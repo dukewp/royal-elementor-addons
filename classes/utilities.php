@@ -572,7 +572,7 @@ class Utilities {
 	/**
 	** Upgrade to Pro Notice
 	*/
-	public static function upgrade_pro_notice( $module, $controls_manager, $widget, $option ) {
+	public static function upgrade_pro_notice( $module, $controls_manager, $widget, $option, $condition = [] ) {
 		if ( defined('WPR_ADDONS_PRO_LICENSE') ) {
 			return;
 		}
@@ -583,14 +583,8 @@ class Utilities {
 				'raw' => 'This option is available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-'. $widget .'-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
 				'type' => $controls_manager,
 				'content_classes' => 'wpr-pro-notice',
-				'conditions' => [
-				    'terms' => [
-				        [
-				            'name' => $option,
-				            'operator' => 'contains',
-				            'value' => 'pro-'
-				        ]
-				    ]
+				'condition' => [
+					$option => $condition,
 				]
 			]
         );
