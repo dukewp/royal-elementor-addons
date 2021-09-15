@@ -687,7 +687,7 @@ class Wpr_Media_Grid extends Widget_Base {
 		$this->add_control_layout_animation();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'media-grid', 'layout_animation' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'media-grid', 'layout_animation', ['pro-fd', 'pro-fs'] );
 
 		$this->add_control(
 			'layout_animation_duration',
@@ -842,7 +842,7 @@ class Wpr_Media_Grid extends Widget_Base {
 		$this->add_control_layout_slider_dots_position();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'media-grid', 'layout_slider_dots_position' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'media-grid', 'layout_slider_dots_position', ['pro-vr'] );
 
 		$this->add_control_stack_layout_slider_autoplay();
 
@@ -919,7 +919,7 @@ class Wpr_Media_Grid extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'media-grid', 'element_select' );
+		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'media-grid', 'element_select', ['pro-lk', 'pro-shr'] );
 
 		$repeater->add_control(
 			'element_location',
@@ -1333,7 +1333,7 @@ class Wpr_Media_Grid extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'media-grid', 'element_animation' );
+		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'media-grid', 'element_animation', ['pro-slrt','pro-slxrt','pro-slbt','pro-sllt','pro-sltp','pro-slxlt','pro-sktp','pro-skrt','pro-skbt','pro-sklt','pro-scup','pro-scdn','pro-rllt','pro-rlrt'] );
 
 		$repeater->add_control(
 			'element_animation_duration',
@@ -1388,7 +1388,7 @@ class Wpr_Media_Grid extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'media-grid', 'element_animation_timing' );
+		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'media-grid', 'element_animation_timing', Utilities::wpr_animation_timing_array());
 
 		$repeater->add_control(
 			'element_animation_size',
@@ -1553,7 +1553,7 @@ class Wpr_Media_Grid extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'overlay_animation' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'overlay_animation', ['pro-slrt','pro-slxrt','pro-slbt','pro-sllt','pro-sltp','pro-slxlt','pro-sktp','pro-skrt','pro-skbt','pro-sklt','pro-scup','pro-scdn','pro-rllt','pro-rlrt',]);
 
 		$this->add_control(
 			'overlay_animation_duration',
@@ -1605,7 +1605,7 @@ class Wpr_Media_Grid extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'overlay_animation_timing' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'overlay_animation_timing', Utilities::wpr_animation_timing_array());
 
 		$this->add_control(
 			'overlay_animation_size',
@@ -1658,7 +1658,7 @@ class Wpr_Media_Grid extends Widget_Base {
 		$this->add_control_image_effects();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'media-grid', 'image_effects' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'media-grid', 'image_effects', ['pro-zi', 'pro-zo', 'pro-go', 'pro-bo']  );
 
 		$this->add_control(
 			'image_effects_duration',
@@ -1710,7 +1710,7 @@ class Wpr_Media_Grid extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'media-grid', 'image_effects_animation_timing' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'media-grid', 'image_effects_animation_timing', Utilities::wpr_animation_timing_array() );
 
 		$this->add_control(
 			'image_effects_size',
@@ -2026,7 +2026,7 @@ class Wpr_Media_Grid extends Widget_Base {
 		$this->add_control_filters_animation();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'media-grid', 'filters_animation' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'media-grid', 'filters_animation', ['pro-fd'], ['pro-fs'] );
 
 		$this->add_control(
 			'filters_animation_duration',
@@ -2077,7 +2077,7 @@ class Wpr_Media_Grid extends Widget_Base {
 		$this->add_control_pagination_type();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'media-grid', 'pagination_type' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'media-grid', 'pagination_type', ['pro-is'] );
 
 		$this->add_control(
 			'pagination_older_text',
@@ -7097,7 +7097,7 @@ class Wpr_Media_Grid extends Widget_Base {
 				$settings['filters_animation'] = 'zoom';
 			}
 		}
-
+		//:TODO
 		$layout_settings = [
 			'layout' => $settings['layout_select'],
 			'columns_desktop' => $settings['layout_columns'],

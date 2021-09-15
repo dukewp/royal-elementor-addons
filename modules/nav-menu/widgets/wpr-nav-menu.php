@@ -231,7 +231,7 @@ class Wpr_Nav_Menu extends Widget_Base {
 		$this->add_control_menu_layout();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'nav-menu', 'menu_layout' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'nav-menu', 'menu_layout', ['pro-vr'] );
 
 		$this->add_responsive_control(
 			'menu_align',
@@ -273,12 +273,12 @@ class Wpr_Nav_Menu extends Widget_Base {
 		$this->add_control_menu_items_pointer();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'nav-menu', 'menu_items_pointer' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'nav-menu', 'menu_items_pointer', ['pro-bd', 'pro-bg'] );
 
 		$this->add_control_pointer_animation_line();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'nav-menu', 'pointer_animation_line' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'nav-menu', 'pointer_animation_line', ['pro-sl', 'pro-dr', 'pro-gr']);
 
 		$this->add_control_pointer_animation_border();
 
@@ -352,7 +352,7 @@ class Wpr_Nav_Menu extends Widget_Base {
 		$this->add_control_menu_items_submenu_entrance();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'nav-menu', 'menu_items_submenu_entrance' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'nav-menu', 'menu_items_submenu_entrance', ['pro-sl'] );
 
 		$this->end_controls_section(); // End Controls Section
 
@@ -368,7 +368,7 @@ class Wpr_Nav_Menu extends Widget_Base {
 		$this->add_control_mob_menu_display();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'nav-menu', 'mob_menu_display' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'nav-menu', 'mob_menu_display', ['pro-nn', 'pro-al'] );
 
 		$this->add_control(
 			'mob_menu_stretch',
@@ -492,7 +492,7 @@ class Wpr_Nav_Menu extends Widget_Base {
 		$this->add_control_toggle_btn_style();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'nav-menu', 'toggle_btn_style' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'nav-menu', 'toggle_btn_style', ['pro-tx'] );
 
 		$this->add_control(
 			'toggle_btn_burger',

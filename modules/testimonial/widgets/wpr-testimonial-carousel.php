@@ -668,7 +668,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 		$this->add_control_testimonial_icon();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'testimonial', 'testimonial_icon' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'testimonial', 'testimonial_icon', ['pro-svg'] );
 
 		$this->add_control(
 			'testimonial_icon_position',
@@ -2812,7 +2812,6 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 		] );
 
 		?>
-
 		<div class="wpr-testimonial-carousel-wrap">
 			
 			<div <?php echo $this->get_render_attribute_string( 'testimonial-caousel-attribute' ); ?>>

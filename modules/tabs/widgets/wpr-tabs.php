@@ -207,7 +207,7 @@ class Wpr_Tabs extends Widget_Base {
 		$repeater->add_control(  'tab_content_type', $this->add_repeater_args_tab_content_type() );
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'tabs', 'tab_content_type' );
+		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'tabs', 'tab_content_type', ['pro-tmp'] );
 
 		// Get Available Meta Keys
 		$post_meta_keys = Utilities::get_custom_meta_keys();

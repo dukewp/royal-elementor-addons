@@ -420,7 +420,7 @@ class Wpr_Flip_Box extends Widget_Base {
 		$this->add_control_box_animation();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'flip-box', 'box_animation',['pro-sl', 'pro-ps','pro-zi', 'o-zo',] );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'flip-box', 'box_animation',['pro-sl', 'pro-ps','pro-zi', 'pro-zo',] );
 
 		$this->add_control(
 			'box_anim_3d',

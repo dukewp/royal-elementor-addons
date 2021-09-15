@@ -176,7 +176,7 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 		$this->add_control_sharing_columns();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'sharing-buttons', 'sharing_columns' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'sharing-buttons', 'sharing_columns', ['pro-3', 'pro-4', 'pro-5', 'pro-6'] );
 
 		$this->add_control_sharing_show_icon();
 
