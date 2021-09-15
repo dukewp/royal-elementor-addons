@@ -84,7 +84,7 @@ class Wpr_Countdown extends Widget_Base {
 		$this->add_control_countdown_type();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'countdown', 'countdown_type' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'countdown', 'countdown_type', ['pro-eg'] );
 
 		$due_date_default = date(
 			'Y-m-d H:i', strtotime( '+1 month' ) + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS )

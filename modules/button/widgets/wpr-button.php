@@ -316,7 +316,7 @@ class Wpr_Button extends Widget_Base {
 		$this->add_control_icon_style();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'button', 'icon_style' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'button', 'icon_style', ['pro-bk', 'pro-ibk'] );
 
 		$this->add_control(
 			'icon_position',
