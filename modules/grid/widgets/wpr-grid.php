@@ -877,8 +877,12 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Show Filters', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => 'yes',
+				'default' => 'yes',
+				'widescreen_default' => 'yes',
+				'laptop_default' => 'yes',
+				'tablet_extra_default' => 'yes',
 				'tablet_default' => 'yes',
+				'mobile_extra_default' => 'yes',
 				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'none',
@@ -999,8 +1003,12 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Navigation', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => 'yes',
+				'default' => 'yes',
+				'widescreen_default' => 'yes',
+				'laptop_default' => 'yes',
+				'tablet_extra_default' => 'yes',
 				'tablet_default' => 'yes',
+				'mobile_extra_default' => 'yes',
 				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'none',
@@ -1047,8 +1055,12 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Pagination', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => 'yes',
+				'default' => 'yes',
+				'widescreen_default' => 'yes',
+				'laptop_default' => 'yes',
+				'tablet_extra_default' => 'yes',
 				'tablet_default' => 'yes',
+				'mobile_extra_default' => 'yes',
 				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'none',
@@ -8607,13 +8619,17 @@ class Wpr_Grid extends Widget_Base {
 			$settings['layout_slider_pause_on_hover'] = '';
 		}
 
-		if  ( 1 == $settings['layout_slider_amount'] ) {
-			$settings['layout_slides_to_scroll'] = 1;
+		if ( 'pro-3' == $settings['layout_slider_amount'] || 'pro-4' == $settings['layout_slider_amount'] || 'pro-5' == $settings['layout_slider_amount'] || 'pro-6' == $settings['layout_slider_amount'] ) {
+			$settings['layout_slider_amount'] = 1;
+		}
+
+		if  ( $settings['layout_slides_to_scroll'] > $settings['layout_slider_amount'] ) {
+			$settings['layout_slides_to_scroll'] = $settings['layout_slider_amount'];
 		}
 
 		$slider_options = [
 			'rtl' => $slider_is_rtl,
-			'slidesToScroll' => absint( $settings['layout_slider_amount'] ),
+			'slidesToScroll' => 2,
 			'infinite' => ( $settings['layout_slider_loop'] === 'yes' ),
 			'speed' => absint( $settings['layout_slider_effect_duration'] * 1000 ),
 			'arrows' => true,
