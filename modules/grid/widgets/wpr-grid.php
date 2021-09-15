@@ -549,7 +549,7 @@ class Wpr_Grid extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'query_source' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'query_source', ['pro-rl', 'pro-cr'] );
 
 		$this->add_control(
 			'query_selection',
@@ -738,7 +738,7 @@ class Wpr_Grid extends Widget_Base {
 		$this->add_control_layout_select();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'layout_select' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'layout_select', ['pro-ms'] );
 
 		$this->add_group_control(
 			Group_Control_Image_Size::get_type(),
@@ -912,7 +912,7 @@ class Wpr_Grid extends Widget_Base {
 		$this->add_control_layout_animation();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'layout_animation' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'layout_animation', ['pro-fd', 'pro-fs'] );
 
 		$this->add_control(
 			'layout_animation_duration',
@@ -1066,7 +1066,7 @@ class Wpr_Grid extends Widget_Base {
 		$this->add_control_layout_slider_dots_position();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'layout_slider_dots_position' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'layout_slider_dots_position', ['pro-vr'] );
 
 		$this->add_control_stack_layout_slider_autoplay();
 
@@ -1145,7 +1145,7 @@ class Wpr_Grid extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'grid', 'element_select' );
+		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'grid', 'element_select', ['pro-lk', 'pro-shr', 'pro-cf'] );
 
 		$repeater->add_control(
 			'element_location',
@@ -2039,7 +2039,7 @@ class Wpr_Grid extends Widget_Base {
 		$this->add_control_image_effects();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'image_effects' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'image_effects', ['pro-zi', 'pro-zo', 'pro-go', 'pro-bo'] );
 
 		$this->add_control(
 			'image_effects_duration',
@@ -2407,7 +2407,7 @@ class Wpr_Grid extends Widget_Base {
 		$this->add_control_filters_animation();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'filters_animation' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'filters_animation', ['pro-fd', 'pro-fs'] );
 
 		$this->add_control(
 			'filters_animation_duration',
@@ -2458,7 +2458,7 @@ class Wpr_Grid extends Widget_Base {
 		$this->add_control_pagination_type();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'pagination_type' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'pagination_type', ['pro-is'] );
 
 		$this->add_control(
 			'pagination_older_text',

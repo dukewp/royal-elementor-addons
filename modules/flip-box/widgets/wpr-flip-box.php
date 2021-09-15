@@ -194,7 +194,7 @@ class Wpr_Flip_Box extends Widget_Base {
 		$this->add_control_front_trigger();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'flip-box', 'front_trigger' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'flip-box', 'front_trigger', ['pro-bt'] );
 
 		$this->add_control(
 			'front_btn_text',
@@ -308,7 +308,7 @@ class Wpr_Flip_Box extends Widget_Base {
 		$this->add_control_back_link_type();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'flip-box', 'back_link_type' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'flip-box', 'back_link_type', ['pro-bt'] );
 
 		$this->add_control(
 			'back_link',

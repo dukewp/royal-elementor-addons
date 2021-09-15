@@ -83,7 +83,7 @@ class Advanced_Text extends Widget_Base {
 		$this->add_control_text_style();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'advanced-text', 'text_style' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'advanced-text', 'text_style', ['pro-cp'] );
 
 		$this->add_control(
 			'text_type',

@@ -189,7 +189,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
         );
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'advanced-slider', 'slider_content_type' );
+		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'advanced-slider', 'slider_content_type', ['pro-tm'] );
 
 		$repeater->add_control( 'slider_select_template', $this->add_repeater_args_slider_select_template() );
 
@@ -857,7 +857,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 		$this->add_control_slider_dots_layout();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'advanced-slider', 'slider_dots_layout' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'advanced-slider', 'slider_dots_layout', ['pro-vr'] );
 
 		$this->add_control_slider_scroll_btn();
 

@@ -140,7 +140,7 @@ class Wpr_Content_Toggle extends Widget_Base {
 		$this->add_control_switcher_label_style();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'content-toggle', 'switcher_label_style' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'content-toggle', 'switcher_label_style', ['pro-in'] );
 
 		$this->add_control(
 			'switcher_style_divider',

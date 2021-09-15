@@ -146,7 +146,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 		$this->add_control_post_type();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'content-ticker', 'post_type' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'content-ticker', 'post_type', ['pro-cm'] );
 
 		$this->add_control(
 			'link_type',
@@ -501,7 +501,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 		$this->add_control_heading_icon_type();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'content-ticker', 'heading_icon_type' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'content-ticker', 'heading_icon_type', ['pro-cc'] );
 
 		$this->add_control(
 			'heading_icon',
@@ -736,7 +736,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 		$this->add_control_type_select();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'content-ticker', 'type_select' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'content-ticker', 'type_select', ['pro-mq'] );
 
 		$this->add_responsive_control(
 			'slider_amount',
@@ -968,7 +968,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 		$this->add_control_slider_effect();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'content-ticker', 'slider_effect' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'content-ticker', 'slider_effect', ['pro-tp', 'pro-fd', 'pro-vs'] );
 
 		$this->add_control_slider_effect_cursor();
 

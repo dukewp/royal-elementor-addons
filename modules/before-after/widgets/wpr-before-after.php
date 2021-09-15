@@ -140,12 +140,12 @@ class Wpr_Before_After extends Widget_Base {
 		$this->add_control_direction();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'before-after', 'direction' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'before-after', 'direction', ['pro-vr'] );
 
 		$this->add_control_trigger();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'before-after', 'trigger' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'before-after', 'trigger', ['pro-ms'] );
 
 		$this->add_control(
 			'divider_icon',
@@ -180,7 +180,7 @@ class Wpr_Before_After extends Widget_Base {
 		$this->add_control_label_display();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'before-after', 'label_display' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'before-after', 'label_display', ['pro-hv'] );
 
 		$this->add_control(
 			'label_image_1',
