@@ -9,7 +9,7 @@ License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 Elementor Post, Portfolio, Woocommerce Grid builder Widgets. Slider, Carousel, Form, Testimonial, Gallery, Nav menu, Google Maps & other addons.
-test
+
 == Description ==
 
 **Royal Addons for Elementor** is the most versatile, intuitive, and easy to use [Elementor Page Builder](https://wordpress.org/plugins/elementor/) extension. Our goal is to provide you with the tools to make things happen, efficiently, and fast compare to other elementor plugins. Choosing us is not only a mindset, but it is also a requirement if you intend to gain an edge over your competitors when creating your website. The best part is that you can design anything **without having to touch a single line of code**.
