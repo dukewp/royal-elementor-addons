@@ -1700,7 +1700,7 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
-		// Upgrade to Pro Notice
+		// Upgrade to Pro Notice :TODO
 		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'grid', 'element_animation' );
 
 		$repeater->add_control(

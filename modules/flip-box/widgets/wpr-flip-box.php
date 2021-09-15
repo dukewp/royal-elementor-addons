@@ -420,7 +420,7 @@ class Wpr_Flip_Box extends Widget_Base {
 		$this->add_control_box_animation();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'flip-box', 'box_animation' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'flip-box', 'box_animation',['pro-sl', 'pro-ps','pro-zi', 'o-zo',] );
 
 		$this->add_control(
 			'box_anim_3d',
@@ -483,7 +483,7 @@ class Wpr_Flip_Box extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'flip-box', 'box_anim_timing' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'flip-box', 'box_anim_timing', ['pro-eio','pro-eiqd','pro-eicb','pro-eiqrt','pro-eiqnt','pro-eisn','pro-eiex','pro-eicr','pro-eibk','pro-eoqd','pro-eocb','pro-eoqrt','pro-eoqnt','pro-eosn','pro-eoex','pro-eocr','pro-eobk','pro-eioqd','pro-eiocb','pro-eioqrt','pro-eioqnt','pro-eiosn','pro-eioex','pro-eiocr','pro-eiobk',] );
 
 		$this->end_controls_section(); // End Controls Section
 

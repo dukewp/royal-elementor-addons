@@ -336,7 +336,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'magazine-grid', 'query_source' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'magazine-grid', 'query_source', ['pro-rl', 'pro-cr'] );
 
 		$this->add_control(
 			'query_selection',
@@ -715,7 +715,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		$element_select = $this->add_option_element_select();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'magazine-grid', 'element_select' );
+		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'magazine-grid', 'element_select', ['pro-lk', 'pro-shr', 'pro-cf']);
 
 		$repeater->add_control(
 			'element_select',
