@@ -8629,7 +8629,7 @@ class Wpr_Grid extends Widget_Base {
 
 		$slider_options = [
 			'rtl' => $slider_is_rtl,
-			'slidesToScroll' => 2,
+			'slidesToScroll' => absint( $settings['layout_slides_to_scroll'] ),
 			'infinite' => ( $settings['layout_slider_loop'] === 'yes' ),
 			'speed' => absint( $settings['layout_slider_effect_duration'] * 1000 ),
 			'arrows' => true,
