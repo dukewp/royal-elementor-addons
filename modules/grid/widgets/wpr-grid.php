@@ -948,7 +948,7 @@ class Wpr_Grid extends Widget_Base {
 
 		$this->add_control_layout_slider_amount();
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'layout_slides_to_scroll',
 			[
 				'label' => esc_html__( 'Slides to Scroll', 'wpr-addons' ),
@@ -956,9 +956,9 @@ class Wpr_Grid extends Widget_Base {
 				'min' => 1,
 				'max' => 10,
 				'default' => 1,
-				'prefix_class' => 'wpr-grid-slides-to-scroll-%s',
 				'frontend_available' => true,
 				'separator' => 'before',
+				'render_type' => 'template',
 				'condition' => [
 					'layout_slider_amount!' => '1',
 					'layout_select' => 'slider',
@@ -1795,8 +1795,12 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Show on this Device', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => 'yes',
+				'default' => 'yes',
+				'widescreen_default' => 'yes',
+				'laptop_default' => 'yes',
+				'tablet_extra_default' => 'yes',
 				'tablet_default' => 'yes',
+				'mobile_extra_default' => 'yes',
 				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'position: absolute; left: -99999999px;',
@@ -8609,6 +8613,7 @@ class Wpr_Grid extends Widget_Base {
 
 		$slider_options = [
 			'rtl' => $slider_is_rtl,
+			'slidesToScroll' => absint( $settings['layout_slider_amount'] ),
 			'infinite' => ( $settings['layout_slider_loop'] === 'yes' ),
 			'speed' => absint( $settings['layout_slider_effect_duration'] * 1000 ),
 			'arrows' => true,
