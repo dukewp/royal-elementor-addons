@@ -2658,7 +2658,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				$slider_html .= '<div class="wpr-slider-item-bg '. $ken_burn_class .'" style="background-image: url('. $item_bg_image_url .')"></div>';
 
 				$slider_amount = +$settings['slider_amount'];
-				
+
 				// Slider Overlay
 				$slider_overlay_html = '';
 				if ( $item['slider_item_overlay'] === 'yes' ) {
@@ -2832,11 +2832,6 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			'nextArrow' => '#wpr-slider-next-'. $this->get_id(),
 		];
 
-
-		if ( $slider_amount === 1 && $settings['slider_effect'] === 'fade' ) {
-			$slider_options['fade'] = true;
-		}
-
 		$this->add_render_attribute( 'advanced-slider-attribute', [
 			'class' => 'wpr-advanced-slider',
 			'dir' => esc_attr( $slider_direction ),
@@ -2848,7 +2843,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 		<!-- Advanced Slider -->
 		<div class="wpr-advanced-slider-wrap">
 			
-			<div <?php echo $this->get_render_attribute_string( 'advanced-slider-attribute' ); ?>>
+			<div <?php echo $this->get_render_attribute_string( 'advanced-slider-attribute' ); ?> data-slide-effect="<?php echo esc_attr($settings['slider_effect']); ?>">
 				<?php echo $slider_html; ?>
 			</div>
 			<div class="wpr-slider-controls">
