@@ -78,7 +78,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 
 	public function add_control_testimonial_icon() {
 		$this->add_control(
-			'testimonial_icon',
+			'testimonial_icon ',
 			[
 				'label' => esc_html__( 'Select Quote Icon', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
@@ -600,6 +600,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 			[
 				'label' => esc_html__( 'Show on Hover', 'wpr-addons' ),
 				'type'         => Controls_Manager::SWITCHER,
+				// 'return_value' => 'fade',
 				'return_value' => 'fade',
 				'prefix_class'	=> 'wpr-testimonial-nav-',
 				'condition' => [
