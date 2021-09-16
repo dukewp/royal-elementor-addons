@@ -749,8 +749,6 @@ class Wpr_Media_Grid extends Widget_Base {
 				'default' => 2,
 				'prefix_class' => 'wpr-grid-slides-to-scroll-',
 				'frontend_available' => true,
-<<<<<<< HEAD
-=======
 				'default' => 2,
 				'widescreen_default' => 2,
 				'laptop_default' => 2,
@@ -758,7 +756,6 @@ class Wpr_Media_Grid extends Widget_Base {
 				'tablet_default' => 1,
 				'mobile_extra_default' => 1,
 				'mobile_default' => 1,
->>>>>>> hagrid
 				'separator' => 'before',
 				'condition' => [
 					'layout_slider_amount!' => '1',
