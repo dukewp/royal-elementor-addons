@@ -86,6 +86,12 @@ class Wpr_Grid extends Widget_Base {
 				'label' => esc_html__( 'Columns', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 3,
+				'widescreen_default' => 3,
+				'laptop_default' => 3,
+				'tablet_extra_default' => 3,
+				'tablet_default' => 2,
+				'mobile_extra_default' => 2,
+				'mobile_default' => 1,
 				'options' => [
 					1 => esc_html__( 'One', 'wpr-addons' ),
 					2 => esc_html__( 'Two', 'wpr-addons' ),
@@ -95,8 +101,8 @@ class Wpr_Grid extends Widget_Base {
 					'pro-6' => esc_html__( 'Six (Pro)', 'wpr-addons' ),
 				],
 				'prefix_class' => 'wpr-grid-columns-%s',
-				'separator' => 'before',
 				'render_type' => 'template',
+				'separator' => 'before',
 				'condition' => [
 					'layout_select' => [ 'fitRows', 'masonry', 'list' ],
 				]
@@ -156,8 +162,8 @@ class Wpr_Grid extends Widget_Base {
 					'pro-6' => esc_html__( 'Six (Pro)', 'wpr-addons' ),
 				],
 				'prefix_class' => 'wpr-grid-slider-columns-%s',
-				'frontend_available' => true,
 				'render_type' => 'template',
+				'frontend_available' => true,
 				'separator' => 'before',
 				'condition' => [
 					'layout_select' => 'slider',
@@ -971,7 +977,6 @@ class Wpr_Grid extends Widget_Base {
 				'separator' => 'before',
 				'render_type' => 'template',
 				'condition' => [
-					'layout_slider_amount!' => '1',
 					'layout_select' => 'slider',
 				],
 			]
