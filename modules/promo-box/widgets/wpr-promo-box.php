@@ -132,7 +132,7 @@ class Wpr_Promo_Box extends Widget_Base {
 		$this->add_control_image_style();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'promo-box', 'image_style' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'promo-box', 'image_style', ['pro-cs']);
 
 		$this->add_control_image_position();
 
@@ -344,7 +344,7 @@ class Wpr_Promo_Box extends Widget_Base {
 		$this->add_control_border_animation();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'promo-box', 'border_animation' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'promo-box', 'border_animation', ['pro-ll','pro-bb','pro-rm','pro-cc','pro-ap',] );
 
 		$this->add_control(
 			'border_animation_duration',
@@ -603,7 +603,7 @@ class Wpr_Promo_Box extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'promo-box', 'image_animation_timing' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'promo-box', 'image_animation_timing', Utilities::wpr_animation_timing_pro_conditions() );
 
 		$this->add_control_group_icon_animation_section();
 

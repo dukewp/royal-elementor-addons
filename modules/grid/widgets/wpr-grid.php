@@ -1719,8 +1719,8 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
-		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'grid', 'element_animation' );
+		// Upgrade to Pro Notice :TODO
+		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'grid', 'element_animation', ['pro-slrt','pro-slxrt','pro-slbt','pro-sllt','pro-sltp','pro-slxlt','pro-sktp','pro-skrt','pro-skbt','pro-sklt','pro-scup','pro-scdn','pro-rllt','pro-rlrt'] );
 
 		$repeater->add_control(
 			'element_animation_duration',
@@ -1775,7 +1775,7 @@ class Wpr_Grid extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'grid', 'element_animation_timing' );
+		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'grid', 'element_animation_timing', ['pro-eio','pro-eiqd','pro-eicb','pro-eiqrt','pro-eiqnt','pro-eisn','pro-eiex','pro-eicr','pro-eibk','pro-eoqd','pro-eocb','pro-eoqrt','pro-eoqnt','pro-eosn','pro-eoex','pro-eocr','pro-eobk','pro-eioqd','pro-eiocb','pro-eioqrt','pro-eioqnt','pro-eiosn','pro-eioex','pro-eiocr','pro-eiobk',] );
 
 		$repeater->add_control(
 			'element_animation_size',
@@ -1957,7 +1957,7 @@ class Wpr_Grid extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'overlay_animation' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'overlay_animation', ['pro-slrt','pro-slxrt','pro-slbt','pro-sllt','pro-sltp','pro-slxlt','pro-sktp','pro-skrt','pro-skbt','pro-sklt','pro-scup','pro-scdn','pro-rllt','pro-rlrt'] );
 
 		$this->add_control(
 			'overlay_animation_duration',
@@ -2009,7 +2009,7 @@ class Wpr_Grid extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'overlay_animation_timing' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'overlay_animation_timing', Utilities::wpr_animation_timing_pro_conditions());
 
 		$this->add_control(
 			'overlay_animation_size',
@@ -2114,7 +2114,7 @@ class Wpr_Grid extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'image_effects_animation_timing' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'image_effects_animation_timing', Utilities::wpr_animation_timing_pro_conditions());
 
 		$this->add_control(
 			'image_effects_size',

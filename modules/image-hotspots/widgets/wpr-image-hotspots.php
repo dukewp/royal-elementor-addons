@@ -366,12 +366,12 @@ class Wpr_Image_Hotspots extends Widget_Base {
 		$this->add_control_tooltip_trigger();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'image-hotspots', 'tooltip_trigger' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'image-hotspots', 'tooltip_trigger', ['pro-cl', 'pro-hv'] );
 
 		$this->add_control_tooltip_position();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'image-hotspots', 'tooltip_position' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'image-hotspots', 'tooltip_position', ['pro-bt', 'pro-lt', 'pro-rt'] );
 
 		$this->add_responsive_control(
             'tooltip_align',

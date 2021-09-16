@@ -55,8 +55,12 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 				'label' => esc_html__( 'Columns', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'label_block' => false,
-				'desktop_default' => 2,
+				'default' => 2,
+				'widescreen_default' => 2,
+				'laptop_default' => 2,
+				'tablet_extra_default' => 2,
 				'tablet_default' => 2,
+				'mobile_extra_default' => 2,
 				'mobile_default' => 1,
 				'options' => [
 					'1' => esc_html__( 'One', 'wpr-addons' ),
@@ -503,8 +507,12 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 				'min' => 1,
 				'max' => 10,
 				'frontend_available' => true,
-				'desktop_default' => 2,
+				'default' => 2,
+				'widescreen_default' => 2,
+				'laptop_default' => 2,
+				'tablet_extra_default' => 2,
 				'tablet_default' => 1,
+				'mobile_extra_default' => 1,
 				'mobile_default' => 1,
 				'condition' => [
 					'testimonial_amount!' => '1',
@@ -524,11 +532,27 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 						'max' => 50,
 					]
 				],
-				'desktop_default' => [
+				'default' => [
+					'size' => 15,
+					'unit' => 'px',
+				],
+				'widescreen_default' => [
+					'size' => 15,
+					'unit' => 'px',
+				],
+				'laptop_default' => [
+					'size' => 15,
+					'unit' => 'px',
+				],
+				'tablet_extra_default' => [
 					'size' => 15,
 					'unit' => 'px',
 				],
 				'tablet_default' => [
+					'size' => 15,
+					'unit' => 'px',
+				],
+				'mobile_extra_default' => [
 					'size' => 15,
 					'unit' => 'px',
 				],
@@ -553,8 +577,11 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 				'label' => esc_html__( 'Navigation', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
-				'desktop_default' => 'yes',
+				'widescreen_default' => 'yes',
+				'laptop_default' => 'yes',
+				'tablet_extra_default' => 'yes',
 				'tablet_default' => 'yes',
+				'mobile_extra_default' => 'yes',
 				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'none',
@@ -609,8 +636,12 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 			[
 				'label' => esc_html__( 'Pagination', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => 'yes',
+				'default' => 'yes',
+				'widescreen_default' => 'yes',
+				'laptop_default' => 'yes',
+				'tablet_extra_default' => 'yes',
 				'tablet_default' => 'yes',
+				'mobile_extra_default' => 'yes',
 				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'none',
@@ -668,7 +699,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 		$this->add_control_testimonial_icon();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'testimonial', 'testimonial_icon' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'testimonial', 'testimonial_icon', ['pro-svg'] );
 
 		$this->add_control(
 			'testimonial_icon_position',
@@ -2812,7 +2843,6 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 		] );
 
 		?>
-
 		<div class="wpr-testimonial-carousel-wrap">
 			
 			<div <?php echo $this->get_render_attribute_string( 'testimonial-caousel-attribute' ); ?>>

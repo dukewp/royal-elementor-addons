@@ -93,7 +93,7 @@ class Wpr_Progress_Bar extends Widget_Base {
 		$this->add_control_layout();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'progress-bar', 'layout' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'progress-bar', 'layout', ['pro-vr'] );
 
 		$this->add_control(
 			'max_value',
@@ -259,7 +259,23 @@ class Wpr_Progress_Bar extends Widget_Base {
 					'unit' => 'px',
 					'size' => 200,
 				],
+				'widescreen_default' => [
+					'unit' => 'px',
+					'size' => 200,
+				],
+				'laptop_default' => [
+					'unit' => 'px',
+					'size' => 200,
+				],
 				'tablet_default' => [
+					'unit' => 'px',
+					'size' => 200,
+				],
+				'tablet_extra_default' => [
+					'unit' => 'px',
+					'size' => 200,
+				],
+				'mobile_extra_default' => [
 					'unit' => 'px',
 					'size' => 200,
 				],
@@ -380,7 +396,7 @@ class Wpr_Progress_Bar extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'progress-bar', 'anim_timing' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'progress-bar', 'anim_timing', Utilities::wpr_animation_timing_pro_conditions() );
 
 		$this->end_controls_section(); // End Controls Section
 

@@ -116,8 +116,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Columns', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
-				'desktop_default' => 3,
+				'default' => 3,
+				'widescreen_default' => 3,
+				'laptop_default' => 3,
+				'tablet_extra_default' => 3,
 				'tablet_default' => 2,
+				'mobile_extra_default' => 2,
 				'mobile_default' => 1,
 				'options' => [
 					1 => esc_html__( 'One', 'wpr-addons' ),
@@ -171,8 +175,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'label' => esc_html__( 'Columns (Carousel)', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'label_block' => false,
-				'desktop_default' => 2,
+				'default' => 2,
+				'widescreen_default' => 2,
+				'laptop_default' => 2,
+				'tablet_extra_default' => 2,
 				'tablet_default' => 2,
+				'mobile_extra_default' => 2,
 				'mobile_default' => 1,
 				'options' => [
 					1 => esc_html__( 'One', 'wpr-addons' ),
@@ -502,12 +510,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$this->add_control_query_selection();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'query_selection' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'query_selection', ['pro-cr'] );
 
 		$this->add_control_query_orderby();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'query_orderby' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'query_orderby', ['pro-rn'] );
 
 		// Categories
 		$this->add_control(
@@ -650,7 +658,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$this->add_control_layout_select();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'layout_select' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'layout_select', ['pro-ms'] );
 
 		$this->add_group_control(
 			Group_Control_Image_Size::get_type(),
@@ -789,8 +797,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Show Filters', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => 'yes',
+				'default' => 'yes',
+				'widescreen_default' => 'yes',
+				'laptop_default' => 'yes',
+				'tablet_extra_default' => 'yes',
 				'tablet_default' => 'yes',
+				'mobile_extra_default' => 'yes',
 				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'none',
@@ -824,7 +836,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$this->add_control_layout_animation();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'layout_animation' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'layout_animation', ['pro-fd', 'pro-fs'] );
 
 		$this->add_control(
 			'layout_animation_duration',
@@ -868,8 +880,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'min' => 1,
 				'max' => 10,
 				'frontend_available' => true,
-				'desktop_default' => 2,
+				'default' => 2,
+				'widescreen_default' => 2,
+				'laptop_default' => 2,
+				'tablet_extra_default' => 2,
 				'tablet_default' => 1,
+				'mobile_extra_default' => 1,
 				'mobile_default' => 1,
 				'separator' => 'before',
 				'condition' => [
@@ -912,8 +928,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Navigation', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => 'yes',
+				'default' => 'yes',
+				'widescreen_default' => 'yes',
+				'laptop_default' => 'yes',
+				'tablet_extra_default' => 'yes',
 				'tablet_default' => 'yes',
+				'mobile_extra_default' => 'yes',
 				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'none',
@@ -960,8 +980,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Pagination', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => 'yes',
+				'default' => 'yes',
+				'widescreen_default' => 'yes',
+				'laptop_default' => 'yes',
+				'tablet_extra_default' => 'yes',
 				'tablet_default' => 'yes',
+				'mobile_extra_default' => 'yes',
 				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'none',
@@ -979,7 +1003,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$this->add_control_layout_slider_dots_position();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'layout_slider_dots_position' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'layout_slider_dots_position', ['pro-vr'] );
 
 		$this->add_control_stack_layout_slider_autoplay();
 
@@ -1058,7 +1082,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'woo-grid', 'element_select' );
+		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'woo-grid', 'element_select', ['pro-lk', 'pro-shr'] );
 
 		$repeater->add_control(
 			'element_location',
@@ -1596,7 +1620,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'woo-grid', 'element_animation' );
+		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'woo-grid', 'element_animation', ['pro-slrt','pro-slxrt','pro-slbt','pro-sllt','pro-sltp','pro-slxlt','pro-sktp','pro-skrt','pro-skbt','pro-sklt','pro-scup','pro-scdn','pro-rllt','pro-rlrt',] );
 
 		$repeater->add_control(
 			'element_animation_duration',
@@ -1651,7 +1675,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'woo-grid', 'element_animation_timing' );
+		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'woo-grid', 'element_animation_timing', Utilities::wpr_animation_timing_pro_conditions() );
 
 		$repeater->add_control(
 			'element_animation_size',
@@ -1690,8 +1714,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Show on this Device', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => 'yes',
+				'default' => 'yes',
+				'widescreen_default' => 'yes',
+				'laptop_default' => 'yes',
+				'tablet_extra_default' => 'yes',
 				'tablet_default' => 'yes',
+				'mobile_extra_default' => 'yes',
 				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'position: absolute; left: -99999999px;',
@@ -1832,7 +1860,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'overlay_animation' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'overlay_animation', ['pro-slrt','pro-slxrt','pro-slbt','pro-sllt','pro-sltp','pro-slxlt','pro-sktp','pro-skrt','pro-skbt','pro-sklt','pro-scup','pro-scdn','pro-rllt','pro-rlrt',] );
 
 		$this->add_control(
 			'overlay_animation_duration',
@@ -1884,7 +1912,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'overlay_animation_timing' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'overlay_animation_timing', Utilities::wpr_animation_timing_pro_conditions() );
 
 		$this->add_control(
 			'overlay_animation_size',
@@ -1937,7 +1965,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$this->add_control_image_effects();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'image_effects' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'image_effects', ['pro-zi', 'pro-zo', 'pro-go', 'pro-bo'] );
 
 		$this->add_control(
 			'image_effects_duration',
@@ -1989,7 +2017,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'image_effects_animation_timing' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'image_effects_animation_timing', Utilities::wpr_animation_timing_pro_conditions() );
 
 		$this->add_control(
 			'image_effects_size',
@@ -2280,7 +2308,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$this->add_control_filters_animation();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'filters_animation' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'filters_animation', ['pro-fd', 'pro-fs'] );
 
 		$this->add_control(
 			'filters_animation_duration',
@@ -2331,7 +2359,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$this->add_control_pagination_type();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'pagination_type' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'pagination_type', ['pro-is'] );
 
 		$this->add_control(
 			'pagination_older_text',
@@ -3157,8 +3185,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Justify Text', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => '',
+				'default' => '',
+				'widescreen_default' => '',
+				'laptop_default' => '',
+				'tablet_extra_default' => '',
 				'tablet_default' => '',
+				'mobile_extra_default' => '',
 				'mobile_default' => '',
 				'selectors_dictionary' => [
 					'' => '',
