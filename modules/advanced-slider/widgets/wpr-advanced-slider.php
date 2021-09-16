@@ -2579,9 +2579,9 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				$ken_burn_class = '';
 				$item_bg_image_url = Group_Control_Image_Size::get_attachment_image_src( $item['slider_item_bg_image']['id'], 'slider_image_size', $settings );
 
-				$item_video_src 	= $item['slider_item_video_src'];
-				$item_video_start 	= $item['slider_item_video_start'];
-				$item_video_end 	= $item['slider_item_video_end'];
+				$item_video_src = $item['slider_item_video_src'];
+				$item_video_start = $item['slider_item_video_start'];
+				$item_video_end = $item['slider_item_video_end'];
 
 				if ( '' !== $item['slider_item_btn_icon_1']['value'] ) {
 					ob_start();
@@ -2657,10 +2657,12 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				// Slider Background Image
 				$slider_html .= '<div class="wpr-slider-item-bg '. $ken_burn_class .'" style="background-image: url('. $item_bg_image_url .')"></div>';
 
+				$slider_amount = +$settings['slider_amount'];
+				
 				// Slider Overlay
 				$slider_overlay_html = '';
 				if ( $item['slider_item_overlay'] === 'yes' ) {
-					if ( $settings['slider_amount'] === 1 || $item['slider_item_blend_mode'] !== 'normal' ) {	
+					if ( $slider_amount === 1 || $item['slider_item_blend_mode'] !== 'normal' ) {	
 						$slider_html .= '<div class="wpr-slider-item-overlay"></div>';
 					} else {
 						$slider_overlay_html = '<div class="wpr-slider-item-overlay"></div>';
@@ -2672,7 +2674,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				$this->add_render_attribute( 'slider_outer' . $item_count, 'class', 'wpr-cv-outer' );	
 
 				if ( $settings['slider_content_animation'] !== 'none' ) {
-					if ( $settings['slider_amount'] === 1 ) {
+					if ( $slider_amount === 1 ) {
 						$this->add_render_attribute( 'slider_container' . $item_count, 'class', 'wpr-slider-animation' );
 						$this->add_render_attribute( 'slider_outer' . $item_count, 'class', 'wpr-anim-transparency wpr-anim-size-'. $settings['slider_content_anim_size'] .' wpr-overlay-'. $settings['slider_content_animation'] );
 					} else if ( !empty( $item_bg_image_url ) && $item['slider_item_video_autoplay'] !== 'yes' ) {
@@ -2814,25 +2816,24 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			$settings['slider_pause_on_hover'] = '';
 		}
 
-		$slider_is_rtl 		= is_rtl();
-		$slider_direction 	= $slider_is_rtl ? 'rtl' : 'ltr';
-		$breakpoints 		= Responsive::get_breakpoints();
+		$slider_is_rtl = is_rtl();
+		$slider_direction = $slider_is_rtl ? 'rtl' : 'ltr';
 
 		$slider_options = [
-			'rtl' 				=> $slider_is_rtl,
-			'infinite' 			=> ( $settings['slider_loop'] === 'yes' ),
-			'speed' 			=> absint( $settings['slider_effect_duration'] * 1000 ),
-			'arrows'			=> true,
-			'dots' 				=> true,
-			'autoplay' 			=> ( $settings['slider_autoplay'] === 'yes' ),
-			'autoplaySpeed'		=> absint( $settings['slider_autoplay_duration'] * 1000 ),
-			'pauseOnHover' 		=> $settings['slider_pause_on_hover'],
-			'prevArrow' 		=> '#wpr-slider-prev-'. $this->get_id(),
-			'nextArrow' 		=> '#wpr-slider-next-'. $this->get_id(),
+			'rtl' => $slider_is_rtl,
+			'infinite' => ( $settings['slider_loop'] === 'yes' ),
+			'speed' => absint( $settings['slider_effect_duration'] * 1000 ),
+			'arrows'=> true,
+			'dots' 	=> true,
+			'autoplay' => ( $settings['slider_autoplay'] === 'yes' ),
+			'autoplaySpeed'=> absint( $settings['slider_autoplay_duration'] * 1000 ),
+			'pauseOnHover' => $settings['slider_pause_on_hover'],
+			'prevArrow' => '#wpr-slider-prev-'. $this->get_id(),
+			'nextArrow' => '#wpr-slider-next-'. $this->get_id(),
 		];
 
 
-		if ( $settings['slider_amount'] === 1 && $settings['slider_effect'] === 'fade' ) {
+		if ( $slider_amount === 1 && $settings['slider_effect'] === 'fade' ) {
 			$slider_options['fade'] = true;
 		}
 
