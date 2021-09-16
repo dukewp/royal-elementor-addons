@@ -70,6 +70,8 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 					'pro-5' => esc_html__( 'Five (Pro)', 'wpr-addons' ),
 					'pro-6' => esc_html__( 'Six (Pro)', 'wpr-addons' ),
 				],
+				'prefix_class' => 'wpr-testimonial-slider-columns-%s',
+				'render_type' => 'template',
 				'frontend_available' => true,
 				'separator' => 'before',
 			]
@@ -499,7 +501,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 			);
 		}
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'testimonial_slides_to_scroll',
 			[
 				'label' => esc_html__( 'Slides to Scroll', 'wpr-addons' ),
@@ -514,9 +516,8 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 				'tablet_default' => 1,
 				'mobile_extra_default' => 1,
 				'mobile_default' => 1,
-				'condition' => [
-					'testimonial_amount!' => '1',
-				],
+				'prefix_class' => 'wpr-adv-slides-to-scroll-',
+				'render_type' => 'template',
 			]
 		);
 
@@ -676,9 +677,6 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 				'options' => [
 					'slide' => esc_html__( 'Slide', 'wpr-addons' ),
 					'fade' => esc_html__( 'Fade', 'wpr-addons' ),
-				],
-				'condition' => [
-					'testimonial_amount' => 1,
 				],
 			]
 		);
@@ -2783,58 +2781,25 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 		
 		$is_rtl = is_rtl();
 		$direction = $is_rtl ? 'rtl' : 'ltr';
-		$breakpoints = Responsive::get_breakpoints();
-
 		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
-			if ( 'pro-3' == $settings['testimonial_amount'] || 'pro-4' == $settings['testimonial_amount'] || 'pro-5' == $settings['testimonial_amount'] || 'pro-6' == $settings['testimonial_amount'] ) {
-				$settings['testimonial_amount'] = 2;
-			}
 
 			$settings['testimonial_autoplay'] = '';
 			$settings['testimonial_autoplay_duration'] = 0;
 			$settings['testimonial_pause_on_hover'] = '';
 		}
 
-		if ( 1 === absint( $settings['testimonial_amount'] ) ) {
-			$slidesToScroll = 1;
-		} else {
-			$slidesToScroll = absint( $settings['testimonial_slides_to_scroll'] );
-		}
-
 		$options = [
-			'rtl'				=> $is_rtl,
-			'slidesToShow'		=> absint( $settings['testimonial_amount'] ),
-			'slidesToScroll'	=> $slidesToScroll,
-			'infinite'			=> ( $settings['testimonial_loop'] === 'yes' ),
-			'speed'				=> absint( $settings['testimonial_effect_duration'] * 1000 ),
-			'arrows'			=> true,
-			'dots'				=> true,
-			'autoplay'			=> ( $settings['testimonial_autoplay'] === 'yes' ),
-			'autoplaySpeed'		=> absint( $settings['testimonial_autoplay_duration'] * 1000 ),
-			'pauseOnHover'		=> $settings['testimonial_pause_on_hover'],
-			'prevArrow' 		=> '#wpr-testimonial-prev-'. $this->get_id(),
-			'nextArrow' 		=> '#wpr-testimonial-next-'. $this->get_id(),
-			'responsive' => [
-				[	
-					'breakpoint' => $breakpoints['lg'],
-					'settings' => [ 
-						'slidesToShow' => absint( $settings['testimonial_amount_tablet'] ),
-						'slidesToScroll' => absint( $settings['testimonial_slides_to_scroll_tablet'] ),
-					]
-				],
-				[
-					'breakpoint' => $breakpoints['md'],
-					'settings' => [ 
-						'slidesToShow' => absint( $settings['testimonial_amount_mobile'] ),
-						'slidesToScroll' => absint( $settings['testimonial_slides_to_scroll_mobile'] ),
-					]
-				]
-			]
+			'rtl' => $is_rtl,
+			'infinite' => ( $settings['testimonial_loop'] === 'yes' ),
+			'speed' => absint( $settings['testimonial_effect_duration'] * 1000 ),
+			'arrows' => true,
+			'dots' => true,
+			'autoplay' => ( $settings['testimonial_autoplay'] === 'yes' ),
+			'autoplaySpeed' => absint( $settings['testimonial_autoplay_duration'] * 1000 ),
+			'pauseOnHover' => $settings['testimonial_pause_on_hover'],
+			'prevArrow' => '#wpr-testimonial-prev-'. $this->get_id(),
+			'nextArrow' => '#wpr-testimonial-next-'. $this->get_id(),
 		];
-
-		if ( $settings['testimonial_amount'] === 1 && $settings['testimonial_effect'] === 'fade' ) {
-			$options['fade'] = true;
-		}
 
 		$this->add_render_attribute( 'testimonial-caousel-attribute', [
 			'class' => 'wpr-testimonial-carousel',
@@ -2845,7 +2810,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 		?>
 		<div class="wpr-testimonial-carousel-wrap">
 			
-			<div <?php echo $this->get_render_attribute_string( 'testimonial-caousel-attribute' ); ?>>
+			<div <?php echo $this->get_render_attribute_string( 'testimonial-caousel-attribute' ); ?> data-slide-effect="<?php echo esc_attr($settings['testimonial_effect']); ?>">
 					
 					<?php foreach ( $settings['testimonial_items'] as $key => $item ) : ?>
 
