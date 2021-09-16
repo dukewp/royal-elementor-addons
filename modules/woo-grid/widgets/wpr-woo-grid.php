@@ -116,8 +116,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Columns', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
-				'desktop_default' => 3,
+				'default' => 3,
+				'widescreen_default' => 3,
+				'laptop_default' => 3,
+				'tablet_extra_default' => 3,
 				'tablet_default' => 2,
+				'mobile_extra_default' => 2,
 				'mobile_default' => 1,
 				'options' => [
 					1 => esc_html__( 'One', 'wpr-addons' ),
@@ -171,8 +175,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'label' => esc_html__( 'Columns (Carousel)', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'label_block' => false,
-				'desktop_default' => 2,
+				'default' => 2,
+				'widescreen_default' => 2,
+				'laptop_default' => 2,
+				'tablet_extra_default' => 2,
 				'tablet_default' => 2,
+				'mobile_extra_default' => 2,
 				'mobile_default' => 1,
 				'options' => [
 					1 => esc_html__( 'One', 'wpr-addons' ),
@@ -789,8 +797,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Show Filters', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => 'yes',
+				'default' => 'yes',
+				'widescreen_default' => 'yes',
+				'laptop_default' => 'yes',
+				'tablet_extra_default' => 'yes',
 				'tablet_default' => 'yes',
+				'mobile_extra_default' => 'yes',
 				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'none',
@@ -868,8 +880,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'min' => 1,
 				'max' => 10,
 				'frontend_available' => true,
-				'desktop_default' => 2,
+				'default' => 2,
+				'widescreen_default' => 2,
+				'laptop_default' => 2,
+				'tablet_extra_default' => 2,
 				'tablet_default' => 1,
+				'mobile_extra_default' => 1,
 				'mobile_default' => 1,
 				'separator' => 'before',
 				'condition' => [
@@ -912,8 +928,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Navigation', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => 'yes',
+				'default' => 'yes',
+				'widescreen_default' => 'yes',
+				'laptop_default' => 'yes',
+				'tablet_extra_default' => 'yes',
 				'tablet_default' => 'yes',
+				'mobile_extra_default' => 'yes',
 				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'none',
@@ -960,8 +980,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Pagination', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => 'yes',
+				'default' => 'yes',
+				'widescreen_default' => 'yes',
+				'laptop_default' => 'yes',
+				'tablet_extra_default' => 'yes',
 				'tablet_default' => 'yes',
+				'mobile_extra_default' => 'yes',
 				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'none',
@@ -1690,8 +1714,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Show on this Device', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => 'yes',
+				'default' => 'yes',
+				'widescreen_default' => 'yes',
+				'laptop_default' => 'yes',
+				'tablet_extra_default' => 'yes',
 				'tablet_default' => 'yes',
+				'mobile_extra_default' => 'yes',
 				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'position: absolute; left: -99999999px;',
@@ -3157,8 +3185,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Justify Text', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => '',
+				'default' => '',
+				'widescreen_default' => '',
+				'laptop_default' => '',
+				'tablet_extra_default' => '',
 				'tablet_default' => '',
+				'mobile_extra_default' => '',
 				'mobile_default' => '',
 				'selectors_dictionary' => [
 					'' => '',

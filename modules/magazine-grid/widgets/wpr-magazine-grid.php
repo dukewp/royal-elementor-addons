@@ -1258,8 +1258,12 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Show on this Device', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => 'yes',
+				'default' => 'yes',
+				'widescreen_default' => 'yes',
+				'laptop_default' => 'yes',
+				'tablet_extra_default' => 'yes',
 				'tablet_default' => 'yes',
+				'mobile_extra_default' => 'yes',
 				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'position: absolute; left: -99999999px;',
@@ -2019,8 +2023,12 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Justify Text', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => '',
+				'default' => '',
+				'widescreen_default' => '',
+				'laptop_default' => '',
+				'tablet_extra_default' => '',
 				'tablet_default' => '',
+				'mobile_extra_default' => '',
 				'mobile_default' => '',
 				'selectors_dictionary' => [
 					'' => '',
@@ -2201,8 +2209,12 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Justify Text', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => '',
+				'default' => '',
+				'widescreen_default' => '',
+				'laptop_default' => '',
+				'tablet_extra_default' => '',
 				'tablet_default' => '',
+				'mobile_extra_default' => '',
 				'mobile_default' => '',
 				'selectors_dictionary' => [
 					'' => '',

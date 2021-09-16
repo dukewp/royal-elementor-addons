@@ -259,7 +259,23 @@ class Wpr_Progress_Bar extends Widget_Base {
 					'unit' => 'px',
 					'size' => 200,
 				],
+				'widescreen_default' => [
+					'unit' => 'px',
+					'size' => 200,
+				],
+				'laptop_default' => [
+					'unit' => 'px',
+					'size' => 200,
+				],
 				'tablet_default' => [
+					'unit' => 'px',
+					'size' => 200,
+				],
+				'tablet_extra_default' => [
+					'unit' => 'px',
+					'size' => 200,
+				],
+				'mobile_extra_default' => [
 					'unit' => 'px',
 					'size' => 200,
 				],

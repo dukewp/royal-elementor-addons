@@ -124,8 +124,12 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'label' => esc_html__( 'Columns (Carousel)', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'label_block' => false,
-				'desktop_default' => 1,
+				'default' => 1,
+				'widescreen_default' => 1,
+				'laptop_default' => 1,
+				'tablet_extra_default' => 1,
 				'tablet_default' => 1,
+				'mobile_extra_default' => 1,
 				'mobile_default' => 1,
 				'options' => [
 					1 => esc_html__( 'One', 'wpr-addons' ),
@@ -150,8 +154,12 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'min' => 1,
 				'max' => 2,
 				'frontend_available' => true,
-				'desktop_default' => 1,
+				'default' => 1,
+				'widescreen_default' => 1,
+				'laptop_default' => 1,
+				'tablet_extra_default' => 1,
 				'tablet_default' => 1,
+				'mobile_extra_default' => 1,
 				'mobile_default' => 1,
 				'condition' => [
 					'slider_amount!' => '1',
@@ -464,8 +472,12 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			[
 				'label' => esc_html__( 'Button Primary', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => 'yes',
+				'default' => 'yes',
+				'widescreen_default' => 'yes',
+				'laptop_default' => 'yes',
+				'tablet_extra_default' => 'yes',
 				'tablet_default' => 'yes',
+				'mobile_extra_default' => 'yes',
 				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'none',
@@ -537,8 +549,12 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			[
 				'label' => esc_html__( 'Button Secondary', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => 'yes',
+				'default' => 'yes',
+				'widescreen_default' => 'yes',
+				'laptop_default' => 'yes',
+				'tablet_extra_default' => 'yes',
 				'tablet_default' => 'yes',
+				'mobile_extra_default' => 'yes',
 				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'none',
@@ -741,8 +757,12 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			[
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => 'yes',
+				'default' => 'yes',
+				'widescreen_default' => 'yes',
+				'laptop_default' => 'yes',
+				'tablet_extra_default' => 'yes',
 				'tablet_default' => 'yes',
+				'mobile_extra_default' => 'yes',
 				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'none',
@@ -760,8 +780,12 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			[
 				'label' => esc_html__( 'Sub Title', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => 'yes',
+				'default' => 'yes',
+				'widescreen_default' => 'yes',
+				'laptop_default' => 'yes',
+				'tablet_extra_default' => 'yes',
 				'tablet_default' => 'yes',
+				'mobile_extra_default' => 'yes',
 				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'none',
@@ -778,8 +802,12 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			[
 				'label' => esc_html__( 'Description', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => 'yes',
+				'default' => 'yes',
+				'widescreen_default' => 'yes',
+				'laptop_default' => 'yes',
+				'tablet_extra_default' => 'yes',
 				'tablet_default' => 'yes',
+				'mobile_extra_default' => 'yes',
 				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'none',
@@ -797,8 +825,12 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			[
 				'label' => esc_html__( 'Navigation', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => 'yes',
+				'default' => 'yes',
+				'widescreen_default' => 'yes',
+				'laptop_default' => 'yes',
+				'tablet_extra_default' => 'yes',
 				'tablet_default' => 'yes',
+				'mobile_extra_default' => 'yes',
 				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'none',
@@ -840,8 +872,12 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			[
 				'label' => esc_html__( 'Pagination', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => 'yes',
+				'default' => 'yes',
+				'widescreen_default' => 'yes',
+				'laptop_default' => 'yes',
+				'tablet_extra_default' => 'yes',
 				'tablet_default' => 'yes',
+				'mobile_extra_default' => 'yes',
 				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'none',
@@ -1028,9 +1064,13 @@ class Wpr_Advanced_Slider extends Widget_Base {
                         'icon' => 'eicon-h-align-right',
                     ]
                 ],
-                'desktop_default' => 'center',
-				'tablet_default' => 'center',
-				'mobile_default' => 'center',
+				'default' => 'yes',
+				'widescreen_default' => 'yes',
+				'laptop_default' => 'yes',
+				'tablet_extra_default' => 'yes',
+				'tablet_default' => 'yes',
+				'mobile_extra_default' => 'yes',
+				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'left' => 'float: left',
 					'center' => 'margin: 0 auto',
