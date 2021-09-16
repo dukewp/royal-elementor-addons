@@ -949,9 +949,6 @@ class Wpr_Advanced_Slider extends Widget_Base {
 					'slide' => esc_html__( 'Slide', 'wpr-addons' ),
 					'fade' => esc_html__( 'Fade', 'wpr-addons' ),
 				],
-				'condition' => [
-					'slider_amount' => 1,
-				],
 			]
 		);
 
@@ -973,6 +970,9 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'label' => esc_html__( 'Content Animation', 'wpr-addons' ),
 				'type' => 'wpr-animations-alt',
 				'default' => 'none',
+				'condition' => [
+					'slider_effect' => 'fade',
+				],
 			]
 		);
 
@@ -992,6 +992,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				],
 				'condition' => [
 					'slider_content_animation!' => 'none',
+					'slider_effect' => 'fade',
 				],
 			]
 		);
@@ -1010,6 +1011,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				],
 				'condition' => [
 					'slider_content_animation!' => 'none',
+					'slider_effect' => 'fade',
 				],
 			]
 		);
