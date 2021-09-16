@@ -1,6 +1,5 @@
 <?php
 namespace WprAddons\Modules\Testimonial\Widgets;
-
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
 use Elementor\Core\Responsive\Responsive;
@@ -228,7 +227,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 
 	public function add_control_dots_hr() {}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Section: Items -----------
 		$this->start_controls_section(

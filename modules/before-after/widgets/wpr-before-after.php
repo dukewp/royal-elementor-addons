@@ -93,7 +93,7 @@ class Wpr_Before_After extends Widget_Base {
 		);
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Tab: Content ==============
 		// Section: General ----------

@@ -167,7 +167,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 
 	public function add_control_slider_dots_hr() {}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Section: Slides -----------
 		$this->start_controls_section(

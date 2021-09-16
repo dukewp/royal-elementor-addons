@@ -85,7 +85,7 @@ class Wpr_Business_Hours extends Widget_Base {
 
 	public function add_control_general_icon_size() {}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		
 		// Section: Business Hours ---
 		$this->start_controls_section(

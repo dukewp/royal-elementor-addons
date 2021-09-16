@@ -108,7 +108,7 @@ class Wpr_Tabs extends Widget_Base {
 
 	public function add_section_settings() {}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		$templates_select = [];
 

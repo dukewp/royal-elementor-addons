@@ -299,7 +299,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 	
 	public function add_section_style_sharing() {}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Tab: Content ==============
 		// Section: Query ------------

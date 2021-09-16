@@ -116,7 +116,7 @@ class Wpr_Promo_Box extends Widget_Base {
 		return Utilities::wpr_animation_timings();
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		
 		// Section: Image ------------
 		$this->start_controls_section(
