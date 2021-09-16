@@ -73,7 +73,9 @@ class Wpr_Media_Grid extends Widget_Base {
 					'pro-7' => esc_html__( 'Seven (Pro)', 'wpr-addons' ),
 					'pro-8' => esc_html__( 'Eight (Pro)', 'wpr-addons' ),
 				],
+				'prefix_class' => 'wpr-grid-columns-%s',
 				'separator' => 'before',
+				'render_type' => 'template',
 				'condition' => [
 					'layout_select' => [ 'fitRows', 'masonry', 'list' ],
 				]
@@ -7087,12 +7089,6 @@ class Wpr_Media_Grid extends Widget_Base {
 			$settings['filters_deeplinking'] = '';
 			$settings['filters_count'] = '';
 
-			if ( 'pro-4' == $settings['layout_columns'] || 'pro-5' == $settings['layout_columns'] || 'pro-6' == $settings['layout_columns'] || 'pro-7' == $settings['layout_columns'] || 'pro-8' == $settings['layout_columns'] ) {
-				$settings['layout_columns'] = 4;
-				$settings['layout_columns_tablet'] = 3;
-				$settings['layout_columns_mobile'] = 1;
-			}
-
 			if ( 'pro-fd' == $settings['filters_animation'] || 'pro-fs' == $settings['filters_animation'] ) {
 				$settings['filters_animation'] = 'zoom';
 			}
@@ -7101,8 +7097,6 @@ class Wpr_Media_Grid extends Widget_Base {
 		$layout_settings = [
 			'layout' => $settings['layout_select'],
 			'columns_desktop' => $settings['layout_columns'],
-			'columns_tablet' => $settings['layout_columns_tablet'],
-			'columns_mobile' => $settings['layout_columns_mobile'],
 			'gutter_hr' => $settings['layout_gutter_hr']['size'],
 			'gutter_vr' => $settings['layout_gutter_vr']['size'],
 			'animation' => $settings['layout_animation'],

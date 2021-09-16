@@ -3323,8 +3323,12 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Justify Text', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => '',
+				'default' => '',
+				'widescreen_default' => '',
+				'laptop_default' => '',
+				'tablet_extra_default' => '',
 				'tablet_default' => '',
+				'mobile_extra_default' => '',
 				'mobile_default' => '',
 				'selectors_dictionary' => [
 					'' => '',
@@ -3505,8 +3509,12 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Justify Text', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => '',
+				'default' => '',
+				'widescreen_default' => '',
+				'laptop_default' => '',
+				'tablet_extra_default' => '',
 				'tablet_default' => '',
+				'mobile_extra_default' => '',
 				'mobile_default' => '',
 				'selectors_dictionary' => [
 					'' => '',
