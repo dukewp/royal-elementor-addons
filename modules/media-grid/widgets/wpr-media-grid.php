@@ -119,8 +119,12 @@ class Wpr_Media_Grid extends Widget_Base {
 				'label' => esc_html__( 'Columns (Carousel)', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'label_block' => false,
-				'desktop_default' => 2,
+				'default' => 2,
+				'widescreen_default' => 2,
+				'laptop_default' => 2,
+				'tablet_extra_default' => 2,
 				'tablet_default' => 2,
+				'mobile_extra_default' => 2,
 				'mobile_default' => 1,
 				'options' => [
 					1 => esc_html__( 'One', 'wpr-addons' ),
@@ -130,7 +134,9 @@ class Wpr_Media_Grid extends Widget_Base {
 					'pro-5' => esc_html__( 'Five (Pro)', 'wpr-addons' ),
 					'pro-6' => esc_html__( 'Six (Pro)', 'wpr-addons' ),
 				],
+				'prefix_class' => 'wpr-grid-slider-columns-%s',
 				'frontend_available' => true,
+				'render_type' => 'template',
 				'separator' => 'before',
 				'condition' => [
 					'layout_select' => 'slider',
@@ -725,17 +731,16 @@ class Wpr_Media_Grid extends Widget_Base {
 
 		$this->add_control_layout_slider_amount();
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'layout_slides_to_scroll',
 			[
 				'label' => esc_html__( 'Slides to Scroll', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
 				'min' => 1,
 				'max' => 10,
+				'default' => 2,
+				'prefix_class' => 'wpr-grid-slides-to-scroll-',
 				'frontend_available' => true,
-				'desktop_default' => 2,
-				'tablet_default' => 1,
-				'mobile_default' => 1,
 				'separator' => 'before',
 				'condition' => [
 					'layout_slider_amount!' => '1',
@@ -7144,13 +7149,8 @@ class Wpr_Media_Grid extends Widget_Base {
 
 	// Slider Settings
 	public function add_slider_settings( $settings ) {
-		$slider_is_rtl 		= is_rtl();
-		$slider_direction 	= $slider_is_rtl ? 'rtl' : 'ltr';
-		$breakpoints 		= Responsive::get_breakpoints();
-
-		if ( 'pro-3' == $settings['layout_slider_amount'] || 'pro-4' == $settings['layout_slider_amount'] || 'pro-5' == $settings['layout_slider_amount'] || 'pro-6' == $settings['layout_slider_amount'] ) {
-			$settings['layout_slider_amount'] = 2;
-		}
+		$slider_is_rtl = is_rtl();
+		$slider_direction = $slider_is_rtl ? 'rtl' : 'ltr';
 
 		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
 			$settings['layout_slider_autoplay'] = '';
@@ -7158,14 +7158,12 @@ class Wpr_Media_Grid extends Widget_Base {
 			$settings['layout_slider_pause_on_hover'] = '';
 		}
 
-		if  ( 1 == $settings['layout_slider_amount'] ) {
-			$settings['layout_slides_to_scroll'] = 1;
+		if ( 'pro-3' == $settings['layout_slider_amount'] || 'pro-4' == $settings['layout_slider_amount'] || 'pro-5' == $settings['layout_slider_amount'] || 'pro-6' == $settings['layout_slider_amount'] ) {
+			$settings['layout_slider_amount'] = 2;
 		}
 
 		$slider_options = [
 			'rtl' => $slider_is_rtl,
-			'slidesToShow' => absint( $settings['layout_slider_amount'] ),
-			'slidesToScroll' => absint( $settings['layout_slides_to_scroll'] ),
 			'infinite' => ( $settings['layout_slider_loop'] === 'yes' ),
 			'speed' => absint( $settings['layout_slider_effect_duration'] * 1000 ),
 			'arrows' => true,
@@ -7175,22 +7173,6 @@ class Wpr_Media_Grid extends Widget_Base {
 			'pauseOnHover' => $settings['layout_slider_pause_on_hover'],
 			'prevArrow' => '#wpr-grid-slider-prev-'. $this->get_id(),
 			'nextArrow' => '#wpr-grid-slider-next-'. $this->get_id(),
-			'responsive' => [
-				[	
-					'breakpoint' => $breakpoints['lg'],
-					'settings' => [ 
-						'slidesToShow' => absint( $settings['layout_slider_amount_tablet'] ),
-						'slidesToScroll' => absint( $settings['layout_slides_to_scroll_tablet'] ),
-					]
-				],
-				[
-					'breakpoint' => $breakpoints['md'],
-					'settings' => [ 
-						'slidesToShow' => absint( $settings['layout_slider_amount_mobile'] ),
-						'slidesToScroll' => absint( $settings['layout_slides_to_scroll_mobile'] ),
-					]
-				]
-			]
 		];
 
 		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
