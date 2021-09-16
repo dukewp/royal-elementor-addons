@@ -603,7 +603,7 @@ class Wpr_Promo_Box extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'promo-box', 'image_animation_timing', Utilities::wpr_animation_timing_array() );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'promo-box', 'image_animation_timing', Utilities::wpr_animation_timing_pro_conditions() );
 
 		$this->add_control_group_icon_animation_section();
 

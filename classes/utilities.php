@@ -518,10 +518,6 @@ class Utilities {
 	/**
 	** WPR Animation Timings
 	*/
-	public static function wpr_animation_timing_array() {
-		$animation_timing_array = ['pro-eio','pro-eiqd','pro-eicb','pro-eiqrt','pro-eiqnt','pro-eisn','pro-eiex','pro-eicr','pro-eibk','pro-eoqd','pro-eocb','pro-eoqrt','pro-eoqnt','pro-eosn','pro-eoex','pro-eocr','pro-eobk','pro-eioqd','pro-eiocb','pro-eioqrt','pro-eioqnt','pro-eiosn','pro-eioex','pro-eiocr','pro-eiobk'];
-		return $animation_timing_array;
-	}
 	public static function wpr_animation_timings() {
 		$timing_functions = [
 			'ease-default' => 'Default',
@@ -560,6 +556,10 @@ class Utilities {
 		}
 
 		return $timing_functions;
+	}
+	
+	public static function wpr_animation_timing_pro_conditions() {
+		return ['pro-eio','pro-eiqd','pro-eicb','pro-eiqrt','pro-eiqnt','pro-eisn','pro-eiex','pro-eicr','pro-eibk','pro-eoqd','pro-eocb','pro-eoqrt','pro-eoqnt','pro-eosn','pro-eoex','pro-eocr','pro-eobk','pro-eioqd','pro-eiocb','pro-eioqrt','pro-eioqnt','pro-eiosn','pro-eioex','pro-eiocr','pro-eiobk'];
 	}
 
 	/**

@@ -380,7 +380,7 @@ class Wpr_Progress_Bar extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'progress-bar', 'anim_timing', Utilities::wpr_animation_timing_array() );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'progress-bar', 'anim_timing', Utilities::wpr_animation_timing_pro_conditions() );
 
 		$this->end_controls_section(); // End Controls Section
 

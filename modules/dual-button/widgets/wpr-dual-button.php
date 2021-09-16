@@ -443,7 +443,7 @@ class Wpr_Dual_Button extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'dual-button', 'button_b_hover_animation' );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'dual-button', 'button_b_hover_animation', ['pro-wnt','pro-rlt','pro-rrt'] );
 		
 		$this->add_control(
 			'button_b_hover_anim_duration',

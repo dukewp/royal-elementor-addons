@@ -2002,7 +2002,7 @@ class Wpr_Grid extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'overlay_animation_timing', Utilities::wpr_animation_timing_array());
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'overlay_animation_timing', Utilities::wpr_animation_timing_pro_conditions());
 
 		$this->add_control(
 			'overlay_animation_size',
@@ -2107,7 +2107,7 @@ class Wpr_Grid extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'image_effects_animation_timing', Utilities::wpr_animation_timing_array());
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'image_effects_animation_timing', Utilities::wpr_animation_timing_pro_conditions());
 
 		$this->add_control(
 			'image_effects_size',
