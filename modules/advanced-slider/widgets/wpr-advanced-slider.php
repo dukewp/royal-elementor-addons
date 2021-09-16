@@ -139,6 +139,8 @@ class Wpr_Advanced_Slider extends Widget_Base {
 					'pro-5' => esc_html__( 'Five (Pro)', 'wpr-addons' ),
 					'pro-6' => esc_html__( 'Six (Pro)', 'wpr-addons' ),
 				],
+				'prefix_class' => 'wpr-adv-slider-columns-%s',
+				'render_type' => 'template',
 				'frontend_available' => true,
 				'separator' => 'before',
 			]
@@ -146,24 +148,17 @@ class Wpr_Advanced_Slider extends Widget_Base {
 	}
 
 	public function add_control_slides_to_scroll() {
-		$this->add_responsive_control(
+		$this->add_control(
 			'slides_to_scroll',
 			[
 				'label' => esc_html__( 'Slides to Scroll', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
 				'min' => 1,
 				'max' => 2,
+				'prefix_class' => 'wpr-adv-slides-to-scroll-',
+				'render_type' => 'template',
 				'frontend_available' => true,
 				'default' => 1,
-				'widescreen_default' => 1,
-				'laptop_default' => 1,
-				'tablet_extra_default' => 1,
-				'tablet_default' => 1,
-				'mobile_extra_default' => 1,
-				'mobile_default' => 1,
-				'condition' => [
-					'slider_amount!' => '1',
-				],
 			]
 		);
 	}
@@ -1064,13 +1059,13 @@ class Wpr_Advanced_Slider extends Widget_Base {
                         'icon' => 'eicon-h-align-right',
                     ]
                 ],
-				'default' => 'yes',
-				'widescreen_default' => 'yes',
-				'laptop_default' => 'yes',
-				'tablet_extra_default' => 'yes',
-				'tablet_default' => 'yes',
-				'mobile_extra_default' => 'yes',
-				'mobile_default' => 'yes',
+				'default' => 'center',
+				'widescreen_default' => 'center',
+				'laptop_default' => 'center',
+				'tablet_extra_default' => 'center',
+				'tablet_default' => 'center',
+				'mobile_extra_default' => 'center',
+				'mobile_default' => 'center',
 				'selectors_dictionary' => [
 					'left' => 'float: left',
 					'center' => 'margin: 0 auto',
@@ -2823,8 +2818,6 @@ class Wpr_Advanced_Slider extends Widget_Base {
 
 		$slider_options = [
 			'rtl' 				=> $slider_is_rtl,
-			'slidesToShow' 		=> absint( $settings['slider_amount'] ),
-			'slidesToScroll' 	=> absint( $settings['slides_to_scroll'] ),
 			'infinite' 			=> ( $settings['slider_loop'] === 'yes' ),
 			'speed' 			=> absint( $settings['slider_effect_duration'] * 1000 ),
 			'arrows'			=> true,
@@ -2834,22 +2827,6 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			'pauseOnHover' 		=> $settings['slider_pause_on_hover'],
 			'prevArrow' 		=> '#wpr-slider-prev-'. $this->get_id(),
 			'nextArrow' 		=> '#wpr-slider-next-'. $this->get_id(),
-			'responsive' 		=> [
-				[	
-					'breakpoint' => $breakpoints['lg'],
-					'settings' => [ 
-						'slidesToShow' => absint( $settings['slider_amount_tablet'] ),
-						'slidesToScroll' => absint( $settings['slides_to_scroll_tablet'] ),
-					]
-				],
-				[
-					'breakpoint' => $breakpoints['md'],
-					'settings' => [ 
-						'slidesToShow' => absint( $settings['slider_amount_mobile'] ),
-						'slidesToScroll' => absint( $settings['slides_to_scroll_mobile'] ),
-					]
-				]
-			]
 		];
 
 
