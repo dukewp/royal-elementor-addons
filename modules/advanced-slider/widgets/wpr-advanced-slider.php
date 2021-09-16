@@ -949,9 +949,9 @@ class Wpr_Advanced_Slider extends Widget_Base {
 					'slide' => esc_html__( 'Slide', 'wpr-addons' ),
 					'fade' => esc_html__( 'Fade', 'wpr-addons' ),
 				],
-				'condition' => [
-					'slider_amount' => 1,
-				],
+				// 'condition' => [
+				// 	'slider_amount' => 1,
+				// ],
 			]
 		);
 
