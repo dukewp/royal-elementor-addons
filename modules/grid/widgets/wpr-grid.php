@@ -141,6 +141,12 @@ class Wpr_Grid extends Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'label_block' => false,
 				'default' => 2,
+				'widescreen_default' => 2,
+				'laptop_default' => 2,
+				'tablet_extra_default' => 2,
+				'tablet_default' => 2,
+				'mobile_extra_default' => 2,
+				'mobile_default' => 1,
 				'options' => [
 					1 => esc_html__( 'One', 'wpr-addons' ),
 					2 => esc_html__( 'Two', 'wpr-addons' ),
@@ -960,6 +966,7 @@ class Wpr_Grid extends Widget_Base {
 				'min' => 1,
 				'max' => 10,
 				'default' => 1,
+				'prefix_class' => 'wpr-grid-slides-to-scroll-',
 				'frontend_available' => true,
 				'separator' => 'before',
 				'render_type' => 'template',
@@ -8631,13 +8638,8 @@ class Wpr_Grid extends Widget_Base {
 			$settings['layout_slider_amount'] = 1;
 		}
 
-		if  ( $settings['layout_slides_to_scroll'] > $settings['layout_slider_amount'] ) {
-			$settings['layout_slides_to_scroll'] = $settings['layout_slider_amount'];
-		}
-
 		$slider_options = [
 			'rtl' => $slider_is_rtl,
-			'slidesToScroll' => absint( $settings['layout_slides_to_scroll'] ),
 			'infinite' => ( $settings['layout_slider_loop'] === 'yes' ),
 			'speed' => absint( $settings['layout_slider_effect_duration'] * 1000 ),
 			'arrows' => true,
