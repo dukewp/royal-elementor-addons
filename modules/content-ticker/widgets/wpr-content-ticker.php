@@ -753,6 +753,8 @@ class Wpr_Content_Ticker extends Widget_Base {
 				'mobile_default' => 1,
 				'min' => 1,
 				'max' => 10,
+				'prefix_class' => 'wpr-ticker-slider-columns-%s',
+				'render_type' => 'template',
 				'frontend_available' => true,
 				'separator' => 'before',
 				'condition' => [
@@ -762,7 +764,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'slides_to_scroll',
 			[
 				'label' => esc_html__( 'Slides to Scroll', 'wpr-addons' ),
@@ -777,6 +779,8 @@ class Wpr_Content_Ticker extends Widget_Base {
 				'tablet_default' => 1,
 				'mobile_extra_default' => 1,
 				'mobile_default' => 1,
+				'prefix_class' => 'wpr-ticker-slides-to-scroll-',
+				'render_type' => 'template',
 				'condition' => [
 					'slider_amount!' => 1,
 					'slider_effect' => 'hr-slide',
@@ -1986,64 +1990,19 @@ class Wpr_Content_Ticker extends Widget_Base {
 		$settings = $this->get_settings();
 		$slider_is_rtl = is_rtl();
 		$slider_direction = $slider_is_rtl ? 'rtl' : 'ltr';
-		$breakpoints = Responsive::get_breakpoints();
-
-		$slider_to_scroll = 1;
-		$slider_to_scroll_tablet = 1;
-		$slider_to_scroll_mobile = 1;
-
 		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
 			$settings['slider_effect'] = 'hr-slide';
 		}
 
-		if ( 'hr-slide' === $settings['slider_effect'] ) {
-			$slider_to_scroll = ( ! empty( $settings['slides_to_scroll'] ) ) ? absint( $settings['slides_to_scroll'] ) : 1;
-			$slider_to_scroll_tablet = ( ! empty( $settings['slides_to_scroll_tablet'] ) ) ? absint( $settings['slides_to_scroll_tablet'] ) : 1;
-			$slider_to_scroll_mobile = ( ! empty( $settings['slides_to_scroll_mobile'] ) ) ? absint( $settings['slides_to_scroll_mobile'] ) : 1;
-		}
-
-
-		$slider_amount = absint( $settings['slider_amount'] );
-		$slider_amount_tablet = absint( $settings['slider_amount_tablet'] );
-		$slider_amount_mobile = absint( $settings['slider_amount_mobile'] );
-
-		if ( $settings['slider_effect'] === 'typing' ) {
-			$slider_amount = 1;
-			$slider_amount_tablet = 1;
-			$slider_amount_mobile = 1;
-		}
-
 		$slider_options = [
-			'rtl' 				=> $slider_is_rtl,
-			'slidesToShow' 		=> $slider_amount,
-			'slidesToScroll' 	=> $slider_to_scroll,
-			'infinite' 			=> ( $settings['slider_loop'] === 'yes' ),
-			'speed' 			=> absint( $settings['slider_effect_duration'] * 1000 ),
-			'autoplay' 			=> ( $settings['slider_autoplay'] === 'yes' ),
-			'autoplaySpeed'		=> absint( $settings['slider_autoplay_duration'] * 1000 ),
-			'pauseOnHover' 		=> $settings['slider_pause_on_hover'],
-			'arrows' 			=> false,
-			'responsive' 		=> [
-				[	
-					'breakpoint' => $breakpoints['lg'],
-					'settings' => [ 
-						'slidesToShow' => $slider_amount_tablet,
-						'slidesToScroll' => $slider_to_scroll_tablet,
-					]
-				],
-				[
-					'breakpoint' => $breakpoints['md'],
-					'settings' => [ 
-						'slidesToShow' => $slider_amount_mobile,
-						'slidesToScroll' => $slider_to_scroll_mobile,
-					]
-				]
-			]
+			'rtl' => $slider_is_rtl,
+			'infinite' => ( $settings['slider_loop'] === 'yes' ),
+			'speed' => absint( $settings['slider_effect_duration'] * 1000 ),
+			'autoplay' => ( $settings['slider_autoplay'] === 'yes' ),
+			'autoplaySpeed' => absint( $settings['slider_autoplay_duration'] * 1000 ),
+			'pauseOnHover' => $settings['slider_pause_on_hover'],
+			'arrows' => false,
 		];
-
-		if ( $settings['slider_effect'] === 'fade' ||  $settings['slider_effect'] === 'typing' ) {
-			$slider_options['fade'] = true;
-		}
 
 		if ( $settings['slider_effect'] === 'vr-slide' ) {
 			$slider_options['vertical'] = true;
@@ -2072,7 +2031,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 
 		?>
 
-		<div <?php echo $this->get_render_attribute_string( 'ticker-slider-attribute' ); ?>>	
+		<div <?php echo $this->get_render_attribute_string( 'ticker-slider-attribute' ); ?> data-slide-effect="<?php echo esc_attr($settings['slider_effect']); ?>">	
 			<?php
 				if ( 'dynamic' === $settings['post_type'] ) {
 					$this->wpr_content_ticker_dynamic();
