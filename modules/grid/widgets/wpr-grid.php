@@ -973,9 +973,9 @@ class Wpr_Grid extends Widget_Base {
 				'max' => 10,
 				'default' => 1,
 				'prefix_class' => 'wpr-grid-slides-to-scroll-',
+				'render_type' => 'template',
 				'frontend_available' => true,
 				'separator' => 'before',
-				'render_type' => 'template',
 				'condition' => [
 					'layout_select' => 'slider',
 				],
