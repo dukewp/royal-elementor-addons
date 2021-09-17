@@ -771,11 +771,11 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 				'options' => [
 					'solid' => [
 						'title' => esc_html__( 'Solid', 'wpr-addons' ),
-						'icon' => 'fa fa-star',
+						'icon' => 'fas fa-star',
 					],
 					'outline' => [
 						'title' => esc_html__( 'Outline', 'wpr-addons' ),
-						'icon' => 'fa fa-star-o',
+						'icon' => 'far fa-star',
 					],
 				],
 				'default' => 'outline',
