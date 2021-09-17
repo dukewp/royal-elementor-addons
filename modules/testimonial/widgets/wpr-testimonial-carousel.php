@@ -600,19 +600,16 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 			[
 				'label' => esc_html__( 'Show on Hover', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_on' => __( 'Yes', 'your-plugin' ),
-				'label_off' => __( 'No', 'your-plugin' ), 
 				'default' => 'no',
 				'return_value' => 'fade',
 				'prefix_class'	=> 'wpr-testimonial-nav-',
-				'redner_type' => 'template',
+				'render_type' => 'template',
 				'condition' => [
 					'testimonial_nav' => 'yes',
 				],
 			]
 		);
 
-		
 
 		$this->add_control(
 			'testimonial_nav_icon',
