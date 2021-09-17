@@ -412,7 +412,6 @@ class Utilities {
 		];
 		
 		return $icons[$icon];
-		// return $icons['svg-sharing-2'];
 	}
 
 
@@ -421,7 +420,6 @@ class Utilities {
 	*/
 	public static function get_wpr_icon( $icon, $dir ) {
 		if ( false !== strpos( $icon, 'svg-' ) ) {
-			// echo $icon;
 			return Utilities::get_svg_icon( $icon, $dir );
 		} elseif ( false !== strpos( $icon, 'fa-' ) ) {
 			$dir = '' !== $dir ? '-'. $dir : '';

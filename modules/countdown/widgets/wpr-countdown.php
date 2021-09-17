@@ -69,7 +69,7 @@ class Wpr_Countdown extends Widget_Base {
 
 	public function add_control_evergreen_stop_after_date_select() {}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		
 		// Section: Countdown --------
 		$this->start_controls_section(

@@ -494,7 +494,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 	
 	public function add_control_grid_slider_dots_hr() {}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Tab: Content ==============
 		// Section: Query ------------

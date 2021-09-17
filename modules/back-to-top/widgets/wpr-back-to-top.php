@@ -35,7 +35,7 @@ class Wpr_Back_To_Top extends Widget_Base {
     }
 
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		
 	// Section: General ----------
 	$this->start_controls_section(

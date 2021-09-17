@@ -64,7 +64,7 @@ class Pricing_Table extends Widget_Base {
 
 	public function add_contro_stack_feature_even_bg() {}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Section: Elements ---------
 		$this->start_controls_section(

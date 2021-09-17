@@ -82,7 +82,7 @@ class Wpr_Image_Hotspots extends Widget_Base {
 		);
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		
 		// Section: Image ------------
 		$this->start_controls_section(

@@ -36,7 +36,7 @@ class Wpr_Phone_Call extends Widget_Base {
     }
 
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Section: General ----------
 	$this->start_controls_section(

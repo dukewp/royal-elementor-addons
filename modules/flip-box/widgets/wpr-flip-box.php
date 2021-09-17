@@ -106,7 +106,7 @@ class Wpr_Flip_Box extends Widget_Base {
 		);
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		
 		// Section: Front ------------
 		$this->start_controls_section(
