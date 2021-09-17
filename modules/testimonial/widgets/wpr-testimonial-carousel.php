@@ -605,7 +605,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 				'default' => 'no',
 				'return_value' => 'fade',
 				'prefix_class'	=> 'wpr-testimonial-nav-',
-				'redner_type' => 'template',
+				'render_type' => 'template',
 				'condition' => [
 					'testimonial_nav' => 'yes',
 				],
