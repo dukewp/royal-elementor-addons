@@ -905,7 +905,7 @@ class Wpr_Nav_Menu extends Widget_Base {
 				'default' => '#ffffff',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-sub-menu .wpr-sub-menu-item:hover,
-					 {{WRAPPER}} .wpr-sub-menu > .menu-item-has-children:hover .wpr-sub-icon,
+					 {{WRAPPER}} .wpr-sub-menu > .menu-item-has-children .wpr-sub-menu-item:hover .wpr-sub-icon,
 					 {{WRAPPER}} .wpr-sub-menu .wpr-sub-menu-item.wpr-active-menu-item,
 					 {{WRAPPER}} .wpr-sub-menu > .menu-item-has-children.current_page_item .wpr-sub-icon' => 'color: {{VALUE}};',
 				],
