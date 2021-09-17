@@ -5285,7 +5285,6 @@ class Wpr_Magazine_Grid extends Widget_Base {
 	public function add_slider_settings( $settings ) {
 		$slider_is_rtl = is_rtl();
 		$slider_direction = $slider_is_rtl ? 'rtl' : 'ltr';
-		$breakpoints = Responsive::get_breakpoints();
 
 		$slider_options = [
 			'rtl' => $slider_is_rtl,
@@ -5299,10 +5298,6 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			'prevArrow' => '#wpr-grid-slider-prev-'. $this->get_id(),
 			'nextArrow' => '#wpr-grid-slider-next-'. $this->get_id(),
 		];
-
-		if ( $settings['slider_effect'] === 'fade' ) {
-			$slider_options['fade'] = true;
-		}
 
 		$this->add_render_attribute( 'slider-settings', [
 			'dir' => esc_attr( $slider_direction ),
