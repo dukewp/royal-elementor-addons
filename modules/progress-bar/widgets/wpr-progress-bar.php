@@ -78,7 +78,7 @@ class Wpr_Progress_Bar extends Widget_Base {
 
 	public function add_control_stripe_anim() {}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Section: General ----------
 		$this->start_controls_section(

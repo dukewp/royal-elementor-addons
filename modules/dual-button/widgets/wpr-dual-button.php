@@ -64,7 +64,7 @@ class Wpr_Dual_Button extends Widget_Base {
 	
 	public function add_section_style_tooltip() {}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Section: General ---------
 		$this->start_controls_section(

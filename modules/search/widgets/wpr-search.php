@@ -65,7 +65,7 @@ class Wpr_Search extends Widget_Base {
 		);
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		
 		// Section: Search -----------
 		$this->start_controls_section(

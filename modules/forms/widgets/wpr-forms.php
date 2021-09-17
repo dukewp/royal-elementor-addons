@@ -39,7 +39,7 @@ class Wpr_Forms extends Widget_Base {
         return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-forms-help-btn';
     }
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Tab: Content ==============
 		// Section: General ----------

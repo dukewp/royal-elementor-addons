@@ -49,7 +49,7 @@ class Wpr_Mailchimp extends Widget_Base {
 	
 	public function add_control_last_name_placeholder() {}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Tab: Content ==============
 		// Section: Settings ----------

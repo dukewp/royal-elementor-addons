@@ -130,7 +130,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 
 	public function add_section_ticker_items() {}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Section: General ----------
 		$this->start_controls_section(

@@ -35,7 +35,7 @@ class Wpr_Author_Box extends Widget_Base {
 		return [ 'qq', 'author box', 'post', 'title' ];//tmp
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Tab: Content ==============
 		// Section: General ----------

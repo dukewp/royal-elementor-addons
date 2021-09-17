@@ -54,7 +54,7 @@ class Wpr_Team_Member extends Widget_Base {
 
 	public function add_section_style_overlay() {}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Section: General ----------
 		$this->start_controls_section(

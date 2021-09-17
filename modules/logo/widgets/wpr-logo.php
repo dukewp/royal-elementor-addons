@@ -44,7 +44,7 @@ class Wpr_Logo extends Widget_Base {
         return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-logo-help-btn';
     }
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		
 		// Section: logo -------------
 		$this->start_controls_section(

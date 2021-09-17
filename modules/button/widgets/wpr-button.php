@@ -76,7 +76,7 @@ class Wpr_Button extends Widget_Base {
 
 	public function render_pro_element_tooltip( $settings ) {}
 	
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Section: Button ----------
 		$this->start_controls_section(

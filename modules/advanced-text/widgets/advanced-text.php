@@ -68,7 +68,7 @@ class Advanced_Text extends Widget_Base {
 
 	public function add_section_style_clipped_text() {}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Section: Content ---------
 		$this->start_controls_section(

@@ -68,7 +68,7 @@ class Wpr_OnepageNav extends Widget_Base {
 
 	public function add_section_nav_tooltip() {}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Section: Navigation -------
 		$this->start_controls_section(

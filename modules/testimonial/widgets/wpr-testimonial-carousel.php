@@ -1,6 +1,5 @@
 <?php
 namespace WprAddons\Modules\Testimonial\Widgets;
-
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
 use Elementor\Core\Responsive\Responsive;
@@ -80,7 +79,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 
 	public function add_control_testimonial_icon() {
 		$this->add_control(
-			'testimonial_icon',
+			'testimonial_icon ',
 			[
 				'label' => esc_html__( 'Select Quote Icon', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
@@ -230,7 +229,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 
 	public function add_control_dots_hr() {}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Section: Items -----------
 		$this->start_controls_section(
@@ -600,14 +599,20 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 			'testimonial_nav_hover',
 			[
 				'label' => esc_html__( 'Show on Hover', 'wpr-addons' ),
-				'type'         => Controls_Manager::SWITCHER,
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => __( 'Yes', 'your-plugin' ),
+				'label_off' => __( 'No', 'your-plugin' ), 
+				'default' => 'no',
 				'return_value' => 'fade',
 				'prefix_class'	=> 'wpr-testimonial-nav-',
+				'redner_type' => 'template',
 				'condition' => [
 					'testimonial_nav' => 'yes',
 				],
 			]
 		);
+
+		
 
 		$this->add_control(
 			'testimonial_nav_icon',

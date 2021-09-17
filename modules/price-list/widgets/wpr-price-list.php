@@ -63,7 +63,7 @@ class Wpr_Price_List extends Widget_Base {
 	
 	public function add_section_style_image() {}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		
 		// Section: Items -----------
 		$this->start_controls_section(
