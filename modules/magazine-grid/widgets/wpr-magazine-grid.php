@@ -5388,7 +5388,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		}
 
 		// Grid/Slider Wrap
-		echo '<div class="wpr-magazine-grid-wrap" '. $render_attribute .'>';
+		echo '<div class="wpr-magazine-grid-wrap" '. $render_attribute .'  data-slide-effect="'. esc_attr($settings['slider_effect']) .'">';
 
 		// Slider
 		if ( 'yes' === $settings['slider_enable'] ) {
