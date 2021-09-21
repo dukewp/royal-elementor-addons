@@ -72,7 +72,8 @@ class Utilities {
 		// Taxonomies
 		if ( 'tax' === $query ) {
 			$custom_types = get_taxonomies( [ 'show_in_nav_menus' => true ], 'objects' );
-			// Post Types
+		
+		// Post Types
 		} else {
 			$custom_types = get_post_types( [ 'show_in_nav_menus' => true ], 'objects' );
 		}
@@ -145,7 +146,7 @@ class Utilities {
 		foreach ( $query as $tax ) {
 			$taxonomies[$tax->term_id] = $tax->name;
 		}
-		
+
 		wp_reset_postdata();
 
 		return $taxonomies;

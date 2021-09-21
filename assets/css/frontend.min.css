@@ -9526,6 +9526,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-tabs-position-above > .elementor-widget-container > .wpr-tabs > .wpr-tabs-wrap > .wpr-tab:before {	
 	border-left-color: transparent;
 	border-right-color: transparent;
+	border-top-color: white;
 	border-top-style: solid;
 	border-left-style: solid;
 	border-right-style: solid;
