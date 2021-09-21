@@ -5741,6 +5741,8 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 .wpr-testimonial-dots li {
 	float: left;
+	width: auto !important;
+	margin: 0 !important;
 }
 
 .wpr-testimonial-dot {
