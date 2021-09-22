@@ -38,7 +38,7 @@ function wpr_addons_load_plugin() {
 		return;
 	}
 
-	$elementor_version_required = '1.0.6';
+	$elementor_version_required = '2.0.0';
 	if ( ! version_compare( ELEMENTOR_VERSION, $elementor_version_required, '>=' ) ) {
 		add_action( 'admin_notices', 'wpr_addons_fail_load_out_of_date' );
 		return;
