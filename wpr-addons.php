@@ -143,4 +143,4 @@ function royal_elementor_addons_activation_time(){
 	$get_activation_time = strtotime("now");
 	add_option('royal_elementor_addons_activation_time', $get_activation_time );
 }
-register_activation_hook( __FILE__, 'royal_elementor_addons_activation_time' );
+// register_activation_hook( __FILE__, 'royal_elementor_addons_activation_time' );

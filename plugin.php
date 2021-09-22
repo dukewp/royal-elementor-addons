@@ -87,7 +87,7 @@ class Plugin {
 		require WPR_ADDONS_PATH . 'classes/wpr-post-likes.php';
 
 		// Rating Notice 
-		require WPR_ADDONS_PATH . 'classes/rating-notice.php';	
+		// require WPR_ADDONS_PATH . 'classes/rating-notice.php';	
 
 		// Custom CSS //tmp
 		// require WPR_ADDONS_PATH . 'modules/custom-css/widgets/wpr-custom-css.php';
