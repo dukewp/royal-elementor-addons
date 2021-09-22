@@ -133,6 +133,14 @@ function wpr_plugin_redirect() {
 }
 
 if ( did_action( 'elementor/loaded' ) ) {
+	
 	register_activation_hook(__FILE__, 'wpr_plugin_activate');
 	add_action('admin_init', 'wpr_plugin_redirect');
 }
+
+// Try to locate it in rating-notice later if possible
+function royal_elementor_addons_activation_time(){
+	$get_activation_time = strtotime("now");
+	add_option('royal_elementor_addons_activation_time', $get_activation_time );
+}
+// register_activation_hook( __FILE__, 'royal_elementor_addons_activation_time' );
