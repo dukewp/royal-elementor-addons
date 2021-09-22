@@ -240,6 +240,12 @@ class Wpr_Nav_Menu extends Widget_Base {
 				'type' => Controls_Manager::CHOOSE,
 				'label_block' => false,
 				'default' => 'left',
+				'widescreen_default' => 'left',
+				'laptop_default' => 'left',
+				'tablet_extra_default' => 'left',
+				'tablet_default' => 'left',
+				'mobile_extra_default' => 'left',
+				'mobile_default' => 'left',
 				'options' => [
 					'left' => [
 						'title' => esc_html__( 'Left', 'wpr-addons' ),
