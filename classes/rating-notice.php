@@ -1,8 +1,10 @@
 <?php 
 namespace WprAddons\Classes;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
+
 // Check plugin.php includes function
 class RatingNotice {
     public function __construct() {
@@ -29,7 +31,7 @@ class RatingNotice {
         if (strtotime('now') - get_option('dismiss_notice_maybe_later') > 10) {
             delete_option('dismiss_notice_maybe_later');
             delete_option('maybe_later');
-        }   
+        }
 
         add_action( 'wp_ajax_my_dismiss_notice', [$this, 'my_dismiss_notice'] );
         add_action( 'wp_ajax_maybe_later', [$this, 'maybe_later'] );
@@ -60,13 +62,13 @@ class RatingNotice {
     }
 
     public function add_script() {
-            wp_register_script( 'notice-update', WPR_ADDONS_ASSETS_URL . '/js/admin/update-notice.js', ['jquery'],'1.0', false );
-            
-            wp_localize_script( 'notice-update', 'notice_params', array(
-                'ajaxurl' => get_admin_url() . 'admin-ajax.php', 
-            ));
-            
-            wp_enqueue_script(  'notice-update' );
+        wp_register_script( 'notice-update', WPR_ADDONS_ASSETS_URL . '/js/admin/update-notice.js', ['jquery'],'1.0', false );
+        
+        wp_localize_script( 'notice-update', 'notice_params', array(
+            'ajaxurl' => get_admin_url() . 'admin-ajax.php', 
+        ));
+        
+        wp_enqueue_script(  'notice-update' );
     }
 
     public function rating_admin_notice(){
@@ -74,7 +76,8 @@ class RatingNotice {
         if ( $pagenow == 'plugins.php' OR $pagenow == 'index.php') {
             $plugin_info = get_plugin_data( __FILE__ , true, true );
             $dont_disturb = esc_url( get_admin_url() . '?spare_me=1' );
-             echo '<div class="notice notice-for-rating is-dismissible my-dismiss-notice" style="border-left-color: #7A75FF!important; display: flex; align-items: center;">
+
+            echo '<div class="notice notice-for-rating is-dismissible my-dismiss-notice" style="border-left-color: #7A75FF!important; display: flex; align-items: center;">
                         <div style="margin-right: 15px;">
                             <img style="width: 97px; height: 97px;" src="' . WPR_ADDONS_ASSETS_URL . '/img/icon-128x128.png">
                         </div>
@@ -89,7 +92,7 @@ class RatingNotice {
                                 <button class="wpr-notice-dismiss-2">💔 No, Sorry</button>
                             </p>
                         </div>
-                    </div>';
+                </div>';
         }
     }
 
@@ -192,4 +195,3 @@ class RatingNotice {
 }
 
 new RatingNotice();
-?>
