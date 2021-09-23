@@ -1,7 +1,7 @@
 ﻿=== Royal Elementor Addons ===
 Contributors: WP Royal
 Tags: elementor, elements, widgets for elementor, elementor addons, elementor widget, elementor form, woocommerce elementor, page builder, builder, wordpress page builder
-Stable tag: 1.1.1
+Stable tag: 1.2
 Requires at least: 5.0
 Tested up to: 5.8
 Requires PHP: 5.6

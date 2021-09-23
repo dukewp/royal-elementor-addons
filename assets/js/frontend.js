@@ -287,13 +287,22 @@
 					isotopeLayout( settings );
 				}, 100 );
 
+				if ( WprElements.editorCheck() ) {
+					setTimeout(function() {
+						isotopeLayout( settings );
+					}, 500 );
+					setTimeout(function() {
+						isotopeLayout( settings );
+					}, 1000 );
+				}
+
 				$( window ).on( 'load', function() {
 					setTimeout(function() {
 						isotopeLayout( settings );
 					}, 100 );
 				});
 
-				$( window ).on( 'resize', function() {
+				$(window).smartresize(function(){
 					setTimeout(function() {
 						isotopeLayout( settings );
 					}, 200 );
@@ -463,7 +472,18 @@
 
 			// Slider
 			} else {
-				iGrid.animate({ 'opacity' : '1' }, 1000 );//tmp
+				iGrid.animate({ 'opacity': '1' }, 1000);
+
+				var sliderClass = $scope.attr('class'),
+					sliderColumnsDesktop = sliderClass.match(/wpr-grid-slider-columns-\d/) ? sliderClass.match(/wpr-grid-slider-columns-\d/).join().slice(-1) : 2,
+					sliderColumnsWideScreen = sliderClass.match(/columns--widescreen\d/) ? sliderClass.match(/columns--widescreen\d/).join().slice(-1) : sliderColumnsDesktop,
+					sliderColumnsLaptop = sliderClass.match(/columns--laptop\d/) ? sliderClass.match(/columns--laptop\d/).join().slice(-1) : sliderColumnsDesktop,
+					sliderColumnsTabletExtra = sliderClass.match(/columns--tablet_extra\d/) ? sliderClass.match(/columns--tablet_extra\d/).join().slice(-1) : sliderColumnsTablet,
+					sliderColumnsTablet = sliderClass.match(/columns--tablet\d/) ? sliderClass.match(/columns--tablet\d/).join().slice(-1) : 2,
+					sliderColumnsMobileExtra = sliderClass.match(/columns--mobile_extra\d/) ? sliderClass.match(/columns--mobile_extra\d/).join().slice(-1) : sliderColumnsTablet,
+					sliderColumnsMobile = sliderClass.match(/columns--mobile\d/) ? sliderClass.match(/columns--mobile\d/).join().slice(-1) : 1,
+					sliderSlidesToScroll = +(sliderClass.match(/wpr-grid-slides-to-scroll-\d/).join().slice(-1));
+
 				iGrid.slick({
 					appendDots : $scope.find( '.wpr-grid-slider-dots' ),
 					customPaging : function ( slider, i ) {
@@ -471,7 +491,59 @@
 							totalSlides = slider.slideCount;
 
 						return '<span class="wpr-grid-slider-dot"></span>';
-					}
+					},
+					slidesToShow: sliderColumnsDesktop,
+					responsive: [
+						{
+							breakpoint: 10000,
+							settings: {
+								slidesToShow: sliderColumnsWideScreen,
+								slidesToScroll: sliderSlidesToScroll > sliderColumnsWideScreen ? 1 : sliderSlidesToScroll
+							}
+						},
+						{
+							breakpoint: 2399,
+							settings: {
+								slidesToShow: sliderColumnsDesktop,
+								slidesToScroll: sliderSlidesToScroll > sliderColumnsDesktop ? 1 : sliderSlidesToScroll
+							}
+						},
+						{
+							breakpoint: 1221,
+							settings: {
+								slidesToShow: sliderColumnsLaptop,
+								slidesToScroll: sliderSlidesToScroll > sliderColumnsLaptop ? 1 : sliderSlidesToScroll
+							}
+						},
+						{
+							breakpoint: 1200,
+							settings: {
+								slidesToShow: sliderColumnsTabletExtra,
+								slidesToScroll: sliderSlidesToScroll > sliderColumnsTabletExtra ? 1 : sliderSlidesToScroll
+							}
+						},
+						{
+							breakpoint: 1024,
+							settings: {
+								slidesToShow: sliderColumnsTablet,
+								slidesToScroll: sliderSlidesToScroll > sliderColumnsTablet ? 1 : sliderSlidesToScroll
+							}
+						},
+						{
+							breakpoint: 880,
+							settings: {
+								slidesToShow: sliderColumnsMobileExtra,
+							 	slidesToScroll: sliderSlidesToScroll > sliderColumnsMobileExtra ? 1 : sliderSlidesToScroll
+							}
+						},
+						{
+							breakpoint: 768,
+							settings: {
+								slidesToShow: sliderColumnsMobile,
+								slidesToScroll: sliderSlidesToScroll > sliderColumnsMobile ? 1 : sliderSlidesToScroll
+							}
+						}
+					],
 				});
 
 				// Adjust Horizontal Pagination
@@ -484,7 +556,7 @@
 						$scope.find( '.slick-dots' ).css( 'width', dotsWrapWidth );
 					}
 
-					// on Resize
+					// on Resize // TODO: Change all resize functions to smartresize (debounce)
 					$(window).on( 'resize', function() {
 						setTimeout(function() {
 							// Calculate Width
@@ -850,22 +922,67 @@
 					mediaWidth = settings.media_width,
 					mediaDistance = settings.media_distance,
 					columns = 3,
-					columnsMobile = settings.columns_mobile,
-					columnsTablet = settings.columns_tablet,
+					columnsMobile = 1,
+					columnsMobileExtra,
+					columnsTablet = 2,
+					columnsTabletExtra,
 					columnsDesktop = settings.columns_desktop,
+					columnsLaptop,
+					columnsWideScreen,
 					gutterHr = settings.gutter_hr,
 					gutterVr = settings.gutter_vr,
 					contWidth = grid.width() + gutterHr - 0.3,
 					viewportWidth = $( 'body' ).prop( 'clientWidth' ),
 					transDuration = 400;
 
+				// Get Responsive Columns
+				var prefixClass = $scope.attr('class'),
+					prefixClass = prefixClass.split(' ');
+
+				for ( var i=0; i < prefixClass.length - 1; i++ ) {
+
+					if ( -1 !== prefixClass[i].search(/mobile\d/) ) {
+						columnsMobile = prefixClass[i].slice(-1);
+					}
+
+					if ( -1 !== prefixClass[i].search(/mobile_extra\d/) ) {
+						columnsMobileExtra = prefixClass[i].slice(-1);
+					}
+
+					if ( -1 !== prefixClass[i].search(/tablet\d/) ) {
+						columnsTablet = prefixClass[i].slice(-1);
+					}
+
+					if ( -1 !== prefixClass[i].search(/tablet_extra\d/) ) {
+						columnsTabletExtra = prefixClass[i].slice(-1);
+					}
+
+					if ( -1 !== prefixClass[i].search(/widescreen\d/) ) {
+						columnsWideScreen = prefixClass[i].slice(-1);
+					}
+
+					if ( -1 !== prefixClass[i].search(/laptop\d/) ) {
+						columnsLaptop = prefixClass[i].slice(-1);
+					}
+				}
+
 				// Mobile
 				if ( 440 >= viewportWidth ) {
 					columns = columnsMobile;
+				// Mobile Extra
+				} else if ( 768 >= viewportWidth ) {
+					columns = (columnsMobileExtra) ? columnsMobileExtra : columnsTablet;
 
 				// Tablet
-				} else if ( 768 >= viewportWidth ) {
+				} else if ( 881 >= viewportWidth ) {
 					columns = columnsTablet;
+				// Tablet Extra
+				} else if ( 1025 >= viewportWidth ) {
+					columns = (columnsTabletExtra) ? columnsTabletExtra : columnsTablet;
+
+				// Laptop
+				} else if ( 1201 >= viewportWidth ) {
+					columns = (columnsLaptop) ? columnsLaptop : columnsDesktop;
 
 				// Desktop
 				} else if ( 1920 >= viewportWidth ) {
@@ -875,7 +992,7 @@
 				} else if ( 2300 >= viewportWidth ) {
 					columns = columnsDesktop + 1;
 				} else if ( 2650 >= viewportWidth ) {
-					columns = columnsDesktop + 2;
+					columns = (columnsWideScreen) ? columnsWideScreen : columnsDesktop + 2;
 				} else if ( 3000 >= viewportWidth ) {
 					columns = columnsDesktop + 3;
 				} else {
@@ -885,6 +1002,10 @@
 				// Limit Columns for Higher Screens
 				if ( columns > 8 ) {
 					columns = 8;
+				}
+
+				if ( 'string' == typeof(columns) && -1 !== columns.indexOf('pro') ) {
+					columns = 3;
 				}
 
 				// Calculate Item Width
@@ -1225,11 +1346,14 @@
 		widgetMagazineGrid: function( $scope ) {
 			// Settings
 			var iGrid = $scope.find( '.wpr-magazine-grid-wrap' ),
-				settings = iGrid.attr( 'data-slick' );
-
+				settings = iGrid.attr( 'data-slick' ),
+				dataSlideEffect = iGrid.attr('data-slide-effect');
+console.log(dataSlideEffect)
 			// Slider
 			if ( typeof settings !== typeof undefined && settings !== false ) {
-				iGrid.slick();
+				iGrid.slick({
+					fade: 'fade' === dataSlideEffect ? true : false
+				});
 			}
 
 			// Media Hover Link
@@ -1433,7 +1557,7 @@
 			var gallery = $scope.find( '.wpr-gallery-slider' ),
 				gallerySettings = gallery.attr( 'data-slick' );
 			
-			gallery.animate({ 'opacity' : '1' }, 1000 );//tmp
+			gallery.animate({ 'opacity' : '1' }, 1000 );
 
 			if ( '[]' !== gallerySettings ) {
 				gallery.slick({
@@ -1487,7 +1611,7 @@
 				gallery = $scope.find( '.wpr-gallery-slider' ),
 				gallerySettings = gallery.attr( 'data-slick' );
 			
-			gallery.animate({ 'opacity' : '1' }, 1000 );//tmp
+			gallery.animate({ 'opacity' : '1' }, 1000 );
 
 			if ( '[]' !== gallerySettings && gallery.length ) {
 				// Get Settings
@@ -2046,6 +2170,18 @@
 			var $advancedSlider = $scope.find( '.wpr-advanced-slider' ),
 				sliderData = $advancedSlider.data('slick');
 
+			// Slider Columns
+			var sliderClass = $scope.attr('class'),
+				sliderColumnsDesktop = sliderClass.match(/wpr-adv-slider-columns-\d/) ? sliderClass.match(/wpr-adv-slider-columns-\d/).join().slice(-1) : 2,
+				sliderColumnsWideScreen = sliderClass.match(/columns--widescreen\d/) ? sliderClass.match(/columns--widescreen\d/).join().slice(-1) : sliderColumnsDesktop,
+				sliderColumnsLaptop = sliderClass.match(/columns--laptop\d/) ? sliderClass.match(/columns--laptop\d/).join().slice(-1) : sliderColumnsDesktop,
+				sliderColumnsTabletExtra = sliderClass.match(/columns--tablet_extra\d/) ? sliderClass.match(/columns--tablet_extra\d/).join().slice(-1) : sliderColumnsTablet,
+				sliderColumnsTablet = sliderClass.match(/columns--tablet\d/) ? sliderClass.match(/columns--tablet\d/).join().slice(-1) : 2,
+				sliderColumnsMobileExtra = sliderClass.match(/columns--mobile_extra\d/) ? sliderClass.match(/columns--mobile_extra\d/).join().slice(-1) : sliderColumnsTablet,
+				sliderColumnsMobile = sliderClass.match(/columns--mobile\d/) ? sliderClass.match(/columns--mobile\d/).join().slice(-1) : 1,
+				sliderSlidesToScroll = +(sliderClass.match(/wpr-adv-slides-to-scroll-\d/).join().slice(-1)),
+				dataSlideEffect = $advancedSlider.attr('data-slide-effect');
+
 			$advancedSlider.slick({
 				appendArrows :  $scope.find('.wpr-slider-controls'),
 				appendDots :  $scope.find('.wpr-slider-dots'),
@@ -2053,7 +2189,66 @@
 					var slideNumber = (i + 1),
 						totalSlides = slider.slideCount;
 					return '<span class="wpr-slider-dot"></span>';
-				}
+				},
+				slidesToShow: sliderColumnsDesktop,
+				responsive: [
+					{
+						breakpoint: 10000,
+						settings: {
+							slidesToShow: sliderColumnsWideScreen,
+							slidesToScroll: sliderSlidesToScroll > sliderColumnsWideScreen ? 1 : sliderSlidesToScroll,
+							fade: (1 == sliderColumnsWideScreen && 'fade' === dataSlideEffect) ? true : false
+						}
+					},
+					{
+						breakpoint: 2399,
+						settings: {
+							slidesToShow: sliderColumnsDesktop,
+							slidesToScroll: sliderSlidesToScroll > sliderColumnsDesktop ? 1 : sliderSlidesToScroll,
+							fade: (1 == sliderColumnsDesktop && 'fade' === dataSlideEffect) ? true : false
+						}
+					},
+					{
+						breakpoint: 1221,
+						settings: {
+							slidesToShow: sliderColumnsLaptop,
+							slidesToScroll: sliderSlidesToScroll > sliderColumnsLaptop ? 1 : sliderSlidesToScroll,
+							fade: (1 == sliderColumnsLaptop && 'fade' === dataSlideEffect) ? true : false
+						}
+					},
+					{
+						breakpoint: 1200,
+						settings: {
+							slidesToShow: sliderColumnsTabletExtra,
+							slidesToScroll: sliderSlidesToScroll > sliderColumnsTabletExtra ? 1 : sliderSlidesToScroll,
+							fade: (1 == sliderColumnsTabletExtra && 'fade' === dataSlideEffect) ? true : false
+						}
+					},
+					{
+						breakpoint: 1024,
+						settings: {
+							slidesToShow: sliderColumnsTablet,
+							slidesToScroll: sliderSlidesToScroll > sliderColumnsTablet ? 1 : sliderSlidesToScroll,
+							fade: (1 == sliderColumnsTablet && 'fade' === dataSlideEffect) ? true : false
+						}
+					},
+					{
+						breakpoint: 880,
+						settings: {
+							slidesToShow: sliderColumnsMobileExtra,
+						 	slidesToScroll: sliderSlidesToScroll > sliderColumnsMobileExtra ? 1 : sliderSlidesToScroll,
+							fade: (1 == sliderColumnsMobileExtra && 'fade' === dataSlideEffect) ? true : false
+						}
+					},
+					{
+						breakpoint: 768,
+						settings: {
+							slidesToShow: sliderColumnsMobile,
+							slidesToScroll: sliderSlidesToScroll > sliderColumnsMobile ? 1 : sliderSlidesToScroll,
+							fade: (1 == sliderColumnsMobile && 'fade' === dataSlideEffect) ? true : false
+						}
+					}
+				],
 			});
 
 			function sliderVideoSize(){
@@ -2103,7 +2298,7 @@
 						videoAutoplay = $(this).attr('data-video-autoplay');
 					
 					if( $(this).find( '.wpr-slider-video' ).length !== 1 && videoAutoplay === 'yes' ) {
-						if ( sliderData.slidesToShow === 1 ) {
+						if ( sliderColumnsDesktop == 1 ) {
 							$(this).find('.wpr-cv-inner').prepend('<div class="wpr-slider-video"><iframe src="'+ videoSrc +'" width="100%" height="100%"  frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>');  
 						} else {
 							$(this).find('.wpr-cv-container').prepend('<div class="wpr-slider-video"><iframe src="'+ videoSrc +'" width="100%" height="100%"  frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>');  
@@ -2115,20 +2310,20 @@
 
 			autoplayVideo();
 
-			function SlideAnimationOff() {
-				if ( sliderData.slidesToShow === 1 ) {
+			function slideAnimationOff() {
+				if ( sliderColumnsDesktop == 1 ) {
 					$advancedSlider.find('.wpr-slider-item').not('.slick-active').find('.wpr-slider-animation').removeClass( 'wpr-animation-enter' );
 				}
 			}
 
-			function SlideAnimationOn() {
+			function slideAnimationOn() {
 				$advancedSlider.find('.slick-active').find('.wpr-slider-content').fadeIn(0);
-				if ( sliderData.slidesToShow === 1 ) {
+				if ( sliderColumnsDesktop == 1 ) {
 					$advancedSlider.find('.slick-active').find('.wpr-slider-animation').addClass( 'wpr-animation-enter' );
 				}
 			}
 			
-			SlideAnimationOn();
+			slideAnimationOn();
 
 			$advancedSlider.find('.wpr-slider-video-btn').on( 'click', function() {
 
@@ -2147,10 +2342,10 @@
 				beforeChange: function() {
 					$advancedSlider.find('.wpr-slider-item').not('.slick-active').find('.wpr-slider-video').remove();
 					$advancedSlider.find('.wpr-animation-enter').find('.wpr-slider-content').fadeOut(300);
-					SlideAnimationOff();
+					slideAnimationOff();
 				},
 				afterChange: function( event, slick, currentSlide ) {
-					SlideAnimationOn();
+					slideAnimationOn();
 					autoplayVideo();
 				}
 			});
@@ -2181,27 +2376,96 @@
 
 		widgetTestimonialCarousel: function( $scope ) {
 			var testimonialCarousel = $scope.find( '.wpr-testimonial-carousel' );
+			// Slider Columns
+			var sliderClass = $scope.attr('class'),
+				sliderColumnsDesktop = sliderClass.match(/wpr-testimonial-slider-columns-\d/) ? sliderClass.match(/wpr-testimonial-slider-columns-\d/).join().slice(-1) : 2,
+				sliderColumnsWideScreen = sliderClass.match(/columns--widescreen\d/) ? sliderClass.match(/columns--widescreen\d/).join().slice(-1) : sliderColumnsDesktop,
+				sliderColumnsLaptop = sliderClass.match(/columns--laptop\d/) ? sliderClass.match(/columns--laptop\d/).join().slice(-1) : sliderColumnsDesktop,
+				sliderColumnsTabletExtra = sliderClass.match(/columns--tablet_extra\d/) ? sliderClass.match(/columns--tablet_extra\d/).join().slice(-1) : sliderColumnsTablet,
+				sliderColumnsTablet = sliderClass.match(/columns--tablet\d/) ? sliderClass.match(/columns--tablet\d/).join().slice(-1) : 2,
+				sliderColumnsMobileExtra = sliderClass.match(/columns--mobile_extra\d/) ? sliderClass.match(/columns--mobile_extra\d/).join().slice(-1) : sliderColumnsTablet,
+				sliderColumnsMobile = sliderClass.match(/columns--mobile\d/) ? sliderClass.match(/columns--mobile\d/).join().slice(-1) : 1,
+				sliderSlidesToScroll = +(sliderClass.match(/wpr-adv-slides-to-scroll-\d/).join().slice(-1)),
+				dataSlideEffect = testimonialCarousel.attr('data-slide-effect');
 
 			testimonialCarousel.slick({
-				appendArrows : $scope.find('.wpr-testimonial-controls'),
-				appendDots : $scope.find('.wpr-testimonial-dots'),
-				customPaging : function (slider, i) {
+				appendArrows: $scope.find('.wpr-testimonial-controls'),
+				appendDots: $scope.find('.wpr-testimonial-dots'),
+				customPaging: function (slider, i) {
 					var slideNumber = (i + 1),
 						totalSlides = slider.slideCount;
 
 					return '<span class="wpr-testimonial-dot"></span>';
-				}
+				},
+				slidesToShow: sliderColumnsDesktop,
+				responsive: [
+					{
+						breakpoint: 10000,
+						settings: {
+							slidesToShow: sliderColumnsWideScreen,
+							slidesToScroll: sliderSlidesToScroll > sliderColumnsWideScreen ? 1 : sliderSlidesToScroll,
+							fade: (1 == sliderColumnsWideScreen && 'fade' === dataSlideEffect) ? true : false
+						}
+					},
+					{
+						breakpoint: 2399,
+						settings: {
+							slidesToShow: sliderColumnsDesktop,
+							slidesToScroll: sliderSlidesToScroll > sliderColumnsDesktop ? 1 : sliderSlidesToScroll,
+							fade: (1 == sliderColumnsDesktop && 'fade' === dataSlideEffect) ? true : false
+						}
+					},
+					{
+						breakpoint: 1221,
+						settings: {
+							slidesToShow: sliderColumnsLaptop,
+							slidesToScroll: sliderSlidesToScroll > sliderColumnsLaptop ? 1 : sliderSlidesToScroll,
+							fade: (1 == sliderColumnsLaptop && 'fade' === dataSlideEffect) ? true : false
+						}
+					},
+					{
+						breakpoint: 1200,
+						settings: {
+							slidesToShow: sliderColumnsTabletExtra,
+							slidesToScroll: sliderSlidesToScroll > sliderColumnsTabletExtra ? 1 : sliderSlidesToScroll,
+							fade: (1 == sliderColumnsTabletExtra && 'fade' === dataSlideEffect) ? true : false
+						}
+					},
+					{
+						breakpoint: 1024,
+						settings: {
+							slidesToShow: sliderColumnsTablet,
+							slidesToScroll: sliderSlidesToScroll > sliderColumnsTablet ? 1 : sliderSlidesToScroll,
+							fade: (1 == sliderColumnsTablet && 'fade' === dataSlideEffect) ? true : false
+						}
+					},
+					{
+						breakpoint: 880,
+						settings: {
+							slidesToShow: sliderColumnsMobileExtra,
+						 	slidesToScroll: sliderSlidesToScroll > sliderColumnsMobileExtra ? 1 : sliderSlidesToScroll,
+							fade: (1 == sliderColumnsMobileExtra && 'fade' === dataSlideEffect) ? true : false
+						}
+					},
+					{
+						breakpoint: 768,
+						settings: {
+							slidesToShow: sliderColumnsMobile,
+							slidesToScroll: sliderSlidesToScroll > sliderColumnsMobile ? 1 : sliderSlidesToScroll,
+							fade: (1 == sliderColumnsMobile && 'fade' === dataSlideEffect) ? true : false
+						}
+					}
+				],
 			});
 
-			// Show Arrows on Hover
+			// Show Arrows On Hover
 			if ( $scope.hasClass( 'wpr-testimonial-nav-fade' ) ) {
 				$scope.on( 'mouseover', function() {
 					$scope.closest( 'section' ).find( '.wpr-testimonial-arrow' ).css({
 						'opacity' : 1,
 					});
 				} );
-
-				$scope.closest( 'section' ).on( 'mouseleave', function() {
+				$scope.closest( 'section' ).on( 'mouseout', function() {
 					$scope.find( '.wpr-testimonial-arrow' ).css({
 						'opacity' : 0,
 					});
@@ -2583,7 +2847,6 @@
 				tooltipTrigger = hotspotsOptions.tooltipTrigger;
 
 			if ( 'click' === tooltipTrigger ) {
-
 				$hotspotItem.on( 'click', function() {
 					if ( $(this).hasClass('wpr-tooltip-active') ) {
 						$(this).removeClass('wpr-tooltip-active');
@@ -2599,15 +2862,12 @@
 				});
 		   
 			} else if ( 'hover' === tooltipTrigger ) {
-
 				$hotspotItem.hover(function () {
 					$(this).toggleClass('wpr-tooltip-active');
 				});
 
 			} else {
-
 				$hotspotItem.addClass('wpr-tooltip-active');
-				
 			}
 
 		}, // End widgetImageHotspots
@@ -2653,13 +2913,82 @@
 		}, // End widgetFlipBox
 
 		widgetContentTicker: function( $scope ) {
-			
 			var $contentTickerSlider = $scope.find( '.wpr-ticker-slider' ),
 				$contentTickerMarquee = $scope.find( '.wpr-ticker-marquee' ),
 				marqueeData = $contentTickerMarquee.data('options');
-
+			// Slider Columns
+			var sliderClass = $scope.attr('class'),
+				sliderColumnsDesktop = sliderClass.match(/wpr-ticker-slider-columns-\d/) ? sliderClass.match(/wpr-ticker-slider-columns-\d/).join().slice(-1) : 2,
+				sliderColumnsWideScreen = sliderClass.match(/columns--widescreen\d/) ? sliderClass.match(/columns--widescreen\d/).join().slice(-1) : sliderColumnsDesktop,
+				sliderColumnsLaptop = sliderClass.match(/columns--laptop\d/) ? sliderClass.match(/columns--laptop\d/).join().slice(-1) : sliderColumnsDesktop,
+				sliderColumnsTabletExtra = sliderClass.match(/columns--tablet_extra\d/) ? sliderClass.match(/columns--tablet_extra\d/).join().slice(-1) : sliderColumnsTablet,
+				sliderColumnsTablet = sliderClass.match(/columns--tablet\d/) ? sliderClass.match(/columns--tablet\d/).join().slice(-1) : 2,
+				sliderColumnsMobileExtra = sliderClass.match(/columns--mobile_extra\d/) ? sliderClass.match(/columns--mobile_extra\d/).join().slice(-1) : sliderColumnsTablet,
+				sliderColumnsMobile = sliderClass.match(/columns--mobile\d/) ? sliderClass.match(/columns--mobile\d/).join().slice(-1) : 1,
+				dataSlideEffect = $contentTickerSlider.attr('data-slide-effect'),
+				sliderSlidesToScroll = 'hr-slide' === dataSlideEffect && sliderClass.match(/wpr-ticker-slides-to-scroll-\d/) ? +(sliderClass.match(/wpr-ticker-slides-to-scroll-\d/).join().slice(-1)) : 1;
+console.log(sliderColumnsDesktop)
 			$contentTickerSlider.slick({
-				appendArrows :  $scope.find('.wpr-ticker-slider-controls'),
+				appendArrows : $scope.find('.wpr-ticker-slider-controls'),
+				slidesToShow: sliderColumnsDesktop,
+				responsive: [
+					{
+						breakpoint: 10000,
+						settings: {
+							slidesToShow: ('typing' === dataSlideEffect || 'fade' === dataSlideEffect ) ? 1 : sliderColumnsWideScreen,
+							slidesToScroll: sliderSlidesToScroll > sliderColumnsWideScreen ? 1 : sliderSlidesToScroll,
+							fade: ('typing' === dataSlideEffect || 'fade' === dataSlideEffect) ? true : false
+						}
+					},
+					{
+						breakpoint: 2399,
+						settings: {
+							slidesToShow: ('typing' === dataSlideEffect || 'fade' === dataSlideEffect ) ? 1 : sliderColumnsDesktop,
+							slidesToScroll: sliderSlidesToScroll > sliderColumnsDesktop ? 1 : sliderSlidesToScroll,
+							fade: ('typing' === dataSlideEffect || 'fade' === dataSlideEffect) ? true : false
+						}
+					},
+					{
+						breakpoint: 1221,
+						settings: {
+							slidesToShow: ('typing' === dataSlideEffect || 'fade' === dataSlideEffect ) ? 1 : sliderColumnsLaptop,
+							slidesToScroll: sliderSlidesToScroll > sliderColumnsLaptop ? 1 : sliderSlidesToScroll,
+							fade: ('typing' === dataSlideEffect || 'fade' === dataSlideEffect) ? true : false
+						}
+					},
+					{
+						breakpoint: 1200,
+						settings: {
+							slidesToShow: ('typing' === dataSlideEffect || 'fade' === dataSlideEffect ) ? 1 : sliderColumnsTabletExtra,
+							slidesToScroll: sliderSlidesToScroll > sliderColumnsTabletExtra ? 1 : sliderSlidesToScroll,
+							fade: ('typing' === dataSlideEffect || 'fade' === dataSlideEffect) ? true : false
+						}
+					},
+					{
+						breakpoint: 1024,
+						settings: {
+							slidesToShow: ('typing' === dataSlideEffect || 'fade' === dataSlideEffect ) ? 1 : sliderColumnsTablet,
+							slidesToScroll: sliderSlidesToScroll > sliderColumnsTablet ? 1 : sliderSlidesToScroll,
+							fade: ('typing' === dataSlideEffect || 'fade' === dataSlideEffect) ? true : false
+						}
+					},
+					{
+						breakpoint: 880,
+						settings: {
+							slidesToShow: ('typing' === dataSlideEffect || 'fade' === dataSlideEffect ) ? 1 : sliderColumnsMobileExtra,
+						 	slidesToScroll: sliderSlidesToScroll > sliderColumnsMobileExtra ? 1 : sliderSlidesToScroll,
+							fade: ('typing' === dataSlideEffect || 'fade' === dataSlideEffect) ? true : false
+						}
+					},
+					{
+						breakpoint: 768,
+						settings: {
+							slidesToShow: ('typing' === dataSlideEffect || 'fade' === dataSlideEffect ) ? 1 : sliderColumnsMobile,
+							slidesToScroll: sliderSlidesToScroll > sliderColumnsMobile ? 1 : sliderSlidesToScroll,
+							fade: ('typing' === dataSlideEffect || 'fade' === dataSlideEffect) ? true : false
+						}
+					}
+				],
 			});
 
 			$contentTickerMarquee.marquee(marqueeData);
@@ -2957,3 +3286,31 @@
 	$( window ).on( 'elementor/frontend/init', WprElements.init );
 
 }( jQuery, window.elementorFrontend ) );
+
+
+// Resize Function - Debounce
+(function($,sr){
+
+  var debounce = function (func, threshold, execAsap) {
+      var timeout;
+
+      return function debounced () {
+          var obj = this, args = arguments;
+          function delayed () {
+              if (!execAsap)
+                  func.apply(obj, args);
+              timeout = null;
+          };
+
+          if (timeout)
+              clearTimeout(timeout);
+          else if (execAsap)
+              func.apply(obj, args);
+
+          timeout = setTimeout(delayed, threshold || 100);
+      };
+  }
+  // smartresize 
+  jQuery.fn[sr] = function(fn){  return fn ? this.bind('resize', debounce(fn)) : this.trigger(sr); };
+
+})(jQuery,'smartresize');

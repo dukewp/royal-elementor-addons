@@ -479,7 +479,73 @@ div[class*="wpr-main-menu-align-"] .wpr-nav-menu-vertical .wpr-nav-menu > li > .
 	text-align: right;
 }
 
-@media screen and ( max-width: 1025px ) {
+@media screen and ( min-width: 2400px ) {
+	.wpr-main-menu-align--widescreenleft .wpr-nav-menu-vertical .wpr-menu-item .wpr-sub-icon,
+	.wpr-main-menu-align--widescreencenter .wpr-nav-menu-vertical .wpr-menu-item .wpr-sub-icon {
+		right: 0;
+	}
+
+	.wpr-main-menu-align--widescreenleft .wpr-nav-menu-horizontal .wpr-nav-menu,
+	.wpr-main-menu-align--widescreenleft .wpr-nav-menu-vertical .wpr-menu-item {
+		text-align: left;
+	}
+
+	.wpr-main-menu-align--widescreencenter .wpr-nav-menu-horizontal .wpr-nav-menu,
+	.wpr-main-menu-align--widescreencenter .wpr-nav-menu-vertical .wpr-menu-item {
+		text-align: center;
+	}
+
+	.wpr-main-menu-align--widescreenright .wpr-nav-menu-horizontal .wpr-nav-menu,
+	.wpr-main-menu-align--widescreenright .wpr-nav-menu-vertical .wpr-menu-item {
+		text-align: right;
+	}	
+}
+
+@media screen and ( max-width: 1221px ) {
+	.wpr-main-menu-align--laptopleft .wpr-nav-menu-vertical .wpr-menu-item .wpr-sub-icon,
+	.wpr-main-menu-align--laptopcenter .wpr-nav-menu-vertical .wpr-menu-item .wpr-sub-icon {
+		right: 0;
+	}
+
+	.wpr-main-menu-align--laptopleft .wpr-nav-menu-horizontal .wpr-nav-menu,
+	.wpr-main-menu-align--laptopleft .wpr-nav-menu-vertical .wpr-menu-item {
+		text-align: left;
+	}
+
+	.wpr-main-menu-align--laptopcenter .wpr-nav-menu-horizontal .wpr-nav-menu,
+	.wpr-main-menu-align--laptopcenter .wpr-nav-menu-vertical .wpr-menu-item {
+		text-align: center;
+	}
+
+	.wpr-main-menu-align--laptopright .wpr-nav-menu-horizontal .wpr-nav-menu,
+	.wpr-main-menu-align--laptopright .wpr-nav-menu-vertical .wpr-menu-item {
+		text-align: right;
+	}	
+}
+
+@media screen and ( max-width: 1200px ) {
+	.wpr-main-menu-align--tablet_extraleft .wpr-nav-menu-vertical .wpr-menu-item .wpr-sub-icon,
+	.wpr-main-menu-align--tablet_extracenter .wpr-nav-menu-vertical .wpr-menu-item .wpr-sub-icon {
+		right: 0;
+	}
+
+	.wpr-main-menu-align--tablet_extraleft .wpr-nav-menu-horizontal .wpr-nav-menu,
+	.wpr-main-menu-align--tablet_extraleft .wpr-nav-menu-vertical .wpr-menu-item {
+		text-align: left;
+	}
+
+	.wpr-main-menu-align--tablet_extracenter .wpr-nav-menu-horizontal .wpr-nav-menu,
+	.wpr-main-menu-align--tablet_extracenter .wpr-nav-menu-vertical .wpr-menu-item {
+		text-align: center;
+	}
+
+	.wpr-main-menu-align--tablet_extraright .wpr-nav-menu-horizontal .wpr-nav-menu,
+	.wpr-main-menu-align--tablet_extraright .wpr-nav-menu-vertical .wpr-menu-item {
+		text-align: right;
+	}	
+}
+
+@media screen and ( max-width: 1024px ) {
 	.wpr-main-menu-align--tabletleft .wpr-nav-menu-vertical .wpr-menu-item .wpr-sub-icon,
 	.wpr-main-menu-align--tabletcenter .wpr-nav-menu-vertical .wpr-menu-item .wpr-sub-icon {
 		right: 0;
@@ -497,6 +563,28 @@ div[class*="wpr-main-menu-align-"] .wpr-nav-menu-vertical .wpr-nav-menu > li > .
 
 	.wpr-main-menu-align--tabletright .wpr-nav-menu-horizontal .wpr-nav-menu,
 	.wpr-main-menu-align--tabletright .wpr-nav-menu-vertical .wpr-menu-item {
+		text-align: right;
+	}	
+}
+
+@media screen and ( max-width: 880px ) {
+	.wpr-main-menu-align--mobile_extraleft .wpr-nav-menu-vertical .wpr-menu-item .wpr-sub-icon,
+	.wpr-main-menu-align--mobile_extracenter .wpr-nav-menu-vertical .wpr-menu-item .wpr-sub-icon {
+		right: 0;
+	}
+
+	.wpr-main-menu-align--mobile_extraleft .wpr-nav-menu-horizontal .wpr-nav-menu,
+	.wpr-main-menu-align--mobile_extraleft .wpr-nav-menu-vertical .wpr-menu-item {
+		text-align: left;
+	}
+
+	.wpr-main-menu-align--mobile_extracenter .wpr-nav-menu-horizontal .wpr-nav-menu,
+	.wpr-main-menu-align--mobile_extracenter .wpr-nav-menu-vertical .wpr-menu-item {
+		text-align: center;
+	}
+
+	.wpr-main-menu-align--mobile_extraright .wpr-nav-menu-horizontal .wpr-nav-menu,
+	.wpr-main-menu-align--mobile_extraright .wpr-nav-menu-vertical .wpr-menu-item {
 		text-align: right;
 	}	
 }
@@ -5741,6 +5829,8 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 .wpr-testimonial-dots li {
 	float: left;
+	width: auto !important;
+	margin: 0 !important;
 }
 
 .wpr-testimonial-dot {
@@ -9438,6 +9528,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-tabs-position-above > .elementor-widget-container > .wpr-tabs > .wpr-tabs-wrap > .wpr-tab:before {	
 	border-left-color: transparent;
 	border-right-color: transparent;
+	border-top-color: white;
 	border-top-style: solid;
 	border-left-style: solid;
 	border-right-style: solid;
