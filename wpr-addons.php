@@ -7,7 +7,9 @@
  * Version: 1.1.1
  * License: GPLv3
  * Author URI: https://wp-royal.com/
- *
+ * Elementor tested up to: 3.4.4
+ * Elementor Pro tested up to: 3.4.1
+ * 
  * Text Domain: wpr-addons
 */
 
@@ -38,6 +40,7 @@ function wpr_addons_load_plugin() {
 		return;
 	}
 
+	// $elementor_version_required = '1.0.6';
 	$elementor_version_required = '1.0.6';
 	if ( ! version_compare( ELEMENTOR_VERSION, $elementor_version_required, '>=' ) ) {
 		add_action( 'admin_notices', 'wpr_addons_fail_load_out_of_date' );
