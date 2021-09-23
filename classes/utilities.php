@@ -57,7 +57,6 @@ class Utilities {
 
 		foreach ( $modules as $title => $data ) {
 			$slug = $data[0];
-
 			if ( 'on' !== get_option('wpr-element-'. $slug, 'on') ) {
 				unset($modules[$title]);
 			}
@@ -73,7 +72,7 @@ class Utilities {
 		// Taxonomies
 		if ( 'tax' === $query ) {
 			$custom_types = get_taxonomies( [ 'show_in_nav_menus' => true ], 'objects' );
-
+		
 		// Post Types
 		} else {
 			$custom_types = get_post_types( [ 'show_in_nav_menus' => true ], 'objects' );
@@ -122,7 +121,7 @@ class Utilities {
 		$r = [];
 
 		$editable_roles = array_reverse( get_editable_roles() );
-
+		
 		$r['guest'] = esc_html__( 'Guest', 'wpr-addons' );
 
 		foreach ( $editable_roles as $role => $details ) {

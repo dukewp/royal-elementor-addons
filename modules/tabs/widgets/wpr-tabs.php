@@ -985,8 +985,8 @@ class Wpr_Tabs extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} '. $css_selector['control_list'] .'.wpr-tab-active' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}}.wpr-tabs-position-above.wpr-tabs-triangle-type-outer '. $css_selector['control_list'] .':before' => 'border-top-color: {{VALUE}}',
-					'{{WRAPPER}}.wpr-tabs-position-right.wpr-tabs-triangle-type-outer '. $css_selector['control_list'] .':before' => 'border-right-color: {{VALUE}}',
-					'{{WRAPPER}}.wpr-tabs-position-left.wpr-tabs-triangle-type-outer '. $css_selector['control_list'] .':before' => 'border-right-color: {{VALUE}}',
+					// '{{WRAPPER}}.wpr-tabs-position-right.wpr-tabs-triangle-type-outer '. $css_selector['control_list'] .':before' => 'border-right-color: {{VALUE}}',
+					// '{{WRAPPER}}.wpr-tabs-position-left.wpr-tabs-triangle-type-outer '. $css_selector['control_list'] .':before' => 'border-right-color: {{VALUE}}',
 				],
 			]
 		);
@@ -1173,62 +1173,7 @@ class Wpr_Tabs extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'tab_triangle',
-			[
-				'label' => esc_html__( 'Triangle', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,				
-				'default' => 'yes',
-				'prefix_class' => 'wpr-tabs-triangle-',
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-            'tab_triangle_type',
-            [
-                'label' => esc_html__( 'Triangle Points to', 'wpr-addons' ),
-                'type' => Controls_Manager::SELECT,
-                'default' => 'outer',
-                'options' => [
-                    'inner' => esc_html__( 'Tab', 'wpr-addons' ),
-                    'outer' => esc_html__( 'Content', 'wpr-addons' ),
-                ],
-				'prefix_class' => 'wpr-tabs-triangle-type-',
-				'render_type' => 'template',
-				'condition' => [
-					'tab_triangle' => 'yes',
-				],
-            ]
-        );
-
-		$this->add_responsive_control(
-			'tab_triangle_size',
-			[
-				'type' => Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Size', 'wpr-addons' ),
-				'size_units' => [ 'px' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 30,
-					]
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 7,
-				],
-				'selectors' => [
-					'{{WRAPPER}} '. $css_selector['control_list'] .':before' => 'border-width: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-tabs-position-above.wpr-tabs-triangle-type-outer '. $css_selector['control_list'] .':before' => 'bottom: -{{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-tabs-position-right.wpr-tabs-triangle-type-outer '. $css_selector['control_list'] .':before' => 'left: -{{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-tabs-position-left.wpr-tabs-triangle-type-outer '. $css_selector['control_list'] .':before' => 'right: -{{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'tab_triangle' => 'yes',
-				],
-			]
-		);
+		
 
 		$this->end_controls_section(); // End Controls Section
 
@@ -1391,6 +1336,73 @@ class Wpr_Tabs extends Widget_Base {
 		);
 
 		$this->end_controls_section(); // End Controls Section
+
+		$this->start_controls_section(
+			'section_style_triangle',
+			[
+				'label' => esc_html__( 'Triangle', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'tab_triangle',
+			[
+				'label' => esc_html__( 'Triangle', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,				
+				'default' => 'yes',
+				'prefix_class' => 'wpr-tabs-triangle-',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+            'tab_triangle_type',
+            [
+                'label' => esc_html__( 'Triangle Points to', 'wpr-addons' ),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'outer',
+                'options' => [
+                    'inner' => esc_html__( 'Tab', 'wpr-addons' ),
+                    'outer' => esc_html__( 'Content', 'wpr-addons' ),
+                ],
+				'prefix_class' => 'wpr-tabs-triangle-type-',
+				'render_type' => 'template',
+				'condition' => [
+					'tab_triangle' => 'yes',
+				],
+            ]
+        );
+
+		$this->add_responsive_control(
+			'tab_triangle_size',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Size', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 30,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 7,
+				],
+				'selectors' => [
+					'{{WRAPPER}} '. $css_selector['control_list'] .':before' => 'border-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-tabs-position-above.wpr-tabs-triangle-type-outer '. $css_selector['control_list'] .':before' => 'bottom: -{{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-tabs-position-right.wpr-tabs-triangle-type-outer '. $css_selector['control_list'] .':before' => 'left: -{{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-tabs-position-left.wpr-tabs-triangle-type-outer '. $css_selector['control_list'] .':before' => 'right: -{{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'tab_triangle' => 'yes',
+				],
+			]
+		);
+
+		$this->end_controls_section();
 
 	}
 
