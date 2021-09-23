@@ -758,7 +758,6 @@ class Wpr_Media_Grid extends Widget_Base {
 				'mobile_default' => 1,
 				'separator' => 'before',
 				'condition' => [
-					'layout_slider_amount!' => '1',
 					'layout_select' => 'slider',
 				],
 			]

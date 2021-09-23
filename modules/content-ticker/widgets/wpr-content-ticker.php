@@ -782,7 +782,6 @@ class Wpr_Content_Ticker extends Widget_Base {
 				'prefix_class' => 'wpr-ticker-slides-to-scroll-',
 				'render_type' => 'template',
 				'condition' => [
-					'slider_amount!' => 1,
 					'slider_effect' => 'hr-slide',
 					'type_select' => 'slider',
 				],
