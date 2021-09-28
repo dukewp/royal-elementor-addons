@@ -47,26 +47,21 @@ jQuery(document).ready(function( $ ) {
 	function renderUserTemplate( type, title, slug, id ) {
 		var html = '';
 
-		html += '<div class="wpr-'+ type +' template-grid-item">';
-			html += '<div class="wpr-screenshot">';
-				html += '<img src="https://wp-royal.com/test/elementor/images/custom.png">';
+		html += '<li>';
+			html += '<div class="wpr-title">'+ title +'</div>';
+			html += '<div class="wpr-action-buttons">';
+				html += '<span class="wpr-template-conditions button-primary" data-slug="'+ slug +'">Conditions</span>';
+				html += '<a href="post.php?post='+ id +'&action=elementor" class="wpr-edit button-primary">Edit</a>';
+				html += '<span class="wpr-delete button-primary" data-slug="'+ slug +'">Delete</span>';
 			html += '</div>';
-			html += '<footer>';
-				html += '<div class="wpr-title">'+ title +'</div>';
-				html += '<div class="wpr-action-buttons">';
-					html += '<span class="button wpr-activate" data-slug="'+ slug +'">Activate</span>';
-					html += '<a href="post.php?post='+ id +'&action=elementor" class="wpr-edit button">Edit</a>';
-					html += '<span class="wpr-reset button" data-slug="'+ slug +'">Delete</span>';
-				html += '</div>';
-			html += '</footer>';
-		html += '</div>';
+		html += '</li>';
 
 		// Render
-		$( '.template-grid-item.wpr-'+ getActiveFilter() ).first().before( html );
+		$( '.wpr-my-templates-list.wpr-'+ getActiveFilter() ).prepend( html );
 
 		// Run Functions
-		activateTemplate();
-		resetTemplate();
+		changeTemplateConditions();
+		deleteTemplate();
 	}
 
 	/*
@@ -157,7 +152,7 @@ jQuery(document).ready(function( $ ) {
 			// Buttons
 			var importButton = $(this),
 				editButton 	 = importButton.parent().find('.wpr-edit'),
-				resetButton  = importButton.parent().find('.wpr-reset');
+				resetButton  = importButton.parent().find('.wpr-delete');
 
 			$('.wrap').children('h1').text('Importing Template, Please be patient...');	
 			
@@ -172,12 +167,12 @@ jQuery(document).ready(function( $ ) {
 				$('.wrap').children('h1').text('Howdy Nick! Template has been successfully imported :)');
 
 				// Change Buttons
-				importButton.removeClass('wpr-import').addClass('wpr-activate').text('Activate').unbind('click');
+				importButton.removeClass('wpr-import').addClass('wpr-template-conditions').text('Activate').unbind('click');
 				editButton.removeClass('hidden');
 				resetButton.removeClass('hidden');
 
-				// Run Activator
-				activateTemplate();
+				// Open Conditions
+				changeTemplateConditions();
 
 				// Edit Template Link
 				response = response.split(';');
@@ -191,52 +186,39 @@ jQuery(document).ready(function( $ ) {
 	/*
 	** Reset Template -------------------------
 	*/
-	function resetTemplate() {
-		$( '.wpr-reset' ).on( 'click', function() {
+	function deleteTemplate() {
+		$( '.wpr-delete' ).on( 'click', function() {
 			// Buttons
-			var resetButton  = $(this),
-				importButton = resetButton.parent().find('.wpr-activate'),
-				editButton 	 = resetButton.parent().find('.wpr-edit');
+			var deleteButton = $(this);
 
 			// Get Template Library
 			var library = 'my-templates' === getActiveFilter() ? 'elementor_library' : 'wpr_templates';
 
 			// Get Template Slug
-			var slug = resetButton.attr('data-slug');
+			var slug = deleteButton.attr('data-slug');
 
 			// AJAX Data
 			var data = {
-				action: 'wpr_reset_template',
+				action: 'wpr_delete_template',
 				template_slug: slug,
 				template_library: library,
 			};
 
-			// Update via AJAX
+			// Remove via AJAX
 			$.post(ajaxurl, data, function(response) {
-				// Change Buttons
-				importButton.removeClass('wpr-activate').addClass('wpr-import').text('Import').unbind('click');
-				editButton.addClass( 'hidden' );
-				resetButton.addClass( 'hidden' );
-
-				// Run Importer
-				importTemplate();
-
-				if ( slug.indexOf( 'user-' ) === 0 || resetButton.closest('ul').hasClass('wpr-my-templates-list') ) {
-					resetButton.closest('.template-grid-item').remove();
-					resetButton.closest('li').remove();
-				}
+				deleteButton.closest('li').remove();
 			});
 		});
 	}
 
-	resetTemplate();
+	deleteTemplate();
 
 	/*
 	** Condition Popup -------------------------
 	*/
 	// Open Popup
-	function activateTemplate() {
-		$( '.wpr-activate' ).on( 'click', function() {
+	function changeTemplateConditions() {
+		$( '.wpr-template-conditions' ).on( 'click', function() {
 			var template = $(this).attr('data-slug');
 
 			// Set Template Slug
@@ -247,7 +229,7 @@ jQuery(document).ready(function( $ ) {
 		});		
 	}
 
-	activateTemplate();
+	changeTemplateConditions();
 
 	// Close Popup
 	conditionPupup.find('.close-popup').on( 'click', function() {
@@ -458,7 +440,7 @@ jQuery(document).ready(function( $ ) {
 		var data = [];
 
 		// Get Templates
-		$('.wpr-activate').each(function() {
+		$('.wpr-template-conditions').each(function() {
 			data.push($(this).attr('data-slug'))
 		});
 
@@ -529,7 +511,7 @@ jQuery(document).ready(function( $ ) {
 
 			// Remove Duplicates
 			conditions = removeConditions( conditions, path );
-		
+
 			// Add New Values
 			conditions[template].push( path );
 		});
@@ -634,7 +616,7 @@ jQuery(document).ready(function( $ ) {
 
 
 //tmp
-// $('.nav-tab-wrapper').after( '<p>'+ $('.nav-tab-wrapper').next('input').val() +'</p>' );
+$('.nav-tab-wrapper').after( '<p>'+ $('.nav-tab-wrapper').next('input').val() +'</p>' );
 
 //tmp
 $('.resett').on( 'click', function(e) {

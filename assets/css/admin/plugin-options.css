@@ -268,7 +268,8 @@
   float: right;
 }
 
-.wpr-my-templates-list .wpr-action-buttons a {
+.wpr-my-templates-list .wpr-action-buttons a,
+.wpr-my-templates-list .wpr-action-buttons span {
   display: inline-block;
   padding: 3px 25px;
   margin-right: 10px;
@@ -279,25 +280,9 @@
           box-shadow: 0 0 3px rgba(0,0,0,0.3);
 }
 
-.wpr-my-templates-list .wpr-action-buttons a:hover {
+.wpr-my-templates-list .wpr-action-buttons a:hover,
+.wpr-my-templates-list .wpr-action-buttons span:hover {
   background: #5938FF;
-}
-
-.wpr-my-templates-list .wpr-action-buttons > span {
-  width: 34px;
-  height: 34px;
-  padding: 0;
-  border: 0;
-  color: #fff;
-  background: #FF4062;
-  text-align: center;
-  -webkit-box-shadow: 0 0 3px rgba(0,0,0,0.3);
-          box-shadow: 0 0 3px rgba(0,0,0,0.3);
-}
-
-.wpr-my-templates-list .wpr-action-buttons > span:hover {
-  color: #fff;
-  background: #FF2C53;
 }
 
 .wpr-my-templates-list .wpr-action-buttons .dashicons {

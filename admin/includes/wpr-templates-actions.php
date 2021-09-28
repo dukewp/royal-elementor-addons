@@ -21,7 +21,7 @@ class WPR_Templates_Actions {
 	public function __construct() {
 
 		// Save Conditions
-		// add_action( 'wp_ajax_wpr_save_template_conditions', [ $this, 'wpr_save_template_conditions' ] );
+		add_action( 'wp_ajax_wpr_save_template_conditions', [ $this, 'wpr_save_template_conditions' ] );
 
 		// Create Template
 		add_action( 'wp_ajax_wpr_create_template', [ $this, 'wpr_create_template' ] );
@@ -33,11 +33,49 @@ class WPR_Templates_Actions {
 		add_action( 'wp_ajax_wpr_import_library_template', [ $this, 'wpr_import_library_template' ] );
 
 		// Reset Template
-		add_action( 'wp_ajax_wpr_reset_template', [ $this, 'wpr_reset_template' ] );
+		add_action( 'wp_ajax_wpr_delete_template', [ $this, 'wpr_delete_template' ] );
 
 		// Enqueue Scripts
 		add_action( 'admin_enqueue_scripts', [ $this, 'templates_library_scripts' ] );
 
+	}
+
+	/**
+	** Save Template Conditions
+	*/
+	public function wpr_save_template_conditions() {//tmp -sanitization
+		// Header
+		if ( isset($_POST['wpr_header_conditions']) ) {
+			update_option( 'wpr_header_conditions', $this->sanitize_conditions($_POST['wpr_header_conditions']) );
+		}
+
+		// Footer
+		if ( isset($_POST['wpr_footer_conditions']) ) {
+			update_option( 'wpr_footer_conditions', $this->sanitize_conditions($_POST['wpr_footer_conditions']) );
+		}
+
+		// Archive
+		if ( isset($_POST['wpr_archive_conditions']) ) {
+			update_option( 'wpr_archive_conditions', $this->sanitize_conditions($_POST['wpr_archive_conditions']) );
+		}
+
+		// Single
+		if ( isset($_POST['wpr_single_conditions']) ) {
+			update_option( 'wpr_single_conditions', $this->sanitize_conditions($_POST['wpr_single_conditions']) );
+		}
+
+		// Popup
+		if ( isset($_POST['wpr_popup_conditions']) ) {
+			update_option( 'wpr_popup_conditions', $this->sanitize_conditions($_POST['wpr_popup_conditions']) );
+		}
+	}
+
+	public function sanitize_conditions( $data ) {
+		if ( '' === $data ) {
+			return '';//tmp - only for development
+		} else {
+			return stripslashes( json_encode( array_filter( json_decode(stripcslashes($data), true) ) ) );
+		}
 	}
 
 	/**
@@ -164,7 +202,7 @@ class WPR_Templates_Actions {
 	/**
 	** Reset Template
 	*/
-	public function wpr_reset_template() {
+	public function wpr_delete_template() {
 		$post = get_page_by_path( sanitize_text_field($_POST['template_slug']), OBJECT, sanitize_text_field($_POST['template_library']) );
 		wp_delete_post( $post->ID, true );
 	}

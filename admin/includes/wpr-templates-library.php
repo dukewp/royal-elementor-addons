@@ -53,9 +53,9 @@ class WPR_Templates_Library {
 		$args = array(
 			'public'              => true,
 			'rewrite'             => false,
-			'show_ui'             => false,
-			'show_in_menu'        => false,
-			'show_in_nav_menus'   => false,
+			'show_ui'             => true,//false
+			'show_in_menu'        => true,//false
+			'show_in_nav_menus'   => true,//false
 			'exclude_from_search' => true,
 			'capability_type'     => 'post',
 			'hierarchical'        => false,

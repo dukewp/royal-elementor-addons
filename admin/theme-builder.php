@@ -8,36 +8,8 @@ use WprAddons\Admin\Includes\WPR_Templates_Loop;
 // Register Menus
 function wpr_addons_add_theme_builder_menu() {
 	add_submenu_page( 'wpr-addons', 'Header & Footer', 'Header & Footer', 'manage_options', 'wpr-theme-builder', 'wpr_addons_theme_builder_page' );
-	add_action( 'admin_init', 'wpr_register_theme_builder_settings' );
 }
 add_action( 'admin_menu', 'wpr_addons_add_theme_builder_menu' );
-
-// Register Settings
-function wpr_register_theme_builder_settings() {
-    // Integrations
-    register_setting( 'wpr-settings', 'wpr_google_map_api_key' );
-    register_setting( 'wpr-settings', 'wpr_mailchimp_api_key' );
-
-    // Lightbox
-    register_setting( 'wpr-settings', 'wpr_lb_bg_color' );
-    register_setting( 'wpr-settings', 'wpr_lb_toolbar_color' );
-    register_setting( 'wpr-settings', 'wpr_lb_caption_color' );
-    register_setting( 'wpr-settings', 'wpr_lb_gallery_color' );
-    register_setting( 'wpr-settings', 'wpr_lb_pb_color' );
-    register_setting( 'wpr-settings', 'wpr_lb_ui_color' );
-    register_setting( 'wpr-settings', 'wpr_lb_ui_hr_color' );
-    register_setting( 'wpr-settings', 'wpr_lb_text_color' );
-    register_setting( 'wpr-settings', 'wpr_lb_icon_size' );
-    register_setting( 'wpr-settings', 'wpr_lb_arrow_size' );
-    register_setting( 'wpr-settings', 'wpr_lb_text_size' );
-
-    // Element Toggle
-    foreach ( Utilities::get_registered_modules() as $title => $data ) {
-        $slug = $data[0];
-        register_setting( 'wpr-elements-settings', 'wpr-element-'. $slug, [ 'default' => 'on' ] );
-    }
-    register_setting( 'wpr-elements-settings', 'wpr-element-toggle-all', [ 'default' => 'on' ]  );
-}
 
 function wpr_addons_theme_builder_page() {
 
@@ -49,9 +21,11 @@ function wpr_addons_theme_builder_page() {
     <h1><?php esc_html_e( 'Royal Elementor Addons', 'wpr-addons' ); ?></h1>
     <p><?php esc_html_e( 'The most powerful Elementor Addons in the universe.', 'wpr-addons' ); ?></p>
 
-    <a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-plugin-prev-btn#widgets" target="_blank" class="button wpr-options-button">
-        <span><?php echo esc_html( 'View Plugin Demo', 'wpr-addons' ); ?></span>
-    </a>
+    <!-- Custom Template -->
+    <div class="wpr-user-template">
+        <span><?php esc_html_e( 'Create Template', 'wpr-addons' ); ?></span>
+        <span class="plus-icon">+</span>
+    </div>
 </div>
 
 <div class="wpr-settings-page">
@@ -148,19 +122,17 @@ function wpr_addons_theme_builder_page() {
 
     <?php if ( $active_tab == 'wpr_tab_header' ) : ?>
 
-    <?php
-
-    // Settings
-    settings_fields( 'wpr-elements-settings' );
-    do_settings_sections( 'wpr-elements-settings' );
-
-    ?>
-
-    Header Tab
+        <!-- Save Conditions -->
+        <input type="hidden" name="wpr_header_conditions" id="wpr_header_conditions" value="<?php echo esc_attr(get_option('wpr_header_conditions')); ?>">
+        
+        <?php WPR_Templates_Loop::get_user_templates( 'header' ); ?>
 
     <?php elseif ( $active_tab == 'wpr_tab_footer' ) : ?>
 
-        Footer Tab
+        <!-- Save Conditions -->
+        <input type="hidden" name="wpr_footer_conditions" id="wpr_footer_conditions" value="<?php echo esc_attr(get_option('wpr_footer_conditions')); ?>">
+        
+        <?php WPR_Templates_Loop::get_user_templates( 'footer' ); ?>
 
     <?php endif; ?>
 

@@ -28,10 +28,10 @@ class WPR_Templates_All {
 		self::$elementor_instance = \Elementor\Plugin::instance();
 
 		// Custom Canvas Template
-		add_filter( 'template_include', [ $this, 'convert_to_canvas_template' ], 12 );
+		// add_filter( 'template_include', [ $this, 'convert_to_canvas_template' ], 12 );
 
 		// Canvas Page Header and Footer 
-		add_action( 'elementor/page_templates/canvas/before_content', [ $this, 'render_header' ], -1 );
+		// add_action( 'wp_head', [ $this, 'render_header' ], -1 );
 		add_action( 'elementor/page_templates/canvas/after_content', [ $this, 'render_footer' ] );
 
 		// Canvas Page Content
@@ -271,11 +271,6 @@ class WPR_Templates_All {
 	** Display Elementor Content
 	*/
 	public function display_elementor_content( $slug ) {
-		// Deny if not Elemenntor Canvas
-		if ( 'elementor_canvas' !== get_page_template_slug() ) {//tmp
-			// return;
-		}
-
 		$template_id = Utilities::get_template_id( $slug );
 		$get_elementor_content = self::$elementor_instance->frontend->get_builder_content( $template_id, false );
 

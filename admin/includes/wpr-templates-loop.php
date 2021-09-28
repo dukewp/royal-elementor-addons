@@ -4,44 +4,12 @@ namespace WprAddons\Admin\Includes;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-use WprAddons\Admin\Includes\WPR_Templates_Data;
 use WprAddons\Classes\Utilities;
 
 /**
 ** WPR_Templates_Loop setup
 */
 class WPR_Templates_Loop {
-
-	/**
-	** Loop Through Templates
-	*/
-	public static function get_predefined_templates( $template ) {
-		// Loop User Templates
-		WPR_Templates_Loop::get_user_templates( $template );
-
-		// Deny if NOT Predefined
-		if ( strpos( $template, 'other' ) === 0 ) {
-			return;
-		}
-
-		// Loop Predefined Templates
-		$data = WPR_Templates_Data::get( $template );
-		$image_url = 'https://wp-royal.com/test/elementor/'. $template .'/images';
-
-		foreach ( $data as $item ) {
-			$slug = sanitize_title( $item );
-
-	        echo '<div class="wpr-'. $template .' template-grid-item">';
-	            echo '<div class="wpr-screenshot">';
-	                echo '<img src="'. esc_attr($image_url .'/'. $slug) .'.png">';
-	            echo '</div>';
-	            echo '<footer>';
-	                echo '<div class="wpr-title">'. $item .'</div>';
-	                WPR_Templates_Loop::render_action_buttons( $slug );
-	            echo '</footer>';
-	        echo '</div>';
-		}
-	}
 
 	/**
 	** Loop Through Custom Templates
@@ -70,32 +38,27 @@ class WPR_Templates_Loop {
 
 		// The Loop
 		if ( ! empty( $user_templates ) ) {
+			echo '<ul class="wpr-'. $template .' template-grid-item wpr-my-templates-list striped">';
+
 			foreach ( $user_templates as $user_template ) {
 				$slug = $user_template->post_name;
 				$edit_url = str_replace( 'edit', 'elementor', get_edit_post_link( $user_template->ID ) );
 
-				echo '<div class="wpr-'. $template .' template-grid-item">';
-				    echo '<div class="wpr-screenshot">';
-				    	if ( '' !== get_the_post_thumbnail($user_template->ID) ) {
-				    		echo get_the_post_thumbnail($user_template->ID);
-				    	} else {
-				        	echo '<img src="'. esc_url($image_url) .'/custom.png">';
-				    	}
-				    echo '</div>';
-				    echo '<footer>';
-				        echo '<div class="wpr-title">'. esc_html($user_template->post_title) .'</div>';
+				echo '<li>';
+			        echo '<div class="wpr-title">'. esc_html($user_template->post_title) .'</div>';
 
-				        echo '<div class="wpr-action-buttons">';
-							// Activate
-							echo '<span class="button wpr-activate" data-slug="'. esc_attr($slug) .'">'. esc_html__( 'Activate', 'wpr-addons' ) .'</span>';
-							// Edit
-							echo '<a href="'. esc_url($edit_url) .'" class="wpr-edit button">'. esc_html__( 'Edit', 'wpr-addons' ) .'</a>';
-							// Delete
-							echo '<span class="wpr-reset button" data-slug="'. esc_attr($slug) .'">'. esc_html__( 'Delete', 'wpr-addons' ) .'</span>';
-				        echo '</div>';
-				    echo '</footer>';
-				echo '</div>';
+			        echo '<div class="wpr-action-buttons">';
+						// Activate
+						echo '<span class="wpr-template-conditions button button-primary" data-slug="'. esc_attr($slug) .'">'. esc_html__( 'Conditions', 'wpr-addons' ) .'</span>';
+						// Edit
+						echo '<a href="'. esc_url($edit_url) .'" class="wpr-edit button button-primary">'. esc_html__( 'Edit', 'wpr-addons' ) .'</a>';
+						// Delete
+						echo '<span class="wpr-delete button button-primary" data-slug="'. esc_attr($slug) .'">'. esc_html__( 'Delete', 'wpr-addons' ) .'</span>';
+			        echo '</div>';
+				echo '</li>';
 			}
+
+			echo '</ul>';
 		}
 
 		// Restore original Post Data
@@ -144,38 +107,6 @@ class WPR_Templates_Loop {
 
 		// Restore original Post Data
 		wp_reset_postdata();
-	}
-
-	/**
-	** Render Action Buttons
-	*/
-	public static function render_action_buttons( $slug ) {
-		 echo '<div class="wpr-action-buttons">';
-
-			// Import
-			$text = esc_html__( 'Import', 'wpr-addons' );
-			$import_class = ' wpr-import';
-
-			// Activate
-			if ( false !== WPR_Templates_Loop::template_exists($slug) ) {
-				$text = esc_html__( 'Activate', 'wpr-addons' );
-				$import_class = ' wpr-activate';
-			}
-
-			// Edit
-			$edit_url = str_replace( 'edit', 'wpr-addons', get_edit_post_link( Utilities::get_template_id( $slug ) ) );
-			$hidden_class = false !== WPR_Templates_Loop::template_exists($slug) ? '' : ' hidden';
-
-			// Preview
-			echo '<a class="wpr-preview button">'. esc_html__( 'Preview', 'wpr-addons' ) .'</a>';
-			// Import/Activate
-			echo '<span class="button'. esc_attr($import_class) .'" data-slug="'. esc_attr($slug) .'">'. esc_html($text) .'</span>';
-			// Edit
-			echo '<a href="'. esc_url($edit_url) .'" class="wpr-edit button'. esc_attr($hidden_class) .'">'. esc_html__( 'Edit', 'wpr-addons' ) .'</a>';
-			// Reset
-			echo '<span class="wpr-reset button'. esc_attr($hidden_class) .'" data-slug="'. esc_attr($slug) .'">'. esc_html__( 'Reset', 'wpr-addons' ) .'</span>';
-
-		echo '</div>';
 	}
 
 	/**
