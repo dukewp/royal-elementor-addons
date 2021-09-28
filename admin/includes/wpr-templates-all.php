@@ -31,7 +31,7 @@ class WPR_Templates_All {
 		// add_filter( 'template_include', [ $this, 'convert_to_canvas_template' ], 12 );
 
 		// Canvas Page Header and Footer 
-		// add_action( 'wp_head', [ $this, 'render_header' ], -1 );
+		// add_action( 'get_header', [ $this, 'render_header' ], -1 );
 		add_action( 'elementor/page_templates/canvas/after_content', [ $this, 'render_footer' ] );
 
 		// Canvas Page Content
