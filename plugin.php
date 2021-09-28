@@ -96,6 +96,9 @@ class Plugin {
 		if ( is_admin() ) {
 			// Plugin Options
 			require WPR_ADDONS_PATH . 'admin/plugin-options.php';
+
+			// Theme Builder
+			require WPR_ADDONS_PATH . 'admin/theme-builder.php';
 		}
 	}
 
