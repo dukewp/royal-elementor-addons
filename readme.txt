@@ -1,9 +1,9 @@
-﻿=== Royal Elementor Addons ===
+﻿=== Royal Elementor Addons (Slider, Post Grid, Product Grid Addons for Elementor) ===
 Contributors: WP Royal
 Tags: elementor, elements, widgets for elementor, elementor addons, elementor widget, elementor form, woocommerce elementor, page builder, builder, wordpress page builder
 Stable tag: 1.2
 Requires at least: 5.0
-Tested up to: 5.8
+Tested up to: 5.8.1
 Requires PHP: 5.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -247,3 +247,15 @@ Yes, undoubtedly.
 Minimum php version 5.6
 memory_limit 256M or more
 post_max_size 64M
+
+== Changelog ==
+
+= Royal Elementor Addons v1.2 - 2021-09-24 =
+* Fix: Elementor Grid Widget responsive column issues.
+* Fix: Elementor Slider Widget responsive column issues.
+* Fix: Elementor Content Ticker Widget responsive column issues.
+* Fix: Elementor Testimonial Carousel Widget responsive column issues.
+* Fix: Added support for Elementor beta breakpoints.
+
+= Royal Elementor Addons v1.0 - 2021-08-14 =
+* Initial Release.
