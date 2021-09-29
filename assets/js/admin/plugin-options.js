@@ -133,7 +133,6 @@ jQuery(document).ready(function( $ ) {
 	// Create - Click
 	$('.create-template').on( 'click', function() {
 		craeteUserTemplate();
-		saveConditions();
 	});
 
 	// Create - Enter Key
@@ -554,6 +553,8 @@ jQuery(document).ready(function( $ ) {
 			});
 		});		
 	}
+	
+	saveConditions();
 
 
 	/*

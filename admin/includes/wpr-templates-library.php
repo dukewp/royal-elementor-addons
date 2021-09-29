@@ -43,6 +43,9 @@ class WPR_Templates_Library {
 		// Template Actions
 		new WPR_Templates_Pages();
 
+		// Enable Elementor for 'wpr_templates'
+		$this->add_elementor_cpt_support();
+
 	}
 
 	/**
@@ -51,15 +54,15 @@ class WPR_Templates_Library {
 	public function register_templates_library_cpt() {
 
 		$args = array(
+			'label'				  => esc_html( 'Royal Templates', 'wpr-addons' ),
 			'public'              => true,
 			'rewrite'             => false,
-			'show_ui'             => true,//false
-			'show_in_menu'        => true,//false
-			'show_in_nav_menus'   => true,//false
+			'show_ui'             => true,//TODO: false
+			'show_in_menu'        => true,//TODO: false
+			'show_in_nav_menus'   => false,
 			'exclude_from_search' => true,
 			'capability_type'     => 'post',
 			'hierarchical'        => false,
-			'supports'            => array( 'title', 'thumbnail', 'wpr-addons' ),
 		);
 
 		register_post_type( 'wpr_templates', $args );
@@ -85,6 +88,17 @@ class WPR_Templates_Library {
 		if ( is_singular( 'wpr_templates' ) && ! current_user_can( 'edit_posts' ) ) {
 			wp_redirect( site_url(), 301 );
 			die;
+		}
+	}
+
+	function add_elementor_cpt_support() {
+		$cpt_support = get_option( 'elementor_cpt_support' );
+		
+		if ( ! $cpt_support || in_array( 'wpr_templates', $cpt_support ) || ! is_admin() ) {
+		    return;
+		} else if ( ! in_array( 'wpr_templates', $cpt_support ) ) {
+		    $cpt_support[] = 'wpr_templates';
+		    update_option( 'elementor_cpt_support', $cpt_support );
 		}
 	}
 
