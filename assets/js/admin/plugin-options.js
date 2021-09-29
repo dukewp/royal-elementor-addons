@@ -133,6 +133,7 @@ jQuery(document).ready(function( $ ) {
 	// Create - Click
 	$('.create-template').on( 'click', function() {
 		craeteUserTemplate();
+		saveConditions();
 	});
 
 	// Create - Enter Key
@@ -554,8 +555,6 @@ jQuery(document).ready(function( $ ) {
 		});		
 	}
 
-	saveConditions();
-
 
 	/*
 	** Filters -------------------------
@@ -616,7 +615,7 @@ jQuery(document).ready(function( $ ) {
 
 
 //tmp
-$('.nav-tab-wrapper').after( '<p>'+ $('.nav-tab-wrapper').next('input').val() +'</p>' );
+// $('.nav-tab-wrapper').after( '<p>'+ $('.nav-tab-wrapper').next('input').val() +'</p>' );
 
 //tmp
 $('.resett').on( 'click', function(e) {

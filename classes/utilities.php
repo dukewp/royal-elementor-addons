@@ -183,6 +183,10 @@ class Utilities {
     ** Get Library Template Slug
     */
 	public static function get_template_slug( $data, $page, $post_id = '' ) {
+		if ( is_null($data) ) {
+			return;
+		}
+		
 		$template = null;
 
 		// Custom

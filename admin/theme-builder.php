@@ -123,14 +123,14 @@ function wpr_addons_theme_builder_page() {
     <?php if ( $active_tab == 'wpr_tab_header' ) : ?>
 
         <!-- Save Conditions -->
-        <input type="hidden" name="wpr_header_conditions" id="wpr_header_conditions" value="<?php echo esc_attr(get_option('wpr_header_conditions')); ?>">
+        <input type="hidden" name="wpr_header_conditions" id="wpr_header_conditions" value="<?php echo esc_attr(get_option('wpr_header_conditions', '[]')); ?>">
         
         <?php WPR_Templates_Loop::get_user_templates( 'header' ); ?>
 
     <?php elseif ( $active_tab == 'wpr_tab_footer' ) : ?>
 
         <!-- Save Conditions -->
-        <input type="hidden" name="wpr_footer_conditions" id="wpr_footer_conditions" value="<?php echo esc_attr(get_option('wpr_footer_conditions')); ?>">
+        <input type="hidden" name="wpr_footer_conditions" id="wpr_footer_conditions" value="<?php echo esc_attr(get_option('wpr_footer_conditions', '[]')); ?>">
         
         <?php WPR_Templates_Loop::get_user_templates( 'footer' ); ?>
 

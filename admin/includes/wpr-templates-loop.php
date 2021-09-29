@@ -34,29 +34,31 @@ class WPR_Templates_Loop {
 		$user_templates = get_posts( $args );
 
 		// The Loop
-		if ( ! empty( $user_templates ) ) {
-			echo '<ul class="wpr-'. $template .' template-grid-item wpr-my-templates-list striped">';
+		echo '<ul class="wpr-'. $template .' template-grid-item wpr-my-templates-list striped">';
 
-			foreach ( $user_templates as $user_template ) {
-				$slug = $user_template->post_name;
-				$edit_url = str_replace( 'edit', 'elementor', get_edit_post_link( $user_template->ID ) );
+			if ( ! empty( $user_templates ) ) {
+				foreach ( $user_templates as $user_template ) {
+					$slug = $user_template->post_name;
+					$edit_url = str_replace( 'edit', 'elementor', get_edit_post_link( $user_template->ID ) );
 
-				echo '<li>';
-			        echo '<div class="wpr-title">'. esc_html($user_template->post_title) .'</div>';
+					echo '<li>';
+				        echo '<div class="wpr-title">'. esc_html($user_template->post_title) .'</div>';
 
-			        echo '<div class="wpr-action-buttons">';
-						// Activate
-						echo '<span class="wpr-template-conditions button button-primary" data-slug="'. esc_attr($slug) .'">'. esc_html__( 'Conditions', 'wpr-addons' ) .'</span>';
-						// Edit
-						echo '<a href="'. esc_url($edit_url) .'" class="wpr-edit button button-primary">'. esc_html__( 'Edit', 'wpr-addons' ) .'</a>';
-						// Delete
-						echo '<span class="wpr-delete button button-primary" data-slug="'. esc_attr($slug) .'">'. esc_html__( 'Delete', 'wpr-addons' ) .'</span>';
-			        echo '</div>';
-				echo '</li>';
+				        echo '<div class="wpr-action-buttons">';
+							// Activate
+							echo '<span class="wpr-template-conditions button button-primary" data-slug="'. esc_attr($slug) .'">'. esc_html__( 'Conditions', 'wpr-addons' ) .'</span>';
+							// Edit
+							echo '<a href="'. esc_url($edit_url) .'" class="wpr-edit button button-primary">'. esc_html__( 'Edit', 'wpr-addons' ) .'</a>';
+							// Delete
+							echo '<span class="wpr-delete button button-primary" data-slug="'. esc_attr($slug) .'">'. esc_html__( 'Delete', 'wpr-addons' ) .'</span>';
+				        echo '</div>';
+					echo '</li>';
+				}
+			} else {
+				// echo '<li>You don\'t have any headers yet!</li>'; //TODO: add Styles to this message
 			}
 
-			echo '</ul>';
-		}
+		echo '</ul>';
 
 		// Restore original Post Data
 		wp_reset_postdata();

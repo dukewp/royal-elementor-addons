@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-$conditions = json_decode( get_option('wpr_footer_conditions'), true );
+$conditions = json_decode( get_option('wpr_footer_conditions', '[]'), true );
 $template_slug = WPR_Conditions_Manager::header_footer_display_conditions($conditions);
 
 if ( '' == $template_slug ) {

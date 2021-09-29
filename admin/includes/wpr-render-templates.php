@@ -47,7 +47,7 @@ class WPR_Render_Templates {
     ** Canvas Header
     */
     public function replace_header($name) {
-    	$conditions = json_decode( get_option('wpr_header_conditions'), true );
+    	$conditions = json_decode( get_option('wpr_header_conditions', '[]'), true );
 
     	if ( ! empty( $conditions ) ) {
 			require __DIR__ . '/../templates/views/theme-header.php';
@@ -67,7 +67,7 @@ class WPR_Render_Templates {
 	** Canvas Footer
 	*/
 	public function replace_footer() {
-    	$conditions = json_decode( get_option('wpr_footer_conditions'), true );
+    	$conditions = json_decode( get_option('wpr_footer_conditions', '[]'), true );
 
     	if ( ! empty( $conditions ) ) {
 			require __DIR__ . '/../templates/views/theme-footer.php';
@@ -125,7 +125,7 @@ class WPR_Render_Templates {
 			$elementor_pro->enqueue_styles();
 		}
 
-		$conditions = json_decode( get_option('wpr_header_conditions'), true );
+		$conditions = json_decode( get_option('wpr_header_conditions', '[]'), true );
 		$template_id = Utilities::get_template_id(WPR_Conditions_Manager::header_footer_display_conditions($conditions));
 
 		if ( false !== $template_id ) {
