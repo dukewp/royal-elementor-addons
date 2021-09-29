@@ -2,7 +2,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-use WprAddons\Admin\Includes\WPR_Templates_All;
+use WprAddons\Admin\Includes\WPR_Render_Templates;
 use WprAddons\Admin\Includes\WPR_Templates_Shortcode;
 use WprAddons\Admin\Includes\WPR_Templates_Popups;
 use WprAddons\Admin\Includes\WPR_Templates_Actions;
@@ -32,7 +32,7 @@ class WPR_Templates_Library {
 		new WPR_Templates_Popups();
 
 		// All Templates
-		new WPR_Templates_All();
+		new WPR_Render_Templates();
 
 		// Template Actions
 		new WPR_Templates_Actions();

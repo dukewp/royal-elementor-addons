@@ -179,6 +179,57 @@ class Utilities {
         return isset( $template->ID ) ? $template->ID : false;
 	}
 
+    /**
+    ** Get Library Template Slug
+    */
+	public static function get_template_slug( $data, $page, $post_id = '' ) {
+		$template = null;
+
+		// Custom
+		if ( sizeof($data) > 1 ) {
+			// Find a Custom Condition
+			foreach( $data as $id => $conditions ) {
+				if ( in_array( $page .'/'. $post_id, $conditions) ) {
+					$template = $id;
+				} elseif ( in_array( $page .'/all', $conditions) ) {
+					$template = $id;
+				} elseif ( in_array( $page, $conditions) ) {
+					$template = $id;
+				}
+			}
+
+			// If a Custom NOT Found, use Global
+			if ( is_null($template) ) {
+				foreach( $data as $id => $conditions ) {
+					if ( in_array( 'global', $conditions) ) {
+						$template = $id;
+					}
+				}
+			}
+		// Global
+		} else {
+			$template = key( $data );
+		}
+
+		return $template;
+	}
+
+
+	/**
+	** Render Elementor Template
+	*/
+	public static function render_elementor_template( $slug ) {
+		$template_id = Utilities::get_template_id( $slug );
+		$get_elementor_content = \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $template_id, false );
+
+		if ( '' === $get_elementor_content ) {
+			return;
+		}
+
+    	// Render Template Content
+		echo $get_elementor_content;
+	}
+
 
 	/**
 	** Blog Archive Page Check

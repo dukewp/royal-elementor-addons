@@ -15,9 +15,6 @@ class WPR_Templates_Loop {
 	** Loop Through Custom Templates
 	*/
 	public static function get_user_templates( $template ) {
-		// Default Image
-		$image_url = 'https://wp-royal.com/test/elementor/images';
-
 		// WP_Query arguments
 		$args = array (
 			'post_type'   => array( 'wpr_templates' ),
