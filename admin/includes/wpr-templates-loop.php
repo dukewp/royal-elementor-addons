@@ -34,7 +34,7 @@ class WPR_Templates_Loop {
 		$user_templates = get_posts( $args );
 
 		// The Loop
-		echo '<ul class="wpr-'. $template .' template-grid-item wpr-my-templates-list striped">';
+		echo '<ul class="wpr-'. $template .' wpr-my-templates-list striped">';
 
 			if ( ! empty( $user_templates ) ) {
 				foreach ( $user_templates as $user_template ) {
