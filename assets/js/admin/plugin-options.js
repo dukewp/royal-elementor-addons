@@ -1,18 +1,6 @@
 jQuery(document).ready(function( $ ) {
 	"use strict";
 
-	/*
-	** Elements Toggle -------------------------
-	*/
-	$('.wpr-elements-toggle').find('input').on( 'change', function() {
-		if ( $(this).is(':checked') ) {
-			$('.wpr-element').find('input').prop( 'checked', true );
-		} else {
-			$('.wpr-element').find('input').prop( 'checked', false );
-		}
-	});
-
-
 	// Condition Selects
 	var globalS  = '.global-condition-select',
 		archiveS = '.archives-condition-select',
@@ -132,7 +120,16 @@ jQuery(document).ready(function( $ ) {
 
 	// Create - Click
 	$('.wpr-create-template').on( 'click', function() {
-		craeteUserTemplate();
+		if ( '' === $('.wpr-user-template-title').val() ) {
+			$('.wpr-user-template-title').css('border-color', 'red');
+			$('.wpr-create-template').after('<p><em>Please fill the Title field.</em></p>');
+		} else {
+			$('.wpr-user-template-title').removeAttr('style');
+			$('.wpr-create-template + p').remove();
+
+			// Create Template
+			craeteUserTemplate();
+		}
 	});
 
 	// Create - Enter Key
@@ -262,9 +259,6 @@ jQuery(document).ready(function( $ ) {
 	** Popup: Clone Conditions -------------------------
 	*/
 	function popupCloneConditions() {
-		// Reset
-		$('.wpr-delete-conditions, .wpr-add-conditions').css('display', 'inline-block');
-
 		// Clone
 		$('.wpr-conditions-wrap').append( '<div class="wpr-conditions">'+ $('.wpr-conditions-sample').html() +'</div>' );
 
@@ -293,7 +287,6 @@ jQuery(document).ready(function( $ ) {
 			clone.find('.singles-condition-select').children().filter(function() {
 				return 'page_404' !== $(this).val()
 			}).remove();
-			$('.wpr-delete-conditions, .wpr-add-conditions').hide();
 		} else if ( 'blog-archives' === currentFilter || 'custom-archives' === currentFilter ) {
 			clone.find('.archives-condition-select').children().filter(function() {
 				return 'products' == $(this).val() || 'product_cat' == $(this).val() || 'product_tag' == $(this).val();
@@ -360,9 +353,6 @@ jQuery(document).ready(function( $ ) {
 					}
 				});
 			}
-		} else { // Set Default
-			popupCloneConditions();
-			$( '.wpr-conditions' ).find('select').hide();
 		}
 	}
 
@@ -396,10 +386,10 @@ jQuery(document).ready(function( $ ) {
 		// Open Popup
 		conditionPupup.fadeIn();
 	}
-
+	
 
 	/*
-	** Popup: Delete Conditions -------------------------
+	** Popup: Delete Conditions -------------------------------
 	*/
 	function popupDeleteConditions() {
 		$( '.wpr-delete-conditions' ).on( 'click', function() {
@@ -420,7 +410,7 @@ jQuery(document).ready(function( $ ) {
 
 
 	/*
-	** Popup: Condition Selection -------------------------
+	** Popup: Condition Selection -------
 	*/
 	// General Condition Select
 	function popupMainConditionSelect() {
@@ -455,7 +445,7 @@ jQuery(document).ready(function( $ ) {
 
 
 	/*
-	** Remove Conditions -------------------------
+	** Remove Conditions --------------------------
 	*/
 	function removeConditions( conditions, path ) {
 		var data = [];
@@ -579,6 +569,31 @@ jQuery(document).ready(function( $ ) {
 
 
 	/*
+	** Highlight Templates with Active Conditions --------
+	*/
+	if ( $('body').hasClass('royal-addons_page_wpr-theme-builder') ) {
+		var conditions = $( '#wpr_'+ currentTab +'_conditions' ).val(),
+			conditions = ('' === conditions || '[]' === conditions) ? {} : JSON.parse(conditions);
+
+		for ( var key in conditions ) {
+			$('.wpr-delete[data-slug="'+ key +'"]').closest('li').addClass('wpr-active-conditions-template').css('border-left', '3px #6A4BFF solid');
+		}
+	}
+
+
+	/*
+	** Elements Toggle -------------------------
+	*/
+	$('.wpr-elements-toggle').find('input').on( 'change', function() {
+		if ( $(this).is(':checked') ) {
+			$('.wpr-element').find('input').prop( 'checked', true );
+		} else {
+			$('.wpr-element').find('input').prop( 'checked', false );
+		}
+	});
+
+
+	/*
 	** Filters -------------------------
 	*/
 	$( '.template-filters ul li span' ).on( 'click', function() {
@@ -636,20 +651,7 @@ jQuery(document).ready(function( $ ) {
 	});
 
 
-//TODO: Remove this
-$('.nav-tab-wrapper').after( '<p>'+ $('.nav-tab-wrapper').next('input').val() +'</p>' );
-
-//TODO: Remove this
-$('.resett').on( 'click', function(e) {
-	// AJAX Data
-	var data = {
-		action: 'wpr_save_template_conditions',
-	};
-
-	data['wpr_'+ currentTab +'_conditions'] = '';
-
-	// Update via AJAX
-	$.post(ajaxurl, data, function(response) {});
-});
+	//TODO: Remove this
+	$('.nav-tab-wrapper').after( '<p>'+ $('.nav-tab-wrapper').next('input').val() +'</p>' );
 
 }); // end dom ready

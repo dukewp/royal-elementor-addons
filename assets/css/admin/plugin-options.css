@@ -359,6 +359,10 @@
 }
 
 .wpr-admin-popup {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -369,12 +373,7 @@
   max-width: 800px;
   padding: 30px;
   padding-bottom: 100px;
-  background-color: rgb(235, 235, 235);
-  border: 1px solid #000;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-direction: column;
+  background-color: #fff;
 }
 
 .wpr-admin-popup h2 {
@@ -400,7 +399,6 @@
 }
 
 .wpr-conditions {
-  background-color: white;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -408,7 +406,7 @@
   margin-top: 10px;
   width: auto;
   border-radius: 4px;
-  box-shadow: 0 2px 12px rgb(0 0 0 / 8%);
+  border: 1px solid #e8e8e8;
 }
 
 .wpr-conditions.wpr-tab-archive .global-condition-select,
@@ -433,41 +431,40 @@
   height: 35px;
   height: 100%;
   width: 33.3%;
-  outline: none !important;
   padding-top: 5px;
   padding-bottom: 5px;
-  border-radius: 0!important;
-  border: none !important;
-  border-right: 0.5px solid rgba(170, 160, 160, 0.623) !important;
+  border-radius: 0;
+  border: none;
+  border-right: 1px solid #e8e8e8 !important;
 }
 
 span.wpr-add-conditions {
-  background: rgb(150, 147, 147) !important;
-  color: white !important;
+  background: rgb(150, 147, 147);
+  color: white;
   font-weight: 600;
   letter-spacing: 1px;
-  padding: 6px 16px !important;
-  border: none !important;
+  padding: 6px 16px;
+  border: none;
 }
 
-.wpr-condition-input-ids {
+input.wpr-condition-input-ids {
   display: none;
   width: 33.3%;
-  padding: 5px !important;
-  outline: none !important;
-  border: none !important;
-  border-top: none!important;
-  border-bottom: none!important;
-  border-radius: 0!important;
+  padding: 5px;
+  outline: none;
+  border: none;
+  border-radius: 0;
 }
 
-.wpr-condition-input-ids:focus,
-select:focus {
+input.wpr-condition-input-ids,
+.wpr-conditions select {
+  border: none;
   box-shadow: none !important;
+  outline: none;
 }
 
 .wpr-add-conditions {
-  margin-top: 15px !important;
+  margin-top: 15px;
 }
 
 .wpr-delete-conditions {
