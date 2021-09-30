@@ -483,6 +483,8 @@ input.user-template-title:focus {
 .wpr-conditions {
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
   margin-top: 10px;
 }
 
@@ -506,9 +508,8 @@ input.user-template-title:focus {
 
 
 .wpr-conditions select {
-  float: left;
   height: 35px;
-  padding: 0 10px;
+  /* padding: 0 10px; */
   margin-right: 10px;
 }
 
