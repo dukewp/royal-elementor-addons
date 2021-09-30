@@ -352,7 +352,7 @@ class Utilities {
 
 
 	/**
-	** Filter oEmbed Results
+	** Get Custom Meta Keys
 	*/
 	public static function get_custom_meta_keys() {
 		$data = [];

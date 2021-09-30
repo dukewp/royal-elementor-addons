@@ -14,7 +14,7 @@ class WPR_Templates_Loop {
 	/**
 	** Loop Through Custom Templates
 	*/
-	public static function get_user_templates( $template ) {
+	public static function get_theme_builder_templates( $template ) {
 		// WP_Query arguments
 		$args = array (
 			'post_type'   => array( 'wpr_templates' ),
@@ -50,7 +50,7 @@ class WPR_Templates_Loop {
 							// Edit
 							echo '<a href="'. esc_url($edit_url) .'" class="wpr-edit button button-primary">'. esc_html__( 'Edit', 'wpr-addons' ) .'</a>';
 							// Delete
-							echo '<span class="wpr-delete button button-primary" data-slug="'. esc_attr($slug) .'">'. esc_html__( 'Delete', 'wpr-addons' ) .'</span>';
+							echo '<span class="wpr-delete button button-primary" data-slug="'. esc_attr($slug) .'" data-warning="'. esc_html__( 'Are you sure you want to delete this template?', 'wpr-addons' ) .'"><span class="dashicons dashicons-no-alt"></span></span>';
 				        echo '</div>';
 					echo '</li>';
 				}
@@ -68,7 +68,7 @@ class WPR_Templates_Loop {
 	/**
 	** Loop Through My Templates
 	*/
-	public static function get_my_templates() {
+	public static function get_elementor_saved_templates() {
 
 		// WP_Query arguments
 		$args = array (
@@ -95,8 +95,8 @@ class WPR_Templates_Loop {
 				echo '<li>';
 					echo '<h3>'. $user_template->post_title .'</h3>';
 					echo '<span class="wpr-action-buttons">';
-						echo '<a href="'. esc_url($edit_url) .'"class="button button-primary">'. esc_html__( 'Edit', 'wpr-addons' ) .'</a>';
-						echo '<span class="wpr-reset button" data-slug="'. esc_attr($user_template->post_name) .'"><span class="dashicons dashicons-no-alt"></span></span>';
+						echo '<a href="'. esc_url($edit_url) .'" class="button button-primary">'. esc_html__( 'Edit', 'wpr-addons' ) .'</a>';
+						echo '<span class="wpr-delete button button-primary" data-slug="'. esc_attr($user_template->post_name) .'" data-warning="'. esc_html__( 'Are you sure you want to delete this template?', 'wpr-addons' ) .'"><span class="dashicons dashicons-no-alt"></span></span>';
 					echo '</span>';
 				echo '</li>';
 			}
@@ -106,6 +106,28 @@ class WPR_Templates_Loop {
 
 		// Restore original Post Data
 		wp_reset_postdata();
+	}
+
+	/**
+	** Render Create Template Popup
+	*/
+	public static function create_template_popup() {
+	?>
+
+    <!-- Custom Template Popup -->
+    <div class="wpr-user-template-popup-wrap wpr-admin-popup-wrap">
+        <div class="wpr-user-template-popup wpr-admin-popup">
+            <h2><?php esc_html_e( 'Templates Help You Work Efficiently!', 'wpr-addons' ); ?></h2>
+            <p><?php esc_html_e( 'Use templates to create the different pieces of your site, and reuse them with one click whenever needed.', 'wpr-addons' ); ?></p>
+           
+            <input type="text" name="user_template_title" class="wpr-user-template-title" placeholder="<?php esc_html_e( 'Enter Template Title', 'wpr-addons' ); ?>">
+            <input type="hidden" name="user_template_type" class="user-template-type">
+            <span class="wpr-create-template"><?php esc_html_e( 'Create Template', 'wpr-addons' ); ?></span>
+            <span class="close-popup dashicons dashicons-no-alt"></span>
+        </div>
+    </div>
+
+	<?php
 	}
 
 	/**

@@ -41,9 +41,13 @@ function wpr_addons_theme_builder_page() {
     <input type="hidden" name="wpr_template" id="wpr_template" value="">
 
     <!-- Conditions Popup -->
-    <div class="wpr-condition-popup-wrap">
-        <div class="wpr-condition-popup">
-            <h2><?php esc_html_e( 'Please select conditions to display your Header', 'wpr-addons' ); ?></h2>
+    <div class="wpr-condition-popup-wrap wpr-admin-popup-wrap">
+        <div class="wpr-condition-popup wpr-admin-popup">
+            <h2><?php esc_html_e( 'Where Do You Want to Display Your Template?', 'wpr-addons' ); ?></h2>
+            <p>
+                <?php esc_html_e( 'Set the conditions that determine where your Template is used throughout your site.', 'wpr-addons' ); ?><br>
+                <?php esc_html_e( 'For example, choose \'Entire Site\' to display the template across your site.', 'wpr-addons' ); ?>
+            </p>
             <span class="close-popup dashicons dashicons-no-alt"></span>
 
             <!-- Conditions -->
@@ -88,27 +92,20 @@ function wpr_addons_theme_builder_page() {
                             }
                         ?>
                     </select>
-                    <input type="text" name="condition_input_ids" class="condition-input-ids">
-                    <span class="delete-conditions dashicons dashicons-no-alt"></span>
+                    <input type="text" name="condition_input_ids" class="wpr-condition-input-ids">
+                    <span class="wpr-delete-conditions dashicons dashicons-no-alt"></span>
                 </div>
             </div>
             
             <!-- Action Buttons -->
-            <span class="add-conditions button"><?php esc_html_e( 'Add Conditions', 'wpr-addons' ); ?></span>
-            <span class="save-conditions button button-primary"><?php esc_html_e( 'Save Conditions', 'wpr-addons' ); ?></span>
+            <span class="wpr-add-conditions button"><?php esc_html_e( 'Add Conditions', 'wpr-addons' ); ?></span>
+            <span class="wpr-save-conditions button button-primary"><?php esc_html_e( 'Save Conditions', 'wpr-addons' ); ?></span>
 
         </div>
     </div>
 
-    <!-- Custom Template Popup -->
-    <div class="user-template-popup-wrap">
-        <div class="user-template-popup">
-            <input type="text" name="user_template_title" class="user-template-title" placeholder="<?php esc_html_e( 'Enter Template Title', 'wpr-addons' ); ?>">
-            <input type="hidden" name="user_template_type" class="user-template-type">
-            <span class="create-template"><?php esc_html_e( 'Create Template', 'wpr-addons' ); ?></span>
-            <span class="close-popup dashicons dashicons-no-alt"></span>
-        </div>
-    </div>
+    <!-- Render Create Templte Popup -->
+    <?php WPR_Templates_Loop::create_template_popup(); ?>
 
     <!-- Tabs -->
     <div class="nav-tab-wrapper wpr-nav-tab-wrapper">
@@ -125,14 +122,14 @@ function wpr_addons_theme_builder_page() {
         <!-- Save Conditions -->
         <input type="hidden" name="wpr_header_conditions" id="wpr_header_conditions" value="<?php echo esc_attr(get_option('wpr_header_conditions', '[]')); ?>">
         
-        <?php WPR_Templates_Loop::get_user_templates( 'header' ); ?>
+        <?php WPR_Templates_Loop::get_theme_builder_templates( 'header' ); ?>
 
     <?php elseif ( $active_tab == 'wpr_tab_footer' ) : ?>
 
         <!-- Save Conditions -->
         <input type="hidden" name="wpr_footer_conditions" id="wpr_footer_conditions" value="<?php echo esc_attr(get_option('wpr_footer_conditions', '[]')); ?>">
         
-        <?php WPR_Templates_Loop::get_user_templates( 'footer' ); ?>
+        <?php WPR_Templates_Loop::get_theme_builder_templates( 'footer' ); ?>
 
     <?php endif; ?>
 
