@@ -204,10 +204,26 @@ jQuery(document).ready(function( $ ) {
 				template_library: library,
 			};
 
-			// Remove via AJAX
+			// Remove Template via AJAX
 			$.post(ajaxurl, data, function(response) {
 				deleteButton.closest('li').remove();
 			});
+
+			// Delete associated Conditions
+			var conditions = JSON.parse($( '#wpr_'+ currentTab +'_conditions' ).val());
+				delete conditions[slug];
+
+			// Set Conditions
+			$('#wpr_'+ currentTab +'_conditions').val( JSON.stringify(conditions) );
+
+			// AJAX Data
+			var data = {
+				action: 'wpr_save_template_conditions'
+			};
+			data['wpr_'+ currentTab +'_conditions'] = JSON.stringify(conditions);
+
+			// Save Conditions
+			$.post(ajaxurl, data, function(response) {});
 		});
 	}
 
@@ -548,7 +564,7 @@ jQuery(document).ready(function( $ ) {
 
 				// Redirect User to Editor
 				if ( conditionPupup.hasClass('editor-redirect') ) {
-					window.location.href = 'post.php?post='+ $('.save-conditions').attr('data-id') +'&action=elementor';
+					window.location.href = 'post.php?post='+ TemplateID +'&action=elementor';
 				}
 			});
 		});		

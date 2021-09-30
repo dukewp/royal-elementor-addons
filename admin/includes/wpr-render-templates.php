@@ -48,8 +48,9 @@ class WPR_Render_Templates {
     */
     public function replace_header() {
     	$conditions = json_decode( get_option('wpr_header_conditions', '[]'), true );
+    	$template = WPR_Conditions_Manager::header_footer_display_conditions( $conditions );
 
-    	if ( ! empty( $conditions ) ) {
+    	if ( ! empty( $conditions ) && ! is_null($template) ) {
 			require __DIR__ . '/../templates/views/theme-header.php';
 
 			$templates   = [];
@@ -68,8 +69,9 @@ class WPR_Render_Templates {
 	*/
 	public function replace_footer() {
     	$conditions = json_decode( get_option('wpr_footer_conditions', '[]'), true );
+    	$template = WPR_Conditions_Manager::header_footer_display_conditions( $conditions );
 
-    	if ( ! empty( $conditions ) ) {
+    	if ( ! empty( $conditions ) && ! is_null($template) ) { 
 			require __DIR__ . '/../templates/views/theme-footer.php';
 
 			$templates   = [];
@@ -125,17 +127,32 @@ class WPR_Render_Templates {
 			$elementor_pro->enqueue_styles();
 		}
 
-		$conditions = json_decode( get_option('wpr_header_conditions', '[]'), true );
-		$template_id = Utilities::get_template_id(WPR_Conditions_Manager::header_footer_display_conditions($conditions));
+		// Load Header Template CSS File
+		$heder_conditions = json_decode( get_option('wpr_header_conditions', '[]'), true );
+		$header_template_id = Utilities::get_template_id(WPR_Conditions_Manager::header_footer_display_conditions($heder_conditions));
 
-		if ( false !== $template_id ) {
+		if ( false !== $header_template_id ) {
 			if ( class_exists( '\Elementor\Core\Files\CSS\Post' ) ) {
-				$css_file = new \Elementor\Core\Files\CSS\Post( $template_id );
+				$header_css_file = new \Elementor\Core\Files\CSS\Post( $header_template_id );
 			} elseif ( class_exists( '\Elementor\Post_CSS_File' ) ) {
-				$css_file = new \Elementor\Post_CSS_File( $template_id );
+				$header_css_file = new \Elementor\Post_CSS_File( $header_template_id );
 			}
 
-			$css_file->enqueue();
+			$header_css_file->enqueue();
+		}
+
+		// Load Footer Template CSS File
+		$footer_conditions = json_decode( get_option('wpr_footer_conditions', '[]'), true );
+		$footer_template_id = Utilities::get_template_id(WPR_Conditions_Manager::header_footer_display_conditions($footer_conditions));
+
+		if ( false !== $footer_template_id ) {
+			if ( class_exists( '\Elementor\Core\Files\CSS\Post' ) ) {
+				$footer_css_file = new \Elementor\Core\Files\CSS\Post( $footer_template_id );
+			} elseif ( class_exists( '\Elementor\Post_CSS_File' ) ) {
+				$footer_css_file = new \Elementor\Post_CSS_File( $footer_template_id );
+			}
+
+			$footer_css_file->enqueue();
 		}
 	}
 

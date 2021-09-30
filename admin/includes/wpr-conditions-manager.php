@@ -29,7 +29,7 @@ class WPR_Conditions_Manager {
     	}
 
         // Reset
-        $template = null;
+        $template = NULL;
 
 		// Archive Pages (includes search)
 		if ( is_archive() || is_search() ) {
@@ -78,7 +78,7 @@ class WPR_Conditions_Manager {
         $post_type = is_null($post) ? '' : $post->post_type;
 
         // Reset
-        $template = null;
+        $template = NULL;
 
 		// Single Pages
 		if ( is_single() || is_front_page() || is_page() || is_404() ) {
@@ -93,7 +93,7 @@ class WPR_Conditions_Manager {
 		        }
 			} else {
 				// Front page
-				if ( $pages && is_front_page() ) {
+				if ( $pages && is_front_page() && ! Utilities::is_blog_archive() ) {//TODO: is it a good check? - && ! Utilities::is_blog_archive()
 	    			$template = Utilities::get_template_slug( $conditions, 'single/front_page' );
 				// Error 404 Page
 				} elseif ( is_404() ) {
@@ -113,16 +113,10 @@ class WPR_Conditions_Manager {
     ** Header & Footer Conditions
     */
     public static function header_footer_display_conditions( $conditions ) {
-    	// Template Type
-    	$post_terms = wp_get_post_terms( get_the_ID(), 'wpr_template_type' );
-        $template_type = ! empty($post_terms) ? $post_terms[0]->slug : '';
-
-        // Global
-        $template = Utilities::get_template_slug( $conditions, 'global' );
-        // $template = NULL;//TODO: TEST this tomorrow
+        $template = NULL;
 
         // Custom
-        if ( ! empty($conditions) && (sizeof( $conditions ) > 1 || sizeof( reset($conditions) ) > 1) ) {
+        if ( ! empty($conditions) ) {
 
 			// Archive Pages (includes search)
 			if ( ! is_null( WPR_Conditions_Manager::archive_templates_conditions( $conditions ) ) ) {
@@ -136,8 +130,6 @@ class WPR_Conditions_Manager {
 
         }
 
-	    if ( 'header' !== $template_type && 'footer' !== $template_type && 'popup' !== $template_type ) {
-	    	return $template;
-	    }
+	    return $template;
     }
 }

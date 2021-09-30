@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $conditions = json_decode( get_option('wpr_header_conditions', '[]'), true );
 $template_slug = WPR_Conditions_Manager::header_footer_display_conditions($conditions);
-// var_dump($template_slug);//TODO: REmove 
+
 ?>
 
 <!DOCTYPE html>

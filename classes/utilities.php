@@ -187,32 +187,26 @@ class Utilities {
 			return;
 		}
 		
-		$template = null;
+		$template = NULL;
 
-		// Custom
-		if ( sizeof($data) > 1 ) {
-			// Find a Custom Condition
+		// Find a Custom Condition
+		foreach( $data as $id => $conditions ) {
+			if ( in_array( $page .'/'. $post_id, $conditions) ) {
+				$template = $id;
+			} elseif ( in_array( $page .'/all', $conditions) ) {
+				$template = $id;
+			} elseif ( in_array( $page, $conditions) ) {
+				$template = $id;
+			}
+		}
+
+		// If a Custom NOT Found, use Global
+		if ( is_null($template) ) {
 			foreach( $data as $id => $conditions ) {
-				if ( in_array( $page .'/'. $post_id, $conditions) ) {
-					$template = $id;
-				} elseif ( in_array( $page .'/all', $conditions) ) {
-					$template = $id;
-				} elseif ( in_array( $page, $conditions) ) {
+				if ( in_array( 'global', $conditions) ) {
 					$template = $id;
 				}
 			}
-
-			// If a Custom NOT Found, use Global
-			if ( is_null($template) ) {
-				foreach( $data as $id => $conditions ) {
-					if ( in_array( 'global', $conditions) ) {
-						$template = $id;
-					}
-				}
-			}
-		// Global
-		} else {
-			$template = key( $data );
 		}
 
 		return $template;
