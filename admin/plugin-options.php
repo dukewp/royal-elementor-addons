@@ -61,6 +61,9 @@ function wpr_addons_settings_page() {
     // Active Tab
     $active_tab = isset( $_GET['tab'] ) ? esc_attr($_GET['tab']) : 'wpr_tab_elements';
 
+    // Render Create Templte Popup
+    WPR_Templates_Loop::create_template_popup();
+    
     ?>
 
     <!-- Tabs -->
@@ -130,7 +133,7 @@ function wpr_addons_settings_page() {
         </div>
         <?php endif; ?>
 
-        <?php Wpr_Templates_Loop::get_my_templates(); ?>
+        <?php Wpr_Templates_Loop::get_elementor_saved_templates(); ?>
 
     <?php elseif ( $active_tab == 'wpr_tab_settings' ) : ?>
 

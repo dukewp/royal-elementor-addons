@@ -17,7 +17,7 @@ jQuery(document).ready(function( $ ) {
 	var globalS  = '.global-condition-select',
 		archiveS = '.archives-condition-select',
 		singleS  = '.singles-condition-select',
-		inputIDs = '.condition-input-ids';
+		inputIDs = '.wpr-condition-input-ids';
 
 	// Condition Popup
 	var conditionPupup = $( '.wpr-condition-popup-wrap' );
@@ -72,7 +72,7 @@ jQuery(document).ready(function( $ ) {
 		var library = 'my-templates' === getActiveFilter() ? 'elementor_library' : 'wpr_templates';
 
 		// Get Template Title
-		var title = $('.user-template-title').val();
+		var title = $('.wpr-user-template-title').val();
 
 		// Get Template Slug
 		var slug = 'user-'+ getActiveFilter() +'-'+ title.replace( /\W+/g, '-' ).toLowerCase();
@@ -93,7 +93,7 @@ jQuery(document).ready(function( $ ) {
 		// Create Template
 		$.post(ajaxurl, data, function(response) {
 			// Close Popup
-			$('.user-template-popup-wrap').fadeOut();
+			$('.wpr-user-template-popup-wrap').fadeOut();
 
 			// Open Conditions
 			setTimeout(function() {
@@ -107,10 +107,10 @@ jQuery(document).ready(function( $ ) {
 				}
 
 				// Set Template Slug & ID
-				$( '.save-conditions' ).attr( 'data-slug', slug ).attr( 'data-id', id );
+				$( '.wpr-save-conditions' ).attr( 'data-slug', slug ).attr( 'data-id', id );
 
 				// Render Template
-				renderUserTemplate( getActiveFilter(), $('.user-template-title').val(), slug, id );
+				renderUserTemplate( getActiveFilter(), $('.wpr-user-template-title').val(), slug, id );
 
 				// Open Popup
 				openConditionsPopup( slug );
@@ -121,22 +121,22 @@ jQuery(document).ready(function( $ ) {
 
 	// Open Popup
 	$('.wpr-user-template').on( 'click', function() {
-		$('.user-template-title').val('');
-		$('.user-template-popup-wrap').fadeIn();
+		$('.wpr-user-template-title').val('');
+		$('.wpr-user-template-popup-wrap').fadeIn();
 	});
 
 	// Close Popup
-	$('.user-template-popup').find('.close-popup').on( 'click', function() {
-		$('.user-template-popup-wrap').fadeOut();
+	$('.wpr-user-template-popup').find('.close-popup').on( 'click', function() {
+		$('.wpr-user-template-popup-wrap').fadeOut();
 	});
 
 	// Create - Click
-	$('.create-template').on( 'click', function() {
+	$('.wpr-create-template').on( 'click', function() {
 		craeteUserTemplate();
 	});
 
 	// Create - Enter Key
-	$('.user-template-title').keypress(function(e) {
+	$('.wpr-user-template-title').keypress(function(e) {
 		if ( e.which == 13 ) {
 			e.preventDefault();
 			craeteUserTemplate();
@@ -188,8 +188,13 @@ jQuery(document).ready(function( $ ) {
 	*/
 	function deleteTemplate() {
 		$( '.wpr-delete' ).on( 'click', function() {
+
 			// Buttons
 			var deleteButton = $(this);
+
+			if ( ! confirm(deleteButton.data('warning')) ) {
+				return;
+			}
 
 			// Get Template Library
 			var library = 'my-templates' === getActiveFilter() ? 'elementor_library' : 'wpr_templates';
@@ -238,7 +243,7 @@ jQuery(document).ready(function( $ ) {
 			var template = $(this).attr('data-slug');
 
 			// Set Template Slug
-			$( '.save-conditions' ).attr( 'data-slug', template );
+			$( '.wpr-save-conditions' ).attr( 'data-slug', template );
 
 			// Open Popup
 			openConditionsPopup( template );
@@ -258,7 +263,7 @@ jQuery(document).ready(function( $ ) {
 	*/
 	function popupCloneConditions() {
 		// Reset
-		$('.delete-conditions, .add-conditions').css('display', 'inline-block');
+		$('.wpr-delete-conditions, .wpr-add-conditions').css('display', 'inline-block');
 
 		// Clone
 		$('.wpr-conditions-wrap').append( '<div class="wpr-conditions">'+ $('.wpr-conditions-sample').html() +'</div>' );
@@ -278,17 +283,17 @@ jQuery(document).ready(function( $ ) {
 
 		if ( 'blog-posts' === currentFilter || 'custom-posts' === currentFilter ) {
 			clone.find('.singles-condition-select').children(':nth-child(1),:nth-child(2),:nth-child(3)').remove();
-			clone.find('.condition-input-ids').val('all').show();
+			clone.find('.wpr-condition-input-ids').val('all').show();
 		} else if ( 'woocommerce-products' === currentFilter ) {
 			clone.find('.singles-condition-select').children().filter(function() {
 				return 'product' !== $(this).val()
 			}).remove();
-			clone.find('.condition-input-ids').val('all').show();
+			clone.find('.wpr-condition-input-ids').val('all').show();
 		} else if ( '404-pages' === currentFilter ) {
 			clone.find('.singles-condition-select').children().filter(function() {
 				return 'page_404' !== $(this).val()
 			}).remove();
-			$('.delete-conditions, .add-conditions').hide();
+			$('.wpr-delete-conditions, .wpr-add-conditions').hide();
 		} else if ( 'blog-archives' === currentFilter || 'custom-archives' === currentFilter ) {
 			clone.find('.archives-condition-select').children().filter(function() {
 				return 'products' == $(this).val() || 'product_cat' == $(this).val() || 'product_tag' == $(this).val();
@@ -304,7 +309,7 @@ jQuery(document).ready(function( $ ) {
 	** Popup: Add Conditions -------------------------
 	*/
 	function popupAddConditions() {
-		$( '.add-conditions' ).on( 'click', function() {
+		$( '.wpr-add-conditions' ).on( 'click', function() {
 			// Clone
 			popupCloneConditions();
 
@@ -397,7 +402,7 @@ jQuery(document).ready(function( $ ) {
 	** Popup: Delete Conditions -------------------------
 	*/
 	function popupDeleteConditions() {
-		$( '.delete-conditions' ).on( 'click', function() {
+		$( '.wpr-delete-conditions' ).on( 'click', function() {
 			var current = $(this).parent(),
 				conditions = $( '#wpr_'+ currentTab +'_conditions' ).val();
 				conditions = '' !== conditions ? JSON.parse(conditions) : {};
@@ -540,7 +545,7 @@ jQuery(document).ready(function( $ ) {
 	** Save Conditions -------------------------
 	*/
 	function saveConditions() {
-		$( '.save-conditions' ).on( 'click', function() {
+		$( '.wpr-save-conditions' ).on( 'click', function() {
 			// Current Template
 			var template = $(this).attr('data-slug'),
 				TemplateID = $(this).attr('data-id');
