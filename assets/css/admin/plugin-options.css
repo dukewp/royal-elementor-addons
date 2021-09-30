@@ -369,8 +369,12 @@
   max-width: 800px;
   padding: 30px;
   padding-bottom: 100px;
-  background-color: #fff;
+  background-color: rgb(235, 235, 235);
   border: 1px solid #000;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
 }
 
 .wpr-admin-popup h2 {
@@ -379,6 +383,7 @@
 
 .wpr-admin-popup p {
   margin-top: 0;
+  text-align: center;
 }
 
 .wpr-admin-popup .close-popup {
@@ -395,9 +400,15 @@
 }
 
 .wpr-conditions {
+  background-color: white;
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
   margin-top: 10px;
+  width: auto;
+  border-radius: 4px;
+  box-shadow: 0 2px 12px rgb(0 0 0 / 8%);
 }
 
 .wpr-conditions.wpr-tab-archive .global-condition-select,
@@ -419,15 +430,41 @@
 }
 
 .wpr-conditions select {
-  float: left;
   height: 35px;
-  padding: 0 10px;
-  margin-right: 10px;
+  height: 100%;
+  width: 33.3%;
+  outline: none !important;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 0!important;
+  border: none !important;
+  border-right: 0.5px solid rgb(170, 160, 160) !important;
+}
+
+span.wpr-add-conditions {
+  background: rgb(150, 147, 147) !important;
+  color: white !important;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 6px 16px !important;
+  border: none !important;
 }
 
 .wpr-condition-input-ids {
   display: none;
-  padding: 7px;
+  width: 33.3%;
+  padding: 5px !important;
+  outline: none !important;
+  margin-left: -2px;
+  border: none !important;
+  border-top: none!important;
+  border-bottom: none!important;
+  border-radius: 0!important;
+}
+
+.wpr-condition-input-ids:focus,
+select:focus {
+  box-shadow: none !important;
 }
 
 .wpr-add-conditions {
@@ -435,11 +472,8 @@
 }
 
 .wpr-delete-conditions {
-  margin-top: 5px;
-  margin-left: 10px;
   padding: 3px;
-  color: #f44;
-  border-bottom: 1px solid #f44;
+  color:  lightgray;
   cursor: pointer;
 }
 
