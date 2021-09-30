@@ -379,23 +379,14 @@ jQuery(document).ready(function( $ ) {
 		} else {
 			conditionsWrap.find(globalS).show();
 		}
-		
+
 		// Add Current Filter Class
 		$('.wpr-conditions-wrap').addClass( $('.template-filters .active-filter').attr('data-class') );
 
 		// Open Popup
 		conditionPupup.fadeIn();
 	}
-
-	function checkActiveTemplateConditions() {
-		var template = $('.wpr-save-conditions').attr('data-slug');
-
-		if ( $('.wpr-delete[data-slug="'+ template +'"]').closest('li').hasClass('wpr-active-conditions-template') ) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+	
 
 	/*
 	** Popup: Delete Conditions -------------------------------
