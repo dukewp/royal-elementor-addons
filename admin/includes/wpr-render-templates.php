@@ -46,7 +46,7 @@ class WPR_Render_Templates {
     /**
     ** Canvas Header
     */
-    public function replace_header($name) {
+    public function replace_header() {
     	$conditions = json_decode( get_option('wpr_header_conditions', '[]'), true );
 
     	if ( ! empty( $conditions ) ) {

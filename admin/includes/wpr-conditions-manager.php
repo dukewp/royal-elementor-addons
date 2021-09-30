@@ -110,7 +110,7 @@ class WPR_Conditions_Manager {
     }
 
     /**
-    ** Canvas Page Before/After Content
+    ** Header & Footer Conditions
     */
     public static function header_footer_display_conditions( $conditions ) {
     	// Template Type
@@ -119,6 +119,7 @@ class WPR_Conditions_Manager {
 
         // Global
         $template = Utilities::get_template_slug( $conditions, 'global' );
+        // $template = NULL;//TODO: TEST this tomorrow
 
         // Custom
         if ( ! empty($conditions) && (sizeof( $conditions ) > 1 || sizeof( reset($conditions) ) > 1) ) {
@@ -139,5 +140,4 @@ class WPR_Conditions_Manager {
 	    	return $template;
 	    }
     }
-    
 }

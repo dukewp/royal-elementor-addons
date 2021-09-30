@@ -615,10 +615,10 @@ jQuery(document).ready(function( $ ) {
 	});
 
 
-//tmp
-// $('.nav-tab-wrapper').after( '<p>'+ $('.nav-tab-wrapper').next('input').val() +'</p>' );
+//TODO: Remove this
+$('.nav-tab-wrapper').after( '<p>'+ $('.nav-tab-wrapper').next('input').val() +'</p>' );
 
-//tmp
+//TODO: Remove this
 $('.resett').on( 'click', function(e) {
 	// AJAX Data
 	var data = {
