@@ -117,9 +117,11 @@ class WPR_Templates_Loop {
     <!-- Custom Template Popup -->
     <div class="wpr-user-template-popup-wrap wpr-admin-popup-wrap">
         <div class="wpr-user-template-popup wpr-admin-popup">
-            <h2><?php esc_html_e( 'Templates Help You Work Efficiently!', 'wpr-addons' ); ?></h2>
-            <p><?php esc_html_e( 'Use templates to create the different pieces of your site, and reuse them with one click whenever needed.', 'wpr-addons' ); ?></p>
-           
+        	<header>
+	            <h2><?php esc_html_e( 'Templates Help You Work Efficiently!', 'wpr-addons' ); ?></h2>
+	            <p><?php esc_html_e( 'Use templates to create the different pieces of your site, and reuse them with one click whenever needed.', 'wpr-addons' ); ?></p>
+			</header>
+			
             <input type="text" name="user_template_title" class="wpr-user-template-title" placeholder="<?php esc_html_e( 'Enter Template Title', 'wpr-addons' ); ?>">
             <input type="hidden" name="user_template_type" class="user-template-type">
             <span class="wpr-create-template"><?php esc_html_e( 'Create Template', 'wpr-addons' ); ?></span>
