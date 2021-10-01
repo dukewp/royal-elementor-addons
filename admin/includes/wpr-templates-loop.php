@@ -14,7 +14,7 @@ class WPR_Templates_Loop {
 	/**
 	** Loop Through Custom Templates
 	*/
-	public static function get_theme_builder_templates( $template ) {
+	public static function render_theme_builder_templates( $template ) {
 		// WP_Query arguments
 		$args = array (
 			'post_type'   => array( 'wpr_templates' ),
@@ -34,7 +34,7 @@ class WPR_Templates_Loop {
 		$user_templates = get_posts( $args );
 
 		// The Loop
-		echo '<ul class="wpr-'. $template .' wpr-my-templates-list striped">';
+		echo '<ul class="wpr-'. $template .'-templates-list wpr-my-templates-list">';
 
 			if ( ! empty( $user_templates ) ) {
 				foreach ( $user_templates as $user_template ) {
@@ -42,13 +42,13 @@ class WPR_Templates_Loop {
 					$edit_url = str_replace( 'edit', 'elementor', get_edit_post_link( $user_template->ID ) );
 
 					echo '<li>';
-				        echo '<div class="wpr-title">'. esc_html($user_template->post_title) .'</div>';
+				        echo '<h3 class="wpr-title">'. esc_html($user_template->post_title) .'</h3>';
 
 				        echo '<div class="wpr-action-buttons">';
 							// Activate
-							echo '<span class="wpr-template-conditions button button-primary" data-slug="'. esc_attr($slug) .'">'. esc_html__( 'Conditions', 'wpr-addons' ) .'</span>';
+							echo '<span class="wpr-template-conditions button button-primary" data-slug="'. esc_attr($slug) .'">'. esc_html__( 'Manage Conditions', 'wpr-addons' ) .'</span>';
 							// Edit
-							echo '<a href="'. esc_url($edit_url) .'" class="wpr-edit button button-primary">'. esc_html__( 'Edit', 'wpr-addons' ) .'</a>';
+							echo '<a href="'. esc_url($edit_url) .'" class="wpr-edit button button-primary">'. esc_html__( 'Edit Template', 'wpr-addons' ) .'</a>';
 							// Delete
 							echo '<span class="wpr-delete button button-primary" data-slug="'. esc_attr($slug) .'" data-warning="'. esc_html__( 'Are you sure you want to delete this template?', 'wpr-addons' ) .'"><span class="dashicons dashicons-no-alt"></span></span>';
 				        echo '</div>';
@@ -68,7 +68,7 @@ class WPR_Templates_Loop {
 	/**
 	** Loop Through My Templates
 	*/
-	public static function get_elementor_saved_templates() {
+	public static function render_elementor_saved_templates() {
 
 		// WP_Query arguments
 		$args = array (
@@ -111,7 +111,7 @@ class WPR_Templates_Loop {
 	/**
 	** Render Create Template Popup
 	*/
-	public static function create_template_popup() {
+	public static function render_create_template_popup() {
 	?>
 
     <!-- Custom Template Popup -->
@@ -121,7 +121,7 @@ class WPR_Templates_Loop {
 	            <h2><?php esc_html_e( 'Templates Help You Work Efficiently!', 'wpr-addons' ); ?></h2>
 	            <p><?php esc_html_e( 'Use templates to create the different pieces of your site, and reuse them with one click whenever needed.', 'wpr-addons' ); ?></p>
 			</header>
-			
+
             <input type="text" name="user_template_title" class="wpr-user-template-title" placeholder="<?php esc_html_e( 'Enter Template Title', 'wpr-addons' ); ?>">
             <input type="hidden" name="user_template_type" class="user-template-type">
             <span class="wpr-create-template"><?php esc_html_e( 'Create Template', 'wpr-addons' ); ?></span>

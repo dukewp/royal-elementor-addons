@@ -94,7 +94,7 @@ function wpr_addons_theme_builder_page() {
                             }
                         ?>
                     </select>
-                    <input type="text" name="condition_input_ids" class="wpr-condition-input-ids">
+                    <input type="text" placeholder="<?php esc_html_e( 'Enter comma separated IDs', 'wpr-addons' ); ?>"  name="condition_input_ids"class="wpr-condition-input-ids">
                     <span class="wpr-delete-conditions dashicons dashicons-no-alt"></span>
                 </div>
             </div>
@@ -107,7 +107,7 @@ function wpr_addons_theme_builder_page() {
     </div>
 
     <!-- Render Create Templte Popup -->
-    <?php WPR_Templates_Loop::create_template_popup(); ?>
+    <?php WPR_Templates_Loop::render_create_template_popup(); ?>
 
     <!-- Tabs -->
     <div class="nav-tab-wrapper wpr-nav-tab-wrapper">
@@ -124,14 +124,14 @@ function wpr_addons_theme_builder_page() {
         <!-- Save Conditions -->
         <input type="hidden" name="wpr_header_conditions" id="wpr_header_conditions" value="<?php echo esc_attr(get_option('wpr_header_conditions', '[]')); ?>">
         
-        <?php WPR_Templates_Loop::get_theme_builder_templates( 'header' ); ?>
+        <?php WPR_Templates_Loop::render_theme_builder_templates( 'header' ); ?>
 
     <?php elseif ( $active_tab == 'wpr_tab_footer' ) : ?>
 
         <!-- Save Conditions -->
         <input type="hidden" name="wpr_footer_conditions" id="wpr_footer_conditions" value="<?php echo esc_attr(get_option('wpr_footer_conditions', '[]')); ?>">
         
-        <?php WPR_Templates_Loop::get_theme_builder_templates( 'footer' ); ?>
+        <?php WPR_Templates_Loop::render_theme_builder_templates( 'footer' ); ?>
 
     <?php endif; ?>
 

@@ -576,7 +576,7 @@ jQuery(document).ready(function( $ ) {
 			conditions = ('' === conditions || '[]' === conditions) ? {} : JSON.parse(conditions);
 
 		for ( var key in conditions ) {
-			$('.wpr-delete[data-slug="'+ key +'"]').closest('li').addClass('wpr-active-conditions-template').css('border-left', '3px #6A4BFF solid');
+			$('.wpr-delete[data-slug="'+ key +'"]').closest('li').addClass('wpr-active-conditions-template');
 		}
 	}
 
@@ -652,6 +652,6 @@ jQuery(document).ready(function( $ ) {
 
 
 	//TODO: Remove this
-	$('.nav-tab-wrapper').after( '<p>'+ $('.nav-tab-wrapper').next('input').val() +'</p>' );
+	// $('.nav-tab-wrapper').after( '<p>'+ $('.nav-tab-wrapper').next('input').val() +'</p>' );
 
 }); // end dom ready

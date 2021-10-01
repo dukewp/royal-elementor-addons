@@ -242,16 +242,19 @@
 /*--------------------------------------------------------------
 == My Templates
 --------------------------------------------------------------*/
-
 .wpr-my-templates-list {
   width: 50%;
 }
 
+.wpr-header-templates-list.wpr-my-templates-list,
+.wpr-footer-templates-list.wpr-my-templates-list {
+  width: 65%;
+}
+
 .wpr-my-templates-list li {
   overflow: hidden;
-  padding: 15px 35px;
+  padding: 20px 35px;
   margin-bottom: 15px;
-  border-radius: 3px;
   -webkit-box-shadow: 0 0 2px rgba(0,0,0,0.2);
           box-shadow: 0 0 2px rgba(0,0,0,0.2);
 }
@@ -269,26 +272,47 @@
   float: right;
 }
 
-.wpr-my-templates-list .wpr-action-buttons > a,
-.wpr-my-templates-list .wpr-action-buttons > span {
-  display: inline-block;
-  padding: 3px 25px;
-  margin-right: 10px;
-  border: 0;
-  background: #6A4BFF;
-  letter-spacing: 0.5px;
-  -webkit-box-shadow: 0 0 3px rgba(0,0,0,0.3);
-          box-shadow: 0 0 3px rgba(0,0,0,0.3);
+.wpr-my-templates-list .wpr-template-conditions {
+  background: #b3b3b3;
 }
 
-.wpr-my-templates-list .wpr-action-buttons > a:hover,
-.wpr-my-templates-list .wpr-action-buttons > span:hover {
+.wpr-active-conditions-template .wpr-template-conditions {
+  background: #6A4BFF;
+}
+
+.wpr-my-templates-list .wpr-edit {
+  background: #545454;
+}
+
+.wpr-my-templates-list .wpr-delete {
+  background: #ff5a4b;
+}
+
+.wpr-my-templates-list .wpr-action-buttons > * {
+  display: inline-block;
+  padding: 3px 20px;
+  margin-right: 10px;
+  border: 0;
+  letter-spacing: 0.5px;
+}
+
+.wpr-my-templates-list .wpr-action-buttons > *:last-child {
+  margin-right: 0;
+}
+
+.wpr-my-templates-list .wpr-action-buttons > *:hover {
   background: #5938FF;
 }
 
 .wpr-my-templates-list .wpr-action-buttons .dashicons {
   font-size: 16px;
   line-height: 30px;
+}
+
+.wpr-header-templates-list li.wpr-active-conditions-template,
+.wpr-footer-templates-list li.wpr-active-conditions-template {
+  border-left: 5px solid #6A4BFF;
+  background: #F6F7F7;
 }
 
 
@@ -347,7 +371,10 @@
   margin-bottom: 70px;
 }
 
-/* Condition Popup */
+
+/*--------------------------------------------------------------
+== Conditions
+--------------------------------------------------------------*/
 .wpr-admin-popup-wrap {
   display: none;
   position: fixed;
@@ -537,23 +564,28 @@ input.wpr-user-template-title {
   border-radius: 3px;
 }
 
-input.wpr-user-template-title::-webkit-input-placeholder {
+input.wpr-user-template-title::-webkit-input-placeholder,
+input.wpr-condition-input-ids::-webkit-input-placeholder {
   color: #9a9a9a;
 }
 
-input.wpr-user-template-title::-moz-placeholder {
+input.wpr-user-template-title::-moz-placeholder,
+input.wpr-condition-input-ids::-moz-placeholder {
   color: #9a9a9a;
 }
 
-input.wpr-user-template-title:-ms-input-placeholder {
+input.wpr-user-template-title:-ms-input-placeholder,
+input.wpr-condition-input-ids:-ms-input-placeholder {
   color: #9a9a9a;
 }
 
-input.wpr-user-template-title::-ms-input-placeholder {
+input.wpr-user-template-title::-ms-input-placeholder,
+input.wpr-condition-input-ids::-ms-input-placeholder {
   color: #9a9a9a;
 }
 
-input.wpr-user-template-title::placeholder {
+input.wpr-user-template-title::placeholder,
+input.wpr-condition-input-ids::placeholder {
   color: #9a9a9a;
 }
 
@@ -563,7 +595,10 @@ input.wpr-user-template-title:focus {
           box-shadow: none;
 }
 
-/* Freemius */
+
+/*--------------------------------------------------------------
+== Freemius
+--------------------------------------------------------------*/
 #fs_connect {
   margin: 50px !important;
   border: 1px solid #e8e8e8;
