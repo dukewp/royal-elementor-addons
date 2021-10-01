@@ -277,15 +277,28 @@
 }
 
 .wpr-active-conditions-template .wpr-template-conditions {
+  background: #7a5ffd;
+}
+
+.wpr-my-templates-list .wpr-template-conditions:hover,
+.wpr-active-conditions-template .wpr-template-conditions:hover {
   background: #6A4BFF;
 }
 
 .wpr-my-templates-list .wpr-edit-template {
-  background: #545454;
+  background: #646464;
+}
+
+.wpr-my-templates-list .wpr-edit-template:hover {
+  background: #535353;
 }
 
 .wpr-my-templates-list .wpr-delete-template {
   background: #ff5a4b;
+}
+
+.wpr-my-templates-list .wpr-delete-template:hover {
+  background: #FF4635;
 }
 
 .wpr-my-templates-list .wpr-action-buttons > * {
@@ -298,10 +311,6 @@
 
 .wpr-my-templates-list .wpr-action-buttons > *:last-child {
   margin-right: 0;
-}
-
-.wpr-my-templates-list .wpr-action-buttons > *:hover {
-  background: #5938FF;
 }
 
 .wpr-my-templates-list .wpr-action-buttons .dashicons {
@@ -460,7 +469,7 @@
 
 .wpr-admin-popup header {
   margin-top: 0;
-  margin-bottom: 35px;
+  margin-bottom: 20px;
   text-align: center;
 }
 

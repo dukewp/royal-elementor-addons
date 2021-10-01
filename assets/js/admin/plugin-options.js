@@ -24,7 +24,6 @@ jQuery(document).ready(function( $ ) {
 			type = $('.template-filters .active-filter').last().attr('data-class');
 			type = type.substring( 0, type.length - 1);
 		}
-		console.log($('.template-filters'));
 		return type;
 	}
 
@@ -45,7 +44,7 @@ jQuery(document).ready(function( $ ) {
 
 		// Render
 		$( '.wpr-my-templates-list.wpr-'+ getActiveFilter() ).prepend( html );
-		// console.log(type, title, slug, id);
+
 		// Run Functions
 		changeTemplateConditions();
 		deleteTemplate();
@@ -62,7 +61,6 @@ jQuery(document).ready(function( $ ) {
 		
 		// Get Template Slug
 		var slug = 'user-'+ getActiveFilter() +'-'+ title.replace( /\W+/g, '-' ).toLowerCase();
-		console.log(library, getActiveFilter(), title, slug);
 
 		if ( 'elementor_library' === library ) {
 			slug = getActiveFilter() +'-'+ title.replace( /\W+/g, '-' ).toLowerCase();
@@ -241,7 +239,7 @@ jQuery(document).ready(function( $ ) {
 	function changeTemplateConditions() {
 		$( '.wpr-template-conditions' ).on( 'click', function() {
 			var template = $(this).attr('data-slug');
-			console.log(template);
+
 			// Set Template Slug
 			$( '.wpr-save-conditions' ).attr( 'data-slug', template );
 
@@ -278,7 +276,6 @@ jQuery(document).ready(function( $ ) {
 
 		// Hide Extra Options
 		var currentFilter = $('.template-filters .active-filter').attr('data-class');
-		console.log(currentFilter);
 
 		if ( 'blog-posts' === currentFilter || 'custom-posts' === currentFilter ) {
 			clone.find('.singles-condition-select').children(':nth-child(1),:nth-child(2),:nth-child(3)').remove();
@@ -335,7 +332,6 @@ jQuery(document).ready(function( $ ) {
 		// Setup Conditions
 		if ( conditions[template] != undefined && conditions[template].length > 0 ) {
 			// Clone
-			console.log(conditions[template], conditions[template].length);
 			for (var i = 0; i < conditions[template].length; i++) {
 				popupCloneConditions();
 				$( '.wpr-conditions' ).find('select').hide();
@@ -352,9 +348,7 @@ jQuery(document).ready(function( $ ) {
 							$(this).find('.'+ path[s] +'s-condition-select').show();
 						} else if ( s === 1 ) {
 							$(this).find('.'+ path[s-1] +'s-condition-select').val(path[s]).trigger('change');
-							console.log($(this).find('.'+ path[s-1] +'s-condition-select').val(path[s])); // whats point ??
 						} else if ( s === 2 ) {
-							console.log($(this).find(inputIDs).val(path[s])); // change it later
 							$(this).find(inputIDs).val(path[s]).trigger('keyup').show();
 						}
 					}
@@ -403,7 +397,7 @@ jQuery(document).ready(function( $ ) {
 			var current = $(this).parent(),
 				conditions = $( '#wpr_'+ currentTab +'_conditions' ).val();
 				conditions = '' !== conditions ? JSON.parse(conditions) : {};
-			console.log(current, conditions);
+
 			// Update Conditions
 			$('#wpr_'+ currentTab +'_conditions').val( JSON.stringify( removeConditions( conditions, getConditionsPath(current) ) ) );
 
@@ -440,7 +434,6 @@ jQuery(document).ready(function( $ ) {
 		$('.archives-condition-select, .singles-condition-select').on( 'change', function() {
 			var current = $(this).parent(),
 				selected = $( 'option:selected', this );
-				console.log(current, selected);
 
 			// Show Custom ID input
 			if ( selected.hasClass('custom-ids') || selected.hasClass('custom-type-ids') ) {
@@ -564,6 +557,15 @@ jQuery(document).ready(function( $ ) {
 			$.post(ajaxurl, data, function(response) {
 				// Close Popup
 				conditionPupup.fadeOut();
+
+				// Set Active Class
+				for ( var key in conditions ) {
+					if ( conditions[key] && 0 !== conditions[key].length ) {
+						$('.wpr-delete-template[data-slug="'+ key +'"]').closest('li').addClass('wpr-active-conditions-template');
+					} else {
+						$('.wpr-delete-template[data-slug="'+ key +'"]').closest('li').removeClass('wpr-active-conditions-template');
+					}
+				}
 
 				// Redirect User to Editor
 				if ( conditionPupup.hasClass('editor-redirect') ) {
