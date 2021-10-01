@@ -48,9 +48,9 @@ class WPR_Templates_Loop {
 							// Activate
 							echo '<span class="wpr-template-conditions button button-primary" data-slug="'. esc_attr($slug) .'">'. esc_html__( 'Manage Conditions', 'wpr-addons' ) .'</span>';
 							// Edit
-							echo '<a href="'. esc_url($edit_url) .'" class="wpr-edit button button-primary">'. esc_html__( 'Edit Template', 'wpr-addons' ) .'</a>';
+							echo '<a href="'. esc_url($edit_url) .'" class="wpr-edit-template button button-primary">'. esc_html__( 'Edit Template', 'wpr-addons' ) .'</a>';
 							// Delete
-							echo '<span class="wpr-delete button button-primary" data-slug="'. esc_attr($slug) .'" data-warning="'. esc_html__( 'Are you sure you want to delete this template?', 'wpr-addons' ) .'"><span class="dashicons dashicons-no-alt"></span></span>';
+							echo '<span class="wpr-delete-template button button-primary" data-slug="'. esc_attr($slug) .'" data-warning="'. esc_html__( 'Are you sure you want to delete this template?', 'wpr-addons' ) .'"><span class="dashicons dashicons-no-alt"></span></span>';
 				        echo '</div>';
 					echo '</li>';
 				}
@@ -96,7 +96,7 @@ class WPR_Templates_Loop {
 					echo '<h3>'. $user_template->post_title .'</h3>';
 					echo '<span class="wpr-action-buttons">';
 						echo '<a href="'. esc_url($edit_url) .'" class="button button-primary">'. esc_html__( 'Edit', 'wpr-addons' ) .'</a>';
-						echo '<span class="wpr-delete button button-primary" data-slug="'. esc_attr($user_template->post_name) .'" data-warning="'. esc_html__( 'Are you sure you want to delete this template?', 'wpr-addons' ) .'"><span class="dashicons dashicons-no-alt"></span></span>';
+						echo '<span class="wpr-delete-template button button-primary" data-slug="'. esc_attr($user_template->post_name) .'" data-warning="'. esc_html__( 'Are you sure you want to delete this template?', 'wpr-addons' ) .'"><span class="dashicons dashicons-no-alt"></span></span>';
 					echo '</span>';
 				echo '</li>';
 			}

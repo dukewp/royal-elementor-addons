@@ -38,8 +38,8 @@ jQuery(document).ready(function( $ ) {
 			html += '<div class="wpr-title">'+ title +'</div>';
 			html += '<div class="wpr-action-buttons">';
 				html += '<span class="wpr-template-conditions button-primary" data-slug="'+ slug +'">Conditions</span>';
-				html += '<a href="post.php?post='+ id +'&action=elementor" class="wpr-edit button-primary">Edit</a>';
-				html += '<span class="wpr-delete button-primary" data-slug="'+ slug +'">Delete</span>';
+				html += '<a href="post.php?post='+ id +'&action=elementor" class="wpr-edit-template button-primary">Edit</a>';
+				html += '<span class="wpr-delete-template button-primary" data-slug="'+ slug +'">Delete</span>';
 			html += '</div>';
 		html += '</li>';
 
@@ -151,8 +151,8 @@ jQuery(document).ready(function( $ ) {
 		$( '.wpr-import' ).on( 'click', function() {
 			// Buttons
 			var importButton = $(this),
-				editButton 	 = importButton.parent().find('.wpr-edit'),
-				resetButton  = importButton.parent().find('.wpr-delete');
+				editButton 	 = importButton.parent().find('.wpr-edit-template'),
+				resetButton  = importButton.parent().find('.wpr-delete-template');
 
 			$('.wrap').children('h1').text('Importing Template, Please be patient...');	
 			
@@ -187,7 +187,7 @@ jQuery(document).ready(function( $ ) {
 	** Reset Template -------------------------
 	*/
 	function deleteTemplate() {
-		$( '.wpr-delete' ).on( 'click', function() {
+		$( '.wpr-delete-template' ).on( 'click', function() {
 
 			// Buttons
 			var deleteButton = $(this);
@@ -399,7 +399,7 @@ jQuery(document).ready(function( $ ) {
 	** Popup: Delete Conditions -------------------------------
 	*/
 	function popupDeleteConditions() {
-		$( '.wpr-delete-conditions' ).on( 'click', function() {
+		$( '.wpr-delete-template-conditions' ).on( 'click', function() {
 			var current = $(this).parent(),
 				conditions = $( '#wpr_'+ currentTab +'_conditions' ).val();
 				conditions = '' !== conditions ? JSON.parse(conditions) : {};
@@ -584,7 +584,7 @@ jQuery(document).ready(function( $ ) {
 			conditions = ('' === conditions || '[]' === conditions) ? {} : JSON.parse(conditions);
 
 		for ( var key in conditions ) {
-			$('.wpr-delete[data-slug="'+ key +'"]').closest('li').addClass('wpr-active-conditions-template');
+			$('.wpr-delete-template[data-slug="'+ key +'"]').closest('li').addClass('wpr-active-conditions-template');
 		}
 	}
 

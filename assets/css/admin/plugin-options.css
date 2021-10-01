@@ -280,11 +280,11 @@
   background: #6A4BFF;
 }
 
-.wpr-my-templates-list .wpr-edit {
+.wpr-my-templates-list .wpr-edit-template {
   background: #545454;
 }
 
-.wpr-my-templates-list .wpr-delete {
+.wpr-my-templates-list .wpr-delete-template {
   background: #ff5a4b;
 }
 
@@ -528,7 +528,7 @@ input.wpr-condition-input-ids,
   text-indent: 5px;
 }
 
-.wpr-delete-conditions {
+.wpr-delete-template-conditions {
   margin-left: auto;
   position: absolute;
   right: -30px;
@@ -537,7 +537,7 @@ input.wpr-condition-input-ids,
   cursor: pointer;
 }
 
-.wpr-delete-conditions:hover {
+.wpr-delete-template-conditions:hover {
   color: #81868a;
 }
 

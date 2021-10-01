@@ -49,7 +49,6 @@ class WPR_Render_Templates {
     public function replace_header() {
     	$conditions = json_decode( get_option('wpr_header_conditions', '[]'), true );
     	$template = WPR_Conditions_Manager::header_footer_display_conditions( $conditions );
-		// QUESTION: where do we use $template variable ???
     	if ( ! empty( $conditions ) && ! is_null($template) ) {
 			require __DIR__ . '/../templates/views/theme-header.php';
 

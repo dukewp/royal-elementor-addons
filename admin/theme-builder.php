@@ -95,7 +95,7 @@ function wpr_addons_theme_builder_page() {
                         ?>
                     </select>
                     <input type="text" placeholder="<?php esc_html_e( 'Enter comma separated IDs', 'wpr-addons' ); ?>"  name="condition_input_ids"class="wpr-condition-input-ids">
-                    <span class="wpr-delete-conditions dashicons dashicons-no-alt"></span>
+                    <span class="wpr-delete-template-conditions dashicons dashicons-no-alt"></span>
                 </div>
             </div>
             
