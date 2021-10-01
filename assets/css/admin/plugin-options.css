@@ -384,6 +384,7 @@
   background-color: #F1F3F5;
 }
 
+
 .wpr-admin-popup .close-popup {
   position: absolute;
   top: 10px;
@@ -437,7 +438,7 @@
 }
 
 .wpr-admin-popup header h2 {
-  margin-bottom: 20px;
+  margin: 25px auto;
   font-size: 26px;
   color: #59626a;
 }
@@ -455,6 +456,7 @@
   padding-bottom: 5px;
   border-radius: 0;
   border: none;
+  flex-grow: 1;
   border-right: 1px solid #e8e8e8 !important;
   background-size: 14px 14px;
 }
@@ -521,13 +523,26 @@ input.wpr-condition-input-ids,
     cursor: pointer;
 }
 
+.wpr-user-template-popup {
+  padding-top: 40px;
+}
+
+.wpr-user-template-popup header {
+  margin-bottom: 27px;
+}
+
 .wpr-user-template-popup .wpr-create-template {
   padding: 11px 20px;
-  margin-left: 5px;
+  margin: 25px auto;
   color: #fff;
   background: #6A4BFF;
   border-radius: 3px;
   cursor: pointer;
+}
+
+.wpr-user-template-popup p {
+  max-width: 70%;
+  margin: auto;
 }
 
 input.wpr-user-template-title {

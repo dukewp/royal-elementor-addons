@@ -20,12 +20,11 @@ jQuery(document).ready(function( $ ) {
 	*/
 	function getActiveFilter() {
 		var type = currentTab.replace( /\W+/g, '-' ).toLowerCase();
-
 		if ( $('.template-filters').length > 0 ) {
 			type = $('.template-filters .active-filter').last().attr('data-class');
 			type = type.substring( 0, type.length - 1);
 		}
-
+		console.log($('.template-filters'));
 		return type;
 	}
 
@@ -46,7 +45,7 @@ jQuery(document).ready(function( $ ) {
 
 		// Render
 		$( '.wpr-my-templates-list.wpr-'+ getActiveFilter() ).prepend( html );
-
+		// console.log(type, title, slug, id);
 		// Run Functions
 		changeTemplateConditions();
 		deleteTemplate();
@@ -58,12 +57,12 @@ jQuery(document).ready(function( $ ) {
 	function craeteUserTemplate() {
 		// Get Template Library
 		var library = 'my-templates' === getActiveFilter() ? 'elementor_library' : 'wpr_templates';
-
 		// Get Template Title
 		var title = $('.wpr-user-template-title').val();
-
+		
 		// Get Template Slug
 		var slug = 'user-'+ getActiveFilter() +'-'+ title.replace( /\W+/g, '-' ).toLowerCase();
+		console.log(library, getActiveFilter(), title, slug);
 
 		if ( 'elementor_library' === library ) {
 			slug = getActiveFilter() +'-'+ title.replace( /\W+/g, '-' ).toLowerCase();
@@ -122,7 +121,11 @@ jQuery(document).ready(function( $ ) {
 	$('.wpr-create-template').on( 'click', function() {
 		if ( '' === $('.wpr-user-template-title').val() ) {
 			$('.wpr-user-template-title').css('border-color', 'red');
-			$('.wpr-create-template').after('<p><em>Please fill the Title field.</em></p>');
+			if($('.wpr-fill-out-the-title').length < 1) {
+				$('.wpr-create-template').before('<p class="wpr-fill-out-the-title"><em>Please fill the Title field.</em></p>');
+				$('.wpr-fill-out-the-title').css('margin-top', '4px');
+				$('.wpr-fill-out-the-title em').css({'color': '#7f8b96', 'font-size': 'smaller'});
+			}
 		} else {
 			$('.wpr-user-template-title').removeAttr('style');
 			$('.wpr-create-template + p').remove();
@@ -238,7 +241,7 @@ jQuery(document).ready(function( $ ) {
 	function changeTemplateConditions() {
 		$( '.wpr-template-conditions' ).on( 'click', function() {
 			var template = $(this).attr('data-slug');
-
+			console.log(template);
 			// Set Template Slug
 			$( '.wpr-save-conditions' ).attr( 'data-slug', template );
 
@@ -263,6 +266,7 @@ jQuery(document).ready(function( $ ) {
 		$('.wpr-conditions-wrap').append( '<div class="wpr-conditions">'+ $('.wpr-conditions-sample').html() +'</div>' );
 
 		// Add Tab Class
+		// why removing and adding again ?
 		$('.wpr-conditions').removeClass( 'wpr-tab-'+ currentTab ).addClass( 'wpr-tab-'+ currentTab );
 		var clone = $('.wpr-conditions').last();
 
@@ -274,6 +278,7 @@ jQuery(document).ready(function( $ ) {
 
 		// Hide Extra Options
 		var currentFilter = $('.template-filters .active-filter').attr('data-class');
+		console.log(currentFilter);
 
 		if ( 'blog-posts' === currentFilter || 'custom-posts' === currentFilter ) {
 			clone.find('.singles-condition-select').children(':nth-child(1),:nth-child(2),:nth-child(3)').remove();
@@ -324,13 +329,13 @@ jQuery(document).ready(function( $ ) {
 	function popupSetConditions( template ) {
 		var conditions = $( '#wpr_'+ currentTab +'_conditions' ).val();
 			conditions = '' !== conditions ? JSON.parse(conditions) : {};
-
 		// Reset
 		$('.wpr-conditions').remove();
 
 		// Setup Conditions
 		if ( conditions[template] != undefined && conditions[template].length > 0 ) {
 			// Clone
+			console.log(conditions[template], conditions[template].length); // QUESTION: can length be more than one in this case ?
 			for (var i = 0; i < conditions[template].length; i++) {
 				popupCloneConditions();
 				$( '.wpr-conditions' ).find('select').hide();
@@ -347,7 +352,9 @@ jQuery(document).ready(function( $ ) {
 							$(this).find('.'+ path[s] +'s-condition-select').show();
 						} else if ( s === 1 ) {
 							$(this).find('.'+ path[s-1] +'s-condition-select').val(path[s]).trigger('change');
+							console.log($(this).find('.'+ path[s-1] +'s-condition-select').val(path[s])); // whats point ??
 						} else if ( s === 2 ) {
+							console.log($(this).find(inputIDs).val(path[s])); // change it later
 							$(this).find(inputIDs).val(path[s]).trigger('keyup').show();
 						}
 					}
@@ -396,7 +403,7 @@ jQuery(document).ready(function( $ ) {
 			var current = $(this).parent(),
 				conditions = $( '#wpr_'+ currentTab +'_conditions' ).val();
 				conditions = '' !== conditions ? JSON.parse(conditions) : {};
-
+			console.log(current, conditions);
 			// Update Conditions
 			$('#wpr_'+ currentTab +'_conditions').val( JSON.stringify( removeConditions( conditions, getConditionsPath(current) ) ) );
 
@@ -433,6 +440,7 @@ jQuery(document).ready(function( $ ) {
 		$('.archives-condition-select, .singles-condition-select').on( 'change', function() {
 			var current = $(this).parent(),
 				selected = $( 'option:selected', this );
+				console.log(current, selected);
 
 			// Show Custom ID input
 			if ( selected.hasClass('custom-ids') || selected.hasClass('custom-type-ids') ) {
