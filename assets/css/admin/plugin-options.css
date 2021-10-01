@@ -537,6 +537,10 @@ input.wpr-condition-input-ids,
   cursor: pointer;
 }
 
+.wpr-delete-conditions:hover {
+  color: #81868a;
+}
+
 .wpr-save-conditions {
     padding: 8px 20px;
     color: #fff;

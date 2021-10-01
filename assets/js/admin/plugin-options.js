@@ -335,7 +335,7 @@ jQuery(document).ready(function( $ ) {
 		// Setup Conditions
 		if ( conditions[template] != undefined && conditions[template].length > 0 ) {
 			// Clone
-			console.log(conditions[template], conditions[template].length); // QUESTION: can length be more than one in this case ?
+			console.log(conditions[template], conditions[template].length);
 			for (var i = 0; i < conditions[template].length; i++) {
 				popupCloneConditions();
 				$( '.wpr-conditions' ).find('select').hide();
