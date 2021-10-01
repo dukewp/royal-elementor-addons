@@ -43,11 +43,13 @@ function wpr_addons_theme_builder_page() {
     <!-- Conditions Popup -->
     <div class="wpr-condition-popup-wrap wpr-admin-popup-wrap">
         <div class="wpr-condition-popup wpr-admin-popup">
-            <h2><?php esc_html_e( 'Where Do You Want to Display Your Template?', 'wpr-addons' ); ?></h2>
-            <p>
-                <?php esc_html_e( 'Set the conditions that determine where your Template is used throughout your site.', 'wpr-addons' ); ?><br>
-                <?php esc_html_e( 'For example, choose \'Entire Site\' to display the template across your site.', 'wpr-addons' ); ?>
-            </p>
+            <header>
+                <h2><?php esc_html_e( 'Where Do You Want to Display Your Template?', 'wpr-addons' ); ?></h2>
+                <p>
+                    <?php esc_html_e( 'Set the conditions that determine where your Template is used throughout your site.', 'wpr-addons' ); ?><br>
+                    <?php esc_html_e( 'For example, choose \'Entire Site\' to display the template across your site.', 'wpr-addons' ); ?>
+                </p>
+            </header>
             <span class="close-popup dashicons dashicons-no-alt"></span>
 
             <!-- Conditions -->
@@ -98,8 +100,8 @@ function wpr_addons_theme_builder_page() {
             </div>
             
             <!-- Action Buttons -->
-            <span class="wpr-add-conditions button"><?php esc_html_e( 'Add Conditions', 'wpr-addons' ); ?></span>
-            <span class="wpr-save-conditions button button-primary"><?php esc_html_e( 'Save Conditions', 'wpr-addons' ); ?></span>
+            <span class="wpr-add-conditions"><?php esc_html_e( 'Add Conditions', 'wpr-addons' ); ?></span>
+            <span class="wpr-save-conditions"><?php esc_html_e( 'Save Conditions', 'wpr-addons' ); ?></span>
 
         </div>
     </div>
