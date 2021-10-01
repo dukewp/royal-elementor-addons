@@ -65,8 +65,8 @@ class WPR_Templates_Library {
 			'label'				  => esc_html( 'Royal Templates', 'wpr-addons' ),
 			'public'              => true,
 			'rewrite'             => false,
-			'show_ui'             => true,//TODO: false
-			'show_in_menu'        => true,//TODO: false
+			'show_ui'             => false,
+			'show_in_menu'        => false,
 			'show_in_nav_menus'   => false,
 			'exclude_from_search' => true,
 			'capability_type'     => 'post',

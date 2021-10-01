@@ -34,16 +34,20 @@ jQuery(document).ready(function( $ ) {
 		var html = '';
 
 		html += '<li>';
-			html += '<div class="wpr-title">'+ title +'</div>';
+			html += '<h3 class="wpr-title">'+ title +'</h3>';
 			html += '<div class="wpr-action-buttons">';
-				html += '<span class="wpr-template-conditions button-primary" data-slug="'+ slug +'">Conditions</span>';
-				html += '<a href="post.php?post='+ id +'&action=elementor" class="wpr-edit-template button-primary">Edit</a>';
-				html += '<span class="wpr-delete-template button-primary" data-slug="'+ slug +'">Delete</span>';
+				html += '<span class="wpr-template-conditions button-primary" data-slug="'+ slug +'">Manage Conditions</span>';
+				html += '<a href="post.php?post='+ id +'&action=elementor" class="wpr-edit-template button-primary">Edit Template</a>';
+				html += '<span class="wpr-delete-template button-primary" data-slug="'+ slug +'" data-warning="Are you sure you want to delete this template?"><span class="dashicons dashicons-no-alt"></span></span>';
 			html += '</div>';
 		html += '</li>';
 
 		// Render
-		$( '.wpr-my-templates-list.wpr-'+ getActiveFilter() ).prepend( html );
+		$( '.wpr-my-templates-list.wpr-'+ getActiveFilter() +'-templates-list' ).prepend( html );
+
+		if ( $('.wpr-empty-templates-message').length ) {
+			$('.wpr-empty-templates-message').remove();
+		}
 
 		// Run Functions
 		changeTemplateConditions();
@@ -119,7 +123,7 @@ jQuery(document).ready(function( $ ) {
 	$('.wpr-create-template').on( 'click', function() {
 		if ( '' === $('.wpr-user-template-title').val() ) {
 			$('.wpr-user-template-title').css('border-color', 'red');
-			if($('.wpr-fill-out-the-title').length < 1) {
+			if ( $('.wpr-fill-out-the-title').length < 1 ) {
 				$('.wpr-create-template').before('<p class="wpr-fill-out-the-title"><em>Please fill the Title field.</em></p>');
 				$('.wpr-fill-out-the-title').css('margin-top', '4px');
 				$('.wpr-fill-out-the-title em').css({'color': '#7f8b96', 'font-size': 'smaller'});
