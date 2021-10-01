@@ -95,7 +95,7 @@ class Wpr_Content_Toggle extends Widget_Base {
 
 		// Get All Templates
 		$templates = get_posts( [
-			'post_type'   => array( 'elementor_library' ),
+			'post_type'   => array( 'z' ),
 			'post_status' => array( 'publish' ),
 			'meta_key' 	  => '_elementor_template_type',
 			'meta_value'  => ['page', 'section'],
