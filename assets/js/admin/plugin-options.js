@@ -121,7 +121,11 @@ jQuery(document).ready(function( $ ) {
 	$('.wpr-create-template').on( 'click', function() {
 		if ( '' === $('.wpr-user-template-title').val() ) {
 			$('.wpr-user-template-title').css('border-color', 'red');
-			$('.wpr-create-template').after('<p><em>Please fill the Title field.</em></p>');
+			if($('.wpr-fill-out-the-title').length < 1) {
+				$('.wpr-create-template').before('<p class="wpr-fill-out-the-title"><em>Please fill the Title field.</em></p>');
+				$('.wpr-fill-out-the-title').css('margin-top', '4px');
+				$('.wpr-fill-out-the-title em').css({'color': '#7f8b96', 'font-size': 'smaller'});
+			}
 		} else {
 			$('.wpr-user-template-title').removeAttr('style');
 			$('.wpr-create-template + p').remove();
