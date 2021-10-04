@@ -43,7 +43,7 @@ class WPR_Templates_Actions {
 	/**
 	** Save Template Conditions
 	*/
-	public function wpr_save_template_conditions() {//tmp -sanitization
+	public function wpr_save_template_conditions() {
 		// Header
 		if ( isset($_POST['wpr_header_conditions']) ) {
 			update_option( 'wpr_header_conditions', $this->sanitize_conditions($_POST['wpr_header_conditions']) );
@@ -71,11 +71,7 @@ class WPR_Templates_Actions {
 	}
 
 	public function sanitize_conditions( $data ) {
-		if ( '' === $data ) {
-			return '';//tmp - only for development
-		} else {
-			return stripslashes( json_encode( array_filter( json_decode(stripcslashes($data), true) ) ) );
-		}
+		return stripslashes( json_encode( array_filter( json_decode(stripcslashes($data), true) ) ) );
 	}
 
 	/**

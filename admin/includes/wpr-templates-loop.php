@@ -33,8 +33,10 @@ class WPR_Templates_Loop {
 		// The Query
 		$user_templates = get_posts( $args );
 
+
+
 		// The Loop
-		echo '<ul class="wpr-'. $template .'-templates-list wpr-my-templates-list">';
+		echo '<ul class="wpr-'. esc_attr($template) .'-templates-list wpr-my-templates-list" data-pro="'. esc_attr(defined('WPR_ADDONS_PRO_LICENSE')) .'">';
 
 			if ( ! empty( $user_templates ) ) {
 				foreach ( $user_templates as $user_template ) {

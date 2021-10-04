@@ -541,12 +541,19 @@ jQuery(document).ready(function( $ ) {
 	*/
 	function saveConditions() {
 		$( '.wpr-save-conditions' ).on( 'click', function() {
+			var proActive = (1 === $('.wpr-my-templates-list').data('pro')) ? true : false;
+
 			// Current Template
 			var template = $(this).attr('data-slug'),
 				TemplateID = $(this).attr('data-id');
 
 			// Get Conditions
 			var conditions = getConditions( template, $( '#wpr_'+ currentTab +'_conditions' ).val() );
+
+			if ( (! proActive && 'global' !== conditions[template][0] && 'undefined' !== typeof conditions[template][0]) || (! proActive && conditions[template].length > 1) ) {
+				alert('Please select "Entire Site" to continue! Mutiple and custom conditions are fully supported in the Pro version.');
+				return;
+			}
 
 			// Set Conditions
 			$('#wpr_'+ currentTab +'_conditions').val( JSON.stringify(conditions) );
