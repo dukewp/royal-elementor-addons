@@ -35,7 +35,6 @@
 			$.each( widgets, function( widget, callback ) {
 				window.elementorFrontend.hooks.addAction( 'frontend/element_ready/' + widget, callback );
 			});
-
 		},
 
 		widgetNavMenu: function( $scope ) {
