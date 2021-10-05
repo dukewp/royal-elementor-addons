@@ -13,7 +13,7 @@ function wpr_addons_add_admin_menu() {
 }
 add_action( 'admin_menu', 'wpr_addons_add_admin_menu' );
 
-// Add Options page link to plugins screen
+// Add Settings page link to plugins screen
 function wpr_settings_link( $links ) {
     $settings_link = '<a href="admin.php?page=wpr-addons">Settings</a>';
     array_push( $links, $settings_link );

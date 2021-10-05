@@ -2,7 +2,6 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-use WprAddons\Classes\Utilities;
 use WprAddons\Admin\Includes\WPR_Templates_Loop;
 
 // Register Menus
@@ -41,72 +40,9 @@ function wpr_addons_theme_builder_page() {
     <input type="hidden" name="wpr_template" id="wpr_template" value="">
 
     <!-- Conditions Popup -->
-    <div class="wpr-condition-popup-wrap wpr-admin-popup-wrap">
-        <div class="wpr-condition-popup wpr-admin-popup">
-            <header>
-                <h2><?php esc_html_e( 'Where Do You Want to Display Your Template?', 'wpr-addons' ); ?></h2>
-                <p>
-                    <?php esc_html_e( 'Set the conditions that determine where your Template is used throughout your site.', 'wpr-addons' ); ?><br>
-                    <?php esc_html_e( 'For example, choose \'Entire Site\' to display the template across your site.', 'wpr-addons' ); ?>
-                </p>
-            </header>
-            <span class="close-popup dashicons dashicons-no-alt"></span>
+    <?php WPR_Templates_Loop::render_conditions_popup(); ?>
 
-            <!-- Conditions -->
-            <div class="wpr-conditions-wrap">
-                <div class="wpr-conditions-sample">
-                    <!-- Global -->
-                    <select name="global_condition_select" class="global-condition-select">
-                        <option value="global"><?php esc_html_e( 'Entire Site', 'wpr-addons' ); ?></option>
-                        <option value="archive"><?php esc_html_e( 'Archives', 'wpr-addons' ); ?></option>
-                        <option value="single"><?php esc_html_e( 'Singular', 'wpr-addons' ); ?></option>
-                    </select>
-                    <!-- Archive -->
-                    <select name="archives_condition_select" class="archives-condition-select">
-                        <option value="posts"><?php esc_html_e( 'Posts Archive', 'wpr-addons' ); ?></option>
-                        <option value="author"><?php esc_html_e( 'Author Archive', 'wpr-addons' ); ?></option>
-                        <option value="date"><?php esc_html_e( 'Date Archive', 'wpr-addons' ); ?></option>
-                        <option value="search"><?php esc_html_e( 'Search Results', 'wpr-addons' ); ?></option>
-                        <option value="categories" class="custom-ids"><?php esc_html_e( 'Post Categories', 'wpr-addons' ); ?></option>
-                        <option value="tags" class="custom-ids"><?php esc_html_e( 'Post Tags', 'wpr-addons' ); ?></option>
-                        <?php // Custom Taxonomies
-                            $custom_taxonomies = Utilities::get_custom_types_of( 'tax', true );
-                            foreach ($custom_taxonomies as $key => $value) {
-                                // Add Shop Archives
-                                if ( 'product_cat' === $key ) {
-                                    echo '<option value="products">'. esc_html__( 'Products Archive', 'wpr-addons' ) .'</option>';
-                                }
-                                // List Taxonomies
-                                echo '<option value="'. esc_attr($key) .'" class="custom-type-ids">'. esc_html($value) .'</option>';
-                            }
-                        ?>
-                    </select>
-                    <!-- Single -->
-                    <select name="singles_condition_select" class="singles-condition-select">
-                        <option value="front_page"><?php esc_html_e( 'Front Page', 'wpr-addons' ); ?></option>
-                        <option value="page_404"><?php esc_html_e( '404 Page', 'wpr-addons' ); ?></option>
-                        <option value="pages" class="custom-ids"><?php esc_html_e( 'Pages', 'wpr-addons' ); ?></option>
-                        <option value="posts" class="custom-ids"><?php esc_html_e( 'Posts', 'wpr-addons' ); ?></option>
-                        <?php // Custom Post Types
-                            $custom_taxonomies = Utilities::get_custom_types_of( 'post', true );
-                            foreach ($custom_taxonomies as $key => $value) {
-                                echo '<option value="'. esc_attr($key) .'" class="custom-type-ids">'. esc_html($value) .'</option>';
-                            }
-                        ?>
-                    </select>
-                    <input type="text" placeholder="<?php esc_html_e( 'Enter comma separated IDs', 'wpr-addons' ); ?>"  name="condition_input_ids"class="wpr-condition-input-ids">
-                    <span class="wpr-delete-template-conditions dashicons dashicons-no-alt"></span>
-                </div>
-            </div>
-            
-            <!-- Action Buttons -->
-            <span class="wpr-add-conditions"><?php esc_html_e( 'Add Conditions', 'wpr-addons' ); ?></span>
-            <span class="wpr-save-conditions"><?php esc_html_e( 'Save Conditions', 'wpr-addons' ); ?></span>
-
-        </div>
-    </div>
-
-    <!-- Render Create Templte Popup -->
+    <!-- Create Templte Popup -->
     <?php WPR_Templates_Loop::render_create_template_popup(); ?>
 
     <!-- Tabs -->
@@ -123,14 +59,14 @@ function wpr_addons_theme_builder_page() {
 
         <!-- Save Conditions -->
         <input type="hidden" name="wpr_header_conditions" id="wpr_header_conditions" value="<?php echo esc_attr(get_option('wpr_header_conditions', '[]')); ?>">
-        
+
         <?php WPR_Templates_Loop::render_theme_builder_templates( 'header' ); ?>
 
     <?php elseif ( $active_tab == 'wpr_tab_footer' ) : ?>
 
         <!-- Save Conditions -->
         <input type="hidden" name="wpr_footer_conditions" id="wpr_footer_conditions" value="<?php echo esc_attr(get_option('wpr_footer_conditions', '[]')); ?>">
-        
+
         <?php WPR_Templates_Loop::render_theme_builder_templates( 'footer' ); ?>
 
     <?php endif; ?>

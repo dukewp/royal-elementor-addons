@@ -550,7 +550,8 @@ jQuery(document).ready(function( $ ) {
 			// Get Conditions
 			var conditions = getConditions( template, $( '#wpr_'+ currentTab +'_conditions' ).val() );
 
-			if ( (! proActive && 'global' !== conditions[template][0] && 'undefined' !== typeof conditions[template][0]) || (! proActive && conditions[template].length > 1) ) {
+			// Don't save if not active
+			if ( !proActive && (('global' !== conditions[template][0] && 'undefined' !== typeof conditions[template][0]) || conditions[template].length > 1) ) {
 				alert('Please select "Entire Site" to continue! Mutiple and custom conditions are fully supported in the Pro version.');
 				return;
 			}
@@ -560,7 +561,8 @@ jQuery(document).ready(function( $ ) {
 
 			// AJAX Data
 			var data = {
-				action: 'wpr_save_template_conditions'
+				action: 'wpr_save_template_conditions',
+				template: template
 			};
 			data['wpr_'+ currentTab +'_conditions'] = JSON.stringify(conditions);
 
