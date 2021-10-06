@@ -86,6 +86,9 @@ class Plugin {
 		// Post Likes
 		require WPR_ADDONS_PATH . 'classes/wpr-post-likes.php';
 
+		// Post Likes
+		require WPR_ADDONS_PATH . 'extensions/particles.php';
+
 		// Rating Notice 
 		// require WPR_ADDONS_PATH . 'classes/rating-notice.php';	
 
