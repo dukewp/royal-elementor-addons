@@ -1,9 +1,9 @@
 <?php
-namespace WprAddons\extensions;
+namespace WprAddons\Extensions;
 
 use Elementor\Controls_Manager;
 
-class Particles {
+class Wpr_Particles {
 
 	private static $_instance = null;
 
@@ -16,23 +16,21 @@ class Particles {
 
 	public function register_controls( $element, $section_id, $args ) {
 
-		if ( ( 'section' === $element->get_name() && 'section_background' === $section_id ) || ( 'column' === $element->get_name() && 'section_style' === $section_id ) ) {
+		if ( ( 'section' === $element->get_name() && 'section_background' === $section_id ) ) {
 
 			$element->start_controls_section(
 				'wpr_particles',
 				[
 					'tab'   => Controls_Manager::TAB_STYLE,
-					'label' => __( 'WPR - Particles', 'wpr-addons' ),
+					'label' => esc_html__( 'WPR - Particles', 'wpr-addons' ),
 				]
 			);
 			$element->add_control(
 				'wpr_enable_particles',
 				[
 					'type'         => Controls_Manager::SWITCHER,
-					'label'        => __( 'Enable Particle Background', 'wts-eae' ),
+					'label'        => esc_html__( 'Enable Particle Background', 'wpr-addons' ),
 					'default'      => '',
-					'label_on'     => __( 'Yes', 'wts-eae' ),
-					'label_off'    => __( 'No', 'wts-eae' ),
 					'return_value' => 'yes',
 					'prefix_class' => 'wpr-particle-',
 					'render_type'  => 'template',
@@ -43,7 +41,7 @@ class Particles {
 				'wpr_particle_json',
 				[
 					'type'        => Controls_Manager::CODE,
-					'label'       => __( 'Add Particle Json', 'wts-eae' ),
+					'label'       => esc_html__( 'Add Particle Json', 'wpr-addons' ),
 					'default'     => '{"particles":{"number":{"value":80,"density":{"enable":true,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":0.5,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.1,"sync":false}},"size":{"value":3,"random":true,"anim":{"enable":false,"speed":40,"size_min":0.1,"sync":false}},"line_linked":{"enable":true,"distance":150,"color":"#ffffff","opacity":0.4,"width":1},"move":{"enable":true,"speed":6,"direction":"none","random":false,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":false,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"repulse"},"onclick":{"enable":true,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":400,"size":40,"duration":2,"opacity":8,"speed":3},"repulse":{"distance":200,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":true}',
 					'render_type' => 'template',
 					'condition'   => [
@@ -64,10 +62,10 @@ class Particles {
 		$old_template = $template;
 		ob_start();
 
-		echo '<div class="wpr-particle-wrapper" id="wpr-particle-{{ view.getID() }}" data-wpr-particles-editor=" {{ settings.wpr_particle_json }}"></div>';
+		echo '<div class="wpr-particle-wrapper" id="wpr-particle-{{ view.getID() }}" data-wpr-particles-editor="{{ settings.wpr_particle_json }}"></div>';
 
 		$particles_content = ob_get_contents();
-		
+
 		ob_end_clean();
 
 		return $template . $particles_content;
@@ -91,4 +89,4 @@ class Particles {
 
 }
 
-$particles = new Particles();
+$particles = new Wpr_Particles();
