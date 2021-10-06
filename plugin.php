@@ -99,6 +99,9 @@ class Plugin {
 
 			// Theme Builder
 			require WPR_ADDONS_PATH . 'admin/theme-builder.php';
+
+			// Theme Builder
+			require WPR_ADDONS_PATH . 'admin/popups.php';
 		}
 	}
 
@@ -161,11 +164,9 @@ class Plugin {
 	}
 
 	public function register_elementor_document_type( $documents_manager ) {
-		require WPR_ADDONS_PATH . 'modules/popup/document.php';
-		require WPR_ADDONS_PATH . 'modules/template-builder/document.php';
+		require WPR_ADDONS_PATH . 'modules/popup/wpr-popup.php';
 
-		$documents_manager->register_document_type( 'wpr-popup', 'Wpr_Popup' );
-		$documents_manager->register_document_type( 'wpr-template-builder', 'Wpr_Template_Builder' );
+		$documents_manager->register_document_type( 'wpr-popups', 'Wpr_Popup' );
 	}
 
 	public function enqueue_styles() {
@@ -533,7 +534,7 @@ class Plugin {
 		add_action( 'elementor/controls/controls_registered', [ $this, 'register_custom_controls' ] );
 
 		// Register Document Type
-		// add_action( 'elementor/documents/register', [ $this, 'register_elementor_document_type' ] );
+		add_action( 'elementor/documents/register', [ $this, 'register_elementor_document_type' ] );
 
 		// Frontend CSS
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_styles' ], 998 );

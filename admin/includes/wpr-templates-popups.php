@@ -27,8 +27,31 @@ class WPR_Templates_Popups {
 		// Elementor Frontend
 		self::$elementor_instance = \Elementor\Plugin::instance();
 
+		add_action( 'template_include', [ $this, 'set_post_type_template' ], 9999 );
+
 
 		add_action( 'wp_footer', [ $this, 'render_popups' ] );
+	}
+
+	/**
+	 * Set blank template for editor
+	 */
+	public function set_post_type_template( $template ) {
+
+		if ( is_singular( 'wpr_templates' ) ) {
+
+			// $template = jet_popup()->plugin_path( 'templates/single.php' );
+
+			if ( self::$elementor_instance->preview->is_preview_mode() ) {
+				$template = WPR_ADDONS_PATH . 'modules/popup/editor.php';
+			}
+
+			// do_action( 'jet-popups/template-include/found' );
+
+			return $template;
+		}
+
+		return $template;
 	}
 
 	/**
@@ -243,11 +266,6 @@ class WPR_Templates_Popups {
 	** Display Elementor Content
 	*/
 	public function display_elementor_content( $slug ) {
-		// Deny if not Elemenntor Canvas
-		if ( 'elementor_canvas' !== get_page_template_slug() ) {//tmp
-			// return;
-		}
-
 		$template_name = '';
 
 		$template_id = Utilities::get_template_id( $slug );

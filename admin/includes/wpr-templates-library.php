@@ -24,7 +24,7 @@ class WPR_Templates_Library {
 		// Register CPTs
 		add_action( 'init', [ $this, 'register_templates_library_cpt' ] );
 		add_action( 'template_redirect', [ $this, 'block_template_frontend' ] );
-		add_action( 'current_screen', [ $this, 'redirect_to_page_builder' ] );
+		// add_action( 'current_screen', [ $this, 'redirect_to_options_page' ] );
 
 		// Templates Shortcode
 		new WPR_Templates_Shortcode();
@@ -52,8 +52,7 @@ class WPR_Templates_Library {
 	/**
 	** Register Templates Library
 	*/
-
-	public function redirect_to_page_builder() {
+	public function redirect_to_options_page() {
 		if ( get_current_screen()->post_type == 'wpr_templates' && isset($_GET['action']) && $_GET['action'] == 'edit' ) {
 			wp_redirect('admin.php?page=wpr-theme-builder');
 		}
@@ -66,8 +65,8 @@ class WPR_Templates_Library {
 			'public'              => true,
 			'rewrite'             => false,
 			'show_ui'             => true,
-			'show_in_menu'        => false,
-			'show_in_nav_menus'   => false,
+			'show_in_menu'        => true,
+			'show_in_nav_menus'   => true,
 			'exclude_from_search' => true,
 			'capability_type'     => 'post',
 			'hierarchical'        => false,
@@ -99,6 +98,9 @@ class WPR_Templates_Library {
 		}
 	}
 
+	/**
+	*** Add elementor support for wpr_templates.
+	**/
 	function add_elementor_cpt_support() {
 		if ( ! is_admin() ) {
 			return;

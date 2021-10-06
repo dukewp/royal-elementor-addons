@@ -594,7 +594,7 @@ jQuery(document).ready(function( $ ) {
 	/*
 	** Highlight Templates with Active Conditions --------
 	*/
-	if ( $('body').hasClass('royal-addons_page_wpr-theme-builder') ) {
+	if ( $('body').hasClass('royal-addons_page_wpr-theme-builder') || $('body').hasClass('royal-addons_page_wpr-popups') ) {
 		var conditions = $( '#wpr_'+ currentTab +'_conditions' ).val(),
 			conditions = ('' === conditions || '[]' === conditions) ? {} : JSON.parse(conditions);
 
@@ -674,7 +674,7 @@ jQuery(document).ready(function( $ ) {
 	});
 
 
-	//TODO: Remove this
-	// $('.nav-tab-wrapper').after( '<p>'+ $('.nav-tab-wrapper').next('input').val() +'</p>' );
+	//TODO: Remove this - only for development
+	$('.nav-tab-wrapper').after( '<p>'+ $('.nav-tab-wrapper').next('input').val() +'</p>' );
 
 }); // end dom ready

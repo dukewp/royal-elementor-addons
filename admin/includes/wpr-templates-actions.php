@@ -93,7 +93,7 @@ class WPR_Templates_Actions {
 				wp_set_object_terms( $template_id, [sanitize_text_field($_POST['user_template_type']), 'user'], 'wpr_template_type' );
 
 				if ( 'popup' === $_POST['user_template_type'] ) {
-					update_post_meta( $template_id, '_elementor_template_type', 'wpr-popup' );
+					update_post_meta( $template_id, '_elementor_template_type', 'wpr-popups' );
 				} else {
 					update_post_meta( $template_id, '_elementor_template_type', 'wpr-template-builder' );
 					update_post_meta( $template_id, '_wpr_template_type', sanitize_text_field($_POST['user_template_type']) );
@@ -208,7 +208,7 @@ class WPR_Templates_Actions {
 	*/
 	public function templates_library_scripts( $hook ) {
 		// Deny if NOT Plugin Page
-		if ( 'toplevel_page_wpr-addons' != $hook && 'royal-addons_page_wpr-theme-builder' != $hook ) {
+		if ( 'toplevel_page_wpr-addons' != $hook && 'royal-addons_page_wpr-theme-builder' != $hook && 'royal-addons_page_wpr-popups' != $hook ) {
 			return;
 		}
 
