@@ -40,7 +40,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 	}
 	
 	public function get_script_depends() {
-		return [ 'imagesloaded', 'wpr-slick' ];
+		return [ 'imagesloaded', 'wpr-slick' ]; //, 'wpr-jarallax', 'wpr-jarallax-video'
 	}
 
     public function get_custom_help_url() {

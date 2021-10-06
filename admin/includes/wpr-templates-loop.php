@@ -55,7 +55,7 @@ class WPR_Templates_Loop {
 					echo '</li>';
 				}
 			} else {
-				echo '<li class="wpr-empty-templates-message">You don\'t have any templates yet!</li>'; //TODO: add Styles to this message
+				// echo '<li>You don\'t have any headers yet!</li>'; //TODO: add Styles to this message
 			}
 
 		echo '</ul>';

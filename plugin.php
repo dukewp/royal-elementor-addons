@@ -88,6 +88,7 @@ class Plugin {
 
 		// Post Likes
 		require WPR_ADDONS_PATH . 'extensions/particles.php';
+		require WPR_ADDONS_PATH . 'Extensions/wpr-parallax-scroll.php';
 
 		// Rating Notice 
 		// require WPR_ADDONS_PATH . 'classes/rating-notice.php';	
