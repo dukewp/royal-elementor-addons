@@ -14,14 +14,41 @@ class Wpr_Parallax_Scroll
 {
     public function __construct()
     {
+            // add_action('elementor/element/section/section_layout/after_section_end', [$this, 'section_particles'], 10);
+            // add_action('elementor/element/common/_section_style/after_section_end', [$this, 'content_protection'], 10);
+            // add_action('elementor/element/common/_section_style/after_section_end', [$this, 'section_tooltip'], 10);
+            ///////////////
             add_action('elementor/element/section/section_layout/after_section_end', [$this, 'section_parallax'], 10);
             add_action( 'elementor/section/print_template', [ $this, '_print_template' ], 10, 2 );
             // add_action( 'elementor/column/print_template', [ $this, '_print_template' ], 10, 2 );
             // add_action( 'elementor/element/print_template', [ $this, '_print_template' ], 10, 2 );
             add_action('elementor/frontend/column/before_render', [$this, '_before_render'], 10, 1);
             add_action('elementor/frontend/section/before_render', [$this, '_before_render'], 10, 1);
+            // add_action( 'elementor/element/after_add_attributes',  [ __CLASS__, 'add_attributes' ] );
             
     }
+
+    // public static function add_attributes( Element_Base $element ) {
+    //     // bail if any other element but section
+    //     if ( $element->get_name() !== 'section' ) return;
+    //     // bail if editor
+    //     if ( \Elementor\Plugin::instance()->editor->is_edit_mode() ) return;
+	// 	// grab the settings
+	// 	$settings = $element->get_settings_for_display();
+
+    //     if($settings['wpr_enable_jarallax']) { 
+	// 		$element->add_render_attribute( '_wrapper', [
+    //             'class' => 'jarallax',
+    //             'speed-data' => $settings['speed'],
+    //             'bg-image' => $settings['bg_image'],
+    //             'scroll-effect' => $settings['scroll_effect'],
+    //         ] );
+	// 		// $element->add_render_attribute( '_wrapper .elementor-element', [
+    //         //     'class' => 'jarallax-img',  
+    //         // ] );
+    //         self::get_jarallax_script_depends();
+    //     }
+    // }
 
     public function _before_render( $element ) {
         // bail if any other element but section
@@ -50,10 +77,15 @@ class Wpr_Parallax_Scroll
     public function _print_template( $template, $widget ) {
 		$old_template = $template;
 		ob_start();
-        ?>
-             <div class="jarallax" style="width: 100%; height: 100%; position: absolute; z-index: 0;">
-             </div>
-             <?php
+		?>
+		<!-- <#
+			view.addRenderAttribute('_wrapper', 'bg-image', bg_image);
+            console.log('something');
+		#> -->
+        <div class="try-jarallax" style="width: 100%; height: 100%; background: linear-gradient(#e66465, #9198e5); position: relative; z-index: 999;">
+            something cool
+        </div>
+		<?php
 		$parallax_content = ob_get_contents();
 		ob_end_clean();
 		$template = $parallax_content . $old_template;
