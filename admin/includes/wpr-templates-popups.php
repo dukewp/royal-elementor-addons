@@ -343,7 +343,6 @@ class WPR_Templates_Popups {
 			'popup_disable_page_scroll' => true,
 			'popup_overlay_disable_close' => false,
 			'popup_close_button_display_delay' => 0,
-			'popup_close_button_position' => 'inside',
 		];
 
 		// Determine Template

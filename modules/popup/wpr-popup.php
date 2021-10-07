@@ -566,7 +566,7 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 				'default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'display: none;',
-					'yes' => 'display: inherit;'
+					'yes' => 'display: block;'
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-popup-close-btn' => '{{VALUE}}',
@@ -587,42 +587,21 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 			]
 		);
 
-		$this->add_control(
-			'popup_close_button_position',
-			[
-				'label' => esc_html__( 'Position', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'inside',
-				'options' => [
-					'inside' => esc_html__( 'Inside', 'wpr-addons' ),
-					'outside' => esc_html__( 'Outside', 'wpr-addons' ),
-				],
-				'separator' => 'before',
-				'condition' => [
-					'popup_close_button_display' => 'yes'
-				]
-			]
-		);
-
 		$this->add_responsive_control(
 			'popup_close_button_position_vr',
 			[
 				'label' => esc_html__( 'Vertical Position', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px','%'],
+				'size_units' => ['px'],
 				'range' => [
 					'px' => [
-						'min' => 0,
-						'max' => 1000,
-					],
-					'%' => [
-						'min' => 0,
+						'min' => -100,
 						'max' => 100,
 					],
 				],				
 				'default' => [
-					'unit' => '%',
-					'size' => 5,
+					'unit' => 'px',
+					'size' => 10,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-popup-close-btn' => 'top: {{SIZE}}{{UNIT}};',
@@ -638,20 +617,16 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 			[
 				'label' => esc_html__( 'Horizontal Position', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px','%'],
+				'size_units' => ['px'],
 				'range' => [
 					'px' => [
-						'min' => 0,
-						'max' => 1000,
-					],
-					'%' => [
-						'min' => 0,
+						'min' => -100,
 						'max' => 100,
 					],
 				],				
 				'default' => [
-					'unit' => '%',
-					'size' => 5,
+					'unit' => 'px',
+					'size' => 10,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-popup-close-btn' => 'right: {{SIZE}}{{UNIT}};',
@@ -723,7 +698,7 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 					'left' => 20,
 				],
 				'selectors' => [
-					'{{WRAPPER}} div[data-elementor-type="wpr-popup"]' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} div[data-elementor-type="wpr-popups"]' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before'
 			]
@@ -935,7 +910,7 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 				],				
 				'default' => [
 					'unit' => 'px',
-					'size' => 35,
+					'size' => 20,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-popup-close-btn i' => 'font-size: {{SIZE}}{{UNIT}};',

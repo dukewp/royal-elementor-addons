@@ -27,7 +27,6 @@ $elementor_plugin = \Elementor\Plugin::$instance;
 
 			<!-- Popup Overlay & Close Button -->
 			<div class="wpr-popup-overlay"></div>
-			<div class="wpr-popup-close-btn"><i class="eicon-close"></i></div>		
 
 			<!-- Template Container -->
 			<div class="wpr-popup-container">

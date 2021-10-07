@@ -295,7 +295,7 @@
 /*--------------------------------------------------------------
 == Modal Popup Editor
 --------------------------------------------------------------*/
-.elementor-editor-wpr-popup .elementor-control-post_status {
+.elementor-editor-wpr-popups .elementor-control-post_status {
 	display: none !important;
 }
 
