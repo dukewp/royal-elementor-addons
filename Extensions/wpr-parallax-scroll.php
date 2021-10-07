@@ -109,7 +109,7 @@ class Wpr_Parallax_Scroll {
                 'step' => 0.1,
                 'default' => 1,
                 'render_type' => 'template',
-            ],
+            ]
         );
 
         $element->add_control(
