@@ -10,24 +10,19 @@ use Elementor\Control_Media;
 use Elementor\Controls_Stack;
 use Elementor\Element_Base;
 
-class Wpr_Parallax_Scroll
-{
+class Wpr_Parallax_Scroll {
     public function __construct()
     {
             add_action('elementor/element/section/section_layout/after_section_end', [$this, 'section_parallax'], 10);
             add_action( 'elementor/section/print_template', [ $this, '_print_template' ], 10, 2 );
-            // add_action( 'elementor/column/print_template', [ $this, '_print_template' ], 10, 2 );
-            // add_action( 'elementor/element/print_template', [ $this, '_print_template' ], 10, 2 );
-            add_action('elementor/frontend/column/before_render', [$this, '_before_render'], 10, 1);
             add_action('elementor/frontend/section/before_render', [$this, '_before_render'], 10, 1);
+            add_action( 'wp_enqueue_scripts', [ $this, 'get_jarallax_script_depends' ] );
             
     }
 
     public function _before_render( $element ) {
         // bail if any other element but section
         if ( $element->get_name() !== 'section' ) return;
-        // bail if editor
-        if ( \Elementor\Plugin::instance()->editor->is_edit_mode() ) return;
 		// grab the settings
 		$settings = $element->get_settings_for_display();
 
@@ -41,22 +36,21 @@ class Wpr_Parallax_Scroll
             // $element->add_render_attribute( '_wrapper .elementor-element', [
             //     'class' => 'jarallax-img',
             // ] );
-            self::get_jarallax_script_depends();
             // var_dump($settings['wpr_enable_jarallax']);
             // var_dump($element);
         }
     }
 
     public function _print_template( $template, $widget ) {
-		$old_template = $template;
 		ob_start();
         ?>
-             <div class="jarallax" style="width: 100%; height: 100%; position: absolute; z-index: 0;">
-             </div>
-             <?php
+        <div id="jarallax-container-0" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; z-index: -100;">
+        <!-- <div style="background-position: 50% 50%; background-size: cover; background-repeat: no-repeat; background-image: url(&quot;https://source.unsplash.com/random&quot;); position: fixed; top: 0px; left: 0px; width: 1205.6px; height: 625.4px; overflow: hidden; pointer-events: none; transform-style: preserve-3d; backface-visibility: hidden; will-change: transform, opacity; margin-top: 48.3px; transform: translate3d(0px, -19.26px, 0px);"></div> -->
+        </div>
+        <?php
 		$parallax_content = ob_get_contents();
 		ob_end_clean();
-		$template = $parallax_content . $old_template;
+		$template = $template . $parallax_content;
 		return $template;
 	}
 
@@ -102,7 +96,6 @@ class Wpr_Parallax_Scroll
                     'title' => __('Meet WPR Parallax', 'wpr-addons'),
                     'messages' => __('Create stunning Parallax effects.', 'wpr-addons'),
                 ]),
-                'prefix_class' => 'jarallax-test-'
             ]
         );
 
@@ -117,6 +110,7 @@ class Wpr_Parallax_Scroll
             'label_off' => __('No', 'wpr-addons'),
             'return_value' => 'yes',
             'render_type' => 'template',
+            'prefix_class' => 'jarallax-'
             ]
         );
         $element->add_control(
@@ -159,6 +153,7 @@ class Wpr_Parallax_Scroll
 				'default' => [
 					'url' => \Elementor\Utils::get_placeholder_image_src(),
 				],
+                'render_type' => 'template',
 			]
 		);
         
@@ -168,12 +163,12 @@ class Wpr_Parallax_Scroll
 
     public function teaser_template($texts)
     {
-        $html = '<div class="ea-nerd-box">
-            <div class="ea-nerd-box-icon">
+        $html = '<div class="">
+            <div class="">
                 <img src="' . WPR_ADDONS_ASSETS_URL . '/img/icon-128x128.png' . '">
             </div>
-            <div class="ea-nerd-box-title">' . $texts['title'] . '</div>
-            <div class="ea-nerd-box-message">' . $texts['messages'] . '</div>
+            <div class="">' . $texts['title'] . '</div>
+            <div class="">' . $texts['messages'] . '</div>
         </div>';
 
         return $html;
