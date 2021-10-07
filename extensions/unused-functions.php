@@ -73,6 +73,16 @@ class Wpr_Parallax_Scroll
             // var_dump($element);
         }
     }
+    public function _print_template( $template, $widget ) {
+		ob_start();
+        ?>
+        <div id="jarallax-container-0" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; z-index: -100;"><div style="background-position: 50% 50%; background-size: cover; background-repeat: no-repeat; background-image: url(&quot;https://source.unsplash.com/random&quot;); position: fixed; top: 0px; left: 0px; width: 1205.6px; height: 625.4px; overflow: hidden; pointer-events: none; transform-style: preserve-3d; backface-visibility: hidden; will-change: transform, opacity; margin-top: 48.3px; transform: translate3d(0px, -19.26px, 0px);"></div></div>
+        <?php
+		$parallax_content = ob_get_contents();
+		ob_end_clean();
+		$template = $template . $parallax_content;
+		return $template;
+	}
 
     public function _print_template( $template, $widget ) {
 		$old_template = $template;
@@ -214,3 +224,5 @@ class Wpr_Parallax_Scroll
 }
 
 $parallax = new Wpr_Parallax_Scroll();
+
+

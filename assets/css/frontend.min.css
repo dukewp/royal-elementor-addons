@@ -9965,6 +9965,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 	left: 0;
 	width: 100%;
 	height: 100%;
+	z-index: 0;
 }
 
 .jarallax-zoom {

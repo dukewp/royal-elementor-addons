@@ -30,7 +30,7 @@ class Wpr_Particles {
 
 	public function custom_json_particles($array, $element) {
 
-		return $element->add_responsive_control(
+		return $element->add_control(
 			'wpr_particle_json_custom',
 			[
 				'type'        => Controls_Manager::CODE,
@@ -49,34 +49,42 @@ class Wpr_Particles {
 
 		if ( ( 'section' === $element->get_name() && 'section_background' === $section_id ) ) {
 
-			$element->start_controls_section(
+			$element->start_controls_section (
 				'wpr_particles',
 				[
 					'tab'   => Controls_Manager::TAB_STYLE,
 					'label' => esc_html__( 'WPR - Particles', 'wpr-addons' ),
 				]
 			);
-			$element->add_control(
+			
+			// gives error when default is yes
+			$element->add_responsive_control (
 				'wpr_enable_particles',
 				[
-					'type'         => Controls_Manager::SWITCHER,
-					'label'        => esc_html__( 'Enable Particle Background', 'wpr-addons' ),
-					'default'      => '',
+					'type' => Controls_Manager::SWITCHER,
+					'label' => esc_html__( 'Enable Particle Background', 'wpr-addons' ),
+					'default' => 'no',
+					'widescreen_default' => 'no',
+					'laptop_default' => 'no',
+					'tablet_extra_default' => 'no',
+					'tablet_default' => 'no',
+					'mobile_extra_default' => 'no',
+					'mobile_default' => 'no',
 					'return_value' => 'yes',
-					'prefix_class' => 'wpr-particle-',
-					'render_type'  => 'template',
+					'prefix_class' => 'wpr-particle-%s',
+					'render_type' => 'template',
 				]
 			);
 
-			$element->add_control(
+			$element->add_control (
 				'which_particle',
 				[
 					'label' => __( 'Particles Selection', 'plugin-domain' ),
 					'type' => \Elementor\Controls_Manager::SELECT,
-					'default' => '',
+					'default' => 'wpr_particle_json',
 					'options' => [
-						'wpr_particle_json_custom'  => __( 'Custom JSON', 'plugin-domain' ),
 						'wpr_particle_json' => __( 'Predefined Styles', 'plugin-domain' ),
+						'wpr_particle_json_custom'  => __( 'Custom', 'plugin-domain' ),
 					],
 					'condition' => [
 						'wpr_enable_particles' => 'yes'
@@ -84,34 +92,28 @@ class Wpr_Particles {
 				]
 			);
 
-			$this->custom_json_particles($this->array_of_particles['snow'], $element);
+			$this->custom_json_particles( $this->array_of_particles['snow'], $element );
 
-			$element->add_responsive_control(
+			$element->add_control (
 				'wpr_particle_json',
 				[
 					'label' => __( 'Particle Effect', 'plugin-domain' ),
 					'type' => Controls_Manager::SELECT,
 					'default' => $this->array_of_particles['default'],
-					'widescreen_default' => $this->array_of_particles['snow'],
-					'laptop_default' => $this->array_of_particles['snow'],
-					'tablet_extra_default' => $this->array_of_particles['snow'],
-					'tablet_default' => $this->array_of_particles['snow'],
-					'mobile_extra_default' => $this->array_of_particles['pentagon'],
-					'mobile_default' => $this->array_of_particles['pentagon'],
 					'options' => [
 						$this->array_of_particles['default']  => esc_html__( 'Default', 'plugin-domain' ),
 
 						$this->array_of_particles['snow'] => esc_html__( 'Snow', 'plugin-domain' ),
 
-						 $this->array_of_particles['bubble'] => esc_html__( 'Bubble', 'plugin-domain' ),
+						$this->array_of_particles['bubble'] => esc_html__( 'Bubble', 'plugin-domain' ),
 
-						 $this->array_of_particles['pentagon'] => esc_html__('Pentagon', 'wpr-addons'),
+						$this->array_of_particles['pentagon'] => esc_html__('Pentagon', 'wpr-addons'),
 
-						 $this->array_of_particles['nasa'] => esc_html__('Nasa', 'wpr-addons'),
+						$this->array_of_particles['nasa'] => esc_html__('Nasa', 'wpr-addons'),
 					],
 					'condition'   => [
-							'which_particle' => 'wpr_particle_json',
-							'wpr_enable_particles' => 'yes'
+						'which_particle' => 'wpr_particle_json',
+						'wpr_enable_particles' => 'yes'
 					],
 				]
 			);
