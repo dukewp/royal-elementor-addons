@@ -29,7 +29,6 @@ class WPR_Templates_Popups {
 
 		add_action( 'template_include', [ $this, 'set_post_type_template' ], 9999 );
 
-
 		add_action( 'wp_footer', [ $this, 'render_popups' ] );
 	}
 
@@ -39,14 +38,9 @@ class WPR_Templates_Popups {
 	public function set_post_type_template( $template ) {
 
 		if ( is_singular( 'wpr_templates' ) ) {
-
-			// $template = jet_popup()->plugin_path( 'templates/single.php' );
-
-			if ( self::$elementor_instance->preview->is_preview_mode() ) {
+			if ( 'wpr-popups' === Utilities::get_elementor_template_type(get_the_ID()) && self::$elementor_instance->preview->is_preview_mode() ) {
 				$template = WPR_ADDONS_PATH . 'modules/popup/editor.php';
 			}
-
-			// do_action( 'jet-popups/template-include/found' );
 
 			return $template;
 		}
@@ -74,7 +68,7 @@ class WPR_Templates_Popups {
     		// Single
     		$this->single_pages_popup_conditions( $conditions );
 
-    		// Enqueue ScrolBar JS //tmp - check if displayed multiple times
+    		// Enqueue ScrolBar JS //TODO - check if displayed multiple times
     		wp_enqueue_script( 'wpr-popup-scroll-js', WPR_ADDONS_URL .'assets/js/lib/perfectscrollbar/perfect-scrollbar.min.js', [ 'jquery' ], '0.4.9' );
         }
 	}

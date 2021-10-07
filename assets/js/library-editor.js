@@ -89,7 +89,7 @@
 	var WprModalPopups = {
 
 		init: function() {
-			if ( ! $( 'body' ).hasClass( 'elementor-editor-wpr-popup' ) ) {
+			if ( ! $( 'body' ).hasClass( 'elementor-editor-wpr-popups' ) ) {
 				return;
 			}
 
@@ -255,11 +255,11 @@
 
 	$( window ).on( 'elementor:init', WprModalPopups.init );
 
-	// Modal Popups
+	// Theme Builder
 	var WprTemplateEditor = {
 
 		init: function() {
-			if ( ! $( 'body' ).hasClass( 'elementor-editor-wpr-template-builder' ) ) {
+			if ( ! $( 'body' ).hasClass( 'elementor-editor-wpr-theme-builder' ) ) {
 				return;
 			}
 
@@ -271,7 +271,7 @@
 
 			// Open Popup Settings
 			setTimeout(function() {
-						$( '#elementor-panel-footer-settings' ).trigger( 'click' );
+				$( '#elementor-panel-footer-settings' ).trigger( 'click' );
 			}, 500 );
 
 			// Popup Settings Notification

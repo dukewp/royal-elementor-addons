@@ -8,6 +8,7 @@ use WprAddons\Admin\Includes\WPR_Templates_Popups;
 use WprAddons\Admin\Includes\WPR_Templates_Actions;
 use WprAddons\Admin\Templates\WPR_Templates_Blocks;
 use WprAddons\Admin\Templates\WPR_Templates_Pages;
+use WprAddons\Classes\Utilities;
 
 /**
  * WPR_Templates_Library setup
@@ -52,9 +53,13 @@ class WPR_Templates_Library {
 	/**
 	** Register Templates Library
 	*/
-	public function redirect_to_options_page() {//TODO: Rediret to popups
+	public function redirect_to_options_page() {
 		if ( get_current_screen()->post_type == 'wpr_templates' && isset($_GET['action']) && $_GET['action'] == 'edit' ) {
-			wp_redirect('admin.php?page=wpr-theme-builder');
+			if ( 'wpr-popups' === Utilities::get_elementor_template_type($_GET['post']) ) {
+				wp_redirect('admin.php?page=wpr-popups');
+			} else {
+				wp_redirect('admin.php?page=wpr-theme-builder');
+			}
 		}
 	}
 

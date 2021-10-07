@@ -214,6 +214,17 @@ class Utilities {
 
 
 	/**
+	** Get Elementor Template Type
+	*/
+	public static function get_elementor_template_type( $id ) {
+		$post_meta = get_post_meta($id);
+		$template_type = isset($post_meta['_elementor_template_type'][0]) ? $post_meta['_elementor_template_type'][0] : false;
+
+        return $template_type;
+	}
+
+
+	/**
 	** Render Elementor Template
 	*/
 	public static function render_elementor_template( $slug ) {

@@ -95,7 +95,7 @@ class WPR_Templates_Actions {
 				if ( 'popup' === $_POST['user_template_type'] ) {
 					update_post_meta( $template_id, '_elementor_template_type', 'wpr-popups' );
 				} else {
-					update_post_meta( $template_id, '_elementor_template_type', 'wpr-template-builder' );
+					update_post_meta( $template_id, '_elementor_template_type', 'wpr-theme-builder' );
 					update_post_meta( $template_id, '_wpr_template_type', sanitize_text_field($_POST['user_template_type']) );
 				}
 			} else {

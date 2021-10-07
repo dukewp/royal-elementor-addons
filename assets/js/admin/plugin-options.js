@@ -675,6 +675,6 @@ jQuery(document).ready(function( $ ) {
 
 
 	//TODO: Remove this - only for development
-	$('.nav-tab-wrapper').after( '<p>'+ $('.nav-tab-wrapper').next('input').val() +'</p>' );
+	// $('.nav-tab-wrapper').after( '<p>'+ $('.nav-tab-wrapper').next('input').val() +'</p>' );
 
 }); // end dom ready
