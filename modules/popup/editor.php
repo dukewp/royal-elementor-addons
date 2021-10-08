@@ -31,11 +31,12 @@ $elementor_plugin = \Elementor\Plugin::$instance;
 			<!-- Template Container -->
 			<div class="wpr-popup-container">
 
-				<!-- Popup Image Overlay & Close Button -->
-				<div class="wpr-popup-image-overlay"></div>
+				<!-- Popup Close Button -->
 				<div class="wpr-popup-close-btn"><i class="eicon-close"></i></div>
 
-				<?php $elementor_plugin->modules_manager->get_modules( 'page-templates' )->print_content(); ?>
+				<div class="wpr-popup-container-inner">
+					<?php $elementor_plugin->modules_manager->get_modules( 'page-templates' )->print_content(); ?>
+				</div>
 
 			</div>
 

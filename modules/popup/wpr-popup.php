@@ -187,11 +187,23 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 		);
 
 		$this->add_control(
+			'popup_automatic_close_switch',
+			[
+				'label' => esc_html__( 'Automatic Closing Delay', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
 			'popup_automatic_close_delay',
 			[
-				'label' => esc_html__( 'Automatic Closing Delay (sec)', 'wpr-addons' ),
+				'label' => esc_html__( 'Set Closing Delay (sec)', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
-				'separator' => 'before',
+				'default' => 10,
+				'condition' => [
+					'popup_automatic_close_switch!' => '',
+				],
 			]
 		);
 
@@ -271,7 +283,7 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 				'default' => 'modal',
 				'options' => [
 					'modal' => esc_html__( 'Modal Popup', 'wpr-addons' ),
-					'notification' => esc_html__( 'Notification', 'wpr-addons' ),
+					'notification' => esc_html__( 'Top Bar Banner', 'wpr-addons' ),
 				],
 			]
 		);
@@ -327,7 +339,7 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 					'auto' => 'height: auto; z-index: 13;',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-popup-container' => '{{VALUE}}',
+					'{{WRAPPER}} .wpr-popup-container-inner' => '{{VALUE}}',
 				],
 			]
 		);
@@ -337,7 +349,7 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 			[
 				'label' => esc_html__( 'Custom Height', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px','%'],
+				'size_units' => ['px','vh'],
 				'range' => [
 					'px' => [
 						'min' => 0,
@@ -353,7 +365,7 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 					'size' => 500,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-popup-container' => 'height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-popup-container-inner' => 'height: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'popup_height' => 'custom'
@@ -444,7 +456,7 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 					],
                 ],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-popup-container' => 'align-items: {{VALUE}}',
+					'{{WRAPPER}} .wpr-popup-container-inner' => 'align-items: {{VALUE}}',
 				],
 				'condition' => [
 					'popup_display_as!' => 'notification',
@@ -455,9 +467,9 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 		$this->add_control(
 			'popup_animation',
 			[
-				'label' => esc_html__( 'Animation', 'wpr-addons' ),
+				'label' => esc_html__( 'Entance Animation', 'wpr-addons' ),
 				'type' => Controls_Manager::ANIMATION,
-				'label_block' => false,
+				'label_block' => true,
 				'frontend_available' => true,
 				'separator' => 'before',
 			]
@@ -475,7 +487,7 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 					'{{WRAPPER}} .wpr-popup-container' => 'animation-duration: {{SIZE}}s;',
 				],
 				'condition' => [
-					'popup_animation!' => '',
+					'popup_animation!' => ['', 'none'],
 				]
 			]
 		);
@@ -661,15 +673,7 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 						'default' => '#ffffff',
 					],
 				],
-				'selector' => '{{WRAPPER}} .wpr-popup-image-overlay'
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Css_Filter::get_type(),
-			[
-				'name' => 'popup_container_bg_overlay',
-				'selector' => '{{WRAPPER}} .wpr-popup-image-overlay',
+				'selector' => '{{WRAPPER}} .wpr-popup-container-inner'
 			]
 		);
 
@@ -698,30 +702,30 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 					'left' => 20,
 				],
 				'selectors' => [
-					'{{WRAPPER}} div[data-elementor-type="wpr-popups"]' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-popup-container-inner' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before'
 			]
 		);
 
-		$this->add_responsive_control(
-			'popup_container_margin',
-			[
-				'label' => esc_html__( 'Margin', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-template-popup-inner' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before'
-			]
-		);
+		// $this->add_responsive_control(
+		// 	'popup_container_margin',
+		// 	[
+		// 		'label' => esc_html__( 'Margin', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::DIMENSIONS,
+		// 		'size_units' => [ 'px', '%' ],
+		// 		'default' => [
+		// 			'top' => 0,
+		// 			'right' => 0,
+		// 			'bottom' => 0,
+		// 			'left' => 0,
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-template-popup' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+		// 		],
+		// 		'separator' => 'before'
+		// 	]
+		// );
 
 		$this->add_control(
 			'popup_container_radius',
@@ -736,7 +740,7 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 					'left' => 0,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-popup-container' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-popup-container-inner' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -746,10 +750,10 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 			Group_Control_Border::get_type(),
 			[
 				'name' => 'popup_container_border',
-				'label' => esc_html__( 'Border', 'jet-popup' ),
+				'label' => esc_html__( 'Border', 'wpr-addons' ),
 				'placeholder' => '1px',
 				'default' => '1px',
-				'selector' => '{{WRAPPER}} .wpr-popup-container',
+				'selector' => '{{WRAPPER}} .wpr-popup-container-inner',
 				'separator' => 'before'
 			]
 		);
@@ -758,7 +762,7 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'popup_container_shadow',
-				'selector' => '{{WRAPPER}} .wpr-popup-container'
+				'selector' => '{{WRAPPER}} .wpr-popup-container-inner'
 			]
 		);
 
@@ -769,6 +773,9 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 			[
 				'label' => esc_html__( 'Overlay', 'wpr-addons' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'popup_overlay_display' => 'yes'
+				]
 			]
 		);
 		
@@ -919,6 +926,29 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 		);
 
 		$this->add_control(
+			'popup_close_btn_box_size',
+			[
+				'label' => esc_html__( 'Box Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 10,
+						'max' => 100,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 35,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-popup-close-btn' => 'width: {{SIZE}}{{UNIT}};height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-popup-close-btn i' => 'line-height: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
 			'popup_close_btn_border_type',
 			[
 				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
@@ -957,25 +987,6 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 				'condition' => [
 					'popup_close_btn_border_type!' => 'none',
 				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'popup_close_btn_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-popup-close-btn' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before',
 			]
 		);
 

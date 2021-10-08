@@ -289,17 +289,17 @@ class WPR_Templates_Popups {
 
 		    		// Popup Overlay & Close Button
 	    			echo '<div class="wpr-popup-overlay"></div>';
-	    			echo '<div class="wpr-popup-close-btn"><i class="eicon-close"></i></div>';
 
 		    		// Template Container
 	    			echo '<div class="wpr-popup-container">';
 
-		    		// Popup Image Overlay & Close Button
-	    			echo '<div class="wpr-popup-image-overlay"></div>';
+		    		// Close Button
 	    			echo '<div class="wpr-popup-close-btn"><i class="eicon-close"></i></div>';
 
 		    		// Template Content
-					echo $get_elementor_content;
+	    			echo '<div class="wpr-popup-container-inner">';
+						echo $get_elementor_content;
+	    			echo '</div>';
 
 	    			echo '</div>';
 
@@ -330,7 +330,8 @@ class WPR_Templates_Popups {
 			'popup_stop_after_date_select' => date( 'Y-m-d H:i', strtotime( '+1 day' ) + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) ),
 			'popup_show_again_delay' => 1,
 			'popup_disable_esc_key' => false,
-			'popup_automatic_close_delay' => false,
+			'popup_automatic_close_switch' => false,
+			'popup_automatic_close_delay' => 10,
 			'popup_animation' => 'fade',
 			'popup_animation_duration' => 1,
 			'popup_show_for_roles' => '',
