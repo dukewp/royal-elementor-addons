@@ -12,10 +12,10 @@ use Elementor\Element_Base;
 
 class Wpr_Parallax_Scroll {
     public function __construct() {
-            add_action('elementor/element/section/section_layout/after_section_end', [$this, 'section_parallax'], 10);
-            add_action( 'elementor/section/print_template', [ $this, '_print_template' ], 10, 2 );
-            add_action('elementor/frontend/section/before_render', [$this, '_before_render'], 10, 1);
-            add_action( 'wp_enqueue_scripts', [ $this, 'get_jarallax_script_depends' ] );
+        add_action('elementor/element/section/section_layout/after_section_end', [$this, 'section_parallax'], 10);
+        add_action( 'elementor/section/print_template', [ $this, '_print_template' ], 10, 2 );
+        add_action('elementor/frontend/section/before_render', [$this, '_before_render'], 10, 1);
+        add_action( 'wp_enqueue_scripts', [ $this, 'get_jarallax_script_depends' ] );
     }
 
     public function _before_render( $element ) {
@@ -23,7 +23,7 @@ class Wpr_Parallax_Scroll {
         if ( $element->get_name() !== 'section' ) return;
 		// grab the settings
 		$settings = $element->get_settings_for_display();
-        // var_dump($settings['bg_image']);
+
         if($settings['wpr_enable_jarallax']) { 
 			$element->add_render_attribute( '_wrapper', [
                 'class' => 'jarallax',
@@ -31,9 +31,6 @@ class Wpr_Parallax_Scroll {
                 'bg-image' => $settings['bg_image']['url'],
                 'scroll-effect' => $settings['scroll_effect'],
             ] );
-            // $element->add_render_attribute( '_wrapper .elementor-element', [
-            //     'class' => 'jarallax-img',
-            // ] );
         }
     }
 
@@ -41,7 +38,7 @@ class Wpr_Parallax_Scroll {
     public function _print_template( $template, $widget ) {
 		ob_start();
 
-        echo '<div class="wpr-jarallax" scroll-effect-editor="{{settings.scroll_effect}}" bg-image-editor="{{settings.bg_image.url}}"></div>';
+        echo '<div class="wpr-jarallax" speed-data-editor="{{settings.speed}}" scroll-effect-editor="{{settings.scroll_effect}}" bg-image-editor="{{settings.bg_image.url}}"></div>';
         
 		$parallax_content = ob_get_contents();
 
@@ -74,24 +71,13 @@ class Wpr_Parallax_Scroll {
             ]
         );
 
-        $element->add_control(
-            'wpr_parallax_test',
-            [
-                'type' => Controls_Manager::RAW_HTML,
-                'raw' => $this->teaser_template([
-                    'title' => __('Meet WPR Parallax', 'wpr-addons'),
-                    'messages' => __('Create stunning Parallax effects.', 'wpr-addons'),
-                ]),
-            ]
-        );
-
         
       $element->add_control(
             'wpr_enable_jarallax',
             [
                 'type'  => Controls_Manager::SWITCHER,
                 'label' => __('Enable Parallax', 'wpr-addons'),
-                'default' => '',
+                'default' => 'no',
                 'label_on' => __('Yes', 'wpr-addons'),
                 'label_off' => __('No', 'wpr-addons'),
                 'return_value' => 'yes',
@@ -102,14 +88,17 @@ class Wpr_Parallax_Scroll {
         $element->add_control(
             'speed',
             [
-                'label' => __( 'Speed', 'plugin-domain' ),
+                'label' => __( 'Speed', 'wpr-addons' ),
                 'type' => \Elementor\Controls_Manager::NUMBER,
-                'min' => 2 - 3,
-                'max' => 2,
+                'min' => 2.0 - 3.0,
+                'max' => 2.0,
                 'step' => 0.1,
-                'default' => 1,
+                'default' => 1.4,
                 'render_type' => 'template',
-            ],
+                'condition' => [
+                    'wpr_enable_jarallax' => 'yes'
+                ]
+            ]
         );
 
         $element->add_control(
@@ -117,16 +106,18 @@ class Wpr_Parallax_Scroll {
 			[
 				'label' => __( 'Scroll Effect', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::SELECT,
-				'default' => 'zoom',
+				'default' => 'scale',
 				'options' => [
-					'zoom'  => __( 'Zoom', 'wpr-addons' ),
-					'scroll' => __( 'Scroll', 'wpr-addons' ),
-					'fade' => __( 'Fade', 'wpr-addons' ),
-					'shade' => __( 'Shade', 'wpr-addons' ),
-					'motion' => __( 'Motion', 'wpr-addons' ),
-					'multi-Layered' => __( 'Multi-Layered', 'wpr-addons' ),
+					'scale'  => esc_html__( 'Zoom', 'wpr-addons' ),
+					'scroll' => esc_html__( 'Scroll', 'wpr-addons' ),
+					'opacity' => esc_html__( 'Opacity', 'wpr-addons' ),
+                    'scale-opacity' => esc_html__('Scale Opacity', 'wpr-addons'),
+					'scroll-opacity' => esc_html__( 'Scroll Opacity', 'wpr-addons' )
 				],
                 'render_type' => 'template',
+                'condition' => [
+                    'wpr_enable_jarallax' => 'yes'
+                ]
 
 			]
 		);
@@ -134,27 +125,41 @@ class Wpr_Parallax_Scroll {
         $element->add_control(
 			'bg_image',
 			[
-				'label' => __( 'Choose Image', 'plugin-domain' ),
+				'label' => __( 'Choose Image', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::MEDIA,
 				'default' => [
 					'url' => \Elementor\Utils::get_placeholder_image_src(),
 				],
                 'render_type' => 'template',
+                'condition' => [
+                    'wpr_enable_jarallax' => 'yes'
+                ]
 			]
 		);
+
+        $element->add_control(
+            'wpr_parallax',
+            [
+                'type' => Controls_Manager::RAW_HTML,
+                'raw' => $this->teaser_template([
+                    'title' => __('', 'wpr-addons'),
+                    'messages' => __('', 'wpr-addons'),
+                ]),
+                'condition' => [
+                    'wpr_enable_jarallax' => 'yes'
+                ]
+            ]
+        );
         
 
         $element->end_controls_section();
     }
 
     public function teaser_template($texts) {
-        $html = '<div class="">
-                    <div class="">
-                        <img src="' . WPR_ADDONS_ASSETS_URL . '/img/icon-128x128.png' . '">
-                    </div>
+        $html = '<div class="primary" style="text-align: center;">
                     <div class="">' . $texts['title'] . '</div>
                     <div class="">' . $texts['messages'] . '</div>
-                    <button class="" onclick="elementor.reloadPreview();">Apply Changes</button>
+                    <button class="elementor-update-preview-button elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply Changes</button>
                 </div>';
 
         return $html;

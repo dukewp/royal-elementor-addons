@@ -88,7 +88,8 @@ class Plugin {
 
 		// Parallax-Particles
 		require WPR_ADDONS_PATH . 'extensions/particles.php';
-		require WPR_ADDONS_PATH . 'Extensions/wpr-parallax-scroll.php';
+		// require WPR_ADDONS_PATH . 'extensions/wpr-parallax-hover.php';
+		require WPR_ADDONS_PATH . 'extensions/wpr-parallax-scroll.php';
 
 		// Rating Notice 
 		// require WPR_ADDONS_PATH . 'classes/rating-notice.php';	
