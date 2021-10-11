@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 use WprAddons\Admin\Includes\WPR_Render_Templates;
 use WprAddons\Admin\Includes\WPR_Templates_Shortcode;
-use WprAddons\Admin\Includes\WPR_Templates_Popups;
+use WprAddons\Admin\Includes\WPR_Templates_Modal_Popups;
 use WprAddons\Admin\Includes\WPR_Templates_Actions;
 use WprAddons\Admin\Templates\WPR_Templates_Blocks;
 use WprAddons\Admin\Templates\WPR_Templates_Pages;
@@ -31,7 +31,7 @@ class WPR_Templates_Library {
 		new WPR_Templates_Shortcode();
 
 		// Popups
-		new WPR_Templates_Popups();
+		new WPR_Templates_Modal_Popups();
 
 		// All Templates
 		new WPR_Render_Templates();
@@ -70,8 +70,8 @@ class WPR_Templates_Library {
 			'public'              => true,
 			'rewrite'             => false,
 			'show_ui'             => true,
-			'show_in_menu'        => true,
-			'show_in_nav_menus'   => true,
+			'show_in_menu'        => false,
+			'show_in_nav_menus'   => false,
 			'exclude_from_search' => true,
 			'capability_type'     => 'post',
 			'hierarchical'        => false,

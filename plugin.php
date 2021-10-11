@@ -166,7 +166,12 @@ class Plugin {
 	public function register_elementor_document_type( $documents_manager ) {
 		require WPR_ADDONS_PATH . 'modules/popup/wpr-popup.php';
 
-		$documents_manager->register_document_type( 'wpr-popups', 'Wpr_Popup' );
+        if ( defined('WPR_ADDONS_PRO_LICENSE') ) {
+        	require WPR_ADDONS_PRO_PATH . 'modules/popup-pro/wpr-popup-pro.php';
+        	$documents_manager->register_document_type( 'wpr-popups', 'Wpr_Popup_Pro' );
+        } else {
+        	$documents_manager->register_document_type( 'wpr-popups', 'Wpr_Popup' );
+        }
 	}
 
 	public function enqueue_styles() {

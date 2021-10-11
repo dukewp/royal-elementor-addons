@@ -31,6 +31,56 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 		}
 	}
 
+	public function add_control_popup_trigger() {
+		$this->add_control(
+			'popup_trigger',
+			[
+				'label'   => esc_html__( 'Open Popup', 'wpr-addons' ),
+				'type'    => Controls_Manager::SELECT,
+				'default' => 'load',
+				'options' => [
+					'load' => esc_html__( 'On Page Load', 'wpr-addons' ),
+					'pro-sc' => esc_html__( 'On Page Scroll (Pro)', 'wpr-addons' ),
+					'pro-es' => esc_html__( 'On Scroll to Element (Pro)', 'wpr-addons' ),
+					'pro-dt' => esc_html__( 'After Specific Date (Pro)', 'wpr-addons' ),
+					'pro-ia'  => esc_html__( 'After User Inactivity (Pro)', 'wpr-addons' ),
+					'pro-ex' => esc_html__( 'After User Exit Intent (Pro)', 'wpr-addons' ),
+					'pro-cs' => esc_html__( 'Custom Trigger (Selector) (Pro)', 'wpr-addons' ),
+				],
+			]
+		);	
+	}
+
+	public function add_control_popup_show_again_delay() {
+		$this->add_control(
+			'popup_show_again_delay',
+			[
+				'label'   => esc_html__( 'Show Again Delay', 'wpr-addons' ),
+				'type'    => Controls_Manager::SELECT,
+				'default' => '0',
+				'options' => [
+					'0' => esc_html__( 'No Delay', 'wpr-addons' ),
+					'pro-6' => esc_html__( '1 Minute (Pro)', 'wpr-addons' ),
+					'pro-18' => esc_html__( '3 Minute (Pro)', 'wpr-addons' ),
+					'pro-30' => esc_html__( '5 Minute (Pro)', 'wpr-addons' ),
+					'pro-60' => esc_html__( '10 Minute (Pro)', 'wpr-addons' ),
+					'pro-180' => esc_html__( '30 Minute (Pro)', 'wpr-addons' ),
+					'pro-360' => esc_html__( '1 Hour (Pro)', 'wpr-addons' ),
+					'pro-1080' => esc_html__( '3 Hour (Pro)', 'wpr-addons' ),
+					'pro-2160' => esc_html__( '6 Hour (Pro)', 'wpr-addons' ),
+					'pro-4320' => esc_html__( '12 Hour (Pro)', 'wpr-addons' ),
+					'pro-8640' => esc_html__( '1 Day (Pro)', 'wpr-addons' ),
+					'pro-25920' => esc_html__( '3 Days (Pro)', 'wpr-addons' ),
+					'pro-60480' => esc_html__( '7 Days (Pro)', 'wpr-addons' ),
+					'pro-262800' => esc_html__( 'Month (Pro)', 'wpr-addons' ),
+				],
+				'separator' => 'before'
+			]
+		);
+	}
+
+	public function add_controls_group_popup_settings() {}
+
 	protected function _register_controls() {
 
 		$this->start_controls_section(
@@ -41,23 +91,17 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 			]
 		);
 
-		$this->add_control(
-			'popup_trigger',
-			[
-				'label'   => esc_html__( 'Open Popup', 'wpr-addons' ),
-				'type'    => Controls_Manager::SELECT,
-				'default' => 'load',
-				'options' => [
-					'load' => esc_html__( 'On Page Load', 'wpr-addons' ),
-					'scroll' => esc_html__( 'On Page Scroll', 'wpr-addons' ),
-					'element-scroll' => esc_html__( 'On Scroll to Element', 'wpr-addons' ),
-					'date' => esc_html__( 'After Specific Date', 'wpr-addons' ),
-					'inactivity'  => esc_html__( 'After User Inactivity', 'wpr-addons' ),
-					'exit' => esc_html__( 'After User Exit Intent', 'wpr-addons' ),
-					'custom' => esc_html__( 'Custom Trigger (Selector)', 'wpr-addons' ),
-				],
-			]
-		);
+		$this->add_control_popup_trigger();
+
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'popup', 'popup_trigger', [
+			'pro-sc',
+			'pro-es',
+			'pro-dt',
+			'pro-ia',
+			'pro-ex',
+			'pro-cs'
+		] );
 
 		$this->add_control(
 			'popup_load_delay',
@@ -137,133 +181,39 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 			]
 		);
 
-		$this->add_control(
-			'popup_show_again_delay',
-			[
-				'label'   => esc_html__( 'Show Again Delay', 'wpr-addons' ),
-				'type'    => Controls_Manager::SELECT,
-				'default' => '0',
-				'options' => [
-					'0' => esc_html__( 'No Delay', 'wpr-addons' ),
-					'60000' => esc_html__( '1 Minute', 'wpr-addons' ),
-					'180000' => esc_html__( '3 Minute', 'wpr-addons' ),
-					'300000' => esc_html__( '5 Minute', 'wpr-addons' ),
-					'600000' => esc_html__( '10 Minute', 'wpr-addons' ),
-					'1800000' => esc_html__( '30 Minute', 'wpr-addons' ),
-					'3600000' => esc_html__( '1 Hour', 'wpr-addons' ),
-					'10800000' => esc_html__( '3 Hour', 'wpr-addons' ),
-					'21600000' => esc_html__( '6 Hour', 'wpr-addons' ),
-					'43200000' => esc_html__( '12 Hour', 'wpr-addons' ),
-					'86400000' => esc_html__( '1 Day', 'wpr-addons' ),
-					'259200000' => esc_html__( '3 Days', 'wpr-addons' ),
-					'604800000' => esc_html__( '7 Days', 'wpr-addons' ),
-					'2628000000' => esc_html__( 'Month', 'wpr-addons' ),
-				],
-				'separator' => 'before'
-			]
-		);
+		$this->add_control_popup_show_again_delay();
 
-		$this->add_control(
-			'popup_stop_after_date',
-			[
-				'label' => esc_html__( 'Stop Showing After Date', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'separator' => 'before'
-			]
-		);
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'popup', 'popup_show_again_delay', [
+			'pro-6',
+			'pro-18',
+			'pro-30',
+			'pro-60',
+			'pro-180',
+			'pro-360',
+			'pro-1080',
+			'pro-2160',
+			'pro-4320',
+			'pro-8640',
+			'pro-25920',
+			'pro-60480',
+			'pro-262800'
+		] );
 
-		$this->add_control(
-			'popup_stop_after_date_select',
-			[
-				'label' => esc_html__( 'Select Date', 'wpr-addons' ),
-				'label_block' => false,
-				'type' => Controls_Manager::DATE_TIME,
-				'default' => date( 'Y-m-d H:i', strtotime( '+1 day' ) + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) ),
-				'description' => sprintf( __( 'Set according to your WordPress timezone: %s.', 'wpr-addons' ), Elementor\Utils::get_timezone_string() ),
-				'condition' => [
-					'popup_stop_after_date!' => '',
-				],
-			]
-		);
+		$this->add_controls_group_popup_settings();
 
-		$this->add_control(
-			'popup_automatic_close_switch',
-			[
-				'label' => esc_html__( 'Automatic Closing Delay', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'separator' => 'before'
-			]
-		);
-
-		$this->add_control(
-			'popup_automatic_close_delay',
-			[
-				'label' => esc_html__( 'Set Closing Delay (sec)', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 10,
-				'condition' => [
-					'popup_automatic_close_switch!' => '',
-				],
-			]
-		);
-
-		$this->add_control(
-			'popup_disable_esc_key',
-			[
-				'label' => esc_html__( 'Prevent Closing on "ESC" Key', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'separator' => 'before'
-			]
-		);
-
-		$this->add_control(
-			'popup_show_for_roles',
-			[
-				'label' => esc_html__( 'Show For Roles', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT2,
-				'options' => Utilities::get_user_roles(),
-				'multiple' => 'true',
-				'separator' => 'before'
-			]
-		);
-
-		$this->add_control(
-			'popup_show_via_referral',
-			[
-				'label' => esc_html__( 'Show according to URL Keyword', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'separator' => 'before'
-			]
-		);
-
-		$this->add_control(
-			'popup_referral_keyword',
-			[
-				'label' => esc_html__( 'Enter Keyword', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => '',
-				'description' => 'Popup will show up if the URL contains this Keyword.',
-				'condition' => [
-					'popup_show_via_referral' => 'yes',
+		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+			$this->add_control(
+				'group_popup_settings_pro_notice',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => '<a onclick="showOptionsImage()" class="wpr-show-img" style="cursor:pointer;">Click Here</a> to see what options <br> are available in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-popup-pro#purchasepro" target="_blank">Pro version</a></strong>
+					<img src="'. WPR_ADDONS_ASSETS_URL .'img/pro-options/group_popup_settings.jpg" style="display:none;position: absolute;top: 80px;left: 0;z-index: 99;border: 1px solid #93003C;">
+					<script>function showOptionsImage(){jQuery(document).on("click",function(){jQuery(".elementor-control .wpr-pro-notice img").hide()}),setTimeout(function(){jQuery(".elementor-control .wpr-pro-notice img").show()},100)}</script>',
+					'content_classes' => 'wpr-pro-notice',
 				]
-			]
-		);
-
-		$this->add_responsive_control(
-			'popup_show_on_device',
-			[
-				'label' => esc_html__( 'Show on this Device', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
-				'widescreen_default' => 'yes',
-				'laptop_default' => 'yes',
-				'tablet_extra_default' => 'yes',
-				'tablet_default' => 'yes',
-				'mobile_extra_default' => 'yes',
-				'mobile_default' => 'yes',
-				'separator' => 'before'
-			]
-		);
+			);
+		}
 
 		$this->end_controls_section();
 

@@ -7,11 +7,11 @@ use WprAddons\Classes\Utilities;
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
- * WPR_Templates_Popups setup
+ * WPR_Templates_Modal_Popups setup
  *
  * @since 1.0
  */
-class WPR_Templates_Popups {
+class WPR_Templates_Modal_Popups {
 
 	/**
 	** Instance of Elemenntor Frontend class.
@@ -59,174 +59,23 @@ class WPR_Templates_Popups {
 
 	    	// Global
     		if ( isset( $conditions['global'] ) ) {
-    			$this->display_popups_by_location( $conditions, 'global' );
+    			WPR_Templates_Modal_Popups::display_popups_by_location( $conditions, 'global' );
     		}
 
-    		// Archive
-    		$this->archive_pages_popup_conditions( $conditions );
+    		// Custom
+			if ( defined('WPR_ADDONS_PRO_LICENSE') ) {
+				// Archive
+				\WprAddonsPro\Classes\Extension::archive_pages_popup_conditions( $conditions );
 
-    		// Single
-    		$this->single_pages_popup_conditions( $conditions );
+				// Single
+				\WprAddonsPro\Classes\Extension::single_pages_popup_conditions( $conditions );
+			}
+
 
     		// Enqueue ScrolBar JS //TODO - check if displayed multiple times
     		wp_enqueue_script( 'wpr-popup-scroll-js', WPR_ADDONS_URL .'assets/js/lib/perfectscrollbar/perfect-scrollbar.min.js', [ 'jquery' ], '0.4.9' );
         }
 	}
-
-    /**
-    ** Archive Pages Popup Conditions
-    */
-    public function archive_pages_popup_conditions( $conditions ) {
-    	$term_id = '';
-    	$term_name = '';
-    	$queried_object = get_queried_object();
-
-    	// Get Terms
-    	if ( ! is_null( $queried_object ) ) {
-    		if ( isset( $queried_object->term_id ) && isset( $queried_object->taxonomy ) ) {
-		        $term_id   = $queried_object->term_id;
-		        $term_name = $queried_object->taxonomy;
-    		}
-    	}
-
-        // Reset
-        $template = null;
-
-		// Archive Pages (includes search)
-		if ( is_archive() || is_search() ) {
-			if ( is_archive() && ! is_search() ) {
-				// Author
-				if ( is_author() ) {
-					if ( isset( $conditions['archive/author'] ) ) {
-	    				$this->display_popups_by_location( $conditions, 'archive/author' );
-					}
-				}
-
-				// Date
-				if ( is_date() ) {
-					if ( isset( $conditions['archive/date'] ) ) {
-	    				$this->display_popups_by_location( $conditions, 'archive/date' );
-					}
-				}
-
-				// Category
-				if ( is_category() ) {
-					if ( isset( $conditions['archive/categories/'. $term_id] ) ) {
-	    				$this->display_popups_by_location( $conditions, 'archive/categories/'. $term_id );
-					}
-
-					if ( isset( $conditions['archive/categories/all'] ) ) {
-	    				$this->display_popups_by_location( $conditions, 'archive/categories/all' );
-					}
-				}
-
-				// Tag
-				if ( is_tag() ) {
-					if ( isset( $conditions['archive/tags/'. $term_id] ) ) {
-	    				$this->display_popups_by_location( $conditions, 'archive/tags/'. $term_id );
-					}
-
-					if ( isset( $conditions['archive/tags/all'] ) ) {
-	    				$this->display_popups_by_location( $conditions, 'archive/tags/all' );
-					}
-				}
-
-				// Custom Taxonomies
-				if ( is_tax() ) {
-					if ( isset( $conditions['archive/'. $term_name .'/'. $term_id] ) ) {
-	    				$this->display_popups_by_location( $conditions, 'archive/'. $term_name .'/'. $term_id );
-					}
-
-					if ( isset( $conditions['archive/'. $term_name .'/all'] ) ) {
-	    				$this->display_popups_by_location( $conditions, 'archive/'. $term_name .'/all' );
-					}
-				}
-
-				// Products
-				if ( class_exists( 'WooCommerce' ) && is_shop() ) {
-					if ( isset( $conditions['archive/products'] ) ) {
-	    				$this->display_popups_by_location( $conditions, 'archive/products' );
-					}
-		        }
-
-			// Search Page
-			} else {
-				if ( isset( $conditions['archive/search'] ) ) {
-    				$this->display_popups_by_location( $conditions, 'archive/search' );
-				}
-	        }
-
-	    // Posts Page
-		} elseif ( Utilities::is_blog_archive() ) {
-			if ( isset( $conditions['archive/posts'] ) ) {
-				$this->display_popups_by_location( $conditions, 'archive/posts' );
-			}
-		}
-    }
-
-
-    /**
-    ** Single Pages Popup Conditions
-    */
-    public function single_pages_popup_conditions( $conditions ) {
-        global $post;
-
-        // Get Posts
-        $post_id   = is_null($post) ? '' : $post->ID;
-        $post_type = is_null($post) ? '' : $post->post_type;
-
-        // Reset
-        $template = null;
-
-		// Single Pages
-		if ( is_single() || is_front_page() || is_page() || is_404() ) {
-
-			if ( is_single() ) {
-				// Blog Posts
-				if ( 'post' == $post_type ) {
-					if ( isset( $conditions['single/posts/'. $post_id] ) ) {
-	    				$this->display_popups_by_location( $conditions, 'single/posts/'. $post_id );
-					}
-
-					if ( isset( $conditions['single/posts/all'] ) ) {
-	    				$this->display_popups_by_location( $conditions, 'single/posts/all' );
-					}
-
-				// CPT
-		        } else {
-					if ( isset( $conditions['single/'. $post_type .'/'. $post_id] ) ) {
-	    				$this->display_popups_by_location( $conditions, 'single/'. $post_type .'/'. $post_id );
-					}
-
-					if ( isset( $conditions['single/'. $post_type .'/all'] ) ) {
-	    				$this->display_popups_by_location( $conditions, 'single/'. $post_type .'/all' );
-					}
-		        }
-			} else {
-				// Front page
-				if ( is_front_page() ) {
-					if ( isset( $conditions['single/front_page'] ) ) {
-	    				$this->display_popups_by_location( $conditions, 'single/front_page' );
-					}
-				// Error 404 Page
-				} elseif ( is_404() ) {
-					if ( isset( $conditions['single/page_404'] ) ) {
-	    				$this->display_popups_by_location( $conditions, 'single/page_404' );
-					}
-				// Single Page
-				} elseif ( is_page() ) {
-					if ( isset( $conditions['single/pages/'. $post_id] ) ) {
-	    				$this->display_popups_by_location( $conditions, 'single/pages/'. $post_id );
-					}
-
-					if ( isset( $conditions['single/pages/all'] ) ) {
-	    				$this->display_popups_by_location( $conditions, 'single/pages/all' );
-					}
-		        }
-			}
-
-        }
-    }
 
     /**
     ** Reverse Template Conditions
@@ -250,20 +99,20 @@ class WPR_Templates_Popups {
     /**
     ** Display Popups by Location
     */
-	public function display_popups_by_location( $conditions, $page ) {
+	public static function display_popups_by_location( $conditions, $page ) {
     	foreach ( $conditions[$page] as $key => $popup ) {
-    		$this->display_elementor_content( $popup );
+    		WPR_Templates_Modal_Popups::render_popup_content( $popup );
     	}
 	}
 
 	/**
 	** Display Elementor Content
 	*/
-	public function display_elementor_content( $slug ) {
+	public static function render_popup_content( $slug ) {
 		$template_name = '';
 
 		$template_id = Utilities::get_template_id( $slug );
-		$get_settings = $this->get_template_settings( $slug );
+		$get_settings = WPR_Templates_Modal_Popups::get_template_settings( $slug );
 		$get_elementor_content = self::$elementor_instance->frontend->get_builder_content( $template_id, false );
 
 		if ( '' === $get_elementor_content ) {
@@ -279,7 +128,7 @@ class WPR_Templates_Popups {
 		$template_settings_attr = "data-settings='". $get_encoded_settings ."'";
 
 		// Return if NOT available for current user
-		if ( ! $this->check_available_user_roles( $get_settings['popup_show_for_roles'] ) ) {
+		if ( ! WPR_Templates_Modal_Popups::check_available_user_roles( $get_settings['popup_show_for_roles'] ) ) {
 			return;
 		}
 
@@ -311,7 +160,7 @@ class WPR_Templates_Popups {
     /**
     ** Get Template Settings
     */
-	public function get_template_settings( $slug ) {
+	public static function get_template_settings( $slug ) {
     	$settings = [];
     	$defaults = [];
 
@@ -363,7 +212,7 @@ class WPR_Templates_Popups {
 	/**
 	** Check Available User Rols
 	*/
-	public function check_available_user_roles( $selected_roles ) {
+	public static function check_available_user_roles( $selected_roles ) {
 		if ( empty( $selected_roles ) ) {
 			return true;
 		}

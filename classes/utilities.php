@@ -44,8 +44,8 @@ class Utilities {
 			'Site Logo' => ['logo', '', ''],
 			'Back to Top' => ['back-to-top', '', ''],
 			'Phone Call' => ['phone-call', '', ''],
+			'Popup Trigger' => ['popup-trigger', '', ''],
 			// 'Author Box' => 'author-box',
-			// 'Popup Trigger' => 'popup-trigger',
 		];
 	}
 
