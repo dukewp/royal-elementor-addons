@@ -8,8 +8,8 @@
 			$(document).ready(function() {
 				if ( ! $( '.wpr-template-popup' ).length || WprPopups.editorCheck() ) {
 					// ScrollBar in Editor
-					if ( $( '.wpr-popup-container' ).length ) {
-						$( '.wpr-popup-container' ).perfectScrollbar();
+					if ( $( '.wpr-popup-container-inner' ).length ) {
+						$( '.wpr-popup-container-inner' ).perfectScrollbar();
 					}
 
 					return;
@@ -134,7 +134,7 @@
 				}
 
 				// Enable Scrollbar
-				popup.find( '.wpr-popup-container' ).perfectScrollbar();
+				popup.find( '.wpr-popup-container-inner' ).perfectScrollbar();
 			});
 		}, // End openPopup
 
@@ -158,18 +158,8 @@
 			popup.addClass( 'wpr-popup-open' ).show();
 			popup.find( '.wpr-popup-container' ).addClass( 'animated '+ settings.popup_animation );
 
-			// Stretch Popup Background
-			WprPopups.fixImageOverlay( popup );
-
 			// Overlay Fade In
 			$( '.wpr-popup-overlay' ).hide().fadeIn();
-
-			// Close Button Position
-			if ( 'inside' === settings.popup_close_button_position ) {
-				popup.find( '.wpr-template-popup-inner' ).children( '.wpr-popup-close-btn' ).remove();
-			} else {
-				popup.find( '.wpr-popup-container' ).children( '.wpr-popup-close-btn' ).remove();
-			}
 
 			// Close Button Show Up Delay
 			popup.find( '.wpr-popup-close-btn' ).css( 'opacity', '0' );
@@ -181,7 +171,7 @@
 
 
 			// Close Automatically
-			if ( false !== settings.popup_automatic_close_delay ) {
+			if ( false !== settings.popup_automatic_close_switch ) {
 				setTimeout(function() {
 					WprPopups.closePopup( popup );
 				}, settings.popup_automatic_close_delay * 1000 );
@@ -341,7 +331,7 @@
 				dataSettings = JSON.parse( popup.attr( 'data-settings' ) ),
 				currentURL = window.location.href;
 
-			if ( 'yes' === dataSettings.popup_show_via_referral ) {
+			if ( 'yes' === dataSettings.popup_show_via_referral && -1 === currentURL.indexOf('wpr_templates=user-popup') ) {
 				if ( currentURL.indexOf( dataSettings.popup_referral_keyword ) == -1 ) {
 					return;
 				}
@@ -395,7 +385,7 @@
 			}
 		},
 
-		checkAvailableDevice: function( popup, settings ) {
+		checkAvailableDevice: function( popup, settings ) {//TODO: Add all 7 device support
 			var viewport = $( 'body' ).prop( 'clientWidth' );
 
 			if ( viewport > 1024 ) {
@@ -407,25 +397,10 @@
 			}
 		},
 
-		// Editor Check
 		getID: function( popup ) {
 			var id = popup.attr( 'id' );
 
 			return id.replace( 'wpr-popup-id-', '' );
-		},
-
-		fixImageOverlay: function( popup ) {
-			// If it's Auto Hieght
-			if ( '13' === popup.find( '.wpr-popup-container' ).css('z-index') ) {
-				return false;
-			}
-			
-			var containerHeight = popup.find( '.wpr-popup-container' ).height(),
-				contentHeight = popup.find( '[data-elementor-type="wpr-popup"]' ).outerHeight();
-
-			var height = containerHeight >= contentHeight ? containerHeight : contentHeight;
-
-			popup.find( '.wpr-popup-image-overlay' ).css( 'height', height  +'px' );
 		},
 
 		// Editor Check

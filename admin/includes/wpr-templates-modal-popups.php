@@ -73,7 +73,7 @@ class WPR_Templates_Modal_Popups {
 
 
     		// Enqueue ScrolBar JS //TODO - check if displayed multiple times
-    		wp_enqueue_script( 'wpr-popup-scroll-js', WPR_ADDONS_URL .'assets/js/lib/perfectscrollbar/perfect-scrollbar.min.js', [ 'jquery' ], '0.4.9' );
+    		wp_enqueue_script( 'wpr-popup-scroll-js', WPR_ADDONS_URL .'assets/js/lib/perfect-scrollbar/perfect-scrollbar.min.js', [ 'jquery' ], '0.4.9' );
         }
 	}
 
