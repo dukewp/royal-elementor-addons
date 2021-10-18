@@ -15,6 +15,8 @@ class Wpr_Particles {
         add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 	}
 
+	public $default_particles = '{"particles":{"number":{"value":80,"density":{"enable":true,"value_area":800}},"color":{"value":"#000000"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":0.5,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.1,"sync":false}},"size":{"value":3,"random":true,"anim":{"enable":false,"speed":40,"size_min":0.1,"sync":false}},"line_linked":{"enable":true,"distance":150,"color":"#000000","opacity":0.4,"width":1},"move":{"enable":true,"speed":6,"direction":"none","random":false,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":false,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"repulse"},"onclick":{"enable":true,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":400,"size":40,"duration":2,"opacity":8,"speed":3},"repulse":{"distance":200,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":true}' ;
+
 	public function array_of_particles() {  
 		return [
 			'default' => '{"particles":{"number":{"value":80,"density":{"enable":true,"value_area":800}},"color":{"value":"#000000"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":0.5,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.1,"sync":false}},"size":{"value":3,"random":true,"anim":{"enable":false,"speed":40,"size_min":0.1,"sync":false}},"line_linked":{"enable":true,"distance":150,"color":"#000000","opacity":0.4,"width":1},"move":{"enable":true,"speed":6,"direction":"none","random":false,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":false,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"repulse"},"onclick":{"enable":true,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":400,"size":40,"duration":2,"opacity":8,"speed":3},"repulse":{"distance":200,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":true}',
@@ -54,7 +56,7 @@ class Wpr_Particles {
 			$element->start_controls_section (
 				'wpr_particles',
 				[
-					'tab'   => Controls_Manager::TAB_STYLE,
+					'tab'   => Controls_Manager::TAB_LAYOUT,
 					'label' => esc_html__( 'WPR - Particles', 'wpr-addons' ),
 				]
 			);
@@ -87,6 +89,9 @@ class Wpr_Particles {
 					]
 				]
 			);
+
+			
+			$this->custom_json_particles( $this->default_particles, $element );
 
 			$element->add_control (
 				'wpr_particle_json',
@@ -176,9 +181,9 @@ class Wpr_Particles {
 					'label' => __( 'Particles Speed', 'wpr-addons' ),
 					'type' => \Elementor\Controls_Manager::NUMBER,
 					'min' => 0,
-					'max' => 200,
-					'step' => 5,
-					'default' => 40,
+					'max' => 50,
+					'step' => 3,
+					'default' => 6,
 					'render_type' => 'template',
 					'condition'   => [
 						'which_particle' => 'wpr_particle_json',
@@ -200,7 +205,26 @@ class Wpr_Particles {
 				]
 			);
 
-			$this->custom_json_particles( $this->array_of_particles()['default'], $element );
+			$element->add_control(
+				'particles_z_index',
+				[
+					'label' => __( 'Z-Index', 'wpr-addons' ),
+					'type' => \Elementor\Controls_Manager::NUMBER,
+					'min' => -99,
+					'max' => 999,
+					'step' => 1,
+					'default' => 0,
+					'render_type' => 'template',
+					'selectors' => [
+						'{{WRAPPER}} .wpr-particle-wrapper' => 'z-index: {{VALUE}};',
+					],
+					'condition'   => [
+						'which_particle' => 'wpr_particle_json',
+						'wpr_enable_particles' => 'yes'
+					]
+				]
+			);
+
 
 
             $element->end_controls_section();
@@ -215,7 +239,7 @@ class Wpr_Particles {
 	
 		ob_start();
 
-		echo '<div class="wpr-particle-wrapper" id="wpr-particle-{{ view.getID() }}" data-wpr-particles-editor="{{ settings[settings.which_particle] }}" wpr-quantity="{{settings.quantity}}" wpr-color="{{settings.particles_color}}" wpr-speed="{{settings.particles_speed}}" wpr-shape="{{settings.particles_shape}}" wpr-size="{{settings.particles_size}}"></div>';
+		echo '<div class="wpr-particle-wrapper" id="wpr-particle-{{ view.getID() }}" data-wpr-particles-editor="{{ settings[settings.which_particle] }}" particle-source="{{settings.which_particle}}" wpr-quantity="{{settings.quantity}}" wpr-color="{{settings.particles_color}}" wpr-speed="{{settings.particles_speed}}" wpr-shape="{{settings.particles_shape}}" wpr-size="{{settings.particles_size}}"></div>';
 
 		$particles_content = ob_get_contents();
 
@@ -234,6 +258,7 @@ class Wpr_Particles {
 		if ( $settings['wpr_enable_particles'] === 'yes' ) {
 			$element->add_render_attribute( '_wrapper', [
 				'data-wpr-particles' => $settings[$settings['which_particle']],
+				'particle-source' => $settings['which_particle'],
 				'wpr-quantity' => $settings['quantity'],
 				'wpr-color' => $settings['particles_color'],
 				'wpr-speed' => $settings['particles_speed'],
@@ -249,4 +274,4 @@ class Wpr_Particles {
 
 }
 
-$particles = new Wpr_Particles();
+new Wpr_Particles();

@@ -9968,26 +9968,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 	z-index: 0;
 }
 
-.jarallax-zoom {
-    transform: scale(1.2);
-	overflow: hidden;
-    transition: all 0.5s ease;
-}
-
-.jarallax-fade {
-    filter: grayscale(100%);
-    transition: all 0.6s ease;
-}
-
-.jarallax-shade {
-    opacity: 0.5;
-    transition: all 0.2s ease;
-}
-.jarallax-motion {
-    transform: translate(30%);
-    transition: all 0.9s ease-in-out;
-}
-
 .jarallax {
     position: relative;
 	transition: all 0.9s ease-in-out;
@@ -10003,6 +9983,17 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     height: 100%;
     z-index: -1;
     /* support for plugin https://github.com/bfred-it/object-fit-images */
+}
+
+.scene {
+    position: absolute;
+	top: 0;
+	left: 0;
+    height: 100%;
+    width: 100%;
+}
+.scene div {
+    position: relative;
 }
 
 

@@ -1,4 +1,4 @@
-( function( $ ) {//TODO: manage comments
+( function( $, window ) {//TODO: manage comments
 
 	"use strict";
 
@@ -321,4 +321,4 @@
 		});
 	}
 
-}( jQuery ) );
+}( jQuery, window ) );
