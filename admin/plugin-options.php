@@ -43,7 +43,7 @@ function wpr_register_addons_settings() {
     // Extensions
     register_setting('wpr-extension-settings', 'wpr-particles-toggle');
     register_setting('wpr-extension-settings', 'wpr-parallax-toggle');
-    register_setting('wpr-extension-settings', 'wpr-custom-css-toggle');
+    // register_setting('wpr-extension-settings', 'wpr-custom-css-toggle');
 
     // Element Toggle
     foreach ( Utilities::get_registered_modules() as $title => $data ) {

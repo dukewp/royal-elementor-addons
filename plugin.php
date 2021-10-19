@@ -87,11 +87,11 @@ class Plugin {
 		require WPR_ADDONS_PATH . 'classes/wpr-post-likes.php';
 
 		// Extensions
-		if(get_option('wpr-particles-toggle') == 'on') {
-			require WPR_ADDONS_PATH . 'extensions/particles.php';
+		if(get_option('wpr-particles-toggle', 'on') == 'on') {
+			require WPR_ADDONS_PATH . 'extensions/wpr-particles.php';
 		}
 
-		if(get_option('wpr-parallax-toggle') == 'on') {
+		if(get_option('wpr-parallax-toggle', 'on') == 'on') {
 			require WPR_ADDONS_PATH . 'extensions/wpr-parallax.php';
 		}
 
