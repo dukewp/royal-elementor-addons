@@ -40,6 +40,11 @@ function wpr_register_addons_settings() {
     register_setting( 'wpr-settings', 'wpr_lb_arrow_size' );
     register_setting( 'wpr-settings', 'wpr_lb_text_size' );
 
+    // Extensions
+    register_setting('wpr-extension-settings', 'wpr-particles-toggle');
+    register_setting('wpr-extension-settings', 'wpr-parallax-toggle');
+    // register_setting('wpr-extension-settings', 'wpr-custom-css-toggle');
+
     // Element Toggle
     foreach ( Utilities::get_registered_modules() as $title => $data ) {
         $slug = $data[0];
@@ -85,6 +90,9 @@ function wpr_addons_settings_page() {
         </a>
         <a href="?page=wpr-addons&tab=wpr_tab_settings" data-title="Settings" class="nav-tab <?php echo $active_tab == 'wpr_tab_settings' ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Settings', 'wpr-addons' ); ?>
+        </a>
+        <a href="?page=wpr-addons&tab=wpr_tab_extensions" data-title="Extensions" class="nav-tab <?php echo $active_tab == 'wpr_tab_extensions' ? 'nav-tab-active' : ''; ?>">
+            <?php esc_html_e( 'Extensions', 'wpr-addons' ); ?>
         </a>
     </div>
 
@@ -246,6 +254,32 @@ function wpr_addons_settings_page() {
         </div>
 
     <?php endif; ?>
+
+    <?php if ( $active_tab == 'wpr_tab_extensions' ) :
+        // Extensions
+        settings_fields( 'wpr-extension-settings' );
+        do_settings_sections( 'wpr-extension-settings' );
+
+        global $new_allowed_options;
+
+        // array of option names
+        $option_names = $new_allowed_options[ 'wpr-extension-settings' ];
+        // your_option_group_name is in register_setting( 'your_option_group_name', $option_name, $sanitize_callback ); 
+        echo '<div class="wpr-elements">';
+        foreach ($option_names as $option_name) {  
+            $option_title = ucwords( preg_replace( '/-/i', ' ', preg_replace('/wpr-||-toggle/i', '', $option_name ) ));
+            echo '<div class="wpr-element">';
+                    echo '<div class="wpr-element-info">';
+                        echo '<h3>' . $option_title . '</h3>';
+                        echo '<input type="checkbox" name="'. $option_name .'" id="'. $option_name .'" '. checked( get_option(''. $option_name .'', 'on'), 'on', false ) .'>';
+                        echo '<label for="'. $option_name .'"></label>';
+                    echo '</div>';
+                echo '</div>';
+            }
+        echo '</div>';
+        
+        submit_button( '', 'wpr-options-button' );
+    endif; ?>
 
 </form>
 </div>

@@ -86,11 +86,21 @@ class Plugin {
 		// Post Likes
 		require WPR_ADDONS_PATH . 'classes/wpr-post-likes.php';
 
+		// Extensions
+		if(get_option('wpr-particles-toggle', 'on') == 'on') {
+			require WPR_ADDONS_PATH . 'extensions/wpr-particles.php';
+		}
+
+		if(get_option('wpr-parallax-toggle', 'on') == 'on') {
+			require WPR_ADDONS_PATH . 'extensions/wpr-parallax.php';
+		}
+
+		// if(get_option('wpr-custom-css-toggle') == 'on') {
+			require WPR_ADDONS_PATH . 'extensions/custom-css/wpr-custom-css.php';
+		// }
+
 		// Rating Notice 
 		// require WPR_ADDONS_PATH . 'classes/rating-notice.php';	
-
-		// Custom CSS //tmp
-		// require WPR_ADDONS_PATH . 'modules/custom-css/widgets/wpr-custom-css.php';
 
 		// Admin Files
 		if ( is_admin() ) {

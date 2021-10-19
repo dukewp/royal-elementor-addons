@@ -4627,6 +4627,19 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 	flex-shrink: 0;
 }
 
+.wpr-popup-container > div {
+	width: 100%;
+}
+
+.wpr-popup-image-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #ffffff;
+}
+
 .wpr-popup-overlay {
 	position: absolute;
 	top: 0;
@@ -4646,6 +4659,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 	right: 0;
 	z-index: 99;
 	text-align: center;
+	width: auto !important;
 	cursor: pointer;
 }
 
@@ -4657,7 +4671,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-popup-notification .wpr-popup-overlay {
 	display: none !important;
 }
-
 
 .wpr-popup-container-inner.ps-container.ps-active-y > .ps-scrollbar-y-rail,
 .wpr-popup-container-inner.ps.ps--active-y > .ps__rail-y {
@@ -4691,6 +4704,13 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 	-webkit-box-align: start !important;
 	    -ms-flex-align: start !important;
 	        align-items: flex-start !important;
+}
+
+.wpr-popup-trigger-button {
+	display: inline-block;
+	font-size: 14px;
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+	cursor: pointer;
 }
 
 /* Only For Editing */
@@ -4731,6 +4751,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 	cursor: pointer;
 }
 
+.elementor-editor-active [data-elementor-type="wpr-popup"] .elementor-section-wrap:not(:empty) + #elementor-add-new-section,
+.elementor-editor-active [data-elementor-type="wpr-popup"]:not(.elementor-edit-mode) {
+    display: none;
+}
 
 /* Template Edit button */
 .wpr-template-edit-btn {
@@ -9951,4 +9975,45 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 .wpr-pc-btn-align-fixed-left .wpr-pc-btn {
 	right: auto;
+}
+
+
+/*--------------------------------------------------------------
+== Section Extensions
+--------------------------------------------------------------*/
+.wpr-particle-wrapper {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 0;
+}
+
+.jarallax {
+    position: relative;
+	transition: all 0.9s ease-in-out;
+    /* z-index: 0; */
+}
+.jarallax > .jarallax-img {
+    position: absolute;
+    object-fit: cover;
+    font-family: 'object-fit: cover;';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    /* support for plugin https://github.com/bfred-it/object-fit-images */
+}
+
+.scene {
+    position: absolute;
+	top: 0;
+	left: 0;
+    height: 100%;
+    width: 100%;
+}
+.scene div {
+    position: relative;
 }
