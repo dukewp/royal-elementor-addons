@@ -61,7 +61,6 @@ class Utilities {
 				unset($modules[$title]);
 			}
 		}
-		// var_dump($modules);
 		return $modules;
 	}
 
