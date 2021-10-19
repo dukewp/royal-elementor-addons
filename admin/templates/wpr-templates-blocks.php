@@ -50,9 +50,17 @@ class WPR_Templates_Blocks {
 							<?php
 
 							$modules = Utilities::get_available_modules();
+
+							$exclude_widgets = [
+								'logo',
+								'forms',
+								'phone-call',
+								'back-to-top',
+								'popup-trigger',
+							];
 							
 							foreach ($modules as $title => $slug) {
-								if ( 'logo' !== $slug[0] && 'forms' !== $slug[0] && 'phone-call' !== $slug[0] && 'back-to-top' !== $slug[0] ) {
+								if ( ! in_array($slug[0], $exclude_widgets) ) {
 									echo '<li data-filter="'. $slug[0] .'">'. $title .'</li>';
 								}
 							}

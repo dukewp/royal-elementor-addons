@@ -71,9 +71,11 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 					'pro-4320' => esc_html__( '12 Hour (Pro)', 'wpr-addons' ),
 					'pro-8640' => esc_html__( '1 Day (Pro)', 'wpr-addons' ),
 					'pro-25920' => esc_html__( '3 Days (Pro)', 'wpr-addons' ),
+					'432000000' => esc_html__( '5 Days', 'wpr-addons' ),
 					'pro-60480' => esc_html__( '7 Days (Pro)', 'wpr-addons' ),
-					'pro-262800' => esc_html__( 'Month (Pro)', 'wpr-addons' ),
+					'pro-262800' => esc_html__( '1 Month (Pro)', 'wpr-addons' ),
 				],
+				'description' => esc_html__( 'This option determines when to show popup again to a visitor after it is closed.', 'wpr-addons' ),
 				'separator' => 'before'
 			]
 		);
@@ -635,6 +637,7 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 				'default' => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} .ps-container > .ps-scrollbar-y-rail > .ps-scrollbar-y' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .ps > .ps__rail-y > .ps__thumb-y' => 'background-color: {{VALUE}}',
 				],
 			]
 		);

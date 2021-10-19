@@ -220,6 +220,12 @@ class WPR_Templates_Loop {
 	                <?php endif; ?>
                 </div>
             </div>
+
+            <?php
+				if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+					echo '<span style="color: #7f8b96;"><br>Conditions are fully suppoted in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-conditions-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong></span>';
+				}
+            ?>
             
             <!-- Action Buttons -->
             <span class="wpr-add-conditions"><?php esc_html_e( 'Add Conditions', 'wpr-addons' ); ?></span>

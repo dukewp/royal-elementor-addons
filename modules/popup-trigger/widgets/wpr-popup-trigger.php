@@ -31,7 +31,37 @@ class Wpr_Popup_Trigger extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'popup', 'trigger', 'button', 'action' ];
+		return [ 'popup', 'trigger', 'button', 'action', 'close' ];
+	}
+
+	public function add_control_popup_trigger_show_again_delay() {
+		$this->add_control(
+			'popup_trigger_show_again_delay',
+			[
+				'label'   => esc_html__( 'Show Again Delay', 'wpr-addons' ),
+				'type'    => Controls_Manager::SELECT,
+				'default' => '0',
+				'options' => [
+					'0' => esc_html__( 'No Delay', 'wpr-addons' ),
+					'pro-6' => esc_html__( '1 Minute (Pro)', 'wpr-addons' ),
+					'pro-18' => esc_html__( '3 Minute (Pro)', 'wpr-addons' ),
+					'pro-30' => esc_html__( '5 Minute (Pro)', 'wpr-addons' ),
+					'pro-60' => esc_html__( '10 Minute (Pro)', 'wpr-addons' ),
+					'pro-180' => esc_html__( '30 Minute (Pro)', 'wpr-addons' ),
+					'pro-360' => esc_html__( '1 Hour (Pro)', 'wpr-addons' ),
+					'pro-1080' => esc_html__( '3 Hour (Pro)', 'wpr-addons' ),
+					'pro-2160' => esc_html__( '6 Hour (Pro)', 'wpr-addons' ),
+					'pro-4320' => esc_html__( '12 Hour (Pro)', 'wpr-addons' ),
+					'pro-8640' => esc_html__( '1 Day (Pro)', 'wpr-addons' ),
+					'pro-25920' => esc_html__( '3 Days (Pro)', 'wpr-addons' ),
+					'432000000' => esc_html__( '5 Days', 'wpr-addons' ),
+					'pro-60480' => esc_html__( '7 Days (Pro)', 'wpr-addons' ),
+					'pro-262800' => esc_html__( '1 Month (Pro)', 'wpr-addons' ),
+				],
+				'description' => esc_html__( 'This option determines when to show popup again to a visitor after it is closed.', 'wpr-addons' ),
+				'separator' => 'before'
+			]
+		);
 	}
 
 	protected function register_controls() {
@@ -47,6 +77,16 @@ class Wpr_Popup_Trigger extends Widget_Base {
 		);
 
 		$this->add_control(
+			'countdown_editor_notice',
+			[
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => '<strong>Please Note:</strong> this widget only works if it is placed inside a popup.',
+				'separator' => 'after',
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+			]
+		);
+
+		$this->add_control(
 			'popup_trigger_type',
 			[
 				'label'   => esc_html__( 'Button Action', 'wpr-addons' ),
@@ -56,38 +96,31 @@ class Wpr_Popup_Trigger extends Widget_Base {
 					'close' => esc_html__( 'Close Popup', 'wpr-addons' ),
 					'close-permanently' => esc_html__( 'Close Permanently', 'wpr-addons' ),
 					'back' => esc_html__( 'Go Back to Referrer', 'wpr-addons' ),
-					'scroll' => esc_html__( 'Scroll to Top', 'wpr-addons' ),
+				]
+			]
+		);
+
+		$this->add_control_popup_trigger_show_again_delay();
+
+		$this->add_control(
+			'popup_trigger_redirect',
+			[
+				'label' => esc_html__( 'Redirect to URL when Closed', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'condition' => [
+					'popup_trigger_type!' => 'back'
 				]
 			]
 		);
 
 		$this->add_control(
-			'popup_trigger_show_again_delay',
+			'popup_trigger_redirect_url',
 			[
-				'label'   => esc_html__( 'Show Again Delay', 'wpr-addons' ),
-				'type'    => Controls_Manager::SELECT,
-				'default' => '0',
-				'options' => [
-					'0' => esc_html__( 'No Delay', 'wpr-addons' ),
-					'10000' => esc_html__( '10 Sec', 'wpr-addons' ),//tmp
-					'15000' => esc_html__( '15 Sec', 'wpr-addons' ),//tmp
-					'20000' => esc_html__( '20 Sec', 'wpr-addons' ),//tmp
-					'60000' => esc_html__( '1 Minute', 'wpr-addons' ),
-					'180000' => esc_html__( '3 Minute', 'wpr-addons' ),
-					'300000' => esc_html__( '5 Minute', 'wpr-addons' ),
-					'600000' => esc_html__( '10 Minute', 'wpr-addons' ),
-					'1800000' => esc_html__( '30 Minute', 'wpr-addons' ),
-					'3600000' => esc_html__( '1 Hour', 'wpr-addons' ),
-					'10800000' => esc_html__( '3 Hour', 'wpr-addons' ),
-					'21600000' => esc_html__( '6 Hour', 'wpr-addons' ),
-					'43200000' => esc_html__( '12 Hour', 'wpr-addons' ),
-					'86400000' => esc_html__( '1 Day', 'wpr-addons' ),
-					'259200000' => esc_html__( '3 Days', 'wpr-addons' ),
-					'604800000' => esc_html__( '7 Days', 'wpr-addons' ),
-					'2628000000' => esc_html__( 'Month', 'wpr-addons' ),
-				],
+				'type' => Controls_Manager::URL,
 				'condition' => [
-					'popup_trigger_type' => 'close'
+					'popup_trigger_redirect' => 'yes',
+					'popup_trigger_type!' => 'back'
 				]
 			]
 		);
@@ -101,7 +134,6 @@ class Wpr_Popup_Trigger extends Widget_Base {
 				'separator' => 'before'
 			]
 		);
-
 
 		$this->add_control(
 			'popup_trigger_extra_icon_pos',
@@ -121,8 +153,13 @@ class Wpr_Popup_Trigger extends Widget_Base {
 			'popup_trigger_extra_icon',
 			[
 				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
-				'type' => Controls_Manager::ICON,
-				'default' => '',
+				'type' => Controls_Manager::ICONS,
+				'skin' => 'inline',
+				'label_block' => false,
+				'default' => [
+					'value' => 'fas fa-times',
+					'library' => 'fa-solid',
+				],
 				'condition' => [
 					'popup_trigger_extra_icon_pos!' => 'none'
 				]
@@ -183,7 +220,7 @@ class Wpr_Popup_Trigger extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#ffffff',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-popup-trigger-button' => 'color: {{VALUE}}',
 				],
@@ -195,6 +232,7 @@ class Wpr_Popup_Trigger extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-popup-trigger-button' => 'background-color: {{VALUE}}',
 				]
@@ -234,7 +272,7 @@ class Wpr_Popup_Trigger extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#54595f',
+				'default' => '#ffffff',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-popup-trigger-button:hover' => 'color: {{VALUE}}',
 				],
@@ -246,6 +284,7 @@ class Wpr_Popup_Trigger extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#4A45D2',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-popup-trigger-button:hover' => 'background-color: {{VALUE}}',
 				]
@@ -380,10 +419,10 @@ class Wpr_Popup_Trigger extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', ],
 				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
+					'top' => 6,
+					'right' => 15,
+					'bottom' => 6,
+					'left' => 15,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-popup-trigger-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -417,10 +456,10 @@ class Wpr_Popup_Trigger extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 2,
-					'right' => 2,
-					'bottom' => 2,
-					'left' => 2,
+					'top' => 3,
+					'right' => 3,
+					'bottom' => 3,
+					'left' => 3,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-popup-trigger-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -437,24 +476,29 @@ class Wpr_Popup_Trigger extends Widget_Base {
 		// Get Settings
 		$settings = $this->get_settings();
 
+		// Get Icon HTML
+		ob_start();
+		\Elementor\Icons_Manager::render_icon( $settings['popup_trigger_extra_icon'], [ 'aria-hidden' => 'true' ] );
+		$icon_html = ob_get_clean();
+
 		$popup_show_delay = $settings['popup_trigger_show_again_delay'];
 
 		if ( 'close-permanently' === $settings['popup_trigger_type'] ) {
 			$popup_show_delay = 10000000000000;
 		}
 
-		echo '<div class="wpr-popup-trigger-button" data-trigger="'. $settings['popup_trigger_type'] .'" data-show-delay="'. $popup_show_delay .'">';
+		echo '<div class="wpr-popup-trigger-button" data-trigger="'. $settings['popup_trigger_type'] .'" data-show-delay="'. $popup_show_delay .'" data-redirect="'. $settings['popup_trigger_redirect'] .'" data-redirect-url="'. $settings['popup_trigger_redirect_url']['url'] .'">';
 
 			// Icon: Before
-			if ( 'before' === $settings['popup_trigger_extra_icon_pos'] ) {
-				echo '<i class="wpr-extra-icon-left '. esc_attr( $settings['popup_trigger_extra_icon'] ) .'"></i>';
+			if ( 'before' === $settings['popup_trigger_extra_icon_pos'] && '' !== $settings['popup_trigger_extra_icon']['value'] ) {
+				echo '<span class="wpr-extra-icon-left">'. $icon_html .'</span>';
 			}
 
 			echo '<span>'. $settings['popup_trigger_text'] .'</span>';
 
 			// Icon: After
 			if ( 'after' === $settings['popup_trigger_extra_icon_pos'] ) {
-				echo '<i class="wpr-extra-icon-right '. esc_attr( $settings['popup_trigger_extra_icon'] ) .'"></i>';
+				echo '<span class="wpr-extra-icon-right">'. $icon_html .'</span>';
 			}
 		echo '</div>';
 
