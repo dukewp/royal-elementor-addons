@@ -34,7 +34,7 @@ class WPR_Templates_Loop {
 		$user_templates = get_posts( $args );
 
 		// The Loop
-		echo '<ul class="wpr-'. $template .'-templates-list wpr-my-templates-list">';
+		echo '<ul class="wpr-'. esc_attr($template) .'-templates-list wpr-my-templates-list" data-pro="'. esc_attr(defined('WPR_ADDONS_PRO_LICENSE')) .'">';
 
 			if ( ! empty( $user_templates ) ) {
 				foreach ( $user_templates as $user_template ) {
@@ -107,6 +107,136 @@ class WPR_Templates_Loop {
 		// Restore original Post Data
 		wp_reset_postdata();
 	}
+
+	/**
+	** Render Conditions Popup
+	*/
+	public static function render_conditions_popup() {
+	?>
+
+    <div class="wpr-condition-popup-wrap wpr-admin-popup-wrap">
+        <div class="wpr-condition-popup wpr-admin-popup">
+            <header>
+                <h2><?php esc_html_e( 'Where Do You Want to Display Your Template?', 'wpr-addons' ); ?></h2>
+                <p>
+                    <?php esc_html_e( 'Set the conditions that determine where your Template is used throughout your site.', 'wpr-addons' ); ?><br>
+                    <?php esc_html_e( 'For example, choose \'Entire Site\' to display the template across your site.', 'wpr-addons' ); ?>
+                </p>
+            </header>
+            <span class="close-popup dashicons dashicons-no-alt"></span>
+
+            <!-- Conditions -->
+            <div class="wpr-conditions-wrap">
+                <div class="wpr-conditions-sample">
+                	<?php if ( defined('WPR_ADDONS_PRO_LICENSE') ) : ?>
+                    <!-- Global -->
+                    <select name="global_condition_select" class="global-condition-select">
+                        <option value="global"><?php esc_html_e( 'Entire Site', 'wpr-addons' ); ?></option>
+                        <option value="archive"><?php esc_html_e( 'Archives', 'wpr-addons' ); ?></option>
+                        <option value="single"><?php esc_html_e( 'Singular', 'wpr-addons' ); ?></option>
+                    </select>
+                    <!-- Archive -->
+                    <select name="archives_condition_select" class="archives-condition-select">
+                        <option value="posts"><?php esc_html_e( 'Posts Archive', 'wpr-addons' ); ?></option>
+                        <option value="author"><?php esc_html_e( 'Author Archive', 'wpr-addons' ); ?></option>
+                        <option value="date"><?php esc_html_e( 'Date Archive', 'wpr-addons' ); ?></option>
+                        <option value="search"><?php esc_html_e( 'Search Results', 'wpr-addons' ); ?></option>
+                        <option value="categories" class="custom-ids"><?php esc_html_e( 'Post Categories', 'wpr-addons' ); ?></option>
+                        <option value="tags" class="custom-ids"><?php esc_html_e( 'Post Tags', 'wpr-addons' ); ?></option>
+                        <?php // Custom Taxonomies
+                            $custom_taxonomies = Utilities::get_custom_types_of( 'tax', true );
+                            foreach ($custom_taxonomies as $key => $value) {
+                                // Add Shop Archives
+                                if ( 'product_cat' === $key ) {
+                                    echo '<option value="products">'. esc_html__( 'Products Archive', 'wpr-addons' ) .'</option>';
+                                }
+                                // List Taxonomies
+                                echo '<option value="'. esc_attr($key) .'" class="custom-type-ids">'. esc_html($value) .'</option>';
+                            }
+                        ?>
+                    </select>
+                    <!-- Single -->
+                    <select name="singles_condition_select" class="singles-condition-select">
+                        <option value="front_page"><?php esc_html_e( 'Front Page', 'wpr-addons' ); ?></option>
+                        <option value="page_404"><?php esc_html_e( '404 Page', 'wpr-addons' ); ?></option>
+                        <option value="pages" class="custom-ids"><?php esc_html_e( 'Pages', 'wpr-addons' ); ?></option>
+                        <option value="posts" class="custom-ids"><?php esc_html_e( 'Posts', 'wpr-addons' ); ?></option>
+                        <?php // Custom Post Types
+                            $custom_taxonomies = Utilities::get_custom_types_of( 'post', true );
+                            foreach ($custom_taxonomies as $key => $value) {
+                                echo '<option value="'. esc_attr($key) .'" class="custom-type-ids">'. esc_html($value) .'</option>';
+                            }
+                        ?>
+                    </select>
+
+                    <input type="text" placeholder="<?php esc_html_e( 'Enter comma separated IDs', 'wpr-addons' ); ?>"  name="condition_input_ids"class="wpr-condition-input-ids">
+                    <span class="wpr-delete-template-conditions dashicons dashicons-no-alt"></span>
+
+	                <?php else: ?>
+
+                    <!-- Global -->
+                    <select name="global_condition_select" class="global-condition-select">
+                        <option value="global"><?php esc_html_e( 'Entire Site', 'wpr-addons' ); ?></option>
+                        <option value="archive"><?php esc_html_e( 'Archives (Pro)', 'wpr-addons' ); ?></option>
+                        <option value="single"><?php esc_html_e( 'Singular (Pro)', 'wpr-addons' ); ?></option>
+                    </select>
+                    <!-- Archive -->
+                    <select name="archives_condition_select" class="archives-condition-select">
+                        <option value="posts"><?php esc_html_e( 'Posts Archive (Pro)', 'wpr-addons' ); ?></option>
+                        <option value="author"><?php esc_html_e( 'Author Archive (Pro)', 'wpr-addons' ); ?></option>
+                        <option value="date"><?php esc_html_e( 'Date Archive (Pro)', 'wpr-addons' ); ?></option>
+                        <option value="search"><?php esc_html_e( 'Search Results (Pro)', 'wpr-addons' ); ?></option>
+                        <option value="categories" class="custom-ids"><?php esc_html_e( 'Post Categories (Pro)', 'wpr-addons' ); ?></option>
+                        <option value="tags" class="custom-ids"><?php esc_html_e( 'Post Tags (Pro)', 'wpr-addons' ); ?></option>
+                        <?php // Custom Taxonomies
+                            $custom_taxonomies = Utilities::get_custom_types_of( 'tax', true );
+                            foreach ($custom_taxonomies as $key => $value) {
+                                // Add Shop Archives
+                                if ( 'product_cat' === $key ) {
+                                    echo '<option value="products">'. esc_html__( 'Products Archive (Pro)', 'wpr-addons' ) .'</option>';
+                                }
+                                // List Taxonomies
+                                echo '<option value="'. esc_attr($key) .'" class="custom-type-ids">'. esc_html($value) .' (Pro)</option>';
+                            }
+                        ?>
+                    </select>
+                    <!-- Single -->
+                    <select name="singles_condition_select" class="singles-condition-select">
+                        <option value="front_page"><?php esc_html_e( 'Front Page (Pro)', 'wpr-addons' ); ?></option>
+                        <option value="page_404"><?php esc_html_e( '404 Page (Pro)', 'wpr-addons' ); ?></option>
+                        <option value="pages" class="custom-ids"><?php esc_html_e( 'Pages (Pro)', 'wpr-addons' ); ?></option>
+                        <option value="posts" class="custom-ids"><?php esc_html_e( 'Posts (Pro)', 'wpr-addons' ); ?></option>
+                        <?php // Custom Post Types
+                            $custom_taxonomies = Utilities::get_custom_types_of( 'post', true );
+                            foreach ($custom_taxonomies as $key => $value) {
+                                echo '<option value="'. esc_attr($key) .'" class="custom-type-ids">'. esc_html($value) .' (Pro)</option>';
+                            }
+                        ?>
+                    </select>
+
+                    <input type="text" placeholder="<?php esc_html_e( 'Enter comma separated IDs (Pro)', 'wpr-addons' ); ?>"  name="condition_input_ids"class="wpr-condition-input-ids">
+                    <span class="wpr-delete-template-conditions dashicons dashicons-no-alt"></span>
+	                	
+	                <?php endif; ?>
+                </div>
+            </div>
+
+            <?php
+				if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+					echo '<span style="color: #7f8b96;"><br>Conditions are fully suppoted in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-conditions-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong></span>';
+				}
+            ?>
+            
+            <!-- Action Buttons -->
+            <span class="wpr-add-conditions"><?php esc_html_e( 'Add Conditions', 'wpr-addons' ); ?></span>
+            <span class="wpr-save-conditions"><?php esc_html_e( 'Save Conditions', 'wpr-addons' ); ?></span>
+
+        </div>
+    </div>
+
+	<?php
+	}
+
 
 	/**
 	** Render Create Template Popup

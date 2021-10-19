@@ -4,10 +4,11 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 use WprAddons\Admin\Includes\WPR_Render_Templates;
 use WprAddons\Admin\Includes\WPR_Templates_Shortcode;
-use WprAddons\Admin\Includes\WPR_Templates_Popups;
+use WprAddons\Admin\Includes\WPR_Templates_Modal_Popups;
 use WprAddons\Admin\Includes\WPR_Templates_Actions;
 use WprAddons\Admin\Templates\WPR_Templates_Blocks;
 use WprAddons\Admin\Templates\WPR_Templates_Pages;
+use WprAddons\Classes\Utilities;
 
 /**
  * WPR_Templates_Library setup
@@ -24,13 +25,13 @@ class WPR_Templates_Library {
 		// Register CPTs
 		add_action( 'init', [ $this, 'register_templates_library_cpt' ] );
 		add_action( 'template_redirect', [ $this, 'block_template_frontend' ] );
-		add_action( 'current_screen', [ $this, 'redirect_to_page_builder' ] );
+		add_action( 'current_screen', [ $this, 'redirect_to_options_page' ] );
 
 		// Templates Shortcode
 		new WPR_Templates_Shortcode();
 
 		// Popups
-		new WPR_Templates_Popups();
+		new WPR_Templates_Modal_Popups();
 
 		// All Templates
 		new WPR_Render_Templates();
@@ -52,10 +53,13 @@ class WPR_Templates_Library {
 	/**
 	** Register Templates Library
 	*/
-
-	public function redirect_to_page_builder() {
+	public function redirect_to_options_page() {
 		if ( get_current_screen()->post_type == 'wpr_templates' && isset($_GET['action']) && $_GET['action'] == 'edit' ) {
-			wp_redirect('admin.php?page=wpr-theme-builder');
+			if ( 'wpr-popups' === Utilities::get_elementor_template_type($_GET['post']) ) {
+				wp_redirect('admin.php?page=wpr-popups');
+			} else {
+				wp_redirect('admin.php?page=wpr-theme-builder');
+			}
 		}
 	}
 
@@ -65,7 +69,7 @@ class WPR_Templates_Library {
 			'label'				  => esc_html( 'Royal Templates', 'wpr-addons' ),
 			'public'              => true,
 			'rewrite'             => false,
-			'show_ui'             => false,
+			'show_ui'             => true,
 			'show_in_menu'        => false,
 			'show_in_nav_menus'   => false,
 			'exclude_from_search' => true,
@@ -99,6 +103,9 @@ class WPR_Templates_Library {
 		}
 	}
 
+	/**
+	*** Add elementor support for wpr_templates.
+	**/
 	function add_elementor_cpt_support() {
 		if ( ! is_admin() ) {
 			return;

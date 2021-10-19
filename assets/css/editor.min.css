@@ -295,7 +295,9 @@
 /*--------------------------------------------------------------
 == Modal Popup Editor
 --------------------------------------------------------------*/
-.elementor-editor-wpr-popup .elementor-control-post_status {
+.elementor-editor-wpr-popups .elementor-control-document_settings,
+.elementor-editor-wpr-popups .elementor-control-post_title,
+.elementor-editor-wpr-popups .elementor-control-post_status {
 	display: none !important;
 }
 
@@ -579,7 +581,10 @@
 .elementor-control.elementor-control-team_member_pro_notice,
 .elementor-control.elementor-control-price_list_pro_notice,
 .elementor-control.elementor-control-business_hours_pro_notice,
-.elementor-control.elementor-control-sharing_columns_pro_notice {
+.elementor-control.elementor-control-sharing_columns_pro_notice,
+.elementor-control.elementor-control-popup_trigger_pro_notice,
+.elementor-control.elementor-control-popup_show_again_delay_pro_notice,
+.elementor-control.elementor-control-group_popup_settings_pro_notice {
 	padding-bottom: 0 !important;
 }
 
@@ -612,7 +617,10 @@
 .elementor-control-team_member_pro_notice .wpr-pro-notice,
 .elementor-control-price_list_pro_notice .wpr-pro-notice,
 .elementor-control-business_hours_pro_notice .wpr-pro-notice,
-.elementor-control-sharing_columns_pro_notice .wpr-pro-notice {
+.elementor-control-sharing_columns_pro_notice .wpr-pro-notice,
+.elementor-control-popup_trigger_pro_notice .wpr-pro-notice,
+.elementor-control-popup_show_again_delay_pro_notice .wpr-pro-notice,
+.elementor-control-group_popup_settings_pro_notice .wpr-pro-notice {
 	border-bottom: none !important;
 }
 

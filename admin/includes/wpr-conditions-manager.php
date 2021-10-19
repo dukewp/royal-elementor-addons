@@ -13,121 +13,28 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 class WPR_Conditions_Manager {
 
     /**
-    ** Archive Templates Conditions
-    */
-    public static function archive_templates_conditions( $conditions ) {
-    	$term_id = '';
-    	$term_name = '';
-    	$queried_object = get_queried_object();
-
-    	// Get Terms
-    	if ( ! is_null( $queried_object ) ) {
-    		if ( isset( $queried_object->term_id ) && isset( $queried_object->taxonomy ) ) {
-		        $term_id   = $queried_object->term_id;
-		        $term_name = $queried_object->taxonomy;
-    		}
-    	}
-
-        // Reset
-        $template = NULL;
-
-		// Archive Pages (includes search)
-		if ( is_archive() || is_search() ) {
-			if ( is_archive() && ! is_search() ) {
-				// Author
-				if ( is_author() ) {
-	    			$template = Utilities::get_template_slug( $conditions, 'archive/author' );
-				// Date
-				} elseif ( is_date() ) {
-	    			$template = Utilities::get_template_slug( $conditions, 'archive/date' );
-				// Category
-				} elseif ( is_category() ) {
-					$template = Utilities::get_template_slug( $conditions, 'archive/categories', $term_id );
-				// Tag
-				} elseif ( is_tag() ) {
-					$template = Utilities::get_template_slug( $conditions, 'archive/tags', $term_id );
-				// Custom Taxonomies
-				} elseif ( is_tax() ) {
-					$template = Utilities::get_template_slug( $conditions, 'archive/'. $term_name, $term_id );
-				// Products
-				} elseif ( class_exists( 'WooCommerce' ) && is_shop() ) {
-					$template = Utilities::get_template_slug( $conditions, 'archive/products' );
-		        }
-
-			// Search Page
-			} else {
-	    		$template = Utilities::get_template_slug( $conditions, 'archive/search' );
-	        }
-
-	    // Posts Page
-		} elseif ( Utilities::is_blog_archive() ) {
-			$template = Utilities::get_template_slug( $conditions, 'archive/posts' );
-		}
-
-	    return $template;
-    }
-
-    /**
-    ** Single Templates Conditions
-    */
-    public static function single_templates_conditions( $conditions, $pages ) {
-        global $post;
-
-        // Get Posts
-        $post_id   = is_null($post) ? '' : $post->ID;
-        $post_type = is_null($post) ? '' : $post->post_type;
-
-        // Reset
-        $template = NULL;
-
-		// Single Pages
-		if ( is_single() || is_front_page() || is_page() || is_404() ) {
-
-			if ( is_single() ) {
-				// Blog Posts
-				if ( 'post' == $post_type ) {
-	    			$template = Utilities::get_template_slug( $conditions, 'single/posts', $post_id );
-				// CPT
-		        } else {
-	    			$template = Utilities::get_template_slug( $conditions, 'single/'. $post_type, $post_id );
-		        }
-			} else {
-				// Front page
-				if ( $pages && is_front_page() && ! Utilities::is_blog_archive() ) {//TODO: is it a good check? - && ! Utilities::is_blog_archive()
-	    			$template = Utilities::get_template_slug( $conditions, 'single/front_page' );
-				// Error 404 Page
-				} elseif ( is_404() ) {
-	    			$template = Utilities::get_template_slug( $conditions, 'single/page_404' );
-				// Single Page
-				} elseif ( $pages && is_page() ) {
-	    			$template = Utilities::get_template_slug( $conditions, 'single/pages', $post_id );
-		        }
-			}
-
-        }
-
-	    return $template;
-    }
-
-    /**
     ** Header & Footer Conditions
     */
     public static function header_footer_display_conditions( $conditions ) {
         $template = NULL;
 
         // Custom
-        if ( ! empty($conditions) ) {
+        if ( defined('WPR_ADDONS_PRO_LICENSE') ) {
+	        if ( ! empty($conditions) ) {
 
-			// Archive Pages (includes search)
-			if ( ! is_null( WPR_Conditions_Manager::archive_templates_conditions( $conditions ) ) ) {
-				$template = WPR_Conditions_Manager::archive_templates_conditions( $conditions );
-			}
+				// Archive Pages (includes search)
+				if ( ! is_null( \WprAddonsPro\Classes\Extension::archive_templates_conditions( $conditions ) ) ) {
+					$template = \WprAddonsPro\Classes\Extension::archive_templates_conditions( $conditions );
+				}
 
-        	// Single Pages
-			if ( ! is_null( WPR_Conditions_Manager::single_templates_conditions( $conditions, true ) ) ) {
-				$template = WPR_Conditions_Manager::single_templates_conditions( $conditions, true );
-			}
+	        	// Single Pages
+				if ( ! is_null( \WprAddonsPro\Classes\Extension::single_templates_conditions( $conditions, true ) ) ) {
+					$template = \WprAddonsPro\Classes\Extension::single_templates_conditions( $conditions, true );
+				}
 
+	        }
+        } else {
+        	$template = Utilities::get_template_slug( $conditions, 'global' );
         }
 
 	    return $template;

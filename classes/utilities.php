@@ -44,8 +44,8 @@ class Utilities {
 			'Site Logo' => ['logo', '', ''],
 			'Back to Top' => ['back-to-top', '', ''],
 			'Phone Call' => ['phone-call', '', ''],
+			'Popup Trigger' => ['popup-trigger', '', ''],
 			// 'Author Box' => 'author-box',
-			// 'Popup Trigger' => 'popup-trigger',
 		];
 	}
 
@@ -209,6 +209,17 @@ class Utilities {
 		}
 
 		return $template;
+	}
+
+
+	/**
+	** Get Elementor Template Type
+	*/
+	public static function get_elementor_template_type( $id ) {
+		$post_meta = get_post_meta($id);
+		$template_type = isset($post_meta['_elementor_template_type'][0]) ? $post_meta['_elementor_template_type'][0] : false;
+
+        return $template_type;
 	}
 
 

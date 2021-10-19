@@ -87,29 +87,29 @@ class WPR_Render_Templates {
 	/**
 	** Theme Builder Content Display
 	*/
-	public function canvas_page_content_display() {//TODO: Change and Adapt this function (maybe move to conditions manager)
-		// Get Conditions
-		$archives = json_decode( get_option( 'wpr_archive_conditions' ), true );
-		$archives = is_null( $archives ) ? [] : $archives;
-		$singles  = json_decode( get_option( 'wpr_single_conditions' ), true );
-		$singles  = is_null( $singles ) ? [] : $singles;
+	// public function canvas_page_content_display() {//TODO: Change and Adapt this function (maybe move to conditions manager)
+	// 	// Get Conditions
+	// 	$archives = json_decode( get_option( 'wpr_archive_conditions' ), true );
+	// 	$archives = is_null( $archives ) ? [] : $archives;
+	// 	$singles  = json_decode( get_option( 'wpr_single_conditions' ), true );
+	// 	$singles  = is_null( $singles ) ? [] : $singles;
 
-		// Reset
-		$template = '';
+	// 	// Reset
+	// 	$template = '';
 
-		// Archive Pages (includes search)
-		if ( ! is_null( $this->archive_templates_conditions( $archives ) ) ) {
-			$template = $this->archive_templates_conditions( $archives );
-		}
+	// 	// Archive Pages (includes search)
+	// 	if ( ! is_null( $this->archive_templates_conditions( $archives ) ) ) {
+	// 		$template = $this->archive_templates_conditions( $archives );
+	// 	}
 
-    	// Single Pages
-		if ( ! is_null( $this->single_templates_conditions( $singles, false ) ) ) {
-			$template = $this->single_templates_conditions( $singles, false );
-		}
+ //    	// Single Pages
+	// 	if ( ! is_null( $this->single_templates_conditions( $singles, false ) ) ) {
+	// 		$template = $this->single_templates_conditions( $singles, false );
+	// 	}
 
-		// Display Template
-		Utilities::render_elementor_template( $template );
-	}
+	// 	// Display Template
+	// 	Utilities::render_elementor_template( $template );
+	// }
 
 	/**
 	 * Enqueue styles and scripts.

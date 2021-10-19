@@ -541,6 +541,8 @@ jQuery(document).ready(function( $ ) {
 	*/
 	function saveConditions() {
 		$( '.wpr-save-conditions' ).on( 'click', function() {
+			var proActive = (1 === $('.wpr-my-templates-list').data('pro')) ? true : false;
+
 			// Current Template
 			var template = $(this).attr('data-slug'),
 				TemplateID = $(this).attr('data-id');
@@ -548,12 +550,19 @@ jQuery(document).ready(function( $ ) {
 			// Get Conditions
 			var conditions = getConditions( template, $( '#wpr_'+ currentTab +'_conditions' ).val() );
 
+			// Don't save if not active
+			if ( !proActive && (('global' !== conditions[template][0] && 'undefined' !== typeof conditions[template][0]) || conditions[template].length > 1) ) {
+				alert('Please select "Entire Site" to continue! Mutiple and custom conditions are fully supported in the Pro version.');
+				return;
+			}
+
 			// Set Conditions
 			$('#wpr_'+ currentTab +'_conditions').val( JSON.stringify(conditions) );
 
 			// AJAX Data
 			var data = {
-				action: 'wpr_save_template_conditions'
+				action: 'wpr_save_template_conditions',
+				template: template
 			};
 			data['wpr_'+ currentTab +'_conditions'] = JSON.stringify(conditions);
 
@@ -585,7 +594,7 @@ jQuery(document).ready(function( $ ) {
 	/*
 	** Highlight Templates with Active Conditions --------
 	*/
-	if ( $('body').hasClass('royal-addons_page_wpr-theme-builder') ) {
+	if ( $('body').hasClass('royal-addons_page_wpr-theme-builder') || $('body').hasClass('royal-addons_page_wpr-popups') ) {
 		var conditions = $( '#wpr_'+ currentTab +'_conditions' ).val(),
 			conditions = ('' === conditions || '[]' === conditions) ? {} : JSON.parse(conditions);
 
@@ -665,7 +674,7 @@ jQuery(document).ready(function( $ ) {
 	});
 
 
-	//TODO: Remove this
+	//TODO: Remove this - only for development
 	// $('.nav-tab-wrapper').after( '<p>'+ $('.nav-tab-wrapper').next('input').val() +'</p>' );
 
 }); // end dom ready
