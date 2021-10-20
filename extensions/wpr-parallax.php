@@ -1,47 +1,33 @@
 <?php
-namespace WprAddons\Extensions;
-
-if (!defined('ABSPATH')) {
-    exit;
-}
-
 use Elementor\Controls_Manager;
 use Elementor\Control_Media;
 use Elementor\Controls_Stack;
 use Elementor\Element_Base;
 use Elementor\Repeater;
+use Elementor\Utils;
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class Wpr_Parallax_Scroll {
+
     public function __construct() {
-        add_action( 'elementor/element/section/section_layout/after_section_end', [$this, 'register_controls'], 19, 3);
-        add_action( 'elementor/section/print_template', [ $this, '_print_template' ], 10, 2 );
+        add_action( 'elementor/element/section/section_background/after_section_end', [$this, 'register_controls'], 10);
         add_action( 'elementor/frontend/section/before_render', [$this, '_before_render'], 10, 1);
+        add_action( 'elementor/section/print_template', [ $this, '_print_template' ], 10, 2 );
         add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
     }
 
-	public static function enqueue_scripts() {    	
-		wp_enqueue_script(
-			'wpr-jarallax',
-			WPR_ADDONS_URL . 'assets/js/lib/jarallax/jarallax.min.js',
-			[
-				'jquery',
-			],
-			'3.0.6',
-			true
-		);
-		wp_enqueue_script( 'wpr-parallax-hover', WPR_ADDONS_URL . 'assets/js/lib/parallax/parallax.min.js', [ 'jquery' ], '3.0.6', true );
-	}
-
-    public function register_controls($element) {
+    public function register_controls( $element ) {
         $element->start_controls_section(
-            'wpr_section_parallax_section',
+            'wpr_section_parallax',
             [
-                'tab' => Controls_Manager::TAB_LAYOUT,
-                'label' => __('<i class=""></i> WPR - Parallax', 'wpr-addons-elementor'),
+                'tab' => Controls_Manager::TAB_STYLE,
+                'label' => __('Parallax - Royal Addons', 'wpr-addons-elementor'),
             ]
         );
         
+        if ( 'on' === get_option('wpr-parallax-background', 'on') ) {
+
         $element->add_control(
             'wpr_enable_jarallax',
             [
@@ -52,16 +38,16 @@ class Wpr_Parallax_Scroll {
                 'label_off' => __('No', 'wpr-addons'),
                 'return_value' => 'yes',
                 'render_type' => 'template',
-                'prefix_class' => 'jarallax-'
+                'prefix_class' => 'wpr-jarallax-'
             ]
         );
 
         $element->add_control(
             'speed',
             [
-                'label' => __( 'Speed', 'wpr-addons' ),
-                'type' => \Elementor\Controls_Manager::NUMBER,
-                'min' => 2.0 - 3.0,
+                'label' => __( 'Animation Speed', 'wpr-addons' ),
+                'type' => Controls_Manager::NUMBER,
+                'min' => -1.0,
                 'max' => 2.0,
                 'step' => 0.1,
                 'default' => 1.4,
@@ -75,8 +61,8 @@ class Wpr_Parallax_Scroll {
         $element->add_control(
 			'scroll_effect',
 			[
-				'label' => __( 'Scroll Effect', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::SELECT,
+				'label' => __( 'Scrolling Effect', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
 				'default' => 'scale',
 				'options' => [
 					'scale'  => esc_html__( 'Zoom', 'wpr-addons' ),
@@ -96,9 +82,9 @@ class Wpr_Parallax_Scroll {
 			'bg_image',
 			[
 				'label' => __( 'Choose Image', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::MEDIA,
+				'type' => Controls_Manager::MEDIA,
 				'default' => [
-					'url' => \Elementor\Utils::get_placeholder_image_src(),
+					'url' => Utils::get_placeholder_image_src(),
 				],
                 'render_type' => 'template',
                 'condition' => [
@@ -111,21 +97,22 @@ class Wpr_Parallax_Scroll {
             'wpr_parallax',
             [
                 'type' => Controls_Manager::RAW_HTML,
-                'raw' => $this->teaser_template([
-                    'title' => __('', 'wpr-addons'),
-                    'messages' => __('', 'wpr-addons'),
-                ]),
+                'raw' => '<div style="text-align: center;"><button class="elementor-update-preview-button elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply Changes</button></div>',
                 'condition' => [
                     'wpr_enable_jarallax' => 'yes'
                 ]
             ]
         );
 
+        } // end if ( 'on' === get_option('wpr-parallax-background', 'on') ) {
+
+        if ( 'on' === get_option('wpr-parallax-multi-layer', 'on') ) {
+
         $element->add_control(
             'wpr_enable_parallax_hover',
             [
                 'type'  => Controls_Manager::SWITCHER,
-                'label' => __('Enable Multi-layered Parallax', 'wpr-addons'),
+                'label' => __('Enable Multi Layer Parallax', 'wpr-addons'),
                 'default' => 'no',
                 'label_on' => __('Yes', 'wpr-addons'),
                 'label_off' => __('No', 'wpr-addons'),
@@ -174,15 +161,15 @@ class Wpr_Parallax_Scroll {
             ]
         );
 
-        $repeater = new \Elementor\Repeater();
+        $repeater = new Repeater();
 
         $repeater->add_control(
             'repeater_bg_image',
             [
                 'label' => __( 'Choose Image', 'wpr-addons' ),
-                'type' => \Elementor\Controls_Manager::MEDIA,
+                'type' => Controls_Manager::MEDIA,
                 'default' => [
-                    'url' => \Elementor\Utils::get_placeholder_image_src(),
+                    'url' => Utils::get_placeholder_image_src(),
                 ],
                 'render_type' => 'template',
             ]
@@ -198,7 +185,7 @@ class Wpr_Parallax_Scroll {
                 'max' => 1000,
                 'step' => 10,
                 'selectors' => [
-                    '{{WRAPPER}} {{CURRENT_ITEM}}.children img' => 'width: {{SIZE}}px!important;',
+                    '{{WRAPPER}} {{CURRENT_ITEM}}.wpr-parallax-ml-children' => 'width: {{SIZE}}px !important;',
                 ],		
             ]
         );
@@ -217,10 +204,10 @@ class Wpr_Parallax_Scroll {
                 ],
                 'default' => [
                     'unit' => '%',
-                    'size' => rand(0, 100),
+                    'size' => 50,
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} {{CURRENT_ITEM}}.children' => 'left: {{SIZE}}{{UNIT}}!important;',
+                    '{{WRAPPER}} {{CURRENT_ITEM}}.wpr-parallax-ml-children' => 'left: {{SIZE}}{{UNIT}} !important;',
                 ],
                 'separator' => 'before',
             ]
@@ -240,12 +227,11 @@ class Wpr_Parallax_Scroll {
                 ],
                 'default' => [
                     'unit' => '%',
-                    'size' => rand(0, 100),
+                    'size' => 50,
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} {{CURRENT_ITEM}}.children' => 'top: {{SIZE}}{{UNIT}}!important;',
+                    '{{WRAPPER}} {{CURRENT_ITEM}}.wpr-parallax-ml-children' => 'top: {{SIZE}}{{UNIT}}!important;',
                 ],
-                'separator' => 'before',
             ]
         );
 
@@ -253,7 +239,7 @@ class Wpr_Parallax_Scroll {
             'hover_parallax',
             [
                 'label' => __( 'Repeater List', 'wpr-addons' ),
-                'type' => \Elementor\Controls_Manager::REPEATER,
+                'type' => Controls_Manager::REPEATER,
                 'fields' => $repeater->get_controls(),
                 'default' => [
                     [
@@ -283,6 +269,8 @@ class Wpr_Parallax_Scroll {
             ]
         );
 
+        } // end if ( 'on' === get_option('wpr-parallax-multi-layer', 'on') ) {
+
         $element->end_controls_section();
     }
 
@@ -292,50 +280,62 @@ class Wpr_Parallax_Scroll {
 
 		$settings = $element->get_settings_for_display();
 
-        // for jarallax
-        if($settings['wpr_enable_jarallax'] == 'yes') { 
-			$element->add_render_attribute( '_wrapper', [
-                'class' => 'jarallax',
-                'speed-data' => $settings['speed'],
-                'bg-image' => $settings['bg_image']['url'],
-                'scroll-effect' => $settings['scroll_effect'],
-            ] );
+        // Parallax Background
+        if ( 'on' === get_option('wpr-parallax-background', 'on') ) {
+            if ( 'yes' === $settings['wpr_enable_jarallax'] ) { 
+    			$element->add_render_attribute( '_wrapper', [
+                    'class' => 'wpr-jarallax',
+                    'speed-data' => $settings['speed'],
+                    'bg-image' => $settings['bg_image']['url'],
+                    'scroll-effect' => $settings['scroll_effect'],
+                ] );
+            }
         }
 
-        // for multilayer parallax
-        if ( $settings['wpr_enable_parallax_hover'] == 'yes' ) {
-			 if ( $settings['hover_parallax'] ) {
+        // Parallax Multi Layer
+        if ( 'on' === get_option('wpr-parallax-multi-layer', 'on') ) {
+            if ( $settings['wpr_enable_parallax_hover'] == 'yes' ) {
+    			 if ( $settings['hover_parallax'] ) {
 
-				echo '<div class="scene" scalar-speed="'. $settings['scalar_speed']['size'] .'" direction="'. $settings['invert_direction'] .'" style="overflow: hidden;">';
+    				echo '<div class="wpr-parallax-multi-layer" scalar-speed="'. $settings['scalar_speed']['size'] .'" direction="'. $settings['invert_direction'] .'" style="overflow: hidden;">';
 
-			 	foreach (  $settings['hover_parallax'] as $item ) {
-					echo '<div data-depth="0.2" style-top="'. $item['layer_position_vr']['size'] .'%" style-left="'. $item['layer_position_hr']['size'] .'%" class="children elementor-repeater-item-' . $item['_id'] . '">
-			 			<img src="' . $item['repeater_bg_image']['url'] . '">
-			 		</div>';
-			 	}
-                 
-				echo '</div>';
-			 }
-		}
+    			 	foreach (  $settings['hover_parallax'] as $item ) {
+    					echo '<div data-depth="0.2" style-top="'. $item['layer_position_vr']['size'] .'%" style-left="'. $item['layer_position_hr']['size'] .'%" class="wpr-parallax-ml-children elementor-repeater-item-' . $item['_id'] . '">
+    			 			<img src="' . $item['repeater_bg_image']['url'] . '">
+    			 		</div>';
+    			 	}
+                     
+    				echo '</div>';
+    			 }
+    		}
+        }
+
     }
-
 
     public function _print_template( $template, $widget ) {
 		ob_start();
 
-        echo '<div class="wpr-jarallax" speed-data-editor="{{settings.speed}}" scroll-effect-editor="{{settings.scroll_effect}}" bg-image-editor="{{settings.bg_image.url}}"></div>';
+        // Background
+        if ( 'on' === get_option('wpr-parallax-background', 'on') ) {
+            echo '<div class="wpr-jarallax" speed-data-editor="{{settings.speed}}" scroll-effect-editor="{{settings.scroll_effect}}" bg-image-editor="{{settings.bg_image.url}}"></div>';
+        }
 
+        // Multi Layer
+        if ( 'on' === get_option('wpr-parallax-multi-layer', 'on') ) {
         ?>
+
             <# if ( settings.hover_parallax.length && settings.wpr_enable_parallax_hover == 'yes') { #>
-				<div class="scene" direction="{{settings.invert_direction}}" scalar-speed="{{settings.scalar_speed.size}}" data-relative-input="true" style="overflow: hidden;">
+				<div class="wpr-parallax-multi-layer" direction="{{settings.invert_direction}}" scalar-speed="{{settings.scalar_speed.size}}" data-relative-input="true" style="overflow: hidden;">
 				<# _.each( settings.hover_parallax, function( item ) { #>
-					<div data-depth="0.2" class="children elementor-repeater-item-{{ item._id }}">	
+					<div data-depth="0.2" class="wpr-parallax-ml-children elementor-repeater-item-{{ item._id }}">	
 						<img src="{{item.repeater_bg_image.url}}">
 					</div>
 				<# }); #>
 				</div>
 			<# } #>
+
         <?php
+        }
 
 		$parallax_content = ob_get_contents();
 
@@ -344,15 +344,16 @@ class Wpr_Parallax_Scroll {
 		return $template . $parallax_content;
 	}
 
-    public function teaser_template($texts) {
-        $html = '<div class="primary" style="text-align: center;">
-                    <div class="">' . $texts['title'] . '</div>
-                    <div class="">' . $texts['messages'] . '</div>
-                    <button class="elementor-update-preview-button elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply Changes</button>
-                </div>';
-                
-        return $html;
+    public static function enqueue_scripts() {
+        if ( 'on' === get_option('wpr-parallax-background', 'on') ) {
+            wp_enqueue_script( 'wpr-jarallax', WPR_ADDONS_URL . 'assets/js/lib/jarallax/jarallax.min.js', ['jquery'], '1.12.7', true );
+        }
+
+        if ( 'on' === get_option('wpr-parallax-multi-layer', 'on') ) {
+            wp_enqueue_script( 'wpr-parallax-hover', WPR_ADDONS_URL . 'assets/js/lib/parallax/parallax.min.js', ['jquery'], '1.0', true );
+        }
     }
+
 }
 
 new Wpr_Parallax_Scroll();

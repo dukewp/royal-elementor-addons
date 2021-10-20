@@ -86,18 +86,18 @@ class Plugin {
 		// Post Likes
 		require WPR_ADDONS_PATH . 'classes/wpr-post-likes.php';
 
-		// Extensions
-		if(get_option('wpr-particles-toggle', 'on') == 'on') {
+		// Particles
+		if ( 'on' === get_option('wpr-particles-toggle', 'on') ) {//TODO: make this check automatic for all extensions
 			require WPR_ADDONS_PATH . 'extensions/wpr-particles.php';
 		}
 
-		if(get_option('wpr-parallax-toggle', 'on') == 'on') {
+		// Parallax
+		if ( 'on' === get_option('wpr-parallax-background', 'on') || 'on' === get_option('wpr-parallax-multi-layer', 'on') ) {
 			require WPR_ADDONS_PATH . 'extensions/wpr-parallax.php';
 		}
 
-		// if(get_option('wpr-custom-css-toggle') == 'on') {
-			require WPR_ADDONS_PATH . 'extensions/custom-css/wpr-custom-css.php';
-		// }
+		// Custom CSS
+		require WPR_ADDONS_PATH . 'extensions/wpr-custom-css.php';
 
 		// Rating Notice 
 		// require WPR_ADDONS_PATH . 'classes/rating-notice.php';	

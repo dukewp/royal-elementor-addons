@@ -41,9 +41,9 @@ function wpr_register_addons_settings() {
     register_setting( 'wpr-settings', 'wpr_lb_text_size' );
 
     // Extensions
-    register_setting('wpr-extension-settings', 'wpr-particles-toggle');
-    register_setting('wpr-extension-settings', 'wpr-parallax-toggle');
-    // register_setting('wpr-extension-settings', 'wpr-custom-css-toggle');
+    register_setting('wpr-extension-settings', 'wpr-particles');
+    register_setting('wpr-extension-settings', 'wpr-parallax-background');
+    register_setting('wpr-extension-settings', 'wpr-parallax-multi-layer');
 
     // Element Toggle
     foreach ( Utilities::get_registered_modules() as $title => $data ) {
@@ -264,18 +264,21 @@ function wpr_addons_settings_page() {
 
         // array of option names
         $option_names = $new_allowed_options[ 'wpr-extension-settings' ];
-        // your_option_group_name is in register_setting( 'your_option_group_name', $option_name, $sanitize_callback ); 
+
         echo '<div class="wpr-elements">';
+
         foreach ($option_names as $option_name) {  
             $option_title = ucwords( preg_replace( '/-/i', ' ', preg_replace('/wpr-||-toggle/i', '', $option_name ) ));
+
             echo '<div class="wpr-element">';
-                    echo '<div class="wpr-element-info">';
-                        echo '<h3>' . $option_title . '</h3>';
-                        echo '<input type="checkbox" name="'. $option_name .'" id="'. $option_name .'" '. checked( get_option(''. $option_name .'', 'on'), 'on', false ) .'>';
-                        echo '<label for="'. $option_name .'"></label>';
-                    echo '</div>';
+                echo '<div class="wpr-element-info">';
+                    echo '<h3>' . $option_title . '</h3>';
+                    echo '<input type="checkbox" name="'. $option_name .'" id="'. $option_name .'" '. checked( get_option(''. $option_name .'', 'on'), 'on', false ) .'>';
+                    echo '<label for="'. $option_name .'"></label>';
                 echo '</div>';
-            }
+            echo '</div>';
+        }
+
         echo '</div>';
         
         submit_button( '', 'wpr-options-button' );
