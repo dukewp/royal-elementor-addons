@@ -23,13 +23,13 @@ class WPR_Conditions_Manager {
 	        if ( ! empty($conditions) ) {
 
 				// Archive Pages (includes search)
-				if ( ! is_null( \WprAddonsPro\Classes\Extension::archive_templates_conditions( $conditions ) ) ) {
-					$template = \WprAddonsPro\Classes\Extension::archive_templates_conditions( $conditions );
+				if ( ! is_null( \WprAddonsPro\Classes\Pro_Modules::archive_templates_conditions( $conditions ) ) ) {
+					$template = \WprAddonsPro\Classes\Pro_Modules::archive_templates_conditions( $conditions );
 				}
 
 	        	// Single Pages
-				if ( ! is_null( \WprAddonsPro\Classes\Extension::single_templates_conditions( $conditions, true ) ) ) {
-					$template = \WprAddonsPro\Classes\Extension::single_templates_conditions( $conditions, true );
+				if ( ! is_null( \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $conditions, true ) ) ) {
+					$template = \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $conditions, true );
 				}
 
 	        }

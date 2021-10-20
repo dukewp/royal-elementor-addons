@@ -27,9 +27,6 @@ class WPR_Render_Templates {
 		// Elementor Frontend
 		self::$elementor_instance = \Elementor\Plugin::instance();
 
-		// Custom Canvas Template
-		// add_filter( 'template_include', [ $this, 'convert_to_canvas_template' ], 12 );
-
 		// Canvas Page Header and Footer 
 		add_action( 'get_header', [ $this, 'replace_header' ] );
 		add_action( 'get_footer', [ $this, 'replace_footer' ] );

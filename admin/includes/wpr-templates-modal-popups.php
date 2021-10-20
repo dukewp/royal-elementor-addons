@@ -65,10 +65,10 @@ class WPR_Templates_Modal_Popups {
     		// Custom
 			if ( defined('WPR_ADDONS_PRO_LICENSE') ) {
 				// Archive
-				\WprAddonsPro\Classes\Extension::archive_pages_popup_conditions( $conditions );
+				\WprAddonsPro\Classes\Pro_Modules::archive_pages_popup_conditions( $conditions );
 
 				// Single
-				\WprAddonsPro\Classes\Extension::single_pages_popup_conditions( $conditions );
+				\WprAddonsPro\Classes\Pro_Modules::single_pages_popup_conditions( $conditions );
 			}
 
 
