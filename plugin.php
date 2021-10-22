@@ -97,7 +97,9 @@ class Plugin {
 		}
 
 		// Sticky Header
-		require WPR_ADDONS_PATH . 'extensions/wpr-sticky-section.php';
+		if ( 'on' === get_option('wpr-sticky-section', 'on') ) {
+			require WPR_ADDONS_PATH . 'extensions/wpr-sticky-section.php';
+		}
 
 		// Custom CSS
 		require WPR_ADDONS_PATH . 'extensions/wpr-custom-css.php';
