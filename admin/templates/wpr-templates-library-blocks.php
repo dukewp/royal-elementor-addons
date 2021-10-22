@@ -6,11 +6,11 @@ use WprAddons\Admin\Templates\WPR_Templates_Data;
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
- * WPR_Templates_Blocks setup
+ * WPR_Templates_Library_Blocks setup
  *
  * @since 1.0
  */
-class WPR_Templates_Blocks {
+class WPR_Templates_Library_Blocks {
 
 	/**
 	** Constructor
@@ -18,14 +18,14 @@ class WPR_Templates_Blocks {
 	public function __construct() {
 
 		// Template Library Popup
-		add_action( 'wp_ajax_wpr_library_templates_blocks', [ $this, 'wpr_library_templates_blocks' ] );
+		add_action( 'wp_ajax_render_library_templates_blocks', [ $this, 'render_library_templates_blocks' ] );
 
 	}
 
 	/**
 	** Template Library Popup
 	*/
-	public function wpr_library_templates_blocks() {
+	public function render_library_templates_blocks() {
 
 		?>
 

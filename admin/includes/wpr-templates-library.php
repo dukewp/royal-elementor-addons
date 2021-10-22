@@ -6,8 +6,9 @@ use WprAddons\Admin\Includes\WPR_Render_Templates;
 use WprAddons\Admin\Includes\WPR_Templates_Shortcode;
 use WprAddons\Admin\Includes\WPR_Templates_Modal_Popups;
 use WprAddons\Admin\Includes\WPR_Templates_Actions;
-use WprAddons\Admin\Templates\WPR_Templates_Blocks;
-use WprAddons\Admin\Templates\WPR_Templates_Pages;
+use WprAddons\Admin\Templates\WPR_Templates_Library_Blocks;
+use WprAddons\Admin\Templates\WPR_Templates_Library_Popups;
+use WprAddons\Admin\Templates\WPR_Templates_Library_Pages;
 use WprAddons\Classes\Utilities;
 
 /**
@@ -30,20 +31,23 @@ class WPR_Templates_Library {
 		// Templates Shortcode
 		new WPR_Templates_Shortcode();
 
-		// Popups
+		// Init Popups
 		new WPR_Templates_Modal_Popups();
 
-		// All Templates
+		// Init Theme Builder
 		new WPR_Render_Templates();
 
 		// Template Actions
 		new WPR_Templates_Actions();
 
-		// Template Actions
-		new WPR_Templates_Blocks();
+		// Add Blocks to Library
+		new WPR_Templates_Library_Blocks();
 
-		// Template Actions
-		new WPR_Templates_Pages();
+		// Add Popups to Library
+		new WPR_Templates_Library_Popups();
+
+		// Add Pages to Library
+		// new WPR_Templates_Library_Pages();
 
 		// Enable Elementor for 'wpr_templates'
 		$this->add_elementor_cpt_support();

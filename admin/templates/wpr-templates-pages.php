@@ -4,11 +4,11 @@ namespace WprAddons\Admin\Templates;
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
- * WPR_Templates_Pages setup
+ * WPR_Templates_Library_Pages setup
  *
  * @since 1.0
  */
-class WPR_Templates_Pages {
+class WPR_Templates_Library_Pages {
 
 	/**
 	** Constructor
@@ -16,14 +16,14 @@ class WPR_Templates_Pages {
 	public function __construct() {
 
 		// Template Library Popup
-		add_action( 'wp_ajax_wpr_library_templates_pages', [ $this, 'wpr_library_templates_pages' ] );
+		add_action( 'wp_ajax_render_library_templates_pages', [ $this, 'render_library_templates_pages' ] );
 
 	}
 
 	/**
 	** Template Library Popup
 	*/
-	public function wpr_library_templates_pages() {
+	public function render_library_templates_pages() {
 		?>
 
 		<div class="wpr-tplib-sidebar">
