@@ -30,5 +30,11 @@ $template_slug = WPR_Conditions_Manager::header_footer_display_conditions($condi
 
 do_action( 'wp_body_open' );
 
+// Royal themes compatibility
+echo '<div id="page-wrap">';
+
 // Render Royal Addons Header
 Utilities::render_elementor_template($template_slug);
+
+// Royal themes compatibility
+echo '<div class="page-content">';

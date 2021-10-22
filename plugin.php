@@ -235,7 +235,7 @@ class Plugin {
 			Plugin::instance()->get_version()
 		);
 
-        // Load FontAwesome - TODO: Check if necessary 
+        // Load FontAwesome - TODO: Check if necessary (maybe elementor is already loading this)
         wp_enqueue_style(
 			'font-awesome-5-all',
 			ELEMENTOR_ASSETS_URL . 'lib/font-awesome/css/all' . $this->script_suffix() . '.css',

@@ -20,6 +20,17 @@ class WPR_Render_Templates {
 	private static $elementor_instance;
 
 	/**
+	** Get Current Theme.
+	*/
+	public $current_theme;
+
+	/**
+	** Royal Themes Array.
+	*/
+	public $royal_themes;
+
+
+	/**
 	** Constructor
 	*/
 	public function __construct() {
@@ -27,9 +38,30 @@ class WPR_Render_Templates {
 		// Elementor Frontend
 		self::$elementor_instance = \Elementor\Plugin::instance();
 
-		// Canvas Page Header and Footer 
-		add_action( 'get_header', [ $this, 'replace_header' ] );
-		add_action( 'get_footer', [ $this, 'replace_footer' ] );
+		// Ative Theme
+		$this->current_theme = get_template();
+
+		// Royal Themes
+		$this->royal_themes = ['ashe', 'ashe-pro', 'ashe-pro-premium', 'bard', 'bard-pro', 'bard-pro-premium'];
+
+		// Popular Themes
+		if ( 'astra' === $this->current_theme ) {
+			require_once(__DIR__ . '/../templates/views/astra/class-astra-compat.php');
+
+		} else if ( 'generatepress' === $this->current_theme ) {
+			require_once(__DIR__ . '/../templates/views/generatepress/class-generatepress-compat.php');
+
+		} else if ( 'oceanwp' === $this->current_theme ) {
+			require_once(__DIR__ . '/../templates/views/oceanwp/class-oceanwp-compat.php');
+
+		} else if ( 'storefront' === $this->current_theme ) {
+			require_once(__DIR__ . '/../templates/views/storefront/class-storefront-compat.php');
+		
+		// Other Themes
+		} else {
+			add_action( 'get_header', [ $this, 'replace_header' ] );
+			add_action( 'get_footer', [ $this, 'replace_footer' ] );
+		}
 
 		// Canvas Page Content
 		// add_action( 'elementor/page_templates/canvas/wpr_content', [ $this, 'canvas_page_content_display' ], 1 );
@@ -39,15 +71,26 @@ class WPR_Render_Templates {
 
 	}
 
+    /**
+    ** Check if a Template has Conditions
+    */
+	public function is_template_available( $type ) {
+    	$conditions = json_decode( get_option('wpr_'. $type .'_conditions', '[]'), true );
+    	$template = WPR_Conditions_Manager::header_footer_display_conditions( $conditions );
+
+    	return (!empty( $conditions ) && !is_null($template)) ? true : false;
+	}
 
     /**
-    ** Canvas Header
+    ** Header
     */
     public function replace_header() {
-    	$conditions = json_decode( get_option('wpr_header_conditions', '[]'), true );
-    	$template = WPR_Conditions_Manager::header_footer_display_conditions( $conditions );
-    	if ( ! empty( $conditions ) && ! is_null($template) ) {
-			require __DIR__ . '/../templates/views/theme-header.php';
+    	if ( $this->is_template_available('header') ) {
+    		if ( ! in_array($this->current_theme, $this->royal_themes) ) {
+				require __DIR__ . '/../templates/views/theme-header.php';
+			} else {
+				require __DIR__ . '/../templates/views/royal/theme-header-royal.php';
+			}
 
 			$templates   = [];
 			$templates[] = 'header.php';
@@ -61,14 +104,15 @@ class WPR_Render_Templates {
     }
 
 	/**
-	** Canvas Footer
+	** Footer
 	*/
 	public function replace_footer() {
-    	$conditions = json_decode( get_option('wpr_footer_conditions', '[]'), true );
-    	$template = WPR_Conditions_Manager::header_footer_display_conditions( $conditions );
-
-    	if ( ! empty( $conditions ) && ! is_null($template) ) { 
-			require __DIR__ . '/../templates/views/theme-footer.php';
+    	if ( $this->is_template_available('footer') ) {
+    		if ( ! in_array($this->current_theme, $this->royal_themes) ) {
+				require __DIR__ . '/../templates/views/theme-footer.php';
+			} else {
+				require __DIR__ . '/../templates/views/royal/theme-footer-royal.php';
+			}
 
 			$templates   = [];
 			$templates[] = 'footer.php';

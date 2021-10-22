@@ -14,6 +14,10 @@ Utilities::render_elementor_template($template_slug);
 
 wp_footer();
 
+// Royal themes compatibility
+echo '</div>'; // .page-content
+echo '</div>'; // #page-wrap
+
 ?>
 
 </body>
