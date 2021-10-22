@@ -96,6 +96,9 @@ class Plugin {
 			require WPR_ADDONS_PATH . 'extensions/wpr-parallax.php';
 		}
 
+		// Sticky Header
+		require WPR_ADDONS_PATH . 'extensions/wpr-sticky-section.php';
+
 		// Custom CSS
 		require WPR_ADDONS_PATH . 'extensions/wpr-custom-css.php';
 

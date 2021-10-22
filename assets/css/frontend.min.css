@@ -10016,3 +10016,54 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 	max-width: 100%;
 	width: 100%;
 }
+
+
+
+/* @media screen and (min-width: 2400px) {
+	section[data-wpr-sticky-devices*='widescreen_sticky'] {
+		position: static!important;
+		background: rgb(28, 194, 186)!important;
+	}
+}
+
+@media screen and (max-width: 2399px) {
+	section[data-wpr-sticky-devices*='desktop_sticky'] {
+		position: static!important;
+		background: rgb(163, 27, 134)!important;
+	}
+}
+
+@media screen and (max-width: 1215px) {
+	section[data-wpr-sticky-devices*='laptop_sticky'] {
+		position: static!important;
+		background: rgb(61, 190, 61)!important;
+	}
+}
+
+@media screen and (max-width: 1200px) {
+	section[data-wpr-sticky-devices*='tablet_extra'] {
+		position: static!important;
+		background: rgb(53, 41, 155)!important;
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	section[data-wpr-sticky-devices*='tablet_sticky'] {
+		position: static!important;
+		background: rgb(190, 166, 61)!important;
+	}
+}
+
+@media screen and (max-width: 767px) {
+	section[data-wpr-sticky-devices*='mobile_extra_sticky'] {
+		position: static!important;
+		background: rgb(61, 70, 190)!important;
+	}
+}
+
+@media screen and (max-width: 440px) {
+	section[data-wpr-sticky-devices*='mobile_sticky'] {
+		position: static!important;
+		background: rgb(51, 212, 113)!important;
+	}
+} */

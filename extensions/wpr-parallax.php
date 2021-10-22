@@ -119,7 +119,7 @@ class Wpr_Parallax_Scroll {
                 'return_value' => 'yes',
                 'render_type' => 'template',
                 'separator' => 'before',
-                'prefix_class' => 'parallax-'
+                'prefix_class' => 'wpr-parallax-'
             ]
         );
 
