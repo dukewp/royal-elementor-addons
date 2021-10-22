@@ -18,6 +18,8 @@ class Wpr_Sticky_Section {
 
     public function __construct() {
 		add_action( 'elementor/element/section/section_background/after_section_end', [ $this, 'register_controls' ], 10 );
+		add_action( 'elementor/section/print_template', [ $this, '_print_template' ], 10, 2 );
+		add_action( 'elementor/frontend/section/before_render', [ $this, '_before_render' ], 10, 1 );
     }
 
     public function register_controls( $element ) {
@@ -41,6 +43,30 @@ class Wpr_Sticky_Section {
 					'return_value' => 'yes',
 					'prefix_class' => 'wpr-sticky-section-',
 					'render_type' => 'template',
+				]
+			);
+
+			$element->add_control(
+				'disable_sticky_devices',
+				[
+					'label' => esc_html__( 'Enable on Devices', 'wpr-addons' ),
+					'label_block' => true,
+					'type' => Controls_Manager::SELECT2,
+					'options' => [
+						'mobile_sticky' => esc_html__('Mobile', 'wpr-addons'),
+						'mobile_extra_sticky' => esc_html__('Mobile_Extra', 'wpr-addons'),
+						'tablet_sticky' => esc_html__('Tablet', 'wpr-addons'),
+						'tablet_extra_sticky' => esc_html__('Tablet_Extra', 'wpr-addons'),
+						'laptop_sticky' => esc_html__('Laptop', 'wpr-addons'),
+						'desktop_sticky' => esc_html__('Desktop', 'wpr-addons'),
+						'widescreen_sticky' => esc_html__('Widescreen', 'wpr-addons')
+					],
+					'multiple' => true,
+					'separator' => 'before',
+					'condition' => [
+						'enable_sticky_section' => 'yes'
+					],
+
 				]
 			);
             
@@ -128,6 +154,44 @@ class Wpr_Sticky_Section {
             $element->end_controls_section();            
         }
     }
+    
+    public function _before_render( $element ) {
+        if ( $element->get_name() !== 'section' ) {
+            return;
+        }
+
+        $settings = $element->get_settings_for_display();
+
+        if ( $settings['enable_sticky_section'] === 'yes' ) {
+            $element->add_render_attribute( '_wrapper', [
+                'data-wpr-sticky-section' => $settings['enable_sticky_section'],
+                'data-wpr-position-type' => $settings['position_type'],
+                'data-wpr-position-offset' => $settings['position_offset'],
+                'data-wpr-position-location' => $settings['position_location'],
+				'data-wpr-sticky-devices' => $settings['disable_sticky_devices']
+            ] );
+        }
+    }
+
+    public function _print_template( $template, $widget ) {
+		if ( $widget->get_name() !== 'section' ) {
+			return $template;
+		}
+
+		ob_start();
+        ?>
+            <# if ( 'yes' == settings.enable_sticky_section) { #>
+                <div class="wpr-sticky-section-yes-editor" data-wpr-sticky-section={{settings.enable_sticky_section}} data-wpr-position-type={{settings.position_type}} data-wpr-position-offset={{settings.position_offset}} data-wpr-position-location={{settings.position_location}} data-wpr-sticky-devices={{settings.disable_sticky_devices}}></div>
+            <# } else { #>
+                <div></div>
+            <# } #>    
+        <?php
+		$particles_content = ob_get_contents();
+
+		ob_end_clean();
+
+		return $template . $particles_content;
+	}
 }
 
 new Wpr_Sticky_Section();
