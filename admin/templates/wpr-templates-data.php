@@ -193,4 +193,41 @@ class WPR_Templates_Data {
 			'back-to-top' => [],
 		];
 	}
+
+
+	public static function get_available_popups() {
+		return [
+			// 'contact' => [
+			// 	'v1' => ['type' => 'iframe', 'url' => 'search/v1/'],
+			// 	'v2' => ['type' => 'iframe', 'url' => 'search/v2/'],
+			// 	'v3' => ['type' => 'iframe', 'url' => 'search/v3/'],
+			// ],
+			'cookie' => [
+				'v1' => ['type' => 'iframe', 'url' => 'search/v1/'],
+			],
+			'countdown' => [
+				'v1' => ['type' => 'iframe', 'url' => 'search/v1/'],
+			],
+			// 'discount' => [
+			// 	'v1' => ['type' => 'iframe', 'url' => 'search/v1/'],
+			// 	'v2' => ['type' => 'iframe', 'url' => 'search/v2/'],
+			// 	'v3' => ['type' => 'iframe', 'url' => 'search/v3/'],
+			// ],
+			// 'gdpr' => [
+			// 	'v1' => ['type' => 'iframe', 'url' => 'search/v1/'],
+			// 	'v2' => ['type' => 'iframe', 'url' => 'search/v2/'],
+			// 	'v3' => ['type' => 'iframe', 'url' => 'search/v3/'],
+			// ],
+			// 'subscribe' => [
+			// 	'v1' => ['type' => 'iframe', 'url' => 'search/v1/'],
+			// 	'v2' => ['type' => 'iframe', 'url' => 'search/v2/'],
+			// 	'v3' => ['type' => 'iframe', 'url' => 'search/v3/'],
+			// ],
+			// 'yesno' => [
+			// 	'v1' => ['type' => 'iframe', 'url' => 'search/v1/'],
+			// 	'v2' => ['type' => 'iframe', 'url' => 'search/v2/'],
+			// 	'v3' => ['type' => 'iframe', 'url' => 'search/v3/'],
+			// ],
+		];
+	}
 }

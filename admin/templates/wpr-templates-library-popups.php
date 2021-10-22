@@ -44,39 +44,16 @@ class WPR_Templates_Library_Popups {
 
 					<div class="wpr-tplib-filters-list">
 						<ul>
-
 							<li data-filter="all"><?php esc_html_e( 'All', 'wpr-addons' ) ?></li>
-
-							<?php
-
-							$modules = Utilities::get_available_modules();
-
-							$exclude_widgets = [
-								'logo',
-								'forms',
-								'phone-call',
-								'back-to-top',
-								'popup-trigger',
-							];
-							
-							foreach ($modules as $title => $slug) {
-								if ( ! in_array($slug[0], $exclude_widgets) ) {
-									echo '<li data-filter="'. $slug[0] .'">'. $title .'</li>';
-								}
-							}
-
-							?>
+							<li data-filter="contact"><?php esc_html_e( 'Contact', 'wpr-addons' ) ?></li>
+							<li data-filter="cookie"><?php esc_html_e( 'Cookie', 'wpr-addons' ) ?></li>
+							<li data-filter="countdown"><?php esc_html_e( 'Countdown', 'wpr-addons' ) ?></li>
+							<li data-filter="discount"><?php esc_html_e( 'Discount', 'wpr-addons' ) ?></li>
+							<li data-filter="gdpr"><?php esc_html_e( 'GDPR', 'wpr-addons' ) ?></li>
+							<li data-filter="subscribe"><?php esc_html_e( 'Subscribe', 'wpr-addons' ) ?></li>
+							<li data-filter="yesno"><?php esc_html_e( 'Yes/No', 'wpr-addons' ) ?></li>
 						</ul>
 					</div>
-				</div>
-
-				<div class="wpr-tplib-sub-filters">
-					<ul>
-						<li data-sub-filter="all" class="wpr-tplib-activ-filter"><?php esc_html_e( 'All', 'wpr-addons' ); ?></li>
-						<li data-sub-filter="grid"><?php esc_html_e( 'Grid', 'wpr-addons' ) ?></li>
-						<li data-sub-filter="slider"><?php esc_html_e( 'Slider', 'wpr-addons' ) ?></li>
-						<li data-sub-filter="carousel"><?php esc_html_e( 'Carousel', 'wpr-addons' ) ?></li>
-					</ul>
 				</div>
 			</div>
 
@@ -87,25 +64,24 @@ class WPR_Templates_Library_Popups {
 
 			<?php
 
-			foreach ($modules as $title => $data) :
-				$module_slug = $data[0];
-				$blocks = WPR_Templates_Data::get_available_blocks();
+			$popups = WPR_Templates_Data::get_available_popups();
 
-				for ( $i=0; $i < count($blocks[$module_slug]); $i++ ) :
+			foreach ($popups as $type => $data) :
 
-					$template_slug 	= array_keys($blocks[$module_slug])[$i];
-					$template_title = $title .' '. $template_slug;
-					$template_sub 	= $blocks[$module_slug][$template_slug]['sub'];
-					$preview_type 	= $blocks[$module_slug][$template_slug]['type'];
-					$preview_url 	= $blocks[$module_slug][$template_slug]['url'];
+				for ( $i=0; $i < count($popups[$type]); $i++ ) :
+
+					$template_slug 	= array_keys($popups[$type])[$i];
+					$template_title = ucfirst($type) .' '. $template_slug;
+					$preview_type 	= $popups[$type][$template_slug]['type'];
+					$preview_url 	= $popups[$type][$template_slug]['url'];
 					$templte_class 	= ( strpos($template_slug, 'pro') && ! defined('WPR_ADDONS_PRO_LICENSE') ) ? ' wpr-tplib-pro-wrap' : '';
 
 			?>
 
 			<div class="wpr-tplib-template-wrap<?php echo esc_attr($templte_class); ?>">
-				<div class="wpr-tplib-template" data-slug="<?php echo esc_attr($template_slug); ?>" data-filter="<?php echo esc_attr($module_slug); ?>" data-sub-filter="<?php echo esc_attr($template_sub); ?>" data-preview-type="<?php echo esc_attr($preview_type); ?>" data-preview-url="<?php echo esc_attr($preview_url); ?>">
+				<div class="wpr-tplib-template" data-slug="<?php echo esc_attr($template_slug); ?>" data-filter="<?php echo esc_attr($type); ?>" data-preview-type="<?php echo esc_attr($preview_type); ?>" data-preview-url="<?php echo esc_attr($preview_url); ?>">
 					<div class="wpr-tplib-template-media">
-						<img src="<?php echo 'https://royal-elementor-addons.com/library/premade-styles/'. $module_slug .'/'. $template_slug .'.jpg'; ?>">
+						<img src="<?php echo 'https://royal-elementor-addons.com/library/premade-styles/popups/'. $type .'/'. $template_slug .'.jpg'; ?>">
 						<div class="wpr-tplib-template-media-overlay">
 							<i class="eicon-eye"></i>
 						</div>
