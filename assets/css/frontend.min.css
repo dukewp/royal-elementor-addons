@@ -10019,7 +10019,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 
 
-/* @media screen and (min-width: 2400px) {
+@media screen and (min-width: 2400px) {
 	section[data-wpr-sticky-devices*='widescreen_sticky'] {
 		position: static!important;
 		background: rgb(28, 194, 186)!important;
@@ -10066,4 +10066,4 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 		position: static!important;
 		background: rgb(51, 212, 113)!important;
 	}
-} */
+}
