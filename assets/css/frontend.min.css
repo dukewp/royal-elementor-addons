@@ -10016,3 +10016,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 	max-width: 100%;
 	width: 100%;
 }
+
+.wpr-sticky-section-yes {
+	width: 100%;
+}
