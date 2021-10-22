@@ -80,9 +80,9 @@ class Wpr_Sticky_Section {
 						'sticky'  => __( 'Sticky', 'wpr-addons' ),
 						'fixed' => __( 'Fixed', 'wpr-addons' ),
 					],
-                    'selectors' => [
-						'{{WRAPPER}}' => 'position: {{VALUE}};',
-                    ],
+                    // 'selectors' => [
+					// 	'{{WRAPPER}}' => 'position: {{VALUE}};',
+                    // ],
 					'condition' => [
 						'enable_sticky_section' => 'yes'
 					],
@@ -135,12 +135,30 @@ class Wpr_Sticky_Section {
 				]
 			);
                 
+            // $element->add_control(
+            //     'wpr_z_index',
+            //     [
+            //         'label' => esc_html__( 'Z-Index', 'elementor' ),
+            //         'type' => Controls_Manager::NUMBER,
+            //         'min' => -99,
+            //         'default' => 0,
+            //         'selectors' => [
+            //             '{{WRAPPER}}' => 'z-index: {{VALUE}};',
+            //         ],
+			// 		'condition' => [
+			// 			'enable_sticky_section' => 'yes'
+			// 		]
+            //     ]
+            // );
+                
             $element->add_control(
-                'z_index',
+                'wpr_z_index',
                 [
                     'label' => esc_html__( 'Z-Index', 'elementor' ),
                     'type' => Controls_Manager::NUMBER,
                     'min' => -99,
+					'max' => 999,
+					'step' => 1,
                     'default' => 0,
                     'selectors' => [
                         '{{WRAPPER}}' => 'z-index: {{VALUE}};',
@@ -150,6 +168,15 @@ class Wpr_Sticky_Section {
 					]
                 ]
             );
+
+			$element->add_control(
+				'custom_breakpoints',
+				[
+					'label' => __( 'Breakpoints', 'wpr-addons' ),
+					'type' => \Elementor\Controls_Manager::HIDDEN,
+					'default' => get_option('elementor_experiment-additional_custom_breakpoints')
+				]
+			);
 
             $element->end_controls_section();            
         }
@@ -161,14 +188,14 @@ class Wpr_Sticky_Section {
         }
 
         $settings = $element->get_settings_for_display();
-
         if ( $settings['enable_sticky_section'] === 'yes' ) {
             $element->add_render_attribute( '_wrapper', [
                 'data-wpr-sticky-section' => $settings['enable_sticky_section'],
                 'data-wpr-position-type' => $settings['position_type'],
                 'data-wpr-position-offset' => $settings['position_offset'],
                 'data-wpr-position-location' => $settings['position_location'],
-				'data-wpr-sticky-devices' => $settings['disable_sticky_devices']
+				'data-wpr-sticky-devices' => $settings['disable_sticky_devices'],
+				'data-wpr-custom-breakpoints' => $settings['custom_breakpoints']
             ] );
         }
     }
@@ -181,7 +208,7 @@ class Wpr_Sticky_Section {
 		ob_start();
         ?>
             <# if ( 'yes' == settings.enable_sticky_section) { #>
-                <div class="wpr-sticky-section-yes-editor" data-wpr-sticky-section={{settings.enable_sticky_section}} data-wpr-position-type={{settings.position_type}} data-wpr-position-offset={{settings.position_offset}} data-wpr-position-location={{settings.position_location}} data-wpr-sticky-devices={{settings.disable_sticky_devices}}></div>
+                <div class="wpr-sticky-section-yes-editor" data-wpr-sticky-section={{settings.enable_sticky_section}} data-wpr-position-type={{settings.position_type}} data-wpr-position-offset={{settings.position_offset}} data-wpr-position-location={{settings.position_location}} data-wpr-sticky-devices={{settings.disable_sticky_devices}} data-wpr-custom-breakpoints={{settings.custom_breakpoints}}></div>
             <# } else { #>
                 <div></div>
             <# } #>    
