@@ -47,11 +47,12 @@ class Wpr_Sticky_Section {
 			);
 
 			$element->add_control(
-				'disable_sticky_devices',
+				'enable_sticky_devices',
 				[
 					'label' => esc_html__( 'Enable on Devices', 'wpr-addons' ),
 					'label_block' => true,
 					'type' => Controls_Manager::SELECT2,
+					'default' => ['desktop_sticky'],
 					'options' => [
 						'mobile_sticky' => esc_html__('Mobile', 'wpr-addons'),
 						'mobile_extra_sticky' => esc_html__('Mobile_Extra', 'wpr-addons'),
@@ -99,9 +100,9 @@ class Wpr_Sticky_Section {
 						'top' => __( 'Top', 'wpr-addons' ),
 						'bottom'  => __( 'Bottom', 'wpr-addons' ),
 					],
-                    'selectors' => [
-                        '{{WRAPPER}}' => '{{VALUE}}: {{position_offset.VALUE}};',
-                    ],
+                    // 'selectors' => [
+                    //     '{{WRAPPER}}' => '{{VALUE}}: {{position_offset.VALUE}};',
+                    // ],
 					'condition' => [
 						'enable_sticky_section' => 'yes'
 					]
@@ -126,30 +127,14 @@ class Wpr_Sticky_Section {
 					'tablet_default' => 0,
 					'mobile_extra_default' => 0,
 					'mobile_default' => 0,
-                    'selectors' => [
-                        '{{WRAPPER}}.wpr-sticky-section-yes' => '{{position_location.VALUE}}: {{VALUE}}px;',
-                    ],
+                    // 'selectors' => [
+                    //     '{{WRAPPER}}' => '{{position_location.VALUE}}: {{VALUE}}px;', // add to wrapper .wpr-sticky-section-yes
+                    // ],
 					'condition' => [
 						'enable_sticky_section' => 'yes'
 					],
 				]
 			);
-                
-            // $element->add_control(
-            //     'wpr_z_index',
-            //     [
-            //         'label' => esc_html__( 'Z-Index', 'elementor' ),
-            //         'type' => Controls_Manager::NUMBER,
-            //         'min' => -99,
-            //         'default' => 0,
-            //         'selectors' => [
-            //             '{{WRAPPER}}' => 'z-index: {{VALUE}};',
-            //         ],
-			// 		'condition' => [
-			// 			'enable_sticky_section' => 'yes'
-			// 		]
-            //     ]
-            // );
                 
             $element->add_control(
                 'wpr_z_index',
@@ -157,7 +142,7 @@ class Wpr_Sticky_Section {
                     'label' => esc_html__( 'Z-Index', 'elementor' ),
                     'type' => Controls_Manager::NUMBER,
                     'min' => -99,
-					'max' => 999,
+					'max' => 99999,
 					'step' => 1,
                     'default' => 0,
                     'selectors' => [
@@ -174,7 +159,21 @@ class Wpr_Sticky_Section {
 				[
 					'label' => __( 'Breakpoints', 'wpr-addons' ),
 					'type' => \Elementor\Controls_Manager::HIDDEN,
-					'default' => get_option('elementor_experiment-additional_custom_breakpoints')
+					'default' => get_option('elementor_experiment-additional_custom_breakpoints'),
+					'condition' => [
+						'enable_sticky_section' => 'yes'
+					]
+				]
+			);
+
+			$element->add_control(
+				'apply_changes',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => '<div style="text-align: center;"><button class="elementor-update-preview-button elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply Changes</button></div>',
+					'condition' => [
+						'enable_sticky_section!' => 'yes'
+					]
 				]
 			);
 
@@ -194,7 +193,7 @@ class Wpr_Sticky_Section {
                 'data-wpr-position-type' => $settings['position_type'],
                 'data-wpr-position-offset' => $settings['position_offset'],
                 'data-wpr-position-location' => $settings['position_location'],
-				'data-wpr-sticky-devices' => $settings['disable_sticky_devices'],
+				'data-wpr-sticky-devices' => $settings['enable_sticky_devices'],
 				'data-wpr-custom-breakpoints' => $settings['custom_breakpoints']
             ] );
         }
@@ -206,12 +205,12 @@ class Wpr_Sticky_Section {
 		}
 
 		ob_start();
+		// how to use empty attribute in the middle for example data-wpr-stikcy-devices
+		// how to render attributes without creating new div using view.addRenderAttributes
         ?>
             <# if ( 'yes' == settings.enable_sticky_section) { #>
-                <div class="wpr-sticky-section-yes-editor" data-wpr-sticky-section={{settings.enable_sticky_section}} data-wpr-position-type={{settings.position_type}} data-wpr-position-offset={{settings.position_offset}} data-wpr-position-location={{settings.position_location}} data-wpr-sticky-devices={{settings.disable_sticky_devices}} data-wpr-custom-breakpoints={{settings.custom_breakpoints}}></div>
-            <# } else { #>
-                <div></div>
-            <# } #>    
+                <div class="wpr-sticky-section-yes-editor" data-wpr-sticky-section={{{settings.enable_sticky_section}}} data-wpr-position-type={{{settings.position_type}}} data-wpr-position-offset={{{settings.position_offset}}} data-wpr-position-location={{{settings.position_location}}} data-wpr-custom-breakpoints={{{settings.custom_breakpoints}}} data-wpr-sticky-devices={{{settings.enable_sticky_devices}}}></div>
+            <# } #>   
         <?php
 		$particles_content = ob_get_contents();
 
