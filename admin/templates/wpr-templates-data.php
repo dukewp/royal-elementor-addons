@@ -194,7 +194,6 @@ class WPR_Templates_Data {
 		];
 	}
 
-
 	public static function get_available_popups() {
 		return [
 			// 'contact' => [
@@ -203,21 +202,13 @@ class WPR_Templates_Data {
 			// 	'v3' => ['type' => 'iframe', 'url' => 'search/v3/'],
 			// ],
 			'cookie' => [
-				'v1' => ['type' => 'iframe', 'url' => 'search/v1/'],
+				'v1' => ['type' => 'image', 'url' => 'popups/cookie/v1-preview.jpg'],
 			],
-			'countdown' => [
-				'v1' => ['type' => 'iframe', 'url' => 'search/v1/'],
+			'discount' => [
+				// 'v1' => ['type' => 'iframe', 'url' => 'search/v1/'],
+				// 'v2' => ['type' => 'iframe', 'url' => 'search/v2/'],
+				'v3-pro' => ['type' => 'iframe', 'url' => 'search/v3/'],
 			],
-			// 'discount' => [
-			// 	'v1' => ['type' => 'iframe', 'url' => 'search/v1/'],
-			// 	'v2' => ['type' => 'iframe', 'url' => 'search/v2/'],
-			// 	'v3' => ['type' => 'iframe', 'url' => 'search/v3/'],
-			// ],
-			// 'gdpr' => [
-			// 	'v1' => ['type' => 'iframe', 'url' => 'search/v1/'],
-			// 	'v2' => ['type' => 'iframe', 'url' => 'search/v2/'],
-			// 	'v3' => ['type' => 'iframe', 'url' => 'search/v3/'],
-			// ],
 			// 'subscribe' => [
 			// 	'v1' => ['type' => 'iframe', 'url' => 'search/v1/'],
 			// 	'v2' => ['type' => 'iframe', 'url' => 'search/v2/'],

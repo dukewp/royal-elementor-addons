@@ -4619,7 +4619,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 	display: flex;
 	overflow: hidden;
 	position: relative;
-	background: #ffffff;
 }
 
 .wpr-popup-container-inner > div {
@@ -4691,6 +4690,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 	cursor: pointer;
 	right: 0;
 	width: 3px;
+}
+
+.wpr-popup-container .ps-scrollbar-x-rail {
+	display: none !important;
 }
 
 .wpr-popup-notification .wpr-popup-container .slideInDown {

@@ -47,9 +47,7 @@ class WPR_Templates_Library_Popups {
 							<li data-filter="all"><?php esc_html_e( 'All', 'wpr-addons' ) ?></li>
 							<li data-filter="contact"><?php esc_html_e( 'Contact', 'wpr-addons' ) ?></li>
 							<li data-filter="cookie"><?php esc_html_e( 'Cookie', 'wpr-addons' ) ?></li>
-							<li data-filter="countdown"><?php esc_html_e( 'Countdown', 'wpr-addons' ) ?></li>
 							<li data-filter="discount"><?php esc_html_e( 'Discount', 'wpr-addons' ) ?></li>
-							<li data-filter="gdpr"><?php esc_html_e( 'GDPR', 'wpr-addons' ) ?></li>
 							<li data-filter="subscribe"><?php esc_html_e( 'Subscribe', 'wpr-addons' ) ?></li>
 							<li data-filter="yesno"><?php esc_html_e( 'Yes/No', 'wpr-addons' ) ?></li>
 						</ul>

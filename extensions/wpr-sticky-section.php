@@ -110,7 +110,7 @@ class Wpr_Sticky_Section {
 			);
                 
             $element->add_control(
-                'z_index',
+                'wpr_z_index',
                 [
                     'label' => esc_html__( 'Z-Index', 'elementor' ),
                     'type' => Controls_Manager::NUMBER,
