@@ -59,7 +59,10 @@ class Wpr_Popup_Trigger extends Widget_Base {
 					'pro-262800' => esc_html__( '1 Month (Pro)', 'wpr-addons' ),
 				],
 				'description' => esc_html__( 'This option determines when to show popup again to a visitor after it is closed.', 'wpr-addons' ),
-				'separator' => 'before'
+				'separator' => 'before',
+				'condition' => [
+					'popup_trigger_type!' => 'close-permanently'
+				]
 			]
 		);
 	}

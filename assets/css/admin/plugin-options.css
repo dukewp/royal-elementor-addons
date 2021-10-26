@@ -247,8 +247,17 @@
 }
 
 .wpr-header-templates-list.wpr-my-templates-list,
-.wpr-footer-templates-list.wpr-my-templates-list {
+.wpr-footer-templates-list.wpr-my-templates-list,
+.wpr-popup-templates-list.wpr-my-templates-list {
   width: 65%;
+}
+
+@media screen and (max-width: 1400px) {
+  .wpr-header-templates-list.wpr-my-templates-list,
+  .wpr-footer-templates-list.wpr-my-templates-list,
+  .wpr-popup-templates-list.wpr-my-templates-list {
+    width: 100%;
+  }
 }
 
 .wpr-my-templates-list li {
