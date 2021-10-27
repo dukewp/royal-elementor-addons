@@ -99,6 +99,7 @@ class Plugin {
 		// Sticky Header
 		if ( 'on' === get_option('wpr-sticky-section', 'on') ) {
 			require WPR_ADDONS_PATH . 'extensions/wpr-sticky-section.php';
+			// var_dump(get_option('elementor_experiment-additional_custom_breakpoints'));
 		}
 
 		// Custom CSS
