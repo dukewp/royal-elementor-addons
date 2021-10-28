@@ -55,7 +55,7 @@ class Wpr_Sticky_Section {
 					'label_block' => true,
 					'type' => Controls_Manager::SELECT2,
 					'default' => ['desktop_sticky'],
-					'options' => $this->breakpointsManager(),
+					'options' => $this->breakpoints_manager(),
 					'multiple' => true,
 					'separator' => 'before',
 					'condition' => [
@@ -75,9 +75,9 @@ class Wpr_Sticky_Section {
 						'sticky'  => __( 'Sticky', 'wpr-addons' ),
 						'fixed' => __( 'Fixed', 'wpr-addons' ),
 					],
-                    // 'selectors' => [
-					// 	'{{WRAPPER}}' => 'position: {{VALUE}};',
-                    // ],
+                    'selectors' => [
+						'{{WRAPPER}}' => 'position: {{VALUE}};',
+                    ],
 					'condition' => [
 						'enable_sticky_section' => 'yes'
 					],
@@ -94,9 +94,9 @@ class Wpr_Sticky_Section {
 						'top' => __( 'Top', 'wpr-addons' ),
 						'bottom'  => __( 'Bottom', 'wpr-addons' ),
 					],
-                    // 'selectors' => [
-                    //     '{{WRAPPER}}' => '{{VALUE}}: {{position_offset.VALUE}};',
-                    // ],
+                    'selectors' => [
+                        '{{WRAPPER}}' => '{{VALUE}}: {{position_offset.VALUE}};',
+                    ],
 					'condition' => [
 						'enable_sticky_section' => 'yes'
 					]
@@ -122,9 +122,9 @@ class Wpr_Sticky_Section {
 					'mobile_extra_default' => 0,
 					'mobile_default' => 0,
 					'prefix_class' => 'wpr-offset-%s',
-                    // 'selectors' => [
-                    //     '{{WRAPPER}}' => '{{position_location.VALUE}}: {{VALUE}}px;', // add to wrapper .wpr-sticky-section-yes
-                    // ],
+                    'selectors' => [
+                        '{{WRAPPER}}' => '{{position_location.VALUE}}: {{VALUE}}px;', // add to wrapper .wpr-sticky-section-yes
+                    ],
 					'condition' => [
 						'enable_sticky_section' => 'yes'
 					],
@@ -166,20 +166,9 @@ class Wpr_Sticky_Section {
 				[
 					'label' => __( 'Active Breakpoints', 'wpr-addons' ),
 					'type' => \Elementor\Controls_Manager::HIDDEN,
-					'default' => $this->breakpointsManager2(),
+					'default' => $this->breakpoints_manager2(),
 					'condition' => [
 						'enable_sticky_section' => 'yes'
-					]
-				]
-			);
-
-			$element->add_control(
-				'apply_changes',
-				[
-					'type' => Controls_Manager::RAW_HTML,
-					'raw' => '<div style="text-align: center;"><button class="elementor-update-preview-button elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply Changes</button></div>',
-					'condition' => [
-						'enable_sticky_section!' => 'yes'
 					]
 				]
 			);
@@ -188,7 +177,7 @@ class Wpr_Sticky_Section {
         }
     }
 
-	public function breakpointsManager() {
+	public function breakpoints_manager() {
 		$active_breakpoints = [];
 
 		foreach ( \Elementor\Plugin::$instance->breakpoints->get_active_breakpoints() as $key => $value ) {
@@ -199,10 +188,10 @@ class Wpr_Sticky_Section {
 		return $active_breakpoints;
 	}
 
-	public function breakpointsManager2() {
+	public function breakpoints_manager2() {
 		$act_breakpoints = [];
 
-		foreach ( $this->breakpointsManager() as $key => $value ) {
+		foreach ( $this->breakpoints_manager() as $key => $value ) {
 			array_push($act_breakpoints, $key);
 		}
 
@@ -223,7 +212,7 @@ class Wpr_Sticky_Section {
                 'data-wpr-position-location' => $settings['position_location'],
 				'data-wpr-sticky-devices' => $settings['enable_sticky_devices'],
 				'data-wpr-custom-breakpoints' => $settings['custom_breakpoints'],
-				'data-wpr-active-breakpoints' => $this->breakpointsManager2()
+				'data-wpr-active-breakpoints' => $this->breakpoints_manager2()
             ] );
         }
     }
