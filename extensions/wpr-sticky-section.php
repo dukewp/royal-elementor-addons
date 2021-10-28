@@ -205,7 +205,7 @@ class Wpr_Sticky_Section {
 		foreach ( $this->breakpointsManager() as $key => $value ) {
 			array_push($act_breakpoints, $key);
 		}
-		// var_dump($act_breakpoints);
+		
 		return $act_breakpoints;
 	}
     
