@@ -250,6 +250,10 @@ post_max_size 64M
 
 == Changelog ==
 
+= Royal Elementor Addons v1.3 - 2021-10-28 =
+* ADDED: Elementor Grid Widget responsive column issues.
+* Fix: Elementor Phone Call Widget has no icon in editor.
+
 = Royal Elementor Addons v1.2 - 2021-09-24 =
 * Fix: Elementor Grid Widget responsive column issues.
 * Fix: Elementor Slider Widget responsive column issues.

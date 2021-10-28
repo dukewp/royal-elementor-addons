@@ -18,8 +18,9 @@ function wpr_addons_theme_builder_page() {
 
 <div class="wpr-settings-page-header">
     <h1><?php esc_html_e( 'Royal Elementor Addons', 'wpr-addons' ); ?></h1>
-    <p><?php esc_html_e( 'The most powerful Elementor Addons in the universe.', 'wpr-addons' ); ?></p>
     <p>
+        <?php esc_html_e( 'The most powerful Elementor Addons in the universe.', 'wpr-addons' ); ?>
+        <br>
         <?php esc_html_e( 'Please Note: Header & Footer builder works best with ', 'wpr-addons' ); ?>
         <a href="https://wordpress.org/themes/ashe/" target="_blank"><?php esc_html_e( 'Ashe', 'wpr-addons' ); ?></a>
         <?php esc_html_e( ' and ', 'wpr-addons' ); ?>
