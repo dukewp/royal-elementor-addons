@@ -32,7 +32,7 @@ class Wpr_Sticky_Section {
 				'wpr_section_sticky_section',
 				[
 					'tab'   => Controls_Manager::TAB_ADVANCED,
-					'label' => esc_html__( 'Sticky section - Royal Addons', 'wpr-addons' ),
+					'label' => esc_html__( 'Sticky - Royal Addons', 'wpr-addons' ),
 				]
 			);
 
@@ -40,7 +40,7 @@ class Wpr_Sticky_Section {
 				'enable_sticky_section',
 				[
 					'type' => Controls_Manager::SWITCHER,
-					'label' => esc_html__( 'Enable Sticky section', 'wpr-addons' ),
+					'label' => esc_html__( 'Make this Section Sticky', 'wpr-addons' ),
 					'default' => 'no',
 					'return_value' => 'yes',
 					'prefix_class' => 'wpr-sticky-section-',
@@ -49,31 +49,30 @@ class Wpr_Sticky_Section {
 			);
 
 			$element->add_control(
-				'enable_sticky_devices',
+				'enable_on_devices',
 				[
 					'label' => esc_html__( 'Enable on Devices', 'wpr-addons' ),
 					'label_block' => true,
 					'type' => Controls_Manager::SELECT2,
 					'default' => ['desktop_sticky'],
-					'options' => $this->breakpointsManager(),
+					'options' => $this->breakpoints_Manager(),
 					'multiple' => true,
 					'separator' => 'before',
 					'condition' => [
 						'enable_sticky_section' => 'yes'
 					],
-
 				]
 			);
             
 			$element->add_control (
 				'position_type',
 				[
-					'label' => __( 'Position Type', 'wpr-addons' ),
+					'label' => __( 'Position', 'wpr-addons' ),
 					'type' => Controls_Manager::SELECT,
 					'default' => 'sticky',
 					'options' => [
-						'sticky'  => __( 'Sticky', 'wpr-addons' ),
-						'fixed' => __( 'Fixed', 'wpr-addons' ),
+						'sticky'  => __( 'Stick on Scroll', 'wpr-addons' ),
+						'fixed' => __( 'Fixed by Default', 'wpr-addons' ),
 					],
                     // 'selectors' => [
 					// 	'{{WRAPPER}}' => 'position: {{VALUE}};',
@@ -166,20 +165,9 @@ class Wpr_Sticky_Section {
 				[
 					'label' => __( 'Active Breakpoints', 'wpr-addons' ),
 					'type' => \Elementor\Controls_Manager::HIDDEN,
-					'default' => $this->breakpointsManager2(),
+					'default' => $this->breakpoints_Manager2(),
 					'condition' => [
 						'enable_sticky_section' => 'yes'
-					]
-				]
-			);
-
-			$element->add_control(
-				'apply_changes',
-				[
-					'type' => Controls_Manager::RAW_HTML,
-					'raw' => '<div style="text-align: center;"><button class="elementor-update-preview-button elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply Changes</button></div>',
-					'condition' => [
-						'enable_sticky_section!' => 'yes'
 					]
 				]
 			);
@@ -188,25 +176,26 @@ class Wpr_Sticky_Section {
         }
     }
 
-	public function breakpointsManager() {
+	public function breakpoints_Manager() {
 		$active_breakpoints = [];
 
 		foreach ( \Elementor\Plugin::$instance->breakpoints->get_active_breakpoints() as $key => $value ) {
-			$active_breakpoints[$key . '_sticky'] = esc_html__(ucwords(preg_replace('/_/i', ' ', $key)), 'wpr-addons');
+			$active_breakpoints[$key .'_sticky'] = esc_html__(ucwords(preg_replace('/_/i', ' ', $key)), 'wpr-addons');
 		}
 
 		$active_breakpoints['desktop_sticky'] = esc_html__('Desktop', 'wpr-addons');
+
 		return $active_breakpoints;
 	}
 
-	public function breakpointsManager2() {
-		$act_breakpoints = [];
+	public function breakpoints_Manager2() {
+		$active_breakpoints = [];
 
-		foreach ( $this->breakpointsManager() as $key => $value ) {
-			array_push($act_breakpoints, $key);
+		foreach ( $this->breakpoints_Manager() as $key => $value ) {
+			array_push($active_breakpoints, $key);
 		}
 
-		return $act_breakpoints;
+		return $active_breakpoints;
 	}
     
     public function _before_render( $element ) {
@@ -221,9 +210,9 @@ class Wpr_Sticky_Section {
                 'data-wpr-position-type' => $settings['position_type'],
                 'data-wpr-position-offset' => $settings['position_offset'],
                 'data-wpr-position-location' => $settings['position_location'],
-				'data-wpr-sticky-devices' => $settings['enable_sticky_devices'],
+				'data-wpr-sticky-devices' => $settings['enable_on_devices'],
 				'data-wpr-custom-breakpoints' => $settings['custom_breakpoints'],
-				'data-wpr-active-breakpoints' => $this->breakpointsManager2()
+				'data-wpr-active-breakpoints' => $this->breakpoints_Manager2()
             ] );
         }
     }
@@ -238,7 +227,7 @@ class Wpr_Sticky_Section {
 		// how to render attributes without creating new div using view.addRenderAttributes
         ?>
             <# if ( 'yes' === settings.enable_sticky_section) { #>
-                <div class="wpr-sticky-section-yes-editor" data-wpr-sticky-section={{{settings.enable_sticky_section}}} data-wpr-position-type={{{settings.position_type}}} data-wpr-position-offset={{{settings.position_offset}}} data-wpr-position-location={{{settings.position_location}}} data-wpr-custom-breakpoints={{{settings.custom_breakpoints}}} data-wpr-sticky-devices={{{settings.enable_sticky_devices}}} data-wpr-active-breakpoints = {{{settings.active_breakpoints}}}></div>
+                <div class="wpr-sticky-section-yes-editor" data-wpr-sticky-section={{{settings.enable_sticky_section}}} data-wpr-position-type={{{settings.position_type}}} data-wpr-position-offset={{{settings.position_offset}}} data-wpr-position-location={{{settings.position_location}}} data-wpr-custom-breakpoints={{{settings.custom_breakpoints}}} data-wpr-sticky-devices={{{settings.enable_on_devices}}} data-wpr-active-breakpoints = {{{settings.active_breakpoints}}}></div>
             <# } #>   
         <?php
 		$particles_content = ob_get_contents();

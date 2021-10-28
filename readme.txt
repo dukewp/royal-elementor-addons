@@ -251,8 +251,16 @@ post_max_size 64M
 == Changelog ==
 
 = Royal Elementor Addons v1.3 - 2021-10-28 =
-* ADDED: Elementor Grid Widget responsive column issues.
+* ADDED: Elementor Header and Footer Builder.
+* ADDED: Elementor Popups (Elementor Modal Popups) Builder.
+* ADDED: Elementor Predefined Styles for Popups and various Royal Elementor Addons Widgets.
+* ADDED: Elementor Particles Effect to the section options.
+* ADDED: Elementor Parallax Background Effect to the section options.
+* ADDED: Elementor Parallax Multi Layer Effect to the section options.
+* ADDED: Elementor Custom CSS option to the Widgets, Columns and Sections.
+* ADDED: Freemius has been integrated.
 * Fix: Elementor Phone Call Widget has no icon in editor.
+* Fix: Elementor Flip Box front button z-index issue.
 
 = Royal Elementor Addons v1.2 - 2021-09-24 =
 * Fix: Elementor Grid Widget responsive column issues.

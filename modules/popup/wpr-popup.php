@@ -216,7 +216,7 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 				'group_popup_settings_pro_notice',
 				[
 					'type' => Controls_Manager::RAW_HTML,
-					'raw' => '<a onclick="showOptionsImage()" class="wpr-show-img" style="cursor:pointer;">Click Here</a> to see what options <br> are available in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-popup-pro#purchasepro" target="_blank">Pro version</a></strong>
+					'raw' => '<a onclick="showOptionsImage()" class="wpr-show-img" style="cursor:pointer;">Click Here</a> to see what options <br> are available in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>
 					<img src="'. WPR_ADDONS_ASSETS_URL .'img/pro-options/group_popup_settings.jpg" style="display:none;position: absolute;top: 80px;left: 0;z-index: 99;border: 1px solid #93003C;">
 					<script>function showOptionsImage(){jQuery(document).on("click",function(){jQuery(".elementor-control .wpr-pro-notice img").hide()}),setTimeout(function(){jQuery(".elementor-control .wpr-pro-notice img").show()},100)}</script>',
 					'content_classes' => 'wpr-pro-notice',
