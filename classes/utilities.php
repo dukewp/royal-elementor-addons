@@ -625,7 +625,7 @@ class Utilities {
 		$module->add_control(
             'wpr_library_buttons',
             [
-				'raw' => '<a href="#" target="_blank">'. esc_html__( 'Widget Preview', 'wpr-addons' ) .'</a> <a href="#">'. esc_html__( 'Predefined Styles', 'wpr-addons' ) .'</a>',
+				'raw' => '<a href="#" target="_blank" data-theme="'. get_template() .'">'. esc_html__( 'Widget Preview', 'wpr-addons' ) .'</a> <a href="#">'. esc_html__( 'Predefined Styles', 'wpr-addons' ) .'</a>',
 				'type' => $controls_manager,
 			]
         );
@@ -642,7 +642,8 @@ class Utilities {
 		$module->add_control(
             $option .'_pro_notice',
             [
-				'raw' => 'This option is available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-'. $widget .'-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+				// 'raw' => 'This option is available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-'. $widget .'-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+				'raw' => 'This option is available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
 				'type' => $controls_manager,
 				'content_classes' => 'wpr-pro-notice',
 				'condition' => [

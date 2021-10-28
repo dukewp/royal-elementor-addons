@@ -45,7 +45,6 @@ class WPR_Templates_Library_Popups {
 					<div class="wpr-tplib-filters-list">
 						<ul>
 							<li data-filter="all"><?php esc_html_e( 'All', 'wpr-addons' ) ?></li>
-							<li data-filter="contact"><?php esc_html_e( 'Contact', 'wpr-addons' ) ?></li>
 							<li data-filter="cookie"><?php esc_html_e( 'Cookie', 'wpr-addons' ) ?></li>
 							<li data-filter="discount"><?php esc_html_e( 'Discount', 'wpr-addons' ) ?></li>
 							<li data-filter="subscribe"><?php esc_html_e( 'Subscribe', 'wpr-addons' ) ?></li>

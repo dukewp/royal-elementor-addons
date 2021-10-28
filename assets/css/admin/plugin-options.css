@@ -637,12 +637,74 @@ input.wpr-user-template-title:focus {
 == Freemius
 --------------------------------------------------------------*/
 #fs_connect {
-  margin: 50px !important;
-  border: 1px solid #e8e8e8;
+  margin: 40px !important;
+  width: 615px !important;
+  border-top: 3px solid #2271B1 !important;
 }
 
 #fs_connect .fs-content {
-  padding: 25px;
+  padding: 25px 20px 35px 20px !important;
+}
+
+#fs_connect .fs-visual {
+  background: transparent !important;
+}
+
+#fs_connect .fs-visual .fs-site-icon,
+#fs_connect .fs-visual .fs-plugin-icon,
+#fs_connect .fs-visual .fs-connect-logo {
+  top: 20px !important;
+}
+
+#fs_connect .fs-visual .fs-plugin-icon,
+#fs_connect .fs-visual .fs-connect-logo,
+#fs_connect .fs-visual .fs-site-icon {
+  border: none !important;
+}
+
+#fs_connect .fs-visual .fs-site-icon i,
+#fs_connect .fs-visual img{
+  overflow: hidden !important;
+  border-radius: 100px !important;
+}
+
+#fs_connect .fs-actions {
+  border-top: 1px solid #F2F2F2 !important;
+  background: #F2F2F2 !important;
+}
+
+#fs_connect .fs-actions .button {
+  font-size: 14px !important;
+}
+
+#fs_connect .fs-actions .button.button-secondary {
+  padding: 0 25px !important;
+}
+
+#fs_connect .fs-permissions {
+  margin-top: 20px !important;
+}
+
+#fs_connect .fs-permissions>.fs-trigger {
+  box-shadow: none !important;
+}
+
+#fs_connect .fs-permissions.fs-open ul {
+  margin: 30px 20px !important;
+}
+
+#fs_connect .fs-permissions ul li {
+  margin-bottom: 20px !important;
+}
+
+#fs_connect .fs-permissions ul li .fs-permission-description span {
+  font-size: 12px !important;
+  text-transform: capitalize !important;
+}
+
+#fs_connect .fs-permissions ul li .fs-permission-description p {
+  font-size: 11px !important;
+  margin-top: 0 !important;
 }
 
 #fs_connect .fs-license-key-container {
@@ -650,15 +712,10 @@ input.wpr-user-template-title:focus {
   margin-top: 20px;
 }
 
-#fs_connect .fs-actions {
-  padding: 0 !important;
-  background-color: transparent !important;
-}
-
-#fs_connect .fs-visual,
-#fs_connect .fs-permissions,
+#pframe,
+#fs_connect.require-license-key .fs-permissions,
+#fs_connect.require-license-key .fs-terms,
 #fs_connect .fs-freemium-licensing,
-#fs_connect .fs-terms,
 #license_issues_link {
   display: none !important;
 }

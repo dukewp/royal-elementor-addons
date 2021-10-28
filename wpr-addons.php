@@ -25,6 +25,63 @@ define( 'WPR_ADDONS_URL', plugins_url( '/', WPR_ADDONS__FILE__ ) );
 define( 'WPR_ADDONS_ASSETS_URL', WPR_ADDONS_URL . 'assets/' );
 define( 'WPR_ADDONS_MODULES_URL', WPR_ADDONS_URL . 'modules/' );
 
+
+/**
+ * Feemius Integration
+ */
+if ( ! function_exists( 'wpr_fs' ) ) {
+	$register_freemius = true;
+
+	if ( is_admin() ) {
+		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+		if ( ! is_plugin_active('royal-elementor-addons/wpr-addons.php') ) {
+			$register_freemius = false;
+		}
+	}
+
+	if ( $register_freemius ) {
+	    // Create a helper function for easy SDK access.
+	    function wpr_fs() {
+	        global $wpr_fs;
+
+	        if ( ! isset( $wpr_fs ) ) {
+	            // Include Freemius SDK.
+	            require_once dirname(__FILE__) . '/freemius/start.php';
+
+	            $wpr_fs = fs_dynamic_init( array(
+	                'id'                  => '8416',
+	                'slug'                => 'wpr-addons',
+	                'premium_slug'        => 'wpr-addons-pro',
+	                'type'                => 'plugin',
+	                'public_key'          => 'pk_a0b21b234a7c9581a555b9ee9f28a',
+	                'is_premium'          => false,
+	            	'has_premium_version' => true,
+	                'has_paid_plans'      => true,
+	                'has_addons'          => false,
+	                'has_paid_plans'      => true,
+	            	'has_affiliation'     => 'selected',
+	                'menu'                => array(
+	                    'slug'           => 'wpr-addons',
+	                    'support'        => false,
+	                	'affiliation'    => true,
+	                ),
+	            ) );
+	        }
+
+	        return $wpr_fs;
+	    }
+
+	    // Init Freemius.
+	    wpr_fs();
+	    // Signal that SDK was initiated.
+	    do_action( 'wpr_fs_loaded' );
+
+	    wpr_fs()->add_filter( 'show_deactivation_subscription_cancellation', '__return_false' );
+	}
+}
+
+
 /**
  * Load gettext translate for our text domain.
  *

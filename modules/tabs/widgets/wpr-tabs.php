@@ -317,7 +317,8 @@ class Wpr_Tabs extends Widget_Base {
 				'tabs_repeater_pro_notice',
 				[
 					'type' => Controls_Manager::RAW_HTML,
-					'raw' => 'More than 3 Tabs are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-tabs-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					// 'raw' => 'More than 3 Tabs are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-tabs-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					'raw' => 'More than 3 Tabs are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
 					'content_classes' => 'wpr-pro-notice',
 				]
 			);
@@ -345,7 +346,8 @@ class Wpr_Tabs extends Widget_Base {
 			$this->add_control(
 	            'tabs_align_pro_notice',
 	            [
-					'raw' => 'Horizontal Align option is fully supported in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-tabs-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					// 'raw' => 'Horizontal Align option is fully supported in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-tabs-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					'raw' => 'Horizontal Align option is fully supported in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
 					'type' => Controls_Manager::RAW_HTML,
 					'content_classes' => 'wpr-pro-notice',
 					'condition' => [
@@ -400,15 +402,15 @@ class Wpr_Tabs extends Widget_Base {
 				'options' => [
 					'left' => [
 						'title' => esc_html__( 'Left', 'wpr-addons' ),
-						'icon' => 'fa fa-align-left',
+						'icon' => 'eicon-text-align-left',
 					],
 					'center' => [
 						'title' => esc_html__( 'Center', 'wpr-addons' ),
-						'icon' => 'fa fa-align-center',
+						'icon' => 'eicon-text-align-center',
 					],
 					'right' => [
 						'title' => esc_html__( 'Right', 'wpr-addons' ),
-						'icon' => 'fa fa-align-right',
+						'icon' => 'eicon-text-align-right',
 					],
 				],
 				'selectors_dictionary' => [

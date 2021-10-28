@@ -60,9 +60,9 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 				'default' => '0',
 				'options' => [
 					'0' => esc_html__( 'No Delay', 'wpr-addons' ),
-					'pro-6' => esc_html__( '1 Minute (Pro)', 'wpr-addons' ),
-					'pro-18' => esc_html__( '3 Minute (Pro)', 'wpr-addons' ),
-					'pro-30' => esc_html__( '5 Minute (Pro)', 'wpr-addons' ),
+					'60000' => esc_html__( '1 Minute', 'wpr-addons' ),
+					'180000' => esc_html__( '3 Minute', 'wpr-addons' ),
+					'300000' => esc_html__( '5 Minute', 'wpr-addons' ),
 					'pro-60' => esc_html__( '10 Minute (Pro)', 'wpr-addons' ),
 					'pro-180' => esc_html__( '30 Minute (Pro)', 'wpr-addons' ),
 					'pro-360' => esc_html__( '1 Hour (Pro)', 'wpr-addons' ),
@@ -71,8 +71,11 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 					'pro-4320' => esc_html__( '12 Hour (Pro)', 'wpr-addons' ),
 					'pro-8640' => esc_html__( '1 Day (Pro)', 'wpr-addons' ),
 					'pro-25920' => esc_html__( '3 Days (Pro)', 'wpr-addons' ),
-					'432000000' => esc_html__( '5 Days', 'wpr-addons' ),
+					'pro-43200' => esc_html__( '5 Days (Pro)', 'wpr-addons' ),
 					'pro-60480' => esc_html__( '7 Days (Pro)', 'wpr-addons' ),
+					'pro-864000' => esc_html__( '10 Days (Pro)', 'wpr-addons' ),
+					'pro-1296000' => esc_html__( '15 Days (Pro)', 'wpr-addons' ),
+					'pro-1728000' => esc_html__( '20 Days (Pro)', 'wpr-addons' ),
 					'pro-262800' => esc_html__( '1 Month (Pro)', 'wpr-addons' ),
 				],
 				'description' => esc_html__( 'This option determines when to show popup again to a visitor after it is closed.', 'wpr-addons' ),
@@ -198,7 +201,11 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 			'pro-4320',
 			'pro-8640',
 			'pro-25920',
+			'pro-43200',
 			'pro-60480',
+			'pro-864000',
+			'pro-1296000',
+			'pro-1728000',
 			'pro-262800'
 		] );
 
@@ -265,8 +272,8 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 					],
 				],				
 				'default' => [
-					'unit' => '%',
-					'size' => 80,
+					'unit' => 'px',
+					'size' => 650,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-popup-container' => 'width: {{SIZE}}{{UNIT}};',
@@ -421,6 +428,7 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 			[
 				'label' => esc_html__( 'Entance Animation', 'wpr-addons' ),
 				'type' => Controls_Manager::ANIMATION,
+				'default' => 'fadeIn',
 				'label_block' => true,
 				'frontend_available' => true,
 				'separator' => 'before',

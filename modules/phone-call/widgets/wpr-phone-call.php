@@ -19,7 +19,7 @@ class Wpr_Phone_Call extends Widget_Base {
 	}
 
 	public function get_icon() {
-		return 'wpr-icon fas fa-phone';
+		return 'wpr-icon eicon-tel-field';
 	}
 
 	public function get_categories() {

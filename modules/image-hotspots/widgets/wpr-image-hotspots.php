@@ -329,7 +329,8 @@ class Wpr_Image_Hotspots extends Widget_Base {
 				'hotspot_repeater_pro_notice',
 				[
 					'type' => Controls_Manager::RAW_HTML,
-					'raw' => 'More than 2 Hotspots are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-image-hotspots-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					// 'raw' => 'More than 2 Hotspots are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-image-hotspots-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					'raw' => 'More than 2 Hotspots are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
 					'content_classes' => 'wpr-pro-notice',
 				]
 			);

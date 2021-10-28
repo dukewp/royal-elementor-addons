@@ -6257,7 +6257,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 == Search
 --------------------------------------------------------------*/
 .wpr-search-form-input-wrap {
-	border-style: solid;
 	width: 100%;
 	overflow: hidden;
 }
@@ -6267,6 +6266,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 	height: 100%;
 	font-size: 14px;
 	background-color: transparent;
+	border-style: solid;
 }
 
 .wpr-search-form-style-inner .wpr-search-form-input-wrap,
@@ -8461,7 +8461,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 .wpr-flip-box-btn {
-	position: relative;
 	display: inline-table;
 	cursor: pointer;
 }

@@ -281,10 +281,11 @@ class Wpr_Parallax_Scroll {
 
         if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
             $element->add_control(
-                'particles_repeater_pro_notice',
+                'paralax_repeater_pro_notice',
                 [
                     'type' => Controls_Manager::RAW_HTML,
-                    'raw' => 'More than 2 Layers are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-parallax-multi-layer-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+                    // 'raw' => 'More than 2 Layers are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-parallax-multi-layer-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+                    'raw' => 'More than 2 Layers are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
                     'content_classes' => 'wpr-pro-notice',
                 ]
             );

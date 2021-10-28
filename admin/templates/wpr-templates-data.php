@@ -24,6 +24,10 @@ class WPR_Templates_Data {
 				'v8-pro' => ['type' => 'iframe', 'url' => 'grid/v8/'],
 				'v9-pro' => ['type' => 'iframe', 'url' => 'grid/v9/'],
 				'v10-pro' => ['type' => 'iframe', 'url' => 'grid/v10/'],
+				'v11' => ['type' => 'iframe', 'url' => 'grid/v11/'],
+				'v12' => ['type' => 'iframe', 'url' => 'grid/v12/'],
+				'v13' => ['type' => 'iframe', 'url' => 'grid/v13/'],
+				'v14' => ['type' => 'iframe', 'url' => 'grid/v14/'],
 			],
 			'woo-grid' => [
 				'v1' => ['type' => 'iframe', 'url' => 'woocommerce-grid/v1/'],
@@ -33,6 +37,8 @@ class WPR_Templates_Data {
 				'v5-pro' => ['type' => 'iframe', 'url' => 'woocommerce-grid/v5/'],
 				'v6-pro' => ['type' => 'iframe', 'url' => 'woocommerce-grid/v6/'],
 				'v7-pro' => ['type' => 'iframe', 'url' => 'woocommerce-grid/v7/'],
+				'v8-pro' => ['type' => 'iframe', 'url' => 'woocommerce-grid/v8/'],
+				'v9-pro' => ['type' => 'iframe', 'url' => 'woocommerce-grid/v9/'],
 			],
 			'media-grid' => [
 				'v1' => ['type' => 'iframe', 'url' => 'image-grid/v1/'],
@@ -42,22 +48,41 @@ class WPR_Templates_Data {
 				'v1' => ['type' => 'iframe', 'url' => 'magazine-grid/v1/'],
 				'v2' => ['type' => 'iframe', 'url' => 'magazine-grid/v2/'],
 				// 'v3' => ['type' => 'iframe', 'url' => 'magazine-grid/v3/', 'sub' => 'carousel'], <-- Keep as example
+				'v3-pro' => ['type' => 'iframe', 'url' => 'magazine-grid/v3/'],
+				'v4-pro' => ['type' => 'iframe', 'url' => 'magazine-grid/v4/'],
+				'v5-pro' => ['type' => 'iframe', 'url' => 'magazine-grid/v5/'],
+				'v6-pro' => ['type' => 'iframe', 'url' => 'magazine-grid/v6/'],
+				'v7-pro' => ['type' => 'iframe', 'url' => 'magazine-grid/v7/'],
+				'v8-pro' => ['type' => 'iframe', 'url' => 'magazine-grid/v8/'],
 			],
 			'advanced-slider' => [
 				'v1' => ['type' => 'iframe', 'url' => 'advanced-slider/v1/'],
 				'v2' => ['type' => 'iframe', 'url' => 'advanced-slider/v2/'],
 				'v3' => ['type' => 'iframe', 'url' => 'advanced-slider/v3/'],
+				'v4-pro' => ['type' => 'iframe', 'url' => 'advanced-slider/v4/'],
+				'v5-pro' => ['type' => 'iframe', 'url' => 'advanced-slider/v5/'],
+				'v6-pro' => ['type' => 'iframe', 'url' => 'advanced-slider/v6/'],
+				'v7-pro' => ['type' => 'iframe', 'url' => 'advanced-slider/v7/'],
+				'v8-pro' => ['type' => 'iframe', 'url' => 'advanced-slider/v8/'],
 			],
 			'testimonial' => [
 				'v1' => ['type' => 'iframe', 'url' => 'testimonial-slider/v1/'],
 				'v2' => ['type' => 'iframe', 'url' => 'testimonial-slider/v2/'],
 				'v3' => ['type' => 'iframe', 'url' => 'testimonial-slider/v3/'],
 				'v4' => ['type' => 'iframe', 'url' => 'testimonial-slider/v4/'],
+				'v5-pro' => ['type' => 'iframe', 'url' => 'testimonial-slider/v5/'],
+				'v6-pro' => ['type' => 'iframe', 'url' => 'testimonial-slider/v6/'],
+				'v7-pro' => ['type' => 'iframe', 'url' => 'testimonial-slider/v7/'],
+				'v8-pro' => ['type' => 'iframe', 'url' => 'testimonial-slider/v8/'],
+				'v9-pro' => ['type' => 'iframe', 'url' => 'testimonial-slider/v9/'],
 			],
 			'nav-menu' => [
 				'v1' => ['type' => 'iframe', 'url' => 'nav-menu/v1/'],
 				'v2' => ['type' => 'iframe', 'url' => 'nav-menu/v2/'],
 				'v3' => ['type' => 'iframe', 'url' => 'nav-menu/v3/'],
+				'v4' => ['type' => 'iframe', 'url' => 'nav-menu/v4/'],
+				'v5' => ['type' => 'iframe', 'url' => 'nav-menu/v5/'],
+				'v6' => ['type' => 'iframe', 'url' => 'nav-menu/v6/'],
 			],
 			'onepage-nav' => [
 				'v1' => ['type' => 'iframe', 'url' => 'one-page-navigation/v1/'],
@@ -71,10 +96,15 @@ class WPR_Templates_Data {
 				'v3' => ['type' => 'iframe', 'url' => 'pricing-table/v3/'],
 				'v4' => ['type' => 'iframe', 'url' => 'pricing-table/v4/'],
 				'v5' => ['type' => 'iframe', 'url' => 'pricing-table/v5/'],
+				'v6-pro' => ['type' => 'iframe', 'url' => 'pricing-table/v6/'],
+				'v7-pro' => ['type' => 'iframe', 'url' => 'pricing-table/v7/'],
+				'v8-pro' => ['type' => 'iframe', 'url' => 'pricing-table/v8/'],
 			],
 			'content-toggle' => [
 				'v1' => ['type' => 'iframe', 'url' => 'content-toggle/v1/'],
 				'v2' => ['type' => 'iframe', 'url' => 'content-toggle/v2/'],
+				'v3-pro' => ['type' => 'iframe', 'url' => 'content-toggle/v3/'],
+				'v4-pro' => ['type' => 'iframe', 'url' => 'content-toggle/v4/'],
 			],
 			'countdown' => [
 				'v1' => ['type' => 'iframe', 'url' => 'countdown/v1/'],
@@ -109,6 +139,7 @@ class WPR_Templates_Data {
 				'v1' => ['type' => 'iframe', 'url' => 'flip-box/v1/'],
 				'v2' => ['type' => 'iframe', 'url' => 'flip-box/v2/'],
 				'v3' => ['type' => 'iframe', 'url' => 'flip-box/v3/'],
+				'v4-pro' => ['type' => 'iframe', 'url' => 'flip-box/v4/'],
 			],
 			'promo-box' => [
 				'v1' => ['type' => 'iframe', 'url' => 'promo-box/v1/'],
@@ -135,12 +166,17 @@ class WPR_Templates_Data {
 				'v3' => ['type' => 'iframe', 'url' => 'mailchimp/v3/'],
 				'v4' => ['type' => 'iframe', 'url' => 'mailchimp/v4/'],
 				'v5' => ['type' => 'iframe', 'url' => 'mailchimp/v5/'],
+				'v6-pro' => ['type' => 'iframe', 'url' => 'mailchimp/v6/'],
+				'v7-pro' => ['type' => 'iframe', 'url' => 'mailchimp/v7/'],
+				'v8-pro' => ['type' => 'iframe', 'url' => 'mailchimp/v8/'],
 			],
 			'content-ticker' => [
 				'v1' => ['type' => 'iframe', 'url' => 'content-ticker/v1/'],
 				'v2' => ['type' => 'iframe', 'url' => 'content-ticker/v2/'],
 				'v3' => ['type' => 'iframe', 'url' => 'content-ticker/v3/'],
 				'v4-pro' => ['type' => 'iframe', 'url' => 'content-ticker/v4/'],
+				'v5-pro' => ['type' => 'iframe', 'url' => 'content-ticker/v5/'],
+				'v6-pro' => ['type' => 'iframe', 'url' => 'content-ticker/v6/'],
 			],
 			'button' => [
 				'v1' => ['type' => 'iframe', 'url' => 'button/v1/'],
@@ -159,7 +195,10 @@ class WPR_Templates_Data {
 				'v2' => ['type' => 'iframe', 'url' => 'team-member/v2/'],
 				'v3' => ['type' => 'iframe', 'url' => 'team-member/v3/'],
 				'v4' => ['type' => 'iframe', 'url' => 'team-member/v4/'],
-				'v5' => ['type' => 'iframe', 'url' => 'team-member/v5/']
+				'v5' => ['type' => 'iframe', 'url' => 'team-member/v5/'],
+				'v6-pro' => ['type' => 'iframe', 'url' => 'team-member/v6/'],
+				'v7-pro' => ['type' => 'iframe', 'url' => 'team-member/v7/'],
+				'v8-pro' => ['type' => 'iframe', 'url' => 'team-member/v8/'],
 			],
 			'google-maps' => [
 				'v1' => ['type' => 'iframe', 'url' => 'google-map/v1/'],
@@ -172,6 +211,10 @@ class WPR_Templates_Data {
 				'v1' => ['type' => 'iframe', 'url' => 'price-list/v1/'],
 				'v2' => ['type' => 'iframe', 'url' => 'price-list/v2/'],
 				'v3' => ['type' => 'iframe', 'url' => 'price-list/v3/'],
+				'v4-pro' => ['type' => 'iframe', 'url' => 'price-list/v4/'],
+				'v5-pro' => ['type' => 'iframe', 'url' => 'price-list/v5/'],
+				'v6-pro' => ['type' => 'iframe', 'url' => 'price-list/v6/'],
+				'v7-pro' => ['type' => 'iframe', 'url' => 'price-list/v7/'],
 			],
 			'business-hours' => [
 				'v1' => ['type' => 'iframe', 'url' => 'business-hours/v1/'],
@@ -182,6 +225,8 @@ class WPR_Templates_Data {
 				'v1' => ['type' => 'iframe', 'url' => 'sharing-button/v1/'],
 				'v2' => ['type' => 'iframe', 'url' => 'sharing-button/v2/'],
 				'v3' => ['type' => 'iframe', 'url' => 'sharing-button/v3/'],
+				'v4-pro' => ['type' => 'iframe', 'url' => 'sharing-button/v4/'],
+				'v5-pro' => ['type' => 'iframe', 'url' => 'sharing-button/v5/'],
 			],
 			'logo' => [],
 			'search' => [
@@ -203,6 +248,9 @@ class WPR_Templates_Data {
 			// ],
 			'cookie' => [
 				'v1' => ['type' => 'image', 'url' => 'popups/cookie/v1-preview.jpg'],
+				'v2-pro' => ['type' => 'image', 'url' => 'popups/cookie/v2-pro-preview.jpg'],
+				'v3-pro' => ['type' => 'image', 'url' => 'popups/cookie/v3-pro-preview.jpg'],
+				'v4-pro' => ['type' => 'image', 'url' => 'popups/cookie/v4-pro-preview.jpg'],
 			],
 			'discount' => [
 				'v1' => ['type' => 'image', 'url' => 'popups/discount/v1-preview.jpg'],
@@ -222,16 +270,16 @@ class WPR_Templates_Data {
 				'v15-pro' => ['type' => 'image', 'url' => 'popups/discount/v15-pro-preview.jpg'],
 				'v16-pro' => ['type' => 'image', 'url' => 'popups/discount/v16-pro-preview.jpg'],
 			],
-			// 'subscribe' => [
-			// 	'v1' => ['type' => 'iframe', 'url' => 'search/v1/'],
-			// 	'v2' => ['type' => 'iframe', 'url' => 'search/v2/'],
-			// 	'v3' => ['type' => 'iframe', 'url' => 'search/v3/'],
-			// ],
-			// 'yesno' => [
-			// 	'v1' => ['type' => 'iframe', 'url' => 'search/v1/'],
-			// 	'v2' => ['type' => 'iframe', 'url' => 'search/v2/'],
-			// 	'v3' => ['type' => 'iframe', 'url' => 'search/v3/'],
-			// ],
+			'subscribe' => [
+                'v1-pro' => ['type' => 'image', 'url' => 'popups/subscribe/v1-pro-preview.jpg'],  
+			    'v2-pro' => ['type' => 'image', 'url' => 'popups/subscribe/v2-pro-preview.jpg'],
+				'v3-pro' => ['type' => 'image', 'url' => 'popups/subscribe/v3-pro-preview.jpg'],
+		    ],
+			'yesno' => [
+				'v1-pro' => ['type' => 'image', 'url' => 'popups/yesno/v1-pro-preview.jpg'],  
+			    'v2-pro' => ['type' => 'image', 'url' => 'popups/yesno/v2-pro-preview.jpg'],
+				'v3-pro' => ['type' => 'image', 'url' => 'popups/yesno/v3-pro-preview.jpg'],
+			],
 		];
 	}
 }

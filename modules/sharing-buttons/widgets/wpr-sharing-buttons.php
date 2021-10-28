@@ -390,19 +390,19 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 				'options' => [
 					'flex-start' => [
 						'title' => esc_html__( 'Left', 'wpr-addons' ),
-						'icon' => 'fa fa-align-left',
+						'icon' => 'eicon-text-align-left',
 					],
 					'center' => [
 						'title' => esc_html__( 'Center', 'wpr-addons' ),
-						'icon' => 'fa fa-align-center',
+						'icon' => 'eicon-text-align-center',
 					],
 					'flex-end' => [
 						'title' => esc_html__( 'Right', 'wpr-addons' ),
-						'icon' => 'fa fa-align-right',
+						'icon' => 'eicon-text-align-right',
 					],
 					'space-between' => [
 						'title' => esc_html__( 'Justified', 'wpr-addons' ),
-						'icon' => 'fa fa-align-justify',
+						'icon' => 'eicon-text-align-justify',
 					],
 				],
 				'default' => 'flex-start',
