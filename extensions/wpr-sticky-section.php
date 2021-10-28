@@ -205,7 +205,7 @@ class Wpr_Sticky_Section {
 		foreach ( $this->breakpointsManager() as $key => $value ) {
 			array_push($act_breakpoints, $key);
 		}
-		
+
 		return $act_breakpoints;
 	}
     
@@ -234,8 +234,7 @@ class Wpr_Sticky_Section {
 		}
 
 		ob_start();
-
-		// how to use empty attribute in the middle for example data-wpr-stikcy-devices
+		
 		// how to render attributes without creating new div using view.addRenderAttributes
         ?>
             <# if ( 'yes' === settings.enable_sticky_section) { #>
