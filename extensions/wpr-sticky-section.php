@@ -40,7 +40,7 @@ class Wpr_Sticky_Section {
 				'enable_sticky_section',
 				[
 					'type' => Controls_Manager::SWITCHER,
-					'label' => esc_html__( 'Enable Sticky section', 'wpr-addons' ),
+					'label' => esc_html__( 'Make This Section Sticky', 'wpr-addons' ),
 					'default' => 'no',
 					'return_value' => 'yes',
 					'prefix_class' => 'wpr-sticky-section-',
@@ -51,7 +51,7 @@ class Wpr_Sticky_Section {
 			$element->add_control (
 				'position_type',
 				[
-					'label' => __( 'Position Type', 'wpr-addons' ),
+					'label' => __( 'Position', 'wpr-addons' ),
 					'type' => Controls_Manager::SELECT,
 					'default' => 'sticky',
 					'options' => [
