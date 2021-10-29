@@ -7,11 +7,6 @@
 		init: function() {
 			$(document).ready(function() {
 				if ( ! $( '.wpr-template-popup' ).length || WprPopups.editorCheck() ) {
-					// ScrollBar in Editor
-					if ( $( '.wpr-popup-container-inner' ).length ) {
-						$( '.wpr-popup-container-inner' ).perfectScrollbar();
-					}
-
 					return;
 				}
 
@@ -134,7 +129,9 @@
 				}
 
 				// Enable Scrollbar
-				popup.find( '.wpr-popup-container-inner' ).perfectScrollbar();
+				if ( '0px' !== popup.find('.wpr-popup-container-inner').css('height') ) {
+					const ps = new PerfectScrollbar(popup.find('.wpr-popup-container-inner')[0]);
+				}
 			});
 		}, // End openPopup
 
@@ -246,6 +243,8 @@
 
 				var popupTriggerType = $(this).attr( 'data-trigger' ),
 					popupShowDelay = $(this).attr( 'data-show-delay'),
+					popupRedirect = $(this).attr( 'data-redirect'),
+					popupRedirectURL = $(this).attr( 'data-redirect-url'),
 					popupID = WprPopups.getID( popup );
 
 				if ( 'close' === popupTriggerType ) {
@@ -256,18 +255,18 @@
 					settings[popupID].popup_close_time = Date.now();
 				} else if ( 'back' === popupTriggerType ) {
 					window.history.back();
-				} else if ( 'scroll' === popupTriggerType ) {
-					$( 'html, body' ).animate( { scrollTop: 0 }, 'slow' );
-					setTimeout(function() {
-						
-					popup.removeClass( 'wpr-popup-open' )
-					}, 500 );
 				}
 
 				WprPopups.closePopup( popup );
 
 				// Save Settings in Browser
 				localStorage.setItem( 'WprPopupSettings', JSON.stringify( settings ) );
+
+				if ( 'back' !== popupTriggerType && 'yes' === popupRedirect ) {
+					setTimeout(function() {
+						window.location.href = popupRedirectURL;
+					}, 100);
+				}
 			});
 
 		}, // End popupTriggerInit

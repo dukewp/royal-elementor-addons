@@ -7,8 +7,8 @@
  * Version: 1.3
  * License: GPLv3
  * Author URI: https://wp-royal.com/
- * Elementor tested up to: 3.4.4
- * Elementor Pro tested up to: 3.4.1
+ * Elementor tested up to: 3.4.6
+ * Elementor Pro tested up to: 3.4.2
  *
  * Text Domain: wpr-addons
 */

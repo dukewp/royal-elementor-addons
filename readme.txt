@@ -1,7 +1,7 @@
-﻿=== Royal Elementor Addons (Slider, Post Grid, Product Grid Addons for Elementor) ===
-Contributors: WP Royal
+﻿=== Royal Elementor Addons (Header Footer Builder, Popups, Post Grid, Woocommerce Product Grid, Post Slider/Carousel, Sticky Header, Menu & other Addons for Elementor) ===
+Contributors: WP Royal, rubeushagrid13, cyberpinky
 Tags: elementor, elements, widgets for elementor, elementor addons, elementor widget, elementor form, woocommerce elementor, page builder, builder, wordpress page builder
-Stable tag: 1.2
+Stable tag: 1.3
 Requires at least: 5.0
 Tested up to: 5.8.1
 Requires PHP: 5.6
@@ -59,6 +59,16 @@ Comes with 30 unique, creative and self-intuitive widgets to take your WordPress
 - [**Site Logo**](https://royal-elementor-addons.com/)
 - [**Back to Top Button**](https://royal-elementor-addons.com/elementor-back-to-top-widget/?ref=rea-wpo-pp-details-tab)
 - [**Phone Call Button**](https://royal-elementor-addons.com/elementor-phone-call-widget/?ref=rea-wpo-pp-details-tab)
+
+**Extensions and Other Features**
+
+- Header Footer Builder
+- Popup Builder (Offer Sales Banners, Subscriptions Banners, GDPR Cookie Consent & Compliance Notice, Cookie Notice, Age Verification)
+- Parallax Scrolling 
+- Parallax Multi-Layer Effect 
+- Particle Effect
+- Sticky Section (Can be used for creating Sticky Header / Menu)
+- Custom CSS
 
 
 **Widgets Description:**
@@ -250,9 +260,9 @@ post_max_size 64M
 
 == Changelog ==
 
-= Royal Elementor Addons v1.3 - 2021-10-28 =
+= Royal Elementor Addons v1.3 - 2021-10-29 =
 * ADDED: Elementor Header and Footer Builder.
-* ADDED: Elementor Popups (Elementor Modal Popups) Builder.
+* ADDED: Elementor Popups (Elementor Modal Popups) Builder. Offer Sales Banners, Subscriptions Banners, GDPR Cookie Consent & Compliance Notice, Cookie Notice, Age Verification. With Exit Intent query parameter targeting (only in PRO).
 * ADDED: Elementor Predefined Styles for Popups and various Royal Elementor Addons Widgets.
 * ADDED: Elementor Particles Effect to the section options.
 * ADDED: Elementor Parallax Background Effect to the section options.

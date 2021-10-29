@@ -501,7 +501,9 @@
   padding-bottom: 5px;
   border-radius: 0;
   border: none;
-  flex-grow: 1;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
   border-right: 1px solid #e8e8e8 !important;
   background-size: 14px 14px;
 }
@@ -621,6 +623,22 @@ input.wpr-condition-input-ids::-ms-input-placeholder {
   color: #9a9a9a;
 }
 
+input.wpr-user-template-title::-webkit-input-placeholder, input.wpr-condition-input-ids::-webkit-input-placeholder {
+  color: #9a9a9a;
+}
+
+input.wpr-user-template-title::-moz-placeholder, input.wpr-condition-input-ids::-moz-placeholder {
+  color: #9a9a9a;
+}
+
+input.wpr-user-template-title:-ms-input-placeholder, input.wpr-condition-input-ids:-ms-input-placeholder {
+  color: #9a9a9a;
+}
+
+input.wpr-user-template-title::-ms-input-placeholder, input.wpr-condition-input-ids::-ms-input-placeholder {
+  color: #9a9a9a;
+}
+
 input.wpr-user-template-title::placeholder,
 input.wpr-condition-input-ids::placeholder {
   color: #9a9a9a;
@@ -686,7 +704,8 @@ input.wpr-user-template-title:focus {
 }
 
 #fs_connect .fs-permissions>.fs-trigger {
-  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
 }
 
 #fs_connect .fs-permissions.fs-open ul {

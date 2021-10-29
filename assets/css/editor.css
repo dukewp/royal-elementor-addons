@@ -25,8 +25,8 @@
     font-size: 10px;
     font-weight: bold;
     color: #ffffff;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#6A4BFF), to(#7E94FE));
     background-image: -o-linear-gradient(#6A4BFF, #7E94FE);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#6A4BFF), to(#7E94FE));
     background-image: linear-gradient(#6A4BFF, #7E94FE);
     -webkit-box-shadow: 0 0 2px 2px #b8c7ff;
             box-shadow: 0 0 2px 2px #b8c7ff;
@@ -39,6 +39,29 @@
 
 .elementor-panel .elementor-element .icon {
 	position: relative !important;
+}
+
+.elementor-control-type-section[class*="elementor-control-wpr_section_"]:after {
+    content: 'R';
+    display: block;
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    font-family: Roboto,Arial,Helvetica,Verdana,sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+    color: #ffffff;
+    background-image: -o-linear-gradient(#6A4BFF, #7E94FE);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#6A4BFF), to(#7E94FE));
+    background-image: linear-gradient(#6A4BFF, #7E94FE);
+    -webkit-box-shadow: 0 0 2px 2px #b8c7ff;
+    box-shadow: 0 0 2px 2px #b8c7ff;
+    width: 19px;
+    height: 19px;
+    line-height: 19px;
+    border-radius: 15px;
+    margin: 3px;
+	text-align: center;
 }
 
 
@@ -96,7 +119,9 @@
 .elementor-control-title_transition_duration,
 .elementor-control-tax1_transition_duration,
 .elementor-control-tax2_transition_duration,
-.elementor-control-filters_transition_duration {
+.elementor-control-filters_transition_duration,
+.elementor-control-pagination_older_text,
+.elementor-control-tooltip_position {
 	padding-top: 15px !important;
 }
 
@@ -293,6 +318,8 @@
 /*--------------------------------------------------------------
 == Modal Popup Editor
 --------------------------------------------------------------*/
+.elementor-editor-wpr-popups .elementor-control-document_settings,
+.elementor-editor-wpr-popups .elementor-control-post_title,
 .elementor-editor-wpr-popups .elementor-control-post_status {
 	display: none !important;
 }
@@ -504,12 +531,16 @@
 }
 
 .elementor-control[class*="pro_notice"] {
-	padding: 20px !important;
-	line-height: 1.4;
-	text-align: center;
+	padding: 5px 0 15px 0 !important;
+}
+
+.wpr-pro-notice {
+	padding: 20px;
 	border-top: 1px solid #e6e9ec;
 	border-bottom: 1px solid #e6e9ec;
 	background-color: #f2fbff;
+	line-height: 1.4;
+	text-align: center;
 }
 
 .elementor-control-slider_section_pro_notice {
@@ -539,4 +570,93 @@
 	top: 0;
 	left: 0;
 	background: rgba(0,0,0,0.2);
+}
+
+/* Adjustments */
+.elementor-control.elementor-control-element_align_pro_notice,
+.elementor-control.elementor-control-search_pro_notice,
+.elementor-control.elementor-control-layout_select_pro_notice,
+.elementor-control.elementor-control-grid_columns_pro_notice,
+.elementor-control.elementor-control-slider_content_type_pro_notice,
+.elementor-control.elementor-control-slider_repeater_pro_notice,
+.elementor-control.elementor-control-slider_dots_layout_pro_notice,
+.elementor-control.elementor-control-testimonial_repeater_pro_notice,
+.elementor-control.elementor-control-testimonial_icon_pro_notice,
+.elementor-control.elementor-control-menu_layout_pro_notice,
+.elementor-control.elementor-control-menu_items_submenu_entrance_pro_notice,
+.elementor-control.elementor-control-switcher_label_style_pro_notice,
+.elementor-control.elementor-control-countdown_type_pro_notice,
+.elementor-control.elementor-control-layout_pro_notice,
+.elementor-control.elementor-control-anim_timing_pro_notice,
+.elementor-control.elementor-control-tab_content_type_pro_notice,
+.elementor-control.elementor-control-tabs_repeater_pro_notice,
+.elementor-control.elementor-control-tabs_align_pro_notice,
+.elementor-control.elementor-control-front_trigger_pro_notice,
+.elementor-control.elementor-control-back_link_type_pro_notice,
+.elementor-control.elementor-control-box_anim_timing_pro_notice,
+.elementor-control.elementor-control-image_style_pro_notice,
+.elementor-control.elementor-control-image_animation_timing_pro_notice,
+.elementor-control.elementor-control-label_display_pro_notice,
+.elementor-control.elementor-control-post_type_pro_notice,
+.elementor-control.elementor-control-type_select_pro_notice,
+.elementor-control.elementor-control-icon_style_pro_notice,
+.elementor-control.elementor-control-dual_button_pro_notice,
+.elementor-control.elementor-control-team_member_pro_notice,
+.elementor-control.elementor-control-price_list_pro_notice,
+.elementor-control.elementor-control-business_hours_pro_notice,
+.elementor-control.elementor-control-sharing_columns_pro_notice,
+.elementor-control.elementor-control-popup_trigger_pro_notice,
+.elementor-control.elementor-control-popup_show_again_delay_pro_notice,
+.elementor-control.elementor-control-group_popup_settings_pro_notice,
+.elementor-control.elementor-control-which_particle_pro_notice,
+.elementor-control.elementor-control-paralax_repeater_pro_notice {
+	padding-bottom: 0 !important;
+}
+
+.elementor-control-search_pro_notice .wpr-pro-notice,
+.elementor-control-grid_columns_pro_notice .wpr-pro-notice,
+.elementor-control-slider_content_type_pro_notice .wpr-pro-notice,
+.elementor-control-slider_repeater_pro_notice .wpr-pro-notice,
+.elementor-control-slider_dots_layout_pro_notice .wpr-pro-notice,
+.elementor-control-testimonial_repeater_pro_notice .wpr-pro-notice,
+.elementor-control-testimonial_icon_pro_notice .wpr-pro-notice,
+.elementor-control-menu_layout_pro_notice .wpr-pro-notice,
+.elementor-control-menu_items_submenu_entrance_pro_notice .wpr-pro-notice,
+.elementor-control-switcher_label_style_pro_notice .wpr-pro-notice,
+.elementor-control-countdown_type_pro_notice .wpr-pro-notice,
+.elementor-control-layout_pro_notice .wpr-pro-notice,
+.elementor-control-anim_timing_pro_notice .wpr-pro-notice,
+.elementor-control-tab_content_type_pro_notice .wpr-pro-notice,
+.elementor-control-tabs_repeater_pro_notice .wpr-pro-notice,
+.elementor-control-tabs_align_pro_notice .wpr-pro-notice,
+.elementor-control-front_trigger_pro_notice .wpr-pro-notice,
+.elementor-control-back_link_type_pro_notice .wpr-pro-notice,
+.elementor-control-box_anim_timing_pro_notice .wpr-pro-notice,
+.elementor-control-image_style_pro_notice .wpr-pro-notice,
+.elementor-control-image_animation_timing_pro_notice .wpr-pro-notice,
+.elementor-control-label_display_pro_notice .wpr-pro-notice,
+.elementor-control-post_type_pro_notice .wpr-pro-notice,
+.elementor-control-type_select_pro_notice .wpr-pro-notice,
+.elementor-control-icon_style_pro_notice .wpr-pro-notice,
+.elementor-control-dual_button_pro_notice .wpr-pro-notice,
+.elementor-control-team_member_pro_notice .wpr-pro-notice,
+.elementor-control-price_list_pro_notice .wpr-pro-notice,
+.elementor-control-business_hours_pro_notice .wpr-pro-notice,
+.elementor-control-sharing_columns_pro_notice .wpr-pro-notice,
+.elementor-control-popup_trigger_pro_notice .wpr-pro-notice,
+.elementor-control-popup_show_again_delay_pro_notice .wpr-pro-notice,
+.elementor-control-group_popup_settings_pro_notice .wpr-pro-notice {
+	border-bottom: none !important;
+}
+
+/* Both */
+.elementor-control.elementor-control-pagination_type_pro_notice,
+.elementor-control.elementor-control-tooltip_trigger_pro_notice {
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+}
+
+.elementor-control-pagination_type_pro_notice .wpr-pro-notice {
+	border-top: none !important;
+	border-bottom: none !important;
 }

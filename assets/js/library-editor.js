@@ -107,7 +107,7 @@
 			// Open Popup Settings
 			setTimeout(function() {
 				$( '#elementor-panel-footer-settings' ).trigger( 'click' );
-			}, 3000);
+			}, 2000);
 
 			// Popup Settings Notification
 			WprModalPopups.settingsNotification();
@@ -116,18 +116,12 @@
 			window.elementorFrontend.hooks.addAction( 'frontend/element_ready/global', function( $scope ) {
 				var popup = $scope.closest( '.wpr-template-popup' );
 
-				WprModalPopups.fixImageOverlay( popup );
 				WprModalPopups.fixPopupLayout( popup );
 			} );
 		},
 
 		onPreviewChange: function() {
-			var iframe = document.getElementById( 'elementor-preview-iframe' ),
-				iframeContent = iframe.contentDocument || iframe.contentWindow.document;
-
-			elementor.hooks.addAction( 'panel/open_editor/widget', function( panel, model, view ) {
-				WprModalPopups.fixImageOverlay( $( '.wpr-template-popup', iframeContent ) );
-			} );
+			// preview change code goes here
 		},
 
 		onControlChange: function( model ) {
@@ -136,6 +130,11 @@
 
 			// Popup
 			var popup = $( '.wpr-template-popup', iframeContent );
+
+			// Scrollbar
+			if ( model.changed.hasOwnProperty( 'popup_height' ) ) {
+				// elementor.reloadPreview();
+			}
 
 			// Display As
 			if ( model.changed.hasOwnProperty( 'popup_display_as' ) ) {
@@ -146,34 +145,28 @@
 				}
 			}
 
+			if ( model.changed.hasOwnProperty( 'popup_display_as' ) ) {
+
+			}
+
 			// Entrance Animation
 			if ( model.changed.hasOwnProperty( 'popup_animation' ) ) {
-				var popupContainer = popup.find( '.wpr-popup-container' );
+				var popupContainer = popup.find('.wpr-popup-container');
 
 				popupContainer.removeAttr( 'class');
-				popupContainer.addClass( 'wpr-popup-container ps-container' );
-				popupContainer.addClass( 'animated '+ model.changed['popup_animation'] );
+				popupContainer.addClass( 'wpr-popup-container animated '+ model.changed['popup_animation'] );
 			}
-
-			// Fix Image Overlay Height
-			if ( model.changed.hasOwnProperty( 'popup_height' ) || model.changed.hasOwnProperty( 'popup_custom_height' )
-				 || model.changed.hasOwnProperty( 'popup_width' ) || model.changed.hasOwnProperty( 'popup_container_margin' ) 
-				 || model.changed.hasOwnProperty( 'popup_container_padding' ) || model.changed.hasOwnProperty( 'popup_display_as' ) ) {
-				WprModalPopups.fixImageOverlay( popup );
-			}
-		},
-
-		fixImageOverlay: function( popup ) {
-			var containerHeight = popup.find( '.wpr-popup-container' ).outerHeight(),
-				contentHeight = popup.find( '[data-elementor-type="wpr-popups"]' ).outerHeight();
-
-			var height = containerHeight >= contentHeight ? containerHeight : contentHeight;
-
-			popup.find( '.wpr-popup-image-overlay' ).css( 'height', height  +'px' );
 		},
 
 		fixPopupLayout: function( popup ) {
 			var settings = WprModalPopups.getDocumentSettings();
+
+			// Add Scrollbar
+			if ( ! popup.find('.wpr-popup-container-inner').hasClass('ps') ) {
+				const ps = new PerfectScrollbar(popup.find('.wpr-popup-container-inner')[0], {
+					suppressScrollX: true
+				});
+			}
 
 			if ( 'notification' === settings.popup_display_as ) {
 				popup.addClass( 'wpr-popup-notification' );

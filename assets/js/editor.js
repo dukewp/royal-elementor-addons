@@ -2,6 +2,27 @@
 
 	"use strict";
 
+	// Make our custom css visible in the panel's front-end
+	elementor.hooks.addFilter( 'editor/style/styleText', function( css, context ) {
+		if ( ! context ) {
+			return;
+		}
+
+		var model = context.model,
+			customCSS = model.get('settings').get('wpr_custom_css');
+		var selector = '.elementor-element.elementor-element-' + model.get('id');
+		
+		if ( 'document' === model.get('elType') ) {
+			selector = elementor.config.document.settings.cssWrapperSelector;
+		}
+
+		if ( customCSS ) {
+			css += customCSS.replace(/selector/g, selector);
+		}
+
+		return css;
+	});
+	
 	// Shortcode Widget: Select Template
 	function selectShortcodeTemplate( model, e, textarea ) {
 			var data = e.params.data;
@@ -273,32 +294,32 @@
 		});
 	}
 
-	// Advanced Slider
-	elementor.hooks.addAction( 'panel/open_editor/widget/wpr-advanced-slider', function( panel, model, view ) {
-		var elControls = panel.$el,
-			$select = elControls.find('.elementor-control-slider_content_type').find('select');
+	// Advanced Slider - TODO: Check if necessary or remove
+	// elementor.hooks.addAction( 'panel/open_editor/widget/wpr-advanced-slider', function( panel, model, view ) {
+	// 	var elControls = panel.$el,
+	// 		$select = elControls.find('.elementor-control-slider_content_type').find('select');
 
-		if ( 'custom' !== $select.val() ) {
-			elControls.find('.elementor-control-slider_items .elementor-repeater-row-controls .elementor-control').addClass('wpr-elementor-hidden-control');
-			elControls.find('.elementor-control-slider_content_type').removeClass('wpr-elementor-hidden-control');
-			elControls.find('.elementor-control-slider_select_template').removeClass('wpr-elementor-hidden-control');
-		} else {
-			elControls.find('.elementor-control-slider_items .elementor-repeater-row-controls .elementor-control').removeClass('wpr-elementor-hidden-control');
-			elControls.find('.elementor-control-slider_select_template').addClass('wpr-elementor-hidden-control');
-		}
+	// 	if ( 'custom' !== $select.val() ) {
+	// 		elControls.find('.elementor-control-slider_items .elementor-repeater-row-controls .elementor-control').addClass('wpr-elementor-hidden-control');
+	// 		elControls.find('.elementor-control-slider_content_type').removeClass('wpr-elementor-hidden-control');
+	// 		elControls.find('.elementor-control-slider_select_template').removeClass('wpr-elementor-hidden-control');
+	// 	} else {
+	// 		elControls.find('.elementor-control-slider_items .elementor-repeater-row-controls .elementor-control').removeClass('wpr-elementor-hidden-control');
+	// 		elControls.find('.elementor-control-slider_select_template').addClass('wpr-elementor-hidden-control');
+	// 	}
 
-		$select.on( 'change', function() {
+	// 	$select.on( 'change', function() {
 
-			if ( 'custom' !== $(this).val() ) {
-				elControls.find('.elementor-control-slider_items .elementor-repeater-row-controls .elementor-control').addClass('wpr-elementor-hidden-control');
-				elControls.find('.elementor-control-slider_content_type').removeClass('wpr-elementor-hidden-control');
-				elControls.find('.elementor-control-slider_select_template').removeClass('wpr-elementor-hidden-control');
-			} else {
-				elControls.find('.elementor-control-slider_items .elementor-repeater-row-controls .elementor-control').removeClass('wpr-elementor-hidden-control');
-				elControls.find('.elementor-control-slider_select_template').addClass('wpr-elementor-hidden-control');
-			}			
-		});
-	} );
+	// 		if ( 'custom' !== $(this).val() ) {
+	// 			elControls.find('.elementor-control-slider_items .elementor-repeater-row-controls .elementor-control').addClass('wpr-elementor-hidden-control');
+	// 			elControls.find('.elementor-control-slider_content_type').removeClass('wpr-elementor-hidden-control');
+	// 			elControls.find('.elementor-control-slider_select_template').removeClass('wpr-elementor-hidden-control');
+	// 		} else {
+	// 			elControls.find('.elementor-control-slider_items .elementor-repeater-row-controls .elementor-control').removeClass('wpr-elementor-hidden-control');
+	// 			elControls.find('.elementor-control-slider_select_template').addClass('wpr-elementor-hidden-control');
+	// 		}			
+	// 	});
+	// } );
 
 	/*--------------------------------------------------------------
 	== Widget Preview and Library buttons
@@ -312,7 +333,8 @@
 
 	function openPedefinedStyles( panel, preview, widget, url, filter ) {
 		panel.on( 'click', '.elementor-control-wpr_library_buttons a:first-child', function() {
-			$(this).attr('href', url +'?ref=rea-plugin-panel-'+ widget +'-preview'+ filter);
+			var theme = $(this).data('theme');
+			$(this).attr('href', url +'?ref=rea-plugin-panel-'+ widget +'-utmtr'+ theme.slice(0,3) +'nkbs'+ theme.slice(3,theme.length) +'-preview'+ filter);
 		});
 
 		panel.on( 'click', '.elementor-control-wpr_library_buttons a:last-child', function() {

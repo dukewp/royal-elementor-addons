@@ -30,12 +30,295 @@
 				'wpr-tabs.default' : WprElements.widgetTabs,
 				'wpr-content-toggle.default' : WprElements.widgetContentToogle,
 				'wpr-back-to-top.default': WprElements.widgetBackToTop,
+				'global': WprElements.widgetSection,
 			};
-
+			
 			$.each( widgets, function( widget, callback ) {
 				window.elementorFrontend.hooks.addAction( 'frontend/element_ready/' + widget, callback );
 			});
 		},
+
+		widgetSection: function( $scope ) {
+			if ( $scope.attr('data-wpr-particles') || $scope.find('.wpr-particle-wrapper').attr('data-wpr-particles-editor') ) {
+				particlesEffect();
+            }
+
+			if ( $scope.hasClass('wpr-jarallax') || $scope.hasClass('wpr-jarallax-yes') ) {
+				parallaxBackground();
+			}
+
+			if ( $scope.hasClass('wpr-parallax-yes') ) {
+				parallaxMultiLayer();
+			}
+						
+			if( $scope.hasClass('wpr-sticky-section-yes') ) {
+				var positionType = !WprElements.editorCheck() ? $scope.attr('data-wpr-position-type') : $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-position-type'),	 elementOffset,
+					positionLocation = !WprElements.editorCheck() ? $scope.attr('data-wpr-position-location') : $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-position-location'),	
+					viewportWidth = $('body').prop('clientWidth') + 17,
+					availableDevices = !WprElements.editorCheck() ? $scope.attr('data-wpr-sticky-devices') : $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-sticky-devices'),
+					activeDevices = !WprElements.editorCheck() ? $scope.attr('data-wpr-active-breakpoints') : $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-active-breakpoints'),
+					customBreakPoints = !WprElements.editorCheck() ? $scope.attr('data-wpr-custom-breakpoints') : $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-custom-breakpoints'),
+					stickySectionExists = $scope.hasClass('wpr-sticky-section-yes') || $scope.find('.wpr-sticky-section-yes-editor') ? true : false,
+					sectionClassList = $scope.attr('class').split(' '),
+					positionStyle, setOffsets = [], offsetMobile, offsetMobileExtra, offsetTablet, offsetTabletExtra, offsetWideScreen, offsetLaptop, offsetDesktop, adminBarHeight;
+
+				if ( 0 == availableDevices.length ) {
+					positionType = 'static';
+				}
+
+				if( WprElements.editorCheck() && availableDevices ) {
+					var attributes = $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-sticky-devices');
+					$scope.attr('data-wpr-sticky-devices', attributes);
+					$scope.attr('data-wpr-custom-breakpoints', customBreakPoints);
+					availableDevices = $scope.attr('data-wpr-sticky-devices');
+				}
+
+				changePositionType(customBreakPoints);
+
+				$(window).resize(function(){
+					if (!stickySectionExists) {
+						positionStyle = 'static';
+					} 
+					viewportWidth = $('body').prop('clientWidth') + 17,
+					
+					changePositionType(customBreakPoints);
+				});
+				
+				if (!stickySectionExists) {
+					positionStyle = 'relative';
+				}
+			} else {	
+				$scope.css({ 'position': 'relative', 'top': '0', 'bottom': 'auto'}) ;
+			}
+
+			function applyPosition() {
+				if ( 'top'  ===  positionLocation ) {
+					$scope.css({ 'position': positionStyle, 'top': elementOffset + 'px', 'bottom': 'auto', 'width': '100%' });
+				}
+				else {
+					$scope.css({ 'position': positionStyle, 'bottom': elementOffset + 'px', 'top': 'auto', 'width': '100%' }) ;
+				}
+			}
+
+			function changeElementOffset() {
+				
+				var deviceRegEx = [/offset--widescreen\d/,  /offset-\d/,   /offset--laptop\d/,  /offset--tablet_extra\d/,  /offset--tablet\d/,  /offset--mobile_extra\d/, /offset--mobile\d/];
+
+				var replaceOffset = ['wpr-offset--widescreen', 'wpr-offset-', 'wpr-offset--laptop', 'wpr-offset--tablet_extra', 'wpr-offset--tablet',  'wpr-offset--mobile_extra', 'wpr-offset--mobile'];
+
+				sectionClassList = sectionClassList.filter((listitem) => {
+					return listitem.indexOf('wpr-offset') !== -1;
+				});
+
+				if (!WprElements.editorCheck()) {
+					sectionClassList = replaceOffset.map((offset, index) => {
+						if(sectionClassList.filter((item) => {return item.match(deviceRegEx[index])}).length == 0) {
+							return offset = offset + '0';
+						} else {
+							return offset = offset + sectionClassList.filter((item) => {return item.match(deviceRegEx[index])}).join().replace(offset, '');
+						}
+					});
+				};
+
+				for ( var i=0; i < sectionClassList.length; i++ ) {
+					if ( -1 !== sectionClassList[i].search(deviceRegEx[i]) ) {
+						setOffsets[i] = +sectionClassList[i].replace(replaceOffset[i], '');
+					} else if ( -1 == sectionClassList[i].search(deviceRegEx[i]) ) {
+						setOffsets[i] = 0;
+					}
+				}
+
+				return setOffsets;
+			}
+
+			function changeElementOffsetInactive() {
+				
+				var deviceRegEx = [/offset-\d/,  /offset--tablet\d/, /offset--mobile\d/];
+
+				var replaceOffset = ['wpr-offset-', 'wpr-offset--tablet', 'wpr-offset--mobile'];
+
+				sectionClassList = sectionClassList.filter((listitem) => {
+					return listitem.indexOf('wpr-offset') !== -1;
+				});
+
+				if (!WprElements.editorCheck()) {
+					sectionClassList = replaceOffset.map((offset, index) => {
+						if(sectionClassList.filter((item) => {return item.match(deviceRegEx[index])}).length == 0) {
+							return offset = offset + '0';
+						} else {
+							return offset = offset + sectionClassList.filter((item) => {return item.match(deviceRegEx[index])}).join().replace(offset, '');
+						}
+					});
+				};
+
+				for ( var i=0; i < sectionClassList.length; i++ ) {
+					if ( -1 !== sectionClassList[i].search(deviceRegEx[i]) ) {
+						setOffsets[i] = +sectionClassList[i].replace(replaceOffset[i], '');
+					} else if ( -1 == sectionClassList[i].search(deviceRegEx[i]) ) {
+						setOffsets[i] = 0;
+					}
+				}
+
+				return setOffsets;
+			}
+
+			function changePositionType(customBreakPoints, setOffsets) {
+				if ( !$scope.hasClass('wpr-sticky-section-yes') || !$scope.find('.wpr-sticky-section-yes-editor') ) {
+					positionStyle = 'relative';
+					return;
+				}
+
+				if ( activeDevices.split(',').length == 3 ) {
+					setOffsets = changeElementOffsetInactive();
+					var checkDevices = ['desktop_sticky', 'tablet_sticky', 'mobile_sticky'];
+					var breakPointSizes = [2400, 1025, 768];
+					var desktopSticky, tabletSticky, mobileSticky;
+					var emptyVariables = [desktopSticky, tabletSticky, mobileSticky];
+
+					checkDevices.forEach((device, index) => {
+						if ( (breakPointSizes[index] > viewportWidth) && availableDevices.indexOf(device) === -1 ) {
+							positionStyle = activeDevices?.indexOf(device) !== -1 ? 'relative' : (emptyVariables[index-1] ? emptyVariables[index-1] : widescreenSticky );
+							emptyVariables[index] = positionStyle;
+							elementOffset = activeDevices?.indexOf(device) !== -1 ? 0 : 0;
+						} else if ( (breakPointSizes[index] > viewportWidth) && availableDevices.indexOf(device) !== -1 ) {
+							positionStyle = positionType;
+							adminBarHeight = $('#wpadminbar').length ? $('#wpadminbar').css('height').slice(0, $('#wpadminbar').css('height').length - 2) : 0;
+							elementOffset = +setOffsets[index] + +adminBarHeight;
+						}
+						applyPosition();
+					});
+	
+					applyPosition();
+					return;
+				}
+
+								
+				setOffsets = changeElementOffset();
+
+				var checkDevices = ['widescreen_sticky', 'desktop_sticky', 'laptop_sticky', 'tablet_extra_sticky', 'tablet_sticky', 'mobile_extra_sticky', 'mobile_sticky'];
+				var breakPointSizes = [4000, 2400, 1216, 1201, 1025, 881, 768];
+				var widescreenSticky, desktopSticky, laptopSticky, tabletExtraSticky, tabletSticky, mobileExtraSticky, mobileSticky;
+				var emptyVariables = [widescreenSticky, desktopSticky, laptopSticky, tabletExtraSticky, tabletSticky, mobileExtraSticky, mobileSticky];
+
+				checkDevices.forEach((device, index) => {
+					if ( (breakPointSizes[index] > viewportWidth) && availableDevices.indexOf(device) === -1 ) {
+						positionStyle = activeDevices?.indexOf(device) !== -1 ? 'relative' : (emptyVariables[index-1] ? emptyVariables[index-1] : widescreenSticky );
+						emptyVariables[index] = positionStyle;
+						elementOffset = activeDevices?.indexOf(device) !== -1 ? 0 : 0;
+					} else if ( (breakPointSizes[index] > viewportWidth) && availableDevices.indexOf(device) !== -1 ) {
+						positionStyle = positionType;
+						adminBarHeight = $('#wpadminbar').length ? $('#wpadminbar').css('height').slice(0, $('#wpadminbar').css('height').length - 2) : 0;
+						elementOffset = +setOffsets[index] + +adminBarHeight;
+					}
+					applyPosition();
+				});
+
+				applyPosition();
+			}
+
+			function particlesEffect() {
+				var elementType = $scope.data('element_type'),
+					sectionID = $scope.data('id'),
+					particlesJSON = ! WprElements.editorCheck() ? $scope.attr('data-wpr-particles') : $scope.find('.wpr-particle-wrapper').attr('data-wpr-particles-editor');
+
+				if ( 'section' === elementType && undefined !== particlesJSON ) {
+					// Frontend
+					if ( ! WprElements.editorCheck() ) {
+						$scope.prepend('<div class="wpr-particle-wrapper" id="wpr-particle-'+ sectionID +'"></div>');
+	
+						particlesJS('wpr-particle-'+ sectionID, $scope.attr('particle-source') == 'wpr_particle_json_custom' ? JSON.parse(particlesJSON) : modifyJSON(particlesJSON));
+					// Editor
+					} else {
+						if ( $scope.hasClass('wpr-particle-yes') ) {
+							particlesJS( 'wpr-particle-'+ sectionID, $scope.find('.wpr-particle-wrapper').attr('particle-source') == 'wpr_particle_json_custom' ? JSON.parse(particlesJSON) : modifyJSON(particlesJSON));
+	
+							$scope.find('.elementor-column').css('z-index', 9);
+	
+							$(window).trigger('resize');
+						} else {
+							$scope.find('.wpr-particle-wrapper').remove();
+						}
+					}
+				}
+			}
+
+			function modifyJSON(json) {
+				var wpJson = JSON.parse(json),
+					particles_quantity = ! WprElements.editorCheck() ? $scope.attr('wpr-quantity') : $scope.find('.wpr-particle-wrapper').attr('wpr-quantity'),
+					particles_color = ! WprElements.editorCheck() ? $scope.attr('wpr-color') || '#000000' : $scope.find('.wpr-particle-wrapper').attr('wpr-color') ? $scope.find('.wpr-particle-wrapper').attr('wpr-color') : '#000000',
+					particles_speed = ! WprElements.editorCheck() ? $scope.attr('wpr-speed') : $scope.find('.wpr-particle-wrapper').attr('wpr-speed'),
+					particles_shape = ! WprElements.editorCheck() ? $scope.attr('wpr-shape') : $scope.find('.wpr-particle-wrapper').attr('wpr-shape'),
+					particles_size = ! WprElements.editorCheck() ? $scope.attr('wpr-size')  : $scope.find('.wpr-particle-wrapper').attr('wpr-size');
+				
+				wpJson.particles.size.value = particles_size;
+				wpJson.particles.number.value = particles_quantity;
+				wpJson.particles.color.value = particles_color;
+				wpJson.particles.shape.type = particles_shape;
+				wpJson.particles.line_linked.color = particles_color;
+				wpJson.particles.move.speed = particles_speed;
+				
+				return wpJson;
+			}
+
+			function parallaxBackground() {
+				if ( $scope.hasClass('wpr-jarallax-yes') ) {
+					if ( ! WprElements.editorCheck() && $scope.hasClass('wpr-jarallax') ) {
+						$scope.css('background-image', 'url("' + $scope.attr('bg-image') + '")');
+						$scope.jarallax({
+							type: $scope.attr('scroll-effect'),
+							speed: $scope.attr('speed-data'),
+						});
+					} else if ( WprElements.editorCheck() ) {
+						$scope.css('background-image', 'url("' + $scope.find('.wpr-jarallax').attr('bg-image-editor') + '")');
+						$scope.jarallax({
+							type: $scope.find('.wpr-jarallax').attr('scroll-effect-editor'),
+							speed: $scope.find('.wpr-jarallax').attr('speed-data-editor')
+						});
+					}
+				} 
+			}
+
+			function parallaxMultiLayer() {
+				if ( $scope.hasClass('wpr-parallax-yes') ) {
+					var scene = document.getElementsByClassName('wpr-parallax-multi-layer');
+
+					var parallaxInstance = Array.from(scene).map(item => {
+						return new Parallax(item, {
+							invertY: item.getAttribute('direction') == 'yes' ? true : false,
+							invertX: item.getAttribute('direction') == 'yes' ? true : false,
+							scalarX: item.getAttribute('scalar-speed'),
+							scalarY: item.getAttribute('scalar-speed'),
+							hoverOnly: true,
+							pointerEvents: true
+						});
+					});
+	
+					parallaxInstance.forEach(parallax => {
+						parallax.friction(0.2, 0.2);
+					});
+				}
+				if ( ! WprElements.editorCheck() ) {						
+					var newScene = [];
+
+					document.querySelectorAll('.wpr-parallax-multi-layer').forEach((element, index) => {
+						element.parentElement.style.position = "relative";
+						element.style.position = "absolute";
+						newScene.push(element);
+						element.remove();
+					});
+
+					document.querySelectorAll('.wpr-parallax-ml-children').forEach((element, index) => {
+						element.style.position = "absolute";
+						element.style.top = element.getAttribute('style-top');
+						element.style.left = element.getAttribute('style-left');
+					});
+
+					$('.wpr-parallax-yes').each(function(index) {
+						$(this).append(newScene[index]);
+					});
+				}
+			}
+		}, // end widgetSection
 
 		widgetNavMenu: function( $scope ) {
 
@@ -1347,7 +1630,7 @@
 			var iGrid = $scope.find( '.wpr-magazine-grid-wrap' ),
 				settings = iGrid.attr( 'data-slick' ),
 				dataSlideEffect = iGrid.attr('data-slide-effect');
-console.log(dataSlideEffect)
+
 			// Slider
 			if ( typeof settings !== typeof undefined && settings !== false ) {
 				iGrid.slick({
@@ -2167,7 +2450,7 @@ console.log(dataSlideEffect)
 
 		widgetAdvancedSlider: function( $scope ) {
 			var $advancedSlider = $scope.find( '.wpr-advanced-slider' ),
-				sliderData = $advancedSlider.data('slick');
+			sliderData = $advancedSlider.data('slick');
 
 			// Slider Columns
 			var sliderClass = $scope.attr('class'),
@@ -2926,7 +3209,7 @@ console.log(dataSlideEffect)
 				sliderColumnsMobile = sliderClass.match(/columns--mobile\d/) ? sliderClass.match(/columns--mobile\d/).join().slice(-1) : 1,
 				dataSlideEffect = $contentTickerSlider.attr('data-slide-effect'),
 				sliderSlidesToScroll = 'hr-slide' === dataSlideEffect && sliderClass.match(/wpr-ticker-slides-to-scroll-\d/) ? +(sliderClass.match(/wpr-ticker-slides-to-scroll-\d/).join().slice(-1)) : 1;
-console.log(sliderColumnsDesktop)
+
 			$contentTickerSlider.slick({
 				appendArrows : $scope.find('.wpr-ticker-slider-controls'),
 				slidesToShow: sliderColumnsDesktop,
@@ -3276,7 +3559,7 @@ console.log(sliderColumnsDesktop)
 		}, // End of Back to Top
 
 		// Editor Check
-		editorCheck: function( $scope ) {
+		editorCheck: function() {
 			return $( 'body' ).hasClass( 'elementor-editor-active' ) ? true : false;
 		}
 	} // End WprElements
