@@ -78,6 +78,7 @@ class Wpr_Sticky_Section {
                     'selectors' => [
 						'{{WRAPPER}}' => 'position: {{VALUE}};',
                     ],
+					'render_type' => 'template',
 					'condition' => [
 						'enable_sticky_section' => 'yes'
 					],
@@ -112,8 +113,8 @@ class Wpr_Sticky_Section {
 					'min' => 0,
 					'max' => 500,
 					'required' => true,
-					'render_type' => 'template',
 					'frontend_available' => true,
+					'render_type' => 'template',
 					'widescreen_default' => 0,
 					'desktop_default' => 0,
 					'laptop_default' => 0,
@@ -121,7 +122,6 @@ class Wpr_Sticky_Section {
 					'tablet_default' => 0,
 					'mobile_extra_default' => 0,
 					'mobile_default' => 0,
-					'prefix_class' => 'wpr-offset-%s',
                     'selectors' => [
                         '{{WRAPPER}}' => '{{position_location.VALUE}}: {{VALUE}}px;', // add to wrapper .wpr-sticky-section-yes
                     ],
