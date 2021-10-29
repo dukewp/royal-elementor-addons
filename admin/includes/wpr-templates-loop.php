@@ -55,7 +55,7 @@ class WPR_Templates_Loop {
 					echo '</li>';
 				}
 			} else {
-				echo '<li>You don\'t have any headers yet!</li>';
+				echo '<li class="wpr-no-templates">You don\'t have any headers yet!</li>';
 			}
 
 		echo '</ul>';

@@ -101,6 +101,10 @@ jQuery(document).ready(function( $ ) {
 				// Render Template
 				renderUserTemplate( getActiveFilter(), $('.wpr-user-template-title').val(), slug, id );
 
+				if ( $('.wpr-no-templates').length ) {
+					$('.wpr-no-templates').hide();
+				}
+
 				// Open Popup
 				openConditionsPopup( slug );
 				conditionPupup.addClass( 'editor-redirect' );
