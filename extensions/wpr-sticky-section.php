@@ -55,8 +55,8 @@ class Wpr_Sticky_Section {
 					'type' => Controls_Manager::SELECT,
 					'default' => 'sticky',
 					'options' => [
-						'sticky'  => __( 'Sticky', 'wpr-addons' ),
-						'fixed' => __( 'Fixed', 'wpr-addons' ),
+						'sticky'  => __( 'Stick On Scroll', 'wpr-addons' ),
+						'fixed' => __( 'Fixed By Default', 'wpr-addons' ),
 					],
                     'selectors' => [
 						'{{WRAPPER}}' => 'position: {{VALUE}};',
