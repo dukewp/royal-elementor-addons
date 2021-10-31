@@ -49,7 +49,7 @@ class Wpr_Sticky_Section {
 			);
 
 			$element->add_control(
-				'enable_sticky_devices',
+				'enable_on_devices',
 				[
 					'label' => esc_html__( 'Enable on Devices', 'wpr-addons' ),
 					'label_block' => true,
@@ -91,12 +91,17 @@ class Wpr_Sticky_Section {
 					'label' => __( 'Location', 'wpr-addons' ),
 					'type' => Controls_Manager::SELECT,
 					'default' => 'top',
+					'render_type' => 'template',
 					'options' => [
 						'top' => __( 'Top', 'wpr-addons' ),
 						'bottom'  => __( 'Bottom', 'wpr-addons' ),
 					],
+					// 'selectors_dictionary' => [
+					// 	'top' => 'top: {{position_offset.VALUE}}px; bottom: auto;',
+					// 	'bottom' => 'bottom: {{position_offset.VALUE}}px; top: auto;'
+					// ],
                     'selectors' => [
-                        '{{WRAPPER}}' => '{{VALUE}}: {{position_offset.VALUE}};',
+                        '{{WRAPPER}}' => 'top: auto; bottom: auto; {{VALUE}}: {{position_offset.VALUE}}px;',
                     ],
 					'condition' => [
 						'enable_sticky_section' => 'yes'
@@ -109,21 +114,20 @@ class Wpr_Sticky_Section {
 				[
 					'label' => __( 'Offset', 'wpr-addons' ),
 					'type' => Controls_Manager::NUMBER,
-					'default' => 0,
 					'min' => 0,
 					'max' => 500,
 					'required' => true,
 					'frontend_available' => true,
 					'render_type' => 'template',
 					'widescreen_default' => 0,
-					'desktop_default' => 0,
+					'default' => 0,
 					'laptop_default' => 0,
 					'tablet_extra_default' => 0,
 					'tablet_default' => 0,
 					'mobile_extra_default' => 0,
 					'mobile_default' => 0,
                     'selectors' => [
-                        '{{WRAPPER}}' => '{{position_location.VALUE}}: {{VALUE}}px;', // add to wrapper .wpr-sticky-section-yes
+                        '{{WRAPPER}}' => 'top: auto; bottom: auto; {{position_location.VALUE}}: {{VALUE}}px;',
                     ],
 					'condition' => [
 						'enable_sticky_section' => 'yes'
@@ -166,7 +170,7 @@ class Wpr_Sticky_Section {
 				[
 					'label' => __( 'Active Breakpoints', 'wpr-addons' ),
 					'type' => \Elementor\Controls_Manager::HIDDEN,
-					'default' => $this->breakpoints_manager2(),
+					'default' => $this->breakpoints_manager_active(),
 					'condition' => [
 						'enable_sticky_section' => 'yes'
 					]
@@ -188,14 +192,14 @@ class Wpr_Sticky_Section {
 		return $active_breakpoints;
 	}
 
-	public function breakpoints_manager2() {
-		$act_breakpoints = [];
+	public function breakpoints_manager_active() {
+		$active_breakpoints = [];
 
 		foreach ( $this->breakpoints_manager() as $key => $value ) {
-			array_push($act_breakpoints, $key);
+			array_push($active_breakpoints, $key);
 		}
 
-		return $act_breakpoints;
+		return $active_breakpoints;
 	}
     
     public function _before_render( $element ) {
@@ -210,9 +214,9 @@ class Wpr_Sticky_Section {
                 'data-wpr-position-type' => $settings['position_type'],
                 'data-wpr-position-offset' => $settings['position_offset'],
                 'data-wpr-position-location' => $settings['position_location'],
-				'data-wpr-sticky-devices' => $settings['enable_sticky_devices'],
+				'data-wpr-sticky-devices' => $settings['enable_on_devices'],
 				'data-wpr-custom-breakpoints' => $settings['custom_breakpoints'],
-				'data-wpr-active-breakpoints' => $this->breakpoints_manager2()
+				'data-wpr-active-breakpoints' => $this->breakpoints_manager_active()
             ] );
         }
     }
@@ -227,7 +231,7 @@ class Wpr_Sticky_Section {
 		// how to render attributes without creating new div using view.addRenderAttributes
         ?>
             <# if ( 'yes' === settings.enable_sticky_section) { #>
-                <div class="wpr-sticky-section-yes-editor" data-wpr-sticky-section={{{settings.enable_sticky_section}}} data-wpr-position-type={{{settings.position_type}}} data-wpr-position-offset={{{settings.position_offset}}} data-wpr-position-location={{{settings.position_location}}} data-wpr-custom-breakpoints={{{settings.custom_breakpoints}}} data-wpr-sticky-devices={{{settings.enable_sticky_devices}}} data-wpr-active-breakpoints = {{{settings.active_breakpoints}}}></div>
+                <div class="wpr-sticky-section-yes-editor" data-wpr-sticky-section={{{settings.enable_sticky_section}}} data-wpr-position-type={{{settings.position_type}}} data-wpr-position-offset={{{settings.position_offset}}} data-wpr-position-location={{{settings.position_location}}} data-wpr-custom-breakpoints={{{settings.custom_breakpoints}}} data-wpr-sticky-devices={{{settings.enable_on_devices}}} data-wpr-active-breakpoints = {{{settings.active_breakpoints}}}></div>
             <# } #>   
         <?php
 		$particles_content = ob_get_contents();
