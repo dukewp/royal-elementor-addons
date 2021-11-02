@@ -45,6 +45,7 @@ class Utilities {
 			'Back to Top' => ['back-to-top', '', ''],
 			'Phone Call' => ['phone-call', '', ''],
 			'Popup Trigger' => ['popup-trigger', '', ''],
+			'Random Image' => ['random-image', '', ''],
 			// 'Author Box' => 'author-box',
 		];
 	}
