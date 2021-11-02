@@ -105,7 +105,7 @@ class Plugin {
 		require WPR_ADDONS_PATH . 'extensions/wpr-custom-css.php';
 
 		// Rating Notice 
-		// require WPR_ADDONS_PATH . 'classes/rating-notice.php';	
+		require WPR_ADDONS_PATH . 'classes/rating-notice.php';	
 
 		// Admin Files
 		if ( is_admin() ) {

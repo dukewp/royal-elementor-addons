@@ -4,7 +4,7 @@
  * Description: The only plugin you need for Elementor page builder.
  * Plugin URI: https://royal-elementor-addons.com/
  * Author: WP Royal
- * Version: 1.3
+ * Version: 1.3.1
  * License: GPLv3
  * Author URI: https://wp-royal.com/
  * Elementor tested up to: 3.4.6
@@ -15,7 +15,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-define( 'WPR_ADDONS_VERSION', '1.3' );
+define( 'WPR_ADDONS_VERSION', '1.3.1' );
 
 define( 'WPR_ADDONS__FILE__', __FILE__ );
 define( 'WPR_ADDONS_PLUGIN_BASE', plugin_basename( WPR_ADDONS__FILE__ ) );
@@ -24,6 +24,7 @@ define( 'WPR_ADDONS_MODULES_PATH', WPR_ADDONS_PATH . 'modules/' );
 define( 'WPR_ADDONS_URL', plugins_url( '/', WPR_ADDONS__FILE__ ) );
 define( 'WPR_ADDONS_ASSETS_URL', WPR_ADDONS_URL . 'assets/' );
 define( 'WPR_ADDONS_MODULES_URL', WPR_ADDONS_URL . 'modules/' );
+
 
 
 /**
@@ -35,7 +36,7 @@ if ( ! function_exists( 'wpr_fs' ) ) {
 	if ( is_admin() ) {
 		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
-		if ( ! is_plugin_active('royal-elementor-addons/wpr-addons.php') ) {
+		if ( is_plugin_active('wpr-addons-pro/wpr-addons-pro.php') ) {
 			$register_freemius = false;
 		}
 	}
@@ -197,9 +198,11 @@ if ( did_action( 'elementor/loaded' ) ) {
 	add_action('admin_init', 'wpr_plugin_redirect');
 }
 
-// Try to locate it in rating-notice later if possible
-function royal_elementor_addons_activation_time(){
-	$get_activation_time = strtotime("now");
-	add_option('royal_elementor_addons_activation_time', $get_activation_time );
+// Set Plugin Activation Time
+function royal_elementor_addons_activation_time() {//TODO: Try to locate this in rating-notice.php later if possible
+	if ( false === get_option( 'royal_elementor_addons_activation_time' ) ) {
+		add_option( 'royal_elementor_addons_activation_time', strtotime('now') );
+	}
 }
-// register_activation_hook( __FILE__, 'royal_elementor_addons_activation_time' );
+
+register_activation_hook( __FILE__, 'royal_elementor_addons_activation_time' );
