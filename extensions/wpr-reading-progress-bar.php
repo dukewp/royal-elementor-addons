@@ -12,8 +12,9 @@ class Wpr_Reading_Progress_Bar
 
     public function __construct()
     {
+        // add_action('elementor/documents/register_controls', [$this, 'register_controls'], 10);
         add_action('elementor/documents/register_controls', [$this, 'register_controls'], 10);
-        // add_action( 'elementor/editor/after_save', [ $this, 'save_global_values' ], 10, 2 );
+        // add_action( 'elementor/editor/after_save', [ $this, 'render_progress_bar' ], 10, 2 );
         add_action('wp_footer', [$this, 'render_progress_bar']);
     }
 
@@ -180,52 +181,22 @@ class Wpr_Reading_Progress_Bar
         //     ]
         // );
 
-        // $element->add_control(
-        //     'eael_ext_reading_progress_animation_speed',
-        //     [
-        //         'label' => __('Animation Speed', 'wpr-addons'),
-        //         'type' => Controls_Manager::SLIDER,
-        //         'size_units' => ['px'],
-        //         'range' => [
-        //             'px' => [
-        //                 'min' => 0,
-        //                 'max' => 1000,
-        //                 'step' => 1,
-        //             ],
-        //         ],
-        //         'default' => [
-        //             'unit' => 'px',
-        //             'size' => 50,
-        //         ],
-        //         'selectors' => [
-        //             '.eael-reading-progress-wrap .eael-reading-progress .eael-reading-progress-fill' => 'transition: width {{SIZE}}ms ease;',
-        //         ],
-        //         'separator' => 'before',
-        //         'condition' => [
-        //             'eael_ext_reading_progress' => 'yes',
-        //         ],
-        //     ]
-        // );
-
-        
         $element->add_control(
             'wpr_reading_progress_bar_changes',
             [
                 'type' => Controls_Manager::RAW_HTML,
-                'raw' => '<div style="text-align: center;"><button class="elementor-update-preview-button elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply Changes</button></div>',
-                'condition' => [
-                    'wpr_enable_reading_progress' => 'yes'
-                ]
+                'raw' => '<div style="text-align: center;"><button class="elementor-update-preview-button elementor-button elementor-button-success" onclick="elementor.reloadPreview()">Apply Changes</button></div>',
             ]
         );
 
         $element->end_controls_section();
     }
 
-    public function render_progress_bar($element) {
+    public function render_progress_bar() {
         $page_settings = get_post_meta( get_the_ID(), '_elementor_page_settings', true );
-
-        if( 'yes' === $page_settings['wpr_enable_reading_progress'] ) {
+        if( '' === $page_settings ) {
+            return;
+        } else if( 'yes' === $page_settings['wpr_enable_reading_progress'] ) {
             echo '<div class="wpr-progress-container">';
                 echo '<div class="wpr-progress-bar" id="wpr-mybar"></div>';
             echo '</div>';
