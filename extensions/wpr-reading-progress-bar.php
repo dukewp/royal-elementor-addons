@@ -13,16 +13,15 @@ class Wpr_Reading_Progress_Bar
     public function __construct()
     {
         add_action('elementor/documents/register_controls', [$this, 'register_controls'], 10);
+        // add_action( 'elementor/editor/after_save', [ $this, 'save_global_values' ], 10, 2 );
         add_action('wp_footer', [$this, 'render_progress_bar']);
     }
 
     public function register_controls($element)
     {
 
-        $global_settings = get_option('wpr_global_settings');
-
         $element->start_controls_section(
-            'wpr_reading_progress_bar_section',
+            'wpr_section_reading_progress_bar',
             [
                 'label' => __('Reading Progress Bar - Royal Addons', 'wpr-addons'),
                 'tab' => Controls_Manager::TAB_SETTINGS,
@@ -38,6 +37,7 @@ class Wpr_Reading_Progress_Bar
                 'label_on' => __('Yes', 'wpr-addons'),
                 'label_off' => __('No', 'wpr-addons'),
                 'return_value' => 'yes',
+                'frontend_available' => true,
                 'render_type' => 'template',
             ]
         );
@@ -207,63 +207,29 @@ class Wpr_Reading_Progress_Bar
         //     ]
         // );
 
+        
+        $element->add_control(
+            'wpr_reading_progress_bar_changes',
+            [
+                'type' => Controls_Manager::RAW_HTML,
+                'raw' => '<div style="text-align: center;"><button class="elementor-update-preview-button elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply Changes</button></div>',
+                'condition' => [
+                    'wpr_enable_reading_progress' => 'yes'
+                ]
+            ]
+        );
+
         $element->end_controls_section();
     }
 
-    public function render_progress_bar() {
-        // Reading Progress Bar
-        // if ($this->get_settings('reading-progress') == true) {
-        //     $reading_progress_status = $global_reading_progress = false;
+    public function render_progress_bar($element) {
+        $page_settings = get_post_meta( get_the_ID(), '_elementor_page_settings', true );
 
-        //     if (isset($settings_data['eael_ext_reading_progress']) && $settings_data['eael_ext_reading_progress'] == 'yes') {
-        //         $reading_progress_status = true;
-        //     } elseif (isset($global_settings['reading_progress']['enabled']) && $global_settings['reading_progress']['enabled']) {
-        //         $reading_progress_status = true;
-        //         $global_reading_progress = true;
-        //         $settings_data = $global_settings['reading_progress'];
-        //     }
-
-        //     if ($reading_progress_status) {
-        //         $this->extensions_data = $settings_data;
-        //         $progress_height = !empty($settings_data['eael_ext_reading_progress_height']['size']) ? $settings_data['eael_ext_reading_progress_height']['size'] : '';
-        //         $animation_speed = !empty($settings_data['eael_ext_reading_progress_animation_speed']['size']) ? $settings_data['eael_ext_reading_progress_animation_speed']['size'] : '';
-
-        //         $reading_progress_html = '<div class="eael-reading-progress-wrap eael-reading-progress-wrap-' . ($this->get_extensions_value('eael_ext_reading_progress') == 'yes' ? 'local' : 'global') . '">';
-
-        //         if ($global_reading_progress) {
-        //             $reading_progress_html .= '<div class="eael-reading-progress eael-reading-progress-global eael-reading-progress-' . $this->get_extensions_value('eael_ext_reading_progress_position') . '" style="height: ' . $progress_height . 'px;background-color: ' . $this->get_extensions_value('eael_ext_reading_progress_bg_color') . ';">
-        //                 <div class="eael-reading-progress-fill" style="height: ' . $progress_height . 'px;background-color: ' . $this->get_extensions_value('eael_ext_reading_progress_fill_color') . ';transition: width ' . $animation_speed . 'ms ease;"></div>
-        //             </div>';
-        //         } else {
-        //             $reading_progress_html .= '<div class="eael-reading-progress eael-reading-progress-local eael-reading-progress-' . $this->get_extensions_value('eael_ext_reading_progress_position') . '">
-        //                 <div class="eael-reading-progress-fill"></div>
-        //             </div>';
-        //         }
-
-        //         $reading_progress_html .= '</div>';
-
-        //         if ($this->get_extensions_value('eael_ext_reading_progress') != 'yes') {
-        //             $display_condition = $this->get_extensions_value('eael_ext_reading_progress_global_display_condition');
-        //             if (get_post_status($this->get_extensions_value('post_id')) != 'publish') {
-        //                 $reading_progress_html = '';
-        //             } else if ($display_condition == 'pages' && !is_page()) {
-        //                 $reading_progress_html = '';
-        //             } else if ($display_condition == 'posts' && !is_single()) {
-        //                 $reading_progress_html = '';
-        //             }
-        //         }
-
-        //         if (!empty($reading_progress_html)) {
-        //             wp_enqueue_script('eael-reading-progress');
-        //             wp_enqueue_style('eael-reading-progress');
-
-        //             $html .= $reading_progress_html;
-        //         }
-        //     }
-        // }
-        echo '<div class="wpr-progress-container">';
-            echo '<div class="wpr-progress-bar" id="wpr-mybar"></div>';
-        echo '</div>';
+        if( 'yes' === $page_settings['wpr_enable_reading_progress'] ) {
+            echo '<div class="wpr-progress-container">';
+                echo '<div class="wpr-progress-bar" id="wpr-mybar"></div>';
+            echo '</div>';
+        } 
     }
 }
 

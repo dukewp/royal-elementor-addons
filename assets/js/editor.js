@@ -1,6 +1,20 @@
 ( function( $ ) {//TODO: manage comments
 
 	"use strict";
+	// eval("ea.hooks.addAction(\"editMode.init\", \"ea\", function () {\n  
+	// 	elementor.settings.page.addChangeCallback(\"eael_ext_reading_progress\", function (newValue) {\n    
+	// 		jQuery(\".eael-reading-progress-wrap\").addClass(\"eael-reading-progress-wrap-disabled\");\n    
+	// 		elementor.saver.update.apply().then(function () {\n      
+	// 			elementor.reloadPreview();\n    
+	// 		});\n  
+	// });\n  
+	// elementor.settings.page.addChangeCallback(\"eael_ext_reading_progress_position\", function (newValue) {\n   
+	//  elementor.settings.page.setSettings(\"eael_ext_reading_progress_position\", newValue);\n    
+	//  jQuery(\".eael-reading-progress\").removeClass(\"eael-reading-progress-top eael-reading-progress-bottom\")
+	// 	 .addClass(\"eael-reading-progress-\" + newValue);\n  
+	//  });\n
+	
+	// });\n\n//# sourceURL=webpack:///./src/js/edit/reading-progress.js?");
 
 	// Make our custom css visible in the panel's front-end
 	elementor.hooks.addFilter( 'editor/style/styleText', function( css, context ) {
