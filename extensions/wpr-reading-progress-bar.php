@@ -14,122 +14,133 @@ class Wpr_ReadingProgressBar {
     private static $_instance = null;
 
     public final function __construct() {
-		
 		// Register controls on Post/Page Settings
 		add_action( 'elementor/documents/register_controls', [ $this, 'register_controls' ], 10, 3 );
-
 		add_action( 'elementor/editor/after_save', [ $this, 'save_global_values' ], 10, 2 );
-
         add_action( 'wp_footer', [ $this, 'html_to_footer' ] );
-
-
 	}
     
     public function register_controls( $element ) {
         
 		$element->start_controls_section(
-			'wpr_reading_progress_bar',
+			'wpr_section_reading_progress_bar',
 			[
                 'tab' => Controls_Manager::TAB_SETTINGS,
-				'label' => __( 'Reading Progress Bar-Royal Addons', 'wpr' ),
+				'label' => __( 'Reading Progress Bar - Royal Addons', 'wpr-addons' ),
 			]
         );
 
-            $element->add_control(
-                'wpr_enable_rpb',
-                [
-                    'label' => __( 'Enable Progress Bar', 'wpr' ),
-                    'type' => Controls_Manager::SWITCHER,
-                    'label_on' => __( 'On', 'wpr' ),
-                    'label_off' => __( 'Off', 'wpr' ),
-                    'return_value' => 'yes',
-                ]
-            );
+		$element->add_control(
+			'wpr_enable_rpb',
+			[
+				'label' => __( 'Enable Progress Bar', 'wpr' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => __( 'On', 'wpr' ),
+				'label_off' => __( 'Off', 'wpr' ),
+				'return_value' => 'yes',
+			]
+		);
 
-            $element->add_control(
-				'wpr_select_view',
-				[
-					'label' => __( 'Select View', 'wpr' ),
-					'type' => \Elementor\Controls_Manager::SELECT,
-					'default' => 'view1',
-					'options' => [
-						'view1' => __( 'View 1', 'wpr' ),
-						'view2' => __( 'View 2', 'wpr' ),
+		$element->add_control(
+			'wpr_select_view',
+			[
+				'label' => __( 'Select View', 'wpr' ),
+				'type' => \Elementor\Controls_Manager::SELECT,
+				'default' => 'view1',
+				'options' => [
+					'view1' => __( 'View 1', 'wpr' ),
+					'view2' => __( 'View 2', 'wpr' ),
+				],
+				'separator' => 'after',
+				'condition' => [
+					'wpr_enable_rpb' => 'yes',
+				],
+			]
+		);
+
+		$element->add_control(
+			'wpr_height',
+			[
+				'label' => __( 'Height', 'wpr' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min'  => 1,
+						'max'  => 100,
+						'step' => 1,
 					],
-                    'separator' => 'after',
-					'condition' => [
-						'wpr_enable_rpb' => 'yes',
-					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+				'condition' => [
+					'wpr_enable_rpb' => 'yes',
+					'wpr_select_view' => 'view1'
+				],
+				'selectors' => [
+					'.wpr-progress-container' => 'height: {{SIZE}}{{UNIT}} !important',
+					'.wpr-progress-container .wpr-progress-bar' => 'height: {{SIZE}}{{UNIT}} !important',
+				],
+			]
+		);
+
+		$element->add_control(
+			'wpr_background_color',
+			[
+				'label' => __( 'Background Color', 'wpr' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'default' => '#C5C5C6',
+				'condition' => [
+					'wpr_enable_rpb' => 'yes',
+					'wpr_select_view' => 'view1'
+				],
+				'selectors' => [
+					'.wpr-progress-container' => 'background-color: {{VALUE}};'
 				]
-			);
+			]
+		);
 
-            $element->add_control(
-				'wpr_height',
-				[
-					'label' => __( 'Height', 'wpr' ),
-					'type' => Controls_Manager::SLIDER,
-					'range' => [
-						'px' => [
-							'min'  => 1,
-							'max'  => 100,
-							'step' => 1,
-						],
-					],
-					'default' => [
-						'unit' => 'px',
-						'size' => 10,
-					],
-					'condition' => [
-						'wpr_enable_rpb' => 'yes',
-                        'wpr_select_view' => 'view1'
-					],
-					// 'selectors' => [
-					// 	'.ma-rpb-progress-container' => 'height: {{SIZE}}{{UNIT}} !important',
-					// 	'.ma-rpb-progress-container .ma-rpb-progress-bar' => 'height: {{SIZE}}{{UNIT}} !important',
-					// ],
+		$element->add_control(
+			'wpr_fill_color',
+			[
+				'label' => __( 'Fill Color', 'wpr' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'default' => '#6A63DA',
+				'condition' => [
+					'wpr_enable_rpb' => 'yes',
+					'wpr_select_view' => 'view1'
+				],
+				'selectors' => [
+					'.wpr-progress-container .wpr-progress-bar' => 'background-color: {{VALUE}};'
 				]
-			);
+			]
+		);
 
-            $element->add_control(
-				'wpr_background_color',
-				[
-					'label' => __( 'Background Color', 'wpr' ),
-					'type' => \Elementor\Controls_Manager::COLOR,
-					'default' => '#C5C5C6',
-					'condition' => [
-						'wpr_enable_rpb' => 'yes',
-                        'wpr_select_view' => 'view1'
-					],
-					// 'selectors' => [
-					// 	'.ma-rpb-progress-container' => 'background-color: {{VALUE}};'
-					// ]
-				]
-			);
-
-            $element->add_control(
-				'wpr_fill_color',
-				[
-					'label' => __( 'Fill Color', 'wpr' ),
-					'type' => \Elementor\Controls_Manager::COLOR,
-					'default' => '#6A63DA',
-					'condition' => [
-						'wpr_enable_rpb' => 'yes',
-                        'wpr_select_view' => 'view1'
-					],
-					// 'selectors' => [
-					// 	'.ma-rpb-progress-container .ma-rpb-progress-bar' => 'background-color: {{VALUE}};'
-					// ]
-				]
-			);
-
-            
-        $element->add_control(
-            'wpr_reading_progress_bar_changes',
-            [
-                'type' => Controls_Manager::RAW_HTML,
-                'raw' => '<div style="text-align: center;"><button class="elementor-update-preview-button elementor-button elementor-button-success" onclick="elementor.reloadPreview()">Apply Changes</button></div>',
-            ]
-        );
+		$element->add_control(
+			'progress_bar_position',
+			[
+				'label' => __( 'Position', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::SELECT,
+				'default' => 'top',
+				'render_type' => 'template',
+				'options' => [
+					'top' => __( 'Top', 'wpr-addons' ),
+					'bottom' => __( 'Bottom', 'wpr-addons' ),
+				],
+				'selectors_dictionary' => [
+					'top' => 'top: 0px; bottom: auto;',
+					'bottom' => 'bottom: 0px; top: auto;',
+				],
+				'selectors' => [
+					'.wpr-progress-container' => '{{VALUE}}',
+				],
+				'condition' => [
+					'wpr_enable_rpb' => 'yes',
+					'wpr_select_view' => 'view1'
+				],
+			]
+		);
 
         $element->end_controls_section();
         
@@ -190,23 +201,14 @@ class Wpr_ReadingProgressBar {
 
 		if( isset( get_option('wpr_addons_integration')['reading-progress-bar'] ) && array_key_exists( $postId, get_option('wpr_addons_integration')['reading-progress-bar'] )
 		) {
-
 			echo $this->getRpbHTML( get_option('wpr_addons_integration')['reading-progress-bar'][$postId] );
-
 		} 		
 	}
 
     public function getRpbHTML( $options ) {
-        $rpbHeight = 'height: ' . $options['height']['size'] . $options['height']['unit'] . '; ';
-        $rpbBgColor = 'background-color: ' . $options['background_color'] . '; ';
-        $rpbFillColor = 'background-color: ' . $options['fill_color'] . '; ';
-        
-        // $html = '<div class="wpr-progress-container" style="' . $rpbBgColor . $rpbHeight . '"><div class="wpr-progress-bar" id="wpr-mybar" style="' . $rpbHeight . $rpbFillColor . '"></div></div></div>';
         $html = '<div class="wpr-progress-container"><div class="wpr-progress-bar" id="wpr-mybar"></div></div></div>';
-
-    return $html;
-
-}
+    	return $html;
+	}
 }
 
 Wpr_ReadingProgressBar::instance();
