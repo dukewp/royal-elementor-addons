@@ -23,7 +23,7 @@ class Wpr_ReadingProgressBar {
     public function register_controls( $element ) {
         
 		$element->start_controls_section(
-			'wpr_section_reading_progress_bar',
+			'wpr_reading_progress_bar',
 			[
                 'tab' => Controls_Manager::TAB_SETTINGS,
 				'label' => __( 'Reading Progress Bar - Royal Addons', 'wpr-addons' ),
