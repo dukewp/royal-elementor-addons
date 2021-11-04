@@ -68,12 +68,12 @@ class Wpr_Sticky_Section {
 			$element->add_control (
 				'position_type',
 				[
-					'label' => __( 'Position', 'wpr-addons' ),
+					'label' => __( 'Position Type', 'wpr-addons' ),
 					'type' => Controls_Manager::SELECT,
 					'default' => 'sticky',
 					'options' => [
-						'sticky'  => __( 'Stick on Scroll', 'wpr-addons' ),
-						'fixed' => __( 'Fixed by Default', 'wpr-addons' ),
+						'sticky'  => __( 'Sticky', 'wpr-addons' ),
+						'fixed' => __( 'Fixed', 'wpr-addons' ),
 					],
                     'selectors' => [
 						'{{WRAPPER}}' => 'position: {{VALUE}};',
@@ -229,11 +229,6 @@ class Wpr_Sticky_Section {
 		ob_start();
 		
 		// how to render attributes without creating new div using view.addRenderAttributes
-        ?>
-            <# if ( 'yes' === settings.enable_sticky_section) { #>
-                <div class="wpr-sticky-section-yes-editor" data-wpr-sticky-section={{{settings.enable_sticky_section}}} data-wpr-position-type={{{settings.position_type}}} data-wpr-position-offset={{{settings.position_offset}}} data-wpr-position-location={{{settings.position_location}}} data-wpr-custom-breakpoints={{{settings.custom_breakpoints}}} data-wpr-sticky-devices={{{settings.enable_on_devices}}} data-wpr-active-breakpoints = {{{settings.active_breakpoints}}}></div>
-            <# } #>   
-        <?php
 		$particles_content = ob_get_contents();
 
 		ob_end_clean();
