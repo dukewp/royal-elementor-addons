@@ -33,10 +33,11 @@ class Wpr_ReadingProgressBar {
 		$element->add_control(
 			'wpr_enable_rpb',
 			[
-				'label' => __( 'Enable Progress Bar', 'wpr' ),
+				'label' => __( 'Enable Progress Bar', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_on' => __( 'On', 'wpr' ),
-				'label_off' => __( 'Off', 'wpr' ),
+				'render_type' => 'template',
+				'label_on' => __( 'On', 'wpr-addons' ),
+				'label_off' => __( 'Off', 'wpr-addons' ),
 				'return_value' => 'yes',
 			]
 		);
@@ -44,12 +45,12 @@ class Wpr_ReadingProgressBar {
 		$element->add_control(
 			'wpr_select_view',
 			[
-				'label' => __( 'Select View', 'wpr' ),
+				'label' => __( 'Select View', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::SELECT,
 				'default' => 'view1',
 				'options' => [
-					'view1' => __( 'View 1', 'wpr' ),
-					'view2' => __( 'View 2', 'wpr' ),
+					'view1' => __( 'View 1', 'wpr-addons' ),
+					'view2' => __( 'View 2', 'wpr-addons' ),
 				],
 				'separator' => 'after',
 				'condition' => [
@@ -61,7 +62,7 @@ class Wpr_ReadingProgressBar {
 		$element->add_control(
 			'wpr_height',
 			[
-				'label' => __( 'Height', 'wpr' ),
+				'label' => __( 'Height', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -88,7 +89,7 @@ class Wpr_ReadingProgressBar {
 		$element->add_control(
 			'wpr_background_color',
 			[
-				'label' => __( 'Background Color', 'wpr' ),
+				'label' => __( 'Background Color', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'default' => '#C5C5C6',
 				'condition' => [
@@ -104,7 +105,7 @@ class Wpr_ReadingProgressBar {
 		$element->add_control(
 			'wpr_fill_color',
 			[
-				'label' => __( 'Fill Color', 'wpr' ),
+				'label' => __( 'Fill Color', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'default' => '#6A63DA',
 				'condition' => [
@@ -151,10 +152,7 @@ class Wpr_ReadingProgressBar {
 		$document = \Elementor\Plugin::$instance->documents->get( $post_id, false );
 		$settings = $document->get_settings();
 		$integrationOptions = get_option( 'wpr_addons_integration' );
-
 		if ( $settings['wpr_enable_rpb'] == 'yes' ) {
-			// Global Settings
-				$integrationOptions['reading-progress-bar'][$post_id] = self::createOption( $settings );
 
 				// Removing global values if disabled
 				if( isset( get_option('wpr_addons_integration')['reading-progress-bar-globally'] ) && array_key_exists( $post_id, get_option('wpr_addons_integration')['reading-progress-bar-globally'] ) ) {
@@ -170,22 +168,6 @@ class Wpr_ReadingProgressBar {
 		
 		update_option( 'wpr_addons_integration', $integrationOptions );
 
-	}
-
-	public static function createOption( $settings ) {
-
-		$rpbSetting = [];
-
-		$rpbSetting['select_view'] = $settings['wpr_select_view'];
-
-		if( $settings['wpr_select_view'] == 'view1' ) {
-			// view 1
-			$rpbSetting['height'] = $settings['wpr_height'];
-			$rpbSetting['background_color'] = $settings['wpr_background_color'];
-			$rpbSetting['fill_color'] = $settings['wpr_fill_color'];
-		} 
-
-		return $rpbSetting;
 	}
     
     public static function instance() {
@@ -206,6 +188,7 @@ class Wpr_ReadingProgressBar {
 	}
 
     public function getRpbHTML( $options ) {
+		var_dump(get_option( 'wpr_addons_integration' ));
         $html = '<div class="wpr-progress-container"><div class="wpr-progress-bar" id="wpr-mybar"></div></div></div>';
     	return $html;
 	}
