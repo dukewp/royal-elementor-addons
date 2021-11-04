@@ -180,7 +180,8 @@
 }
 
 .wpr-element-info input,
-.wpr-elements-toggle input {
+.wpr-elements-toggle input,
+.wpr-setting-custom-ckbox input {
   position: absolute;
   z-index: -1000;
   left: -1000px;
@@ -194,7 +195,8 @@
 }
 
 .wpr-element-info label,
-.wpr-elements-toggle label {
+.wpr-elements-toggle label,
+.wpr-setting-custom-ckbox label {
   position: relative;
   display: block;
   width: 45px;
@@ -213,7 +215,8 @@
 }
 
 .wpr-element-info input + label:after,
-.wpr-elements-toggle input + label:after {
+.wpr-elements-toggle input + label:after,
+.wpr-setting-custom-ckbox input + label:after {
   content: ' ';
   display: block;
   position: absolute;
@@ -229,12 +232,14 @@
 }
 
 .wpr-element-info input:checked + label,
-.wpr-elements-toggle input:checked + label {
+.wpr-elements-toggle input:checked + label,
+.wpr-setting-custom-ckbox input:checked + label {
   background: #6A4BFF;
 }
 
 .wpr-element-info input:checked + label:after,
-.wpr-elements-toggle input:checked + label:after {
+.wpr-elements-toggle input:checked + label:after,
+.wpr-setting-custom-ckbox input:checked + label:after {
   left: 24px;
 }
 
@@ -377,10 +382,14 @@
   margin-bottom: 8px;
 }
 
-.wpr-setting input {
+.wpr-setting input:not(input[type='checkbox']) {
   border: 1px solid #e8e8e8;
   width: 100%;
   padding: 5px 15px;
+}
+
+.wpr-setting input[type='checkbox'] {
+  margin-right: 8px;
 }
 
 .wpr-settings .submit:first-of-type {
@@ -650,6 +659,63 @@ input.wpr-user-template-title:focus {
           box-shadow: none;
 }
 
+/*--------------------------------------------------------------
+== White Label
+--------------------------------------------------------------*/
+.wpr-wl-tab-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.wpr-wl-tab-content .wpr-settings-group:last-of-type {
+  margin-top: 50px;
+  margin-left: 50px;
+}
+
+.wpr-setting-custom-img-upload div button {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-radius: 3px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.wpr-setting-custom-img-upload div button span {
+  margin-left: 5px;
+}
+
+.wpr-setting-custom-img-upload div button img {
+  width: 50px;
+}
+
+.wpr-setting-custom-ckbox h4 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.wpr-setting-custom-ckbox label {
+  background: #d3d3d3;
+}
+
+.wpr-setting-custom-ckbox p {
+  color: #a09f9f;
+}
 
 /*--------------------------------------------------------------
 == Freemius

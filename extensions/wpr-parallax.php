@@ -25,7 +25,7 @@ class Wpr_Parallax_Scroll {
             'wpr_section_parallax',
             [
                 'tab' => Controls_Manager::TAB_STYLE,
-                'label' => __('Parallax - Royal Addons', 'wpr-addons-elementor'),
+                'label' =>  sprintf(esc_html__('Parallax - %s', 'wpr-addons'), Utilities::get_plugin_name()),
             ]
         );
         

@@ -36,6 +36,7 @@ class Wpr_Mailchimp extends Widget_Base {
 	}
 
     public function get_custom_help_url() {
+    	if ( empty(get_option('wpr_wl_plugin_links')) )
         return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-mailchimp-subscription-help-btn';
     }
 
@@ -70,7 +71,6 @@ class Wpr_Mailchimp extends Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'default' => 'def',
 				'options' => Utilities::get_mailchimp_lists(),
-				'description' => 'Navigate to Dashboard > Royal Addons > Integrations to set up MailChimp API Key.'
 			]
 		);
 
@@ -79,7 +79,7 @@ class Wpr_Mailchimp extends Widget_Base {
 				'mailchimp_key_notice',
 				[
 					'type' => Controls_Manager::RAW_HTML,
-					'raw' => sprintf( __( 'Navigate to <strong><a href="%s" target="_blank">Dashboard > Royal Addons > Integrations</a></strong> to set up <strong>MailChimp API Key</strong>.', 'wpr-addons' ), admin_url( 'admin.php?page=wpr-addons&tab=wpr_tab_settings' ) ),
+					'raw' => sprintf( __( 'Navigate to <strong><a href="%s" target="_blank">Dashboard > %s > Integrations</a></strong> to set up <strong>MailChimp API Key</strong>.', 'wpr-addons' ), admin_url( 'admin.php?page=wpr-addons&tab=wpr_tab_settings' ), Utilities::get_plugin_name() ),
 					'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 				]
 			);

@@ -8,6 +8,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Utilities {
 
 	/**
+	** Get Plugin Name
+	*/
+	public static function get_plugin_name($full = false) {
+		return class_exists('\WprAddonsPro\Admin\Wpr_White_Label') ? \WprAddonsPro\Admin\Wpr_White_Label::get_plugin_name($full) : 'Royal Addons';
+	}
+
+	/**
 	** Get Available Modules
 	*/
 	public static function get_registered_modules() {
@@ -622,13 +629,15 @@ class Utilities {
 	** WPR Library Button
 	*/
 	public static function wpr_library_buttons( $module, $controls_manager ) {
-		$module->add_control(
-            'wpr_library_buttons',
-            [
-				'raw' => '<a href="#" target="_blank" data-theme="'. get_template() .'">'. esc_html__( 'Widget Preview', 'wpr-addons' ) .'</a> <a href="#">'. esc_html__( 'Predefined Styles', 'wpr-addons' ) .'</a>',
-				'type' => $controls_manager,
-			]
-        );
+		if ( empty(get_option('wpr_wl_plugin_links')) ) {
+			$module->add_control(
+	            'wpr_library_buttons',
+	            [
+					'raw' => '<a href="#" target="_blank" data-theme="'. get_template() .'">'. esc_html__( 'Widget Preview', 'wpr-addons' ) .'</a> <a href="#">'. esc_html__( 'Predefined Styles', 'wpr-addons' ) .'</a>',
+					'type' => $controls_manager,
+				]
+	        );
+        }
 	}
 
 	/**

@@ -1,7 +1,7 @@
 ﻿=== Royal Elementor Addons (Header Footer Builder, Popups, Post Grid, Woocommerce Product Grid, Post Slider/Carousel, Sticky Header, Menu & other Addons for Elementor) ===
 Contributors: WP Royal, rubeushagrid13, cyberpinky
 Tags: elementor, elements, widgets for elementor, elementor addons, elementor widget, elementor form, woocommerce elementor, page builder, builder, wordpress page builder
-Stable tag: 1.3
+Stable tag: 1.3.1
 Requires at least: 5.0
 Tested up to: 5.8.1
 Requires PHP: 5.6

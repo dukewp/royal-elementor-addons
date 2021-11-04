@@ -12,6 +12,7 @@ use Elementor\Plugin;
 use Elementor\Core\Responsive\Responsive;
 use Elementor\Core\Breakpoints\Manager;
 use Elementor\Core\Breakpoints;
+use WprAddons\Classes\Utilities;
 
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -32,7 +33,7 @@ class Wpr_Sticky_Section {
 				'wpr_section_sticky_section',
 				[
 					'tab'   => Controls_Manager::TAB_ADVANCED,
-					'label' => esc_html__( 'Sticky section - Royal Addons', 'wpr-addons' ),
+					'label' =>  sprintf(esc_html__('Sticky Section - %s', 'wpr-addons'), Utilities::get_plugin_name()),
 				]
 			);
 

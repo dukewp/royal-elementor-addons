@@ -33,7 +33,7 @@ do_action( 'wp_body_open' );
 // Royal themes compatibility
 echo '<div id="page-wrap">';
 
-// Render Royal Addons Header
+// Render WPR Header
 Utilities::render_elementor_template($template_slug);
 
 // Royal themes compatibility
