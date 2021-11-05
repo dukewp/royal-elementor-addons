@@ -304,7 +304,7 @@ class Utilities {
 			$sharing_url = 'https://web.skype.com/share?url='. $args['url'];
 			$network_title = esc_html__( 'Skype', 'wpr-addons' );
 		} elseif ( 'whatsapp' === $args['network'] ) {
-			$sharing_url = 'whatsapp://send?text=*'. $args['title'] .'*\n'. $args['text'] .'\n'. $args['url'];
+			$sharing_url = 'https://api.whatsapp.com/send?text=*'. $args['title'] .'*\n'. $args['text'] .'\n'. $args['url'];
 			$network_title = esc_html__( 'WhatsApp', 'wpr-addons' );
 		} elseif ( 'telegram' === $args['network'] ) {
 			$sharing_url = 'https://telegram.me/share/url?url='. $args['url'] .'&text='. $args['text'];
