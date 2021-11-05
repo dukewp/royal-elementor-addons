@@ -36,7 +36,7 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}a,
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 999;
+    z-index: 9999999;
   }
   
   .wpr-progress-bar {
