@@ -73,8 +73,8 @@ class Wpr_Sticky_Section {
 					'type' => Controls_Manager::SELECT,
 					'default' => 'sticky',
 					'options' => [
-						'sticky'  => __( 'Sticky', 'wpr-addons' ),
-						'fixed' => __( 'Fixed', 'wpr-addons' ),
+						'sticky'  => __( 'Stick on Scroll', 'wpr-addons' ),
+						'fixed' => __( 'Fixed by Default', 'wpr-addons' ),
 					],
                     'selectors' => [
 						'{{WRAPPER}}' => 'position: {{VALUE}};',
@@ -120,8 +120,8 @@ class Wpr_Sticky_Section {
 					'required' => true,
 					'frontend_available' => true,
 					'render_type' => 'template',
-					'widescreen_default' => 0,
 					'default' => 0,
+					'widescreen_default' => 0,
 					'laptop_default' => 0,
 					'tablet_extra_default' => 0,
 					'tablet_default' => 0,
