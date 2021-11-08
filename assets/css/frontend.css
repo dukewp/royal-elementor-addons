@@ -10028,3 +10028,17 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-sticky-section-yes {
 	width: 100%;
 }
+
+.wpr-progress-bar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: white;
+  width: 100%;
+  z-index: 9999999;
+}
+
+.wpr-progress-bar {
+  background-color: black;
+  width: 0%;
+}
