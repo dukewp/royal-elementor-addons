@@ -25,8 +25,6 @@ define( 'WPR_ADDONS_URL', plugins_url( '/', WPR_ADDONS__FILE__ ) );
 define( 'WPR_ADDONS_ASSETS_URL', WPR_ADDONS_URL . 'assets/' );
 define( 'WPR_ADDONS_MODULES_URL', WPR_ADDONS_URL . 'modules/' );
 
-// var_dump(get_option('wpr_progress_bar_global_options'));
-
 /**
  * Feemius Integration
  */
