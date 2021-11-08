@@ -60,20 +60,32 @@ class Wpr_ReadingProgressBar {
 		$element->add_control(
 			'wpr_rpb_display_on',
 			[
-				'label' => __( 'Display Progress Bar On', 'wpr-addons' ),
+				'label' => __( 'Display Progress Bar', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::SELECT,
 				'default' => 'page',
 				'options' => [
-					'page' => __( 'All Pages', 'wpr-addons' ),
-					'post' => __( 'All Posts', 'wpr-addons' ),
+					'page' => __( 'On All Pages', 'wpr-addons' ),
+					'post' => __( 'On All Posts', 'wpr-addons' ),
 					'global' => __( 'Globally', 'wpr-addons' ),
 				],
 				'separator' => 'after',
 				'condition' => [
+					'wpr_rpb_enable' => 'yes',
 					'wpr_rpb_enable_globally' => 'yes',
 				],
 			]
 		);
+
+		$element->add_control(
+            'wpr_rpb_apply_changes',
+            [
+                'type' => Controls_Manager::RAW_HTML,
+                'raw' => '<div style="text-align: center;"><button class="elementor-update-preview-button elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply Changes</button></div>',
+                'condition' => [
+                    'wpr_rpb_enable_globally' => 'yes'
+                ]
+            ]
+        );
 
 		$element->add_control(
 			'wpr_height',
@@ -95,8 +107,8 @@ class Wpr_ReadingProgressBar {
 					'wpr_rpb_enable' => 'yes',
 				],
 				'selectors' => [
-					'.wpr-progress-container' => 'height: {{SIZE}}{{UNIT}} !important',
-					'.wpr-progress-container .wpr-progress-bar' => 'height: {{SIZE}}{{UNIT}} !important',
+					'.wpr-progress-bar-container' => 'height: {{SIZE}}{{UNIT}} !important',
+					'.wpr-progress-bar-container .wpr-progress-bar' => 'height: {{SIZE}}{{UNIT}} !important',
 				],
 			]
 		);
@@ -111,7 +123,7 @@ class Wpr_ReadingProgressBar {
 					'wpr_rpb_enable' => 'yes',
 				],
 				'selectors' => [
-					'.wpr-progress-container' => 'background-color: {{VALUE}};'
+					'.wpr-progress-bar-container' => 'background-color: {{VALUE}};'
 				]
 			]
 		);
@@ -126,7 +138,7 @@ class Wpr_ReadingProgressBar {
 					'wpr_rpb_enable' => 'yes',
 				],
 				'selectors' => [
-					'.wpr-progress-container .wpr-progress-bar' => 'background-color: {{VALUE}};'
+					'.wpr-progress-bar-container .wpr-progress-bar' => 'background-color: {{VALUE}};'
 				]
 			]
 		);
@@ -143,11 +155,11 @@ class Wpr_ReadingProgressBar {
 					'bottom' => __( 'Bottom', 'wpr-addons' ),
 				],
 				'selectors_dictionary' => [
-					'top' => 'top: 0px; bottom: auto;',
-					'bottom' => 'bottom: 0px; top: auto;',
+					'top' => 'top: 0px !important; bottom: auto !important;',
+					'bottom' => 'bottom: 0px !important; top: auto !important;',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-progress-container' => '{{VALUE}}',
+					'{{WRAPPER}} .wpr-progress-bar-container' => '{{VALUE}}',
 				],
 				'condition' => [
 					'wpr_rpb_enable' => 'yes',
@@ -175,25 +187,23 @@ class Wpr_ReadingProgressBar {
 
 	}
 
-    public function html_to_footer() {
+	public function html_to_footer() {
     	$settings = get_option('wpr_progress_bar_global_options');
 		$rpb_position = 'top' === $settings['wpr_progress_bar_position'] ? 'top: 0px; bottom: auto;' : 'bottom: 0px; top: auto;';
-		$rpb_background_color = $settings['wpr_background_color'];
-		$rpb_height = 'height: '.$settings['wpr_height']['size'] . $settings['wpr_height']['unit'].';';
+		$rpb_background_color = 'background-color: ' . $settings['wpr_background_color'] . ' !important;';
 		$rpb_fill_color = 'background-color: ' . $settings['wpr_fill_color'] . '!important;';
-    	if ( !empty($settings) ) {
-    		if ( 'yes' === $settings['wpr_rpb_enable'] && 'yes' !== $settings['wpr_rpb_enable_globally_option']  ) {
-				// $page_settings = get_post_meta( get_the_ID(), '_elementor_page_settings', true );
-				echo '<div class="wpr-progress-container"><div class="wpr-progress-bar wpr-mybar" id="wpr-mybar"></div></div>';
-			} else if ( 'yes' === $settings['wpr_rpb_enable_globally_option'] && get_post_type() === $settings['wpr_rpb_display_option'] ) {
-				var_dump($settings['wpr_rpb_enable_globally_option']);
-				// get_post_type() === $settings['wpr_rpb_display_on']
-				echo '<div style="'. $rpb_position .'  background: '. $rpb_background_color .'; " class="wpr-progress-container"><div style="'.$rpb_fill_color . $rpb_height .'" class="wpr-progress-bar wpr-mybar" id="wpr-mybar"></div></div>';
-				// if( is_page() ) {
-				// 	// style="'. $rpb_position .'"
-				// }
-			} else if ( 'global' === $settings['wpr_rpb_display_option'] ) {
-				echo '<div style="'. $rpb_position .'  background: '. $rpb_background_color .'; " class="wpr-progress-container"><div style="'.$rpb_fill_color . $rpb_height .'" class="wpr-progress-bar wpr-mybar" id="wpr-mybar"></div></div>';
+		$rpb_height = 'height: '.$settings['wpr_height']['size'] . $settings['wpr_height']['unit'].';';
+		var_dump($rpb_background_color);
+
+    	if ( !empty($settings) && 'yes' === $settings['wpr_rpb_enable'] ) {
+    		if ( 'yes' === $settings['wpr_rpb_enable_globally_option']  ) {
+    			if ( ('post' === $settings['wpr_rpb_display_option'] && ! is_single()) || ('page' === $settings['wpr_rpb_display_option'] && ! is_page()) ) {
+    				return;
+    			}
+				
+    			echo '<div style="'. $rpb_position . $rpb_background_color .'" class="wpr-progress-bar-container"><div style="'.$rpb_fill_color . $rpb_height .'" class="wpr-progress-bar wpr-mybar" id="wpr-mybar"></div></div>';
+			} else {
+				echo '<div class="wpr-progress-bar-container"><div class="wpr-progress-bar wpr-mybar" id="wpr-mybar"></div></div>';
 			}
     	}
 	}

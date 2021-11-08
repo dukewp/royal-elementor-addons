@@ -31,15 +31,16 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}a,
     transition: width 50ms ease;
   } */
 
-  .wpr-progress-container {
+  .wpr-progress-bar-container {
     position: fixed;
     top: 0;
     left: 0;
+    background-color: white;
     width: 100%;
     z-index: 9999999;
   }
   
   .wpr-progress-bar {
-    background: #aa7604;
+    background-color: black;
     width: 0%;
   }
