@@ -26,7 +26,7 @@ class Wpr_Particles {
 			'wpr_section_particles',
 			[
 				'tab'   => Controls_Manager::TAB_STYLE,
-				'label' => esc_html__( 'Particles - Royal Addons', 'wpr-addons' ),
+				'label' =>  sprintf(esc_html__('Particles - %s', 'wpr-addons'), Utilities::get_plugin_name()),
 			]
 		);
 

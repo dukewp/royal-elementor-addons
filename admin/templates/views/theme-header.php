@@ -30,5 +30,5 @@ $template_slug = WPR_Conditions_Manager::header_footer_display_conditions($condi
 
 do_action( 'wp_body_open' );
 
-// Render Royal Addons Header
+// Render WPR Header
 Utilities::render_elementor_template($template_slug);

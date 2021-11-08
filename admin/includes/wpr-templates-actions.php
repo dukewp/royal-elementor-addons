@@ -207,8 +207,9 @@ class WPR_Templates_Actions {
 	** Enqueue Scripts and Styles
 	*/
 	public function templates_library_scripts( $hook ) {
+
 		// Deny if NOT Plugin Page
-		if ( 'toplevel_page_wpr-addons' != $hook && 'royal-addons_page_wpr-theme-builder' != $hook && 'royal-addons_page_wpr-popups' != $hook ) {
+		if ( 'toplevel_page_wpr-addons' != $hook && !strpos($hook, 'wpr-theme-builder') && !strpos($hook, 'wpr-popups') ) {
 			return;
 		}
 
@@ -218,6 +219,11 @@ class WPR_Templates_Actions {
 		// Color Picker
 		wp_enqueue_style( 'wp-color-picker' );
 	    wp_enqueue_script( 'wp-color-picker-alpha', WPR_ADDONS_URL .'assets/js/admin/wp-color-picker-alpha.min.js', ['jquery', 'wp-color-picker'], $version, true );
+
+	    // Media Upload
+		if ( ! did_action( 'wp_enqueue_media' ) ) {
+			wp_enqueue_media();
+		}
 
 		// enqueue CSS
 		wp_enqueue_style( 'wpr-plugin-options-css', WPR_ADDONS_URL .'assets/css/admin/plugin-options.css', [], $version );

@@ -162,4 +162,6 @@ class WprRatingNotice {
 
 }
 
-new WprRatingNotice();
+if ( 'Royal Addons' === Utilities::get_plugin_name() ) {
+    new WprRatingNotice();
+}

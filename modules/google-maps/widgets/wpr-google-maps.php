@@ -40,6 +40,7 @@ class Wpr_Google_Maps extends Widget_Base {
 	}
 
     public function get_custom_help_url() {
+    	if ( empty(get_option('wpr_wl_plugin_links')) )
         return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-google-maps-help-btn';
     }
 
@@ -62,7 +63,7 @@ class Wpr_Google_Maps extends Widget_Base {
 				'gm_api_notice',
 				[
 					'type' => Controls_Manager::RAW_HTML,
-					'raw' => sprintf( __( 'Please enter <strong>Google Map API Key</strong> from <br><a href="%s" target="_blank">Dashboard > Royal Addons > Settings</a> tab to get this widget working.', 'wpr-addons' ), admin_url( 'admin.php?page=wpr-addons&tab=wpr_tab_settings' ) ),
+					'raw' => sprintf( __( 'Please enter <strong>Google Map API Key</strong> from <br><a href="%s" target="_blank">Dashboard > %s > Settings</a> tab to get this widget working.', 'wpr-addons' ), admin_url( 'admin.php?page=wpr-addons&tab=wpr_tab_settings' ), Utilities::get_plugin_name() ),
 					'separator' => 'after',
 					'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 				]

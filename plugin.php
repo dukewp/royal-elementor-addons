@@ -433,6 +433,14 @@ class Plugin {
 			true
 		);
 
+		wp_localize_script(
+			'wpr-addons-library-frontend-js',
+			'white_label',
+			[
+				'logo_url' => !empty(get_option('wpr_wl_plugin_logo')) ? wp_get_attachment_image_src(get_option('wpr_wl_plugin_logo'), 'full')[0] : WPR_ADDONS_ASSETS_URL .'img/logo-40x40.png'
+			]
+		);
+
 		wp_enqueue_script(
 			'wpr-addons-library-editor-js',
 			WPR_ADDONS_URL . 'assets/js/library-editor' . $this->script_suffix() . '.js',
@@ -532,7 +540,7 @@ class Plugin {
 		\Elementor\Plugin::instance()->elements_manager->add_category(
 			'wpr-widgets',
 			[
-				'title' => esc_html__( 'Royal Elementor Addons', 'wpr-addons' ),
+				'title' => Utilities::get_plugin_name(true),
 				'icon' => 'font',
 			],
 			1
@@ -542,7 +550,7 @@ class Plugin {
 		\Elementor\Plugin::instance()->elements_manager->add_category(
 			'wpr-woo-widgets',
 			[
-				'title' => esc_html__( 'Royal Addons WooCommerce', 'wpr-addons' ),
+				'title' => sprintf(esc_html__( '%s WooCommerce', 'wpr-addons' ), Utilities::get_plugin_name()),
 				'icon' => 'font',
 			],
 			2

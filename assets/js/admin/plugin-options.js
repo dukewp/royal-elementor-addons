@@ -678,6 +678,45 @@ jQuery(document).ready(function( $ ) {
 	});
 
 
+	/*
+	** Image Upload Option -------------------------
+	*/
+	$('body').on( 'click', '.wpr-setting-custom-img-upload button', function(e){
+		e.preventDefault();
+
+		var button = $(this);
+
+		if ( ! button.find('img').length ) {
+			var custom_uploader = wp.media({
+				title: 'Insert image',
+				library : {
+					uploadedTo : wp.media.view.settings.post.id, // attach to the current post?
+					type : 'image'
+				},
+				button: {
+					text: 'Use this image' // button label text
+				},
+				multiple: false
+			}).on('select', function() {
+				var attachment = custom_uploader.state().get('selection').first().toJSON();
+
+				button.find('i').remove();
+				button.prepend('<img src="' + attachment.url + '">');
+				button.find('span').text('Remove Image');
+
+				$('#wpr_wl_plugin_logo').val(attachment.id);
+			}).open();
+		} else {
+			button.find('img').remove();
+			button.prepend('<i class="dashicons dashicons-cloud-upload"></i>');
+			button.find('span').text('Upload Image');
+
+			$('#wpr_wl_plugin_logo').val('');
+		}
+	
+	});
+
+
 	//TODO: Remove this - only for development
 	// $('.nav-tab-wrapper').after( '<p>'+ $('.nav-tab-wrapper').next('input').val() +'</p>' );
 

@@ -49,6 +49,7 @@ class Wpr_Progress_Bar extends Widget_Base {
 	}
 
     public function get_custom_help_url() {
+    	if ( empty(get_option('wpr_wl_plugin_links')) )
         return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-progress-bar-help-btn';
     }
 

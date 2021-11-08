@@ -49,6 +49,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 	}
 
     public function get_custom_help_url() {
+    	if ( empty(get_option('wpr_wl_plugin_links')) )
         return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-woo-grid-help-btn';
     }
 
@@ -2175,7 +2176,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$this->add_control(
 			'lightbox_popup_description',
 			[
-				'raw' => __( 'You can change Lightbox Popup styling options globaly. Navigate to <strong>Dashboard > Royal Addons > Settings</strong>.', 'wpr-addons' ),
+				'raw' => sprintf(__( 'You can change Lightbox Popup styling options globaly. Navigate to <strong>Dashboard > %s > Settings</strong>.', 'wpr-addons' ), Utilities::get_plugin_name()),
 				'type' => Controls_Manager::RAW_HTML,
 				'separator' => 'before',
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',

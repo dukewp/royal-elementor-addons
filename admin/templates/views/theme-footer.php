@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $conditions = json_decode( get_option('wpr_footer_conditions', '[]'), true );
 $template_slug = WPR_Conditions_Manager::header_footer_display_conditions($conditions);
 
-// Render Royal Addons Header
+// Render WPR Header
 Utilities::render_elementor_template($template_slug);
 
 wp_footer();

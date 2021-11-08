@@ -2,13 +2,16 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-use WprAddons\Classes\Utilities;
 use WprAddons\Admin\Includes\WPR_Templates_Loop;
+use WprAddonsPro\Admin\Wpr_White_Label;
+use WprAddons\Classes\Utilities;
 
 // Register Menus
 function wpr_addons_add_admin_menu() {
-	add_menu_page( 'Royal Addons', 'Royal Addons', 'manage_options', 'wpr-addons', 'wpr_addons_settings_page', 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTciIGhlaWdodD0iNzUiIHZpZXdCb3g9IjAgMCA5NyA3NSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTAuMDM2NDA4NiAyMy4yODlDLTAuNTc1NDkgMTguNTIxIDYuNjg4NzMgMTYuMzY2NiA5LjU0OSAyMC40Njc4TDQyLjgzNjUgNjguMTk3MkM0NC45MTgxIDcxLjE4MiA0Mi40NDk0IDc1IDM4LjQzNzggNzVIMTEuMjc1NkM4LjY1NDc1IDc1IDYuNDUyNjQgNzMuMjg1NSA2LjE2MTcgNzEuMDE4NEwwLjAzNjQwODYgMjMuMjg5WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTk2Ljk2MzYgMjMuMjg5Qzk3LjU3NTUgMTguNTIxIDkwLjMxMTMgMTYuMzY2NiA4Ny40NTEgMjAuNDY3OEw1NC4xNjM1IDY4LjE5NzJDNTIuMDgxOCA3MS4xODIgNTQuNTUwNiA3NSA1OC41NjIyIDc1SDg1LjcyNDRDODguMzQ1MiA3NSA5MC41NDc0IDczLjI4NTUgOTAuODM4MyA3MS4wMTg0TDk2Ljk2MzYgMjMuMjg5WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTUzLjI0MTIgNC40ODUyN0M1My4yNDEyIC0wLjI3MDc2MSA0NS44NDg1IC0xLjc0ODAzIDQzLjQ2NTEgMi41MzE3NEw2LjY4OTkxIDY4LjU2NzdDNS4wMzM0OSA3MS41NDIxIDcuNTIyNzIgNzUgMTEuMzIwMyA3NUg0OC4wOTU1QzUwLjkzNzQgNzUgNTMuMjQxMiA3Mi45OTQ4IDUzLjI0MTIgNzAuNTIxMlY0LjQ4NTI3WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTQzLjc1ODggNC40ODUyN0M0My43NTg4IC0wLjI3MDc2MSA1MS4xNTE1IC0xLjc0ODAzIDUzLjUzNDkgMi41MzE3NEw5MC4zMTAxIDY4LjU2NzdDOTEuOTY2NSA3MS41NDIxIDg5LjQ3NzMgNzUgODUuNjc5NyA3NUg0OC45MDQ1QzQ2LjA2MjYgNzUgNDMuNzU4OCA3Mi45OTQ4IDQzLjc1ODggNzAuNTIxMlY0LjQ4NTI3WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg==', '58.6' );
-	add_action( 'admin_init', 'wpr_register_addons_settings' );
+    $menu_icon = !empty(get_option('wpr_wl_plugin_logo')) ? 'dashicons-admin-generic' : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTciIGhlaWdodD0iNzUiIHZpZXdCb3g9IjAgMCA5NyA3NSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTAuMDM2NDA4NiAyMy4yODlDLTAuNTc1NDkgMTguNTIxIDYuNjg4NzMgMTYuMzY2NiA5LjU0OSAyMC40Njc4TDQyLjgzNjUgNjguMTk3MkM0NC45MTgxIDcxLjE4MiA0Mi40NDk0IDc1IDM4LjQzNzggNzVIMTEuMjc1NkM4LjY1NDc1IDc1IDYuNDUyNjQgNzMuMjg1NSA2LjE2MTcgNzEuMDE4NEwwLjAzNjQwODYgMjMuMjg5WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTk2Ljk2MzYgMjMuMjg5Qzk3LjU3NTUgMTguNTIxIDkwLjMxMTMgMTYuMzY2NiA4Ny40NTEgMjAuNDY3OEw1NC4xNjM1IDY4LjE5NzJDNTIuMDgxOCA3MS4xODIgNTQuNTUwNiA3NSA1OC41NjIyIDc1SDg1LjcyNDRDODguMzQ1MiA3NSA5MC41NDc0IDczLjI4NTUgOTAuODM4MyA3MS4wMTg0TDk2Ljk2MzYgMjMuMjg5WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTUzLjI0MTIgNC40ODUyN0M1My4yNDEyIC0wLjI3MDc2MSA0NS44NDg1IC0xLjc0ODAzIDQzLjQ2NTEgMi41MzE3NEw2LjY4OTkxIDY4LjU2NzdDNS4wMzM0OSA3MS41NDIxIDcuNTIyNzIgNzUgMTEuMzIwMyA3NUg0OC4wOTU1QzUwLjkzNzQgNzUgNTMuMjQxMiA3Mi45OTQ4IDUzLjI0MTIgNzAuNTIxMlY0LjQ4NTI3WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTQzLjc1ODggNC40ODUyN0M0My43NTg4IC0wLjI3MDc2MSA1MS4xNTE1IC0xLjc0ODAzIDUzLjUzNDkgMi41MzE3NEw5MC4zMTAxIDY4LjU2NzdDOTEuOTY2NSA3MS41NDIxIDg5LjQ3NzMgNzUgODUuNjc5NyA3NUg0OC45MDQ1QzQ2LjA2MjYgNzUgNDMuNzU4OCA3Mi45OTQ4IDQzLjc1ODggNzAuNTIxMlY0LjQ4NTI3WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg==';
+	add_menu_page( Utilities::get_plugin_name(), Utilities::get_plugin_name(), 'manage_options', 'wpr-addons', 'wpr_addons_settings_page', $menu_icon, '58.6' );
+	
+    add_action( 'admin_init', 'wpr_register_addons_settings' );
     add_filter( 'plugin_action_links_royal-elementor-addons/wpr-addons.php', 'wpr_settings_link' );
 }
 add_action( 'admin_menu', 'wpr_addons_add_admin_menu' );
@@ -40,6 +43,18 @@ function wpr_register_addons_settings() {
     register_setting( 'wpr-settings', 'wpr_lb_arrow_size' );
     register_setting( 'wpr-settings', 'wpr_lb_text_size' );
 
+    // White Label
+    register_setting( 'wpr-wh-settings', 'wpr_wl_plugin_logo' );
+    register_setting( 'wpr-wh-settings', 'wpr_wl_plugin_name' );
+    register_setting( 'wpr-wh-settings', 'wpr_wl_plugin_desc' );
+    register_setting( 'wpr-wh-settings', 'wpr_wl_plugin_author' );
+    register_setting( 'wpr-wh-settings', 'wpr_wl_plugin_website' );
+    register_setting( 'wpr-wh-settings', 'wpr_wl_plugin_links' );
+    register_setting( 'wpr-wh-settings', 'wpr_wl_hide_elements_tab' );
+    register_setting( 'wpr-wh-settings', 'wpr_wl_hide_extensions_tab' );
+    register_setting( 'wpr-wh-settings', 'wpr_wl_hide_settings_tab' );
+    register_setting( 'wpr-wh-settings', 'wpr_wl_hide_white_label_tab' );
+
     // Extensions
     register_setting('wpr-extension-settings', 'wpr-particles');
     register_setting('wpr-extension-settings', 'wpr-parallax-background');
@@ -62,12 +77,14 @@ function wpr_addons_settings_page() {
 <div class="wrap wpr-settings-page-wrap">
 
 <div class="wpr-settings-page-header">
-    <h1><?php esc_html_e( 'Royal Elementor Addons', 'wpr-addons' ); ?></h1>
+    <h1><?php echo Utilities::get_plugin_name(true); ?></h1>
     <p><?php esc_html_e( 'The most powerful Elementor Addons in the universe.', 'wpr-addons' ); ?></p>
 
+    <?php if ( empty(get_option('wpr_wl_plugin_links')) ) : ?>
     <a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-plugin-prev-btn#widgets" target="_blank" class="button wpr-options-button">
         <span><?php echo esc_html( 'View Plugin Demo', 'wpr-addons' ); ?></span>
     </a>
+    <?php endif; ?>
 </div>
 
 <div class="wpr-settings-page">
@@ -75,7 +92,18 @@ function wpr_addons_settings_page() {
     <?php
 
     // Active Tab
-    $active_tab = isset( $_GET['tab'] ) ? esc_attr($_GET['tab']) : 'wpr_tab_elements';
+    if ( empty(get_option('wpr_wl_hide_elements_tab')) ) {
+        $active_tab = isset( $_GET['tab'] ) ? esc_attr($_GET['tab']) : 'wpr_tab_elements';
+    } elseif ( empty(get_option('wpr_wl_hide_extensions_tab')) ) {
+        $active_tab = isset( $_GET['tab'] ) ? esc_attr($_GET['tab']) : 'wpr_tab_extensions';
+    } elseif ( empty(get_option('wpr_wl_hide_settings_tab')) ) {
+        $active_tab = isset( $_GET['tab'] ) ? esc_attr($_GET['tab']) : 'wpr_tab_settings';
+    } elseif ( empty(get_option('wpr_wl_hide_white_label_tab')) ) {
+        $active_tab = isset( $_GET['tab'] ) ? esc_attr($_GET['tab']) : 'wpr_tab_white_label';
+    } else {
+        $active_tab = isset( $_GET['tab'] ) ? esc_attr($_GET['tab']) : 'wpr_tab_my_templates';
+    }
+    
 
     // Render Create Templte Popup
     WPR_Templates_Loop::render_create_template_popup();
@@ -84,18 +112,33 @@ function wpr_addons_settings_page() {
 
     <!-- Tabs -->
     <div class="nav-tab-wrapper wpr-nav-tab-wrapper">
+        <?php if ( empty(get_option('wpr_wl_hide_elements_tab')) ) : ?>
         <a href="?page=wpr-addons&tab=wpr_tab_elements" data-title="Elements" class="nav-tab <?php echo $active_tab == 'wpr_tab_elements' ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Elements', 'wpr-addons' ); ?>
         </a>
+        <?php endif; ?>
+
+        <?php if ( empty(get_option('wpr_wl_hide_extensions_tab')) ) : ?>
         <a href="?page=wpr-addons&tab=wpr_tab_extensions" data-title="Extensions" class="nav-tab <?php echo $active_tab == 'wpr_tab_extensions' ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Extensions', 'wpr-addons' ); ?>
         </a>
+        <?php endif; ?>
+
         <a href="?page=wpr-addons&tab=wpr_tab_my_templates" data-title="My Templates" class="nav-tab <?php echo $active_tab == 'wpr_tab_my_templates' ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'My Templates', 'wpr-addons' ); ?>
         </a>
+
+        <?php if ( empty(get_option('wpr_wl_hide_settings_tab')) ) : ?>
         <a href="?page=wpr-addons&tab=wpr_tab_settings" data-title="Settings" class="nav-tab <?php echo $active_tab == 'wpr_tab_settings' ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Settings', 'wpr-addons' ); ?>
         </a>
+        <?php endif; ?>
+
+        <?php // White Label
+            echo !empty(get_option('wpr_wl_hide_white_label_tab')) ? '<div style="display: none;">' : '<div>';
+                do_action('wpr_white_label_tab');
+            echo '</div>';
+        ?>
     </div>
 
     <?php if ( $active_tab == 'wpr_tab_elements' ) : ?>
@@ -131,7 +174,7 @@ function wpr_addons_settings_page() {
                 echo '<h3>'. $title .'</h3>';
                 echo '<input type="checkbox" name="wpr-element-'. $slug .'" id="wpr-element-'. $slug .'" '. checked( get_option('wpr-element-'. $slug, 'on'), 'on', false ) .'>';
                 echo '<label for="wpr-element-'. $slug .'"></label>';
-                echo ( '' !== $url ) ? '<a href="'. $url . $reff .'" target="_blank">'. esc_html('View Widget Demo', 'wpr-addons') .'</a>' : '';
+                echo ( '' !== $url && empty(get_option('wpr_wl_plugin_links')) ) ? '<a href="'. $url . $reff .'" target="_blank">'. esc_html('View Widget Demo', 'wpr-addons') .'</a>' : '';
             echo '</div>';
         echo '</div>';
     }
@@ -145,12 +188,10 @@ function wpr_addons_settings_page() {
     <?php elseif ( $active_tab == 'wpr_tab_my_templates' ) : ?>
 
         <!-- Custom Template -->
-        <?php if ( 'wpr_tab_my_templates' === $_GET['tab'] ) : ?>
         <div class="wpr-user-template">
             <span><?php esc_html_e( 'Create Template', 'wpr-addons' ); ?></span>
             <span class="plus-icon">+</span>
         </div>
-        <?php endif; ?>
 
         <?php Wpr_Templates_Loop::render_elementor_saved_templates(); ?>
 
@@ -255,9 +296,8 @@ function wpr_addons_settings_page() {
 
         </div>
 
-    <?php endif; ?>
+    <?php elseif ( $active_tab == 'wpr_tab_extensions' ) :
 
-    <?php if ( $active_tab == 'wpr_tab_extensions' ) :
         // Extensions
         settings_fields( 'wpr-extension-settings' );
         do_settings_sections( 'wpr-extension-settings' );
@@ -284,6 +324,11 @@ function wpr_addons_settings_page() {
         echo '</div>';
         
         submit_button( '', 'wpr-options-button' );
+
+    elseif ( $active_tab == 'wpr_tab_white_label' ) :
+
+        do_action('wpr_white_label_tab_content');
+
     endif; ?>
 
 </form>
