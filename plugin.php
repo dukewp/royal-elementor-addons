@@ -391,6 +391,14 @@ class Plugin {
 			'2.0',
 			true
 		);
+
+		wp_register_script(
+			'wpr-lottie-animations',
+			WPR_ADDONS_URL . 'assets/js/lib/lottie/lottie.min.js',
+			[],
+			'5.8.0',
+			true
+		);
 	}
 
 	public function enqueue_panel_scripts() {

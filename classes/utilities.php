@@ -52,6 +52,7 @@ class Utilities {
 			'Back to Top' => ['back-to-top', '', ''],
 			'Phone Call' => ['phone-call', '', ''],
 			'Popup Trigger' => ['popup-trigger', '', ''],
+			'Lottie Animations' => ['lottie-animations', '', ''],
 			// 'Author Box' => 'author-box',
 		];
 	}

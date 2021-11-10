@@ -1758,7 +1758,7 @@ class Wpr_Team_Member extends Widget_Base {
 			<?php endif; ?>
 
 			<?php if ( '' !== $settings['member_description'] && 'below' === $settings['member_description_location'] ) : ?>
-				<div class="wpr-member-description"><?php echo esc_html( $settings['member_description'] ); ?></div>
+				<div class="wpr-member-description"><?php echo wp_kses_post( $settings['member_description'] ); ?></div>
 			<?php endif; ?>
 			
 			<?php 
