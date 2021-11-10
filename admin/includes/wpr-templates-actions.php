@@ -208,28 +208,34 @@ class WPR_Templates_Actions {
 	*/
 	public function templates_library_scripts( $hook ) {
 
-		// Deny if NOT Plugin Page
-		if ( 'toplevel_page_wpr-addons' != $hook && !strpos($hook, 'wpr-theme-builder') && !strpos($hook, 'wpr-popups') ) {
-			return;
-		}
-
 		// Get Plugin Version
 		$version = Plugin::instance()->get_version();
 
-		// Color Picker
-		wp_enqueue_style( 'wp-color-picker' );
-	    wp_enqueue_script( 'wp-color-picker-alpha', WPR_ADDONS_URL .'assets/js/admin/wp-color-picker-alpha.min.js', ['jquery', 'wp-color-picker'], $version, true );
+		// Deny if NOT Plugin Page
+		if ( 'toplevel_page_wpr-addons' == $hook || strpos($hook, 'wpr-theme-builder') || strpos($hook, 'wpr-popups') ) {
 
-	    // Media Upload
-		if ( ! did_action( 'wp_enqueue_media' ) ) {
-			wp_enqueue_media();
+			// Color Picker
+			wp_enqueue_style( 'wp-color-picker' );
+		    wp_enqueue_script( 'wp-color-picker-alpha', WPR_ADDONS_URL .'assets/js/admin/wp-color-picker-alpha.min.js', ['jquery', 'wp-color-picker'], $version, true );
+
+		    // Media Upload
+			if ( ! did_action( 'wp_enqueue_media' ) ) {
+				wp_enqueue_media();
+			}
+
+			// enqueue CSS
+			wp_enqueue_style( 'wpr-plugin-options-css', WPR_ADDONS_URL .'assets/css/admin/plugin-options.css', [], $version );
+
+		    // enqueue JS
+		    wp_enqueue_script( 'wpr-plugin-options-js', WPR_ADDONS_URL .'assets/js/admin/plugin-options.js', ['jquery'], $version );
+
 		}
 
-		// enqueue CSS
-		wp_enqueue_style( 'wpr-plugin-options-css', WPR_ADDONS_URL .'assets/css/admin/plugin-options.css', [], $version );
 
-	    // enqueue JS
-	    wp_enqueue_script( 'wpr-plugin-options-js', WPR_ADDONS_URL .'assets/js/admin/plugin-options.js', ['jquery'], $version );
+		if ( strpos($hook, 'wpr-templates-kit') ) {
+			wp_enqueue_style( 'wpr-templates-kit-css', WPR_ADDONS_URL .'assets/css/admin/templates-kit.css', [], $version );
+		    wp_enqueue_script( 'wpr-templates-kit-js', WPR_ADDONS_URL .'assets/js/admin/templates-kit.js', ['jquery'], $version );
+		}
 	}
 }
 
@@ -291,7 +297,7 @@ class WPR_Library_Source extends \Elementor\TemplateLibrary\Source_Base {
 		return wp_remote_retrieve_body( $response );
 	}
 
-	public function get_data( array $args ) {
+	public function get_data( array $args ) {//TODO: FIX - This function imports placeholder images in library
 		$data = $this->request_template_data( $args['template_id'] );
 
 		$data = json_decode( $data, true );
@@ -302,14 +308,6 @@ class WPR_Library_Source extends \Elementor\TemplateLibrary\Source_Base {
 
 		$data['content'] = $this->replace_elements_ids( $data['content'] );
 		$data['content'] = $this->process_export_import_content( $data['content'], 'on_import' );
-
-		// TODO: Find out why EK has this setting. Maybe for page import and document settings?
-		// $post_id = 94;
-		// $document = \Elementor\Plugin::instance()->documents->get( $post_id );
-
-		// if ( $document ) {
-		// 	$data['content'] = $document->get_elements_raw_data( $data['content'], true );
-		// }
 
 		return $data;
 	}
