@@ -1,7 +1,7 @@
 ( function( $ ) {//TODO: manage comments
 
 	"use strict";
-
+	
 	// Make our custom css visible in the panel's front-end
 	elementor.hooks.addFilter( 'editor/style/styleText', function( css, context ) {
 		if ( ! context ) {

@@ -101,6 +101,11 @@ class Plugin {
 			require WPR_ADDONS_PATH . 'extensions/wpr-sticky-section.php';
 		}
 
+		// Sticky Header
+		if ( 'on' === get_option('wpr-reading-progress-bar', 'on') ) {
+			require WPR_ADDONS_PATH . 'extensions/wpr-reading-progress-bar.php';
+		}
+
 		// Custom CSS
 		require WPR_ADDONS_PATH . 'extensions/wpr-custom-css.php';
 
