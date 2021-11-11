@@ -13,7 +13,28 @@ jQuery(document).ready(function( $ ) {
 			$('.wpr-templates-kit-logo').find('.back-btn').on('click', function(){
 				WprTemplatesKit.showTemplatesMainGrid();
 			});
+
+			$('.wpr-templates-kit-single').find('.import-kit').on('click', function(){
+				WprTemplatesKit.importTemplatesKit( $(this).attr('data-kit-id') );
+			});
 			
+		},
+
+		importTemplatesKit: function( kit ) {
+			// AJAX Data
+			var data = {
+				action: 'wpr_import_templates_kit',
+				wpr_templates_kit: kit,
+				wpr_templates_kit_single: false
+			};
+
+			console.log(kit)
+			console.log('import started')
+
+			// Update via AJAX
+			$.post(ajaxurl, data, function(response) {
+				console.log(response);
+			});
 		},
 
 		showTemplatesMainGrid: function() {
@@ -56,8 +77,8 @@ jQuery(document).ready(function( $ ) {
 
 			}
 
-			// Set Kit Id
-
+			// Set Kit ID
+			$('.wpr-templates-kit-single').find('.import-kit').attr('data-kit-id', kit.data('kit-id'));
 
 			// Set Active Template ID by Default
 			WprTemplatesKit.setActiveTemplateID(singleGrid.children().first());
@@ -75,7 +96,7 @@ jQuery(document).ready(function( $ ) {
 			template.addClass('selected-template');
 			var id =  $('.wpr-templates-kit-grid.single-grid').find('.selected-template').data('page-id');
 
-			$('.wpr-templates-kit-single').find('.import-template').attr('data-template', id);
+			$('.wpr-templates-kit-single').find('.import-template').attr('data-template-id', id);
 			$('.wpr-templates-kit-single').find('.import-template span').text(id);
 		},
 
