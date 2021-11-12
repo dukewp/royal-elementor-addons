@@ -97,7 +97,7 @@ function wpr_addons_templates_kit_page() {
 
             <div class="import-template-buttons">
                 <button class="import-kit button"><?php _e('Import Kit', 'wpr-addons'); ?></button>
-                <button class="import-template button"><?php _e('Import "<span></span>" Template', 'wpr-addons'); ?></button>
+                <button class="import-template button"><?php _e('Import <strong></strong> Template', 'wpr-addons'); ?></button>
             </div>
         </footer>
     </div>
@@ -136,7 +136,7 @@ function wpr_import_templates_kit() {
         $local_file_path = download_template( $kit, $file );
 
         // Prepare for Import
-        $wp_import = new WP_Import( $local_file_path, ['fetch_attachments' => true] );
+        $wp_import = new WP_Import( $local_file_path, ['fetch_attachments' => true] );//TODO: BG Image Import Issue
 
         // Import
         ob_start();

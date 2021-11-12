@@ -97,7 +97,7 @@ jQuery(document).ready(function( $ ) {
 			var id =  $('.wpr-templates-kit-grid.single-grid').find('.selected-template').data('page-id');
 
 			$('.wpr-templates-kit-single').find('.import-template').attr('data-template-id', id);
-			$('.wpr-templates-kit-single').find('.import-template span').text(id);
+			$('.wpr-templates-kit-single').find('.import-template strong').text(id);
 		},
 
 	}

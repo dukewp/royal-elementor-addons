@@ -111,7 +111,7 @@ class WPR_Templates_Loop {
 	/**
 	** Render Conditions Popup
 	*/
-	public static function render_conditions_popup() {
+	public static function render_conditions_popup( $hf = false ) {
 	?>
 
     <div class="wpr-condition-popup-wrap wpr-admin-popup-wrap">
@@ -222,10 +222,17 @@ class WPR_Templates_Loop {
             </div>
 
             <?php
-				if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
-					// echo '<span style="color: #7f8b96;"><br>Conditions are fully suppoted in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-conditions-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong></span>';
-					echo '<span style="color: #7f8b96;"><br>Conditions are fully suppoted in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong></span>';
-				}
+
+            // Header Footer Canvas Swicher
+           	if ( $hf ) {
+           		echo '<div>Show this template on Elementor Canvas pages? <input type="checkbox"></div>';
+           	}
+
+           	// Pro Notice
+			if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+				// echo '<span style="color: #7f8b96;"><br>Conditions are fully suppoted in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-conditions-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong></span>';
+				echo '<span style="color: #7f8b96;"><br>Conditions are fully suppoted in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong></span>';
+			}
             ?>
             
             <!-- Action Buttons -->
