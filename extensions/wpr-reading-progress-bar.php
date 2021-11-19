@@ -193,7 +193,6 @@ class Wpr_ReadingProgressBar {
 		$rpb_background_color = 'background-color: ' . $settings['wpr_background_color'] . ' !important;';
 		$rpb_fill_color = 'background-color: ' . $settings['wpr_fill_color'] . '!important;';
 		$rpb_height = 'height: '.$settings['wpr_height']['size'] . $settings['wpr_height']['unit'].';';
-		var_dump($rpb_background_color);
 
     	if ( !empty($settings) && 'yes' === $settings['wpr_rpb_enable'] ) {
     		if ( 'yes' === $settings['wpr_rpb_enable_globally_option']  ) {

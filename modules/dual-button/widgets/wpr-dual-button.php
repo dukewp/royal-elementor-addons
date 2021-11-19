@@ -114,8 +114,8 @@ class Wpr_Dual_Button extends Widget_Base {
 				'dual_button_pro_notice',
 				[
 					'type' => Controls_Manager::RAW_HTML,
-					// 'raw' => '<span style="color:#2a2a2a;">Button Middle Badge(icon) and<br> Custom Button Toolip</span> options are available in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-dual-button-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
-					'raw' => '<span style="color:#2a2a2a;">Button Middle Badge(icon) and<br> Custom Button Toolip</span> options are available in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+					'raw' => '<span style="color:#2a2a2a;">Button Middle Badge(icon) and<br> Custom Button Toolip</span> options are available in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-dual-button-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					// 'raw' => '<span style="color:#2a2a2a;">Button Middle Badge(icon) and<br> Custom Button Toolip</span> options are available in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
 					'content_classes' => 'wpr-pro-notice',
 				]
 			);

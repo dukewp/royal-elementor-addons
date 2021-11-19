@@ -1,9 +1,9 @@
-﻿=== Royal Elementor Addons (Header Footer Builder, Popups, Post Grid, Woocommerce Product Grid, Post Slider/Carousel, Sticky Header, Menu & other Addons for Elementor) ===
+﻿=== Royal Elementor Addons (Header Footer Builder, Popups, Post Grid, Woocommerce Product Grid, Slider, Parallax Image & other Free Addons for Elementor) ===
 Contributors: WP Royal, rubeushagrid13, cyberpinky
 Tags: elementor, elements, widgets for elementor, elementor addons, elementor widget, elementor form, woocommerce elementor, page builder, builder, wordpress page builder
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 Requires at least: 5.0
-Tested up to: 5.8.1
+Tested up to: 5.8.2
 Requires PHP: 5.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -260,6 +260,11 @@ post_max_size 64M
 
 == Changelog ==
 
+= Royal Elementor Addons v1.3.2 - 2021-11-19 =
+* FIX: Elementor Text widget bullet list issue.
+* FIX: Elementor Team member widget description option doesn't accept HTML tags.
+* FIX: Elementor Sharing widget WhatsApp sharing issue.
+
 = Royal Elementor Addons v1.3 - 2021-10-29 =
 * ADDED: Elementor Header and Footer Builder.
 * ADDED: Elementor Popups (Elementor Modal Popups) Builder. Offer Sales Banners, Subscriptions Banners, GDPR Cookie Consent & Compliance Notice, Cookie Notice, Age Verification. With Exit Intent query parameter targeting (only in PRO).
@@ -269,15 +274,15 @@ post_max_size 64M
 * ADDED: Elementor Parallax Multi Layer Effect to the section options.
 * ADDED: Elementor Custom CSS option to the Widgets, Columns and Sections.
 * ADDED: Freemius has been integrated.
-* Fix: Elementor Phone Call Widget has no icon in editor.
-* Fix: Elementor Flip Box front button z-index issue.
+* FIX: Elementor Phone Call Widget has no icon in editor.
+* FIX: Elementor Flip Box front button z-index issue.
 
 = Royal Elementor Addons v1.2 - 2021-09-24 =
-* Fix: Elementor Grid Widget responsive column issues.
-* Fix: Elementor Slider Widget responsive column issues.
-* Fix: Elementor Content Ticker Widget responsive column issues.
-* Fix: Elementor Testimonial Carousel Widget responsive column issues.
-* Fix: Added support for Elementor beta breakpoints.
+* FIX: Elementor Grid Widget responsive column issues.
+* FIX: Elementor Slider Widget responsive column issues.
+* FIX: Elementor Content Ticker Widget responsive column issues.
+* FIX: Elementor Testimonial Carousel Widget responsive column issues.
+* FIX: Added support for Elementor beta breakpoints.
 
 = Royal Elementor Addons v1.0 - 2021-08-14 =
 * Initial Release.

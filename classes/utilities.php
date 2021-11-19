@@ -19,7 +19,7 @@ class Utilities {
 	*/
 	public static function get_registered_modules() {
 		return [
-			'Grid' => ['grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-portfolio-grid'],
+			'Post Grid' => ['grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-portfolio-grid'],
 			'WooCommerce Grid' => ['woo-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-woo-grid'],
 			'Image Grid' => ['media-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-gallery-grid'],
 			'Magazine Grid' => ['magazine-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-magazine-grid'],
@@ -53,7 +53,7 @@ class Utilities {
 			'Phone Call' => ['phone-call', '', ''],
 			'Popup Trigger' => ['popup-trigger', '', ''],
 			// 'Lottie Animations' => ['lottie-animations', '', ''],
-			'Random Image' => ['random-image', '', ''],
+			// 'Random Image' => ['random-image', '', ''],
 			// 'Author Box' => 'author-box',
 		];
 	}
@@ -653,8 +653,8 @@ class Utilities {
 		$module->add_control(
             $option .'_pro_notice',
             [
-				// 'raw' => 'This option is available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-'. $widget .'-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
-				'raw' => 'This option is available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+				'raw' => 'This option is available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-'. $widget .'-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+				// 'raw' => 'This option is available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
 				'type' => $controls_manager,
 				'content_classes' => 'wpr-pro-notice',
 				'condition' => [

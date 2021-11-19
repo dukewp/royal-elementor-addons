@@ -562,7 +562,7 @@ class Wpr_Media_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Not Found Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => 'No Posts Found!',
+				'default' => 'No Images Found!',
 				'condition' => [
 					'query_selection' => 'dynamic',
 				]
@@ -613,8 +613,8 @@ class Wpr_Media_Grid extends Widget_Base {
 				'grid_columns_pro_notice',
 				[
 					'type' => Controls_Manager::RAW_HTML,
-					// 'raw' => '<span style="color:#2a2a2a;">Grid Columns</span> option is fully supported<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-media-grid-pro#purchasepro" target="_blank">Pro version</a></strong>',
-					'raw' => '<span style="color:#2a2a2a;">Grid Columns</span> option is fully supported<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+					'raw' => '<span style="color:#2a2a2a;">Grid Columns</span> option is fully supported<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-media-grid-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					// 'raw' => '<span style="color:#2a2a2a;">Grid Columns</span> option is fully supported<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
 					'content_classes' => 'wpr-pro-notice',
 				]
 			);
@@ -1009,8 +1009,8 @@ class Wpr_Media_Grid extends Widget_Base {
 			$repeater->add_control(
 	            'element_align_pro_notice',
 	            [
-					// 'raw' => 'Vertical Align option is available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-media-grid-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
-					'raw' => 'Vertical Align option is available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+					'raw' => 'Vertical Align option is available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-media-grid-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					// 'raw' => 'Vertical Align option is available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
 					'type' => Controls_Manager::RAW_HTML,
 					'content_classes' => 'wpr-pro-notice',
 					'condition' => [

@@ -123,8 +123,8 @@ class Wpr_Price_List extends Widget_Base {
 				'price_list_pro_notice',
 				[
 					'type' => Controls_Manager::RAW_HTML,
-					// 'raw' => '<span style="color:#2a2a2a;">Custom Image, Image Position and Custom Link</span> options are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-price-list-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
-					'raw' => '<span style="color:#2a2a2a;">Custom Image, Image Position and Custom Link</span> options are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+					'raw' => '<span style="color:#2a2a2a;">Custom Image, Image Position and Custom Link</span> options are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-price-list-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					// 'raw' => '<span style="color:#2a2a2a;">Custom Image, Image Position and Custom Link</span> options are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
 					'content_classes' => 'wpr-pro-notice',
 				]
 			);
