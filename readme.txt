@@ -1,7 +1,7 @@
 ﻿=== Royal Elementor Addons (Header Footer Builder, Popups, Post Grid, Woocommerce Product Grid, Slider, Parallax Image & other Free Addons for Elementor) ===
-Contributors: WP Royal, rubeushagrid13, cyberpinky
+Contributors: WP Royal, rubeushagrid13, cyberpinky, elementoraddonswpr
 Tags: elementor, elements, widgets for elementor, elementor addons, elementor widget, elementor form, woocommerce elementor, page builder, builder, wordpress page builder
-Stable tag: 1.3.2
+Stable tag: 1.3.21
 Requires at least: 5.0
 Tested up to: 5.8.2
 Requires PHP: 5.6
@@ -67,6 +67,8 @@ Comes with 30 unique, creative and self-intuitive widgets to take your WordPress
 - Parallax Scrolling 
 - Parallax Multi-Layer Effect 
 - Particle Effect
+- White Label Branding (Change Plugin Name, Description, Developer / Agency, Website URL, Menu Label
+and other custom branding related settings)
 - Sticky Section (Can be used for creating Sticky Header / Menu)
 - Custom CSS
 
@@ -259,6 +261,10 @@ memory_limit 256M or more
 post_max_size 64M
 
 == Changelog ==
+
+= Royal Elementor Addons v1.3.21 - 2021-11-22 =
+* FIX: Fixed Minor Bugs.
+* ADDED: White Label Branding (Supported in PRO verison)
 
 = Royal Elementor Addons v1.3.2 - 2021-11-19 =
 * FIX: Elementor Text widget bullet list issue.

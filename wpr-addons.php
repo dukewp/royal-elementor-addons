@@ -4,7 +4,7 @@
  * Description: The only plugin you need for Elementor page builder.
  * Plugin URI: https://royal-elementor-addons.com/
  * Author: WP Royal
- * Version: 1.3.2
+ * Version: 1.3.21
  * License: GPLv3
  * Author URI: https://royal-elementor-addons.com/
  * Elementor tested up to: 3.4.6
