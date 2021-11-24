@@ -223,17 +223,12 @@ class WPR_Templates_Loop {
             </div>
 
 			<div class="wpr-canvas-condition wpr-setting-custom-ckbox">
-				<span><?php esc_html_e( 'Show this template on canvas pages', 'wpr-addons' ); ?></span>
+				<span><?php esc_html_e( 'Show this template on Elementor Canvas pages', 'wpr-addons' ); ?></span>
             	<input type="checkbox" name="wpr-show-on-canvas" id="wpr-show-on-canvas">
             	<label for="wpr-show-on-canvas"></label>
             </div>
 
             <?php
-
-            // Header Footer Canvas Swicher
-           	if ( $hf ) {
-           		echo '<div>Show this template on Elementor Canvas pages? <input type="checkbox"></div>';
-           	}
 
            	// Pro Notice
 			if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
