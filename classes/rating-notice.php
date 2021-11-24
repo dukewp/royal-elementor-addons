@@ -19,7 +19,7 @@ class WprRatingNotice {
             }
         }
 
-        if ( $pagenow == 'plugins.php' || $pagenow == 'index.php' || $pagenow == 'edit.php') {
+        if ( is_admin() ) {
             add_action( 'admin_head', [$this, 'enqueue_scripts' ] );
         }
 
@@ -52,7 +52,7 @@ class WprRatingNotice {
     public function render_rating_notice() {
         global $pagenow;
 
-        if ( $pagenow == 'plugins.php' || $pagenow == 'index.php' ) {
+        if ( is_admin() ) {
             $plugin_info = get_plugin_data( __FILE__ , true, true );
             $dont_disturb = esc_url( get_admin_url() . '?spare_me=1' );
 

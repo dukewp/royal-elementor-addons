@@ -60,7 +60,7 @@ function wpr_register_addons_settings() {
     register_setting('wpr-extension-settings', 'wpr-parallax-background');
     register_setting('wpr-extension-settings', 'wpr-parallax-multi-layer');
     register_setting('wpr-extension-settings', 'wpr-sticky-section');
-    register_setting('wpr-extension-settings', 'wpr-reading-progress-bar');
+    // register_setting('wpr-extension-settings', 'wpr-reading-progress-bar');
 
     // Element Toggle
     foreach ( Utilities::get_registered_modules() as $title => $data ) {
@@ -317,6 +317,7 @@ function wpr_addons_settings_page() {
                     echo '<h3>' . $option_title . '</h3>';
                     echo '<input type="checkbox" name="'. $option_name .'" id="'. $option_name .'" '. checked( get_option(''. $option_name .'', 'on'), 'on', false ) .'>';
                     echo '<label for="'. $option_name .'"></label>';
+                    // echo '<a href="https://royal-elementor-addons.com/elementor-particle-effects/?ref=rea-plugin-backend-extentions-prev">'. esc_html('View Extension Demo', 'wpr-addons') .'</a>';
                 echo '</div>';
             echo '</div>';
         }

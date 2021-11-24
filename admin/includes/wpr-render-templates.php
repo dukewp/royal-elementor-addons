@@ -63,6 +63,10 @@ class WPR_Render_Templates {
 			add_action( 'get_footer', [ $this, 'replace_footer' ] );
 		}
 
+		add_action( 'elementor/page_templates/canvas/before_content', [ $this, 'add_canvas_header' ] );
+
+		add_action( 'elementor/page_templates/canvas/after_content', [ $this, 'add_canvas_footer' ], 9 );
+
 		// Canvas Page Content
 		// add_action( 'elementor/page_templates/canvas/before_content', [ $this, 'replace_header' ] );
 
@@ -103,6 +107,19 @@ class WPR_Render_Templates {
         }
     }
 
+    public function add_canvas_header() {
+    	if ( $this->is_template_available('header') ) {
+	    	$conditions = json_decode( get_option('wpr_header_conditions', '[]'), true );
+			$template_slug = WPR_Conditions_Manager::header_footer_display_conditions($conditions);
+			$template_id = Utilities::get_template_id($template_slug);
+			$show_on_canvas = get_post_meta($template_id, 'wpr_header_show_on_canvas', true);
+
+			if ( !empty($show_on_canvas) && 'true' === $show_on_canvas && 0 === strpos($template_slug, 'user-header-') ) {
+				Utilities::render_elementor_template($template_slug);
+			}
+		}
+    }
+
 	/**
 	** Footer
 	*/
@@ -124,6 +141,19 @@ class WPR_Render_Templates {
 			ob_get_clean();
         }
 	}
+
+    public function add_canvas_footer() {
+    	if ( $this->is_template_available('footer') ) {
+	    	$conditions = json_decode( get_option('wpr_footer_conditions', '[]'), true );
+			$template_slug = WPR_Conditions_Manager::header_footer_display_conditions($conditions);
+			$template_id = Utilities::get_template_id($template_slug);
+			$show_on_canvas = get_post_meta($template_id, 'wpr_footer_show_on_canvas', true);
+
+			if ( !empty($show_on_canvas) && 'true' === $show_on_canvas && 0 === strpos($template_slug, 'user-footer-') ) {
+				Utilities::render_elementor_template($template_slug);
+			}
+		}
+    }
 
 	/**
 	** Theme Builder Content Display

@@ -253,8 +253,8 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		$this->add_control(
             'slider_section_pro_notice',
             [
-				// 'raw' => 'Tiled Post Slider is available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-magazine-grid-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
-				'raw' => 'Tiled Post Slider is available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+				'raw' => 'Tiled Post Slider is available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-magazine-grid-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+				// 'raw' => 'Tiled Post Slider is available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
 				'type' => Controls_Manager::RAW_HTML,
 				'content_classes' => 'wpr-pro-notice',
 			]
@@ -565,8 +565,8 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			$this->add_control(
 	            'layout_select_pro_notice',
 	            [
-					// 'raw' => 'This Layout options are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-magazine-grid-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
-					'raw' => 'This Layout options are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+					'raw' => 'This Layout options are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-magazine-grid-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					// 'raw' => 'This Layout options are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
 					'type' => Controls_Manager::RAW_HTML,
 					'content_classes' => 'wpr-pro-notice',
 					'condition' => [
@@ -774,8 +774,8 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			$repeater->add_control(
 	            'element_align_pro_notice',
 	            [
-					// 'raw' => 'Vertical Align option is available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-magazine-grid-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
-					'raw' => 'Vertical Align option is available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+					'raw' => 'Vertical Align option is available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-magazine-grid-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					// 'raw' => 'Vertical Align option is available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
 					'type' => Controls_Manager::RAW_HTML,
 					'content_classes' => 'wpr-pro-notice',
 				]
@@ -5062,9 +5062,11 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 	// Render Post Read More
 	public function render_post_read_more( $settings, $class ) {
+		$read_more_animation = ! defined('WPR_ADDONS_PRO_LICENSE') ? 'wpr-button-none' : $this->get_settings()['read_more_animation'];
+
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo '<a href="'. esc_url( get_the_permalink() ) .'" class="wpr-button-effect '. $this->get_settings()['read_more_animation'] .'">';
+				echo '<a href="'. esc_url( get_the_permalink() ) .'" class="wpr-button-effect '. $read_more_animation .'">';
 
 				// Icon: Before
 				if ( 'before' === $settings['element_extra_icon_pos'] ) {

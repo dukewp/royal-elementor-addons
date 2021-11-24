@@ -241,11 +241,6 @@ class WPR_Templates_Data {
 
 	public static function get_available_popups() {
 		return [
-			// 'contact' => [
-			// 	'v1' => ['type' => 'iframe', 'url' => 'search/v1/'],
-			// 	'v2' => ['type' => 'iframe', 'url' => 'search/v2/'],
-			// 	'v3' => ['type' => 'iframe', 'url' => 'search/v3/'],
-			// ],
 			'cookie' => [
 				'v1' => ['type' => 'image', 'url' => 'popups/cookie/v1-preview.jpg'],
 				'v2-pro' => ['type' => 'image', 'url' => 'popups/cookie/v2-pro-preview.jpg'],
@@ -254,10 +249,10 @@ class WPR_Templates_Data {
 			],
 			'discount' => [
 				'v1' => ['type' => 'image', 'url' => 'popups/discount/v1-preview.jpg'],
-				'v2-pro' => ['type' => 'image', 'url' => 'popups/discount/v2-pro-preview.jpg'],
+				'v2' => ['type' => 'image', 'url' => 'popups/discount/v2-preview.jpg'],
 				'v3-pro' => ['type' => 'image', 'url' => 'popups/discount/v3-pro-preview.jpg'],
 				'v4-pro' => ['type' => 'image', 'url' => 'popups/discount/v4-pro-preview.jpg'],
-				'v5-pro' => ['type' => 'image', 'url' => 'popups/discount/v5-pro-preview.jpg'],
+				'v5' => ['type' => 'image', 'url' => 'popups/discount/v5-preview.jpg'],
 				'v6' => ['type' => 'image', 'url' => 'popups/discount/v6-preview.jpg'],
 				'v7-pro' => ['type' => 'image', 'url' => 'popups/discount/v7-pro-preview.jpg'],
 				'v8-pro' => ['type' => 'image', 'url' => 'popups/discount/v8-pro-preview.jpg'],

@@ -280,6 +280,9 @@ jQuery(document).ready(function( $ ) {
 			// Reset
 			$('.wpr-conditions').last().find('input').hide();//tmp -maybe remove
 
+			// Show on Canvas
+			$('.wpr-canvas-condition').show();
+
 			// Run Functions
 			popupDeleteConditions();
 			popupMainConditionSelect();
@@ -324,6 +327,15 @@ jQuery(document).ready(function( $ ) {
 				});
 			}
 		}
+
+		// Set Show on Canvas Switcher value
+		var conditionsBtn = $('.wpr-template-conditions[data-slug='+ template +']');
+
+		if ( 'true' === conditionsBtn.attr('data-show-on-canvas') ) {
+			$('.wpr-canvas-condition').find('input[type=checkbox]').attr('checked', 'checked');
+		} else {
+			$('.wpr-canvas-condition').find('input[type=checkbox]').removeAttr('checked');
+		}
 	}
 
 
@@ -336,6 +348,7 @@ jQuery(document).ready(function( $ ) {
 		popupSetConditions(template);
 		popupMainConditionSelect();
 		popupSubConditionSelect();
+		showOnCanvasSwitcher();
 		popupDeleteConditions();
 
 		// Conditions Wrap
@@ -352,6 +365,13 @@ jQuery(document).ready(function( $ ) {
 
 		// Add Current Filter Class
 		$('.wpr-conditions-wrap').addClass( $('.template-filters .active-filter').attr('data-class') );
+
+		// Show on Canvas
+		if ( $('.wpr-conditions').length ) {
+			$('.wpr-canvas-condition').show();
+		} else {
+			$('.wpr-canvas-condition').hide();
+		}
 
 		// Open Popup
 		conditionPupup.fadeIn();
@@ -373,6 +393,11 @@ jQuery(document).ready(function( $ ) {
 			// Remove Conditions
 			current.fadeOut( 500, function() {
 				$(this).remove();
+
+				// Show on Canvas
+				if ( 0 === $('.wpr-conditions').length ) {
+					$('.wpr-canvas-condition').hide();
+				}
 			});
 
 		});
@@ -410,6 +435,13 @@ jQuery(document).ready(function( $ ) {
 			} else {
 				current.find(inputIDs).hide();
 			}
+		});
+	}
+
+	// Show on Canvas Switcher
+	function showOnCanvasSwitcher() {
+		$('.wpr-canvas-condition input[type=checkbox]').on('change', function() {
+			$('.wpr-template-conditions[data-slug='+ $('.wpr-save-conditions').attr('data-slug') +']').attr('data-show-on-canvas', $(this).prop('checked'));
 		});
 	}
 
@@ -530,6 +562,10 @@ jQuery(document).ready(function( $ ) {
 				template: template
 			};
 			data['wpr_'+ currentTab +'_conditions'] = JSON.stringify(conditions);
+
+			if ( $('#wpr-show-on-canvas').length ) {
+				data['wpr_'+ currentTab +'_show_on_canvas'] = $('#wpr-show-on-canvas').prop('checked');
+			}
 
 			// Save Conditions
 			$.post(ajaxurl, data, function(response) {

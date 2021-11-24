@@ -86,8 +86,8 @@ class Wpr_OnepageNav extends Widget_Base {
 				'opnepage_pro_notice',
 				[
 					'type' => Controls_Manager::RAW_HTML,
-					// 'raw' => '<span style="color:#2a2a2a;">Custom Icon Color, Item Tooltip, Highlight Active Menu Item and Scroll Speed</span> options are available in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-onepage-nav-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
-					'raw' => '<span style="color:#2a2a2a;">Custom Icon Color, Item Tooltip, Highlight Active Menu Item and Scroll Speed</span> options are available in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+					'raw' => '<span style="color:#2a2a2a;">Custom Icon Color, Item Tooltip, Highlight Active Menu Item and Scroll Speed</span> options are available in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-onepage-nav-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					// 'raw' => '<span style="color:#2a2a2a;">Custom Icon Color, Item Tooltip, Highlight Active Menu Item and Scroll Speed</span> options are available in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
 					'content_classes' => 'wpr-pro-notice',
 				]
 			);
