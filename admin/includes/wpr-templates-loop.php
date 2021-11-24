@@ -40,13 +40,14 @@ class WPR_Templates_Loop {
 				foreach ( $user_templates as $user_template ) {
 					$slug = $user_template->post_name;
 					$edit_url = str_replace( 'edit', 'elementor', get_edit_post_link( $user_template->ID ) );
+					$show_on_canvas = get_post_meta(Utilities::get_template_id($slug), 'wpr_header_show_on_canvas', true);
 
 					echo '<li>';
 				        echo '<h3 class="wpr-title">'. esc_html($user_template->post_title) .'</h3>';
 
 				        echo '<div class="wpr-action-buttons">';
 							// Activate
-							echo '<span class="wpr-template-conditions button button-primary" data-slug="'. esc_attr($slug) .'">'. esc_html__( 'Manage Conditions', 'wpr-addons' ) .'</span>';
+							echo '<span class="wpr-template-conditions button button-primary" data-slug="'. esc_attr($slug) .'" data-show-on-canvas="'. esc_attr($show_on_canvas) .'">'. esc_html__( 'Manage Conditions', 'wpr-addons' ) .'</span>';
 							// Edit
 							echo '<a href="'. esc_url($edit_url) .'" class="wpr-edit-template button button-primary">'. esc_html__( 'Edit Template', 'wpr-addons' ) .'</a>';
 							// Delete
@@ -219,6 +220,12 @@ class WPR_Templates_Loop {
 	                	
 	                <?php endif; ?>
                 </div>
+            </div>
+
+			<div class="wpr-canvas-condition wpr-setting-custom-ckbox">
+				<span><?php esc_html_e( 'Show this template on canvas pages', 'wpr-addons' ); ?></span>
+            	<input type="checkbox" name="wpr-show-on-canvas" id="wpr-show-on-canvas">
+            	<label for="wpr-show-on-canvas"></label>
             </div>
 
             <?php

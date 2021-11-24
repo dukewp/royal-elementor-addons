@@ -5062,9 +5062,11 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 	// Render Post Read More
 	public function render_post_read_more( $settings, $class ) {
+		$read_more_animation = ! defined('WPR_ADDONS_PRO_LICENSE') ? 'wpr-button-none' : $this->get_settings()['read_more_animation'];
+
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo '<a href="'. esc_url( get_the_permalink() ) .'" class="wpr-button-effect '. $this->get_settings()['read_more_animation'] .'">';
+				echo '<a href="'. esc_url( get_the_permalink() ) .'" class="wpr-button-effect '. $read_more_animation .'">';
 
 				// Icon: Before
 				if ( 'before' === $settings['element_extra_icon_pos'] ) {

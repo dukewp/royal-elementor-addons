@@ -7192,7 +7192,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			$product->supports( 'ajax_add_to_cart' ) ? 'ajax_add_to_cart' : '',
 		] ) );
 
-		$add_to_cart_animation = ! defined('WPR_ADDONS_PRO_LICENSE') ? 'none' : $this->get_settings()['add_to_cart_animation'];
+		$add_to_cart_animation = ! defined('WPR_ADDONS_PRO_LICENSE') ? 'wpr-button-none' : $this->get_settings()['add_to_cart_animation'];
 
 		$attributes = [
 			'rel="nofollow"',

@@ -4,6 +4,7 @@ namespace WprAddons\Admin\Includes;
 use WprAddons\Plugin;
 use Elementor\TemplateLibrary\Source_Base;
 use Elementor\Core\Common\Modules\Ajax\Module as Ajax;
+use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -47,11 +48,19 @@ class WPR_Templates_Actions {
 		// Header
 		if ( isset($_POST['wpr_header_conditions']) ) {
 			update_option( 'wpr_header_conditions', $this->sanitize_conditions($_POST['wpr_header_conditions']) );
+
+			if ( isset($_POST['wpr_header_show_on_canvas']) ) {
+				update_post_meta( Utilities::get_template_id($_POST['template']), 'wpr_header_show_on_canvas', $_POST['wpr_header_show_on_canvas'] );
+			}
 		}
 
 		// Footer
 		if ( isset($_POST['wpr_footer_conditions']) ) {
 			update_option( 'wpr_footer_conditions', $this->sanitize_conditions($_POST['wpr_footer_conditions']) );
+
+			if ( isset($_POST['wpr_footer_show_on_canvas']) ) {
+				update_post_meta( Utilities::get_template_id($_POST['template']), 'wpr_footer_show_on_canvas', $_POST['wpr_footer_show_on_canvas'] );
+			}
 		}
 
 		// Archive

@@ -7904,7 +7904,7 @@ class Wpr_Grid extends Widget_Base {
 
 	// Render Post Read More
 	public function render_post_read_more( $settings, $class ) {
-		$read_more_animation = ! defined('WPR_ADDONS_PRO_LICENSE') ? 'none' : $this->get_settings()['read_more_animation'];
+		$read_more_animation = ! defined('WPR_ADDONS_PRO_LICENSE') ? 'wpr-button-none' : $this->get_settings()['read_more_animation'];
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
