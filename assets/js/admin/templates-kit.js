@@ -21,19 +21,33 @@ jQuery(document).ready(function( $ ) {
 		},
 
 		importTemplatesKit: function( kit ) {
-			// AJAX Data
-			var data = {
-				action: 'wpr_import_templates_kit',
-				wpr_templates_kit: kit,
-				wpr_templates_kit_single: false
-			};
-
 			console.log(kit)
 			console.log('import started')
 
 			// Update via AJAX
-			$.post(ajaxurl, data, function(response) {
-				console.log(response);
+			$.ajax({
+				type: 'POST',
+				url: ajaxurl,
+				data: {
+					action: 'wpr_import_templates_kit',
+					wpr_templates_kit: kit,
+					wpr_templates_kit_single: false
+				},
+				success: function( response ) {
+					console.log('Import Finished!');
+
+					// Fix Elementor Images
+					$.ajax({
+						type: 'POST',
+						url: ajaxurl,
+						data: {
+							action: 'wpr_fix_elementor_images'
+						},
+						success: function( response ) {
+							console.log('Elementor Images Fixed');
+						}
+					});
+				}
 			});
 		},
 

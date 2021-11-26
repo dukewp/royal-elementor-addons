@@ -11,6 +11,17 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  * @since 1.0
  */
 class WPR_Templates_Data {
+	public static function get_available_kits() {
+		return [
+			'cybersecurity' => [
+				'v1' => ['pages' => 'home,about,services,pricing,contact,', ],
+			],
+			'cryptocurrency' => [
+				'v1' => ['pages' => 'home,about,services,token-sale,pricing,contact,', ],
+			],
+		];
+	}
+
 	public static function get_available_blocks() {
 		return [
 			'grid' => [

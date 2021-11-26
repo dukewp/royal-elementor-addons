@@ -2,7 +2,9 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
+use WprAddons\Admin\Templates\WPR_Templates_Data;
 use WprAddons\Classes\Utilities;
+use Elementor\Plugin;
 
 // Register Menus
 function wpr_addons_add_templates_kit_menu() {
@@ -12,6 +14,7 @@ add_action( 'admin_menu', 'wpr_addons_add_templates_kit_menu' );
 
 // Import Template Kit
 add_action( 'wp_ajax_wpr_import_templates_kit', 'wpr_import_templates_kit' );
+add_action( 'wp_ajax_wpr_fix_elementor_images', 'wpr_fix_elementor_images' );
 
 
 /**
@@ -42,51 +45,27 @@ function wpr_addons_templates_kit_page() {
     </header>
 
     <div class="wpr-templates-kit-grid main-grid">
-        <div class="grid-item" data-pages="home,about,services,contact," data-kit-id="food-restaurant">
-            <div class="image-wrap">
-                <img src="<?php echo WPR_ADDONS_ASSETS_URL .'img/tmp/1.jpg'; ?>" alt="">
-                <div class="image-overlay"><span class="dashicons dashicons-search"></span></div>
-            </div>
-            <footer>
-                <h3>Food Restaurant</h3>
-            </footer>
-        </div>
-        <div class="grid-item" data-pages="home," data-kit-id="main-demo">
-            <div class="image-wrap">
-                <img src="<?php echo WPR_ADDONS_ASSETS_URL .'img/tmp/2.jpg'; ?>" alt="">
-                <div class="image-overlay"><span class="dashicons dashicons-search"></span></div>
-            </div>
-            <footer>
-                <h3>Main Demo</h3>
-            </footer>
-        </div>
-        <div class="grid-item">
-            <div class="image-wrap">
-                <img src="<?php echo WPR_ADDONS_ASSETS_URL .'img/tmp/3.jpg'; ?>" alt="">
-                <div class="image-overlay"><span class="dashicons dashicons-search"></span></div>
-            </div>
-            <footer>
-                <h3>Black Site</h3>
-            </footer>
-        </div>
-        <div class="grid-item">
-            <div class="image-wrap">
-                <img src="<?php echo WPR_ADDONS_ASSETS_URL .'img/tmp/4.jpg'; ?>" alt="">
-                <div class="image-overlay"><span class="dashicons dashicons-search"></span></div>
-            </div>
-            <footer>
-                <h3>Surfing Style</h3>
-            </footer>
-        </div>
-        <div class="grid-item">
-            <div class="image-wrap">
-                <img src="<?php echo WPR_ADDONS_ASSETS_URL .'img/tmp/1.jpg'; ?>" alt="">
-                <div class="image-overlay"><span class="dashicons dashicons-search"></span></div>
-            </div>
-            <footer>
-                <h3>Food Restaurant</h3>
-            </footer>
-        </div>
+        <?php
+            $kits = WPR_Templates_Data::get_available_kits();
+
+            foreach ($kits as $slug => $kit) {
+                foreach ($kit as $version => $data ) {
+                   $kit_id = $slug .'-'. $version;
+                   $kit_title = ucfirst($slug) .' '. ucfirst($version);
+
+                    echo '<div class="grid-item" data-pages="'. $data['pages'] .'" data-kit-id="'. $kit_id .'">';
+                        echo '<div class="image-wrap">';
+                            echo '<img src="'. WPR_ADDONS_ASSETS_URL .'img/tmp/'. $kit_id .'.png">';
+                            echo '<div class="image-overlay"><span class="dashicons dashicons-search"></span></div>';
+                        echo '</div>';
+                        echo '<footer>';
+                            echo '<h3>'. $kit_title .'</h3>';
+                        echo '</footer>';
+                    echo '</div>';
+                }
+            }
+        ?>
+
     </div>
 
     <div class="wpr-templates-kit-single">
@@ -132,11 +111,14 @@ function wpr_import_templates_kit() {
         $kit = sanitize_file_name($_POST['wpr_templates_kit']);
         $file = rest_sanitize_boolean($_POST['wpr_templates_kit_single']);
 
+        // Tmp
+        update_option( 'wpr-import-kit-id', $kit );
+
         // Download Import File
         $local_file_path = download_template( $kit, $file );
 
         // Prepare for Import
-        $wp_import = new WP_Import( $local_file_path, ['fetch_attachments' => true] );//TODO: BG Image Import Issue
+        $wp_import = new WP_Import( $local_file_path, ['fetch_attachments' => true] );
 
         // Import
         ob_start();
@@ -159,6 +141,7 @@ function download_template( $kit, $file ) {
     $file = ! $file ? 'main' : $file;
 
     // Remote and Local Files
+    // $remote_file_url = 'https://royal-elementor-addons.com/library/templates-kit/'. $kit .'/wxr.xml';//astra
     $remote_file_url = 'https://royal-elementor-addons.com/library/templates-kit/'. $kit .'/'. $file .'.xml';
     $local_file_path = WPR_ADDONS_PATH .'admin/import/tmp.xml';
 
@@ -169,4 +152,34 @@ function download_template( $kit, $file ) {
     copy( $remote_file_url, $local_file_path );
 
     return $local_file_path;
+}
+
+/**
+** // Fix Elementor Images
+*/
+function wpr_fix_elementor_images() {
+    $pages = get_pages([ 'meta_key' => '_elementor_version' ]);
+
+    foreach ($pages as $key => $page) {
+        $data = get_post_meta( $page->ID, '_elementor_data', true );
+
+        if ( ! empty( $data ) ) {
+            $site_url      = get_site_url();
+            $site_url      = str_replace( '/', '\/', $site_url );
+            // $demo_site_url = 'https:' . '//illarithmetic.tastewp.com';
+            $demo_site_url = 'https://staging-demosites.kinsta.cloud/' . get_option('wpr-import-kit-id');
+            $demo_site_url = str_replace( '/', '\/', $demo_site_url );
+            $data          = preg_replace('/\\\{1}\/sites\\\{1}\/\d/', '', $data);
+            $data          = str_replace( $demo_site_url, $site_url, $data );
+            $data          = json_decode( $data, true );
+        }
+
+        update_metadata( 'post', $page->ID, '_elementor_data', $data );
+    }
+
+    // Clear Elementor Cache
+    Plugin::$instance->files_manager->clear_cache();
+
+    // Clear DB
+    delete_option('wpr-import-kit-id');
 }
