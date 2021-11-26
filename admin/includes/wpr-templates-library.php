@@ -117,11 +117,9 @@ class WPR_Templates_Library {
 
 		$cpt_support = get_option( 'elementor_cpt_support' );
 		
-		// if ( ! $cpt_support || in_array( 'wpr_templates', $cpt_support ) ) {
-		//     update_option( 'elementor_cpt_support', ['post', 'page', 'wpr_templates'] );
-		// } // TODO: Maybe this is needed? disables woocommercce products checkbox
-
-		if ( ! in_array( 'wpr_templates', $cpt_support ) ) {
+		if ( ! $cpt_support || in_array( 'wpr_templates', $cpt_support ) ) {
+		    update_option( 'elementor_cpt_support', ['post', 'page', 'wpr_templates'] );
+		} else if ( ! in_array( 'wpr_templates', $cpt_support ) ) {
 		    $cpt_support[] = 'wpr_templates';
 		    update_option( 'elementor_cpt_support', $cpt_support );
 		}
