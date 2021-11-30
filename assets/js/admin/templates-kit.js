@@ -3,6 +3,8 @@ jQuery(document).ready(function( $ ) {
 
 	var WprTemplatesKit = {
 
+		requiredPlugins: false,
+
 		init: function() {
 
 			$('.wpr-templates-kit-grid').find('.image-overlay').on('click', function(){
@@ -16,39 +18,127 @@ jQuery(document).ready(function( $ ) {
 
 			$('.wpr-templates-kit-single').find('.import-kit').on('click', function(){
 				WprTemplatesKit.importTemplatesKit( $(this).attr('data-kit-id') );
+				$('.wpr-import-kit-popup-wrap').fadeIn();
 			});
-			
+
+			$('.wpr-import-kit-popup-wrap .close-btn').on('click', function(){
+				$('.wpr-import-kit-popup-wrap').fadeOut();
+			});
+
 		},
 
-		importTemplatesKit: function( kit ) {
-			console.log(kit)
-			console.log('import started')
+		installRequiredPlugins: function( kitID ) {
+			var kit = $('.grid-item[data-kit-id="'+ kitID +'"]');
+				WprTemplatesKit.requiredPlugins = kit.data('plugins') !== undefined ? kit.data('plugins') : false;
 
-			// Update via AJAX
-			$.ajax({
-				type: 'POST',
-				url: ajaxurl,
-				data: {
-					action: 'wpr_import_templates_kit',
-					wpr_templates_kit: kit,
-					wpr_templates_kit_single: false
-				},
-				success: function( response ) {
-					console.log('Import Finished!');
+			// Install Plugins
+			if ( WprTemplatesKit.requiredPlugins ) {
+				if ( 'contact-form-7' in WprTemplatesKit.requiredPlugins ) {
+					WprTemplatesKit.installPluginViaAjax('contact-form-7');
+				}
 
-					// Fix Elementor Images
+				if ( 'ashe-extra' in WprTemplatesKit.requiredPlugins ) {
+					WprTemplatesKit.installPluginViaAjax('ashe-extra');
+				}
+			}
+
+		},
+
+		installPluginViaAjax: function( slug ) {
+            wp.updates.installPlugin({
+                slug: slug,
+                success: function() {
+			        $.post(
+			            ajaxurl,
+			            {
+			                action: 'wpr_install_reuired_plugins',
+			                plugin: slug,
+			            }
+			        );
+			        WprTemplatesKit.requiredPlugins[slug] = true;
+                },
+                error: function( xhr, ajaxOptions, thrownerror ) {
+                    console.log(xhr.errorCode)
+                    if ( 'folder_exists' === xhr.errorCode ) {
+				        $.post(
+				            ajaxurl,
+				            {
+				                action: 'wpr_install_reuired_plugins',
+				                plugin: slug,
+				            }
+				        );
+				        WprTemplatesKit.requiredPlugins[slug] = true;
+                    }
+                },
+            });
+		},
+
+		importTemplatesKit: function( kitID ) {
+			console.log('Installing Plugins...');
+			WprTemplatesKit.importProgressBar('plugins');
+			WprTemplatesKit.installRequiredPlugins( kitID );
+
+	        var installPlugins = setInterval(function() {
+
+	        	if ( Object.values(WprTemplatesKit.requiredPlugins).every(Boolean) ) {
+					console.log('Importing Kit: '+ kitID +'...');
+					WprTemplatesKit.importProgressBar('content');
+
+					// Import Kit
 					$.ajax({
 						type: 'POST',
 						url: ajaxurl,
 						data: {
-							action: 'wpr_fix_elementor_images'
+							action: 'wpr_import_templates_kit',
+							wpr_templates_kit: kitID,
+							wpr_templates_kit_single: false
 						},
 						success: function( response ) {
-							console.log('Elementor Images Fixed');
+							console.log('Fixing Elementor Images...');
+							WprTemplatesKit.importProgressBar('elementor');
+
+							// Fix Elementor Images
+							$.ajax({
+								type: 'POST',
+								url: ajaxurl,
+								data: {
+									action: 'wpr_fix_elementor_images'
+								},
+								success: function( response ) {
+									setTimeout(function(){
+										console.log('Import Finished!');
+										WprTemplatesKit.importProgressBar('finish');
+									}, 1000 );
+								}
+							});
 						}
 					});
-				}
-			});
+
+	        		// Clear
+	        		clearInterval( installPlugins );
+	        	}
+	        }, 1000);
+		},
+
+		importProgressBar: function( step ) {
+			if ( 'plugins' === step ) {
+				$('.wpr-import-kit-popup .progress-wrap strong').text('Step 1: Installing/Activating Plugins...');
+			} else if ( 'content' === step ) {
+				$('.wpr-import-kit-popup .progress-bar').animate({'width' : '33%'}, 500);
+				$('.wpr-import-kit-popup .progress-wrap strong').text('Step 2: Importing Demo Content...');
+			} else if ( 'elementor' === step ) {
+				$('.wpr-import-kit-popup .progress-bar').animate({'width' : '66%'}, 500);
+				$('.wpr-import-kit-popup .progress-wrap strong').text('Step 3: Importing Settings...');
+			} else if ( 'finish' === step ) {
+				var href = window.location.href,
+					index = href.indexOf('/wp-admin'),
+					homeUrl = href.substring(0, index);
+
+				$('.wpr-import-kit-popup .progress-bar').animate({'width' : '100%'}, 500);
+				$('.wpr-import-kit-popup .progress-wrap strong').html('Step 4: Import Finished - <a href="'+ homeUrl +'" target="_blank">Visit Site</a>');
+				$('.wpr-import-kit-popup header h3').text('Import was Successfull!');
+				$('.wpr-import-kit-popup-wrap .close-btn').show();
+			}
 		},
 
 		showTemplatesMainGrid: function() {
@@ -56,6 +146,7 @@ jQuery(document).ready(function( $ ) {
 			$('.wpr-templates-kit-single').hide();
 			$('.wpr-templates-kit-grid.main-grid').show();
 			$('.wpr-templates-kit-filters').show();
+			$('.wpr-templates-kit-logo').find('.back-btn').css('display', 'none');
 		},
 
 		showImportPage: function() {
@@ -108,7 +199,7 @@ jQuery(document).ready(function( $ ) {
 			
 			// Set
 			template.addClass('selected-template');
-			var id =  $('.wpr-templates-kit-grid.single-grid').find('.selected-template').data('page-id');
+			var id = $('.wpr-templates-kit-grid.single-grid').find('.selected-template').data('page-id');
 
 			$('.wpr-templates-kit-single').find('.import-template').attr('data-template-id', id);
 			$('.wpr-templates-kit-single').find('.import-template strong').text(id);

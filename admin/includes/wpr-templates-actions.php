@@ -168,6 +168,8 @@ class WPR_Templates_Actions {
 
 		if ( strpos($hook, 'wpr-templates-kit') ) {
 			wp_enqueue_style( 'wpr-templates-kit-css', WPR_ADDONS_URL .'assets/css/admin/templates-kit.css', [], $version );
+			
+			wp_enqueue_script( 'updates' );
 		    wp_enqueue_script( 'wpr-templates-kit-js', WPR_ADDONS_URL .'assets/js/admin/templates-kit.js', ['jquery'], $version );
 		}
 	}

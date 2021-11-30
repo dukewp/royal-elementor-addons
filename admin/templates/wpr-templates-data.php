@@ -14,10 +14,10 @@ class WPR_Templates_Data {
 	public static function get_available_kits() {
 		return [
 			'cybersecurity' => [
-				'v1' => ['pages' => 'home,about,services,pricing,contact,', ],
+				'v1' => ['pages' => 'home,about,services,pricing,contact,', 'plugins' => '{"contact-form-7":false}'],
 			],
 			'cryptocurrency' => [
-				'v1' => ['pages' => 'home,about,services,token-sale,pricing,contact,', ],
+				'v1' => ['pages' => 'home,about,services,token-sale,pricing,contact,', 'plugins' => 'cf7' ],
 			],
 		];
 	}

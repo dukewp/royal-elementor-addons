@@ -13,6 +13,7 @@ function wpr_addons_add_templates_kit_menu() {
 add_action( 'admin_menu', 'wpr_addons_add_templates_kit_menu' );
 
 // Import Template Kit
+add_action( 'wp_ajax_wpr_install_reuired_plugins', 'wpr_install_reuired_plugins' );
 add_action( 'wp_ajax_wpr_import_templates_kit', 'wpr_import_templates_kit' );
 add_action( 'wp_ajax_wpr_fix_elementor_images', 'wpr_fix_elementor_images' );
 
@@ -53,7 +54,7 @@ function wpr_addons_templates_kit_page() {
                    $kit_id = $slug .'-'. $version;
                    $kit_title = ucfirst($slug) .' '. ucfirst($version);
 
-                    echo '<div class="grid-item" data-pages="'. $data['pages'] .'" data-kit-id="'. $kit_id .'">';
+                    echo '<div class="grid-item" data-kit-id="'. $kit_id .'" data-plugins="'. esc_attr($data['plugins']) .'" data-pages="'. $data['pages'] .'">';
                         echo '<div class="image-wrap">';
                             echo '<img src="'. WPR_ADDONS_ASSETS_URL .'img/tmp/'. $kit_id .'.png">';
                             echo '<div class="image-overlay"><span class="dashicons dashicons-search"></span></div>';
@@ -81,6 +82,25 @@ function wpr_addons_templates_kit_page() {
         </footer>
     </div>
 
+    <div class="wpr-import-kit-popup-wrap">
+        <div class="overlay"></div>
+        <div class="wpr-import-kit-popup">
+            <header>
+                <h3><?php _e('Template Kit is being imported...', 'wpr-addons'); ?></h3>
+                <span class="dashicons dashicons-no-alt close-btn"></span>
+            </header>
+            <div class="content">
+                <p><?php _e('The import process can take a few minutes depending on the size of the sites and speed of the connection.', 'wpr-addons'); ?></p>
+                <p><?php _e('Please do NOT close this browser window until importe is ompleted.', 'wpr-addons'); ?></p>
+
+                <div class="progress-wrap">
+                    <div class="progress-bar"></div>
+                    <strong></strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 
@@ -88,6 +108,24 @@ function wpr_addons_templates_kit_page() {
 
 } // End wpr_addons_templates_kit_page()
 
+
+/**
+** Install/Activate Required Plugins
+*/
+function wpr_install_reuired_plugins() {
+    // Getcurrently active plugins
+    $active_plugins = (array) get_option( 'active_plugins', array() );
+
+    // Add Required Plugins
+    if ( 'contact-form-7' == $_POST['plugin'] ) {
+        array_push( $active_plugins, 'contact-form-7/wp-contact-form-7.php' );
+    } elseif ( 'ashe-extra' == $_POST['plugin'] ) {
+        array_push( $active_plugins, 'ashe-extra/ashe-extra.php' );
+    }
+
+    // Set Active Plugins
+    update_option( 'active_plugins', $active_plugins );
+}
 
 /**
 ** Import Template Kit
@@ -155,7 +193,7 @@ function download_template( $kit, $file ) {
 }
 
 /**
-** // Fix Elementor Images
+** Fix Elementor Images
 */
 function wpr_fix_elementor_images() {
     $pages = get_pages([ 'meta_key' => '_elementor_version' ]);
