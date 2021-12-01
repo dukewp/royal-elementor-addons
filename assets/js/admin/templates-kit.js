@@ -8,7 +8,7 @@ jQuery(document).ready(function( $ ) {
 		init: function() {
 
 			$('.wpr-templates-kit-grid').find('.image-overlay').on('click', function(){
-				WprTemplatesKit.showImportPage();
+				WprTemplatesKit.showImportPage( $(this).closest('.grid-item') );
 				WprTemplatesKit.renderImportPage( $(this).closest('.grid-item') );
 			});
 
@@ -17,7 +17,7 @@ jQuery(document).ready(function( $ ) {
 			});
 
 			$('.wpr-templates-kit-single').find('.import-kit').on('click', function(){
-				var confirmImport = confirm('Are you sure you want to import Templates Kit?\n\nElementor Header, Footer, Pages, Media Files, Menus and some required plugins will be installed on your website.');
+				var confirmImport = confirm('Are you sure you want to import this Template Kit?\n\nElementor Header, Footer, Pages, Media Files, Menus and some required plugins will be installed on your website.');
 				
 				if ( confirmImport ) {
 					WprTemplatesKit.importTemplatesKit( $(this).attr('data-kit-id') );
@@ -153,12 +153,13 @@ jQuery(document).ready(function( $ ) {
 			$('.wpr-templates-kit-logo').find('.back-btn').css('display', 'none');
 		},
 
-		showImportPage: function() {
+		showImportPage: function( kit ) {
 			$('.wpr-templates-kit-grid.main-grid').hide();
 			$('.wpr-templates-kit-filters').hide();
 			$('.wpr-templates-kit-single .action-buttons-wrap').css('margin-left', $('#adminmenuwrap').outerWidth());
 			$('.wpr-templates-kit-single').show();
 			$('.wpr-templates-kit-logo').find('.back-btn').css('display', 'flex');
+			$('.wpr-templates-kit-single .preview-demo').attr('href', 'https://staging-demosites.kinsta.cloud/'+ kit.data('kit-id'));
 		},
 
 		renderImportPage: function( kit ) {

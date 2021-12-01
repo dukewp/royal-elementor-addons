@@ -73,7 +73,7 @@ function wpr_addons_templates_kit_page() {
         <div class="wpr-templates-kit-grid single-grid"></div>
 
         <footer class="action-buttons-wrap">
-            <a href="https://royal-elementor-addons.com/" class="button"><?php _e('Preview Demo <span class="dashicons dashicons-external"></span>', 'wpr-addons'); ?></a>
+            <a href="https://royal-elementor-addons.com/" class="preview-demo button" target="_blank"><?php _e('Preview Demo <span class="dashicons dashicons-external"></span>', 'wpr-addons'); ?></a>
 
             <div class="import-template-buttons">
                 <button class="import-kit button"><?php _e('Import Kit', 'wpr-addons'); ?></button>
