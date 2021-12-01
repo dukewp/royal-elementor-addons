@@ -17,8 +17,12 @@ jQuery(document).ready(function( $ ) {
 			});
 
 			$('.wpr-templates-kit-single').find('.import-kit').on('click', function(){
-				WprTemplatesKit.importTemplatesKit( $(this).attr('data-kit-id') );
-				$('.wpr-import-kit-popup-wrap').fadeIn();
+				var confirmImport = confirm('Are you sure you want to import Templates Kit?\n\nElementor Header, Footer, Pages, Media Files, Menus and some required plugins will be installed on your website.');
+				
+				if ( confirmImport ) {
+					WprTemplatesKit.importTemplatesKit( $(this).attr('data-kit-id') );
+					$('.wpr-import-kit-popup-wrap').fadeIn();
+				}
 			});
 
 			$('.wpr-import-kit-popup-wrap .close-btn').on('click', function(){

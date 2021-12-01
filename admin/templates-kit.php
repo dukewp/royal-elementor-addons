@@ -90,8 +90,8 @@ function wpr_addons_templates_kit_page() {
                 <span class="dashicons dashicons-no-alt close-btn"></span>
             </header>
             <div class="content">
-                <p><?php _e('The import process can take a few minutes depending on the size of the sites and speed of the connection.', 'wpr-addons'); ?></p>
-                <p><?php _e('Please do NOT close this browser window until importe is ompleted.', 'wpr-addons'); ?></p>
+                <p><?php _e('The import process can take a few minutes depending on the size of the kit you are importing and speed of the connection.', 'wpr-addons'); ?></p>
+                <p><?php _e('Please do NOT close this browser window until import is completed.', 'wpr-addons'); ?></p>
 
                 <div class="progress-wrap">
                     <div class="progress-bar"></div>
@@ -204,7 +204,7 @@ function wpr_fix_elementor_images() {
         if ( ! empty( $data ) ) {
             $site_url      = get_site_url();
             $site_url      = str_replace( '/', '\/', $site_url );
-            // $demo_site_url = 'https:' . '//illarithmetic.tastewp.com';
+            $demo_site_url = 'https:' . '//illarithmetic.tastewp.com';
             $demo_site_url = 'https://staging-demosites.kinsta.cloud/' . get_option('wpr-import-kit-id');
             $demo_site_url = str_replace( '/', '\/', $demo_site_url );
             $data          = preg_replace('/\\\{1}\/sites\\\{1}\/\d/', '', $data);
