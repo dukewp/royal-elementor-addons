@@ -3467,7 +3467,7 @@ class Wpr_Grid extends Widget_Base {
 		$this->add_control(
 			'excerpt_dropcap_color',
 			[
-				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'label'  => esc_html__( 'DropCap Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#3a3a3a',
 				'selectors' => [
