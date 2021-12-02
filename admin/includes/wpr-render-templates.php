@@ -108,7 +108,7 @@ class WPR_Render_Templates {
     }
 
     public function add_canvas_header() {
-    	if ( $this->is_template_available('header') ) {
+    	if ( $this->is_template_available('header') && ! \Elementor\Plugin::$instance->preview->is_preview_mode() ) {
 	    	$conditions = json_decode( get_option('wpr_header_conditions', '[]'), true );
 			$template_slug = WPR_Conditions_Manager::header_footer_display_conditions($conditions);
 			$template_id = Utilities::get_template_id($template_slug);
@@ -143,7 +143,7 @@ class WPR_Render_Templates {
 	}
 
     public function add_canvas_footer() {
-    	if ( $this->is_template_available('footer') ) {
+    	if ( $this->is_template_available('footer') && ! \Elementor\Plugin::$instance->preview->is_preview_mode() ) {
 	    	$conditions = json_decode( get_option('wpr_footer_conditions', '[]'), true );
 			$template_slug = WPR_Conditions_Manager::header_footer_display_conditions($conditions);
 			$template_id = Utilities::get_template_id($template_slug);

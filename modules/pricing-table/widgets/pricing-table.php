@@ -352,7 +352,7 @@ class Pricing_Table extends Widget_Base {
 		$repeater->add_control(
 			'select_icon',
 			[
-				'label' => esc_html__( 'Icon', 'wpr-addons' ),
+				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
 				'type' => Controls_Manager::ICONS,
 				'skin' => 'inline',
 				'label_block' => false,
@@ -2545,19 +2545,19 @@ class Pricing_Table extends Widget_Base {
 
 			<?php elseif ( $item['type_select'] === 'button' && ( ! empty( $item['btn_text'] ) || '' !== $item['select_icon']['value'] ) ) :
 
-				$this->add_render_attribute( 'btn_attribute' . $item_count, 'href', $item['btn_url']['url'] );
+				$this->add_render_attribute( 'btn_attribute'. $item_count, 'href', $item['btn_url']['url'] );
 
 				if ( $item['btn_url']['is_external'] ) :
-					$this->add_render_attribute( 'btn_attribute' . $item_count, 'target', '_blank' );
+					$this->add_render_attribute( 'btn_attribute'. $item_count, 'target', '_blank' );
 				endif;
 
 				if ( $item['btn_url']['nofollow'] ) :
-					$this->add_render_attribute( 'btn_attribute' . $item_count, 'nofollow', '' );
+					$this->add_render_attribute( 'btn_attribute'. $item_count, 'nofollow', '' );
 				endif;
 
 				?>
 
-				<a class="wpr-pricing-table-btn wpr-button-effect <?php echo $this->get_settings()['btn_animation']; ?>" <?php echo $this->get_render_attribute_string( 'btn_attribute' ); ?>>
+				<a class="wpr-pricing-table-btn wpr-button-effect <?php echo $this->get_settings()['btn_animation']; ?>" <?php echo $this->get_render_attribute_string( 'btn_attribute'. $item_count ); ?>>
 					<span>
 
 						<?php if ( '' !== $item['select_icon']['value'] &&  $item['btn_position'] === 'before' ) : ?>

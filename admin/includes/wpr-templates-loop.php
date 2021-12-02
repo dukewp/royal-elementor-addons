@@ -40,7 +40,7 @@ class WPR_Templates_Loop {
 				foreach ( $user_templates as $user_template ) {
 					$slug = $user_template->post_name;
 					$edit_url = str_replace( 'edit', 'elementor', get_edit_post_link( $user_template->ID ) );
-					$show_on_canvas = get_post_meta(Utilities::get_template_id($slug), 'wpr_header_show_on_canvas', true);
+					$show_on_canvas = get_post_meta(Utilities::get_template_id($slug), 'wpr_'. $template .'_show_on_canvas', true);
 
 					echo '<li>';
 				        echo '<h3 class="wpr-title">'. esc_html($user_template->post_title) .'</h3>';
