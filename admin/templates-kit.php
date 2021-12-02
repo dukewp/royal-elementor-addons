@@ -15,7 +15,7 @@ add_action( 'admin_menu', 'wpr_addons_add_templates_kit_menu' );
 // Import Template Kit
 add_action( 'wp_ajax_wpr_install_reuired_plugins', 'wpr_install_reuired_plugins' );
 add_action( 'wp_ajax_wpr_import_templates_kit', 'wpr_import_templates_kit' );
-add_action( 'wp_ajax_wpr_fix_elementor_images', 'wpr_fix_elementor_images' );
+add_action( 'wp_ajax_wpr_final_settings_setup', 'wpr_final_settings_setup' );
 
 
 /**
@@ -217,6 +217,24 @@ function wpr_fix_elementor_images() {
 
     // Clear Elementor Cache
     Plugin::$instance->files_manager->clear_cache();
+}
+
+/**
+** Final Settings Setup
+*/
+function wpr_final_settings_setup() {
+    // Fix Elementor Images
+    wpr_fix_elementor_images();
+
+    // Set Home Page
+    update_option( 'show_on_front', 'page' );
+    update_option( 'page_on_front', 9 );
+
+    // Set Headers and Footers
+    update_option('wpr_header_conditions', '{"user-header-header-1":["global"]}');
+    update_post_meta( Utilities::get_template_id('user-header-header-1'), 'wpr_header_show_on_canvas', 'true' );
+    update_option('wpr_footer_conditions', '{"user-footer-22":["global"]}');
+    update_post_meta( Utilities::get_template_id('user-footer-22'), 'wpr_footer_show_on_canvas', 'true' );
 
     // Clear DB
     delete_option('wpr-import-kit-id');

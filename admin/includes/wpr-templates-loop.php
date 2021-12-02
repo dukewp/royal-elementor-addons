@@ -170,7 +170,7 @@ class WPR_Templates_Loop {
                         ?>
                     </select>
 
-                    <input type="text" placeholder="<?php esc_html_e( 'Enter comma separated IDs', 'wpr-addons' ); ?>"  name="condition_input_ids"class="wpr-condition-input-ids">
+                    <input type="text" placeholder="<?php esc_html_e( 'Enter comma separated IDs', 'wpr-addons' ); ?>" name="condition_input_ids" class="wpr-condition-input-ids">
                     <span class="wpr-delete-template-conditions dashicons dashicons-no-alt"></span>
 
 	                <?php else: ?>
@@ -215,7 +215,7 @@ class WPR_Templates_Loop {
                         ?>
                     </select>
 
-                    <input type="text" placeholder="<?php esc_html_e( 'Enter comma separated IDs (Pro)', 'wpr-addons' ); ?>"  name="condition_input_ids"class="wpr-condition-input-ids">
+                    <input type="text" placeholder="<?php esc_html_e( 'Enter comma separated IDs (Pro)', 'wpr-addons' ); ?>" name="condition_input_ids" class="wpr-condition-input-ids">
                     <span class="wpr-delete-template-conditions dashicons dashicons-no-alt"></span>
 	                	
 	                <?php endif; ?>

@@ -98,15 +98,15 @@ jQuery(document).ready(function( $ ) {
 							wpr_templates_kit_single: false
 						},
 						success: function( response ) {
-							console.log('Fixing Elementor Images...');
-							WprTemplatesKit.importProgressBar('elementor');
+							console.log('Setting up Final Settings...');
+							WprTemplatesKit.importProgressBar('settings');
 
 							// Fix Elementor Images
 							$.ajax({
 								type: 'POST',
 								url: ajaxurl,
 								data: {
-									action: 'wpr_fix_elementor_images'
+									action: 'wpr_final_settings_setup'
 								},
 								success: function( response ) {
 									setTimeout(function(){
@@ -130,7 +130,7 @@ jQuery(document).ready(function( $ ) {
 			} else if ( 'content' === step ) {
 				$('.wpr-import-kit-popup .progress-bar').animate({'width' : '33%'}, 500);
 				$('.wpr-import-kit-popup .progress-wrap strong').text('Step 2: Importing Demo Content...');
-			} else if ( 'elementor' === step ) {
+			} else if ( 'settings' === step ) {
 				$('.wpr-import-kit-popup .progress-bar').animate({'width' : '66%'}, 500);
 				$('.wpr-import-kit-popup .progress-wrap strong').text('Step 3: Importing Settings...');
 			} else if ( 'finish' === step ) {
