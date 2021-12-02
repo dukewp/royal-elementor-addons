@@ -352,7 +352,7 @@ class Pricing_Table extends Widget_Base {
 		$repeater->add_control(
 			'select_icon',
 			[
-				'label' => esc_html__( 'Icon', 'wpr-addons' ),
+				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
 				'type' => Controls_Manager::ICONS,
 				'skin' => 'inline',
 				'label_block' => false,
