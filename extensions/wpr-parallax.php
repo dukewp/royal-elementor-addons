@@ -253,7 +253,7 @@ class Wpr_Parallax_Scroll {
                 'min' => -1.0,
                 'max' => 2.0,
                 'step' => 0.1,
-                'default' => 1.4,
+                'default' => 0.4,
                 'render_type' => 'template',
             ]
         );

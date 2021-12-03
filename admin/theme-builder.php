@@ -41,7 +41,7 @@ function wpr_addons_theme_builder_page() {
     <input type="hidden" name="wpr_template" id="wpr_template" value="">
 
     <!-- Conditions Popup -->
-    <?php WPR_Templates_Loop::render_conditions_popup(); ?>
+    <?php WPR_Templates_Loop::render_conditions_popup(true); ?>
 
     <!-- Create Templte Popup -->
     <?php WPR_Templates_Loop::render_create_template_popup(); ?>
