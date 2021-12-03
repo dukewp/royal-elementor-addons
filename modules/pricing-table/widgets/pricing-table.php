@@ -61,6 +61,13 @@ class Pricing_Table extends Widget_Base {
 		];
 	}
 
+	public function add_repeater_args_feature_tooltip_show_icon() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
+		];
+	}
+
 	public function add_contro_stack_feature_tooltip_section() {}
 
 	public function add_contro_stack_feature_even_bg() {}
@@ -435,6 +442,8 @@ class Pricing_Table extends Widget_Base {
 		$repeater->add_control( 'feature_tooltip', $this->add_repeater_args_feature_tooltip() );
 
 		$repeater->add_control( 'feature_tooltip_text', $this->add_repeater_args_feature_tooltip_text() );
+
+		$repeater->add_control( 'feature_tooltip_show_icon', $this->add_repeater_args_feature_tooltip_show_icon() );
 
 		$repeater->add_control(
 			'divider_style',
@@ -2455,7 +2464,16 @@ class Pricing_Table extends Widget_Base {
 					<?php endif; ?>
 					
 					<span class="wpr-pricing-table-feature-text wpr-pricing-table-ftext-line-<?php echo esc_attr( $item['feature_linethrough'] ); ?>">
-						<span><?php echo $item['feature_text']; ?></span>
+						<span>
+						<?php
+							echo $item['feature_text'];
+
+							if ( 'yes' === $item['feature_tooltip'] && 'yes' === $item['feature_tooltip_show_icon'] ) {
+								echo '&nbsp;&nbsp;<i class="far fa-question-circle"></i>';
+							}
+
+						?>
+						</span>
 					</span>
 
 					<?php if ( $item['feature_tooltip'] === 'yes' && ! empty( $item['feature_tooltip_text'] ) ) : ?>
