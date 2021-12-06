@@ -630,12 +630,18 @@ class Utilities {
 	/**
 	** WPR Library Button
 	*/
-	public static function wpr_library_buttons( $module, $controls_manager ) {
+	public static function wpr_library_buttons( $module, $controls_manager, $tutorial_url = '' ) {
 		if ( empty(get_option('wpr_wl_plugin_links')) ) {
+			if ( '' !== $tutorial_url ) {
+				$tutorial_link = '<a href="'. $tutorial_url .'" target="_blank">'. esc_html__( 'Watch Video Tutorial ', 'wpr-addons' ) .'<span class="dashicons dashicons-video-alt3"></span></a>';
+			} else {
+				$tutorial_link = '';
+			}
+
 			$module->add_control(
 	            'wpr_library_buttons',
 	            [
-					'raw' => '<a href="#" target="_blank" data-theme="'. get_template() .'">'. esc_html__( 'Widget Preview', 'wpr-addons' ) .'</a> <a href="#">'. esc_html__( 'Predefined Styles', 'wpr-addons' ) .'</a>',
+					'raw' => '<div><a href="#" target="_blank" data-theme="'. get_template() .'">'. esc_html__( 'Widget Preview', 'wpr-addons' ) .'</a> <a href="#">'. esc_html__( 'Predefined Styles', 'wpr-addons' ) .'</a></div>'. $tutorial_link,
 					'type' => $controls_manager,
 				]
 	        );

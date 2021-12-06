@@ -107,8 +107,8 @@ class Wpr_ReadingProgressBar {
 					'wpr_rpb_enable' => 'yes',
 				],
 				'selectors' => [
-					'.wpr-progress-bar-container' => 'height: {{SIZE}}{{UNIT}} !important',
-					'.wpr-progress-bar-container .wpr-progress-bar' => 'height: {{SIZE}}{{UNIT}} !important',
+					'.wpr-reading-progress-bar-container' => 'height: {{SIZE}}{{UNIT}} !important',
+					'.wpr-reading-progress-bar-container .wpr-reading-progress-bar' => 'height: {{SIZE}}{{UNIT}} !important',
 				],
 			]
 		);
@@ -123,7 +123,7 @@ class Wpr_ReadingProgressBar {
 					'wpr_rpb_enable' => 'yes',
 				],
 				'selectors' => [
-					'.wpr-progress-bar-container' => 'background-color: {{VALUE}};'
+					'.wpr-reading-progress-bar-container' => 'background-color: {{VALUE}};'
 				]
 			]
 		);
@@ -138,7 +138,7 @@ class Wpr_ReadingProgressBar {
 					'wpr_rpb_enable' => 'yes',
 				],
 				'selectors' => [
-					'.wpr-progress-bar-container .wpr-progress-bar' => 'background-color: {{VALUE}};'
+					'.wpr-reading-progress-bar-container .wpr-reading-progress-bar' => 'background-color: {{VALUE}};'
 				]
 			]
 		);
@@ -159,7 +159,7 @@ class Wpr_ReadingProgressBar {
 					'bottom' => 'bottom: 0px !important; top: auto !important;',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-progress-bar-container' => '{{VALUE}}',
+					'{{WRAPPER}} .wpr-reading-progress-bar-container' => '{{VALUE}}',
 				],
 				'condition' => [
 					'wpr_rpb_enable' => 'yes',
@@ -200,15 +200,13 @@ class Wpr_ReadingProgressBar {
     				return;
     			}
 				
-    			echo '<div style="'. $rpb_position . $rpb_background_color .'" class="wpr-progress-bar-container"><div style="'.$rpb_fill_color . $rpb_height .'" class="wpr-progress-bar wpr-mybar" id="wpr-mybar"></div></div>';
+    			echo '<div style="'. $rpb_position . $rpb_background_color .'" class="wpr-reading-progress-bar-container"><div style="'.$rpb_fill_color . $rpb_height .'" class="wpr-reading-progress-bar wpr-mybar" id="wpr-mybar"></div></div>';
 			} else {
-				echo '<div class="wpr-progress-bar-container"><div class="wpr-progress-bar wpr-mybar" id="wpr-mybar"></div></div>';
+				echo '<div class="wpr-reading-progress-bar-container"><div class="wpr-reading-progress-bar wpr-mybar" id="wpr-mybar"></div></div>';
 			}
     	}
 	}
 
-
-    
     public static function instance() {
 		if ( is_null( self::$_instance ) ) {
 			self::$_instance = new self();

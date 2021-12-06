@@ -542,6 +542,13 @@
 	text-align: center;
 }
 
+.wpr-pro-notice-video {
+	display: block;
+	margin-top: 7px;
+	line-height: 20px;
+	border: none !important;
+}
+
 .elementor-control-slider_section_pro_notice {
 	margin-top: -16px;
 }

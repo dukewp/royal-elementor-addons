@@ -79,19 +79,7 @@ class Wpr_OnepageNav extends Widget_Base {
 			]
 		);
 
-		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
-
-		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
-			$this->add_control(
-				'opnepage_pro_notice',
-				[
-					'type' => Controls_Manager::RAW_HTML,
-					'raw' => '<span style="color:#2a2a2a;">Custom Icon Color, Item Tooltip, Highlight Active Menu Item and Scroll Speed</span> options are available in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-onepage-nav-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
-					// 'raw' => '<span style="color:#2a2a2a;">Custom Icon Color, Item Tooltip, Highlight Active Menu Item and Scroll Speed</span> options are available in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
-					'content_classes' => 'wpr-pro-notice',
-				]
-			);
-		}
+		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML, 'https://youtu.be/0hM4l2UKzXs' );
 
 		$repeater = new Repeater();
 
@@ -157,6 +145,18 @@ class Wpr_OnepageNav extends Widget_Base {
 				'title_field' => '{{{ nav_item_tooltip }}}',
 			]
 		);
+
+		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+			$this->add_control(
+				'opnepage_pro_notice',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => '<span style="color:#2a2a2a;">Custom Icon Color, Item Tooltip, Highlight Active Menu Item and Scroll Speed</span> options are available in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-onepage-nav-upgrade-pro#purchasepro" target="_blank">Pro version</a><br><a href="https://youtu.be/0hM4l2UKzXs?t=253" target="_blank" class="wpr-pro-notice-video">Watch Video <span class="dashicons dashicons-video-alt3"></span></a></strong>',
+					// 'raw' => '<span style="color:#2a2a2a;">Custom Icon Color, Item Tooltip, Highlight Active Menu Item and Scroll Speed</span> options are available in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+					'content_classes' => 'wpr-pro-notice',
+				]
+			);
+		}
 
 		$this->end_controls_section(); // End Controls Section
 

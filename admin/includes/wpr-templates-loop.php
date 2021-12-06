@@ -112,7 +112,7 @@ class WPR_Templates_Loop {
 	/**
 	** Render Conditions Popup
 	*/
-	public static function render_conditions_popup( $hf = false ) {
+	public static function render_conditions_popup( $canvas = false ) {
 	?>
 
     <div class="wpr-condition-popup-wrap wpr-admin-popup-wrap">
@@ -222,11 +222,13 @@ class WPR_Templates_Loop {
                 </div>
             </div>
 
+			<?php if ( $canvas ) : ?>
 			<div class="wpr-canvas-condition wpr-setting-custom-ckbox">
 				<span><?php esc_html_e( 'Show this template on Elementor Canvas pages', 'wpr-addons' ); ?></span>
             	<input type="checkbox" name="wpr-show-on-canvas" id="wpr-show-on-canvas">
             	<label for="wpr-show-on-canvas"></label>
             </div>
+            <?php endif; ?>
 
             <?php
 

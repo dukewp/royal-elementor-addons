@@ -1679,6 +1679,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children > a:aft
 }
 
 .wpr-grid-item {
+	padding: 0 !important;
 	float: left;
 	position: relative;
 	text-align: center;
@@ -2456,6 +2457,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children > a:aft
 	font-size: 21px;
 	font-weight: 700;
 	line-height: 23px;
+	margin: 0 !important;
 }
 
 .elementor-widget-wpr-magazine-grid .wpr-grid-item-title {
@@ -2556,6 +2558,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children > a:aft
 }
 
 .wpr-mgzn-grid-item {
+	padding: 0 !important;
 	text-align: center;
 }
 
@@ -4836,7 +4839,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 .wpr-mailchimp-subscribe-btn {
 	width: 100%;
-	padding: 0;
+	padding: 0 !important;
 	outline: none !important;
 	cursor: pointer;
 }
@@ -5476,9 +5479,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-pricing-table-feature:hover .wpr-pricing-table-feature-tooltip {
 	visibility: visible;
 	opacity: 1;
-	-ms-transform: translate(-50%,-80%);
-	    transform: translate(-50%,-80%);
-	-webkit-transform: translate(-50%,-80%);
+	top: 5px;
+	-ms-transform: translate(-50%,-100%);
+	    transform: translate(-50%,-100%);
+	-webkit-transform: translate(-50%,-100%);
 }
 
 .wpr-pricing-table-feature-tooltip:before {
@@ -6289,6 +6293,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 .wpr-search-form-submit {
+	padding: 0 !important;
 	cursor: pointer;
 	border-style: solid;
 	-webkit-transition: all 200ms;
@@ -10033,7 +10038,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 	width: 100%;
 }
 
-.wpr-progress-bar-container {
+.wpr-reading-progress-bar-container {
   position: fixed;
   top: 0;
   left: 0;
@@ -10042,7 +10047,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
   z-index: 9999999;
 }
 
-.wpr-progress-bar {
+.wpr-reading-progress-bar {
   background-color: black;
   width: 0%;
 }

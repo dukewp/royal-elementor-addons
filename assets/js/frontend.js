@@ -53,10 +53,10 @@
 					}
 				}
 
-				if( $('#wpadminbar').length && $('.wpr-progress-bar-container').length ) {
-					if ( 0 === $('.wpr-progress-bar-container').position().top ) {
-						// $('.wpr-progress-bar-container').attr('style', 'top: 32px !important;');
-						$('.wpr-progress-bar-container').css('top', ' 32px');
+				if( $('#wpadminbar').length && $('.wpr-reading-progress-bar-container').length ) {
+					if ( 0 === $('.wpr-reading-progress-bar-container').position().top ) {
+						// $('.wpr-reading-progress-bar-container').attr('style', 'top: 32px !important;');
+						$('.wpr-reading-progress-bar-container').css('top', ' 32px');
 					}
 				}
 			}
