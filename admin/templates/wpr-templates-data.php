@@ -17,7 +17,7 @@ class WPR_Templates_Data {
 				'v1' => ['pages' => 'home,about,services,pricing,contact,', 'plugins' => '{"contact-form-7":false}'],
 			],
 			'cryptocurrency' => [
-				'v1' => ['pages' => 'home,about,services,token-sale,pricing,contact,', 'plugins' => 'cf7' ],
+				'v1' => ['pages' => 'home,about,services,token,pricing,contact,', 'plugins' => '{"contact-form-7":false}' ],
 			],
 		];
 	}

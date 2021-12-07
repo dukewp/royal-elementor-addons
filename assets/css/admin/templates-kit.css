@@ -41,6 +41,7 @@ img {
 }
 
 .wpr-templates-kit-filters {
+  visibility: hidden;
   padding: 20px;
 }
 
@@ -115,7 +116,7 @@ img {
 }
 
  .wpr-templates-kit-single .grid-item {
-  cursor: pointer;
+  /*cursor: pointer;*/
  }
 
 .wpr-templates-kit-single .action-buttons-wrap {
@@ -131,13 +132,32 @@ img {
   box-shadow: 0 0 3px 0 rgba(0,0,0,0.1);
 }
 
-.wpr-templates-kit-single .import-template strong {
-	text-transform: capitalize;
+.wpr-templates-kit-single .preview-demo .dashicons {
+  font-size: 14px;
+  line-height: 28px;
+}
+
+.wpr-templates-kit-single .import-kit {
+  background: #6A4BFF;
+  color: #fff;
+}
+
+.wpr-templates-kit-single .import-kit .dashicons {
+  font-size: 14px;
+  line-height: 30px;
 }
 
 .wpr-templates-kit-single .selected-template {
 	border: 1px solid #2271B1;
 	box-shadow: 0 0 5px 0 rgba(0,0,0,0.1);
+}
+
+.import-template-buttons .import-template {
+  display: none;
+}
+
+.wpr-templates-kit-single .import-template strong {
+  text-transform: capitalize;
 }
 
 .wpr-import-kit-popup-wrap {
@@ -156,7 +176,7 @@ img {
 
 .wpr-import-kit-popup {
   overflow: hidden;
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);

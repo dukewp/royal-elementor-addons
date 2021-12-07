@@ -958,7 +958,7 @@ class WP_Import extends WP_Importer {
 			$post_meta_key_value[ $meta['key'] ] = $meta['value'];
 		}
 
-		$_menu_item_object_id = $post_meta_key_value['menu_item_object_id'];
+		$_menu_item_object_id = $post_meta_key_value['_menu_item_object_id'];
 		if ( 'taxonomy' === $post_meta_key_value['_menu_item_type'] && isset( $this->processed_terms[ intval( $_menu_item_object_id ) ] ) ) {
 			$_menu_item_object_id = $this->processed_terms[ intval( $_menu_item_object_id ) ];
 		} elseif ( 'post_type' === $post_meta_key_value['_menu_item_type'] && isset( $this->processed_posts[ intval( $_menu_item_object_id ) ] ) ) {
@@ -1015,6 +1015,7 @@ class WP_Import extends WP_Importer {
 	 * @return int|WP_Error Post ID on success, WP_Error otherwise
 	 */
 	private function process_attachment( $post, $url ) {
+		
 		if ( ! $this->fetch_attachments ) {
 			return new WP_Error( 'attachment_processing_error', esc_html__( 'Fetching attachments is not enabled', 'wpr-addons' ) );
 		}

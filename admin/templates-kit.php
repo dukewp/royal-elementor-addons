@@ -56,7 +56,7 @@ function wpr_addons_templates_kit_page() {
 
                     echo '<div class="grid-item" data-kit-id="'. $kit_id .'" data-plugins="'. esc_attr($data['plugins']) .'" data-pages="'. $data['pages'] .'">';
                         echo '<div class="image-wrap">';
-                            echo '<img src="'. WPR_ADDONS_ASSETS_URL .'img/tmp/'. $kit_id .'.png">';
+                            echo '<img src="https://royal-elementor-addons.com/library/templates-kit/'. $kit_id .'/home.jpg">';
                             echo '<div class="image-overlay"><span class="dashicons dashicons-search"></span></div>';
                         echo '</div>';
                         echo '<footer>';
@@ -73,10 +73,10 @@ function wpr_addons_templates_kit_page() {
         <div class="wpr-templates-kit-grid single-grid"></div>
 
         <footer class="action-buttons-wrap">
-            <a href="https://royal-elementor-addons.com/" class="preview-demo button" target="_blank"><?php _e('Preview Demo <span class="dashicons dashicons-external"></span>', 'wpr-addons'); ?></a>
+            <a href="https://royal-elementor-addons.com/" class="preview-demo button" target="_blank"><?php _e('Preview Demo', 'wpr-addons'); ?> <span class="dashicons dashicons-external"></span></a>
 
             <div class="import-template-buttons">
-                <button class="import-kit button"><?php _e('Import Kit', 'wpr-addons'); ?></button>
+                <button class="import-kit button"><?php _e('Import Templates Kit', 'wpr-addons'); ?> <span class="dashicons dashicons-download"></span></button>
                 <button class="import-template button"><?php _e('Import <strong></strong> Template', 'wpr-addons'); ?></button>
             </div>
         </footer>
@@ -147,7 +147,7 @@ function wpr_import_templates_kit() {
 
     if ( class_exists( 'WP_Import' ) ) {
         $kit = sanitize_file_name($_POST['wpr_templates_kit']);
-        $file = rest_sanitize_boolean($_POST['wpr_templates_kit_single']);
+        $file = sanitize_file_name($_POST['wpr_templates_kit_single']);
 
         // Tmp
         update_option( 'wpr-import-kit-id', $kit );
@@ -179,8 +179,7 @@ function download_template( $kit, $file ) {
     $file = ! $file ? 'main' : $file;
 
     // Remote and Local Files
-    // $remote_file_url = 'https://royal-elementor-addons.com/library/templates-kit/'. $kit .'/wxr.xml';//astra
-    $remote_file_url = 'https://royal-elementor-addons.com/library/templates-kit/'. $kit .'/'. $file .'.xml';
+    $remote_file_url = 'https://royal-elementor-addons.com/library/templates-kit/'. $kit .'/main.xml';
     $local_file_path = WPR_ADDONS_PATH .'admin/import/tmp.xml';
 
     // No Limit for Execution
@@ -196,23 +195,52 @@ function download_template( $kit, $file ) {
 ** Fix Elementor Images
 */
 function wpr_fix_elementor_images() {
-    $pages = get_pages([ 'meta_key' => '_elementor_version' ]);
+    $args = array(
+        'post_type' => ['wpr_templates', 'page'],
+        'posts_per_page' => '-1',
+        'meta_key' => '_elementor_version'
+    );
+    $elementor_pages = new WP_Query ( $args );
 
-    foreach ($pages as $key => $page) {
-        $data = get_post_meta( $page->ID, '_elementor_data', true );
+    // Check that we have query results.
+    if ( $elementor_pages->have_posts() ) {
+     
+        // Start looping over the query results.
+        while ( $elementor_pages->have_posts() ) {
 
-        if ( ! empty( $data ) ) {
+            $elementor_pages->the_post();
+
+            // Replace Demo with Current
             $site_url      = get_site_url();
             $site_url      = str_replace( '/', '\/', $site_url );
-            $demo_site_url = 'https:' . '//illarithmetic.tastewp.com';
-            $demo_site_url = 'https://staging-demosites.kinsta.cloud/' . get_option('wpr-import-kit-id');
+            $demo_site_url = 'https://demosites.royal-elementor-addons.com/' . get_option('wpr-import-kit-id');
             $demo_site_url = str_replace( '/', '\/', $demo_site_url );
-            $data          = preg_replace('/\\\{1}\/sites\\\{1}\/\d/', '', $data);
-            $data          = str_replace( $demo_site_url, $site_url, $data );
-            $data          = json_decode( $data, true );
-        }
 
-        update_metadata( 'post', $page->ID, '_elementor_data', $data );
+            // Elementor Data
+            $data = get_post_meta( get_the_ID(), '_elementor_data', true );
+
+            if ( ! empty( $data ) ) {
+                $data          = preg_replace('/\\\{1}\/sites\\\{1}\/\d/', '', $data);
+                $data          = str_replace( $demo_site_url, $site_url, $data );
+                $data          = json_decode( $data, true );
+            }
+
+            update_metadata( 'post', get_the_ID(), '_elementor_data', $data );
+
+            // Elementor Page Settings
+            $page_settings = get_post_meta( get_the_ID(), '_elementor_page_settings', true );
+            $page_settings = json_encode($page_settings);
+
+            if ( ! empty( $page_settings ) ) {
+                $page_settings          = preg_replace('/\\\{1}\/sites\\\{1}\/\d/', '', $page_settings);
+                $page_settings          = str_replace( $demo_site_url, $site_url, $page_settings );
+                $page_settings          = json_decode( $page_settings, true );
+            }
+
+            update_metadata( 'post', get_the_ID(), '_elementor_page_settings', $page_settings );
+
+        }
+     
     }
 
     // Clear Elementor Cache
@@ -223,18 +251,21 @@ function wpr_fix_elementor_images() {
 ** Final Settings Setup
 */
 function wpr_final_settings_setup() {
+    $kit = get_option('wpr-import-kit-id');
+
     // Fix Elementor Images
     wpr_fix_elementor_images();
 
     // Set Home Page
+    $page = get_page_by_path('home-'. $kit);
     update_option( 'show_on_front', 'page' );
-    update_option( 'page_on_front', 9 );
+    update_option( 'page_on_front', $page->ID );
 
     // Set Headers and Footers
-    update_option('wpr_header_conditions', '{"user-header-header-1":["global"]}');
-    update_post_meta( Utilities::get_template_id('user-header-header-1'), 'wpr_header_show_on_canvas', 'true' );
-    update_option('wpr_footer_conditions', '{"user-footer-22":["global"]}');
-    update_post_meta( Utilities::get_template_id('user-footer-22'), 'wpr_footer_show_on_canvas', 'true' );
+    update_option('wpr_header_conditions', '{"user-header-'. $kit .'":["global"]}');
+    update_post_meta( Utilities::get_template_id('user-header-'. $kit), 'wpr_header_show_on_canvas', 'true' );
+    update_option('wpr_footer_conditions', '{"user-footer-'. $kit .'":["global"]}');
+    update_post_meta( Utilities::get_template_id('user-footer-'. $kit), 'wpr_footer_show_on_canvas', 'true' );
 
     // Clear DB
     delete_option('wpr-import-kit-id');
