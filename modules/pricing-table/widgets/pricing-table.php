@@ -84,7 +84,7 @@ class Pricing_Table extends Widget_Base {
 
 		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
-		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'opnepage_pro_notice',
 				[
@@ -2441,7 +2441,7 @@ class Pricing_Table extends Widget_Base {
 	<div class="wpr-pricing-table">
 		<?php foreach ( $settings['pricing_items'] as $key => $item ) :
 
-			if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+			if ( ! wpr_fs()->can_use_premium_code() ) {
 				$item['feature_tooltip'] = '';
 				$item['feature_tooltip_text'] = '';
 			}

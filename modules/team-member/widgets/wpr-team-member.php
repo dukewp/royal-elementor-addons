@@ -158,7 +158,7 @@ class Wpr_Team_Member extends Widget_Base {
 			]
 		);
 
-		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'team_member_pro_notice',
 				[
@@ -1721,7 +1721,7 @@ class Wpr_Team_Member extends Widget_Base {
 		// Get Settings 
 		$settings = $this->get_settings();
 
-		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$settings['member_name_location'] = 'below';
 			$settings['member_job_location'] = 'below';
 			$settings['member_description_location'] = 'below';

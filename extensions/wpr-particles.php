@@ -42,7 +42,7 @@ class Wpr_Particles {
 			]
 		);
 
-        if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+        if ( ! wpr_fs()->can_use_premium_code() ) {
 			$element->add_control (
 				'which_particle',
 				[
@@ -67,7 +67,7 @@ class Wpr_Particles {
 
 		$this->custom_json_particles( $this->default_particles, $element );
 
-		if ( defined('WPR_ADDONS_PRO_LICENSE') ) {
+		if ( wpr_fs()->can_use_premium_code() ) {
             \WprAddonsPro\Extensions\Wpr_Particles_Pro::add_control_group_predefined_particles($element);
 		}
 
@@ -132,7 +132,7 @@ class Wpr_Particles {
 		if ( $settings['wpr_enable_particles'] === 'yes' ) {
 			$settings['which_particle'] = 'pro-pjs' === $settings['which_particle'] ? 'wpr_particle_json_custom' : $settings['which_particle'];
 			
-			if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+			if ( ! wpr_fs()->can_use_premium_code() ) {
 				$element->add_render_attribute( '_wrapper', [
 					'data-wpr-particles' => $settings[$settings['which_particle']],
 					'particle-source' => $settings['which_particle'],

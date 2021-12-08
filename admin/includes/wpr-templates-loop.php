@@ -34,7 +34,7 @@ class WPR_Templates_Loop {
 		$user_templates = get_posts( $args );
 
 		// The Loop
-		echo '<ul class="wpr-'. esc_attr($template) .'-templates-list wpr-my-templates-list" data-pro="'. esc_attr(defined('WPR_ADDONS_PRO_LICENSE')) .'">';
+		echo '<ul class="wpr-'. esc_attr($template) .'-templates-list wpr-my-templates-list" data-pro="'. esc_attr(wpr_fs()->can_use_premium_code()) .'">';
 
 			if ( ! empty( $user_templates ) ) {
 				foreach ( $user_templates as $user_template ) {
@@ -129,7 +129,7 @@ class WPR_Templates_Loop {
             <!-- Conditions -->
             <div class="wpr-conditions-wrap">
                 <div class="wpr-conditions-sample">
-                	<?php if ( defined('WPR_ADDONS_PRO_LICENSE') ) : ?>
+                	<?php if ( wpr_fs()->can_use_premium_code() ) : ?>
                     <!-- Global -->
                     <select name="global_condition_select" class="global-condition-select">
                         <option value="global"><?php esc_html_e( 'Entire Site', 'wpr-addons' ); ?></option>
@@ -231,7 +231,7 @@ class WPR_Templates_Loop {
             <?php endif; ?>
 
             <?php
-				if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+				if ( ! wpr_fs()->can_use_premium_code() ) {
 					echo '<span style="color: #7f8b96;"><br>Conditions are fully suppoted in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-conditions-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong></span>';
 					// echo '<span style="color: #7f8b96;"><br>Conditions are fully suppoted in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong></span>';
 				}

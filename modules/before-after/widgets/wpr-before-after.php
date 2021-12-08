@@ -690,7 +690,7 @@ class Wpr_Before_After extends Widget_Base {
 		// Get Settings
 		$settings = $this->get_settings();
 
-		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$settings['direction'] = 'horizontal';
 			$settings['trigger'] = 'drag';
 			$settings['divider_position'] = 50;
