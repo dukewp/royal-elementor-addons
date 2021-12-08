@@ -189,7 +189,7 @@ class Plugin {
 	public function register_elementor_document_type( $documents_manager ) {
 		require WPR_ADDONS_PATH . 'modules/popup/wpr-popup.php';
 
-        if ( defined('WPR_ADDONS_PRO_LICENSE') ) {
+        if ( wpr_fs()->can_use_premium_code() && defined('WPR_ADDONS_PRO_VERSION') ) {
         	require WPR_ADDONS_PRO_PATH . 'modules/popup-pro/wpr-popup-pro.php';
         	$documents_manager->register_document_type( 'wpr-popups', 'Wpr_Popup_Pro' );
         } else {

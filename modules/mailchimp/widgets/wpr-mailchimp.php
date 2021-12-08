@@ -188,7 +188,7 @@ class Wpr_Mailchimp extends Widget_Base {
 			]
 		);
 
-		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'mailchimp_pro_notice',
 				[

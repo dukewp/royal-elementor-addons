@@ -80,7 +80,7 @@ class Wpr_Search extends Widget_Base {
 
 		$this->add_control_search_query();
 
-		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'search_pro_notice',
 				[

@@ -211,7 +211,7 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 
 		$this->add_controls_group_popup_settings();
 
-		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'group_popup_settings_pro_notice',
 				[

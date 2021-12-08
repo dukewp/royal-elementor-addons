@@ -1483,7 +1483,7 @@ class Wpr_Promo_Box extends Widget_Base {
 		}
 
 		// Animations
-		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$settings['title_animation'] = 'none';
 			$settings['description_animation'] = 'none';
 			$settings['btn_animation'] = 'none';

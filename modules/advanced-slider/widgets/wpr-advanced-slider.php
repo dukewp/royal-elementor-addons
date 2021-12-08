@@ -648,7 +648,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			]
 		);
 
-		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'slider_repeater_pro_notice',
 				[
@@ -709,7 +709,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 
 		$this->add_control_slider_amount();
 
-		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'opnepage_pro_notice',
 				[
@@ -2542,11 +2542,11 @@ class Wpr_Advanced_Slider extends Widget_Base {
 		}
 		
 		foreach ( $settings['slider_items'] as $key => $item ) {
-			if ( ! defined('WPR_ADDONS_PRO_LICENSE') && $key === 4 ) {
+			if ( ! wpr_fs()->can_use_premium_code() && $key === 4 ) {
 				break;
 			}
 
-			if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+			if ( ! wpr_fs()->can_use_premium_code() ) {
 				if ( 'pro-3' == $settings['slider_amount'] || 'pro-4' == $settings['slider_amount'] || 'pro-5' == $settings['slider_amount'] || 'pro-6' == $settings['slider_amount'] ) {
 					$settings['slider_amount'] = 2;
 				}
@@ -2565,7 +2565,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 
 			// Or Build Custom
 			} else if( 'custom' === $item['slider_content_type'] ) {
-				if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+				if ( ! wpr_fs()->can_use_premium_code() ) {
 					$item['slider_item_link_type'] = 'none';
 				}
 
@@ -2813,7 +2813,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			}
 		}
 
-		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$settings['slider_autoplay'] = '';
 			$settings['slider_autoplay_duration'] = 0;
 			$settings['slider_pause_on_hover'] = '';

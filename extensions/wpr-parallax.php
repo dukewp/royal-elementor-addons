@@ -61,7 +61,7 @@ class Wpr_Parallax_Scroll {
             ]
         );
 
-        if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+        if ( ! wpr_fs()->can_use_premium_code() ) {
             $element->add_control(
                 'scroll_effect',
                 [
@@ -292,7 +292,7 @@ class Wpr_Parallax_Scroll {
             ]
         );
 
-        if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+        if ( ! wpr_fs()->can_use_premium_code() ) {
             $element->add_control(
                 'paralax_repeater_pro_notice',
                 [
@@ -341,7 +341,7 @@ class Wpr_Parallax_Scroll {
                     echo '<div class="wpr-parallax-multi-layer" scalar-speed="'. $settings['scalar_speed']['size'] .'" direction="'. $settings['invert_direction'] .'" style="overflow: hidden;">';
 
                     foreach (  $settings['hover_parallax'] as $key => $item ) {
-                        if ( $key < 2 || defined('WPR_ADDONS_PRO_LICENSE') ) {
+                        if ( $key < 2 || wpr_fs()->can_use_premium_code() ) {
                             echo '<div data-depth="'. $item['data_depth'] .'" style-top="'. $item['layer_position_vr']['size'] .'%" style-left="'. $item['layer_position_hr']['size'] .'%" class="wpr-parallax-ml-children elementor-repeater-item-' . $item['_id'] . '">';
                                 echo '<img src="' . $item['repeater_bg_image']['url'] . '">';
                             echo '</div>';
@@ -363,7 +363,7 @@ class Wpr_Parallax_Scroll {
         }
         // Multi Layer
         if ( 'on' === get_option('wpr-parallax-multi-layer', 'on') ) {
-            if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+            if ( ! wpr_fs()->can_use_premium_code() ) {
                 ?>
                 <# if ( settings.hover_parallax.length && settings.wpr_enable_parallax_hover == 'yes') { #>
                     <div class="wpr-parallax-multi-layer" direction="{{settings.invert_direction}}" scalar-speed="{{settings.scalar_speed.size}}" data-relative-input="true" style="overflow: hidden;">

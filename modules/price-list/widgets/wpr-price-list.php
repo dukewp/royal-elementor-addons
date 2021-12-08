@@ -118,7 +118,7 @@ class Wpr_Price_List extends Widget_Base {
 
 		$repeater->add_control( 'prlist_link', $this->add_repeater_args_prlist_link() );
 
-		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$repeater->add_control(
 				'price_list_pro_notice',
 				[

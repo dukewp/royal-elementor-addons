@@ -1964,7 +1964,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 		}
 
 
-		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$settings['heading_icon_type'] = ( 'pro-cc' == $settings['heading_icon_type'] ) ? 'none' : $settings['heading_icon_type'];
 		}
 
@@ -1990,7 +1990,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 		$settings = $this->get_settings();
 		$slider_is_rtl = is_rtl();
 		$slider_direction = $slider_is_rtl ? 'rtl' : 'ltr';
-		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$settings['slider_effect'] = 'hr-slide';
 		}
 
@@ -2025,7 +2025,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 			$this->add_render_attribute( 'ticker-slider-attribute','class', 'wpr-ticker-gradient' );
 		}
 
-		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$settings['post_type'] = 'dynamic';
 		}
 
@@ -2071,7 +2071,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 				
 				<?php
 
-				if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+				if ( ! wpr_fs()->can_use_premium_code() ) {
 					$settings['type_select'] = 'slider';
 				}
 

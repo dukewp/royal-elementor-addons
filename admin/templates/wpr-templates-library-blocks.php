@@ -98,7 +98,7 @@ class WPR_Templates_Library_Blocks {
 					$template_sub 	= $blocks[$module_slug][$template_slug]['sub'];
 					$preview_type 	= $blocks[$module_slug][$template_slug]['type'];
 					$preview_url 	= $blocks[$module_slug][$template_slug]['url'];
-					$templte_class 	= ( strpos($template_slug, 'pro') && ! defined('WPR_ADDONS_PRO_LICENSE') ) ? ' wpr-tplib-pro-wrap' : '';
+					$templte_class 	= ( strpos($template_slug, 'pro') && ! wpr_fs()->can_use_premium_code() ) ? ' wpr-tplib-pro-wrap' : '';
 
 			?>
 
@@ -113,7 +113,7 @@ class WPR_Templates_Library_Blocks {
 					<div class="wpr-tplib-template-footer elementor-clearfix">
 						<h3><?php echo str_replace('-pro', ' Pro', $template_title); ?></h3>
 
-						<?php if ( strpos($template_slug, 'pro') && ! defined('WPR_ADDONS_PRO_LICENSE') ) : ?>
+						<?php if ( strpos($template_slug, 'pro') && ! wpr_fs()->can_use_premium_code() ) : ?>
 							<span class="wpr-tplib-insert-template wpr-tplib-insert-pro"><i class="eicon-star"></i> <span><?php esc_html_e( 'Go Pro', 'wpr-addons' ); ?></span></span>
 						<?php else : ?>
 							<span class="wpr-tplib-insert-template"><i class="eicon-file-download"></i> <span><?php esc_html_e( 'Insert', 'wpr-addons' ); ?></span></span>

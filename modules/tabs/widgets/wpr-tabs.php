@@ -313,7 +313,7 @@ class Wpr_Tabs extends Widget_Base {
 		);
 
 
-		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'tabs_repeater_pro_notice',
 				[
@@ -343,7 +343,7 @@ class Wpr_Tabs extends Widget_Base {
 
 		$this->add_control_tabs_hr_position();
 
-		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 	            'tabs_align_pro_notice',
 	            [
@@ -1422,7 +1422,7 @@ class Wpr_Tabs extends Widget_Base {
 	protected function render() {
 		$settings = $this->get_settings();
 
-		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$settings['active_tab'] = 1;
 			$settings['tabs_trigger'] = 'click';
 			$settings['autoplay'] = '';
@@ -1453,7 +1453,7 @@ class Wpr_Tabs extends Widget_Base {
 			<div class="wpr-tabs-wrap">
 				<?php foreach ( $tabs as $index => $item ) :
 				
-				if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+				if ( ! wpr_fs()->can_use_premium_code() ) {
 					$item['tab_content_type'] = ('pro-tmp' == $item['tab_content_type']) ? 'editor' : $item['tab_content_type'];
 
 					if ( $index === 3 ) {

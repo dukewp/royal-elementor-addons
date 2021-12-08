@@ -151,7 +151,7 @@ class Wpr_Business_Hours extends Widget_Base {
 			]
 		);
 
-		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$repeater->add_control(
 				'business_hours_pro_notice',
 				[

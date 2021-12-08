@@ -616,7 +616,7 @@ class Utilities {
 			'pro-eiobk' => 'EIO Back (Pro)',
 		];
 
-		if ( defined('WPR_ADDONS_PRO_LICENSE') ) {
+		if ( wpr_fs()->can_use_premium_code() ) {
 			$timing_functions = \WprAddonsPro\Includes\Controls\WPR_Control_Animations_Pro::wpr_animation_timings();
 		}
 
@@ -652,7 +652,7 @@ class Utilities {
 	** Upgrade to Pro Notice
 	*/
 	public static function upgrade_pro_notice( $module, $controls_manager, $widget, $option, $condition = [] ) {
-		if ( defined('WPR_ADDONS_PRO_LICENSE') ) {
+		if ( wpr_fs()->can_use_premium_code() ) {
 			return;
 		}
 

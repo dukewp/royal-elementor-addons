@@ -146,7 +146,7 @@ class Wpr_OnepageNav extends Widget_Base {
 			]
 		);
 
-		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'opnepage_pro_notice',
 				[
@@ -689,7 +689,7 @@ class Wpr_OnepageNav extends Widget_Base {
 		$settings = $this->get_settings();
 
 		// Pro Options
-		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$settings['nav_item_scroll_speed'] = '';
 			$settings['nav_item_highlight'] = '';
 			$settings['nav_item_show_tooltip'] = '';
@@ -701,7 +701,7 @@ class Wpr_OnepageNav extends Widget_Base {
 		foreach ( $settings['nav_items'] as $item ) {
 			echo '<div class="wpr-onepage-nav-item elementor-repeater-item-'. $item['_id'] .'">';
 				echo '<a href="#'. $item['nav_item_id'] .'">';
-					echo ( defined('WPR_ADDONS_PRO_LICENSE') && 'yes' === $settings['nav_item_show_tooltip'] ) ? '<span class="wpr-tooltip">'. $item['nav_item_tooltip'] .'</span>' : '';
+					echo ( wpr_fs()->can_use_premium_code() && 'yes' === $settings['nav_item_show_tooltip'] ) ? '<span class="wpr-tooltip">'. $item['nav_item_tooltip'] .'</span>' : '';
 					\Elementor\Icons_Manager::render_icon( $item['nav_item_icon'] );
 				echo '</a>';
 			echo '</div>';

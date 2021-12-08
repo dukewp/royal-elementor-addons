@@ -1225,13 +1225,13 @@ class Wpr_Content_Toggle extends Widget_Base {
 
 		$settings = $this->get_settings();
 
-		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$settings['switcher_label_style'] = 'outer';
 			$settings['content_animation'] = 'none';
 			$settings['content_anim_size'] = 'large';
 		}
 		
-		$active_switcher = defined('WPR_ADDONS_PRO_LICENSE') ? $settings['active_switcher'] : 1;
+		$active_switcher = wpr_fs()->can_use_premium_code() ? $settings['active_switcher'] : 1;
 
 		if ( $active_switcher > 2 ) {
 			$active_switcher = 2;
@@ -1300,7 +1300,7 @@ class Wpr_Content_Toggle extends Widget_Base {
 		// Get Settings
 		$settings = $this->get_settings();
 
-		if ( ! defined('WPR_ADDONS_PRO_LICENSE') ) {
+		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$settings['switcher_style'] = 'dual';
 		}
 
