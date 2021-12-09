@@ -19,6 +19,18 @@ class WPR_Templates_Data {
 			'cryptocurrency' => [
 				'v1' => ['pages' => 'home,about,services,token,pricing,contact,', 'plugins' => '{"contact-form-7":false}' ],
 			],
+			'skincare' => [
+				'v1' => ['pages' => 'home,about,services,procedures,gallery,pricing,contact,', 'plugins' => '{"contact-form-7":false}' ],
+			],
+			'medical' => [
+				'v1' => ['pages' => 'home,about,services,doctors,contact,', 'plugins' => '{"contact-form-7":false}' ],
+			],
+			'digitalagency' => [
+				'v1' => ['pages' => 'home,about,services,contact,', 'plugins' => '{"contact-form-7":false}' ],
+			],
+			'drone' => [
+				'v1' => ['pages' => 'home,about,gallery,services,contact,', 'plugins' => '{"contact-form-7":false}' ],
+			],
 		];
 	}
 

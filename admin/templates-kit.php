@@ -178,8 +178,11 @@ function wpr_import_templates_kit() {
 function download_template( $kit, $file ) {
     $file = ! $file ? 'main' : $file;
 
+    // Avoid Cache
+    $randomNum = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 7);
+
     // Remote and Local Files
-    $remote_file_url = 'https://royal-elementor-addons.com/library/templates-kit/'. $kit .'/main.xml';
+    $remote_file_url = 'https://royal-elementor-addons.com/library/templates-kit/'. $kit .'/main.xml?='. $randomNum;
     $local_file_path = WPR_ADDONS_PATH .'admin/import/tmp.xml';
 
     // No Limit for Execution
@@ -211,8 +214,8 @@ function wpr_fix_elementor_images() {
             $elementor_pages->the_post();
 
             // Replace Demo with Current
-            $site_url      = get_site_url();
-            $site_url      = str_replace( '/', '\/', $site_url );
+            $site_url = get_site_url();
+            $site_url = str_replace( '/', '\/', $site_url );
             $demo_site_url = 'https://demosites.royal-elementor-addons.com/' . get_option('wpr-import-kit-id');
             $demo_site_url = str_replace( '/', '\/', $demo_site_url );
 
@@ -220,9 +223,9 @@ function wpr_fix_elementor_images() {
             $data = get_post_meta( get_the_ID(), '_elementor_data', true );
 
             if ( ! empty( $data ) ) {
-                $data          = preg_replace('/\\\{1}\/sites\\\{1}\/\d/', '', $data);
-                $data          = str_replace( $demo_site_url, $site_url, $data );
-                $data          = json_decode( $data, true );
+                $data = preg_replace('/\\\{1}\/sites\\\{1}\/\d+/', '', $data);
+                $data = str_replace( $demo_site_url, $site_url, $data );
+                $data = json_decode( $data, true );
             }
 
             update_metadata( 'post', get_the_ID(), '_elementor_data', $data );
@@ -232,9 +235,9 @@ function wpr_fix_elementor_images() {
             $page_settings = json_encode($page_settings);
 
             if ( ! empty( $page_settings ) ) {
-                $page_settings          = preg_replace('/\\\{1}\/sites\\\{1}\/\d/', '', $page_settings);
-                $page_settings          = str_replace( $demo_site_url, $site_url, $page_settings );
-                $page_settings          = json_decode( $page_settings, true );
+                $page_settings = preg_replace('/\\\{1}\/sites\\\{1}\/\d+/', '', $page_settings);
+                $page_settings = str_replace( $demo_site_url, $site_url, $page_settings );
+                $page_settings = json_decode( $page_settings, true );
             }
 
             update_metadata( 'post', get_the_ID(), '_elementor_page_settings', $page_settings );
