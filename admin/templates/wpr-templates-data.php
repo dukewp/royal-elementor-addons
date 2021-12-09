@@ -31,6 +31,12 @@ class WPR_Templates_Data {
 			'drone' => [
 				'v1' => ['pages' => 'home,about,gallery,services,contact,', 'plugins' => '{"contact-form-7":false}' ],
 			],
+			'architecture' => [
+				'v1' => ['pages' => 'home,about,portfolio,services,faq,contact,', 'plugins' => '{"contact-form-7":false}' ],
+			],
+			'fooddelivery' => [
+				'v1' => ['pages' => 'home,about,services,partner,blog,faq,contact,', 'plugins' => '{"contact-form-7":false}' ],
+			],
 		];
 	}
 
