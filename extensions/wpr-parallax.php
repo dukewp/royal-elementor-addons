@@ -61,7 +61,9 @@ class Wpr_Parallax_Scroll {
             ]
         );
 
-        if ( ! wpr_fs()->can_use_premium_code() ) {
+        if ( wpr_fs()->can_use_premium_code() && defined('WPR_ADDONS_PRO_VERSION') ) {
+            \WprAddonsPro\Extensions\Wpr_Parallax_Scroll_Pro::add_control_scroll_effect($element);
+        } else {
             $element->add_control(
                 'scroll_effect',
                 [
@@ -84,8 +86,6 @@ class Wpr_Parallax_Scroll {
 
             // Upgrade to Pro Notice
             Utilities::upgrade_pro_notice( $element, Controls_Manager::RAW_HTML, 'parallax-background', 'scroll_effect', ['pro-op','pro-sclo','pro-scrlo'] );
-        } else {
-            \WprAddonsPro\Extensions\Wpr_Parallax_Scroll_Pro::add_control_scroll_effect($element);
         }
 
         $element->add_control(
