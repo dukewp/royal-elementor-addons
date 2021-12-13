@@ -42,7 +42,9 @@ class Wpr_Particles {
 			]
 		);
 
-        if ( ! wpr_fs()->can_use_premium_code() ) {
+        if ( wpr_fs()->can_use_premium_code() && defined('WPR_ADDONS_PRO_VERSION') ) {
+            \WprAddonsPro\Extensions\Wpr_Particles_Pro::add_control_which_particle($element);
+        } else {
 			$element->add_control (
 				'which_particle',
 				[
@@ -61,13 +63,11 @@ class Wpr_Particles {
 
 			// Upgrade to Pro Notice
 			Utilities::upgrade_pro_notice( $element, Controls_Manager::RAW_HTML, 'particles', 'which_particle', ['pro-pjs'] );
-        } else {
-            \WprAddonsPro\Extensions\Wpr_Particles_Pro::add_control_which_particle($element);
         }
 
 		$this->custom_json_particles( $this->default_particles, $element );
 
-		if ( wpr_fs()->can_use_premium_code() ) {
+		if ( wpr_fs()->can_use_premium_code() && defined('WPR_ADDONS_PRO_VERSION') ) {
             \WprAddonsPro\Extensions\Wpr_Particles_Pro::add_control_group_predefined_particles($element);
 		}
 

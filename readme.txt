@@ -1,7 +1,7 @@
 ﻿=== Royal Elementor Addons (Header Footer Builder, Popups, Post Grid, Woocommerce Product Grid, Slider, Parallax Image & other Free Addons for Elementor) ===
 Contributors: WP Royal, rubeushagrid13, cyberpinky, elementoraddonswpr
 Tags: elementor, elements, widgets for elementor, elementor addons, elementor widget, elementor form, woocommerce elementor, page builder, builder, wordpress page builder
-Stable tag: 1.3.22
+Stable tag: 1.3.23
 Requires at least: 5.0
 Tested up to: 5.8.2
 Requires PHP: 5.6
@@ -263,6 +263,9 @@ post_max_size 64M
 
 == Changelog ==
 
+= Royal Elementor Addons v1.3.23 - 2021-12-09 =
+* FIX: Minor but essential Bugs.
+
 = Royal Elementor Addons v1.3.22 - 2021-12-03 =
 * FIX: Elementor Pricing Table widget Button link is now clickable.
 * FIX: Custom Post Types Elementor support option issue.
@@ -271,7 +274,7 @@ post_max_size 64M
 * ADDED: Youtube Video Tutorial link to Elementor OnePage Navigation Widget.
 
 = Royal Elementor Addons v1.3.21 - 2021-11-22 =
-* FIX: Fixed Minor Bugs.
+* FIX: Minor but essential Bugs.
 * ADDED: White Label Branding (Supported in PRO verison)
 
 = Royal Elementor Addons v1.3.2 - 2021-11-19 =

@@ -616,7 +616,7 @@ class Utilities {
 			'pro-eiobk' => 'EIO Back (Pro)',
 		];
 
-		if ( wpr_fs()->can_use_premium_code() ) {
+		if ( wpr_fs()->can_use_premium_code() && defined('WPR_ADDONS_PRO_VERSION') ) {
 			$timing_functions = \WprAddonsPro\Includes\Controls\WPR_Control_Animations_Pro::wpr_animation_timings();
 		}
 
