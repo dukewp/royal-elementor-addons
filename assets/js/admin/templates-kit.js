@@ -7,16 +7,18 @@ jQuery(document).ready(function( $ ) {
 
 		init: function() {
 
+			// Overlay Click
 			$('.wpr-templates-kit-grid').find('.image-overlay').on('click', function(){
 				WprTemplatesKit.showImportPage( $(this).closest('.grid-item') );
 				WprTemplatesKit.renderImportPage( $(this).closest('.grid-item') );
 			});
 
+			// Logo Click
 			$('.wpr-templates-kit-logo').find('.back-btn').on('click', function(){
 				WprTemplatesKit.showTemplatesMainGrid();
 			});
 
-			// Import Kit
+			// Import Templates Kit
 			$('.wpr-templates-kit-single').find('.import-kit').on('click', function(){
 				var confirmImport = confirm('Are you sure you want to import this Template Kit?\n\nElementor Header, Footer, Pages, Media Files, Menus and some required plugins will be installed on your website.');
 				
@@ -24,6 +26,36 @@ jQuery(document).ready(function( $ ) {
 					WprTemplatesKit.importTemplatesKit( $(this).attr('data-kit-id') );
 					$('.wpr-import-kit-popup-wrap').fadeIn();
 				}
+			});
+
+			// Close Button Click
+			$('.wpr-import-kit-popup-wrap').find('.close-btn').on('click', function(){
+				$('.wpr-import-kit-popup-wrap').fadeOut();
+			});
+
+			// Search Templates Kit
+			// $('.wpr-templates-kit-search').find('input').keyup(function(){
+			// 	var val = $(this).val();
+			// 	setTimeout(function(){
+			// 		console.log(val)
+			// 		// WprTemplatesKit.searchTemplatesKit( $(this).val() );
+			// 	}, 1000);
+			// });
+
+			var searchTimeout = null;  
+			$('.wpr-templates-kit-search').find('input').keyup(function() {
+				var val = $(this).val();
+
+				if (searchTimeout != null) {
+					clearTimeout(searchTimeout);
+				}
+
+				searchTimeout = setTimeout(function() {
+					searchTimeout = null;  
+
+					WprTemplatesKit.searchTemplatesKit( val );
+
+				}, 1000);  
 			});
 
 			// Import Single Template // TODO: Disable Single Template import for now
@@ -36,10 +68,6 @@ jQuery(document).ready(function( $ ) {
 			// 		WprTemplatesKit.importSingleTemplate( $('.import-kit').attr('data-kit-id'), $(this).attr('data-template-id') );
 			// 	}
 			// });
-
-			$('.wpr-import-kit-popup-wrap').find('.close-btn').on('click', function(){
-				$('.wpr-import-kit-popup-wrap').fadeOut();
-			});
 
 		},
 
@@ -178,13 +206,15 @@ jQuery(document).ready(function( $ ) {
 			$(this).hide();
 			$('.wpr-templates-kit-single').hide();
 			$('.wpr-templates-kit-grid.main-grid').show();
-			$('.wpr-templates-kit-filters').show();
+			$('.wpr-templates-kit-search').show();
+			// $('.wpr-templates-kit-filters').show();
 			$('.wpr-templates-kit-logo').find('.back-btn').css('display', 'none');
 		},
 
 		showImportPage: function( kit ) {
 			$('.wpr-templates-kit-grid.main-grid').hide();
-			$('.wpr-templates-kit-filters').hide();
+			$('.wpr-templates-kit-search').hide();
+			// $('.wpr-templates-kit-filters').hide();
 			$('.wpr-templates-kit-single .action-buttons-wrap').css('margin-left', $('#adminmenuwrap').outerWidth());
 			$('.wpr-templates-kit-single').show();
 			$('.wpr-templates-kit-logo').find('.back-btn').css('display', 'flex');
@@ -240,6 +270,21 @@ jQuery(document).ready(function( $ ) {
 
 			// Set Preview Link
 			$('.wpr-templates-kit-single').find('.preview-demo').attr('href', $('.wpr-templates-kit-single').find('.preview-demo').attr('href') +'/'+ id );
+		},
+
+		searchTemplatesKit: function( tag ) {
+			var getAllTags;
+
+			$('.main-grid .grid-item').each(function(){
+				getAllTags += $(this).data('tags');
+			});
+
+			if ( '' !== tag ) {
+				$('.main-grid .grid-item').hide();
+				$('.main-grid .grid-item[data-tags*="'+ tag +'"]').show();
+			} else {
+				$('.main-grid .grid-item').show();
+			}
 		},
 
 	}

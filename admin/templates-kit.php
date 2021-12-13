@@ -33,6 +33,11 @@ function wpr_addons_templates_kit_page() {
             <div class="back-btn"><?php _e('<span class="dashicons dashicons-arrow-left-alt2"></span> Back to Library', 'wpr-addons'); ?></div>
         </div>
 
+        <div class="wpr-templates-kit-search">
+            <input type="text" autocomplete="off" placeholder="<?php _e('Search Templates Kit...', 'wpr-addons'); ?>">
+            <span class="dashicons dashicons-search"></span>
+        </div>
+
         <div class="wpr-templates-kit-filters">
             <div>Filter: All</div>
             <ul>
@@ -45,6 +50,11 @@ function wpr_addons_templates_kit_page() {
         </div>
     </header>
 
+    <div class="wpr-templates-kit-page-title">
+        <h1><?php _e('Royal Templates Kit', 'wpr-addons'); ?></h1>
+        <p><?php _e('Import any Templates Kit with just a Single click', 'wpr-addons'); ?></p>
+    </div>
+
     <div class="wpr-templates-kit-grid main-grid">
         <?php
             $kits = WPR_Templates_Data::get_available_kits();
@@ -52,15 +62,14 @@ function wpr_addons_templates_kit_page() {
             foreach ($kits as $slug => $kit) {
                 foreach ($kit as $version => $data ) {
                    $kit_id = $slug .'-'. $version;
-                   $kit_title = ucfirst($slug) .' '. ucfirst($version);
 
-                    echo '<div class="grid-item" data-kit-id="'. $kit_id .'" data-plugins="'. esc_attr($data['plugins']) .'" data-pages="'. $data['pages'] .'">';
+                    echo '<div class="grid-item" data-kit-id="'. $kit_id .'" data-tags="'. $data['tags'] .'" data-plugins="'. esc_attr($data['plugins']) .'" data-pages="'. $data['pages'] .'" data-price="'. $data['price'] .'">';
                         echo '<div class="image-wrap">';
                             echo '<img src="https://royal-elementor-addons.com/library/templates-kit/'. $kit_id .'/home.jpg">';
                             echo '<div class="image-overlay"><span class="dashicons dashicons-search"></span></div>';
                         echo '</div>';
                         echo '<footer>';
-                            echo '<h3>'. $kit_title .'</h3>';
+                            echo '<h3>'. $data['name'] .'</h3>';
                         echo '</footer>';
                     echo '</div>';
                 }

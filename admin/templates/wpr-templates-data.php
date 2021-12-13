@@ -5,37 +5,80 @@ use WprAddons\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-/**
- * WPR_Templates_Actions setup
- *
- * @since 1.0
- */
 class WPR_Templates_Data {
 	public static function get_available_kits() {
 		return [
 			'cybersecurity' => [
-				'v1' => ['pages' => 'home,about,services,pricing,contact,', 'plugins' => '{"contact-form-7":false}'],
+				'v1' => [
+					'name' => 'Cybersecurity',
+					'pages' => 'home,about,services,pricing,contact,',
+					'plugins' => '{"contact-form-7":false}',
+					'tags' => 'data protection',
+					'price' => 'free',
+				],
 			],
 			'cryptocurrency' => [
-				'v1' => ['pages' => 'home,about,services,token,pricing,contact,', 'plugins' => '{"contact-form-7":false}' ],
+				'v1' => [
+					'name' => 'Cryptocurrency',
+					'pages' => 'home,about,services,token,pricing,contact,',
+					'plugins' => '{"contact-form-7":false}',
+					'tags' => 'bitcoin etherum blockchain protection',
+					'price' => 'pro',
+				],
 			],
 			'skincare' => [
-				'v1' => ['pages' => 'home,about,services,procedures,gallery,pricing,contact,', 'plugins' => '{"contact-form-7":false}' ],
+				'v1' => [
+					'name' => 'Skin Care',
+					'pages' => 'home,about,services,procedures,gallery,pricing,contact,',
+					'plugins' => '{"contact-form-7":false}',
+					'tags' => '',
+					'price' => 'free',
+				],
 			],
 			'medical' => [
-				'v1' => ['pages' => 'home,about,services,doctors,contact,', 'plugins' => '{"contact-form-7":false}' ],
+				'v1' => [
+					'name' => 'Medical',
+					'pages' => 'home,about,services,doctors,contact,',
+					'plugins' => '{"contact-form-7":false}',
+					'tags' => '',
+					'price' => 'free',
+				],
 			],
 			'digitalagency' => [
-				'v1' => ['pages' => 'home,about,services,contact,', 'plugins' => '{"contact-form-7":false}' ],
+				'v1' => [
+					'name' => 'Digital Agency',
+					'pages' => 'home,about,services,contact,',
+					'plugins' => '{"contact-form-7":false}',
+					'tags' => '',
+					'price' => 'free',
+				],
 			],
 			'drone' => [
-				'v1' => ['pages' => 'home,about,gallery,services,contact,', 'plugins' => '{"contact-form-7":false}' ],
+				'v1' => [
+					'name' => 'Drone Project',
+					'pages' => 'home,about,gallery,services,contact,',
+					'plugins' => '{"contact-form-7":false}',
+					'tags' => '',
+					'price' => 'free',
+				],
 			],
 			'architecture' => [
-				'v1' => ['pages' => 'home,about,portfolio,services,faq,contact,', 'plugins' => '{"contact-form-7":false}' ],
+				'v1' => [
+					'name' => 'Architecture',
+					'pages' => 'home,about,portfolio,services,faq,contact,',
+					'plugins' => '{"contact-form-7":false}',
+					'tags' => '',
+					'price' => 'free',
+				],
 			],
 			'fooddelivery' => [
-				'v1' => ['pages' => 'home,about,services,partner,blog,faq,contact,', 'plugins' => '{"contact-form-7":false}' ],
+				'v1' => [
+					'name' => 'Food Delivery',
+					'pages' => 'home,about,services,partner,blog,faq,contact,',
+					'plugins' => '{"contact-form-7":false}',
+					'tags' => '',
+					'price' => 'free',
+				],
 			],
 		];
 	}

@@ -40,8 +40,27 @@ img {
 	color: #222;
 }
 
+.wpr-templates-kit-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-right: 30px;
+}
+
+.wpr-templates-kit-search input {
+  width: 500px;
+  height: 45px;
+  border-color: #e8e8e8;
+  box-shadow: none !important;
+}
+
+.wpr-templates-kit-search .dashicons {
+  margin-left: -32px;
+  color: #777;
+}
+
 .wpr-templates-kit-filters {
-  visibility: hidden;
+  display: none;
   padding: 20px;
 }
 
@@ -54,6 +73,17 @@ img {
 
 .wpr-templates-kit-filters ul {
   display: none;
+}
+
+.wpr-templates-kit-page-title {
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+
+.wpr-templates-kit-page-title h1 {
+  font-size: 35px;
+  color: #555;
 }
 
 .wpr-templates-kit-grid {
