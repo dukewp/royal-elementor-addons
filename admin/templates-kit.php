@@ -38,6 +38,16 @@ function wpr_addons_templates_kit_page() {
             <span class="dashicons dashicons-search"></span>
         </div>
 
+        <div class="wpr-templates-kit-price-filter">
+            <span data-price="mixed"><?php _e('Price: Mixed', 'wpr-addons'); ?></span>
+            <span class="dashicons dashicons-arrow-down-alt2"></span>
+            <ul>
+                <li><?php _e('Mixed', 'wpr-addons'); ?></li>
+                <li><?php _e('Free', 'wpr-addons'); ?></li>
+                <li><?php _e('Premium', 'wpr-addons'); ?></li>
+            </ul>
+        </div>
+
         <div class="wpr-templates-kit-filters">
             <div>Filter: All</div>
             <ul>
@@ -85,7 +95,10 @@ function wpr_addons_templates_kit_page() {
             <a href="https://royal-elementor-addons.com/" class="preview-demo button" target="_blank"><?php _e('Preview Demo', 'wpr-addons'); ?> <span class="dashicons dashicons-external"></span></a>
 
             <div class="import-template-buttons">
-                <button class="import-kit button"><?php _e('Import Templates Kit', 'wpr-addons'); ?> <span class="dashicons dashicons-download"></span></button>
+                <?php
+                    echo '<button class="import-kit button">'. __('Import Templates Kit', 'wpr-addons') .' <span class="dashicons dashicons-download"></span></button>';
+                    echo '<a href="https://royal-elementor-addons.com/" class="get-access button" target="_blank">'. __('Get Access', 'wpr-addons') .' <span class="dashicons dashicons-external"></span></a>';
+                ?>
                 <button class="import-template button"><?php _e('Import <strong></strong> Template', 'wpr-addons'); ?></button>
             </div>
         </footer>

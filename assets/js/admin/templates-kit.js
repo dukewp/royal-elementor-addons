@@ -20,6 +20,10 @@ jQuery(document).ready(function( $ ) {
 
 			// Import Templates Kit
 			$('.wpr-templates-kit-single').find('.import-kit').on('click', function(){
+				if ( $('.wpr-templates-kit-grid').find('.grid-item[data-kit-id="'+ $(this).attr('data-kit-id') +'"]').data('price') === 'pro' ) {
+					return false;
+				}
+
 				var confirmImport = confirm('Are you sure you want to import this Template Kit?\n\nElementor Header, Footer, Pages, Media Files, Menus and some required plugins will be installed on your website.');
 				
 				if ( confirmImport ) {
@@ -34,14 +38,6 @@ jQuery(document).ready(function( $ ) {
 			});
 
 			// Search Templates Kit
-			// $('.wpr-templates-kit-search').find('input').keyup(function(){
-			// 	var val = $(this).val();
-			// 	setTimeout(function(){
-			// 		console.log(val)
-			// 		// WprTemplatesKit.searchTemplatesKit( $(this).val() );
-			// 	}, 1000);
-			// });
-
 			var searchTimeout = null;  
 			$('.wpr-templates-kit-search').find('input').keyup(function() {
 				var val = $(this).val();
@@ -51,11 +47,19 @@ jQuery(document).ready(function( $ ) {
 				}
 
 				searchTimeout = setTimeout(function() {
-					searchTimeout = null;  
-
+					searchTimeout = null;
 					WprTemplatesKit.searchTemplatesKit( val );
+				}, 500);  
+			});
 
-				}, 1000);  
+			// Price Filter
+			$('.wpr-templates-kit-price-filter ul li').on('click', function() {
+				var price = $(this).text(),
+					price = 'premium' == price.toLowerCase() ? 'pro' : price.toLowerCase();
+
+				WprTemplatesKit.fiterFreeProTemplates( price );
+				$('.wpr-templates-kit-price-filter').children().first().attr( 'data-price', price );
+				$('.wpr-templates-kit-price-filter').children().first().text( 'Price: '+ $(this).text() );
 			});
 
 			// Import Single Template // TODO: Disable Single Template import for now
@@ -205,15 +209,19 @@ jQuery(document).ready(function( $ ) {
 		showTemplatesMainGrid: function() {
 			$(this).hide();
 			$('.wpr-templates-kit-single').hide();
+			$('.wpr-templates-kit-page-title').show();
 			$('.wpr-templates-kit-grid.main-grid').show();
 			$('.wpr-templates-kit-search').show();
+			$('.wpr-templates-kit-price-filter').show();
 			// $('.wpr-templates-kit-filters').show();
 			$('.wpr-templates-kit-logo').find('.back-btn').css('display', 'none');
 		},
 
 		showImportPage: function( kit ) {
+			$('.wpr-templates-kit-page-title').hide();
 			$('.wpr-templates-kit-grid.main-grid').hide();
 			$('.wpr-templates-kit-search').hide();
+			$('.wpr-templates-kit-price-filter').hide();
 			// $('.wpr-templates-kit-filters').hide();
 			$('.wpr-templates-kit-single .action-buttons-wrap').css('margin-left', $('#adminmenuwrap').outerWidth());
 			$('.wpr-templates-kit-single').show();
@@ -243,11 +251,19 @@ jQuery(document).ready(function( $ ) {
 					');
 				};
 			} else {
-
+				// just one page
 			}
 
-			// Set Kit ID
-			$('.wpr-templates-kit-single').find('.import-kit').attr('data-kit-id', kit.data('kit-id'));
+			if ( $('.wpr-templates-kit-grid').find('.grid-item[data-kit-id="'+ kit.data('kit-id') +'"]').data('price') === 'pro' ) {
+				$('.wpr-templates-kit-single').find('.import-kit').hide();
+				$('.wpr-templates-kit-single').find('.get-access').show();
+			} else {
+				$('.wpr-templates-kit-single').find('.get-access').hide();
+				$('.wpr-templates-kit-single').find('.import-kit').show();
+
+				// Set Kit ID
+				$('.wpr-templates-kit-single').find('.import-kit').attr('data-kit-id', kit.data('kit-id'));
+			}
 
 			// Set Active Template ID by Default // TODO: Disable Single Template import for now
 			// WprTemplatesKit.setActiveTemplateID(singleGrid.children().first());
@@ -273,17 +289,29 @@ jQuery(document).ready(function( $ ) {
 		},
 
 		searchTemplatesKit: function( tag ) {
-			var getAllTags;
-
-			$('.main-grid .grid-item').each(function(){
-				getAllTags += $(this).data('tags');
-			});
+			var price = $('.wpr-templates-kit-price-filter').children().first().attr( 'data-price' ),
+				priceAttr = 'mixed' === price ? '' : '[data-price*="'+ price +'"]';
 
 			if ( '' !== tag ) {
 				$('.main-grid .grid-item').hide();
-				$('.main-grid .grid-item[data-tags*="'+ tag +'"]').show();
+				$('.main-grid .grid-item[data-tags*="'+ tag +'"]'+ priceAttr).show();
 			} else {
-				$('.main-grid .grid-item').show();
+				$('.main-grid .grid-item'+ priceAttr).show();
+			}
+		},
+
+		fiterFreeProTemplates: function( price ) {
+			var tag = $('.wpr-templates-kit-search').find('input').val(),
+				tagAttr = '' === tag ? '' : '[data-tags*="'+ tag +'"]';
+
+			if ( 'free' == price ) {
+				$('.main-grid .grid-item').hide();
+				$('.main-grid .grid-item[data-price*="'+ price +'"]'+ tagAttr).show();
+			} else if ( 'pro' == price ) {
+				$('.main-grid .grid-item').hide();
+				$('.main-grid .grid-item[data-price*="'+ price +'"]'+ tagAttr).show();
+			} else {
+				$('.main-grid .grid-item'+ tagAttr).show();
 			}
 		},
 
