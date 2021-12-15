@@ -125,6 +125,7 @@ jQuery(document).ready(function( $ ) {
 			console.log('Installing Plugins...');
 			WprTemplatesKit.importProgressBar('plugins');
 			WprTemplatesKit.installRequiredPlugins( kitID );
+			WprTemplatesKit.threeDotsAnimation();
 
 	        var installPlugins = setInterval(function() {
 
@@ -187,13 +188,13 @@ jQuery(document).ready(function( $ ) {
 
 		importProgressBar: function( step ) {
 			if ( 'plugins' === step ) {
-				$('.wpr-import-kit-popup .progress-wrap strong').text('Step 1: Installing/Activating Plugins...');
+				$('.wpr-import-kit-popup .progress-wrap strong').html('Step 1: Installing/Activating Plugins<span>.</span>');
 			} else if ( 'content' === step ) {
 				$('.wpr-import-kit-popup .progress-bar').animate({'width' : '33%'}, 500);
-				$('.wpr-import-kit-popup .progress-wrap strong').text('Step 2: Importing Demo Content...');
+				$('.wpr-import-kit-popup .progress-wrap strong').html('Step 2: Importing Demo Content<span>.</span>');
 			} else if ( 'settings' === step ) {
 				$('.wpr-import-kit-popup .progress-bar').animate({'width' : '66%'}, 500);
-				$('.wpr-import-kit-popup .progress-wrap strong').text('Step 3: Importing Settings...');
+				$('.wpr-import-kit-popup .progress-wrap strong').html('Step 3: Importing Settings<span>.</span>');
 			} else if ( 'finish' === step ) {
 				var href = window.location.href,
 					index = href.indexOf('/wp-admin'),
@@ -204,6 +205,21 @@ jQuery(document).ready(function( $ ) {
 				$('.wpr-import-kit-popup header h3').text('Import was Successfull!');
 				$('.wpr-import-kit-popup-wrap .close-btn').show();
 			}
+		},
+
+		threeDotsAnimation: function() {
+			var threeDotsText = '';
+			var dotsInterval = setInterval( function() {
+				var threeDots = $('.wpr-import-kit-popup .progress-wrap strong span');
+
+				if ( threeDots.text().length > 2 ) {
+					threeDotsText = '';
+				} else {
+					threeDotsText += '.';
+				}
+
+					threeDots.text(threeDotsText)
+			}, 500);
 		},
 
 		showTemplatesMainGrid: function() {

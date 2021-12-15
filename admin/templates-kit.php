@@ -108,7 +108,7 @@ function wpr_addons_templates_kit_page() {
         <div class="overlay"></div>
         <div class="wpr-import-kit-popup">
             <header>
-                <h3><?php _e('Template Kit is being imported...', 'wpr-addons'); ?></h3>
+                <h3><?php _e('Template Kit is being imported', 'wpr-addons'); ?><span>.</span></h3>
                 <span class="dashicons dashicons-no-alt close-btn"></span>
             </header>
             <div class="content">
