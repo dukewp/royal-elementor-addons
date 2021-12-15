@@ -39,7 +39,11 @@ jQuery(document).ready(function( $ ) {
 
 			// Search Templates Kit
 			var searchTimeout = null;  
-			$('.wpr-templates-kit-search').find('input').keyup(function() {
+			$('.wpr-templates-kit-search').find('input').keyup(function(e) {
+				if ( e.which === 13 ) {
+					return false;
+				}
+
 				var val = $(this).val();
 
 				if (searchTimeout != null) {
@@ -49,7 +53,18 @@ jQuery(document).ready(function( $ ) {
 				searchTimeout = setTimeout(function() {
 					searchTimeout = null;
 					WprTemplatesKit.searchTemplatesKit( val );
-				}, 500);  
+
+					// Final Adjustments
+					$.ajax({
+						type: 'POST',
+						url: ajaxurl,
+						data: {
+							action: 'wpr_search_query_results',
+							search_query: val
+						},
+						success: function( response ) {}
+					});
+				}, 1000);  
 			});
 
 			// Price Filter
@@ -78,18 +93,13 @@ jQuery(document).ready(function( $ ) {
 		installRequiredPlugins: function( kitID ) {
 			var kit = $('.grid-item[data-kit-id="'+ kitID +'"]');
 				WprTemplatesKit.requiredPlugins = kit.data('plugins') !== undefined ? kit.data('plugins') : false;
-
+			
 			// Install Plugins
 			if ( WprTemplatesKit.requiredPlugins ) {
-				if ( 'contact-form-7' in WprTemplatesKit.requiredPlugins ) {
+				if ( 'contact-form-7' in WprTemplatesKit.requiredPlugins && false === WprTemplatesKit.requiredPlugins['contact-form-7'] ) {
 					WprTemplatesKit.installPluginViaAjax('contact-form-7');
 				}
-
-				if ( 'ashe-extra' in WprTemplatesKit.requiredPlugins ) {
-					WprTemplatesKit.installPluginViaAjax('ashe-extra');
-				}
 			}
-
 		},
 
 		installPluginViaAjax: function( slug ) {
@@ -313,6 +323,14 @@ jQuery(document).ready(function( $ ) {
 				$('.main-grid .grid-item[data-tags*="'+ tag +'"]'+ priceAttr).show();
 			} else {
 				$('.main-grid .grid-item'+ priceAttr).show();
+			}
+
+			if ( ! $('.main-grid .grid-item').is(':visible') ) {
+				$('.wpr-templates-kit-page-title').hide();
+				$('.wpr-templates-kit-not-found').css('display', 'flex');
+			} else {
+				$('.wpr-templates-kit-not-found').hide();
+				$('.wpr-templates-kit-page-title').show();
 			}
 		},
 

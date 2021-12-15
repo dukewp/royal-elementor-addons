@@ -8,13 +8,14 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 class WPR_Templates_Data {
 	public static function get_available_kits() {
 		$is_pro_active = wpr_fs()->can_use_premium_code() && defined('WPR_ADDONS_PRO_VERSION');
+		$is_cf7_active = is_plugin_active('contact-form-7/wp-contact-form-7.php') ? 'true' : 'false';
 
 		return [
 			'cybersecurity' => [
 				'v1' => [
 					'name' => 'Cybersecurity',
 					'pages' => 'home,about,services,pricing,contact,',
-					'plugins' => '{"contact-form-7":false}',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'cybersecurity data protection',
 					'price' => $is_pro_active ? 'free' : 'free',
 				],
@@ -23,7 +24,7 @@ class WPR_Templates_Data {
 				'v1' => [
 					'name' => 'Cryptocurrency',
 					'pages' => 'home,about,services,token,pricing,contact,',
-					'plugins' => '{"contact-form-7":false}',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'cryptocurrency bitcoin etherum blockchain protection',
 					'price' => $is_pro_active ? 'free' : 'pro',
 				],
@@ -32,7 +33,7 @@ class WPR_Templates_Data {
 				'v1' => [
 					'name' => 'Skin Care',
 					'pages' => 'home,about,services,procedures,gallery,pricing,contact,',
-					'plugins' => '{"contact-form-7":false}',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'skincare skin care beauty clean face',
 					'price' => $is_pro_active ? 'free' : 'pro',
 				],
@@ -41,7 +42,7 @@ class WPR_Templates_Data {
 				'v1' => [
 					'name' => 'Medical',
 					'pages' => 'home,about,services,doctors,contact,',
-					'plugins' => '{"contact-form-7":false}',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'medical',
 					'price' => $is_pro_active ? 'free' : 'pro',
 				],
@@ -50,7 +51,7 @@ class WPR_Templates_Data {
 				'v1' => [
 					'name' => 'Digital Agency',
 					'pages' => 'home,about,services,contact,',
-					'plugins' => '{"contact-form-7":false}',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'digitalagency',
 					'price' => $is_pro_active ? 'free' : 'free',
 				],
@@ -59,7 +60,7 @@ class WPR_Templates_Data {
 				'v1' => [
 					'name' => 'Drone Project',
 					'pages' => 'home,about,gallery,services,contact,',
-					'plugins' => '{"contact-form-7":false}',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'drone',
 					'price' => $is_pro_active ? 'free' : 'pro',
 				],
@@ -68,7 +69,7 @@ class WPR_Templates_Data {
 				'v1' => [
 					'name' => 'Architecture',
 					'pages' => 'home,about,portfolio,services,faq,contact,',
-					'plugins' => '{"contact-form-7":false}',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'architecture',
 					'price' => $is_pro_active ? 'free' : 'free',
 				],
@@ -77,7 +78,7 @@ class WPR_Templates_Data {
 				'v1' => [
 					'name' => 'Food Delivery',
 					'pages' => 'home,services,partner,blog,faq,contact,',
-					'plugins' => '{"contact-form-7":false}',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'fooddelivery',
 					'price' => $is_pro_active ? 'free' : 'free',
 				],
@@ -86,7 +87,7 @@ class WPR_Templates_Data {
 				'v1' => [
 					'name' => 'Construction',
 					'pages' => 'home,about,services,projects,pricing,contact,faq,',
-					'plugins' => '{"contact-form-7":false}',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'construction',
 					'price' => $is_pro_active ? 'free' : 'free',
 				],
@@ -95,14 +96,14 @@ class WPR_Templates_Data {
 				'v1' => [
 					'name' => 'IT Tech v1',
 					'pages' => 'home,about,services,pricing,faq,contact,',
-					'plugins' => '{"contact-form-7":false}',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'ittech',
 					'price' => $is_pro_active ? 'free' : 'free',
 				],
 				'v2' => [
 					'name' => 'IT Tech v2',
 					'pages' => 'home,about,services,pricing,faq,contact,',
-					'plugins' => '{"contact-form-7":false}',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'ittech',
 					'price' => $is_pro_active ? 'free' : 'free',
 				],
@@ -111,7 +112,7 @@ class WPR_Templates_Data {
 				'v1' => [
 					'name' => 'Real Estate',
 					'pages' => 'home,properties,about,services,faq,contact,',
-					'plugins' => '{"contact-form-7":false}',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'realestate',
 					'price' => $is_pro_active ? 'free' : 'free',
 				],
@@ -120,7 +121,7 @@ class WPR_Templates_Data {
 				'v1' => [
 					'name' => 'Restaurant',
 					'pages' => 'home,about,gallery,menu,contact,',
-					'plugins' => '{"contact-form-7":false}',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'restaurant',
 					'price' => $is_pro_active ? 'free' : 'free',
 				],
@@ -129,7 +130,7 @@ class WPR_Templates_Data {
 				'v1' => [
 					'name' => 'Wedding',
 					'pages' => 'home,about,services,gallery,contact,',
-					'plugins' => '{"contact-form-7":false}',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'wedding',
 					'price' => $is_pro_active ? 'free' : 'free',
 				],

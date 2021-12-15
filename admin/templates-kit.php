@@ -16,6 +16,7 @@ add_action( 'admin_menu', 'wpr_addons_add_templates_kit_menu' );
 add_action( 'wp_ajax_wpr_install_reuired_plugins', 'wpr_install_reuired_plugins' );
 add_action( 'wp_ajax_wpr_import_templates_kit', 'wpr_import_templates_kit' );
 add_action( 'wp_ajax_wpr_final_settings_setup', 'wpr_final_settings_setup' );
+add_action( 'wp_ajax_wpr_search_query_results', 'wpr_search_query_results' );
 
 
 /**
@@ -121,6 +122,13 @@ function wpr_addons_templates_kit_page() {
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="wpr-templates-kit-not-found">
+        <img src="<?php echo WPR_ADDONS_ASSETS_URL .'img/not-found.png'; ?>">
+        <h1><?php _e('No Search Results Found.', 'wpr-addons'); ?></h1>
+        <p><?php _e('Cant find a Templates Kit you are looking for?', 'wpr-addons'); ?></p>
+        <a href="https://royal-elementor-addons.com/library/request-new-kit-red.html" target="_blank"><?php _e('Request Templates Kit.', 'wpr-addons'); ?></a>
     </div>
 
 </div>
@@ -273,6 +281,29 @@ function wpr_fix_elementor_images() {
 }
 
 /**
+** Fix Contact Form 7
+*/
+function fix_contact_form_7() {
+    if ( class_exists('WPCF7_ContactForm') ) {
+        $new_contact_form = WPCF7_ContactForm::get_template(
+            array(
+                'title' =>
+                    /* translators: title of your first contact form. %d: number fixed to '1' */
+                    sprintf( __( 'Contact form %d', 'contact-form-7' ), 1 ),
+            )
+        );
+
+        // Get CF7s
+        $contact_forms = get_posts(['post_type'=>'wpcf7_contact_form']);
+
+        // Add new CF7
+        if ( empty($contact_forms) ) {
+            $new_contact_form->save();
+        }
+    }
+}
+
+/**
 ** Final Settings Setup
 */
 function wpr_final_settings_setup() {
@@ -280,6 +311,9 @@ function wpr_final_settings_setup() {
 
     // Fix Elementor Images
     wpr_fix_elementor_images();
+
+    // Fix Contact Form 7
+    fix_contact_form_7();
 
     // Set Home Page
     $page = get_page_by_path('home-'. $kit);
@@ -363,3 +397,14 @@ function wpr_svgs_allow_svg_upload( $data, $file, $filename, $mimes ) {
 
 }
 add_filter( 'wp_check_filetype_and_ext', 'wpr_svgs_allow_svg_upload', 10, 4 );
+
+/**
+** Search Query Results
+*/
+function wpr_search_query_results() {
+    wp_remote_post( 'http://nicktesting.kinsta.cloud/wp-json/search-results/v1/keywords', [
+        'body' => [
+            'search_query' => $_POST['search_query']
+        ]
+    ] );
+}

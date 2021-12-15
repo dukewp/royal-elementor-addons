@@ -365,6 +365,14 @@
 				);
 			}
 
+
+			$permissions['test'] = array(
+				'icon-class' => 'dashicons dashicons-search',
+				'label'      => 'Templates Kit Search',
+				'desc'       => 'Keywords searched in Templates Kit.',
+				'priority'   => 25,
+			);
+
             $permissions['site'] = array(
                 'icon-class' => 'dashicons dashicons-admin-settings',
                 'tooltip'    => ( $require_license_key ? sprintf( $fs->get_text_inline( 'So you can manage and control your license remotely from the User Dashboard.', 'permissions-site_tooltip' ), $fs->get_module_type() ) : '' ),
