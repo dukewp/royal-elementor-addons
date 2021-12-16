@@ -36,6 +36,9 @@ class WPR_Templates_Actions {
 		// Reset Template
 		add_action( 'wp_ajax_wpr_delete_template', [ $this, 'wpr_delete_template' ] );
 
+		// Elementor Search Data
+		add_action( 'wp_ajax_wpr_elementor_search_data', [ $this, 'wpr_elementor_search_data' ] );
+
 		// Enqueue Scripts
 		add_action( 'admin_enqueue_scripts', [ $this, 'templates_library_scripts' ] );
 
@@ -242,8 +245,6 @@ class WPR_Templates_Actions {
 	}
 }
 
-
-
 /**
  * WPR_Templates_Actions setup
  *
@@ -312,14 +313,21 @@ class WPR_Library_Source extends \Elementor\TemplateLibrary\Source_Base {
 		$data['content'] = $this->replace_elements_ids( $data['content'] );
 		$data['content'] = $this->process_export_import_content( $data['content'], 'on_import' );
 
-		// TODO: Find out why EK has this setting. Maybe for page import and document settings?
-		// $post_id = 94;
-		// $document = \Elementor\Plugin::instance()->documents->get( $post_id );
-
-		// if ( $document ) {
-		// 	$data['content'] = $document->get_elements_raw_data( $data['content'], true );
-		// }
-
 		return $data;
 	}
+
+
+	/**
+	** Elementor Search Data
+	*/
+	public function wpr_elementor_search_data() {
+	    wp_remote_post( 'https://reastats.kinsta.cloud/wp-json/elementor-search/data', [
+	        'body' => [
+	            'search_query' => $_POST['search_query']
+	        ]
+	    ] );
+
+	    var_dump('expression');
+	}
+
 }
