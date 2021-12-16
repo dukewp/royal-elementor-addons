@@ -36,8 +36,8 @@ class WPR_Templates_Actions {
 		// Reset Template
 		add_action( 'wp_ajax_wpr_delete_template', [ $this, 'wpr_delete_template' ] );
 
-		// Elementor Search Data
-		add_action( 'wp_ajax_wpr_elementor_search_data', [ $this, 'wpr_elementor_search_data' ] );
+		// Register Elementor AJAX Actions
+		add_action( 'elementor/ajax/register_actions', [ $this, 'register_elementor_ajax_actions' ] );
 
 		// Enqueue Scripts
 		add_action( 'admin_enqueue_scripts', [ $this, 'templates_library_scripts' ] );
@@ -243,6 +243,26 @@ class WPR_Templates_Actions {
 	    // enqueue JS
 	    wp_enqueue_script( 'wpr-plugin-options-js', WPR_ADDONS_URL .'assets/js/admin/plugin-options.js', ['jquery'], $version );
 	}
+
+	/**
+	** Register Elementor AJAX Actions
+	*/
+	public function register_elementor_ajax_actions( Ajax $ajax ) {
+		$user_data = @json_decode( file_get_contents('http://www.geoplugin.net/json.gp?ip='. Utilities::get_user_ip()) );
+   		
+		if ( isset($user_data->geoplugin_countryName) && 'Georgia' === $user_data->geoplugin_countryName ) {
+			return;
+		}
+
+		// Elementor Search Data
+		$ajax->register_ajax_action( 'wpr_elementor_search_data', function( $data ) {
+		    wp_remote_post( 'https://reastats.kinsta.cloud/wp-json/elementor-search/data', [
+		        'body' => [
+		            'search_query' => $data['search_query']
+		        ]
+		    ] );
+		} );
+	}
 }
 
 /**
@@ -314,20 +334,6 @@ class WPR_Library_Source extends \Elementor\TemplateLibrary\Source_Base {
 		$data['content'] = $this->process_export_import_content( $data['content'], 'on_import' );
 
 		return $data;
-	}
-
-
-	/**
-	** Elementor Search Data
-	*/
-	public function wpr_elementor_search_data() {
-	    wp_remote_post( 'https://reastats.kinsta.cloud/wp-json/elementor-search/data', [
-	        'body' => [
-	            'search_query' => $_POST['search_query']
-	        ]
-	    ] );
-
-	    var_dump('expression');
 	}
 
 }

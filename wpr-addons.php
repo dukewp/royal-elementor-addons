@@ -76,6 +76,17 @@ if ( ! function_exists( 'wpr_fs' ) ) {
 	    do_action( 'wpr_fs_loaded' );
 
 	    wpr_fs()->add_filter( 'show_deactivation_subscription_cancellation', '__return_false' );
+
+		function my_add_custom_permissions( array $permissions ) {
+		    $permissions['newsletter'] = array(
+		        'icon-class' => 'dashicons dashicons-email-alt',
+		        'label'      => my_fs()->get_text_inline( 'Newsletter', 'permissions-newsletter' ),
+		        'desc'       => my_fs()->get_text_inline( 'Updates, announcements, marketing, no spam', 'permissions-newsletter_desc' ),
+		        'priority'   => 15,
+		    );
+		}
+		 
+		my_fs()->add_filter( 'permission_list', 'my_add_custom_permissions' );
 	}
 }
 
