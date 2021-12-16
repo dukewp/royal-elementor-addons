@@ -365,6 +365,13 @@
 				);
 			}
 
+			$permissions['royaladdons'] = array(
+				'icon-class' => 'dashicons dashicons-search',
+				'label'      => 'Templates Kit & Elementor Search',
+				'desc'       => 'Searched query of Templates Kit and Elmenetor Widgets Panel.',
+				'priority'   => 25,
+			);
+
             $permissions['site'] = array(
                 'icon-class' => 'dashicons dashicons-admin-settings',
                 'tooltip'    => ( $require_license_key ? sprintf( $fs->get_text_inline( 'So you can manage and control your license remotely from the User Dashboard.', 'permissions-site_tooltip' ), $fs->get_module_type() ) : '' ),

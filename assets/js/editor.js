@@ -1,7 +1,47 @@
 ( function( $ ) {//TODO: manage comments
 
 	"use strict";
-	
+
+	var mutationObserver = new MutationObserver(function(mutations) {
+		// Elementor Search Input
+		if ( $('#elementor-panel-elements-search-input').length ) {
+
+			var searchTimeout = null;  
+			$('#elementor-panel-elements-search-input').on( 'keyup', function(e) {
+				if ( e.which === 13 ) {
+					return false;
+				}
+
+				var val = $(this).val();
+
+				if (searchTimeout != null) {
+					clearTimeout(searchTimeout);
+				}
+
+				searchTimeout = setTimeout(function() {
+					searchTimeout = null;
+
+					elementorCommon.ajax.addRequest( 'wpr_elementor_search_data', {
+						data: {
+						    search_query: val,
+						},
+						success: function() {
+							console.log('Success!');
+						}
+					});
+				}, 1000);
+			});
+
+		}
+	});
+
+	// Listen to Elementor Panel Changes
+	mutationObserver.observe($('#elementor-panel')[0], {
+	  childList: true,
+	  subtree: true,
+	});
+
+
 	// Make our custom css visible in the panel's front-end
 	elementor.hooks.addFilter( 'editor/style/styleText', function( css, context ) {
 		if ( ! context ) {
@@ -332,12 +372,12 @@
 	}
 
 	function openPedefinedStyles( panel, preview, widget, url, filter ) {
-		panel.on( 'click', '.elementor-control-wpr_library_buttons a:first-child', function() {
+		panel.on( 'click', '.elementor-control-wpr_library_buttons .elementor-control-raw-html div a:first-child', function() {
 			var theme = $(this).data('theme');
 			$(this).attr('href', url +'?ref=rea-plugin-panel-'+ widget +'-utmtr'+ theme.slice(0,3) +'nkbs'+ theme.slice(3,theme.length) +'-preview'+ filter);
 		});
 
-		panel.on( 'click', '.elementor-control-wpr_library_buttons a:last-child', function() {
+		panel.on( 'click', '.elementor-control-wpr_library_buttons .elementor-control-raw-html div a:last-child', function() {
 			preview.closest('body').find('#wpr-library-btn').attr('data-filter', widget);
 			preview.closest('body').find('#wpr-library-btn').trigger('click');
 		});

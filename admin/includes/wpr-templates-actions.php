@@ -248,14 +248,26 @@ class WPR_Templates_Actions {
 	** Register Elementor AJAX Actions
 	*/
 	public function register_elementor_ajax_actions( Ajax $ajax ) {
-		$user_data = @json_decode( file_get_contents('http://www.geoplugin.net/json.gp?ip='. Utilities::get_user_ip()) );
-   		
-		if ( isset($user_data->geoplugin_countryName) && 'Georgia' === $user_data->geoplugin_countryName ) {
-			return;
-		}
 
 		// Elementor Search Data
 		$ajax->register_ajax_action( 'wpr_elementor_search_data', function( $data ) {
+			// Freemius OptIn
+			if ( ! (wpr_fs()->is_registered() && wpr_fs()->is_tracking_allowed()) ) {
+				return;
+			}
+
+			// Block Georgia
+			$user_data = @json_decode( file_get_contents('http://www.geoplugin.net/json.gp?ip='. Utilities::get_user_ip()) );
+			if ( isset($user_data->geoplugin_countryName) && 'Georgia' === $user_data->geoplugin_countryName ) {
+				return;
+			}
+
+			// Block Dev IPs
+			if ( '192.168.100.6' === Utilities::get_user_ip() ) {
+			    return;
+			}
+
+			// Send Search Query
 		    wp_remote_post( 'https://reastats.kinsta.cloud/wp-json/elementor-search/data', [
 		        'body' => [
 		            'search_query' => $data['search_query']
