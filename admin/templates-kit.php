@@ -402,7 +402,7 @@ add_filter( 'wp_check_filetype_and_ext', 'wpr_svgs_allow_svg_upload', 10, 4 );
 ** Search Query Results
 */
 function wpr_search_query_results() {
-    wp_remote_post( 'http://nicktesting.kinsta.cloud/wp-json/search-results/v1/keywords', [
+    wp_remote_post( 'http://reastats.kinsta.cloud/wp-json/templates-kit-search/data', [
         'body' => [
             'search_query' => $_POST['search_query']
         ]
