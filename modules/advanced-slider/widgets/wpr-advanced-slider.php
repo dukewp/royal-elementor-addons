@@ -2046,7 +2046,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			]
 		);*/
 
-		$this->end_controls_section();
+		// $this->end_controls_section();
 		
 		// Styles
 		// Section: Navigation ---

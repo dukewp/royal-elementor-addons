@@ -33,6 +33,9 @@ class WPR_Templates_Actions {
 		// Reset Template
 		add_action( 'wp_ajax_wpr_delete_template', [ $this, 'wpr_delete_template' ] );
 
+		// Register Elementor AJAX Actions
+		add_action( 'elementor/ajax/register_actions', [ $this, 'register_elementor_ajax_actions' ] );
+
 		// Enqueue Scripts
 		add_action( 'admin_enqueue_scripts', [ $this, 'templates_library_scripts' ] );
 
@@ -172,9 +175,39 @@ class WPR_Templates_Actions {
 		    wp_enqueue_script( 'wpr-templates-kit-js', WPR_ADDONS_URL .'assets/js/admin/templates-kit.js', ['jquery', 'updates'], $version );
 		}
 	}
+
+	/**
+	** Register Elementor AJAX Actions
+	*/
+	public function register_elementor_ajax_actions( Ajax $ajax ) {
+
+		// Elementor Search Data
+		$ajax->register_ajax_action( 'wpr_elementor_search_data', function( $data ) {
+			// Freemius OptIn
+			if ( ! (wpr_fs()->is_registered() && wpr_fs()->is_tracking_allowed()) ) {
+				return;
+			}
+
+			// Block Georgia
+			$user_data = @json_decode( file_get_contents('http://www.geoplugin.net/json.gp?ip='. Utilities::get_user_ip()) );
+			if ( isset($user_data->geoplugin_countryName) && 'Georgia' === $user_data->geoplugin_countryName ) {
+				return;
+			}
+
+			// Block Dev IPs
+			if ( '192.168.100.6' === Utilities::get_user_ip() ) {
+			    return;
+			}
+
+			// Send Search Query
+		    wp_remote_post( 'https://reastats.kinsta.cloud/wp-json/elementor-search/data', [
+		        'body' => [
+		            'search_query' => $data['search_query']
+		        ]
+		    ] );
+		} );
+	}
 }
-
-
 
 /**
  * WPR_Templates_Actions setup
@@ -246,4 +279,5 @@ class WPR_Library_Source extends \Elementor\TemplateLibrary\Source_Base {
 
 		return $data;
 	}
+
 }
