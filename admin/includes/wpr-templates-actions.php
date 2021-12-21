@@ -188,17 +188,6 @@ class WPR_Templates_Actions {
 				return;
 			}
 
-			// Block Georgia
-			$user_data = @json_decode( file_get_contents('http://www.geoplugin.net/json.gp?ip='. Utilities::get_user_ip()) );
-			if ( isset($user_data->geoplugin_countryName) && 'Georgia' === $user_data->geoplugin_countryName ) {
-				return;
-			}
-
-			// Block Dev IPs
-			if ( '192.168.100.6' === Utilities::get_user_ip() ) {
-			    return;
-			}
-
 			// Send Search Query
 		    wp_remote_post( 'https://reastats.kinsta.cloud/wp-json/elementor-search/data', [
 		        'body' => [

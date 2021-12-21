@@ -326,6 +326,9 @@ function wpr_final_settings_setup() {
     update_option('wpr_footer_conditions', '{"user-footer-'. $kit .'":["global"]}');
     update_post_meta( Utilities::get_template_id('user-footer-'. $kit), 'wpr_footer_show_on_canvas', 'true' );
 
+    // Track Kit
+    wpr_track_imported_kit( $kit );
+
     // Clear DB
     delete_option('wpr-import-kit-id');
 
@@ -402,9 +405,30 @@ add_filter( 'wp_check_filetype_and_ext', 'wpr_svgs_allow_svg_upload', 10, 4 );
 ** Search Query Results
 */
 function wpr_search_query_results() {
+    // Freemius OptIn
+    if ( ! (wpr_fs()->is_registered() && wpr_fs()->is_tracking_allowed()) ) {
+        return;
+    }
+
     wp_remote_post( 'http://reastats.kinsta.cloud/wp-json/templates-kit-search/data', [
         'body' => [
             'search_query' => $_POST['search_query']
+        ]
+    ] );
+}
+
+/**
+** Search Query Results
+*/
+function wpr_track_imported_kit( $kit ) {
+    // Freemius OptIn
+    if ( ! (wpr_fs()->is_registered() && wpr_fs()->is_tracking_allowed()) ) {
+        return;
+    }
+    
+    wp_remote_post( 'http://reastats.kinsta.cloud/wp-json/templates-kit-import/data', [
+        'body' => [
+            'imported_kit' => $kit
         ]
     ] );
 }
