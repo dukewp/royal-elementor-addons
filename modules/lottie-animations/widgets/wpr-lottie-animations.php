@@ -53,7 +53,7 @@ class Wpr_Lottie_Animations extends Widget_Base {
 			]
 		);
 
-		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
+		// Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
 		$this->add_control(
 			'source',
@@ -73,7 +73,7 @@ class Wpr_Lottie_Animations extends Widget_Base {
 			[
 				'label'       => __( 'Animation JSON URL', 'wpr-addons' ),
 				'type'        => Controls_Manager::TEXT,
-				'dynamic'     => array( 'active' => true ),
+				'default'	  => 'https://assets3.lottiefiles.com/packages/lf20_ghs9bkkc.json',
 				'description' => 'Get JSON code URL from <a href="https://lottiefiles.com/" target="_blank">here</a>',
 				'label_block' => true,
 				'condition'   => [
@@ -96,22 +96,23 @@ class Wpr_Lottie_Animations extends Widget_Base {
 		);
 
 		$this->add_control(
-			'loop',
-			[
-				'label' => esc_html__( 'Loop', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'label_block' => false
-			]
-		);
-
-		$this->add_control(
 			'autoplay',
 			[
 				'label' => esc_html__( 'Autoplay', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
 				'return_value' => 'yes',
-				'label_block' => false
+				'separator'   => 'before',
+			]
+		);
+
+		$this->add_control(
+			'loop',
+			[
+				'label' => esc_html__( 'Loop', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
 			]
 		);
 
@@ -187,8 +188,8 @@ class Wpr_Lottie_Animations extends Widget_Base {
 				'type'        => Controls_Manager::SLIDER,
 				'size_units'  => array( 'px', 'em', '%' ),
 				'default'     => array(
-					'unit' => 'px',
-					'size' => 200,
+					'unit' => '%',
+					'size' => 50,
 				),
 				'range'       => array(
 					'px' => array(
@@ -203,8 +204,8 @@ class Wpr_Lottie_Animations extends Widget_Base {
 				'render_type' => 'template',
 				'separator'   => 'before',
 				'selectors'   => array(
-					'{{WRAPPER}} .wpr-lottie-animations svg'    => 'width: {{SIZE}}{{UNIT}} !important; height: {{SIZE}}{{UNIT}} !important;',
-					'{{WRAPPER}} .wpr-lottie-animations'    => 'width: {{SIZE}}{{UNIT}} !important; height: {{SIZE}}{{UNIT}} !important;',
+					'{{WRAPPER}} .wpr-lottie-animations svg' => 'width: {{SIZE}}{{UNIT}} !important; height: {{SIZE}}{{UNIT}} !important;',
+					'{{WRAPPER}} .wpr-lottie-animations' => 'width: {{SIZE}}{{UNIT}} !important; height: {{SIZE}}{{UNIT}} !important;',
 				),
 			)
 		);
@@ -261,7 +262,7 @@ class Wpr_Lottie_Animations extends Widget_Base {
 		$this->add_control(
 			'link_switcher',
 			[
-				'label' => __( 'Link', 'wpr-addons' ),
+				'label' => __( 'Wrapper Link', 'wpr-addons' ),
 				'type'  => Controls_Manager::SWITCHER,
 			]
 		);
@@ -294,7 +295,6 @@ class Wpr_Lottie_Animations extends Widget_Base {
 				),
 				'placeholder' => 'https://royal-elementor-addons.com/',
 				'label_block' => true,
-				'separator'   => 'after',
 				'condition'   => array(
 					'link_switcher'  => 'yes',
 					'link_selection' => 'url',
@@ -329,7 +329,6 @@ class Wpr_Lottie_Animations extends Widget_Base {
 				'default'      => 'svg',
 				'prefix_class' => 'wpr-lottie-',
 				'render_type'  => 'template',
-				'label_block'  => true,
 				'separator'    => 'before',
 			]
 		);
@@ -363,17 +362,6 @@ class Wpr_Lottie_Animations extends Widget_Base {
 		);
 
 		$this->add_control(
-			'lottie_background',
-			[
-				'label'     => __( 'Background Color', 'wpr-addons' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => array(
-					'{{WRAPPER}} .wpr-lottie-animations'  => 'background-color: {{VALUE}}',
-				),
-			]
-		);
-		
-		$this->add_control(
 			'opacity',
 			[
 				'label'     => __( 'Opacity', 'wpr-addons' ),
@@ -399,84 +387,12 @@ class Wpr_Lottie_Animations extends Widget_Base {
 			)
 		);
 
-		$this->add_group_control(
-			Group_Control_Border::get_type(),
-			[
-				'name'      => 'lottie_border',
-				'selector'  => '{{WRAPPER}} .wpr-lottie-animations',
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'lottie_border_radius',
-			[
-				'label'      => __( 'Border Radius', 'wpr-addons' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => array( 'px', '%', 'em' ),
-				'selectors'  => array(
-					'{{WRAPPER}} .wpr-lottie-animations' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
-				),
-				'condition'  => array(
-					'lottie_adv_radius!' => 'yes',
-				),
-			]
-		);
-
-		$this->add_control(
-			'lottie_adv_radius',
-			[
-				'label'       => __( 'Advanced Border Radius', 'wpr-addons' ),
-				'type'        => Controls_Manager::SWITCHER,
-				'description' => __( 'Apply custom radius values. Get the radius value from ', 'wpr-addons' ) . '<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">here</a>',
-			]
-		);
-
-		$this->add_control(
-			'lottie_adv_radius_value',
-			array(
-				'label'     => __( 'Border Radius', 'wpr-addons' ),
-				'default' => 'no',
-				'type'      => Controls_Manager::TEXT,
-				'dynamic'   => array( 'active' => true ),
-				'selectors' => array(
-					'{{WRAPPER}} .wpr-lottie-animations' => 'border-radius: {{VALUE}};',
-				),
-				'condition' => array(
-					'lottie_adv_radius' => 'yes',
-				),
-			)
-		);
-		
-		$this->add_responsive_control(
-			'animation_padding',
-			array(
-				'label'      => __( 'Padding', 'wpr-addons' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => array( 'px', 'em', '%' ),
-				'selectors'  => array(
-					'{{WRAPPER}} .wpr-lottie-animations' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
-				),
-			)
-		);
-
 		$this->end_controls_tab();
 		
 		$this->start_controls_tab(
 			'tab_lottie_hover',
 			[
 				'label' => __( 'Hover', 'wpr-addons' ),
-			]
-		);
-
-		$this->add_control(
-			'lottie_hover_background',
-			[
-				'label'     => __( 'Background Color', 'wpr-addons' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => array(
-					'{{WRAPPER}} .wpr-lottie-animations:hover'  => 'background-color: {{VALUE}}',
-				),
 			]
 		);
 
@@ -535,10 +451,6 @@ class Wpr_Lottie_Animations extends Widget_Base {
 	}
 
 	public function lottie_attributes($settings) {
-		// ob_start();
-		// \Elementor\Icons_Manager::render_icon( $settings['button_prev'], [ 'aria-hidden' => 'true' ] );
-		// $icon_prev = ob_get_clean();
-
 		$attributes = [
 			'loop' => $settings['loop'],
 			'autoplay' => $settings['autoplay'],
@@ -559,6 +471,10 @@ class Wpr_Lottie_Animations extends Widget_Base {
 		$settings = $this->get_settings_for_display();
 		$lottie_json = 'url' === $settings['source'] ? esc_url($settings['json_url']) : $settings['json_file']['url'];
 		$lottie_link = 'url' === $settings['link_selection'] ? $settings['link']['url'] : get_permalink($settings['existing_link']);
+
+		if ( '' === $lottie_json ) {
+			$lottie_json = WPR_ADDONS_URL .'modules/lottie-animations/assets/default.json';
+		}
 
 		$lottie_animation = 'yes' === $settings['link_switcher']
 				? '<a href="'. $lottie_link .'"><div class="wpr-lottie-animations" data-settings="'. esc_attr($this->lottie_attributes($settings)) .'" data-json-url="'. $lottie_json .'"></div></a>'
