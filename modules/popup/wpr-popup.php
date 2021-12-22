@@ -190,9 +190,6 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'popup', 'popup_show_again_delay', [
-			'pro-6',
-			'pro-18',
-			'pro-30',
 			'pro-60',
 			'pro-180',
 			'pro-360',
