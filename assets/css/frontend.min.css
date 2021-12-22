@@ -10211,7 +10211,7 @@ html {
   .wpr-table-td,
   .wpr-table-th {
 	  vertical-align: middle;
-	  transition: all 0.6s ease;
+	  /* transition: all 0.6s ease; */
   }
   
   .wpr-table-appended-tr {

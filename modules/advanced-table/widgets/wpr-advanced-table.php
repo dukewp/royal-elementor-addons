@@ -807,6 +807,25 @@ class Wpr_AdvancedTable extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'hover_transition',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.3,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-table-th' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
+					'{{WRAPPER}} .wpr-table-th i' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
+					'{{WRAPPER}} .wpr-table-td' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
+					'{{WRAPPER}} .wpr-table-td i' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
+					'{{WRAPPER}} .wpr-table-text' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;'
+				],
+			]
+		);
+
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -816,8 +835,89 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'tab' => Controls_Manager::TAB_STYLE
 			]
 		);
-
 		
+		$this->start_controls_tabs(
+			'style_tabs'
+		);
+
+		$this->start_controls_tab(
+			'style_normal_tab',
+			[
+				'label' => __( 'Normal', 'plugin-name' ),
+			]
+		);
+
+		$this->add_control(
+			'th_color',
+			[
+				'label'  => esc_html__( 'Text Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#fff',
+				'selectors' => [
+					'{{WRAPPER}} th' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'th_bg_color',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#34495E',
+				'selectors' => [
+					'{{WRAPPER}} th' => 'background-color: {{VALUE}}',
+				],
+				'separator' => 'after',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'style_hover_tab',
+			[
+				'label' => __( 'Hover', 'plugin-name' ),
+			]
+		);
+
+		$this->add_control(
+			'th_color_hover',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#fff',
+				'selectors' => [
+					'{{WRAPPER}} th:hover' => 'color: {{VALUE}}; cursor: pointer;',
+				],
+			]
+		);
+
+		$this->add_control(
+			'th_bg_color_hover',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#43495E',
+				'selectors' => [
+					'{{WRAPPER}} th:hover' => 'background-color: {{VALUE}}',
+				],
+				'separator' => 'after',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'th_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} th'
+			]
+		);
 
 		$this->add_control(
 			'header_border_radius',
@@ -1017,90 +1117,6 @@ class Wpr_AdvancedTable extends Widget_Base {
 			]
 		);
 
-		
-		$this->start_controls_tabs(
-			'style_tabs'
-		);
-
-		$this->start_controls_tab(
-			'style_normal_tab',
-			[
-				'label' => __( 'Normal', 'plugin-name' ),
-			]
-		);
-
-		$this->add_control(
-			'th_color',
-			[
-				'label'  => esc_html__( 'Text Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#fff',
-				'selectors' => [
-					'{{WRAPPER}} th' => 'color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_control(
-			'th_bg_color',
-			[
-				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#34495E',
-				'selectors' => [
-					'{{WRAPPER}} th' => 'background-color: {{VALUE}}',
-				],
-				'separator' => 'after',
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->start_controls_tab(
-			'style_hover_tab',
-			[
-				'label' => __( 'Hover', 'plugin-name' ),
-			]
-		);
-
-		$this->add_control(
-			'th_color_hover',
-			[
-				'label'  => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#fff',
-				'selectors' => [
-					'{{WRAPPER}} th:hover' => 'color: {{VALUE}}; cursor: pointer;',
-				],
-			]
-		);
-
-		$this->add_control(
-			'th_bg_color_hover',
-			[
-				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#43495E',
-				'selectors' => [
-					'{{WRAPPER}} th:hover' => 'background-color: {{VALUE}}',
-				],
-				'separator' => 'after',
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->end_controls_tabs();
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'th_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} th'
-			]
-		);
-
 		$this->add_responsive_control(
 			'th_align',
 			[
@@ -1138,84 +1154,6 @@ class Wpr_AdvancedTable extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-            'tbody_icon_size',
-            [
-                'label'      => __('Icon Size', 'wpr-addons'),
-                'type'       => Controls_Manager::SLIDER,
-                'size_units' => ['px'],
-                'range'      => [
-                    'px' => [
-                        'min' => 1,
-                        'max' => 70,
-                    ],
-                ],
-                'default'    => [
-                    'size' => 20,
-                ],
-                'selectors'  => [
-                    '{{WRAPPER}} .wpr-advanced-table tbody i' => 'font-size: {{SIZE}}{{UNIT}};',
-                    // '{{WRAPPER}} .eael-data-table thead tr th .data-table-header-svg-icon' => 'height: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'td_icon_space',
-            [
-                'label'      => __('Icon Margin', 'wpr-addons'),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%'],
-                'range'      => [
-                    // 'px' => [
-                    //     'min' => 1,
-                    //     'max' => 100,
-                    // ],
-                    // '%' => [
-                    //     'min' => 1,
-                    //     'max' => 100,
-                    // ],
-					'default' => [
-						'top' => 0,
-						'right' => 0,
-						'bottom' => 0,
-						'left' => 0,
-					],
-				],
-                'selectors'             => [
-					'{{WRAPPER}} .wpr-advanced-table td i' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
-				],
-            ]
-		);
-
-        $this->add_responsive_control(
-            'td_img_space',
-            [
-                'label'      => __('Image Padding', 'wpr-addons'),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%'],
-                'range'      => [
-                    // 'px' => [
-                    //     'min' => 1,
-                    //     'max' => 100,
-                    // ],
-                    // '%' => [
-                    //     'min' => 1,
-                    //     'max' => 100,
-                    // ],
-					'default' => [
-						'top' => 0,
-						'right' => 0,
-						'bottom' => 0,
-						'left' => 0,
-					],
-				],
-                'selectors'             => [
-					'{{WRAPPER}} .wpr-advanced-table td img' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
-				],
-            ]
-		);
-		
 		$this->start_controls_tabs(
 			'cells_style_tabs'
 		);
@@ -1243,7 +1181,8 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => 'gray',
 				'selectors' => [
-					'{{WRAPPER}} tr.wpr-odd td .wpr-table-text' => 'color: {{VALUE}}',
+					'{{WRAPPER}} tr.wpr-odd td.wpr-table-text' => 'color: {{VALUE}}',
+					// '{{WRAPPER}} tr:nth-child(odd) td a' => 'color: {{VALUE}} !important',
 					'{{WRAPPER}} tr.wpr-odd td a' => 'color: {{VALUE}} !important',
 				],
 			]
@@ -1257,6 +1196,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'default' => '#fff',
 				'selectors' => [
 					'{{WRAPPER}} tr.wpr-odd td' => 'background-color: {{VALUE}}', // TODO: decide tr or td
+					// '{{WRAPPER}} tr:nth-child(odd) td' => 'background-color: {{VALUE}}', // TODO: decide tr or td
 				],
 			]
 		);
@@ -1275,10 +1215,10 @@ class Wpr_AdvancedTable extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#fff',
+				'default' => '#000',
 				'selectors' => [
-					'{{WRAPPER}} tr.wpr-even td .wpr-table-text' => 'color: {{VALUE}}',
-					'{{WRAPPER}} tr.wpr-even td a' => 'color: {{VALUE}} !important',
+					'{{WRAPPER}} tr.wpr-even td a .wpr-table-text' => 'color: {{VALUE}} !important',
+					'{{WRAPPER}} tr.wpr-even td.wpr-table-text' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -1291,6 +1231,8 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'default' => '#ffbbee',
 				'selectors' => [
 					'{{WRAPPER}} tr.wpr-even td' => 'background-color: {{VALUE}}', // TODO: decide tr or td
+					// '{{WRAPPER}} tr:nth-child(even) td' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} tr.wpr-even td' => 'background-color: {{VALUE}};',
 				],
 			]
 		);
@@ -1432,8 +1374,13 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => 'gray',
 				'selectors' => [
-					'{{WRAPPER}} tr.wpr-odd td:hover a' => 'color: {{VALUE}}',
+					// '{{WRAPPER}} tr.wpr-odd td:hover a' => 'color: {{VALUE}}',
+					// '{{WRAPPER}} tr.wpr-odd td:hover i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} tr.wpr-odd td:hover a' => 'color: {{VALUE}} !important',
+					'{{WRAPPER}} tr.wpr-odd td:hover.wpr-table-text' => 'color: {{VALUE}} !important',
 					'{{WRAPPER}} tr.wpr-odd td:hover i' => 'color: {{VALUE}}',
+					// '{{WRAPPER}} tr:nth-child(odd) td:hover a' => 'color: {{VALUE}} !important',
+					// '{{WRAPPER}} tr:nth-child(odd) td:hover i' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -1446,6 +1393,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'default' => '#ddd',
 				'selectors' => [
 					'{{WRAPPER}} tr.wpr-odd:hover td' => 'background-color: {{VALUE}}; cursor: pointer;',
+					// '{{WRAPPER}} tr:nth-child(odd):hover td' => 'background-color: {{VALUE}}; cursor: pointer;',
 				],
 			]
 		);
@@ -1466,7 +1414,8 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => 'lightgray',
 				'selectors' => [
-					'{{WRAPPER}} tr.wpr-even td:hover a' => 'color: {{VALUE}}',
+					'{{WRAPPER}} tr.wpr-even td:hover.wpr-table-text' => 'color: {{VALUE}}',
+					'{{WRAPPER}} tr.wpr-even td:hover a .wpr-table-text' => 'color: {{VALUE}} !important',
 					'{{WRAPPER}} tr.wpr-even td:hover i' => 'color: {{VALUE}}',
 				],
 			]
@@ -1487,6 +1436,84 @@ class Wpr_AdvancedTable extends Widget_Base {
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
+
+		$this->add_responsive_control(
+            'tbody_icon_size',
+            [
+                'label'      => __('Icon Size', 'wpr-addons'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'range'      => [
+                    'px' => [
+                        'min' => 1,
+                        'max' => 70,
+                    ],
+                ],
+                'default'    => [
+                    'size' => 20,
+                ],
+                'selectors'  => [
+                    '{{WRAPPER}} .wpr-advanced-table tbody i' => 'font-size: {{SIZE}}{{UNIT}};',
+                    // '{{WRAPPER}} .eael-data-table thead tr th .data-table-header-svg-icon' => 'height: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'td_icon_space',
+            [
+                'label'      => __('Icon Margin', 'wpr-addons'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'range'      => [
+                    // 'px' => [
+                    //     'min' => 1,
+                    //     'max' => 100,
+                    // ],
+                    // '%' => [
+                    //     'min' => 1,
+                    //     'max' => 100,
+                    // ],
+					'default' => [
+						'top' => 0,
+						'right' => 0,
+						'bottom' => 0,
+						'left' => 0,
+					],
+				],
+                'selectors'             => [
+					'{{WRAPPER}} .wpr-advanced-table td i' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				],
+            ]
+		);
+
+        $this->add_responsive_control(
+            'td_img_space',
+            [
+                'label'      => __('Image Padding', 'wpr-addons'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'range'      => [
+                    // 'px' => [
+                    //     'min' => 1,
+                    //     'max' => 100,
+                    // ],
+                    // '%' => [
+                    //     'min' => 1,
+                    //     'max' => 100,
+                    // ],
+					'default' => [
+						'top' => 0,
+						'right' => 0,
+						'bottom' => 0,
+						'left' => 0,
+					],
+				],
+                'selectors'             => [
+					'{{WRAPPER}} .wpr-advanced-table td img' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				],
+            ]
+		);
 
 		$this->end_controls_section();
 
@@ -1979,7 +2006,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 			[
 				'label' => __( 'Background Color', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
-				'default' => '#7b23ac',
+				'default' => '#34495E',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-table-custom-pagination-list' => 'background-color: {{VALUE}}'
 				],
@@ -2132,24 +2159,25 @@ class Wpr_AdvancedTable extends Widget_Base {
 			[
 				'label' => __( 'Background Color', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
-				'default' => '#7b2ccc',
+				// 'default' => '#7b2ccc',
+				'default' => '#43495E',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-table-custom-pagination-list:hover' => 'background-color: {{VALUE}}'
 				],
 			]
 		);
 				
-		$this->add_control(
-			'pagination_color_active_hover',
-			[
-				'label' => __( 'Background Color (Active)', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'default' => '#fb0',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-custom-pagination-list.wpr-active-pagination-item:hover' => 'background-color: {{VALUE}}'
-				],
-			]
-		);
+		// $this->add_control(
+		// 	'pagination_color_active_hover',
+		// 	[
+		// 		'label' => __( 'Background Color (Active)', 'wpr-addons' ),
+		// 		'type' => \Elementor\Controls_Manager::COLOR,
+		// 		'default' => '#fb0',
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-table-custom-pagination-list.wpr-active-pagination-item:hover' => 'background-color: {{VALUE}}'
+		// 		],
+		// 	]
+		// );
 
 		$this->add_control(
 			'pagination_border_color_hover',
@@ -2327,16 +2355,19 @@ class Wpr_AdvancedTable extends Widget_Base {
 		} else {
 
 			// Storing Data table content values
+			$countRows = 0;
 			foreach( $settings['table_content_rows'] as $content_row ) {
+				$countRows++;
+				$oddEven = $countRows % 2 == 0 ? 'wpr-even' : 'wpr-odd';
 				$row_id = uniqid();
 				if( $content_row['table_content_row_type'] == 'row' ) {
 					$table_tr[] = [
 						'id' => $row_id,
 						'type' => $content_row['table_content_row_type'],
 					'tr_bg_color' => $content_row['tr_bg_color'],
-					'class' => ['wpr-table-body-row', 'wpr-table-row', 'elementor-repeater-item-'.$content_row['_id']]
+					'class' => ['wpr-table-body-row', 'wpr-table-row', 'elementor-repeater-item-'.$content_row['_id'], $oddEven]
 					];
-
+					
 				}
 			if( $content_row['table_content_row_type'] == 'col' ) {
 
@@ -2434,7 +2465,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 						]);
 
 						?>
-					<tr class='<?php echo $this->get_render_attribute_string('table_row_attributes'.$i) ?>'>
+					<tr <?php echo $this->get_render_attribute_string('table_row_attributes'.$i) ?>>
 						<?php
 							for( $j = 0; $j < count( $table_td ); $j++ ) {
 								if( $table_tr[$i]['id'] == $table_td[$j]['row_id'] ) {
