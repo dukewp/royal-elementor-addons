@@ -180,13 +180,13 @@ class Wpr_Lottie_Animations extends Widget_Base {
 				),
 			)
 		);
-
+		
 		$this->add_responsive_control(
 			'animation_size',
 			array(
 				'label'       => __( 'Size', 'wpr-addons' ),
 				'type'        => Controls_Manager::SLIDER,
-				'size_units'  => array( 'px', 'em', '%' ),
+				'size_units'  => array( 'px', '%' ),
 				'default'     => array(
 					'unit' => '%',
 					'size' => 50,
@@ -204,7 +204,7 @@ class Wpr_Lottie_Animations extends Widget_Base {
 				'render_type' => 'template',
 				'separator'   => 'before',
 				'selectors'   => array(
-					'{{WRAPPER}} .wpr-lottie-animations svg' => 'width: {{SIZE}}{{UNIT}} !important; height: {{SIZE}}{{UNIT}} !important;',
+					'{{WRAPPER}} .wpr-lottie-animations svg' => 'width: 100% !important; height: 100% !important;',
 					'{{WRAPPER}} .wpr-lottie-animations' => 'width: {{SIZE}}{{UNIT}} !important; height: {{SIZE}}{{UNIT}} !important;',
 				),
 			)
@@ -257,6 +257,31 @@ class Wpr_Lottie_Animations extends Widget_Base {
 					'{{WRAPPER}} .wpr-lottie-animations-wrapper' => 'display: flex; justify-content: {{VALUE}}; align-items: {{VALUE}};',
 				),
 			)
+		);
+		
+		$this->add_control(
+			'lottie_renderer',
+			[
+				'label'        => __( 'Render As', 'wpr-addons' ),
+				'type'         => Controls_Manager::SELECT,
+				'options'      => array(
+					'svg'    => __( 'SVG', 'wpr-addons' ),
+					'canvas' => __( 'Canvas', 'wpr-addons' ),
+				),
+				'default'      => 'svg',
+				'prefix_class' => 'wpr-lottie-',
+				'render_type'  => 'template',
+				'separator'    => 'before',
+			]
+		);
+
+		$this->add_control(
+			'render_notice',
+			[
+				'raw'             => __( 'Set render type to canvas if you\'re having performance issues on the page.', 'premium-addons-for-elemeentor' ),
+				'type'            => Controls_Manager::RAW_HTML,
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+			]
 		);
 		
 		$this->add_control(
@@ -316,31 +341,7 @@ class Wpr_Lottie_Animations extends Widget_Base {
 				),
 			)
 		);
-		
-		$this->add_control(
-			'lottie_renderer',
-			[
-				'label'        => __( 'Render As', 'wpr-addons' ),
-				'type'         => Controls_Manager::SELECT,
-				'options'      => array(
-					'svg'    => __( 'SVG', 'wpr-addons' ),
-					'canvas' => __( 'Canvas', 'wpr-addons' ),
-				),
-				'default'      => 'svg',
-				'prefix_class' => 'wpr-lottie-',
-				'render_type'  => 'template',
-				'separator'    => 'before',
-			]
-		);
 
-		$this->add_control(
-			'render_notice',
-			[
-				'raw'             => __( 'Set render type to canvas if you\'re having performance issues on the page.', 'premium-addons-for-elemeentor' ),
-				'type'            => Controls_Manager::RAW_HTML,
-				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
-			]
-		);
 
 		$this->end_controls_section(); // End Controls Section
 
@@ -378,7 +379,22 @@ class Wpr_Lottie_Animations extends Widget_Base {
 				),
 			]
 		);
-		
+
+		$this->add_control(
+			'hover_transition',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.3,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-lottie-animations' => 'transition-duration: {{VALUE}}s;'
+				],
+			]
+		);
+
 		$this->add_group_control(
 			Group_Control_Css_Filter::get_type(),
 			array(
