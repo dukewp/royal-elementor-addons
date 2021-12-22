@@ -34,7 +34,7 @@ class Wpr_Nav_Menu extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'nav menu', 'navigation menu', 'horizontal menu', 'horizontal navigation', 'vertical menu', 'vertical navigation', 'burger menu', 'hamburger menu', 'mobile menu', 'responsive menu' ];
+		return [ 'nav menu', 'header', 'navigation menu', 'horizontal menu', 'horizontal navigation', 'vertical menu', 'vertical navigation', 'burger menu', 'hamburger menu', 'mobile menu', 'responsive menu' ];
 	}
 
 	public function get_style_depends() {

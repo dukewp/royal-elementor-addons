@@ -207,8 +207,9 @@ class Wpr_Sticky_Section {
         if ( $element->get_name() !== 'section' ) {
             return;
         }
-
+		
         $settings = $element->get_settings_for_display();
+		
         if ( $settings['enable_sticky_section'] === 'yes' ) {
             $element->add_render_attribute( '_wrapper', [
                 'data-wpr-sticky-section' => $settings['enable_sticky_section'],
@@ -228,6 +229,14 @@ class Wpr_Sticky_Section {
 		}
 
 		ob_start();
+
+		?>
+
+		<# if ( 'yes' === settings.enable_sticky_section) { #>
+			<div class="wpr-sticky-section-yes-editor" data-wpr-sticky-section={{{settings.enable_sticky_section}}} data-wpr-position-type={{{settings.position_type}}} data-wpr-position-offset={{{settings.position_offset}}} data-wpr-position-location={{{settings.position_location}}} data-wpr-sticky-devices={{{settings.enable_on_devices}}} data-wpr-custom-breakpoints={{{settings.custom_breakpoints}}} data-wpr-active-breakpoints={{{settings.active_breakpoints}}}></div>
+		<# } #>   
+
+		<?php
 		
 		// how to render attributes without creating new div using view.addRenderAttributes
 		$particles_content = ob_get_contents();
