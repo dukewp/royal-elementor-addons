@@ -52,7 +52,7 @@ class Utilities {
 			'Back to Top' => ['back-to-top', '', ''],
 			'Phone Call' => ['phone-call', '', ''],
 			'Popup Trigger' => ['popup-trigger', '', ''],
-			// 'Lottie Animations' => ['lottie-animations', '', ''],
+			'Lottie Animations' => ['lottie-animations', '', ''],
 			// 'Random Image' => ['random-image', '', ''],
 			// 'Author Box' => 'author-box',
 		];

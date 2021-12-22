@@ -33,7 +33,7 @@ class WprRatingNotice {
 
         if ( false !== $install_date && $this->past_date >= $install_date ) {
             add_action( 'admin_notices', [$this, 'render_rating_notice' ]);
-        }    
+        }
     }
 
     function wpr_rating_already_rated() {    
@@ -66,7 +66,7 @@ class WprRatingNotice {
                             <p>
                                 <a href="https://wordpress.org/support/plugin/royal-elementor-addons/reviews/?filter=5#new-post" target="_blank" class="wpr-you-deserve-it button button-primary">OK, you deserve it!</a>
                                 <a class="wpr-already-rated"><span class="dashicons dashicons-yes"></span> I Already did</a>
-                                <a href="https://royal-elementor-addons.com/contact/?ref=rea-plugin-backend-rating-support" target="_blank" class="wpr-need-support"><span class="dashicons dashicons-sos"></span> I need support!</a>
+                                <a href="https://wordpress.org/support/plugin/royal-elementor-addons/" target="_blank" class="wpr-need-support"><span class="dashicons dashicons-sos"></span> I need support!</a>
                                 <a class="wpr-notice-dismiss-2"><span class="dashicons dashicons-thumbs-down"></span> NO, not good enough</a>
                             </p>
                         </div>

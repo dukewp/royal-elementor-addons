@@ -277,8 +277,8 @@
 	color: red;
 }
 
-/* Help Button */
-#elementor-panel__editor__help__link[href^="https://royal-elementor-addons.com/contact/"] {
+/* Help Button - select with referrals - [href^="https://royal-elementor-addons.com/contact/"] */
+#elementor-panel__editor__help__link[href^="https://wordpress.org/support/plugin/royal-elementor-addons/"] {
 	display: inline-block;
 	padding: 12px 35px;
 	font-size: 13px;
@@ -294,22 +294,22 @@
 	transition: all 0.2s ease-in;
 }
 
-#elementor-panel__editor__help__link[href^="https://royal-elementor-addons.com/contact/"]:hover {
+#elementor-panel__editor__help__link[href^="https://wordpress.org/support/plugin/royal-elementor-addons/"]:hover {
 	color: #fff;
 	background: #6A4BFF;
 }
 
-#elementor-panel__editor__help__link[href^="https://royal-elementor-addons.com/contact/"] i {
+#elementor-panel__editor__help__link[href^="https://wordpress.org/support/plugin/royal-elementor-addons/"] i {
 	color: #fff;
 	font-size: 14px;
 	vertical-align: top;
 }
 
-#elementor-panel__editor__help__link[href^="https://royal-elementor-addons.com/contact/"]:hover i {
+#elementor-panel__editor__help__link[href^="https://wordpress.org/support/plugin/royal-elementor-addons/"]:hover i {
 	color: #fff;
 }
 
-#elementor-panel__editor__help__link[href^="https://royal-elementor-addons.com/contact/"]:hover i:before {
+#elementor-panel__editor__help__link[href^="https://wordpress.org/support/plugin/royal-elementor-addons/"]:hover i:before {
 	content: '\e942' !important;
 }
 
