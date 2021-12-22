@@ -37,7 +37,8 @@ class Wpr_Forms extends Widget_Base {
 
     public function get_custom_help_url() {
     	if ( empty(get_option('wpr_wl_plugin_links')) )
-        return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-forms-help-btn';
+        // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-forms-help-btn';
+    		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
 
 	protected function register_controls() {

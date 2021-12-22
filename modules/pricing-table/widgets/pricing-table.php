@@ -44,7 +44,8 @@ class Pricing_Table extends Widget_Base {
 
     public function get_custom_help_url() {
     	if ( empty(get_option('wpr_wl_plugin_links')) )
-        return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-pricing-table-help-btn';
+        // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-pricing-table-help-btn';
+    		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
 
 	public function add_repeater_args_feature_tooltip() {
