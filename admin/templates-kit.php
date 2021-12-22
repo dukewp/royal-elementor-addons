@@ -348,6 +348,9 @@ function wpr_svgs_upload_mimes( $mimes = array() ) {
     $mimes['svg'] = 'image/svg+xml';
     $mimes['svgz'] = 'image/svg+xml';
 
+    // allow JSON file upload
+    $mimes['json'] = 'text/plain';
+
     return $mimes;
 
 }
