@@ -667,7 +667,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 		$this->start_controls_section(
 			'style_section',
 			[
-				'label' => __('General Styles', 'wpr-addons'),
+				'label' => __('General', 'wpr-addons'),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -812,7 +812,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 		$this->start_controls_section(
 			'header_style',
 			[
-				'label' => esc_html__('Header Style', 'wpr-addons'),
+				'label' => esc_html__('Header', 'wpr-addons'),
 				'tab' => Controls_Manager::TAB_STYLE
 			]
 		);
@@ -1133,7 +1133,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 		$this->start_controls_section(
 			'content_styles',
 			[
-				'label' => esc_html__('Content Styles', 'wpr-addons'),
+				'label' => esc_html__('Content', 'wpr-addons'),
 				'tab' => Controls_Manager::TAB_STYLE
 			]
 		);
@@ -1243,7 +1243,8 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => 'gray',
 				'selectors' => [
-					'{{WRAPPER}} tr.wpr-odd td a' => 'color: {{VALUE}}',
+					'{{WRAPPER}} tr.wpr-odd td .wpr-table-text' => 'color: {{VALUE}}',
+					'{{WRAPPER}} tr.wpr-odd td a' => 'color: {{VALUE}} !important',
 				],
 			]
 		);
@@ -1276,7 +1277,8 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#fff',
 				'selectors' => [
-					'{{WRAPPER}} tr.wpr-even td a' => 'color: {{VALUE}}',
+					'{{WRAPPER}} tr.wpr-even td .wpr-table-text' => 'color: {{VALUE}}',
+					'{{WRAPPER}} tr.wpr-even td a' => 'color: {{VALUE}} !important',
 				],
 			]
 		);
@@ -1726,7 +1728,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'type' => Controls_Manager::SLIDER,
                 'size_units' => [ 'px', '%' ],
                 'default'   => [
-                    'size'  => 425,
+                    'size'  => 325,
                     'unit'  => 'px'
                 ],
 				'range' => [
@@ -1754,14 +1756,15 @@ class Wpr_AdvancedTable extends Widget_Base {
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => [ 'px', 'em', '%' ],
                 'default'    => [
-                    'top'    => 0,
-                    'bottom' => 0,
-                    'left'   => 0,
-                    'right'  => 0,
+                    'top'    => 10,
+                    'bottom' => 10,
+                    'left'   => 10,
+                    'right'  => 10,
                     'unit'   => 'px'
                 ],
                 'selectors' => [
                     '{{WRAPPER}} .wpr-table-live-search-cont input' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .wpr-search-input-icon' => 'right: {{RIGHT}}{{UNIT}} !important',
                 ],
             ]
         );
