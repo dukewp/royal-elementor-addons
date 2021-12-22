@@ -53,6 +53,7 @@ class Utilities {
 			'Phone Call' => ['phone-call', '', ''],
 			'Popup Trigger' => ['popup-trigger', '', ''],
 			'Lottie Animations' => ['lottie-animations', '', ''],
+			'Posts Timeline' => ['posts-timeline', '', ''],
 			// 'Random Image' => ['random-image', '', ''],
 			// 'Author Box' => 'author-box',
 		];
@@ -691,6 +692,24 @@ class Utilities {
 			$ipaddress = 'UNKNOWN';
 		}
 		return $ipaddress;
+	}
+
+	public static function youtube_url ( $story_settings ) {
+		if ( $story_settings['repeater_youtube_video_url'] != '' ) {
+                preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $story_settings['repeater_youtube_video_url'], $matches);
+              
+                if ( isset($matches[1]) ) {
+                    $id = $matches[1];
+                    $media = '<iframe width="100%" height="auto"
+                    src="https://www.youtube.com/embed/' . $id . '" 
+                    frameborder="0" allowfullscreen></iframe>';
+                }
+            } else if ( empty($story_settings['repeater_youtube_video_url']) ) {
+				$media = '';
+			} else {
+                $media = __("Wrong URL","wpr-addons");
+            }
+			return $media;
 	}
 
 }
