@@ -527,7 +527,7 @@ class Wpr_Random_Image extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-attachment-caption' => 'height: {{SIZE}}{{UNIT}};top:calc((100% - {{SIZE}}{{UNIT}})/2);left:calc((100% - {{overlay_width.SIZE}}{{overlay_width.UNIT}})/2);',
+					'{{WRAPPER}} .wpr-attachment-caption' => 'height: {{SIZE}}{{UNIT}}; top:calc((100% - {{SIZE}}{{UNIT}})/2); left:calc((100% - {{overlay_width.SIZE}}{{overlay_width.UNIT}})/2);',
 				],
 				'separator' => 'after',
 				'condition' => [
@@ -557,7 +557,7 @@ class Wpr_Random_Image extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-attachment-caption' => 'width: {{SIZE}}{{UNIT}};top:calc((100% - {{overlay_hegiht.SIZE}}{{overlay_hegiht.UNIT}})/2);left:calc((100% - {{SIZE}}{{UNIT}})/2);',
+					'{{WRAPPER}} .wpr-attachment-caption' => 'width: {{SIZE}}{{UNIT}}; top: calc((100% - {{overlay_hegiht.SIZE}}{{overlay_hegiht.UNIT}})/2); left:calc((100% - {{SIZE}}{{UNIT}})/2);',
 				],
 				'condition' => [
 					'overlay_image_caption_position' => 'overlay'
@@ -607,7 +607,7 @@ class Wpr_Random_Image extends Widget_Base {
 					
 			echo '<div class="wpr-random-image-gallery">';
 
-				$overlay_image_caption = 'overlay' === $settings['overlay_image_caption_position'] ? 'style="position: absolute; width: 100%; height: 100%; text-align: center; display: flex; justify-content: center; align-items: center;"' : '';
+				$overlay_image_caption = 'overlay' === $settings['overlay_image_caption_position'] ? 'style="position: absolute; text-align: center; display: flex; justify-content: center; align-items: center;"' : '';
 
 				if( '' === $settings['category'] ) {
 
