@@ -1235,72 +1235,25 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#ffbbee',
 				'selectors' => [
-					'{{WRAPPER}} tr.wpr-even td' => 'background-color: {{VALUE}}', // TODO: decide tr or td
-					// '{{WRAPPER}} tr:nth-child(even) td' => 'background-color: {{VALUE}};',
 					'{{WRAPPER}} tr.wpr-even td' => 'background-color: {{VALUE}};',
 				],
 			]
 		);
 
-		// $this->add_control(
-		// 	'td_border_type',
-		// 	[
-		// 		'label' => esc_html__( 'Border Type', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SELECT,
-		// 		'options' => [
-		// 			'none' => esc_html__( 'None', 'wpr-addons' ),
-		// 			'solid' => esc_html__( 'Solid', 'wpr-addons' ),
-		// 			'double' => esc_html__( 'Double', 'wpr-addons' ),
-		// 			'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
-		// 			'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
-		// 			'groove' => esc_html__( 'Groove', 'wpr-addons' ),
-		// 		],
-		// 		'default' => 'none',
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} td.wpr-table-td' => 'border-style: {{VALUE}};',
-		// 		],
-		// 		'separator' => 'before',
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'td_border_width',
-		// 	[
-		// 		'label' => esc_html__( 'Border Width', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::DIMENSIONS,
-		// 		'size_units' => [ 'px' ],
-		// 		'default' => [
-		// 			'top' => 1,
-		// 			'right' => 1,
-		// 			'bottom' => 1,
-		// 			'left' => 1,
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} td' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-		// 		],
-		// 		'condition' => [
-		// 			'td_border_type!' => 'none',
-		// 		],
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'td_border_color',
-		// 	[
-		// 		'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::COLOR,
-		// 		'default' => '#333333',
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} td' => 'border-color: {{VALUE}}',
-		// 		],
-		// 		'separator' => 'after',
-		// 		'condition' => [
-		// 			'td_border_type!' => 'none',
-		// 		],
-		// 	]
-		// );
-
 		$this->end_controls_tab();
+
+		$this->add_control(
+			'active_td_bg_color',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#0E0D0D45',
+				'separator' => 'before',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-active-td-bg-color' => 'background: {{VALUE}} !important;',
+				],
+			]
+		);
 
 		$this->start_controls_tab(
 			'cells_style_hover_tab',
@@ -1325,13 +1278,9 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => 'gray',
 				'selectors' => [
-					// '{{WRAPPER}} tr.wpr-odd td:hover a' => 'color: {{VALUE}}',
-					// '{{WRAPPER}} tr.wpr-odd td:hover i' => 'color: {{VALUE}}',
 					'{{WRAPPER}} tr.wpr-odd td:hover a' => 'color: {{VALUE}} !important',
 					'{{WRAPPER}} tr.wpr-odd td:hover.wpr-table-text' => 'color: {{VALUE}} !important',
 					'{{WRAPPER}} tr.wpr-odd td:hover i' => 'color: {{VALUE}}',
-					// '{{WRAPPER}} tr:nth-child(odd) td:hover a' => 'color: {{VALUE}} !important',
-					// '{{WRAPPER}} tr:nth-child(odd) td:hover i' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -1344,7 +1293,6 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'default' => '#ddd',
 				'selectors' => [
 					'{{WRAPPER}} tr.wpr-odd:hover td' => 'background-color: {{VALUE}}; cursor: pointer;',
-					// '{{WRAPPER}} tr:nth-child(odd):hover td' => 'background-color: {{VALUE}}; cursor: pointer;',
 				],
 			]
 		);
