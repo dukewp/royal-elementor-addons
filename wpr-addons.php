@@ -76,6 +76,16 @@ if ( ! function_exists( 'wpr_fs' ) ) {
 	    do_action( 'wpr_fs_loaded' );
 
 	    wpr_fs()->add_filter( 'show_deactivation_subscription_cancellation', '__return_false' );
+
+		function disable_contact_for_free_users( $is_visible, $menu_id ) {
+			if ( 'contact' != $menu_id ) {
+				return $is_visible;
+			}
+
+			return wpr_fs()->can_use_premium_code();
+		}
+
+		wpr_fs()->add_filter( 'is_submenu_visible', 'disable_contact_for_free_users', 10, 2 );
 	}
 }
 
