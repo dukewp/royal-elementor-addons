@@ -61,6 +61,7 @@ if ( ! function_exists( 'wpr_fs' ) ) {
 	            	'has_affiliation'     => 'selected',
 	                'menu'                => array(
 	                    'slug'           => 'wpr-addons',
+	                    'first-path'     => 'admin.php?page=wpr-templates-kit',
 	                    'support'        => false,
 	                	'affiliation'    => true,
 	                ),
