@@ -92,7 +92,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 		$this->add_control(
 			'enable_table_sorting',
 			[
-				'label' => __('Enable Table Sorting', 'wpr-addons'),
+				'label' => __('Table Sorting', 'wpr-addons'),
 				'type' => \Elementor\Controls_Manager::SWITCHER,
 				'label_on' => __('Yes', 'wpr-addons'),
 				'label_off' => __('No', 'wpr-addons'),
@@ -982,35 +982,29 @@ class Wpr_AdvancedTable extends Widget_Base {
                 'selectors'  => [
                     '{{WRAPPER}} .wpr-advanced-table thead .wpr-sorting-icon i' => 'font-size: {{SIZE}}{{UNIT}};',
                 ],
+				'condition' => [
+					'enable_table_sorting' => 'yes'
+				]
             ]
         );
 
-        $this->add_responsive_control(
-            'header_icon_space',
-            [
-                'label'      => __('Icon Margin', 'wpr-addons'),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%'],
-                'range'      => [
-                    // 'px' => [
-                    //     'min' => 1,
-                    //     'max' => 100,
-                    // ],
-                    // '%' => [
-                    //     'min' => 1,
-                    //     'max' => 100,
-                    // ],
-					'default' => [
-						'top' => 0,
-						'right' => 0,
-						'bottom' => 0,
-						'left' => 0,
-					],
+		$this->add_responsive_control(
+			'header_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 10,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
 				],
-                'selectors'             => [
-					'{{WRAPPER}} .wpr-advanced-table th i' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				'selectors' => [
+					'{{WRAPPER}} th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
-            ]
+				'separator' => 'before'
+			]
 		);
 
         $this->add_responsive_control(
@@ -1099,22 +1093,32 @@ class Wpr_AdvancedTable extends Widget_Base {
 		// 	]
 		// );
 
-		$this->add_responsive_control(
-			'header_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 10,
-					'right' => 10,
-					'bottom' => 10,
-					'left' => 10,
+        $this->add_responsive_control(
+            'header_icon_space',
+            [
+                'label'      => __('Icon Margin', 'wpr-addons'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'range'      => [
+                    // 'px' => [
+                    //     'min' => 1,
+                    //     'max' => 100,
+                    // ],
+                    // '%' => [
+                    //     'min' => 1,
+                    //     'max' => 100,
+                    // ],
+					'default' => [
+						'top' => 0,
+						'right' => 0,
+						'bottom' => 0,
+						'left' => 0,
+					],
 				],
-				'selectors' => [
-					'{{WRAPPER}} th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                'selectors'             => [
+					'{{WRAPPER}} .wpr-advanced-table th i' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
-			]
+            ]
 		);
 
 		$this->add_responsive_control(
@@ -1124,6 +1128,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'type' => Controls_Manager::CHOOSE,
 				'label_block' => false,
 				'default' => 'left',
+				'separator' => 'before',
 				'options' => [
 					'left' => [
 						'title' => esc_html__( 'Left', 'wpr-addons' ),
@@ -1295,60 +1300,6 @@ class Wpr_AdvancedTable extends Widget_Base {
 		// 	]
 		// );
 
-		$this->add_responsive_control(
-			'td_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 10,
-					'right' => 10,
-					'bottom' => 10,
-					'left' => 10,
-				],
-				'selectors' => [
-					'{{WRAPPER}} td' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'td_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} td'
-			]
-		);
-
-		$this->add_responsive_control(
-			'td_align',
-			[
-				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
-				'type' => Controls_Manager::CHOOSE,
-				'label_block' => false,
-				'default' => 'left',
-				'options' => [
-					'left' => [
-						'title' => esc_html__( 'Left', 'wpr-addons' ),
-						'icon' => ' eicon-text-align-left',
-					],
-					'center' => [
-						'title' => esc_html__( 'Center', 'wpr-addons' ),
-						'icon' => ' eicon-text-align-center',
-					],
-					'right' => [
-						'title' => esc_html__( 'Right', 'wpr-addons' ),
-						'icon' => ' eicon-text-align-right',
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} td' => 'text-align: {{VALUE}};',
-				],
-			]
-		);
-
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
@@ -1437,12 +1388,23 @@ class Wpr_AdvancedTable extends Widget_Base {
 
 		$this->end_controls_tabs();
 
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'td_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} td',
+				'separator' => 'before'
+			]
+		);
+
 		$this->add_responsive_control(
             'tbody_icon_size',
             [
                 'label'      => __('Icon Size', 'wpr-addons'),
                 'type'       => Controls_Manager::SLIDER,
                 'size_units' => ['px'],
+				'separator' => 'before',
                 'range'      => [
                     'px' => [
                         'min' => 1,
@@ -1458,6 +1420,53 @@ class Wpr_AdvancedTable extends Widget_Base {
                 ],
             ]
         );
+
+		$this->add_responsive_control(
+			'td_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'separator' => 'before',
+				'default' => [
+					'top' => 10,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} td' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+        $this->add_responsive_control(
+            'td_img_space',
+            [
+                'label'      => __('Image Padding', 'wpr-addons'),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'range'      => [
+                    // 'px' => [
+                    //     'min' => 1,
+                    //     'max' => 100,
+                    // ],
+                    // '%' => [
+                    //     'min' => 1,
+                    //     'max' => 100,
+                    // ],
+					'default' => [
+						'top' => 0,
+						'right' => 0,
+						'bottom' => 0,
+						'left' => 0,
+					],
+				],
+                'selectors'             => [
+					'{{WRAPPER}} .wpr-advanced-table td img' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				],
+            ]
+		);
 
         $this->add_responsive_control(
             'td_icon_space',
@@ -1487,32 +1496,32 @@ class Wpr_AdvancedTable extends Widget_Base {
             ]
 		);
 
-        $this->add_responsive_control(
-            'td_img_space',
-            [
-                'label'      => __('Image Padding', 'wpr-addons'),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => ['px', '%'],
-                'range'      => [
-                    // 'px' => [
-                    //     'min' => 1,
-                    //     'max' => 100,
-                    // ],
-                    // '%' => [
-                    //     'min' => 1,
-                    //     'max' => 100,
-                    // ],
-					'default' => [
-						'top' => 0,
-						'right' => 0,
-						'bottom' => 0,
-						'left' => 0,
+		$this->add_responsive_control(
+			'td_align',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'label_block' => false,
+				'default' => 'left',
+				'separator' => 'before',
+				'options' => [
+					'left' => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => ' eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => ' eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => ' eicon-text-align-right',
 					],
 				],
-                'selectors'             => [
-					'{{WRAPPER}} .wpr-advanced-table td img' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				'selectors' => [
+					'{{WRAPPER}} td' => 'text-align: {{VALUE}};',
 				],
-            ]
+			]
 		);
 
 		$this->end_controls_section();
@@ -1698,6 +1707,156 @@ class Wpr_AdvancedTable extends Widget_Base {
 			]
 		);
 
+		$this->start_controls_tabs(
+            'table_search_input_tabs'
+        );
+
+            $this->start_controls_tab(
+                'table_search_input_normal_tab',
+                [
+                    'label'     => esc_html__( 'Normal', 'wpr-addons' ),
+                ]
+            );
+
+            $this->add_control(
+                'table_search_input_color',
+                [
+                    'label'     => esc_html__( 'Color', 'wpr-addons' ),
+                    'type'      => Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .wpr-table-live-search-cont input' => 'color: {{VALUE}};',
+                    ],
+                ]
+            );
+
+            $this->add_control(
+                'table_search_input_background_color',
+                [
+                    'label'     => esc_html__( 'Background Color', 'wpr-addons' ),
+                    'type'      => Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .wpr-table-live-search-cont input' => 'background-color: {{VALUE}};',
+                    ],
+                ]
+            );
+
+
+            $this->end_controls_tab();
+
+
+            $this->start_controls_tab(
+                'table_search_input_hover_tab',
+                [
+                    'label'     => esc_html__( 'Hover', 'wpr-addons' ),
+                ]
+            );
+
+            $this->add_control(
+                'table_search_input_hover_color',
+                [
+                    'label'     => esc_html__( 'Color', 'wpr-addons' ),
+                    'type'      => Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .wpr-table-live-search-cont input:hover' => 'color: {{VALUE}};',
+                    ],
+                ]
+            );
+
+            $this->add_control(
+                'table_search_input_hover_background_color',
+                [
+                    'label'     => esc_html__( 'Background Color', 'wpr-addons' ),
+                    'type'      => Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .wpr-table-live-search-cont input:hover' => 'background-color: {{VALUE}};',
+                    ],
+                ]
+            );
+
+
+            $this->end_controls_tab();
+
+            $this->start_controls_tab(
+                'table_search_input_focus_tab',
+                [
+                    'label'     => esc_html__( 'Focus', 'wpr-addons' ),
+                ]
+            );
+
+            $this->add_control(
+                'table_search_input_focus_color',
+                [
+                    'label'     => esc_html__( 'Color', 'wpr-addons' ),
+                    'type'      => Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .wpr-table-live-search-cont input:focus' => 'color: {{VALUE}};',
+                    ],
+                ]
+            );
+
+            $this->add_control(
+                'table_search_input_focus_background_color',
+                [
+                    'label'     => esc_html__( 'Background Color', 'wpr-addons' ),
+                    'type'      => Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .wpr-table-live-search-cont input:focus' => 'background-color: {{VALUE}};',
+                    ],
+                ]
+            );
+    
+            $this->end_controls_tab();
+
+        $this->end_controls_tabs();
+        
+        $this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+			  'name' => 'table_search_input_border_shadow',
+			  'selector' => '{{WRAPPER}} .wpr-table-live-search-cont input',
+			  'separator' => 'before'
+			]
+		);
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name' => 'table_search_input_text_typography',
+                'label' =>esc_html__( 'Typography', 'wpr-addons' ),
+                'selector' => '{{WRAPPER}} .wpr-table-live-search-cont input',
+				'separator' => 'before'
+            ]
+        );
+
+        $this->add_control(
+            'table_search_input_placeholder_heading',
+            [
+                'label'     => esc_html__( 'Input Placeholder:', 'wpr-addons' ),
+                'type'      => Controls_Manager::HEADING,
+                'separator' => 'before'
+            ]
+        );
+
+        $this->add_control(
+            'table_search_input_placeholder_color',
+            [
+                'label'     => esc_html__( 'Color', 'wpr-addons' ),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-table-live-search-cont input::placeholder' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name' => 'table_search_input_placeholder_typo',
+                'label' =>esc_html__( 'Typography', 'wpr-addons' ),
+                'selector' => '{{WRAPPER}} .wpr-table-live-search-cont input::placeholder',
+            ]
+        );
+
         $this->add_control(
             'table_search_icon_heading',
             [
@@ -1816,154 +1975,6 @@ class Wpr_AdvancedTable extends Widget_Base {
 				],
 			]
         );
-        
-        $this->add_group_control(
-			Group_Control_Box_Shadow::get_type(),
-			[
-			  'name' => 'table_search_input_border_shadow',
-			  'selector' => '{{WRAPPER}} .wpr-table-live-search-cont input',
-			]
-		);
-
-        $this->add_group_control(
-            Group_Control_Typography::get_type(),
-            [
-                'name' => 'table_search_input_text_typography',
-                'label' =>esc_html__( 'Typography', 'wpr-addons' ),
-                'selector' => '{{WRAPPER}} .wpr-table-live-search-cont input',
-            ]
-        );
-
-		$this->start_controls_tabs(
-            'table_search_input_tabs'
-        );
-
-            $this->start_controls_tab(
-                'table_search_input_normal_tab',
-                [
-                    'label'     => esc_html__( 'Normal', 'wpr-addons' ),
-                ]
-            );
-
-            $this->add_control(
-                'table_search_input_color',
-                [
-                    'label'     => esc_html__( 'Color', 'wpr-addons' ),
-                    'type'      => Controls_Manager::COLOR,
-                    'selectors' => [
-                        '{{WRAPPER}} .wpr-table-live-search-cont input' => 'color: {{VALUE}};',
-                    ],
-                ]
-            );
-
-            $this->add_control(
-                'table_search_input_background_color',
-                [
-                    'label'     => esc_html__( 'Background Color', 'wpr-addons' ),
-                    'type'      => Controls_Manager::COLOR,
-                    'selectors' => [
-                        '{{WRAPPER}} .wpr-table-live-search-cont input' => 'background-color: {{VALUE}};',
-                    ],
-                ]
-            );
-
-
-            $this->end_controls_tab();
-
-
-            $this->start_controls_tab(
-                'table_search_input_hover_tab',
-                [
-                    'label'     => esc_html__( 'Hover', 'wpr-addons' ),
-                ]
-            );
-
-            $this->add_control(
-                'table_search_input_hover_color',
-                [
-                    'label'     => esc_html__( 'Color', 'wpr-addons' ),
-                    'type'      => Controls_Manager::COLOR,
-                    'selectors' => [
-                        '{{WRAPPER}} .wpr-table-live-search-cont input:hover' => 'color: {{VALUE}};',
-                    ],
-                ]
-            );
-
-            $this->add_control(
-                'table_search_input_hover_background_color',
-                [
-                    'label'     => esc_html__( 'Background Color', 'wpr-addons' ),
-                    'type'      => Controls_Manager::COLOR,
-                    'selectors' => [
-                        '{{WRAPPER}} .wpr-table-live-search-cont input:hover' => 'background-color: {{VALUE}};',
-                    ],
-                ]
-            );
-
-
-            $this->end_controls_tab();
-
-            $this->start_controls_tab(
-                'table_search_input_focus_tab',
-                [
-                    'label'     => esc_html__( 'Focus', 'wpr-addons' ),
-                ]
-            );
-
-            $this->add_control(
-                'table_search_input_focus_color',
-                [
-                    'label'     => esc_html__( 'Color', 'wpr-addons' ),
-                    'type'      => Controls_Manager::COLOR,
-                    'selectors' => [
-                        '{{WRAPPER}} .wpr-table-live-search-cont input:focus' => 'color: {{VALUE}};',
-                    ],
-                ]
-            );
-
-            $this->add_control(
-                'table_search_input_focus_background_color',
-                [
-                    'label'     => esc_html__( 'Background Color', 'wpr-addons' ),
-                    'type'      => Controls_Manager::COLOR,
-                    'selectors' => [
-                        '{{WRAPPER}} .wpr-table-live-search-cont input:focus' => 'background-color: {{VALUE}};',
-                    ],
-                ]
-            );
-    
-            $this->end_controls_tab();
-
-        $this->end_controls_tabs();
-
-        $this->add_control(
-            'table_search_input_placeholder_heading',
-            [
-                'label'     => esc_html__( 'Input Placeholder:', 'wpr-addons' ),
-                'type'      => Controls_Manager::HEADING,
-                'separator' => 'before'
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Typography::get_type(),
-            [
-                'name' => 'table_search_input_placeholder_typo',
-                'label' =>esc_html__( 'Typography', 'wpr-addons' ),
-                'selector' => '{{WRAPPER}} .wpr-table-live-search-cont input::placeholder',
-            ]
-        );
-
-        $this->add_control(
-            'table_search_input_placeholder_color',
-            [
-                'label'     => esc_html__( 'Color', 'wpr-addons' ),
-                'type'      => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .wpr-table-live-search-cont input::placeholder' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
 
 		$this->end_controls_section();
 	
@@ -2031,6 +2042,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'label' => esc_html__( 'Padding', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
+				'separator' => 'before',
 				'default' => [
 					'top' => 7,
 					'right' => 13,
@@ -2206,6 +2218,7 @@ class Wpr_AdvancedTable extends Widget_Base {
                 'type'         => Controls_Manager::CHOOSE,
                 'label_block'  => false,
                 'default'      => 'center',
+				'separator' => 'before',
                 'options'      => [
                     'flex-start'   => [
                         'title' => __('Left', 'wpr-addons'),
