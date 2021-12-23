@@ -188,6 +188,10 @@ class WPR_Templates_Actions {
 				return;
 			}
 
+			if ( strlen($data['search_query']) > 25 ) {
+				return;
+			}
+
 			// Send Search Query
 		    wp_remote_post( 'https://reastats.kinsta.cloud/wp-json/elementor-search/data', [
 		        'body' => [

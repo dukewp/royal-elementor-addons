@@ -87,7 +87,7 @@ class Wpr_Popup_Trigger extends Widget_Base {
 			'countdown_editor_notice',
 			[
 				'type' => Controls_Manager::RAW_HTML,
-				'raw' => '<strong>Please Note:</strong> this widget only works if it is placed inside a popup.',
+				'raw' => '<strong>Please Note:</strong> this widget only works if it is placed inside a Popup. To create a Popup, please navigate to the WordPress <a href="'. admin_url('admin.php?page=wpr-popups') .'">Dashboard > Royal Addons > Popups.</a>',
 				'separator' => 'after',
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 			]

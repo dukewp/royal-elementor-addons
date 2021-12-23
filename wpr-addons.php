@@ -77,8 +77,8 @@ if ( ! function_exists( 'wpr_fs' ) ) {
 
 	    wpr_fs()->add_filter( 'show_deactivation_subscription_cancellation', '__return_false' );
 
-	    // Hide Contact form for Free Users
-		function my_custom_is_submenu_visible( $is_visible, $menu_id ) {
+		function disable_contact_for_free_users( $is_visible, $menu_id ) {
+
 			if ( 'contact' != $menu_id ) {
 				return $is_visible;
 			}
@@ -86,7 +86,8 @@ if ( ! function_exists( 'wpr_fs' ) ) {
 			return wpr_fs()->can_use_premium_code();
 		}
 
-		wpr_fs()->add_filter( 'is_submenu_visible', 'my_custom_is_submenu_visible', 10, 2 );
+		wpr_fs()->add_filter( 'is_submenu_visible', 'disable_contact_for_free_users', 10, 2 );
+
 	}
 }
 

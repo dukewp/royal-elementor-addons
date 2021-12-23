@@ -679,3 +679,18 @@
 	border-top: none !important;
 	border-bottom: none !important;
 }
+
+
+/*--------------------------------------------------------------
+== Elementor Search Notice
+--------------------------------------------------------------*/
+.wpr-elementor-search-notice {
+	background: #fff;
+	font-size: 13px;
+	padding: 20px;
+	line-height: 18px;
+	margin: 10px;
+	border-left: 3px solid #71d7f7;
+	-webkit-box-shadow: 0 1px 4px 0 rgb(0 0 0 / 7%);
+	box-shadow: 0 1px 4px 0 rgb(0 0 0 / 7%);
+}
