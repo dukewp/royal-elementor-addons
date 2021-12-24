@@ -340,87 +340,87 @@ class Wpr_Random_Image extends Widget_Base {
 
 		$this->end_controls_section();
 
-		$this->start_controls_section(
-			'random_image_title_styles_section',
-			[
-				'label' => __( 'Title', 'wpr-addons' ),
-				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
-			]
-		);
+		// $this->start_controls_section(
+		// 	'random_image_title_styles_section',
+		// 	[
+		// 		'label' => __( 'Title', 'wpr-addons' ),
+		// 		'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+		// 	]
+		// );
 
-		$this->add_control(
-			'list_color',
-			[
-				'label' => __( 'Color', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-random-image-gallery-title' => 'color: {{VALUE}}'
-				],
-			]
-		);
+		// $this->add_control(
+		// 	'list_color',
+		// 	[
+		// 		'label' => __( 'Color', 'wpr-addons' ),
+		// 		'type' => \Elementor\Controls_Manager::COLOR,
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-random-image-gallery-title' => 'color: {{VALUE}}'
+		// 		],
+		// 	]
+		// );
 
-		$this->add_control(
-			'list_bg_color',
-			[
-				'label' => __( 'Background Color', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-random-image-gallery-title' => 'background-color: {{VALUE}}'
-				],
-			]
-		);
+		// $this->add_control(
+		// 	'list_bg_color',
+		// 	[
+		// 		'label' => __( 'Background Color', 'wpr-addons' ),
+		// 		'type' => \Elementor\Controls_Manager::COLOR,
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-random-image-gallery-title' => 'background-color: {{VALUE}}'
+		// 		],
+		// 	]
+		// );
 
-		$this->add_responsive_control(
-			'random_image_title_width',
-			[
-				'type' => Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Width', 'wpr-addons' ),
-				'size_units' => [ 'px', 'vw', '%' ],
-				'range' => [
-					'px' => [
-						'min' => 20,
-						'max' => 1500,
-					],
-					'vh' => [
-						'min' => 20,
-						'max' => 100,
-					],
-					'%' => [
-						'min' => 10,
-						'max' => 100
-					]
-				],
-				'default' => [
-					'unit' => '%',
-					'size' => 100,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-random-image-gallery-title' => 'width: {{SIZE}}{{UNIT}}; margin: auto;',
-				],
-				// 'separator' => 'before',
-			]
-		);
+		// $this->add_responsive_control(
+		// 	'random_image_title_width',
+		// 	[
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'label' => esc_html__( 'Width', 'wpr-addons' ),
+		// 		'size_units' => [ 'px', 'vw', '%' ],
+		// 		'range' => [
+		// 			'px' => [
+		// 				'min' => 20,
+		// 				'max' => 1500,
+		// 			],
+		// 			'vh' => [
+		// 				'min' => 20,
+		// 				'max' => 100,
+		// 			],
+		// 			'%' => [
+		// 				'min' => 10,
+		// 				'max' => 100
+		// 			]
+		// 		],
+		// 		'default' => [
+		// 			'unit' => '%',
+		// 			'size' => 100,
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-random-image-gallery-title' => 'width: {{SIZE}}{{UNIT}}; margin: auto;',
+		// 		],
+		// 		// 'separator' => 'before',
+		// 	]
+		// );
 
-		$this->add_responsive_control(
-			'padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'size_units' => [ 'px', '%' ],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-random-image-gallery-title' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before',
-			]
-		);
+		// $this->add_responsive_control(
+		// 	'padding',
+		// 	[
+		// 		'label' => esc_html__( 'Padding', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::DIMENSIONS,
+		// 		'default' => [
+		// 			'top' => 0,
+		// 			'right' => 0,
+		// 			'bottom' => 0,
+		// 			'left' => 0,
+		// 		],
+		// 		'size_units' => [ 'px', '%' ],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-random-image-gallery-title' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+		// 		],
+		// 		'separator' => 'before',
+		// 	]
+		// );
 
-		$this->end_controls_section();
+		// $this->end_controls_section();
 
 		$this->start_controls_section(
 			'random_image_caption_styles_section',
@@ -450,6 +450,15 @@ class Wpr_Random_Image extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-attachment-caption' => 'background-color: {{VALUE}}'
 				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'title_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-attachment-caption',
 			]
 		);
 
@@ -610,7 +619,7 @@ class Wpr_Random_Image extends Widget_Base {
 				$overlay_image_caption = 'overlay' === $settings['overlay_image_caption_position'] ? 'style="position: absolute; text-align: center; display: flex; justify-content: center; align-items: center;"' : '';
 
 				if( '' === $settings['category'] ) {
-
+					
 					$random_index = 1 < count($uncategorized_gallery_images_array) ? wp_rand(0, count($uncategorized_gallery_images_array) - 1) : '';
 
 					
@@ -644,7 +653,7 @@ class Wpr_Random_Image extends Widget_Base {
 						$thumbnail_size = $settings['wpr_thumbnail_size'];
 						$thumbnail_custom_dimension = $settings['wpr_thumbnail_custom_dimension'];
 
-						$image_caption = 'yes' === $settings['enable_image_caption'] ? '<p class="wpr-attachment-caption" '. $overlay_image_caption .'><span style="vertical-align: middle; text-align: center;>' . wp_get_attachment_caption($categorized_gallery_images_array[$random_index]['id']) . '</span></p>' : '';
+						$image_caption = 'yes' === $settings['enable_image_caption'] ? '<p class="wpr-attachment-caption" '. $overlay_image_caption .'><span style="vertical-align: middle; text-align: center;">' . wp_get_attachment_caption($categorized_gallery_images_array[$random_index]['id']) . '</span></p>' : '';
 
 						if ( 'custom' === $settings['wpr_thumbnail_size'] ) {
 							$custom_size = array( $thumbnail_custom_dimension['width'],$thumbnail_custom_dimension['height'] );
