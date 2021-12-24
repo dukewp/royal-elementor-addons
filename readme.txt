@@ -72,9 +72,9 @@ and other custom branding related settings)
 - Sticky Section (Can be used for creating Sticky Header / Menu) - elementor extension
 - Custom CSS - Elementor free custom css , apply custom css to any section - elementor extension & other elementor enhancements coming soon.
 
-**Elementor Prebuilt template Kits**
+**Elementor Prebuilt Templates Kit**
 
-- [**Nature Elementor Template**](https://demosites.royal-elementor-addons.com/nature-v1/?ref=rea-wpo-pp-details-tab)+
+- [**Nature Elementor Template**](https://demosites.royal-elementor-addons.com/nature-v1/?ref=rea-wpo-pp-details-tab)
 - [**Digital Agency Elementor Template**](https://demosites.royal-elementor-addons.com/digitalagency-v1/?ref=rea-wpo-pp-details-tab)
 - [**It Technology 1 Elementor Template**](https://demosites.royal-elementor-addons.com/ittech-v1/?ref=rea-wpo-pp-details-tab)
 - [**Construction Elementor Template**](https://demosites.royal-elementor-addons.com/construction-v1/?ref=rea-wpo-pp-details-tab)

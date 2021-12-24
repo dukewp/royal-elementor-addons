@@ -56,7 +56,7 @@ if ( ! function_exists( 'wpr_fs' ) ) {
 	                'public_key'          => 'pk_a0b21b234a7c9581a555b9ee9f28a',
 	                'is_premium'          => false,
 	            	'has_premium_version' => true,
-	                'has_paid_plans'      => true,
+	                'has_paid_plans'      => false,
 	                'has_addons'          => false,
 	            	'has_affiliation'     => 'selected',
 	                'menu'                => array(
