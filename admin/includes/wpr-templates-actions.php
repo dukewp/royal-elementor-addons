@@ -252,7 +252,7 @@ class WPR_Templates_Actions {
 		// Elementor Search Data
 		$ajax->register_ajax_action( 'wpr_elementor_search_data', function( $data ) {
 			// Freemius OptIn
-			if ( ! (wpr_fs()->is_registered() && wpr_fs()->is_tracking_allowed()) ) {
+			if ( ! wpr_fs()->is_tracking_allowed() ) {
 				return;
 			}
 
