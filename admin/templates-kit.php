@@ -409,7 +409,7 @@ add_filter( 'wp_check_filetype_and_ext', 'wpr_svgs_allow_svg_upload', 10, 4 );
 */
 function wpr_search_query_results() {
     // Freemius OptIn
-    if ( ! (wpr_fs()->is_registered() && wpr_fs()->is_tracking_allowed()) ) {
+    if ( ! wpr_fs()->is_tracking_allowed() ) {
         return;
     }
 
@@ -425,7 +425,7 @@ function wpr_search_query_results() {
 */
 function wpr_track_imported_kit( $kit ) {
     // Freemius OptIn
-    if ( ! (wpr_fs()->is_registered() && wpr_fs()->is_tracking_allowed()) ) {
+    if ( ! wpr_fs()->is_tracking_allowed() ) {
         return;
     }
     
