@@ -560,8 +560,9 @@
 	border: none !important;
 }
 
-.elementor-control-slider_section_pro_notice {
+#elementor-controls .elementor-control-slider_section_pro_notice {
 	margin-top: -16px;
+	padding-bottom: 0 !important;
 }
 
 .elementor-control-layout_select_pro_notice + div,

@@ -61,6 +61,7 @@ if ( ! function_exists( 'wpr_fs' ) ) {
 	            	'has_affiliation'     => 'selected',
 	                'menu'                => array(
 	                    'slug'           => 'wpr-addons',
+	                    'first-path'     => 'admin.php?page=wpr-templates-kit',
 	                    'support'        => false,
 	                	'affiliation'    => true,
 	                ),
@@ -78,6 +79,7 @@ if ( ! function_exists( 'wpr_fs' ) ) {
 	    wpr_fs()->add_filter( 'show_deactivation_subscription_cancellation', '__return_false' );
 
 		function disable_contact_for_free_users( $is_visible, $menu_id ) {
+
 			if ( 'contact' != $menu_id ) {
 				return $is_visible;
 			}
@@ -86,6 +88,7 @@ if ( ! function_exists( 'wpr_fs' ) ) {
 		}
 
 		wpr_fs()->add_filter( 'is_submenu_visible', 'disable_contact_for_free_users', 10, 2 );
+
 	}
 }
 

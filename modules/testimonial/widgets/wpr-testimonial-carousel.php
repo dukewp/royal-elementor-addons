@@ -494,7 +494,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
-				'opnepage_pro_notice',
+				'testimonial_columns_pro_notice',
 				[
 					'type' => Controls_Manager::RAW_HTML,
 					'raw' => '<span style="color:#2a2a2a;">Testimonial Columns</span> option is fully supported in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-testimonial-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',

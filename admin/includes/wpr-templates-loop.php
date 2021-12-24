@@ -170,7 +170,7 @@ class WPR_Templates_Loop {
                         ?>
                     </select>
 
-                    <input type="text" placeholder="<?php esc_html_e( 'Enter comma separated IDs', 'wpr-addons' ); ?>"  name="condition_input_ids"class="wpr-condition-input-ids">
+                    <input type="text" placeholder="<?php esc_html_e( 'Enter comma separated IDs', 'wpr-addons' ); ?>" name="condition_input_ids" class="wpr-condition-input-ids">
                     <span class="wpr-delete-template-conditions dashicons dashicons-no-alt"></span>
 
 	                <?php else: ?>
@@ -215,7 +215,7 @@ class WPR_Templates_Loop {
                         ?>
                     </select>
 
-                    <input type="text" placeholder="<?php esc_html_e( 'Enter comma separated IDs (Pro)', 'wpr-addons' ); ?>"  name="condition_input_ids"class="wpr-condition-input-ids">
+                    <input type="text" placeholder="<?php esc_html_e( 'Enter comma separated IDs (Pro)', 'wpr-addons' ); ?>" name="condition_input_ids" class="wpr-condition-input-ids">
                     <span class="wpr-delete-template-conditions dashicons dashicons-no-alt"></span>
 	                	
 	                <?php endif; ?>
@@ -224,17 +224,21 @@ class WPR_Templates_Loop {
 
 			<?php if ( $canvas ) : ?>
 			<div class="wpr-canvas-condition wpr-setting-custom-ckbox">
-				<span><?php esc_html_e( 'Show this template on canvas pages', 'wpr-addons' ); ?></span>
+				<span><?php esc_html_e( 'Show this template on Elementor Canvas pages', 'wpr-addons' ); ?></span>
             	<input type="checkbox" name="wpr-show-on-canvas" id="wpr-show-on-canvas">
             	<label for="wpr-show-on-canvas"></label>
             </div>
             <?php endif; ?>
 
             <?php
-				if ( ! wpr_fs()->can_use_premium_code() ) {
-					echo '<span style="color: #7f8b96;"><br>Conditions are fully suppoted in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-conditions-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong></span>';
-					// echo '<span style="color: #7f8b96;"><br>Conditions are fully suppoted in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong></span>';
-				}
+
+
+           	// Pro Notice
+			if ( ! wpr_fs()->can_use_premium_code() ) {
+				// echo '<span style="color: #7f8b96;"><br>Conditions are fully suppoted in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-conditions-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong></span>';
+				echo '<span style="color: #7f8b96;"><br>Conditions are fully suppoted in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong></span>';
+			}
+
             ?>
             
             <!-- Action Buttons -->

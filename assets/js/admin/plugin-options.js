@@ -151,45 +151,6 @@ jQuery(document).ready(function( $ ) {
 
 
 	/*
-	** Import Template -------------------------
-	*/
-	function importTemplate() {
-		$( '.wpr-import' ).on( 'click', function() {
-			// Buttons
-			var importButton = $(this),
-				editButton 	 = importButton.parent().find('.wpr-edit-template'),
-				resetButton  = importButton.parent().find('.wpr-delete-template');
-
-			$('.wrap').children('h1').text('Importing Template, Please be patient...');	
-			
-			// AJAX Data
-			var data = {
-				action: 'wpr_import_template',
-				wpr_template: $(this).attr('data-slug'),
-			};
-
-			// Update via AJAX
-			$.post(ajaxurl, data, function(response) {
-				$('.wrap').children('h1').text('Howdy Nick! Template has been successfully imported :)');
-
-				// Change Buttons
-				importButton.removeClass('wpr-import').addClass('wpr-template-conditions').text('Activate').unbind('click');
-				editButton.removeClass('hidden');
-				resetButton.removeClass('hidden');
-
-				// Open Conditions
-				changeTemplateConditions();
-
-				// Edit Template Link
-				response = response.split(';');
-				editButton.attr( 'href', 'post.php?post='+ response[30].replace('i:', '') +'&action=elementor' );
-			});		
-		});		
-	}
-
-	importTemplate();
-
-	/*
 	** Reset Template -------------------------
 	*/
 	function deleteTemplate() {

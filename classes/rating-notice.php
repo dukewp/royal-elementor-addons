@@ -58,7 +58,7 @@ class WprRatingNotice {
 
             echo '<div class="notice wpr-rating-notice is-dismissible" style="border-left-color: #7A75FF!important; display: flex; align-items: center;">
                         <div class="wpr-rating-notice-logo">
-                            <img src="' . WPR_ADDONS_ASSETS_URL . '/img/icon-128x128.png">
+                            <img src="' . WPR_ADDONS_ASSETS_URL . '/img/logo-128x128.png">
                         </div>
                         <div>
                             <h3>Thank you for using Royal Elementor Addons to build this website!</h3>

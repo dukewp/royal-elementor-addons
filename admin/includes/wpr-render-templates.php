@@ -68,7 +68,7 @@ class WPR_Render_Templates {
 		add_action( 'elementor/page_templates/canvas/after_content', [ $this, 'add_canvas_footer' ], 9 );
 
 		// Canvas Page Content
-		// add_action( 'elementor/page_templates/canvas/wpr_content', [ $this, 'canvas_page_content_display' ], 1 );
+		// add_action( 'elementor/page_templates/canvas/before_content', [ $this, 'replace_header' ] );
 
 		// Scripts and Styles
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
