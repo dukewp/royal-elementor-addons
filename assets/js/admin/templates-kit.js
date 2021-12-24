@@ -252,7 +252,7 @@ jQuery(document).ready(function( $ ) {
 			$('.wpr-templates-kit-single .action-buttons-wrap').css('margin-left', $('#adminmenuwrap').outerWidth());
 			$('.wpr-templates-kit-single').show();
 			$('.wpr-templates-kit-logo').find('.back-btn').css('display', 'flex');
-			$('.wpr-templates-kit-single .preview-demo').attr('href', 'https://demosites.royal-elementor-addons.com/'+ kit.data('kit-id'));
+			$('.wpr-templates-kit-single .preview-demo').attr('href', 'https://demosites.royal-elementor-addons.com/'+ kit.data('kit-id') +'?ref=rea-plugin-backend-templates');
 		},
 
 		renderImportPage: function( kit ) {

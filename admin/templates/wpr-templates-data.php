@@ -86,7 +86,7 @@ class WPR_Templates_Data {
 			'fooddelivery' => [
 				'v1' => [
 					'name' => 'Food Delivery',
-					'pages' => 'home,services,partner,blog,faq,contact,',
+					'pages' => 'home,services,blog,faq,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'fooddelivery',
 					'price' => $is_pro_active ? 'free' : 'pro',
