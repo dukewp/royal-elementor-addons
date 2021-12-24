@@ -341,3 +341,24 @@ function wpr_addons_settings_page() {
 <?php
 
 } // End wpr_addons_settings_page()
+
+
+
+// Add Support Sub Menu item that will redirect to wp.org
+function wpr_addons_add_support_menu() {
+    add_submenu_page( 'wpr-addons', 'Support', 'Support', 'manage_options', 'wpr-support', 'wpr_addons_support_page', 99 );
+}
+add_action( 'admin_menu', 'wpr_addons_add_support_menu', 99 );
+
+function wpr_addons_support_page() {}
+
+function wpr_redirect_support_page() {
+    ?>
+    <script type="text/javascript">
+        jQuery(document).ready( function($) {
+            $( 'ul#adminmenu a[href*="page=wpr-support"]' ).attr('href','https://wordpress.org/support/plugin/royal-elementor-addons/').attr( 'target', '_blank' );
+        });
+    </script>
+    <?php
+}
+add_action( 'admin_head', 'wpr_redirect_support_page' );
