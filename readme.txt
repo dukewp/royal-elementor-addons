@@ -1,7 +1,7 @@
 ﻿=== Royal Elementor Addons (Header Footer Builder, Popups, Post Grid, Woocommerce Product Grid, Slider, Parallax Image & other Free Addons for Elementor) ===
 Contributors: WP Royal, rubeushagrid13, cyberpinky, elementoraddonswpr
 Tags: elementor, elements, widgets for elementor, elementor addons, elementor widget, elementor form, woocommerce elementor, page builder, builder, wordpress page builder
-Stable tag: 1.3.24
+Stable tag: 1.3.25
 Requires at least: 5.0
 Tested up to: 5.8.2
 Requires PHP: 5.6
@@ -71,6 +71,24 @@ Comes with 40+ widgets for elementor. Creative and self-intuitive elementor widg
 and other custom branding related settings)
 - Sticky Section (Can be used for creating Sticky Header / Menu) - elementor extension
 - Custom CSS - Elementor free custom css , apply custom css to any section - elementor extension & other elementor enhancements coming soon.
+
+**Elementor Prebuilt template Kits**
+
+- [**Nature Elementor Template**](https://demosites.royal-elementor-addons.com/nature-v1/?ref=rea-wpo-pp-details-tab)+
+- [**Digital Agency Elementor Template**](https://demosites.royal-elementor-addons.com/digitalagency-v1/?ref=rea-wpo-pp-details-tab)
+- [**It Technology 1 Elementor Template**](https://demosites.royal-elementor-addons.com/ittech-v1/?ref=rea-wpo-pp-details-tab)
+- [**Construction Elementor Template**](https://demosites.royal-elementor-addons.com/construction-v1/?ref=rea-wpo-pp-details-tab)
+- [**Architecture Elementor Template**](https://demosites.royal-elementor-addons.com/architecture-v1/?ref=rea-wpo-pp-details-tab)
+- [**It Technology 2 Elementor Template**](https://demosites.royal-elementor-addons.com/ittech-v2/?ref=rea-wpo-pp-details-tab)
+- [**Drone Elementor Template**](https://demosites.royal-elementor-addons.com/drone-v1/?ref=rea-wpo-pp-details-tab)
+- [**Cybersecurity Elementor Template**](https://demosites.royal-elementor-addons.com/cybersecurity-v1/?ref=rea-wpo-pp-details-tab)
+- [**Medical Elementor Template**](https://demosites.royal-elementor-addons.com/medical-v1/?ref=rea-wpo-pp-details-tab)
+- [**Realestate Elementor Template**](https://demosites.royal-elementor-addons.com/realestate-v1/?ref=rea-wpo-pp-details-tab)
+- [**Cryptocurrency Elementor Template**](https://demosites.royal-elementor-addons.com/cryptocurrency-v1/?ref=rea-wpo-pp-details-tab)
+- [**Skincare Elementor Template**](https://demosites.royal-elementor-addons.com/skincare-v1/?ref=rea-wpo-pp-details-tab)
+- [**Food Delivery Elementor Template**](https://demosites.royal-elementor-addons.com/fooddelivery-v1/?ref=rea-wpo-pp-details-tab)
+- [**Wedding Elementor Template**](https://demosites.royal-elementor-addons.com/wedding-v1/?ref=rea-wpo-pp-details-tab)
+- [**Restaurant Elementor Template**](https://demosites.royal-elementor-addons.com/restaurant-v1/?ref=rea-wpo-pp-details-tab)
 
 
 **Widgets Description:**
@@ -263,8 +281,8 @@ post_max_size 64M
 
 == Changelog ==
 
-= Royal Elementor Addons v1.3.24 - 2021-12-16 =
-* FIX: Advanced Slider not showing in Elementor Editor Panel.
+= Royal Elementor Addons v1.3.25 - 2021-12-24 =
+* ADDED: Elementor Templates Kit Library (Elementor Starter Sites).
 * FIX: Minor but essential Bugs.
 
 = Royal Elementor Addons v1.3.23 - 2021-12-09 =

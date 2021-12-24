@@ -71,7 +71,7 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,gallery,services,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'drone',
-					'price' => $is_pro_active ? 'free' : 'pro',
+					'price' => $is_pro_active ? 'free' : 'free',
 				],
 			],
 			'architecture' => [

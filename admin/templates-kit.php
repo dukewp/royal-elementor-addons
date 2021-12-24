@@ -98,7 +98,7 @@ function wpr_addons_templates_kit_page() {
             <div class="import-template-buttons">
                 <?php
                     echo '<button class="import-kit button">'. __('Import Templates Kit', 'wpr-addons') .' <span class="dashicons dashicons-download"></span></button>';
-                    echo '<a href="https://royal-elementor-addons.com/" class="get-access button" target="_blank">'. __('Get Access', 'wpr-addons') .' <span class="dashicons dashicons-external"></span></a>';
+                    echo '<a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-templates-upgrade-pro#purchasepro" class="get-access button" target="_blank">'. __('Get Access', 'wpr-addons') .' <span class="dashicons dashicons-external"></span></a>';
                 ?>
                 <button class="import-template button"><?php _e('Import <strong></strong> Template', 'wpr-addons'); ?></button>
             </div>
