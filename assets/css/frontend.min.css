@@ -10225,21 +10225,40 @@ html {
   .wpr-table-tr-before::before {
 	  content: '+';
 	  position: absolute;
-	  top: 20px;
-	  left: 20px;
+	  top: 10px;
+	  left: 10px;
+	  display: flex;
+	  justify-content: center;
+	  align-items: center;
 	  background: green;
 	  color: white;
-	  padding: 5px 10px;
+	  width: 20px;
+	  height: 20px;
 	  font-size: 15px;
+	  border-radius: 50%;
   }
   
   .wpr-table-tr-before-remove::before {
 	  content: '-';
 	  position: absolute;
-	  top: 20px;
-	  left: 20px;
+	  top: 10px;
+	  left: 10px;
+	  display: flex;
+	  justify-content: center;
+	  align-items: center;
 	  background: red;
-	  color: black;
-	  padding: 5px 10px;
+	  color: white;
+	  width: 20px;
+	  height: 20px;
 	  font-size: 15px;
+	  border-radius: 50%;
+  }
+
+  .wpr-table-prev-arrow {
+	  -webkit-transform: rotate(180deg);
+	  -ms-transform: rotate(180deg);
+	  transform: rotate(180deg);
+	  -webkit-transform-origin: center;
+	  -ms-transform-origin: center;
+	  transform-origin: center;
   }

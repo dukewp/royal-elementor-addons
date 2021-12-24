@@ -98,6 +98,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'label_off' => __('No', 'wpr-addons'),
 				'return_value' => 'yes',
 				'default' => 'yes',
+				'separator' => 'before'
 			]
 		);
 
@@ -110,6 +111,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'label_off' => __('No', 'wpr-addons'),
 				'return_value' => 'yes',
 				'default' => 'yes',
+				'separator' => 'before'
 			]
 		);
 
@@ -128,6 +130,18 @@ class Wpr_AdvancedTable extends Widget_Base {
         );
 
 		$this->add_control(
+			'enable_row_pagination', [
+				'label' => __('Table Row Pagination', 'wpr-addons'),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'label_on' => __('Yes', 'wpr-addons'),
+				'label_off' => __('No', 'wpr-addons'),
+				'return_value' => 'yes',
+				'default' => 'no',
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
 			'enable_custom_pagination', [
 				'label' => __('Custom Pagination', 'wpr-addons'),
 				'type' => \Elementor\Controls_Manager::SWITCHER,
@@ -135,6 +149,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'label_off' => __('No', 'wpr-addons'),
 				'return_value' => 'yes',
 				'default' => 'no',
+				'separator' => 'before'
 			]
 		);
 
@@ -155,6 +170,29 @@ class Wpr_AdvancedTable extends Widget_Base {
 		);
 
 		$this->add_control(
+			'pagination_nav_icons',
+			[
+				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'svg-angle-1-left',
+				'options' => Utilities::get_svg_icons_array( 'arrows', [
+					'fas fa-angle-left' => esc_html__( 'Angle', 'wpr-addons' ),
+					'fas fa-angle-double-left' => esc_html__( 'Angle Double', 'wpr-addons' ),
+					'fas fa-arrow-left' => esc_html__( 'Arrow', 'wpr-addons' ),
+					'fas fa-arrow-alt-circle-left' => esc_html__( 'Arrow Circle', 'wpr-addons' ),
+					'far fa-arrow-alt-circle-left' => esc_html__( 'Arrow Circle Alt', 'wpr-addons' ),
+					'fas fa-long-arrow-alt-left' => esc_html__( 'Long Arrow', 'wpr-addons' ),
+					'fas fa-chevron-left' => esc_html__( 'Chevron', 'wpr-addons' ),
+					'svg-icons' => esc_html__( 'SVG Icons -----', 'wpr-addons' ),
+				] ),
+				'condition' => [
+					'enable_custom_pagination' => 'yes',
+				],
+				'separator' => 'after',
+			]
+		);
+
+		$this->add_control(
 			'enable_table_export',
 			[
 				'label' => __('Enable Table Export', 'wpr-addons'),
@@ -163,6 +201,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'label_off' => __('No', 'wpr-addons'),
 				'return_value' => 'yes',
 				'default' => 'yes',
+				'separator' => 'before'
 			]
 		);
 
@@ -759,8 +798,9 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'default' => 'none',
 				'selectors' => [
 					'{{WRAPPER}} th.wpr-table-th' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} th.wpr-table-th-pag' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} td.wpr-table-td' => 'border-style: {{VALUE}};',
-					// '{{WRAPPER}} li' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} td.wpr-table-td-pag' => 'border-style: {{VALUE}};',
 				],
 				'separator' => 'before',
 			]
@@ -780,7 +820,9 @@ class Wpr_AdvancedTable extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} th.wpr-table-th' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} th.wpr-table-th-pag' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} td.wpr-table-td' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} td.wpr-table-td-pag' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					// '{{WRAPPER}} li' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
@@ -797,7 +839,9 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'default' => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} th.wpr-table-th' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} th.wpr-table-th-pag' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} td.wpr-table-td' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} td.wpr-table-td-pag' => 'border-color: {{VALUE}}',
 					// '{{WRAPPER}} li' => 'border-color: {{VALUE}}',
 				],
 				'separator' => 'after',
@@ -816,10 +860,13 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'min' => 0,
 				'max' => 5,
 				'step' => 0.1,
+				'separator' => 'before',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-table-th' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
+					'{{WRAPPER}} .wpr-table-th-pag' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
 					'{{WRAPPER}} .wpr-table-th i' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
 					'{{WRAPPER}} .wpr-table-td' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
+					'{{WRAPPER}} .wpr-table-td-pag' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
 					'{{WRAPPER}} .wpr-table-td i' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
 					'{{WRAPPER}} .wpr-table-text' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;'
 				],
@@ -1984,6 +2031,53 @@ class Wpr_AdvancedTable extends Widget_Base {
 			]
 		);
 
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'table_pagination_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-table-custom-pagination-list',
+			]
+		);
+
+		$this->add_responsive_control(
+			'pagination_horizontal_gutter',
+			[
+				'label' => esc_html__( 'Horizontal Gutter', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 200
+					]
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-table-custom-pagination-list:not(:last-child)' => 'margin-right: {{SIZE}}{{UNIT}}',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_responsive_control(
+			'pagination_vertical_gutter',
+			[
+				'label' => __( 'Vertical Gutter', 'plugin-name' ),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'render_type' => 'template',
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 200
+					]
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-table-custom-pagination-inner-cont' => 'margin-top: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
 		$this->add_responsive_control(
 			'pagination_padding',
 			[
@@ -1999,24 +2093,6 @@ class Wpr_AdvancedTable extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-table-custom-pagination-list' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'pagination_margin',
-			[
-				'label' => esc_html__( 'Margin', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 10,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-custom-pagination-list' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -2240,7 +2316,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 			<div class="wpr-table-pagination-cont">
 			<ul class="wpr-table-custom-pagination">
 				<div class="wpr-table-custom-pagination-inner-cont">
-				<li class='wpr-table-custom-pagination-prev wpr-table-prev-next wpr-table-custom-pagination-list'><i class="fas fa-arrow-left"></i></li>
+				<li class='wpr-table-custom-pagination-prev wpr-table-prev-next wpr-table-custom-pagination-list wpr-table-next-arrow wpr-table-arrow'><?php echo Utilities::get_wpr_icon( $settings['pagination_nav_icons'], '' ); ?></li>
 
 					<?php 
 					$item_index = 0;
@@ -2256,7 +2332,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 		
 						<?php } ?>
 					
-				<li class='wpr-table-custom-pagination-next wpr-table-prev-next wpr-table-custom-pagination-list'><i class="fas fa-arrow-right"></i></li>
+				<li class='wpr-table-custom-pagination-next wpr-table-prev-next wpr-table-custom-pagination-list wpr-table-prev-arrow wpr-table-arrow'><?php echo Utilities::get_wpr_icon( $settings['pagination_nav_icons'], '' ); ?></li>
 				</div>
 			</ul>
 			</div>
@@ -2307,7 +2383,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 
 		
 		<div class="wpr-table-container">
-		<div class="wpr-table-inner-container" style="width: 100%;" data-table-sorting="<?php echo $settings['enable_table_sorting']; ?>" data-custom-pagination="<?php echo $settings['enable_custom_pagination'] ?>" data-rows-per-page="<?php echo isset($settings['table_items_per_page']) ? $settings['table_items_per_page'] : ''; ?>">
+		<div class="wpr-table-inner-container" style="width: 100%;" data-table-sorting="<?php echo $settings['enable_table_sorting']; ?>" data-custom-pagination="<?php echo $settings['enable_custom_pagination'] ?>" data-row-pagination="<?php echo $settings['enable_row_pagination'] ?>" data-rows-per-page="<?php echo isset($settings['table_items_per_page']) ? $settings['table_items_per_page'] : ''; ?>">
 
 		<?php if ( 'csv' === $settings['choose_table_type'] ) {
 
@@ -2416,10 +2492,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 					</tr>
 				</thead>
 				<tbody>
-				<?php for( $i = 0 + $x; $i < count( $table_tr ) + $x; $i++ ) : 
-						// if( isset( $settings['table_items_per_page'] ) && $i - $x === $settings['table_items_per_page'] ) {
-						// 	return;
-						// }
+				<?php for( $i = 0 + $x; $i < count( $table_tr ) + $x; $i++ ) :
 
 						$this->add_render_attribute('table_row_attributes'.$i, [
 							'class' => $table_tr[$i]['class'],
@@ -2520,7 +2593,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 				<div class="wpr-table-pagination-cont">
 				<ul class="wpr-table-custom-pagination">
 					<div class="wpr-table-custom-pagination-inner-cont">
-					<li class='wpr-table-custom-pagination-prev wpr-table-prev-next wpr-table-custom-pagination-list'><i class="fas fa-arrow-left"></i></li>
+					<li class='wpr-table-custom-pagination-prev wpr-table-prev-next wpr-table-custom-pagination-list wpr-slider-prev-arrow wpr-slider-arrow'><?php echo Utilities::get_wpr_icon( $settings['pagination_nav_icons'], '' ); ?></i></li>
 
 						<?php 
 						$total_rows = 0;
@@ -2543,7 +2616,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 			
 							<?php } ?>
 						
-					<li class='wpr-table-custom-pagination-next wpr-table-prev-next wpr-table-custom-pagination-list'><i class="fas fa-arrow-right"></i></li>
+					<li class='wpr-table-custom-pagination-next wpr-table-prev-next wpr-table-custom-pagination-list wpr-slider-prev-arrow wpr-slider-arrow'><?php echo Utilities::get_wpr_icon( $settings['pagination_nav_icons'], '' ); ?></i></li>
 					</div>
 				</ul>
 				</div>
