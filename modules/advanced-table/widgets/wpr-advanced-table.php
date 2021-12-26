@@ -49,6 +49,10 @@ class Wpr_AdvancedTable extends Widget_Base {
 		return [];
 	}
 
+	public function get_script_depends() {
+		return ['wpr-table-to-excel-js'];
+	}
+
 	public function get_custom_help_url() {
         return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-back-to-top-help-btn';
     }
