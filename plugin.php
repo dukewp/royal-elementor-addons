@@ -405,7 +405,10 @@ class Plugin {
 			true
 		);
 
-		wp_register_script( 'wpr-table-to-excel-js', WPR_ADDONS_URL  . 'assets/js/lib/tableToExcel/tableToExcel.js',[ 'elementor-frontend' ], null, true );
+		wp_register_script( 
+			'wpr-table-to-excel-js',
+			 WPR_ADDONS_URL  . 'assets/js/lib/tableToExcel/tableToExcel.js',
+			 [], null, true );
 	}
 
 	public function enqueue_panel_scripts() {

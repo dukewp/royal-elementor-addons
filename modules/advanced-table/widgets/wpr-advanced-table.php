@@ -1082,64 +1082,6 @@ class Wpr_AdvancedTable extends Widget_Base {
             ]
 		);
 
-		// $this->add_control(
-		// 	'th_border_type',
-		// 	[
-		// 		'label' => esc_html__( 'Border Type', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SELECT,
-		// 		'options' => [
-		// 			'none' => esc_html__( 'None', 'wpr-addons' ),
-		// 			'solid' => esc_html__( 'Solid', 'wpr-addons' ),
-		// 			'double' => esc_html__( 'Double', 'wpr-addons' ),
-		// 			'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
-		// 			'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
-		// 			'groove' => esc_html__( 'Groove', 'wpr-addons' ),
-		// 		],
-		// 		'default' => 'none',
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} th' => 'border-style: {{VALUE}};',
-		// 		],
-		// 		'separator' => 'before',
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'th_border_width',
-		// 	[
-		// 		'label' => esc_html__( 'Border Width', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::DIMENSIONS,
-		// 		'size_units' => [ 'px' ],
-		// 		'default' => [
-		// 			'top' => 1,
-		// 			'right' => 1,
-		// 			'bottom' => 1,
-		// 			'left' => 1,
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} th' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-		// 		],
-		// 		'condition' => [
-		// 			'th_border_type!' => 'none',
-		// 		],
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'th_border_color',
-		// 	[
-		// 		'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::COLOR,
-		// 		'default' => '#333333',
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} th' => 'border-color: {{VALUE}}',
-		// 		],
-		// 		'separator' => 'after',
-		// 		'condition' => [
-		// 			'th_border_type!' => 'none',
-		// 		],
-		// 	]
-		// );
-
         $this->add_responsive_control(
             'header_icon_space',
             [
@@ -2031,6 +1973,18 @@ class Wpr_AdvancedTable extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'pagination_border_color',
+			[
+				'label'     => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-table-custom-pagination-inner-cont' => 'border-color: {{VALUE}}',
+				],
+			]
+		);
+
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
@@ -2157,18 +2111,6 @@ class Wpr_AdvancedTable extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'pagination_border_color',
-			[
-				'label'     => esc_html__( 'Border Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#ffffff',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-custom-pagination-inner-cont' => 'border-color: {{VALUE}}',
-				],
-			]
-		);
-
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
@@ -2202,18 +2144,6 @@ class Wpr_AdvancedTable extends Widget_Base {
 				],
 			]
 		);
-				
-		// $this->add_control(
-		// 	'pagination_color_active_hover',
-		// 	[
-		// 		'label' => __( 'Background Color (Active)', 'wpr-addons' ),
-		// 		'type' => \Elementor\Controls_Manager::COLOR,
-		// 		'default' => '#fb0',
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-table-custom-pagination-list.wpr-active-pagination-item:hover' => 'background-color: {{VALUE}}'
-		// 		],
-		// 	]
-		// );
 
 		$this->add_control(
 			'pagination_border_color_hover',
