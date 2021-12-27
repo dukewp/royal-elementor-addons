@@ -77,6 +77,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'options' => [
 					'custom' => esc_html__( 'Custom', 'wpr-addons' ),
 					'csv' => esc_html__( 'upload CSV', 'wpr-addons' ),
+					'url' => esc_html__( 'Remote CSV File URL', 'wpr-addons' ),
 				],
 			]
 		);
@@ -90,8 +91,24 @@ class Wpr_AdvancedTable extends Widget_Base {
                 'condition' => [
                     'choose_table_type'   => 'csv',
                 ]
-            ]);
-         
+       		]
+		);
+
+        $this->add_control(
+            'table_insert_url',
+            [
+                'label'         => esc_html__( 'Enter a CSV File URL', 'elementskit' ),
+                'type'          => Controls_Manager::URL,
+                'show_external' => false,
+                'label_block'   => true,
+                // 'default'       => [
+                //     'url' => Handler::get_url()  . 'assets/table.csv',
+                // ],
+                'condition' => [
+                    'choose_table_type'   => 'url',
+                ]
+            ]
+        );
 
 		$this->add_control(
 			'enable_table_sorting',
@@ -2322,6 +2339,10 @@ class Wpr_AdvancedTable extends Widget_Base {
 		<?php if ( 'csv' === $settings['choose_table_type'] ) {
 
 			echo $this->render_csv_data($settings['table_upload_csv']['url'], $settings['enable_custom_pagination'], $sorting_icon, $settings);
+
+		} else if ( 'url' === $settings['choose_table_type']) {
+
+			echo $this->render_csv_data($settings['table_insert_url']['url'], $settings['enable_custom_pagination'], $sorting_icon, $settings);
 
 		} else {
 
