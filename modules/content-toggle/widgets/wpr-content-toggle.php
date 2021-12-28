@@ -1131,12 +1131,12 @@ class Wpr_Content_Toggle extends Widget_Base {
 	public function wpr_dual_switcher_outer_text() {
 
 		$settings = $this->get_settings();
-
+		$this->add_inline_editing_attributes('switcher_first_label', 'basic');
 		?>
 
 		<div class="wpr-switcher-inner wpr-switcher-first">
 			<?php if ( '' !== $settings['switcher_first_label'] ) : ?>
-			<div class="wpr-switcher-label"><?php echo $settings['switcher_first_label']; ?></div>
+			<h1 class="wpr-switcher-label" <?php echo $this->get_render_attribute_string('switcher_first_label') ?>><?php echo $settings['switcher_first_label']; ?></>
 			<?php endif; ?>
 
 			<?php if ( 'yes' === $settings['switcher_first_show_icon'] && '' !== $settings['switcher_first_icon']['value'] ) : ?>
