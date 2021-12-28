@@ -124,6 +124,35 @@ class Wpr_AdvancedTable extends Widget_Base {
 		);
 
 		$this->add_control(
+			'enable_columns_control',
+			[
+				'label' => __('Columns', 'wpr-addons'),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'label_on' => __('Yes', 'wpr-addons'),
+				'label_off' => __('No', 'wpr-addons'),
+				'return_value' => 'yes',
+				'default' => 'yes',
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'columns_number',
+			[
+				'label' => esc_html__( 'Quantity', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'min' => 1,
+				'max' => 100,
+				'render_type' => 'template',
+				'frontend_available' => true,
+				'default' => 10,
+				'condition' => [
+					'enable_columns_control' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control(
 			'enable_table_live_search',
 			[
 				'label' => __('Enable Live Search', 'wpr-addons'),
@@ -2334,7 +2363,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 
 		
 		<div class="wpr-table-container">
-		<div class="wpr-table-inner-container" style="width: 100%;" data-table-sorting="<?php echo $settings['enable_table_sorting']; ?>" data-custom-pagination="<?php echo $settings['enable_custom_pagination'] ?>" data-row-pagination="<?php echo $settings['enable_row_pagination'] ?>" data-rows-per-page="<?php echo isset($settings['table_items_per_page']) ? $settings['table_items_per_page'] : ''; ?>">
+		<div class="wpr-table-inner-container" style="width: 100%;" data-table-columns="<?php echo empty($settings['columns_number']) ? $settings['columns_number'] : '' ?>" data-table-sorting="<?php echo $settings['enable_table_sorting']; ?>" data-custom-pagination="<?php echo $settings['enable_custom_pagination'] ?>" data-row-pagination="<?php echo $settings['enable_row_pagination'] ?>" data-rows-per-page="<?php echo isset($settings['table_items_per_page']) ? $settings['table_items_per_page'] : ''; ?>">
 
 		<?php if ( 'csv' === $settings['choose_table_type'] ) {
 
