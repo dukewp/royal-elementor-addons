@@ -771,8 +771,7 @@ class Pricing_Table extends Widget_Base {
 				],
 				'condition' => [
 					'badge_style!' => [ 'none', 'cyrcle' ],
-				],	
-			
+				],
 			]
 		);
 

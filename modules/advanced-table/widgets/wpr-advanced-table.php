@@ -131,7 +131,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'label_on' => __('Yes', 'wpr-addons'),
 				'label_off' => __('No', 'wpr-addons'),
 				'return_value' => 'yes',
-				'default' => 'yes',
+				'default' => 'no',
 				'separator' => 'before'
 			]
 		);
@@ -2041,6 +2041,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'name'     => 'table_pagination_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-table-custom-pagination-list',
+				'render_type' => 'template'
 			]
 		);
 
@@ -2311,7 +2312,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 							</li>
 		
 						<?php } ?>
-					
+
 				<li class='wpr-table-custom-pagination-next wpr-table-prev-next wpr-table-custom-pagination-list wpr-table-prev-arrow wpr-table-arrow'><?php echo Utilities::get_wpr_icon( $settings['pagination_nav_icons'], '' ); ?></li>
 				</div>
 			</ul>
@@ -2363,7 +2364,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 
 		
 		<div class="wpr-table-container">
-		<div class="wpr-table-inner-container" style="width: 100%;" data-table-columns="<?php echo empty($settings['columns_number']) ? $settings['columns_number'] : '' ?>" data-table-sorting="<?php echo $settings['enable_table_sorting']; ?>" data-custom-pagination="<?php echo $settings['enable_custom_pagination'] ?>" data-row-pagination="<?php echo $settings['enable_row_pagination'] ?>" data-rows-per-page="<?php echo isset($settings['table_items_per_page']) ? $settings['table_items_per_page'] : ''; ?>">
+		<div class="wpr-table-inner-container" style="width: 100%;" data-table-columns="<?php echo !empty($settings['columns_number']) ? $settings['columns_number'] : '' ?>" data-table-sorting="<?php echo $settings['enable_table_sorting']; ?>" data-custom-pagination="<?php echo $settings['enable_custom_pagination'] ?>" data-row-pagination="<?php echo $settings['enable_row_pagination'] ?>" data-rows-per-page="<?php echo isset($settings['table_items_per_page']) ? $settings['table_items_per_page'] : ''; ?>">
 
 		<?php if ( 'csv' === $settings['choose_table_type'] ) {
 
