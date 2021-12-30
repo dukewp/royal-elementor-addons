@@ -113,7 +113,7 @@ function wpr_addons_templates_kit_page() {
                 <span class="dashicons dashicons-no-alt close-btn"></span>
             </header>
             <div class="content">
-                <p><?php _e('The import process can take a few minutes depending on the size of the kit you are importing and speed of the connection.', 'wpr-addons'); ?></p>
+                <p><?php _e('The import process can take a few seconds depending on the size of the kit you are importing and speed of the connection.', 'wpr-addons'); ?></p>
                 <p><?php _e('Please do NOT close this browser window until import is completed.', 'wpr-addons'); ?></p>
 
                 <div class="progress-wrap">
@@ -409,7 +409,7 @@ add_filter( 'wp_check_filetype_and_ext', 'wpr_svgs_allow_svg_upload', 10, 4 );
 */
 function wpr_search_query_results() {
     // Freemius OptIn
-    if ( ! (wpr_fs()->is_registered() && wpr_fs()->is_tracking_allowed()) ) {
+    if ( ! (wpr_fs()->is_registered() && wpr_fs()->is_tracking_allowed()  || wpr_fs()->is_pending_activation() ) ) {
         return;
     }
 
@@ -425,7 +425,7 @@ function wpr_search_query_results() {
 */
 function wpr_track_imported_kit( $kit ) {
     // Freemius OptIn
-    if ( ! (wpr_fs()->is_registered() && wpr_fs()->is_tracking_allowed()) ) {
+    if ( ! (wpr_fs()->is_registered() && wpr_fs()->is_tracking_allowed()  || wpr_fs()->is_pending_activation() ) ) {
         return;
     }
     
