@@ -2578,7 +2578,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 				<div class="wpr-table-pagination-cont">
 				<ul class="wpr-table-custom-pagination">
 					<div class="wpr-table-custom-pagination-inner-cont">
-					<li class='wpr-table-custom-pagination-prev wpr-table-prev-next wpr-table-custom-pagination-list wpr-slider-prev-arrow wpr-slider-arrow'><?php echo Utilities::get_wpr_icon( $settings['pagination_nav_icons'], '' ); ?></i></li>
+					<li class='wpr-table-custom-pagination-prev wpr-table-prev-next wpr-table-custom-pagination-list'><?php echo Utilities::get_wpr_icon( $settings['pagination_nav_icons'], '' ); ?></i></li>
 
 						<?php 
 						$total_rows = 0;
@@ -2601,7 +2601,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 			
 							<?php } ?>
 						
-					<li class='wpr-table-custom-pagination-next wpr-table-prev-next wpr-table-custom-pagination-list wpr-slider-prev-arrow wpr-slider-arrow'><?php echo Utilities::get_wpr_icon( $settings['pagination_nav_icons'], '' ); ?></i></li>
+					<li class='wpr-table-custom-pagination-next wpr-table-prev-next wpr-table-custom-pagination-list wpr-table-prev-arrow wpr-table-arrow'><?php echo Utilities::get_wpr_icon( $settings['pagination_nav_icons'], '' ); ?></li>
 					</div>
 				</ul>
 				</div>
