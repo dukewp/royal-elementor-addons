@@ -1107,7 +1107,7 @@ class Wpr_AdvancedTable extends Widget_Base {
         $this->add_responsive_control(
             'header_img_space',
             [
-                'label'      => __('Image Padding', 'wpr-addons'),
+                'label'      => __('Image Margin', 'wpr-addons'),
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'range'      => [
@@ -1127,7 +1127,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 					],
 				],
                 'selectors'             => [
-					'{{WRAPPER}} .wpr-advanced-table th img' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+					'{{WRAPPER}} .wpr-advanced-table th img' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
             ]
 		);
@@ -1430,7 +1430,7 @@ class Wpr_AdvancedTable extends Widget_Base {
         $this->add_responsive_control(
             'td_img_space',
             [
-                'label'      => __('Image Padding', 'wpr-addons'),
+                'label'      => __('Image Margin', 'wpr-addons'),
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'range'      => [
@@ -1450,7 +1450,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 					],
 				],
                 'selectors'             => [
-					'{{WRAPPER}} .wpr-advanced-table td img' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+					'{{WRAPPER}} .wpr-advanced-table td img' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
             ]
 		);
