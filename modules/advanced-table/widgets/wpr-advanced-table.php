@@ -219,26 +219,63 @@ class Wpr_AdvancedTable extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'pagination_nav_icons',
+		// $this->add_control(
+		// 	'pagination_nav_icons',
+		// 	[
+		// 		'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'default' => 'svg-angle-1-left',
+		// 		'options' => Utilities::get_svg_icons_array( 'arrows', [
+		// 			'fas fa-angle-left' => esc_html__( 'Angle', 'wpr-addons' ),
+		// 			'fas fa-angle-double-left' => esc_html__( 'Angle Double', 'wpr-addons' ),
+		// 			'fas fa-arrow-left' => esc_html__( 'Arrow', 'wpr-addons' ),
+		// 			'fas fa-arrow-alt-circle-left' => esc_html__( 'Arrow Circle', 'wpr-addons' ),
+		// 			'far fa-arrow-alt-circle-left' => esc_html__( 'Arrow Circle Alt', 'wpr-addons' ),
+		// 			'fas fa-long-arrow-alt-left' => esc_html__( 'Long Arrow', 'wpr-addons' ),
+		// 			'fas fa-chevron-left' => esc_html__( 'Chevron', 'wpr-addons' ),
+		// 			'svg-icons' => esc_html__( 'SVG Icons -----', 'wpr-addons' ),
+		// 		] ),
+		// 		'condition' => [
+		// 			'enable_custom_pagination' => 'yes',
+		// 		],
+		// 		'separator' => 'after',
+		// 	]
+		// );
+
+		$this->add_responsive_control(
+			'pagination_nav_icons_left',
 			[
-				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'svg-angle-1-left',
-				'options' => Utilities::get_svg_icons_array( 'arrows', [
-					'fas fa-angle-left' => esc_html__( 'Angle', 'wpr-addons' ),
-					'fas fa-angle-double-left' => esc_html__( 'Angle Double', 'wpr-addons' ),
-					'fas fa-arrow-left' => esc_html__( 'Arrow', 'wpr-addons' ),
-					'fas fa-arrow-alt-circle-left' => esc_html__( 'Arrow Circle', 'wpr-addons' ),
-					'far fa-arrow-alt-circle-left' => esc_html__( 'Arrow Circle Alt', 'wpr-addons' ),
-					'fas fa-long-arrow-alt-left' => esc_html__( 'Long Arrow', 'wpr-addons' ),
-					'fas fa-chevron-left' => esc_html__( 'Chevron', 'wpr-addons' ),
-					'svg-icons' => esc_html__( 'SVG Icons -----', 'wpr-addons' ),
-				] ),
+				'label' => esc_html__('Icon (Left)', 'wpr-addons'),
+				'type' => Controls_Manager::ICONS,
+				'skin' => 'inline',
+				'label_block' => false,
+				'default' => [
+					'value' => 'fas fa-star',
+					'library' => 'solid',
+				],
 				'condition' => [
 					'enable_custom_pagination' => 'yes',
 				],
-				'separator' => 'after',
+
+			]
+		);
+		// );
+
+		$this->add_responsive_control(
+			'pagination_nav_icons_right',
+			[
+				'label' => esc_html__('Icon (Right)', 'wpr-addons'),
+				'type' => Controls_Manager::ICONS,
+				'skin' => 'inline',
+				'label_block' => false,
+				'default' => [
+					'value' => 'fas fa-star',
+					'library' => 'solid',
+				],
+				'condition' => [
+					'enable_custom_pagination' => 'yes',
+				],
+
 			]
 		);
 
@@ -799,6 +836,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 					'{{WRAPPER}} .wpr-table-container .wpr-advanced-table' => 'width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-export-search-inner-cont' => 'width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-table-custom-pagination' => 'width: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}} .wpr-table-inner-container' => 'width: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -826,6 +864,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-table-container .wpr-table-inner-container' => 'display: flex; justify-content: {{VALUE}}',
+					'{{WRAPPER}} .wpr-table-container' => 'display: flex; justify-content: {{VALUE}}',
 					'{{WRAPPER}} .wpr-export-search-cont' => 'display: flex; justify-content: {{VALUE}}',
 					'{{WRAPPER}} .wpr-table-pagination-cont' => 'display: flex; justify-content: {{VALUE}}',
 				]
@@ -1723,6 +1762,7 @@ class Wpr_AdvancedTable extends Widget_Base {
                     'type'      => Controls_Manager::COLOR,
                     'selectors' => [
                         '{{WRAPPER}} .wpr-table-live-search-cont input' => 'background-color: {{VALUE}};',
+                        // '{{WRAPPER}} .wpr-table-live-search-cont' => 'background-color: {{VALUE}};',
                     ],
                 ]
             );
@@ -2292,12 +2332,13 @@ class Wpr_AdvancedTable extends Widget_Base {
 		}
 		echo '</tbody></table>';
 		echo '</div>';
+		echo '</div>'; // <?php echo Utilities::get_wpr_icon( $settings['pagination_nav_icons_left'], '' ); 
 
 		if ( 'yes' == $settings['enable_custom_pagination'] ) { ?>
 			<div class="wpr-table-pagination-cont">
 			<ul class="wpr-table-custom-pagination">
 				<div class="wpr-table-custom-pagination-inner-cont">
-				<li class='wpr-table-custom-pagination-prev wpr-table-prev-next wpr-table-custom-pagination-list wpr-table-next-arrow wpr-table-arrow'><?php echo Utilities::get_wpr_icon( $settings['pagination_nav_icons'], '' ); ?></li>
+				<li class='wpr-table-custom-pagination-prev wpr-table-prev-next wpr-table-custom-pagination-list wpr-table-next-arrow wpr-table-arrow'><?php \Elementor\Icons_Manager::render_icon( $settings['pagination_nav_icons_left'], [ 'aria-hidden' => 'true' ] ); ?></li>
 
 					<?php 
 					$item_index = 0;
@@ -2313,14 +2354,12 @@ class Wpr_AdvancedTable extends Widget_Base {
 		
 						<?php } ?>
 
-				<li class='wpr-table-custom-pagination-next wpr-table-prev-next wpr-table-custom-pagination-list wpr-table-prev-arrow wpr-table-arrow'><?php echo Utilities::get_wpr_icon( $settings['pagination_nav_icons'], '' ); ?></li>
+				<li class='wpr-table-custom-pagination-next wpr-table-prev-next wpr-table-custom-pagination-list wpr-table-prev-arrow wpr-table-arrow'><?php \Elementor\Icons_Manager::render_icon( $settings['pagination_nav_icons_right'], [ 'aria-hidden' => 'true' ] ); ?></li>
 				</div>
 			</ul>
 			</div>
 	
 			<?php } 
-
-		echo '</div>';
 		fclose($handle);
 		
 	}
@@ -2364,7 +2403,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 
 		
 		<div class="wpr-table-container">
-		<div class="wpr-table-inner-container" style="width: 100%;" data-table-columns="<?php echo !empty($settings['columns_number']) ? $settings['columns_number'] : '' ?>" data-table-sorting="<?php echo $settings['enable_table_sorting']; ?>" data-custom-pagination="<?php echo $settings['enable_custom_pagination'] ?>" data-row-pagination="<?php echo $settings['enable_row_pagination'] ?>" data-rows-per-page="<?php echo isset($settings['table_items_per_page']) ? $settings['table_items_per_page'] : ''; ?>">
+		<div class="wpr-table-inner-container" data-table-columns="<?php echo !empty($settings['columns_number']) ? $settings['columns_number'] : '' ?>" data-table-sorting="<?php echo $settings['enable_table_sorting']; ?>" data-custom-pagination="<?php echo $settings['enable_custom_pagination'] ?>" data-row-pagination="<?php echo $settings['enable_row_pagination'] ?>" data-rows-per-page="<?php echo isset($settings['table_items_per_page']) ? $settings['table_items_per_page'] : ''; ?>">
 
 		<?php if ( 'csv' === $settings['choose_table_type'] ) {
 
@@ -2578,7 +2617,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 				<div class="wpr-table-pagination-cont">
 				<ul class="wpr-table-custom-pagination">
 					<div class="wpr-table-custom-pagination-inner-cont">
-					<li class='wpr-table-custom-pagination-prev wpr-table-prev-next wpr-table-custom-pagination-list'><?php echo Utilities::get_wpr_icon( $settings['pagination_nav_icons'], '' ); ?></i></li>
+					<li class='wpr-table-custom-pagination-prev wpr-table-prev-next wpr-table-custom-pagination-list'><?php \Elementor\Icons_Manager::render_icon( $settings['pagination_nav_icons_left'], [ 'aria-hidden' => 'true' ] ); ?></i></li>
 
 						<?php 
 						$total_rows = 0;
@@ -2601,7 +2640,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 			
 							<?php } ?>
 						
-					<li class='wpr-table-custom-pagination-next wpr-table-prev-next wpr-table-custom-pagination-list wpr-table-prev-arrow wpr-table-arrow'><?php echo Utilities::get_wpr_icon( $settings['pagination_nav_icons'], '' ); ?></li>
+					<li class='wpr-table-custom-pagination-next wpr-table-prev-next wpr-table-custom-pagination-list wpr-table-prev-arrow wpr-table-arrow'><?php \Elementor\Icons_Manager::render_icon( $settings['pagination_nav_icons_right'], [ 'aria-hidden' => 'true' ] ); ?></li>
 					</div>
 				</ul>
 				</div>

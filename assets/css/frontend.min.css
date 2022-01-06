@@ -10160,6 +10160,7 @@ html {
   /* --- Advanced Table ---  */
   .wpr-advanced-table {
 	  overflow-x: scroll;
+	  max-width: 100%!important;
   }
   
   .wpr-advanced-table th {
@@ -10168,6 +10169,10 @@ html {
   
   .wpr-table-live-search-cont {
 	  margin: 20px 0;
+  }
+
+  .wpr-table-live-search-cont input {
+	  min-width: 100%;
   }
   
   .wpr-search-input-icon,
@@ -10194,7 +10199,9 @@ html {
   }
   
   .wpr-table-export-button-cont button {
-	  margin: 20px 10px 20px 0;
+	  position: relative;
+	  display: block;
+	  width: 100%;
   }
   
   /* .wpr-td-content-wrapper, */
@@ -10254,14 +10261,14 @@ html {
 	  border-radius: 50%;
   }
 
-  .wpr-table-prev-arrow {
+  /* .wpr-table-prev-arrow {
 	  -webkit-transform: rotate(180deg);
 	  -ms-transform: rotate(180deg);
 	  transform: rotate(180deg);
 	  -webkit-transform-origin: center;
 	  -ms-transform-origin: center;
 	  transform-origin: center;
-  }
+  } */
 
   .wpr-data-table-th-img,
   .wpr-table-text {
