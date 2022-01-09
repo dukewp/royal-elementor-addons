@@ -10167,7 +10167,8 @@ html {
 	  position: relative;
   }
   
-  .wpr-table-live-search-cont {
+  .wpr-table-live-search-cont,
+  .wpr-table-export-button-cont {
 	  margin: 20px 0;
   }
 
@@ -10200,7 +10201,6 @@ html {
   
   .wpr-table-export-button-cont button {
 	  position: relative;
-	  display: block;
 	  width: 100%;
   }
   

@@ -192,6 +192,18 @@ class Wpr_AdvancedTable extends Widget_Base {
 		);
 
 		$this->add_control(
+			'enable_entry_info', [
+				'label' => __('Entry Info', 'wpr-addons'),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'label_on' => __('Yes', 'wpr-addons'),
+				'label_off' => __('No', 'wpr-addons'),
+				'return_value' => 'yes',
+				'default' => 'no',
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
 			'enable_custom_pagination', [
 				'label' => __('Custom Pagination', 'wpr-addons'),
 				'type' => \Elementor\Controls_Manager::SWITCHER,
@@ -250,7 +262,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'skin' => 'inline',
 				'label_block' => false,
 				'default' => [
-					'value' => 'fas fa-star',
+					'value' => 'fas fa-chevron-left',
 					'library' => 'solid',
 				],
 				'condition' => [
@@ -269,7 +281,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'skin' => 'inline',
 				'label_block' => false,
 				'default' => [
-					'value' => 'fas fa-star',
+					'value' => 'fas fa-chevron-right',
 					'library' => 'solid',
 				],
 				'condition' => [
@@ -836,7 +848,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 					'{{WRAPPER}} .wpr-table-container .wpr-advanced-table' => 'width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-export-search-inner-cont' => 'width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-table-custom-pagination' => 'width: {{SIZE}}{{UNIT}};',
-					// '{{WRAPPER}} .wpr-table-inner-container' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-table-inner-container' => 'width: 100%;',
 				],
 			]
 		);
@@ -1598,6 +1610,16 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'separator' => 'after',
 			]
 		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'export_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-table-export-button-cont .wpr-button'
+			]
+		);
+
 		$this->add_control(
 			'export_buttons_border_type',
 			[
@@ -2320,7 +2342,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 		$countRows = 0;
 		$oddEven = '';
 		while ($csvcontents = fgetcsv($handle)) {
-			if($countRows < 100) {	// TODO: remove if statement later
+			if($countRows < 1000000) {	// TODO: remove if statement later
 				$countRows++;
 				$oddEven = $countRows % 2 == 0 ? 'wpr-even' : 'wpr-odd';
 				echo '<tr class="wpr-table-row  '. $oddEven .'">';
@@ -2380,7 +2402,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 	
 			if ( 'yes' === $settings['enable_table_export'] ) {
 				echo '<div class="wpr-table-export-button-cont">';
-					echo '<button class="wpr-button wpr-xls">XLS</button>';
+					echo '<button class="wpr-button wpr-xls">EXCEL</button>';
 					echo '<button class="wpr-button wpr-csv">CSV</button>';
 				echo '</div>';
 			}
@@ -2403,7 +2425,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 
 		
 		<div class="wpr-table-container">
-		<div class="wpr-table-inner-container" data-table-columns="<?php echo !empty($settings['columns_number']) ? $settings['columns_number'] : '' ?>" data-table-sorting="<?php echo $settings['enable_table_sorting']; ?>" data-custom-pagination="<?php echo $settings['enable_custom_pagination'] ?>" data-row-pagination="<?php echo $settings['enable_row_pagination'] ?>" data-rows-per-page="<?php echo isset($settings['table_items_per_page']) ? $settings['table_items_per_page'] : ''; ?>">
+		<div class="wpr-table-inner-container" data-table-columns="<?php echo !empty($settings['columns_number']) ? $settings['columns_number'] : '' ?>" data-table-sorting="<?php echo $settings['enable_table_sorting']; ?>" data-custom-pagination="<?php echo $settings['enable_custom_pagination'] ?>" data-row-pagination="<?php echo $settings['enable_row_pagination'] ?>" data-entry-info="<?php echo $settings['enable_entry_info'] ?>" data-rows-per-page="<?php echo isset($settings['table_items_per_page']) ? $settings['table_items_per_page'] : ''; ?>">
 
 		<?php if ( 'csv' === $settings['choose_table_type'] ) {
 
