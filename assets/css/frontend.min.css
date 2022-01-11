@@ -10158,18 +10158,16 @@ html {
   }
   
   /* --- Advanced Table ---  */
+  /* override twenty-twentyone margins */
   .wpr-advanced-table {
 	  overflow-x: scroll;
 	  max-width: 100%!important;
+	  margin-right: 0 !important;
+	  margin-left: 0 !important;
   }
   
   .wpr-advanced-table th {
 	  position: relative;
-  }
-  
-  .wpr-table-live-search-cont,
-  .wpr-table-export-button-cont {
-	  margin: 20px 0;
   }
 
   .wpr-table-live-search-cont input {
@@ -10209,6 +10207,7 @@ html {
 	  display: flex;
 	  justify-content: space-between;
 	  align-items: center;
+	  margin: 20px 0;
   }
   
   .wpr-advanced-table img {
@@ -10273,4 +10272,21 @@ html {
   .wpr-data-table-th-img,
   .wpr-table-text {
 	  vertical-align: middle;
+  }
+
+  .wpr-xls,
+  .wpr-csv {
+	  padding: auto;
+  }
+
+  @media screen and (max-width: 768px) {
+	.wpr-export-search-inner-cont,
+	.wpr-table-pagination-cont {
+		flex-direction: column;
+	}
+
+	.wpr-table-export-button-cont {
+		width: 100%;
+		justify-content: space-around;
+	}
   }
