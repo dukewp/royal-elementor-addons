@@ -871,7 +871,8 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-table-container .wpr-advanced-table' => 'width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-export-search-inner-cont' => 'width: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-table-custom-pagination' => 'width: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}} .wpr-table-custom-pagination' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-table-pagination-cont' => 'width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-table-inner-container' => 'width: 100%;',
 				],
 			]
@@ -902,7 +903,8 @@ class Wpr_AdvancedTable extends Widget_Base {
 					'{{WRAPPER}} .wpr-table-container .wpr-table-inner-container' => 'display: flex; justify-content: {{VALUE}}',
 					'{{WRAPPER}} .wpr-table-container' => 'display: flex; justify-content: {{VALUE}}',
 					'{{WRAPPER}} .wpr-export-search-cont' => 'display: flex; justify-content: {{VALUE}}',
-					'{{WRAPPER}} .wpr-table-pagination-cont' => 'display: flex; justify-content: {{VALUE}}',
+					// '{{WRAPPER}} .wpr-table-pagination-cont' => 'display: flex; justify-content: {{VALUE}}',
+					'{{WRAPPER}} .wpr-table-pagination-outer-cont' => 'display: flex; justify-content: {{VALUE}}',
 				]
             ]
         );
@@ -1131,7 +1133,7 @@ class Wpr_AdvancedTable extends Widget_Base {
                 ],
                 'selectors'  => [
                     '{{WRAPPER}} .wpr-advanced-table thead i' => 'font-size: {{SIZE}}{{UNIT}};',
-                    // '{{WRAPPER}} .eael-data-table thead tr th .data-table-header-svg-icon' => 'height: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .wpr-advanced-table thead svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}}',
                 ],
             ]
         );
@@ -1259,6 +1261,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} th' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} .wpr-th-inner-cont' => 'text-align: {{VALUE}};',
 				],
 			]
 		);
@@ -2501,6 +2504,31 @@ class Wpr_AdvancedTable extends Widget_Base {
 			</div>
 	<?php }
 
+	public function render_th_icon($item) {
+		ob_start();
+		\Elementor\Icons_Manager::render_icon($item['choose_header_col_icon'], ['aria-hidden' => 'true']);
+		return ob_get_clean();
+	}
+
+	public function render_icon_or_image($item, $i) {
+		if( $item['header_icon'] === 'yes' && $item['header_icon_type'] === 'icon' ) {
+			$header_icon = $this->render_th_icon($item);
+		}
+
+		if( $item['header_icon'] == 'yes' && $item['header_icon_type'] == 'image' ) {
+			$this->add_render_attribute('wpr_table_th_img'.$i, [
+				'src'	=> esc_url( $item['header_col_img']['url'] ),
+				'class'	=> 'wpr-data-table-th-img',
+				'style'	=> "width:{$item['header_col_img_size']}px;",
+				'alt'	=> esc_attr(get_post_meta($item['header_col_img']['id'], '_wp_attachment_image_alt', true))
+			]);
+
+			$header_icon = '<img' . ' ' . $this->get_render_attribute_string('wpr_table_th_img'.$i) . '>';
+		}
+
+		echo $header_icon;
+	}
+
     public function render() {
 		$settings = $this->get_settings_for_display(); 
 
@@ -2590,68 +2618,40 @@ class Wpr_AdvancedTable extends Widget_Base {
 							'class' => ['elementor-repeater-item-'.$content_row['_id'], 'wpr-table-td'],
 						];
 				}
-			}
-		
-		?>
+			} ?>
+
 			  <table class="wpr-advanced-table" id="wpr-advanced-table">
 				<?php if ( $settings['table_header'] ) { ?>
+					
 				<thead>
 					<tr class="wpr-table-head-row wpr-table-row">
 						<?php $i = 0; foreach ($settings['table_header'] as $item) { 
 							$this->add_render_attribute('th_class'.$i, [
 								'class' => ['wpr-table-th', 'elementor-repeater-item-'.$item['_id']],
 								'colspan' => $item['header_colspan'],
-							]); 
-
-							if( $item['header_icon'] == 'yes' && $item['header_icon_type'] == 'image' ) {
-								$this->add_render_attribute('wpr_table_th_img'.$i, [
-									'src'	=> esc_url( $item['header_col_img']['url'] ),
-									'class'	=> 'wpr-data-table-th-img',
-									'style'	=> "width:{$item['header_col_img_size']}px;",
-									'alt'	=> esc_attr(get_post_meta($item['header_col_img']['id'], '_wp_attachment_image_alt', true))
-								]);
-							}
+							]);
 							
-							if($item['header_icon'] == 'yes' && $item['header_icon_position'] == 'left') {
-								if( $item['header_icon_type'] == 'image' ) :
-									?>
+							if($item['header_icon'] == 'yes' && $item['header_icon_position'] == 'left') { ?>
 								<th <?php echo $this->get_render_attribute_string('th_class'.$i); ?>>
-										<img <?php echo $this->get_render_attribute_string('wpr_table_th_img'.$i); ?>>
-										<span class="wpr-table-text"><?php echo $item['table_th']; ?></span>
-										<?php echo $sorting_icon; ?>
+									<?php $this->render_icon_or_image($item, $i); ?>
+									<span class="wpr-table-text"><?php echo $item['table_th']; ?></span>
+									<?php echo $sorting_icon; ?>
 								</th>
-								<?php else : ?>
-									<th <?php echo $this->get_render_attribute_string('th_class'.$i); ?>>
-										<?php \Elementor\Icons_Manager::render_icon($item['choose_header_col_icon'], ['aria-hidden' => 'true']);?>&nbsp;&nbsp;
-										<span class="wpr-table-text"><?php echo $item['table_th']; ?></span>
-										<?php echo $sorting_icon; ?>
-									</th>
-								<?php endif;
-							?>
-
-							<?php  } elseif ($item['header_icon'] == 'yes' && $item['header_icon_position'] == 'right') {
-								if( $item['header_icon_type'] == 'image' ) :
-									?>
+							<?php  } elseif ($item['header_icon'] == 'yes' && $item['header_icon_position'] == 'right') { ?>
 								<th <?php echo $this->get_render_attribute_string('th_class'.$i); ?>>
 										<span class="wpr-table-text"><?php echo $item['table_th']; ?></span>
-										<img <?php echo $this->get_render_attribute_string('wpr_table_th_img'.$i); ?>>
+										<?php $this->render_icon_or_image($item, $i); ?>
 										<?php echo $sorting_icon; ?>
 								</th>
-								<?php else : ?>
-									<th <?php echo $this->get_render_attribute_string('th_class'.$i); ?>>
-										<span class="wpr-table-text"><?php echo $item['table_th']; ?></span>&nbsp;&nbsp;
-										<?php \Elementor\Icons_Manager::render_icon($item['choose_header_col_icon'], ['aria-hidden' => 'true']);?>
-										<?php echo $sorting_icon; ?>
-									</th>
-								<?php endif; ?>
 							<?php } else { ?>
-							<th <?php echo $this->get_render_attribute_string('th_class'.$i); ?>>
-								<span class="wpr-table-text"><?php echo $item['table_th']; ?></span>
-								<?php echo $sorting_icon; ?>
-							</th>
+								<th <?php echo $this->get_render_attribute_string('th_class'.$i); ?>>
+									<span class="wpr-table-text"><?php echo $item['table_th']; ?></span>
+									<?php echo $sorting_icon; ?>
+								</th>
 						<?php } $i++; } ?>
 					</tr>
 				</thead>
+
 				<tbody>
 				<?php for( $i = 0 + $x; $i < count( $table_tr ) + $x; $i++ ) :
 
@@ -2696,7 +2696,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 										<td <?php echo $this->get_render_attribute_string('table_inside_td'.$i.$j); ?> style="background-color: <?php echo $table_tr[$i]['tr_bg_color']; ?>">
 											<div class="wpr-td-content-wrapper">
 												<div <?php echo $this->get_render_attribute_string('td_content'); ?>>
-													<?php \Elementor\Icons_Manager::render_icon($table_td[$j]['icon_item'], ['aria-hidden' => 'true']);?>&nbsp;&nbsp;
+													<?php \Elementor\Icons_Manager::render_icon($table_td[$j]['icon_item'], ['aria-hidden' => 'true']);?>
 													<a href="<?php echo esc_url($table_td[$j]['link']['url']) ?>" target="_blank">
 														<span class="wpr-table-text"><?php echo $table_td[$j]['content']; ?></span>
 													</a>
@@ -2723,7 +2723,12 @@ class Wpr_AdvancedTable extends Widget_Base {
 
 										<td <?php echo $this->get_render_attribute_string('table_inside_td'.$i.$j); ?> style="background-color: <?php echo $table_tr[$i]['tr_bg_color']; ?>">
 											<div class="wpr-td-content-wrapper">
-												<div <?php echo $this->get_render_attribute_string('td_content'); ?>><a href="<?php echo esc_url($table_td[$j]['link']['url']) ?>" target="_blank"><span class="wpr-table-text"><?php echo $table_td[$j]['content']; ?></span></a>&nbsp;&nbsp;<?php \Elementor\Icons_Manager::render_icon($table_td[$j]['icon_item'], ['aria-hidden' => 'true']);?></div>
+												<div <?php echo $this->get_render_attribute_string('td_content'); ?>>
+													<a href="<?php echo esc_url($table_td[$j]['link']['url']) ?>" target="_blank">
+														<span class="wpr-table-text"><?php echo $table_td[$j]['content']; ?></span>
+													</a>
+													<?php \Elementor\Icons_Manager::render_icon($table_td[$j]['icon_item'], ['aria-hidden' => 'true']);?>
+												</div>
 											</div>
 										</td>
 									<?php }
@@ -2732,8 +2737,8 @@ class Wpr_AdvancedTable extends Widget_Base {
 										<td <?php echo $this->get_render_attribute_string('table_inside_td'.$i.$j); ?> style="background-color: <?php echo $table_tr[$i]['tr_bg_color']; ?>">
 											<div class="wpr-td-content-wrapper">
 												<div <?php echo $this->get_render_attribute_string('td_content'); ?>>
-												<a href="<?php echo esc_url($table_td[$j]['link']['url']) ?>" target="_blank"><span class="wpr-table-text"><?php echo $table_td[$j]['content']; ?></span></a>
-											</div>
+													<a href="<?php echo esc_url($table_td[$j]['link']['url']) ?>" target="_blank"><span class="wpr-table-text"><?php echo $table_td[$j]['content']; ?></span></a>
+												</div>
 											</div>
 										</td>
 
