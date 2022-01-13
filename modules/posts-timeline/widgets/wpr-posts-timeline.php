@@ -1948,7 +1948,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 					'timeline_layout' => ['horizontal'],
 					'slides_height_bottom_line!' => 'yes',
 				],
-				'render_type' => 'template',
+				// 'render_type' => 'template',
 			]
 		);
 
@@ -3142,7 +3142,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 			[
 				'label' => __( 'Right Label Position', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				'render_type' => 'template',
 				'range' => [
 					'px' => [
 						'min' => 0,
@@ -3171,7 +3170,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 			[
 				'label' => __( 'Left Label Position', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				'render_type' => 'template',
 				'range' => [
 					'px' => [
 						'min' => 0,
@@ -3200,7 +3198,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 			[
 				'label' => __( 'Left Label Position', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				'render_type' => 'template',
 				'size_units' => ['px', '%'],
 				'range' => [
 					'px' => [
@@ -3230,7 +3227,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 			[
 				'label' => __( 'Right Label Position', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				'render_type' => 'template',
 				'size_units' => ['px', '%'],
 				'range' => [
 					'px' => [
@@ -3306,7 +3302,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'condition' => [
 					'timeline_layout' => ['horizontal']
 				],
-				'render_type' => 'template',
 			]
 		);
 
