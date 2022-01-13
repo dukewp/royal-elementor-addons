@@ -104,7 +104,8 @@ class Wpr_AdvancedTable extends Widget_Base {
                 'type'      => Controls_Manager::MEDIA,
                 'media_type'=> array(),
                 'condition' => [
-                    'choose_table_type'   => 'file',
+                    'choose_table_type'   => 'csv',
+					'choose_csv_type' => 'file',
                 ]
        		]
 		);
@@ -112,7 +113,7 @@ class Wpr_AdvancedTable extends Widget_Base {
         $this->add_control(
             'table_insert_url',
             [
-                'label'         => esc_html__( 'Enter a CSV File URL', 'elementskit' ),
+                'label'         => esc_html__( 'Enter a CSV File URL', 'wpr-addons' ),
                 'type'          => Controls_Manager::URL,
                 'show_external' => false,
                 'label_block'   => true,
@@ -120,10 +121,24 @@ class Wpr_AdvancedTable extends Widget_Base {
                 //     'url' => Handler::get_url()  . 'assets/table.csv',
                 // ],
                 'condition' => [
+					'choose_table_type' => 'csv',
                     'choose_csv_type'   => 'url',
                 ]
             ]
         );
+
+		$this->add_control(
+			'enable_custom_links',
+			[
+				'label' => __('Custom Links', 'wpr-addons'),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'label_on' => __('Yes', 'wpr-addons'),
+				'label_off' => __('No', 'wpr-addons'),
+				'return_value' => 'yes',
+				'default' => 'no',
+				'separator' => 'before'
+			]
+		);
 
 		$this->add_control(
 			'enable_table_sorting',
@@ -338,6 +353,67 @@ class Wpr_AdvancedTable extends Widget_Base {
 		$this->end_controls_section();
 
 		$this->start_controls_section(
+			'custom_links_section',
+			[
+				'label' => esc_html__( 'Custom Links', 'wpr-addons' ),
+				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
+				'condition' => [
+					'choose_table_type' => 'csv',
+					'enable_custom_links' => 'yes',
+				]
+			]
+		); //goback
+
+		$repeater = new \Elementor\Repeater();
+
+		$repeater->add_control(
+			'custom_link_title', [
+				'label' => esc_html__( 'Title', 'plugin-name' ),
+				'type' => \Elementor\Controls_Manager::TEXT,
+				'default' => esc_html__( 'Custom Link Title' , 'plugin-name' ),
+				'label_block' => true,
+			]
+		);
+
+        $repeater->add_control(
+            'table_custom_link',
+            [
+                'label'         => esc_html__( 'Custom Link', 'wpr-addons' ),
+                'type'          => Controls_Manager::URL,
+                'show_external' => false,
+                'label_block'   => true,
+            ]
+        );
+
+		$repeater->add_control(
+			'custom_link_tr_index',
+			[
+				'label'			=> esc_html__( 'Table Row Index', 'wpr-addons'),
+				'type'			=> Controls_Manager::NUMBER,
+				'default' 		=> 0,
+				'min'     		=> 0,
+			]
+		);
+
+		$this->add_control(
+			'custom_links',
+			[
+				'label' => esc_html__( 'Custom Links', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::REPEATER,
+				'fields' => $repeater->get_controls(),
+				'default' => [
+					[
+						'table_custom_link' => esc_html__( 'X', 'plugin-name' ),
+						'custom_link_tr_index' => esc_html__( 'Change This', 'plugin-name' ),
+					],
+				],
+				'title_field' => '{{{ custom_link_title }}}',
+			]
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
 			'section_header',
 			[
 				'label' => __('Header', 'wpr-addons'),
@@ -417,7 +493,9 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'default' => 'left',
 				'options' => [
 					'left' => __('left', 'wpr-addons'),
-					'right' => __('right', 'wpr-addons')
+					'right' => __('right', 'wpr-addons'),
+					'top' => __('top', 'wpr-addons'),
+					'bottom' => __('bottom', 'wpr-addons'),
 				],
 				'condition' => [
 					'header_icon' => 'yes'
@@ -699,7 +777,9 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'default' => 'left',
 				'options' => [
 					'left' => __('left', 'wpr-addons'),
-					'right' => __('right', 'wpr-addons')
+					'right' => __('right', 'wpr-addons'),
+					'top' => __('top', 'wpr-addons'),
+					'bottom' => __('bottom', 'wpr-addons'),
 				],
 				'condition' => [
 					'td_icon' => 'yes'
@@ -837,7 +917,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 		$this->add_responsive_control(
 			'table_width',
 			[
-				'label' => __( 'Table Width', 'plugin-name' ),
+				'label' => __( 'Table Width', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::SLIDER,
 				'size_units' => ['px', '%'],
 				'render_type' => 'template',
@@ -1017,7 +1097,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 		$this->start_controls_tab(
 			'style_normal_tab',
 			[
-				'label' => __( 'Normal', 'plugin-name' ),
+				'label' => __( 'Normal', 'wpr-addons' ),
 			]
 		);
 
@@ -1051,7 +1131,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 		$this->start_controls_tab(
 			'style_hover_tab',
 			[
-				'label' => __( 'Hover', 'plugin-name' ),
+				'label' => __( 'Hover', 'wpr-addons' ),
 			]
 		);
 
@@ -1283,7 +1363,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 		$this->start_controls_tab(
 			'cells_style_normal_tab',
 			[
-				'label' => __( 'Normal', 'plugin-name' ),
+				'label' => __( 'Normal', 'wpr-addons' ),
 			]
 		);
 
@@ -1375,7 +1455,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 		$this->start_controls_tab(
 			'cells_style_hover_tab',
 			[
-				'label' => __( 'Hover', 'plugin-name' ),
+				'label' => __( 'Hover', 'wpr-addons' ),
 			]
 		);
 
@@ -2157,7 +2237,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 		$this->add_responsive_control(
 			'pagination_vertical_gutter',
 			[
-				'label' => __( 'Vertical Gutter', 'plugin-name' ),
+				'label' => __( 'Vertical Gutter', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::SLIDER,
 				'size_units' => ['px'],
 				'render_type' => 'template',
@@ -2510,9 +2590,9 @@ class Wpr_AdvancedTable extends Widget_Base {
 		return ob_get_clean();
 	}
 
-	public function render_icon_or_image($item, $i) {
+	public function render_th_icon_or_image($item, $i) {
 		if( $item['header_icon'] === 'yes' && $item['header_icon_type'] === 'icon' ) {
-			$header_icon = $this->render_th_icon($item);
+			$header_icon = '<span style="display: inline-block; vertical-align: middle;">' . $this->render_th_icon($item) . '</span>';
 		}
 
 		if( $item['header_icon'] == 'yes' && $item['header_icon_type'] == 'image' ) {
@@ -2527,6 +2607,31 @@ class Wpr_AdvancedTable extends Widget_Base {
 		}
 
 		echo $header_icon;
+	}
+
+	public function render_td_icon($table_td, $j) {
+		ob_start();
+		\Elementor\Icons_Manager::render_icon($table_td[$j]['icon_item'], ['aria-hidden' => 'true']);
+		return ob_get_clean();
+	}
+
+	public function render_td_icon_or_image($table_td, $j) {
+		if( $table_td[$j]['icon'] === 'yes' && $table_td[$j]['icon_type'] == 'icon' ) {
+			$tbody_icon = '<span style="display: inline-block; vertical-align: middle;">' . $this->render_th_icon($item) . '</span>';
+		}
+
+		if( $table_td[$j]['icon'] == 'yes' && $table_td[$j]['icon_type'] == 'image' ) { 
+            $this->add_render_attribute('wpr_table_td_img'.$j, [
+                'src'	=> esc_url( $table_td[$j]['col_img']['url'] ),
+                'class'	=> 'wpr-data-table-th-img',
+                'style'	=> "width:{$table_td[$j]['col_img_size']}px;",
+                'alt'	=> esc_attr(get_post_meta($table_td[$j]['col_img']['id'], '_wp_attachment_image_alt', true))
+            ]);
+
+			$tbody_icon = '<img' . ' ' . $this->get_render_attribute_string('wpr_table_td_img'.$j) . '>';
+		}
+
+		echo $tbody_icon;
 	}
 
     public function render() {
@@ -2591,10 +2696,9 @@ class Wpr_AdvancedTable extends Widget_Base {
 					$table_tr[] = [
 						'id' => $row_id,
 						'type' => $content_row['table_content_row_type'],
-					'tr_bg_color' => $content_row['tr_bg_color'],
-					'class' => ['wpr-table-body-row', 'wpr-table-row', 'elementor-repeater-item-'.$content_row['_id'], $oddEven]
+						'tr_bg_color' => $content_row['tr_bg_color'],
+						'class' => ['wpr-table-body-row', 'wpr-table-row', 'elementor-repeater-item-'.$content_row['_id'], $oddEven]
 					];
-					
 				}
 
 				if( $content_row['table_content_row_type'] == 'col' ) {
@@ -2629,26 +2733,14 @@ class Wpr_AdvancedTable extends Widget_Base {
 							$this->add_render_attribute('th_class'.$i, [
 								'class' => ['wpr-table-th', 'elementor-repeater-item-'.$item['_id']],
 								'colspan' => $item['header_colspan'],
-							]);
-							
-							if($item['header_icon'] == 'yes' && $item['header_icon_position'] == 'left') { ?>
+							]); ?>
 								<th <?php echo $this->get_render_attribute_string('th_class'.$i); ?>>
-									<?php $this->render_icon_or_image($item, $i); ?>
+									<?php $item['header_icon'] === 'yes'  && $item['header_icon_position'] == 'left' ? $this->render_th_icon_or_image($item, $i) : '' ?>
 									<span class="wpr-table-text"><?php echo $item['table_th']; ?></span>
+									<?php $item['header_icon'] === 'yes' && $item['header_icon_position'] == 'right' ? $this->render_th_icon_or_image($item, $i) : '' ?>
 									<?php echo $sorting_icon; ?>
 								</th>
-							<?php  } elseif ($item['header_icon'] == 'yes' && $item['header_icon_position'] == 'right') { ?>
-								<th <?php echo $this->get_render_attribute_string('th_class'.$i); ?>>
-										<span class="wpr-table-text"><?php echo $item['table_th']; ?></span>
-										<?php $this->render_icon_or_image($item, $i); ?>
-										<?php echo $sorting_icon; ?>
-								</th>
-							<?php } else { ?>
-								<th <?php echo $this->get_render_attribute_string('th_class'.$i); ?>>
-									<span class="wpr-table-text"><?php echo $item['table_th']; ?></span>
-									<?php echo $sorting_icon; ?>
-								</th>
-						<?php } $i++; } ?>
+						<?php $i++; } ?>
 					</tr>
 				</thead>
 
@@ -2664,86 +2756,23 @@ class Wpr_AdvancedTable extends Widget_Base {
 						<?php
 							for( $j = 0; $j < count( $table_td ); $j++ ) {
 								if( $table_tr[$i]['id'] == $table_td[$j]['row_id'] ) {
-									$this->add_render_attribute('table_inside_td'.$i.$j, [
+									$this->add_render_attribute('tbody_td_attributes'.$i.$j, [
 										'colspan' => $table_td[$j]['colspan'] > 1 ? $table_td[$j]['colspan'] : '',
 										'rowspan' => $table_td[$j]['rowspan'] > 1 ? $table_td[$j]['rowspan'] : '',
 										'class' => $table_td[$j]['class']
-									]);
-
-									if ( $table_td[$j]['icon'] == 'yes' && $table_td[$j]['icon_type'] == 'image' ) {   
-										$this->add_render_attribute('wpr_table_td_img'.$j, [
-											'src'	=> esc_url( $table_td[$j]['col_img']['url'] ),
-											'class'	=> 'wpr-data-table-th-img',
-											'style'	=> "width:{$table_td[$j]['col_img_size']}px;",
-											'alt'	=> esc_attr(get_post_meta($table_td[$j]['col_img']['id'], '_wp_attachment_image_alt', true))
-										]); 
-									}
-
-									if($table_td[$j]['icon'] == 'yes' && $table_td[$j]['icon_position'] == 'left') { 
-										if( $table_td[$j]['icon_type'] == 'image' ) { ?>
+									]); ?>
 									
-										<td <?php echo $this->get_render_attribute_string('table_inside_td'.$i.$j); ?> style="background-color: <?php echo $table_tr[$i]['tr_bg_color']; ?>">
+										<td <?php echo $this->get_render_attribute_string('tbody_td_attributes'.$i.$j); ?> style="background-color: <?php echo $table_tr[$i]['tr_bg_color']; ?>">
 											<div class="wpr-td-content-wrapper">
-													<img <?php echo $this->get_render_attribute_string('wpr_table_td_img'.$j); ?>>
+													<?php $table_td[$j]['icon'] === 'yes' && $table_td[$j]['icon_position'] === 'left' ? $this->render_td_icon_or_image($table_td, $j) : '' ?>
 													<a href="<?php echo esc_url($table_td[$j]['link']['url']) ?>" target="_blank">
 														<span class="wpr-table-text"><?php echo $table_td[$j]['content']; ?></span>
 													</a>
-											</div>
-										</td>
-
-										<?php } else { ?>
-									
-										<td <?php echo $this->get_render_attribute_string('table_inside_td'.$i.$j); ?> style="background-color: <?php echo $table_tr[$i]['tr_bg_color']; ?>">
-											<div class="wpr-td-content-wrapper">
-												<div <?php echo $this->get_render_attribute_string('td_content'); ?>>
-													<?php \Elementor\Icons_Manager::render_icon($table_td[$j]['icon_item'], ['aria-hidden' => 'true']);?>
-													<a href="<?php echo esc_url($table_td[$j]['link']['url']) ?>" target="_blank">
-														<span class="wpr-table-text"><?php echo $table_td[$j]['content']; ?></span>
-													</a>
-												</div>
-											</div>
-										</td>
-										
-									<?php }
-									} elseif( $table_td[$j]['icon'] == 'yes' && $table_td[$j]['icon_position'] == 'right' ) { 
-										if( $table_td[$j]['icon_type'] == 'image' ) { ?>
-									
-										<td <?php echo $this->get_render_attribute_string('table_inside_td'.$i.$j); ?> style="background-color: <?php echo $table_tr[$i]['tr_bg_color']; ?>">
-											<div class="wpr-td-content-wrapper">
-												<div <?php echo $this->get_render_attribute_string('td_content'); ?>>
-													<a href="<?php echo esc_url($table_td[$j]['link']['url']) ?>" target="_blank">
-														<span class="wpr-table-text"><?php echo $table_td[$j]['content']; ?></span>
-													</a>
-													<img <?php echo $this->get_render_attribute_string('wpr_table_td_img'.$j); ?>>
-												</div>
-											</div>
-										</td>
-
-										<?php } else { ?>
-
-										<td <?php echo $this->get_render_attribute_string('table_inside_td'.$i.$j); ?> style="background-color: <?php echo $table_tr[$i]['tr_bg_color']; ?>">
-											<div class="wpr-td-content-wrapper">
-												<div <?php echo $this->get_render_attribute_string('td_content'); ?>>
-													<a href="<?php echo esc_url($table_td[$j]['link']['url']) ?>" target="_blank">
-														<span class="wpr-table-text"><?php echo $table_td[$j]['content']; ?></span>
-													</a>
-													<?php \Elementor\Icons_Manager::render_icon($table_td[$j]['icon_item'], ['aria-hidden' => 'true']);?>
-												</div>
-											</div>
-										</td>
-									<?php }
-								 } else { ?>
-
-										<td <?php echo $this->get_render_attribute_string('table_inside_td'.$i.$j); ?> style="background-color: <?php echo $table_tr[$i]['tr_bg_color']; ?>">
-											<div class="wpr-td-content-wrapper">
-												<div <?php echo $this->get_render_attribute_string('td_content'); ?>>
-													<a href="<?php echo esc_url($table_td[$j]['link']['url']) ?>" target="_blank"><span class="wpr-table-text"><?php echo $table_td[$j]['content']; ?></span></a>
-												</div>
+													<?php $table_td[$j]['icon'] === 'yes' && $table_td[$j]['icon_position'] === 'right' ? $this->render_td_icon_or_image($table_td, $j) : '' ?>
 											</div>
 										</td>
 
 								<?php }
-								}
 							}
 						?>
 					</tr>
