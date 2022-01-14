@@ -10163,27 +10163,19 @@ html {
 	  min-width: 100%;
 	  min-height: 100%;
   }
+
+  /* remove overflow hidden if possible */
   .wpr-timeline-centered {
 	  position: relative;
 	  display: table;
 	  margin-bottom: 30px;
 	  width: 100%;
 	  height: 100%;
-  }
-  
-  .wpr-vertical span.wpr-year-container:first-child {
-	  margin-top: 0px!important;
+	  overflow: hidden;
   }
   
   .wpr-timeline-centered.wpr-timeline-sm .wpr-timeline-entry {
 	  margin-bottom: 20px !important;
-  }
-  
-  .wpr-middle-line {
-	  position: absolute;
-	  display: block;
-	  width: 2px;
-	  height: 100%;
   }
   
   .wpr-middle-line {
@@ -10202,7 +10194,6 @@ html {
 	  left: 24%;
   }
   
-  /* .wpr-one-sided-timeline-left .wpr-middle-line, */
   .wpr-one-sided-timeline-left .wpr-icon {
 	  right: 0.3%;
   }
@@ -10624,20 +10615,6 @@ html {
 	  }
   
   }
-  
-  /* @media screen and (max-width: 602px) {
-	  .wpr-timeline-centered.wpr-both-sided-timeline .wpr-timeline-entry.wpr-left-aligned .wpr-timeline-entry-inner .wpr-data-container:after {
-		  right: 102%;
-		  left: auto;
-	  }
-  } */
-  
-  /* @media screen and (max-width: 470px) {
-	  .wpr-timeline-centered.wpr-both-sided-timeline .wpr-timeline-entry.wpr-left-aligned .wpr-timeline-entry-inner .wpr-data-container:after {
-		  right: 103%;
-		  left: auto;
-	  }
-  } */
   
   /* Horizontal Bottom Timeline */
   /*----Horizontal Timeline----*/
@@ -11133,8 +11110,4 @@ html {
   
   .wpr-horizontal .wpr-story-info:before {
 	  border: 13px solid transparent;
-  }
-  
-  .wpr-wrapper .wpr-data-container {
-	  background-color: #fff9ed;
   }
