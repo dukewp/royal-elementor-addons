@@ -10730,7 +10730,6 @@ html {
 	.wpr-horizontal-bottom .wpr-timeline-img,
 	.wpr-horizontal-bottom .wpr-timeline-img img {
 	  display: inline-block;
-	  width: 100%;
 	  max-width: 100% !important;
 	  height: auto;
 	}
@@ -10980,14 +10979,6 @@ html {
 	  color: #333333;
   }
   
-  .wpr-wrapper .wpr-icon i {
-	  font-size: 20px;
-  }
-  
-  .wpr-wrapper .wpr-data-container span.wpr-title {
-	  color: #23A455;
-  }
-  
   .wpr-horizontal-bottom span.wpr-title {
 	  color: #23A455;
   }
@@ -10997,10 +10988,6 @@ html {
   }
   
   .wpr-wrapper:before {
-	  background-color: #D6D6D6;
-  }
-  
-  .wpr-wrapper:after {
 	  background-color: #D6D6D6;
   }
   
@@ -11023,7 +11010,6 @@ html {
   
   .wpr-horizontal-bottom .wpr-story-info {	
 	  border-bottom: 4px solid #23A455;
-	  /* background-color: #fff9ed; */
   }
   
   .wpr-horizontal-bottom .wpr-story-info:before {
@@ -11032,14 +11018,6 @@ html {
 	  border-left-color: transparent;
 	  border-right-color: transparent;
   }
-  
-  .wpr-wrapper .wpr-data-container {
-	  background-color: #fff9ed;
-  }
-  
-  /* .wpr-wrapper .wpr-data-container:after {
-	  border-color: transparent;
-  } */
   
   .wpr-left-aligned .wpr-data-container:after {
 	  border-right-color: transparent !important;
@@ -11062,45 +11040,8 @@ html {
 	  color: #333333;
   }
   
-  .wpr-wrapper .wpr-icon i {
-	  font-size: 20px;
-  }
-  
-  .wpr-wrapper .wpr-data-container span.wpr-title {
-	  color: #23A455;
-  }
-  
-  .wpr-horizontal span.wpr-title {
-	  color: #23A455;
-  }
-  
   .wpr-wrapper .wpr-timeline-centered .wpr-year {
 	  border:2px solid #D6D6D6;
-  }
-  
-  .wpr-wrapper:before {
-	  background-color: #D6D6D6;
-  }
-  
-  .wpr-wrapper:after {
-	  background-color: #D6D6D6;
-  }
-  
-  .wpr-horizontal .wpr-pagination.swiper-pagination-progressbar {
-	  background-color: #D6D6D6;
-  }
-  
-  .wpr-horizontal .wpr-button-prev {
-	  color: #D6D6D6;
-  }
-  
-  .wpr-horizontal .wpr-button-next {
-	  color: #D6D6D6;
-  }
-  
-  .wpr-wrapper .wpr-icon {
-	  background-color: #23A455;
-	  color: #fff9ed;
   }
   
   .wpr-horizontal .wpr-story-info {	
