@@ -181,7 +181,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 					'image-bottom' => esc_html__('Bottom'),
 					'background' => esc_html__('Background'),
 				],
-				// 'render_type' => 'template',
 			]
 		);
 
@@ -373,7 +372,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'type' => Controls_Manager::NUMBER,
 				'min' => 0,
 				'max' => 500,
-				// 'render_type' => 'template',
 				'frontend_available' => true,
 				'default' => 150,
 				'condition' => [
@@ -389,7 +387,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'type' => Controls_Manager::NUMBER,
 				'min' => 0,
 				'max' => 2000,
-				// 'render_type' => 'template',
 				'frontend_available' => true,
 				'default' => 600,
 				'condition' => [
@@ -418,7 +415,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'return_value' => 'yes',
 				'default' => 'no',
 				'label_block' => false,
-				'render_type' => 'template',
 				'condition' => [
 					'content_layout' => 'image-top'
 				]
@@ -433,7 +429,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'return_value' => 'yes',
 				'default' => 'no',
 				'label_block' => false,
-				'render_type' => 'template',
 			]
 		);
 
@@ -1147,7 +1142,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'return_value' => 'yes',
 				'default' => 'yes',
 				'label_block' => false,
-				// 'render_type' => 'template',
+				'render_type' => 'template',
 			]
 		);
 
@@ -1950,7 +1945,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 					'timeline_layout' => ['horizontal'],
 					'slides_height_bottom_line!' => 'yes',
 				],
-				// 'render_type' => 'template',
 			]
 		);
 
@@ -1977,7 +1971,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 					'timeline_layout' => ['horizontal'],
 					'slides_height_bottom_line' => 'yes',
 				],
-				'render_type' => 'template',
 			]
 		);
 		
@@ -2063,7 +2056,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'condition' => [
 					'timeline_layout' => ['horizontal', 'horizontal_bottom']
 				],
-				'render_type' => 'template',
 			]
 		);
 
@@ -2087,7 +2079,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'condition' => [
 					'show_overlay!' => 'yes'
 				],
-				'render_type' => 'template'
 			]
 		);
 
@@ -2107,9 +2098,8 @@ class Wpr_PostsTimeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-timeline-story-overlay' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' =>[
-					'content_layout' => 'overlay'
+					'show_overlay' => 'yes'
 				],
-				'render_type' => 'template'
 			]
 		);
 
@@ -2128,7 +2118,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 		// 		'selectors' => [
 		// 			'{{WRAPPER}} .wpr-horizontal-timeline' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 		// 		],
-		// 		'render_type' => 'template'
 		// 		// TODO: creates problem with slider container
 		// 	]
 		// );
@@ -2558,7 +2547,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-inner-date-label' => 'border-style: {{VALUE}};',
 				],
-				'render_type' => 'template',
 				'separator' => 'before',
 			]
 		);
@@ -2578,7 +2566,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-inner-date-label' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
-				'render_type' => 'template',
 				'condition' => [
 					'date_border_type!' => 'none',
 				],
@@ -2647,7 +2634,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-inner-date-label' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
-				'render_type' => 'template',
 				'separator' => 'before',
 			]
 		);
@@ -2664,7 +2650,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 					'bottom' => 0,
 					'left' => 0,
 				],
-				'render_type' => 'template',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-inner-date-label' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
@@ -3257,7 +3242,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 			[
 				'label' => __( 'Position Top', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				'render_type' => 'template',
 				'range' => [
 					'px' => [
 						'min' => 0,
@@ -3367,7 +3351,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'condition' => [
 					'timeline_content' => 'custom',
 				],
-				'render_type' => 'template',
 			]
 		);
 
@@ -3431,7 +3414,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 					'type' => \Elementor\Core\Schemes\Color::get_type(),
 					'value' => \Elementor\Core\Schemes\Color::COLOR_1,
 				],
-				'render_type' => 'template',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'background-color: {{VALUE}}',
 				],
@@ -3471,7 +3453,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 					// '{{WRAPPER}} .wpr-horizontal-timeline .wpr-icon' => 'border-color: {{VALUE}}',
 					// '{{WRAPPER}} .wpr-horizontal-bottom-timeline .wpr-icon' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'border-color: {{VALUE}}',
-					'render_type' => 'template'
 				],
 			]
 		);
@@ -3498,7 +3479,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'condition' => [
 					'timeline_layout' => ['horizontal']
 				],
-				'render_type' => 'template',
 			]
 		);
 
@@ -3522,7 +3502,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 		// 			'{{WRAPPER}} .wpr-horizontal-bottom .wpr-icon' => 'top: {{SIZE}}{{UNIT}} !important;',
 		// 		],
 		// 		'condition' => ['timeline_layout' => ['horizontal_bottom']],
-		// 		'render_type' => 'template',
 		// 	]
 		// );
 
@@ -3551,7 +3530,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 			[
 				'label' => esc_html__( 'Icon Background Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				'render_type' => 'template',
 				'size_units' => [ '%', 'px' ],
 				'default' => [
 					'unit' => 'px',
@@ -3581,7 +3559,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 		// 	[
 		// 		'label' => __( 'Margin Left', 'wpr-addons' ),
 		// 		'type' => Controls_Manager::SLIDER,
-		// 		'render_type' => 'template',
 		// 		'range' => [
 		// 			'px' => [
 		// 				'min' => 0,
@@ -3606,7 +3583,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 			[
 				'label' => __( 'Position Top', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				// 'render_type' => 'template',
 				'range' => [
 					'px' => [
 						'min' => 0,
@@ -3631,7 +3607,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 		// 	[
 		// 		'label' => __( 'Position Left', 'wpr-addons' ),
 		// 		'type' => Controls_Manager::SLIDER,
-		// 		'render_type' => 'template',
 		// 		'range' => [
 		// 			'px' => [
 		// 				'min' => 0,
@@ -3771,6 +3746,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-timeline-fill' => 'background-color: {{VALUE}} !important;',
+					'{{WRAPPER}} .wpr-change-border-color' => 'background-color: {{VALUE}} !important; border-color: {{VALUE}} !important;',
 					'{{WRAPPER}} .wpr-vertical:before' => 'background-color: {{VALUE}} !important;',
 					'{{WRAPPER}} .wpr-vertical:after' => 'background-color: {{VALUE}} !important;',
 				],
@@ -3780,6 +3756,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 			]
 		);
 
+		//todo: add progressbar height
 		$this->add_responsive_control(
 			'swiper_pagination_progressbar_top',
 			[
@@ -3802,7 +3779,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'condition' => [
 					'timeline_layout' => ['horizontal']
 				],
-				'render_type' => 'template',
 			]
 		);
 		
@@ -3945,7 +3921,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 			[
 				'label' => __( 'Triangle Position Top', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				'render_type' => 'template',
 				'range' => [
 					'px' => [
 						'min' => -1000,
@@ -4026,7 +4001,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 			[
 				'label' => __( 'Triangle Position Top', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				'render_type' => 'template',
 				'range' => [
 					'%' => [
 						'min' => 0,
@@ -4059,7 +4033,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'label' => __( 'Triangle Position Top', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ '%', 'px' ],
-				'render_type' => 'template',
 				'range' => [
 					'%' => [
 						'min' => 0,
@@ -4249,7 +4222,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'condition' => [
 					'timeline_layout' => 'horizontal',
 				],
-				'render_type' => 'template',
 			]
 		);
 
@@ -4276,7 +4248,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'condition' => [
 					'timeline_layout' => 'horizontal_bottom',
 				],
-				'render_type' => 'template',
 			]
 		);
 		
@@ -4872,7 +4843,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 				} else if ( 'wpr-right-aligned' === $this->content_alignment  ) {
 					$this->animation = preg_match('/right/i', $settings['timeline_animation']) ? str_replace('right', 'left', $settings['timeline_animation']) : $settings['timeline_animation'];
 				}
-			}	
+			}
 		}
 
 		if ( preg_match('/right/i', $settings['timeline_animation']) ) {
@@ -5058,7 +5029,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 							echo '<div class="wpr-icon-border-color wpr-icon" data-bullet-border-color="'. $this->bullet_border_color .'" data-bullet-bg-color="'. $settings['icon_bgcolor'] .'">';
 							\Elementor\Icons_Manager::render_icon( $settings['posts_icon'], [ 'aria-hidden' => 'true' ] );
 							echo '</div>';
-							echo '<div class="wpr-story-info-vertical wpr-data-container animated '. $background_class .'" data-aos="'. $this->animation.'" data-aos-left="'.$this->animation_loadmore_left .'" data-aos-right="'. $this->animation_loadmore_right .'" data-animation-offset="'. $settings['animation_offset'] .'" data-animation-duration="'. $settings['aos_animation_duration'] .'" data-animation-once="'. $settings['animation_loop_or_once'] .'" style="background-image: url('.$background_image .')">';
+							echo '<div class="wpr-story-info-vertical wpr-data-container animated '. $background_class .'" data-aos="'. $this->animation.'" data-aos-left="'. $this->animation_loadmore_left .'" data-aos-right="'. $this->animation_loadmore_right .'" data-animation-offset="'. $settings['animation_offset'] .'" data-animation-duration="'. $settings['aos_animation_duration'] .'" data-animation-once="'. $settings['animation_loop_or_once'] .'" style="background-image: url('.$background_image .')">';
 
 							echo 'image-top' === $settings['content_layout'] || 'yes' === $settings['show_overlay'] ? '<div class="wpr-animation-wrap wpr-timeline-img" style="position: relative;">'.$this->image.'' : '';
 
@@ -5489,6 +5460,8 @@ class Wpr_PostsTimeline extends Widget_Base {
 		
 		$layout = $settings['timeline_layout'];
 		$this->animation= $settings['timeline_animation'];
+		$this->animation_loadmore_left = '';
+		$this->animation_loadmore_right = '';
 		$this->timeline_fill = $settings['timeline_fill'];
 		$this->show_readmore = !empty($settings['show_readmore']) ? $settings['show_readmore'] : '';
 		$data = $settings['timeline_repeater_list'];
