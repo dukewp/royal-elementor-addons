@@ -53,6 +53,7 @@ class Utilities {
 			'Phone Call' => ['phone-call', '', ''],
 			'Popup Trigger' => ['popup-trigger', '', ''],
 			'Lottie Animations' => ['lottie-animations', '', ''],
+			'Charts' => ['charts', '', ''],
 			// 'Random Image' => ['random-image', '', ''],
 			// 'Author Box' => 'author-box',
 		];
