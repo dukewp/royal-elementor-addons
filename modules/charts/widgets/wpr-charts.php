@@ -59,9 +59,9 @@ class Wpr_Charts extends Widget_Base {
 			]
         );
 
-        $chartRepeater = new Repeater();
+        $chart_repeater = new Repeater();
 
-		$chartRepeater->add_control(
+		$chart_repeater->add_control(
 			'chart_label', [
 				'label'       => esc_html__('Name', 'wpr-addons'),
 				'type'        => Controls_Manager::TEXT,
@@ -82,9 +82,129 @@ class Wpr_Charts extends Widget_Base {
 
 				],
 
-				'fields'      => $chartRepeater->get_controls(),
+				'fields'      => $chart_repeater->get_controls(),
 				'title_field' => '{{{ chart_label }}}',
 				// 'condition'   => ['chart_type' => ['bar', 'horizontalBar', 'line', 'radar']],
+			]
+		);
+
+		// repeter 1
+		$chart_repeater_labels = new Repeater();
+		$chart_repeater_labels->add_control(
+			'chart_data_label', [
+				'label'       => esc_html__('Label', 'elementskit'),
+				'type'        => Controls_Manager::TEXT,
+				'default'     => esc_html__('Label #1', 'elementskit'),
+				'label_block' => true,
+			]
+		);
+		$chart_repeater_labels->add_control(
+			'chart_data_set', [
+				'label'       => esc_html__('Data', 'elementskit'),
+				'type'        => Controls_Manager::TEXT,
+				'default'     => '10,23,15',
+				'label_block' => true,
+				'description' => esc_html__('Enter data values by "," separated(1). Example: 2,4,8,16,32 etc', 'elementskit'),
+			]
+		);
+
+
+		// start tabs section
+		$chart_repeater_labels->start_controls_tabs(
+			'chart_data_bar_back_tab'
+		);
+		// start normal sections
+		$chart_repeater_labels->start_controls_tab(
+			'chart_data_bar_back_normal',
+			[
+				'label' => esc_html__('Normal', 'elementskit'),
+			]
+		);
+
+		$chart_repeater_labels->add_control(
+			'chart_data_bar_back_color', [
+				'label'       => esc_html__('Background Color', 'elementskit'),
+				'type'        => Controls_Manager::COLOR,
+				'default'     => 'rgba(242,41,91,0.48)',
+			]
+		);
+
+		$chart_repeater_labels->add_control(
+			'chart_data_bar_border_color', [
+				'label'       => esc_html__('Border Color', 'elementskit'),
+				'type'        => Controls_Manager::COLOR,
+				'default'     => 'rgba(242,41,91,0.48)',
+			]
+		);
+
+		$chart_repeater_labels->end_controls_tab();
+		// end normal sections
+		// start hover sections
+		$chart_repeater_labels->start_controls_tab(
+			'chart_data_bar_back_hover',
+			[
+				'label' => esc_html__('Hover', 'elementskit'),
+			]
+		);
+		$chart_repeater_labels->add_control(
+			'chart_data_bar_back_color_hover', [
+				'label'       => esc_html__('Background Color', 'elementskit'),
+				'type'        => Controls_Manager::COLOR,
+			]
+		);
+
+		$chart_repeater_labels->add_control(
+			'chart_data_bar_border_color_hover', [
+				'label'       => esc_html__('Border Color', 'elementskit'),
+				'type'        => Controls_Manager::COLOR,
+			]
+		);
+		$chart_repeater_labels->end_controls_tab();
+		// end hover sections
+		$chart_repeater_labels->end_controls_tabs();
+		// end tabs section
+
+		$chart_repeater_labels->add_control(
+			'chart_data_bar_border_width', [
+				'label'       => esc_html__('Border Width', 'elementskit'),
+				'type'        => Controls_Manager::NUMBER,
+				'default'     => '1',
+			]
+		);
+
+		$this->add_control(
+			'charts_data_set',
+			[
+				'label'   => esc_html__('Set Data', 'elementskit'),
+				'type'    => Controls_Manager::REPEATER,
+				'default' => [
+					[
+						'chart_data_label'            => esc_html__('Label #1', 'elementskit'),
+						'chart_data_set'              => '13,20,15',
+						'chart_data_bar_back_color'   => 'rgba(242,41,91,0.48)',
+						'chart_data_bar_border_color' => 'rgba(242,41,91,0.48)',
+						'chart_data_bar_border_width' => 1,
+					],
+					[
+						'chart_data_label'            => esc_html__('Label #2', 'elementskit'),
+						'chart_data_set'              => '20,10,33',
+						'chart_data_bar_back_color'   => 'rgba(69,53,244,0.48)',
+						'chart_data_bar_border_color' => 'rgba(69,53,244,0.48)',
+						'chart_data_bar_border_width' => 1,
+					],
+					[
+						'chart_data_label'            => esc_html__('Label #3', 'elementskit'),
+						'chart_data_set'              => '10,3,23',
+						'chart_data_bar_back_color'   => 'rgba(239,239,40,0.57)',
+						'chart_data_bar_border_color' => 'rgba(239,239,40,0.57)',
+						'chart_data_bar_border_width' => 1,
+					],
+
+				],
+
+				'fields'      => $chart_repeater_labels->get_controls(),
+				'title_field' => '{{{ chart_data_label }}}',
+				// 'condition'   => ['chart_style' => ['bar', 'horizontalBar', 'line', 'radar']],
 			]
 		);
 
@@ -134,7 +254,33 @@ class Wpr_Charts extends Widget_Base {
 			endforeach;
 		endif;
 
-        var_dump($data_charts_array);
+		var_dump($charts_data_set);
+
+		if(is_array($charts_data_set) && sizeof($charts_data_set)):
+			foreach($charts_data_set AS $DataChart):
+				$backgroundColor      = $DataChart['chart_data_bar_back_color'];
+				$backgroundColorHover = $DataChart['chart_data_bar_back_color_hover'];
+				$borderColor          = $DataChart['chart_data_bar_border_color'];
+				$borderColorHover     = $DataChart['chart_data_bar_border_color_hover'];
+				$borderWidth          = $DataChart['chart_data_bar_border_width'];
+
+				$backgroundColorHover = strlen($backgroundColorHover) > 0 ? $backgroundColorHover : $backgroundColor;
+				$borderColorHover     = strlen($borderColorHover) > 0 ? $borderColorHover : $borderColor;
+
+				$dataChartArray['datasets'][] = [
+					'label'                => $DataChart['chart_data_label'],
+					'data'                 => array_map('floatval', explode(',', trim($DataChart['chart_data_set'], ','))),
+					'backgroundColor'      => $backgroundColor,
+					'hoverBackgroundColor' => $backgroundColorHover,
+					'borderColor'          => $borderColor,
+					'hoverBorderColor'     => $borderColorHover,
+					'borderWidth'          => $borderWidth,
+				];
+			endforeach;
+		endif;
+
+		$dataLabelsJson = wp_json_encode(array_filter($dataChartArray['labels']));
+		$dataJson       = wp_json_encode(array_filter($dataChartArray['datasets']));
 
         $layout_settings = [
             'chart_type' => $settings['chart_type'],
