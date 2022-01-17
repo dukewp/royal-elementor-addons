@@ -26,7 +26,7 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,portfolio,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'portfolio personal cv designer ux artist artwork personal resume',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
 			'cybersecurity' => [ // TODO:
@@ -35,7 +35,7 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,services,pricing,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'cybersecurity data protection hacker security dark digital technology cybercrime',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
 			'cryptocurrency' => [ // TODO
@@ -44,7 +44,7 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,services,token,pricing,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'cryptocurrency bitcoin ethereum etherium blockchain protection nft coin corporate crypto dark startup token digital',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
 			'skincare' => [
@@ -53,7 +53,7 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,services,procedures,gallery,pricing,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'skincare skin care beauty clean face skin-beauty health wellness',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
 			'medical' => [
@@ -62,7 +62,7 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,services,doctors,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'medical clinic dental health healthcare doctor therapist wellness treatment cure',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
 			'digitalagency' => [
@@ -71,7 +71,7 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,services,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'digital agency company corporate digital services office agency web marketing',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
 			'drone' => [
@@ -80,7 +80,7 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,gallery,services,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'drone photography aerial photo ',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
 			'architecture' => [
@@ -107,7 +107,7 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,services,projects,pricing,contact,faq,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'construction architecture company interior office real estate',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
 			'ittech' => [
@@ -116,7 +116,7 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,services,pricing,faq,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'ittech advanced technology it technique',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 				'v2' => [
 					'name' => 'IT Tech v2',
@@ -141,7 +141,7 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,gallery,menu,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'restaurant fastfood hotel italian pizza pizzeria pasta dinner fast food wine recipe recipes',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
 			'wedding' => [
@@ -150,7 +150,7 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,services,blog,gallery,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'wedding party event invitation planner',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
 		];
