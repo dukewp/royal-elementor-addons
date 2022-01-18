@@ -16,35 +16,6 @@ use Elementor\Core\Schemes\Typography;
 use WprAddons\Classes\Utilities;
 
 class Wpr_PostsTimeline extends Widget_Base {
-
-    //  public function get_script_depends() {
-	// 	if (\Elementor\Plugin::$instance->editor->is_edit_mode() || \Elementor\Plugin::$instance->preview->is_preview_mode()) {
-	// 		return [ 'wpr-horizontal-js', 'wpr-swiper-js', 'wpr-horizontal-editor-js' ];
-	// 	}
-	// 	 $settings = $this->get_settings_for_display();
-	// 	$layout = $settings['timeline_layout'];
-	// 	if($layout == 'horizontal'){
-	// 		return [ 'wpr-horizontal-js' ];
-	// 	}else{
-	// 		return [];	
-	// 	}
-    //  }
- 
-    //  public function get_style_depends() {
-	// 	if (\Elementor\Plugin::$instance->editor->is_edit_mode() || \Elementor\Plugin::$instance->preview->is_preview_mode()) {
-	// 		return [ 'wpr-centered-css','wpr-horizontal-css','wpr-fontello-css','wpr-color-typography','font-awesome-5-all' ];
-	// 	}
-	// 	$settings = $this->get_settings_for_display();
-	// 	$layout = $settings['timeline_layout']; 
-	// 	$styles = ['wpr-fontello-css','font-awesome-5-all'];
-	// 	if($layout == 'horizontal'){
-	// 		array_push($styles, 'wpr-horizontal-css');
-	// 	}else{
-	// 		array_push($styles, 'wpr-centered-css');
-	// 	}
-	// 	array_push($styles, 'wpr-color-typography');
-	// 	return $styles ;
-    //  }
 	
 	public function get_name() {
 		return 'wpr-posts-timeline';
@@ -68,12 +39,12 @@ class Wpr_PostsTimeline extends Widget_Base {
 
 	public function get_script_depends() {
 		// TODO: separate infinite-scroll from isotope
-		return [ 'wpr-swiper-js', 'wpr-horizontal-editor-js', 'wpr-aos-js', 'wpr-isotope' ];
+		return [ 'swiper', 'wpr-aos-js', 'wpr-isotope' ];
 	}
 
     // 'wpr-fontello-css',
 	public function get_style_depends() {
-		return [ 'wpr-animations-css', 'wpr-loading-animations-css', 'wpr-aos-css' ];
+		return [ 'swiper', 'wpr-animations-css', 'wpr-loading-animations-css', 'wpr-aos-css' ];
 	}
 
     public function get_custom_help_url() {

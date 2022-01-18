@@ -241,7 +241,7 @@ class Plugin {
 		// Posts Timeline
 		wp_register_style( 
 			'wpr-aos-css', 
-			WPR_ADDONS_URL  . 'assets/css/timeline/wpr-aos.css',
+			WPR_ADDONS_URL  . 'assets/css/lib/aos/aos' . $this->script_suffix() . '.css',
 			[]
 		);
 
@@ -308,7 +308,7 @@ class Plugin {
 		
 		wp_enqueue_style( 
 			'wpr-aos-css', 
-			WPR_ADDONS_URL  . 'assets/css/timeline/wpr-aos.css',
+			WPR_ADDONS_URL  . 'assets/css/lib/aos/aos' . $this->script_suffix() . '.css',
 			[]
 		);
 	}
@@ -335,10 +335,8 @@ class Plugin {
 			true
 		);
 
-		wp_enqueue_script( 'wpr-aos-js', WPR_ADDONS_URL  . 'assets/js/timeline/wpr-aos.js',[ 'elementor-frontend' ], null, true );
-		wp_enqueue_script( 'wpr-swiper-js', WPR_ADDONS_URL  . 'assets/js/timeline/wpr-swiper.min.js',[ 'elementor-frontend' ], null, true );
-		wp_enqueue_script( 'wpr-horizontal-editor-js', WPR_ADDONS_URL  . 'assets/js/timeline/wpr-horizontal-editor.js',[ 'elementor-frontend' ],null, true );
-		
+		wp_enqueue_script( 'wpr-aos-js', WPR_ADDONS_URL  . 'assets/js/lib/aos/aos'. $this->script_suffix() .'.js',[ 'elementor-frontend' ], null, true );
+
 		wp_localize_script(
 			'wpr-addons-js',
 			'WprConfig', // This is used in the js file to group all of your scripts together
@@ -423,9 +421,7 @@ class Plugin {
 			true
 		);
 
-		wp_register_script( 'wpr-aos-js', WPR_ADDONS_URL  . 'assets/js/timeline/wpr-aos.js',[ 'elementor-frontend' ], null, true );
-		wp_register_script( 'wpr-horizontal-editor-js', WPR_ADDONS_URL  . 'assets/js/timeline/wpr-horizontal-editor.js',[ 'elementor-frontend' ],null, true );
-		wp_register_script( 'wpr-swiper-js', WPR_ADDONS_URL  . 'assets/js/timeline/wpr-swiper.min.js',[ 'elementor-frontend' ], null, true );
+		wp_register_script( 'wpr-aos-js', WPR_ADDONS_URL  . 'assets/js/lib/aos/aos'. $this->script_suffix()  .'.js',[ 'elementor-frontend' ], null, true );
 	}
 
 	public function enqueue_panel_scripts() {
