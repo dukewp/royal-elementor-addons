@@ -59,7 +59,7 @@ class Wpr_Charts extends Widget_Base {
 			]
         );
 
-        $chart_repeater = new Repeater();
+        $chart_repeater = new \Elementor\Repeater();
 
 		$chart_repeater->add_control(
 			'chart_label', [
@@ -88,74 +88,76 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 
-		// repeter 1
+		// repeter for data fields
 		$chart_repeater_labels = new Repeater();
+
 		$chart_repeater_labels->add_control(
 			'chart_data_label', [
-				'label'       => esc_html__('Label', 'elementskit'),
+				'label'       => esc_html__('Label', 'wpr-addons'),
 				'type'        => Controls_Manager::TEXT,
-				'default'     => esc_html__('Label #1', 'elementskit'),
+				'default'     => esc_html__('Label #1', 'wpr-addons'),
 				'label_block' => true,
 			]
 		);
+
 		$chart_repeater_labels->add_control(
 			'chart_data_set', [
-				'label'       => esc_html__('Data', 'elementskit'),
+				'label'       => esc_html__('Data', 'wpr-addons'),
 				'type'        => Controls_Manager::TEXT,
 				'default'     => '10,23,15',
 				'label_block' => true,
-				'description' => esc_html__('Enter data values by "," separated(1). Example: 2,4,8,16,32 etc', 'elementskit'),
+				'description' => esc_html__('Enter data values by "," separated(1). Example: 2,4,8,16,32 etc', 'wpr-addons'),
 			]
 		);
-
 
 		// start tabs section
 		$chart_repeater_labels->start_controls_tabs(
-			'chart_data_bar_back_tab'
+			'chart_data_bar_background_tab'
 		);
 		// start normal sections
 		$chart_repeater_labels->start_controls_tab(
-			'chart_data_bar_back_normal',
+			'chart_data_bar_background_normal',
 			[
-				'label' => esc_html__('Normal', 'elementskit'),
+				'label' => esc_html__('Normal', 'wpr-addons'),
 			]
 		);
 
 		$chart_repeater_labels->add_control(
-			'chart_data_bar_back_color', [
-				'label'       => esc_html__('Background Color', 'elementskit'),
+			'chart_data_background_color', [
+				'label'       => esc_html__('Background Color', 'wpr-addons'),
 				'type'        => Controls_Manager::COLOR,
-				'default'     => 'rgba(242,41,91,0.48)',
+				'default'     => 'rgba(23, 187, 87, 0.48)',
 			]
 		);
 
 		$chart_repeater_labels->add_control(
-			'chart_data_bar_border_color', [
-				'label'       => esc_html__('Border Color', 'elementskit'),
+			'chart_data_border_color', [
+				'label'       => esc_html__('Border Color', 'wpr-addons'),
 				'type'        => Controls_Manager::COLOR,
-				'default'     => 'rgba(242,41,91,0.48)',
+				'default'     => 'rgba(87, 187, 23, 0.48)',
 			]
 		);
 
 		$chart_repeater_labels->end_controls_tab();
+
 		// end normal sections
 		// start hover sections
 		$chart_repeater_labels->start_controls_tab(
-			'chart_data_bar_back_hover',
+			'chart_data_bar_background_hover',
 			[
-				'label' => esc_html__('Hover', 'elementskit'),
+				'label' => esc_html__('Hover', 'wpr-addons'),
 			]
 		);
 		$chart_repeater_labels->add_control(
-			'chart_data_bar_back_color_hover', [
-				'label'       => esc_html__('Background Color', 'elementskit'),
+			'chart_data_background_color_hover', [
+				'label'       => esc_html__('Background Color', 'wpr-addons'),
 				'type'        => Controls_Manager::COLOR,
 			]
 		);
 
 		$chart_repeater_labels->add_control(
-			'chart_data_bar_border_color_hover', [
-				'label'       => esc_html__('Border Color', 'elementskit'),
+			'chart_data_border_color_hover', [
+				'label'       => esc_html__('Border Color', 'wpr-addons'),
 				'type'        => Controls_Manager::COLOR,
 			]
 		);
@@ -165,8 +167,8 @@ class Wpr_Charts extends Widget_Base {
 		// end tabs section
 
 		$chart_repeater_labels->add_control(
-			'chart_data_bar_border_width', [
-				'label'       => esc_html__('Border Width', 'elementskit'),
+			'chart_data_border_width', [
+				'label'       => esc_html__('Border Width', 'wpr-addons'),
 				'type'        => Controls_Manager::NUMBER,
 				'default'     => '1',
 			]
@@ -175,29 +177,29 @@ class Wpr_Charts extends Widget_Base {
 		$this->add_control(
 			'charts_data_set',
 			[
-				'label'   => esc_html__('Set Data', 'elementskit'),
+				'label'   => esc_html__('Set Data', 'wpr-addons'),
 				'type'    => Controls_Manager::REPEATER,
 				'default' => [
 					[
-						'chart_data_label'            => esc_html__('Label #1', 'elementskit'),
+						'chart_data_label'            => esc_html__('Label #1', 'wpr-addons'),
 						'chart_data_set'              => '13,20,15',
-						'chart_data_bar_back_color'   => 'rgba(242,41,91,0.48)',
-						'chart_data_bar_border_color' => 'rgba(242,41,91,0.48)',
-						'chart_data_bar_border_width' => 1,
+						'chart_data_background_color'   => 'rgba(242,41,91,0.48)',
+						'chart_data_border_color' => 'rgba(242,41,91,0.48)',
+						'chart_data_border_width' => 1,
 					],
 					[
-						'chart_data_label'            => esc_html__('Label #2', 'elementskit'),
+						'chart_data_label'            => esc_html__('Label #2', 'wpr-addons'),
 						'chart_data_set'              => '20,10,33',
-						'chart_data_bar_back_color'   => 'rgba(69,53,244,0.48)',
-						'chart_data_bar_border_color' => 'rgba(69,53,244,0.48)',
-						'chart_data_bar_border_width' => 1,
+						'chart_data_background_color'   => 'rgba(69,53,244,0.48)',
+						'chart_data_border_color' => 'rgba(69,53,244,0.48)',
+						'chart_data_border_width' => 1,
 					],
 					[
-						'chart_data_label'            => esc_html__('Label #3', 'elementskit'),
+						'chart_data_label'            => esc_html__('Label #3', 'wpr-addons'),
 						'chart_data_set'              => '10,3,23',
-						'chart_data_bar_back_color'   => 'rgba(239,239,40,0.57)',
-						'chart_data_bar_border_color' => 'rgba(239,239,40,0.57)',
-						'chart_data_bar_border_width' => 1,
+						'chart_data_background_color'   => 'rgba(239,239,40,0.57)',
+						'chart_data_border_color' => 'rgba(239,239,40,0.57)',
+						'chart_data_border_width' => 1,
 					],
 
 				],
@@ -254,37 +256,24 @@ class Wpr_Charts extends Widget_Base {
 			endforeach;
 		endif;
 
-		var_dump($charts_data_set);
-
-		if(is_array($charts_data_set) && sizeof($charts_data_set)):
-			foreach($charts_data_set AS $DataChart):
-				$backgroundColor      = $DataChart['chart_data_bar_back_color'];
-				$backgroundColorHover = $DataChart['chart_data_bar_back_color_hover'];
-				$borderColor          = $DataChart['chart_data_bar_border_color'];
-				$borderColorHover     = $DataChart['chart_data_bar_border_color_hover'];
-				$borderWidth          = $DataChart['chart_data_bar_border_width'];
-
-				$backgroundColorHover = strlen($backgroundColorHover) > 0 ? $backgroundColorHover : $backgroundColor;
-				$borderColorHover     = strlen($borderColorHover) > 0 ? $borderColorHover : $borderColor;
-
-				$dataChartArray['datasets'][] = [
-					'label'                => $DataChart['chart_data_label'],
-					'data'                 => array_map('floatval', explode(',', trim($DataChart['chart_data_set'], ','))),
-					'backgroundColor'      => $backgroundColor,
-					'hoverBackgroundColor' => $backgroundColorHover,
-					'borderColor'          => $borderColor,
-					'hoverBorderColor'     => $borderColorHover,
-					'borderWidth'          => $borderWidth,
+		if(is_array($charts_data_set) && sizeof($charts_data_set)) {
+			foreach($charts_data_set as $chart_data) {
+				$data_charts_array['datasets'][] = [
+					'label' => $chart_data['chart_data_label'],
+					'data' => array_map('floatval', explode(',', trim($chart_data['chart_data_set'], ','))),
+					'backgroundColor' => $chart_data['chart_data_background_color'],
+					'hoverBackgroundColor' => $chart_data['chart_data_background_color_hover'],
+					'borderColor' => $chart_data['chart_data_border_color'],
+					'hoverBorderColor' => $chart_data['chart_data_border_color_hover'],
+					'borderWidth' => $chart_data['chart_data_border_width']
 				];
-			endforeach;
-		endif;
-
-		$dataLabelsJson = wp_json_encode(array_filter($dataChartArray['labels']));
-		$dataJson       = wp_json_encode(array_filter($dataChartArray['datasets']));
+			}
+		}
 
         $layout_settings = [
             'chart_type' => $settings['chart_type'],
             'chart_labels' => $data_charts_array['labels'],
+			'chart_datasets' => wp_json_encode($data_charts_array['datasets'])
         ];
 
 		$this->add_render_attribute( 'chart-settings', [
