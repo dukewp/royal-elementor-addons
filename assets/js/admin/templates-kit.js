@@ -135,7 +135,6 @@ jQuery(document).ready(function( $ ) {
 			console.log('Installing Plugins...');
 			WprTemplatesKit.importProgressBar('plugins');
 			WprTemplatesKit.installRequiredPlugins( kitID );
-			WprTemplatesKit.threeDotsAnimation();
 
 	        var installPlugins = setInterval(function() {
 
@@ -198,13 +197,13 @@ jQuery(document).ready(function( $ ) {
 
 		importProgressBar: function( step ) {
 			if ( 'plugins' === step ) {
-				$('.wpr-import-kit-popup .progress-wrap strong').html('Step 1: Installing/Activating Plugins<span>.</span>');
+				$('.wpr-import-kit-popup .progress-wrap strong').html('Step 1: Installing/Activating Plugins<span class="dot-flashing"></span>');
 			} else if ( 'content' === step ) {
 				$('.wpr-import-kit-popup .progress-bar').animate({'width' : '33%'}, 500);
-				$('.wpr-import-kit-popup .progress-wrap strong').html('Step 2: Importing Demo Content<span>.</span>');
+				$('.wpr-import-kit-popup .progress-wrap strong').html('Step 2: Importing Demo Content<span class="dot-flashing"></span>');
 			} else if ( 'settings' === step ) {
 				$('.wpr-import-kit-popup .progress-bar').animate({'width' : '66%'}, 500);
-				$('.wpr-import-kit-popup .progress-wrap strong').html('Step 3: Importing Settings<span>.</span>');
+				$('.wpr-import-kit-popup .progress-wrap strong').html('Step 3: Importing Settings<span class="dot-flashing"></span>');
 			} else if ( 'finish' === step ) {
 				var href = window.location.href,
 					index = href.indexOf('/wp-admin'),
@@ -215,21 +214,6 @@ jQuery(document).ready(function( $ ) {
 				$('.wpr-import-kit-popup header h3').text('Import was Successfull!');
 				$('.wpr-import-kit-popup-wrap .close-btn').show();
 			}
-		},
-
-		threeDotsAnimation: function() {
-			var threeDotsText = '';
-			var dotsInterval = setInterval( function() {
-				var threeDots = $('.wpr-import-kit-popup .progress-wrap strong span');
-
-				if ( threeDots.text().length > 2 ) {
-					threeDotsText = '';
-				} else {
-					threeDotsText += '.';
-				}
-
-					threeDots.text(threeDotsText)
-			}, 500);
 		},
 
 		showTemplatesMainGrid: function() {
@@ -269,10 +253,12 @@ jQuery(document).ready(function( $ ) {
 				for (var i = 0; i < pagesArray.length - 1; i++ ) {
 					singleGrid.append('\
 				        <div class="grid-item" data-page-id="'+ pagesArray[i] +'">\
+				        	<a href="https://demosites.royal-elementor-addons.com/'+ kit.data('kit-id') +'?ref=rea-plugin-backend-templates" target="_blank">\
 				            <div class="image-wrap">\
 				                <img src="https://royal-elementor-addons.com/library/templates-kit/'+ kitID +'/'+ pagesArray[i] +'.jpg">\
 				            </div>\
 				            <footer><h3>'+ pagesArray[i] +'</h3></footer>\
+				            </a>\
 				        </div>\
 					');
 				};
