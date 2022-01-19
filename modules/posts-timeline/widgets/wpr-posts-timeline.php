@@ -5423,6 +5423,24 @@ class Wpr_PostsTimeline extends Widget_Base {
 		return $class;
 	}
 
+	public static function youtube_url ( $story_settings ) {
+		if ( $story_settings['repeater_youtube_video_url'] != '' ) {
+                preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $story_settings['repeater_youtube_video_url'], $matches);
+              
+                if ( isset($matches[1]) ) {
+                    $id = $matches[1];
+                    $media = '<iframe width="100%" height="auto"
+                    src="https://www.youtube.com/embed/' . $id . '" 
+                    frameborder="0" allowfullscreen></iframe>';
+                }
+            } else if ( empty($story_settings['repeater_youtube_video_url']) ) {
+				$media = '';
+			} else {
+                $media = __("Wrong URL","wpr-addons");
+            }
+			return $media;
+	}
+
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 		global $paged;
