@@ -42,7 +42,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 		return [ 'swiper', 'wpr-aos-js', 'wpr-isotope' ];
 	}
 
-    // 'wpr-fontello-css',
 	public function get_style_depends() {
 		return [ 'swiper', 'wpr-animations-css', 'wpr-loading-animations-css', 'wpr-aos-css' ];
 	}
@@ -51,15 +50,6 @@ class Wpr_PostsTimeline extends Widget_Base {
     	if ( empty(get_option('wpr_wl_plugin_links')) )
         return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-grid-help-btn';
     }
-
-	public function add_option_query_source() {
-		$pro_query = [
-			'pro-rl' => 'Related Query (Pro)',
-			'pro-cr' => 'Current Query (Pro)',
-		];
-		
-		return array_merge(Utilities::get_custom_types_of( 'post', false ), $pro_query);
-	}
 
 	public function wpr_aos_amination_array(){
 
@@ -534,7 +524,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 		$repeater->add_control(
 			'repeater_image_or_icon',
 			[
-				'label' => esc_html__( 'Image Or Icon', 'wpr-addons' ),
+				'label' => esc_html__( 'Image or Icon', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'image',
 				'options' => [
@@ -626,42 +616,15 @@ class Wpr_PostsTimeline extends Widget_Base {
 		$repeater->start_controls_tab(
 			'repeater_advanced_tab',
 			[
-				'label' => __( 'Advanced Settings', 'wpr-addons' ),
+				'label' => __( 'Advanced', 'wpr-addons' ),
 			]
 		);
 
-		$repeater->add_control(
-			'repeater_show_year_label',
-			[
-				'label' => __( 'Middle Line Label', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
-				'label_on' => __( 'Show', 'wpr-addpns' ),
-				'label_off' => __( 'Hide', 'wpr-addpns' ),
-				'return_value' => 'yes',
-				'default' => 'no',
-			]
-		);
-
-		$repeater->add_control(
-			'repeater_year',
-			[
-				'label' => __( 'Label Text', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => '2020',
-				'condition'   => [
-					'repeater_show_year_label'   => [
-					   'yes'
-					],
-				]
-
-			]
-		);
-			
-		$repeater->add_group_control( //TODO: find out usage
+		$repeater->add_group_control(
 			Group_Control_Image_Size::get_type(),
 			[ 
-				 
-				'name' => 'wpr_thumbnail', // Usage: `{name}_size` and `{name}_custom_dimension`, in this case `thumbnail_size` and `thumbnail_custom_dimension`.
+				'name' => 'wpr_thumbnail',
+				'default' => 'full',
 				'separator' => 'none',
 			]
 		);
@@ -862,8 +825,8 @@ class Wpr_PostsTimeline extends Widget_Base {
 
 		$this->end_controls_section();
 
-		$post_types = $this->add_option_query_source();
-		// unset( $post_types['product'] );
+		$post_types = Utilities::get_custom_types_of( 'post', false );
+		unset( $post_types['product'] );
 		// unset($post_types['page']);
 		// unset($post_types['e-landing-page']);
 		$post_taxonomies = Utilities::get_custom_types_of( 'tax', false );
@@ -1143,7 +1106,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 		$this->add_control(
 			'title_overlay',
 			[
-				'label' => esc_html__( 'Title Over', 'wpr-addons' ),
+				'label' => esc_html__( 'Title Over Image', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default' => 'no',
@@ -1197,7 +1160,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 		$this->add_control(
 			'date_overlay',
 			[
-				'label' => esc_html__( 'Date Over', 'wpr-addons' ),
+				'label' => esc_html__( 'Date Over Image', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default' => 'no',
@@ -1251,7 +1214,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 		$this->add_control(
 			'description_overlay',
 			[
-				'label' => esc_html__( 'Description Over', 'wpr-addons' ),
+				'label' => esc_html__( 'Description Over Image', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default' => 'no',
@@ -1266,7 +1229,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 		$this->add_control(
 			'iframe_overlay',
 			[
-				'label' => esc_html__( 'Iframe Over', 'wpr-addons' ),
+				'label' => esc_html__( 'Iframe Over Image', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default' => 'no',
@@ -3769,61 +3732,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 			]
 		);
 
-		// 	/*---- Year Label ----*/
-		$this->add_control(
-			'year_label_section',
-			[
-				'label' => __( 'Middle Line Label', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::HEADING,
-				'separator' => 'before',
-				'condition' => [
-					'timeline_content' => ['custom'],
-				]
-			]
-		);
-		
-		$this->add_control(
-			'year_label_color',
-			[
-				'label' => __( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-wrapper .wpr-year' => 'color: {{VALUE}}',
-				],
-				'default' => '#605BE5',
-				'condition' => [
-					'timeline_content' => ['custom'],
-				]
-			]
-		);
-		
-		$this->add_control(
-			'year_label_bgcolor',
-			[
-				'label' => __( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-wrapper .wpr-year' => 'background-color: {{VALUE}}',
-				],
-				'default' => '#54595F',
-				'condition' => [
-					'timeline_content' => ['custom'],
-				]
-			]
-		);		
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => 'year_typography',
-				'label' => __( 'Typography', 'wpr-addons' ),
-				'selector' => '{{WRAPPER}} .wpr-wrapper .wpr-year',
-				'condition' => [
-					'timeline_content' => ['custom'],
-				]
-			]
-		);
-
 		$this->end_controls_section();
 		
 		$this->start_controls_section(
@@ -4831,7 +4739,6 @@ class Wpr_PostsTimeline extends Widget_Base {
     public function add_custom_horizontal_timeline_attributes($content, $settings, $index) {
 
 			$this->timeline_description = $content['repeater_description'];
-			$this->show_year_label = esc_html($content['repeater_show_year_label']);
 			$this->timeline_year = esc_html($content['repeater_year']);
 			$this->story_date_label = esc_html($content['repeater_date_label']);
 			$this->story_extra_label = esc_html($content['repeater_extra_label']);
@@ -4899,12 +4806,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 				$this->thumbnail_custom_dimension = $content['wpr_thumbnail_custom_dimension'];
 
 				$this->render_image_or_icon($content);
-				
-				if ( $content['repeater_show_year_label'] == 'yes' ) {
-					echo '<span class="wpr-year-container">
-					<span class="wpr-year-label wpr-year">'.$content['repeater_year'].'</span>
-					</span>';
-				}
 
 				$background_image = $settings['content_layout'] === 'background' ? $content['repeater_image']['url'] : '';
 				$background_class = $settings['content_layout'] === 'background' ? 'story-with-background' : '';
@@ -5149,12 +5050,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 							echo 'image-bottom' === $settings['content_layout'] ? $this->image : '';                       
 						echo '</div>';
 
-							if($this->show_year_label == 'yes'){
-								echo '<div class="wpr-year-container">
-									<span '.$this->get_render_attribute_string( $this->year_key ).' >'.$this->timeline_year.'</span>
-								</div>';
-							}
-
 							if ( 'yes' === $settings['show_extra_label'] ) {
 								echo '<div class="wpr-extra-label">
 									<span '.$this->get_render_attribute_string( $this->date_label_key ).' >'. $this->story_date_label .'</span> 
@@ -5187,7 +5082,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 
 		echo '<div id="wpr-horizontal-bottom-wrapper" class="wpr-wrapper wpr-horizontal-bottom swiper-container" dir="'. $dir .'" data-slidestoshow = "'.esc_attr($sidesToShow).'" data-autoplay="'.esc_attr($autoplay).'" data-swiper-speed="'. esc_attr($swiper_speed) .'" data-swiper-delay="'. esc_attr($swiper_delay) .'">';
 		echo '<div class="wpr-horizontal-bottom-timeline swiper-wrapper">';
-			if(is_array($data)){
+			if ( is_array($data) ) {
 					foreach($data as $index=>$content) {
 
 						$this->add_custom_horizontal_timeline_attributes($content, $settings, $index);
@@ -5197,11 +5092,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 						$this->render_image_or_icon($content);
 
 						echo '<div class="swiper-slide swiper-slide-line-top '.esc_attr($slidesHeight).' elementor-repeater-item-'. $content['_id'] .'">';
-							if($this->show_year_label == 'yes'){
-								echo '<div class="wpr-year-container">
-									<span '.$this->get_render_attribute_string( $this->year_key ).' >'.$this->timeline_year.'</span>
-								</div>';
-							}
+
 							if ( 'yes' === $settings['show_extra_label'] ) {
 								echo '<div class="wpr-extra-label">
 									<span '.$this->get_render_attribute_string( $this->date_label_key ).' >'. $this->story_date_label .'</span> 
