@@ -10377,12 +10377,11 @@ html {
 	  -ms-filter: alpha(opacity=60);
 	  filter: alpha(opacity=60);
   }
-  
+
   .wpr-timeline-centered .wpr-year-container .wpr-year-label {
 	  border-radius: 6px;
 	  display: inline-block;
 	  line-height: 1;
-	  padding: 7px 14px;
 	  text-align: center;
 	  vertical-align: baseline;
 	  white-space: nowrap
