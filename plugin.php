@@ -241,6 +241,13 @@ class Plugin {
 			Plugin::instance()->get_version()
 		);
 
+		// Posts Timeline
+		wp_register_style( 
+			'wpr-aos-css', 
+			WPR_ADDONS_URL  . 'assets/css/lib/aos/aos' . $this->script_suffix() . '.css',
+			[]
+		);
+
 		wp_enqueue_style(
 			'wpr-addons-css',
 			WPR_ADDONS_URL . 'assets/css/frontend' . $this->script_suffix() . '.css',
@@ -300,6 +307,13 @@ class Plugin {
 			[],
 			Plugin::instance()->get_version()
 		);
+
+		
+		wp_enqueue_style( 
+			'wpr-aos-css', 
+			WPR_ADDONS_URL  . 'assets/css/lib/aos/aos' . $this->script_suffix() . '.css',
+			[]
+		);
 	}
 
 	public function enqueue_scripts() {
@@ -323,7 +337,9 @@ class Plugin {
 			Plugin::instance()->get_version(),
 			true
 		);
-		
+
+		wp_enqueue_script( 'wpr-aos-js', WPR_ADDONS_URL  . 'assets/js/lib/aos/aos'. $this->script_suffix() .'.js',[ 'elementor-frontend' ], null, true );
+
 		wp_localize_script(
 			'wpr-addons-js',
 			'WprConfig', // This is used in the js file to group all of your scripts together
@@ -407,6 +423,8 @@ class Plugin {
 			'5.8.0',
 			true
 		);
+
+		wp_register_script( 'wpr-aos-js', WPR_ADDONS_URL  . 'assets/js/lib/aos/aos'. $this->script_suffix()  .'.js',[ 'elementor-frontend' ], null, true );
 	}
 
 	public function enqueue_panel_scripts() {
