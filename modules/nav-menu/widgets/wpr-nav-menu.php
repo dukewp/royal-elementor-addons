@@ -201,7 +201,7 @@ class Wpr_Nav_Menu extends Widget_Base {
 			]
 		);
 
-		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
+		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML, 'https://www.youtube.com/watch?v=at0CPKtklF0' );
 		
 		$menus = $this->get_available_menus();
 

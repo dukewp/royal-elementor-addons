@@ -64,6 +64,7 @@ if ( ! function_exists( 'wpr_fs' ) ) {
 	                    'first-path'     => 'admin.php?page=wpr-templates-kit',
 	                    'support'        => false,
 	                	'affiliation'    => true,
+	                    'pricing'        => false,
 	                ),
 	            ) );
 	        }

@@ -57,6 +57,7 @@ class WPR_Templates_Library_Blocks {
 								'phone-call',
 								'back-to-top',
 								'popup-trigger',
+								'lottie-animations',
 							];
 							
 							foreach ($modules as $title => $slug) {

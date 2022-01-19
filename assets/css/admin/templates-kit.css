@@ -254,8 +254,8 @@ img {
   display: none;
 }
 
- .wpr-templates-kit-single .grid-item {
-  /*cursor: pointer;*/
+ .wpr-templates-kit-single .grid-item a {
+  text-decoration: none;
  }
 
 .wpr-templates-kit-single .action-buttons-wrap {

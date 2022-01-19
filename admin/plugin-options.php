@@ -317,6 +317,13 @@ function wpr_addons_settings_page() {
                     echo '<h3>' . $option_title . '</h3>';
                     echo '<input type="checkbox" name="'. $option_name .'" id="'. $option_name .'" '. checked( get_option(''. $option_name .'', 'on'), 'on', false ) .'>';
                     echo '<label for="'. $option_name .'"></label>';
+
+                    if ( 'wpr-particles' === $option_name || false !== strpos($option_name, 'parallax') ) {
+                        echo '<br><span>Tip: Edit any Section > Navigate to Style tab</span>';
+                    } else if ( 'wpr-sticky-section' === $option_name ) {
+                        echo '<br><span>Tip: Edit any Section > Navigate to Advanced tab</span>';
+                    }
+
                     // echo '<a href="https://royal-elementor-addons.com/elementor-particle-effects/?ref=rea-plugin-backend-extentions-prev">'. esc_html('View Extension Demo', 'wpr-addons') .'</a>';
                 echo '</div>';
             echo '</div>';
@@ -356,9 +363,31 @@ function wpr_redirect_support_page() {
     ?>
     <script type="text/javascript">
         jQuery(document).ready( function($) {
-            $( 'ul#adminmenu a[href*="page=wpr-support"]' ).attr('href','https://wordpress.org/support/plugin/royal-elementor-addons/').attr( 'target', '_blank' );
+            $( 'ul#adminmenu a[href*="page=wpr-support"]' ).attr('href', 'https://wordpress.org/support/plugin/royal-elementor-addons/').attr( 'target', '_blank' );
         });
     </script>
     <?php
 }
 add_action( 'admin_head', 'wpr_redirect_support_page' );
+
+
+// Add Upgrade Sub Menu item that will redirect to royal-elementor-addons.com
+function wpr_addons_add_upgrade_menu() {
+    if ( defined('WPR_ADDONS_PRO_VERSION') ) return;
+    add_submenu_page( 'wpr-addons', 'Upgrade', 'Upgrade', 'manage_options', 'wpr-upgrade', 'wpr_addons_upgrade_page', 99 );
+}
+add_action( 'admin_menu', 'wpr_addons_add_upgrade_menu', 99 );
+
+function wpr_addons_upgrade_page() {}
+
+function wpr_redirect_upgrade_page() {
+    ?>
+    <script type="text/javascript">
+        jQuery(document).ready( function($) {
+            $( 'ul#adminmenu a[href*="page=wpr-upgrade"]' ).attr('href', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-menu-upgrade-pro#purchasepro').attr( 'target', '_blank' );
+            $( 'ul#adminmenu a[href*="#purchasepro"]' ).css('color', 'greenyellow');
+        });
+    </script>
+    <?php
+}
+add_action( 'admin_head', 'wpr_redirect_upgrade_page' );

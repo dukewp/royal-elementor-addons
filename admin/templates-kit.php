@@ -326,6 +326,9 @@ function wpr_final_settings_setup() {
     update_option('wpr_footer_conditions', '{"user-footer-'. $kit .'":["global"]}');
     update_post_meta( Utilities::get_template_id('user-footer-'. $kit), 'wpr_footer_show_on_canvas', 'true' );
 
+    // Set Popup
+    update_option('wpr_popup_conditions', '{"user-popup-'. $kit .'":["global"]}');
+
     // Track Kit
     wpr_track_imported_kit( $kit );
 

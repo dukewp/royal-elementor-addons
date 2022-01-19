@@ -171,6 +171,14 @@
   float: right;
 }
 
+.wpr-element-info span {
+  display: block;
+  margin-top: 3px;
+  color: #999;
+  font-style: normal;
+  font-size: 12px;
+}
+
 .wpr-element-info a {
   display: block;
   clear: both;
