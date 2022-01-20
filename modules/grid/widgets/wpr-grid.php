@@ -2768,6 +2768,34 @@ class Wpr_Grid extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'grid', [
+			'Grid Columns 1,2,3,4,5,6',
+			'Masonry Layout',
+			'List Layout Zig-zag',
+			'Posts Slider Columns (Carousel) 1,2,3,4,5,6',
+			'Related Posts Query, Current Page Query, Random Posts Query',
+			'Infinite Scrolling Pagination',
+			'Post Slider Autoplay options',
+			'Post Slider Advanced Navigation Positioning',
+			'Post Slider Advanced Pagination Positioning',
+			'Advanced Post Likes',
+			'Advanced Post Sharing',
+			'Custom Fields Support',
+			'Advanced Grid Loading Animations (Fade in & Slide Up)',
+			'Unlimited Grid Elements Positioning',
+			'Unlimited Image Overlay Animations',
+			'Image overlay GIF upload option',
+			'Image Overlay Blend Mode',
+			'Image Effects: Zoom, Grayscale, Blur',
+			'Lightbox Thumbnail Gallery, Lightbox Image Sharing Button',
+			'Grid Category Filter Deeplinking',
+			'Grid Category Filter Icons select',
+			'Grid Category Filter Count',
+			'Grid Item Even/Odd Background Color',
+			'Title, Category, Read More Advanced Link Hover Animations',
+		] );
+
 		// Styles ====================
 		// Section: Grid Item --------
 		$this->start_controls_section(

@@ -222,6 +222,15 @@ class Wpr_OnepageNav extends Widget_Base {
 		// Section: Settings ---------
 		$this->add_section_settings();
 
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'onepage-nav', [
+			'Highlight Active Nav Icon',
+			'Nav Icon Custom Color',
+			'Nav Icon Advanced Tooltip',
+			'Scrolling Animation Speed',
+			'Navigation Full-height (Sidebar) option',
+		] );
+		
 		// Styles ====================
 		// Section: Nav Wrap ---------
 		$this->start_controls_section(

@@ -680,6 +680,54 @@
 	border-bottom: none !important;
 }
 
+.elementor-control-pro_features_section .elementor-section-toggle,
+.elementor-control-pro_features_section .elementor-section-title {
+  color: #f54;
+}
+
+.elementor-control-pro_features_section .elementor-section-title {
+  line-height: 20px;
+}
+.elementor-control-pro_features_section .elementor-section-title .dashicons {
+  line-height: 20px;
+  font-size: 13px;
+}
+
+.wpr-pro-features-list {
+  text-align: center;
+}
+
+.wpr-pro-features-list ul {
+  text-align: left;
+}
+
+.wpr-pro-features-list ul li {
+  position: relative;
+  line-height: 22px;
+  padding-left: 20px;
+}
+
+.wpr-pro-features-list ul li::before {
+  content: '.';
+  font-size: 38px;
+  position: absolute;
+  top: -11px;
+  left: 0;
+}
+
+.wpr-pro-features-list ul + a {
+  display: inline-block;
+  background-color: #f54;
+  color: #fff;
+  margin: 15px 15px 10px 0;
+  padding: 7px 12px;
+  border-radius: 3px;
+}
+
+.wpr-pro-features-list ul + a:hover {
+  color: #fff;
+}
+
 
 /*--------------------------------------------------------------
 == Elementor Search Notice

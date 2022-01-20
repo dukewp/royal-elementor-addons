@@ -200,6 +200,13 @@ class Wpr_Business_Hours extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'business-hours', [
+			'List Item Custom Icon options',
+			'List Item Custom Text & Background Color options',
+			'List Item Even/Odd Background Color option',
+		] );
+		
 		// Styles
 		// Section: General ----------
 		$this->start_controls_section(

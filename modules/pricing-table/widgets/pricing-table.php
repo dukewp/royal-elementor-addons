@@ -822,6 +822,12 @@ class Pricing_Table extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'pricing-table', [
+			'List Item Advanced Tooltip',
+			'List Item Even/Odd Background Color',
+		] );
+		
 		// Styles
 		// Section: Heading ----------
 		$this->start_controls_section(
