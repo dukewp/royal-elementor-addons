@@ -498,24 +498,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 		);
 
 		$repeater->add_control(
-			'repeater_date_label',
-			[
-				'label' => __( 'Primary Label', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => '01 Jan 2020',
-			]
-		);
-
-		$repeater->add_control(
-			'repeater_extra_label',
-			[
-				'label' => __( 'Secondary Label', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => 'Secondaty Label',
-			]
-		);
-
-		$repeater->add_control(
 			'repeater_story_title',
 			[
 				'label' => __( 'Timeline Story Title', 'wpr-addons' ),
@@ -531,6 +513,24 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'label' => esc_html__( 'Title URL', 'wpr-addons' ), // bottom issue
 				'type' => Controls_Manager::TEXT,
 				'default' => '#',
+			]
+		);
+
+		$repeater->add_control(
+			'repeater_date_label',
+			[
+				'label' => __( 'Primary Label', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::TEXT,
+				'default' => '01 Jan 2020',
+			]
+		);
+
+		$repeater->add_control(
+			'repeater_extra_label',
+			[
+				'label' => __( 'Secondary Label', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::TEXT,
+				'default' => 'Secondaty Label',
 			]
 		);
 
@@ -2418,7 +2418,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-story-info-vertical' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
 					'{{WRAPPER}} .wpr-timeline-story-overlay' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
 				],
-				'separator' => 'before',
+				// 'separator' => 'before',
 			]
 		);
 
@@ -3103,7 +3103,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 		$this->start_controls_section(
 			'label_styles_section',
 			[
-				'label' => __( 'Label', 'wpr-addons' ),
+				'label' => __( 'Extra Label', 'wpr-addons' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'show_extra_label' => 'yes'
