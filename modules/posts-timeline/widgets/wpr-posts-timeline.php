@@ -154,7 +154,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'options'=>[
 					'F j, Y' => esc_html__(date('F j, Y')),
 					'Y-m-d' => esc_html__(date('Y-m-d')),
-					'Y,M,D' => esc_html__(date('Y,M,D')),
+					'Y, M, D' => esc_html__(date('Y, M, D')),
 					'm/d/Y' => esc_html__(date('m/d/Y')),
 					'd/m/Y' => esc_html__(date('d/m/Y')),
 				],
