@@ -214,7 +214,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 		$this->add_responsive_control(
 			'content_alignment',
 			[
-				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'label' => esc_html__( 'Alignment (Right)', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
 				'label_block' => false,
 				'default' => 'center',
@@ -1212,7 +1212,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 		$this->add_responsive_control(
 			'label_alignment_left',
 			[
-				'label' => esc_html__( 'Extra Label Alignment', 'wpr-addons' ),
+				'label' => esc_html__( 'Extra Label Alignment (Right)', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
 				'label_block' => false,
 				'default' => 'center',
@@ -1544,7 +1544,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 		$this->add_responsive_control (
 			'readmore_content_alignment',
 			[
-				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'label' => esc_html__( 'Alignment (Right)', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
 				'label_block' => false,
 				'default' => 'center',
