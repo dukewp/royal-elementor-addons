@@ -93,7 +93,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 		$this->start_controls_section(
 			'general_section',
 			[
-				'label' => __( 'General', 'wpr-addons' ),
+				'label' => __( 'Layout', 'wpr-addons' ),
 				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -107,8 +107,8 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'type' => \Elementor\Controls_Manager::SELECT,
 				'default' => 'dynamic',
 				'options'=>[
-					'custom' => esc_html__('Custom', 'wpr-addons'),
 					'dynamic' => esc_html__('Dynamic', 'wpr-addons'),
+					'custom' => esc_html__('Custom', 'wpr-addons'),
 				],
 				'render_type' => 'template',
 			]
@@ -179,7 +179,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 		$this->add_responsive_control(
 			'content_alignment_left',
 			[
-				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'label' => esc_html__( 'Content Align', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
 				'label_block' => false,
 				'default' => 'center',
@@ -214,7 +214,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 		$this->add_responsive_control(
 			'content_alignment',
 			[
-				'label' => esc_html__( 'Alignment (Right)', 'wpr-addons' ),
+				'label' => esc_html__( 'Content Align (Right)', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
 				'label_block' => false,
 				'default' => 'center',
@@ -257,7 +257,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'condition' => [
 					'timeline_content' => 'dynamic'
 				],
-				'separator' => 'after',
 			]
 		);
 				
@@ -267,6 +266,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'label' => __( 'Slides To Show', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::NUMBER,
 				'default' => '3',
+				'separator' => 'before',
 				'condition'   => [
 					'timeline_layout'   => [
 					   'horizontal',
@@ -747,7 +747,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 		$repeater->add_responsive_control(
 			'repeater_timeline_item_icon_alignment',
 			[
-				'label' => esc_html__( 'Inner Icon Alignment', 'wpr-addons' ),
+				'label' => esc_html__( 'Inner Icon Align', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
 				'label_block' => false,
 				'default' => 'center',
@@ -1174,7 +1174,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 		$this->add_responsive_control(
 			'label_alignment',
 			[
-				'label' => esc_html__( 'Extra Label Alignment', 'wpr-addons' ),
+				'label' => esc_html__( 'Extra Label Align', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
 				'label_block' => false,
 				'default' => 'center',
@@ -1212,7 +1212,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 		$this->add_responsive_control(
 			'label_alignment_left',
 			[
-				'label' => esc_html__( 'Extra Label Alignment (Right)', 'wpr-addons' ),
+				'label' => esc_html__( 'Extra Label Align (Right)', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
 				'label_block' => false,
 				'default' => 'center',
@@ -1510,7 +1510,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 		$this->add_responsive_control (
 			'readmore_content_alignment_left',
 			[
-				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'label' => esc_html__( 'Align', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
 				'label_block' => false,
 				'default' => 'center',
@@ -1544,7 +1544,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 		$this->add_responsive_control (
 			'readmore_content_alignment',
 			[
-				'label' => esc_html__( 'Alignment (Right)', 'wpr-addons' ),
+				'label' => esc_html__( 'Align (Right)', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
 				'label_block' => false,
 				'default' => 'center',
@@ -1664,7 +1664,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 		$this->add_responsive_control(
 			'overlay_content_alignment_vertical',
 			[
-				'label' => esc_html__( 'Overlay Content Alignment', 'wpr-addons' ),
+				'label' => esc_html__( 'Overlay Content Align', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
 				'label_block' => false,
 				'default' => 'center',
@@ -1866,7 +1866,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 		$this->add_responsive_control(
 			'pagination_alignment',
 			[
-				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'label' => esc_html__( 'Align', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
 				'label_block' => false,
 				'default' => 'center',
@@ -5150,9 +5150,11 @@ class Wpr_PostsTimeline extends Widget_Base {
 							\Elementor\Icons_Manager::render_icon( $content['repeater_story_icon'], [ 'aria-hidden' => 'true' ] );
 						echo '</div>';
 
-						echo '<div class="wpr-story-info-vertical wpr-data-container '. $background_class .'"  data-aos="'.$this->animation.'" data-aos-left="'.$this->animation_loadmore_left .'" data-aos-right="'. $this->animation_loadmore_right .'" data-animation-offset="'. $settings['animation_offset'] .'" data-animation-duration="'. $settings['aos_animation_duration'] .'"  style="background-image: url('.$background_image .')">';
+						echo '<div class="wpr-story-info-vertical wpr-data-container '. $background_class .'"  data-aos="'.$this->animation.'" data-aos-left="'.$this->animation_loadmore_left .'" data-aos-right="'. $this->animation_loadmore_right .'" data-animation-offset="'. $settings['animation_offset'] .'" data-animation-duration="'. $settings['aos_animation_duration'] .'"  style="background-image: url('. $background_image .')">';
 
 							echo $settings['content_layout'] === 'image-top' || $settings['show_overlay'] === 'yes' ? '<div class="wpr-animation-wrap wpr-timeline-img" style="position: relative;">' .$this->image : '';
+
+							echo !empty($content['repeater_youtube_video_url'] ) && ($settings['content_layout'] === 'image-top' || $settings['show_overlay'] === 'yes') ? '<div> '. $this->youtube_url($content) .' </div>' : '';
 
 								echo $settings['show_overlay'] === 'yes' && !empty($this->image) ? '<div class="wpr-timeline-story-overlay '. $this->animation_class .'">' : '';
 
@@ -5168,7 +5170,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 
 							echo 'yes' === $settings['show_description'] && 'yes' !== $settings['description_overlay'] ? '<div class="wpr-description">'. wp_trim_words($content['repeater_description'], $settings['excerpt_count']) .'</div>' : '';
 
-							echo !empty($content['repeater_youtube_video_url'] ) && 'yes' !== $settings['iframe_overlay'] ? '<div> '. $this->youtube_url($content) .' </div>' : '';
+							echo !empty($content['repeater_youtube_video_url'] ) && 'yes' !== $settings['iframe_overlay'] && $settings['content_layout'] !== 'image-top' ? '<div> '. $this->youtube_url($content) .' </div>' : '';
 
 							echo $settings['content_layout'] === 'image-bottom' ? $this->image : '';
 
