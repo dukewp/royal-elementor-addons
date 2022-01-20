@@ -4378,12 +4378,12 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 1000,
+						'max' => 500,
 					]
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 117,
+					'size' => 114,
 				],			
 				'selectors' => [
 					'{{WRAPPER}} .wpr-button-prev' => 'bottom: auto; top: {{SIZE}}{{UNIT}};',
