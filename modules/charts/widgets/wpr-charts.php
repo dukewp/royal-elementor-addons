@@ -84,7 +84,7 @@ class Wpr_Charts extends Widget_Base {
 
 				'fields'      => $chart_repeater->get_controls(),
 				'title_field' => '{{{ chart_label }}}',
-				'condition'   => ['chart_type' => ['bar', 'horizontalBar', 'line', 'radar']],
+				// 'condition'   => ['chart_type' => ['bar', 'horizontalBar', 'line', 'radar']],
 			]
 		);
 
@@ -255,8 +255,6 @@ class Wpr_Charts extends Widget_Base {
 			foreach($charts_labels_data AS $labels_data):
 				$data_charts_array['labels'][] = $labels_data['chart_label'];
 			endforeach;
-		else:
-			$data_charts_array['labels'] = '';
 		endif;
 
 		if(is_array($charts_data_set) && sizeof($charts_data_set)) {
