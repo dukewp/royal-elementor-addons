@@ -3714,7 +3714,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'size_units' => [ '%', 'px' ],
 				'default' => [
 					'unit' => 'px',
-					'size' => 150,
+					'size' => 180,
 				],
 				'range' => [
 					'%' => [
