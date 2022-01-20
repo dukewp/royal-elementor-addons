@@ -1192,6 +1192,8 @@ class Wpr_PostsTimeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-left-aligned .wpr-title' => 'text-align: {{VALUE}};',
 					'{{WRAPPER}} .wpr-left-aligned .wpr-description' => 'text-align: {{VALUE}};',
 					'{{WRAPPER}} .wpr-left-aligned .wpr-inner-date-label' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} .wpr-left-aligned .wpr-timeline-img' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} .wpr-timeline-img' => 'text-align: {{VALUE}};',
 					'{{WRAPPER}} .swiper-wrapper .wpr-title' => 'text-align: {{VALUE}};',
 					'{{WRAPPER}} .swiper-wrapper .wpr-description' => 'text-align: {{VALUE}};',
 					'{{WRAPPER}} .swiper-wrapper .wpr-inner-date-label' => 'text-align: {{VALUE}};',
@@ -1227,6 +1229,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-right-aligned .wpr-title' => 'text-align: {{VALUE}};',
 					'{{WRAPPER}} .wpr-right-aligned .wpr-description' => 'text-align: {{VALUE}};',
 					'{{WRAPPER}} .wpr-right-aligned .wpr-inner-date-label' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} .wpr-right-aligned .wpr-timeline-img' => 'text-align: {{VALUE}};',
 				],
 				'condition' => [
 					'timeline_layout' => ['centered', 'one-sided']
@@ -1245,6 +1248,9 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'separator' => 'before',
 				'condition' => [
 					'content_layout' => 'image-top'
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-timeline-img img' => 'display: block; width: 100%!important;'
 				]
 			]
 		);
