@@ -10335,7 +10335,7 @@ html {
     display: flow-root;
 }
 
-.wpr-timeline-centered .wpr-timeline-entry .wpr-timeline-entry-inner .wpr-data-wrap {
+ .wpr-timeline-centered .wpr-timeline-entry .wpr-timeline-entry-inner .wpr-data-wrap {
     position: relative;
     -webkit-background-clip: padding-box;
     -moz-background-clip: padding;
@@ -10365,13 +10365,14 @@ html {
 
 .wpr-title-wrap {
     overflow: hidden;
+	width: 100% !important;
 }
 
 .wpr-timeline-centered .wpr-timeline-entry .wpr-timeline-entry-inner .wpr-data-wrap .wpr-title {
     margin-bottom: 10px;
     font-weight: bold;
     display: inline-block;
-    width: 100%;
+    /* width: 100%; */
 }
 
 .wpr-timeline-centered .wpr-timeline-entry .wpr-timeline-entry-inner .wpr-data-wrap .wpr-title span {
@@ -10759,7 +10760,7 @@ html {
   .wpr-horizontal-bottom .wpr-title,
   .wpr-horizontal-bottom .wpr-description {
     display: inline-block;
-    width: 100%;
+    /* width: 100%; */
     margin: 0;
     line-height: 1.2em;
   }
@@ -10931,7 +10932,7 @@ html {
     max-width: 100% !important;
     height: auto;
   }
-  .wpr-horizontal .wpr-title,
+
   .wpr-horizontal .wpr-description {
     display: inline-block;
     width: 100%;
