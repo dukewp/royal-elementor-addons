@@ -293,7 +293,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'default' => 'no',
 				'separator' => 'before',
 				'condition' => [
-					'timeline_content' => 'dynamic',
+					'timeline_content' => 'custom',
 					'timeline_layout' => ['centered', 'one-sided', 'one-sided-left']
 				]
 			]
