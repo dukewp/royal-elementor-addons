@@ -10276,13 +10276,6 @@ html {
     right: calc(100%);
     transform: translate(50%);
 }
-
-.wpr-timeline-centered.wpr-both-sided-timeline .wpr-timeline-entry.wpr-left-aligned .wpr-timeline-entry-inner .wpr-data-wrap,
-.wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-entry.wpr-left-aligned .wpr-timeline-entry-inner .wpr-data-wrap {
-    margin-left: 0;
-    margin-right: 63px;
-}
-
 .wpr-timeline-centered .wpr-timeline-entry.wpr-left-aligned .wpr-timeline-entry-inner .wpr-data-wrap:after {
     right: 0;
     margin-left: 0;
@@ -10337,13 +10330,13 @@ html {
     font-size: 22px;
 }
 
+/* year-wrap or data-wrap */
 .wpr-vertical .wpr-timeline-centered .wpr-data-wrap {
     display: flow-root;
 }
 
 .wpr-timeline-centered .wpr-timeline-entry .wpr-timeline-entry-inner .wpr-data-wrap {
     position: relative;
-    margin-left: 63px;
     -webkit-background-clip: padding-box;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -10365,7 +10358,8 @@ html {
     margin-left: -9px;
 }
 
-.wpr-timeline-centered .wpr-timeline-entry .wpr-timeline-entry-inner .wpr-data-wrap p+p {
+/* p+p */
+.wpr-timeline-centered .wpr-timeline-entry .wpr-timeline-entry-inner .wpr-data-wrap  {
     margin-top: 15px;
 }
 
@@ -10436,10 +10430,6 @@ html {
 
 .wpr-timeline-centered.wpr-one-sided-timeline .wpr-timeline-entry .wpr-timeline-entry-inner {
     margin-left: 0;
-}
-
-.wpr-timeline-centered.wpr-one-sided-timeline .wpr-timeline-entry .wpr-timeline-entry-inner .wpr-data-wrap {
-    margin-left: 30%;
 }
 
 .wpr-one-sided-timeline .wpr-timeline-entry .wpr-timeline-entry-inner .wpr-icon {
@@ -10530,6 +10520,11 @@ html {
         left: 11% !important;
     }
 
+	.wpr-centered .wpr-year-label {
+		position: relative;
+		right: 39%;
+	}
+
     .wpr-timeline-centered.wpr-one-sided-timeline .wpr-year-wrap .wpr-year-label {
         position: absolute;
         left: 11%;
@@ -10552,7 +10547,7 @@ html {
     .wpr-timeline-centered .wpr-extra-label {
        display: none !important;
     }
-    .wpr-timeline-centered .wpr-year-wrap {
+    .wpr-timeline-centered .wpr-data-wrap {
         padding-left: 54px;
         text-align: left;
         margin-bottom: 5px;
