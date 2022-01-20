@@ -3090,7 +3090,564 @@ class Wpr_PostsTimeline extends Widget_Base {
 
 		$this->end_controls_tabs();
 
-		$this->end_controls_section();		
+		$this->end_controls_section();
+		
+		$this->start_controls_section(
+			'middle_line_styles_section',
+			[
+				'label' => __( 'Main Line', 'wpr-addons' ),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control( //TODO: change slider control to number
+			'middle_line_width',
+			[
+				'label' => esc_html__( 'Line Width', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 1,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wrapper .wpr-line::before' => 'transform: scaleX({{SIZE}}) !important;',
+					'{{WRAPPER}} .wpr-wrapper .wpr-middle-line' => 'transform: scaleX({{SIZE}}) !important;',
+					'{{WRAPPER}} .wpr-wrapper #wpr-timeline-fill' => 'transform: scaleX({{SIZE}}) !important;',
+					/// add container class for more specificity
+				],
+				'condition' => [
+					'timeline_layout' => ['centered', 'one-sided', 'one-sided-left']
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'line_color',
+			[
+				'label' => __( 'Line Color', 'wpr' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wrapper .wpr-line::before' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wrapper .wpr-middle-line' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wrapper .wpr-timeline-centered .wpr-year' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wrapper:before' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wrapper:after' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-horizontal .wpr-pagination.swiper-pagination-progressbar' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-horizontal-bottom .wpr-pagination.swiper-pagination-progressbar' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-horizontal .wpr-button-prev' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-horizontal .wpr-button-next' => 'color: {{VALUE}}',
+				],
+				'default' => '#D6D6D6',
+			]
+		); //Todo: find out why so many colors together
+
+		$this->add_control(
+			'timeline_fill_color',
+			[
+				'label'  => esc_html__( 'Line Fill Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-timeline-fill' => 'background-color: {{VALUE}} !important;',
+					'{{WRAPPER}} .wpr-change-border-color' => 'background-color: {{VALUE}} !important; border-color: {{VALUE}} !important;',
+					'{{WRAPPER}} .wpr-vertical:before' => 'background-color: {{VALUE}} !important;',
+					'{{WRAPPER}} .wpr-vertical:after' => 'background-color: {{VALUE}} !important;',
+				],
+				'condition' => [
+					'timeline_layout!' => ['horizontal', 'horizontal-bottom']
+				]
+			]
+		);
+
+		//todo: add progressbar height
+		$this->add_responsive_control(
+			'swiper_pagination_progressbar_top',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Progressbar Position', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 1000,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 109,
+				],			
+				'selectors' => [
+					'{{WRAPPER}} .wpr-horizontal .wpr-pagination.swiper-pagination-progressbar' => 'top: auto; bottom: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'timeline_layout' => ['horizontal']
+				],
+			]
+		);
+		
+		$this->add_control(
+			'swiper_progressbar_color',
+			[
+				'label' => __( 'Progressfill Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-horizontal .wpr-pagination.swiper-pagination-progressbar .swiper-pagination-progressbar-fill' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-horizontal-bottom .wpr-pagination.swiper-pagination-progressbar .swiper-pagination-progressbar-fill' => 'background-color: {{VALUE}}',
+				],
+				'condition' => [
+					'timeline_layout' => ['horizontal', 'horizontal-bottom']
+				],
+				'default' => '#605BE5',
+			]
+		);
+		// year label // 
+		/*---- Year Label ----*/
+		
+		$this->add_control(
+			'year_label_section',
+			[
+				'label' => __( 'Main Line Label', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::HEADING,
+				'separator' => 'before',
+				'condition' => [
+					'timeline_content' => ['custom'],
+				]
+			]
+		);
+		
+		$this->add_control(
+			'year_label_color',
+			[
+				'label' => __( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wrapper .wpr-year' => 'color: {{VALUE}}',
+				],
+				'default' => '#fff',
+				'condition' => [
+					'timeline_content' => ['custom'],
+				]
+			]
+		);
+		
+		$this->add_control(
+			'year_label_bgcolor',
+			[
+				'label' => __( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wrapper .wpr-year' => 'background-color: {{VALUE}}', //GOBACK
+				],
+				'default' => '#54595F',
+				'condition' => [
+					'timeline_content' => ['custom'],
+				]
+			]
+		);
+		
+		$this->add_control(
+			'year_label_border_color',
+			[
+				'label' => __( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wrapper .wpr-year' => 'border-color: {{VALUE}}', //GOBACK
+				],
+				'default' => '#54595F',
+				'condition' => [
+					'timeline_content' => ['custom'],
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'year_typography',
+				'label' => __( 'Typography', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}} .wpr-wrapper .wpr-year',
+				'condition' => [
+					'timeline_content' => ['custom'],
+				]
+			]
+		);
+		
+		$this->add_responsive_control(
+			'year-label-padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 10,
+					'right' => 15,
+					'bottom' => 10,
+					'left' => 15,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-year-label' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'year_label_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-year-label' => 'border-style: {{VALUE}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'year_label_border_size',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 10,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 2,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-year-label' => 'border-width: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'year_label_border_type!' => 'none'
+				]
+			]
+		);
+
+		$this->add_control(
+			'year_label_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 3,
+					'right' => 3,
+					'bottom' => 3,
+					'left' => 3,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-year-label' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->end_controls_section();
+		
+		$this->start_controls_section(
+			'icon_styles_section',
+			[
+				'label' => __( 'Main Line Icon', 'wpr-addons' ),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'icon_bgcolor',
+			[
+				'label' => __( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'scheme' => [
+					'type' => \Elementor\Core\Schemes\Color::get_type(),
+					'value' => \Elementor\Core\Schemes\Color::COLOR_1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'background-color: {{VALUE}}',
+				],
+				'default' => '#605BE5',
+			]
+		);
+
+		$this->add_control(
+			'icon_color',
+			[
+				'label' => __( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				// 'scheme' => [
+				// 	'type' => \Elementor\Core\Schemes\Color::get_type(),
+				// 	'value' => \Elementor\Core\Schemes\Color::COLOR_1,
+				// ],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'color: {{VALUE}}; border-color: {{icon_border_color}};',
+				],
+				'condition' => [
+					// 'timeline_content' => ['dynamic']
+				],
+				'default' => '#FFF',
+			]
+		);
+
+		//TODO: override javascript
+		$this->add_control(
+			'icon_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#000',
+				'selectors' => [
+					// '{{WRAPPER}} .wpr-story-info-vertical .wpr-icon' => 'border-color: {{VALUE}}',
+					// '{{WRAPPER}} .wpr-story-info .wpr-icon' => 'border-color: {{VALUE}}',
+					// '{{WRAPPER}} .wpr-horizontal-timeline .wpr-icon' => 'border-color: {{VALUE}}',
+					// '{{WRAPPER}} .wpr-horizontal-bottom-timeline .wpr-icon' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'border-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'icon_bottom_position',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Icon position', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => -500,
+						'max' => 500,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 110,
+				],			
+				'selectors' => [
+					'{{WRAPPER}} .wpr-horizontal .wpr-icon' => 'bottom: {{SIZE}}{{UNIT}} !important;',
+				],
+				'condition' => [
+					'timeline_layout' => ['horizontal']
+				],
+			]
+		);
+
+		// $this->add_responsive_control( // TODO: determine why used top previously
+		// 	'icon_top_position',
+		// 	[
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'label' => esc_html__( 'Icon position', 'wpr-addons' ),
+		// 		'size_units' => [ 'px' ],
+		// 		'range' => [
+		// 			'px' => [
+		// 				'min' => -500,
+		// 				'max' => 500,
+		// 			]
+		// 		],
+		// 		'default' => [
+		// 			'unit' => 'px',
+		// 			'size' => 80,
+		// 		],			
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-horizontal-bottom .wpr-icon' => 'top: {{SIZE}}{{UNIT}} !important;',
+		// 		],
+		// 		'condition' => ['timeline_layout' => ['horizontal-bottom']],
+		// 	]
+		// );
+
+		$this->add_responsive_control(
+			'icon_size',
+			[
+				'label' => __( 'Icon Size', 'wpr' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 10,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'size' => 28,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wrapper .wpr-icon i' => 'font-size: {{SIZE}}{{UNIT}} !important',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'icon_bg_size',
+			[
+				'label' => esc_html__( 'Icon Background Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ '%', 'px' ],
+				'default' => [
+					'unit' => 'px',
+					'size' => 38,
+				],
+				'range' => [
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					],
+					'px' => [
+						'min' => 0,
+						'max' => 200,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wrapper .wpr-icon i' => 'display: block;',
+					'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'height: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}}; display: flex !important; justify-content: center !important; align-items: center !important;',
+
+				],
+				'separator' => 'after',
+			]
+		);
+
+		// $this->add_control( // TODO: needs centering from css	
+		// 	'wpr_icon_margin_left_onesided',
+		// 	[
+		// 		'label' => __( 'Margin Left', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'range' => [
+		// 			'px' => [
+		// 				'min' => 0,
+		// 				'max' => 100,
+		// 			],
+		// 		],
+		// 		'default' => [
+		// 			'unit' => 'px',
+		// 			'size' => 58,
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-icon' => 'margin-left: calc(24%); transform: translate(-50%);', // .wpr-story-info-vertical
+		// 		],
+		// 		'condition' => [
+		// 			'timeline_layout' => ['one-sided'],
+		// 		]
+		// 	]
+		// );
+		
+		$this->add_control(
+			'icon_top',
+			[
+				'label' => __( 'Position Top', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 300,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 113,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'top: {{SIZE}}{{UNIT}}; transform: translate(-50%, -50%);',
+				],
+				'condition' => [
+					'timeline_layout' => ['horizontal-bottom'],
+				]
+			]
+		);
+		
+		// $this->add_control(
+		// 	'wpr_icon_margin_left_horizontal',
+		// 	[
+		// 		'label' => __( 'Position Left', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'range' => [
+		// 			'px' => [
+		// 				'min' => 0,
+		// 				'max' => 500,
+		// 			],
+		// 		],
+		// 		'default' => [
+		// 			'unit' => 'px',
+		// 			'size' => 94,
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'left: {{SIZE}}{{UNIT}}',
+		// 			// '{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'margin-bottom: {{SIZE}}{{UNIT}}', // creates marker shape
+		// 		],
+		// 		'condition' => [
+		// 			'timeline_layout' => ['horizontal', 'horizontal-bottom'],
+		// 		]
+		// 	]
+		// );
+		
+		$this->add_control(
+			'icon_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-icon' => 'border-style: {{VALUE}}',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'icon_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-icon' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+					/// add container class for more specificity
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'icon_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 2,
+					'right' => 2,
+					'bottom' => 2,
+					'left' => 2,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-icon' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+					/// add container class for more specificity
+				],
+				'separator' => 'before',
+			]
+		);
+		
+		$this->end_controls_section();	
 			
 		$this->start_controls_section(
 			'label_styles_section',
@@ -3435,563 +3992,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 			]
 		);
 		
-		$this->end_controls_section();
-		
-		$this->start_controls_section(
-			'icon_styles_section',
-			[
-				'label' => __( 'Main Line Icon', 'wpr-addons' ),
-				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
-			]
-		);
-
-		$this->add_control(
-			'icon_bgcolor',
-			[
-				'label' => __( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => \Elementor\Core\Schemes\Color::get_type(),
-					'value' => \Elementor\Core\Schemes\Color::COLOR_1,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'background-color: {{VALUE}}',
-				],
-				'default' => '#605BE5',
-			]
-		);
-
-		$this->add_control(
-			'icon_color',
-			[
-				'label' => __( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				// 'scheme' => [
-				// 	'type' => \Elementor\Core\Schemes\Color::get_type(),
-				// 	'value' => \Elementor\Core\Schemes\Color::COLOR_1,
-				// ],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'color: {{VALUE}}; border-color: {{icon_border_color}};',
-				],
-				'condition' => [
-					// 'timeline_content' => ['dynamic']
-				],
-				'default' => '#FFF',
-			]
-		);
-
-		//TODO: override javascript
-		$this->add_control(
-			'icon_border_color',
-			[
-				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
-				'selectors' => [
-					// '{{WRAPPER}} .wpr-story-info-vertical .wpr-icon' => 'border-color: {{VALUE}}',
-					// '{{WRAPPER}} .wpr-story-info .wpr-icon' => 'border-color: {{VALUE}}',
-					// '{{WRAPPER}} .wpr-horizontal-timeline .wpr-icon' => 'border-color: {{VALUE}}',
-					// '{{WRAPPER}} .wpr-horizontal-bottom-timeline .wpr-icon' => 'border-color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'border-color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'icon_bottom_position',
-			[
-				'type' => Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Icon position', 'wpr-addons' ),
-				'size_units' => [ 'px' ],
-				'range' => [
-					'px' => [
-						'min' => -500,
-						'max' => 500,
-					]
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 110,
-				],			
-				'selectors' => [
-					'{{WRAPPER}} .wpr-horizontal .wpr-icon' => 'bottom: {{SIZE}}{{UNIT}} !important;',
-				],
-				'condition' => [
-					'timeline_layout' => ['horizontal']
-				],
-			]
-		);
-
-		// $this->add_responsive_control( // TODO: determine why used top previously
-		// 	'icon_top_position',
-		// 	[
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'label' => esc_html__( 'Icon position', 'wpr-addons' ),
-		// 		'size_units' => [ 'px' ],
-		// 		'range' => [
-		// 			'px' => [
-		// 				'min' => -500,
-		// 				'max' => 500,
-		// 			]
-		// 		],
-		// 		'default' => [
-		// 			'unit' => 'px',
-		// 			'size' => 80,
-		// 		],			
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-horizontal-bottom .wpr-icon' => 'top: {{SIZE}}{{UNIT}} !important;',
-		// 		],
-		// 		'condition' => ['timeline_layout' => ['horizontal-bottom']],
-		// 	]
-		// );
-
-		$this->add_responsive_control(
-			'icon_size',
-			[
-				'label' => __( 'Icon Size', 'wpr' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'px' => [
-						'min' => 10,
-						'max' => 100,
-					],
-				],
-				'default' => [
-					'size' => 28,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-wrapper .wpr-icon i' => 'font-size: {{SIZE}}{{UNIT}} !important',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'icon_bg_size',
-			[
-				'label' => esc_html__( 'Icon Background Size', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ '%', 'px' ],
-				'default' => [
-					'unit' => 'px',
-					'size' => 38,
-				],
-				'range' => [
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
-					'px' => [
-						'min' => 0,
-						'max' => 200,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-wrapper .wpr-icon i' => 'display: block;',
-					'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'height: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}}; display: flex !important; justify-content: center !important; align-items: center !important;',
-
-				],
-				'separator' => 'after',
-			]
-		);
-
-		// $this->add_control( // TODO: needs centering from css	
-		// 	'wpr_icon_margin_left_onesided',
-		// 	[
-		// 		'label' => __( 'Margin Left', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'range' => [
-		// 			'px' => [
-		// 				'min' => 0,
-		// 				'max' => 100,
-		// 			],
-		// 		],
-		// 		'default' => [
-		// 			'unit' => 'px',
-		// 			'size' => 58,
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-icon' => 'margin-left: calc(24%); transform: translate(-50%);', // .wpr-story-info-vertical
-		// 		],
-		// 		'condition' => [
-		// 			'timeline_layout' => ['one-sided'],
-		// 		]
-		// 	]
-		// );
-		
-		$this->add_control(
-			'icon_top',
-			[
-				'label' => __( 'Position Top', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 300,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 113,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'top: {{SIZE}}{{UNIT}}; transform: translate(-50%, -50%);',
-				],
-				'condition' => [
-					'timeline_layout' => ['horizontal-bottom'],
-				]
-			]
-		);
-		
-		// $this->add_control(
-		// 	'wpr_icon_margin_left_horizontal',
-		// 	[
-		// 		'label' => __( 'Position Left', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'range' => [
-		// 			'px' => [
-		// 				'min' => 0,
-		// 				'max' => 500,
-		// 			],
-		// 		],
-		// 		'default' => [
-		// 			'unit' => 'px',
-		// 			'size' => 94,
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'left: {{SIZE}}{{UNIT}}',
-		// 			// '{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'margin-bottom: {{SIZE}}{{UNIT}}', // creates marker shape
-		// 		],
-		// 		'condition' => [
-		// 			'timeline_layout' => ['horizontal', 'horizontal-bottom'],
-		// 		]
-		// 	]
-		// );
-		
-		$this->add_control(
-			'icon_border_type',
-			[
-				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'none' => esc_html__( 'None', 'wpr-addons' ),
-					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
-					'double' => esc_html__( 'Double', 'wpr-addons' ),
-					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
-					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
-					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
-				],
-				'default' => 'none',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-icon' => 'border-style: {{VALUE}}',
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'icon_border_radius',
-			[
-				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-icon' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
-					/// add container class for more specificity
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'icon_border_width',
-			[
-				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 2,
-					'right' => 2,
-					'bottom' => 2,
-					'left' => 2,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-icon' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
-					/// add container class for more specificity
-				],
-				'separator' => 'before',
-			]
-		);
-		
-		$this->end_controls_section();
-		
-		$this->start_controls_section(
-			'middle_line_styles_section',
-			[
-				'label' => __( 'Main Line', 'wpr-addons' ),
-				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
-			]
-		);
-
-		$this->add_control( //TODO: change slider control to number
-			'middle_line_width',
-			[
-				'label' => esc_html__( 'Line Width', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 1,
-				'step' => 0.1,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-wrapper .wpr-line::before' => 'transform: scaleX({{SIZE}}) !important;',
-					'{{WRAPPER}} .wpr-wrapper .wpr-middle-line' => 'transform: scaleX({{SIZE}}) !important;',
-					'{{WRAPPER}} .wpr-wrapper #wpr-timeline-fill' => 'transform: scaleX({{SIZE}}) !important;',
-					/// add container class for more specificity
-				],
-				'condition' => [
-					'timeline_layout' => ['centered', 'one-sided', 'one-sided-left']
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'line_color',
-			[
-				'label' => __( 'Line Color', 'wpr' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-wrapper .wpr-line::before' => 'background-color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-wrapper .wpr-middle-line' => 'background-color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-wrapper .wpr-timeline-centered .wpr-year' => 'border-color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-wrapper:before' => 'background-color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-wrapper:after' => 'background-color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-horizontal .wpr-pagination.swiper-pagination-progressbar' => 'background-color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-horizontal-bottom .wpr-pagination.swiper-pagination-progressbar' => 'background-color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-horizontal .wpr-button-prev' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-horizontal .wpr-button-next' => 'color: {{VALUE}}',
-				],
-				'default' => '#D6D6D6',
-			]
-		); //Todo: find out why so many colors together
-
-		$this->add_control(
-			'timeline_fill_color',
-			[
-				'label'  => esc_html__( 'Line Fill Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#605BE5',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-timeline-fill' => 'background-color: {{VALUE}} !important;',
-					'{{WRAPPER}} .wpr-change-border-color' => 'background-color: {{VALUE}} !important; border-color: {{VALUE}} !important;',
-					'{{WRAPPER}} .wpr-vertical:before' => 'background-color: {{VALUE}} !important;',
-					'{{WRAPPER}} .wpr-vertical:after' => 'background-color: {{VALUE}} !important;',
-				],
-				'condition' => [
-					'timeline_layout!' => ['horizontal', 'horizontal-bottom']
-				]
-			]
-		);
-
-		//todo: add progressbar height
-		$this->add_responsive_control(
-			'swiper_pagination_progressbar_top',
-			[
-				'type' => Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Progressbar Position', 'wpr-addons' ),
-				'size_units' => [ 'px' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 1000,
-					]
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 109,
-				],			
-				'selectors' => [
-					'{{WRAPPER}} .wpr-horizontal .wpr-pagination.swiper-pagination-progressbar' => 'top: auto; bottom: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'timeline_layout' => ['horizontal']
-				],
-			]
-		);
-		
-		$this->add_control(
-			'swiper_progressbar_color',
-			[
-				'label' => __( 'Progressfill Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-horizontal .wpr-pagination.swiper-pagination-progressbar .swiper-pagination-progressbar-fill' => 'background-color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-horizontal-bottom .wpr-pagination.swiper-pagination-progressbar .swiper-pagination-progressbar-fill' => 'background-color: {{VALUE}}',
-				],
-				'condition' => [
-					'timeline_layout' => ['horizontal', 'horizontal-bottom']
-				],
-				'default' => '#605BE5',
-			]
-		);
-		// year label // 
-		/*---- Year Label ----*/
-		
-		$this->add_control(
-			'year_label_section',
-			[
-				'label' => __( 'Main Line Label', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::HEADING,
-				'separator' => 'before',
-				'condition' => [
-					'timeline_content' => ['custom'],
-				]
-			]
-		);
-		
-		$this->add_control(
-			'year_label_color',
-			[
-				'label' => __( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-wrapper .wpr-year' => 'color: {{VALUE}}',
-				],
-				'default' => '#fff',
-				'condition' => [
-					'timeline_content' => ['custom'],
-				]
-			]
-		);
-		
-		$this->add_control(
-			'year_label_bgcolor',
-			[
-				'label' => __( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-wrapper .wpr-year' => 'background-color: {{VALUE}}', //GOBACK
-				],
-				'default' => '#54595F',
-				'condition' => [
-					'timeline_content' => ['custom'],
-				]
-			]
-		);
-		
-		$this->add_control(
-			'year_label_border_color',
-			[
-				'label' => __( 'Border Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-wrapper .wpr-year' => 'border-color: {{VALUE}}', //GOBACK
-				],
-				'default' => '#54595F',
-				'condition' => [
-					'timeline_content' => ['custom'],
-				]
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => 'year_typography',
-				'label' => __( 'Typography', 'wpr-addons' ),
-				'selector' => '{{WRAPPER}} .wpr-wrapper .wpr-year',
-				'condition' => [
-					'timeline_content' => ['custom'],
-				]
-			]
-		);
-		
-		$this->add_responsive_control(
-			'year-label-padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 10,
-					'right' => 15,
-					'bottom' => 10,
-					'left' => 15,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-year-label' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'year_label_border_type',
-			[
-				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'none' => esc_html__( 'None', 'wpr-addons' ),
-					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
-					'double' => esc_html__( 'Double', 'wpr-addons' ),
-					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
-					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
-					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
-				],
-				'default' => 'none',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-year-label' => 'border-style: {{VALUE}};',
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_responsive_control(
-			'year_label_border_size',
-			[
-				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 10,
-					],
-				],				
-				'default' => [
-					'unit' => 'px',
-					'size' => 2,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-year-label' => 'border-width: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'year_label_border_type!' => 'none'
-				]
-			]
-		);
-
-		$this->add_control(
-			'year_label_radius',
-			[
-				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 3,
-					'right' => 3,
-					'bottom' => 3,
-					'left' => 3,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-year-label' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before',
-			]
-		);
-
 		$this->end_controls_section();
 		
 		$this->start_controls_section(
