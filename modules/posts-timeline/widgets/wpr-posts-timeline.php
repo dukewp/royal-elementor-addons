@@ -152,11 +152,11 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'type' => \Elementor\Controls_Manager::SELECT,
 				'default' => 'F j, Y',
 				'options'=>[
-					'F j, Y' => esc_html__('January 21, 2022'),
-					'Y-m-d' => esc_html__('2022-02-21'),
-					'Y,M,D' => esc_html__('2022,Jan,Sun'),
-					'm/d/Y' => esc_html__('02/21/2022'),
-					'd/m/Y' => esc_html__('21/02/2022'),
+					'F j, Y' => esc_html__(date('F j, Y')),
+					'Y-m-d' => esc_html__(date('Y-m-d')),
+					'Y,M,D' => esc_html__(date('Y,M,D')),
+					'm/d/Y' => esc_html__(date('m/d/Y')),
+					'd/m/Y' => esc_html__(date('d/m/Y')),
 				],
 			]
 		);
@@ -3093,7 +3093,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'size_units' => [ '%', 'px' ],
 				'default' => [
 					'unit' => 'px',
-					'size' => 100,
+					'size' => 150,
 				],
 				'range' => [
 					'%' => [
@@ -3102,7 +3102,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 					],
 					'px' => [
 						'min' => 0,
-						'max' => 200,
+						'max' => 400,
 					],
 				],
 				'selectors' => [
