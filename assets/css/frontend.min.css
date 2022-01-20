@@ -10734,7 +10734,6 @@ html {
 
 	/* .wpr-horizontal-bottom .wpr-timeline-img, */
 	.wpr-horizontal-bottom .wpr-timeline-img img {
-	  display: inline-block;
 	  max-width: 100% !important;
 	  height: auto;
 	}
