@@ -134,13 +134,13 @@ class Wpr_PostsTimeline extends Widget_Base {
 		$this->add_control(
 			'content_layout',
 			[
-				'label' => __( 'Image Position', 'wpr-addons' ),
+				'label' => __( 'Media Position', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::SELECT,
 				'default' => 'image-top',
 				'options'=>[
 					'image-top' => esc_html__('Top'),
 					'image-bottom' => esc_html__('Bottom'),
-					'background' => esc_html__('Background'),
+					// 'background' => esc_html__('Background'),
 				],
 			]
 		);
@@ -158,6 +158,9 @@ class Wpr_PostsTimeline extends Widget_Base {
 					'm/d/Y' => esc_html__(date('m/d/Y')),
 					'd/m/Y' => esc_html__(date('d/m/Y')),
 				],
+				'condition' => [
+					'timeline_content' => 'dynamic',
+				]
 			]
 		);
 
@@ -4999,8 +5002,6 @@ class Wpr_PostsTimeline extends Widget_Base {
 		}
 	}
 
-	public $background_image = '';
-
     public function add_custom_horizontal_timeline_attributes($content, $settings, $index) {
 
 			$this->timeline_description = $content['repeater_description'];
@@ -5224,7 +5225,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 						<div class="wpr-timeline-entry-inner">';
 						if ( 'yes' === $settings['show_extra_label'] ) {
 							echo '<time class="wpr-extra-label" data-aos="'. $this->animation.'" data-animation-offset="'. $settings['animation_offset'] .'">
-								<span class="wpr-label">'.get_the_date($settings['date_format']).'</span>
+								<span class="wpr-label">'. get_the_date($settings['date_format']) .'</span>
 							</time>';
 						}
 
@@ -5241,7 +5242,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 									echo  'yes' === $settings['show_title'] && 'yes' === $settings['title_overlay'] ? '<a class="wpr-title-cont" href="'. get_the_permalink() .'" target="_blank"><span class="wpr-title">'. get_the_title() .'</span></a>' : '';
 
 									echo 'yes' === $settings['show_date'] && 'yes' === $settings['date_overlay'] ? '<div class="wpr-inner-date-label">
-										'. apply_filters( 'the_date', get_the_date( '' ), get_option( 'date_format' ), '', '' ) .'
+										'. get_the_date($settings['date_format']) .'
 									</div>' : '';
 									
 									echo !empty(get_the_content()) && 'yes' === $settings['show_description'] && 'yes' === $settings['description_overlay'] ? '<div class="wpr-description">'.wp_trim_words(get_the_content(), $settings['excerpt_count']).'</div>' : '';
@@ -5255,7 +5256,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 									echo  'yes' === $settings['show_title'] && 'yes' !== $settings['title_overlay'] ? '<a class="wpr-title-cont" href="'. get_the_permalink() .'" target="_blank"><span class="wpr-title">'. get_the_title() .'</span></a>' : '';
 
 									echo 'yes' === $settings['show_date'] && 'yes' !== $settings['date_overlay'] ? '<div class="wpr-inner-date-label">
-										'. apply_filters( 'the_date', get_the_date( '' ), get_option( 'date_format' ), '', '' ) .'
+										'. get_the_date($settings['date_format']) .'
 									</div>' : '';
 
 									echo !empty(get_the_content()) && 'yes' === $settings['show_description']  && 'yes' !== $settings['description_overlay'] ? '<div class="wpr-description">'.wp_trim_words(get_the_content(), $settings['excerpt_count']).'</div>' : '';
@@ -5465,7 +5466,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 							echo !empty(get_the_content()) && 'yes' === $settings['show_description'] && 'yes' === $settings['description_overlay'] ? '<div class="wpr-description">'.wp_trim_words(get_the_content(), $settings['excerpt_count']).'</div>' : '';
 	
 							echo 'yes' === $settings['show_date'] && 'yes' === $settings['date_overlay'] ? '<div class="wpr-inner-date-label">
-							'. apply_filters( 'the_date', get_the_date( '' ), get_option( 'date_format' ), '', '' ) .'
+							'. get_the_date($settings['date_format']) .'
 							</div>' : '';
 							
 							echo 'yes' === $this->show_readmore && 'yes' === $settings['readmore_overlay'] ? '<div class="wpr-read-more-container"><a class="wpr-read-more-button" href="'. get_the_permalink() .'">'. $settings['read_more_text'] .'</a></div>' : '';
@@ -5478,7 +5479,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 						echo !empty(get_the_content()) && 'yes' === $settings['show_description'] && 'yes' !== $settings['description_overlay'] ? '<div class="wpr-description">'.wp_trim_words(get_the_content(), $settings['excerpt_count']).'</div>' : '';
 	
 						echo 'yes' === $settings['show_date'] && 'yes' !== $settings['date_overlay'] ? '<div class="wpr-inner-date-label">
-						'. apply_filters( 'the_date', get_the_date( '' ), get_option( 'date_format' ), '', '' ) .'
+						'. get_the_date($settings['date_format']) .'
 						</div>' : '';
 	
 						echo 'yes' === $this->show_readmore && 'yes' !== $settings['readmore_overlay'] ? '<div class="wpr-read-more-container"><a class="wpr-read-more-button" href="'. get_the_permalink() .'">'. $settings['read_more_text'] .'</a></div>' : '';
@@ -5489,7 +5490,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 						if ( 'yes' === $settings['show_extra_label'] ) {	
 							echo '<div class="wpr-extra-label">
 								<span class="wpr-label">
-								'. apply_filters( 'the_date', get_the_date( '' ), get_option( 'date_format' ), '', '' ) .'
+								'. get_the_date($settings['date_format']) .'
 								</span>
 							</div>';
 						}
