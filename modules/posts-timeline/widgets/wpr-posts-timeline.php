@@ -2285,7 +2285,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-entry.wpr-left-aligned .wpr-timeline-entry-inner .wpr-data-wrap' => 'margin-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-timeline-entry.wpr-right-aligned .wpr-timeline-entry-inner .wpr-data-wrap' => 'margin-left: calc(27% + {{SIZE}}{{UNIT}});',
-					'{{WRAPPER}} .wpr-centered .wpr-left-aligned .wpr-timeline-entry-inner .wpr-data-wrap' => 'margin-right: {{SIZE}}{{UNIT}}; margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-centered .wpr-left-aligned .wpr-timeline-entry-inner .wpr-data-wrap' => 'margin-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-centered .wpr-right-aligned .wpr-timeline-entry-inner .wpr-data-wrap' => 'margin-left: {{SIZE}}{{UNIT}};',
 				],
 			]
