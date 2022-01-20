@@ -1196,12 +1196,51 @@ class Wpr_PostsTimeline extends Widget_Base {
 					],
 				],
                 'selectors' => [
+					'{{WRAPPER}} .wpr-left-aligned .wpr-extra-label .wpr-label' => 'text-align: {{VALUE}};', //display: block;
+					'{{WRAPPER}} .wpr-left-aligned .wpr-extra-label .wpr-sub-label' => 'text-align: {{VALUE}};', //display: block;
+					'{{WRAPPER}} .swiper-wrapper .wpr-extra-label .wpr-label' => 'text-align: {{VALUE}};', //display: block;
+					'{{WRAPPER}} .swiper-wrapper .wpr-extra-label .wpr-sub-label' => 'text-align: {{VALUE}};', //display: block;
+				],
+				'condition' => [
+					// 'timeline_content' => 'custom',
+					'show_extra_label' => 'yes',
+					'timeline_layout' => ['centered', 'one-sided-left', 'horizontal', 'horizontal_bottom']
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'label_alignment_left',
+			[
+				'label' => esc_html__( 'Extra Label Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'label_block' => false,
+				'default' => 'center',
+				'options' => [
+					'left' => [
+						'title' => esc_html__( 'Start', 'wpr-addons' ),
+						// 'icon' => 'eicon-h-align-left',
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						// 'icon' => 'eicon-h-align-center',
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'End', 'wpr-addons' ),
+						// 'icon' => 'eicon-h-align-right',
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+                'selectors' => [
 					'{{WRAPPER}} .wpr-extra-label .wpr-label' => 'text-align: {{VALUE}};', //display: block;
 					'{{WRAPPER}} .wpr-extra-label .wpr-sub-label' => 'text-align: {{VALUE}};', //display: block;
 				],
 				'condition' => [
 					// 'timeline_content' => 'custom',
-					'show_extra_label' => 'yes'
+					'show_extra_label' => 'yes',
+					'timeline_layout' => ['centered', 'one-sided']
 				]
 			]
 		);
@@ -1496,6 +1535,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 				],
 				'condition' => [
 					'show_readmore' => 'yes',
+					'timeline_content' => ['dynamic'],
 					'timeline_layout!' => 'one-sided',
 				]
 			]
@@ -1528,6 +1568,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 				],
 				'condition' => [
 					'show_readmore' => 'yes',
+					'timeline_content' => ['dynamic'],
 					'timeline_layout' => ['centered', 'one-sided']
 				]
 			]
