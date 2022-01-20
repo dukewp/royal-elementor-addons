@@ -291,6 +291,9 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'label_off' => __( 'Hide', 'wpr-addpns' ),
 				'return_value' => 'yes',
 				'default' => 'no',
+				'condition' => [
+					'timeline_layout' => ['centered', 'one-sided', 'one-sided-left']
+				]
 			]
 		);
 				
@@ -1474,7 +1477,7 @@ class Wpr_PostsTimeline extends Widget_Base {
 		$this->add_control(
 			'readmore_overlay',
 			[
-				'label' => esc_html__( 'Read More Over', 'wpr-addons' ),
+				'label' => esc_html__( 'Read More Over Image', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default' => 'no',
@@ -5401,11 +5404,11 @@ class Wpr_PostsTimeline extends Widget_Base {
 							echo '</div>';
 						echo '</div>';
 							
-						if ( $settings['repeater_show_year_label'] == 'yes' ) {
-							echo '<span class="wpr-year-container">
-							<span class="wpr-year-label wpr-year">'.$content['repeater_year'].'</span>
-							</span>';
-						}
+						// if ( $settings['repeater_show_year_label'] == 'yes' ) {
+						// 	echo '<span class="wpr-year-container">
+						// 	<span class="wpr-year-label wpr-year">'.$content['repeater_year'].'</span>
+						// 	</span>';
+						// }
 					}
 				} 
 				
