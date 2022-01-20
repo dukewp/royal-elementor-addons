@@ -1181,15 +1181,18 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'options' => [
 					'left' => [
 						'title' => esc_html__( 'Start', 'wpr-addons' ),
-						'icon' => 'eicon-h-align-left',
+						// 'icon' => 'eicon-h-align-left',
+						'icon' => 'eicon-text-align-left',
 					],
 					'center' => [
 						'title' => esc_html__( 'Center', 'wpr-addons' ),
-						'icon' => 'eicon-h-align-center',
+						// 'icon' => 'eicon-h-align-center',
+						'icon' => 'eicon-text-align-center',
 					],
 					'right' => [
 						'title' => esc_html__( 'End', 'wpr-addons' ),
-						'icon' => 'eicon-h-align-right',
+						// 'icon' => 'eicon-h-align-right',
+						'icon' => 'eicon-text-align-right',
 					],
 				],
                 'selectors' => [
