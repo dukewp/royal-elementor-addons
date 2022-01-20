@@ -291,7 +291,9 @@ class Wpr_PostsTimeline extends Widget_Base {
 				'label_off' => __( 'Hide', 'wpr-addpns' ),
 				'return_value' => 'yes',
 				'default' => 'no',
+				'separator' => 'before',
 				'condition' => [
+					'timeline_content' => 'dynamic',
 					'timeline_layout' => ['centered', 'one-sided', 'one-sided-left']
 				]
 			]
