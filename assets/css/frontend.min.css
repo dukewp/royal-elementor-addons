@@ -10392,8 +10392,8 @@ html {
 	  float: left;
 	  clear: left;
 	  width: 50%;
-	  margin-top: 20px;
-	  margin-bottom: 20px;
+	  margin-top: 20px!important;
+	  margin-bottom: 20px!important;
 	  top: 1px;
 	  width: 100%;
 	  margin-left: auto;
@@ -10402,26 +10402,21 @@ html {
 	  text-align: center
   }
   
-  .wpr-timeline-centered .wpr-year-container:after {
-	  clear: both
+  .wpr-timeline-centered.wpr-one-sided-timeline .wpr-year-container .wpr-year-label {
+	  position: absolute;
+	  left: 24%;
+	  transform: translate(-50%, -50%);
   }
   
-  /* .wpr-right-aligned .wpr-data-container:after {
-	  right: 100%;
-  } */
+  .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-year-container .wpr-year-label {
+		position: absolute;
+		left: 85%;
+		transform: translate(-50%, -50%);
+  }
   
   .wpr-both-sided-timeline .wpr-left-aligned .wpr-data-container:after,
   .wpr-one-sided-timeline-left .wpr-left-aligned .wpr-data-container:after {
 	  left: 100%;
-  }
-  
-  .wpr-timeline-centered.wpr-one-sided-timeline .wpr-year-container {
-	  text-align: right;
-	  padding-right: 73%;
-  }
-  
-  .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-year-container {
-	  padding-left: 70%;
   }
   
   .wpr-timeline-centered.wpr-one-sided-timeline .wpr-timeline-entry {
@@ -10524,6 +10519,19 @@ html {
 	  .wpr-one-sided-timeline .wpr-icon {
 		  left: 11% !important;
 	  }
+  
+	  .wpr-timeline-centered.wpr-one-sided-timeline .wpr-year-container .wpr-year-label {
+		  position: absolute;
+		  left: 11%;
+		  transform: translate(-50%, -50%);
+	  }
+  
+	  .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-year-container .wpr-year-label {
+			position: absolute;
+			left: 88.6%;
+			transform: translate(-50%, -50%);
+	  }
+
 	  .wpr-timeline-centered.wpr-one-sided-timeline .wpr-timeline-entry .wpr-timeline-entry-inner .wpr-data-container {
 		  margin-left: 24%;
 	  }

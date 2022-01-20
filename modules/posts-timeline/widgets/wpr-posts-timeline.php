@@ -4139,10 +4139,15 @@ class Wpr_PostsTimeline extends Widget_Base {
 			[
 				'label' => __( 'Triangle Position Top', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ '%', 'px' ],
 				'range' => [
 					'%' => [
 						'min' => 0,
 						'max' => 100,
+					],
+					'px' => [
+						'min' => 0,
+						'max' => 1000,
 					],
 				],
 				'default' => [
