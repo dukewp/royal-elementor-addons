@@ -17,7 +17,7 @@ class Module extends Module_Base {
 
 	public function get_widgets() {
 		return [
-			'Wpr_PostsTimeline', // This should match the widget/element class.
+			'Wpr_Posts_Timeline', // This should match the widget/element class.
 		];
 	}
 	

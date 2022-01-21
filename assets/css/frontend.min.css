@@ -10637,8 +10637,14 @@ html {
     max-width: 100% !important;
     height: auto;
   }
-  .wpr-horizontal-bottom .wpr-title,
+  /* .wpr-horizontal-bottom .wpr-title, */
   .wpr-horizontal-bottom .wpr-description {
+    display: inline-block;
+    width: 100%;
+    margin: 0;
+    line-height: 1.2em;
+  }
+  .wpr-horizontal-bottom .wpr-title {
     display: inline-block;
     /* width: 100%; */
     margin: 0;
