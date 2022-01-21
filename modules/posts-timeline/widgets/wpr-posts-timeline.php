@@ -84,6 +84,25 @@ class Wpr_Posts_Timeline extends Widget_Base {
 	   ];
 	}
 
+	public function add_control_slides_to_show() {
+		$this->add_control(
+			'slides_to_show',
+			[
+				'label' => __( 'Slides To Show', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::NUMBER,
+				'default' => '3',
+				'max' => '4',
+				'separator' => 'before',
+				'condition'   => [
+					'timeline_layout'   => [
+					   'horizontal',
+					   'horizontal-bottom'
+					],
+				]
+			]
+		);
+	}
+
 	public function add_control_show_pagination() {}
 
 	protected function _register_controls() {
@@ -280,21 +299,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		// 	]
 		// );
 				
-		$this->add_control(
-			'slides_to_show',
-			[
-				'label' => __( 'Slides To Show', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::NUMBER,
-				'default' => '3',
-				'separator' => 'before',
-				'condition'   => [
-					'timeline_layout'   => [
-					   'horizontal',
-					   'horizontal-bottom'
-					],
-				]
-			]
-		);
+		$this->add_control_slides_to_show();
 				
 		$this->add_control(
 			'story_info_gutter',
@@ -315,7 +320,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			'slides_height',
 			[
 				'label' => esc_html__( 'Equal Height Slides', 'wpr-addons' ),
-				'description' => __('Make all slides the same height based on the tallest slide','wpr-addons'),
+				'description' => __('Make all slides the same height based on the tallest.','wpr-addons'),
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'auto-height',
 				'default' => 'no',
@@ -5298,8 +5303,11 @@ class Wpr_Posts_Timeline extends Widget_Base {
 	} // end rendern_dynamic_vertical_timeline
 
 	public function render_custom_horizontal_timeline( $settings, $autoplay, $dir, $data, $slidesHeight, $swiper_speed, $swiper_delay ) {
-		$sidesToShow = isset($settings['slides_to_show'])
-		&& !empty($settings['slides_to_show']) ? $settings['slides_to_show'] : 2;
+		$sidesToShow = isset($settings['slides_to_show']) && !empty($settings['slides_to_show']) ? $settings['slides_to_show'] : 2;
+
+		if ( ! wpr_fs()->can_use_premium_code() && $sidesToShow > 4 ) {
+			$sidesToShow = 4;
+		}
 
 		if ( $settings['timeline_layout'] == 'horizontal' ) {
 			$horizontal_class = 'wpr-horizontal-wrapper';
@@ -5381,9 +5389,13 @@ class Wpr_Posts_Timeline extends Widget_Base {
 	
 	public function render_dynamic_horizontal_timeline ( $settings, $my_query, $dir, $autoplay, $slidesHeight, $swiper_speed, $swiper_delay ) {
 		wp_reset_postdata();
-		$sidesToShow = isset($settings['slides_to_show'])
-		&& !empty($settings['slides_to_show']) ? $settings['slides_to_show'] : 2;
-	
+
+		$sidesToShow = isset($settings['slides_to_show']) && !empty($settings['slides_to_show']) ? $settings['slides_to_show'] : 2;
+
+		if ( ! wpr_fs()->can_use_premium_code() && $sidesToShow > 4 ) {
+			$sidesToShow = 4;
+		}
+		
 		if ( $settings['timeline_layout'] == 'horizontal' ) {
 			$horizontal_class = 'wpr-horizontal-wrapper';
 		} else if ( $settings['timeline_layout'] == 'horizontal-bottom' ) {
