@@ -52,40 +52,36 @@ class Wpr_Posts_Timeline extends Widget_Base {
     }
 
 	public function wpr_aos_amination_array(){
-
-		$animations = [
-			"none" =>"None",
-			  "fade" =>"Fade",
-			  "fade-up" =>"Fade Up",
-			  "fade-down" =>"Fade Down",
-			  "fade-left" =>"Fade Left",
-			  "fade-right" =>"Fade Right",
-			  "fade-up-right" =>"Fade Up Right",
-			  "fade-up-left" =>"Fade Up Left",
-			  "fade-down-right" =>"Fade Down Right",
-			  "fade-down-left" =>"Fade Down Left",
-			  "flip-up" =>"Flip Up",
-			  "flip-down" =>"Flip Down",
-			  "flip-right" =>"Flip right",
-			  "flip-left" =>"Flip Left",
-			  "slide-up" =>"Slide Up",
-			  "slide-left" =>"Slide Left",
-			  "slide-right" =>"Slide Right",
-			  "slide-down" =>"Slide Down",
-			  "zoom-in" =>"Zoom In",
-			  "zoom-out" =>"Zoom Out",
-			  "zoom-in-up" =>"Zoom In Up",
-			  "zoom-in-down" =>"Zoom In Down",
-			  "zoom-in-left" =>"Zoom In Left",
-			  "zoom-in-right" =>"Zoom In Right",
-			  "zoom-out-up" =>"Zoom Out Up",
-			  "zoom-out-down" =>"Zoom Out Down",
-			  "zoom-out-left" =>"Zoom Out Left",
-			  "zoom-out-right" =>"Zoom Out Right"
+		return [
+			'none' => 'None',
+			'fade' => 'Fade',
+			'pro-fu' => 'Fade Up (pro)',
+			'pro-fd' => 'Fade Down (pro)',
+			'pro-fl' => 'Fade Left (pro)',
+			'pro-fr' => 'Fade Right (pro)',
+			'pro-fur' => 'Fade Up Right (pro)',
+			'pro-ful' => 'Fade Up Left (pro)',
+			'pro-fdr' => 'Fade Down Right (pro)',
+			'pro-fdl' => 'Fade Down Left (pro)',
+			'pro-flu' => 'Flip Up (pro)',
+			'pro-fld' => 'Flip Down (pro)',
+			'pro-flr' => 'Flip right (pro)',
+			'pro-fll' => 'Flip Left (pro)',
+			'pro-slu' => 'Slide Up (pro)',
+			'pro-sll' => 'Slide Left (pro)',
+			'pro-slr' => 'Slide Right (pro)',
+			'pro-sld' => 'Slide Down (pro)',
+			'pro-zmi' => 'Zoom In (pro)',
+			'pro-zmo' => 'Zoom Out (pro)',
+			'pro-zmiu' => 'Zoom In Up (pro)',
+			'pro-zmid' => 'Zoom In Down (pro)',
+			'pro-zmil' => 'Zoom In Left (pro)',
+			'pro-zmir' => 'Zoom In Right (pro)',
+			'pro-zmou' => 'Zoom Out Up (pro)',
+			'pro-zmod' => 'Zoom Out Down (pro)',
+			'pro-zmol' => 'Zoom Out Left (pro)',
+			'pro-zmor' => 'Zoom Out Right (pro)',
 	   ];
-	
-		return $animations;
-	
 	}
 
 	protected function _register_controls() {
