@@ -529,6 +529,13 @@ class Wpr_Image_Hotspots extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'image-hotspots', [
+			'Add Unlimited Hotspots',
+			'Show Tooltips on Click or Hover',
+			'Advanced Tooltip Positioning',
+		] );
+		
 		// Section: Hotspots ---------
 		$this->start_controls_section(
 			'section_style_hotspots',

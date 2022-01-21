@@ -1518,6 +1518,23 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'magazine-grid', [
+			'Random Posts Query',
+			'+6 Magazine Grid Layouts',
+			'Magazine Grid Slider',
+			'Magazine Grid Slider Autoplay options',
+			'Magazine Grid Slider Advanced Navigation Positioning',
+			'Magazine Grid Slider Advanced Pagination Positioning',
+			'Advanced Post Likes',
+			'Advanced Post Sharing',
+			'Custom Fields Support',
+			'Unlimited Grid Elements Positioning',
+			'Unlimited Image Overlay Animations',
+			'Image overlay GIF upload option',
+			'Title, Category, Read More Advanced Link Hover Animations',
+		] );
+		
 		// Styles ====================
 		// Section: Grid Media -------
 		$this->start_controls_section(

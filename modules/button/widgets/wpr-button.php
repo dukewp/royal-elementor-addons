@@ -399,6 +399,13 @@ class Wpr_Button extends Widget_Base {
 		// Section: Tooltip ---------
 		$this->add_section_tooltip();
 
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'button', [
+			'Advanced Button Styles',
+			'Advanced Hover Animations - Change Text on Hover',
+			'Advanced Tooltip options',
+		] );
+
 		// Styles
 		// Section: Button -----------
 		$this->start_controls_section(

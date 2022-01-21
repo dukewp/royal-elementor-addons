@@ -2639,6 +2639,32 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'woo-grid', [
+			'Grid Columns 1,2,3,4,5,6',
+			'Masonry Layout',
+			'Products Slider Columns (Carousel) 1,2,3,4,5,6',
+			'Current Page Query, Random Products Query',
+			'Infinite Scrolling Pagination',
+			'Products Slider Autoplay options',
+			'Products Slider Advanced Navigation Positioning',
+			'Products Slider Advanced Pagination Positioning',
+			'Advanced Products Likes',
+			'Advanced Products Sharing',
+			'Advanced Grid Loading Animations (Fade in & Slide Up)',
+			'Unlimited Grid Elements Positioning',
+			'Unlimited Image Overlay Animations',
+			'Image overlay GIF upload option',
+			'Image Overlay Blend Mode',
+			'Image Effects: Zoom, Grayscale, Blur',
+			'Lightbox Thumbnail Gallery, Lightbox Image Sharing Button',
+			'Grid Category Filter Deeplinking',
+			'Grid Category Filter Icons select',
+			'Grid Category Filter Count',
+			'Grid Item Even/Odd Background Color',
+			'Title, Category, Read More Advanced Link Hover Animation',
+		] );
+		
 		// Styles ====================
 		// Section: Grid Item --------
 		$this->start_controls_section(

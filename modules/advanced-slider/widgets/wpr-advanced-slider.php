@@ -1022,7 +1022,19 @@ class Wpr_Advanced_Slider extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
-
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'advanced-slider', [
+			'Add Unlimited Slides',
+			'Elementor Templates Slider option',
+			'Scroll to Section Button',
+			'Ken Burn Effect',
+			'Columns (Carousel) 1,2,3,4,5,6',
+			'Unlimited Slides to Scroll option',
+			'Slider/Carousel Autoplay options',
+			'Advanced Navigation Positioning',
+			'Advanced Pagination Positioning',
+		] );
+		
 		// Styles
 		// Section: Slider Content ---
 		$this->start_controls_section(

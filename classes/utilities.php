@@ -672,6 +672,40 @@ class Utilities {
 	}
 
 	/**
+	** Pro Features List Section
+	*/
+	public static function pro_features_list_section( $module, $controls_manager, $widget, $features ) {
+		if ( wpr_fs()->can_use_premium_code() ) {
+			return;
+		}
+
+		$module->start_controls_section(
+			'pro_features_section',
+			[
+				'label' => 'Pro Features <span class="dashicons dashicons-star-filled"></span>',
+			]
+		);
+
+		$list_html = '';
+
+		for ($i=0; $i < count($features); $i++) { 
+			$list_html .= '<li>'. $features[$i] .'</li>';
+		}
+
+		$module->add_control(
+			'pro_features_list',
+			[
+				'type' => $controls_manager,
+				'raw' => '<ul>'. $list_html .'</ul>
+						  <a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-pro-sec-'. $widget .'-upgrade-pro#purchasepro" target="_blank">Get Pro version</a>',
+				'content_classes' => 'wpr-pro-features-list',
+			]
+		);
+
+		$module->end_controls_section();
+	}
+
+	/**
 	** Get User IP
 	*/
 	public static function get_user_ip() {
