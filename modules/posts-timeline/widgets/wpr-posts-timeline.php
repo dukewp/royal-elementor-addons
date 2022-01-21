@@ -103,6 +103,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		);
 	}
 
+	public function add_control_group_autoplay() {}
+
 	public function add_control_show_pagination() {}
 
 	protected function _register_controls() {
@@ -352,39 +354,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'swiper_autoplay',
-			[
-				'label' => esc_html__( 'Autoplay', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'default' => 'yes',
-				'label_block' => false,
-				'condition' => [
-					'timeline_layout'   => [
-						'horizontal-bottom',
-						'horizontal'
-					],
-				],
-				'render_type' => 'template',
-			]
-		);
-				
-		$this->add_control(
-			'swiper_delay',
-			[
-				'label' => esc_html__( 'Autoplay Delay', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'min' => 0,
-				'max' => 5000,
-				'frontend_available' => true,
-				'default' => 500,
-				'condition' => [
-					'swiper_autoplay' => 'yes',
-					'timeline_layout' => ['horizontal', 'horizontal-bottom']
-				]
-			]
-		);
+		$this->add_control_group_autoplay();
 				
 		$this->add_control(
 			'swiper_speed',
@@ -5490,9 +5460,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$this->timeline_fill = $settings['timeline_fill'];
 		$this->show_readmore = !empty($settings['show_readmore']) ? $settings['show_readmore'] : '';
 		$data = $settings['timeline_repeater_list'];
-		$autoplay = $settings['swiper_autoplay'];
+		$autoplay = ! wpr_fs()->can_use_premium_code() ? '' : $settings['swiper_autoplay'];
+		$swiper_delay = ! wpr_fs()->can_use_premium_code() ? 0 : $settings['swiper_delay'];
 		$swiper_speed = $settings['swiper_speed'];
-		$swiper_delay = $settings['swiper_delay'];
 		$slidesHeight = $settings['slides_height'];
 		$this->pagination_type = !empty($settings['pagination_type']) ? $settings['pagination_type'] : '';
 		$this->pagination_max_pages = !empty($this->get_max_num_pages( $settings )) ? $this->get_max_num_pages( $settings ) : '';
