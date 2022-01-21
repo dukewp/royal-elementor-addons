@@ -10479,6 +10479,12 @@ html {
     align-items: flex-end;
 }
 
+/* .wpr-horizontal-timeline .swiper-slide-line-bottom.auto-height {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+} */
+
 .wpr-horizontal-timeline .wpr-story-info {
     width: 98%;
 }
