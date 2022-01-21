@@ -334,7 +334,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		);
 
 		$this->add_control(
-			'slides_height',
+			'equal_slides_height_top_line',
 			[
 				'label' => esc_html__( 'Equal Height Slides', 'wpr-addons' ),
 				'description' => __('Make all slides the same height based on the tallest.','wpr-addons'),
@@ -352,7 +352,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		);
 
 		$this->add_control(
-			'slides_height_bottom_line',
+			'equal_slides_height_bottom_line',
 			[
 				'label' => esc_html__( 'Equal Height Slides', 'wpr-addons' ),
 				'description' => __('Make all slides the same height','wpr-addons'),
@@ -2089,7 +2089,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => esc_html__( 'Container Height', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				// 'size_units' => [ '%', 'px' ],
+				'size_units' => [ '%', 'px' ],
 				'default' => [
 					'unit' => 'px',
 					'size' => 450,
@@ -2099,10 +2099,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						'min' => 0,
 						'max' => 2000,
 					],
-					// '%' => [
-					// 	'min' => 0,
-					// 	'max' => 100,
-					// ],
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					],
 				],
 				'selectors' => [ 
 
@@ -2111,7 +2111,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 				'condition' => [
 					'timeline_layout' => ['horizontal'],
-					'slides_height_bottom_line' => 'yes',
+					'equal_slides_height_bottom_line' => 'yes',
 				],
 			]
 		);
@@ -2121,20 +2121,20 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => esc_html__( 'Container Height', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				// 'size_units' => [ '%', 'px' ],
+				'size_units' => [ '%', 'px' ],
 				'default' => [
-					'unit' => 'px',
-					'size' => 450,
+					'unit' => '%',
+					'size' => 100,
 				],
 				'range' => [
 					'px' => [
 						'min' => 0,
 						'max' => 2000,
 					],
-					// '%' => [
-					// 	'min' => 0,
-					// 	'max' => 100,
-					// ],
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					],
 				],
 				'selectors' => [
 					// '{{WRAPPER}} .wpr-horizontal-wrapper' => 'height: calc(100% + {{timeline_item_position.SIZE}}) !important;',
@@ -2149,7 +2149,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 				'condition' => [
 					'timeline_layout' => ['horizontal'],
-					'slides_height_bottom_line!' => 'yes',
+					'equal_slides_height_bottom_line!' => 'yes',
 				],
 			]
 		);
@@ -2210,7 +2210,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 				'condition' => [
 					'timeline_layout' => ['horizontal'], // horizontal-bottom
-					// 'slides_height' => ['auto-height']
+					// 'equal_slides_height_top_line' => ['auto-height']
 				],
 			]
 		);
@@ -2237,7 +2237,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 				'condition' => [
 					'timeline_layout' => ['horizontal'],
-					'slides_height_bottom_line!' => 'yes',
+					'equal_slides_height_bottom_line!' => 'yes',
 				],
 			]
 		);
@@ -2263,7 +2263,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 				'condition' => [
 					'timeline_layout' => ['horizontal'],
-					'slides_height_bottom_line' => 'yes',
+					'equal_slides_height_bottom_line' => 'yes',
 				],
 			]
 		);
@@ -5483,7 +5483,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$autoplay = ! wpr_fs()->can_use_premium_code() ? '' : $settings['swiper_autoplay'];
 		$swiper_delay = ! wpr_fs()->can_use_premium_code() ? 0 : $settings['swiper_delay'];
 		$swiper_speed = $settings['swiper_speed'];
-		$slidesHeight = $settings['slides_height'];
+		$slidesHeight = $settings['equal_slides_height_top_line'];
 		$this->pagination_type = !empty($settings['pagination_type']) ? $settings['pagination_type'] : '';
 		$this->pagination_max_pages = !empty($this->get_max_num_pages( $settings )) ? $this->get_max_num_pages( $settings ) : '';
 		$this->bullet_border_color = $settings['icon_border_color'];
