@@ -84,6 +84,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 	   ];
 	}
 
+	public function add_control_show_pagination() {}
+
 	protected function _register_controls() {
 
 		$this->start_controls_section(
@@ -488,21 +490,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'show_pagination',
-			[
-				'label' => esc_html__( 'Show Pagination', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'label_block' => false,
-				'render_type' => 'template',
-				'condition' => [
-					'timeline_layout!' => ['horizontal', 'horizontal-bottom'],
-					'timeline_content' => 'dynamic'
-				],
-				'separator' => 'before'
-			]
-		);
+		$this->add_control_show_pagination();
 		
 		$this->end_controls_section();
 
@@ -5083,7 +5071,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
         }
 	}
 	
-	public function wpr_render_swiper_pagination($settings) {
+	public function wpr_render_swiper_navigation($settings) {
 		echo '</div>
 			<!-- Add Pagination -->        
 			<div class="wpr-pagination"></div>
@@ -5096,6 +5084,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			</div>
 		</div>';
 	}
+
+	public function render_pagination($settings, $paged) {}
 
 	// Get Animation Class
 	public function get_animation_class( $data, $object ) {
@@ -5302,74 +5292,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			echo'</div>';  
 			echo '</div>';
 
-			if ( 'yes' === $settings['show_pagination'] ) {
-
-			echo '<div>';
-			echo '<div class="wpr-grid-pagination wpr-pagination-load-more">';
-
-			echo '<div class="wpr-pagination-loading">';
-				switch ( $settings['pagination_animation'] ) {
-					case 'loader-1':
-						echo '<div class="wpr-double-bounce">';
-							echo '<div class="wpr-child wpr-double-bounce1"></div>';
-							echo '<div class="wpr-child wpr-double-bounce2"></div>';
-						echo '</div>';
-						break;
-					case 'loader-2':
-						echo '<div class="wpr-wave">';
-							echo '<div class="wpr-rect wpr-rect1"></div>';
-							echo '<div class="wpr-rect wpr-rect2"></div>';
-							echo '<div class="wpr-rect wpr-rect3"></div>';
-							echo '<div class="wpr-rect wpr-rect4"></div>';
-							echo '<div class="wpr-rect wpr-rect5"></div>';
-						echo '</div>';
-						break;
-					case 'loader-3':
-						echo '<div class="wpr-spinner wpr-spinner-pulse"></div>';
-						break;
-					case 'loader-4':
-						echo '<div class="wpr-chasing-dots">';
-							echo '<div class="wpr-child wpr-dot1"></div>';
-							echo '<div class="wpr-child wpr-dot2"></div>';
-						echo '</div>';
-						break;
-					case 'loader-5':
-						echo '<div class="wpr-three-bounce">';
-							echo '<div class="wpr-child wpr-bounce1"></div>';
-							echo '<div class="wpr-child wpr-bounce2"></div>';
-							echo '<div class="wpr-child wpr-bounce3"></div>';
-						echo '</div>';
-						break;
-					case 'loader-6':
-						echo '<div class="wpr-fading-circle">';
-							echo '<div class="wpr-circle wpr-circle1"></div>';
-							echo '<div class="wpr-circle wpr-circle2"></div>';
-							echo '<div class="wpr-circle wpr-circle3"></div>';
-							echo '<div class="wpr-circle wpr-circle4"></div>';
-							echo '<div class="wpr-circle wpr-circle5"></div>';
-							echo '<div class="wpr-circle wpr-circle6"></div>';
-							echo '<div class="wpr-circle wpr-circle7"></div>';
-							echo '<div class="wpr-circle wpr-circle8"></div>';
-							echo '<div class="wpr-circle wpr-circle9"></div>';
-							echo '<div class="wpr-circle wpr-circle10"></div>';
-							echo '<div class="wpr-circle wpr-circle11"></div>';
-							echo '<div class="wpr-circle wpr-circle12"></div>';
-						echo '</div>';
-						break;
-					
-					default:
-						break;
-				}
-			echo '</div>';
-
-			echo '<p class="wpr-pagination-finish">'. $settings['pagination_finish_text'] .'</p>';
-				echo '<a href="'. get_pagenum_link( $paged + 1, true ) .'" class="wpr-load-more-btn button">';
-				echo $settings['pagination_load_more_text'];
-				echo '</a>';
-			echo '</div>';
-			echo '</div>';
-
-			}
+			// Pagination
+			$this->render_pagination($settings, $paged);
 		}
 	} // end rendern_dynamic_vertical_timeline
 
@@ -5452,7 +5376,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					}
 				} 
 				
-				$this->wpr_render_swiper_pagination($settings);
+				$this->wpr_render_swiper_navigation($settings);
 	}
 	
 	public function render_dynamic_horizontal_timeline ( $settings, $my_query, $dir, $autoplay, $slidesHeight, $swiper_speed, $swiper_delay ) {
@@ -5532,7 +5456,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					echo '</div>';
 				}
 	
-				$this->wpr_render_swiper_pagination($settings);
+				$this->wpr_render_swiper_navigation($settings);
 			}
 	
 			
