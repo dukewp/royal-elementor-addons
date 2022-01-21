@@ -1919,6 +1919,16 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		
 		$this->end_controls_section();
 		
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'posts-timeline', [
+			'Add Unlimited Custom Timeline Items',
+			'Unlimited Slides to Show option',
+			'Carousel Autoplay and Autoplay Speed options',
+			'Unlimited Posts Per Page option',
+			'Advanced Pagination - Load More Button or Infinite Scroll options',
+			'Advanced Entrance Animation Options',
+		] );
+
 		$this->start_controls_section(
 			'content_styles_section',
 			[
