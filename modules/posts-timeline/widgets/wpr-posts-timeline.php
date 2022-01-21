@@ -529,60 +529,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'label' => __( 'Content', 'wpr-addons' ),
 			]
 		);
-
-		$repeater->add_control(
-			'repeater_story_title',
-			[
-				'label' => __( 'Item Title', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => 'Timeline Story',
-				'label_block' => true,
-			]
-		);
-
-		// $repeater->add_control(
-		// 	'repeater_title_link',
-		// 	[
-		// 		'label' => esc_html__( 'Title URL', 'wpr-addons' ), // bottom issue
-		// 		'type' => Controls_Manager::URL,
-		// 		'default' => '#',
-		// 	]
-		// );
-
-		$repeater->add_control(
-			'repeater_title_link',
-			[
-				'label' => esc_html__( 'Title URL', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::URL,
-				'placeholder' => esc_html__( 'https://your-link.com', 'wpr-addons' ),
-				'default' => [
-					'url' => '',
-					'is_external' => true,
-					'nofollow' => true,
-					'custom_attributes' => '',
-				],
-			]
-		);
-
-		$repeater->add_control(
-			'repeater_date_label',
-			[
-				'label' => __( 'Primary Label', 'wpr-addons' ),
-				'label_block' => true,
-				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => '01 Jan 2020',
-			]
-		);
-
-		$repeater->add_control(
-			'repeater_extra_label',
-			[
-				'label' => __( 'Secondary Label', 'wpr-addons' ),
-				'label_block' => true,
-				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => 'Secondaty Label',
-			]
-		);
 		
 		$repeater->add_control(
 			'repeater_show_year_label',
@@ -593,7 +539,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'label_off' => __( 'Hide', 'wpr-addpns' ),
 				'return_value' => 'yes',
 				'default' => 'no',
-				'separator' => 'before'
 				// 'condition' => [
 				// 	'timeline_content' => 'custom',
 				// 	'timeline_layout' => ['centered', 'one-sided', 'one-sided-left']
@@ -623,6 +568,70 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'default' => [
 					'value' => 'fab fa-apple',
 					'library' => 'solid',
+				],
+			]
+		);
+
+		$repeater->add_control(
+			'more_options',
+			[
+				'label' => esc_html__( 'Extra Label', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+		
+		$repeater->add_control(
+			'repeater_date_label',
+			[
+				'label' => __( 'Primary Label', 'wpr-addons' ),
+				'label_block' => true,
+				'type' => \Elementor\Controls_Manager::TEXT,
+				'default' => '01 Jan 2020',
+			]
+		);
+
+		$repeater->add_control(
+			'repeater_extra_label',
+			[
+				'label' => __( 'Secondary Label', 'wpr-addons' ),
+				'label_block' => true,
+				'type' => \Elementor\Controls_Manager::TEXT,
+				'default' => 'Secondaty Label',
+			]
+		);
+
+		$repeater->add_control(
+			'repeater_story_title',
+			[
+				'label' => __( 'Item Title', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::TEXT,
+				'default' => 'Timeline Story',
+				'label_block' => true,
+				'separator' => 'before'
+			]
+		);
+
+		// $repeater->add_control(
+		// 	'repeater_title_link',
+		// 	[
+		// 		'label' => esc_html__( 'Title URL', 'wpr-addons' ), // bottom issue
+		// 		'type' => Controls_Manager::URL,
+		// 		'default' => '#',
+		// 	]
+		// );
+
+		$repeater->add_control(
+			'repeater_title_link',
+			[
+				'label' => esc_html__( 'Item Title URL', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::URL,
+				'placeholder' => esc_html__( 'https://your-link.com', 'wpr-addons' ),
+				'default' => [
+					'url' => '',
+					'is_external' => true,
+					'nofollow' => true,
+					'custom_attributes' => '',
 				],
 			]
 		);
@@ -689,7 +698,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'type' => \Elementor\Controls_Manager::ICONS,
 				'skin' => 'inline',
 				'label_block' => false,
-				'separator' => 'before',
 				'default' => [
 					'value' => 'far fa-address-book',
 					'library' => 'solid',
