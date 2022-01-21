@@ -31,6 +31,7 @@
 				'wpr-content-toggle.default' : WprElements.widgetContentToogle,
 				'wpr-back-to-top.default': WprElements.widgetBackToTop,
 				'wpr-lottie-animations.default': WprElements.widgetLottieAnimations,
+				'wpr-posts-timeline.default' : WprElements.widgetPostsTimeline,
 				'global': WprElements.widgetSection,
 			};
 			
@@ -76,82 +77,104 @@
 				parallaxMultiLayer();
 			}
 
-			if( $scope.hasClass('wpr-sticky-section-yes') ) {
-				var positionType = !WprElements.editorCheck() ? $scope.attr('data-wpr-position-type') : $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-position-type'),
-				positionLocation = !WprElements.editorCheck() ? $scope.attr('data-wpr-position-location') : $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-position-location'),
-				viewportWidth = $('body').prop('clientWidth') + 17,
-				availableDevices = !WprElements.editorCheck() ? $scope.attr('data-wpr-sticky-devices') : $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-sticky-devices'),
-				activeDevices = !WprElements.editorCheck() ? $scope.attr('data-wpr-active-breakpoints') : $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-active-breakpoints'),
-				stickySectionExists = $scope.hasClass('wpr-sticky-section-yes') || $scope.find('.wpr-sticky-section-yes-editor') ? true : false,
-				positionStyle, adminBarHeight, adminBarOffset, location = +$scope.css('top').slice(0, -2);
+			if ( $scope.hasClass('wpr-sticky-section-yes') ) {
+						
+			    var positionType = !WprElements.editorCheck() ? $scope.attr('data-wpr-position-type') : $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-position-type'),
+				    positionLocation = !WprElements.editorCheck() ? $scope.attr('data-wpr-position-location') : $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-position-location'),
+				    positionOffset = !WprElements.editorCheck() ? $scope.attr('data-wpr-position-offset') : $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-position-offset'),
+				    viewportWidth = $('body').prop('clientWidth') + 17,
+				    availableDevices = !WprElements.editorCheck() ? $scope.attr('data-wpr-sticky-devices') : $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-sticky-devices'),
+				    activeDevices = !WprElements.editorCheck() ? $scope.attr('data-wpr-active-breakpoints') : $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-active-breakpoints'),
+				    stickySectionExists = $scope.hasClass('wpr-sticky-section-yes') || $scope.find('.wpr-sticky-section-yes-editor') ? true : false,
+				    positionStyle, adminBarHeight, location = +$scope.css('top').slice(0, -2),
+				    stickyHeaderFooter = $scope.closest('div[data-elementor-type="wp-post"]').length ? $scope.closest('div[data-elementor-type="wp-post"]') : '',
+					headerFooterZIndex = !WprElements.editorCheck() ? $scope.attr('data-wpr-z-index') : $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-z-index');
 
-				if ( 0 == availableDevices.length ) {
-					positionType = 'static';
-				}
+			    if ( $scope.closest('div[data-elementor-type="wp-post"]').length && !$scope.find('.wpr-sticky-section-yes-editor').length) {
+			        positionType = $scope.attr('data-wpr-position-type');
+			        positionLocation = $scope.attr('data-wpr-position-location');
+			        positionOffset = $scope.attr('data-wpr-position-offset');
+			        availableDevices = $scope.attr('data-wpr-sticky-devices');
+			        activeDevices = $scope.attr('data-wpr-active-breakpoints');
+					headerFooterZIndex = $scope.attr('data-wpr-z-index');
+			    }
 
-				if( WprElements.editorCheck() && availableDevices ) {
-					var attributes = $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-sticky-devices');
-					$scope.attr('data-wpr-sticky-devices', attributes);
-					availableDevices = $scope.attr('data-wpr-sticky-devices');
-				}
+			    if ( 0 == availableDevices.length ) {
+			        positionType = 'static';
+			    }
 
-				changePositionType();
-				changeAdminBarOffset();
+			    if( WprElements.editorCheck() && availableDevices ) {
+			        var attributes = $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-sticky-devices');
+			        $scope.attr('data-wpr-sticky-devices', attributes);
+			        availableDevices = $scope.attr('data-wpr-sticky-devices');
+			    }
 
-				$(window).resize(function() { 
-					viewportWidth = $('body').prop('clientWidth') + 17,
-					changePositionType();
-				});
-				
-				if (!stickySectionExists) {
-					positionStyle = 'static';
-				}
+			    changePositionType();
+			    changeAdminBarOffset();
 
-				function changePositionType() {
-					if ( !$scope.hasClass('wpr-sticky-section-yes') || !$scope.find('.wpr-sticky-section-yes-editor') ) {
-						positionStyle = 'static';
-						return;
-					}
+			    $(window).resize(function() { 
+			        viewportWidth = $('body').prop('clientWidth') + 17,
+			        changePositionType();
+			    });
+			    
+			    if (!stickySectionExists) {
+			        positionStyle = 'static';
+			    }
 
-					var checkDevices = [['mobile_sticky', 768], ['mobile_extra_sticky', 881], ['tablet_sticky', 1025], ['tablet_extra_sticky', 1201], ['laptop_sticky', 1216],  ['desktop_sticky', 2400], ['widescreen_sticky', 4000]];
-					var emptyVariables = [];
+			    function changePositionType() {
+			        if ( !$scope.hasClass('wpr-sticky-section-yes') || !$scope.find('.wpr-sticky-section-yes-editor') ) {
+			            positionStyle = 'static';
+			            return;
+			        }
 
-					var checkedDevices = checkDevices.filter((item, index) => {
-						return activeDevices.indexOf(item[0]) != -1;
-					}).reverse();
-					
-					checkedDevices.forEach((device, index) => {
-						if ( (device[1] > viewportWidth) && availableDevices.indexOf(device[0]) === -1 ) {
-							positionStyle = activeDevices?.indexOf(device[0]) !== -1 ? 'static' : (emptyVariables[index - 1] ? emptyVariables[index - 1] : positionType);
-							emptyVariables[index] = positionStyle;
-						} else if ( ( device[1] > viewportWidth) && availableDevices.indexOf(device[0]) !== -1 ) {
-							positionStyle = positionType;
-						}
-					});
-					
-					applyPosition();
-				}
+			        var checkDevices = [['mobile_sticky', 768], ['mobile_extra_sticky', 881], ['tablet_sticky', 1025], ['tablet_extra_sticky', 1201], ['laptop_sticky', 1216],  ['desktop_sticky', 2400], ['widescreen_sticky', 4000]];
+			        var emptyVariables = [];
 
-				function applyPosition() {
-					var bottom = +window.innerHeight - (+$scope.css('top').slice(0, -2) + $scope.height());
-					var top = +window.innerHeight - (+$scope.css('bottom').slice(0, -2) + $scope.height());
-					if ( 'top'  ===  positionLocation ) {
-						$scope.css({'position': positionStyle });
-					}
-					else {
-						$scope.css({'position': positionStyle });
-					}
-				}
+			        var checkedDevices = checkDevices.filter((item, index) => {
+			            return activeDevices.indexOf(item[0]) != -1;
+			        }).reverse();
+			        
+			        checkedDevices.forEach((device, index) => {
+			            if ( (device[1] > viewportWidth) && availableDevices.indexOf(device[0]) === -1 ) {
+			                positionStyle = activeDevices?.indexOf(device[0]) !== -1 ? 'static' : (emptyVariables[index - 1] ? emptyVariables[index - 1] : positionType);
+			                emptyVariables[index] = positionStyle;
+			            } else if ( ( device[1] > viewportWidth) && availableDevices.indexOf(device[0]) !== -1 ) {
+			                positionStyle = positionType;
+			            }
+			        });
+			        
+			        applyPosition();
+			    }
+			    
+			    function applyPosition() {
+			        var bottom = +window.innerHeight - (+$scope.css('top').slice(0, -2) + $scope.height());
+			        var top = +window.innerHeight - (+$scope.css('bottom').slice(0, -2) + $scope.height());
+			        if ( 'top'  ===  positionLocation ) {
+			            $scope.css({'position': positionStyle });
+			            if ( '' !== stickyHeaderFooter ) {
+			                // stickyHeaderFooter = stickyHeaderFooter.find('.wpr-sticky-section-yes');
+			                stickyHeaderFooter.css({'position': positionStyle, 'top': positionOffset + 'px', 'bottom': 'auto', 'z-index': headerFooterZIndex });
+			            }
+			        }
+			        else {
+			            $scope.css({'position': positionStyle });
+			            if ( '' !== stickyHeaderFooter ) {
+			                stickyHeaderFooter = stickyHeaderFooter.find('.wpr-sticky-section-yes');
+			                stickyHeaderFooter.css({'position': positionStyle, 'bottom': positionOffset + 'px', 'top': 'auto', 'z-index': headerFooterZIndex }); 
+			            }
+			        }
+			    }
 
-				function changeAdminBarOffset() {	
-					if($('#wpadminbar').length) {
-						adminBarHeight = $('#wpadminbar').css('height').slice(0, $('#wpadminbar').css('height').length - 2);
-						if ( 'top'  ===  positionLocation && ( 'fixed' == $scope.css('position')  || 'sticky' == $scope.css('position') ) ) {
-							$scope.css('top', +adminBarHeight + location + 'px');
-							$scope.css('bottom', 'auto');
-						} 
-					}
-				}
+			    function changeAdminBarOffset() {	
+			        if($('#wpadminbar').length) {
+			            adminBarHeight = $('#wpadminbar').css('height').slice(0, $('#wpadminbar').css('height').length - 2);
+			            if ( 'top'  ===  positionLocation && ( 'fixed' == $scope.css('position')  || 'sticky' == $scope.css('position') ) ) {
+			                $scope.css('top', +adminBarHeight + location + 'px');
+			                $scope.css('bottom', 'auto');
+			            } 
+			        }
+			    }
+
 			}
 
 			function particlesEffect() {
@@ -413,11 +436,11 @@
 
 			// Full Width Dropdown
 			function fullWidthMobileDropdown() {
-				if ( ! $scope.hasClass( 'wpr-mobile-menu-full-width' ) || ! $scope.closest('.elementor-column-wrap').length ) {
+				if ( ! $scope.hasClass( 'wpr-mobile-menu-full-width' ) || ! $scope.closest('.elementor-column').length ) {
 					return;
 				}
 
-				var eColumn   = $scope.closest('.elementor-column-wrap'),
+				var eColumn   = $scope.closest('.elementor-column'),
 					mWidth 	  = $scope.closest('.elementor-top-section').outerWidth() - 2 * mobileMenu.offset().left,
 					mPosition = eColumn.offset().left + parseInt(eColumn.css('padding-left'), 10);
 
@@ -3495,19 +3518,344 @@
 			}
 
 		}, // End of Back to Top
-
-		widgetLottieAnimations: function($scope) {
-			var lottieAnimations = $scope.find('.wpr-lottie-animations');
+        
+        widgetLottieAnimations: function($scope) {
+			var lottieAnimations = $scope.find('.wpr-lottie-animations'),
+				lottieAnimationsWrap = $scope.find('.wpr-lottie-animations-wrapper'),
+				lottieJSON = JSON.parse(lottieAnimations.attr('data-settings'));
 
 			var animation = lottie.loadAnimation({
 			  container: lottieAnimations[0], // Required
 			  path: lottieAnimations.attr('data-json-url'), // Required
-			  renderer: 'svg', // Required
-			  loop: true, // Optional
-			  autoplay: true, // Optional
-			})
+			  renderer: lottieJSON.lottie_renderer, // Required
+			  loop: 'yes' === lottieJSON.loop ? true : false, // Optional
+			  autoplay: 'yes' === lottieJSON.autoplay ? true : false
+			});
 
+			animation.setSpeed(lottieJSON.speed);
+
+			if( lottieJSON.reverse ) {
+				animation.setDirection(-1);
+			} 
+
+			animation.addEventListener('DOMLoaded', function () {
+				
+				if ( 'hover' !== lottieJSON.trigger && 'none' !== lottieJSON.trigger ) {
+				
+				// if ( 'viewport' === lottieJSON.trigger ) {
+					initLottie('load');
+					$(window).on('scroll', initLottie);
+				}
+				
+                if ( 'hover' === lottieJSON.trigger ) {
+                    animation.pause();
+                    lottieAnimations.hover(function () {
+                        animation.play();
+                    }, function () {
+                        animation.pause();
+                    });
+                }
+
+				function initLottie(event) {
+					animation.pause();
+
+					if (typeof lottieAnimations[0].getBoundingClientRect === "function") {
+											
+						var height = document.documentElement.clientHeight;
+						var scrollTop = (lottieAnimations[0].getBoundingClientRect().top)/height * 100;
+						var scrollBottom = (lottieAnimations[0].getBoundingClientRect().bottom)/height * 100;
+						var scrollEnd = scrollTop < lottieJSON.scroll_end;
+						var scrollStart = scrollBottom > lottieJSON.scroll_start;
+
+						if ( 'viewport' === lottieJSON.trigger ) {
+							scrollStart && scrollEnd ? animation.play() : animation.pause();
+						}
+						
+						if ( 'scroll' === lottieJSON.trigger ) {
+							if( scrollStart && scrollEnd) {
+								animation.pause();
+								
+								// $(window).scroll(function() {
+									// calculate the percentage the user has scrolled down the page
+									var scrollPercent = 100 * $(window).scrollTop() / ($(document).height() - $(window).height());
+								 
+									var scrollPercentRounded = Math.round(scrollPercent);
+							
+									animation.goToAndStop( (scrollPercentRounded / 100) * 4000); // why 4000
+								// });
+							}
+						};
+					}
+				}
+			});
 		}, // End of Lottie Animations
+
+		widgetPostsTimeline: function($scope) { // goback
+			var iGrid = $scope.find( '.wpr-timeline-centered' ),
+				pagination = $scope.find( '.wpr-grid-pagination' ),
+				threshold = 'load-more' === iGrid.attr('data-pagination') ? false : 10,
+				middleLine = $scope.find('.wpr-middle-line'),
+				timelineFill = $scope.find("#wpr-timeline-fill"),
+				lastIcon = $scope.find('.wpr-icon-border-color.wpr-icon:last'),
+				firstIcon = $scope.find('.wpr-icon-border-color.wpr-icon').first(),
+				element = $scope.find('.wpr-timeline-centered'),
+				timelineItem = $scope.find('.wpr-story-info-vertical'),
+				scopeClass = '.elementor-element-'+ $scope.attr( 'data-id' ),
+				aosOffset = +$scope.find('.wpr-story-info-vertical').attr('data-animation-offset'),
+				aosDuration = +$scope.find('.wpr-story-info-vertical').attr('data-animation-duration'),
+				aosOnce = $scope.find('.wpr-story-info-vertical').attr('data-animation-once') == 'yes' ? true : false;
+
+
+			if ( !$scope.find('.wpr-horizontal').length && !$scope.find('.wpr-horizontal-bottom').length ) {
+				adjustMiddleLineHeight(middleLine, timelineFill, lastIcon, firstIcon, element);
+			}
+  
+			$(window).resize(function() {
+				adjustMiddleLineHeight(middleLine, timelineFill, lastIcon, firstIcon, element);
+			});
+
+			$(window).smartresize(function() {
+				adjustMiddleLineHeight(middleLine, timelineFill, lastIcon, firstIcon, element);
+			});
+
+			$(window).resize(function() {
+				if ( $scope.find('.wpr-both-sided-timeline').length ) {
+					if ( $(window).width() < 767 ) {
+						$scope.find('.wpr-both-sided-timeline .wpr-left-aligned').removeClass('wpr-left-aligned').addClass('wpr-right-aligned').addClass('wpr-remove-right-aligned-later');
+					} else {
+						$scope.find('.wpr-both-sided-timeline .wpr-remove-right-aligned-later').removeClass('wpr-right-aligned').addClass('wpr-left-aligned').removeClass('wpr-remove-right-aligned-later');
+					}
+				}
+			});
+  
+
+			if ( 'load-more' !== iGrid.attr('data-pagination') ) {
+				$scope.find('.wpr-grid-pagination').css('visibility', 'hidden');
+			}
+			
+			//-------------------------------------//
+			// init Infinite Scroll
+			if ( !$scope.find('.elementor-repeater-items').length && !WprElements.editorCheck() && 'load-more' === $scope.find('.wpr-timeline-centered').data('pagination') ) {
+				// var navClass = scopeClass +' .wpr-load-more-btn';
+				
+				iGrid.infiniteScroll({
+					path: scopeClass + ' .wpr-grid-pagination a',
+					hideNav: false,
+					append:  '.wpr-timeline-entry',
+					history: false,
+					scrollThreshold: threshold,
+					status: scopeClass + ' .page-load-status',
+					onInit: function() {
+					this.on( 'load', function() {
+					});
+				}
+			});
+
+			}
+
+			// Request
+			iGrid.on( 'request.infiniteScroll', function( event, path ) {
+				$scope.find( '.wpr-load-more-btn' ).hide();
+				$scope.find( '.wpr-pagination-loading' ).css( 'display', 'inline-block' );
+			});
+			
+			var pagesLoaded = 0;
+
+			iGrid.on( 'load.infiniteScroll', function( event, response ) {
+				pagesLoaded++;
+				
+				// get posts from response
+				var items = $( response ).find( '.wpr-timeline-entry' );
+				iGrid.infiniteScroll( 'appendItems', items );
+
+				if ( !$scope.find('.wpr-one-sided-timeline').length && !$scope.find('.wpr-one-sided-timeline-left').length ) {
+					$scope.find('.wpr-timeline-entry').each(function(index, value){
+						$(this).removeClass('wpr-right-aligned wpr-left-aligned');
+						if ( 0 == index % 2 ) {
+							$(this).addClass('wpr-left-aligned');
+							$(this).find('.wpr-story-info-vertical').attr('data-aos', $(this).find('.wpr-story-info-vertical').attr('data-aos-left'));
+						} else {
+							$(this).addClass('wpr-right-aligned');
+							$(this).find('.wpr-story-info-vertical').attr('data-aos', $(this).find('.wpr-story-info-vertical').attr('data-aos-right'));
+						}
+					});
+
+					AOS.init({
+						offset: parseInt(aosOffset),
+						duration: aosDuration,
+						once: aosOnce,
+					});
+				}
+
+				$(window).scroll();
+
+				$scope.find( '.wpr-pagination-loading' ).hide();
+				// $scope.find( '.wpr-load-more-btn' ).fadeIn();
+				if ( iGrid.data('max-pages') - 1 !== pagesLoaded ) { // $pagination_max_pages
+					if ( 'load-more' === iGrid.attr('data-pagination') ) {
+						$scope.find( '.wpr-load-more-btn' ).fadeIn();
+					}
+				} else {
+					$scope.find( '.wpr-pagination-finish' ).fadeIn( 1000 );
+					pagination.delay( 2000 ).fadeOut( 1000 );
+				}
+
+				middleLine = $scope.find('.wpr-middle-line');
+				timelineFill = $scope.find("#wpr-timeline-fill");
+				lastIcon = $scope.find('.wpr-icon-border-color.wpr-icon:last');
+				firstIcon = $scope.find('.wpr-icon-border-color.wpr-icon').first();
+				element = $scope.find('.wpr-timeline-centered');
+
+				adjustMiddleLineHeight(middleLine, timelineFill, lastIcon, firstIcon, element);
+				postsTimelineFill(lastIcon, firstIcon);
+			});
+
+			if ( !WprElements.editorCheck() ) {
+				$scope.find( '.wpr-load-more-btn' ).on( 'click', function() {
+					iGrid.infiniteScroll( 'loadNextPage' );
+					return false;
+				});
+
+				if ( 'infinite-scroll' == iGrid.attr('data-pagination') ) {
+
+					iGrid.infiniteScroll({
+						path: scopeClass + ' .wpr-grid-pagination a',
+						hideNav: false,
+						append:  '.wpr-timeline-entry',
+						history: false,
+						scrollThreshold: threshold,
+						status: scopeClass + ' .page-load-status',
+						});
+
+						iGrid.infiniteScroll('loadNextPage');
+				}
+			}
+
+			if ( 'one-sided' === $scope.find('.wpr-timeline-fill').data('layout') ) {
+				$('.wpr-timeline-fill').css('left', '24%');
+			}
+			
+			AOS.init({
+				offset: parseInt(aosOffset),
+				duration: aosDuration,
+				once: aosOnce,
+			});
+
+			window.onscroll = function() {
+				postsTimelineFill(lastIcon, firstIcon)
+			};
+			
+			var horizontal = $scope.find('.wpr-horizontal-bottom').length ? '.wpr-horizontal-bottom' : '.wpr-horizontal';
+			var swiperSlider = $scope.find(horizontal +".swiper-container");
+                        
+			var slidestoshow = swiperSlider.data("slidestoshow");
+
+			var swiperLoader = function swiperLoader(swiperElement, swiperConfig) {
+				if ('undefined' === typeof Swiper) {     
+					var asyncSwiper = elementorFrontend.utils.swiper;     
+					return new asyncSwiper(swiperElement, swiperConfig).then( function (newSwiperInstance) {     
+						return newSwiperInstance;
+					});  
+				 } else {     
+					  return swiperPromise(swiperElement, swiperConfig);  
+				  }
+			};  
+			
+			var swiperPromise = function swiperPromise(swiperElement, swiperConfig) {    
+				return new Promise(function (resolve, reject) {  
+						var swiperInstance = new Swiper(swiperElement, swiperConfig);     
+						resolve(swiperInstance);   
+				}); 
+			};
+
+			if ( $scope.find('.swiper-wrapper').length ) {
+				swiperLoader(swiperSlider, {
+					spaceBetween: +swiperSlider.data('swiper-space-between'),
+					autoplay: swiperSlider.data("autoplay") === 'yes' ? true : false,
+					delay: +swiperSlider.attr('data-swiper-delay'),
+					speed: +swiperSlider.attr('data-swiper-speed'),
+					slidesPerView: swiperSlider.data("slidestoshow"),
+					direction: 'horizontal',
+					pagination: {
+					  el: '.wpr-pagination',
+					  type: 'progressbar',
+					},
+					navigation: {
+					  nextEl: '.wpr-button-next',
+					  prevEl: '.wpr-button-prev',
+					},
+					// Responsive breakpoints
+					breakpoints: {
+					  // when window width is >= 320px
+					  320: {
+						slidesPerView: 1,
+					  },
+					  // when window width is >= 480px
+					  480: {
+						slidesPerView: 2,
+					  },
+					  // when window width is >= 640px
+					  740: { // 640
+						slidesPerView: slidestoshow,
+					  
+					  }
+					},
+				  
+				  });
+	
+			  if ( $scope.find('.swiper-slide.auto-height .wpr-story-info').length ) {
+				$scope.find('.swiper-slide.auto-height .wpr-story-info').css('height', 'calc(100% - '+ $scope.find('.swiper-slide.auto-height .wpr-story-info').css('marginTop') +')');
+			  }
+
+			}
+
+		  function postsTimelineFill(lastIcon, firstIcon) {
+
+			AOS.init();
+
+			if ( $scope.find('.wpr-year-label').length > 0 ) {
+				firstIcon = $scope.find('.wpr-year-label').eq(0);
+			}
+
+			  if( timelineFill.length ) {
+
+				var fillHeight = timelineFill.css('height').slice(0, -2),
+					docScrollTop = document.documentElement.scrollTop,
+					clientHeight = document.documentElement.clientHeight/2;
+				  
+				if ( !((docScrollTop + clientHeight - (firstIcon.offset().top)) > lastIcon.offset().top - firstIcon.offset().top + parseInt(lastIcon.css('height').slice(0, -2))) ) {
+					timelineFill.css('height', (docScrollTop  + clientHeight - (firstIcon.offset().top)) + 'px');
+				}
+				  $('.wpr-icon-border-color.wpr-icon').each(function() {
+
+					if ( $(this).offset().top < parseInt( firstIcon.offset().top + parseInt(fillHeight) ) ) { ///  + firstIcon.offset().top
+
+						$(this).css('transition', 'all 0.6s ease');
+						$(this).addClass('wpr-change-border-color');
+						
+					} else {
+						$(this).removeClass('wpr-change-border-color');
+					}
+				});
+			  }
+		  }
+
+		  function adjustMiddleLineHeight(middleLine, timelineFill, lastIcon, firstIcon, element) {
+			  	element = $scope.find('.wpr-timeline-centered')
+				if ( !$scope.find('.wpr-both-sided-timeline').length && !$scope.find('.wpr-one-sided-timeline').length && !$scope.find('.wpr-one-sided-timeline-left').length ) {
+					return;
+				}
+
+				if ( $scope.find('.wpr-year-label').length > 0 ) {
+					firstIcon = $scope.find('.wpr-year-label').eq(0);
+				}
+
+				middleLine.css('height', (lastIcon.offset().top - (lastIcon.css('height').slice(0, -2)/2 + (firstIcon.offset().top - firstIcon.css('height').slice(0, -2)/2))) + 'px');
+				middleLine.css('maxHeight', firstIcon.offset().top - lastIcon.offset().top + 'px !important');
+				middleLine.css('top', (firstIcon.offset().top - element.offset().top) + 'px');
+				timelineFill.css('top', (firstIcon.offset().top - element.offset().top) + 'px');
+		  }
+		}, // end widgetPostsTimeline
 
 		// Editor Check
 		editorCheck: function() {

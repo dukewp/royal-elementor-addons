@@ -404,7 +404,7 @@ class Advanced_Text extends Widget_Base {
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'advanced-text', [
 			'Clipped Text Effect',
-			'Examples - <a href="https://royal-elementor-addons.com/elementor-advanced-text-widget/#clipped1?ref=rea-plugin-panel-pro-sec-advanced-text">Clipped effects</a>',
+			'Examples - <a href="https://royal-elementor-addons.com/elementor-advanced-text-widget/?ref=rea-plugin-panel-pro-sec-advanced-text#clipped1" target="_blank">Clipped effects</a>',
 		] );
 
 		// // Widget Extra Buttons ---------

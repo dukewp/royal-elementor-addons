@@ -7,6 +7,7 @@
 
 		sectionIndex: null,
 		contentID: 0,
+		logoURL: white_label.logo_url,
 
 		init: function() {
 			window.elementor.on( 'preview:loaded', WprLibraryTmpls.previewLoaded );
@@ -15,7 +16,7 @@
 		previewLoaded: function() {
 			var previewIframe = window.elementor.$previewContents,
 				addNewSection = previewIframe.find( '.elementor-add-new-section' ),
-				libraryButton = '<div id="wpr-library-btn" class="elementor-add-section-area-button" style="background:url('+ window.elementor.config.home_url +'/wp-content/plugins/royal-elementor-addons/assets/img/logo-40x40.png) no-repeat;"></div>';
+				libraryButton = '<div id="wpr-library-btn" class="elementor-add-section-area-button" style="background:url('+ WprLibraryTmpls.logoURL +') no-repeat center center / contain;"></div>';
 
 			// Add Library Button
             var elementorAddSection = $("#tmpl-elementor-add-section"),
@@ -98,7 +99,7 @@
 					<div class="wpr-tplib-popup-overlay">\
 						<div class="wpr-tplib-popup">\
 							<div class="wpr-tplib-header elementor-clearfix">\
-								<div class="wpr-tplib-logo"><span class="wpr-library-icon" style="background:url('+ window.elementor.config.home_url +'/wp-content/plugins/royal-elementor-addons/assets/img/logo-40x40.png) no-repeat;">RE</span>Library</div>\
+								<div class="wpr-tplib-logo"><span class="wpr-library-icon" style="background:url('+ WprLibraryTmpls.logoURL +') no-repeat center center / contain;">RE</span>Library</div>\
 								<div class="wpr-tplib-back" data-tab="">\
 									<i class="eicon-chevron-left"></i> <span>Back to Library</span>\
 								</div>\
@@ -290,8 +291,8 @@
 						var href = window.location.href,
 							adminUrl = href.substring(0, href.indexOf('/wp-admin')+9);
 
-						window.open(adminUrl +'/admin.php?page=wpr-addons-pricing', '_blank');
-						// window.open('https://royal-elementor-addons.com/?ref=rea-plugin-library-'+ module +'-upgrade-pro#purchasepro', '_blank');
+						// window.open(adminUrl +'/admin.php?page=wpr-addons-pricing', '_blank');
+						window.open('https://royal-elementor-addons.com/?ref=rea-plugin-library-'+ module +'-upgrade-pro#purchasepro', '_blank');
 						return;
 					}
 
@@ -444,5 +445,20 @@
 	};
 
 	$( window ).on( 'elementor:init', WprLibraryTmpls.init );
+
+    $(window).on('elementor:init', function () {
+        
+        elementor.settings.page.addChangeCallback( 'wpr_enable_rpb', function ( newValue ) {
+            if('yes' == newValue ) {
+                let wrpbHtml = '<div class="wpr-progress-container"><div class="wpr-progress-bar" id="wpr-mybar"></div></div></div>';
+                $( elementorFrontend.elements.$body ).append( wrpbHtml );
+            } else {
+                if ( $( elementorFrontend.elements.$body ).find( '.wpr-progress-container' ).length ) {
+                    $( elementorFrontend.elements.$body ).find( '.wpr-progress-container' ).remove();
+                }
+            }
+            // elementor.reloadPreview();
+        });
+    });
 
 }( jQuery ) );

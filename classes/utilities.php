@@ -53,7 +53,7 @@ class Utilities {
 			'Site Logo' => ['logo', '', ''],
 			'Popup Trigger' => ['popup-trigger', '', ''],
 			'Lottie Animations' => ['lottie-animations', '', ''],
-			'Posts Timeline' => ['posts-timeline', '', ''],
+			// 'Posts Timeline' => ['posts-timeline', '', ''],
 			// 'Random Image' => ['random-image', '', ''],
 			// 'Author Box' => 'author-box',
 		];
