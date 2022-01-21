@@ -317,6 +317,24 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		// );
 				
 		$this->add_control_slides_to_show();
+
+		if ( ! wpr_fs()->can_use_premium_code() ) {
+			$this->add_control(
+				'slides_to_show_pro_notice',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => 'More than 4 Slides are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-posts-timeline-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+					'content_classes' => 'wpr-pro-notice',
+					'condition'   => [
+						'timeline_layout'   => [
+						   'horizontal',
+						   'horizontal-bottom'
+						],
+					]
+				]
+			);
+		}
 				
 		$this->add_control(
 			'story_info_gutter',
@@ -982,6 +1000,18 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			]
 		);
 
+		if ( ! wpr_fs()->can_use_premium_code() ) {
+			$this->add_control(
+				'timeline_repeater_pro_notice',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => 'More than 4 Slides are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-posts-timeline-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+					'content_classes' => 'wpr-pro-notice',
+				]
+			);
+		}
+
 		$this->end_controls_section();
 
 		$post_types = Utilities::get_custom_types_of( 'post', false );
@@ -1126,6 +1156,18 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		}
 
         $this->add_control_posts_per_page();
+
+		if ( ! wpr_fs()->can_use_premium_code() ) {
+			$this->add_control(
+				'posts_per_page_pro_notice',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => 'More than 4 Posts are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-posts-timeline-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					// 'raw' => 'More than 4 Posts are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+					'content_classes' => 'wpr-pro-notice',
+				]
+			);
+		}
 
         $this->add_control(
 			'order_posts',
@@ -5121,11 +5163,15 @@ class Wpr_Posts_Timeline extends Widget_Base {
 	public function render_custom_vertical_timeline($layout, $settings, $data, $countItem ) {
 		echo '
 		<div class="wpr-wrapper wpr-vertical '. $this->timeline_layout_wrapper .'">
-			<div class="wpr-timeline-centered wpr-timeline-sm wpr-line '.$this->timeline_layout.'">';
+			<div class="wpr-timeline-centered wpr-timeline-sm wpr-line '. $this->timeline_layout .'">';
 			echo '<div class="wpr-middle-line"></div>';
 			echo 'yes' === $this->timeline_fill ? '<div id="wpr-timeline-fill" class="wpr-timeline-fill" data-layout="'. $layout .'"></div>' : '';
 			
-			foreach ( $data as $index=>$content ) {
+			foreach ( $data as $index => $content ) {
+				if ( ! wpr_fs()->can_use_premium_code() && $index === 4 ) {
+					break;
+				}
+
 				if ( ! empty( $content['repeater_title_link']['url'] ) ) {
 					$this->add_link_attributes( 'repeater_title_link', $content['repeater_title_link'] );
 				}
@@ -5315,7 +5361,11 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 		echo '<div class="swiper-wrapper '. $horizontal_timeline_class .'">';
 			if ( is_array($data) ) {
-					foreach($data as $index=>$content) {
+					foreach( $data as $index => $content ) {
+						if ( ! wpr_fs()->can_use_premium_code() && $index === 4 ) {
+							break;
+						}
+
 						if ( ! empty( $content['repeater_title_link']['url'] ) ) {
 							$this->add_link_attributes( 'repeater_title_link', $content['repeater_title_link'] );
 						}
