@@ -792,6 +792,18 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'testimonial', [
+			'Add Unlimited Testimonials',
+			'Columns (Carousel) 1,2,3,4,5,6',
+			'Advanced Social Media Icon options',
+			'Advanced Rating Styling options',
+			'Unlimited Slides to Scroll option',
+			'Autoplay options',
+			'Advanced Navigation Positioning',
+			'Advanced Pagination Positioning',
+		] );
+		
 		// Styles
 		// Section: General ----------
 		$this->start_controls_section(

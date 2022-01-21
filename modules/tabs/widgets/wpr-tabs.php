@@ -527,6 +527,18 @@ class Wpr_Tabs extends Widget_Base {
 		// Section: Settings ---------
 		$this->add_section_settings();
 
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'tabs', [
+			'Add Unlimited Tabs',
+			'Tab Content Type - Elementor Template',
+			'Custom Tab Colors',
+			'Tab Label Align',
+			'Swich Tabs on Hover option',
+			'Set Active Tab by Default',
+			'Advanced Tab Content Animations',
+			'Tabs Autoplay option',
+		] );
+		
 		// Styles
 		// Section: Tabs ------------
 		$this->start_controls_section(

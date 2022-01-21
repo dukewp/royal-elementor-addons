@@ -586,6 +586,17 @@ class Wpr_Nav_Menu extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'nav-menu', [
+			'Vertical Layout',
+			'Advanced Link Hover Effects: Slide, Grow, Drop',
+			'SubMenu Entrance Slide Effect',
+			'SubMenu Width option',
+			'Advanced Display Conditions',
+			'Mobile Menu Display Custom Conditions',
+			'Mobile Menu Button Custom Text option',
+		] );
+		
 		// Tab: Styles ===============
 		// Section: Menu Items -------
 		$this->start_controls_section(

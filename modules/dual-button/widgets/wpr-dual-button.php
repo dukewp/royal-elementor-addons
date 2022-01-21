@@ -679,6 +679,12 @@ class Wpr_Dual_Button extends Widget_Base {
 		// Section: Tooltip #2 --------
 		$this->add_section_tooltip_b();
 
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'dual-button', [
+			'Middle Badge Text & Icon options',
+			'Advanced Tooltip options',
+		] );
+
 		// Styles
 		// Section: General ----------
 		$this->start_controls_section(

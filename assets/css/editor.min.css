@@ -628,7 +628,8 @@
 .elementor-control.elementor-control-group_popup_settings_pro_notice,
 .elementor-control.elementor-control-which_particle_pro_notice,
 .elementor-control.elementor-control-paralax_repeater_pro_notice,
-.elementor-control.elementor-control-opnepage_pro_notice {
+.elementor-control.elementor-control-opnepage_pro_notice,
+.elementor-control.elementor-control-timeline_repeater_pro_notice {
 	padding-bottom: 0 !important;
 }
 
@@ -678,6 +679,54 @@
 .elementor-control-pagination_type_pro_notice .wpr-pro-notice {
 	border-top: none !important;
 	border-bottom: none !important;
+}
+
+.elementor-control-pro_features_section .elementor-section-toggle,
+.elementor-control-pro_features_section .elementor-section-title {
+  color: #f54;
+}
+
+.elementor-control-pro_features_section .elementor-section-title {
+  line-height: 20px;
+}
+.elementor-control-pro_features_section .elementor-section-title .dashicons {
+  line-height: 20px;
+  font-size: 13px;
+}
+
+.wpr-pro-features-list {
+  text-align: center;
+}
+
+.wpr-pro-features-list ul {
+  text-align: left;
+}
+
+.wpr-pro-features-list ul li {
+  position: relative;
+  line-height: 22px;
+  padding-left: 20px;
+}
+
+.wpr-pro-features-list ul li::before {
+  content: '.';
+  font-size: 38px;
+  position: absolute;
+  top: -11px;
+  left: 0;
+}
+
+.wpr-pro-features-list ul + a {
+  display: inline-block;
+  background-color: #f54;
+  color: #fff;
+  margin: 15px 15px 10px 0;
+  padding: 7px 12px;
+  border-radius: 3px;
+}
+
+.wpr-pro-features-list ul + a:hover {
+  color: #fff;
 }
 
 

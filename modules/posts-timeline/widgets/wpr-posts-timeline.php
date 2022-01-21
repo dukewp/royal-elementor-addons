@@ -241,82 +241,26 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'separator' => 'before'
 			]
 		);
-
-		// $this->add_responsive_control(
-		// 	'label_alignment',
-		// 	[
-		// 		'label' => esc_html__( 'Extra Label Align', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::CHOOSE,
-		// 		'label_block' => false,
-		// 		'default' => 'center',
-		// 		'options' => [
-		// 			'left' => [
-		// 				'title' => esc_html__( 'Start', 'wpr-addons' ),
-		// 				// 'icon' => 'eicon-h-align-left',
-		// 				'icon' => 'eicon-text-align-left',
-		// 			],
-		// 			'center' => [
-		// 				'title' => esc_html__( 'Center', 'wpr-addons' ),
-		// 				// 'icon' => 'eicon-h-align-center',
-		// 				'icon' => 'eicon-text-align-center',
-		// 			],
-		// 			'right' => [
-		// 				'title' => esc_html__( 'End', 'wpr-addons' ),
-		// 				// 'icon' => 'eicon-h-align-right',
-		// 				'icon' => 'eicon-text-align-right',
-		// 			],
-		// 		],
-        //         'selectors' => [
-		// 			'{{WRAPPER}} .wpr-left-aligned .wpr-extra-label .wpr-label' => 'text-align: {{VALUE}};', //display: block;
-		// 			'{{WRAPPER}} .wpr-left-aligned .wpr-extra-label .wpr-sub-label' => 'text-align: {{VALUE}};', //display: block;
-		// 			'{{WRAPPER}} .swiper-wrapper .wpr-extra-label .wpr-label' => 'text-align: {{VALUE}};', //display: block;
-		// 			'{{WRAPPER}} .swiper-wrapper .wpr-extra-label .wpr-sub-label' => 'text-align: {{VALUE}};', //display: block;
-		// 		],
-		// 		'condition' => [
-		// 			// 'timeline_content' => 'custom',
-		// 			'show_extra_label' => 'yes',
-		// 			'timeline_layout' => ['centered', 'one-sided-left', 'horizontal', 'horizontal-bottom']
-		// 		]
-		// 	]
-		// );
-
-		// $this->add_responsive_control(
-		// 	'label_alignment_left',
-		// 	[
-		// 		'label' => esc_html__( 'Extra Label Align (Right)', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::CHOOSE,
-		// 		'label_block' => false,
-		// 		'default' => 'center',
-		// 		'options' => [
-		// 			'left' => [
-		// 				'title' => esc_html__( 'Start', 'wpr-addons' ),
-		// 				// 'icon' => 'eicon-h-align-left',
-		// 				'icon' => 'eicon-text-align-left',
-		// 			],
-		// 			'center' => [
-		// 				'title' => esc_html__( 'Center', 'wpr-addons' ),
-		// 				// 'icon' => 'eicon-h-align-center',
-		// 				'icon' => 'eicon-text-align-center',
-		// 			],
-		// 			'right' => [
-		// 				'title' => esc_html__( 'End', 'wpr-addons' ),
-		// 				// 'icon' => 'eicon-h-align-right',
-		// 				'icon' => 'eicon-text-align-right',
-		// 			],
-		// 		],
-        //         'selectors' => [
-		// 			'{{WRAPPER}} .wpr-extra-label .wpr-label' => 'text-align: {{VALUE}};', //display: block;
-		// 			'{{WRAPPER}} .wpr-extra-label .wpr-sub-label' => 'text-align: {{VALUE}};', //display: block;
-		// 		],
-		// 		'condition' => [
-		// 			// 'timeline_content' => 'custom',
-		// 			'show_extra_label' => 'yes',
-		// 			'timeline_layout' => ['centered', 'one-sided']
-		// 		]
-		// 	]
-		// );
-				
+		
 		$this->add_control_slides_to_show();
+
+		if ( ! wpr_fs()->can_use_premium_code() ) {
+			$this->add_control(
+				'slides_to_show_pro_notice',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => 'More than 4 Slides are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-posts-timeline-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+					'content_classes' => 'wpr-pro-notice',
+					'condition'   => [
+						'timeline_layout'   => [
+						   'horizontal',
+						   'horizontal-bottom'
+						],
+					]
+				]
+			);
+		}
 				
 		$this->add_control(
 			'story_info_gutter',
@@ -425,6 +369,36 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				]
 			]
 		);
+
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'posts-timeline', 'timeline_animation', [
+			'pro-fu',
+			'pro-fd',
+			'pro-fl',
+			'pro-fr',
+			'pro-fur',
+			'pro-ful',
+			'pro-fdr',
+			'pro-fdl',
+			'pro-flu',
+			'pro-fld',
+			'pro-flr',
+			'pro-fll',
+			'pro-slu',
+			'pro-sll',
+			'pro-slr',
+			'pro-sld',
+			'pro-zmi',
+			'pro-zmo',
+			'pro-zmiu',
+			'pro-zmid',
+			'pro-zmil',
+			'pro-zmir',
+			'pro-zmou',
+			'pro-zmod',
+			'pro-zmol',
+			'pro-zmor',
+		] );
 
 		// $this->add_responsive_control(
 		// 	'timeline_animation',
@@ -980,6 +954,18 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			]
 		);
 
+		if ( ! wpr_fs()->can_use_premium_code() ) {
+			$this->add_control(
+				'timeline_repeater_pro_notice',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => 'More than 4 Slides are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-posts-timeline-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+					'content_classes' => 'wpr-pro-notice',
+				]
+			);
+		}
+
 		$this->end_controls_section();
 
 		$post_types = Utilities::get_custom_types_of( 'post', false );
@@ -1124,6 +1110,18 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		}
 
         $this->add_control_posts_per_page();
+
+		if ( ! wpr_fs()->can_use_premium_code() ) {
+			$this->add_control(
+				'posts_per_page_pro_notice',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => 'More than 4 Posts are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-posts-timeline-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					// 'raw' => 'More than 4 Posts are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+					'content_classes' => 'wpr-pro-notice',
+				]
+			);
+		}
 
         $this->add_control(
 			'order_posts',
@@ -1948,7 +1946,17 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		);
 		
 		$this->end_controls_section();
-		
+
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'posts-timeline', [
+			'Add Unlimited Custom Timeline Items',
+			'Unlimited Slides to Show option',
+			'Carousel Autoplay and Autoplay Speed',
+			'Unlimited Posts Per Page option',
+			'Advanced Pagination - Load More Button or Infinite Scroll options',
+			'Advanced Entrance Animation Options',
+		] );
+
 		$this->start_controls_section(
 			'content_styles_section',
 			[
@@ -5094,11 +5102,15 @@ class Wpr_Posts_Timeline extends Widget_Base {
 	public function render_custom_vertical_timeline($layout, $settings, $data, $countItem ) {
 		echo '
 		<div class="wpr-wrapper wpr-vertical '. $this->timeline_layout_wrapper .'">
-			<div class="wpr-timeline-centered wpr-timeline-sm wpr-line '.$this->timeline_layout.'">';
+			<div class="wpr-timeline-centered wpr-timeline-sm wpr-line '. $this->timeline_layout .'">';
 			echo '<div class="wpr-middle-line"></div>';
 			echo 'yes' === $this->timeline_fill ? '<div id="wpr-timeline-fill" class="wpr-timeline-fill" data-layout="'. $layout .'"></div>' : '';
 			
-			foreach ( $data as $index=>$content ) {
+			foreach ( $data as $index => $content ) {
+				if ( ! wpr_fs()->can_use_premium_code() && $index === 4 ) {
+					break;
+				}
+
 				if ( ! empty( $content['repeater_title_link']['url'] ) ) {
 					$this->add_link_attributes( 'repeater_title_link', $content['repeater_title_link'] );
 				}
@@ -5288,7 +5300,11 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 		echo '<div class="swiper-wrapper '. $horizontal_timeline_class .'">';
 			if ( is_array($data) ) {
-					foreach($data as $index=>$content) {
+					foreach( $data as $index => $content ) {
+						if ( ! wpr_fs()->can_use_premium_code() && $index === 4 ) {
+							break;
+						}
+
 						if ( ! empty( $content['repeater_title_link']['url'] ) ) {
 							$this->add_link_attributes( 'repeater_title_link', $content['repeater_title_link'] );
 						}

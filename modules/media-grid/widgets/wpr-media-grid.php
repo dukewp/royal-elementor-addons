@@ -2392,6 +2392,32 @@ class Wpr_Media_Grid extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'media-grid', [
+			'Grid Columns 1,2,3,4,5,6,7,8',
+			'Masonry Layout',
+			'Random Images Query',
+			'Image Slider Columns (Carousel) 1,2,3,4,5,6,7,8',
+			'Infinite Scrolling Pagination',
+			'Image Slider Autoplay options',
+			'Image Slider Advanced Navigation Positioning',
+			'Image Slider Advanced Pagination Positioning',
+			'Advanced Image Likes',
+			'Advanced Image Sharing',
+			'Advanced Grid Loading Animations (Fade in & Slide Up)',
+			'Unlimited Grid Elements Positioning',
+			'Unlimited Image Overlay Animations',
+			'Image overlay GIF upload option',
+			'Image Overlay Blend Mode',
+			'Image Effects: Zoom, Grayscale, Blur',
+			'Lightbox Thumbnail Gallery, Lightbox Image Sharing Button',
+			'Grid Category Filter Deeplinking',
+			'Grid Category Filter Icons select',
+			'Grid Category Filter Count',
+			'Grid Item Even/Odd Background Color',
+			'Title & Category Advanced Link Hover Animations',
+		] );
+		
 		// Styles ====================
 		// Section: Grid Item --------
 		$this->start_controls_section(
