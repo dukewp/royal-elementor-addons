@@ -51,7 +51,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
         return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-grid-help-btn';
     }
 
-	public function wpr_aos_amination_array(){
+	public function wpr_aos_amination_array() {
 		return [
 			'none' => 'None',
 			'fade' => 'Fade',
