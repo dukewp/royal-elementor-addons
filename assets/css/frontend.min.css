@@ -10476,6 +10476,7 @@ html {
 .wpr-horizontal-timeline .swiper-slide-line-bottom {
     display: flex;
     justify-content: center;
+    align-items: flex-end;
 }
 
 .wpr-horizontal-timeline .wpr-story-info {
@@ -10677,7 +10678,7 @@ html {
   
   
   /*----Middle Line----*/
-  .wpr-horizontal-bottom .wpr-pagination.swiper-pagination-progressbar {
+  .wpr-horizontal-bottom .wpr-swiper-pagination.swiper-pagination-progressbar {
     position: absolute;
     top: 112px;
     margin: 0px 32px;
@@ -10685,7 +10686,7 @@ html {
     z-index: 0;
   }
   
-  .wpr-horizontal-bottom .wpr-pagination.swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
+  .wpr-horizontal-bottom .wpr-swiper-pagination.swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
     background: rgba(0, 0, 0, 0.25);
   }
   
@@ -10714,6 +10715,9 @@ html {
   
   /*----Slider Styles*/
   .swiper-slide.auto-height {
+    height: auto;
+  }
+  .wpr-horizontal-timeline .swiper-slide {
     height: auto;
   }
 
@@ -10851,7 +10855,7 @@ html {
   }
   
   /*----Middle Line----*/
-  .wpr-horizontal .wpr-pagination.swiper-pagination-progressbar {
+  .wpr-horizontal .wpr-swiper-pagination.swiper-pagination-progressbar {
     position: absolute;
     height: 2px;
     margin: 0px 32px;
