@@ -370,6 +370,36 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			]
 		);
 
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'posts-timeline', 'timeline_animation', [
+			'pro-fu',
+			'pro-fd',
+			'pro-fl',
+			'pro-fr',
+			'pro-fur',
+			'pro-ful',
+			'pro-fdr',
+			'pro-fdl',
+			'pro-flu',
+			'pro-fld',
+			'pro-flr',
+			'pro-fll',
+			'pro-slu',
+			'pro-sll',
+			'pro-slr',
+			'pro-sld',
+			'pro-zmi',
+			'pro-zmo',
+			'pro-zmiu',
+			'pro-zmid',
+			'pro-zmil',
+			'pro-zmir',
+			'pro-zmou',
+			'pro-zmod',
+			'pro-zmol',
+			'pro-zmor',
+		] );
+
 		// $this->add_responsive_control(
 		// 	'timeline_animation',
 		// 	[
