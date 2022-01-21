@@ -932,7 +932,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						'repeater_date_label'   => __('Jul 1994','wpr-addons'),
 						'repeater_extra_label'  => __('Apple History','wpr-addons'),
 						'repeater_image' =>[
-							'url' => '',	
+							'url' => Utils::get_placeholder_image_src(),	
 							'id' => '',						
 						],
 						'repeater_youtube_video_url' => '',
@@ -944,7 +944,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						'repeater_date_label'   => __('Feb 2005','wpr-addons'),
 						'repeater_extra_label'  => __('Apple History','wpr-addons'),
 						'repeater_image' =>[
-							'url' => '',
+							'url' => Utils::get_placeholder_image_src(),
 							'id' => '',							
 						],
 						'repeater_youtube_video_url' => '',
@@ -957,7 +957,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						'repeater_date_label'   => __('Aug 2007','wpr-addons'),
 						'repeater_extra_label'  => __('Apple History','wpr-addons'),
 						'repeater_image' =>[
-							'url' => '',
+							'url' => Utils::get_placeholder_image_src(),
 							'id' => '',						
 						],
 						'repeater_youtube_video_url' => '',
@@ -1351,6 +1351,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-story-info:hover .wpr-title' => 'opacity: 1; transform: translateY(0%);',
 				],
 				'condition' => [
+					'show_overlay' => 'yes',
 					'show_title' => 'yes',
 					'title_overlay' => 'yes'
 				],
@@ -1407,7 +1408,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-timeline-entry:hover .wpr-inner-date-label' => 'opacity: 1; transform: translateY(0%);'
 				],
 				'condition' => [
-					'show_date' => ['yes'],
+					'show_overlay' => 'yes',
+					'show_date' => 'yes',
 					'date_overlay' => 'yes',
 					'timeline_content' => 'dynamic'
 				]
@@ -1462,7 +1464,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-timeline-entry:hover .wpr-description' => 'opacity: 1; transform: translateY(0%);'
 				],
 				'condition' => [
-					'show_description' => ['yes'],
+					'show_description' => 'yes',
 					'description_overlay' => 'yes'
 				]
 			]
@@ -1547,7 +1549,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-timeline-entry:hover .wpr-read-more-button' => 'opacity: 1; transform: translateY(0%);'
 				],
 				'condition' => [
-					'show_readmore' => ['yes'],
+					'show_readmore' => 'yes',
 					'readmore_overlay' => 'yes'
 				]
 			]
@@ -2071,11 +2073,46 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-centered .wpr-left-aligned .wpr-timeline-entry-inner .wpr-data-wrap' => 'margin-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-centered .wpr-right-aligned .wpr-timeline-entry-inner .wpr-data-wrap' => 'margin-left: {{SIZE}}{{UNIT}};',
 				],
+				'condition' => [
+					'timeline_layout' => ['centered', 'one-sided', 'one-sided-left']
+				]
 			]
 		);
 
 		$this->add_responsive_control(
 			'timeline_container_height',
+			[
+				'label' => esc_html__( 'Container Height', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				// 'size_units' => [ '%', 'px' ],
+				'default' => [
+					'unit' => 'px',
+					'size' => 450,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 2000,
+					],
+					// '%' => [
+					// 	'min' => 0,
+					// 	'max' => 100,
+					// ],
+				],
+				'selectors' => [ 
+
+					'{{WRAPPER}} .wpr-horizontal-wrapper' => 'min-height: calc( {{SIZE}}{{UNIT}} + {{timeline_item_position_equal_heights.SIZE}}) !important;',
+					'{{WRAPPER}} .wpr-horizontal-timeline .swiper-slide-line-bottom' => 'min-height: calc( {{SIZE}}{{UNIT}} + {{timeline_item_position_equal_heights.SIZE}}{{UNIT}} ) !important;', 
+				],
+				'condition' => [
+					'timeline_layout' => ['horizontal'],
+					'slides_height_bottom_line' => 'yes',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'timeline_container_height_2',
 			[
 				'label' => esc_html__( 'Container Height', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
@@ -2102,14 +2139,12 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					// '{{WRAPPER}} .wpr-horizontal-timeline .swiper-slide' => 'height: calc( {{SIZE}}{{UNIT}} + {{timeline_item_position.SIZE}} ) !important;',
 					// '{{WRAPPER}} .wpr-horizontal-timeline .swiper-slide .wpr-story-info' => 'height: {{SIZE}}{{UNIT}} !important; min-height: 100% !important;',
 
-					// '{{WRAPPER}} .wpr-horizontal-wrapper' => 'min-height: calc( {{SIZE}}{{UNIT}} + {{timeline_item_position.SIZE}}) !important;',
-					// '{{WRAPPER}} .wpr-horizontal-timeline .swiper-slide-line-bottom' => 'min-height: calc( {{SIZE}}{{UNIT}} + {{timeline_item_position.SIZE}}{{UNIT}} ) !important;', 
-
-					'{{WRAPPER}} .wpr-horizontal-wrapper' => 'min-height: calc( {{SIZE}}{{UNIT}} + {{timeline_item_position_equal_heights.SIZE}}) !important;',
-					'{{WRAPPER}} .wpr-horizontal-timeline .swiper-slide-line-bottom' => 'min-height: calc( {{SIZE}}{{UNIT}} + {{timeline_item_position_equal_heights.SIZE}}{{UNIT}} ) !important;', 
+					'{{WRAPPER}} .wpr-horizontal-wrapper' => 'min-height: calc( {{SIZE}}{{UNIT}} + {{timeline_item_position.SIZE}}) !important;',
+					'{{WRAPPER}} .wpr-horizontal-timeline .swiper-slide-line-bottom' => 'min-height: calc( {{SIZE}}{{UNIT}} + {{timeline_item_position.SIZE}}{{UNIT}} ) !important;', 
 				],
 				'condition' => [
 					'timeline_layout' => ['horizontal'],
+					'slides_height_bottom_line!' => 'yes',
 				],
 			]
 		);
