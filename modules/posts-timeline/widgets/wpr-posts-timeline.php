@@ -107,6 +107,21 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 	public function add_control_show_pagination() {}
 
+	public function add_control_posts_per_page() {
+        $this->add_control(
+			'posts_per_page',
+			[
+				'label' => esc_html__( 'Posts Per Page', 'wpr-addons'),
+				'type' => Controls_Manager::NUMBER,
+				'render_type' => 'template',
+				'default' => 3,
+				'max' => 4,
+                'min' => 0,
+				'label_block' => false,
+			]
+		);
+	}
+
 	protected function _register_controls() {
 
 		$this->start_controls_section(
@@ -1110,17 +1125,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			);
 		}
 
-        $this->add_control(
-			'posts_per_page',
-			[
-				'label' => esc_html__( 'Posts Per Page', 'wpr-addons'),
-				'type' => Controls_Manager::NUMBER,
-				'render_type' => 'template',
-				'default' => 3,
-                'min' => 0,
-				'label_block' => false,
-			]
-		);
+        $this->add_control_posts_per_page();
 
         $this->add_control(
 			'order_posts',
@@ -4910,12 +4915,14 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			$paged = 1;
 		}
 
+		$posts_per_page =  (!wpr_fs()->can_use_premium_code() && $settings['posts_per_page'] > 4) ? 4 : $settings['posts_per_page'];
+
 		// Dynamic
 		$args = [
 			'post_type' => $settings[ 'timeline_post_types' ],
 			// 'tax_query' => $this->get_tax_query_args(),
 			'post__not_in' => !empty($settings[ 'query_exclude_'. $settings[ 'timeline_post_types' ] ]) ? $settings[ 'query_exclude_'. $settings[ 'timeline_post_types' ] ] : '',
-			'posts_per_page' => $settings['posts_per_page'],
+			'posts_per_page' =>  $posts_per_page,
 			'orderby' => $settings[ 'order_posts' ],
 			'order' => $settings['order_direction'],
 			'author' => $author,
@@ -4938,33 +4945,11 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			$args = [
 				'post_type' => $settings[ 'timeline_post_types' ],
 				'post__in' => $post_ids,
-				'posts_per_page' => $settings['posts_per_page'],
+				'posts_per_page' => $posts_per_page,
 				'orderby' => '',  //  $settings[ 'query_randomize' ],
 				'paged' => $paged,
 			];
 		}
-
-		// Get Post Type
-		// if ( 'current' === $settings[ 'query_source' ] ) {
-		// 	global $wp_query;
-
-		// 	$args = $wp_query->query_vars;
-		// 	$args['posts_per_page'] = $settings['query_posts_per_page'];
-		// 	$args['orderby'] = $settings['query_randomize'];
-		// }
-
-		// Related
-		// if ( 'related' === $settings[ 'query_source' ] ) {
-		// 	$args = [
-		// 		'post_type' => get_post_type( get_the_ID() ),
-		// 		'tax_query' => $this->get_tax_query_args(),
-		// 		'post__not_in' => [ get_the_ID() ],
-		// 		'ignore_sticky_posts' => 1,
-		// 		'posts_per_page' => $settings['query_posts_per_page'],
-		// 		'orderby' => $settings[ 'query_randomize' ],
-		// 		'offset' => $offset,
-		// 	];
-		// }
 
 		return $args;
 	}
