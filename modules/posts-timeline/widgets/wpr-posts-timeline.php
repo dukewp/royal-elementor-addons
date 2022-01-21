@@ -863,12 +863,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-timeline-media i' => 'font-size: {{SIZE}}{{UNIT}};',
-					// '{{WRAPPER}} .wpr-horizontal-bottom .wpr-timeline-media svg' => 'width: {{SIZE}}{{UNIT}};',
-					// '{{WRAPPER}} .wpr-horizontal .wpr-timeline-media svg' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-timeline-media svg' => 'width: {{SIZE}}{{UNIT}};',
 					
 				],
 				'condition' => [
-					// 'timeline_content' => 'custom',
 					'repeater_media' => 'icon'
 				]
 			]
@@ -3618,31 +3616,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				]
 			]
 		);
-		
-		// $this->add_control(
-		// 	'wpr_icon_margin_left_horizontal',
-		// 	[
-		// 		'label' => __( 'Position Left', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'range' => [
-		// 			'px' => [
-		// 				'min' => 0,
-		// 				'max' => 500,
-		// 			],
-		// 		],
-		// 		'default' => [
-		// 			'unit' => 'px',
-		// 			'size' => 94,
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'left: {{SIZE}}{{UNIT}}',
-		// 			// '{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'margin-bottom: {{SIZE}}{{UNIT}}', // creates marker shape
-		// 		],
-		// 		'condition' => [
-		// 			'timeline_layout' => ['horizontal', 'horizontal-bottom'],
-		// 		]
-		// 	]
-		// );
 		
 		$this->add_control(
 			'icon_border_type',
