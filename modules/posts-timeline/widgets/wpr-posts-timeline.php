@@ -4950,7 +4950,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
     public function add_custom_horizontal_timeline_attributes($content, $settings, $index) {
 
 			$this->timeline_description = $content['repeater_description'];
-			$this->timeline_year = esc_html($content['repeater_year']);
 			$this->story_date_label = esc_html($content['repeater_date_label']);
 			$this->story_extra_label = esc_html($content['repeater_extra_label']);
 			$this->timeline_story_title = esc_html($content['repeater_story_title']);
