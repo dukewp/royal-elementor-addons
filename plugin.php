@@ -103,7 +103,7 @@ class Plugin {
 
 		// Reading Progress Bar
 		if ( 'on' === get_option('wpr-reading-progress-bar', 'on') ) {
-			// require WPR_ADDONS_PATH . 'extensions/wpr-reading-progress-bar.php';
+			require WPR_ADDONS_PATH . 'extensions/wpr-reading-progress-bar.php';
 		}
 
 		// Custom CSS
