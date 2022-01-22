@@ -10965,8 +10965,8 @@ html {
 
 @media screen and (max-width: 767px) {
     .wpr-one-sided-timeline .wpr-middle-line,
-    .wpr-one-sided-timeline #wpr-timeline-fill,
-    .wpr-both-sided-timeline #wpr-timeline-fill,
+    .wpr-one-sided-timeline .wpr-timeline-fill,
+    .wpr-both-sided-timeline .wpr-timeline-fill,
     .wpr-both-sided-timeline .wpr-middle-line,
     .wpr-one-sided-timeline .wpr-icon {
         left: 11% !important;
