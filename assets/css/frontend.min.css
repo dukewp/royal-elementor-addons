@@ -10858,13 +10858,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 /* .wpr-horizontal-bottom .wpr-title, */
 
-.wpr-horizontal-bottom .wpr-description {
-    display: inline-block;
-    width: 100%;
-    margin: 0;
-    line-height: 1.2em;
-}
-
 .wpr-horizontal-bottom .wpr-title {
     display: inline-block;
     /* width: 100%; */
@@ -10878,8 +10871,28 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 .wpr-horizontal-bottom .wpr-description {
+    display: inline-block;
+    width: 100%;
+    margin: 0;
+    line-height: 1.2em;
     padding: 8px;
     font-size: inherit;
+}
+
+.wpr-horizontal .wpr-description {
+    display: inline-block;
+    width: 100%;
+    margin: 0;
+    line-height: 1.2em;
+    padding: 8px;
+    font-size: inherit;
+}
+
+.wpr-wrapper .wpr-description {
+    font-size: 16px;
+    font-weight: normal;
+    color: #333333;
+    background-color: transparent !important;
 }
 
 
@@ -11059,21 +11072,9 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     box-sizing: border-box;
 }
 
-.wpr-horizontal .wpr-description {
-    display: inline-block;
-    width: 100%;
-    margin: 0;
-    line-height: 1.2em;
-}
-
 .wpr-horizontal .wpr-title {
     padding: 8px 8px 0;
     font-size: 20px;
-}
-
-.wpr-horizontal .wpr-description {
-    padding: 8px;
-    font-size: inherit;
 }
 
 
@@ -11133,12 +11134,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     font-weight: 600;
 }
 
-.wpr-wrapper .wpr-description {
-    font-size: 16px;
-    font-weight: normal;
-    color: #333333;
-}
-
 .wpr-wrapper .wpr-timeline-centered .wpr-year {
     border: 2px solid;
 }
@@ -11167,12 +11162,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-wrapper span.wpr-title {
     font-size: 20px;
     font-weight: 600;
-}
-
-.wpr-wrapper .wpr-description {
-    font-size: 16px;
-    font-weight: normal;
-    color: #333333;
 }
 
 .wpr-wrapper .wpr-timeline-centered .wpr-year {

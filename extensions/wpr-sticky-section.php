@@ -178,6 +178,17 @@ class Wpr_Sticky_Section {
 				]
 			);
 
+			$element->add_control(
+				'wpr_sticky_apply_changes',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => '<div style="text-align: center;"><button class="elementor-update-preview-button elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply Changes</button></div>',
+					// 'condition' => [
+					// 	'enable_sticky_section' => 'yes'
+					// ]
+				]
+			);
+
             $element->end_controls_section();            
         }
     }

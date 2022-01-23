@@ -2287,7 +2287,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-vertical' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					// '{{WRAPPER}} .wpr-horizontal' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-horizontal' => 'padding-top: {{TOP}}{{UNIT}};',
 				],
 			]
 		);
@@ -2601,7 +2601,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wrapper .wpr-title-wrap:hover .wpr-title' => 'cursor: pointer; color: {{VAlUE}}',
 				],
-				'default' => '#ffA',
+				'default' => '#000',
 			]
 		);
 
@@ -3294,7 +3294,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		);
 		
 		$this->add_responsive_control(
-			'year-label-padding',
+			'year_label_padding',
 			[
 				'label' => esc_html__( 'Padding', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
@@ -3457,7 +3457,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 102,
+					'size' => 110,
 				],			
 				'selectors' => [
 					'{{WRAPPER}} .wpr-horizontal .wpr-icon' => 'bottom: {{SIZE}}{{UNIT}} !important;',
@@ -3494,7 +3494,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$this->add_responsive_control(
 			'icon_size',
 			[
-				'label' => __( 'Icon Size', 'wpr' ),
+				'label' => __( 'Icon Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -3514,7 +3514,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$this->add_responsive_control(
 			'icon_bg_size',
 			[
-				'label' => esc_html__( 'Icon Background Size', 'wpr-addons' ),
+				'label' => esc_html__( 'Background Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ '%', 'px' ],
 				'default' => [
