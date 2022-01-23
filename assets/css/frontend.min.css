@@ -10810,7 +10810,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 .wpr-horizontal-bottom .wpr-story-info {
     padding: 0;
-    margin: 170px 4px 50px;
+    /* margin: 170px 4px 50px; */
     justify-content: center;
     position: relative;
     transition: all 200ms ease-in;

@@ -2148,7 +2148,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 300,
+						'max' => 200,
 					]
 				],
 				'default' => [
@@ -2208,11 +2208,11 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					],
 					'px' => [
 						'min' => 0,
-						'max' => 400,
+						'max' => 300,
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-story-info' => 'margin-top: {{SIZE}}{{UNIT}} !important;',
+					'{{WRAPPER}} .wpr-story-info' => 'margin-top: calc({{SIZE}}{{UNIT}}) !important;',
 					'{{WRAPPER}} .wpr-horizontal-bottom-timeline .swiper-slide.auto-height .wpr-story-info' => 'max-height: calc(100% - {{SIZE}}{{UNIT}}) !important;',
 				],
 				'condition' => [
@@ -2220,6 +2220,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 			]
 		);
+		// + {{swiper_pagination_progressbar_top}}
 
 		// $this->add_responsive_control(
 		// 	'story_info_position_top',
@@ -2288,6 +2289,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-vertical' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-horizontal' => 'padding-top: {{TOP}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-horizontal-bottom' => 'padding-bottom: {{TOP}}{{UNIT}};',
 				],
 			]
 		);
@@ -4383,7 +4385,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 500,
+						'max' => 300,
 					]
 				],
 				'default' => [
@@ -4649,38 +4651,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'selector' => '{{WRAPPER}} .wpr-load-more-btn',
 			]
 		);
-
-		// $this->add_group_control(
-		// 	Group_Control_Typography::get_type(),
-		// 	[
-		// 		'name'     => 'pagination_typography',
-		// 		'scheme' => Typography::TYPOGRAPHY_3, 
-		// 		'selector' => '{{WRAPPER}} .wpr-grid-pagination'
-		// 	]
-		// );
-
-		// $this->add_responsive_control(
-		// 	'pagination_icon_size',
-		// 	[
-		// 		'label' => esc_html__( 'Icon Size', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'size_units' => ['px'],
-		// 		'range' => [
-		// 			'px' => [
-		// 				'min' => 5,
-		// 				'max' => 30,
-		// 			],
-		// 		],				
-		// 		'default' => [
-		// 			'unit' => 'px',
-		// 			'size' => 15,
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-grid-pagination i' => 'font-size: {{SIZE}}{{UNIT}};',
-		// 			'{{WRAPPER}} .wpr-grid-pagination svg' => 'width: {{SIZE}}{{UNIT}};',
-		// 		],
-		// 	]
-		// );
 
 		$this->add_control(
 			'pagination_border_type',
