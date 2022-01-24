@@ -84,6 +84,27 @@ class Wpr_Posts_Timeline extends Widget_Base {
 	   ];
 	}
 
+	public function background_blend_modes() {
+		return [
+			'normal' => 'Normal',
+			'multiply' => 'Multiply',
+			'screen' => 'Screen',
+			'overlay' => 'Overlay',
+			'darken' => 'Darken',
+			'lighten' => 'Lighten',
+			'color-dodge' => 'Color-Dodge',
+			'color-burn' => 'Color-Burn',
+			'hard-light' => 'Hard-Light',
+			'soft-light' => 'Soft-Light',
+			'difference' => 'Difference',
+			'exclusion' => 'Exclusion',
+			'hue' => 'Hue',
+			'saturation' => 'Saturation',
+			'color' => 'Color',
+			'luminosity' => 'Luminosity'
+		];
+	}
+
 	public function add_control_slides_to_show() {
 		$this->add_control(
 			'slides_to_show',
@@ -174,7 +195,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'options'=>[
 					'image-top' => esc_html__('Top'),
 					'image-bottom' => esc_html__('Bottom'),
-					// 'background' => esc_html__('Background'),
+					'background' => esc_html__('Background'),
 				],
 			]
 		);
@@ -1273,13 +1294,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'condition' => [
 					'content_layout' => 'image-top'
 				],
-				'selectors_dictionary' => [
-					'yes' => 'display: block; width: 100%!important;',
-					'no' => 'no',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-timeline-media img' => '{{VALUE}}'
-				]
 			]
 		);
 
@@ -1327,7 +1341,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'label_block' => false,
 				'render_type' => 'template',
 				'condition' => [
-					'show_overlay!' => 'no',
+					'show_overlay' => 'yes',
+					'content_layout' => 'image-top',
 					'show_title' => 'yes'
 				]
 			]
@@ -1351,7 +1366,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-story-info:hover .wpr-title' => 'opacity: 1; transform: translateY(0%);',
 				],
 				'condition' => [
-					'show_overlay!' => 'no',
+					'show_overlay' => 'yes',
+					'content_layout' => 'image-top',
 					'show_title' => 'yes',
 					'title_overlay' => 'yes'
 				],
@@ -1384,7 +1400,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'label_block' => false,
 				// 'render_type' => 'template',
 				'condition' => [
-					'show_overlay!' => 'no',
+					'show_overlay' => 'yes',
+					'content_layout' => 'image-top',
 					'timeline_content' => 'dynamic',
 					'show_date' => 'yes'
 				]
@@ -1408,7 +1425,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-timeline-entry:hover .wpr-inner-date-label' => 'opacity: 1; transform: translateY(0%);'
 				],
 				'condition' => [
-					'show_overlay!' => 'no',
+					'show_overlay' => 'yes',
+					'content_layout' => 'image-top',
 					'show_date' => 'yes',
 					'date_overlay' => 'yes',
 					'timeline_content' => 'dynamic'
@@ -1441,7 +1459,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'default' => 'no',
 				'label_block' => false,
 				'condition' => [
-					'show_overlay' => '!no',
+					'show_overlay' => 'yes',
+					'content_layout' => 'image-top',
 					'show_description' => 'yes'
 				]
 			]
@@ -1525,8 +1544,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'label_block' => false,
 				'render_type' => 'template',
 				'condition' => [
-					'show_overlay!' => 'no',
+					'show_overlay' => 'yes',
 					'show_readmore' => 'yes',
+					'content_layout' => 'image-top',
 					'timeline_content' => ['dynamic']
 				]
 			]
@@ -1644,7 +1664,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'label' => __( 'Overlay', 'wpr-addons' ),
 				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
 				'condition' => [
-					'show_overlay!' => 'no'
+					'content_layout' => 'image-top',
+					'show_overlay' => 'yes'
 				]
 			]
 		);
@@ -1735,7 +1756,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-timeline-story-overlay' => 'justify-content: {{VALUE}};',
 				],
 				'condition' => [
-					'show_overlay!' => 'no',
+					'show_overlay' => 'yes',
 					'content_layout' => 'image-top'
 				]
 			]
@@ -1767,7 +1788,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-timeline-story-overlay div' => 'display: flex; justify-content: {{VALUE}};',
 				],
 				'condition' => [
-					'show_overlay!' => 'no',
+					'show_overlay' => 'yes',
 					'content_layout' => 'image-top'
 				]
 			]
@@ -2089,6 +2110,23 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'selector' => '{{WRAPPER}} .wpr-story-info-vertical',
 				'condition' => [
 					'timeline_layout' => ['centered', 'one-sided', 'one-sided-left']
+				]
+			]
+		);
+	
+		$this->add_control(
+			'content_background_blend_mode',
+			[
+				'label' => __( 'Media Position', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::SELECT,
+				'default' => 'normal',
+				'options' => $this->background_blend_modes(),
+				'condition' => [
+					'content_layout' => 'background'
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-story-info-vertical' => 'background-blend-mode: {{VALUE}}',
+					'{{WRAPPER}} .wpr-story-infO' => 'background-blend-mode: {{VALUE}}',
 				]
 			]
 		);
@@ -2527,7 +2565,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'label' => __( 'Overlay', 'wpr-addons' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 				'condition' => [
-					'show_overlay!' => 'no'
+					'content_layout' => 'image-top',
+					'show_overlay' => 'yes'
 				],
 			]
 		);
@@ -2548,7 +2587,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			\Elementor\Group_Control_Background::get_type(),
 			[
 				'name' => 'overlay_background',
-				'label' => esc_html__( 'Background', 'plugin-name' ),
+				'label' => esc_html__( 'Background', 'wpr-addons' ),
 				'types' => [ 'classic', 'gradient', 'video' ],
 				'selector' => '{{WRAPPER}} .wpr-timeline-story-overlay',
 			]
@@ -2571,7 +2610,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-timeline-story-overlay' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' =>[
-					'show_overlay!' => 'no'
+					'show_overlay' => 'yes',
+					'content_layout' => 'image-top',
 				],
 			]
 		);
