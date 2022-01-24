@@ -10500,10 +10500,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     display: block;
 }
 
-.wpr-timeline-centered .wpr-extra-label>span:last-child {
-    margin-top: 5px;
-}
-
 .wpr-timeline-centered .wpr-timeline-entry .wpr-timeline-entry-inner .wpr-icon {
     display: block;
     width: 48px;
