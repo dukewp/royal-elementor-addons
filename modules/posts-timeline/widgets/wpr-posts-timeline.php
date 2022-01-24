@@ -2963,6 +2963,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => esc_html__( 'Line Width', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
+				'min' => 0,
 				'default' => 1,
 				'step' => 0.1,
 				'selectors' => [
@@ -3542,19 +3543,14 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ '%', 'px' ],
 				'default' => [
 					'unit' => 'px',
 					'size' => 180,
 				],
 				'range' => [
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
 					'px' => [
 						'min' => 0,
-						'max' => 400,
+						'max' => 300,
 					],
 				],
 				'selectors' => [
@@ -3570,15 +3566,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => __( 'Right Label Distance', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['%','px'],
 				'range' => [
 					'px' => [
 						'min' => 0,
 						'max' => 50,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 10,
 					],
 				],
 				'default' => [
@@ -3599,15 +3590,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => __( 'Left Label Distance', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['%', 'px'],
 				'range' => [
 					'px' => [
 						'min' => 0,
 						'max' => 50,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 200,
 					],
 				],
 				'default' => [
@@ -3634,10 +3620,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						'min' => 0,
 						'max' => 130,
 					],
-					'%' => [
-						'min' => 0,
-						'max' => 12,
-					],
 				],
 				'default' => [
 					'unit' => 'px',
@@ -3657,15 +3639,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => __( 'Right Label Distance', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px', '%'],
 				'range' => [
 					'px' => [
 						'min' => 0,
 						'max' => 50,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 10,
 					],
 				],
 				'default' => [
