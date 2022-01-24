@@ -10727,7 +10727,7 @@ html {
 .wpr-horizontal.swiper-container {
     position: unset;
     /* overflow: hidden; */
-    z-index: 10;
+    z-index: 11;
     margin: 0 32px;
   }
   
