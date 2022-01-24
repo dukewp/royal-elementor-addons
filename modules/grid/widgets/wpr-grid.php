@@ -433,6 +433,8 @@ class Wpr_Grid extends Widget_Base {
 	public function add_control_filters_count_superscript() {}
 	
 	public function add_control_filters_count_brackets() {}
+	
+	public function add_control_filters_default_filter() {}
 
 	public function add_control_pagination_type() {
 		$this->add_control(
@@ -2370,6 +2372,8 @@ class Wpr_Grid extends Widget_Base {
 		$this->add_control_filters_count_superscript();
 
 		$this->add_control_filters_count_brackets();
+
+		$this->add_control_filters_default_filter();
 
 		$this->add_control_filters_icon();
 
@@ -8259,6 +8263,7 @@ class Wpr_Grid extends Widget_Base {
 		$custom_filters = $settings[ 'query_taxonomy_'. $taxonomy ];
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {
+			$settings['filters_default_filter'] = '';
 			$settings['filters_icon_align'] = '';
 			$settings['filters_count'] = '';
 			$settings['filters_pointer'] = 'none';
@@ -8601,6 +8606,7 @@ class Wpr_Grid extends Widget_Base {
 			$settings['layout_select'] = 'pro-ms' == $settings['layout_select'] ? 'fitRows' : $settings['layout_select'];
 			$settings['filters_deeplinking'] = '';
 			$settings['filters_count'] = '';
+			$settings['filters_default_filter'] = '';
 
 			if ( 'pro-fd' == $settings['filters_animation'] || 'pro-fs' == $settings['filters_animation'] ) {
 				$settings['filters_animation'] = 'zoom';
@@ -8617,6 +8623,7 @@ class Wpr_Grid extends Widget_Base {
 			'animation_delay' => $settings['layout_animation_delay'],
 			'deeplinking' => $settings['filters_deeplinking'],
 			'filters_linkable' => $settings['filters_linkable'],
+			'filters_default_filter' => $settings['filters_default_filter'],
 			'filters_count' => $settings['filters_count'],
 			'filters_hide_empty' => $settings['filters_hide_empty'],
 			'filters_animation' => $settings['filters_animation'],
