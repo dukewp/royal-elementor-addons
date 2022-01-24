@@ -3161,7 +3161,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'timeline_layout' => ['horizontal', 'horizontal-bottom']
 				],
 				'default' => '#605BE5',
-				'separator' => 'before'
 			]
 		);
 
@@ -3177,10 +3176,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-vertical:before' => 'background-color: {{VALUE}} !important;',
 					'{{WRAPPER}} .wpr-vertical:after' => 'background-color: {{VALUE}} !important;',
 				],
-				'separator' => 'before',
 				'condition' => [
 					'timeline_layout!' => ['horizontal', 'horizontal-bottom']
 				],
+				'separator' => 'before'
 			]
 		);
 
@@ -4305,7 +4304,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 100,
+						'max' => 200,
 					],
 				],				
 				'default' => [
@@ -4326,34 +4325,30 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'navigation_icon_bg_size',
-			[
-				'label' => esc_html__( 'Box Size', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],				
-				'default' => [
-					'unit' => 'px',
-					'size' => 40,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-horizontal-bottom .wpr-button-next' => 'width: {{SIZE}}{{UNIT}}; text-align: center; height: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-horizontal-bottom .wpr-button-prev' => 'width: {{SIZE}}{{UNIT}}; text-align: center; height: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-horizontal .wpr-button-next' => 'width: {{SIZE}}{{UNIT}}; text-align: center; height: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-horizontal .wpr-button-prev' => 'width: {{SIZE}}{{UNIT}}; text-align: center; height: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-horizontal .wpr-button-next i' => 'width: {{SIZE}}{{UNIT}}; text-align: center; line-height: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-horizontal .wpr-button-prev i' => 'width: {{SIZE}}{{UNIT}}; text-align: center; line-height: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-horizontal-bottom .wpr-button-next i' => 'width: {{SIZE}}{{UNIT}}; text-align: center; line-height: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-horizontal-bottom .wpr-button-prev i' => 'width: {{SIZE}}{{UNIT}}; text-align: center; line-height: {{SIZE}}{{UNIT}};',
-				],
-			]
-		); //todo
+		// $this->add_responsive_control(
+		// 	'navigation_icon_bg_size',
+		// 	[
+		// 		'label' => esc_html__( 'Button Background Size', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'size_units' => ['px'],
+		// 		'range' => [
+		// 			'px' => [
+		// 				'min' => 0,
+		// 				'max' => 200,
+		// 			],
+		// 		],				
+		// 		'default' => [
+		// 			'unit' => 'px',
+		// 			'size' => 40,
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-horizontal-bottom .wpr-button-next' => 'width: {{SIZE}}{{UNIT}}; text-align: center; height: auto;',
+		// 			'{{WRAPPER}} .wpr-horizontal-bottom .wpr-button-prev' => 'width: {{SIZE}}{{UNIT}}; text-align: center; height: auto;',
+		// 			'{{WRAPPER}} .wpr-horizontal .wpr-button-next i' => 'width: {{SIZE}}{{UNIT}}; text-align: center;',
+		// 			'{{WRAPPER}} .wpr-horizontal .wpr-button-prev i' => 'width: {{SIZE}}{{UNIT}}; text-align: center;',
+		// 		],
+		// 	]
+		// ); //todo
 
 		// $this->add_control( //TODO: change slider control to number
 		// 	'navigation_icon_bg_size',
