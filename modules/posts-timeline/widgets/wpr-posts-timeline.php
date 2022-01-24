@@ -2070,7 +2070,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 100,
+						'max' => 50,
 					],
 				],				
 				'default' => [
@@ -2086,6 +2086,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'condition' => [
 					'timeline_layout' => ['centered', 'one-sided', 'one-sided-left']
 				],
+				'render_type' => 'template',
 				'separator' => 'before'
 			]
 		);
