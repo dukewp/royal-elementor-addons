@@ -2850,7 +2850,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					// '{{WRAPPER}} .wpr-wrapper .wpr-read-more-wrap' => 'width: {{SIZE}}{{UNIT}} !important; height: auto;',
 
 				],
-				'separator' => 'after',
+				'separator' => 'before',
 			]
 		);
 
