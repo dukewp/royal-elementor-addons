@@ -1327,7 +1327,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'label_block' => false,
 				'render_type' => 'template',
 				'condition' => [
-					'show_overlay' => 'yes',
+					'show_overlay!' => 'no',
 					'show_title' => 'yes'
 				]
 			]
@@ -1351,7 +1351,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-story-info:hover .wpr-title' => 'opacity: 1; transform: translateY(0%);',
 				],
 				'condition' => [
-					'show_overlay' => 'yes',
+					'show_overlay!' => 'no',
 					'show_title' => 'yes',
 					'title_overlay' => 'yes'
 				],
@@ -1384,7 +1384,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'label_block' => false,
 				// 'render_type' => 'template',
 				'condition' => [
-					'show_overlay' => 'yes',
+					'show_overlay!' => 'no',
 					'timeline_content' => 'dynamic',
 					'show_date' => 'yes'
 				]
@@ -1408,7 +1408,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-timeline-entry:hover .wpr-inner-date-label' => 'opacity: 1; transform: translateY(0%);'
 				],
 				'condition' => [
-					'show_overlay' => 'yes',
+					'show_overlay!' => 'no',
 					'show_date' => 'yes',
 					'date_overlay' => 'yes',
 					'timeline_content' => 'dynamic'
@@ -1441,7 +1441,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'default' => 'no',
 				'label_block' => false,
 				'condition' => [
-					'show_overlay' => 'yes',
+					'show_overlay' => '!no',
 					'show_description' => 'yes'
 				]
 			]
@@ -1525,7 +1525,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'label_block' => false,
 				'render_type' => 'template',
 				'condition' => [
-					'show_overlay' => 'yes',
+					'show_overlay!' => 'no',
 					'show_readmore' => 'yes',
 					'timeline_content' => ['dynamic']
 				]
@@ -1644,7 +1644,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'label' => __( 'Overlay', 'wpr-addons' ),
 				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
 				'condition' => [
-					'show_overlay' => 'yes'
+					'show_overlay!' => 'no'
 				]
 			]
 		);
@@ -1735,7 +1735,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-timeline-story-overlay' => 'justify-content: {{VALUE}};',
 				],
 				'condition' => [
-					'show_overlay' => 'yes',
+					'show_overlay!' => 'no',
 					'content_layout' => 'image-top'
 				]
 			]
@@ -1767,7 +1767,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-timeline-story-overlay div' => 'display: flex; justify-content: {{VALUE}};',
 				],
 				'condition' => [
-					'show_overlay' => 'yes',
+					'show_overlay!' => 'no',
 					'content_layout' => 'image-top'
 				]
 			]
@@ -2251,7 +2251,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-data-wrap' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
 				],
 				'condition' => [
-					'show_overlay!' => 'yes'
 				],
 			]
 		);
@@ -2528,7 +2527,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'label' => __( 'Overlay', 'wpr-addons' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 				'condition' => [
-					'show_overlay' => ['yes']
+					'show_overlay!' => 'no'
 				],
 			]
 		);
@@ -2572,7 +2571,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-timeline-story-overlay' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' =>[
-					'show_overlay' => 'yes'
+					'show_overlay!' => 'no'
 				],
 			]
 		);
