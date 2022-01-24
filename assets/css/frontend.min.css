@@ -10929,11 +10929,11 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 .wpr-horizontal-bottom .wpr-button-prev {
-    left: -10px;
+    margin-left: -10px;
 }
 
 .wpr-horizontal-bottom .wpr-button-next {
-    right: -10px;
+    margin-right: -10px;
 }
 
 .wpr-button-prev.swiper-button-disabled,
@@ -11098,11 +11098,11 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 .wpr-horizontal .wpr-button-prev {
-    left: -6px;
+    margin-left: -6px;
 }
 
 .wpr-horizontal .wpr-button-next {
-    right: -6px;
+    margin-right: -6px;
 }
 
 .wpr-button-prev.swiper-button-disabled,
