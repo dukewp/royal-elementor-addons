@@ -275,28 +275,30 @@ class Wpr_Charts extends Widget_Base {
 			}
 		} else {
 			if(is_array($charts_data_set) && sizeof($charts_data_set)) {
+				$chart_data_number_values = [];
 				foreach($charts_data_set AS $labels_data):
-					// $data_charts_array['labels'][] = $labels_data['chart_label'];
+					$data_charts_array['labels'][] = $labels_data['chart_data_label'];
 		
 					var_dump($labels_data['chart_data_label']);
 				endforeach;
 				
 				foreach($charts_data_set as $chart_data) {
+					
+				}
+				// array_map('floatval', explode(',', trim($chart_data_set['chart_data_set'], ','));
+
 					$data_charts_array['datasets'][] = [
-						'label' => $chart_data['chart_data_label'],
-						'data' => array_map('floatval', explode(',', trim($chart_data['chart_data_set'], ','))),
+						'label' => 'New Data Set',
+						'data' => $chart_data_values,
 						'backgroundColor' => $chart_data['chart_data_background_color'],
 						'hoverBackgroundColor' => $chart_data['chart_data_background_color_hover'],
 						'borderColor' => $chart_data['chart_data_border_color'],
 						'hoverBorderColor' => $chart_data['chart_data_border_color_hover'],
 						'borderWidth' => $chart_data['chart_data_border_width']
 					];
-				}
 			}
 		}
 
-		var_dump($data_charts_array);
-		
         $layout_settings = [
             'chart_type' => $settings['chart_type'],
             'chart_labels' => !empty($data_charts_array['labels']) ? $data_charts_array['labels'] : '',
