@@ -3418,7 +3418,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					],
 					'px' => [
 						'min' => 0,
-						'max' => 200,
+						'max' => 100,
 					],
 				],
 				'selectors' => [
