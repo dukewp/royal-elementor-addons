@@ -84,7 +84,9 @@ class Wpr_Charts extends Widget_Base {
 
 				'fields'      => $chart_repeater->get_controls(),
 				'title_field' => '{{{ chart_label }}}',
-				// 'condition'   => ['chart_type' => ['bar', 'horizontalBar', 'line', 'radar']],
+				'condition'   => [
+					'chart_type' => ['bar', 'line', 'radar'] //  'horizontalBar',
+				],
 			]
 		);
 
@@ -229,8 +231,8 @@ class Wpr_Charts extends Widget_Base {
 				'type'    => Controls_Manager::SELECT,
 				'default' => 'bar',
 				'options' => [
-					'line'          => esc_html__('Line', 'wpr-addons'),
 					'bar'           => esc_html__('Bar', 'wpr-addons'),
+					'line'          => esc_html__('Line', 'wpr-addons'),
 					'radar'         => esc_html__('Radar', 'wpr-addons'),
 					'doughnut'      => esc_html__('Doughnut', 'wpr-addons'),
 					'pie'           => esc_html__('Pie', 'wpr-addons'),
@@ -257,23 +259,47 @@ class Wpr_Charts extends Widget_Base {
 			endforeach;
 		endif;
 
-		if(is_array($charts_data_set) && sizeof($charts_data_set)) {
-			foreach($charts_data_set as $chart_data) {
-				$data_charts_array['datasets'][] = [
-					'label' => $chart_data['chart_data_label'],
-					'data' => array_map('floatval', explode(',', trim($chart_data['chart_data_set'], ','))),
-					'backgroundColor' => $chart_data['chart_data_background_color'],
-					'hoverBackgroundColor' => $chart_data['chart_data_background_color_hover'],
-					'borderColor' => $chart_data['chart_data_border_color'],
-					'hoverBorderColor' => $chart_data['chart_data_border_color_hover'],
-					'borderWidth' => $chart_data['chart_data_border_width']
-				];
+		if ( in_array($chart_type, array('bar', 'line', 'radar'))) {
+			if(is_array($charts_data_set) && sizeof($charts_data_set)) {
+				foreach($charts_data_set as $chart_data) {
+					$data_charts_array['datasets'][] = [
+						'label' => $chart_data['chart_data_label'],
+						'data' => array_map('floatval', explode(',', trim($chart_data['chart_data_set'], ','))),
+						'backgroundColor' => $chart_data['chart_data_background_color'],
+						'hoverBackgroundColor' => $chart_data['chart_data_background_color_hover'],
+						'borderColor' => $chart_data['chart_data_border_color'],
+						'hoverBorderColor' => $chart_data['chart_data_border_color_hover'],
+						'borderWidth' => $chart_data['chart_data_border_width']
+					];
+				}
+			}
+		} else {
+			if(is_array($charts_data_set) && sizeof($charts_data_set)) {
+				foreach($charts_data_set AS $labels_data):
+					// $data_charts_array['labels'][] = $labels_data['chart_label'];
+		
+					var_dump($labels_data['chart_data_label']);
+				endforeach;
+				
+				foreach($charts_data_set as $chart_data) {
+					$data_charts_array['datasets'][] = [
+						'label' => $chart_data['chart_data_label'],
+						'data' => array_map('floatval', explode(',', trim($chart_data['chart_data_set'], ','))),
+						'backgroundColor' => $chart_data['chart_data_background_color'],
+						'hoverBackgroundColor' => $chart_data['chart_data_background_color_hover'],
+						'borderColor' => $chart_data['chart_data_border_color'],
+						'hoverBorderColor' => $chart_data['chart_data_border_color_hover'],
+						'borderWidth' => $chart_data['chart_data_border_width']
+					];
+				}
 			}
 		}
 
+		var_dump($data_charts_array);
+		
         $layout_settings = [
             'chart_type' => $settings['chart_type'],
-            'chart_labels' => $data_charts_array['labels'],
+            'chart_labels' => !empty($data_charts_array['labels']) ? $data_charts_array['labels'] : '',
 			'chart_datasets' => wp_json_encode($data_charts_array['datasets'])
         ];
 
