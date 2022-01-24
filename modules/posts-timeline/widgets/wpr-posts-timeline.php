@@ -2554,17 +2554,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		);
 
 		$this->add_control(
-			'date_bg_color',
-			[
-				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-inner-date-label' => 'background-color: {{VALUE}}',
-				]
-			]
-		);
-
-		$this->add_control(
 			'date_color',
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
@@ -2850,7 +2839,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					// '{{WRAPPER}} .wpr-wrapper .wpr-read-more-wrap' => 'width: {{SIZE}}{{UNIT}} !important; height: auto;',
 
 				],
-				'separator' => 'after',
+				'separator' => 'before',
 			]
 		);
 
@@ -2974,6 +2963,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => esc_html__( 'Line Width', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
+				'min' => 0,
 				'default' => 1,
 				'step' => 0.1,
 				'selectors' => [
@@ -3553,19 +3543,14 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ '%', 'px' ],
 				'default' => [
 					'unit' => 'px',
 					'size' => 180,
 				],
 				'range' => [
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
 					'px' => [
 						'min' => 0,
-						'max' => 400,
+						'max' => 300,
 					],
 				],
 				'selectors' => [
@@ -3581,15 +3566,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => __( 'Right Label Distance', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['%','px'],
 				'range' => [
 					'px' => [
 						'min' => 0,
 						'max' => 50,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 10,
 					],
 				],
 				'default' => [
@@ -3610,15 +3590,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => __( 'Left Label Distance', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['%', 'px'],
 				'range' => [
 					'px' => [
 						'min' => 0,
 						'max' => 50,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 200,
 					],
 				],
 				'default' => [
@@ -3645,10 +3620,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						'min' => 0,
 						'max' => 130,
 					],
-					'%' => [
-						'min' => 0,
-						'max' => 12,
-					],
 				],
 				'default' => [
 					'unit' => 'px',
@@ -3668,15 +3639,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => __( 'Right Label Distance', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px', '%'],
 				'range' => [
 					'px' => [
 						'min' => 0,
 						'max' => 50,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 10,
 					],
 				],
 				'default' => [
