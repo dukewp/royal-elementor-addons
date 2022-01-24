@@ -3130,7 +3130,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$this->add_control(
 			'line_color',
 			[
-				'label' => __( 'Line Color', 'wpr' ),
+				'label' => __( 'Line Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wrapper .wpr-line::before' => 'background-color: {{VALUE}}',
@@ -3146,6 +3146,22 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'default' => '#D6D6D6',
 			]
 		); //Todo: find out why so many colors together
+		
+		$this->add_control(
+			'swiper_progressbar_color',
+			[
+				'label' => __( 'Progress(Fill) Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-horizontal .wpr-swiper-pagination.swiper-pagination-progressbar .swiper-pagination-progressbar-fill' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-horizontal-bottom .wpr-swiper-pagination.swiper-pagination-progressbar .swiper-pagination-progressbar-fill' => 'background-color: {{VALUE}}',
+				],
+				'condition' => [
+					'timeline_layout' => ['horizontal', 'horizontal-bottom']
+				],
+				'default' => '#605BE5',
+			]
+		);
 
 		$this->add_control(
 			'timeline_fill_color',
@@ -3161,7 +3177,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 				'condition' => [
 					'timeline_layout!' => ['horizontal', 'horizontal-bottom']
-				]
+				],
+				'separator' => 'before'
 			]
 		);
 
@@ -3175,7 +3192,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 1000,
+						'max' => 300,
 					]
 				],
 				'default' => [
@@ -3184,6 +3201,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],			
 				'selectors' => [
 					'{{WRAPPER}} .wpr-horizontal .wpr-swiper-pagination.swiper-pagination-progressbar' => 'top: auto; bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-horizontal .wpr-icon' => 'bottom: calc({{SIZE}}{{UNIT}} + 1px) !important;',
+					'{{WRAPPER}} .wpr-button-prev' => 'top: auto; bottom: calc({{SIZE}}{{UNIT}});',
+					'{{WRAPPER}} .wpr-button-next' => 'top: auto; bottom: calc({{SIZE}}{{UNIT}});',
 				],
 				'condition' => [
 					'timeline_layout' => ['horizontal']
@@ -3210,6 +3230,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],			
 				'selectors' => [
 					'{{WRAPPER}} .wpr-horizontal-bottom .wpr-swiper-pagination.swiper-pagination-progressbar' => 'bottom: auto; top: {{SIZE}}{{UNIT}} !important',
+					'{{WRAPPER}} .wpr-horizontal-bottom .wpr-icon' => 'position: absolute; top: calc({{SIZE}}{{UNIT}} + 1px) !important; left: 50%; transform: translate(-50%, -50%);',
+					'{{WRAPPER}} .wpr-button-prev' => 'bottom: auto; top: calc({{SIZE}}{{UNIT}} + 2px);',
+					'{{WRAPPER}} .wpr-button-next' => 'bottom: auto; top: calc({{SIZE}}{{UNIT}} + 2px);',
 				],
 				'condition' => [
 					'timeline_layout' => ['horizontal-bottom']
@@ -3222,7 +3245,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			'swiper_pagination_progressbar_height',
 			[
 				'type' => Controls_Manager::NUMBER,
-				'label' => esc_html__( 'Height(Scale)', 'wpr-addons' ),
+				'label' => esc_html__( 'Height', 'wpr-addons' ),
 				'default' => 0.7,
 				'step' => 0.1,		
 				'selectors' => [
@@ -3231,22 +3254,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'condition' => [
 					'timeline_layout' => ['horizontal-bottom', 'horizontal']
 				],
-			]
-		);
-		
-		$this->add_control(
-			'swiper_progressbar_color',
-			[
-				'label' => __( 'Progressfill Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-horizontal .wpr-swiper-pagination.swiper-pagination-progressbar .swiper-pagination-progressbar-fill' => 'background-color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-horizontal-bottom .wpr-swiper-pagination.swiper-pagination-progressbar .swiper-pagination-progressbar-fill' => 'background-color: {{VALUE}}',
-				],
-				'condition' => [
-					'timeline_layout' => ['horizontal', 'horizontal-bottom']
-				],
-				'default' => '#605BE5',
 			]
 		);
 
@@ -3470,31 +3477,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'icon_bottom_position',
-			[
-				'type' => Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Icon position', 'wpr-addons' ),
-				'size_units' => [ 'px' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 300,
-					]
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 110,
-				],			
-				'selectors' => [
-					'{{WRAPPER}} .wpr-horizontal .wpr-icon' => 'bottom: {{SIZE}}{{UNIT}} !important;',
-				],
-				'condition' => [
-					'timeline_layout' => ['horizontal']
-				],
-			]
-		);
-
 		// $this->add_responsive_control( // TODO: determine why used top previously
 		// 	'icon_top_position',
 		// 	[
@@ -3590,29 +3572,54 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		// 	]
 		// );
 		
-		$this->add_control(
-			'icon_top',
-			[
-				'label' => __( 'Position Top', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 300,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 113,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'top: {{SIZE}}{{UNIT}}; transform: translate(-50%, -50%);',
-				],
-				'condition' => [
-					'timeline_layout' => ['horizontal-bottom'],
-				]
-			]
-		);
+		// $this->add_control(
+		// 	'icon_top',
+		// 	[
+		// 		'label' => __( 'Position Top', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'range' => [
+		// 			'px' => [
+		// 				'min' => 0,
+		// 				'max' => 300,
+		// 			],
+		// 		],
+		// 		'default' => [
+		// 			'unit' => 'px',
+		// 			'size' => 113,
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'top: {{SIZE}}{{UNIT}}; transform: translate(-50%, -50%);',
+		// 		],
+		// 		'condition' => [
+		// 			'timeline_layout' => ['horizontal-bottom'],
+		// 		]
+		// 	]
+		// );
+
+		// $this->add_responsive_control(
+		// 	'icon_bottom_position',
+		// 	[
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'label' => esc_html__( 'Distance', 'wpr-addons' ),
+		// 		'size_units' => [ 'px' ],
+		// 		'range' => [
+		// 			'px' => [
+		// 				'min' => 0,
+		// 				'max' => 300,
+		// 			]
+		// 		],
+		// 		'default' => [
+		// 			'unit' => 'px',
+		// 			'size' => 110,
+		// 		],			
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-horizontal .wpr-icon' => 'bottom: {{SIZE}}{{UNIT}} !important;',
+		// 		],
+		// 		'condition' => [
+		// 			'timeline_layout' => ['horizontal']
+		// 		],
+		// 	]
+		// );
 		
 		$this->add_control(
 			'icon_border_type',
@@ -4317,82 +4324,48 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'navigation_icon_bg_size',
-			[
-				'label' => esc_html__( 'Button Background Size', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 200,
-					],
-				],				
-				'default' => [
-					'unit' => 'px',
-					'size' => 40,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-horizontal-bottom .wpr-button-next i' => 'width: {{SIZE}}{{UNIT}}; text-align: center;',
-					'{{WRAPPER}} .wpr-horizontal-bottom .wpr-button-prev i' => 'width: {{SIZE}}{{UNIT}}; text-align: center;',
-					'{{WRAPPER}} .wpr-horizontal .wpr-button-next i' => 'width: {{SIZE}}{{UNIT}}; text-align: center;',
-					'{{WRAPPER}} .wpr-horizontal .wpr-button-prev i' => 'width: {{SIZE}}{{UNIT}}; text-align: center;',
-				],
-			]
-		);
+		// $this->add_responsive_control(
+		// 	'navigation_icon_bg_size',
+		// 	[
+		// 		'label' => esc_html__( 'Button Background Size', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'size_units' => ['px'],
+		// 		'range' => [
+		// 			'px' => [
+		// 				'min' => 0,
+		// 				'max' => 200,
+		// 			],
+		// 		],				
+		// 		'default' => [
+		// 			'unit' => 'px',
+		// 			'size' => 40,
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-horizontal-bottom .wpr-button-next' => 'width: {{SIZE}}{{UNIT}}; text-align: center; height: auto;',
+		// 			'{{WRAPPER}} .wpr-horizontal-bottom .wpr-button-prev' => 'width: {{SIZE}}{{UNIT}}; text-align: center; height: auto;',
+		// 			'{{WRAPPER}} .wpr-horizontal .wpr-button-next i' => 'width: {{SIZE}}{{UNIT}}; text-align: center;',
+		// 			'{{WRAPPER}} .wpr-horizontal .wpr-button-prev i' => 'width: {{SIZE}}{{UNIT}}; text-align: center;',
+		// 		],
+		// 	]
+		// ); //todo
 
-		$this->add_responsive_control(
-			'swiper_navigation_position',
-			[
-				'type' => Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Position', 'wpr-addons' ),
-				'size_units' => [ 'px' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 1000,
-					]
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 71,
-				],			
-				'selectors' => [
-					'{{WRAPPER}} .wpr-button-prev' => 'top: auto; bottom: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-button-next' => 'top: auto; bottom: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'timeline_layout' => 'horizontal',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'swiper_navigation_position_top',
-			[
-				'type' => Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Position', 'wpr-addons' ),
-				'size_units' => [ 'px' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 300,
-					]
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 114,
-				],			
-				'selectors' => [
-					'{{WRAPPER}} .wpr-button-prev' => 'bottom: auto; top: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-button-next' => 'bottom: auto; top: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'timeline_layout' => 'horizontal-bottom',
-				],
-			]
-		);
+		// $this->add_control( //TODO: change slider control to number
+		// 	'navigation_icon_bg_size',
+		// 	[
+		// 		'label' => esc_html__( 'Background Size', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::NUMBER,
+		// 		'min' => 0,
+		// 		'default' => 0.8,
+		// 		'step' => 0.1,
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-horizontal-bottom .wpr-button-next' => 'transform: scale({{SIZE}}); text-align: center; height: auto;',
+		// 			'{{WRAPPER}} .wpr-horizontal-bottom .wpr-button-prev' => 'transform: scale({{SIZE}}); text-align: center; height: auto;',
+		// 			'{{WRAPPER}} .wpr-horizontal .wpr-button-next i' => 'transform: scale({{SIZE}}); text-align: center;',
+		// 			'{{WRAPPER}} .wpr-horizontal .wpr-button-prev i' => 'transform: scale({{SIZE}}); text-align: center;',
+		// 		],
+		// 		'separator' => 'before',
+		// 	]
+		// );
 		
 		$this->end_controls_tab();
 
@@ -4975,10 +4948,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			<!-- Add Pagination -->        
 			<div class="wpr-swiper-pagination"></div>
 			<!-- Add Arrows -->
-			<div class="wpr-button-prev wpr-slider-prev-arrow wpr-slider-prev-'. $this->get_id() .'">
+			<div class="wpr-button-prev wpr-timeline-prev-arrow wpr-timeline-prev-'. $this->get_id() .'">
 				'. \WprAddons\Classes\Utilities::get_wpr_icon( $settings['swiper_nav_icon'], '' ) .'
 			</div>
-			<div class="wpr-button-next wpr-slider-next-arrow wpr-slider-next-'. $this->get_id() .'">
+			<div class="wpr-button-next wpr-timeline-next-arrow wpr-timeline-next-'. $this->get_id() .'">
 				'. \WprAddons\Classes\Utilities::get_wpr_icon( $settings['swiper_nav_icon'], '' ) .'
 			</div>
 		</div>';
