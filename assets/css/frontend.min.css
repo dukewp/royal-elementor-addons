@@ -10711,6 +10711,13 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     margin: 0 32px;
 }
 
+.wpr-horizontal.swiper-container {
+    position: unset;
+    /* overflow: hidden; */
+    z-index: 11;
+    margin: 0 32px;
+}
+
 .wpr-horizontal {
     padding-top: 10px;
 }
@@ -10964,14 +10971,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 
 /*----Horizontal Timeline----*/
-
-.wpr-horizontal.swiper-container {
-    position: unset;
-    /* overflow: hidden; */
-    z-index: 11;
-    margin: 0 32px;
-}
-
 
 /*----Year Label----*/
 
