@@ -2496,26 +2496,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'title_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 5,
-					'right' => 0,
-					'bottom' => 5,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-wrapper .wpr-title' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
-					/// add container class for more specificity
-				],
-				'separator' => 'before',
-			]
-		);
-
 		$this->end_controls_tab();
 		
 		$this->start_controls_tab(
@@ -2696,25 +2676,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		// );
 
 		$this->add_responsive_control(
-			'date_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-inner-date-label' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_responsive_control(
 			'date_margin',
 			[
 				'label' => esc_html__( 'Margin', 'wpr-addons' ),
@@ -2781,26 +2742,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wrapper .wpr-description' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
-					/// add container class for more specificity
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_responsive_control(
-			'description_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 5,
-					'right' => 0,
-					'bottom' => 5,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-wrapper .wpr-description' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
 					/// add container class for more specificity
 				],
 				'separator' => 'before',
@@ -3323,25 +3264,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		);
 
 		$this->add_control(
-			'icon_bgcolor',
-			[
-				'label' => __( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => \Elementor\Core\Schemes\Color::get_type(),
-					'value' => \Elementor\Core\Schemes\Color::COLOR_1,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'background-color: {{VALUE}}',
-				],
-				'default' => '#605BE5',
-				'condition' => [
-					'timeline_content' => 'dynamic'
-				]
-			]
-		);
-
-		$this->add_control(
 			'icon_color',
 			[
 				'label' => __( 'Color', 'wpr-addons' ),
@@ -3359,6 +3281,25 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'timeline_content' => ['dynamic']
 				],
 				'default' => '#FFF',
+			]
+		);
+
+		$this->add_control(
+			'icon_bgcolor',
+			[
+				'label' => __( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'scheme' => [
+					'type' => \Elementor\Core\Schemes\Color::get_type(),
+					'value' => \Elementor\Core\Schemes\Color::COLOR_1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'background-color: {{VALUE}}',
+				],
+				'default' => '#605BE5',
+				'condition' => [
+					'timeline_content' => 'dynamic'
+				]
 			]
 		);
 
@@ -3444,6 +3385,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wrapper .wpr-icon i' => 'font-size: {{SIZE}}{{UNIT}} !important',
 				],
+				'separator' => 'before'
 			]
 		);
 
@@ -3470,9 +3412,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wrapper .wpr-icon i' => 'display: block;',
 					'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'height: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}}; display: flex !important; justify-content: center !important; align-items: center !important;',
-
 				],
-				'separator' => 'after',
 			]
 		);
 
@@ -3546,26 +3486,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		);
 
 		$this->add_control(
-			'icon_border_radius',
-			[
-				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-icon' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
-					/// add container class for more specificity
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
 			'icon_border_width',
 			[
 				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
@@ -3581,7 +3501,25 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-icon' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
 					/// add container class for more specificity
 				],
-				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'icon_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-icon' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+					/// add container class for more specificity
+				],
 			]
 		);
 		
