@@ -2554,17 +2554,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		);
 
 		$this->add_control(
-			'date_bg_color',
-			[
-				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-inner-date-label' => 'background-color: {{VALUE}}',
-				]
-			]
-		);
-
-		$this->add_control(
 			'date_color',
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
