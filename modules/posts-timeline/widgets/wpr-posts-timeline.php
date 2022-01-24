@@ -1992,7 +1992,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$this->add_control(
 			'story_border_color_left',
 			[
-				'label' => __( 'Border Color (Left-aligned)', 'wpr-addons' ),
+				'label' => __( 'Border Color (Left Aligned)', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'scheme' => [
 					'type' => \Elementor\Core\Schemes\Color::get_type(),
@@ -2011,7 +2011,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$this->add_control(
 			'story_border_color_right',
 			[
-				'label' => __( 'Border Color (Right-aligned)', 'wpr-addons' ),
+				'label' => __( 'Border Color (Right Aligned)', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'scheme' => [
 					'type' => \Elementor\Core\Schemes\Color::get_type(),
@@ -2052,7 +2052,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$this->add_control( //TOdO: add pagination icon
 			'item_distance',
 			[
-				'label' => esc_html__( 'Item Distance', 'wpr-addons' ),
+				'label' => esc_html__( 'Distance From Line', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => ['px'],
 				'range' => [
@@ -2228,7 +2228,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$this->add_responsive_control(
 			'story_padding',
 			[
-				'label' => esc_html__( 'Item Padding', 'wpr-addons' ),
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
@@ -2301,7 +2301,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$this->add_control(
 			'timeline_item_border_width_left',
 			[
-				'label' => esc_html__( 'Border Width (Left-aligned)', 'wpr-addons' ),
+				'label' => esc_html__( 'Border Width (Left Aligned)', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
@@ -2327,7 +2327,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$this->add_control(
 			'timeline_item_border_width_right',
 			[
-				'label' => esc_html__( 'Border Width (Right-aligned)', 'wpr-addons' ),
+				'label' => esc_html__( 'Border Width (Right Aligned)', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
