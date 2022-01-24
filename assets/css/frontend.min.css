@@ -10259,69 +10259,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-pc-btn-align-fixed-left .wpr-pc-btn {
     right: auto;
 }
-
-
-/*--------------------------------------------------------------
-  == Section Extensions
-  --------------------------------------------------------------*/
-
-.wpr-particle-wrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-}
-
-.wpr-particle-wrapper canvas {
-    position: relative;
-    z-index: -1;
-}
-
-.wpr-jarallax {
-    position: relative;
-    -webkit-transition: all 0.9s ease-in-out;
-    -o-transition: all 0.9s ease-in-out;
-    transition: all 0.9s ease-in-out;
-}
-
-.wpr-parallax-multi-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-}
-
-.wpr-parallax-ml-children {
-    position: relative;
-    display: none;
-}
-
-.wpr-parallax-ml-children img {
-    max-width: 100%;
-    width: 100%;
-}
-
-.wpr-sticky-section-yes {
-    width: 100%;
-}
-
-.wpr-reading-progress-bar-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 9999999;
-}
-
-.wpr-reading-progress-bar {
-    background-color: black;
-    width: 0%;
-}
-
-
 /* -- Posts Timeline Styles -- */
 
 .wpr-vertical {
@@ -10426,6 +10363,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     height: 0;
 }
 
+.wpr-read-more-button {
+    display: inline-block;
+}
+
 .wpr-timeline-centered.wpr-both-sided-timeline .wpr-timeline-entry.wpr-left-aligned .wpr-timeline-entry-inner .wpr-extra-label,
 .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-entry.wpr-left-aligned .wpr-timeline-entry-inner .wpr-extra-label {
     left: 108%;
@@ -10452,13 +10393,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     left: calc(100%);
     transform: translate(-50%);
 }
-
-
-/* .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-entry.wpr-left-aligned .wpr-timeline-entry-inner .wpr-icon {
-    position: absolute;
-    left: calc(98%);
-    transform: translate(-50%);
-} */
 
 .wpr-both-sided-timeline .wpr-right-aligned .wpr-icon {
     position: absolute;
@@ -10521,9 +10455,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     -webkit-background-clip: padding-box;
     -moz-background-clip: padding;
     background-clip: padding-box;
-    /* -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    border-radius: 6px; */
 }
 
 .wpr-timeline-centered .wpr-timeline-entry .wpr-timeline-entry-inner .wpr-data-wrap:after {
@@ -10646,21 +10577,9 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     align-items: flex-end;
 }
 
-
-/* .wpr-horizontal-timeline .swiper-slide-line-bottom.auto-height {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-} */
-
 .wpr-horizontal-timeline .wpr-story-info {
     width: 98%;
 }
-
-*/
-/* .wpr-horizontal-timeline .swiper-slide {
-    width: 100%;
-} */
 
 .wpr-story-info-vertical img,
 .wpr-story-info img {
@@ -10682,8 +10601,8 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     left: 0;
     display: flex;
     flex-direction: column;
-    height: 100%;
     width: 100%;
+    height: auto;
 }
 
 
@@ -10832,8 +10751,12 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 /* .wpr-horizontal-bottom .wpr-timeline-media, */
 
+.wpr-timeline-media {
+    overflow: hidden;
+}
+
 .wpr-timeline-media img {
-    display: inline-block;
+    /* display: inline-block; */
     max-width: 100% !important;
     height: auto;
 }
@@ -10920,6 +10843,9 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-horizontal-bottom .wpr-button-prev,
 .wpr-horizontal-bottom .wpr-button-next {
     position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 40px;
     top: 113px;
     cursor: pointer;
@@ -10952,7 +10878,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     height: auto;
 }
 
-#wpr-horizontal-bottom-wrapper {
+.wpr-horizontal-bottom {
     height: auto;
 }
 
@@ -11092,6 +11018,9 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     font-size: 40px;
     cursor: pointer;
     line-height: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .wpr-horizontal .wpr-button-prev {
@@ -11301,4 +11230,65 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     .wpr-one-sided-timeline-left .wpr-icon {
         right: -5.7%;
     }
+}
+
+
+/*--------------------------------------------------------------
+  == Section Extensions
+  --------------------------------------------------------------*/
+
+.wpr-particle-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.wpr-particle-wrapper canvas {
+    position: relative;
+    z-index: -1;
+}
+
+.wpr-jarallax {
+    position: relative;
+    -webkit-transition: all 0.9s ease-in-out;
+    -o-transition: all 0.9s ease-in-out;
+    transition: all 0.9s ease-in-out;
+}
+
+.wpr-parallax-multi-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.wpr-parallax-ml-children {
+    position: relative;
+    display: none;
+}
+
+.wpr-parallax-ml-children img {
+    max-width: 100%;
+    width: 100%;
+}
+
+.wpr-sticky-section-yes {
+    width: 100%;
+}
+
+.wpr-reading-progress-bar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999999;
+}
+
+.wpr-reading-progress-bar {
+    background-color: black;
+    width: 0%;
 }
