@@ -2288,8 +2288,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-vertical' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-horizontal' => 'padding-top: {{TOP}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-horizontal-bottom' => 'padding-bottom: {{TOP}}{{UNIT}};',
+					// '{{WRAPPER}} .wpr-horizontal' => 'padding-top: {{TOP}}{{UNIT}};',
+					// '{{WRAPPER}} .wpr-horizontal-bottom' => 'padding-bottom: {{TOP}}{{UNIT}};',
 				],
 			]
 		);

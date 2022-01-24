@@ -10711,6 +10711,13 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     margin: 0 32px;
 }
 
+.wpr-horizontal {
+    padding-top: 10px;
+}
+
+.wpr-horizontal-bottom {
+    padding-bottom: 10px;
+}
 
 /*----Year Label----*/
 
