@@ -425,7 +425,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$this->add_control(
 			'animation_loop_or_once',
 			[
-				'label' => esc_html__( 'Play Once', 'wpr-addons' ),
+				'label' => esc_html__( 'Animate Once', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::SWITCHER,
 				'label_on' => esc_html__( 'Yes', 'wpr-addons' ),
 				'label_off' => esc_html__( 'No', 'wpr-addons' ),
@@ -1251,7 +1251,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$this->add_control(
 			'show_overlay',
 			[
-				'label' => esc_html__( 'Show Overlay', 'wpr-addons' ),
+				'label' => esc_html__( 'Show Image Overlay', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default' => 'no',
@@ -1640,7 +1640,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$this->add_control(
 			'overlay_width',
 			[
-				'label' => esc_html__( 'Overlay Width', 'wpr-addons' ),
+				'label' => esc_html__( 'Width', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ '%', 'px' ],
 				'default' => [
@@ -1670,7 +1670,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$this->add_responsive_control(
 			'overlay_hegiht',
 			[
-				'label' => esc_html__( 'Overlay Height', 'wpr-addons' ),
+				'label' => esc_html__( 'Height', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ '%', 'px' ],
 				'default' => [
@@ -1701,7 +1701,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$this->add_responsive_control(
 			'overlay_content_alignment_vertical',
 			[
-				'label' => esc_html__( 'Overlay Content Align', 'wpr-addons' ),
+				'label' => esc_html__( 'Content Vertical Align', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
 				'label_block' => false,
 				'default' => 'center',
@@ -2073,7 +2073,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 				'condition' => [
 					'timeline_layout' => ['centered', 'one-sided', 'one-sided-left']
-				]
+				],
+				'separator' => 'before'
 			]
 		);
 
@@ -2131,6 +2132,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'timeline_layout' => ['horizontal'],
 					'equal_slides_height_top_line!' => 'auto-height',
 				],
+				'separator' => 'before'
 			]
 		);
 
@@ -2157,6 +2159,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'timeline_layout' => 'horizontal',
 					'equal_slides_height_top_line' => 'auto-height',
 				],
+				'separator' => 'before'
 			]
 		);
 		
@@ -2187,6 +2190,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'condition' => [
 					'timeline_layout' => ['horizontal-bottom'],
 				],
+				'separator' => 'before'
 			]
 		);
 		// + {{swiper_pagination_progressbar_top}}
@@ -2242,45 +2246,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 			]
 		);
-
-		$this->add_responsive_control(
-			'container_padding',
-			[
-				'label' => esc_html__( 'Container Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 10,
-					'right' => 10,
-					'bottom' => 10,
-					'left' => 10,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-vertical' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					// '{{WRAPPER}} .wpr-horizontal' => 'padding-top: {{TOP}}{{UNIT}};',
-					// '{{WRAPPER}} .wpr-horizontal-bottom' => 'padding-bottom: {{TOP}}{{UNIT}};',
-				],
-			]
-		);
-
-		// $this->add_responsive_control( //TODO: decide need or not
-		// 	'wpr_story_cont_padding',
-		// 	[
-		// 		'label' => esc_html__( 'Container Padding', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::DIMENSIONS,
-		// 		'size_units' => [ 'px' ],
-		// 		'default' => [
-		// 			'top' => 2,
-		// 			'right' => 2,
-		// 			'bottom' => 2,
-		// 			'left' => 2,
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-horizontal-timeline' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-		// 		],
-		// 		// TODO: creates problem with slider container
-		// 	]
-		// );
 
 		$this->add_control(
 			'timeline_item_border_type',
