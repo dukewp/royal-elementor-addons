@@ -178,6 +178,18 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 			]
 		);
+
+		$this->add_group_control(
+			Group_Control_Image_Size::get_type(),
+			[ 
+				'name' => 'wpr_thumbnail_dynamic',
+				'default' => 'full',
+				'separator' => 'none',
+				'condition' => [
+					'timeline_content' => 'dynamic'
+				]
+			]
+		);
 	
 		$this->add_control(
 			'date_format',
@@ -2346,18 +2358,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'condition' => [
 					'timeline_content' => 'dynamic'
 				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Image_Size::get_type(),
-			[ 
-				'name' => 'wpr_thumbnail_dynamic',
-				'default' => 'full',
-				'separator' => 'none',
-				'condition' => [
-					'timeline_content' => 'dynamic'
-				]
 			]
 		);
 
@@ -5127,14 +5127,13 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					echo '<div class="wpr-timeline-centered wpr-line '. $this->timeline_layout .'"  data-pagination="'. $this->pagination_type .'" data-max-pages="'. $this->pagination_max_pages .'" data-arrow-bgcolor="'. $arrow_bgcolor .'">';
 					echo '<div class="wpr-middle-line"></div>';
 					echo 'yes' === $this->timeline_fill ? '<div class="wpr-timeline-fill" data-layout="'. $layout .'"></div>' : '';
-
 				while ( $this->my_query->have_posts() ) {
 					global $wp_query;
 					$counter = $wp_query->current_post++;
 					$this->my_query->the_post();
-					ob_start();
-					the_post_thumbnail($settings['wpr_thumbnail_dynamic_size']);
-					$this->image = ob_get_clean();
+					$id = get_post_thumbnail_id();
+					$this->src = Group_Control_Image_Size::get_attachment_image_src( $id, 'wpr_thumbnail_dynamic', $settings );
+					$this->image = '<img class="wpr-thumbnail-image" src="'. $this->src .'"></img>';
 
 					$this->content_and_animation_alignment($layout, $countItem, $settings);
 				
@@ -5183,7 +5182,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 									echo 'yes' === $this->show_readmore && 'yes' !== $settings['readmore_overlay'] ? '<div class="wpr-read-more-wrap"><a class="wpr-read-more-button" href="'. get_the_permalink() .'">'. $settings['read_more_text'] .'</a></div>' : '';
 
-								echo $settings['content_layout'] === 'image-bottom' ? '<div class="wpr-animation-wrap wpr-timeline-media"><img src="'.the_post_thumbnail().'"</div>' : '';
+								echo $settings['content_layout'] === 'image-bottom' ? '<div class="wpr-animation-wrap wpr-timeline-media">
+								'.$this->image.'
+								</div>' : '';
 
 							echo '</div>';
 					echo '</div>';
@@ -5319,6 +5320,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					<div class="'.$horizontal_timeline_class.' swiper-wrapper">';
 					while( $this->my_query->have_posts() ) {
 						$this->my_query->the_post();
+
+						$id = get_post_thumbnail_id();
+						$this->src = Group_Control_Image_Size::get_attachment_image_src( $id, 'wpr_thumbnail_dynamic', $settings );
+						$this->image = '<img class="wpr-thumbnail-image" src="'. $this->src .'"></img>';
 						
 						$background_image = $settings['content_layout'] === 'background' ? get_the_post_thumbnail_url() : '';
 						$background_class = $settings['content_layout'] === 'background' ? 'story-with-background' : '';
@@ -5326,7 +5331,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					echo '<div class="swiper-slide  '.$swiper_class.'  '. esc_attr($slidesHeight) .'">';
 						// TODO: apply animation class to other layouts as well
 						echo '<div class="wpr-story-info '. $background_class .'" style="background-image: url('. $background_image .')">';
-						echo $settings['content_layout'] === 'image-top' || $settings['show_overlay'] === 'yes' ? '<div class="wpr-animation-wrap wpr-timeline-media" style="position: relative;"><img src="'. get_the_post_thumbnail_url() .'">' : '';
+						echo $settings['content_layout'] === 'image-top' || $settings['show_overlay'] === 'yes' ? '<div class="wpr-animation-wrap wpr-timeline-media" style="position: relative;">'. $this->image .'' : '';
 	
 						echo $settings['show_overlay'] === 'yes' && !empty(get_the_post_thumbnail_url()) ? '<div class="wpr-timeline-story-overlay '. $this->animation_class .'">' : '';
 	
@@ -5353,7 +5358,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 	
 						echo 'yes' === $this->show_readmore && 'yes' !== $settings['readmore_overlay'] ? '<div class="wpr-read-more-wrap"><a class="wpr-read-more-button" href="'. get_the_permalink() .'">'. $settings['read_more_text'] .'</a></div>' : '';
 	
-						echo $settings['content_layout'] === 'image-bottom' ? '<div class="wpr-animation-wrap wpr-timeline-media"><img src="'.the_post_thumbnail().'"></div>' : '';
+						echo $settings['content_layout'] === 'image-bottom' ? '<div class="wpr-animation-wrap wpr-timeline-media">'. $this->image .'</div>' : '';
 						echo '</div>';
 	
 						if ( 'yes' === $settings['show_extra_label'] ) {	
