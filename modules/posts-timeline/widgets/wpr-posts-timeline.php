@@ -2077,37 +2077,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'vertical_timeline_container_height',
-			[
-				'label' => esc_html__( 'Container Height', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ '%', 'px' ],
-				'default' => [
-					'unit' => '%',
-					'size' => 100,
-				],
-				'range' => [
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
-					'px' => [
-						'min' => 0,
-						'max' => 5000,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-timeline-centered .wpr-story-info-vertical' => 'height: {{SIZE}}{{UNIT}} !important;',
-					'{{WRAPPER}} .wpr-timeline-centered' => 'height: {{SIZE}}{{UNIT}} !important;',
-				],
-				'condition' => [
-					'content_layout' => ['background'],
-					'timeline_layout' => ['centered', 'one-sided', 'one-sided-left']
-				],
-			]
-		);
-
 		// $this->add_responsive_control(
 		// 	'timeline_img_width',
 		// 	[
