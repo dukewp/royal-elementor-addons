@@ -11174,18 +11174,32 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     border: 13px solid transparent;
 }
 
-.wpr-timeline-prev-arrow {
+.wpr-horizontal .wpr-timeline-prev-arrow {
     left: 1%;
     -webkit-transform: translateY(50%);
     -ms-transform: translateY(50%);
     transform: translateY(50%);
 }
 
-.wpr-timeline-next-arrow {
+.wpr-horizontal .wpr-timeline-next-arrow {
     right: 1%;
     -webkit-transform: translateY(50%) rotate(180deg);
     -ms-transform: translateY(50%) rotate(180deg);
     transform: translateY(50%) rotate(180deg);
+}
+
+.wpr-horizontal-bottom .wpr-timeline-prev-arrow {
+    left: 1%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.wpr-horizontal-bottom .wpr-timeline-next-arrow {
+    right: 1%;
+    -webkit-transform: translateY(-50%) rotate(180deg);
+    -ms-transform: translateY(-50%) rotate(180deg);
+    transform: translateY(-50%) rotate(180deg);
 }
 
 @media screen and (max-width: 767px) {

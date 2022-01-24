@@ -3161,6 +3161,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'timeline_layout' => ['horizontal', 'horizontal-bottom']
 				],
 				'default' => '#605BE5',
+				'separator' => 'before'
 			]
 		);
 
@@ -3176,10 +3177,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-vertical:before' => 'background-color: {{VALUE}} !important;',
 					'{{WRAPPER}} .wpr-vertical:after' => 'background-color: {{VALUE}} !important;',
 				],
+				'separator' => 'before',
 				'condition' => [
 					'timeline_layout!' => ['horizontal', 'horizontal-bottom']
 				],
-				'separator' => 'before'
 			]
 		);
 
@@ -4328,7 +4329,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$this->add_responsive_control(
 			'navigation_icon_bg_size',
 			[
-				'label' => esc_html__( 'Button Background Size', 'wpr-addons' ),
+				'label' => esc_html__( 'Box Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => ['px'],
 				'range' => [
