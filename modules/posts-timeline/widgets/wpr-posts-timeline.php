@@ -2130,7 +2130,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 200,
+						'max' => 50,
 					]
 				],
 				'default' => [
@@ -2157,7 +2157,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 300,
+						'max' => 50,
 					]
 				],
 				'default' => [
@@ -2180,19 +2180,14 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => esc_html__( 'Item Top Distance', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ '%', 'px' ],
 				'default' => [
 					'unit' => 'px',
-					'size' => 170,
+					'size' => 50,
 				],
 				'range' => [
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
 					'px' => [
 						'min' => 0,
-						'max' => 300,
+						'max' => 50,
 					],
 				],
 				'selectors' => [
