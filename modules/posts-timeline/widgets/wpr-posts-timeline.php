@@ -2145,7 +2145,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		);
 		
 		$this->add_responsive_control(
-			'story_info_margin_top',
+			'story_info_margin_top', //todo apply minimum position
 			[
 				'label' => esc_html__( 'Item Top Distance', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
@@ -2160,8 +2160,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-story-info' => 'margin-top: calc({{SIZE}}{{UNIT}}) !important;',
-					'{{WRAPPER}} .wpr-horizontal-bottom-timeline .swiper-slide.auto-height .wpr-story-info' => 'max-height: calc(100% - {{SIZE}}{{UNIT}}) !important;',
+					'{{WRAPPER}} .wpr-story-info' => 'margin-top: calc({{SIZE}}{{UNIT}} + {{swiper_pagination_progressbar_top.SIZE}}{{swiper_pagination_progressbar_top.UNIT}}) !important; max-height: calc(100% - {{SIZE}}{{UNIT}}) !important',
+					// '{{WRAPPER}} .wpr-horizontal-bottom-timeline .swiper-slide.auto-height .wpr-story-info' => 'margin-top: calc({{SIZE}}{{UNIT}} + {{swiper_pagination_progressbar_top.SIZE}}{{swiper_pagination_progressbar_top.UNIT}}) !important; max-height: calc(100% - {{SIZE}}{{UNIT}}) !important;',
 				],
 				'condition' => [
 					'timeline_layout' => ['horizontal-bottom'],
