@@ -3251,7 +3251,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'default' => 0.7,
 				'step' => 0.1,		
 				'selectors' => [
-					'{{WRAPPER}} .wpr-swiper-pagination.swiper-pagination-progressbar' => 'transform: scaleY({{SIZE}});',
+					'{{WRAPPER}} .wpr-swiper-pagination.swiper-pagination-progressbar' => 'transform: scaleY({{SIZE}}) translateX(-50%);',
 				],
 				'condition' => [
 					'timeline_layout' => ['horizontal-bottom', 'horizontal']
@@ -4299,12 +4299,12 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$this->add_responsive_control(
 			'navigation_icon_size',
 			[
-				'label' => esc_html__( 'Button Size', 'wpr-addons' ),
+				'label' => esc_html__( 'Icon Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => ['px'],
 				'range' => [
 					'px' => [
-						'min' => 0,
+						'min' => 10,
 						'max' => 100,
 					],
 				],				
@@ -4323,6 +4323,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-horizontal .wpr-button-prev svg' => 'width: {{SIZE}}{{UNIT}};',
 					
 				],
+				'separator' => 'before',
 			]
 		);
 
@@ -4334,7 +4335,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'size_units' => ['px'],
 				'range' => [
 					'px' => [
-						'min' => 0,
+						'min' => 20,
 						'max' => 100,
 					],
 				],				
@@ -4351,6 +4352,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-horizontal .wpr-button-prev i' => 'width: {{SIZE}}{{UNIT}}; text-align: center; line-height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-horizontal-bottom .wpr-button-next i' => 'width: {{SIZE}}{{UNIT}}; text-align: center; line-height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-horizontal-bottom .wpr-button-prev i' => 'width: {{SIZE}}{{UNIT}}; text-align: center; line-height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-swiper-pagination.swiper-pagination-progressbar' => 'width: calc(100% - ({{SIZE}}px + 15px)*2);',
 				],
 			]
 		); //todo

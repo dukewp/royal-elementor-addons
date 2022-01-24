@@ -10906,9 +10906,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 .wpr-horizontal-bottom .wpr-swiper-pagination.swiper-pagination-progressbar {
     position: absolute;
-    top: 112px;
-    margin: 0px 32px;
-    width: calc(100% - 64px);
+    left: 50%;
     z-index: 0;
 }
 
@@ -11081,8 +11079,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-horizontal .wpr-swiper-pagination.swiper-pagination-progressbar {
     position: absolute;
     height: 2px;
-    margin: 0px 32px;
-    width: calc(100% - 64px);
+    left: 50%;
     z-index: 0;
 }
 
