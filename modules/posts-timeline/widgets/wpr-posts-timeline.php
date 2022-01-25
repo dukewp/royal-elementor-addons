@@ -731,13 +731,16 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => __( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => \Elementor\Core\Schemes\Color::get_type(),
-					'value' => \Elementor\Core\Schemes\Color::COLOR_1,
-				],
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-story-info' => 'border-color: {{VALUE}} !important; outline-color: {{VALUE}} !important',
 					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-story-info-vertical' => 'border-color: {{VALUE}} !important; outline-color: {{VALUE}} !important',
+
+					// TODO: background colors for repeater arrows
+					'{{WRAPPER}} {{CURRENT_ITEM}}.swiper-slide-line-top .wpr-story-info:before' => 'border-bottom-color: {{VALUE}} !important;',
+					'{{WRAPPER}} {{CURRENT_ITEM}}.swiper-slide-line-bottom .wpr-story-info:before' => 'border-top-color: {{VALUE}} !important',
+					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-right-aligned .wpr-story-info-vertical:after' => 'border-right-color: {{VALUE}} !important',
+					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-left-aligned .wpr-story-info-vertical:after' => 'border-left-color: {{VALUE}} !important',
+					'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-wrapper .wpr-both-sided-timeline .wpr-left-aligned .wpr-data-wrap:after' => 'border-right-color: {{VALUE}} !important; border-left-color: transparent !important;',
 				],
 				// 'condition' => [
 				// 	'timeline_layout!' => 'centered'
@@ -761,12 +764,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => __( 'Title Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => \Elementor\Core\Schemes\Color::get_type(),
-					'value' => \Elementor\Core\Schemes\Color::COLOR_1,
-				],
 				'selectors' => [
-					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-title' => 'color: {{VALUE}}',
+					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-timeline-entry a.wpr-title' => 'color: {{VALUE}};',
 				],
 				'default' => '#605BE5',
 			]
@@ -777,44 +776,27 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => __( 'Description Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => \Elementor\Core\Schemes\Color::get_type(),
-					'value' => \Elementor\Core\Schemes\Color::COLOR_3,
-				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-wrapper {{CURRENT_ITEM}} .wpr-description' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wrapper {{CURRENT_ITEM}} .wpr-description' => 'color: {{VALUE}};',
 				],
 				'default' => '#333333',
 			]
 		);
 
 		$repeater->add_control(
-			'arrow_repeater_bgcolor',
+			'repeater_main_line_content_styles',
 			[
-				'label' => __( 'Triangle Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-
-					// TODO: background colors for repeater arrows
-					'{{WRAPPER}} {{CURRENT_ITEM}}.swiper-slide-line-top .wpr-story-info:before' => 'border-bottom-color: {{VALUE}} !important;',
-					'{{WRAPPER}} {{CURRENT_ITEM}}.swiper-slide-line-bottom .wpr-story-info:before' => 'border-top-color: {{VALUE}} !important',
-					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-right-aligned .wpr-story-info-vertical:after' => 'border-right-color: {{VALUE}} !important',
-					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-left-aligned .wpr-story-info-vertical:after' => 'border-left-color: {{VALUE}} !important',
-					'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-wrapper .wpr-both-sided-timeline .wpr-left-aligned .wpr-data-wrap:after' => 'border-right-color: {{VALUE}} !important; border-left-color: transparent !important;',
-				],
-				// 'condition' => [
-				// 	'timeline_layout' => 'horizontal-bottom'
-				// ],
-				'default' => '#605BE5',
+				'label' => __('Main Line','wpr-addons'),
+				'type' => \Elementor\Controls_Manager::HEADING,
+				'separator' => 'before',				
 			]
 		);
 		
 		$repeater->add_control(
 			'repeater_timeline_icon_color',
 			[
-				'label' => __( 'Main Line Icon Color', 'wpr-addons' ),
+				'label' => __( 'Icon Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'separator' => 'before',
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}}  .wpr-icon i' => 'color: {{VALUE}}',
 					// '{{WRAPPER}} {{CURRENT_ITEM}} .wpr-timeline-media i' => 'color: {{VALUE}}',
@@ -827,7 +809,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$repeater->add_control(
 			'repeater_timeline_icon_bg_color',
 			[
-				'label' => __( 'Main Line Icon Bg Color', 'wpr-addons' ),
+				'label' => __( 'Icon Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-icon' => 'background-color: {{VALUE}}',
@@ -842,7 +824,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$repeater->add_control(
 			'icon_border_color',
 			[
-				'label'  => esc_html__( 'Main Line Icon Border Color', 'wpr-addons' ),
+				'label'  => esc_html__( 'Icon Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#000',
 				'selectors' => [
@@ -2099,10 +2081,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => __( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => \Elementor\Core\Schemes\Color::get_type(),
-					'value' => \Elementor\Core\Schemes\Color::COLOR_1,
-				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-story-info' => 'border-color: {{VALUE}} !important; outline-color: {{VALUE}} !important',
 					'{{WRAPPER}} .wpr-story-info-vertical' => 'border-color: {{VALUE}} !important; outline-color: {{VALUE}} !important',
@@ -2119,10 +2097,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => __( 'Border Color (Left Aligned)', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => \Elementor\Core\Schemes\Color::get_type(),
-					'value' => \Elementor\Core\Schemes\Color::COLOR_1,
-				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-left-aligned .wpr-story-info-vertical' => 'border-color: {{VALUE}} !important; outline-color: {{VALUE}} !important',
 				],
@@ -2138,10 +2112,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => __( 'Border Color (Right Aligned)', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => \Elementor\Core\Schemes\Color::get_type(),
-					'value' => \Elementor\Core\Schemes\Color::COLOR_1,
-				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-right-aligned .wpr-story-info-vertical' => 'border-color: {{VALUE}} !important; outline-color: {{VALUE}} !important',
 				],
@@ -2796,10 +2766,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => __( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => \Elementor\Core\Schemes\Color::get_type(),
-					'value' => \Elementor\Core\Schemes\Color::COLOR_1,
-				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-title' => 'color: {{VALUE}}',
 				],
@@ -3024,10 +2990,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => __( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => \Elementor\Core\Schemes\Color::get_type(),
-					'value' => \Elementor\Core\Schemes\Color::COLOR_3,
-				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wrapper .wpr-description' => 'color: {{VALUE}}',
 				],
@@ -3093,10 +3055,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => __( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => \Elementor\Core\Schemes\Color::get_type(),
-					'value' => \Elementor\Core\Schemes\Color::COLOR_3,
-				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wrapper .wpr-read-more-button' => 'color: {{VAlUE}}',
 				],
@@ -3109,10 +3067,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => __( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => \Elementor\Core\Schemes\Color::get_type(),
-					'value' => \Elementor\Core\Schemes\Color::COLOR_3,
-				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wrapper .wpr-read-more-button' => 'background-color: {{VAlUE}}',
 				],
@@ -3281,10 +3235,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => __( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => \Elementor\Core\Schemes\Color::get_type(),
-					'value' => \Elementor\Core\Schemes\Color::COLOR_3,
-				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wrapper .wpr-read-more-button:hover' => 'color: {{VAlUE}}',
 				],
@@ -3297,10 +3247,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => __( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => \Elementor\Core\Schemes\Color::get_type(),
-					'value' => \Elementor\Core\Schemes\Color::COLOR_3,
-				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wrapper .wpr-read-more-button:hover' => 'background-color: {{VAlUE}}',
 				],
@@ -3641,15 +3587,15 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-year-label' => 'border-width: {{SIZE}}{{UNIT}};',
 
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-year-label' => 'margin-left: calc({{LEFT}}px);',
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-middle-line' => 'margin-left: calc({{LEFT}}px);',
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-timeline-fill' => 'margin-left: calc({{LEFT}}px);',
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-icon' => 'margin-left: calc({{LEFT}}px);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-year-label' => 'margin-left: calc({{LEFT}}px);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-middle-line' => 'margin-left: calc({{LEFT}}px);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-timeline-fill' => 'margin-left: calc({{LEFT}}px);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-icon' => 'margin-left: calc({{LEFT}}px);',
 
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-year-label' => 'margin-right: calc({{RIGHT}}px);',
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-middle-line' => 'margin-right: calc({{RIGHT}}px);',
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-fill' => 'margin-right: calc({{RIGHT}}px);',
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-icon' => 'margin-right: calc({{RIGHT}}px);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-year-label' => 'margin-right: calc({{RIGHT}}px);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-middle-line' => 'margin-right: calc({{RIGHT}}px);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-fill' => 'margin-right: calc({{RIGHT}}px);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-icon' => 'margin-right: calc({{RIGHT}}px);',
 				],
 				'condition' => [
 					'year_label_border_type!' => 'none'
@@ -3691,10 +3637,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => __( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => \Elementor\Core\Schemes\Color::get_type(),
-					'value' => \Elementor\Core\Schemes\Color::COLOR_1,
-				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-icon i' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'color: {{VALUE}}; border-color: {{icon_border_color}};',
@@ -3712,10 +3654,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => __( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => \Elementor\Core\Schemes\Color::get_type(),
-					'value' => \Elementor\Core\Schemes\Color::COLOR_1,
-				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'background-color: {{VALUE}}',
 				],
@@ -3943,15 +3881,15 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-icon' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
 
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-year-label' => 'margin-left: calc({{LEFT}}px);',
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-middle-line' => 'margin-left: calc({{LEFT}}px);',
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-timeline-fill' => 'margin-left: calc({{LEFT}}px);',
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-icon' => 'margin-left: calc({{LEFT}}px);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-year-label' => 'margin-left: calc({{LEFT}}px);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-middle-line' => 'margin-left: calc({{LEFT}}px);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-timeline-fill' => 'margin-left: calc({{LEFT}}px);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-icon' => 'margin-left: calc({{LEFT}}px);',
 
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-year-label' => 'margin-right: calc({{RIGHT}}px);',
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-middle-line' => 'margin-right: calc({{RIGHT}}px);',
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-fill' => 'margin-right: calc({{RIGHT}}px);',
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-icon' => 'margin-right: calc({{RIGHT}}px);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-year-label' => 'margin-right: calc({{RIGHT}}px);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-middle-line' => 'margin-right: calc({{RIGHT}}px);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-fill' => 'margin-right: calc({{RIGHT}}px);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-icon' => 'margin-right: calc({{RIGHT}}px);',
 					/// add container class for more specificity
 				],
 				'condition' => [
@@ -4232,10 +4170,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => __( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => \Elementor\Core\Schemes\Color::get_type(),
-					'value' => \Elementor\Core\Schemes\Color::COLOR_1,
-				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wrapper span.wpr-label' => 'color: {{VALUE}}',
 				],
@@ -4273,10 +4207,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => __( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => \Elementor\Core\Schemes\Color::get_type(),
-					'value' => \Elementor\Core\Schemes\Color::COLOR_3,
-				],
+				
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wrapper span.wpr-sub-label' => 'color: {{VALUE}}',
 				],
