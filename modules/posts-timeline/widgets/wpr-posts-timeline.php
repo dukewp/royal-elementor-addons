@@ -2571,42 +2571,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			]
 		);
 
-		// $this->add_responsive_control(
-		// 	'timeline_img_width',
-		// 	[
-		// 		'label' => esc_html__( 'Image Size', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'size_units' => [ '%', 'px' ],
-		// 		'default' => [
-		// 			'unit' => '%',
-		// 			'size' => 100,
-		// 		],
-		// 		'range' => [
-		// 			'%' => [
-		// 				'min' => 0,
-		// 				'max' => 100,
-		// 			],
-		// 			'px' => [
-		// 				'min' => 0,
-		// 				'max' => 5000,
-		// 			],
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-story-info img' => 'width: {{SIZE}}{{UNIT}} !important; height: auto !important;',
-		// 			'{{WRAPPER}} .swiper-container .wpr-timeline-media' => 'text-align: {{content_alignment_left.VALUE}} !important;',
-		// 			'{{WRAPPER}} .wpr-left-aligned .wpr-timeline-media' => 'text-align: {{content_alignment_left.VALUE}} !important;',
-		// 			'{{WRAPPER}} .wpr-right-aligned .wpr-timeline-media' => 'text-align: {{content_alignment.VALUE}} !important;',
-		// 			'{{WRAPPER}} .wpr-story-info-vertical img' => 'width: {{SIZE}}{{UNIT}} !important; height: auto !important;',
-		// 			// display: inline-block;
-		// 		],
-		// 		'condition' => [
-		// 			// 'timeline_content' => ['dynamic'], // horizontal-bottom
-		// 			// 'timeline_layout' => ['horizontal'],
-		// 			// 'equal_height_slides' => ['auto-height']
-		// 		],
-		// 	]
-		// );
-
 		$this->add_control(
 			'content_item_border_color',
 			[
