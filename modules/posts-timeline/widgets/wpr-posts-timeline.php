@@ -3302,27 +3302,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			]
 		);
 
-		$this->add_control( //TODO: change slider control to number
-			'middle_line_width',
-			[
-				'label' => esc_html__( 'Line Width', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'min' => 0,
-				'default' => 1,
-				'step' => 0.1,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-wrapper .wpr-line::before' => 'transform: scaleX({{SIZE}}) !important;',
-					'{{WRAPPER}} .wpr-wrapper .wpr-middle-line' => 'transform: scaleX({{SIZE}}) !important;',
-					'{{WRAPPER}} .wpr-wrapper .wpr-timeline-fill' => 'transform: scaleX({{SIZE}}) !important;',
-					/// add container class for more specificity
-				],
-				'condition' => [
-					'timeline_layout' => ['centered', 'one-sided', 'one-sided-left']
-				],
-				'separator' => 'before',
-			]
-		);
-
 		$this->add_control(
 			'line_color',
 			[
@@ -3372,10 +3351,30 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-vertical:before' => 'background-color: {{VALUE}} !important;',
 					'{{WRAPPER}} .wpr-vertical:after' => 'background-color: {{VALUE}} !important;',
 				],
-				'separator' => 'before',
 				'condition' => [
 					'timeline_layout!' => ['horizontal', 'horizontal-bottom']
 				],
+			]
+		);
+
+		$this->add_control( //TODO: change slider control to number
+			'middle_line_width',
+			[
+				'label' => esc_html__( 'Line Width', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'min' => 0,
+				'default' => 1,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wrapper .wpr-line::before' => 'transform: scaleX({{SIZE}}) !important;',
+					'{{WRAPPER}} .wpr-wrapper .wpr-middle-line' => 'transform: scaleX({{SIZE}}) !important;',
+					'{{WRAPPER}} .wpr-wrapper .wpr-timeline-fill' => 'transform: scaleX({{SIZE}}) !important;',
+					/// add container class for more specificity
+				],
+				'condition' => [
+					'timeline_layout' => ['centered', 'one-sided', 'one-sided-left']
+				],
+				'separator' => 'before',
 			]
 		);
 
@@ -4377,7 +4376,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 					'{{WRAPPER}} .wpr-one-sided-timeline .wpr-data-wrap:after' => 'top: {{size}}{{UNIT}}; transform: translateY(-50%) !important;',
 					'{{WRAPPER}} .wpr-one-sided-timeline-left .wpr-data-wrap:after' => 'top: {{size}}{{UNIT}}; transform: translateY(-50%) !important;',
-					'{{WRAPPER}} .wpr-one-sided-timeline .wpr-icon' => 'position: absolute; top: {{size}}{{UNIT}}; transform: translate (-50%, -50%) !important;',
+					'{{WRAPPER}} .wpr-one-sided-timeline .wpr-icon' => 'position: absolute; top: {{size}}{{UNIT}}; transform: translate(-50%, -50%) !important;',
 					'{{WRAPPER}} .wpr-one-sided-timeline .wpr-extra-label' => 'top: {{size}}{{UNIT}};  transform: translateY(-50%) !important;',
 					'{{WRAPPER}} .wpr-one-sided-timeline-left .wpr-icon' => 'position: absolute; top: {{size}}{{UNIT}}; transform: translate(50%,-50%) !important;',
 					'{{WRAPPER}} .wpr-one-sided-timeline-left .wpr-extra-label' => 'top: {{size}}{{UNIT}};  transform: translateY(-50%) !important;',
@@ -5281,7 +5280,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						echo '</time>';
 					}
 
-						echo '<div class="wpr-icon-border-color wpr-icon">';
+						echo '<div class="wpr-main-line-icon wpr-icon">';
 							\Elementor\Icons_Manager::render_icon( $content['repeater_story_icon'], [ 'aria-hidden' => 'true' ] );
 						echo '</div>';
 
@@ -5367,7 +5366,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 							</time>';
 						}
 
-							echo '<div class="wpr-icon-border-color wpr-icon">';
+							echo '<div class="wpr-main-line-icon wpr-icon">';
 							\Elementor\Icons_Manager::render_icon( $settings['posts_icon'], [ 'aria-hidden' => 'true' ] );
 							echo '</div>';
 							echo '<div class="wpr-story-info-vertical wpr-data-wrap animated '. $background_class .'" data-aos="'. $this->animation.'" data-aos-left="'. $this->animation_loadmore_left .'" data-aos-right="'. $this->animation_loadmore_right .'" data-animation-offset="'. $settings['animation_offset'] .'" data-animation-duration="'. $settings['aos_animation_duration'] .'" data-animation-once="'. $settings['animation_loop_or_once'] .'">';
@@ -5469,7 +5468,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 								</div>';
 							}
 
-							echo '<div class="wpr-icon-border-color wpr-icon">';
+							echo '<div class="wpr-main-line-icon wpr-icon">';
 							\Elementor\Icons_Manager::render_icon( $content['repeater_story_icon'], [ 'aria-hidden' => 'true' ] );
 							echo'</div>'; 
 							echo '<div class="wpr-story-info '. $this->background_class .'">';
@@ -5599,7 +5598,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 							</div>';
 						}
 	
-						echo '<div class="wpr-icon-border-color wpr-icon">';
+						echo '<div class="wpr-main-line-icon wpr-icon">';
 							\Elementor\Icons_Manager::render_icon( $settings['posts_icon'], [ 'aria-hidden' => 'true' ] );
 						echo'</div>'; 
 					echo '</div>';
