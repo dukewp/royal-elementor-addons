@@ -10753,6 +10753,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 .wpr-timeline-media {
     overflow: hidden;
+    position: relative;
 }
 
 .wpr-timeline-media img {
