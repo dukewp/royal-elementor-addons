@@ -2141,7 +2141,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 50,
+						'max' => 150,
 					],
 				],				
 				'default' => [
@@ -2150,7 +2150,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-entry.wpr-left-aligned .wpr-timeline-entry-inner .wpr-data-wrap' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-timeline-entry.wpr-right-aligned .wpr-timeline-entry-inner .wpr-data-wrap' => 'margin-left: calc(27% + {{SIZE}}{{UNIT}});',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-timeline-entry.wpr-right-aligned .wpr-timeline-entry-inner .wpr-data-wrap' => 'margin-left: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-centered .wpr-left-aligned .wpr-timeline-entry-inner .wpr-data-wrap' => 'margin-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-centered .wpr-right-aligned .wpr-timeline-entry-inner .wpr-data-wrap' => 'margin-left: {{SIZE}}{{UNIT}};',
 				],
@@ -3542,15 +3542,19 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-year-label' => 'width: {{SIZE}}{{UNIT}};',
 
-					'{{WRAPPER}} .wpr-one-sided-timeline .wpr-year-label' => 'left: calc({{SIZE}}px/2);',
-					'{{WRAPPER}} .wpr-one-sided-timeline .wpr-middle-line' => 'left: calc({{SIZE}}px/2);',
-					'{{WRAPPER}} .wpr-one-sided-timeline .wpr-timeline-fill' => 'left: calc({{SIZE}}px/2);',
-					'{{WRAPPER}} .wpr-one-sided-timeline .wpr-icon' => 'left: calc({{SIZE}}px/2);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline article' => 'padding-left: calc({{SIZE}}px/2);',					
+					'{{WRAPPER}} .wpr-one-sided-wrapper-left' => 'padding-right: calc({{SIZE}}px/2);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-year-label' => 'left: calc({{SIZE}}px/2);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-middle-line' => 'left: calc({{SIZE}}px/2);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-timeline-fill' => 'left: calc({{SIZE}}px/2);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-icon' => 'left: calc({{SIZE}}px/2);',
 
-					'{{WRAPPER}} .wpr-one-sided-timeline-left .wpr-year-label' => 'right: calc({{SIZE}}px/2);',
-					'{{WRAPPER}} .wpr-one-sided-timeline-left .wpr-middle-line' => 'right: calc({{SIZE}}px/2);',
-					'{{WRAPPER}} .wpr-one-sided-timeline-left .wpr-timeline-fill' => 'right: calc({{SIZE}}px/2);',
-					'{{WRAPPER}} .wpr-one-sided-timeline-left .wpr-icon' => 'right: calc({{SIZE}}px/2);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left article' => 'padding-right: calc({{SIZE}}px/2);',					
+					'{{WRAPPER}} .wpr-one-sided-wrapper-left' => 'padding-right: calc({{SIZE}}px/2);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-year-label' => 'right: calc({{SIZE}}px/2);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-middle-line' => 'right: calc({{SIZE}}px/2);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-fill' => 'right: calc({{SIZE}}px/2);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-icon' => 'right: calc({{SIZE}}px/2);',
 				],
 			]
 		);
@@ -3765,10 +3769,15 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wrapper .wpr-icon i' => 'display: block;',
 					'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'height: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}}; display: flex !important; justify-content: center !important; align-items: center !important;',
+					
+					'{{WRAPPER}} .wpr-one-sided-wrapper' => 'padding-left: calc({{SIZE}}px/2);',
+					// '{{WRAPPER}} .wpr-one-sided-timeline article' => 'padding-left: calc({{SIZE}}px/2);',
 					'{{WRAPPER}} .wpr-one-sided-timeline .wpr-middle-line' => 'left: calc({{SIZE}}px/2);',
 					'{{WRAPPER}} .wpr-one-sided-timeline .wpr-timeline-fill' => 'left: calc({{SIZE}}px/2);',
 					'{{WRAPPER}} .wpr-one-sided-timeline .wpr-icon' => 'left: calc({{SIZE}}px/2);',
 					
+					'{{WRAPPER}} .wpr-one-sided-wrapper-left' => 'padding-right: calc({{SIZE}}px/2);',
+					// '{{WRAPPER}} .wpr-one-sided-timeline-left article' => 'padding-right: calc({{SIZE}}px/2);',
 					'{{WRAPPER}} .wpr-one-sided-timeline-left .wpr-middle-line' => 'right: calc({{SIZE}}px/2);',
 					'{{WRAPPER}} .wpr-one-sided-timeline-left .wpr-timeline-fill' => 'right: calc({{SIZE}}px/2);',
 					'{{WRAPPER}} .wpr-one-sided-timeline-left .wpr-icon' => 'right: calc({{SIZE}}px/2);',

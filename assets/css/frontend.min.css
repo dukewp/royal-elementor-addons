@@ -10520,7 +10520,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-year-wrap .wpr-year-label {
     position: absolute;
-    transform: translate(-50%, -50%);
+    transform: translate(50%, -50%);
 }
 
 .wpr-both-sided-timeline .wpr-left-aligned .wpr-data-wrap:after,
