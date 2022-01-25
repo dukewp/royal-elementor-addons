@@ -3931,6 +3931,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-icon' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
 					/// add container class for more specificity
 				],
+				'condition' => [
+					'icon_border_type!' => 'none'
+				]
 			]
 		);
 
