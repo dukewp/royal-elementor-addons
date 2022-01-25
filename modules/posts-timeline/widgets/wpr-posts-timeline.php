@@ -3331,8 +3331,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-wrapper .wpr-line::before' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-wrapper .wpr-middle-line' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-wrapper .wpr-timeline-centered .wpr-year' => 'border-color: {{VALUE}}',
+
 					'{{WRAPPER}} .wpr-wrapper:before' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-wrapper:after' => 'background-color: {{VALUE}}',
+
 					'{{WRAPPER}} .wpr-horizontal .wpr-swiper-pagination.swiper-pagination-progressbar' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-horizontal-bottom .wpr-swiper-pagination.swiper-pagination-progressbar' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-horizontal .wpr-button-prev' => 'color: {{VALUE}}',
@@ -3562,15 +3564,15 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-year-label' => 'width: {{SIZE}}{{UNIT}};',
 
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-year-label' => 'left: calc({{SIZE}}px/2 + {{year_label_border_size.SIZE}}px);',
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-middle-line' => 'left: calc({{SIZE}}px/2 + {{year_label_border_size.SIZE}}px);',
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-timeline-fill' => 'left: calc({{SIZE}}px/2 + {{year_label_border_size.SIZE}}px);',
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-icon' => 'left: calc({{SIZE}}px/2 + {{year_label_border_size.SIZE}}px);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-year-label' => 'left: calc({{SIZE}}px/2);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-middle-line' => 'left: calc({{SIZE}}px/2);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-timeline-fill' => 'left: calc({{SIZE}}px/2);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-icon' => 'left: calc({{SIZE}}px/2);',
 
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-year-label' => 'right: calc({{SIZE}}px/2 + {{year_label_border_size.SIZE}}px);',
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-middle-line' => 'right: calc({{SIZE}}px/2 + {{year_label_border_size.SIZE}}px);',
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-fill' => 'right: calc({{SIZE}}px/2 + {{year_label_border_size.SIZE}}px);',
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-icon' => 'right: calc({{SIZE}}px/2 + {{year_label_border_size.SIZE}}px);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-year-label' => 'right: calc({{SIZE}}px/2);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-middle-line' => 'right: calc({{SIZE}}px/2);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-fill' => 'right: calc({{SIZE}}px/2);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-icon' => 'right: calc({{SIZE}}px/2);',
 				],
 				'separator' => 'before',
 				'render_type' => 'template',
@@ -3638,6 +3640,16 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-year-label' => 'border-width: {{SIZE}}{{UNIT}};',
+
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-year-label' => 'margin-left: calc({{LEFT}}px);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-middle-line' => 'margin-left: calc({{LEFT}}px);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-timeline-fill' => 'margin-left: calc({{LEFT}}px);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-icon' => 'margin-left: calc({{LEFT}}px);',
+
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-year-label' => 'margin-right: calc({{RIGHT}}px);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-middle-line' => 'margin-right: calc({{RIGHT}}px);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-fill' => 'margin-right: calc({{RIGHT}}px);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-icon' => 'margin-right: calc({{RIGHT}}px);',
 				],
 				'condition' => [
 					'year_label_border_type!' => 'none'
@@ -3810,13 +3822,13 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-wrapper .wpr-icon i' => 'display: block;',
 					'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'height: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}}; display: flex !important; justify-content: center !important; align-items: center !important;',
 					
-					'{{WRAPPER}} .wpr-one-sided-timeline .wpr-middle-line' => 'left: calc({{SIZE}}px/2 + {{icon_border_width.SIZE}}px);',
-					'{{WRAPPER}} .wpr-one-sided-timeline .wpr-timeline-fill' => 'left: calc({{SIZE}}px/2 + {{icon_border_width.SIZE}}px);',
-					'{{WRAPPER}} .wpr-one-sided-timeline .wpr-icon' => 'left: calc({{SIZE}}px/2 + {{icon_border_width.SIZE}}px);',
+					'{{WRAPPER}} .wpr-one-sided-timeline .wpr-middle-line' => 'left: calc({{SIZE}}px/2);',
+					'{{WRAPPER}} .wpr-one-sided-timeline .wpr-timeline-fill' => 'left: calc({{SIZE}}px/2);',
+					'{{WRAPPER}} .wpr-one-sided-timeline .wpr-icon' => 'left: calc({{SIZE}}px/2);',
 					
-					'{{WRAPPER}} .wpr-one-sided-timeline-left .wpr-middle-line' => 'right: calc({{SIZE}}px/2 + {{icon_border_width.SIZE}}px);',
-					'{{WRAPPER}} .wpr-one-sided-timeline-left .wpr-timeline-fill' => 'right: calc({{SIZE}}px/2 + {{icon_border_width.SIZE}}px);',
-					'{{WRAPPER}} .wpr-one-sided-timeline-left .wpr-icon' => 'right: calc({{SIZE}}px/2 + {{icon_border_width.SIZE}}px);',
+					'{{WRAPPER}} .wpr-one-sided-timeline-left .wpr-middle-line' => 'right: calc({{SIZE}}px/2);',
+					'{{WRAPPER}} .wpr-one-sided-timeline-left .wpr-timeline-fill' => 'right: calc({{SIZE}}px/2);',
+					'{{WRAPPER}} .wpr-one-sided-timeline-left .wpr-icon' => 'right: calc({{SIZE}}px/2);',
 				],
 				'render_type' => 'template',
 			]
@@ -3930,6 +3942,16 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-icon' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-year-label' => 'margin-left: calc({{LEFT}}px);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-middle-line' => 'margin-left: calc({{LEFT}}px);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-timeline-fill' => 'margin-left: calc({{LEFT}}px);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-icon' => 'margin-left: calc({{LEFT}}px);',
+
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-year-label' => 'margin-right: calc({{RIGHT}}px);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-middle-line' => 'margin-right: calc({{RIGHT}}px);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-fill' => 'margin-right: calc({{RIGHT}}px);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-icon' => 'margin-right: calc({{RIGHT}}px);',
 					/// add container class for more specificity
 				],
 				'condition' => [

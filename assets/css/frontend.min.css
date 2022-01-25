@@ -10333,17 +10333,17 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     margin-left: 0;
 }
 
+.wpr-both-sided-timeline .wpr-middle-line {
+    left: 50%;
+}
 .wpr-middle-line {
     position: absolute;
     display: block;
-    background: orange;
     width: 4px;
-    left: 50%;
     top: 20px;
     height: 100%;
     margin-left: -2px;
 }
-
 .wpr-one-sided-timeline-left .wpr-icon {
     right: 0.3%;
 }
