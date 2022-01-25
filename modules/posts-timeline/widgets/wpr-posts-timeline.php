@@ -2029,7 +2029,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$this->start_controls_section(
 			'content_styles_section',
 			[
-				'label' => __( 'Items', 'wpr-addons' ),
+				'label' => __( 'Timeline Items', 'wpr-addons' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -3514,7 +3514,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 400,
+						'max' => 100,
 					]
 				],
 				'selectors' => [
@@ -3530,7 +3530,29 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-fill' => 'right: calc({{SIZE}}px/2);',
 					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-icon' => 'right: calc({{SIZE}}px/2);',
 				],
-				'separator' => 'before'
+				'separator' => 'before',
+			]
+		);
+		
+		$this->add_responsive_control(
+			'year_label_height',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Height', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'default' => [
+					'size' => 30,
+					'unit' => 'px'
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					]
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-year-label' => 'height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
+				],
 			]
 		);
 
