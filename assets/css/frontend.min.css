@@ -10304,6 +10304,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     float: left;
 }
 
+.wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-entry.wpr-left-aligned {
+    width: 100%;
+}
+
 .wpr-timeline-centered.wpr-both-sided-timeline .wpr-timeline-entry.wpr-left-aligned .wpr-timeline-entry-inner,
 .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-entry.wpr-left-aligned .wpr-timeline-entry-inner {
     margin-left: 0;
