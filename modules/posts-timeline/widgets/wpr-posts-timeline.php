@@ -507,7 +507,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'label_off' => __( 'Hide', 'wpr-addpns' ),
 				'return_value' => 'yes',
 				'default' => 'no',
-				'description' => ('Only Works With Horizontal Layout'),
 				// 'condition' => [
 				// 	'timeline_content' => 'custom',
 				// 	'timeline_layout' => ['centered', 'one-sided', 'one-sided-left']
@@ -699,7 +698,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$repeater->add_control(
 			'item_bg_color',
 			[
-				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'label'  => esc_html__( 'Item Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#FFF',
 				'selectors' => [
@@ -707,6 +706,25 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-horizontal-bottom-timeline {{CURRENT_ITEM}} .wpr-story-info' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-horizontal {{CURRENT_ITEM}} .wpr-story-info' => 'background-color: {{VALUE}}'
 				]
+			]
+		);
+		
+		/*---- Story Title ----*/
+		$repeater->add_control(
+			'story_title_color',
+			[
+				'label' => __( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'scheme' => [
+					'type' => \Elementor\Core\Schemes\Color::get_type(),
+					'value' => \Elementor\Core\Schemes\Color::COLOR_1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-wrapper .wpr-data-wrap .wpr-title' => 'color: {{VALUE}}',
+					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-horizontal .wpr-title' => 'color: {{VALUE}}',
+					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-horizontal-bottom .wpr-title' => 'color: {{VALUE}}',
+				],
+				'default' => '#605BE5',
 			]
 		);
 		
@@ -754,6 +772,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => __( 'Main Line Icon Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'separator' => 'before',
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}}  .wpr-icon i' => 'color: {{VALUE}}',
 					// '{{WRAPPER}} {{CURRENT_ITEM}} .wpr-timeline-media i' => 'color: {{VALUE}}',
@@ -777,20 +796,17 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			]
 		);	
 
+		//TODO: override javascript
 		$repeater->add_control(
-			'date_label_bg_color',
+			'icon_border_color',
 			[
-				'label' => __( 'Extra Label Bg Color', 'wpr-addons' ),
+				'label'  => esc_html__( 'Main Line Icon Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => \Elementor\Core\Schemes\Color::get_type(),
-					'value' => \Elementor\Core\Schemes\Color::COLOR_1,
-				],
+				'default' => '#000',
 				'selectors' => [
-					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-extra-label' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-icon' => 'border-color: {{VALUE}}',
 				],
-				'default' => '#fff',
-			] 
+			]
 		);
 
 		$repeater->add_control(
@@ -798,7 +814,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => __('Media Icon','wpr-addons'),
 				'type' => \Elementor\Controls_Manager::HEADING,
-				'separator' => 'before',				
+				'separator' => 'before',
+				'condition' => [
+					'repeater_media' => 'icon'
+				],				
 			]
 		);
 		
@@ -809,11 +828,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}}  .wpr-timeline-media i' => 'color: {{VALUE}}',
-					// '{{WRAPPER}} {{CURRENT_ITEM}} .wpr-timeline-media i' => 'color: {{VALUE}}',
-					// '{{WRAPPER}} {{CURRENT_ITEM}} .wpr-timeline-media i' => 'color: {{VALUE}}',
 				],
 				'condition' => [
-					// 'timeline_content' => 'custom',
 					'repeater_media' => 'icon'
 				],
 				'default' => '#000',
@@ -2729,15 +2745,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 				]
 		);
-
-		$this->start_controls_tabs('title_style_tabs');
-		
-		$this->start_controls_tab(
-			'title_style_tab',
-			[
-				'label' => __( 'Normal', 'wpr-addons' ),
-			]
-		);
 		
 		/*---- Story Title ----*/
 		$this->add_control(
@@ -2802,35 +2809,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'separator' => 'before',
 			]
 		);
-
-		$this->end_controls_tab();
-		
-		$this->start_controls_tab(
-			'title_style_hover_tab',
-			[
-				'label' => __( 'Hover', 'wpr-addons' ),
-			]
-		);
-				
-		$this->add_control(
-			'title_color_hover',
-			[
-				'label' => __( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => \Elementor\Core\Schemes\Color::get_type(),
-					'value' => \Elementor\Core\Schemes\Color::COLOR_3,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-wrapper .wpr-title-wrap:hover .wpr-title' => 'cursor: pointer; color: {{VAlUE}}',
-				],
-				'default' => '#000',
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->end_controls_tabs();
 
 		$this->end_controls_section();
 
@@ -3552,6 +3530,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-fill' => 'right: calc({{SIZE}}px/2);',
 					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-icon' => 'right: calc({{SIZE}}px/2);',
 				],
+				'separator' => 'before'
 			]
 		);
 
