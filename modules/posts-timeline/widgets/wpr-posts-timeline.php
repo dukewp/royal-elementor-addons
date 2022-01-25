@@ -271,7 +271,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'return_value' => 'yes',
 				'default' => 'yes',
 				'label_block' => false,
-				'separator' => 'before'
+				'separator' => 'before',
+				'condition' => [
+					'timeline_layout!' => ['one-sided', 'one-sided-left']
+				]
 			]
 		);
 		
@@ -519,7 +522,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => __( 'Label Text', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => '2020',
+				'default' => '2022',
 				'condition' => [
 					'repeater_show_year_label' => 'yes'
 				]
@@ -555,7 +558,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'label' => __( 'Primary Label', 'wpr-addons' ),
 				'label_block' => true,
 				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => '01 Jan 2020',
+				'default' => '01 Jan 2022',
 			]
 		);
 
@@ -566,6 +569,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'label_block' => true,
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'default' => 'Secondaty Label',
+				'description' => esc_html__( 'Extra Label options does not work with "Line Left" and "Line Right" Layouts.', 'wpr-addons' ),
 			]
 		);
 
@@ -2204,10 +2208,11 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'size' => 45,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-entry.wpr-left-aligned .wpr-timeline-entry-inner .wpr-data-wrap' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-timeline-entry.wpr-right-aligned .wpr-timeline-entry-inner .wpr-data-wrap' => 'margin-left: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-centered .wpr-left-aligned .wpr-timeline-entry-inner .wpr-data-wrap' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-centered .wpr-right-aligned .wpr-timeline-entry-inner .wpr-data-wrap' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-data-wrap' => 'margin-right: calc({{icon_bg_size.SIZE}}px + {{SIZE}}px);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-data-wrap' => 'margin-left: calc({{icon_bg_size.SIZE}}px + {{SIZE}}px);',
+					
+					'{{WRAPPER}} .wpr-centered .wpr-left-aligned .wpr-timeline-entry-inner .wpr-data-wrap' => 'margin-right: {{SIZE}}px;',
+					'{{WRAPPER}} .wpr-centered .wpr-right-aligned .wpr-timeline-entry-inner .wpr-data-wrap' => 'margin-left: {{SIZE}}px;',
 				],
 				'condition' => [
 					'timeline_layout' => ['centered', 'one-sided', 'one-sided-left']
@@ -3568,6 +3573,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-icon' => 'right: calc({{SIZE}}px/2);',
 				],
 				'separator' => 'before',
+				'render_type' => 'template',
 			]
 		);
 		
@@ -3812,6 +3818,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-one-sided-timeline-left .wpr-timeline-fill' => 'right: calc({{SIZE}}px/2);',
 					'{{WRAPPER}} .wpr-one-sided-timeline-left .wpr-icon' => 'right: calc({{SIZE}}px/2);',
 				],
+				'render_type' => 'template',
 			]
 		);
 		// $this->add_control( // TODO: needs centering from css	
