@@ -2228,7 +2228,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		);
 
 		$this->add_control( //TOdO: add pagination icon
-			'item_distance',
+			'item_distance_from_line',
 			[
 				'label' => esc_html__( 'Distance From Line', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
@@ -2236,7 +2236,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 150,
+						'max' => 100,
 					],
 				],				
 				'default' => [
@@ -2255,6 +2255,33 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 				'render_type' => 'template',
 				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'item_distance_vertical',
+			[
+				'label' => esc_html__( 'Vertical Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 20,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-timeline-centered .wpr-year-wrap' => 'margin-bottom: {{SIZE}}px;',
+					'{{WRAPPER}} .wpr-timeline-centered .wpr-timeline-entry' => 'margin-bottom: {{SIZE}}px;',
+				],
+				'condition' => [
+					'timeline_layout' => ['centered', 'one-sided', 'one-sided-left']
+				],
+				'render_type' => 'template',
 			]
 		);
 
@@ -3623,6 +3650,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-year-label' => 'height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-year-wrap' => 'height: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -3667,15 +3695,15 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-year-label' => 'border-width: {{SIZE}}{{UNIT}};',
 
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-year-label' => 'margin-left: calc({{LEFT}}px);',
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-middle-line' => 'margin-left: calc({{LEFT}}px);',
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-timeline-fill' => 'margin-left: calc({{LEFT}}px);',
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-icon' => 'margin-left: calc({{LEFT}}px);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-year-label' => 'margin-left: calc({{LEFT}}px);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-middle-line' => 'margin-left: calc({{LEFT}}px);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-timeline-fill' => 'margin-left: calc({{LEFT}}px);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-icon' => 'margin-left: calc({{LEFT}}px);',
 
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-year-label' => 'margin-right: calc({{RIGHT}}px);',
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-middle-line' => 'margin-right: calc({{RIGHT}}px);',
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-fill' => 'margin-right: calc({{RIGHT}}px);',
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-icon' => 'margin-right: calc({{RIGHT}}px);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-year-label' => 'margin-right: calc({{RIGHT}}px);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-middle-line' => 'margin-right: calc({{RIGHT}}px);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-fill' => 'margin-right: calc({{RIGHT}}px);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-icon' => 'margin-right: calc({{RIGHT}}px);',
 				],
 				'condition' => [
 					'year_label_border_type!' => 'none'
@@ -3958,15 +3986,15 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-icon' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
 
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-year-label' => 'margin-left: calc({{LEFT}}px);',
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-middle-line' => 'margin-left: calc({{LEFT}}px);',
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-timeline-fill' => 'margin-left: calc({{LEFT}}px);',
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-icon' => 'margin-left: calc({{LEFT}}px);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-year-label' => 'margin-left: calc({{LEFT}}px);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-middle-line' => 'margin-left: calc({{LEFT}}px);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-timeline-fill' => 'margin-left: calc({{LEFT}}px);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-icon' => 'margin-left: calc({{LEFT}}px);',
 
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-year-label' => 'margin-right: calc({{RIGHT}}px);',
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-middle-line' => 'margin-right: calc({{RIGHT}}px);',
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-fill' => 'margin-right: calc({{RIGHT}}px);',
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-icon' => 'margin-right: calc({{RIGHT}}px);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-year-label' => 'margin-right: calc({{RIGHT}}px);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-middle-line' => 'margin-right: calc({{RIGHT}}px);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-fill' => 'margin-right: calc({{RIGHT}}px);',
+					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-icon' => 'margin-right: calc({{RIGHT}}px);',
 					/// add container class for more specificity
 				],
 				'condition' => [
@@ -5358,11 +5386,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				$background_class = $settings['content_layout'] === 'background' ? 'story-with-background' : '';
 
 				if ( $content['repeater_show_year_label'] == 'yes' ) {
-					echo '<span class="wpr-year-wrap">
-						<span class="wpr-year-label wpr-year">
-							<span class="wpr-year-text">'.$content['repeater_year'].'</span>
-						</span>
-					</span>';
+					echo '<span class="wpr-year-wrap">';
+						echo '<span class="wpr-year-label wpr-year">'. $content['repeater_year'] .'</span>';
+					echo '</span>';
 				}
 				
 				echo '<article class="wpr-timeline-entry '. $this->content_alignment .' elementor-repeater-item-'. $content['_id'] .'" data-item-id="elementor-repeater-item-' . $content['_id'] . '">
