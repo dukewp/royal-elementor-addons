@@ -730,21 +730,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		);
 
 		$repeater->add_control(
-			'repeater_overlay_bgcolor',
-			[
-				'label' => __( 'Overlay Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-wrapper {{CURRENT_ITEM}} .wpr-timeline-story-overlay' => 'background-color: {{VALUE}}',
-				],
-				'default' => '#0000005E',
-				'condition' => [
-					'show_custom_styles' => 'yes'
-				]
-			]
-		);
-
-		$repeater->add_control(
 			'repeater_story_border_color',
 			[
 				'label' => __( 'Border Color', 'wpr-addons' ),
@@ -769,14 +754,44 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'repeater_media_styles',
+			[
+				'label' => __('Media','wpr-addons'),
+				'type' => \Elementor\Controls_Manager::HEADING,
+				'separator' => 'before',
+				'condition' => [
+					'show_custom_styles' => 'yes'
+				]			
+			]
+		);
+
+		$repeater->add_control(
+			'repeater_overlay_bgcolor',
+			[
+				'label' => __( 'Overlay Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wrapper {{CURRENT_ITEM}} .wpr-timeline-story-overlay' => 'background-color: {{VALUE}}',
+				],
+				'default' => '#0000005E',
+				'condition' => [
+					'show_custom_styles' => 'yes'
+				]
+			]
+		);
+
+		$repeater->add_control(
 			'repeater_media_item_border_color',
 			[
 				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#E8E8E8',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-timeline-media' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-timeline-media' => 'border-color: {{VALUE}}',
 				],
+				'condition' => [
+					'show_custom_styles' => 'yes'
+				]
 			]
 		);
 
@@ -5725,7 +5740,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 								</span>
 							</div>';
 						}
-	
+						
 						echo '<div class="wpr-main-line-icon wpr-icon">';
 							\Elementor\Icons_Manager::render_icon( $settings['posts_icon'], [ 'aria-hidden' => 'true' ] );
 						echo'</div>'; 
