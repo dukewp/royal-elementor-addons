@@ -11108,6 +11108,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
         width: 100%;
     }
     .wpr-timeline-centered .wpr-right-aligned .wpr-icon {
+        /* position: absolute; */
         transform: translate(-50%, -50%) !important;
     }
     .wpr-both-sided-timeline .wpr-extra-label {

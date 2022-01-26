@@ -2262,8 +2262,11 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-data-wrap' => 'margin-right: calc({{main_line_side_distance.SIZE}}px/2 + {{SIZE}}px);', 
 					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-data-wrap' => 'margin-left: calc({{main_line_side_distance.SIZE}}px/2 + {{SIZE}}px);',
 
-					'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-timeline-centered.wpr-both-sided-timeline .wpr-data-wrap' => 'margin-left: calc({{main_line_side_distance.SIZE}}px/2 + {{SIZE}}px);',
-					'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-both-sided-timeline .wpr-extra-label' => 'left: calc({{main_line_side_distance.SIZE}}px/2 + {{SIZE}}px) !important;',
+					'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-timeline-centered.wpr-both-sided-timeline .wpr-data-wrap' => 'margin-left: calc({{main_line_side_distance_mobile.SIZE}}px/2 + {{SIZE}}px);',
+					'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-both-sided-timeline .wpr-extra-label' => 'left: calc({{main_line_side_distance_mobile.SIZE}}px/2 + {{SIZE}}px) !important;',
+
+					'body[data-elementor-device-mode=mobile_extra] {{WRAPPER}} .wpr-timeline-centered.wpr-both-sided-timeline .wpr-data-wrap' => 'margin-left: calc({{main_line_side_distance_mobile_extra.SIZE}}px/2 + {{SIZE}}px);',
+					'body[data-elementor-device-mode=mobile_extra] {{WRAPPER}} .wpr-both-sided-timeline .wpr-extra-label' => 'left: calc({{main_line_side_distance_mobile_extra.SIZE}}px/2 + {{SIZE}}px) !important;',
 					
 					'{{WRAPPER}} .wpr-centered .wpr-left-aligned .wpr-timeline-entry-inner .wpr-data-wrap' => 'margin-right: {{SIZE}}px;',
 					'{{WRAPPER}} .wpr-centered .wpr-right-aligned .wpr-timeline-entry-inner .wpr-data-wrap' => 'margin-left: {{SIZE}}px;',
@@ -5449,6 +5452,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 					echo '<article class="wpr-timeline-entry '. $this->content_alignment .'" data-counter="'. $countItem .'">
 						<div class="wpr-timeline-entry-inner">';
+						
 						if ( 'yes' === $settings['show_extra_label'] ) {
 							echo '<time class="wpr-extra-label" data-aos="'. $this->animation.'" data-animation-offset="'. $settings['animation_offset'] .'">
 								<span class="wpr-label">'. get_the_date($settings['date_format']) .'</span>
