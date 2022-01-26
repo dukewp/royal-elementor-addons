@@ -11112,7 +11112,8 @@ body:not(.elementor-editor-active) .wpr-template-popup {
         transform: translate(-50%, -50%) !important;
     }
     .wpr-both-sided-timeline .wpr-extra-label {
-        left: 0 !important;
+        top: -10px !important;
+        transform: translateY(-100%) !important;
         text-align: left !important;
     }
     .wpr-both-sided-timeline .wpr-extra-label .wpr-label,
