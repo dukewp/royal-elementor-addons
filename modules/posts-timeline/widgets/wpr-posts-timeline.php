@@ -727,6 +727,18 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'repeate_overlay_bgcolor',
+			[
+				'label' => __( 'Overlay Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wrapper {{CURRENT_ITEM}} .wpr-timeline-story-overlay' => 'background-color: {{VALUE}}',
+				],
+				'default' => '#0000005E',
+			]
+		);
+
+		$repeater->add_control(
 			'repeater_story_border_color',
 			[
 				'label' => __( 'Border Color', 'wpr-addons' ),
@@ -2462,6 +2474,21 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'media_item_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-timeline-media' => 'border-color: {{VALUE}}',
+				],
+				'condition' => [
+					'timeline_content' => 'dynamic'
+				]
+			]
+		);
+
 		$this->add_responsive_control(
 			'timeline_img_width',
 			[
@@ -2494,18 +2521,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					// 'timeline_content' => ['dynamic'], // horizontal-bottom
 					// 'timeline_layout' => ['horizontal'],
 					// 'equal_height_slides' => ['auto-height']
-				],
-			]
-		);
-
-		$this->add_control(
-			'media_item_border_color',
-			[
-				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#E8E8E8',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-timeline-media' => 'border-color: {{VALUE}}',
 				],
 			]
 		);
@@ -2721,6 +2736,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-wrapper .wpr-timeline-story-overlay' => 'background-color: {{VALUE}}',
 				],
 				'default' => '#0000005E',
+				'condition' => [
+					'timeline_content' => 'dynamic'
+				]
 			]
 		);
 
@@ -2731,6 +2749,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'label' => esc_html__( 'Background', 'wpr-addons' ),
 				'types' => [ 'classic', 'gradient', 'video' ],
 				'selector' => '{{WRAPPER}} .wpr-timeline-story-overlay',
+				'condition' => [
+					'timeline_content' => 'dynamic'
+				]
 			]
 		);
 
@@ -3692,6 +3713,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					// '{{WRAPPER}} .wpr-horizontal-bottom-timeline .wpr-icon' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'border-color: {{VALUE}}',
 				],
+				'condition' => [
+					'timeline_content' => 'dynamic'
+				]
 			]
 		);
 

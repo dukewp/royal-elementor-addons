@@ -11155,7 +11155,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     }
     .wpr-both-sided-timeline .wpr-extra-label {
         top: -50px !important;
-        left: 10% !important;
+        left: 0 !important;
         text-align: left !important;
     }
     .wpr-both-sided-timeline .wpr-extra-label .wpr-label,
