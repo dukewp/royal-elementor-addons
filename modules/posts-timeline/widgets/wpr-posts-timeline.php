@@ -4094,7 +4094,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$this->add_responsive_control(
 			'label_right',
 			[
-				'label' => __( 'Right Label Distance', 'wpr-addons' ),
+				'label' => __( 'Label Distance', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -4108,29 +4108,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-timeline-centered.wpr-both-sided-timeline .wpr-timeline-entry.wpr-left-aligned .wpr-timeline-entry-inner .wpr-extra-label' => 'left: calc(100% + {{SIZE}}{{UNIT}})',
-				],
-				'condition' => [
-					'timeline_layout' => ['centered'],
-				]
-			]
-		);
-
-		$this->add_responsive_control(
-			'label_left',
-			[
-				'label' => __( 'Left Label Distance', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 50,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 25,
-				],
-				'selectors' => [
 					'{{WRAPPER}} .wpr-timeline-centered.wpr-both-sided-timeline .wpr-timeline-entry.wpr-right-aligned .wpr-timeline-entry-inner .wpr-extra-label' => 'right: calc(100% + {{SIZE}}{{UNIT}})',
 				],
 				'condition' => [
