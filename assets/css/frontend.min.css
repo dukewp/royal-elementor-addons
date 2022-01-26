@@ -11111,17 +11111,20 @@ body:not(.elementor-editor-active) .wpr-template-popup {
         float: none;
         width: 100%;
     }
+    .wpr-vertical {
+        /* margin-top: 50px; */
+    }
     .wpr-timeline-centered .wpr-right-aligned .wpr-icon {
         /* position: absolute; */
         transform: translate(-50%, -50%) !important;
     }
-    .wpr-both-sided-timeline .wpr-extra-label {
+    .wpr-one-sided-timeline .wpr-extra-label {
         top: -10px !important;
         transform: translateY(-100%) !important;
         text-align: left !important;
     }
-    .wpr-both-sided-timeline .wpr-extra-label .wpr-label,
-    .wpr-both-sided-timeline .wpr-extra-label .wpr-sub-label {
+    .wpr-one-sided-timeline .wpr-extra-label .wpr-label,
+    .wpr-one-sided-timeline .wpr-extra-label .wpr-sub-label {
         text-align: left !important;
     }
 
