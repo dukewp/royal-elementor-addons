@@ -2261,15 +2261,15 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-data-wrap' => 'margin-right: calc({{main_line_side_distance.SIZE}}px/2 + {{SIZE}}px);', 
 					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-data-wrap' => 'margin-left: calc({{main_line_side_distance.SIZE}}px/2 + {{SIZE}}px);',
-
-					'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-timeline-centered.wpr-both-sided-timeline .wpr-data-wrap' => 'margin-left: calc({{main_line_side_distance_mobile.SIZE}}px/2 + {{SIZE}}px);',
-					'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-both-sided-timeline .wpr-extra-label' => 'left: calc({{main_line_side_distance_mobile.SIZE}}px/2 + {{SIZE}}px) !important;',
-
-					'body[data-elementor-device-mode=mobile_extra] {{WRAPPER}} .wpr-timeline-centered.wpr-both-sided-timeline .wpr-data-wrap' => 'margin-left: calc({{main_line_side_distance_mobile_extra.SIZE}}px/2 + {{SIZE}}px);',
-					'body[data-elementor-device-mode=mobile_extra] {{WRAPPER}} .wpr-both-sided-timeline .wpr-extra-label' => 'left: calc({{main_line_side_distance_mobile_extra.SIZE}}px/2 + {{SIZE}}px) !important;',
 					
 					'{{WRAPPER}} .wpr-centered .wpr-left-aligned .wpr-timeline-entry-inner .wpr-data-wrap' => 'margin-right: {{SIZE}}px;',
 					'{{WRAPPER}} .wpr-centered .wpr-right-aligned .wpr-timeline-entry-inner .wpr-data-wrap' => 'margin-left: {{SIZE}}px;',
+
+                    'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-timeline-centered.wpr-both-sided-timeline .wpr-data-wrap' => 'margin-left: calc({{main_line_side_distance.SIZE}}px/2 + {{SIZE}}px);',
+                    'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-both-sided-timeline .wpr-extra-label' => 'left: calc({{main_line_side_distance.SIZE}}px/2 + {{SIZE}}px) !important;',
+
+                    'body[data-elementor-device-mode=mobile_extra] {{WRAPPER}} .wpr-timeline-centered.wpr-both-sided-timeline .wpr-data-wrap' => 'margin-left: calc({{main_line_side_distance.SIZE}}px/2 + {{SIZE}}px);',
+                    'body[data-elementor-device-mode=mobile_extra] {{WRAPPER}} .wpr-both-sided-timeline .wpr-extra-label' => 'left: calc({{main_line_side_distance.SIZE}}px/2 + {{SIZE}}px) !important;',
 				],
 				'condition' => [
 					'timeline_layout' => ['centered', 'one-sided', 'one-sided-left']
@@ -2296,9 +2296,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'size' => 20,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-timeline-centered .wpr-year-wrap' => 'margin-bottom: {{SIZE}}px;',
-					'{{WRAPPER}} .wpr-timeline-centered .wpr-timeline-entry' => 'margin-bottom: {{SIZE}}px;',
-					'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-both-sided-timeline .wpr-extra-label' => 'top: calc(-{{SIZE}}px/2) !important;',
+                    '{{WRAPPER}} .wpr-timeline-centered .wpr-year-wrap' => 'margin-bottom: {{SIZE}}px;',
+                    '{{WRAPPER}} .wpr-timeline-centered .wpr-timeline-entry' => 'margin-bottom: {{SIZE}}px;',
+                    'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-both-sided-timeline .wpr-timeline-entry' => 'margin-bottom: calc({{SIZE}}px + {{label_padding.TOP}}px + 25px);',
 				],
 				'condition' => [
 					'timeline_layout' => ['centered', 'one-sided', 'one-sided-left']
