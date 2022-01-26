@@ -3566,10 +3566,15 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-middle-line' => 'right: calc({{SIZE}}px/2);',
 					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-fill' => 'right: calc({{SIZE}}px/2);',
 					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-icon' => 'right: calc({{SIZE}}px/2);',
+
+					'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-both-sided-timeline .wpr-year-label' => 'left: calc({{SIZE}}px/2);',
+					'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-both-sided-timeline .wpr-middle-line' => 'left: calc({{SIZE}}px/2);',
+					'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-both-sided-timeline .wpr-timeline-fill' => 'left: calc({{SIZE}}px/2);',
+					'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-both-sided-timeline .wpr-icon' => 'left: calc({{SIZE}}px/2);',
 				],
 				'render_type' => 'template',
 				'condition' => [
-					'timeline_layout' => ['one-sided', 'one-sided-left']
+					'timeline_layout' => ['centered', 'one-sided', 'one-sided-left']
 				],
 			]
 		);
