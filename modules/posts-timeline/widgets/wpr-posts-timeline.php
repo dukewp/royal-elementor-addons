@@ -2259,8 +2259,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'size' => 45,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-data-wrap' => 'margin-right: calc({{icon_bg_size.SIZE}}px + {{SIZE}}px);',
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-data-wrap' => 'margin-left: calc({{icon_bg_size.SIZE}}px + {{SIZE}}px);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-data-wrap' => 'margin-right: calc({{main_line_side_distance.SIZE}}px/2 + {{SIZE}}px);', 
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-data-wrap' => 'margin-left: calc({{main_line_side_distance.SIZE}}px/2 + {{SIZE}}px);',
 					
 					'{{WRAPPER}} .wpr-centered .wpr-left-aligned .wpr-timeline-entry-inner .wpr-data-wrap' => 'margin-right: {{SIZE}}px;',
 					'{{WRAPPER}} .wpr-centered .wpr-right-aligned .wpr-timeline-entry-inner .wpr-data-wrap' => 'margin-left: {{SIZE}}px;',
@@ -3567,8 +3567,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-fill' => 'right: calc({{SIZE}}px/2);',
 					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-icon' => 'right: calc({{SIZE}}px/2);',
 				],
+				'render_type' => 'template',
 				'condition' => [
-					'timeline_layout' => ['one-sided']
+					'timeline_layout' => ['one-sided', 'one-sided-left']
 				],
 			]
 		);
@@ -5681,7 +5682,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 								</span>
 							</div>';
 						}
-						
+
 						echo '<div class="wpr-main-line-icon wpr-icon">';
 							\Elementor\Icons_Manager::render_icon( $settings['posts_icon'], [ 'aria-hidden' => 'true' ] );
 						echo'</div>'; 

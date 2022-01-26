@@ -10649,7 +10649,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     overflow: hidden;
     text-align: center;
     vertical-align: middle;
-    /* top: 3%; */
+    top: 0;
     left: 50%;
     transform: translateX(-50%);
 }
