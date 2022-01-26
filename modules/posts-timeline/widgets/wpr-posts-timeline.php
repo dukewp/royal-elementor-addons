@@ -2248,7 +2248,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'size' => 50,
 				],			
 				'selectors' => [
-					'{{WRAPPER}} .wpr-story-info' => 'margin-bottom: calc({{SIZE}}{{UNIT}} + {{swiper_pagination_progressbar_bottom.SIZE}}{{swiper_pagination_progressbar_bottom.UNIT}}) !important; margin-top: 10px;',
+					'{{WRAPPER}} .wpr-story-info' => 'margin-bottom: calc({{SIZE}}{{UNIT}} + {{swiper_pagination_progressbar_bottom.SIZE}}{{swiper_pagination_progressbar_bottom.UNIT}}) !important;',
 				],
 				'condition' => [
 					'timeline_layout' => ['horizontal'],
@@ -2304,10 +2304,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-horizontal-bottom-timeline .wpr-story-info' => 'margin-top: calc({{SIZE}}{{UNIT}} + {{swiper_pagination_progressbar_top.SIZE}}{{swiper_pagination_progressbar_top.UNIT}}) !important; max-height: calc(100% - {{SIZE}}{{UNIT}}) !important;',
 					'{{WRAPPER}} .wpr-horizontal-bottom-timeline .swiper-slide.auto-height .wpr-story-info' => 'margin-top: calc({{SIZE}}{{UNIT}} + {{swiper_pagination_progressbar_top.SIZE}}{{swiper_pagination_progressbar_top.UNIT}}) !important; max-height: calc(100% - {{SIZE}}{{UNIT}}) !important; height: calc(100% - ({{SIZE}}{{UNIT}} + {{swiper_pagination_progressbar_top.SIZE}}{{swiper_pagination_progressbar_top.UNIT}})) !important'
 				],
+				'separator' => 'before',
 				'condition' => [
 					'timeline_layout' => ['horizontal-bottom'],
 				],
-				'separator' => 'before'
 			]
 		);
 		// + {{swiper_pagination_progressbar_top}}
@@ -3358,7 +3358,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'timeline_layout' => ['horizontal', 'horizontal-bottom']
 				],
 				'default' => '#605BE5',
-				'separator' => 'before'
 			]
 		);
 
@@ -3408,22 +3407,38 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			]
 		);
 
-		//todo: add progressbar height
+		$this->add_responsive_control(
+			'swiper_pagination_progressbar_height',
+			[
+				'type' => Controls_Manager::NUMBER,
+				'label' => esc_html__( 'Height', 'wpr-addons' ),
+				'default' => 0.7,
+				'step' => 0.1,		
+				'selectors' => [
+					'{{WRAPPER}} .wpr-swiper-pagination.swiper-pagination-progressbar' => 'transform: scaleY({{SIZE}}) translateX(-50%);',
+				],
+				'separator' => 'before',
+				'condition' => [
+					'timeline_layout' => ['horizontal-bottom', 'horizontal']
+				],
+			]
+		);
+
 		$this->add_responsive_control(
 			'swiper_pagination_progressbar_bottom',
 			[
 				'type' => Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Progressbar Position', 'wpr-addons' ),
+				'label' => esc_html__( 'Bottom Distance', 'wpr-addons' ),
 				'size_units' => [ 'px' ],
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 300,
+						'max' => 100,
 					]
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 109,
+					'size' => 100,
 				],			
 				'selectors' => [
 					'{{WRAPPER}} .wpr-horizontal .wpr-swiper-pagination.swiper-pagination-progressbar' => 'top: auto; bottom: {{SIZE}}{{UNIT}};',
@@ -3437,22 +3452,21 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			]
 		);
 
-		//todo: add progressbar height
 		$this->add_responsive_control(
 			'swiper_pagination_progressbar_top',
 			[
 				'type' => Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Progressbar Position', 'wpr-addons' ),
+				'label' => esc_html__( 'Top Distance', 'wpr-addons' ),
 				'size_units' => [ 'px' ],
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 400,
+						'max' => 100,
 					]
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 112,
+					'size' => 100,
 				],			
 				'selectors' => [
 					'{{WRAPPER}} .wpr-horizontal-bottom .wpr-swiper-pagination.swiper-pagination-progressbar' => 'bottom: auto; top: {{SIZE}}{{UNIT}} !important',
@@ -3466,19 +3480,35 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			]
 		);
 
-		//todo: add progressbar height
 		$this->add_responsive_control(
-			'swiper_pagination_progressbar_height',
+			'main_line_side_distance',
 			[
-				'type' => Controls_Manager::NUMBER,
-				'label' => esc_html__( 'Height', 'wpr-addons' ),
-				'default' => 0.7,
-				'step' => 0.1,		
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Side Distance', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 100,
+				],			
 				'selectors' => [
-					'{{WRAPPER}} .wpr-swiper-pagination.swiper-pagination-progressbar' => 'transform: scaleY({{SIZE}}) translateX(-50%);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-year-label' => 'left: calc({{SIZE}}px/2);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-middle-line' => 'left: calc({{SIZE}}px/2);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-timeline-fill' => 'left: calc({{SIZE}}px/2);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-icon' => 'left: calc({{SIZE}}px/2);',
+
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-year-label' => 'right: calc({{SIZE}}px/2);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-middle-line' => 'right: calc({{SIZE}}px/2);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-fill' => 'right: calc({{SIZE}}px/2);',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-icon' => 'right: calc({{SIZE}}px/2);',
 				],
 				'condition' => [
-					'timeline_layout' => ['horizontal-bottom', 'horizontal']
+					'timeline_layout' => ['one-sided']
 				],
 			]
 		);
@@ -3571,16 +3601,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-year-label' => 'width: {{SIZE}}{{UNIT}};',
-
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-year-label' => 'left: calc({{SIZE}}px/2);',
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-middle-line' => 'left: calc({{SIZE}}px/2);',
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-timeline-fill' => 'left: calc({{SIZE}}px/2);',
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-icon' => 'left: calc({{SIZE}}px/2);',
-
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-year-label' => 'right: calc({{SIZE}}px/2);',
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-middle-line' => 'right: calc({{SIZE}}px/2);',
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-fill' => 'right: calc({{SIZE}}px/2);',
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-icon' => 'right: calc({{SIZE}}px/2);',
 				],
 				'separator' => 'before',
 				'render_type' => 'template',
@@ -3649,16 +3669,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-year-label' => 'border-width: {{SIZE}}{{UNIT}};',
-
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-year-label' => 'margin-left: calc({{LEFT}}px);',
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-middle-line' => 'margin-left: calc({{LEFT}}px);',
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-timeline-fill' => 'margin-left: calc({{LEFT}}px);',
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-icon' => 'margin-left: calc({{LEFT}}px);',
-
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-year-label' => 'margin-right: calc({{RIGHT}}px);',
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-middle-line' => 'margin-right: calc({{RIGHT}}px);',
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-fill' => 'margin-right: calc({{RIGHT}}px);',
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-icon' => 'margin-right: calc({{RIGHT}}px);',
 				],
 				'condition' => [
 					'year_label_border_type!' => 'none'
@@ -3825,14 +3835,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wrapper .wpr-icon i' => 'display: block;',
 					'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'height: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}}; display: flex !important; justify-content: center !important; align-items: center !important;',
-					
-					'{{WRAPPER}} .wpr-one-sided-timeline .wpr-middle-line' => 'left: calc({{SIZE}}px/2);',
-					'{{WRAPPER}} .wpr-one-sided-timeline .wpr-timeline-fill' => 'left: calc({{SIZE}}px/2);',
-					'{{WRAPPER}} .wpr-one-sided-timeline .wpr-icon' => 'left: calc({{SIZE}}px/2);',
-					
-					'{{WRAPPER}} .wpr-one-sided-timeline-left .wpr-middle-line' => 'right: calc({{SIZE}}px/2);',
-					'{{WRAPPER}} .wpr-one-sided-timeline-left .wpr-timeline-fill' => 'right: calc({{SIZE}}px/2);',
-					'{{WRAPPER}} .wpr-one-sided-timeline-left .wpr-icon' => 'right: calc({{SIZE}}px/2);',
 				],
 				'render_type' => 'template',
 			]
@@ -3946,17 +3948,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-icon' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
-
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-year-label' => 'margin-left: calc({{LEFT}}px);',
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-middle-line' => 'margin-left: calc({{LEFT}}px);',
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-timeline-fill' => 'margin-left: calc({{LEFT}}px);',
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-icon' => 'margin-left: calc({{LEFT}}px);',
-
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-year-label' => 'margin-right: calc({{RIGHT}}px);',
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-middle-line' => 'margin-right: calc({{RIGHT}}px);',
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-fill' => 'margin-right: calc({{RIGHT}}px);',
-					// '{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-icon' => 'margin-right: calc({{RIGHT}}px);',
-					/// add container class for more specificity
 				],
 				'condition' => [
 					'icon_border_type!' => 'none'
@@ -3991,7 +3982,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'label' => __( 'Extra Label', 'wpr-addons' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 				'condition' => [
-					'show_extra_label' => 'yes'
+					'show_extra_label' => 'yes',
+					'timeline_layout!' => ['one-sided', 'one-sided-left']
 				]
 			]
 		);
@@ -4088,7 +4080,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 130,
+						'max' => 50,
 					],
 				],
 				'default' => [
@@ -4125,60 +4117,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'condition' => [
 					'timeline_layout' => ['one-sided-left'],
 				]
-			]
-		);
-
-		$this->add_control(
-			'label_top_position',
-			[
-				'label' => __( 'Position Top', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['%', 'px'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 10,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 25,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-wrapper .wpr-extra-label' => 'top: {{SIZE}}{{UNIT}}',
-				],
-				'condition' => [
-					'timeline_layout' => ['horizontal-bottom'],
-				]
-			]
-		);
-
-		$this->add_responsive_control(
-			'label_bottom_position',
-			[
-				'type' => Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Label Distance', 'wpr-addons' ),
-				'size_units' => [ 'px' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 500,
-					]
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 25,
-				],			
-				'selectors' => [
-					'{{WRAPPER}} .wpr-horizontal .wpr-extra-label' => 'bottom: {{SIZE}}{{UNIT}} !important;',
-				],
-				'condition' => [
-					'timeline_layout' => ['horizontal']
-				],
 			]
 		);
 
@@ -4668,7 +4606,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-horizontal-bottom .wpr-button-next svg' => 'text-align: center; line-height: 1.5;',
 					'{{WRAPPER}} .wpr-horizontal-bottom .wpr-button-prev svg' => 'text-align: center; line-height: 1.5;',
 					'{{WRAPPER}} .wpr-swiper-pagination.swiper-pagination-progressbar' => 'width: calc(100% - ({{SIZE}}px + 15px)*2);',
+					'{{WRAPPER}} .wpr-horizontal-bottom.swiper-container' => 'margin-left: {{SIZE}}px; margin-right: {{SIZE}}px;',
+					'{{WRAPPER}} .wpr-horizontal.swiper-container' => 'margin-left: {{SIZE}}px; margin-right: {{SIZE}}px;',
 				],
+				'render_type' => 'template'
 			]
 		); //todo
 
