@@ -10891,6 +10891,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 /*----Extra Labels----*/
 
+.wpr-timeline-centered .wpr-extra-label {
+    transform: translateY(-50%) !important;
+}
+
 .wpr-horizontal .wpr-extra-label {
     position: absolute;
     /* bottom: 0px; */

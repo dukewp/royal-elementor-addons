@@ -4476,7 +4476,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-timeline-centered .wpr-data-wrap:after' => 'top: {{size}}{{UNIT}}; transform: translateY(-50%) !important;',
 					'{{WRAPPER}} .wpr-timeline-centered  .wpr-right-aligned .wpr-icon' => 'position: absolute; top: {{size}}{{UNIT}}; transform: translate(50%, -50%) !important;',
 					'{{WRAPPER}} .wpr-timeline-centered  .wpr-left-aligned .wpr-icon' => 'position: absolute; top: {{size}}{{UNIT}}; transform: translate(-50%, -50%) !important;',
-					'{{WRAPPER}} .wpr-timeline-centered .wpr-extra-label' => 'top: {{size}}{{UNIT}};  transform: translateY(-50%) !important;', 
+					'{{WRAPPER}} .wpr-timeline-centered .wpr-extra-label' => 'top: {{size}}{{UNIT}};', 
 				],
 				'condition' => [
 					'timeline_layout' => ['centered']
