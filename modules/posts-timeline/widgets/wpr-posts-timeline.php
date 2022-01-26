@@ -3552,6 +3552,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'type' => Controls_Manager::SLIDER,
 				'label' => esc_html__( 'Side Distance', 'wpr-addons' ),
+				'description' => esc_html__('This option for Zig-Zag layout only works on mobile devices.', 'wpr-addons'),
 				'size_units' => [ 'px' ],
 				'range' => [
 					'px' => [
