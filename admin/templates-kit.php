@@ -149,8 +149,8 @@ function wpr_install_reuired_plugins() {
     // Add Required Plugins
     if ( 'contact-form-7' == $_POST['plugin'] ) {
         array_push( $active_plugins, 'contact-form-7/wp-contact-form-7.php' );
-    } elseif ( 'ashe-extra' == $_POST['plugin'] ) {
-        array_push( $active_plugins, 'ashe-extra/ashe-extra.php' );
+    } elseif ( 'media-library-assistant' == $_POST['plugin'] ) {
+        array_push( $active_plugins, 'media-library-assistant/index.php' );
     }
 
     // Set Active Plugins
