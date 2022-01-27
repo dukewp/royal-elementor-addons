@@ -99,6 +99,10 @@ jQuery(document).ready(function( $ ) {
 				if ( 'contact-form-7' in WprTemplatesKit.requiredPlugins && false === WprTemplatesKit.requiredPlugins['contact-form-7'] ) {
 					WprTemplatesKit.installPluginViaAjax('contact-form-7');
 				}
+				
+				if ( 'media-library-assistant' in WprTemplatesKit.requiredPlugins && false === WprTemplatesKit.requiredPlugins['media-library-assistant'] ) {
+					WprTemplatesKit.installPluginViaAjax('media-library-assistant');
+				}
 			}
 		},
 

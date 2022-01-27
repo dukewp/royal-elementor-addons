@@ -9,6 +9,7 @@ class WPR_Templates_Data {
 	public static function get_available_kits() {
 		$is_pro_active = wpr_fs()->can_use_premium_code() && defined('WPR_ADDONS_PRO_VERSION');
 		$is_cf7_active = is_plugin_active('contact-form-7/wp-contact-form-7.php') ? 'true' : 'false';
+		$is_mla_active = is_plugin_active('media-library-assistant/index.php') ? 'true' : 'false';
 
 		return [
 			'nature' => [
@@ -16,7 +17,7 @@ class WPR_Templates_Data {
 					'name' => 'nature',
 					'pages' => 'home,about,services,projects,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
-					'tags' => 'nature travel forest generic multipurpose national-park nature-park sanctuary wilderness hitchhiking mountain river lakes outdoors',
+					'tags' => 'nature travel forest slider generic multipurpose national-park nature-park sanctuary wilderness hitchhiking mountain river lakes outdoors',
 					'price' => $is_pro_active ? 'free' : 'free',
 				],
 			],
@@ -25,7 +26,16 @@ class WPR_Templates_Data {
 					'name' => 'Portfolio/CV',
 					'pages' => 'home,about,portfolio,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
-					'tags' => 'portfolio personal cv designer ux artist artwork personal resume',
+					'tags' => 'portfolio personal cv designer ux artist artwork personal resume photographer',
+					'price' => $is_pro_active ? 'free' : 'free',
+				],
+			],
+			'photography' => [
+				'v1' => [
+					'name' => 'Photographer Portfolio',
+					'pages' => 'home,about,services,portfolio,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .', "media-library-assistant":'. $is_mla_active .'}',
+					'tags' => 'portfolio personal cv designer ux artist artwork personal resume camera fashion lens modelling photographer photography videography wedding shoot ',
 					'price' => $is_pro_active ? 'free' : 'free',
 				],
 			],
@@ -34,7 +44,7 @@ class WPR_Templates_Data {
 					'name' => 'Pizza Restaurant',
 					'pages' => 'home,menu,about,offer,gallery,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
-					'tags' => 'pizza italian restaurant food pasta fastfood fast food',
+					'tags' => 'pizza italian restaurant food slider pasta fastfood fast food recipes cooking',
 					'price' => $is_pro_active ? 'free' : 'free',
 				],
 			],
@@ -97,7 +107,7 @@ class WPR_Templates_Data {
 					'name' => 'Architecture',
 					'pages' => 'home,about,portfolio,services,faq,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
-					'tags' => 'architecture company interior design designer landscaping office zoning building',
+					'tags' => 'architecture company slider interior design designer landscaping office zoning building',
 					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
@@ -106,7 +116,7 @@ class WPR_Templates_Data {
 					'name' => 'Food Delivery',
 					'pages' => 'home,services,blog,faq,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
-					'tags' => 'fooddelivery fast food chain restaurant service hotel italian pasta pizza pizzeria burger',
+					'tags' => 'fooddelivery fast food chain restaurant service hotel italian pasta pizza pizzeria burger recipes cooking',
 					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
@@ -149,7 +159,16 @@ class WPR_Templates_Data {
 					'name' => 'Restaurant',
 					'pages' => 'home,about,gallery,menu,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
-					'tags' => 'restaurant fastfood hotel italian pizza pizzeria pasta dinner fast food wine recipe recipes',
+					'tags' => 'restaurant fastfood slider hotel italian pizza pizzeria pasta dinner fast food wine recipe recipes cooking',
+					'price' => $is_pro_active ? 'free' : 'free',
+				],
+			],
+			'winebar' => [
+				'v1' => [
+					'name' => 'Wine Bar & Restaurant',
+					'pages' => 'home,story,wines,dishes,events,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'wine winery beer drink alcohol pub events dish wines italian restaurant food slider recipes cooking recipes',
 					'price' => $is_pro_active ? 'free' : 'free',
 				],
 			],
@@ -158,7 +177,7 @@ class WPR_Templates_Data {
 					'name' => 'Wedding',
 					'pages' => 'home,about,services,blog,gallery,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
-					'tags' => 'wedding party event invitation planner',
+					'tags' => 'wedding party event slider invitation planner',
 					'price' => $is_pro_active ? 'free' : 'free',
 				],
 			],
