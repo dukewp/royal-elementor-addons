@@ -10595,7 +10595,12 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     display: flex;
     flex-direction: column;
     width: 100%;
+    line-height: 1;
     height: auto;
+}
+
+.wpr-story-info {
+    line-height: 1;
 }
 
 
