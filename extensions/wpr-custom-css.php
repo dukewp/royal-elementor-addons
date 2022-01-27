@@ -34,8 +34,9 @@ class Wpr_Custom_CSS {
 			[
 				'type' => Controls_Manager::CODE,
 				'label' => esc_html__('Custom CSS', 'wpr-addons'),
+				'language' => 'css',
+				'render_type' => 'ui',
 				'label_block' => true,
-				'language' => 'css'
 			]
 		);
 

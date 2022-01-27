@@ -9,6 +9,7 @@ class WPR_Templates_Data {
 	public static function get_available_kits() {
 		$is_pro_active = wpr_fs()->can_use_premium_code() && defined('WPR_ADDONS_PRO_VERSION');
 		$is_cf7_active = is_plugin_active('contact-form-7/wp-contact-form-7.php') ? 'true' : 'false';
+		$is_mla_active = is_plugin_active('media-library-assistant/index.php') ? 'true' : 'false';
 
 		return [
 			'nature' => [
@@ -26,6 +27,15 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,portfolio,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'portfolio personal cv designer ux artist artwork personal resume photographer',
+					'price' => $is_pro_active ? 'free' : 'free',
+				],
+			],
+			'photography' => [
+				'v1' => [
+					'name' => 'Photographer Portfolio',
+					'pages' => 'home,about,services,portfolio,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .', "media-library-assistant":'. $is_mla_active .'}',
+					'tags' => 'portfolio personal cv designer ux artist artwork personal resume camera fashion lens modelling photographer photography videography wedding shoot ',
 					'price' => $is_pro_active ? 'free' : 'free',
 				],
 			],
@@ -150,6 +160,15 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,gallery,menu,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'restaurant fastfood slider hotel italian pizza pizzeria pasta dinner fast food wine recipe recipes cooking',
+					'price' => $is_pro_active ? 'free' : 'free',
+				],
+			],
+			'winebar' => [
+				'v1' => [
+					'name' => 'Wine Bar & Restaurant',
+					'pages' => 'home,story,wines,dishes,events,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'wine winery beer drink alcohol pub events dish wines italian restaurant food slider recipes cooking recipes',
 					'price' => $is_pro_active ? 'free' : 'free',
 				],
 			],
