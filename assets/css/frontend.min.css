@@ -10368,8 +10368,8 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     display: inline-block;
 }
 
-.wpr-timeline-centered.wpr-both-sided-timeline .wpr-timeline-entry.wpr-left-aligned .wpr-timeline-entry-inner .wpr-extra-label,
-.wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-entry.wpr-left-aligned .wpr-timeline-entry-inner .wpr-extra-label {
+.wpr-timeline-centered.wpr-both-sided-timeline .wpr-timeline-entry.wpr-left-aligned .wpr-extra-label,
+.wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-timeline-entry.wpr-left-aligned .wpr-extra-label {
     left: 108%;
     /* text-align: center; */
 }
@@ -10416,7 +10416,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     right: 100%;
 }
 
-.wpr-timeline-centered .wpr-timeline-entry .wpr-timeline-entry-inner .wpr-extra-label {
+.wpr-timeline-centered .wpr-timeline-entry .wpr-extra-label {
     position: absolute;
     right: 108%;
     width: 100%;
@@ -10431,7 +10431,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     right: 108% !important;
 }
 
-.wpr-timeline-centered .wpr-timeline-entry .wpr-timeline-entry-inner .wpr-extra-label>span {
+.wpr-timeline-centered .wpr-timeline-entry .wpr-extra-label>span {
     display: block;
 }
 
@@ -11111,25 +11111,15 @@ body:not(.elementor-editor-active) .wpr-template-popup {
         float: none;
         width: 100%;
     }
-    .wpr-vertical {
-        /* margin-top: 50px; */
-    }
     .wpr-timeline-centered .wpr-right-aligned .wpr-icon {
         /* position: absolute; */
         transform: translate(-50%, -50%) !important;
     }
     .wpr-one-sided-timeline .wpr-extra-label {
-        top: -10px !important;
-        transform: translateY(-100%) !important;
-        text-align: left !important;
-    }
-    .wpr-one-sided-timeline .wpr-extra-label .wpr-label,
-    .wpr-one-sided-timeline .wpr-extra-label .wpr-sub-label {
-        text-align: left !important;
-    }
-
-    .wpr-both-sided-timeline .wpr-year-label {
-        transform: translate(-50%);
+        position: static !important;
+        transform: none !important;
+        display: block;
+        margin-bottom: 10px;
     }
 }
 

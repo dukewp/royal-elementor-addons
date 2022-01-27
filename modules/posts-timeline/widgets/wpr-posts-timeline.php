@@ -2267,10 +2267,11 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-centered .wpr-one-sided-timeline .wpr-right-aligned .wpr-timeline-entry-inner .wpr-data-wrap' => 'margin-left: calc({{main_line_side_distance.SIZE}}px/2 + {{SIZE}}px);',
 
                     'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-timeline-centered.wpr-both-sided-timeline .wpr-data-wrap' => 'margin-left: calc({{main_line_side_distance.SIZE}}px/2 + {{SIZE}}px);',
-                    '{{WRAPPER}} .wpr-centered .wpr-one-sided-timeline .wpr-extra-label' => 'left: calc({{main_line_side_distance.SIZE}}px/2 + {{SIZE}}px) !important; top: -10px !important; transform: translateY(-100%) !important; text-align: left !important;',
+                    '{{WRAPPER}} .wpr-centered .wpr-one-sided-timeline .wpr-extra-label' => 'margin-left: calc({{main_line_side_distance.SIZE}}px/2 + {{SIZE}}px);',
+                    // '{{WRAPPER}} .wpr-centered .wpr-one-sided-timeline .wpr-extra-label' => 'left: calc({{main_line_side_distance.SIZE}}px/2 + {{SIZE}}px) !important; top: -10px !important; transform: translateY(-100%) !important; text-align: left !important;',
 
-                    'body[data-elementor-device-mode=mobile_extra] {{WRAPPER}} .wpr-timeline-centered.wpr-both-sided-timeline .wpr-data-wrap' => 'margin-left: calc({{main_line_side_distance.SIZE}}px/2 + {{SIZE}}px);',
-                    'body[data-elementor-device-mode=mobile_extra] {{WRAPPER}} .wpr-both-sided-timeline .wpr-extra-label' => 'left: calc({{main_line_side_distance.SIZE}}px/2 + {{SIZE}}px) !important;',
+                    // 'body[data-elementor-device-mode=mobile_extra] {{WRAPPER}} .wpr-timeline-centered.wpr-both-sided-timeline .wpr-data-wrap' => 'margin-left: calc({{main_line_side_distance.SIZE}}px/2 + {{SIZE}}px);',
+                    // 'body[data-elementor-device-mode=mobile_extra] {{WRAPPER}} .wpr-both-sided-timeline .wpr-extra-label' => 'left: calc({{main_line_side_distance.SIZE}}px/2 + {{SIZE}}px) !important;',
 				],
 				'condition' => [
 					'timeline_layout' => ['centered', 'one-sided', 'one-sided-left']
@@ -2299,7 +2300,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'selectors' => [
                     '{{WRAPPER}} .wpr-timeline-centered .wpr-year-wrap' => 'margin-bottom: {{SIZE}}px;',
                     '{{WRAPPER}} .wpr-timeline-centered .wpr-timeline-entry' => 'margin-bottom: {{SIZE}}px;',
-                    '{{WRAPPER}} .wpr-centered .wpr-one-sided-timeline .wpr-timeline-entry' => 'margin-top: calc({{SIZE}}px + {{label_padding.TOP}}px + 44px);',
 				],
 				'condition' => [
 					'timeline_layout' => ['centered', 'one-sided', 'one-sided-left']
@@ -4108,8 +4108,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'size' => 25,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-both-sided-timeline .wpr-timeline-entry.wpr-left-aligned .wpr-timeline-entry-inner .wpr-extra-label' => 'left: calc(100% + {{SIZE}}{{UNIT}})',
-					'{{WRAPPER}} .wpr-timeline-centered.wpr-both-sided-timeline .wpr-timeline-entry.wpr-right-aligned .wpr-timeline-entry-inner .wpr-extra-label' => 'right: calc(100% + {{SIZE}}{{UNIT}})',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-both-sided-timeline .wpr-timeline-entry.wpr-left-aligned .wpr-extra-label' => 'left: calc(100% + {{SIZE}}{{UNIT}})',
+					'{{WRAPPER}} .wpr-timeline-centered.wpr-both-sided-timeline .wpr-timeline-entry.wpr-right-aligned .wpr-extra-label' => 'right: calc(100% + {{SIZE}}{{UNIT}})',
 				],
 				'condition' => [
 					'timeline_layout' => ['centered'],
@@ -5342,14 +5342,16 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					echo '</span>';
 				}
 				
-				echo '<article class="wpr-timeline-entry '. $this->content_alignment .' elementor-repeater-item-'. $content['_id'] .'" data-item-id="elementor-repeater-item-' . $content['_id'] . '">
-					<div class="wpr-timeline-entry-inner">';
-					if ( 'yes' === $settings['show_extra_label'] ) {
-						echo !empty($content['repeater_date_label']) && !empty($content['repeater_extra_label']) ? '<time class="wpr-extra-label" data-animation-offset="'. $settings['animation_offset'] .'" data-aos="'.$this->animation.'" data-aos-left="'.$this->animation_loadmore_left .'" data-aos-right="'. $this->animation_loadmore_right .'" data-animation-offset="'. $settings['animation_offset'] .'" data-animation-duration="'. $settings['aos_animation_duration'] .'">' : '';
-							echo !empty($content['repeater_date_label']) ? '<span class="wpr-label">'. $content['repeater_date_label'] .'</span>' : '';
-							echo !empty($content['repeater_extra_label']) ? '<span class="wpr-sub-label">' . $content['repeater_extra_label'] .'</span>' : '';
-						echo !empty($content['repeater_date_label']) && !empty($content['repeater_extra_label']) ? '</time>' : '';
-					}
+				echo '<article class="wpr-timeline-entry '. $this->content_alignment .' elementor-repeater-item-'. $content['_id'] .'" data-item-id="elementor-repeater-item-' . $content['_id'] . '">';
+                    
+                    if ( 'yes' === $settings['show_extra_label'] ) {
+                        echo !empty($content['repeater_date_label']) && !empty($content['repeater_extra_label']) ? '<time class="wpr-extra-label" data-animation-offset="'. $settings['animation_offset'] .'" data-aos="'.$this->animation.'" data-aos-left="'.$this->animation_loadmore_left .'" data-aos-right="'. $this->animation_loadmore_right .'" data-animation-offset="'. $settings['animation_offset'] .'" data-animation-duration="'. $settings['aos_animation_duration'] .'">' : '';
+                            echo !empty($content['repeater_date_label']) ? '<span class="wpr-label">'. $content['repeater_date_label'] .'</span>' : '';
+                            echo !empty($content['repeater_extra_label']) ? '<span class="wpr-sub-label">' . $content['repeater_extra_label'] .'</span>' : '';
+                        echo !empty($content['repeater_date_label']) && !empty($content['repeater_extra_label']) ? '</time>' : '';
+                    }
+
+					echo '<div class="wpr-timeline-entry-inner">';
 
 						echo '<div class="wpr-main-line-icon wpr-icon">';
 							\Elementor\Icons_Manager::render_icon( $content['repeater_story_icon'], [ 'aria-hidden' => 'true' ] );
@@ -5432,14 +5434,15 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					$background_image = $settings['content_layout'] === 'background' ? get_the_post_thumbnail_url() : '';
 					$background_class = $settings['content_layout'] === 'background' ? 'story-with-background' : '';
 
-					echo '<article class="wpr-timeline-entry '. $this->content_alignment .'" data-counter="'. $countItem .'">
-						<div class="wpr-timeline-entry-inner">';
-						
-						if ( 'yes' === $settings['show_extra_label'] ) {
-							echo '<time class="wpr-extra-label" data-aos="'. $this->animation.'" data-animation-offset="'. $settings['animation_offset'] .'">
-								<span class="wpr-label">'. get_the_date($settings['date_format']) .'</span>
-							</time>';
-						}
+					echo '<article class="wpr-timeline-entry '. $this->content_alignment .'" data-counter="'. $countItem .'">';
+                        
+                        if ( 'yes' === $settings['show_extra_label'] ) {
+                            echo '<time class="wpr-extra-label" data-aos="'. $this->animation.'" data-animation-offset="'. $settings['animation_offset'] .'">
+                                <span class="wpr-label">'. get_the_date($settings['date_format']) .'</span>
+                            </time>';
+                        }
+
+						echo '<div class="wpr-timeline-entry-inner">';
 
 							echo '<div class="wpr-main-line-icon wpr-icon">';
 							\Elementor\Icons_Manager::render_icon( $settings['posts_icon'], [ 'aria-hidden' => 'true' ] );
