@@ -10259,7 +10259,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-pc-btn-align-fixed-left .wpr-pc-btn {
     right: auto;
 }
-/* -- Posts Timeline Styles -- */
+
+/*--------------------------------------------------------------
+== Post Timeline
+--------------------------------------------------------------*/
 
 .wpr-vertical {
     /* display: table; */
@@ -10481,7 +10484,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     margin-left: -9px;
 }
 
-/* p+p */
 .wpr-title-wrap {
     overflow: hidden;
     width: 100% !important;
@@ -10491,7 +10493,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     margin-bottom: 10px;
     font-weight: bold;
     display: inline-block;
-    /* width: 100%; */
 }
 
 .wpr-timeline-centered .wpr-timeline-entry .wpr-timeline-entry-inner .wpr-data-wrap .wpr-title span {
@@ -10584,8 +10585,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    /* height: 100%; */
-    /* max-height: 100%; */
 }
 
 .wpr-timeline-story-overlay {
@@ -10602,18 +10601,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-story-info {
     line-height: 1;
 }
-
-
-/* TODO: test for other devices ass well */
-
-
-/* body[data-elementor-device-mode=mobile_extra] .wpr-timeline-centered.wpr-both-sided-timeline .wpr-timeline-entry.wpr-left-aligned .wpr-main-line-icon.wpr-icon  {
-    background: red !important;
-} */
-
-
-/* Horizontal Bottom Timeline */
-
 
 /*----Horizontal Timeline----*/
 
@@ -10669,12 +10656,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     transform: translateX(-50%);
 }
 
-
-/* .wpr-horizontal-bottom .wpr-extra-label div {
-    display: table-cell;
-    vertical-align: middle;
-  } */
-
 .wpr-extra-label .wpr-label,
 .wpr-extra-label .wpr-sub-label {
     display: block;
@@ -10723,7 +10704,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 .wpr-horizontal-bottom .wpr-story-info {
     padding: 0;
-    /* margin: 170px 4px 50px; */
     justify-content: center;
     position: relative;
     transition: all 200ms ease-in;
@@ -10732,8 +10712,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     border-radius: 6px;
-    /* height: calc(100% - 200px); */
-    /* height: calc(100% - 160px); */
 }
 
 
@@ -10857,7 +10835,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 
-/*----Slider Styles*/
+/*----Slider Styles-----*/
 
 .swiper-slide.auto-height {
     height: auto;
@@ -10870,9 +10848,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-horizontal-bottom {
     height: auto;
 }
-
-
-/* Horizontal Timeline Styles  */
 
 
 /*----Horizontal Timeline----*/
@@ -10912,7 +10887,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 .wpr-horizontal .wpr-extra-label {
     position: absolute;
-    /* bottom: 0px; */
     display: table;
     width: 100%;
     height: 80px;
@@ -10922,12 +10896,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     left: 50%;
     transform: translateX(-50%);
 }
-
-
-/* .wpr-horizontal .wpr-extra-label div {
-    display: table-cell;
-    vertical-align: bottom;
-  } */
 
 .wpr-horizontal .wpr-extra-label .wpr-label,
 .wpr-horizontal .wpr-extra-label .wpr-sub-label {
@@ -10947,9 +10915,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     display: block;
     z-index: 100;
     left: 50%;
-    /* bottom: 80px; */
     transform: translate(-50%, 50%);
-    /* locate in controls if needed */
 }
 
 .wpr-horizontal .wpr-icon i {
@@ -11032,7 +10998,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 
-/*----Slider Styles*/
+/*----Slider Styles----*/
 
 .wpr-wrapper .wpr-year {
     font-size: 16px;
@@ -11127,7 +11093,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
         width: 100%;
     }
     .wpr-timeline-centered .wpr-right-aligned .wpr-icon {
-        /* position: absolute; */
         transform: translate(-50%, -50%) !important;
     }
     .wpr-one-sided-timeline .wpr-extra-label {
