@@ -2449,51 +2449,31 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'horizontal_bottom_container_padding',
+			'horizontal_container_padding',
 			[
 				'label' => esc_html__( 'Container Padding', 'elementor' ),
-				'type' => Controls_Manager::DIMENSIONS,
+				'type' => Controls_Manager::SLIDER,
 				'description' => esc_html__('Apply this option to fix Box Shadow issue.'),
-				'size_units' => [ 'px'],
-				'allowed_dimensions' => 'vertical',
-				'placeholder' => [
-					'top' => 'auto',
-					'right' => 'auto',
-					'bottom' => 5,
-					'left' => 'auto',
+				'default' => [
+					'unit' => 'px',
+					'size' => 50,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 150,
+					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-horizontal-bottom-timeline' => 'padding-bottom: {{BOTTOM}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-horizontal-bottom-timeline' => 'padding-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-horizontal-timeline' => 'padding-top: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
-					'timeline_layout' => ['horizontal-bottom']
+					'timeline_layout' => ['horizontal-bottom', 'horizontal']
 				],
 			]
 		);
-
-		$this->add_responsive_control(
-			'horizontal_top_container_padding',
-			[
-				'label' => esc_html__( 'Container Padding', 'elementor' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'description' => esc_html__('Apply this option to fix Box Shadow issue.'),
-				'size_units' => [ 'px'],
-				'allowed_dimensions' => 'vertical',
-				'placeholder' => [
-					'top' => 5,
-					'right' => 'auto',
-					'bottom' => 'auto',
-					'left' => 'auto',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-horizontal-timeline' => 'padding-top: {{TOP}}{{UNIT}};',
-				],
-				'condition' => [
-					'timeline_layout' => ['horizontal']
-				],
-			]
-		);
-
+		
 		$this->add_control(
 			'timeline_item_border_type',
 			[
