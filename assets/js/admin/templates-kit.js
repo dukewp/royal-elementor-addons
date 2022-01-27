@@ -90,7 +90,25 @@ jQuery(document).ready(function( $ ) {
 
 		},
 
+		installRequiredTheme: function( kitID ) { //TODO: Check if ashe is installed, don't run with import.
+			wp.updates.installTheme({
+				slug: 'ashe',
+				success: function() {
+					console.log('Done---------!')
+
+			        $.post(
+			            ajaxurl,
+			            {
+			                action: 'wpr_install_reuired_theme',
+			            }
+			        );
+				}
+			});
+		},
+
 		installRequiredPlugins: function( kitID ) {
+			WprTemplatesKit.installRequiredTheme();
+
 			var kit = $('.grid-item[data-kit-id="'+ kitID +'"]');
 				WprTemplatesKit.requiredPlugins = kit.data('plugins') !== undefined ? kit.data('plugins') : false;
 			
