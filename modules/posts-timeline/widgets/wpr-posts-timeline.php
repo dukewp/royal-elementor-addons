@@ -272,9 +272,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'default' => 'yes',
 				'label_block' => false,
 				'separator' => 'before',
-				'condition' => [
-					'timeline_layout!' => ['one-sided', 'one-sided-left']
-				]
 			]
 		);
 		
