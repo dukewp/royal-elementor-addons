@@ -11121,6 +11121,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
         display: block;
         margin-bottom: 10px;
     }
+
+    .wpr-right-aligned .wpr-extra-label .wpr-label {
+        text-align: left !important;
+    }
 }
 
 
