@@ -136,7 +136,10 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'label_off' => __('No', 'wpr-addons'),
 				'return_value' => 'yes',
 				'default' => 'no',
-				'separator' => 'before'
+				'separator' => 'before',
+				'condition' => [
+					'choose_table_type' => 'csv',
+				]
 			]
 		);
 
