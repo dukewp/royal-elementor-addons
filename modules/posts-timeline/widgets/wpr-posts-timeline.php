@@ -2434,10 +2434,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'description' => esc_html__('Apply this option to fix Box Shadow issue.'),
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 20,
-					'right' => 20,
-					'bottom' => 20,
-					'left' => 20,
+					'top' => 10,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-vertical' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -2456,7 +2456,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'description' => esc_html__('Apply this option to fix Box Shadow issue.'),
 				'default' => [
 					'unit' => 'px',
-					'size' => 50,
+					'size' => 10,
 				],
 				'range' => [
 					'px' => [
