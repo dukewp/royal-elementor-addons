@@ -758,7 +758,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					// TODO: background colors for repeater arrows
 					'{{WRAPPER}} {{CURRENT_ITEM}}.swiper-slide-line-top .wpr-story-info:before' => 'border-bottom-color: {{VALUE}} !important;',
 					'{{WRAPPER}} {{CURRENT_ITEM}}.swiper-slide-line-bottom .wpr-story-info:before' => 'border-top-color: {{VALUE}} !important',
-					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-right-aligned .wpr-story-info-vertical:after' => 'border-right-color: {{VALUE}} !important',
 					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-left-aligned .wpr-story-info-vertical:after' => 'border-left-color: {{VALUE}} !important',
 					'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-wrapper .wpr-both-sided-timeline .wpr-left-aligned .wpr-data-wrap:after' => 'border-right-color: {{VALUE}} !important; border-left-color: transparent !important;',
 					'{{WRAPPER}} .wpr-centered .wpr-one-sided-timeline .wpr-right-aligned-aligned .wpr-data-wrap:after' => 'border-right-color: {{VALUE}} !important; border-left-color: transparent !important;',
@@ -767,6 +766,41 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'condition' => [
 					'show_custom_styles' => 'yes'
 				]
+			]
+		);
+
+		$repeater->add_control(
+			'repeater_triangle_color',
+			[
+				'label' => __('Triangle','wpr-addons'),
+				'type' => \Elementor\Controls_Manager::HEADING,
+				'separator' => 'before',
+				'condition' => [
+					'show_custom_styles' => 'yes'
+				]			
+			]
+		);
+
+		$repeater->add_control(
+			'repeater_triangle_bgcolor',
+			[
+				'label' => __( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline {{CURRENT_ITEM}}.wpr-right-aligned .wpr-data-wrap:after' => 'border-right-color: {{icon_bgcolor}}',
+					'{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline-left {{CURRENT_ITEM}}.wpr-left-aligned .wpr-data-wrap:after' => 'border-left-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wrapper {{CURRENT_ITEM}}.wpr-right-aligned .wpr-data-wrap:after' => 'border-right-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-horizontal {{CURRENT_ITEM}} .wpr-story-info:before' => 'border-top-color: {{VALUE}} !important',
+					'{{WRAPPER}} .wpr-horizontal-bottom {{CURRENT_ITEM}} .wpr-story-info:before' => 'border-bottom-color: {{VALUE}} !important',
+					'{{WRAPPER}} .wpr-wrapper {{CURRENT_ITEM}}.wpr-left-aligned .wpr-data-wrap:after' => 'border-left-color: {{VALUE}} !important',
+					'{{WRAPPER}} .wpr-centered {{CURRENT_ITEM}} .wpr-one-sided-timeline .wpr-right-aligned .wpr-data-wrap:after' => 'border-right-color: {{VALUE}} !important; border-left-color: transparent !important;',
+					'{{WRAPPER}} .wpr-wrapper {{CURRENT_ITEM}} .wpr-one-sided-timeline-left .wpr-left-aligned .wpr-data-wrap:after' => 'border-left-color: {{VALUE}} !important',
+				],
+				'default' => '#605BE5',
+				'condition' => [
+					'show_custom_styles' => 'yes'
+				]
+				// 'separator' => 'after',
 			]
 		);
 
@@ -4093,10 +4127,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-wrapper .wpr-right-aligned .wpr-data-wrap:after' => 'border-right-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-horizontal .wpr-story-info:before' => 'border-top-color: {{VALUE}} !important',
 					'{{WRAPPER}} .wpr-horizontal-bottom .wpr-story-info:before' => 'border-bottom-color: {{VALUE}} !important',
-					'{{WRAPPER}} .wpr-wrapper .wpr-left-aligned .wpr-data-wrap:after' => 'border-left-color: {{VALUE}} !important',
+					'{{WRAPPER}} .wpr-wrapper .wpr-left-aligned .wpr-data-wrap:after' => 'border-left-color: {{VALUE}}',
 					'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-wrapper .wpr-both-sided-timeline .wpr-left-aligned .wpr-data-wrap:after' => 'border-right-color: {{VALUE}} !important; border-left-color: transparent !important;',
 					'{{WRAPPER}} .wpr-centered .wpr-one-sided-timeline .wpr-right-aligned .wpr-data-wrap:after' => 'border-right-color: {{VALUE}} !important; border-left-color: transparent !important;',
-					'{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline-left .wpr-left-aligned .wpr-data-wrap:after' => 'border-left-color: {{VALUE}} !important',
 				],
 				'default' => '#605BE5',
 				// 'separator' => 'after',
