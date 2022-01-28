@@ -10418,6 +10418,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     transform: rotate(180deg);
 }
 
+.wpr-story-info-vertical {
+    box-shadow: 0px 0px 20px 1px rgb(0 0 0 / 10%);
+}
+
 .wpr-right-aligned .wpr-story-info-vertical.wpr-data-wrap:after {
     right: 100%;
 }
@@ -10510,7 +10514,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-timeline-centered .wpr-year-wrap .wpr-year-label {
     display: inline-block;
     text-align: center;
-    white-space: nowrap
+    white-space: nowrap;
 }
 
 .wpr-timeline-centered .wpr-year-wrap {
@@ -10522,7 +10526,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     margin-left: auto;
     margin-right: auto;
     padding: 0;
-    text-align: center
+    text-align: center;
 }
 
 .wpr-timeline-centered.wpr-one-sided-timeline .wpr-year-wrap .wpr-year-label {
@@ -10664,6 +10668,14 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-extra-label .wpr-sub-label {
     display: block;
     width: 100%;
+}
+
+.wpr-extra-label .wpr-label {
+    font-size: 15px;
+}
+
+.wpr-extra-label .wpr-sub-label {
+    font-size: 12px;
 }
 
 
@@ -11007,7 +11019,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-wrapper .wpr-year {
     font-size: 16px;
     font-weight: bold;
-    line-height: 2.1;
+    line-height: 2.1em;
 }
 
 .wpr-wrapper span.wpr-extra-label {
@@ -11042,9 +11054,9 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     color: #7A7A7A;
 }
 
-.wpr-wrapper span.wpr-title {
-    font-size: 20px;
-    font-weight: 600;
+.wpr-wrapper a.wpr-title {
+    font-size: 24px;
+    font-weight: bold;
 }
 
 .wpr-horizontal .wpr-story-info {

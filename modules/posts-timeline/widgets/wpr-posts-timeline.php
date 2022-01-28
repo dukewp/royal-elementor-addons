@@ -863,7 +863,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-timeline-entry a.wpr-title' => 'color: {{VALUE}};',
 				],
-				'default' => '#605BE5',
+				'default' => '#444444',
 				'condition' => [
 					'show_custom_styles' => 'yes'
 				]
@@ -949,9 +949,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'label' => __( 'Icon Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-wrapper {{CURRENT_ITEM}} .wpr-icon' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wrapper {{CURRENT_ITEM}} .wpr-icon' => 'background-color: {{VALUE}} !important;',
 				],
-				'default' => '#605BE5',
+				'default' => '#FFFFF',
 				'condition' => [
 					'show_custom_styles' => 'yes'
 				]
@@ -965,7 +965,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#605BE5',
 				'selectors' => [
-					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-change-border-color.wpr-icon' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-change-border-color.wpr-icon' => 'background-color: {{VALUE}} !important;',
 				],
 				'condition' => [
 					'show_custom_styles' => 'yes'
@@ -1129,12 +1129,27 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						'repeater_year'			=> __('2021','wpr-addons'),
 						'repeater_date_label'   => __('Jan 2021','wpr-addons'),
 						'repeater_extra_label'  => __('Company Established','wpr-addons'),
+						'repeater_story_icon' => [
+							'value' => 'far fa-flag',
+							'library' => 'solid'
+						],
 						'repeater_show_year_label' => 'yes',
 						'repeater_image' =>[
 							'url' => Utils::get_placeholder_image_src(),	
 							'id' => '',						
 						],
 						'repeater_youtube_video_url' => '',
+						'item_bg_color' => '#E71919',
+						'repeater_triangle_bgcolor' => '#E71919',
+						'repeater_overlay_bgcolor' => '#0000005E',
+						'repeater_story_title_color' => '#FCFCFC',
+						'repeater_description_color' => '#ECECEC',
+						'repeater_timeline_icon_bg_color' => '',
+						'item_content_border_color' => '#E8E8E8',
+						'repeater_timeline_icon_color' => '#E8E8E8',
+						'repeater_icon_timeline_fill_color' => '#E71919',
+						'repeater_icon_timeline_background_fill_color' => '#605BE5',
+						'repeater_icon_border_color' => '#E8E8E8'
 					],
 					[
 						'repeater_story_title' => __( 'Timeline Item 2', 'wpr-addons' ),
@@ -1142,12 +1157,26 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						'repeater_year'			=> __('2021','wpr-addons'),
 						'repeater_date_label'   => __('March 2021','wpr-addons'),
 						'repeater_extra_label'  => __('New office in California','wpr-addons'),
+						'repeater_story_icon' => [
+							'value' => 'far fa-paper-plane',
+							'library' => 'solid'
+						],
 						'repeater_image' =>[
 							'url' => Utils::get_placeholder_image_src(),
 							'id' => '',							
 						],
 						'repeater_youtube_video_url' => '',
-						
+						'item_bg_color' => '#ECB824',
+						'repeater_triangle_bgcolor' => '#ECB824',
+						'repeater_overlay_bgcolor' => '#0000005E',
+						'repeater_story_title_color' => '#FCFCFC',
+						'repeater_description_color' => '#ECECEC',
+						'repeater_timeline_icon_bg_color' => '',
+						'item_content_border_color' => '#E8E8E8',
+						'repeater_timeline_icon_color' => '#E8E8E8',
+						'repeater_icon_timeline_fill_color' => '#ECB824',
+						'repeater_icon_timeline_background_fill_color' => '#605BE5',
+						'repeater_icon_border_color' => '#E8E8E8'	
 					],
 					[
 						'repeater_story_title' => __( 'Timeline Item 3', 'wpr-addons' ),
@@ -1155,11 +1184,27 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						'repeater_year'			=> __('2022','wpr-addons'),
 						'repeater_date_label'   => __('April 2022','wpr-addons'),
 						'repeater_extra_label'  => __('First Product Launch','wpr-addons'),
+						'repeater_story_icon' => [
+							'value' => 'far fa-lightbulb',
+							'library' => 'solid'
+						],
+						'repeater_show_year_label' => 'yes',
 						'repeater_image' =>[
 							'url' => Utils::get_placeholder_image_src(),
 							'id' => '',						
 						],
 						'repeater_youtube_video_url' => '',
+						'item_bg_color' => '#1BE620',
+						'repeater_triangle_bgcolor' => '#1BE620',
+						'repeater_overlay_bgcolor' => '#0000005E',
+						'repeater_story_title_color' => '#FCFCFC',
+						'repeater_description_color' => '#FDFDFD',
+						'item_content_border_color' => '#E8E8E8',
+						'repeater_timeline_icon_bg_color' => '',
+						'repeater_timeline_icon_color' => '#E8E8E8',
+						'repeater_icon_timeline_fill_color' => '#1BE620',
+						'repeater_icon_timeline_background_fill_color' => '#605BE5',
+						'repeater_icon_border_color' => '#E8E8E8'
 					],
 					[
 						'repeater_story_title' => __( 'Timeline Item 4', 'wpr-addons' ),
@@ -1167,11 +1212,26 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						'repeater_year'			=> __('2022','wpr-addons'),
 						'repeater_date_label'   => __('September 2022','wpr-addons'),
 						'repeater_extra_label'  => __('Entering Stock Market','wpr-addons'),
+						'repeater_story_icon' => [
+							'value' => 'fas fa-bolt',
+							'library' => 'solid'
+						],
 						'repeater_image' =>[
 							'url' => Utils::get_placeholder_image_src(),
 							'id' => '',						
 						],
 						'repeater_youtube_video_url' => '',
+						'item_bg_color' => '#D82F8E',
+						'repeater_triangle_bgcolor' => '#D82F8E',
+						'repeater_overlay_bgcolor' => '#0000005E',
+						'repeater_story_title_color' => '#FCFCFC',
+						'repeater_description_color' => '#F3F3F3',
+						'item_content_border_color' => '#E8E8E8',
+						'repeater_timeline_icon_bg_color' => '',
+						'repeater_timeline_icon_color' => '#E8E8E8',
+						'repeater_icon_timeline_fill_color' => '#D82F8E',
+						'repeater_icon_timeline_background_fill_color' => '#605BE5',
+						'repeater_icon_border_color' => '#E8E8E8'
 					],
 				],
 				'title_field' => '{{{ repeater_story_title }}}',
@@ -2304,22 +2364,22 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			]
 		);
 	
-		$this->add_control(
-			'content_background_blend_mode',
-			[
-				'label' => __( 'Media Position', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::SELECT,
-				'default' => 'normal',
-				'options' => $this->background_blend_modes(),
-				'condition' => [
-					'content_layout' => 'background'
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-story-info-vertical' => 'background-blend-mode: {{VALUE}}',
-					'{{WRAPPER}} .wpr-story-infO' => 'background-blend-mode: {{VALUE}}',
-				]
-			]
-		);
+		// $this->add_control(
+		// 	'content_background_blend_mode',
+		// 	[
+		// 		'label' => __( 'Media Position', 'wpr-addons' ),
+		// 		'type' => \Elementor\Controls_Manager::SELECT,
+		// 		'default' => 'normal',
+		// 		'options' => $this->background_blend_modes(),
+		// 		'condition' => [
+		// 			'content_layout' => 'background'
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-story-info-vertical' => 'background-blend-mode: {{VALUE}}',
+		// 			'{{WRAPPER}} .wpr-story-infO' => 'background-blend-mode: {{VALUE}}',
+		// 		]
+		// 	]
+		// );
 
 		$this->add_responsive_control(
 			'item_distance_from_line',
@@ -2335,7 +2395,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],				
 				'default' => [
 					'unit' => 'px',
-					'size' => 45,
+					'size' => 40,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-data-wrap' => 'margin-right: calc({{main_line_side_distance.SIZE}}px/2 + {{SIZE}}px);', 
@@ -2371,7 +2431,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],				
 				'default' => [
 					'unit' => 'px',
-					'size' => 20,
+					'size' => 40,
 				],
 				'selectors' => [
                     '{{WRAPPER}} .wpr-timeline-centered .wpr-year-wrap' => 'margin-bottom: {{SIZE}}px;',
@@ -2494,41 +2554,13 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'size_units' => [ 'px' ],
 				'default' => [
 					'top' => 10,
-					'right' => 10,
-					'bottom' => 10,
+					'right' => 20,
 					'left' => 10,
+					'bottom' => 20,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-vertical' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'condition' => [
-					'timeline_layout' => ['centered', 'one-sided', 'one-sided-left']
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'horizontal_container_padding',
-			[
-				'label' => esc_html__( 'Container Padding', 'elementor' ),
-				'type' => Controls_Manager::SLIDER,
-				'description' => esc_html__('Apply this option to fix Box Shadow issue.'),
-				'default' => [
-					'unit' => 'px',
-					'size' => 10,
-				],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 150,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-horizontal-bottom-timeline' => 'padding-bottom: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-horizontal-timeline' => 'padding-top: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'timeline_layout' => ['horizontal-bottom', 'horizontal']
+					'{{WRAPPER}} .wpr-wrapper .swiper-slide' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -2546,7 +2578,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
 					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
 				],
-				'default' => 'solid',
+				'default' => 'none',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-story-info' => 'border-style: {{VALUE}} !important;',
 					'{{WRAPPER}} .wpr-story-info' => 'border-style: {{VALUE}} !important;',
@@ -2642,10 +2674,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
+					'top' => 5,
+					'right' => 5,
+					'bottom' => 5,
+					'left' => 5,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-story-info' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
@@ -2944,7 +2976,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-title' => 'color: {{VALUE}}',
 				],
-				'default' => '#605BE5',
+				'default' => '#444444',
 			]
 		);
 
@@ -2954,9 +2986,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'label' => __( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-title' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wrapper .wpr-title-wrap' => 'background-color: {{VALUE}} !important',
 				],
-				'default' => '#fff',
+				'default' => '#FFFFFF00',
 			]
 		);
 		
@@ -2992,9 +3024,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 5,
+					'top' => 10,
 					'right' => 0,
-					'bottom' => 5,
+					'bottom' => 0,
 					'left' => 0,
 				],
 				'selectors' => [
@@ -3446,7 +3478,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-timeline-fill' => 'background-color: {{VALUE}} !important;',
-					// '{{WRAPPER}} .wpr-change-border-color' => 'border-color: {{VALUE}} !important;',
+					'{{WRAPPER}} .wpr-change-border-color' => 'border-color: {{VALUE}} !important;',
 					'{{WRAPPER}} .wpr-vertical:before' => 'background-color: {{VALUE}} !important;',
 					'{{WRAPPER}} .wpr-vertical:after' => 'background-color: {{VALUE}} !important;',
 				],
@@ -3706,7 +3738,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'label' => esc_html__( 'Height', 'wpr-addons' ),
 				'size_units' => [ 'px' ],
 				'default' => [
-					'size' => 30,
+					'size' => 41,
 					'unit' => 'px'
 				],
 				'range' => [
@@ -3716,7 +3748,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					]
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-year-label' => 'height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-year-label' => 'height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-year-wrap' => 'height: {{SIZE}}{{UNIT}};',
 				],
 			]
@@ -3804,10 +3836,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-icon i' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'color: {{VALUE}}; border-color: {{icon_border_color}};',
+					'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-wrapper .wpr-icon svg' => 'fill: {{VALUE}};',
 				],
-				'default' => '#FFF',
+				'default' => '#666666',
 			]
 		);
 
@@ -3835,7 +3867,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'background-color: {{VALUE}}',
 				],
-				'default' => '#605BE5',
+				'default' => '#FFFFFF',
 			]
 		);
 
@@ -3859,7 +3891,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
+				'default' => '#EAEAEA',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'border-color: {{VALUE}}',
 				],
@@ -3894,7 +3926,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					],
 				],
 				'default' => [
-					'size' => 28,
+					'size' => 17,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wrapper .wpr-icon i' => 'font-size: {{SIZE}}{{UNIT}} !important',
@@ -3910,7 +3942,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'unit' => 'px',
-					'size' => 38,
+					'size' => 45,
 				],
 				'range' => [
 					'px' => [
@@ -3939,7 +3971,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
 					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
 				],
-				'default' => 'none',
+				'default' => 'solid',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-icon' => 'border-style: {{VALUE}}',
 				],
@@ -3975,10 +4007,11 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
+					'top' => 50,
+					'right' => 50,
+					'bottom' => 50,
+					'left' => 50,
+					'unit' => '%'
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-icon' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
@@ -4193,7 +4226,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-wrapper .wpr-both-sided-timeline .wpr-left-aligned .wpr-data-wrap:after' => 'border-right-color: {{VALUE}} !important; border-left-color: transparent !important;',
 					'{{WRAPPER}} .wpr-centered .wpr-one-sided-timeline .wpr-right-aligned .wpr-data-wrap:after' => 'border-right-color: {{VALUE}} !important; border-left-color: transparent !important;',
 				],
-				'default' => '#605BE5',
+				'default' => '#FFFFFF',
 				// 'separator' => 'after',
 			]
 		);
@@ -4206,7 +4239,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'size_units' => [ 'px' ],
 				'default' => [
 					'unit' => 'px',
-					'size' => 13,
+					'size' => 11,
 				],
 				'range' => [
 					'px' => [
