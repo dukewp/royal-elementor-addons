@@ -936,9 +936,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Icon Fill Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605BE5',
+				'default' => '#fff',
 				'selectors' => [
-					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-change-border-color.wpr-icon' => 'background-color: {{VALUE}} !important;',
+					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-change-border-color.wpr-icon i' => 'color: {{VALUE}} !important;',
+					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-change-border-color.wpr-icon svg' => 'fill: {{VALUE}} !important;',
 				],
 				'condition' => [
 					'show_custom_styles' => 'yes'
@@ -959,7 +960,22 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'show_custom_styles' => 'yes'
 				]
 			]
-		);	
+		);
+
+		$repeater->add_control(
+			'repeater_icon_timeline_background_fill_color',
+			[
+				'label'  => esc_html__( 'Icon Background Fill Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-change-border-color.wpr-icon' => 'background-color: {{VALUE}};',
+				],
+				'condition' => [
+					'show_custom_styles' => 'yes'
+				],
+			]
+		);
 
 		$repeater->add_control(
 			'repeater_icon_border_color',
@@ -3409,7 +3425,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-timeline-fill' => 'background-color: {{VALUE}} !important;',
-					'{{WRAPPER}} .wpr-change-border-color' => 'border-color: {{VALUE}} !important;',
+					// '{{WRAPPER}} .wpr-change-border-color' => 'border-color: {{VALUE}} !important;',
 					'{{WRAPPER}} .wpr-vertical:before' => 'background-color: {{VALUE}} !important;',
 					'{{WRAPPER}} .wpr-vertical:after' => 'background-color: {{VALUE}} !important;',
 				],
@@ -3429,15 +3445,16 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'step' => 0.1,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wrapper .wpr-line::before' => 'transform: scaleX({{SIZE}}) !important;',
-					'{{WRAPPER}} .wpr-wrapper .wpr-middle-line' => 'transform: scaleX({{SIZE}}) translateX(-50%) !important;',
-					'{{WRAPPER}} .wpr-wrapper .wpr-timeline-fill' => 'transform: scaleX({{SIZE}}) translateX(-50%) !important;',
+					'{{WRAPPER}} .wpr-wrapper .wpr-middle-line' => 'transform: scaleX({{SIZE}}) translate(-50%)  !important;',
+					'{{WRAPPER}} .wpr-wrapper .wpr-timeline-fill' => 'transform: scaleX({{SIZE}}) translate(-50%)  !important;',
+					
 					// '{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline-left .wpr-line::before' => 'transform: scaleX({{SIZE}}) translateX(50%) !important;',
 					'{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline-left .wpr-middle-line' => 'transform: scaleX({{SIZE}}) !important;',
 					'{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline-left .wpr-timeline-fill' => 'transform: scaleX({{SIZE}}) !important;',
 
-					'{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline .wpr-line::before' => 'transform: scaleX({{SIZE}}) translateX(-50%) !important;',
-					'{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline .wpr-middle-line' => 'transform: scaleX({{SIZE}}) translateX(-50%) !important;',
-					'{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline .wpr-timeline-fill' => 'transform: scaleX({{SIZE}}) translateX(-50%) !important;',
+					'{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline .wpr-line::before' => 'transform: scaleX({{SIZE}}) !important;',
+					'{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline .wpr-middle-line' => 'transform: scaleX({{SIZE}})  !important;',
+					'{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline .wpr-timeline-fill' => 'transform: scaleX({{SIZE}}) !important;',
 				],
 				'condition' => [
 					'timeline_layout' => ['centered', 'one-sided', 'one-sided-left']
@@ -3770,9 +3787,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Fill Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605BE5',
+				'default' => '#fff',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-change-border-color.wpr-icon' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-change-border-color.wpr-icon i' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-change-border-color.wpr-icon svg' => 'fill: {{VALUE}};',
 				],
 				'condition' => [
 					'timeline_layout!' => ['horizontal', 'horizontal-bottom']
@@ -3789,6 +3807,21 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'background-color: {{VALUE}}',
 				],
 				'default' => '#605BE5',
+			]
+		);
+
+		$this->add_control(
+			'icon_timeline_background_fill_color',
+			[
+				'label'  => esc_html__( 'Background Fill Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-change-border-color.wpr-icon' => 'background-color: {{VALUE}};',
+				],
+				'condition' => [
+					'timeline_layout!' => ['horizontal', 'horizontal-bottom']
+				],
 			]
 		);
 
@@ -5206,6 +5239,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
         $swiper_class = $horizontal_timeline_class === 'wpr-horizontal-timeline' ? 'swiper-slide-line-bottom' : 'swiper-slide-line-top';
 
+		echo '<div class="wpr-timeline-outer-container">';
 		echo '<div class="wpr-wrapper swiper-container '.$horizontal_inner_class.'" dir="'. $dir .'" data-slidestoshow = "'.esc_attr($sidesToShow).'" data-autoplay="'.esc_attr($autoplay).'" data-swiper-speed="'. esc_attr($swiper_speed) .'" data-swiper-delay="'. esc_attr($swiper_delay) .'" data-swiper-space-between="'. esc_attr($settings['story_info_gutter']) .'">';
 
 		echo '<div class="swiper-wrapper '. $horizontal_timeline_class .'">';
@@ -5278,6 +5312,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				} 
 				
 				$this->wpr_render_swiper_navigation($settings);
+				echo '</div>';
 	}
 	
 	public function render_dynamic_horizontal_timeline ( $settings, $dir, $autoplay, $slidesHeight, $swiper_speed, $swiper_delay ) {
@@ -5306,6 +5341,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		}
 	
 		if( $this->my_query->have_posts() ) { 
+		
+		echo '<div class="wpr-timeline-outer-container">';
 				echo '<div class="wpr-wrapper swiper-container '. $horizontal_inner_class .'" dir="'. $dir .'" data-slidestoshow = "'.esc_attr($sidesToShow).'" data-autoplay="'.esc_attr($autoplay).'" data-swiper-speed="'. esc_attr($swiper_speed) .'" data-swiper-delay="'. esc_attr($swiper_delay) .'" data-swiper-space-between="'.$settings['story_info_gutter'].'">
 					<div class="'.$horizontal_timeline_class.' swiper-wrapper">';
 					while( $this->my_query->have_posts() ) {
@@ -5374,6 +5411,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				}
 	
 				$this->wpr_render_swiper_navigation($settings);
+				echo '</div>';
 			}
 	
 			

@@ -10264,6 +10264,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 == Post Timeline
 --------------------------------------------------------------*/
 
+.wpr-timeline-outer-container {
+    position: relative;
+}
+
 .wpr-vertical {
     /* display: table; */
     min-width: 100%;
