@@ -896,6 +896,21 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				]
 			]
 		);
+
+		$repeater->add_control(
+			'repeater_icon_timeline_fill_color',
+			[
+				'label'  => esc_html__( 'Fill Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-change-border-color.wpr-icon' => 'background-color: {{VALUE}} !important;',
+				],
+				'condition' => [
+					'show_custom_styles' => 'yes'
+				]
+			]
+		);
 		
 		$repeater->add_control(
 			'repeater_timeline_icon_bg_color',
@@ -2247,7 +2262,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'item_distance_from_line',
 			[
 				'label' => esc_html__( 'Distance From Line', 'wpr-addons' ),
@@ -2283,7 +2298,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'item_distance_vertical',
 			[
 				'label' => esc_html__( 'Vertical Distance', 'wpr-addons' ),
@@ -2292,7 +2307,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 50,
+						'max' => 200,
 					],
 				],				
 				'default' => [
@@ -2575,10 +2590,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-story-info' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
-					'{{WRAPPER}} .wpr-story-info img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-story-info-vertical' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
-					'{{WRAPPER}} .wpr-timeline-story-overlay' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} 0px 0px !important;',
-					'{{WRAPPER}} .wpr-timeline-media' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} 0px 0px !important;',
+					'{{WRAPPER}} .wpr-timeline-story-overlay' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
 				],
 				// 'separator' => 'before',
 			]
@@ -2662,7 +2675,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'left' => 0,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-timeline-media' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-timeline-media' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow: hidden',
 				],
 			]
 		);
@@ -3362,7 +3375,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-timeline-fill' => 'background-color: {{VALUE}} !important;',
-					'{{WRAPPER}} .wpr-change-border-color' => 'background-color: {{VALUE}} !important; border-color: {{VALUE}} !important;',
+					'{{WRAPPER}} .wpr-change-border-color' => 'border-color: {{VALUE}} !important;',
 					'{{WRAPPER}} .wpr-vertical:before' => 'background-color: {{VALUE}} !important;',
 					'{{WRAPPER}} .wpr-vertical:after' => 'background-color: {{VALUE}} !important;',
 				],
@@ -3714,10 +3727,22 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-wrapper .wpr-icon' => 'color: {{VALUE}}; border-color: {{icon_border_color}};',
 					'{{WRAPPER}} .wpr-wrapper .wpr-icon svg' => 'fill: {{VALUE}};',
 				],
-				'condition' => [
-					'timeline_content' => ['dynamic']
-				],
 				'default' => '#FFF',
+			]
+		);
+
+		$this->add_control(
+			'icon_timeline_fill_color',
+			[
+				'label'  => esc_html__( 'Fill Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-change-border-color.wpr-icon' => 'background-color: {{VALUE}};',
+				],
+				'condition' => [
+					'timeline_layout!' => ['horizontal', 'horizontal-bottom']
+				],
 			]
 		);
 
