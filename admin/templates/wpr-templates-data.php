@@ -30,7 +30,7 @@ class WPR_Templates_Data {
 					'price' => $is_pro_active ? 'free' : 'free',
 				],
 			],
-			'photography' => [
+			'photographer' => [
 				'v1' => [
 					'name' => 'Photographer Portfolio',
 					'pages' => 'home,about,services,portfolio,contact,',
