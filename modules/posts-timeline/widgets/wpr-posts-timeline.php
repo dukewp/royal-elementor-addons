@@ -455,21 +455,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'animation_loop_or_once',
-			[
-				'label' => esc_html__( 'Animate Once', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'wpr-addons' ),
-				'label_off' => esc_html__( 'No', 'wpr-addons' ),
-				'return_value' => 'yes',
-				'default' => 'yes',
-				'condition' => [
-					'timeline_layout!' => ['horizontal', 'horizontal-bottom']
-				]
-			]
-		);
-
 		$this->add_control_show_pagination();
 		
 		$this->end_controls_section();
@@ -5088,7 +5073,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 							echo '<div class="wpr-main-line-icon wpr-icon">';
 							\Elementor\Icons_Manager::render_icon( $settings['posts_icon'], [ 'aria-hidden' => 'true' ] );
 							echo '</div>';
-							echo '<div class="wpr-story-info-vertical wpr-data-wrap animated '. $background_class .'" data-aos="'. $this->animation.'" data-aos-left="'. $this->animation_loadmore_left .'" data-aos-right="'. $this->animation_loadmore_right .'" data-animation-offset="'. $settings['animation_offset'] .'" data-animation-duration="'. $settings['aos_animation_duration'] .'" data-animation-once="'. $settings['animation_loop_or_once'] .'">';
+							echo '<div class="wpr-story-info-vertical wpr-data-wrap animated '. $background_class .'" data-aos="'. $this->animation.'" data-aos-left="'. $this->animation_loadmore_left .'" data-aos-right="'. $this->animation_loadmore_right .'" data-animation-offset="'. $settings['animation_offset'] .'" data-animation-duration="'. $settings['aos_animation_duration'] .'">';
 
 							echo 'image-top' === $settings['content_layout'] || 'yes' === $settings['show_overlay'] ? '<div class="wpr-animation-wrap wpr-timeline-media">'.$this->image.'' : '';
 
