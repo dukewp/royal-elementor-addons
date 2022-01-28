@@ -934,7 +934,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$repeater->add_control(
 			'repeater_icon_timeline_fill_color',
 			[
-				'label'  => esc_html__( 'Fill Color', 'wpr-addons' ),
+				'label'  => esc_html__( 'Icon Fill Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#605BE5',
 				'selectors' => [
@@ -962,13 +962,13 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		);	
 
 		$repeater->add_control(
-			'icon_border_color',
+			'repeater_icon_border_color',
 			[
 				'label'  => esc_html__( 'Icon Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#000',
 				'selectors' => [
-					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-icon' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wrapper {{CURRENT_ITEM}} .wpr-icon' => 'border-color: {{VALUE}}',
 				],
 				'condition' => [
 					'show_custom_styles' => 'yes'
