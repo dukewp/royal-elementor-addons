@@ -3439,22 +3439,30 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			'middle_line_width',
 			[
 				'label' => esc_html__( 'Line Width', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'min' => 0,
-				'default' => 1,
-				'step' => 0.1,
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 1,
+						'max' => 50,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 4,
+				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-wrapper .wpr-line::before' => 'transform: scaleX({{SIZE}}) !important;',
-					'{{WRAPPER}} .wpr-wrapper .wpr-middle-line' => 'transform: scaleX({{SIZE}}) translate(-50%)  !important;',
-					'{{WRAPPER}} .wpr-wrapper .wpr-timeline-fill' => 'transform: scaleX({{SIZE}}) translate(-50%)  !important;',
+					// '{{WRAPPER}} .wpr-wrapper .wpr-line::before' => 'transform: scaleX({{SIZE}}) !important;',
+					'{{WRAPPER}} .wpr-wrapper .wpr-middle-line' => 'width: {{SIZE}}px; transform: translate(-50%) !important',
+					'{{WRAPPER}} .wpr-wrapper .wpr-timeline-fill' => 'width: {{SIZE}}px; transform: translate(-50%)  !important;',
 					
 					// '{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline-left .wpr-line::before' => 'transform: scaleX({{SIZE}}) translateX(50%) !important;',
-					'{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline-left .wpr-middle-line' => 'transform: scaleX({{SIZE}}) !important;',
-					'{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline-left .wpr-timeline-fill' => 'transform: scaleX({{SIZE}}) !important;',
+					'{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline-left .wpr-middle-line' => 'width: {{SIZE}}px; transform: translate(50%) !important;',
+					'{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline-left .wpr-timeline-fill' => 'width: {{SIZE}}px; transform: translate(50%) !important;',
 
-					'{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline .wpr-line::before' => 'transform: scaleX({{SIZE}}) !important;',
-					'{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline .wpr-middle-line' => 'transform: scaleX({{SIZE}})  !important;',
-					'{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline .wpr-timeline-fill' => 'transform: scaleX({{SIZE}}) !important;',
+					// '{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline .wpr-line::before' => 'transform: scaleX({{SIZE}}) !important;',
+					'{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline .wpr-middle-line' => 'width: {{SIZE}}px; transform: translate(-50%)  !important;',
+					'{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline .wpr-timeline-fill' => 'width: {{SIZE}}px; transform: translate(-50%) !important;',
 				],
 				'condition' => [
 					'timeline_layout' => ['centered', 'one-sided', 'one-sided-left']
