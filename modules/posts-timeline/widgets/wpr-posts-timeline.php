@@ -2334,7 +2334,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 50,
+						'max' => 150,
 					]
 				],
 				'default' => [
@@ -2361,7 +2361,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 50,
+						'max' => 150,
 					]
 				],
 				'default' => [
@@ -2391,7 +2391,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 50,
+						'max' => 150,
 					],
 				],
 				'selectors' => [
@@ -2473,7 +2473,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 			]
 		);
-		
+
 		$this->add_control(
 			'timeline_item_border_type',
 			[
@@ -5184,7 +5184,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 						echo '<div class="swiper-slide '. $swiper_class .' '.esc_attr($slidesHeight).' elementor-repeater-item-'. $content['_id'] .'">';
 
-							if ( 'yes' === $settings['show_extra_label'] ) {
+							if ( 'yes' === $content['repeater_show_extra_label'] ) {
 								echo !empty($this->story_date_label) && !empty($this->story_extra_label) ? '<div class="wpr-extra-label" >' : '';
 								  echo !empty($this->story_date_label) ? '<span '.$this->get_render_attribute_string( $this->date_label_key ).' >'. $this->story_date_label .'</span>' : ''; 
 								  echo !empty($this->story_extra_label) ? '<span '.$this->get_render_attribute_string( $this->extra_label_key ).' >'. $this->story_extra_label .'</span>' : '';
