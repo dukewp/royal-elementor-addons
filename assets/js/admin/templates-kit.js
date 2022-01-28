@@ -3,6 +3,7 @@ jQuery(document).ready(function( $ ) {
 
 	var WprTemplatesKit = {
 
+		requiredTheme: false,
 		requiredPlugins: false,
 
 		init: function() {
@@ -102,6 +103,8 @@ jQuery(document).ready(function( $ ) {
 			                action: 'wpr_install_reuired_theme',
 			            }
 			        );
+
+			        WprTemplatesKit.requiredTheme = true;
 				}
 			});
 		},
@@ -160,7 +163,7 @@ jQuery(document).ready(function( $ ) {
 
 	        var installPlugins = setInterval(function() {
 
-	        	if ( Object.values(WprTemplatesKit.requiredPlugins).every(Boolean) ) {
+	        	if ( Object.values(WprTemplatesKit.requiredPlugins).every(Boolean) && WprTemplatesKit.requiredTheme ) {
 					console.log('Importing Kit: '+ kitID +'...');
 					WprTemplatesKit.importProgressBar('content');
 
