@@ -501,10 +501,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'label_off' => __( 'Hide', 'wpr-addpns' ),
 				'return_value' => 'yes',
 				'default' => 'no',
-				// 'condition' => [
-				// 	'timeline_content' => 'custom',
-				// 	'timeline_layout' => ['centered', 'one-sided', 'one-sided-left']
-				// ]
 			]
 		);
 
@@ -1128,11 +1124,12 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'fields' => $repeater->get_controls(),
 				'default' => [
 					[
-						'repeater_story_title' => __( 'Apple Founded', 'wpr-addons' ),
-						'repeater_description' => __('Placeholder for your text','wpr-addons'),
-						'repeater_year'			=> __('1994','wpr-addons'),
-						'repeater_date_label'   => __('Jul 1994','wpr-addons'),
-						'repeater_extra_label'  => __('Apple History','wpr-addons'),
+						'repeater_story_title' => __( 'Timeline Item 1', 'wpr-addons' ),
+						'repeater_description' => __('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima incidunt voluptates nemo.','wpr-addons'),
+						'repeater_year'			=> __('2021','wpr-addons'),
+						'repeater_date_label'   => __('Jan 2021','wpr-addons'),
+						'repeater_extra_label'  => __('Company Established','wpr-addons'),
+						'repeater_show_year_label' => 'yes',
 						'repeater_image' =>[
 							'url' => Utils::get_placeholder_image_src(),	
 							'id' => '',						
@@ -1140,11 +1137,11 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						'repeater_youtube_video_url' => '',
 					],
 					[
-						'repeater_story_title' => __( 'Apple Prime Services', 'wpr' ),
-						'repeater_description' => __('Another placeholder for custom text','wpr'),
-						'repeater_year'			=> __('2005','wpr-addons'),
-						'repeater_date_label'   => __('Feb 2005','wpr-addons'),
-						'repeater_extra_label'  => __('Apple History','wpr-addons'),
+						'repeater_story_title' => __( 'Timeline Item 2', 'wpr-addons' ),
+						'repeater_description' => __('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima incidunt voluptates nemo.','wpr-addons'),
+						'repeater_year'			=> __('2021','wpr-addons'),
+						'repeater_date_label'   => __('March 2021','wpr-addons'),
+						'repeater_extra_label'  => __('New office in California','wpr-addons'),
 						'repeater_image' =>[
 							'url' => Utils::get_placeholder_image_src(),
 							'id' => '',							
@@ -1153,11 +1150,23 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						
 					],
 					[
-						'repeater_story_title' => __( 'Apple Announced Fresh Pickup', 'wpr' ),
-						'repeater_description' => __('Create your own description','wpr'),
-						'repeater_year'			=> __('2007','wpr-addons'),
-						'repeater_date_label'   => __('Aug 2007','wpr-addons'),
-						'repeater_extra_label'  => __('Apple History','wpr-addons'),
+						'repeater_story_title' => __( 'Timeline Item 3', 'wpr-addons' ),
+						'repeater_description' => __('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima incidunt voluptates nemo.','wpr-addons'),
+						'repeater_year'			=> __('2022','wpr-addons'),
+						'repeater_date_label'   => __('April 2022','wpr-addons'),
+						'repeater_extra_label'  => __('First Product Launch','wpr-addons'),
+						'repeater_image' =>[
+							'url' => Utils::get_placeholder_image_src(),
+							'id' => '',						
+						],
+						'repeater_youtube_video_url' => '',
+					],
+					[
+						'repeater_story_title' => __( 'Timeline Item 4', 'wpr-addons' ),
+						'repeater_description' => __('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima incidunt voluptates nemo.','wpr-addons'),
+						'repeater_year'			=> __('2022','wpr-addons'),
+						'repeater_date_label'   => __('September 2022','wpr-addons'),
+						'repeater_extra_label'  => __('Entering Stock Market','wpr-addons'),
 						'repeater_image' =>[
 							'url' => Utils::get_placeholder_image_src(),
 							'id' => '',						
@@ -2938,6 +2947,18 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'default' => '#605BE5',
 			]
 		);
+
+		$this->add_control(
+			'story_title_bg_color',
+			[
+				'label' => __( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-title' => 'background-color: {{VALUE}}',
+				],
+				'default' => '#fff',
+			]
+		);
 		
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
@@ -3605,7 +3626,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wrapper .wpr-year' => 'color: {{VALUE}}',
 				],
-				'default' => '#fff',
+				'default' => '#222222',
 				'condition' => [
 					'timeline_content' => ['custom'],
 				]
@@ -3620,7 +3641,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wrapper .wpr-year' => 'background-color: {{VALUE}}',
 				],
-				'default' => '#54595F',
+				'default' => '#fff',
 				'condition' => [
 					'timeline_content' => ['custom'],
 				]
@@ -3635,7 +3656,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wrapper .wpr-year.wpr-year-label' => 'border-color: {{VALUE}}',
 				],
-				'default' => '#54595F',
+				'default' => '#E0E0E0',
 				'condition' => [
 					'timeline_content' => ['custom'],
 				]
@@ -3714,7 +3735,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
 					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
 				],
-				'default' => 'none',
+				'default' => 'solid',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-year-label' => 'border-style: {{VALUE}};',
 				],
@@ -3736,7 +3757,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],				
 				'default' => [
 					'unit' => 'px',
-					'size' => 2,
+					'size' => 3,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-year-label' => 'border-width: {{SIZE}}{{UNIT}};',
@@ -3754,10 +3775,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 3,
-					'right' => 3,
-					'bottom' => 3,
-					'left' => 3,
+					'top' => 5,
+					'right' => 5,
+					'bottom' => 5,
+					'left' => 5,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-year-label' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -3983,7 +4004,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => 'rgba(0, 0, 0, 0.25)',
+				'default' => '',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-extra-label' => 'background-color: {{VALUE}}',
 				],
@@ -4323,6 +4344,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-button-prev i' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-button-next i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-button-prev svg' => 'fill: {{VALUE}}; cursor: pointer; z-index: 11;',
+					'{{WRAPPER}} .wpr-button-next svg' => 'fill: {{VALUE}}; cursor: pointer; z-index: 11;',
 				],
 				'condition' => [
 					'timeline_layout' => ['horizontal', 'horizontal-bottom']
@@ -4342,6 +4365,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-button-prev' => 'transition-duration: {{VALUE}}s',
 					'{{WRAPPER}} .wpr-button-next' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-button-prev i' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-button-next i' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-button-prev svg' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-button-next svg' => 'transition-duration: {{VALUE}}s',
 				],
 				'separator' => 'before'
 			],
