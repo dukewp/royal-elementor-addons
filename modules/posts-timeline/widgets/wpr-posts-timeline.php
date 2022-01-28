@@ -3431,9 +3431,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-wrapper .wpr-line::before' => 'transform: scaleX({{SIZE}}) !important;',
 					'{{WRAPPER}} .wpr-wrapper .wpr-middle-line' => 'transform: scaleX({{SIZE}}) translateX(-50%) !important;',
 					'{{WRAPPER}} .wpr-wrapper .wpr-timeline-fill' => 'transform: scaleX({{SIZE}}) translateX(-50%) !important;',
-					'{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline-left .wpr-line::before' => 'transform: scaleX({{SIZE}}) translateX(50%) !important;',
-					'{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline-left .wpr-middle-line' => 'transform: scaleX({{SIZE}}) translateX(50%) !important;',
-					'{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline-left .wpr-timeline-fill' => 'transform: scaleX({{SIZE}}) translateX(50%) !important;',
+					// '{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline-left .wpr-line::before' => 'transform: scaleX({{SIZE}}) translateX(50%) !important;',
+					'{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline-left .wpr-middle-line' => 'transform: scaleX({{SIZE}}) !important;',
+					'{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline-left .wpr-timeline-fill' => 'transform: scaleX({{SIZE}}) !important;',
 
 					'{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline .wpr-line::before' => 'transform: scaleX({{SIZE}}) translateX(-50%) !important;',
 					'{{WRAPPER}} .wpr-wrapper .wpr-one-sided-timeline .wpr-middle-line' => 'transform: scaleX({{SIZE}}) translateX(-50%) !important;',
