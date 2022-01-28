@@ -2461,7 +2461,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 150,
+						'max' => 50,
 					],
 				],
 				'selectors' => [
