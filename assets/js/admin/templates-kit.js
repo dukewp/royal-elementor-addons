@@ -91,16 +91,31 @@ jQuery(document).ready(function( $ ) {
 
 		},
 
-		installRequiredTheme: function( kitID ) { //TODO: Check if ashe is installed, don't run with import.
+		installRequiredTheme: function( kitID ) {
+			var themeStatus = $('.wpr-templates-kit-grid').data('theme-status');
+
+			if ( 'ashe-active' === themeStatus ) {
+				WprTemplatesKit.requiredTheme = true;
+				return;
+			} else if ( 'ashe-inactive' === themeStatus ) {
+		        $.post(
+		            ajaxurl,
+		            {
+		                action: 'wpr_activate_reuired_theme',
+		            }
+		        );
+
+		        WprTemplatesKit.requiredTheme = true;
+		        return;			
+			}
+
 			wp.updates.installTheme({
 				slug: 'ashe',
 				success: function() {
-					console.log('Done---------!')
-
 			        $.post(
 			            ajaxurl,
 			            {
-			                action: 'wpr_install_reuired_theme',
+			                action: 'wpr_activate_reuired_theme',
 			            }
 			        );
 
