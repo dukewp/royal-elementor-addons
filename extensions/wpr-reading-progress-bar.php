@@ -144,7 +144,7 @@ class Wpr_ReadingProgressBar {
 		);
 
 		$element->add_control(//wpr_rpb_position
-			'progress_bar_position',
+			'reading_progress_bar_position',
 			[
 				'label' => __( 'Position', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::SELECT,
@@ -182,14 +182,14 @@ class Wpr_ReadingProgressBar {
 			'wpr_height' => $settings['wpr_height'],
 			'wpr_background_color' => $settings['wpr_background_color'],
 			'wpr_fill_color' => $settings['wpr_fill_color'],
-			'wpr_progress_bar_position' => $settings['progress_bar_position'],
+			'wpr_reading_progress_bar_position' => $settings['reading_progress_bar_position'],
 		]);
 
 	}
 
 	public function html_to_footer() {
     	$settings = get_option('wpr_progress_bar_global_options');
-		$rpb_position = 'top' === $settings['wpr_progress_bar_position'] ? 'top: 0px; bottom: auto;' : 'bottom: 0px; top: auto;';
+		$rpb_position = 'top' === $settings['wpr_reading_progress_bar_position'] ? 'top: 0px; bottom: auto;' : 'bottom: 0px; top: auto;';
 		$rpb_background_color = 'background-color: ' . $settings['wpr_background_color'] . ' !important;';
 		$rpb_fill_color = 'background-color: ' . $settings['wpr_fill_color'] . '!important;';
 		$rpb_height = 'height: '.$settings['wpr_height']['size'] . $settings['wpr_height']['unit'].';';
