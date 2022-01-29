@@ -18,9 +18,6 @@ use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-//TODO: create select to switch to custom images uploaded by user
-
-
 class Wpr_Random_Image extends Widget_Base {
 	
 	public function get_name() {
@@ -84,7 +81,7 @@ class Wpr_Random_Image extends Widget_Base {
 		);
 
 		$this->add_control(
-			'overlay_image_caption_position',
+			'image_caption_position',
 			[
 				'label' => esc_html__( 'Position', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
@@ -95,42 +92,47 @@ class Wpr_Random_Image extends Widget_Base {
 				],
 				'condition' => [
 					'enable_image_caption' => 'yes'
+				],
+				'prefix_class' => 'wpr-random-image-'
+			]
+		);
+		
+		$this->add_responsive_control(
+			'random_image_text_alignment',
+			[
+				'label' => esc_html__( 'Text Align', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'label_block' => false,
+				'default' => 'center',
+				'options' => [
+					'left' => [
+						'title' => esc_html__( 'Start', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'End', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+                'selectors' => [
+					'{{WRAPPER}} .wpr-random-image-gallery' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} .wpr-random-image-overlay' => 'text-align: {{VALUE}};',
+				],
+				'condition' => [
+					'enable_image_caption' => 'yes',
+					'image_caption_position' => 'normal'
 				]
 			]
 		);
 		
-		// $this->add_responsive_control(
-		// 	'random_image_alignment',
-		// 	[
-		// 		'label' => esc_html__( 'Image Alignmnent', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::CHOOSE,
-		// 		'label_block' => false,
-		// 		'default' => 'center',
-		// 		'options' => [
-		// 			'left' => [
-		// 				'title' => esc_html__( 'Start', 'wpr-addons' ),
-		// 				'icon' => 'eicon-h-align-left',
-		// 			],
-		// 			'center' => [
-		// 				'title' => esc_html__( 'Center', 'wpr-addons' ),
-		// 				'icon' => 'eicon-h-align-center',
-		// 			],
-		// 			'right' => [
-		// 				'title' => esc_html__( 'End', 'wpr-addons' ),
-		// 				'icon' => 'eicon-h-align-right',
-		// 			],
-		// 		],
-        //         'selectors' => [
-		// 			'{{WRAPPER}} .wpr-random-image-gallery' => 'text-align: {{VALUE}};',
-		// 			// '{{WRAPPER}} .wpr-random-image-gallery .wpr-random-image-inner-cont' => 'display: inline-block;',
-		// 		],
-		// 	]
-		// );
-		
 		$this->add_responsive_control(
 			'random_image_alignment',
 			[
-				'label' => esc_html__( 'Image Alignmnent', 'wpr-addons' ),
+				'label' => esc_html__( 'Image Align', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
 				'label_block' => false,
 				'default' => 'center',
@@ -226,6 +228,23 @@ class Wpr_Random_Image extends Widget_Base {
 			]
 		);
 
+		$this->add_group_control(
+			Group_Control_Css_Filter::get_type(),
+			[
+				'name' => 'css_filters',
+				'selector' => '{{WRAPPER}} .wpr-random-image-gallery img',
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'box_shadow',
+				'selector' => '{{WRAPPER}} .wpr-random-image-gallery img'
+			]
+		);
+
 		$this->add_responsive_control(
 			'random_image_width',
 			[
@@ -276,15 +295,6 @@ class Wpr_Random_Image extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Css_Filter::get_type(),
-			[
-				'name' => 'css_filters',
-				'selector' => '{{WRAPPER}} .wpr-random-image-gallery img',
-				'separator' => 'before'
-			]
-		);
-
-		$this->add_group_control(
 			Group_Control_Border::get_type(),
 			[
 				'name' => 'border',
@@ -295,10 +305,10 @@ class Wpr_Random_Image extends Widget_Base {
 					],
 					'width' => [
 						'default' => [
-							'top' => '1',
-							'right' => '1',
-							'bottom' => '1',
-							'left' => '1',
+							'top' => 1,
+							'right' => 1,
+							'bottom' => 1,
+							'left' => 1,
 							'isLinked' => true,
 						],
 					],
@@ -326,107 +336,19 @@ class Wpr_Random_Image extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-random-image-gallery img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Box_Shadow::get_type(),
-			[
-				'name' => 'box_shadow',
-				'selector' => '{{WRAPPER}} .wpr-random-image-gallery img'
 			]
 		);
 
 		$this->end_controls_section();
-
-		// $this->start_controls_section(
-		// 	'random_image_title_styles_section',
-		// 	[
-		// 		'label' => __( 'Title', 'wpr-addons' ),
-		// 		'tab' => \Elementor\Controls_Manager::TAB_STYLE,
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'list_color',
-		// 	[
-		// 		'label' => __( 'Color', 'wpr-addons' ),
-		// 		'type' => \Elementor\Controls_Manager::COLOR,
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-random-image-gallery-title' => 'color: {{VALUE}}'
-		// 		],
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'list_bg_color',
-		// 	[
-		// 		'label' => __( 'Background Color', 'wpr-addons' ),
-		// 		'type' => \Elementor\Controls_Manager::COLOR,
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-random-image-gallery-title' => 'background-color: {{VALUE}}'
-		// 		],
-		// 	]
-		// );
-
-		// $this->add_responsive_control(
-		// 	'random_image_title_width',
-		// 	[
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'label' => esc_html__( 'Width', 'wpr-addons' ),
-		// 		'size_units' => [ 'px', 'vw', '%' ],
-		// 		'range' => [
-		// 			'px' => [
-		// 				'min' => 20,
-		// 				'max' => 1500,
-		// 			],
-		// 			'vh' => [
-		// 				'min' => 20,
-		// 				'max' => 100,
-		// 			],
-		// 			'%' => [
-		// 				'min' => 10,
-		// 				'max' => 100
-		// 			]
-		// 		],
-		// 		'default' => [
-		// 			'unit' => '%',
-		// 			'size' => 100,
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-random-image-gallery-title' => 'width: {{SIZE}}{{UNIT}}; margin: auto;',
-		// 		],
-		// 		// 'separator' => 'before',
-		// 	]
-		// );
-
-		// $this->add_responsive_control(
-		// 	'padding',
-		// 	[
-		// 		'label' => esc_html__( 'Padding', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::DIMENSIONS,
-		// 		'default' => [
-		// 			'top' => 0,
-		// 			'right' => 0,
-		// 			'bottom' => 0,
-		// 			'left' => 0,
-		// 		],
-		// 		'size_units' => [ 'px', '%' ],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-random-image-gallery-title' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-		// 		],
-		// 		'separator' => 'before',
-		// 	]
-		// );
-
-		// $this->end_controls_section();
 
 		$this->start_controls_section(
 			'random_image_caption_styles_section',
 			[
 				'label' => __( 'Caption', 'wpr-addons' ),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'enable_image_caption' => 'yes'
+				]
 			]
 		);
 
@@ -462,59 +384,6 @@ class Wpr_Random_Image extends Widget_Base {
 			]
 		);
 
-		// $this->add_responsive_control(
-		// 	'caption_width',
-		// 	[
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'label' => esc_html__( 'Width', 'wpr-addons' ),
-		// 		'size_units' => [ 'px', 'vw', '%' ],
-		// 		'range' => [
-		// 			'px' => [
-		// 				'min' => 20,
-		// 				'max' => 1500,
-		// 			],
-		// 			'vh' => [
-		// 				'min' => 20,
-		// 				'max' => 100,
-		// 			],
-		// 			'%' => [
-		// 				'min' => 10,
-		// 				'max' => 100
-		// 			]
-		// 		],
-		// 		'default' => [
-		// 			'unit' => '%',
-		// 			'size' => 100,
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-attachment-caption' => 'width: {{SIZE}}{{UNIT}}; margin: auto;',
-		// 		],
-		// 		// 'separator' => 'before',
-		// 	]
-		// );
-
-		$this->add_responsive_control(
-			'caption_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'size_units' => [ 'px', '%' ],
-				'selectors' => [
-					'{{WRAPPER}} ..wpr-attachment-caption' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before',
-				'condition' => [
-					'overlay_image_caption_position' => 'overlay'
-				]
-			]
-		);
-
 		$this->add_responsive_control(
 			'overlay_hegiht',
 			[
@@ -538,9 +407,9 @@ class Wpr_Random_Image extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-attachment-caption' => 'height: {{SIZE}}{{UNIT}}; top:calc((100% - {{SIZE}}{{UNIT}})/2); left:calc((100% - {{overlay_width.SIZE}}{{overlay_width.UNIT}})/2);',
 				],
-				'separator' => 'after',
+				'separator' => 'before',
 				'condition' => [
-					'overlay_image_caption_position' => 'overlay'
+					'image_caption_position' => 'overlay'
 				]
 			]
 		);
@@ -569,8 +438,27 @@ class Wpr_Random_Image extends Widget_Base {
 					'{{WRAPPER}} .wpr-attachment-caption' => 'width: {{SIZE}}{{UNIT}}; top: calc((100% - {{overlay_hegiht.SIZE}}{{overlay_hegiht.UNIT}})/2); left:calc((100% - {{SIZE}}{{UNIT}})/2);',
 				],
 				'condition' => [
-					'overlay_image_caption_position' => 'overlay'
+					'image_caption_position' => 'overlay'
 				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'caption_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'size_units' => [ 'px', '%' ],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-attachment-caption' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
 			]
 		);
 
@@ -616,8 +504,6 @@ class Wpr_Random_Image extends Widget_Base {
 					
 			echo '<div class="wpr-random-image-gallery">';
 
-				$overlay_image_caption = 'overlay' === $settings['overlay_image_caption_position'] ? 'style="position: absolute; text-align: center; display: flex; justify-content: center; align-items: center;"' : '';
-
 				if( '' === $settings['category'] ) {
 					
 					$random_index = 1 < count($uncategorized_gallery_images_array) ? wp_rand(0, count($uncategorized_gallery_images_array) - 1) : '';
@@ -627,7 +513,7 @@ class Wpr_Random_Image extends Widget_Base {
 					$thumbnail_size = $settings['wpr_thumbnail_size'];
 					$thumbnail_custom_dimension = $settings['wpr_thumbnail_custom_dimension'];
 
-					$image_caption = 'yes' === $settings['enable_image_caption'] ? '<p class="wpr-attachment-caption" '. $overlay_image_caption .'><span style="vertical-align: middle; text-align: center;">' . wp_get_attachment_caption($uncategorized_gallery_images_array[$random_index]['id']) . '</span></p>' : '';
+					$image_caption = 'yes' === $settings['enable_image_caption'] ? '<p class="wpr-attachment-caption"><span style="vertical-align: middle; text-align: center;">' . wp_get_attachment_caption($uncategorized_gallery_images_array[$random_index]['id']) . '</span></p>' : '';
 
 					if ( 'custom' === $settings['wpr_thumbnail_size'] ) {
 						$custom_size = array ( $thumbnail_custom_dimension['width'],$thumbnail_custom_dimension['height']);
@@ -638,7 +524,6 @@ class Wpr_Random_Image extends Widget_Base {
 					}
 
 					echo '<div class="wpr-random-image-inner-cont" style="position: relative;">';
-						// echo '<h1 class="wpr-random-image-gallery-title">' . $category_title . '</h1>';
 						echo $image; 
 						echo $image_caption;
 					echo '</div>';
@@ -653,7 +538,7 @@ class Wpr_Random_Image extends Widget_Base {
 						$thumbnail_size = $settings['wpr_thumbnail_size'];
 						$thumbnail_custom_dimension = $settings['wpr_thumbnail_custom_dimension'];
 
-						$image_caption = 'yes' === $settings['enable_image_caption'] ? '<p class="wpr-attachment-caption" '. $overlay_image_caption .'><span style="vertical-align: middle; text-align: center;">' . wp_get_attachment_caption($categorized_gallery_images_array[$random_index]['id']) . '</span></p>' : '';
+						$image_caption = 'yes' === $settings['enable_image_caption'] ? '<p class="wpr-attachment-caption"><span style="vertical-align: middle; text-align: center;">' . wp_get_attachment_caption($categorized_gallery_images_array[$random_index]['id']) . '</span></p>' : '';
 
 						if ( 'custom' === $settings['wpr_thumbnail_size'] ) {
 							$custom_size = array( $thumbnail_custom_dimension['width'],$thumbnail_custom_dimension['height'] );
@@ -664,7 +549,6 @@ class Wpr_Random_Image extends Widget_Base {
 						}
 
 						echo '<div class="wpr-random-image-inner-cont" style="position: relative;">';
-							// echo '<h1 class="wpr-random-image-gallery-title">' . $category_title . '</h1>';
 							echo $image;
 							echo $image_caption;
 						echo '</div>';
