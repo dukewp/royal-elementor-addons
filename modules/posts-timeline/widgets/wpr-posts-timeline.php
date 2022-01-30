@@ -861,7 +861,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'label' => __( 'Title Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-timeline-entry a.wpr-title' => 'color: {{VALUE}};',
+					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-title' => 'color: {{VALUE}} !important;',
 				],
 				'default' => '#444444',
 				'condition' => [
