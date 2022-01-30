@@ -10137,7 +10137,6 @@ html {
   .wpr-table-export-button-cont {
 	  display: flex;
 	  justify-content: center;
-	  width: 30%;
   }
   
   .wpr-table-export-button-cont button {
