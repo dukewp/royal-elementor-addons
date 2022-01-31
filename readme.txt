@@ -1,9 +1,9 @@
 ﻿=== Royal Elementor Addons (Header Footer Builder, Popups, Post Grid, Woocommerce Product Grid, Slider, Parallax Image & other Free Addons for Elementor) ===
 Contributors: WP Royal, rubeushagrid13, cyberpinky, elementoraddonswpr
 Tags: elementor, elements, widgets for elementor, elementor addons, elementor widget, elementor form, woocommerce elementor, page builder, builder, wordpress page builder
-Stable tag: 1.3.26
+Stable tag: 1.3.27
 Requires at least: 5.0
-Tested up to: 5.8.2
+Tested up to: 5.9
 Requires PHP: 5.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -59,6 +59,8 @@ Comes with 40+ widgets for elementor. Creative and self-intuitive elementor widg
 - [**Site Logo**](https://royal-elementor-addons.com/)
 - [**Back to Top Button**](https://royal-elementor-addons.com/elementor-back-to-top-widget/?ref=rea-wpo-pp-details-tab)
 - [**Phone Call Button**](https://royal-elementor-addons.com/elementor-phone-call-widget/?ref=rea-wpo-pp-details-tab)
+- [**Lottie Animation**](https://royal-elementor-addons.com/elementor-lottie-animation-widget/?ref=rea-wpo-pp-details-tab)
+- [**Timeline Widget**](https://royal-elementor-addons.com/elementor-timeline-widget/?ref=rea-wpo-pp-details-tab)
 
 **Elementor Extensions and Other Features**
 
@@ -91,6 +93,9 @@ and other custom branding related settings)
 - [**Restaurant Elementor Template**](https://demosites.royal-elementor-addons.com/restaurant-v1/?ref=rea-wpo-pp-details-tab)
 - [**Portfolio Elementor Template**](https://demosites.royal-elementor-addons.com/portfolio-v1/?ref=rea-wpo-pp-details-tab)
 - [**Pizza Restaurant Elementor Template**](https://demosites.royal-elementor-addons.com/pizza-v1/?ref=rea-wpo-pp-details-tab)
+- [**Wine Bar Elementor Template**](https://demosites.royal-elementor-addons.com/winebar-v1/?ref=rea-wpo-pp-details-tab)
+- [**Photographer Portfolio Elementor Template Dark**](https://demosites.royal-elementor-addons.com/photographer-v1/?ref=rea-wpo-pp-details-tab)
+- [**Photographer Portfolio Elementor Template Light**](https://demosites.royal-elementor-addons.com/photographer-v2/?ref=rea-wpo-pp-details-tab)
 
 
 **Widgets Description:**
@@ -225,6 +230,15 @@ Royal Post Grid Elementor widget could be used as elementor post slider, element
 
 [Phone Call Button](https://royal-elementor-addons.com/elementor-phone-call-widget/?ref=rea-wpo-pp-details-tab) - A free Elementor Phone Call Button. Can be displayed on page bottom or anywhere in the page content as well.
 
+== 33. Elementor Lottie Animation ==
+
+[Elementor Lottie Animation](https://royal-elementor-addons.com/elementor-lottie-animation-widget/?ref=rea-wpo-pp-details-tab) Our Elementor Lottie animation widget for Elementor gives you the ability to easily add Elementor Lottie Animations to your Elementor pages. Comes with features like reverse Lottie animation, autoplay lottie animation, loop lottie animation, different render types of lottie animation SVG or Canvas, rotate or change lottie animation size, manipulate with lottie animation speed, trigger lottie animation on hover, on viewport or on scroll. Add a custom link on the elementor lottie animation and lots of other features. Use Css Filters Effects to completely change elementor Lottie animaiton visual. Ability to load Lotte animaiton from multiple sourses - Load with Custom link or Media library.
+
+== 34. Elementor Timeline Widget ==
+
+[Timeline Widget](https://royal-elementor-addons.com/elementor-timeline-widget/?ref=rea-wpo-pp-details-tab) - A free Elementor Timeline widget. Create your timeline chart using Elementor timeline grid widget and showcase your timeline roadmap horizontal (timeline slider), vertical (one sided) & zigzag styles. With our Elementor timeline widget, get advanced styles in timeline, content, background, border, positioning, etc. Can be used to create a Elementor history timeline, Elementor blog timeline, Elementor event timeline, Elementor story timeline, Elementor company timeline, Elementor post timeline, Elementor timeline slider, Elementor Timeline for Youtube Video Display. Widget Layout is mobile and tablet ready and can be used as a responsive timeline as well. You can display your Wordpress blog posts as timeline items or create your own custom elementor timeline items - video timeline supported as well. You don't need any other WordPress elementor timeline plugin because our widgets have all great timeline features in it which no other page builder timeline has - create a simple or advanced memory lane in minutes.
+
+
 **And even more is coming very soon.** Widgets and other features will be added with each major update based on popular demand. We are relly trying to make this plugin on of the best and super addons for elementor. Currently we have most advanced Post grid widgets for elementor , advanced product grid widgets for elementor, advanced Gallery grid widgets for elementor, advanced Magazing grid widgets for elementor, advanced contact forms widgets for elementor, advanced one page navigation widgets for elementor, advanced Slider widgets for elementor, most advanced popup and popup related widgets for elementor, advanced header footer builder and we promise in the nearest feature we will add much more!
 
 
@@ -283,7 +297,15 @@ post_max_size 64M
 
 == Changelog ==
 
-= Royal Elementor Addons v1.3.26 - 2022-21-02 =
+= Royal Elementor Addons v1.3.27 - 2022-31-01 =
+* ADDED: Photographer Portfolio Elementor Template Kit Dark.
+* ADDED: Photographer Portfolio Elementor Template Kit Light.
+* ADDED: Wine Bar Elementor Template Kit.
+* ADDED: Elementor Timeline Widget.
+* FIX: Elementor Template kit causes daouble header issue on some popular themes.
+* FIX: Minor but essential Bugs.
+
+= Royal Elementor Addons v1.3.26 - 2022-21-01 =
 * ADDED: Pizza Restaurant Elementor Template.
 * ADDED: Royal Elementor Widget Pro Features List Section.
 * FIX: Minor but essential Bugs.

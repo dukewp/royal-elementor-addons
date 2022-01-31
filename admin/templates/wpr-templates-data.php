@@ -32,7 +32,14 @@ class WPR_Templates_Data {
 			],
 			'photographer' => [
 				'v1' => [
-					'name' => 'Photographer Portfolio',
+					'name' => 'Photographer Portfolio Dark',
+					'pages' => 'home,about,services,portfolio,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .', "media-library-assistant":'. $is_mla_active .'}',
+					'tags' => 'portfolio personal cv designer ux artist artwork personal resume camera fashion lens modelling photographer photography videography wedding shoot ',
+					'price' => $is_pro_active ? 'free' : 'free',
+				],
+				'v2' => [
+					'name' => 'Photographer Portfolio Light',
 					'pages' => 'home,about,services,portfolio,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .', "media-library-assistant":'. $is_mla_active .'}',
 					'tags' => 'portfolio personal cv designer ux artist artwork personal resume camera fashion lens modelling photographer photography videography wedding shoot ',
@@ -168,7 +175,7 @@ class WPR_Templates_Data {
 					'name' => 'Wine Bar & Restaurant',
 					'pages' => 'home,story,wines,dishes,events,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
-					'tags' => 'wine winery beer drink alcohol pub events dish wines italian restaurant food slider recipes cooking recipes',
+					'tags' => 'wine bar winery beer drink alcohol pub events dish wines italian restaurant food slider recipes cooking recipes',
 					'price' => $is_pro_active ? 'free' : 'free',
 				],
 			],
