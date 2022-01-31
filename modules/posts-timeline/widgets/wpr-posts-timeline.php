@@ -2392,10 +2392,19 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						'min' => 0,
 						'max' => 100,
 					],
-				],				
+				],
+				'devices' => [ 'desktop', 'tablet', 'mobile' ],			
 				'default' => [
-					'unit' => 'px',
 					'size' => 40,
+					'unit' => 'px',
+				],
+				'tablet_default' => [
+					'size' => 40,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 15,
+					'unit' => 'px',
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-data-wrap' => 'margin-right: calc({{main_line_side_distance.SIZE}}px/2 + {{SIZE}}px);', 
@@ -2552,11 +2561,27 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'description' => esc_html__('Apply this option to fix Box Shadow issue.'),
 				'size_units' => [ 'px' ],
+				'devices' => [ 'desktop', 'tablet', 'mobile' ],
 				'default' => [
 					'top' => 10,
-					'right' => 20,
+					'right' => 10,
 					'left' => 10,
-					'bottom' => 20,
+					'bottom' => 10,
+					'unit' => 'px'
+				],
+				'tablet_default' => [
+					'top' => 10,
+					'right' => 10,
+					'left' => 10,
+					'bottom' => 10,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'top' => 10,
+					'right' => 10,
+					'left' => 10,
+					'bottom' => 10,
+					'unit' => 'px',
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-vertical' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -3664,9 +3689,18 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						'max' => 100,
 					]
 				],
+				'devices' => [ 'desktop', 'tablet', 'mobile' ],
 				'default' => [
-					'unit' => 'px',
 					'size' => 100,
+					'unit' => 'px',
+				],
+				'tablet_default' => [
+					'size' => 100,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 50,
+					'unit' => 'px',
 				],			
 				'selectors' => [
 					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-year-label' => 'left: calc({{SIZE}}px/2);',
