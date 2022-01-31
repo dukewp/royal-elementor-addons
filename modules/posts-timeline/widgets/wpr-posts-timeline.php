@@ -1148,7 +1148,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						'item_content_border_color' => '#E8E8E8',
 						'repeater_timeline_icon_color' => '#E8E8E8',
 						'repeater_icon_timeline_fill_color' => '#E71919',
-						'repeater_icon_timeline_background_fill_color' => '#605BE5',
+						'repeater_icon_timeline_background_fill_color' => '#FFFFFF',
 						'repeater_icon_border_color' => '#E8E8E8'
 					],
 					[
@@ -1175,7 +1175,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						'item_content_border_color' => '#E8E8E8',
 						'repeater_timeline_icon_color' => '#E8E8E8',
 						'repeater_icon_timeline_fill_color' => '#ECB824',
-						'repeater_icon_timeline_background_fill_color' => '#605BE5',
+						'repeater_icon_timeline_background_fill_color' => '#FFFFFF',
 						'repeater_icon_border_color' => '#E8E8E8'	
 					],
 					[
@@ -1203,7 +1203,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						'repeater_timeline_icon_bg_color' => '',
 						'repeater_timeline_icon_color' => '#E8E8E8',
 						'repeater_icon_timeline_fill_color' => '#1BE620',
-						'repeater_icon_timeline_background_fill_color' => '#605BE5',
+						'repeater_icon_timeline_background_fill_color' => '#FFFFFF',
 						'repeater_icon_border_color' => '#E8E8E8'
 					],
 					[
@@ -1230,7 +1230,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						'repeater_timeline_icon_bg_color' => '',
 						'repeater_timeline_icon_color' => '#E8E8E8',
 						'repeater_icon_timeline_fill_color' => '#D82F8E',
-						'repeater_icon_timeline_background_fill_color' => '#605BE5',
+						'repeater_icon_timeline_background_fill_color' => '#FFFFFF',
 						'repeater_icon_border_color' => '#E8E8E8'
 					],
 				],
@@ -3930,7 +3930,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Fill Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605BE5',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-change-border-color.wpr-icon' => 'background-color: {{VALUE}};',
 				],
@@ -5553,8 +5553,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 		$data = $settings['timeline_repeater_list'];
 		
-		$autoplay = ! wpr_fs()->can_use_premium_code() ? '' : $settings['swiper_autoplay'];
-		$swiper_delay = ! wpr_fs()->can_use_premium_code() ? 0 : $settings['swiper_delay'];
+		$autoplay = ! wpr_fs()->can_use_premium_code() && !empty($settings['swiper_autoplay']) ? '' : $settings['swiper_autoplay'];
+		$swiper_delay = ! wpr_fs()->can_use_premium_code() && !empty($settings['swiper_delay']) ? 0 : $settings['swiper_delay'];
 		$swiper_speed = $settings['swiper_speed'];
 		$slidesHeight = $settings['equal_height_slides'];
 
