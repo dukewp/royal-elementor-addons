@@ -257,6 +257,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'value' => 'fab fa-apple',
 					'library' => 'solid',
 				],
+				'condition' => [
+					'timeline_content' => 'dynamic'
+				]
 			]
 		);
 		
