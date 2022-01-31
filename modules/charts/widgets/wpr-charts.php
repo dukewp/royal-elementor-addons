@@ -277,6 +277,10 @@ class Wpr_Charts extends Widget_Base {
 			if(is_array($charts_data_set) && sizeof($charts_data_set)) {
 				$chart_data_number_values = [];
 				$chart_background_colors = [];
+				$chart_background_hover_colors = [];
+				$chart_data_border_colors = [];
+				$chart_data_border_hover_colors = [];
+				$chart_data_border_width = [];
 				
 				foreach($charts_data_set AS $labels_data):
 					$data_charts_array['labels'][] = $labels_data['chart_data_label'];
