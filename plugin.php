@@ -416,7 +416,7 @@ class Plugin {
 
 		wp_register_script(
 			'wpr-lottie-animations',
-			WPR_ADDONS_URL . 'assets/js/lib/lottie/lottie'. $this->script_suffix() .'js',
+			WPR_ADDONS_URL . 'assets/js/lib/lottie/lottie'. $this->script_suffix() .'.js',
 			[],
 			'5.8.0',
 			true
