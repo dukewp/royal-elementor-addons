@@ -338,8 +338,6 @@ class Plugin {
 			true
 		);
 
-		wp_enqueue_script( 'wpr-aos-js', WPR_ADDONS_URL  . 'assets/js/lib/aos/aos'. $this->script_suffix() .'.js',[ 'elementor-frontend' ], null, true );
-
 		wp_localize_script(
 			'wpr-addons-js',
 			'WprConfig', // This is used in the js file to group all of your scripts together
@@ -418,13 +416,19 @@ class Plugin {
 
 		wp_register_script(
 			'wpr-lottie-animations',
-			WPR_ADDONS_URL . 'assets/js/lib/lottie/lottie.min.js',
+			WPR_ADDONS_URL . 'assets/js/lib/lottie/lottie'. $this->script_suffix() .'js',
 			[],
 			'5.8.0',
 			true
 		);
 
-		wp_register_script( 'wpr-aos-js', WPR_ADDONS_URL  . 'assets/js/lib/aos/aos'. $this->script_suffix()  .'.js',[ 'elementor-frontend' ], null, true );
+		wp_register_script( 
+			'wpr-aos-js',
+			 WPR_ADDONS_URL  . 'assets/js/lib/aos/aos'. $this->script_suffix() .'.js',
+			 [], 
+			 null, 
+			 true
+		);
 	}
 
 	public function enqueue_panel_scripts() {
