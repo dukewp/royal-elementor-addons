@@ -58,6 +58,7 @@ class WPR_Templates_Library_Blocks {
 								'back-to-top',
 								'popup-trigger',
 								'lottie-animations',
+								'posts-timeline',
 							];
 							
 							foreach ($modules as $title => $slug) {
