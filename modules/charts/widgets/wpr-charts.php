@@ -289,9 +289,10 @@ class Wpr_Charts extends Widget_Base {
 				}
 				
 				foreach($charts_data_set as $chart_data) {
-					var_dump($chart_data);
-					array_push($chart_background_colors, array_map('floatval', explode(',', trim($chart_data['chart_data_background_color'], ',')))[0]);
+					array_push($chart_background_colors, trim($chart_data['chart_data_background_color']));
 				}
+
+				var_dump($chart_background_colors);
 
 					$data_charts_array['datasets'][] = [
 						'label' => 'New Data Set',
