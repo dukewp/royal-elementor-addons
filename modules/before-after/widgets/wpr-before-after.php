@@ -33,7 +33,7 @@ class Wpr_Before_After extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'image compare', 'image comparison', 'before after image' ];
+		return [ 'royal', 'image compare', 'image comparison', 'before after image' ];
 	}
 
 	public function get_script_depends() {

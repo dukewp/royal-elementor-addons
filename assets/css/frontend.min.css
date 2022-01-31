@@ -328,16 +328,16 @@ template {
 
 
 /*.wpr-float-align-left .wpr-nav-menu li {
-	  float: left;
+    float: left;
   }
   
   .wpr-float-align-right .wpr-nav-menu li {
-	  float: right;
+    float: right;
   }
   
   .wpr-float-align-center .wpr-nav-menu {
-	  width: auto;
-	  margin: 0 auto;
+    width: auto;
+    margin: 0 auto;
   }*/
 
 
@@ -1802,7 +1802,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 
 /*.wpr-grid-item-display-custom .inner-block { //tmp - maybe remove? need to check
-	  text-align: center;
+    text-align: center;
   }*/
 
 .wpr-grid-item-title .inner-block a,
@@ -10668,6 +10668,15 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     position: unset;
     /* overflow: hidden; */
     z-index: 11;
+    margin: 0 32px;
+}
+
+.wpr-horizontal {
+    padding-top: 10px;
+}
+
+.wpr-horizontal-bottom {
+    padding-bottom: 10px;
 }
 
 /* Year Label  */
@@ -11097,7 +11106,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
         display: block;
         margin-bottom: 10px;
     }
-
     .wpr-right-aligned .wpr-extra-label .wpr-label {
         text-align: left !important;
     }

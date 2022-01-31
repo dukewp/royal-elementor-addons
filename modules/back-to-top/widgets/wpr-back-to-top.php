@@ -27,7 +27,7 @@ class Wpr_Back_To_Top extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'back to top', 'scroll', 'scroll to top', 'back', 'top' ];
+		return [ 'royal', 'back to top', 'scroll', 'scroll to top', 'back', 'top' ];
 	}
 
     public function get_custom_help_url() {

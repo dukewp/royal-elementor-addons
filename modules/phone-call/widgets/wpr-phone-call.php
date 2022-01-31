@@ -28,7 +28,7 @@ class Wpr_Phone_Call extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'Phone', 'call','phone','Phone call' ];
+		return [ 'royal', 'Phone', 'call','phone','Phone call' ];
 	}
 
     public function get_custom_help_url() {

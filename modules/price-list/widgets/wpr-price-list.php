@@ -37,7 +37,7 @@ class Wpr_Price_List extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'pricing list', 'price list', 'price menu', 'pricing menu', 'food menu', 'restaurant menu' ];
+		return [ 'royal', 'pricing list', 'price list', 'price menu', 'pricing menu', 'food menu', 'restaurant menu' ];
 	}
 
     public function get_custom_help_url() {

@@ -32,7 +32,7 @@ class Wpr_Popup_Trigger extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'popup', 'trigger', 'button', 'action', 'close' ];
+		return [ 'royal', 'popup', 'trigger', 'button', 'action', 'close' ];
 	}
 
 	public function add_control_popup_trigger_show_again_delay() {

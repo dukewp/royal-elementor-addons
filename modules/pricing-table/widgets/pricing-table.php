@@ -35,7 +35,7 @@ class Pricing_Table extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'price table', 'pricing table', 'features table' ];
+		return [ 'royal', 'price table', 'pricing table', 'features table' ];
 	}
 
 	public function get_style_depends() {

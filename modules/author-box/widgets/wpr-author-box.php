@@ -32,7 +32,7 @@ class Wpr_Author_Box extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'qq', 'author box', 'post', 'title' ];//tmp
+		return [ 'royal', 'qq', 'author box', 'post', 'title' ];//tmp
 	}
 
 	protected function register_controls() {

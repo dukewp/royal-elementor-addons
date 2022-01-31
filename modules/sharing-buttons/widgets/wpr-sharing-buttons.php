@@ -32,7 +32,7 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'social sharing', 'sharing buttons', ];
+		return [ 'royal', 'social sharing', 'sharing buttons', ];
 	}
 
     public function get_custom_help_url() {

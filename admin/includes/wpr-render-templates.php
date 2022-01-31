@@ -60,12 +60,11 @@ class WPR_Render_Templates {
 		// Other Themes
 		} else {
 			add_action( 'get_header', [ $this, 'replace_header' ] );
+			add_action( 'elementor/page_templates/canvas/before_content', [ $this, 'add_canvas_header' ] );
+
 			add_action( 'get_footer', [ $this, 'replace_footer' ] );
+			add_action( 'elementor/page_templates/canvas/after_content', [ $this, 'add_canvas_footer' ], 9 );
 		}
-
-		add_action( 'elementor/page_templates/canvas/before_content', [ $this, 'add_canvas_header' ] );
-
-		add_action( 'elementor/page_templates/canvas/after_content', [ $this, 'add_canvas_footer' ], 9 );
 
 		// Canvas Page Content
 		// add_action( 'elementor/page_templates/canvas/before_content', [ $this, 'replace_header' ] );

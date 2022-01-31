@@ -14,6 +14,7 @@ add_action( 'admin_menu', 'wpr_addons_add_templates_kit_menu' );
 
 // Import Template Kit
 add_action( 'wp_ajax_wpr_install_reuired_plugins', 'wpr_install_reuired_plugins' );
+add_action( 'wp_ajax_wpr_activate_reuired_theme', 'wpr_activate_reuired_theme' );
 add_action( 'wp_ajax_wpr_import_templates_kit', 'wpr_import_templates_kit' );
 add_action( 'wp_ajax_wpr_final_settings_setup', 'wpr_final_settings_setup' );
 add_action( 'wp_ajax_wpr_search_query_results', 'wpr_search_query_results' );
@@ -66,7 +67,7 @@ function wpr_addons_templates_kit_page() {
         <p><?php _e('Import any Templates Kit with just a Single click', 'wpr-addons'); ?></p>
     </div>
 
-    <div class="wpr-templates-kit-grid main-grid">
+    <div class="wpr-templates-kit-grid main-grid" data-theme-status="<?php echo get_theme_status(); ?>">
         <?php
             $kits = WPR_Templates_Data::get_available_kits();
 
@@ -138,6 +139,43 @@ function wpr_addons_templates_kit_page() {
 
 } // End wpr_addons_templates_kit_page()
 
+/**
+** Get Theme Status
+*/
+function get_theme_status() {
+    $theme = wp_get_theme();
+
+    // Theme installed and activate.
+    if ( 'Ashe' === $theme->name || 'Ashe' === $theme->parent_theme ) {
+        return 'ashe-active';
+    }
+
+    // Theme installed but not activate.
+    foreach ( (array) wp_get_themes() as $theme_dir => $theme ) {
+        if ( 'Ashe' === $theme->name || 'Ashe' === $theme->parent_theme ) {
+            return 'ashe-inactive';
+        }
+    }
+
+    return 'ashe-not-installed';
+}
+
+/**
+** Install/Activate Required Theme
+*/
+function wpr_activate_reuired_theme() {
+
+    $theme = get_option('stylesheet');
+
+    if ( 'ashe' === $theme || 'bard' === $theme
+        || 'ashe-pro-premium' === $theme || 'bard-pro-premium' === $theme
+        || 'vayne-pro-premium' === $theme || 'kayn-pro-premium' === $theme ) {
+        return;
+    }
+
+    // Activate Ashe Theme
+    switch_theme( 'ashe' );
+}
 
 /**
 ** Install/Activate Required Plugins
@@ -155,6 +193,9 @@ function wpr_install_reuired_plugins() {
 
     // Set Active Plugins
     update_option( 'active_plugins', $active_plugins );
+
+    // Activate Ashe Theme
+    switch_theme( 'ashe' );
 }
 
 /**

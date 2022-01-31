@@ -37,7 +37,7 @@ class Wpr_Content_Toggle extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'content toggle', 'content switcher', 'pricing toggle', 'toggle price plan', 'pricing table' ];
+		return [ 'royal', 'content toggle', 'content switcher', 'pricing toggle', 'toggle price plan', 'pricing table' ];
 	}
 
 	public function get_style_depends() {

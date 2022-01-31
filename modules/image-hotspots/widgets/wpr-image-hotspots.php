@@ -37,7 +37,7 @@ class Wpr_Image_Hotspots extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'image hotspots' ];
+		return [ 'royal', 'image hotspots' ];
 	}
 
     public function get_custom_help_url() {

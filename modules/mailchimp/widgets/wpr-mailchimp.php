@@ -32,7 +32,7 @@ class Wpr_Mailchimp extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'subscribe', 'subscription form', 'email subscription', 'sing up form', 'singup form', 'newsletter', 'mailchimp' ];
+		return [ 'royal', 'subscribe', 'subscription form', 'email subscription', 'sing up form', 'singup form', 'newsletter', 'mailchimp' ];
 	}
 
     public function get_custom_help_url() {

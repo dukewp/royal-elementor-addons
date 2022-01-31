@@ -36,7 +36,7 @@ class Wpr_Search extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'search', 'search widget' ];
+		return [ 'royal', 'search', 'search widget' ];
 	}
 
     public function get_custom_help_url() {

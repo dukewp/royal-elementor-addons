@@ -1,7 +1,7 @@
 ﻿=== Royal Elementor Addons (Header Footer Builder, Popups, Post Grid, Woocommerce Product Grid, Slider, Parallax Image & other Free Addons for Elementor) ===
 Contributors: WP Royal, rubeushagrid13, cyberpinky, elementoraddonswpr
 Tags: elementor, elements, widgets for elementor, elementor addons, elementor widget, elementor form, woocommerce elementor, page builder, builder, wordpress page builder
-Stable tag: 1.3.25
+Stable tag: 1.3.26
 Requires at least: 5.0
 Tested up to: 5.8.2
 Requires PHP: 5.6
@@ -89,6 +89,8 @@ and other custom branding related settings)
 - [**Food Delivery Elementor Template**](https://demosites.royal-elementor-addons.com/fooddelivery-v1/?ref=rea-wpo-pp-details-tab)
 - [**Wedding Elementor Template**](https://demosites.royal-elementor-addons.com/wedding-v1/?ref=rea-wpo-pp-details-tab)
 - [**Restaurant Elementor Template**](https://demosites.royal-elementor-addons.com/restaurant-v1/?ref=rea-wpo-pp-details-tab)
+- [**Portfolio Elementor Template**](https://demosites.royal-elementor-addons.com/portfolio-v1/?ref=rea-wpo-pp-details-tab)
+- [**Pizza Restaurant Elementor Template**](https://demosites.royal-elementor-addons.com/pizza-v1/?ref=rea-wpo-pp-details-tab)
 
 
 **Widgets Description:**
@@ -280,6 +282,11 @@ memory_limit 256M or more
 post_max_size 64M
 
 == Changelog ==
+
+= Royal Elementor Addons v1.3.26 - 2022-21-02 =
+* ADDED: Pizza Restaurant Elementor Template.
+* ADDED: Royal Elementor Widget Pro Features List Section.
+* FIX: Minor but essential Bugs.
 
 = Royal Elementor Addons v1.3.25 - 2021-12-24 =
 * ADDED: Elementor Templates Kit Library (Elementor Starter Sites).

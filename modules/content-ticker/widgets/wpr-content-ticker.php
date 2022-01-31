@@ -38,7 +38,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'content ticker', 'news ticker', 'post ticker' ];
+		return [ 'royal', 'content ticker', 'news ticker', 'post ticker' ];
 	}
 
 	public function get_script_depends() {
