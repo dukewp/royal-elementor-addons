@@ -286,10 +286,11 @@ class Wpr_Charts extends Widget_Base {
 				
 				foreach($charts_data_set as $chart_data) {
 					array_push($chart_data_number_values, array_map('floatval', explode(',', trim($chart_data['chart_data_set'], ',')))[0]);
-				}
-				
-				foreach($charts_data_set as $chart_data) {
 					array_push($chart_background_colors, trim($chart_data['chart_data_background_color']));
+					array_push($chart_background_hover_colors, trim($chart_data['chart_data_background_color_hover']));
+					array_push($chart_data_border_colors, trim($chart_data['chart_data_border_color']));
+					array_push($chart_data_border_hover_colors, trim($chart_data['chart_data_border_color']));
+					array_push($chart_data_border_width, trim($chart_data['chart_data_border_width']));
 				}
 
 				var_dump($chart_background_colors);
@@ -298,10 +299,10 @@ class Wpr_Charts extends Widget_Base {
 						'label' => 'New Data Set',
 						'data' => $chart_data_number_values,
 						'backgroundColor' => $chart_background_colors,
-						// 'hoverBackgroundColor' => $chart_data['chart_data_background_color_hover'],
-						// 'borderColor' => $chart_data['chart_data_border_color'],
-						// 'hoverBorderColor' => $chart_data['chart_data_border_color_hover'],
-						// 'borderWidth' => $chart_data['chart_data_border_width']
+						'hoverBackgroundColor' => $chart_background_hover_colors,
+						'borderColor' => $chart_data_border_colors,
+						'hoverBorderColor' => $chart_data_border_hover_colors,
+						'borderWidth' => $chart_data_border_width
 					];
 			}
 		}
