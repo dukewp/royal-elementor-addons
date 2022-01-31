@@ -276,6 +276,7 @@ class Wpr_Charts extends Widget_Base {
 		} else {
 			if(is_array($charts_data_set) && sizeof($charts_data_set)) {
 				$chart_data_number_values = [];
+				$chart_background_colors = [];
 				
 				foreach($charts_data_set AS $labels_data):
 					$data_charts_array['labels'][] = $labels_data['chart_data_label'];
@@ -284,14 +285,18 @@ class Wpr_Charts extends Widget_Base {
 				endforeach;
 				
 				foreach($charts_data_set as $chart_data) {
-					var_dump($chart_data);
 					array_push($chart_data_number_values, array_map('floatval', explode(',', trim($chart_data['chart_data_set'], ',')))[0]);
+				}
+				
+				foreach($charts_data_set as $chart_data) {
+					var_dump($chart_data);
+					array_push($chart_background_colors, array_map('floatval', explode(',', trim($chart_data['chart_data_background_color'], ',')))[0]);
 				}
 
 					$data_charts_array['datasets'][] = [
 						'label' => 'New Data Set',
 						'data' => $chart_data_number_values,
-						'backgroundColor' => $chart_data['chart_data_background_color'],
+						'backgroundColor' => $chart_background_colors,
 						'hoverBackgroundColor' => $chart_data['chart_data_background_color_hover'],
 						'borderColor' => $chart_data['chart_data_border_color'],
 						'hoverBorderColor' => $chart_data['chart_data_border_color_hover'],
