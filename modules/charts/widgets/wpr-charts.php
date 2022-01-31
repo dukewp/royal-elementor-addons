@@ -297,10 +297,10 @@ class Wpr_Charts extends Widget_Base {
 						'label' => 'New Data Set',
 						'data' => $chart_data_number_values,
 						'backgroundColor' => $chart_background_colors,
-						'hoverBackgroundColor' => $chart_data['chart_data_background_color_hover'],
-						'borderColor' => $chart_data['chart_data_border_color'],
-						'hoverBorderColor' => $chart_data['chart_data_border_color_hover'],
-						'borderWidth' => $chart_data['chart_data_border_width']
+						// 'hoverBackgroundColor' => $chart_data['chart_data_background_color_hover'],
+						// 'borderColor' => $chart_data['chart_data_border_color'],
+						// 'hoverBorderColor' => $chart_data['chart_data_border_color_hover'],
+						// 'borderWidth' => $chart_data['chart_data_border_width']
 					];
 			}
 		}
