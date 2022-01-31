@@ -10276,13 +10276,11 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 /* year-wrap or data-wrap */
-
 .wpr-vertical .wpr-timeline-centered .wpr-data-wrap {
     display: flow-root;
 }
 
 /* remove overflow hidden if possible */
-
 .wpr-timeline-centered {
     position: relative;
     display: table;
@@ -10659,8 +10657,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     line-height: 1;
 }
 
-/*----Horizontal Timeline----*/
-
+/* Horizontal Timeline */
 .wpr-horizontal-bottom.swiper-container {
     position: unset;
     overflow: hidden;
@@ -10682,8 +10679,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     padding-bottom: 10px;
 }
 
-/*----Year Label----*/
-
+/* Year Label  */
 .wpr-horizontal-bottom .wpr-year-wrap {
     position: absolute;
     display: table;
@@ -10706,8 +10702,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     display: table-cell;
 }
 
-/*----Story Icon----*/
-
+/* Story Icon */
 .wpr-horizontal-bottom .wpr-icon {
     color: #fff;
     width: 40px;
@@ -10732,17 +10727,11 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 
-/*----Story Content Section----*/
-
+/* Story Content */
 .wpr-horizontal-bottom .wpr-story-info:before {
     content: "";
     display: block;
     position: absolute;
-    /* left: calc(50% - 10px);
-    left: -moz-calc(50% - 1em);
-    left: -webkit-calc(50% - 10px);
-    left: -o-calc(50% - 10px); */
-    /* bottom: 100%; */
 }
 
 .wpr-horizontal-bottom .wpr-story-info {
@@ -10759,7 +10748,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 
 /* .wpr-horizontal-bottom .wpr-timeline-media, */
-
 .wpr-timeline-media {
     overflow: hidden;
     position: relative;
@@ -10796,7 +10784,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 
 /* .wpr-horizontal-bottom .wpr-title, */
-
 .wpr-horizontal-bottom .wpr-title {
     display: inline-block;
     /* width: 100%; */
@@ -10833,8 +10820,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 
-/*----Middle Line----*/
-
+/* Middle Line */
 .wpr-horizontal-bottom .wpr-swiper-pagination.swiper-pagination-progressbar {
     position: absolute;
     left: 50%;
@@ -10846,8 +10832,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 
-/*----Next/Prev Buttons----*/
-
+/* Next/Prev Buttons */
 .wpr-horizontal-bottom .wpr-button-prev,
 .wpr-horizontal-bottom .wpr-button-next {
     position: absolute;
@@ -10876,8 +10861,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 
-/*----Slider Styles-----*/
-
+/* Slider Styles */
 .swiper-slide.auto-height {
     height: auto;
 }
@@ -10891,10 +10875,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 
-/*----Horizontal Timeline----*/
-
-/*----Year Label----*/
-
+/* Horizontal Timeline */
 .wpr-horizontal .wpr-year-wrap {
     position: absolute;
     display: table;
@@ -10919,9 +10900,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     background: rgb(255, 0, 179);
 }
 
-
-/*----Extra Labels----*/
-
+/* Extra Labels */
 .wpr-timeline-centered .wpr-extra-label {
     transform: translateY(-50%) !important;
 }
@@ -10944,9 +10923,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     width: 100%;
 }
 
-
-/*----Story Icon----*/
-
+/* Story Icon */
 .wpr-horizontal .wpr-icon {
     width: 40px;
     height: 40px;
@@ -10972,8 +10949,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 
-/*----Story Content Section----*/
-
+/* Story Content Section */
 .wpr-horizontal .wpr-story-info:before {
     content: "";
     display: block;
@@ -11000,8 +10976,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 
-/*----Middle Line----*/
-
+/* Middle Line */
 .wpr-horizontal .wpr-swiper-pagination.swiper-pagination-progressbar {
     position: absolute;
     height: 2px;
@@ -11010,8 +10985,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 
-/*----Next/Prev Buttons----*/
-
+/* Next/Prev Buttons */
 .wpr-horizontal .wpr-button-prev,
 .wpr-horizontal .wpr-button-next {
     position: absolute;
@@ -11038,9 +11012,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     pointer-events: none;
 }
 
-
-/*----Slider Styles----*/
-
+/* slider styles  */
 .wpr-wrapper .wpr-year {
     font-size: 16px;
     font-weight: bold;

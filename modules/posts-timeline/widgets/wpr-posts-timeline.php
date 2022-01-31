@@ -160,10 +160,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => __( 'Timeline Content', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::SELECT,
-				'default' => 'dynamic',
+				'default' => 'custom',
 				'options'=>[
-					'dynamic' => esc_html__('Dynamic', 'wpr-addons'),
 					'custom' => esc_html__('Custom', 'wpr-addons'),
+					'dynamic' => esc_html__('Dynamic', 'wpr-addons')
 				],
 				'render_type' => 'template',
 			]
@@ -257,6 +257,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'value' => 'fab fa-apple',
 					'library' => 'solid',
 				],
+				'condition' => [
+					'timeline_content' => 'dynamic'
+				]
 			]
 		);
 		
@@ -963,7 +966,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Icon Background Fill Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605BE5',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-change-border-color.wpr-icon' => 'background-color: {{VALUE}} !important;',
 				],
@@ -1148,7 +1151,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						'item_content_border_color' => '#E8E8E8',
 						'repeater_timeline_icon_color' => '#E8E8E8',
 						'repeater_icon_timeline_fill_color' => '#E71919',
-						'repeater_icon_timeline_background_fill_color' => '#605BE5',
+						'repeater_icon_timeline_background_fill_color' => '#FFFFFF',
 						'repeater_icon_border_color' => '#E8E8E8'
 					],
 					[
@@ -1175,7 +1178,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						'item_content_border_color' => '#E8E8E8',
 						'repeater_timeline_icon_color' => '#E8E8E8',
 						'repeater_icon_timeline_fill_color' => '#ECB824',
-						'repeater_icon_timeline_background_fill_color' => '#605BE5',
+						'repeater_icon_timeline_background_fill_color' => '#FFFFFF',
 						'repeater_icon_border_color' => '#E8E8E8'	
 					],
 					[
@@ -1203,7 +1206,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						'repeater_timeline_icon_bg_color' => '',
 						'repeater_timeline_icon_color' => '#E8E8E8',
 						'repeater_icon_timeline_fill_color' => '#1BE620',
-						'repeater_icon_timeline_background_fill_color' => '#605BE5',
+						'repeater_icon_timeline_background_fill_color' => '#FFFFFF',
 						'repeater_icon_border_color' => '#E8E8E8'
 					],
 					[
@@ -1230,7 +1233,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						'repeater_timeline_icon_bg_color' => '',
 						'repeater_timeline_icon_color' => '#E8E8E8',
 						'repeater_icon_timeline_fill_color' => '#D82F8E',
-						'repeater_icon_timeline_background_fill_color' => '#605BE5',
+						'repeater_icon_timeline_background_fill_color' => '#FFFFFF',
 						'repeater_icon_border_color' => '#E8E8E8'
 					],
 				],
@@ -2392,10 +2395,19 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						'min' => 0,
 						'max' => 100,
 					],
-				],				
+				],
+				'devices' => [ 'desktop', 'tablet', 'mobile' ],			
 				'default' => [
-					'unit' => 'px',
 					'size' => 40,
+					'unit' => 'px',
+				],
+				'tablet_default' => [
+					'size' => 40,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 15,
+					'unit' => 'px',
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline-left .wpr-data-wrap' => 'margin-right: calc({{main_line_side_distance.SIZE}}px/2 + {{SIZE}}px);', 
@@ -2552,11 +2564,27 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'description' => esc_html__('Apply this option to fix Box Shadow issue.'),
 				'size_units' => [ 'px' ],
+				'devices' => [ 'desktop', 'tablet', 'mobile' ],
 				'default' => [
 					'top' => 10,
-					'right' => 20,
+					'right' => 10,
 					'left' => 10,
-					'bottom' => 20,
+					'bottom' => 10,
+					'unit' => 'px'
+				],
+				'tablet_default' => [
+					'top' => 10,
+					'right' => 10,
+					'left' => 10,
+					'bottom' => 10,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'top' => 10,
+					'right' => 10,
+					'left' => 10,
+					'bottom' => 10,
+					'unit' => 'px',
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-vertical' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -3664,9 +3692,18 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						'max' => 100,
 					]
 				],
+				'devices' => [ 'desktop', 'tablet', 'mobile' ],
 				'default' => [
-					'unit' => 'px',
 					'size' => 100,
+					'unit' => 'px',
+				],
+				'tablet_default' => [
+					'size' => 100,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 50,
+					'unit' => 'px',
 				],			
 				'selectors' => [
 					'{{WRAPPER}} .wpr-timeline-centered.wpr-one-sided-timeline .wpr-year-label' => 'left: calc({{SIZE}}px/2);',
@@ -3902,7 +3939,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Fill Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#fff',
+				'default' => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-change-border-color.wpr-icon i' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-change-border-color.wpr-icon svg' => 'fill: {{VALUE}};',
@@ -3930,7 +3967,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Fill Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605BE5',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-change-border-color.wpr-icon' => 'background-color: {{VALUE}};',
 				],
@@ -5285,11 +5322,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					global $wp_query;
 					$counter = $wp_query->current_post++;
 					$this->my_query->the_post();
-					ob_start();
+					
 					$id = get_post_thumbnail_id();
 					$this->src = Group_Control_Image_Size::get_attachment_image_src( $id, 'wpr_thumbnail_dynamic', $settings );
-					$this->image_tag = !empty(the_post_thumbnail()) ? '<img class="wpr-thumbnail-image" src="'. $this->src .'">' : '';
-					$this->image = ob_get_clean();
 					
 
 					$this->content_and_animation_alignment($layout, $countItem, $settings);
@@ -5311,7 +5346,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 							echo '</div>';
 							echo '<div class="wpr-story-info-vertical wpr-data-wrap animated '. $background_class .'" data-aos="'. $this->animation.'" data-aos-left="'. $this->animation_loadmore_left .'" data-aos-right="'. $this->animation_loadmore_right .'" data-animation-offset="'. $settings['animation_offset'] .'" data-animation-duration="'. $settings['aos_animation_duration'] .'">';
 
-							echo 'image-top' === $settings['content_layout'] || 'yes' === $settings['show_overlay'] ? '<div class="wpr-animation-wrap wpr-timeline-media">'.$this->image.'' : '';
+							echo 'image-top' === $settings['content_layout'] || 'yes' === $settings['show_overlay'] ? '<div class="wpr-animation-wrap wpr-timeline-media"><img class="wpr-thumbnail-image" src="'. $this->src .'">' : '';
 
 							
 								echo $settings['show_overlay'] === 'yes' && !empty(get_the_post_thumbnail_url()) ? '<div class="wpr-timeline-story-overlay '. $this->animation_class .'">' : '';
@@ -5463,11 +5498,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					while( $this->my_query->have_posts() ) {
 						$this->my_query->the_post();
 
-						ob_start();
-						$id = get_post_thumbnail_id();
-						$this->src = Group_Control_Image_Size::get_attachment_image_src( $id, 'wpr_thumbnail_dynamic', $settings );
-						!empty(the_post_thumbnail()) ? '<img class="wpr-thumbnail-image" src="'. $this->src .'">' : '';
-						$this->image = ob_get_clean();
+						
+					
+					$id = get_post_thumbnail_id();
+					$this->src = Group_Control_Image_Size::get_attachment_image_src( $id, 'wpr_thumbnail_dynamic', $settings );
 						
 						$background_image = $settings['content_layout'] === 'background' ? get_the_post_thumbnail_url() : '';
 						$background_class = $settings['content_layout'] === 'background' ? 'story-with-background' : '';
@@ -5477,7 +5511,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						echo '<div class="wpr-story-info '. $background_class .'">';
 						echo $settings['content_layout'] === 'image-top' || $settings['show_overlay'] === 'yes' ? '<div class="wpr-animation-wrap wpr-timeline-media">' : '';
 
-						echo $settings['content_layout'] === 'image-top' ? $this->image : '';
+						echo $settings['content_layout'] === 'image-top' ? '<img class="wpr-thumbnail-image" src="'. $this->src .'">' : '';
 	
 						echo $settings['show_overlay'] === 'yes' && !empty(get_the_post_thumbnail_url()) ? '<div class="wpr-timeline-story-overlay '. $this->animation_class .'">' : '';
 	
@@ -5553,8 +5587,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 		$data = $settings['timeline_repeater_list'];
 		
-		$autoplay = ! wpr_fs()->can_use_premium_code() ? '' : $settings['swiper_autoplay'];
-		$swiper_delay = ! wpr_fs()->can_use_premium_code() ? 0 : $settings['swiper_delay'];
+		$autoplay = ! wpr_fs()->can_use_premium_code() && !empty($settings['swiper_autoplay']) ? '' : $settings['swiper_autoplay'];
+		$swiper_delay = ! wpr_fs()->can_use_premium_code() && !empty($settings['swiper_delay']) ? 0 : $settings['swiper_delay'];
 		$swiper_speed = $settings['swiper_speed'];
 		$slidesHeight = $settings['equal_height_slides'];
 
