@@ -10541,6 +10541,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 .wpr-title-wrap {
     overflow: hidden;
+    flex-shrink: 0;
     width: 100% !important;
 }
 
