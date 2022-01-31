@@ -963,7 +963,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Icon Background Fill Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605BE5',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-change-border-color.wpr-icon' => 'background-color: {{VALUE}} !important;',
 				],
@@ -3902,7 +3902,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Fill Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#fff',
+				'default' => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-change-border-color.wpr-icon i' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-change-border-color.wpr-icon svg' => 'fill: {{VALUE}};',
