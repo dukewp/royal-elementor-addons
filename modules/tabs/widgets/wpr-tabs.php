@@ -39,7 +39,7 @@ class Wpr_Tabs extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'vertical tabs', 'horizontal tabs', 'accordion' ];
+		return [ 'royal', 'vertical tabs', 'horizontal tabs', 'accordion' ];
 	}
 
 	public function get_style_depends() {

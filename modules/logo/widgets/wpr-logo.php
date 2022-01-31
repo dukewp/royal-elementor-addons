@@ -37,7 +37,7 @@ class Wpr_Logo extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'site logo', 'image' ];
+		return [ 'royal', 'site logo', 'image' ];
 	}
 
     public function get_custom_help_url() {

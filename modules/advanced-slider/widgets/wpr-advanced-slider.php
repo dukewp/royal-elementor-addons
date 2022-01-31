@@ -38,7 +38,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'image slider', 'slideshow', 'image carousel', 'template slider' ];
+		return [ 'royal', 'image slider', 'slideshow', 'image carousel', 'template slider' ];
 	}
 	
 	public function get_script_depends() {

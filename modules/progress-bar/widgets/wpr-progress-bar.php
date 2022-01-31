@@ -37,7 +37,7 @@ class Wpr_Progress_Bar extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'progress bar', 'skill bar', 'skills bar', 'percentage bar', 'bar chart' ];
+		return [ 'royal', 'progress bar', 'skill bar', 'skills bar', 'percentage bar', 'bar chart' ];
 	}
 
 	public function get_script_depends() {

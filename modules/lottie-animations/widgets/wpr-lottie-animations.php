@@ -31,7 +31,7 @@ class Wpr_Lottie_Animations extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'lottie', 'animation', 'animations', 'svg' ];
+		return [ 'royal', 'lottie', 'animation', 'animations', 'svg' ];
 	}
 	
 	public function get_script_depends() {

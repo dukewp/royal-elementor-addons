@@ -35,7 +35,7 @@ class Advanced_Text extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'advanced text', 'text effects', 'typing text', 'fancy text', 'animated text', '3d text', 'text mask', 'text rotator', 'text animaiton' ];
+		return [ 'royal', 'advanced text', 'text effects', 'typing text', 'fancy text', 'animated text', '3d text', 'text mask', 'text rotator', 'text animaiton' ];
 	}
 
 	public function get_style_depends() {

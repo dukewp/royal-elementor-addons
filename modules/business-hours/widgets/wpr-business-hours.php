@@ -37,7 +37,7 @@ class Wpr_Business_Hours extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'business hours', 'opening Hours', 'opening times', 'currently Open' ];
+		return [ 'royal', 'business hours', 'opening Hours', 'opening times', 'currently Open' ];
 	}
 
     public function get_custom_help_url() {

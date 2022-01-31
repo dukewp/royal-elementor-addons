@@ -37,7 +37,7 @@ class Wpr_Dual_Button extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'dual button', 'double button' ];
+		return [ 'royal', 'dual button', 'double button' ];
 	}
 	
 	public function get_style_depends() {

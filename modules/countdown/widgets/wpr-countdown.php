@@ -37,7 +37,7 @@ class Wpr_Countdown extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'evergreen countdown timer' ];
+		return [ 'royal', 'evergreen countdown timer' ];
 	}
 
     public function get_custom_help_url() {

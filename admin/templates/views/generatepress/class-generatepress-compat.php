@@ -43,11 +43,13 @@ class Wpr_GeneratePress_Compat {
 		if ( $this->render_templates->is_template_available('header') ) {
 			add_action( 'template_redirect', [ $this, 'generatepress_setup_header' ] );
 			add_action( 'generate_header', [$this->render_templates, 'replace_header'] );
+			add_action( 'elementor/page_templates/canvas/before_content', [ $this->render_templates, 'add_canvas_header' ] );
 		}
 
 		if ( $this->render_templates->is_template_available('footer') ) {
 			add_action( 'template_redirect', [ $this, 'generatepress_setup_footer' ] );
 			add_action( 'generate_footer', [$this->render_templates, 'replace_footer'] );
+			add_action( 'elementor/page_templates/canvas/after_content', [ $this->render_templates, 'add_canvas_footer' ] );
 		}
 	}
 

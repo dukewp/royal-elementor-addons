@@ -37,7 +37,7 @@ class Wpr_Flip_Box extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'hover box', 'banner box', 'animated banner' ];
+		return [ 'royal', 'hover box', 'banner box', 'animated banner' ];
 	}
 
 	public function get_style_depends() {

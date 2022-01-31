@@ -41,11 +41,13 @@ class Wpr_Storefront_Compat {
 		if ( $this->render_templates->is_template_available('header') ) {
 			add_action( 'template_redirect', [ $this, 'setup_header' ], 10 );
 			add_action( 'storefront_before_header', [$this->render_templates, 'replace_header'], 500 );
+			add_action( 'elementor/page_templates/canvas/before_content', [ $this->render_templates, 'add_canvas_header' ] );
 		}
 
 		if ( $this->render_templates->is_template_available('footer') ) {
 			add_action( 'template_redirect', [ $this, 'setup_footer' ], 10 );
 			add_action( 'storefront_after_footer', [$this->render_templates, 'replace_footer'], 500 );
+			add_action( 'elementor/page_templates/canvas/after_content', [ $this->render_templates, 'add_canvas_footer' ] );
 		}
 
 		if ( $this->render_templates->is_template_available('header') || $this->render_templates->is_template_available('footer') ) {

@@ -37,7 +37,7 @@ class Wpr_Team_Member extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'team member' ];
+		return [ 'royal', 'team member' ];
 	}
 
 	public function get_style_depends() {

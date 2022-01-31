@@ -37,7 +37,7 @@ class Wpr_Button extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'button' ];
+		return [ 'royal', 'button' ];
 	}
 	
 	public function get_style_depends() {

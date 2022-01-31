@@ -37,7 +37,7 @@ class Wpr_OnepageNav extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'one page', 'onepage', 'navigation', 'one page scroll', 'scroll navigation', 'floating menu', 'sticky menu', 'page scroll' ];
+		return [ 'royal', 'one page', 'onepage', 'navigation', 'one page scroll', 'scroll navigation', 'floating menu', 'sticky menu', 'page scroll' ];
 	}
 
     public function get_custom_help_url() {

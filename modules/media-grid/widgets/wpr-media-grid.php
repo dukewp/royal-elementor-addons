@@ -37,7 +37,7 @@ class Wpr_Media_Grid extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'image gallery', 'image slider', 'image carousel', 'image grid', 'media grid', 'massonry grid', 'isotope', 'massonry grid', 'filterable grid' ];
+		return [ 'royal', 'image gallery', 'image slider', 'image carousel', 'image grid', 'media grid', 'massonry grid', 'isotope', 'massonry grid', 'filterable grid' ];
 	}
 
 	public function get_script_depends() {
