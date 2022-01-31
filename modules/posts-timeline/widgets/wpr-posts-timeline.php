@@ -160,10 +160,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => __( 'Timeline Content', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::SELECT,
-				'default' => 'dynamic',
+				'default' => 'custom',
 				'options'=>[
-					'dynamic' => esc_html__('Dynamic', 'wpr-addons'),
 					'custom' => esc_html__('Custom', 'wpr-addons'),
+					'dynamic' => esc_html__('Dynamic', 'wpr-addons')
 				],
 				'render_type' => 'template',
 			]
