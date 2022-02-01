@@ -5170,9 +5170,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 						echo '<div class="wpr-story-info-vertical wpr-data-wrap '. $background_class .'"  data-aos="'. $this->animation .'" data-aos-left="'.$this->animation_loadmore_left .'" data-aos-right="'. $this->animation_loadmore_right .'" data-animation-offset="'. $settings['animation_offset'] .'" data-animation-duration="'. $settings['aos_animation_duration'] .'">';
 
-							echo $settings['content_layout'] === 'image-top' ? '<div class="wpr-animation-wrap wpr-timeline-media">' .$this->image : '';
+							echo $settings['content_layout'] === 'image-top' && !empty($this->image) || $settings['content_layout'] === 'image-top' && $content['repeater_youtube_video_url'] ? '<div class="wpr-animation-wrap wpr-timeline-media">' .$this->image : '';
 
-							echo !empty($content['repeater_youtube_video_url'] ) && $settings['content_layout'] === 'image-top' ? '<div class="wpr-timeline-iframe-wrapper"> '. $this->youtube_url($content) .' </div>' : '';
+							echo !empty($content['repeater_youtube_video_url']) && $settings['content_layout'] === 'image-top' ? '<div class="wpr-timeline-iframe-wrapper"> '. $this->youtube_url($content) .' </div>' : '';
 
 								echo $settings['show_overlay'] === 'yes' && !empty($this->image) || $settings['show_overlay'] === 'yes' && !empty($content['repeater_youtube_video_url']) ? '<div class="wpr-timeline-story-overlay '. $this->animation_class .'">' : '';
 
@@ -5181,7 +5181,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 								echo $settings['show_overlay'] === 'yes' && !empty($this->image) || $settings['show_overlay'] === 'yes' && !empty($content['repeater_youtube_video_url'])  ? '</div>' : '';
 
-							echo $settings['content_layout'] === 'image-top' || $settings['show_overlay'] === 'yes' ? '</div>' : '';
+							echo $settings['content_layout'] === 'image-top' && !empty($content['repeater_youtube_video_url']) || $settings['content_layout'] === 'image-top' && !empty($this->image) || $settings['show_overlay'] === 'yes' ? '</div>' : '';
 
 							echo 'yes' !== $settings['title_overlay'] && 'yes' === $settings['show_title'] && !empty($content['repeater_story_title'])  || 'yes' !== $settings['description_overlay'] && 'yes' === $settings['show_description'] && !empty($content['repeater_description']) ?'<div class="wpr-timeline-content-wrapper">' : '';
 								echo  '<div class="wpr-content-wrapper">'; //remove
@@ -5349,7 +5349,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 							\Elementor\Icons_Manager::render_icon( $content['repeater_story_icon'], [ 'aria-hidden' => 'true' ] );
 							echo'</div>'; 
 							echo '<div class="wpr-story-info '. $this->background_class .'">';
-								echo !empty($this->image) && !empty($content['repeater_youtube_video_url']) ? '<div class="wpr-animation-wrap wpr-timeline-media">' : '';
+								echo !empty($this->image) && 'image-top' === $settings['content_layout'] || !empty($content['repeater_youtube_video_url']) && 'image-top' === $settings['content_layout'] ? '<div class="wpr-animation-wrap wpr-timeline-media">' : '';
 
 									echo 'image-top' === $settings['content_layout'] ? $this->image : '';
 
@@ -5364,7 +5364,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 									echo 'yes' === $settings['show_overlay'] && !empty($this->image) || $settings['show_overlay'] === 'yes' && !empty($content['repeater_youtube_video_url']) ? '</div>' : '';
 								
-								echo !empty($this->image) && !empty($content['repeater_youtube_video_url']) ? '</div>' : ''; 
+								echo !empty($this->image) || !empty($content['repeater_youtube_video_url']) ? '</div>' : ''; 
 									
 								echo 'yes' !== $settings['title_overlay'] && 'yes' === $settings['show_title'] && !empty($content['repeater_story_title'])  || 'yes' !== $settings['description_overlay'] && 'yes' === $settings['show_description'] && !empty($content['repeater_description']) ? '<div class="wpr-timeline-content-wrapper">' : '';
 
