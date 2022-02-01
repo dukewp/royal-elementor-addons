@@ -10802,7 +10802,8 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     padding-bottom: 56.25%;
 }
 
-.wpr-timeline-media iframe {
+.wpr-timeline-media iframe,
+.wpr-timeline-iframe-wrapper iframe {
     position: absolute;
     top: 0;
     left: 0;
