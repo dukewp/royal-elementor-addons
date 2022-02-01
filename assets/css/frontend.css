@@ -10795,7 +10795,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     display: inline-block;
 }
 
-.wpr-timeline-media .wpr-timeline-iframe-wrapper {
+.wpr-timeline-iframe-wrapper {
     position: relative;
     width: 100%;
     height: 0;
