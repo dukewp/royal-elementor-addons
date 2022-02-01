@@ -124,6 +124,7 @@ class Wpr_Charts extends Widget_Base {
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
 				'placeholder' => esc_html__( 'https://www.your-link.com', 'wpr-addons' ),
+				'default' => 'To Be Applied',
 				'condition' => [
 					'show_chart_title' => 'yes',
 				],
