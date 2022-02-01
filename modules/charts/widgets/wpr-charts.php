@@ -52,6 +52,85 @@ class Wpr_Charts extends Widget_Base {
     protected function register_controls() {
 
         $this->start_controls_section(
+            'section_chart_general',
+			[
+				'label' => esc_html__( 'General', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+			]
+        );
+
+		// chart style
+		$this->add_control(
+			'chart_type',
+			[
+				'label'   => esc_html__('Chart Styles', 'wpr-addons'),
+				'type'    => Controls_Manager::SELECT,
+				'default' => 'bar',
+				'options' => [
+					'bar'           => esc_html__('Bar', 'wpr-addons'),
+					'line'          => esc_html__('Line', 'wpr-addons'),
+					'radar'         => esc_html__('Radar', 'wpr-addons'),
+					'doughnut'      => esc_html__('Doughnut', 'wpr-addons'),
+					'pie'           => esc_html__('Pie', 'wpr-addons'),
+					'polarArea'     => esc_html__('Polar Area', 'wpr-addons'),
+					'scatter'     => esc_html__('Scatter', 'wpr-addons'),
+				],
+
+			]
+		);
+
+		$this->add_control(
+			'charts_legend_position',
+			[
+				'label'   => esc_html__('Legend Position', 'elementskit'),
+				'type'    => Controls_Manager::CHOOSE,
+				'default' => 'top',
+				'options' => [
+					'top'    => [
+						'title' => esc_html__('Top', 'elementskit'),
+						'icon'  => 'eicon-v-align-top',
+					],
+					'right'  => [
+						'title' => esc_html__('Right', 'elementskit'),
+						'icon'  => 'eicon-h-align-right',
+					],
+					'bottom' => [
+						'title' => esc_html__('Bottom', 'elementskit'),
+						'icon'  => 'eicon-v-align-bottom',
+					],
+					'left'   => [
+						'title' => esc_html__('Left', 'elementskit'),
+						'icon'  => 'eicon-h-align-left',
+					],
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'show_chart_title',
+			[
+				'label' => esc_html__( 'Show Title', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'chart_title',
+			[
+				'label' => esc_html__( 'Title', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'placeholder' => esc_html__( 'https://www.your-link.com', 'wpr-addons' ),
+				'condition' => [
+					'show_chart_title' => 'yes',
+				],
+			]
+		);
+
+        $this->end_controls_section();$this->start_controls_section(
             'section_chart_data',
 			[
 				'label' => esc_html__( 'Data', 'wpr-addons' ),
@@ -214,36 +293,6 @@ class Wpr_Charts extends Widget_Base {
 		);
 
         $this->end_controls_section();
-
-        $this->start_controls_section(
-            'section_chart_general',
-			[
-				'label' => esc_html__( 'General', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_CONTENT,
-			]
-        );
-
-		// chart style
-		$this->add_control(
-			'chart_type',
-			[
-				'label'   => esc_html__('Chart Styles', 'wpr-addons'),
-				'type'    => Controls_Manager::SELECT,
-				'default' => 'bar',
-				'options' => [
-					'bar'           => esc_html__('Bar', 'wpr-addons'),
-					'line'          => esc_html__('Line', 'wpr-addons'),
-					'radar'         => esc_html__('Radar', 'wpr-addons'),
-					'doughnut'      => esc_html__('Doughnut', 'wpr-addons'),
-					'pie'           => esc_html__('Pie', 'wpr-addons'),
-					'polarArea'     => esc_html__('Polar Area', 'wpr-addons'),
-					'scatter'     => esc_html__('Scatter', 'wpr-addons'),
-				],
-
-			]
-		);
-
-        $this->end_controls_section();
     }
 
     protected function render() {
@@ -314,7 +363,10 @@ class Wpr_Charts extends Widget_Base {
         $layout_settings = [
             'chart_type' => $settings['chart_type'],
             'chart_labels' => !empty($data_charts_array['labels']) ? $data_charts_array['labels'] : '',
-			'chart_datasets' => wp_json_encode($data_charts_array['datasets'])
+			'chart_datasets' => wp_json_encode($data_charts_array['datasets']),
+			'legend_position' => $settings['charts_legend_position'],
+			'show_chart_title' => $settings['show_chart_title'],
+			'chart_title' => !empty($settings['chart_title']) ? $settings['chart_title'] : '',
         ];
 
 		$this->add_render_attribute( 'chart-settings', [
