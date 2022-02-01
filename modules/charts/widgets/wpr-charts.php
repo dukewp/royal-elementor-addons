@@ -43,6 +43,10 @@ class Wpr_Charts extends Widget_Base {
 		return [ 'wpr-charts' ];
 	}
 
+	public function get_style_depends() {
+		return ['wpr-loading-animations-css'];
+	}
+
     public function get_custom_help_url() {
     	if ( empty(get_option('wpr_wl_plugin_links')) )
         // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-grid-help-btn';
@@ -128,6 +132,7 @@ class Wpr_Charts extends Widget_Base {
 				'default' => 'bar',
 				'options' => [
 					'bar'           => esc_html__('Bar', 'wpr-addons'),
+					'bar_horizontal' => esc_html__('Bar (Horizontal)', 'wpr-addons'),
 					'line'          => esc_html__('Line', 'wpr-addons'),
 					'radar'         => esc_html__('Radar', 'wpr-addons'),
 					'doughnut'      => esc_html__('Doughnut', 'wpr-addons'),
@@ -224,7 +229,8 @@ class Wpr_Charts extends Widget_Base {
 				'fields'      => $chart_repeater->get_controls(),
 				'title_field' => '{{{ chart_label }}}',
 				'condition'   => [
-					'chart_type' => ['bar', 'line', 'radar', 'scatter'] //  'horizontalBar',
+					'data_source' => 'custom',
+					'chart_type' => ['bar', 'bar_horizontal', 'line', 'radar', 'scatter'] //  'horizontalBar',
 				],
 			]
 		);
@@ -348,7 +354,7 @@ class Wpr_Charts extends Widget_Base {
 
 				'fields'      => $chart_repeater_labels->get_controls(),
 				'title_field' => '{{{ chart_data_label }}}',
-				// 'condition'   => ['chart_style' => ['bar', 'horizontalBar', 'line', 'radar']],
+				// 'condition'   => ['chart_style' => ['bar', 'bar_horizontal', 'horizontalBar', 'line', 'radar']],
 			]
 		);
 
@@ -368,7 +374,7 @@ class Wpr_Charts extends Widget_Base {
 			endforeach;
 		endif;
 
-		if ( in_array($chart_type, array('bar', 'line', 'radar', 'scatter'))) {
+		if ( in_array($chart_type, array('bar', 'bar_horizontal', 'line', 'radar', 'scatter'))) {
 			if(is_array($charts_data_set) && sizeof($charts_data_set)) {
 				foreach($charts_data_set as $chart_data) {
 					$data_charts_array['datasets'][] = [
@@ -393,8 +399,6 @@ class Wpr_Charts extends Widget_Base {
 				
 				foreach($charts_data_set AS $labels_data):
 					$data_charts_array['labels'][] = $labels_data['chart_data_label'];
-		
-					var_dump($labels_data['chart_data_label']);
 				endforeach;
 				
 				foreach($charts_data_set as $chart_data) {
@@ -405,8 +409,6 @@ class Wpr_Charts extends Widget_Base {
 					array_push($chart_data_border_hover_colors, trim($chart_data['chart_data_border_color']));
 					array_push($chart_data_border_width, trim($chart_data['chart_data_border_width']));
 				}
-
-				var_dump($chart_background_colors);
 
 					$data_charts_array['datasets'][] = [
 						'label' => 'New Data Set',
@@ -437,6 +439,11 @@ class Wpr_Charts extends Widget_Base {
 		] );
         
         echo '<div ' . $this->get_render_attribute_string( 'chart-settings') . '>';
+
+			if ($data_source === 'csv') {
+				echo '<span class="wpr-rotating-plane" style="width: 25px; height: 25px; background: red; border-radius: 50%; position: absolute; top: 50%; left: 50%; z-index: 999; transform: translate(-50%, -50%);"></span>';
+			}
+
             echo '<div>';
                 echo '<canvas id="wpr-chart"></canvas>';
             echo '</div>';
