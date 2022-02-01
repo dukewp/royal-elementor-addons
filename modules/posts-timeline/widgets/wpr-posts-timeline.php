@@ -5349,6 +5349,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 							\Elementor\Icons_Manager::render_icon( $content['repeater_story_icon'], [ 'aria-hidden' => 'true' ] );
 							echo'</div>'; 
 							echo '<div class="wpr-story-info '. $this->background_class .'">';
+
 								echo !empty($this->image) && 'image-top' === $settings['content_layout'] || !empty($content['repeater_youtube_video_url']) && 'image-top' === $settings['content_layout'] ? '<div class="wpr-animation-wrap wpr-timeline-media">' : '';
 
 									echo 'image-top' === $settings['content_layout'] ? $this->image : '';
@@ -5364,7 +5365,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 									echo 'yes' === $settings['show_overlay'] && !empty($this->image) || $settings['show_overlay'] === 'yes' && !empty($content['repeater_youtube_video_url']) ? '</div>' : '';
 								
-								echo !empty($this->image) || !empty($content['repeater_youtube_video_url']) ? '</div>' : ''; 
+								echo !empty($this->image) && 'image-top' === $settings['content_layout'] || !empty($content['repeater_youtube_video_url']) && 'image-top' === $settings['content_layout'] ? '</div>' : ''; 
 									
 								echo 'yes' !== $settings['title_overlay'] && 'yes' === $settings['show_title'] && !empty($content['repeater_story_title'])  || 'yes' !== $settings['description_overlay'] && 'yes' === $settings['show_description'] && !empty($content['repeater_description']) ? '<div class="wpr-timeline-content-wrapper">' : '';
 
@@ -5372,7 +5373,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 									echo !empty($this->timeline_description ) && 'yes' === $settings['show_description'] && 'yes' !== $settings['description_overlay'] ?'<div '.$this->get_render_attribute_string( $this->description_key ) .'>'. $this->timeline_description .'</div>' : ''; 
 
-									echo !empty( $content['repeater_youtube_video_url'] ) && $settings['content_layout'] == 'image-bottom' ? '<div class="wpr-timeline-iframe-wrapper">  '. $this->youtube_url($content) .' </div>' : '';
+									echo !empty( $content['repeater_youtube_video_url'] ) && $settings['content_layout'] !== 'image-top' ? '<div class="wpr-timeline-iframe-wrapper">  '. $this->youtube_url($content) .' </div>' : '';
 
 								echo 'yes' !== $settings['title_overlay'] && 'yes' === $settings['show_title'] && !empty($content['repeater_story_title'])  || 'yes' !== $settings['description_overlay'] && 'yes' === $settings['show_description'] && !empty($content['repeater_description']) ? '</div>' : '';	 
 
