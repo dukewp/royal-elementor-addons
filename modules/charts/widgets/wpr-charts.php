@@ -59,6 +59,66 @@ class Wpr_Charts extends Widget_Base {
 			]
         );
 
+		$this->add_control(
+			'data_source',
+			[
+				'label'              => __( 'Data Source', 'wpr-addons' ),
+				'type'               => Controls_Manager::SELECT,
+				'default'            => 'custom',
+				'options'            => [
+					'custom' => __( 'Custom', 'wpr-addons' ),
+					'csv'    => 'CSV' . __( ' File', 'wpr-addons' ),
+				],
+				'frontend_available' => true,
+			]
+		);
+
+		$this->add_control(
+			'csv_source',
+			[
+				'label'              => __( 'Data Source', 'wpr-addons' ),
+				'type'               => Controls_Manager::SELECT,
+				'default'            => 'url',
+				'options'            => [
+					'url' => __( 'Remote URL', 'wpr-addons' ),
+					'file' => __( ' File', 'wpr-addons' ),
+				],
+				'condition'   => [
+					'data_source' => 'csv',
+				],
+				'frontend_available' => true,
+			]
+		);
+
+		$this->add_control(
+			'data_source_csv_url',
+			[
+				'label'       => __( 'Remote URL', 'wpr-addons' ),
+				'type'        => Controls_Manager::TEXT,
+				'dynamic'     => array( 'active' => true ),
+				'label_block' => true,
+				'condition'   => [
+					'data_source' => 'csv',
+					'csv_source' => 'url',
+				],
+			]
+		);
+
+		$this->add_control(
+			'data_source_csv_file',
+			[
+				'label'       => __( 'Upload CSV File', 'wpr-addons' ),
+				'type'        => \Elementor\Controls_Manager::MEDIA,
+				'dynamic'     => ['active' => true],
+				'media_type'  => [],
+				'label_block' => true,
+				'condition'   => [
+					'data_source' => 'csv',
+					'csv_source' => 'file',
+				],
+			]
+		);
+
 		// chart style
 		$this->add_control(
 			'chart_type',
@@ -73,7 +133,7 @@ class Wpr_Charts extends Widget_Base {
 					'doughnut'      => esc_html__('Doughnut', 'wpr-addons'),
 					'pie'           => esc_html__('Pie', 'wpr-addons'),
 					'polarArea'     => esc_html__('Polar Area', 'wpr-addons'),
-					'scatter'     => esc_html__('Scatter', 'wpr-addons'),
+					// 'scatter'     => esc_html__('Scatter', 'wpr-addons'),
 				],
 
 			]
@@ -82,24 +142,24 @@ class Wpr_Charts extends Widget_Base {
 		$this->add_control(
 			'charts_legend_position',
 			[
-				'label'   => esc_html__('Legend Position', 'elementskit'),
+				'label'   => esc_html__('Legend Position', 'wpr-addons'),
 				'type'    => Controls_Manager::CHOOSE,
 				'default' => 'top',
 				'options' => [
 					'top'    => [
-						'title' => esc_html__('Top', 'elementskit'),
+						'title' => esc_html__('Top', 'wpr-addons'),
 						'icon'  => 'eicon-v-align-top',
 					],
 					'right'  => [
-						'title' => esc_html__('Right', 'elementskit'),
+						'title' => esc_html__('Right', 'wpr-addons'),
 						'icon'  => 'eicon-h-align-right',
 					],
 					'bottom' => [
-						'title' => esc_html__('Bottom', 'elementskit'),
+						'title' => esc_html__('Bottom', 'wpr-addons'),
 						'icon'  => 'eicon-v-align-bottom',
 					],
 					'left'   => [
-						'title' => esc_html__('Left', 'elementskit'),
+						'title' => esc_html__('Left', 'wpr-addons'),
 						'icon'  => 'eicon-h-align-left',
 					],
 				],
@@ -123,8 +183,7 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
-				'placeholder' => esc_html__( 'https://www.your-link.com', 'wpr-addons' ),
-				'default' => 'To Be Applied',
+				'placeholder' => esc_html__( 'To Be Applied', 'wpr-addons' ),
 				'condition' => [
 					'show_chart_title' => 'yes',
 				],
@@ -362,12 +421,14 @@ class Wpr_Charts extends Widget_Base {
 		}
 
         $layout_settings = [
+			'data_source' => $data_source,
             'chart_type' => $settings['chart_type'],
             'chart_labels' => !empty($data_charts_array['labels']) ? $data_charts_array['labels'] : '',
 			'chart_datasets' => wp_json_encode($data_charts_array['datasets']),
 			'legend_position' => $settings['charts_legend_position'],
 			'show_chart_title' => $settings['show_chart_title'],
 			'chart_title' => !empty($settings['chart_title']) ? $settings['chart_title'] : '',
+			'url' => $data_source_csv_url ? $data_source_csv_url : $data_source_csv_file['url'],
         ];
 
 		$this->add_render_attribute( 'chart-settings', [
