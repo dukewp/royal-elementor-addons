@@ -10,8 +10,7 @@ class WprRatingNotice {
 
     public function __construct() {
         global $pagenow;
-
-        $this->past_date = strtotime( '-14 days' );
+        $this->past_date = false == get_option('wpr_compare_to_maybe_later_time') ? strtotime( '-14 days' ) : strtotime('-7 days');
 
         if ( current_user_can('administrator') ) {
             if ( empty(get_option('wpr_rating_dismiss_notice', false)) && empty(get_option('wpr_rating_already_rated', false)) ) {
@@ -32,16 +31,21 @@ class WprRatingNotice {
     public function check_plugin_install_time() {   
         $install_date = get_option('royal_elementor_addons_activation_time');
 
-        if ( false == get_option('wpr_maybe_later_date') && false !== $install_date && $this->past_date >= $install_date ) {
+        if ( false == get_option('wpr_maybe_later_time') && false !== $install_date && $this->past_date >= $install_date ) {
             add_action( 'admin_notices', [$this, 'render_rating_notice' ]);
-        } else if ( get_option('wpr_random_number') >= get_option('wpr_maybe_later_date') ) {
+        } else if ( $this->past_date >= get_option('wpr_maybe_later_time') ) {
             add_action( 'admin_notices', [$this, 'render_rating_notice' ]);
         }
     }
 
     public function wpr_rating_maybe_later() {
-        update_option('wpr_maybe_later_date', strtotime('now'));
-        update_option('wpr_random_number', '-10 seconds');
+        if ( false == get_option('wpr_maybe_later_time') && false == get_option('wpr_compare_to_maybe_later_time') ) {
+            add_option('wpr_maybe_later_time', strtotime('now'));
+            add_option('wpr_compare_to_maybe_later_time', 'on');
+        } else {
+            update_option('wpr_maybe_later_time', strtotime('now'));
+            update_option('wpr_compare_to_maybe_later_time', 'on');
+        }
     }
 
     function wpr_rating_already_rated() {    
