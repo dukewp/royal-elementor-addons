@@ -3277,7 +3277,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-read-more-button' => 'transition-duration: {{VALUE}}s',
 				],
 				'separator' => 'before'
-			],
+			]
 		);
 
 		$this->add_control(
@@ -3914,7 +3914,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-icon' => 'transition-duration: {{VALUE}}s',
 				],
 				'separator' => 'before'
-			],
+			]
 		);
 
 		$this->add_responsive_control(
@@ -4407,7 +4407,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-button-next svg' => 'transition-duration: {{VALUE}}s',
 				],
 				'separator' => 'before'
-			],
+			]
 		);
 
 		$this->add_responsive_control(
