@@ -32,6 +32,14 @@ class Wpr_Parallax_Scroll {
         if ( 'on' === get_option('wpr-parallax-background', 'on') ) {
 
         $element->add_control(
+            'parallax_video_tutorial',
+            [
+                'raw' => '<a href="https://www.youtube.com/watch?v=DcDeQ__lJbw" target="_blank">Watch Video Tutorial <span class="dashicons dashicons-video-alt3"></span></a>',
+                'type' => Controls_Manager::RAW_HTML,
+            ]
+        );
+
+        $element->add_control(
             'wpr_enable_jarallax',
             [
                 'type'  => Controls_Manager::SWITCHER,
@@ -116,7 +124,23 @@ class Wpr_Parallax_Scroll {
 
         } // end if ( 'on' === get_option('wpr-parallax-background', 'on') ) {
 
+        $element->add_control(
+            'parallax_type_divider',
+            [
+                'type' => Controls_Manager::DIVIDER,
+                'style' => 'thick',
+            ]
+        );
+
         if ( 'on' === get_option('wpr-parallax-multi-layer', 'on') ) {
+
+        $element->add_control(
+            'parallax_multi_video_tutorial',
+            [
+                'raw' => '<a href="https://youtu.be/DcDeQ__lJbw?t=121" target="_blank">Watch Video Tutorial <span class="dashicons dashicons-video-alt3"></span></a>',
+                'type' => Controls_Manager::RAW_HTML,
+            ]
+        );
 
         $element->add_control(
             'wpr_enable_parallax_hover',
@@ -128,7 +152,6 @@ class Wpr_Parallax_Scroll {
                 'label_off' => __('No', 'wpr-addons'),
                 'return_value' => 'yes',
                 'render_type' => 'template',
-                'separator' => 'before',
                 'prefix_class' => 'wpr-parallax-'
             ]
         );
@@ -300,6 +323,9 @@ class Wpr_Parallax_Scroll {
                     'raw' => 'More than 2 Layers are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-parallax-multi-layer-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
                     // 'raw' => 'More than 2 Layers are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
                     'content_classes' => 'wpr-pro-notice',
+                    'condition' => [
+                        'wpr_enable_parallax_hover' => 'yes'
+                    ]
                 ]
             );
         }

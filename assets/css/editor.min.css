@@ -629,7 +629,8 @@
 .elementor-control.elementor-control-which_particle_pro_notice,
 .elementor-control.elementor-control-paralax_repeater_pro_notice,
 .elementor-control.elementor-control-opnepage_pro_notice,
-.elementor-control.elementor-control-timeline_repeater_pro_notice {
+.elementor-control.elementor-control-timeline_repeater_pro_notice,
+.elementor-control.elementor-control-limit_grid_items_pro_notice {
 	padding-bottom: 0 !important;
 }
 
@@ -727,6 +728,21 @@
 
 .wpr-pro-features-list ul + a:hover {
   color: #fff;
+}
+
+/* Video Tutorial Link */
+.elementor-control[class*="video_tutorial"] {
+  padding-top: 0 !important;
+  padding-bottom: 5px !important;
+}
+
+.elementor-control[class*="video_tutorial"] a {
+  line-height: 16px;
+  font-size: 12px;
+}
+
+.elementor-control[class*="video_tutorial"] a .dashicons {
+  font-size: 16px;
 }
 
 

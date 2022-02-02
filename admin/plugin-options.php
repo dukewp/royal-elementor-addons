@@ -9,8 +9,8 @@ use WprAddons\Classes\Utilities;
 // Register Menus
 function wpr_addons_add_admin_menu() {
     $menu_icon = !empty(get_option('wpr_wl_plugin_logo')) ? 'dashicons-admin-generic' : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTciIGhlaWdodD0iNzUiIHZpZXdCb3g9IjAgMCA5NyA3NSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTAuMDM2NDA4NiAyMy4yODlDLTAuNTc1NDkgMTguNTIxIDYuNjg4NzMgMTYuMzY2NiA5LjU0OSAyMC40Njc4TDQyLjgzNjUgNjguMTk3MkM0NC45MTgxIDcxLjE4MiA0Mi40NDk0IDc1IDM4LjQzNzggNzVIMTEuMjc1NkM4LjY1NDc1IDc1IDYuNDUyNjQgNzMuMjg1NSA2LjE2MTcgNzEuMDE4NEwwLjAzNjQwODYgMjMuMjg5WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTk2Ljk2MzYgMjMuMjg5Qzk3LjU3NTUgMTguNTIxIDkwLjMxMTMgMTYuMzY2NiA4Ny40NTEgMjAuNDY3OEw1NC4xNjM1IDY4LjE5NzJDNTIuMDgxOCA3MS4xODIgNTQuNTUwNiA3NSA1OC41NjIyIDc1SDg1LjcyNDRDODguMzQ1MiA3NSA5MC41NDc0IDczLjI4NTUgOTAuODM4MyA3MS4wMTg0TDk2Ljk2MzYgMjMuMjg5WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTUzLjI0MTIgNC40ODUyN0M1My4yNDEyIC0wLjI3MDc2MSA0NS44NDg1IC0xLjc0ODAzIDQzLjQ2NTEgMi41MzE3NEw2LjY4OTkxIDY4LjU2NzdDNS4wMzM0OSA3MS41NDIxIDcuNTIyNzIgNzUgMTEuMzIwMyA3NUg0OC4wOTU1QzUwLjkzNzQgNzUgNTMuMjQxMiA3Mi45OTQ4IDUzLjI0MTIgNzAuNTIxMlY0LjQ4NTI3WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTQzLjc1ODggNC40ODUyN0M0My43NTg4IC0wLjI3MDc2MSA1MS4xNTE1IC0xLjc0ODAzIDUzLjUzNDkgMi41MzE3NEw5MC4zMTAxIDY4LjU2NzdDOTEuOTY2NSA3MS41NDIxIDg5LjQ3NzMgNzUgODUuNjc5NyA3NUg0OC45MDQ1QzQ2LjA2MjYgNzUgNDMuNzU4OCA3Mi45OTQ4IDQzLjc1ODggNzAuNTIxMlY0LjQ4NTI3WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg==';
-	add_menu_page( Utilities::get_plugin_name(), Utilities::get_plugin_name(), 'manage_options', 'wpr-addons', 'wpr_addons_settings_page', $menu_icon, '58.6' );
-	
+    add_menu_page( Utilities::get_plugin_name(), Utilities::get_plugin_name(), 'manage_options', 'wpr-addons', 'wpr_addons_settings_page', $menu_icon, '58.6' );
+    
     add_action( 'admin_init', 'wpr_register_addons_settings' );
     add_filter( 'plugin_action_links_royal-elementor-addons/wpr-addons.php', 'wpr_settings_link' );
 }
@@ -318,7 +318,13 @@ function wpr_addons_settings_page() {
                     echo '<input type="checkbox" name="'. $option_name .'" id="'. $option_name .'" '. checked( get_option(''. $option_name .'', 'on'), 'on', false ) .'>';
                     echo '<label for="'. $option_name .'"></label>';
 
-                    if ( 'wpr-particles' === $option_name || false !== strpos($option_name, 'parallax') ) {
+                    if ( 'wpr-parallax-background' === $option_name ) {
+                        echo '<br><span>Tip: Edit any Section > Navigate to Style tab</span>';
+                        echo '<a href="https://www.youtube.com/watch?v=DcDeQ__lJbw" target="_blank">Watch Video Tutorial</a>';
+                    } else if ( 'wpr-parallax-multi-layer' === $option_name ) {
+                        echo '<br><span>Tip: Edit any Section > Navigate to Style tab</span>';
+                        echo '<a href="https://youtu.be/DcDeQ__lJbw?t=121" target="_blank">Watch Video Tutorial</a>';
+                    } else if ( 'wpr-particles' === $option_name ) {
                         echo '<br><span>Tip: Edit any Section > Navigate to Style tab</span>';
                     } else if ( 'wpr-sticky-section' === $option_name ) {
                         echo '<br><span>Tip: Edit any Section > Navigate to Advanced tab</span>';
