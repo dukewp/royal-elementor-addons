@@ -5258,7 +5258,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 							echo '</div>';
 							echo '<div class="wpr-story-info-vertical wpr-data-wrap animated '. $background_class .'" data-aos="'. $this->animation.'" data-aos-left="'. $this->animation_loadmore_left .'" data-aos-right="'. $this->animation_loadmore_right .'" data-animation-offset="'. $settings['animation_offset'] .'" data-animation-duration="'. $settings['aos_animation_duration'] .'">';
 
-							echo 'image-top' === $settings['content_layout'] && !empty($this->image) || 'yes' === $settings['show_overlay'] && !empty($this->image) ? '<div class="wpr-animation-wrap wpr-timeline-media"><img class="wpr-thumbnail-image" src="'. $this->src .'">' : '';
+							echo 'image-top' === $settings['content_layout'] && !empty($this->src) || 'yes' === $settings['show_overlay']  && !empty($this->src) ? '<div class="wpr-animation-wrap wpr-timeline-media"><img class="wpr-thumbnail-image" src="'. $this->src .'">' : '';
 
 							
 								echo $settings['show_overlay'] === 'yes' && !empty(get_the_post_thumbnail_url()) ? '<div class="wpr-timeline-story-overlay '. $this->animation_class .'">' : '';
@@ -5275,7 +5275,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 								echo $settings['show_overlay'] === 'yes' && !empty(get_the_post_thumbnail_url()) ? '</div>' : '';
 									
-							echo $settings['content_layout'] === 'image-top' && !empty($this->image) || $settings['show_overlay'] === 'yes' && !empty($this->image) ? '</div>' : '';
+							echo $settings['content_layout'] === 'image-top' && !empty($this->src) || $settings['show_overlay'] === 'yes' && !empty($this->src) ? '</div>' : '';
 
 							echo 'yes' !== $settings['title_overlay'] && 'yes' === $settings['show_title'] || 'yes' !== $settings['description_overlay'] && 'yes' === $settings['show_description'] || 'yes' === $settings['show_date'] && 'yes' !== $settings['date_overlay'] || 'yes' === $this->show_readmore && 'yes' !== $settings['readmore_overlay']  ? '<div class="wpr-timeline-content-wrapper">' : '';
 
@@ -5291,8 +5291,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 							echo 'yes' !== $settings['title_overlay'] && 'yes' === $settings['show_title'] || 'yes' !== $settings['description_overlay'] && 'yes' === $settings['show_description'] || 'yes' === $settings['show_date'] && 'yes' !== $settings['date_overlay'] || 'yes' === $this->show_readmore && 'yes' !== $settings['readmore_overlay']  ? '</div>' : '';		
 
-								echo $settings['content_layout'] === 'image-bottom' && !empty($this->image)? '<div class="wpr-animation-wrap wpr-timeline-media">
-								'.$this->image.'
+								echo $settings['content_layout'] === 'image-bottom' && !empty($this->src) ? '<div class="wpr-animation-wrap wpr-timeline-media">
+								<img class="wpr-thumbnail-image" src="'. $this->src .'">
 								</div>' : '';
 
 							echo '</div>';
@@ -5424,7 +5424,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						echo '<div class="wpr-story-info '. $background_class .'">';
 						echo $settings['content_layout'] === 'image-top' && !empty($this->src) || $settings['show_overlay'] === 'yes' && !empty($this->src) ? '<div class="wpr-animation-wrap wpr-timeline-media">' : '';
 
-						echo $settings['content_layout'] === 'image-top' ? '<img class="wpr-thumbnail-image" src="'. $this->src .'">' : '';
+						echo $settings['content_layout'] === 'image-top' && !empty($this->src) ? '<img class="wpr-thumbnail-image" src="'. $this->src .'">' : '';
 	
 						echo $settings['show_overlay'] === 'yes' && !empty(get_the_post_thumbnail_url()) ? '<div class="wpr-timeline-story-overlay '. $this->animation_class .'">' : '';
 	
@@ -5454,7 +5454,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 						echo 'yes' !== $settings['title_overlay'] && 'yes' === $settings['show_title'] || 'yes' !== $settings['description_overlay'] && 'yes' === $settings['show_description'] || 'yes' === $settings['show_date'] && 'yes' !== $settings['date_overlay'] || 'yes' === $this->show_readmore && 'yes' !== $settings['readmore_overlay'] ? '</div>' : '';
 	
-						echo $settings['content_layout'] === 'image-bottom' && !empty($this->image) ? '<div class="wpr-animation-wrap wpr-timeline-media">'. $this->image .'</div>' : '';
+						echo $settings['content_layout'] === 'image-bottom' && !empty($this->src) ? '<div class="wpr-animation-wrap wpr-timeline-media">
+						 <img class="wpr-thumbnail-image" src="'. $this->src .'">
+						</div>' : '';
 
 						echo '</div>';
 	
