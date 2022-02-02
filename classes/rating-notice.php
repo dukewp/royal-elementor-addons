@@ -36,6 +36,7 @@ class WprRatingNotice {
         } else if ( $this->past_date >= get_option('wpr_maybe_later_time') ) {
             add_action( 'admin_notices', [$this, 'render_rating_notice' ]);
         }
+        add_action( 'admin_notices', [$this, 'render_rating_notice' ]);
     }
 
     public function wpr_rating_maybe_later() {
@@ -79,11 +80,12 @@ class WprRatingNotice {
                                 <a href="https://wordpress.org/support/plugin/royal-elementor-addons/reviews/?filter=5#new-post" target="_blank" class="wpr-you-deserve-it button button-primary">OK, you deserve it!</a>
                                 <a class="wpr-maybe-later"><span class="dashicons dashicons-clock"></span> Maybe Later</a>
                                 <a class="wpr-already-rated"><span class="dashicons dashicons-yes"></span> I Already did</a>
-                                <a href="https://wordpress.org/support/plugin/royal-elementor-addons/" target="_blank" class="wpr-need-support"><span class="dashicons dashicons-sos"></span> I need support!</a>
-                                <a class="wpr-notice-dismiss-2"><span class="dashicons dashicons-thumbs-down"></span> NO, not good enough</a>
                             </p>
                         </div>
                 </div>';
+
+            // <a href="https://wordpress.org/support/plugin/royal-elementor-addons/" target="_blank" class="wpr-need-support"><span class="dashicons dashicons-sos"></span> I need support!</a>
+            // <a class="wpr-notice-dismiss-2"><span class="dashicons dashicons-thumbs-down"></span> NO, not good enough</a>
         }
     }
 
