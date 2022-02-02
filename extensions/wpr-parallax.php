@@ -28,6 +28,14 @@ class Wpr_Parallax_Scroll {
                 'label' =>  sprintf(esc_html__('Parallax - %s', 'wpr-addons'), Utilities::get_plugin_name()),
             ]
         );
+
+        $element->add_control(
+            'wpr_parallax',
+            [
+                'type' => Controls_Manager::RAW_HTML,
+                'raw' => '<div class="elementor-update-preview editor-pa-preview-update" style="background-color: #fff;"><div class="elementor-update-preview-title">Update changes to page</div><div class="elementor-update-preview-button-wrapper"><div style="text-align: right;"><button class="elementor-update-preview-button elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply</button></div>',
+            ]
+        );
         
         if ( 'on' === get_option('wpr-parallax-background', 'on') ) {
 
@@ -105,17 +113,6 @@ class Wpr_Parallax_Scroll {
                     'url' => Utils::get_placeholder_image_src(),
                 ],
                 'render_type' => 'template',
-                'condition' => [
-                    'wpr_enable_jarallax' => 'yes'
-                ]
-            ]
-        );
-
-        $element->add_control(
-            'wpr_parallax',
-            [
-                'type' => Controls_Manager::RAW_HTML,
-                'raw' => '<div style="text-align: center;"><button class="elementor-update-preview-button elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply Changes</button></div>',
                 'condition' => [
                     'wpr_enable_jarallax' => 'yes'
                 ]
