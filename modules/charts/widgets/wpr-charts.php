@@ -138,7 +138,7 @@ class Wpr_Charts extends Widget_Base {
 					'doughnut'      => esc_html__('Doughnut', 'wpr-addons'),
 					'pie'           => esc_html__('Pie', 'wpr-addons'),
 					'polarArea'     => esc_html__('Polar Area', 'wpr-addons'),
-					// 'scatter'     => esc_html__('Scatter', 'wpr-addons'),
+					'scatter'     => esc_html__('Scatter', 'wpr-addons'),
 				],
 
 			]
@@ -230,7 +230,7 @@ class Wpr_Charts extends Widget_Base {
 				'title_field' => '{{{ chart_label }}}',
 				'condition'   => [
 					'data_source' => 'custom',
-					'chart_type' => ['bar', 'bar_horizontal', 'line', 'radar', 'scatter'] //  'horizontalBar',
+					// 'chart_type' => ['bar', 'bar_horizontal', 'line', 'radar', 'scatter'] //  'horizontalBar',
 				],
 			]
 		);
@@ -411,7 +411,7 @@ class Wpr_Charts extends Widget_Base {
 				}
 
 					$data_charts_array['datasets'][] = [
-						'label' => 'New Data Set',
+						'label' => $chart_data['chart_data_label'], // test with fixed value 
 						'data' => $chart_data_number_values,
 						'backgroundColor' => $chart_background_colors,
 						'hoverBackgroundColor' => $chart_background_hover_colors,
