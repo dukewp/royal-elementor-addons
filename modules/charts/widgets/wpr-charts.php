@@ -95,6 +95,20 @@ class Wpr_Charts extends Widget_Base {
 		);
 
 		$this->add_control(
+			'data_csv_separator',
+			[
+				'label'       => __( 'Remote URL', 'wpr-addons' ),
+				'type'        => Controls_Manager::TEXT,
+				'dynamic'     => array( 'active' => true ),
+				'default' => ',',
+				'label_block' => true,
+				'condition'   => [
+					'data_source' => 'csv',
+				],
+			]
+		);
+
+		$this->add_control(
 			'data_source_csv_url',
 			[
 				'label'       => __( 'Remote URL', 'wpr-addons' ),
@@ -368,13 +382,13 @@ class Wpr_Charts extends Widget_Base {
 
 		$data_charts_array = [];
 
-		if(is_array($charts_labels_data) && sizeof($charts_labels_data)):
-			foreach($charts_labels_data AS $labels_data):
-				$data_charts_array['labels'][] = $labels_data['chart_label'];
-			endforeach;
-		endif;
-
 		if ( in_array($chart_type, array('bar', 'bar_horizontal', 'line', 'radar', 'scatter'))) {
+			if(is_array($charts_labels_data) && sizeof($charts_labels_data)):
+				foreach($charts_labels_data AS $labels_data):
+					$data_charts_array['labels'][] = $labels_data['chart_label'];
+				endforeach;
+			endif;
+
 			if(is_array($charts_data_set) && sizeof($charts_data_set)) {
 				foreach($charts_data_set as $chart_data) {
 					$data_charts_array['datasets'][] = [
@@ -411,7 +425,7 @@ class Wpr_Charts extends Widget_Base {
 				}
 
 					$data_charts_array['datasets'][] = [
-						'label' => $chart_data['chart_data_label'], // test with fixed value 
+						'label' => 'Label Placeholder', // test with fixed value 
 						'data' => $chart_data_number_values,
 						'backgroundColor' => $chart_background_colors,
 						'hoverBackgroundColor' => $chart_background_hover_colors,
@@ -439,6 +453,7 @@ class Wpr_Charts extends Widget_Base {
 			'show_chart_title' => $settings['show_chart_title'],
 			'chart_title' => !empty($settings['chart_title']) ? $settings['chart_title'] : '',
 			'url' => $data_url,
+			'separator' => $data_csv_separator,
         ];
 
 		$this->add_render_attribute( 'chart-settings', [

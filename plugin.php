@@ -415,6 +415,14 @@ class Plugin {
 			'3.7.0',
 			true,
 		);
+
+		// wp_register_script(
+		// 	'wpr-charts',
+		// 	'https://cdn.jsdelivr.net/npm/chart.js',
+		// 	[],
+		// 	false,
+		// 	true,
+		// );
 	}
 
 	public function enqueue_panel_scripts() {
