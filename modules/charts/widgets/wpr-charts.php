@@ -422,6 +422,14 @@ class Wpr_Charts extends Widget_Base {
 			}
 		}
 
+		if ( !empty($data_source_csv_url) ) {
+			$data_url = $data_source_csv_url;
+		} else if ( !empty($data_source_csv_file['url']) ) {
+			$data_url = $data_source_csv_file['url'];
+		} else {
+			$data_url = '';
+		}
+
         $layout_settings = [
 			'data_source' => $data_source,
             'chart_type' => $settings['chart_type'],
@@ -430,7 +438,7 @@ class Wpr_Charts extends Widget_Base {
 			'legend_position' => $settings['charts_legend_position'],
 			'show_chart_title' => $settings['show_chart_title'],
 			'chart_title' => !empty($settings['chart_title']) ? $settings['chart_title'] : '',
-			'url' => $data_source_csv_url ? $data_source_csv_url : $data_source_csv_file['url'],
+			'url' => $data_url,
         ];
 
 		$this->add_render_attribute( 'chart-settings', [
