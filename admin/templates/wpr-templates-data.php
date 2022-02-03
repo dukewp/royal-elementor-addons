@@ -30,22 +30,6 @@ class WPR_Templates_Data {
 					'price' => $is_pro_active ? 'free' : 'free',
 				],
 			],
-			'photographer' => [
-				'v1' => [
-					'name' => 'Photographer Portfolio Dark',
-					'pages' => 'home,about,services,portfolio,contact,',
-					'plugins' => '{"contact-form-7":'. $is_cf7_active .', "media-library-assistant":'. $is_mla_active .'}',
-					'tags' => 'portfolio personal cv designer ux artist artwork personal resume camera fashion lens modelling photographer photography videography wedding shoot ',
-					'price' => $is_pro_active ? 'free' : 'free',
-				],
-				'v2' => [
-					'name' => 'Photographer Portfolio Light',
-					'pages' => 'home,about,services,portfolio,contact,',
-					'plugins' => '{"contact-form-7":'. $is_cf7_active .', "media-library-assistant":'. $is_mla_active .'}',
-					'tags' => 'portfolio personal cv designer ux artist artwork personal resume camera fashion lens modelling photographer photography videography wedding shoot ',
-					'price' => $is_pro_active ? 'free' : 'free',
-				],
-			],
 			'pizza' => [
 				'v1' => [
 					'name' => 'Pizza Restaurant',
@@ -61,6 +45,22 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,services,pricing,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'cybersecurity data protection hacker security dark digital technology cybercrime',
+					'price' => $is_pro_active ? 'free' : 'free',
+				],
+			],
+			'photographer' => [
+				'v1' => [
+					'name' => 'Photographer Portfolio Dark',
+					'pages' => 'home,about,services,portfolio,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .', "media-library-assistant":'. $is_mla_active .'}',
+					'tags' => 'portfolio personal cv designer ux artist artwork personal resume camera fashion lens modelling photographer photography videography wedding shoot ',
+					'price' => $is_pro_active ? 'free' : 'free',
+				],
+				'v2' => [
+					'name' => 'Photographer Portfolio Light',
+					'pages' => 'home,about,services,portfolio,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .', "media-library-assistant":'. $is_mla_active .'}',
+					'tags' => 'portfolio personal cv designer ux artist artwork personal resume camera fashion lens modelling photographer photography videography wedding shoot ',
 					'price' => $is_pro_active ? 'free' : 'free',
 				],
 			],

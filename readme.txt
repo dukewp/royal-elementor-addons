@@ -1,7 +1,7 @@
 ﻿=== Royal Elementor Addons (Header Footer Builder, Popups, Post Grid, Woocommerce Product Grid, Slider, Parallax Image & other Free Addons for Elementor) ===
 Contributors: WP Royal, rubeushagrid13, cyberpinky, elementoraddonswpr
 Tags: elementor, elements, widgets for elementor, elementor addons, elementor widget, elementor form, woocommerce elementor, page builder, builder, wordpress page builder
-Stable tag: 1.3.27
+Stable tag: 1.3.28
 Requires at least: 5.0
 Tested up to: 5.9
 Requires PHP: 5.6
@@ -296,6 +296,9 @@ memory_limit 256M or more
 post_max_size 64M
 
 == Changelog ==
+
+= Royal Elementor Addons v1.3.28 - 2022-2-02 =
+* FIX: Minor Posts Timeline Bugs.
 
 = Royal Elementor Addons v1.3.27 - 2022-31-01 =
 * ADDED: Photographer Portfolio Elementor Template Kit Dark.
