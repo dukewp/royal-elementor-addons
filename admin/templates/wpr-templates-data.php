@@ -416,6 +416,9 @@ class WPR_Templates_Data {
 			],
 			'phone-call' => [],
 			'back-to-top' => [],
+			'posts-timeline' => [],
+			'lottie-animations' => [],
+			'popup-trigger' => [],
 		];
 	}
 
