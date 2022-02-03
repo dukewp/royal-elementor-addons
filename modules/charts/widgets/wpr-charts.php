@@ -159,24 +159,47 @@ class Wpr_Charts extends Widget_Base {
 		);
 
 		$this->add_control(
-			'column_width_x',
+			'chart_interaction_mode',
 			[
-				'label'              => __( 'Column Width', 'premium-addons-pro' ),
-				'type'               => Controls_Manager::SLIDER,
-				'range'              => [
-					'px' => [
-						'min'  => 0,
-						'max'  => 1,
-						'step' => 0.1,
-					],
+				'label'   => esc_html__('Interaction Mode', 'wpr-addons'),
+				'type'    => Controls_Manager::SELECT,
+				'default' => 'nearest',
+				'options' => [
+					'nearest' => esc_html__('Nearest', 'wpr-addons'),
+					'index' => esc_html__('Index', 'wpr-addons'),
 				],
-				'condition'          => [
-					'chart_type' => 'bar',
-				],
-				'frontend_available' => true,
+				'separator' => 'before'
 			]
 		);
 
+		$this->add_control(
+			'labels_rotation_x_axis',
+			array(
+				'label'              => __( 'Labels Rotation ', 'wpr-addons' ),
+				'type'               => Controls_Manager::NUMBER,
+				'min'                => 0,
+				'max'                => 360,
+				'default'            => 0,
+				'separator'			 => 'before',
+				'frontend_available' => true,
+			)
+		);
+
+		$this->add_control(
+			'column_width_x',
+			[
+				'label' => esc_html__( 'Column Width', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.5,
+				'step' => 0.1,
+				'min' => 0,
+				'max' => 1,
+				'frontend_available' => true,
+				'condition' => [
+					'chart_type' => ['bar', 'bar_horizontal'],
+				]
+			]
+		);
 
 		$this->add_control(
 			'charts_legend_position',
@@ -207,6 +230,17 @@ class Wpr_Charts extends Widget_Base {
 		);
 
 		$this->add_control(
+			'chart_animation',
+			[
+				'label' => esc_html__( 'Animation', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
 			'show_chart_title',
 			[
 				'label' => esc_html__( 'Show Title', 'wpr-addons' ),
@@ -229,7 +263,79 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 
-        $this->end_controls_section();$this->start_controls_section(
+		$this->add_control(
+			'show_lines',
+			[
+				'label' => esc_html__( 'Show Lines', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'separator' => 'before',
+				'condition' => [
+					'chart_type!' => ['bar', 'bar_horizontal'],
+				]
+			]
+		);
+
+		$this->add_control(
+			'line_dots',
+			[
+				'label' => esc_html__( 'Line Dots', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'separator' => 'before',
+				'condition' => [
+					'chart_type!' => ['bar', 'bar_horizontal'],
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'line_dots_radius',
+			[
+				'label' => esc_html__( 'Line Dots Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'size_units' => [ 'px' ],
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+				'condition' => [
+					'chart_type!' => ['bar', 'bar_horizontal'],
+					'line_dots' => 'yes',
+				]
+			]
+		);
+
+		$this->add_control(
+			'min_value', 
+			[
+				'label'       => esc_html__('Min. Value', 'wpr-addons'),
+				'type'        => Controls_Manager::NUMBER,
+				'default'     => -100,
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'max_value', 
+			[
+				'label'       => esc_html__('Max. Value', 'wpr-addons'),
+				'type'        => Controls_Manager::NUMBER,
+				'default'     => 100,
+			]
+		);
+
+        $this->end_controls_section();
+		
+		$this->start_controls_section(
             'section_chart_data',
 			[
 				'label' => esc_html__( 'Data', 'wpr-addons' ),
@@ -264,7 +370,7 @@ class Wpr_Charts extends Widget_Base {
 				'title_field' => '{{{ chart_label }}}',
 				'condition'   => [
 					'data_source' => 'custom',
-					// 'chart_type' => ['bar', 'bar_horizontal', 'line', 'radar', 'scatter'] //  'horizontalBar',
+					'chart_type' => ['bar', 'bar_horizontal', 'line', 'radar', 'scatter'] //  'horizontalBar',
 				],
 			]
 		);
@@ -393,6 +499,103 @@ class Wpr_Charts extends Widget_Base {
 		);
 
         $this->end_controls_section();
+		
+		$this->start_controls_section(
+            'section_chart_general_styles',
+			[
+				'label' => esc_html__( 'General', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+        );
+
+		$this->add_responsive_control(
+			'chart_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 200,
+					],
+				],
+				'size_units' => [ 'px' ],
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+			]
+		);
+
+        $this->end_controls_section();
+		
+		$this->start_controls_section(
+            'section_chart_legend_styles',
+			[
+				'label' => esc_html__( 'Legend', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+        );
+
+		$this->add_responsive_control(
+			'legend_font_size',
+			[
+				'label' => esc_html__( 'Font Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 10,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 14,
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'legend_font_style',
+			[
+				'label'   => esc_html__('Font Style', 'elementskit'),
+				'type'    => Controls_Manager::SELECT,
+				'default' => 'normal',
+				'options' => [
+					'normal' => 'Normal',
+					'italic' => 'Italic',
+					'oblique' => 'Oblique',
+				],
+
+			]
+		);
+
+		// $this->add_control(
+		// 	'legend_font_family',
+		// 	[
+		// 		'label'   => esc_html__('Font Style', 'elementskit'),
+		// 		'type'    => Controls_Manager::SELECT,
+		// 		'default' => '',
+		// 		'options' => [
+		// 		],
+
+		// 	]
+		// );
+
+		$this->add_control(
+			'legend_font_weight',
+			array(
+				'label'              => __( 'Font Weight ', 'wpr-addons' ),
+				'type'               => Controls_Manager::NUMBER,
+				'min'                => 0,
+				'default'            => 600,
+				'frontend_available' => true,
+			)
+		);
+
+        $this->end_controls_section();
     }
 
     protected function render() {
@@ -409,8 +612,6 @@ class Wpr_Charts extends Widget_Base {
 				endforeach;
 			endif;
 
-			var_dump($column_width_x);
-
 			if(is_array($charts_data_set) && sizeof($charts_data_set)) {
 				foreach($charts_data_set as $chart_data) {
 					$data_charts_array['datasets'][] = [
@@ -421,7 +622,7 @@ class Wpr_Charts extends Widget_Base {
 						'borderColor' => $chart_data['chart_data_border_color'],
 						'hoverBorderColor' => $chart_data['chart_data_border_color_hover'],
 						'borderWidth' => $chart_data['chart_data_border_width'],
-						'barPercentage' => !empty($column_width_x) ? $column_width_x['size'] : '',
+						'barPercentage' => $settings['column_width_x'],
 					];
 				}
 			}
@@ -433,6 +634,7 @@ class Wpr_Charts extends Widget_Base {
 				$chart_data_border_colors = [];
 				$chart_data_border_hover_colors = [];
 				$chart_data_border_width = [];
+				$chart_data_bar_percentage = [];
 				
 				foreach($charts_data_set AS $labels_data):
 					$data_charts_array['labels'][] = $labels_data['chart_data_label'];
@@ -443,8 +645,9 @@ class Wpr_Charts extends Widget_Base {
 					array_push($chart_background_colors, trim($chart_data['chart_data_background_color']));
 					array_push($chart_background_hover_colors, trim($chart_data['chart_data_background_color_hover']));
 					array_push($chart_data_border_colors, trim($chart_data['chart_data_border_color']));
-					array_push($chart_data_border_hover_colors, trim($chart_data['chart_data_border_color']));
+					array_push($chart_data_border_hover_colors, trim($chart_data['chart_data_border_color_hover']));
 					array_push($chart_data_border_width, trim($chart_data['chart_data_border_width']));
+					array_push($chart_data_bar_percentage, trim($chart_data['column_width_x']));
 				}
 
 					$data_charts_array['datasets'][] = [
@@ -455,6 +658,7 @@ class Wpr_Charts extends Widget_Base {
 						'borderColor' => $chart_data_border_colors,
 						'hoverBorderColor' => $chart_data_border_hover_colors,
 						'borderWidth' => $chart_data_border_width,
+						'barPercentage' => $chart_data_bar_percentage,
 					];
 			}
 		}
@@ -466,17 +670,30 @@ class Wpr_Charts extends Widget_Base {
 		} else {
 			$data_url = '';
 		}
+		var_dump($min_value, $max_value);
 
         $layout_settings = [
 			'data_source' => $data_source,
             'chart_type' => $settings['chart_type'],
+			'chart_interaction_mode' => $chart_interaction_mode,
             'chart_labels' => !empty($data_charts_array['labels']) ? $data_charts_array['labels'] : '',
 			'chart_datasets' => wp_json_encode($data_charts_array['datasets']),
 			'legend_position' => $settings['charts_legend_position'],
+			'chart_animation' => $settings['chart_animation'],
 			'show_chart_title' => $settings['show_chart_title'],
 			'chart_title' => !empty($settings['chart_title']) ? $settings['chart_title'] : '',
+			'show_lines' => isset($show_lines) ? $show_lines : '',
+			'line_dots' => isset($line_dots) ? $line_dots : '',
+			'line_dots_radius' => isset($line_dots_radius) ? $line_dots_radius['size'] : '',
+			'rotation' => $labels_rotation_x_axis,
+			'min_value' => $min_value,
+			'max_value' => $max_value,
+			'chart_padding' => $chart_padding['size'],
 			'url' => $data_url,
 			'separator' => $data_csv_separator,
+			'legend_font_size' => $legend_font_size['size'],
+			'legend_font_style' => $legend_font_style,
+			'legend_font_weight' => $legend_font_weight,
         ];
 
 		$this->add_render_attribute( 'chart-settings', [
@@ -490,8 +707,8 @@ class Wpr_Charts extends Widget_Base {
 				echo '<span class="wpr-rotating-plane" style="width: 25px; height: 25px; background: red; border-radius: 50%; position: absolute; top: 50%; left: 50%; z-index: 999; transform: translate(-50%, -50%);"></span>';
 			}
 
-            echo '<div>';
-                echo '<canvas id="wpr-chart"></canvas>';
+            echo '<div class="wpr-charts-wrapper">';
+                echo '<canvas class="wpr-chart"></canvas>';
             echo '</div>';
         echo '</div>';
     }
