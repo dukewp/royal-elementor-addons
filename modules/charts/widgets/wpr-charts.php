@@ -159,6 +159,26 @@ class Wpr_Charts extends Widget_Base {
 		);
 
 		$this->add_control(
+			'column_width_x',
+			[
+				'label'              => __( 'Column Width', 'premium-addons-pro' ),
+				'type'               => Controls_Manager::SLIDER,
+				'range'              => [
+					'px' => [
+						'min'  => 0,
+						'max'  => 1,
+						'step' => 0.1,
+					],
+				],
+				'condition'          => [
+					'chart_type' => 'bar',
+				],
+				'frontend_available' => true,
+			]
+		);
+
+
+		$this->add_control(
 			'charts_legend_position',
 			[
 				'label'   => esc_html__('Legend Position', 'wpr-addons'),
@@ -389,6 +409,8 @@ class Wpr_Charts extends Widget_Base {
 				endforeach;
 			endif;
 
+			var_dump($column_width_x);
+
 			if(is_array($charts_data_set) && sizeof($charts_data_set)) {
 				foreach($charts_data_set as $chart_data) {
 					$data_charts_array['datasets'][] = [
@@ -398,7 +420,8 @@ class Wpr_Charts extends Widget_Base {
 						'hoverBackgroundColor' => $chart_data['chart_data_background_color_hover'],
 						'borderColor' => $chart_data['chart_data_border_color'],
 						'hoverBorderColor' => $chart_data['chart_data_border_color_hover'],
-						'borderWidth' => $chart_data['chart_data_border_width']
+						'borderWidth' => $chart_data['chart_data_border_width'],
+						'barPercentage' => !empty($column_width_x) ? $column_width_x['size'] : '',
 					];
 				}
 			}
@@ -431,7 +454,7 @@ class Wpr_Charts extends Widget_Base {
 						'hoverBackgroundColor' => $chart_background_hover_colors,
 						'borderColor' => $chart_data_border_colors,
 						'hoverBorderColor' => $chart_data_border_hover_colors,
-						'borderWidth' => $chart_data_border_width
+						'borderWidth' => $chart_data_border_width,
 					];
 			}
 		}
