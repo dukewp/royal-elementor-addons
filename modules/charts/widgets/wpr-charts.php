@@ -166,7 +166,22 @@ class Wpr_Charts extends Widget_Base {
 				'default' => 'nearest',
 				'options' => [
 					'nearest' => esc_html__('Nearest', 'wpr-addons'),
+					'point' => esc_html__('Point', 'wpr-addons'),
 					'index' => esc_html__('Index', 'wpr-addons'),
+					'dataset' => esc_html__('Dataset', 'wpr-addons'),
+				],
+			]
+		);
+
+		$this->add_control(
+			'trigger_tooltip_on',
+			[
+				'label'   => esc_html__('Show Tooltip On', 'wpr-addons'),
+				'type'    => Controls_Manager::SELECT,
+				'default' => 'mousemove',
+				'options' => [
+					'mousemove' => esc_html__('Hover', 'wpr-addons'),
+					'click' => esc_html__('Click', 'wpr-addons'),
 				],
 				'separator' => 'before'
 			]
@@ -237,6 +252,76 @@ class Wpr_Charts extends Widget_Base {
 				'default' => 'yes',
 				'return_value' => 'yes',
 				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'chart_animation_loop',
+			[
+				'label' => esc_html__( 'Loop', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'condition' => [
+					'chart_animation' => 'yes',
+				]
+			]
+		);
+
+		$this->add_control(
+			'chart_animation_duration', 
+			[
+				'label'       => esc_html__('Animation Duration', 'wpr-addons'),
+				'type'        => Controls_Manager::NUMBER,
+				'default'     => 1000,
+				'condition' => [
+					'chart_animation' => 'yes',
+				]
+			]
+		);
+
+		$this->add_control(
+			'animation_transition_type',
+			[
+				'label'   => esc_html__('Animation Transition Style', 'elementskit'),
+				'type'    => Controls_Manager::SELECT,
+				'default' => 'linear',
+				'options' => [
+					'linear' => 'linear',
+					'easeInQuad' => 'easeInQuad',
+					'easeOutQuad' => 'easeOutQuad',
+					'easeInOutQuad' => 'easeInOutQuad',
+					'easeInCubic' => 'easeInCubic',
+					'easeOutCubic' => 'easeOutCubic',
+					'easeInOutCubic' => 'easeInOutCubic',
+					'easeInQuart' => 'easeInQuart',
+					'easeOutQuart' => 'easeOutQuart',
+					'easeInOutQuart' => 'easeInOutQuart',
+					'easeInQuint' => 'easeInQuint',
+					'easeOutQuint' => 'easeOutQuint',
+					'easeInOutQuint' => 'easeInOutQuint',
+					'easeInSine' => 'easeInSine',
+					'easeOutSine' => 'easeOutSine',
+					'easeInOutSine' => 'easeInOutSine',
+					'easeInExpo' => 'easeInExpo',
+					'easeOutExpo' => 'easeOutExpo',
+					'easeInOutExpo' => 'easeInOutExpo',
+					'easeInCirc' => 'easeInCirc',
+					'easeOutCirc' => 'easeOutCirc',
+					'easeInOutCirc' => 'easeInOutCirc',
+					'easeInElastic' => 'easeInElastic',
+					'easeOutElastic' => 'easeOutElastic',
+					'easeInOutElastic' => 'easeInOutElastic',
+					'easeInBack' => 'easeInBack',
+					'easeOutBack' => 'easeOutBack',
+					'easeInOutBack' => 'easeInOutBack',
+					'easeInBounce' => 'easeInBounce',
+					'easeOutBounce' => 'easeOutBounce',
+					'easeInOutBounce' => 'easeInOutBounce',
+				],
+				'condition' => [
+					'chart_animation' => 'yes'
+				]
 			]
 		);
 
@@ -315,12 +400,28 @@ class Wpr_Charts extends Widget_Base {
 		);
 
 		$this->add_control(
+			'enable_min_max',
+			[
+				'label' => esc_html__( 'Min-Max Values', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'separator' => 'before',
+				'condition' => [
+					// 'chart_type!' => ['bar', 'bar_horizontal'],
+				]
+			]
+		);
+
+		$this->add_control(
 			'min_value', 
 			[
 				'label'       => esc_html__('Min. Value', 'wpr-addons'),
 				'type'        => Controls_Manager::NUMBER,
 				'default'     => -100,
-				'separator' => 'before'
+				'condition' => [
+					'enable_min_max' => 'yes',
+				]
 			]
 		);
 
@@ -330,6 +431,9 @@ class Wpr_Charts extends Widget_Base {
 				'label'       => esc_html__('Max. Value', 'wpr-addons'),
 				'type'        => Controls_Manager::NUMBER,
 				'default'     => 100,
+				'condition' => [
+					'enable_min_max' => 'yes',
+				]
 			]
 		);
 
@@ -670,16 +774,19 @@ class Wpr_Charts extends Widget_Base {
 		} else {
 			$data_url = '';
 		}
-		var_dump($min_value, $max_value);
 
         $layout_settings = [
 			'data_source' => $data_source,
             'chart_type' => $settings['chart_type'],
 			'chart_interaction_mode' => $chart_interaction_mode,
+			'trigger_tooltip_on' => $trigger_tooltip_on,
             'chart_labels' => !empty($data_charts_array['labels']) ? $data_charts_array['labels'] : '',
 			'chart_datasets' => wp_json_encode($data_charts_array['datasets']),
 			'legend_position' => $settings['charts_legend_position'],
-			'chart_animation' => $settings['chart_animation'],
+			'chart_animation' => $chart_animation,
+			'chart_animation_loop' => $chart_animation_loop,
+			'chart_animation_duration' => $chart_animation_duration,
+			'animation_transition_type' => $animation_transition_type,
 			'show_chart_title' => $settings['show_chart_title'],
 			'chart_title' => !empty($settings['chart_title']) ? $settings['chart_title'] : '',
 			'show_lines' => isset($show_lines) ? $show_lines : '',
