@@ -194,7 +194,7 @@ class Wpr_Popup_Trigger extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
             'popup_trigger_align',
             [
                 'label' => esc_html__( 'Button Align', 'wpr-addons' ),
