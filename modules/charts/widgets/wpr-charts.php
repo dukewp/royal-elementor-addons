@@ -160,17 +160,14 @@ class Wpr_Charts extends Widget_Base {
 		);
 
 		$this->add_control(
-			'chart_interaction_mode',
+			'exclude_dataset_on_click',
 			[
-				'label'   => esc_html__('Interaction Mode', 'wpr-addons'),
-				'type'    => Controls_Manager::SELECT,
-				'default' => 'nearest',
-				'options' => [
-					'nearest' => esc_html__('Nearest', 'wpr-addons'),
-					'point' => esc_html__('Point', 'wpr-addons'),
-					'index' => esc_html__('Index', 'wpr-addons'),
-					'dataset' => esc_html__('Dataset', 'wpr-addons'),
-				],
+				'label'   => esc_html__('Exclude Dataset On Click', 'wpr-addons'),
+				'type'    => Controls_Manager::SWITCHER ,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'separator' => 'before',
+				'separator' => 'before'
 			]
 		);
 
@@ -191,12 +188,24 @@ class Wpr_Charts extends Widget_Base {
 		$this->add_control(
 			'labels_rotation_x_axis',
 			array(
-				'label'              => __( 'Labels Rotation ', 'wpr-addons' ),
+				'label'              => __( 'Labels Rotation (X)', 'wpr-addons' ),
 				'type'               => Controls_Manager::NUMBER,
 				'min'                => 0,
 				'max'                => 360,
 				'default'            => 0,
 				'separator'			 => 'before',
+				'frontend_available' => true,
+			)
+		);
+
+		$this->add_control(
+			'labels_rotation_y_axis',
+			array(
+				'label'              => __( 'Labels Rotation (Y)', 'wpr-addons' ),
+				'type'               => Controls_Manager::NUMBER,
+				'min'                => 0,
+				'max'                => 360,
+				'default'            => 0,
 				'frontend_available' => true,
 			)
 		);
@@ -211,32 +220,10 @@ class Wpr_Charts extends Widget_Base {
 				'min' => 0,
 				'max' => 1,
 				'frontend_available' => true,
+				'separator' => 'before',
 				'condition' => [
 					'chart_type' => ['bar', 'bar_horizontal'],
 				]
-			]
-		);
-
-		$this->add_control(
-			'show_chart_title',
-			[
-				'label' => esc_html__( 'Show Title', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
-				'return_value' => 'yes',
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'chart_title',
-			[
-				'label' => esc_html__( 'Title', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'placeholder' => esc_html__( 'To Be Applied', 'wpr-addons' ),
-				'condition' => [
-					'show_chart_title' => 'yes',
-				],
 			]
 		);
 
@@ -283,6 +270,10 @@ class Wpr_Charts extends Widget_Base {
 				'default' => [
 					'unit' => 'px',
 					'size' => 10,
+				],
+				'mobile_default' => [
+					'unit' => 'px',
+					'size' => 5
 				],
 				'condition' => [
 					'chart_type!' => ['bar', 'bar_horizontal'],
@@ -511,6 +502,80 @@ class Wpr_Charts extends Widget_Base {
         $this->end_controls_section();
 		
 		$this->start_controls_section(
+            'section_chart_title',
+			[
+				'label' => esc_html__( 'Title', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$this->add_control(
+			'show_chart_title',
+			[
+				'label' => esc_html__( 'Show Title', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'chart_title',
+			[
+				'label' => esc_html__( 'Title', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'placeholder' => esc_html__( 'To Be Applied', 'wpr-addons' ),
+				'default' => esc_html__('To Be Applied', 'wpr-addons'),
+				'condition' => [
+					'show_chart_title' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'chart_title_position',
+			[
+				'label' => esc_html__( 'Position', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'top',
+				'label_block' => false,
+				// 'render_type' => 'template',
+				'options' => [
+					'top' => esc_html__( 'Top', 'wpr-addons' ),
+					'right' => esc_html__( 'Right', 'wpr-addons' ),
+					'bottom' => esc_html__( 'Bottom', 'wpr-addons' ),
+					'left' => esc_html__( 'Left', 'wpr-addons' ),
+					'chartArea' => esc_html__( 'chartArea', 'wpr-addons' ),
+				],
+				'condition' => [
+					'show_chart_title' => 'yes',
+				]
+			]
+		);
+
+		$this->add_control(
+			'chart_title_align',
+			[
+				'label' => esc_html__( 'Align', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'center',
+				'label_block' => false,
+				// 'render_type' => 'template',
+				'options' => [
+					'start' => esc_html__( 'Start', 'wpr-addons' ),
+					'center' => esc_html__( 'Center', 'wpr-addons' ),
+					'end' => esc_html__( 'End', 'wpr-addons' ),
+				],
+				'condition' => [
+					'show_chart_title' => 'yes',
+				]
+			]
+		);
+
+		$this->end_controls_section();
+		
+		$this->start_controls_section(
             'section_chart_legend',
 			[
 				'label' => esc_html__( 'Legend', 'wpr-addons' ),
@@ -530,32 +595,37 @@ class Wpr_Charts extends Widget_Base {
 		);
 
 		$this->add_control(
+			'charts_legend_shape',
+			[
+				'label' => esc_html__( 'Shape', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'rectangle',
+				'label_block' => false,
+				'render_type' => 'template',
+				'options' => [
+					'rectangle' => esc_html__( 'Rectangle', 'wpr-addons' ),
+					'point' => esc_html__( 'Point', 'wpr-addons' ),
+				],
+				'condition' => [
+					'show_chart_legend' => 'yes',
+				]
+			]
+		);
+
+		$this->add_control(
 			'charts_legend_position',
 			[
-				'label'   => esc_html__('Legend Position', 'wpr-addons'),
-				'type'    => Controls_Manager::CHOOSE,
+				'label' => esc_html__( 'Position', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
 				'default' => 'top',
+				'label_block' => false,
+				// 'render_type' => 'template',
 				'options' => [
-					'left'   => [
-						'title' => esc_html__('Left', 'wpr-addons'),
-						'icon'  => 'eicon-h-align-left',
-					],
-					'top'    => [
-						'title' => esc_html__('Top', 'wpr-addons'),
-						'icon'  => 'eicon-v-align-top',
-					],
-					'right'  => [
-						'title' => esc_html__('Right', 'wpr-addons'),
-						'icon'  => 'eicon-h-align-right',
-					],
-					'bottom' => [
-						'title' => esc_html__('Bottom', 'wpr-addons'),
-						'icon'  => 'eicon-v-align-bottom',
-					],
-					// 'chartArea' => [
-					// 	'title' => esc_html__('chartArea', 'wpr-addons'),
-					// 	'icon'  => '',
-					// ]
+					'top' => esc_html__( 'Top', 'wpr-addons' ),
+					'right' => esc_html__( 'Right', 'wpr-addons' ),
+					'bottom' => esc_html__( 'Bottom', 'wpr-addons' ),
+					'left' => esc_html__( 'Left', 'wpr-addons' ),
+					'chartArea' => esc_html__( 'chartArea', 'wpr-addons' ),
 				],
 				'condition' => [
 					'show_chart_legend' => 'yes',
@@ -566,22 +636,15 @@ class Wpr_Charts extends Widget_Base {
 		$this->add_control(
 			'charts_legend_align',
 			[
-				'label'   => esc_html__('Legend Align', 'wpr-addons'),
-				'type'    => Controls_Manager::CHOOSE,
+				'label' => esc_html__( 'Align', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
 				'default' => 'center',
+				'label_block' => false,
+				// 'render_type' => 'template',
 				'options' => [
-					'start'    => [
-						'title' => esc_html__('Start', 'wpr-addons'),
-						'icon'  => 'eicon-text-align-left',
-					],
-					'center'  => [
-						'title' => esc_html__('Center', 'wpr-addons'),
-						'icon'  => 'eicon-text-align-center',
-					],
-					'end' => [
-						'title' => esc_html__('End', 'wpr-addons'),
-						'icon'  => 'eicon-text-align-right',
-					],
+					'start' => esc_html__( 'Start', 'wpr-addons' ),
+					'center' => esc_html__( 'Center', 'wpr-addons' ),
+					'end' => esc_html__( 'End', 'wpr-addons' ),
 				],
 				'condition' => [
 					'show_chart_legend' => 'yes',
@@ -590,6 +653,61 @@ class Wpr_Charts extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+		
+		$this->start_controls_section(
+            'section_chart_tooltip',
+			[
+				'label' => esc_html__( 'Tooltip', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$this->add_control(
+			'show_chart_tooltip',
+			[
+				'label' => esc_html__( 'Show Tooltip', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'chart_interaction_mode',
+			[
+				'label'   => esc_html__('Interaction Mode', 'wpr-addons'),
+				'type'    => Controls_Manager::SELECT,
+				'default' => 'point',
+				'options' => [
+					// 'nearest' => esc_html__('Nearest', 'wpr-addons'),
+					'point' => esc_html__('Point', 'wpr-addons'),
+					'index' => esc_html__('Index', 'wpr-addons'),
+					'dataset' => esc_html__('Dataset', 'wpr-addons'),
+				],
+				'condition' => [
+					'show_chart_tooltip' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control(
+			'tooltip_position',
+			[
+				'label'   => esc_html__('Position', 'wpr-addons'),
+				'type'    => Controls_Manager::SELECT,
+				'default' => 'nearest',
+				'options' => [
+					'nearest' => esc_html__('Nearest', 'wpr-addons'),
+					'average' => esc_html__('Average', 'wpr-addons'),
+				],
+				'condition' => [
+					'show_chart_tooltip' => 'yes'
+				]
+			]
+		);
+
+		$this->end_controls_section(); 
 		
 		$this->start_controls_section(
             'section_chart_animations',
@@ -717,7 +835,99 @@ class Wpr_Charts extends Widget_Base {
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
-        );
+        ); 
+
+		$this->add_control(
+			'chart_title_color', [
+				'label'       => esc_html__('Color', 'wpr-addons'),
+				'type'        => Controls_Manager::COLOR,
+			]
+		);
+
+		$this->add_control(
+			'title_font_family',
+			[
+				'label' => esc_html__( 'Font Family', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::FONT,
+				'default' => "'Open Sans', sans-serif",
+			]
+		);
+		
+		$this->add_control(
+			'title_font_style',
+			[
+				'label'   => esc_html__('Font Style', 'wpr-addons'),
+				'type'    => Controls_Manager::SELECT,
+				'default' => 'normal',
+				'options' => [
+					'normal' => 'Normal',
+					'italic' => 'Italic',
+					'oblique' => 'Oblique',
+				],
+		
+			]
+		);
+		
+		// $this->add_control(
+		// 	'title_font_family',
+		// 	[
+		// 		'label'   => esc_html__('Font Style', 'wpr-addons'),
+		// 		'type'    => Controls_Manager::SELECT,
+		// 		'default' => '',
+		// 		'options' => [
+		// 		],
+		
+		// 	]
+		// );
+		
+		$this->add_control(
+			'title_font_weight',
+			[
+				'label'              => __( 'Font Weight ', 'wpr-addons' ),
+				'type'               => Controls_Manager::NUMBER,
+				'min'                => 0,
+				'default'            => 600,
+				'frontend_available' => true,
+			]
+		);
+		
+		$this->add_responsive_control(
+			'title_font_size',
+			[
+				'label' => esc_html__( 'Font Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 10,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 14,
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'chart_title_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 200,
+					],
+				],
+				'size_units' => [ 'px' ],
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+			]
+		);
 
         $this->end_controls_section();
 		
@@ -842,6 +1052,241 @@ class Wpr_Charts extends Widget_Base {
 		);
 
         $this->end_controls_section();
+		
+		$this->start_controls_section(
+            'section_chart_tooltip_styles',
+			[
+				'label' => esc_html__( 'Tooltip', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'show_chart_tooltip' => 'yes'
+				]
+			]
+        ); 
+
+		$this->add_control(
+			'chart_tooltip_bg_color', [
+				'label'       => esc_html__('Background Color', 'wpr-addons'),
+				'type'        => Controls_Manager::COLOR,
+			]
+		);
+		
+		$this->add_responsive_control(
+			'tooltip_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 10,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 14,
+				],
+			]
+		);
+		
+		$this->add_responsive_control(
+			'tooltip_caret_size',
+			[
+				'label' => esc_html__( 'Caret Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 10,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 14,
+				],
+			]
+		);
+
+		$this->add_control(
+			'tooltip_title_heading',
+			[
+				'label' => esc_html__( 'Tooltip Title', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'chart_tooltip_title_color', [
+				'label'       => esc_html__('Title Color', 'wpr-addons'),
+				'type'        => Controls_Manager::COLOR,
+				'default' => '#FFF'
+			]
+		);
+
+		$this->add_control(
+			'chart_tooltip_title_font',
+			[
+				'label' => esc_html__( 'Font Family', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::FONT,
+				'default' => "'Open Sans', sans-serif",
+			]
+		);
+		
+		$this->add_responsive_control(
+			'chart_tooltip_title_font_size',
+			[
+				'label' => esc_html__( 'Font Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 10,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 14,
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'chart_tooltip_title_align',
+			[
+				'label' => esc_html__( 'Title Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'default' => 'center',
+				'label_block' => false,
+				'options' => [
+					'left' => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				// 'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'chart_tooltip_title_margin_bottom',
+			[
+				'label' => esc_html__( 'Title Spacing', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'size_units' => [ 'px' ],
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+			]
+		);
+
+		$this->add_control(
+			'tooltip_item_heading',
+			[
+				'label' => esc_html__( 'Tooltip Item', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'chart_tooltip_item_color', [
+				'label'       => esc_html__('Item Color', 'wpr-addons'),
+				'type'        => Controls_Manager::COLOR,
+			]
+		);
+
+		$this->add_control(
+			'chart_tooltip_item_font',
+			[
+				'label' => esc_html__( 'Font Family', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::FONT,
+				'default' => "'Open Sans', sans-serif",
+			]
+		);
+		
+		$this->add_responsive_control(
+			'chart_tooltip_item_font_size',
+			[
+				'label' => esc_html__( 'Font Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 10,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 14,
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'chart_tooltip_item_align',
+			[
+				'label' => esc_html__( 'Title Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'default' => 'center',
+				'label_block' => false,
+				'options' => [
+					'left' => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				// 'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'chart_tooltip_item_spacing',
+			[
+				'label' => esc_html__( 'Title Spacing', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'size_units' => [ 'px' ],
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+			]
+		);
+
+        $this->end_controls_section();
     }
 
     protected function render() {
@@ -919,17 +1364,20 @@ class Wpr_Charts extends Widget_Base {
 			$data_url = '';
 		}
 
-		var_dump($settings['chart_legend_padding']['size']);
+		// var_dump($settings['line_dots_radius']);
+		// var_dump($settings['line_dots_radius_tablet']);
+		// var_dump($settings['line_dots_radius_mobile']);
 
         $layout_settings = [
 			'data_source' => $data_source,
             'chart_type' => $settings['chart_type'],
 			'chart_padding' => $chart_padding['size'], //TODO: doesnt work
-			'chart_interaction_mode' => $chart_interaction_mode,
+			'exclude_dataset_on_click' => $exclude_dataset_on_click,
 			'trigger_tooltip_on' => $trigger_tooltip_on,
             'chart_labels' => !empty($data_charts_array['labels']) ? $data_charts_array['labels'] : '',
 			'chart_datasets' => wp_json_encode($data_charts_array['datasets']),
 			'show_chart_legend' => $show_chart_legend,
+			'legend_shape' => $charts_legend_shape,
 			'legend_box_width' => $legend_box_width['size'],
 			'legend_position' => $settings['charts_legend_position'],
 			'legend_align' => $settings['charts_legend_align'],
@@ -945,10 +1393,35 @@ class Wpr_Charts extends Widget_Base {
 			'animation_transition_type' => $animation_transition_type,
 			'show_chart_title' => $settings['show_chart_title'],
 			'chart_title' => !empty($settings['chart_title']) ? $settings['chart_title'] : '',
+			'chart_title_align' => !empty($chart_title_align) ? $chart_title_align : '',
+			'chart_title_position' => !empty($chart_title_position) ? $chart_title_position : '',
+			'chart_title_color' => !empty($chart_title_color) ? $chart_title_color : '',
+			'title_font_family' => $title_font_family,
+			'title_font_size' => $title_font_size['size'],
+			'title_font_style' => $title_font_style,
+			'title_font_weight' => $title_font_weight,
+			'title_padding' => $chart_title_padding['size'],
+			'show_chart_tooltip' => $show_chart_tooltip,
+			'chart_interaction_mode' => $chart_interaction_mode,
+			'tooltip_position' => $tooltip_position,
+			'tooltip_padding' => $tooltip_padding['size'],
+			'tooltip_caret_size' => $tooltip_caret_size['size'],
+			'chart_tooltip_bg_color' => $chart_tooltip_bg_color,
+			'chart_tooltip_title_color' => $chart_tooltip_title_color,
+			'chart_tooltip_title_font' => $chart_tooltip_title_font,
+			'chart_tooltip_title_font_size' => $chart_tooltip_title_font_size['size'],
+			'chart_tooltip_title_align' => $chart_tooltip_title_align,
+			'chart_tooltip_title_margin_bottom' => $chart_tooltip_title_margin_bottom['size'],
+			'chart_tooltip_item_color' => $chart_tooltip_item_color,
+			'chart_tooltip_item_font' => $chart_tooltip_item_font,
+			'chart_tooltip_item_font_size' => $chart_tooltip_item_font_size['size'],
+			'chart_tooltip_item_align' => $chart_tooltip_item_align,
+			'chart_tooltip_item_spacing' => $chart_tooltip_item_spacing['size'],
 			'show_lines' => isset($show_lines) ? $show_lines : '',
 			'line_dots' => isset($line_dots) ? $line_dots : '',
 			'line_dots_radius' => isset($line_dots_radius) ? $line_dots_radius['size'] : '',
-			'rotation' => $labels_rotation_x_axis,
+			'rotation_x' => $labels_rotation_x_axis,
+			'rotation_y' => $labels_rotation_y_axis,
 			'min_value' => $min_value,
 			'max_value' => $max_value,
 			'url' => $data_url,
