@@ -744,7 +744,6 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 
-
 		$this->add_responsive_control(
 			'legend_font_size',
 			[
@@ -794,13 +793,32 @@ class Wpr_Charts extends Widget_Base {
 
 		$this->add_control(
 			'legend_font_weight',
-			array(
+			[
 				'label'              => __( 'Font Weight ', 'wpr-addons' ),
 				'type'               => Controls_Manager::NUMBER,
 				'min'                => 0,
 				'default'            => 600,
 				'frontend_available' => true,
-			)
+			]
+		);
+
+		$this->add_responsive_control(
+			'chart_legend_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 200,
+					],
+				],
+				'size_units' => [ 'px' ],
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+			]
 		);
 
         $this->end_controls_section();
@@ -898,6 +916,7 @@ class Wpr_Charts extends Widget_Base {
 			'legend_font_size' => $legend_font_size['size'],
 			'legend_font_style' => $legend_font_style,
 			'legend_font_weight' => $legend_font_weight,
+			'legend_padding' => $chart_legend_padding['size'],
 			'chart_animation' => $chart_animation,
 			'chart_animation_loop' => $chart_animation_loop,
 			'chart_animation_duration' => $chart_animation_duration,
