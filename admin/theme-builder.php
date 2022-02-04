@@ -7,7 +7,7 @@ use WprAddons\Classes\Utilities;
 
 // Register Menus
 function wpr_addons_add_theme_builder_menu() {
-	add_submenu_page( 'wpr-addons', 'Header & Footer', 'Header & Footer', 'manage_options', 'wpr-theme-builder', 'wpr_addons_theme_builder_page' );
+	add_submenu_page( 'wpr-addons', 'Theme Builder', 'Theme Builder', 'manage_options', 'wpr-theme-builder', 'wpr_addons_theme_builder_page' );
 }
 add_action( 'admin_menu', 'wpr_addons_add_theme_builder_menu' );
 
@@ -54,6 +54,9 @@ function wpr_addons_theme_builder_page() {
         <a href="?page=wpr-theme-builder&tab=wpr_tab_footer" data-title="Footer" class="nav-tab <?php echo $active_tab == 'wpr_tab_footer' ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Footer', 'wpr-addons' ); ?>
         </a>
+        <a href="?page=wpr-theme-builder&tab=wpr_tab_archive" data-title="Archive" class="nav-tab <?php echo $active_tab == 'wpr_tab_archive' ? 'nav-tab-active' : ''; ?>">
+            <?php esc_html_e( 'Archive', 'wpr-addons' ); ?>
+        </a>
     </div>
 
     <?php if ( $active_tab == 'wpr_tab_header' ) : ?>
@@ -69,6 +72,13 @@ function wpr_addons_theme_builder_page() {
         <input type="hidden" name="wpr_footer_conditions" id="wpr_footer_conditions" value="<?php echo esc_attr(get_option('wpr_footer_conditions', '[]')); ?>">
 
         <?php WPR_Templates_Loop::render_theme_builder_templates( 'footer' ); ?>
+
+    <?php elseif ( $active_tab == 'wpr_tab_archive' ) : ?>
+
+        <!-- Save Conditions -->
+        <input type="hidden" name="wpr_archive_conditions" id="wpr_archive_conditions" value="<?php echo esc_attr(get_option('wpr_archive_conditions', '[]')); ?>">
+
+        <?php WPR_Templates_Loop::render_theme_builder_templates( 'archive' ); ?>
 
     <?php endif; ?>
 
