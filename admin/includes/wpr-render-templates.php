@@ -66,8 +66,8 @@ class WPR_Render_Templates {
 			add_action( 'elementor/page_templates/canvas/after_content', [ $this, 'add_canvas_footer' ], 9 );
 		}
 
-		// Template Include
-		add_filter( 'template_include', [ $this, 'template_include' ], 11 ); // 11 = after WooCommerce.
+		// Theme Builder
+		add_filter( 'template_include', [ $this, 'convert_to_canvas' ], 11 ); // 11 to load after WooCommerce.
 		add_action( 'elementor/page_templates/canvas/wpr_print_content', [ $this, 'canvas_page_content_display' ] );
 
 		// Scripts and Styles
@@ -155,41 +155,16 @@ class WPR_Render_Templates {
 		}
     }
 
-    public function template_include( $template ) {
-    	$conditions = json_decode( get_option('wpr_archive_conditions', '[]'), true );
-		
-		// Archive Pages (includes search)
-		if ( ! is_null( \WprAddonsPro\Classes\Pro_Modules::archive_templates_conditions( $conditions ) ) ) {
-			// $template = \WprAddonsPro\Classes\Pro_Modules::archive_templates_conditions( $conditions );
-		}
-
-		// var_dump($template);
-
+    public function convert_to_canvas( $template ) {//TODO: Add option to disable this		
 		return WPR_ADDONS_PATH . 'admin/templates/wpr-canvas.php';
     }
 
 	/**
 	** Theme Builder Content Display
 	*/
-	public function canvas_page_content_display() {//TODO: Change and Adapt this function (maybe move to conditions manager)
-		// Get Conditions
-		$archives = json_decode( get_option( 'wpr_archive_conditions' ), true );
-		$archives = is_null( $archives ) ? [] : $archives;
-		$singles  = json_decode( get_option( 'wpr_single_conditions' ), true );
-		$singles  = is_null( $singles ) ? [] : $singles;
-
-		// Reset
-		$template = '';
-
-		// Archive Pages (includes search)
-		if ( ! is_null( \WprAddonsPro\Classes\Pro_Modules::archive_templates_conditions( $archives ) ) ) {
-			$template = \WprAddonsPro\Classes\Pro_Modules::archive_templates_conditions( $archives );
-		}
-
-    	// Single Pages
-		if ( ! is_null( \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $singles, false ) ) ) {
-			$template = \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $singles, false );
-		}
+	public function canvas_page_content_display() {
+		// Get Template
+		$template = WPR_Conditions_Manager::canvas_page_content_display_conditions();
 
 		// Display Template
 		Utilities::render_elementor_template( $template );

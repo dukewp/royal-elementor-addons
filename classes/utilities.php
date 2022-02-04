@@ -75,6 +75,20 @@ class Utilities {
 	}
 
 	/**
+	** Get Theme Builder Modules
+	*/
+	public static function get_theme_builder_modules() {
+		return [
+			'post-title',
+			'post-media',
+			'post-content',
+			'post-info',
+			'post-navigation',
+			'post-comments',
+		];
+	}
+
+	/**
 	** Get Available Custom Post Types or Taxonomies
 	*/
 	public static function get_custom_types_of( $query, $exclude_defaults = true ) {

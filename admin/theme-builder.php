@@ -57,6 +57,9 @@ function wpr_addons_theme_builder_page() {
         <a href="?page=wpr-theme-builder&tab=wpr_tab_archive" data-title="Archive" class="nav-tab <?php echo $active_tab == 'wpr_tab_archive' ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Archive', 'wpr-addons' ); ?>
         </a>
+        <a href="?page=wpr-theme-builder&tab=wpr_tab_single" data-title="Single" class="nav-tab <?php echo $active_tab == 'wpr_tab_single' ? 'nav-tab-active' : ''; ?>">
+            <?php esc_html_e( 'Single', 'wpr-addons' ); ?>
+        </a>
     </div>
 
     <?php if ( $active_tab == 'wpr_tab_header' ) : ?>
@@ -79,6 +82,13 @@ function wpr_addons_theme_builder_page() {
         <input type="hidden" name="wpr_archive_conditions" id="wpr_archive_conditions" value="<?php echo esc_attr(get_option('wpr_archive_conditions', '[]')); ?>">
 
         <?php WPR_Templates_Loop::render_theme_builder_templates( 'archive' ); ?>
+
+    <?php elseif ( $active_tab == 'wpr_tab_single' ) : ?>
+
+        <!-- Save Conditions -->
+        <input type="hidden" name="wpr_single_conditions" id="wpr_single_conditions" value="<?php echo esc_attr(get_option('wpr_single_conditions', '[]')); ?>">
+
+        <?php WPR_Templates_Loop::render_theme_builder_templates( 'single' ); ?>
 
     <?php endif; ?>
 

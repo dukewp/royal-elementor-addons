@@ -20,20 +20,53 @@ class WPR_Conditions_Manager {
 
         // Custom
         if ( wpr_fs()->can_use_premium_code() && defined('WPR_ADDONS_PRO_VERSION') ) {
-	        if ( ! empty($conditions) ) {
+	        if ( !empty($conditions) ) {
 
 				// Archive Pages (includes search)
-				if ( ! is_null( \WprAddonsPro\Classes\Pro_Modules::archive_templates_conditions( $conditions ) ) ) {
+				if ( !is_null( \WprAddonsPro\Classes\Pro_Modules::archive_templates_conditions( $conditions ) ) ) {
 					$template = \WprAddonsPro\Classes\Pro_Modules::archive_templates_conditions( $conditions );
 				}
 
 	        	// Single Pages
-				if ( ! is_null( \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $conditions, true ) ) ) {
+				if ( !is_null( \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $conditions, true ) ) ) {
 					$template = \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $conditions, true );
 				}
 
 	        }
         } else {
+        	$template = Utilities::get_template_slug( $conditions, 'global' );
+        }
+
+	    return $template;
+    }
+
+    /**
+    ** Canvas Content Conditions
+    */
+    public static function canvas_page_content_display_conditions() {
+        $template = NULL;
+
+		// Get Conditions
+		$archives = json_decode( get_option( 'wpr_archive_conditions' ), true );
+		$singles  = json_decode( get_option( 'wpr_single_conditions' ), true );
+
+        // Custom
+        if ( wpr_fs()->can_use_premium_code() && defined('WPR_ADDONS_PRO_VERSION') ) {
+
+	        if ( !empty($archives) || !empty($singles) ) {
+
+				// Archive Pages (includes search)
+				if ( !is_null( \WprAddonsPro\Classes\Pro_Modules::archive_templates_conditions( $archives ) ) ) {
+					$template = \WprAddonsPro\Classes\Pro_Modules::archive_templates_conditions( $archives );
+				}
+
+		    	// Single Pages
+				if ( !is_null( \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $singles, false ) ) ) {
+					$template = \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $singles, false );
+				}
+
+	        }
+        } else {//TODO: Set kinda "ALL" for default (free version)
         	$template = Utilities::get_template_slug( $conditions, 'global' );
         }
 
