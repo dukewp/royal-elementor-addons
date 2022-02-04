@@ -217,115 +217,6 @@ class Wpr_Charts extends Widget_Base {
 		);
 
 		$this->add_control(
-			'charts_legend_position',
-			[
-				'label'   => esc_html__('Legend Position', 'wpr-addons'),
-				'type'    => Controls_Manager::CHOOSE,
-				'default' => 'top',
-				'options' => [
-					'top'    => [
-						'title' => esc_html__('Top', 'wpr-addons'),
-						'icon'  => 'eicon-v-align-top',
-					],
-					'right'  => [
-						'title' => esc_html__('Right', 'wpr-addons'),
-						'icon'  => 'eicon-h-align-right',
-					],
-					'bottom' => [
-						'title' => esc_html__('Bottom', 'wpr-addons'),
-						'icon'  => 'eicon-v-align-bottom',
-					],
-					'left'   => [
-						'title' => esc_html__('Left', 'wpr-addons'),
-						'icon'  => 'eicon-h-align-left',
-					],
-				],
-				'separator' => 'before'
-			]
-		);
-
-		$this->add_control(
-			'chart_animation',
-			[
-				'label' => esc_html__( 'Animation', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
-				'return_value' => 'yes',
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'chart_animation_loop',
-			[
-				'label' => esc_html__( 'Loop', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
-				'return_value' => 'yes',
-				'condition' => [
-					'chart_animation' => 'yes',
-				]
-			]
-		);
-
-		$this->add_control(
-			'chart_animation_duration', 
-			[
-				'label'       => esc_html__('Animation Duration', 'wpr-addons'),
-				'type'        => Controls_Manager::NUMBER,
-				'default'     => 1000,
-				'condition' => [
-					'chart_animation' => 'yes',
-				]
-			]
-		);
-
-		$this->add_control(
-			'animation_transition_type',
-			[
-				'label'   => esc_html__('Animation Transition Style', 'elementskit'),
-				'type'    => Controls_Manager::SELECT,
-				'default' => 'linear',
-				'options' => [
-					'linear' => 'linear',
-					'easeInQuad' => 'easeInQuad',
-					'easeOutQuad' => 'easeOutQuad',
-					'easeInOutQuad' => 'easeInOutQuad',
-					'easeInCubic' => 'easeInCubic',
-					'easeOutCubic' => 'easeOutCubic',
-					'easeInOutCubic' => 'easeInOutCubic',
-					'easeInQuart' => 'easeInQuart',
-					'easeOutQuart' => 'easeOutQuart',
-					'easeInOutQuart' => 'easeInOutQuart',
-					'easeInQuint' => 'easeInQuint',
-					'easeOutQuint' => 'easeOutQuint',
-					'easeInOutQuint' => 'easeInOutQuint',
-					'easeInSine' => 'easeInSine',
-					'easeOutSine' => 'easeOutSine',
-					'easeInOutSine' => 'easeInOutSine',
-					'easeInExpo' => 'easeInExpo',
-					'easeOutExpo' => 'easeOutExpo',
-					'easeInOutExpo' => 'easeInOutExpo',
-					'easeInCirc' => 'easeInCirc',
-					'easeOutCirc' => 'easeOutCirc',
-					'easeInOutCirc' => 'easeInOutCirc',
-					'easeInElastic' => 'easeInElastic',
-					'easeOutElastic' => 'easeOutElastic',
-					'easeInOutElastic' => 'easeInOutElastic',
-					'easeInBack' => 'easeInBack',
-					'easeOutBack' => 'easeOutBack',
-					'easeInOutBack' => 'easeInOutBack',
-					'easeInBounce' => 'easeInBounce',
-					'easeOutBounce' => 'easeOutBounce',
-					'easeInOutBounce' => 'easeInOutBounce',
-				],
-				'condition' => [
-					'chart_animation' => 'yes'
-				]
-			]
-		);
-
-		$this->add_control(
 			'show_chart_title',
 			[
 				'label' => esc_html__( 'Show Title', 'wpr-addons' ),
@@ -446,6 +337,20 @@ class Wpr_Charts extends Widget_Base {
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
         );
+
+		// $this->add_control( //TODO: use this instead of repeater
+		// 	'chart_label', [
+		// 		'label'       => esc_html__('Name', 'wpr-addons'),
+		// 		'type'        => Controls_Manager::TEXTAREA,
+		// 		'default'     => esc_html__('January', 'wpr-addons'),
+		// 		'description' => esc_html__('Enter the comma-separated list of values', 'wpr-addons'),
+		// 		'label_block' => true,
+		// 				'condition'   => [
+		// 					'data_source' => 'custom',
+		// 					'chart_type' => ['bar', 'bar_horizontal', 'line', 'radar', 'scatter'] //  'horizontalBar',
+		// 				],
+		// 	]
+		// );
 
         $chart_repeater = new \Elementor\Repeater();
 
@@ -605,6 +510,178 @@ class Wpr_Charts extends Widget_Base {
         $this->end_controls_section();
 		
 		$this->start_controls_section(
+            'section_chart_legend',
+			[
+				'label' => esc_html__( 'Legend', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$this->add_control(
+			'show_chart_legend',
+			[
+				'label' => esc_html__( 'Show Legend', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'charts_legend_position',
+			[
+				'label'   => esc_html__('Legend Position', 'wpr-addons'),
+				'type'    => Controls_Manager::CHOOSE,
+				'default' => 'top',
+				'options' => [
+					'left'   => [
+						'title' => esc_html__('Left', 'wpr-addons'),
+						'icon'  => 'eicon-h-align-left',
+					],
+					'top'    => [
+						'title' => esc_html__('Top', 'wpr-addons'),
+						'icon'  => 'eicon-v-align-top',
+					],
+					'right'  => [
+						'title' => esc_html__('Right', 'wpr-addons'),
+						'icon'  => 'eicon-h-align-right',
+					],
+					'bottom' => [
+						'title' => esc_html__('Bottom', 'wpr-addons'),
+						'icon'  => 'eicon-v-align-bottom',
+					],
+					// 'chartArea' => [
+					// 	'title' => esc_html__('chartArea', 'wpr-addons'),
+					// 	'icon'  => '',
+					// ]
+				],
+				'condition' => [
+					'show_chart_legend' => 'yes',
+				]
+			]
+		);
+
+		$this->add_control(
+			'charts_legend_align',
+			[
+				'label'   => esc_html__('Legend Align', 'wpr-addons'),
+				'type'    => Controls_Manager::CHOOSE,
+				'default' => 'center',
+				'options' => [
+					'start'    => [
+						'title' => esc_html__('Start', 'wpr-addons'),
+						'icon'  => 'eicon-text-align-left',
+					],
+					'center'  => [
+						'title' => esc_html__('Center', 'wpr-addons'),
+						'icon'  => 'eicon-text-align-center',
+					],
+					'end' => [
+						'title' => esc_html__('End', 'wpr-addons'),
+						'icon'  => 'eicon-text-align-right',
+					],
+				],
+				'condition' => [
+					'show_chart_legend' => 'yes',
+				]
+			]
+		);
+
+		$this->end_controls_section();
+		
+		$this->start_controls_section(
+            'section_chart_animations',
+			[
+				'label' => esc_html__( 'Animation', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+			]
+        );
+
+		$this->add_control(
+			'chart_animation',
+			[
+				'label' => esc_html__( 'Animation', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'chart_animation_loop',
+			[
+				'label' => esc_html__( 'Loop', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'condition' => [
+					'chart_animation' => 'yes',
+				]
+			]
+		);
+
+		$this->add_control(
+			'chart_animation_duration', 
+			[
+				'label'       => esc_html__('Animation Duration', 'wpr-addons'),
+				'type'        => Controls_Manager::NUMBER,
+				'default'     => 1000,
+				'condition' => [
+					'chart_animation' => 'yes',
+				]
+			]
+		);
+
+		$this->add_control(
+			'animation_transition_type',
+			[
+				'label'   => esc_html__('Animation Transition Style', 'elementskit'),
+				'type'    => Controls_Manager::SELECT,
+				'default' => 'linear',
+				'options' => [
+					'linear' => 'linear',
+					'easeInQuad' => 'easeInQuad',
+					'easeOutQuad' => 'easeOutQuad',
+					'easeInOutQuad' => 'easeInOutQuad',
+					'easeInCubic' => 'easeInCubic',
+					'easeOutCubic' => 'easeOutCubic',
+					'easeInOutCubic' => 'easeInOutCubic',
+					'easeInQuart' => 'easeInQuart',
+					'easeOutQuart' => 'easeOutQuart',
+					'easeInOutQuart' => 'easeInOutQuart',
+					'easeInQuint' => 'easeInQuint',
+					'easeOutQuint' => 'easeOutQuint',
+					'easeInOutQuint' => 'easeInOutQuint',
+					'easeInSine' => 'easeInSine',
+					'easeOutSine' => 'easeOutSine',
+					'easeInOutSine' => 'easeInOutSine',
+					'easeInExpo' => 'easeInExpo',
+					'easeOutExpo' => 'easeOutExpo',
+					'easeInOutExpo' => 'easeInOutExpo',
+					'easeInCirc' => 'easeInCirc',
+					'easeOutCirc' => 'easeOutCirc',
+					'easeInOutCirc' => 'easeInOutCirc',
+					'easeInElastic' => 'easeInElastic',
+					'easeOutElastic' => 'easeOutElastic',
+					'easeInOutElastic' => 'easeInOutElastic',
+					'easeInBack' => 'easeInBack',
+					'easeOutBack' => 'easeOutBack',
+					'easeInOutBack' => 'easeInOutBack',
+					'easeInBounce' => 'easeInBounce',
+					'easeOutBounce' => 'easeOutBounce',
+					'easeInOutBounce' => 'easeInOutBounce',
+				],
+				'condition' => [
+					'chart_animation' => 'yes'
+				]
+			]
+		);
+
+        $this->end_controls_section();
+		
+		$this->start_controls_section(
             'section_chart_general_styles',
 			[
 				'label' => esc_html__( 'General', 'wpr-addons' ),
@@ -716,6 +793,8 @@ class Wpr_Charts extends Widget_Base {
 				endforeach;
 			endif;
 
+			// $data_charts_array['labels'] = preg_split($settings['chart_label'], "/,/");
+
 			if(is_array($charts_data_set) && sizeof($charts_data_set)) {
 				foreach($charts_data_set as $chart_data) {
 					$data_charts_array['datasets'][] = [
@@ -775,6 +854,8 @@ class Wpr_Charts extends Widget_Base {
 			$data_url = '';
 		}
 
+		var_dump($settings['charts_legend_align']);
+
         $layout_settings = [
 			'data_source' => $data_source,
             'chart_type' => $settings['chart_type'],
@@ -782,7 +863,9 @@ class Wpr_Charts extends Widget_Base {
 			'trigger_tooltip_on' => $trigger_tooltip_on,
             'chart_labels' => !empty($data_charts_array['labels']) ? $data_charts_array['labels'] : '',
 			'chart_datasets' => wp_json_encode($data_charts_array['datasets']),
+			'show_chart_legend' => $show_chart_legend,
 			'legend_position' => $settings['charts_legend_position'],
+			'legend_align' => $settings['charts_legend_align'],
 			'chart_animation' => $chart_animation,
 			'chart_animation_loop' => $chart_animation_loop,
 			'chart_animation_duration' => $chart_animation_duration,
