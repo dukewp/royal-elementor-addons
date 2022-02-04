@@ -718,6 +718,13 @@ class Wpr_Charts extends Widget_Base {
 			]
         );
 
+		$this->add_control(
+			'chart_legend_text_color', [
+				'label'       => esc_html__('Border Color', 'wpr-addons'),
+				'type'        => Controls_Manager::COLOR,
+			]
+		);
+
 		$this->add_responsive_control(
 			'legend_font_size',
 			[
@@ -866,6 +873,10 @@ class Wpr_Charts extends Widget_Base {
 			'show_chart_legend' => $show_chart_legend,
 			'legend_position' => $settings['charts_legend_position'],
 			'legend_align' => $settings['charts_legend_align'],
+			'legend_text_color' => $chart_legend_text_color,
+			'legend_font_size' => $legend_font_size['size'],
+			'legend_font_style' => $legend_font_style,
+			'legend_font_weight' => $legend_font_weight,
 			'chart_animation' => $chart_animation,
 			'chart_animation_loop' => $chart_animation_loop,
 			'chart_animation_duration' => $chart_animation_duration,
@@ -881,9 +892,6 @@ class Wpr_Charts extends Widget_Base {
 			'chart_padding' => $chart_padding['size'],
 			'url' => $data_url,
 			'separator' => $data_csv_separator,
-			'legend_font_size' => $legend_font_size['size'],
-			'legend_font_style' => $legend_font_style,
-			'legend_font_weight' => $legend_font_weight,
         ];
 
 		$this->add_render_attribute( 'chart-settings', [
