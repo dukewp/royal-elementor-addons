@@ -720,10 +720,30 @@ class Wpr_Charts extends Widget_Base {
 
 		$this->add_control(
 			'chart_legend_text_color', [
-				'label'       => esc_html__('Border Color', 'wpr-addons'),
+				'label'       => esc_html__('Color', 'wpr-addons'),
 				'type'        => Controls_Manager::COLOR,
 			]
 		);
+
+		$this->add_responsive_control(
+			'legend_box_width',
+			[
+				'label' => esc_html__( 'Box Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 200,
+					],
+				],
+				'size_units' => [ 'px' ],
+				'default' => [
+					'unit' => 'px',
+					'size' => 40,
+				],
+			]
+		);
+
 
 		$this->add_responsive_control(
 			'legend_font_size',
@@ -871,6 +891,7 @@ class Wpr_Charts extends Widget_Base {
             'chart_labels' => !empty($data_charts_array['labels']) ? $data_charts_array['labels'] : '',
 			'chart_datasets' => wp_json_encode($data_charts_array['datasets']),
 			'show_chart_legend' => $show_chart_legend,
+			'legend_box_width' => $legend_box_width['size'],
 			'legend_position' => $settings['charts_legend_position'],
 			'legend_align' => $settings['charts_legend_align'],
 			'legend_text_color' => $chart_legend_text_color,
