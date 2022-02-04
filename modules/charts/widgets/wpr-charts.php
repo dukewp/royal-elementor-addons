@@ -154,6 +154,7 @@ class Wpr_Charts extends Widget_Base {
 					'polarArea'     => esc_html__('Polar Area', 'wpr-addons'),
 					'scatter'     => esc_html__('Scatter', 'wpr-addons'),
 				],
+				'separator' => 'before'
 
 			]
 		);
@@ -637,7 +638,7 @@ class Wpr_Charts extends Widget_Base {
 		$this->add_control(
 			'animation_transition_type',
 			[
-				'label'   => esc_html__('Animation Transition Style', 'elementskit'),
+				'label'   => esc_html__('Animation Transition Style', 'wpr-addons'),
 				'type'    => Controls_Manager::SELECT,
 				'default' => 'linear',
 				'options' => [
@@ -711,6 +712,16 @@ class Wpr_Charts extends Widget_Base {
         $this->end_controls_section();
 		
 		$this->start_controls_section(
+            'section_chart_title_styles',
+			[
+				'label' => esc_html__( 'Title', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+        );
+
+        $this->end_controls_section();
+		
+		$this->start_controls_section(
             'section_chart_legend_styles',
 			[
 				'label' => esc_html__( 'Legend', 'wpr-addons' ),
@@ -726,9 +737,18 @@ class Wpr_Charts extends Widget_Base {
 		);
 
 		$this->add_control(
+			'legend_font_family',
+			[
+				'label' => esc_html__( 'Font Family', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::FONT,
+				'default' => "'Open Sans', sans-serif",
+			]
+		);
+
+		$this->add_control(
 			'legend_font_style',
 			[
-				'label'   => esc_html__('Font Style', 'elementskit'),
+				'label'   => esc_html__('Font Style', 'wpr-addons'),
 				'type'    => Controls_Manager::SELECT,
 				'default' => 'normal',
 				'options' => [
@@ -743,7 +763,7 @@ class Wpr_Charts extends Widget_Base {
 		// $this->add_control(
 		// 	'legend_font_family',
 		// 	[
-		// 		'label'   => esc_html__('Font Style', 'elementskit'),
+		// 		'label'   => esc_html__('Font Style', 'wpr-addons'),
 		// 		'type'    => Controls_Manager::SELECT,
 		// 		'default' => '',
 		// 		'options' => [
@@ -899,11 +919,12 @@ class Wpr_Charts extends Widget_Base {
 			$data_url = '';
 		}
 
-		var_dump($settings['charts_legend_align']);
+		var_dump($settings['chart_legend_padding']['size']);
 
         $layout_settings = [
 			'data_source' => $data_source,
             'chart_type' => $settings['chart_type'],
+			'chart_padding' => $chart_padding['size'], //TODO: doesnt work
 			'chart_interaction_mode' => $chart_interaction_mode,
 			'trigger_tooltip_on' => $trigger_tooltip_on,
             'chart_labels' => !empty($data_charts_array['labels']) ? $data_charts_array['labels'] : '',
@@ -913,6 +934,7 @@ class Wpr_Charts extends Widget_Base {
 			'legend_position' => $settings['charts_legend_position'],
 			'legend_align' => $settings['charts_legend_align'],
 			'legend_text_color' => $chart_legend_text_color,
+			'legend_font_family' => $legend_font_family,
 			'legend_font_size' => $legend_font_size['size'],
 			'legend_font_style' => $legend_font_style,
 			'legend_font_weight' => $legend_font_weight,
@@ -929,7 +951,6 @@ class Wpr_Charts extends Widget_Base {
 			'rotation' => $labels_rotation_x_axis,
 			'min_value' => $min_value,
 			'max_value' => $max_value,
-			'chart_padding' => $chart_padding['size'],
 			'url' => $data_url,
 			'separator' => $data_csv_separator,
         ];
