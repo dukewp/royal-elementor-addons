@@ -725,45 +725,6 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'legend_box_width',
-			[
-				'label' => esc_html__( 'Box Size', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 200,
-					],
-				],
-				'size_units' => [ 'px' ],
-				'default' => [
-					'unit' => 'px',
-					'size' => 40,
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'legend_font_size',
-			[
-				'label' => esc_html__( 'Font Size', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px' ],
-				'range' => [
-					'px' => [
-						'min' => 10,
-						'max' => 100,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 14,
-				],
-				'separator' => 'before',
-			]
-		);
-
 		$this->add_control(
 			'legend_font_style',
 			[
@@ -799,6 +760,45 @@ class Wpr_Charts extends Widget_Base {
 				'min'                => 0,
 				'default'            => 600,
 				'frontend_available' => true,
+			]
+		);
+
+		$this->add_responsive_control(
+			'legend_font_size',
+			[
+				'label' => esc_html__( 'Font Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 10,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 14,
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'legend_box_width',
+			[
+				'label' => esc_html__( 'Box Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 200,
+					],
+				],
+				'size_units' => [ 'px' ],
+				'default' => [
+					'unit' => 'px',
+					'size' => 40,
+				],
+				'separator' => 'before',
 			]
 		);
 
