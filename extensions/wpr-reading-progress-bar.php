@@ -190,7 +190,7 @@ class Wpr_ReadingProgressBar {
 	public function html_to_footer() {
     	$settings = get_option('wpr_progress_bar_global_options');
 		$rpb_position = 'top' === get_option('wpr_reading_progress_bar_position') ? 'top: 0px; bottom: auto;' : 'bottom: 0px; top: auto;'; // option or setting ?
-		$rpb_background_color = 'background-color: ' . $settings['wpr_background_color'] . ' !important;';
+		$rpb_background_color = 'background-color: ' . !empty($settings['wpr_background_color']) ? $settings['wpr_background_color'] : '' . ' !important;';
 		$rpb_fill_color = 'background-color: ' . $settings['wpr_fill_color'] . '!important;';
 		$rpb_height = 'height: '.$settings['wpr_height']['size'] . $settings['wpr_height']['unit'].';';
 

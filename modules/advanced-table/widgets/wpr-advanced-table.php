@@ -2539,11 +2539,12 @@ class Wpr_AdvancedTable extends Widget_Base {
     }
 
 	protected function render_csv_data($url, $custom_pagination, $sorting_icon, $settings) {
-
+		
 		$url_ext = pathinfo($url, PATHINFO_EXTENSION);
+		$url_ext2 = pathinfo($url);
 
 		ob_start();
-		if($url_ext === 'csv'){ 
+		if($url_ext === 'csv' || str_contains($url_ext2['dirname'], 'docs.google.com/spreadsheets')) { 
 			echo $this->wpr_parse_csv_to_table($url, true, $custom_pagination, $sorting_icon, $settings);
 		} else {
 			echo '<p class="wpr-no-csv-file-found">'. esc_html__('Please provide an csv file', 'wpr-addons') .'</p>';
