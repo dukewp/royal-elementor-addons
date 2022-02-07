@@ -287,7 +287,7 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Min-Max Values', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
+				'default' => 'no',
 				'return_value' => 'yes',
 				'separator' => 'before',
 				'condition' => [
@@ -1079,13 +1079,13 @@ class Wpr_Charts extends Widget_Base {
 				'size_units' => [ 'px' ],
 				'range' => [
 					'px' => [
-						'min' => 10,
+						'min' => 0,
 						'max' => 100,
 					],
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 14,
+					'size' => 5,
 				],
 			]
 		);
@@ -1098,13 +1098,13 @@ class Wpr_Charts extends Widget_Base {
 				'size_units' => [ 'px' ],
 				'range' => [
 					'px' => [
-						'min' => 10,
+						'min' => 0,
 						'max' => 100,
 					],
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 14,
+					'size' => 10,
 				],
 			]
 		);
