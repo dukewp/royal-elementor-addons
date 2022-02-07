@@ -155,8 +155,13 @@ class WPR_Render_Templates {
 		}
     }
 
-    public function convert_to_canvas( $template ) {//TODO: Add option to disable this		
-		return WPR_ADDONS_PATH . 'admin/templates/wpr-canvas.php';
+    public function convert_to_canvas( $template ) {//TODO: Add option to disable this
+    	if ( false ) {
+    		return WPR_ADDONS_PATH . 'admin/templates/wpr-canvas.php';
+    	} else {
+    		return $template;
+    	}
+		
     }
 
 	/**

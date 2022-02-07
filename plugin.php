@@ -575,19 +575,26 @@ class Plugin {
 			[
 				'title' => Utilities::get_plugin_name(true),
 				'icon' => 'font',
-			],
-			1
+			]
 		);
 
 		// Add Woo element category in panel
 		\Elementor\Plugin::instance()->elements_manager->add_category(
-			'wpr-woo-widgets',
+			'wpr-theme-builder-widgets',
 			[
-				'title' => sprintf(esc_html__( '%s WooCommerce', 'wpr-addons' ), Utilities::get_plugin_name()),
+				'title' => sprintf(esc_html__( '%s Theme Builder', 'wpr-addons' ), Utilities::get_plugin_name()),
 				'icon' => 'font',
-			],
-			2
+			]
 		);
+
+		// Add Woo element category in panel
+		// \Elementor\Plugin::instance()->elements_manager->add_category(
+		// 	'wpr-woo-widgets',
+		// 	[
+		// 		'title' => sprintf(esc_html__( '%s WooCommerce', 'wpr-addons' ), Utilities::get_plugin_name()),
+		// 		'icon' => 'font',
+		// 	]
+		// );
 	}
 
 	protected function add_actions() {

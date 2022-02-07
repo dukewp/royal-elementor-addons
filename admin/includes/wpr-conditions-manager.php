@@ -67,7 +67,7 @@ class WPR_Conditions_Manager {
 
 	        }
         } else {//TODO: Set kinda "ALL" for default (free version)
-        	$template = Utilities::get_template_slug( $conditions, 'global' );
+        	// $template = Utilities::get_template_slug( $conditions, 'global' );
         }
 
 	    return $template;
