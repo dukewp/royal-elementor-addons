@@ -264,6 +264,16 @@ class Utilities {
 
 
 	/**
+	** Theme Builder Template Check
+	*/
+	public static function is_theme_builder_template() {
+		$current_page = get_post(get_the_ID());
+
+		return str_contains($current_page->post_name, 'user-archive') || str_contains($current_page->post_name, 'user-single');
+	}
+
+
+	/**
 	** Blog Archive Page Check
 	*/
 	public static function is_blog_archive() {

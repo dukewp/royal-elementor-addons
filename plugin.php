@@ -568,7 +568,9 @@ class Plugin {
 
 	public function elementor_init() {
 		$this->_modules_manager = new Manager();
+	}
 
+	public function register_widget_categories() {
 		// Add element category in panel
 		\Elementor\Plugin::instance()->elements_manager->add_category(
 			'wpr-widgets',
@@ -579,13 +581,16 @@ class Plugin {
 		);
 
 		// Add Woo element category in panel
-		\Elementor\Plugin::instance()->elements_manager->add_category(
-			'wpr-theme-builder-widgets',
-			[
-				'title' => sprintf(esc_html__( '%s Theme Builder', 'wpr-addons' ), Utilities::get_plugin_name()),
-				'icon' => 'font',
-			]
-		);
+		if ( Utilities::is_theme_builder_template() ) {
+			\Elementor\Plugin::instance()->elements_manager->add_category(
+				'wpr-theme-builder-widgets',
+				[
+					'title' => sprintf(esc_html__( '%s Theme Builder', 'wpr-addons' ), Utilities::get_plugin_name()),
+					'icon' => 'font',
+				]
+			);
+		}
+		
 
 		// Add Woo element category in panel
 		// \Elementor\Plugin::instance()->elements_manager->add_category(
@@ -598,7 +603,11 @@ class Plugin {
 	}
 
 	protected function add_actions() {
+		// Register Widgets
 		add_action( 'elementor/init', [ $this, 'elementor_init' ] );
+
+		// Register Categories
+		add_action( 'elementor/elements/categories_registered', [ $this, 'register_widget_categories' ] );
 
 		// Register Ajax Hooks
 		$this->register_ajax_hooks();
