@@ -1211,6 +1211,7 @@ class Wpr_Charts extends Widget_Base {
 			'chart_tooltip_item_color', [
 				'label'       => esc_html__('Item Color', 'wpr-addons'),
 				'type'        => Controls_Manager::COLOR,
+				'default' => '#FFF'
 			]
 		);
 

@@ -410,19 +410,11 @@ class Plugin {
 
 		wp_register_script(
 			'wpr-charts',
-			WPR_ADDONS_URL . 'assets/js/lib/charts/charts.min.js',
+			WPR_ADDONS_URL . 'assets/js/lib/charts/charts' . $this->script_suffix() . '.js',
 			[],
 			'3.7.0',
 			true,
 		);
-
-		// wp_register_script(
-		// 	'wpr-charts',
-		// 	'https://cdn.jsdelivr.net/npm/chart.js',
-		// 	[],
-		// 	false,
-		// 	true,
-		// );
 	}
 
 	public function enqueue_panel_scripts() {
