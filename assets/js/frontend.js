@@ -90,6 +90,7 @@
 				    stickyHeaderFooter = $scope.closest('div[data-elementor-type="wp-post"]').length ? $scope.closest('div[data-elementor-type="wp-post"]') : '',
 					headerFooterZIndex = !WprElements.editorCheck() ? $scope.attr('data-wpr-z-index') : $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-z-index');
 
+                    // $scope.closest('div[data-elementor-type="wp-post"]').length && 
 			    if ( !$scope.find('.wpr-sticky-section-yes-editor').length) {
 			        positionType = $scope.attr('data-wpr-position-type');
 			        positionLocation = $scope.attr('data-wpr-position-location');
