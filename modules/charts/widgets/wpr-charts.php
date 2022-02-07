@@ -242,6 +242,20 @@ class Wpr_Charts extends Widget_Base {
 		);
 
 		$this->add_control(
+			'chart_type_line_fill',
+			[
+				'label' => esc_html__( 'Show Background Fill', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'separator' => 'before',
+				'condition' => [
+					'chart_type!' => ['bar', 'bar_horizontal'],
+				]
+			]
+		);
+
+		$this->add_control(
 			'line_dots',
 			[
 				'label' => esc_html__( 'Line Dots', 'wpr-addons' ),
@@ -1317,6 +1331,7 @@ class Wpr_Charts extends Widget_Base {
 						'hoverBorderColor' => $chart_data['chart_data_border_color_hover'],
 						'borderWidth' => $chart_data['chart_data_border_width'],
 						'barPercentage' => $settings['column_width_x'],
+						'fill' => !empty($settings['chart_type_line_fill']) && 'yes' === $settings['chart_type_line_fill'] ? true : false,
 					];
 				}
 			}
