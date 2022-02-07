@@ -410,7 +410,7 @@ class Plugin {
 
 		wp_register_script(
 			'wpr-charts',
-			WPR_ADDONS_URL . 'assets/js/lib/charts/charts' . $this->script_suffix() . '.js',
+			WPR_ADDONS_URL . 'assets/js/lib/charts/charts.min.js',
 			[],
 			'3.7.0',
 			true,
