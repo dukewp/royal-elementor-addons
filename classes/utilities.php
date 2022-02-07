@@ -23,7 +23,7 @@ class Utilities {
 			'WooCommerce Grid' => ['woo-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-woo-grid'],
 			'Image Grid' => ['media-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-gallery-grid'],
 			'Magazine Grid' => ['magazine-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-magazine-grid'],
-			'Posts Timeline' => ['posts-timeline', 'https://royal-elementor-addons.com/elementor-timeline-widget/?ref=rea-plugin-backend-elements-widget-prev', ''],
+			'Posts Timeline' => ['posts-timeline', 'https://royal-elementor-addons.com/elementor-timeline-widget/', ''],
 			'Advanced Slider' => ['advanced-slider', 'https://royal-elementor-addons.com/elementor-advanced-slider-widget/', ''],
 			'Testimonial' => ['testimonial', 'https://royal-elementor-addons.com/elementor-testimonials-slider-widget/', ''],
 			'Nav Menu' => ['nav-menu', 'http://royal-elementor-addons.com/elementor-menu-widget/', ''],

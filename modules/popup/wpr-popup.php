@@ -608,6 +608,43 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 
 		$this->end_controls_section();
 
+		// Section: Pro Features
+		if ( ! wpr_fs()->can_use_premium_code() ) {
+			$this->start_controls_section(
+				'pro_features_section',
+				[
+					'label' => 'Pro Features <span class="dashicons dashicons-star-filled"></span>',
+					'tab'   => Controls_Manager::TAB_SETTINGS,
+				]
+			);
+
+			$this->add_control(
+				'pro_features_list',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => '<ul>
+						<li>Open Popup: On Page Scroll</li>
+						<li>Open Popup: On Scroll to Element</li>
+						<li>Open Popup: After Specific Date</li>
+						<li>Open Popup: After User Inactivity</li>
+						<li>Open Popup: After User Exit Intent</li>
+						<li>Open Popup: Custom Trigger (Selector)</li>
+						<li>Show Again Delay: Set any time (hours, days, weeks) - This option determines when to show popup again to a visitor after it is closed.</li>
+						<li>Stop showing after Specific Date</li>
+						<li>Automatic Closing Delay</li>
+						<li>Show Popup for Specific Roles</li>
+						<li>Show according to URL Keyword - Popup will show up if URL(referral) contains chosen keyword</li>
+						<li>Show/Hide Popup on any Device</li>
+						<li>Prevent Popup closing on"ESC" key</li>
+					</ul>
+							  <a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-pro-sec-wpr-popups-upgrade-pro#purchasepro" target="_blank">Get Pro version</a>',
+					'content_classes' => 'wpr-pro-features-list',
+				]
+			);
+
+			$this->end_controls_section();
+		}
+
 		// Default Document Settings
 		parent::_register_controls();
 

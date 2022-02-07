@@ -114,7 +114,7 @@ function wpr_addons_settings_page() {
     <div class="nav-tab-wrapper wpr-nav-tab-wrapper">
         <?php if ( empty(get_option('wpr_wl_hide_elements_tab')) ) : ?>
         <a href="?page=wpr-addons&tab=wpr_tab_elements" data-title="Elements" class="nav-tab <?php echo $active_tab == 'wpr_tab_elements' ? 'nav-tab-active' : ''; ?>">
-            <?php esc_html_e( 'Elements', 'wpr-addons' ); ?>
+            <?php esc_html_e( 'Widgets', 'wpr-addons' ); ?>
         </a>
         <?php endif; ?>
 
@@ -153,11 +153,11 @@ function wpr_addons_settings_page() {
 
     <div class="wpr-elements-toggle">
         <div>
-            <h3><?php esc_html_e( 'Toggle all Elements', 'wpr-addons' ); ?></h3>
+            <h3><?php esc_html_e( 'Toggle all Widgets', 'wpr-addons' ); ?></h3>
             <input type="checkbox" name="wpr-element-toggle-all" id="wpr-element-toggle-all" <?php checked( get_option('wpr-element-toggle-all', 'on'), 'on', true ); ?>>
             <label for="wpr-element-toggle-all"></label>
         </div>
-        <p><?php esc_html_e( 'You can disable some elements for faster page speed.', 'wpr-addons' ); ?></p>
+        <p><?php esc_html_e( 'You can disable some widgets for faster page speed.', 'wpr-addons' ); ?></p>
     </div>
 
     <div class="wpr-elements">
