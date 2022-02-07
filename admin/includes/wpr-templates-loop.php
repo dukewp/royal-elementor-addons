@@ -138,6 +138,7 @@ class WPR_Templates_Loop {
                     </select>
                     <!-- Archive -->
                     <select name="archives_condition_select" class="archives-condition-select">
+                        <option value="all_archives"><?php esc_html_e( 'All Archives', 'wpr-addons' ); ?></option>
                         <option value="posts"><?php esc_html_e( 'Posts Archive', 'wpr-addons' ); ?></option>
                         <option value="author"><?php esc_html_e( 'Author Archive', 'wpr-addons' ); ?></option>
                         <option value="date"><?php esc_html_e( 'Date Archive', 'wpr-addons' ); ?></option>
@@ -183,6 +184,7 @@ class WPR_Templates_Loop {
                     </select>
                     <!-- Archive -->
                     <select name="archives_condition_select" class="archives-condition-select">
+                        <option value="all_archives"><?php esc_html_e( 'All Archives (Pro)', 'wpr-addons' ); ?></option>
                         <option value="posts"><?php esc_html_e( 'Posts Archive (Pro)', 'wpr-addons' ); ?></option>
                         <option value="author"><?php esc_html_e( 'Author Archive (Pro)', 'wpr-addons' ); ?></option>
                         <option value="date"><?php esc_html_e( 'Date Archive (Pro)', 'wpr-addons' ); ?></option>

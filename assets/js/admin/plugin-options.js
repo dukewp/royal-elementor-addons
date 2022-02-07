@@ -281,7 +281,9 @@ jQuery(document).ready(function( $ ) {
 			$('.wpr-conditions').last().find('input').hide();//tmp -maybe remove
 
 			// Show on Canvas
-			$('.wpr-canvas-condition').show();
+			if ( 'header' === currentTab || 'footer' === currentTab ) {
+				$('.wpr-canvas-condition').show();
+			}
 
 			// Run Functions
 			popupDeleteConditions();
@@ -354,6 +356,9 @@ jQuery(document).ready(function( $ ) {
 		// Conditions Wrap
 		var conditionsWrap = $( '.wpr-conditions' );
 
+		// Reset Canvas Option
+		$('.wpr-canvas-condition').hide();
+
 		// Show Conditions
 		if ( 'single' === currentTab ) {
 			conditionsWrap.find(singleS).show();
@@ -361,17 +366,15 @@ jQuery(document).ready(function( $ ) {
 			conditionsWrap.find(archiveS).show();
 		} else {
 			conditionsWrap.find(globalS).show();
+
+			// Show Canvas Option
+			if ( $('.wpr-conditions').length ) {
+				$('.wpr-canvas-condition').show();
+			}
 		}
 
 		// Add Current Filter Class
 		$('.wpr-conditions-wrap').addClass( $('.template-filters .active-filter').attr('data-class') );
-
-		// Show on Canvas
-		if ( $('.wpr-conditions').length ) {
-			$('.wpr-canvas-condition').show();
-		} else {
-			$('.wpr-canvas-condition').hide();
-		}
 
 		// Open Popup
 		conditionPupup.fadeIn();
