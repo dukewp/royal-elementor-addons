@@ -41,7 +41,7 @@ class Wpr_Sticky_Section {
 				'wpr_sticky_apply_changes',
 				[
 					'type' => Controls_Manager::RAW_HTML,
-					'raw' => '<div class="elementor-update-preview editor-pa-preview-update" style="background-color: #fff;"><div class="elementor-update-preview-title">Update changes to page</div><div class="elementor-update-preview-button-wrapper"><div style="text-align: right;"><button class="elementor-update-preview-button elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply</button></div>',
+					'raw' => '<div class="elementor-update-preview editor-wpr-preview-update" style="background-color: #fff;"><div class="elementor-update-preview-title">Update changes to page</div><div class="elementor-update-preview-button-wrapper"><div style="text-align: right;"><button class="elementor-update-preview-button elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply</button></div>',
 				]
 			);
 
