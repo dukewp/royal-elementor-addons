@@ -30,6 +30,15 @@ class Wpr_Particles {
 			]
 		);
 
+		$element->add_control(
+			'wpr_particles_apply_changes',
+			[
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => '<div class="elementor-update-preview editor-wpr-preview-update"><span>Update changes to Preview</span><button class="elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply</button>',
+				'separator' => 'after'
+			]
+		);
+
 		$element->add_control (
 			'wpr_enable_particles',
 			[

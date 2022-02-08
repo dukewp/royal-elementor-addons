@@ -34,7 +34,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return ['Post Timeline', 'Post', 'Posts', 'Timeline', 'Posts Timeline', 'Story Timeline', 'Content Timeline'];
+		return ['post timeline', 'post', 'posts', 'timeline', 'posts timeline', 'story timeline', 'content timeline'];
 	}
 
 	public function get_script_depends() {
@@ -5156,10 +5156,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				echo '<article class="wpr-timeline-entry '. $this->content_alignment .' elementor-repeater-item-'. $content['_id'] .'" data-item-id="elementor-repeater-item-' . $content['_id'] . '">';
                     
                     if ( 'yes' === $content['repeater_show_extra_label'] ) {
-                        echo !empty($content['repeater_date_label']) && !empty($content['repeater_extra_label']) ? '<time class="wpr-extra-label" data-aos="'.$this->animation.'" data-aos-left="'.$this->animation_loadmore_left .'" data-aos-right="'. $this->animation_loadmore_right .'" data-animation-offset="'. $settings['animation_offset'] .'" data-animation-duration="'. $settings['aos_animation_duration'] .'">' : '';
+                        echo !empty($content['repeater_date_label']) || !empty($content['repeater_extra_label']) ? '<time class="wpr-extra-label" data-aos="'.$this->animation.'" data-aos-left="'.$this->animation_loadmore_left .'" data-aos-right="'. $this->animation_loadmore_right .'" data-animation-offset="'. $settings['animation_offset'] .'" data-animation-duration="'. $settings['aos_animation_duration'] .'">' : '';
                             echo !empty($content['repeater_date_label']) ? '<span class="wpr-label">'. $content['repeater_date_label'] .'</span>' : '';
                             echo !empty($content['repeater_extra_label']) ? '<span class="wpr-sub-label">' . $content['repeater_extra_label'] .'</span>' : '';
-                        echo !empty($content['repeater_date_label']) && !empty($content['repeater_extra_label']) ? '</time>' : '';
+                        echo !empty($content['repeater_date_label']) || !empty($content['repeater_extra_label']) ? '</time>' : '';
                     }
 
 					echo '<div class="wpr-timeline-entry-inner">';
@@ -5339,10 +5339,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						echo '<div class="swiper-slide '. $this->swiper_class .' '.esc_attr($slidesHeight).' elementor-repeater-item-'. $content['_id'] .'">';
 
 							if ( 'yes' === $content['repeater_show_extra_label'] ) {
-								echo !empty($this->story_date_label) && !empty($this->story_extra_label) ? '<div class="wpr-extra-label" >' : '';
+								echo !empty($this->story_date_label) || !empty($this->story_extra_label) ? '<div class="wpr-extra-label" >' : '';
 								  echo !empty($this->story_date_label) ? '<span '.$this->get_render_attribute_string( $this->date_label_key ).' >'. $this->story_date_label .'</span>' : ''; 
 								  echo !empty($this->story_extra_label) ? '<span '.$this->get_render_attribute_string( $this->extra_label_key ).' >'. $this->story_extra_label .'</span>' : '';
-								echo !empty($this->story_date_label) && !empty($this->story_extra_label) ? '</div>' : '';
+								echo !empty($this->story_date_label) || !empty($this->story_extra_label) ? '</div>' : '';
 							}
 
 							echo '<div class="wpr-main-line-icon wpr-icon">';

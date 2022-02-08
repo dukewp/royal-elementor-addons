@@ -28,13 +28,22 @@ class Wpr_Parallax_Scroll {
                 'label' =>  sprintf(esc_html__('Parallax - %s', 'wpr-addons'), Utilities::get_plugin_name()),
             ]
         );
+
+        $element->add_control(
+            'wpr_parallax',
+            [
+                'type' => Controls_Manager::RAW_HTML,
+                'raw' => '<div class="elementor-update-preview editor-wpr-preview-update"><span>Update changes to Preview</span><button class="elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply</button>',
+                'separator' => 'after'
+            ]
+        );
         
         if ( 'on' === get_option('wpr-parallax-background', 'on') ) {
 
         $element->add_control(
             'parallax_video_tutorial',
             [
-                'raw' => '<a href="https://www.youtube.com/watch?v=DcDeQ__lJbw" target="_blank">Watch Video Tutorial <span class="dashicons dashicons-video-alt3"></span></a>',
+                'raw' => '<br><a href="https://www.youtube.com/watch?v=DcDeQ__lJbw" target="_blank">Watch Video Tutorial <span class="dashicons dashicons-video-alt3"></span></a>',
                 'type' => Controls_Manager::RAW_HTML,
             ]
         );
@@ -105,17 +114,6 @@ class Wpr_Parallax_Scroll {
                     'url' => Utils::get_placeholder_image_src(),
                 ],
                 'render_type' => 'template',
-                'condition' => [
-                    'wpr_enable_jarallax' => 'yes'
-                ]
-            ]
-        );
-
-        $element->add_control(
-            'wpr_parallax',
-            [
-                'type' => Controls_Manager::RAW_HTML,
-                'raw' => '<div style="text-align: center;"><button class="elementor-update-preview-button elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply Changes</button></div>',
                 'condition' => [
                     'wpr_enable_jarallax' => 'yes'
                 ]

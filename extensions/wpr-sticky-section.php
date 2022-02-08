@@ -37,6 +37,15 @@ class Wpr_Sticky_Section {
 				]
 			);
 
+			$element->add_control(
+				'wpr_sticky_apply_changes',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => '<div class="elementor-update-preview editor-wpr-preview-update"><span>Update changes to Preview</span><button class="elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply</button>',
+					'separator' => 'after'
+				]
+			);
+
 			$element->add_control (
 				'enable_sticky_section',
 				[
@@ -175,17 +184,6 @@ class Wpr_Sticky_Section {
 					'condition' => [
 						'enable_sticky_section' => 'yes'
 					]
-				]
-			);
-
-			$element->add_control(
-				'wpr_sticky_apply_changes',
-				[
-					'type' => Controls_Manager::RAW_HTML,
-					'raw' => '<div style="text-align: center;"><button class="elementor-update-preview-button elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply Changes</button></div>',
-					// 'condition' => [
-					// 	'enable_sticky_section' => 'yes'
-					// ]
 				]
 			);
 

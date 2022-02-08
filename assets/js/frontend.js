@@ -90,7 +90,8 @@
 				    stickyHeaderFooter = $scope.closest('div[data-elementor-type="wp-post"]').length ? $scope.closest('div[data-elementor-type="wp-post"]') : '',
 					headerFooterZIndex = !WprElements.editorCheck() ? $scope.attr('data-wpr-z-index') : $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-z-index');
 
-			    if ( $scope.closest('div[data-elementor-type="wp-post"]').length && !$scope.find('.wpr-sticky-section-yes-editor').length) {
+                    // $scope.closest('div[data-elementor-type="wp-post"]').length && 
+			    if ( !$scope.find('.wpr-sticky-section-yes-editor').length) {
 			        positionType = $scope.attr('data-wpr-position-type');
 			        positionLocation = $scope.attr('data-wpr-position-location');
 			        positionOffset = $scope.attr('data-wpr-position-offset');
@@ -98,7 +99,6 @@
 			        activeDevices = $scope.attr('data-wpr-active-breakpoints');
 					headerFooterZIndex = $scope.attr('data-wpr-z-index');
 			    }
-
 			    if ( 0 == availableDevices.length ) {
 			        positionType = 'static';
 			    }
@@ -153,14 +153,14 @@
 			            $scope.css({'position': positionStyle });
 			            if ( '' !== stickyHeaderFooter ) {
 			                // stickyHeaderFooter = stickyHeaderFooter.find('.wpr-sticky-section-yes');
-			                stickyHeaderFooter.css({'position': positionStyle, 'top': positionOffset + 'px', 'bottom': 'auto', 'z-index': headerFooterZIndex });
+			                stickyHeaderFooter.css({'position': positionStyle, 'top': positionOffset + 'px', 'bottom': 'auto', 'z-index': headerFooterZIndex, 'width': '100%' });
 			            }
 			        }
 			        else {
 			            $scope.css({'position': positionStyle });
 			            if ( '' !== stickyHeaderFooter ) {
 			                stickyHeaderFooter = stickyHeaderFooter.find('.wpr-sticky-section-yes');
-			                stickyHeaderFooter.css({'position': positionStyle, 'bottom': positionOffset + 'px', 'top': 'auto', 'z-index': headerFooterZIndex }); 
+			                stickyHeaderFooter.css({'position': positionStyle, 'bottom': positionOffset + 'px', 'top': 'auto', 'z-index': headerFooterZIndex, 'width': '100%' }); 
 			            }
 			        }
 			    }
