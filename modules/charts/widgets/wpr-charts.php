@@ -665,6 +665,21 @@ class Wpr_Charts extends Widget_Base {
 		);
 
 		$this->add_control(
+			'y_step_size',
+			[
+				'label'              => __( 'Step Size', 'wpr-addons' ),
+				'type'               => Controls_Manager::NUMBER,
+				'min'                => 0,
+				'max'                => 360,
+				'default'            => 0,
+				'frontend_available' => true,
+				'condition' => [
+					'display_y_ticks' => 'true'
+				]
+			]
+		);
+
+		$this->add_control(
 			'display_y_axis_title',
 			[
 				'label'   => esc_html__('Show Title', 'wpr-addons'),
@@ -1855,15 +1870,9 @@ class Wpr_Charts extends Widget_Base {
 		$data_charts_array = [];
 
 		if ( in_array($chart_type, array('bar', 'bar_horizontal', 'line', 'radar'))) {
-
-			// if(is_array($charts_labels_data) && sizeof($charts_labels_data)):
-			// 	foreach($charts_labels_data AS $labels_data):
-			// 		$data_charts_array['labels'][] = $labels_data['chart_label'];
-			// 	endforeach;
-			// endif;
 			
 			if(!empty($charts_labels_data)):
-					$data_charts_array['labels'] = explode(',', trim($charts_labels_data));
+				$data_charts_array['labels'] = explode(',', trim($charts_labels_data));
 			endif;
 
 			if(is_array($charts_data_set) && sizeof($charts_data_set)) {
@@ -2007,6 +2016,7 @@ class Wpr_Charts extends Widget_Base {
 			'grid_line_width_x' => $grid_line_width_x,
 			'display_y_axis' => $display_y_axis,
 			'display_y_ticks' => $display_y_ticks,
+			'y_step_size' => $y_step_size,
 			'display_y_axis_title' => $display_y_axis_title,
 			'y_axis_title' => $y_axis_title,
 			'axis_title_color_y' => $axis_title_color_y,
