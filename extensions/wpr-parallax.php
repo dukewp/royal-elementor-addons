@@ -53,6 +53,24 @@ class Wpr_Parallax_Scroll {
             ]
         );
 
+		$element->add_control(
+			'parallax_item_bg_size',
+			[
+				'label' => esc_html__( 'Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'cover',
+				'options' => [
+					'cover' => esc_html__( 'Cover', 'wpr-addons' ),
+					'contain' => esc_html__( 'Contain', 'wpr-addons' ),
+					'auto' => esc_html__( 'Auto', 'wpr-addons' ),
+				],
+				'selectors' => [
+					'{{WRAPPER}}.wpr-jarallax-yes' => 'position: relative; background-size: {{VALUE}}; background-repeat: no-repeat background-blend-mode: darken; background-position: left top;',
+					'{{WRAPPER}} .wpr-jarallax' => 'position: relative; background-size: {{VALUE}}; background-repeat: no-repeat; background-blend-mode: darken; background-position: left top;',
+				],
+			]
+		);
+
         $element->add_control(
             'speed',
             [
