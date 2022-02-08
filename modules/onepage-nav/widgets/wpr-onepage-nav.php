@@ -76,11 +76,11 @@ class Wpr_OnepageNav extends Widget_Base {
 		$this->start_controls_section(
 			'section_nav',
 			[
-				'label' => esc_html__( 'Navigation', 'wpr-addons' ),
+				'label' => 'Navigation  <a href="#" onclick="window.open(\'https://youtu.be/0hM4l2UKzXs\',\'_blank\').focus()">Video Tutorial <span class="dashicons dashicons-video-alt3"></span></a>',
 			]
 		);
 
-		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML, 'https://youtu.be/0hM4l2UKzXs' );
+		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
 		$repeater = new Repeater();
 

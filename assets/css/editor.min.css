@@ -313,10 +313,6 @@
 	content: '\e942' !important;
 }
 
-.elementor-control-posts_slider_notice {
-  margin-top: -20px;
-}
-
 .elementor-control-posts_slider_notice .elementor-control-raw-html {
   font-style: normal !important;
 }
@@ -490,7 +486,7 @@
 == Widget Preview and Library buttons
 --------------------------------------------------------------*/
 .elementor-control-wpr_library_buttons {
-	height: 80px;
+	height: 60px;
 	padding: 0;
 }
 
@@ -538,6 +534,31 @@
 	line-height: 20px;
 	color: #777;
 	border: none !important;
+}
+
+.elementor-section-title > a {
+  top: 10px;
+  right: 20px;
+  position: absolute;
+  line-height: 20px;
+}
+
+.elementor-section-title > a:hover {
+  border-color: transparent;
+}
+
+/*--------------------------------------------------------------
+== Apply Changes Button
+--------------------------------------------------------------*/
+.editor-wpr-preview-update {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.editor-wpr-preview-update button {
+  font-size: 13px;
+  padding: 5px 10px;
 }
 
 
