@@ -187,6 +187,11 @@ class Plugin {
 	}
 
 	public function register_elementor_document_type( $documents_manager ) {
+		// Theme Builder
+		require WPR_ADDONS_PATH . 'modules/theme-builder/wpr-theme-builder.php';
+		$documents_manager->register_document_type( 'wpr-theme-builder', 'Wpr_Theme_Builder' );
+
+		// Popups
 		require WPR_ADDONS_PATH . 'modules/popup/wpr-popup.php';
 
         if ( wpr_fs()->can_use_premium_code() && defined('WPR_ADDONS_PRO_VERSION') ) {

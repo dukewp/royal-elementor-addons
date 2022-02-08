@@ -1503,7 +1503,7 @@ class Wpr_Post_Media extends Widget_Base {
 			$show_caption = $settings['gallery_caption'];
 		}
 		
-		// Image
+		// Render Image
 		if ( has_post_thumbnail() ) {
 			echo '<div class="wpr-featured-media-image" data-src="'. esc_url( $src ) .'"'. $lightbox .'>';
 				if ( 'yes' === $show_caption && '' !== $caption ) {
