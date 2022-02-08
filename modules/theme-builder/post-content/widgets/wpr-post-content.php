@@ -153,31 +153,13 @@ class Wpr_Post_Content extends Widget_Base {
 
 		$dropcap_class = 'yes' === $settings['post_content_dropcap'] ? ' wpr-enable-dropcap' : '';
 
-		if ( ! \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
-			echo '<div class="wpr-post-content'. $dropcap_class .'">';
-				if ( 'content' === $settings['post_content_display'] ) {
-					the_content();
-				} else {
-					the_excerpt();
-				}
-			echo '</div>';
-
-		// Fix Elementor Editor
-		} else {//TODO: check this with Nick
-			$latest_post = get_posts('post_type=post&numberposts=1');
-
-			if ( !empty($latest_post) ) {
-
-				echo '<div class="wpr-post-content'. $dropcap_class .'">';
-					if ( 'content' === $settings['post_content_display'] ) {
-						echo $latest_post[0]->post_content;
-					} else {
-						echo $latest_post[0]->post_excerpt;
-					}
-				echo '</div>';
-
+		echo '<div class="wpr-post-content'. $dropcap_class .'">';
+			if ( 'content' === $settings['post_content_display'] ) {
+				the_content();
+			} else {
+				the_excerpt();
 			}
-		}
+		echo '</div>';
 
 	}
 	

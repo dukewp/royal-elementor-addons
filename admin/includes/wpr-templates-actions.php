@@ -101,9 +101,7 @@ class WPR_Templates_Actions {
 			if ( 'wpr_templates' === $_POST['user_template_library'] ) {
 				wp_set_object_terms( $template_id, [sanitize_text_field($_POST['user_template_type']), 'user'], 'wpr_template_type' );
 
-				if ( 'archive' === $_POST['user_template_type'] || 'single' === $_POST['user_template_type'] ) {
-					update_post_meta( $template_id, '_elementor_template_type', 'wpr-theme-builder' );
-				} elseif ( 'popup' === $_POST['user_template_type'] ) {
+				if ( 'popup' === $_POST['user_template_type'] ) {
 					update_post_meta( $template_id, '_elementor_template_type', 'wpr-popups' );
 				} else {
 					update_post_meta( $template_id, '_elementor_template_type', 'wpr-theme-builder' );

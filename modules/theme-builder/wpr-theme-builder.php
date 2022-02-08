@@ -90,11 +90,14 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 
 		// Posts
 		foreach ( $post_types as $slug => $title ) {
+			$latest_post = get_posts('post_type='. $slug .'&numberposts=1');
+
 			$this->add_control(
 				'preview_single_'. $slug,
 				[
 					'label' => 'Select '. $title,
 					'type' => Controls_Manager::SELECT2,
+					'default' => !empty($latest_post) ? $latest_post[0]->ID : '',
 					'label_block' => true,
 					'options' => Utilities::get_posts_by_post_type( $slug ),
 					'separator' => 'before',
@@ -128,13 +131,11 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 
 		$this->add_control(
 			'submit_preview_changes',
-			[
-				'type' => Controls_Manager::BUTTON,
-				'label' => esc_html__( 'Submit Preview Changes', 'wpr-addons' ),
-				'label_block' => true,
-				'show_label' => false,
-				'text' => esc_html__( 'Submit Preview Changes', 'wpr-addons' ),
-			]
+            [
+                'type' => Controls_Manager::RAW_HTML,
+                'raw' => '<div class="elementor-update-preview editor-wpr-preview-update"><span>Update changes to Preview</span><button class="elementor-button elementor-button-success">Apply</button>',
+                'separator' => 'after'
+            ]
 		);
 
 		$this->end_controls_section();
@@ -146,7 +147,7 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 	public function get_default_post_type() {
 		$slug = get_post_meta( get_the_ID(), '_wpr_template_type', true  );
 
-		if ( strpos( $slug, 'post' ) ) {
+		if ( 0 === strpos( $slug, 'single' ) ) {
 			return 'post';
 		} else {
 			return 'archive/post';
@@ -244,7 +245,9 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 
 	public function switch_to_preview_query() {
 		if ( 'wpr_templates' === get_post_type( get_the_ID() ) ) {
-			Elementor\Plugin::instance()->db->switch_to_query( $this->get_document_query_args() );
+		$document = Elementor\Plugin::instance()->documents->get_doc_or_auto_save( get_the_ID() );
+
+			Elementor\Plugin::instance()->db->switch_to_query( $document->get_document_query_args() );
 		}
 	}
 
