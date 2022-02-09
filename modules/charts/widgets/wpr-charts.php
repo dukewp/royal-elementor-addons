@@ -159,6 +159,37 @@ class Wpr_Charts extends Widget_Base {
 		);
 
 		$this->add_control(
+			'stacked_bar_chart',
+			[
+				'label'   => esc_html__('Stacked Bar Chart', 'wpr-addons'),
+				'type'    => Controls_Manager::SWITCHER ,
+				'default' => 'false',
+				'return_value' => 'true',
+				'separator' => 'before',
+				'condition' => [
+					'chart_type' => 'bar'
+				]
+			]
+		);
+
+		$this->add_control(
+			'data_type',
+			[
+				'label'              => __( 'Data Type', 'wpr-addons' ),
+				'type'               => Controls_Manager::SELECT,
+				'options'            => [
+					'linear'      => __( 'Linear', 'wpr-addons' ),
+					'logarithmic' => __( 'Logarithmic', 'wpr-addons' ),
+				],
+				'default'            => 'linear',
+				// 'condition' => [
+				// 	'display_y_ticks' => 'true'
+				// ],
+				'frontend_available' => true,
+			]
+		);
+
+		$this->add_control(
 			'exclude_dataset_on_click',
 			[
 				'label'   => esc_html__('Exclude Dataset On Click', 'wpr-addons'),
@@ -184,6 +215,17 @@ class Wpr_Charts extends Widget_Base {
 				'condition' => [
 					'chart_type' => ['bar', 'bar_horizontal'],
 				]
+			]
+		);
+
+		$this->add_control(
+			'inner_datalabels',
+			[
+				'label'   => esc_html__('Inner Datalabels', 'wpr-addons'),
+				'type'    => Controls_Manager::SWITCHER ,
+				'default' => 'false',
+				'return_value' => 'true',
+				'separator' => 'before',
 			]
 		);
 
@@ -333,7 +375,7 @@ class Wpr_Charts extends Widget_Base {
 				'label_block' => true,
 				'condition'   => [
 					'data_source' => 'custom',
-					'chart_type' => ['bar', 'bar_horizontal', 'line', 'radar']
+					// 'chart_type' => ['bar', 'bar_horizontal', 'line', 'radar']
 				],
 			]
 		);
@@ -889,6 +931,19 @@ class Wpr_Charts extends Widget_Base {
 		);
 
 		$this->add_control(
+			'tooltips_percent',
+			[
+				'label'              => __( 'Convert Values to percent', 'wpr-addons' ),
+				'type'               => Controls_Manager::SWITCHER,
+				'return_value'       => 'true',
+				'frontend_available' => true,
+				'condition' => [
+					'show_chart_tooltip' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control(
 			'trigger_tooltip_on',
 			[
 				'label'   => esc_html__('Show Tooltip On', 'wpr-addons'),
@@ -945,6 +1000,9 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Lines', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
+				'condition' => [
+					'chart_type!' => ['bar', 'bar_horizontal'],
+				]
 			]
         );
 
@@ -956,9 +1014,6 @@ class Wpr_Charts extends Widget_Base {
 				'default' => 'yes',
 				'return_value' => 'yes',
 				'separator' => 'before',
-				'condition' => [
-					'chart_type!' => ['bar', 'bar_horizontal'],
-				]
 			]
 		);
 
@@ -1025,6 +1080,17 @@ class Wpr_Charts extends Widget_Base {
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
         );
+
+		$this->add_control(
+			'inner_datalabels_color', [
+				'label'       => esc_html__('Datalabels Color', 'wpr-addons'),
+				'type'        => Controls_Manager::COLOR,
+				'default' => '#FFF',
+				'condition' => [
+					'inner_datalabels' => 'true'
+				]
+			]
+		);
 
 		$this->add_responsive_control(
 			'chart_padding',
@@ -1542,18 +1608,6 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 
-		// $this->add_control(
-		// 	'legend_font_family',
-		// 	[
-		// 		'label'   => esc_html__('Font Style', 'wpr-addons'),
-		// 		'type'    => Controls_Manager::SELECT,
-		// 		'default' => '',
-		// 		'options' => [
-		// 		],
-
-		// 	]
-		// );
-
 		$this->add_control(
 			'legend_font_weight',
 			[
@@ -1893,6 +1947,7 @@ class Wpr_Charts extends Widget_Base {
 		} else {
 			if(is_array($charts_data_set) && sizeof($charts_data_set)) {
 				$chart_data_number_values = [];
+				$chart_data_number_values2 = [];
 				$chart_background_colors = [];
 				$chart_background_hover_colors = [];
 				$chart_data_border_colors = [];
@@ -1903,8 +1958,16 @@ class Wpr_Charts extends Widget_Base {
 				foreach($charts_data_set AS $labels_data):
 					$data_charts_array['labels'][] = $labels_data['chart_data_label'];
 				endforeach;
+
+				foreach($charts_data_set as $key=>$chart_data_array_keys) {
+					$chart_data_number_values2[$key] = [];
+				}
 				
-				foreach($charts_data_set as $chart_data) {
+				foreach($charts_data_set as $key=>$chart_data) {
+					$outer_key = $key;
+					foreach($charts_data_set as $key=>$chart_data_test) {
+						array_push($chart_data_number_values2[$outer_key], array_map('floatval', explode(',', trim($chart_data_test['chart_data_set'], ',')))[$outer_key]);
+					}
 					array_push($chart_data_number_values, array_map('floatval', explode(',', trim($chart_data['chart_data_set'], ',')))[0]);
 					array_push($chart_background_colors, trim($chart_data['chart_data_background_color']));
 					array_push($chart_background_hover_colors, trim($chart_data['chart_data_background_color_hover']));
@@ -1913,10 +1976,15 @@ class Wpr_Charts extends Widget_Base {
 					array_push($chart_data_border_width, trim($chart_data['chart_data_border_width']));
 					!empty($settings['column_width_x']) ? array_push($chart_data_bar_percentage, trim($chart_data['column_width_x'])) : '';
 				}
+			
+				if(!empty($charts_labels_data)):
+					$data_charts_array_test = explode(',', trim($charts_labels_data));
+				endif;
 
+				foreach($data_charts_array_test as $key=>$data_test) {
 					$data_charts_array['datasets'][] = [
-						'label' => 'Label Placeholder', // test with fixed value 
-						'data' => $chart_data_number_values,
+						'label' => $data_test, // test with fixed value 
+						'data' => $chart_data_number_values2[$key],
 						'backgroundColor' => $chart_background_colors,
 						'hoverBackgroundColor' => $chart_background_hover_colors,
 						'borderColor' => $chart_data_border_colors,
@@ -1924,6 +1992,7 @@ class Wpr_Charts extends Widget_Base {
 						'borderWidth' => $chart_data_border_width,
 						'barPercentage' => $chart_data_bar_percentage,
 					];
+				}
 			}
 		}
 
@@ -1938,7 +2007,11 @@ class Wpr_Charts extends Widget_Base {
         $layout_settings = [
 			'data_source' => $data_source,
             'chart_type' => $settings['chart_type'],
+			'stacked_bar_chart' => !empty($settings['stacked_bar_chart']) ? $settings['stacked_bar_chart'] : false,
+            'data_type' => $settings['data_type'],
 			'chart_padding' => $chart_padding['size'],
+			'inner_datalabels' => $inner_datalabels,
+			'inner_datalabels_color' => $inner_datalabels_color,
 			'ticks_padding_x' => !empty($ticks_padding_x['size']) ? $ticks_padding_x['size'] : '',
 			'ticks_color_x' => $chart_ticks_color_x,
 			'ticks_font_family_x' => $ticks_font_family_x,
@@ -1981,6 +2054,7 @@ class Wpr_Charts extends Widget_Base {
 			'title_font_weight' => $title_font_weight,
 			'title_padding' => $chart_title_padding['size'],
 			'show_chart_tooltip' => $show_chart_tooltip,
+			'tooltips_percent' => $tooltips_percent,
 			'chart_interaction_mode' => $chart_interaction_mode,
 			'tooltip_position' => $tooltip_position,
 			'tooltip_padding' => $tooltip_padding['size'],
