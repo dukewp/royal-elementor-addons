@@ -34,7 +34,8 @@ class Wpr_Particles {
 			'wpr_particles_apply_changes',
 			[
 				'type' => Controls_Manager::RAW_HTML,
-				'raw' => '<div class="elementor-update-preview editor-wpr-preview-update" style="background-color: #fff;"><div class="elementor-update-preview-title">Update changes to page</div><div class="elementor-update-preview-button-wrapper"><div style="text-align: right;"><button class="elementor-update-preview-button elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply</button></div>',
+				'raw' => '<div class="elementor-update-preview editor-wpr-preview-update"><span>Update changes to Preview</span><button class="elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply</button>',
+				'separator' => 'after'
 			]
 		);
 

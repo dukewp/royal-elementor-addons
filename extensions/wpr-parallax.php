@@ -33,7 +33,8 @@ class Wpr_Parallax_Scroll {
             'wpr_parallax',
             [
                 'type' => Controls_Manager::RAW_HTML,
-                'raw' => '<div class="elementor-update-preview editor-wpr-preview-update" style="background-color: #fff;"><div class="elementor-update-preview-title">Update changes to page</div><div class="elementor-update-preview-button-wrapper"><div style="text-align: right;"><button class="elementor-update-preview-button elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply</button></div>',
+                'raw' => '<div class="elementor-update-preview editor-wpr-preview-update"><span>Update changes to Preview</span><button class="elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply</button>',
+                'separator' => 'after'
             ]
         );
         
@@ -42,7 +43,7 @@ class Wpr_Parallax_Scroll {
         $element->add_control(
             'parallax_video_tutorial',
             [
-                'raw' => '<a href="https://www.youtube.com/watch?v=DcDeQ__lJbw" target="_blank">Watch Video Tutorial <span class="dashicons dashicons-video-alt3"></span></a>',
+                'raw' => '<br><a href="https://www.youtube.com/watch?v=DcDeQ__lJbw" target="_blank">Watch Video Tutorial <span class="dashicons dashicons-video-alt3"></span></a>',
                 'type' => Controls_Manager::RAW_HTML,
             ]
         );

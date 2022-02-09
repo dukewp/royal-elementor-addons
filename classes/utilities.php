@@ -23,7 +23,7 @@ class Utilities {
 			'WooCommerce Grid' => ['woo-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-woo-grid'],
 			'Image Grid' => ['media-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-gallery-grid'],
 			'Magazine Grid' => ['magazine-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-magazine-grid'],
-			'Posts Timeline' => ['posts-timeline', '', ''],
+			'Posts Timeline' => ['posts-timeline', 'https://royal-elementor-addons.com/elementor-timeline-widget/', ''],
 			'Advanced Slider' => ['advanced-slider', 'https://royal-elementor-addons.com/elementor-advanced-slider-widget/', ''],
 			'Testimonial' => ['testimonial', 'https://royal-elementor-addons.com/elementor-testimonials-slider-widget/', ''],
 			'Nav Menu' => ['nav-menu', 'http://royal-elementor-addons.com/elementor-menu-widget/', ''],
@@ -51,9 +51,9 @@ class Utilities {
 			'Search Form' => ['search', 'https://royal-elementor-addons.com/elementor-search-widget/', ''],
 			'Back to Top' => ['back-to-top', 'https://royal-elementor-addons.com/elementor-back-to-top-widget/', ''],
 			'Phone Call' => ['phone-call', 'https://royal-elementor-addons.com/elementor-phone-call-widget/', ''],
+			'Lottie Animations' => ['lottie-animations', 'https://royal-elementor-addons.com/elementor-lottie-animation-widget/?ref=rea-plugin-backend-elements-widget-prev', ''],
 			'Site Logo' => ['logo', '', ''],
 			'Popup Trigger' => ['popup-trigger', '', ''],
-			'Lottie Animations' => ['lottie-animations', '', ''],
 			// 'Random Image' => ['random-image', '', ''],
 			// 'Author Box' => 'author-box',
 		];
@@ -709,7 +709,7 @@ class Utilities {
 	** Check for New Free Users
 	*/
 	public static function is_new_free_user() {
-		return !wpr_fs()->can_use_premium_code() && intval(get_option('royal_elementor_addons_activation_time')) > 1243792039;
+		return !wpr_fs()->can_use_premium_code() && intval(get_option('royal_elementor_addons_activation_time')) > 1643803820;
 	}
 
 }
