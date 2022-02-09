@@ -110,6 +110,7 @@ class Wpr_Parallax_Scroll {
             [
                 'label' => __( 'Choose Image', 'wpr-addons' ),
                 'type' => Controls_Manager::MEDIA,
+                'devices' => [ 'desktop', 'mobile' ],
                 'default' => [
                     'url' => Utils::get_placeholder_image_src(),
                 ],
