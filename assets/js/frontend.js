@@ -230,7 +230,8 @@
 							speed: $scope.attr('speed-data'),
 						});
 					} else if ( WprElements.editorCheck() ) {
-						$scope.css('background-image', 'url("' + $scope.find('.wpr-jarallax').attr('bg-image-editor') + '")');
+						var backgroundImage = $scope.find('.wpr-jarallax').attr('bg-image-editor');
+						$scope.css('background-image', 'url("' + backgroundImage + '")');
 						$scope.jarallax({
 							type: $scope.find('.wpr-jarallax').attr('scroll-effect-editor'),
 							speed: $scope.find('.wpr-jarallax').attr('speed-data-editor')

@@ -105,7 +105,7 @@ class Wpr_Parallax_Scroll {
             Utilities::upgrade_pro_notice( $element, Controls_Manager::RAW_HTML, 'parallax-background', 'scroll_effect', ['pro-op','pro-sclo','pro-scrlo'] );
         }
 
-        $element->add_control(
+        $element->add_responsive_control(
             'bg_image',
             [
                 'label' => __( 'Choose Image', 'wpr-addons' ),
@@ -348,6 +348,7 @@ class Wpr_Parallax_Scroll {
                     'id' => 'wpr-test-parallax',
                     'speed-data' => $settings['speed'],
                     'bg-image' => $settings['bg_image']['url'],
+                    'bg-image-mobile' => !empty($settings['bg_image_mobile']['url']) ? $settings['bg_image_mobile']['url'] : $settings['bg_image']['url'],
                     'scroll-effect' => $settings['scroll_effect'],
                 ] );
 
@@ -383,7 +384,7 @@ class Wpr_Parallax_Scroll {
         ob_start();
         
         if ( 'on' === get_option('wpr-parallax-background', 'on') ) {
-            echo '<div class="wpr-jarallax" speed-data-editor="{{settings.speed}}" scroll-effect-editor="{{settings.scroll_effect}}" bg-image-editor="{{settings.bg_image.url}}"></div>';
+            echo '<div class="wpr-jarallax" speed-data-editor="{{settings.speed}}" scroll-effect-editor="{{settings.scroll_effect}}" bg-image-editor="{{settings.bg_image.url}}" bg-image-mobile-editor="{{settings.bg_image_mobile.url}}"></div>';
         }
         // Multi Layer
         if ( 'on' === get_option('wpr-parallax-multi-layer', 'on') ) {
