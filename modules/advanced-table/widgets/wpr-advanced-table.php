@@ -2545,7 +2545,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 
 		ob_start();
 		if($url_ext === 'csv' || str_contains($url_ext2['dirname'], 'docs.google.com/spreadsheets')) { 
-			echo $this->wpr_parse_csv_to_table($url, true, $custom_pagination, $sorting_icon, $settings);
+			echo $this->wpr_parse_csv_to_table($url, $settings, $custom_pagination, $sorting_icon, true);
 		} else {
 			echo '<p class="wpr-no-csv-file-found">'. esc_html__('Please provide an csv file', 'wpr-addons') .'</p>';
 		}
@@ -2553,7 +2553,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 
 	}
 
-	protected function wpr_parse_csv_to_table($filename, $header=true, $custom_pagination, $sorting_icon, $settings) {
+	protected function wpr_parse_csv_to_table($filename, $settings, $custom_pagination, $sorting_icon, $header=true) {
 
 		$handle = fopen($filename, "r");
 		//display header row if true
