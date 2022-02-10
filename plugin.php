@@ -111,7 +111,7 @@ class Plugin {
 
 		// Rating Notice 
 		require WPR_ADDONS_PATH . 'classes/rating-notice.php';
-		require WPR_ADDONS_PATH . 'classes/test-notice.php';
+		require WPR_ADDONS_PATH . 'classes/templates-block-notice.php';
 
 		// Admin Files
 		if ( is_admin() ) {

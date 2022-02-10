@@ -216,4 +216,9 @@ function royal_elementor_addons_activation_time() {//TODO: Try to locate this in
 	}
 }
 
-register_activation_hook( __FILE__, 'royal_elementor_addons_activation_time' );
+function royal_elementor_addons_deactivate() {
+	delete_option('wpr_templates_block_dismiss_notice');
+}
+
+register_activation_hook( __FILE__, 'royal_elementor_addons_activation_time' );	
+register_deactivation_hook( __FILE__, 'royal_elementor_addons_deactivate' );
