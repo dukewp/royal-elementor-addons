@@ -113,6 +113,7 @@ class WPR_Templates_Loop {
 	** Render Conditions Popup
 	*/
 	public static function render_conditions_popup( $canvas = false ) {
+		
 	?>
 
     <div class="wpr-condition-popup-wrap wpr-admin-popup-wrap">

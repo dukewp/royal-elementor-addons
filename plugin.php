@@ -117,6 +117,9 @@ class Plugin {
 			// Plugin Options
 			require WPR_ADDONS_PATH . 'admin/plugin-options.php';
 
+			// Premade Blocks
+			require WPR_ADDONS_PATH . 'admin/premade-blocks.php';
+
 			// Templates Kit
 			require WPR_ADDONS_PATH . 'admin/templates-kit.php';
 
