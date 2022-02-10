@@ -81,7 +81,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 
 	public function add_control_testimonial_icon() {
 		$this->add_control(
-			'testimonial_icon ',
+			'testimonial_icon',
 			[
 				'label' => esc_html__( 'Select Quote Icon', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
@@ -702,7 +702,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 		$this->add_control_testimonial_icon();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'testimonial', 'testimonial_icon', ['pro-svg'] );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'testimonial', 'testimonial_icon' , ['pro-svg'] );
 
 		$this->add_control(
 			'testimonial_icon_position',
@@ -715,7 +715,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 					'inner' => esc_html__( 'Inner Content', 'wpr-addons' ),
 				],
 				'condition' => [
-					'icon!' => '',
+					'testimonial_icon!' => '', // why just icon ?
 				],
 				'render_type' => 'template',
 			]
