@@ -590,15 +590,6 @@ class Wpr_Charts extends Widget_Base {
 		);
 
 		$this->add_control(
-			'x_axis_conditions',
-			[
-				'label' => esc_html__( 'X-Axis', 'wpr-addons' ),
-				'type' => Controls_Manager::HEADING,
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
 			'reverse_x',
 			[
 				'label' => esc_html__( 'Reverse', 'wpr-addons' ),
@@ -608,7 +599,32 @@ class Wpr_Charts extends Widget_Base {
 				'separator' => 'before',
 				'condition' => [
 					'show_chart_legend' => 'yes',
+					'chart_type' => ['bar_horizontal']
 				]
+			]
+		);
+
+		$this->add_control(
+			'reverse_y',
+			[
+				'label' => esc_html__( 'Reverse', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'no',
+				'return_value' => 'yes',
+				'separator' => 'before',
+				'condition' => [
+					'show_chart_legend' => 'yes',
+					'chart_type' => ['bar', 'line']
+				]
+			]
+		);
+
+		$this->add_control(
+			'x_axis_conditions',
+			[
+				'label' => esc_html__( 'X-Axis', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
 			]
 		);
 
@@ -685,20 +701,6 @@ class Wpr_Charts extends Widget_Base {
 				'label' => esc_html__( 'Y-Axis', 'wpr-addons' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'reverse_y',
-			[
-				'label' => esc_html__( 'Reverse', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'no',
-				'return_value' => 'yes',
-				'separator' => 'before',
-				'condition' => [
-					'show_chart_legend' => 'yes',
-				]
 			]
 		);
 
@@ -1020,7 +1022,7 @@ class Wpr_Charts extends Widget_Base {
 		);
 
 		$this->add_control(
-			'tooltip_position',
+			'chart_tooltip_position',
 			[
 				'label'   => esc_html__('Position', 'wpr-addons'),
 				'type'    => Controls_Manager::SELECT,
@@ -2255,7 +2257,7 @@ class Wpr_Charts extends Widget_Base {
 			'show_chart_tooltip' => $show_chart_tooltip,
 			'tooltips_percent' => $tooltips_percent,
 			'chart_interaction_mode' => $chart_interaction_mode,
-			'tooltip_position' => $tooltip_position,
+			'tooltip_position' => $chart_tooltip_position,
 			'tooltip_padding' => $tooltip_padding['size'],
 			'tooltip_caret_size' => $tooltip_caret_size['size'],
 			'chart_tooltip_bg_color' => $chart_tooltip_bg_color,
