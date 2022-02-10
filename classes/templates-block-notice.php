@@ -53,7 +53,6 @@ class WprTemplatesBlockNotice {
         jQuery( document ).ready( function() {
             jQuery(document).on( 'click', '.notice-dismiss', function() {
                 jQuery(document).find('.wpr-test-notice').slideUp();
-                alert();
                 jQuery.post({
                     url: ajaxurl,
                     data: {
