@@ -5,6 +5,7 @@ use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Text_Shadow;
+use Elementor\Group_Control_Text_Stroke;
 use Elementor\Group_Control_Typography;
 use Elementor\Core\Schemes\Typography;
 use Elementor\Core\Schemes\Color;
@@ -125,11 +126,46 @@ class Wpr_Post_Title extends Widget_Base {
 		);
 
 		$this->add_group_control(
+			Group_Control_Text_Stroke::get_type(),
+			[
+				'name' => 'text_stroke',
+				'selector' => '{{WRAPPER}} .wpr-post-title',
+			]
+		);
+
+		$this->add_group_control(
 			Group_Control_Text_Shadow::get_type(),
 			[
 				'name' => 'title_shadow',
 				'selector' => '{{WRAPPER}} .wpr-post-title',
 				'separator' => 'after',
+			]
+		);
+
+		$this->add_control(
+			'blend_mode',
+			[
+				'label' => esc_html__( 'Blend Mode', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'' => esc_html__( 'Normal', 'wpr-addons' ),
+					'multiply' => 'Multiply',
+					'screen' => 'Screen',
+					'overlay' => 'Overlay',
+					'darken' => 'Darken',
+					'lighten' => 'Lighten',
+					'color-dodge' => 'Color Dodge',
+					'saturation' => 'Saturation',
+					'color' => 'Color',
+					'difference' => 'Difference',
+					'exclusion' => 'Exclusion',
+					'hue' => 'Hue',
+					'luminosity' => 'Luminosity',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-post-title' => 'mix-blend-mode: {{VALUE}}',
+				],
+				'separator' => 'none',
 			]
 		);
 

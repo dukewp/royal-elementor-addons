@@ -812,10 +812,10 @@ class Wpr_Author_Box extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 2,
-					'right' => 2,
-					'bottom' => 2,
-					'left' => 2,
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-author-box-btn' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -877,7 +877,7 @@ class Wpr_Author_Box extends Widget_Base {
 			}
 
 			// Author Title
-			if ( '' !== $settings['author_name'] && '' !== $title ) {
+			if ( '' !== $settings['author_name'] && '' !== $title && 'yes' === $settings['author_title'] ) {
 				echo '<'. $settings['author_title_tag'] .' class="wpr-author-box-title">';
 					if ( 'posts' === $settings['author_title_links_to'] || $has_website ) {
 						echo '<a href="'. esc_url( $author_link ) .'" target="'. esc_attr($link_target) .'">'. $title .'</a>';
