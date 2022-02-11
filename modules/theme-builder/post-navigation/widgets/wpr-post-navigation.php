@@ -734,6 +734,9 @@ class Wpr_Post_Navigation extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-post-navigation svg' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-post-navigation-wrap i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-post-navigation-wrap svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
