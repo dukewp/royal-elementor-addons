@@ -733,8 +733,8 @@ class Wpr_Post_Info extends Widget_Base {
 				],
 				'range' => [
 					'px' => [
-						'min' => 5,
-						'max' => 200,
+						'min' => 0,
+						'max' => 25,
 					],
 					'%' => [
 						'min' => 5,
