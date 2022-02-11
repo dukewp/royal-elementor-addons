@@ -1103,10 +1103,10 @@ class Wpr_Post_Comments extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 2,
-					'right' => 2,
+					'top' => 0,
+					'right' => 0,
 					'bottom' => 0,
-					'left' => 2,
+					'left' => 0,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-comment-reply a' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -1343,10 +1343,10 @@ class Wpr_Post_Comments extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 2,
-					'right' => 2,
+					'top' => 0,
+					'right' => 0,
 					'bottom' => 0,
-					'left' => 2,
+					'left' => 0,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-comments-navigation a' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -1732,10 +1732,10 @@ class Wpr_Post_Comments extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 2,
-					'right' => 2,
+					'top' => 0,
+					'right' => 0,
 					'bottom' => 0,
-					'left' => 2,
+					'left' => 0,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-comment-form input[type=text]' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -1986,10 +1986,10 @@ class Wpr_Post_Comments extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 2,
-					'right' => 2,
+					'top' => 0,
+					'right' => 0,
 					'bottom' => 0,
-					'left' => 2,
+					'left' => 0,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-submit-comment' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
