@@ -317,10 +317,6 @@ class Wpr_Post_Info extends Widget_Base {
 				'skin' => 'inline',
 				'label_block' => false,
 				'separator' => 'before',
-				'default' => [
-					'value' => 'fas fa-star',
-					'library' => 'fa-solid',
-				],
 			]
 		);
 
