@@ -313,8 +313,14 @@ class Wpr_Post_Info extends Widget_Base {
 			'post_info_extra_icon',
 			[
 				'label' => esc_html__( 'Extra Icon', 'wpr-addons' ),
-				'type' => Controls_Manager::ICON,
-				'separator' => 'before'
+				'type' => Controls_Manager::ICONS,
+				'skin' => 'inline',
+				'label_block' => false,
+				'separator' => 'before',
+				'default' => [
+					'value' => 'fas fa-star',
+					'library' => 'fa-solid',
+				],
 			]
 		);
 
@@ -1328,7 +1334,7 @@ class Wpr_Post_Info extends Widget_Base {
 			echo '<span class="wpr-post-info-text">';
 				// Extra Icon
 				if ( '' !== $settings['post_info_extra_icon'] ) {
-					echo '<i class="'. esc_attr( $settings['post_info_extra_icon'] ) .'"></i>';
+					echo \Elementor\Icons_Manager::render_icon( $settings['post_info_extra_icon'], [ 'aria-hidden' => 'true' ] );
 				}
 
 				// Extra Text
