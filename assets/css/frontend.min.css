@@ -1259,6 +1259,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 .wpr-post-nav-fixed.wpr-post-navigation img {
     position: absolute;
     top: 0;
+    max-width: none;
 }
 
 .wpr-post-nav-fixed.wpr-post-nav-prev {
