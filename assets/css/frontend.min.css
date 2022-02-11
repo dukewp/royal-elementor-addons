@@ -1234,6 +1234,13 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     display: flex;
 }
 
+.wpr-posts-navigation-svg-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
 .wpr-post-navigation-wrap>div:last-child {
     margin-right: 0 !important;
 }

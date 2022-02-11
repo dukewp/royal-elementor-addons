@@ -626,6 +626,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 				'default' => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-posts-navigation-svg-wrapper svg' => 'fill: {{VALUE}}',
 				],
 			]
 		);
@@ -788,7 +789,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation-wrap i' => 'height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-post-navigation i' => 'height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-posts-navigation-svg-wrapper' => 'height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-posts-navigation-svg-wrapper' => 'height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-post-nav-fixed.wpr-post-navigation img' => 'height: {{SIZE}}{{UNIT}};',
 				],
 			]
@@ -1272,7 +1273,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 		}
 
 		if ( 'yes' === $settings['post_nav_arrows'] && $location === $settings['post_nav_arrows_loc'] && false !== strpos( $settings['post_nav_arrow_icon'], 'svg-' ) ) {
-			echo  '<span class="wpr-posts-navigation-svg-wrapper">' . Utilities::get_wpr_icon( $settings['post_nav_arrow_icon'], $dir ) . '</span>';
+			echo  '<div class="wpr-posts-navigation-svg-wrapper">' . Utilities::get_wpr_icon( $settings['post_nav_arrow_icon'], $dir ) . '</div>';
 		} else if ( 'yes' === $settings['post_nav_arrows'] && $location === $settings['post_nav_arrows_loc'] && false == strpos( $settings['post_nav_arrow_icon'], 'svg-' ) ) {
 			echo  Utilities::get_wpr_icon( $settings['post_nav_arrow_icon'], $dir );
 		}
