@@ -306,7 +306,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 				'default' => 'medium',
 				'condition' => [
 					'post_nav_image' => 'yes',
-					// 'post_nav_layout!' => 'fixed'
+					'post_nav_layout!' => 'fixed'
 				],
 			]
 		);
@@ -637,7 +637,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation i' => 'background-color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-post-navigation svg' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-posts-navigation-svg-wrapper' => 'background-color: {{VALUE}};',
 				]
 			]
 		);
@@ -1273,7 +1273,9 @@ class Wpr_Post_Navigation extends Widget_Base {
 			$settings['post_nav_arrows_loc'] = 'separate';
 		}
 
-		if ( 'yes' === $settings['post_nav_arrows'] && $location === $settings['post_nav_arrows_loc'] ) {
+		if ( 'yes' === $settings['post_nav_arrows'] && $location === $settings['post_nav_arrows_loc'] && false !== strpos( $settings['post_nav_arrow_icon'], 'svg-' ) ) {
+			echo  '<span class="wpr-posts-navigation-svg-wrapper">' . Utilities::get_wpr_icon( $settings['post_nav_arrow_icon'], $dir ) . '</span>';
+		} else if ( 'yes' === $settings['post_nav_arrows'] && $location === $settings['post_nav_arrows_loc'] && false == strpos( $settings['post_nav_arrow_icon'], 'svg-' ) ) {
 			echo  Utilities::get_wpr_icon( $settings['post_nav_arrow_icon'], $dir );
 		}
 	}
