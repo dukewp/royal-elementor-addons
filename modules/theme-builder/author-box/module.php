@@ -1,5 +1,5 @@
 <?php
-namespace WprAddons\Modules\AuthorBox;
+namespace WprAddons\Modules\ThemeBuilder\AuthorBox;
 
 use WprAddons\Base\Module_Base;
 

@@ -55,7 +55,6 @@ class Utilities {
 			'Site Logo' => ['logo', '', ''],
 			'Popup Trigger' => ['popup-trigger', '', ''],
 			// 'Random Image' => ['random-image', '', ''],
-			// 'Author Box' => 'author-box',
 		];
 	}
 
@@ -85,6 +84,7 @@ class Utilities {
 			'post-info',
 			'post-navigation',
 			'post-comments',
+			'author-box',
 		];
 	}
 
