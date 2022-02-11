@@ -171,19 +171,17 @@ class Wpr_Post_Navigation extends Widget_Base {
 			[
 				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => 'eicon-arrow',
-				'options' => [
-					'eicon-arrow' => esc_html__( 'Long Arrow 1', 'wpr-addons' ),
-					'fa fa-long-arrow' => esc_html__( 'Long Arrow 2', 'wpr-addons' ),
-					'fa fa-angle' => esc_html__( 'Angle', 'wpr-addons' ),
-					'fa fa-angle-double' => esc_html__( 'Double Angle', 'wpr-addons' ),
-					'fa fa-chevron' => esc_html__( 'Chevron', 'wpr-addons' ),
-					'fa fa-chevron-circle' => esc_html__( 'Chevron Circle', 'wpr-addons' ),
-					'fa fa-caret' => esc_html__( 'Caret', 'wpr-addons' ),
-					'fa fa-arrow' => esc_html__( 'Arrow', 'wpr-addons' ),
-					'fa fa-arrow-circle' => esc_html__( 'Arrow Circle', 'wpr-addons' ),
-					'fa fa-arrow-circle-o' => esc_html__( 'Arrow Circle 2', 'wpr-addons' ),
-				],
+				'default' => 'svg-angle-1-left',
+				'options' => Utilities::get_svg_icons_array( 'arrows', [
+					'fas fa-angle' => esc_html__( 'Angle', 'wpr-addons' ),
+					'fas fa-angle-double' => esc_html__( 'Angle Double', 'wpr-addons' ),
+					'fas fa-arrow' => esc_html__( 'Arrow', 'wpr-addons' ),
+					'fas fa-arrow-alt-circle' => esc_html__( 'Arrow Circle', 'wpr-addons' ),
+					'far fa-arrow-alt-circle' => esc_html__( 'Arrow Circle Alt', 'wpr-addons' ),
+					'fas fa-long-arrow-alt' => esc_html__( 'Long Arrow', 'wpr-addons' ),
+					'fas fa-chevron' => esc_html__( 'Chevron', 'wpr-addons' ),
+					'svg-icons' => esc_html__( 'SVG Icons -----', 'wpr-addons' ),
+				] ),
 				'condition' => [
 					'post_nav_arrows' => 'yes',
 				]
@@ -758,7 +756,9 @@ class Wpr_Post_Navigation extends Widget_Base {
 					'size' => 50,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-post-navigation i' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-post-navigation-wrap i' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-post-navigation-wrap svg' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-post-navigation svg' => 'width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-post-nav-fixed.wpr-post-nav-prev img' => 'left: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-post-nav-fixed.wpr-post-nav-next img' => 'right: {{SIZE}}{{UNIT}};',
 				],
@@ -782,7 +782,9 @@ class Wpr_Post_Navigation extends Widget_Base {
 					'size' => 50,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-post-navigation i' => 'height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-post-navigation-wrap i' => 'height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-post-navigation-wrap svg' => 'height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-post-navigation svg' => 'height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-post-nav-fixed.wpr-post-navigation img' => 'height: {{SIZE}}{{UNIT}};',
 				],
 			]
@@ -1266,7 +1268,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 		}
 
 		if ( 'yes' === $settings['post_nav_arrows'] && $location === $settings['post_nav_arrows_loc'] ) {
-			echo '<i class="'. esc_attr( $settings['post_nav_arrow_icon'] ) .'-'. $dir .'"></i>';
+			echo  Utilities::get_wpr_icon( $settings['post_nav_arrow_icon'], $dir );
 		}
 	}
 
