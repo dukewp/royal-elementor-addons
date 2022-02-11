@@ -757,6 +757,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation-wrap i' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-post-navigation i' => 'width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-post-navigation-wrap svg' => 'width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-post-navigation svg' => 'width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-post-nav-fixed.wpr-post-nav-prev img' => 'left: {{SIZE}}{{UNIT}};',
