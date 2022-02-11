@@ -552,13 +552,42 @@ class Wpr_AdvancedTable extends Widget_Base {
 			]
 		);
 
-		$repeater->add_control(
+		$repeater->add_responsive_control(
 			'header_col_img_size',
 			[
-				'label' => esc_html__( 'Image Size(px)', 'wpr-addons'),
-				'default' => '25',
-				'type' => Controls_Manager::NUMBER,
-				'label_block' => false,
+				'label' => __( 'Image Size', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => ['px', '%'],
+				'range' => [
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					],
+					'px' => [
+						'min' => 0,
+						'max' => 2000
+					]
+				],
+				'devices' => [ 'desktop', 'tablet', 'mobile' ],
+				'default' => [
+					'size' => 100,
+					'unit' => '%'
+				],
+				'desktop_default' => [
+					'size' => 100,
+					'unit' => '%',
+				],
+				'tablet_default' => [
+					'size' => 100,
+					'unit' => '%',
+				],
+				'mobile_default' => [
+					'size' => 100,
+					'unit' => '%',
+				],
+				'selectors' => [
+					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-data-table-th-img' => 'width: {{SIZE}}{{UNIT}} !important; height: auto !important;',
+				],
 				'condition' => [
 					'header_icon_type'	=> 'image'
 				]
@@ -838,20 +867,51 @@ class Wpr_AdvancedTable extends Widget_Base {
 					'url' => \Elementor\Utils::get_placeholder_image_src(),
 				],
 				'condition' => [
-					'td_icon_type'	=> 'image'
+					'td_icon' => 'yes',
+					'td_icon_type!'	=> ['none', 'icon']
 				]
 			]
 		);
 
-		$repeater->add_control(
+		$repeater->add_responsive_control(
 			'td_col_img_size',
 			[
-				'label' => esc_html__( 'Image Size(px)', 'wpr-addons'),
-				'default' => '25',
-				'type' => Controls_Manager::NUMBER,
-				'label_block' => false,
+				'label' => __( 'Image Size', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => ['px', '%'],
+				'range' => [
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					],
+					'px' => [
+						'min' => 0,
+						'max' => 2000
+					]
+				],
+				'devices' => [ 'desktop', 'tablet', 'mobile' ],
+				'default' => [
+					'size' => 100,
+					'unit' => '%'
+				],
+				'desktop_default' => [
+					'size' => 100,
+					'unit' => '%',
+				],
+				'tablet_default' => [
+					'size' => 100,
+					'unit' => '%',
+				],
+				'mobile_default' => [
+					'size' => 100,
+					'unit' => '%',
+				],
+				'selectors' => [
+					'{{WRAPPER}} {{CURRENT_ITEM}} img' => 'width: {{SIZE}}{{UNIT}} !important; height: auto !important;',
+				],
 				'condition' => [
-					'td_icon_type'	=> 'image'
+					'td_icon' => 'yes',
+					'td_icon_type!'	=> ['none', 'icon']
 				]
 			]
 		);
@@ -2645,7 +2705,6 @@ class Wpr_AdvancedTable extends Widget_Base {
 			$this->add_render_attribute('wpr_table_th_img'.$i, [
 				'src'	=> esc_url( $item['header_col_img']['url'] ),
 				'class'	=> 'wpr-data-table-th-img',
-				'style'	=> "width:{$item['header_col_img_size']}px;",
 				'alt'	=> esc_attr(get_post_meta($item['header_col_img']['id'], '_wp_attachment_image_alt', true))
 			]);
 
@@ -2670,7 +2729,6 @@ class Wpr_AdvancedTable extends Widget_Base {
             $this->add_render_attribute('wpr_table_td_img'.$j, [
                 'src'	=> esc_url( $table_td[$j]['col_img']['url'] ),
                 'class'	=> 'wpr-data-table-th-img',
-                'style'	=> "width:{$table_td[$j]['col_img_size']}px;",
                 'alt'	=> esc_attr(get_post_meta($table_td[$j]['col_img']['id'], '_wp_attachment_image_alt', true))
             ]);
 
@@ -2764,7 +2822,6 @@ class Wpr_AdvancedTable extends Widget_Base {
 							'icon_position' => $content_row['td_icon_position'],
 							'icon_item' 	=> $content_row['choose_td_icon'],
 							'col_img' => $content_row['td_col_img'],
-							'col_img_size' => $content_row['td_col_img_size'],
 							'class' => ['elementor-repeater-item-'.$content_row['_id'], 'wpr-table-td'],
 						];
 				}
@@ -2777,13 +2834,15 @@ class Wpr_AdvancedTable extends Widget_Base {
 					<tr class="wpr-table-head-row wpr-table-row">
 						<?php $i = 0; foreach ($settings['table_header'] as $item) { 
 							$this->add_render_attribute('th_class'.$i, [
-								'class' => ['wpr-table-th', 'elementor-repeater-item-'.$item['_id']],
+								'class' => ['wpr-table-th', 'elementor-repeater-item-'.$item['_id'], ($item['header_icon_position'] === 'top') ? 'wpr-flex-column' : (($item['header_icon_position'] === 'bottom') ? 'wpr-flex-column-reverse' : '')],
 								'colspan' => $item['header_colspan'],
 							]); ?>
 								<th <?php echo $this->get_render_attribute_string('th_class'.$i); ?>>
 									<?php $item['header_icon'] === 'yes'  && $item['header_icon_position'] == 'left' ? $this->render_th_icon_or_image($item, $i) : '' ?>
 									<span class="wpr-table-text"><?php echo $item['table_th']; ?></span>
 									<?php $item['header_icon'] === 'yes' && $item['header_icon_position'] == 'right' ? $this->render_th_icon_or_image($item, $i) : '' ?>
+									<?php echo $sorting_icon; ?>
+									<?php $item['header_icon'] === 'yes' && ($item['header_icon_position'] == 'top' || $item['header_icon_position'] == 'bottom')? $this->render_th_icon_or_image($item, $i) : '' ?>
 									<?php echo $sorting_icon; ?>
 								</th>
 						<?php $i++; } ?>
@@ -2809,8 +2868,8 @@ class Wpr_AdvancedTable extends Widget_Base {
 								]); ?>
 								
 								<td <?php echo $this->get_render_attribute_string('tbody_td_attributes'.$i.$j); ?>>
-									<div class="wpr-td-content-wrapper">
-										<?php $table_td[$j]['icon'] === 'yes' && $table_td[$j]['icon_position'] === 'left' ? $this->render_td_icon_or_image($table_td, $j) : '' ?>
+									<div class="wpr-td-content-wrapper <?php echo ($table_td[$j]['icon_position'] === 'top') ? 'wpr-flex-column' : (($table_td[$j]['icon_position'] === 'bottom') ? 'wpr-flex-column-reverse' : '') ?>">
+										<?php $table_td[$j]['icon'] === 'yes' && ($table_td[$j]['icon_position'] === 'left' || $table_td[$j]['icon_position'] === 'top' || $table_td[$j]['icon_position'] === 'bottom') ? $this->render_td_icon_or_image($table_td, $j) : '' ?>
 										<a href="<?php echo esc_url($table_td[$j]['link']['url']) ?>" target="<?php echo $table_td[$j]['external'] ?>">
 											<span class="wpr-table-text"><?php echo $table_td[$j]['content']; ?></span>
 										</a>
