@@ -784,6 +784,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation-wrap i' => 'height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-post-navigation i' => 'width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-post-navigation-wrap svg' => 'height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-post-navigation svg' => 'height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-post-nav-fixed.wpr-post-navigation img' => 'height: {{SIZE}}{{UNIT}};',
