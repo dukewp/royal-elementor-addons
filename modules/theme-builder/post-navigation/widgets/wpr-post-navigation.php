@@ -306,7 +306,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 				'default' => 'medium',
 				'condition' => [
 					'post_nav_image' => 'yes',
-					'post_nav_layout!' => 'fixed'
+					// 'post_nav_layout!' => 'fixed'
 				],
 			]
 		);
