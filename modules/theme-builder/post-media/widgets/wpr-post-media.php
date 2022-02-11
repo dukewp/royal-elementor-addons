@@ -1614,7 +1614,8 @@ class Wpr_Post_Media extends Widget_Base {
 		// Get Settings
 		$settings = $this->get_settings();
 		$thumb_id = get_post_thumbnail_id();
-		$post_format = 'gallery' === get_post_format() ? 'gallery' : 'standard';
+		$post_format = get_post_format();
+		// $post_format = 'gallery' === get_post_format() ? 'gallery' : 'standard'; // WTF was this???
 
 		echo '<div class="wpr-featured-media-wrap" data-caption="'. esc_attr( $post_format ) .'">';
 
