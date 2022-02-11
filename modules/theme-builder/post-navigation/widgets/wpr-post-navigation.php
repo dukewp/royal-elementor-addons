@@ -671,6 +671,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 				'default' => '#54595f',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation i:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-posts-navigation-svg-wrapper:hover svg' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -682,6 +683,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation i:hover' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-posts-navigation-svg-wrapper:hover' => 'background-color: {{VALUE}}',
 				]
 			]
 		);
