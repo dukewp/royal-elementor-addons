@@ -724,12 +724,12 @@ class Wpr_Post_Info extends Widget_Base {
 		$this->add_responsive_control(
 			'post_info_text_width',
 			[
-				'label' => esc_html__( 'Width', 'wpr-addons' ),
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
 					'unit' => 'px',
-					'size' => 100
+					'size' => 25
 				],
 				'range' => [
 					'px' => [
@@ -742,7 +742,7 @@ class Wpr_Post_Info extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-post-info li .wpr-post-info-text span' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-post-info li .wpr-post-info-text span' => 'margin-right: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
