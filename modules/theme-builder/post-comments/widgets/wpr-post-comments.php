@@ -1433,7 +1433,7 @@ class Wpr_Post_Comments extends Widget_Base {
 		$this->add_control(
 			'cf_title_bd_type',
 			[
-				'label' => esc_html__( 'Style', 'wpr-addons' ),
+				'label' => esc_html__( 'Border Style', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'none' => esc_html__( 'None', 'wpr-addons' ),
@@ -2234,7 +2234,7 @@ class Wpr_Post_Comments extends Widget_Base {
 
 				// Text Field
 				$defaults['comment_field']  = '<div class="wpr-comment-form-text">' . $text_label;
-				$defaults['comment_field'] .= '<textarea name="comment" placeholder="'. $text_ph .'"></textarea>';
+				$defaults['comment_field'] .= '<textarea name="comment" placeholder="'. $text_ph .'" cols="45" rows="8" maxlength="65525"></textarea>';
 				$defaults['comment_field'] .= '</div>';
 
 				// Submit Button
