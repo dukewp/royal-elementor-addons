@@ -650,6 +650,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation i' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-posts-navigation-svg-wrapper' => 'border-color: {{VALUE}}',
 				],
 			]
 		);
@@ -671,7 +672,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 				'default' => '#54595f',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation i:hover' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-posts-navigation-svg-wrapper:hover svg' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-posts-navigation-svg-wrapper:hover svg' => 'fill: {{VALUE}}',
 				],
 			]
 		);
@@ -695,6 +696,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation i:hover' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-posts-navigation-svg-wrapper:hover' => 'border-color: {{VALUE}}',
 				],
 			]
 		);
@@ -813,6 +815,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 				'default' => 'none',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation i' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .wpr-posts-navigation-svg-wrapper' => 'border-style: {{VALUE}};',
 				],
 				'separator' => 'before',
 			]
@@ -832,6 +835,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation i' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-posts-navigation-svg-wrapper' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
 					'post_nav_arrow_border_type!' => 'none',
