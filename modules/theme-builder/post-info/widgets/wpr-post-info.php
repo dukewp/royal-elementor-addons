@@ -729,7 +729,7 @@ class Wpr_Post_Info extends Widget_Base {
 				'size_units' => [ 'px', '%' ],
 				'default' => [
 					'unit' => 'px',
-					'size' => 25
+					'size' => 10
 				],
 				'range' => [
 					'px' => [
