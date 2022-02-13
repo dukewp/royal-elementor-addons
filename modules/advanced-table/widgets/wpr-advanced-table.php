@@ -214,7 +214,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 
 		$this->add_control(
 			'enable_row_pagination', [
-				'label' => __('Table Row Pagination', 'wpr-addons'),
+				'label' => __('Table Row Index', 'wpr-addons'),
 				'type' => \Elementor\Controls_Manager::SWITCHER,
 				'label_on' => __('Yes', 'wpr-addons'),
 				'label_off' => __('No', 'wpr-addons'),
@@ -226,7 +226,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 
 		$this->add_control(
 			'enable_custom_pagination', [
-				'label' => __('Table Page Pagination', 'wpr-addons'),
+				'label' => __('Table Navigation', 'wpr-addons'),
 				'type' => \Elementor\Controls_Manager::SWITCHER,
 				'label_on' => __('Yes', 'wpr-addons'),
 				'label_off' => __('No', 'wpr-addons'),
@@ -340,18 +340,18 @@ class Wpr_AdvancedTable extends Widget_Base {
 			]
 		);
 
-        $this->add_control(
-            'table_export_csv_button',
-            [
-                'label' => __('Export table as CSV file', 'wpr-addons'),
-                'type'  => Controls_Manager::BUTTON,
-                'text'  => __('Export', 'wpr-addons'),
-                'event' => 'my-table-export',
-				'condition' => [
-					'enable_table_export' => 'yes'
-				]
-            ]
-        );
+        // $this->add_control(
+        //     'table_export_csv_button',
+        //     [
+        //         'label' => __('Export table as CSV file', 'wpr-addons'),
+        //         'type'  => Controls_Manager::BUTTON,
+        //         'text'  => __('Export', 'wpr-addons'),
+        //         'event' => 'my-table-export',
+		// 		'condition' => [
+		// 			'enable_table_export' => 'yes'
+		// 		]
+        //     ]
+        // );
 
 		$this->end_controls_section();
 
@@ -1240,10 +1240,11 @@ class Wpr_AdvancedTable extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} th:first-child' => 'border-top-left-radius: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} th:last-child' => 'border-top-right-radius: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} tr:last-child td:first-child' => 'border-bottom-left-radius: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} tr:last-child td:last-child' => 'border-bottom-right-radius: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}} th:first-child' => 'border-top-left-radius: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}} th:last-child' => 'border-top-right-radius: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}} tr:last-child td:first-child' => 'border-bottom-left-radius: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}} tr:last-child td:last-child' => 'border-bottom-right-radius: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-table-inner-container table' => 'border-radius: {{SIZE}}{{UNIT}};'
 				],
 				'separator' => 'before',
 			]
@@ -2348,7 +2349,6 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'label' => __( 'Vertical Gutter', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::SLIDER,
 				'size_units' => ['px'],
-				'render_type' => 'template',
 				'range' => [
 					'px' => [
 						'min' => 0,
@@ -2500,7 +2500,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 		$this->add_control(
             'pagination_alignment',
             [
-                'label'        => __('Alignment', 'wpr-addons'),
+                'label'        => __('Alignment', 'wpr-addons'), 
                 'type'         => Controls_Manager::CHOOSE,
                 'label_block'  => false,
                 'default'      => 'center',
@@ -2521,6 +2521,9 @@ class Wpr_AdvancedTable extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-table-custom-pagination' => 'display: flex; justify-content: {{VALUE}}; align-items: center;',
+				],
+				'condition' => [
+					'enable_entry_info!' => 'yes'
 				]
             ]
         );
@@ -2645,49 +2648,46 @@ class Wpr_AdvancedTable extends Widget_Base {
 		echo '</div>'; // <?php echo Utilities::get_wpr_icon( $settings['pagination_nav_icons_left'], '' ); 
 
 		if ( 'yes' == $settings['enable_custom_pagination'] ) {
-
 			$this->render_custom_pagination($settings, $countRows);
-
 		} 
 
 		fclose($handle);
 	}
 
 	public function render_custom_pagination($settings, $countRows) { ?>
-			<div class="wpr-table-pagination-outer-cont">
-			<div class="wpr-table-pagination-cont">
-			<ul class="wpr-table-custom-pagination">
-				<div class="wpr-table-custom-pagination-inner-cont">
+		<div class="wpr-table-pagination-outer-cont">
+		<div class="wpr-table-pagination-cont">
+		<ul class="wpr-table-custom-pagination">
+			<div class="wpr-table-custom-pagination-inner-cont">
 				<li class='wpr-table-custom-pagination-prev wpr-table-prev-next wpr-table-custom-pagination-list'><?php \Elementor\Icons_Manager::render_icon( $settings['pagination_nav_icons_left'], [ 'aria-hidden' => 'true' ] ); ?></i></li>
 
-					<?php 
-					$total_rows = 0;
-					$item_index = 0;
+				<?php $total_rows = 0;
+					  $item_index = 0;
 
-					if ( 'custom' === $settings['choose_table_type'] ) {
-						foreach ( $settings['table_content_rows'] as $item ) {
-							if ( 'row' === $item['table_content_row_type'] ) {
-								$total_rows++;
-							}
+				if ( 'custom' === $settings['choose_table_type'] ) {
+					foreach ( $settings['table_content_rows'] as $item ) {
+						if ( 'row' === $item['table_content_row_type'] ) {
+							$total_rows++;
 						}
 					}
+				}
 		
-					// $exact_number_of_pages = $total_rows/$settings['table_items_per_page'];
-					$total_pages = 'custom' === $settings['choose_table_type'] ? ceil($total_rows/$settings['table_items_per_page']) : ceil($countRows/$settings['table_items_per_page']);
+				// $exact_number_of_pages = $total_rows/$settings['table_items_per_page'];
+				$total_pages = 'custom' === $settings['choose_table_type'] ? ceil($total_rows/$settings['table_items_per_page']) : ceil($countRows/$settings['table_items_per_page']);
 					
-					for (  $i = 1; $i <= $total_pages; $i++ ) {	?>
-		
-							<li class="wpr-table-custom-pagination-list wpr-table-custom-pagination-list-item <?php echo $i === 1 ? 'wpr-active-pagination-item' : ''; ?>">
-								<span><?php echo $i; ?></span>
-							</li>
-		
-						<?php } ?>
+				for (  $i = 1; $i <= $total_pages; $i++ ) {	?>
+	
+						<li class="wpr-table-custom-pagination-list wpr-table-custom-pagination-list-item <?php echo $i === 1 ? 'wpr-active-pagination-item' : ''; ?>">
+							<span><?php echo $i; ?></span>
+						</li>
+	
+					<?php } ?>
 					
 				<li class='wpr-table-custom-pagination-next wpr-table-prev-next wpr-table-custom-pagination-list wpr-table-prev-arrow wpr-table-arrow'><?php \Elementor\Icons_Manager::render_icon( $settings['pagination_nav_icons_right'], [ 'aria-hidden' => 'true' ] ); ?></li>
-				</div>
-			</ul>
 			</div>
-			</div>
+		</ul>
+		</div>
+		</div>
 	<?php }
 
 	public function render_th_icon($item) {
@@ -2806,45 +2806,45 @@ class Wpr_AdvancedTable extends Widget_Base {
 
 				if( $content_row['table_content_row_type'] == 'col' ) {
 
-						$table_tr_keys = array_keys( $table_tr );
+					$table_tr_keys = array_keys( $table_tr );
 					$last_key = end( $table_tr_keys );
 
-						$table_td[] = [
-							'row_id'		=> $table_tr[$last_key]['id'],
-							'type'			=> $content_row['table_content_row_type'],
-							'content'		=> $content_row['table_td'],
-							'colspan'		=> $content_row['table_content_row_colspan'],
-							'rowspan'		=> $content_row['table_content_row_rowspan'],
-							'link'   		=> $content_row['cell_link'],
-							'external' => $content_row['cell_link']['is_external'] == true ? '_blank' : '_self',
-							'icon_type' => $content_row['td_icon_type'],
-							'icon'			=> $content_row['td_icon'],
-							'icon_position' => $content_row['td_icon_position'],
-							'icon_item' 	=> $content_row['choose_td_icon'],
-							'col_img' => $content_row['td_col_img'],
-							'class' => ['elementor-repeater-item-'.$content_row['_id'], 'wpr-table-td'],
-						];
+					$table_td[] = [
+						'row_id'		=> $table_tr[$last_key]['id'],
+						'type'			=> $content_row['table_content_row_type'],
+						'content'		=> $content_row['table_td'],
+						'colspan'		=> $content_row['table_content_row_colspan'],
+						'rowspan'		=> $content_row['table_content_row_rowspan'],
+						'link'   		=> $content_row['cell_link'],
+						'external' => $content_row['cell_link']['is_external'] == true ? '_blank' : '_self',
+						'icon_type' => $content_row['td_icon_type'],
+						'icon'			=> $content_row['td_icon'],
+						'icon_position' => $content_row['td_icon_position'],
+						'icon_item' 	=> $content_row['choose_td_icon'],
+						'col_img' => $content_row['td_col_img'],
+						'class' => ['elementor-repeater-item-'.$content_row['_id'], 'wpr-table-td'],
+					];
 				}
 			} ?>
 
-			  <table class="wpr-advanced-table" id="wpr-advanced-table">
-				<?php if ( $settings['table_header'] ) { ?>
+			<table class="wpr-advanced-table" id="wpr-advanced-table">
+			<?php if ( $settings['table_header'] ) { ?>
 					
 				<thead>
 					<tr class="wpr-table-head-row wpr-table-row">
-						<?php $i = 0; foreach ($settings['table_header'] as $item) { 
-							$this->add_render_attribute('th_class'.$i, [
-								'class' => ['wpr-table-th', 'elementor-repeater-item-'.$item['_id'], ($item['header_icon_position'] === 'top') ? 'wpr-flex-column' : (($item['header_icon_position'] === 'bottom') ? 'wpr-flex-column-reverse' : '')],
-								'colspan' => $item['header_colspan'],
-							]); ?>
-								<th <?php echo $this->get_render_attribute_string('th_class'.$i); ?>>
-									<?php $item['header_icon'] === 'yes'  && $item['header_icon_position'] == 'left' ? $this->render_th_icon_or_image($item, $i) : '' ?>
-									<span class="wpr-table-text"><?php echo $item['table_th']; ?></span>
-									<?php $item['header_icon'] === 'yes' && $item['header_icon_position'] == 'right' ? $this->render_th_icon_or_image($item, $i) : '' ?>
-									<?php echo $sorting_icon; ?>
-									<?php $item['header_icon'] === 'yes' && ($item['header_icon_position'] == 'top' || $item['header_icon_position'] == 'bottom')? $this->render_th_icon_or_image($item, $i) : '' ?>
-									<?php echo $sorting_icon; ?>
-								</th>
+					<?php $i = 0; foreach ($settings['table_header'] as $item) { 
+					$this->add_render_attribute('th_class'.$i, [
+						'class' => ['wpr-table-th', 'elementor-repeater-item-'.$item['_id'], ($item['header_icon_position'] === 'top') ? 'wpr-flex-column' : (($item['header_icon_position'] === 'bottom') ? 'wpr-flex-column-reverse' : '')],
+						'colspan' => $item['header_colspan'],
+						]); ?>
+						<th <?php echo $this->get_render_attribute_string('th_class'.$i); ?>>
+							<?php $item['header_icon'] === 'yes'  && $item['header_icon_position'] == 'left' ? $this->render_th_icon_or_image($item, $i) : '' ?>
+							<span class="wpr-table-text"><?php echo $item['table_th']; ?></span>
+							<?php $item['header_icon'] === 'yes' && $item['header_icon_position'] == 'right' ? $this->render_th_icon_or_image($item, $i) : '' ?>
+							<?php echo $sorting_icon; ?>
+							<?php $item['header_icon'] === 'yes' && ($item['header_icon_position'] == 'top' || $item['header_icon_position'] == 'bottom')? $this->render_th_icon_or_image($item, $i) : '' ?>
+							<?php echo $sorting_icon; ?>
+						</th>
 						<?php $i++; } ?>
 					</tr>
 				</thead>
@@ -2858,36 +2858,32 @@ class Wpr_AdvancedTable extends Widget_Base {
 
 						?>
 					<tr <?php echo $this->get_render_attribute_string('table_row_attributes'.$i) ?>>
-						<?php
-						for( $j = 0; $j < count( $table_td ); $j++ ) {
+					<?php for( $j = 0; $j < count( $table_td ); $j++ ) {
 							if( $table_tr[$i]['id'] == $table_td[$j]['row_id'] ) {
 								$this->add_render_attribute('tbody_td_attributes'.$i.$j, [
-									'colspan' => $table_td[$j]['colspan'] > 1 ? $table_td[$j]['colspan'] : '',
-									'rowspan' => $table_td[$j]['rowspan'] > 1 ? $table_td[$j]['rowspan'] : '',
-									'class' => $table_td[$j]['class']
+								'colspan' => $table_td[$j]['colspan'] > 1 ? $table_td[$j]['colspan'] : '',
+								'rowspan' => $table_td[$j]['rowspan'] > 1 ? $table_td[$j]['rowspan'] : '',
+								'class' => $table_td[$j]['class']
 								]); ?>
 								
-								<td <?php echo $this->get_render_attribute_string('tbody_td_attributes'.$i.$j); ?>>
-									<div class="wpr-td-content-wrapper <?php echo ($table_td[$j]['icon_position'] === 'top') ? 'wpr-flex-column' : (($table_td[$j]['icon_position'] === 'bottom') ? 'wpr-flex-column-reverse' : '') ?>">
-										<?php $table_td[$j]['icon'] === 'yes' && ($table_td[$j]['icon_position'] === 'left' || $table_td[$j]['icon_position'] === 'top' || $table_td[$j]['icon_position'] === 'bottom') ? $this->render_td_icon_or_image($table_td, $j) : '' ?>
-										<a href="<?php echo esc_url($table_td[$j]['link']['url']) ?>" target="<?php echo $table_td[$j]['external'] ?>">
-											<span class="wpr-table-text"><?php echo $table_td[$j]['content']; ?></span>
-										</a>
-										<?php $table_td[$j]['icon'] === 'yes' && $table_td[$j]['icon_position'] === 'right' ? $this->render_td_icon_or_image($table_td, $j) : '' ?>
-									</div>
-								</td>
-
+							<td <?php echo $this->get_render_attribute_string('tbody_td_attributes'.$i.$j); ?>>
+								<div class="wpr-td-content-wrapper <?php echo ($table_td[$j]['icon_position'] === 'top') ? 'wpr-flex-column' : (($table_td[$j]['icon_position'] === 'bottom') ? 'wpr-flex-column-reverse' : '') ?>">
+									<?php $table_td[$j]['icon'] === 'yes' && ($table_td[$j]['icon_position'] === 'left' || $table_td[$j]['icon_position'] === 'top' || $table_td[$j]['icon_position'] === 'bottom') ? $this->render_td_icon_or_image($table_td, $j) : '' ?>
+									<a href="<?php echo esc_url($table_td[$j]['link']['url']) ?>" target="<?php echo $table_td[$j]['external'] ?>">
+										<span class="wpr-table-text"><?php echo $table_td[$j]['content']; ?></span>
+									</a>
+									<?php $table_td[$j]['icon'] === 'yes' && $table_td[$j]['icon_position'] === 'right' ? $this->render_td_icon_or_image($table_td, $j) : '' ?>
+								</div>
+							</td>
 							<?php }
-							}
-						?>
+							} ?>
 					</tr>
 			        <?php endfor; ?>
 				</tbody>
 			</table>
-		  </div>
 		</div>
-    <?php }
-		  
+		</div>
+    	<?php }
 			if ( 'yes' == $settings['enable_custom_pagination'] ) {
 					$this->render_custom_pagination($settings, null);
 			}
