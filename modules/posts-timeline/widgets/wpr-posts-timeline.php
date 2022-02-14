@@ -332,6 +332,31 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'horizontal_timeline_progressfill',
+			[
+				'label' => esc_html__( 'Hide Progressbar Fill', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Show', 'your-plugin' ),
+				'label_off' => esc_html__( 'Hide', 'your-plugin' ),
+				'default' => 'yes',
+				'label_block' => false,
+				'render_type' => 'template',
+				'selectors_dictionary' => [
+					'' => 'display: none;'
+				],
+				'selectors' => [
+					'{{WRAPPER}} .swiper-pagination-progressbar-fill' => '{{VALUE}}',
+				],
+				'condition' => [
+					'timeline_layout'   => [
+					   'horizontal-bottom',
+					   'horizontal'
+					],
+				]
+			]
+		);
+
 		$this->add_control_group_autoplay();
 				
 		$this->add_control(
