@@ -5496,8 +5496,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 
-		var_dump($this->get_tax_query_args());
-
 		global $paged;
 		$paged = 1;
 		$this->my_query = 'dynamic' === $settings['timeline_content'] ? new \WP_Query ($this->get_main_query_args()) : '';
