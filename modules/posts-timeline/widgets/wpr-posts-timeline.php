@@ -5536,6 +5536,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$data = $settings['timeline_repeater_list'];
 		
 		$autoplay = ! wpr_fs()->can_use_premium_code() && !isset($settings['swiper_autoplay']) ? '' : $settings['swiper_autoplay'];
+		$pause_on_hover = ! wpr_fs()->can_use_premium_code() && !isset($settings['pause_on_hover']) ? '' : $settings['pause_on_hover'];
 		$swiper_delay = ! wpr_fs()->can_use_premium_code() && !isset($settings['swiper_delay']) ? 0 : $settings['swiper_delay'];
 		$swiper_speed = $settings['swiper_speed'];
 		$slidesHeight = $settings['equal_height_slides'];
