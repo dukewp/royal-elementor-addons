@@ -1557,8 +1557,6 @@ class Wpr_Post_Media extends Widget_Base {
 		if ( false === strpos( $meta_value, '<iframe ' ) ) {
 			add_filter( 'oembed_result', [ $utilities, 'filter_oembed_results' ], 50, 3 );
 				$track_url = $this->wp_oembed_get( $meta_value );
-				// $track_url = $meta_value;
-				var_dump($track_url);
 			remove_filter( 'oembed_result', [ $utilities, 'filter_oembed_results' ], 50 );
 
 		// Iframe
