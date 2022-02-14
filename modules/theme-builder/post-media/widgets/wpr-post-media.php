@@ -1540,6 +1540,7 @@ class Wpr_Post_Media extends Widget_Base {
 		// Video
 		if ( 'video' === $post_format ) {
 			$track_url = str_replace( '&auto_play=true', '', $track_url );
+			var_dump($track_url);
 			echo '<div class="elementor-fit-aspect-ratio">';
 				echo '<iframe src="'. esc_url( $track_url ) .'"></iframe>';
 			echo '</div>';
