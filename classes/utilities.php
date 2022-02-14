@@ -394,33 +394,6 @@ class Utilities {
 		return  $matches[1] .'&auto_play=true';
 	}
 
-	public static function wp_oembed_get( $url = '', $width = 0, $height = 0 ) { //TODO: locate this function or remove if possible
-
-		// vars
-		$embed = '';
-		$res   = array(
-			'width'  => $width,
-			'height' => $height,
-		);
-
-		// get emebed
-		$embed = @wp_oembed_get( $url, $res );
-
-		// try shortcode
-		if ( ! $embed ) {
-
-			 // global
-			global $wp_embed;
-
-			// get emebed
-			$embed = $wp_embed->shortcode( $res, $url );
-
-		}
-
-		// return
-		return $embed;
-	}
-
 
 	/**
 	** Get Custom Meta Keys
