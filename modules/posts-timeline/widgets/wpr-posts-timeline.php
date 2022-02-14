@@ -339,16 +339,16 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => esc_html__( 'Hide Progressbar Fill', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'default' => 'no',
+				'label_on' => esc_html__( 'Show', 'your-plugin' ),
+				'label_off' => esc_html__( 'Hide', 'your-plugin' ),
+				'default' => 'yes',
 				'label_block' => false,
 				'render_type' => 'template',
 				'selectors_dictionary' => [
-					'yes' => 'display: none',
-					'no' => ''
+					'' => 'display: none;'
 				],
 				'selectors' => [
-					'{{WRAPPER}} .swiper-pagination-progressbar-fill' => '{{VALUE}};'
+					'{{WRAPPER}} .swiper-pagination-progressbar-fill' => '{{VALUE}}',
 				],
 				'condition' => [
 					'timeline_layout'   => [
@@ -5520,7 +5520,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 	protected function render() {
 		$settings = $this->get_settings_for_display();
-
+		var_dump($settings['horizontal_timeline_progressfill']);
 		global $paged;
 		$paged = 1;
 		$this->my_query = 'dynamic' === $settings['timeline_content'] ? new \WP_Query ($this->get_main_query_args()) : '';
