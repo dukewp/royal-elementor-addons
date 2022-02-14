@@ -333,6 +333,31 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		);
 
 		$this->add_control_group_autoplay();
+
+		$this->add_control(
+			'horizontal_timeline_progressfill',
+			[
+				'label' => esc_html__( 'Hide Progressbar Fill', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'default' => 'no',
+				'label_block' => false,
+				'render_type' => 'template',
+				'selectors_dictionary' => [
+					'yes' => 'display: none',
+					'no' => ''
+				],
+				'selectors' => [
+					'{{WRAPPER}} .swiper-pagination-progressbar-fill' => '{{VALUE}};'
+				],
+				'condition' => [
+					'timeline_layout'   => [
+					   'horizontal-bottom',
+					   'horizontal'
+					],
+				]
+			]
+		);
 				
 		$this->add_control(
 			'swiper_speed',
@@ -5495,8 +5520,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 	protected function render() {
 		$settings = $this->get_settings_for_display();
-
-		var_dump($this->get_tax_query_args());
 
 		global $paged;
 		$paged = 1;
