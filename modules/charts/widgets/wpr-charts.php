@@ -827,7 +827,6 @@ class Wpr_Charts extends Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'default' => 'top',
 				'label_block' => false,
-				// 'render_type' => 'template',
 				'options' => [
 					'top' => esc_html__( 'Top', 'wpr-addons' ),
 					'right' => esc_html__( 'Right', 'wpr-addons' ),
@@ -848,7 +847,6 @@ class Wpr_Charts extends Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'default' => 'center',
 				'label_block' => false,
-				// 'render_type' => 'template',
 				'options' => [
 					'start' => esc_html__( 'Start', 'wpr-addons' ),
 					'center' => esc_html__( 'Center', 'wpr-addons' ),
@@ -920,7 +918,6 @@ class Wpr_Charts extends Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'default' => 'top',
 				'label_block' => false,
-				// 'render_type' => 'template',
 				'options' => [
 					'top' => esc_html__( 'Top', 'wpr-addons' ),
 					'right' => esc_html__( 'Right', 'wpr-addons' ),
@@ -941,7 +938,6 @@ class Wpr_Charts extends Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'default' => 'center',
 				'label_block' => false,
-				// 'render_type' => 'template',
 				'options' => [
 					'start' => esc_html__( 'Start', 'wpr-addons' ),
 					'center' => esc_html__( 'Center', 'wpr-addons' ),
