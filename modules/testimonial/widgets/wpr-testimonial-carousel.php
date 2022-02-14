@@ -704,7 +704,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'testimonial', 'testimonial_icon', ['pro-svg'] );
 
-		$this->add_control(
+		$this->add_control(//TODO: This option doesn't work properly
 			'testimonial_icon_position',
 			[
 				'type' => Controls_Manager::SELECT,
@@ -715,7 +715,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 					'inner' => esc_html__( 'Inner Content', 'wpr-addons' ),
 				],
 				'condition' => [
-					'testimonial_icon!' => '',
+					'testimonial_icon!' => 'none',
 				],
 				'render_type' => 'template',
 			]
@@ -2708,7 +2708,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 
 		<div class="wpr-testimonial-content-wrap">
 			<div class="wpr-testimonial-content-inner">
-			<?php if ( $settings['testimonial_icon_position'] === 'top' && ! empty( $settings['testimonial_icon'] ) ) : ?>
+			<?php if ( $settings['testimonial_icon'] !== 'none' && $settings['testimonial_icon_position'] === 'top' ) : ?>
 				<div class="wpr-testimonial-icon">
 					<?php echo Utilities::get_wpr_icon( $settings['testimonial_icon'], '' ); ?>
 				</div>
@@ -2724,7 +2724,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 
 			<?php if ( ! empty( $item['testimonial_content'] ) ) : ?>
 				<div class="wpr-testimonial-content">
-					<?php if ( $settings['testimonial_icon_position'] === 'inner' && ! empty( $settings['testimonial_icon'] ) ) : ?>
+					<?php if ( $settings['testimonial_icon'] !== 'none' && $settings['testimonial_icon_position'] === 'inner' ) : ?>
 					<div class="wpr-testimonial-icon">	
 						<?php echo Utilities::get_wpr_icon( $settings['testimonial_icon'], '' ); ?>
 					</div>

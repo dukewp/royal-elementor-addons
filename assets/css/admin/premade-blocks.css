@@ -31,7 +31,8 @@
   border-radius: 3px;
 }
 
-.wpr-premade-blocks-tutorial:hover {
+.wpr-premade-blocks-tutorial:hover,
+.wpr-premade-blocks-tutorial:focus {
   color: #fff;
   background: #5a39fb;
 }
