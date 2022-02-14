@@ -354,6 +354,16 @@ class Plugin {
 	public function register_scripts() {
 
 		wp_register_script(
+			'wpr-infinite-scroll',
+			WPR_ADDONS_URL . 'assets/js/lib/infinite-scroll/infinite-scroll' . $this->script_suffix() . '.js',
+			[
+				'jquery',
+			],
+			'3.0.5',
+			true
+		);
+
+		wp_register_script(
 			'wpr-isotope',
 			WPR_ADDONS_URL . 'assets/js/lib/isotope/isotope' . $this->script_suffix() . '.js',
 			[

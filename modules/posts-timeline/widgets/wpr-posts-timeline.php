@@ -39,7 +39,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 	public function get_script_depends() {
 		// TODO: separate infinite-scroll from isotope
-		return [ 'swiper', 'wpr-aos-js', 'wpr-isotope' ];
+		return [ 'swiper', 'wpr-aos-js', 'wpr-infinite-scroll' ];
 	}
 
 	public function get_style_depends() {
