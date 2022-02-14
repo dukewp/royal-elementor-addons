@@ -1517,33 +1517,6 @@ class Wpr_Post_Media extends Widget_Base {
 		}
 	}
 
-	public function wp_oembed_get( $url = '', $width = 0, $height = 0 ) { //TODO: locate this function or remove if possible
-
-		// vars
-		$embed = '';
-		$res   = array(
-			'width'  => $width,
-			'height' => $height,
-		);
-
-		// get emebed
-		$embed = @wp_oembed_get( $url, $res );
-
-		// try shortcode
-		if ( ! $embed ) {
-
-			 // global
-			global $wp_embed;
-
-			// get emebed
-			$embed = $wp_embed->shortcode( $res, $url );
-
-		}
-
-		// return
-		return $embed;
-	}
-
 	public function render_post_audio_video( $settings, $post_format ) {
 		$utilities = new Utilities();
 		$meta_value = get_post_meta( get_the_ID(), $settings[ 'featured_media_'. $post_format ], true );
@@ -1556,7 +1529,7 @@ class Wpr_Post_Media extends Widget_Base {
 		// URL
 		if ( false === strpos( $meta_value, '<iframe ' ) ) {
 			add_filter( 'oembed_result', [ $utilities, 'filter_oembed_results' ], 50, 3 );
-				$track_url = $this->wp_oembed_get( $meta_value );
+				$track_url = Utilities::wp_oembed_get( $meta_value );
 			remove_filter( 'oembed_result', [ $utilities, 'filter_oembed_results' ], 50 );
 
 		// Iframe
