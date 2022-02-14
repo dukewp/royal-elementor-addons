@@ -5317,7 +5317,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$this->horizontal_timeline_classes($settings);
 
 		echo '<div class="wpr-timeline-outer-container">';
-		echo '<div class="wpr-wrapper swiper-container '.$this->horizontal_inner_class.'" dir="'. $dir .'" data-slidestoshow = "'.esc_attr($this->slidesToShow).'" data-autoplay="'.esc_attr($autoplay).'" data-swiper-speed="'. esc_attr($swiper_speed) .'" data-swiper-delay="'. esc_attr($swiper_delay) .'" data-swiper-space-between="'. esc_attr($settings['story_info_gutter']) .'">';
+		echo '<div class="wpr-wrapper swiper-container '.$this->horizontal_inner_class.'" dir="'. $dir .'" data-slidestoshow = "'.esc_attr($this->slidesToShow).'" data-autoplay="'.esc_attr($autoplay).'" data-swiper-speed="'. esc_attr($swiper_speed) .'" data-swiper-delay="'. esc_attr($swiper_delay) .'" data-pause-on-hover = "'. esc_attr($this->pause_on_hover) .'" data-swiper-space-between="'. esc_attr($settings['story_info_gutter']) .'">';
 
 		echo '<div class="swiper-wrapper '. $this->horizontal_timeline_class .'">';
 			if ( is_array($data) ) {
@@ -5406,7 +5406,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		if( $this->my_query->have_posts() ) { 
 		
 		echo '<div class="wpr-timeline-outer-container">';
-				echo '<div class="wpr-wrapper swiper-container '. $this->horizontal_inner_class .'" dir="'. $dir .'" data-slidestoshow = "'.esc_attr($this->slidesToShow).'" data-autoplay="'.esc_attr($autoplay).'" data-swiper-speed="'. esc_attr($swiper_speed) .'" data-swiper-delay="'. esc_attr($swiper_delay) .'" data-swiper-space-between="'.$settings['story_info_gutter'].'">
+				echo '<div class="wpr-wrapper swiper-container '. $this->horizontal_inner_class .'" dir="'. $dir .'" data-slidestoshow = "'.esc_attr($this->slidesToShow).'" data-autoplay="'.esc_attr($autoplay).'" data-swiper-speed="'. esc_attr($swiper_speed) .'" data-swiper-delay="'. esc_attr($swiper_delay) .'" data-pause-on-hover = "'. esc_attr($this->pause_on_hover) .'" data-swiper-space-between="'.$settings['story_info_gutter'].'">
 					<div class="'.$this->horizontal_timeline_class.' swiper-wrapper">';
 					while( $this->my_query->have_posts() ) {
 						$this->my_query->the_post();
@@ -5503,6 +5503,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$data = $settings['timeline_repeater_list'];
 		
 		$autoplay = ! wpr_fs()->can_use_premium_code() && !isset($settings['swiper_autoplay']) ? '' : $settings['swiper_autoplay'];
+		$this->pause_on_hover = ! wpr_fs()->can_use_premium_code() && !isset($settings['pause_on_hover']) ? '' : $settings['pause_on_hover'];
 		$swiper_delay = ! wpr_fs()->can_use_premium_code() && !isset($settings['swiper_delay']) ? 0 : $settings['swiper_delay'];
 		$swiper_speed = $settings['swiper_speed'];
 		$slidesHeight = $settings['equal_height_slides'];
