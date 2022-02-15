@@ -127,84 +127,84 @@ class Wpr_Post_Media extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'featured_media_pfa_select',
-			[
-				'label' => esc_html__( 'Post Format Audio', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'default',
-				'options' => [
-					'default' => esc_html__( 'Featured Image', 'wpr-addons' ),
-					'meta' => esc_html__( 'Meta Value', 'wpr-addons' ),
-				],
-				'separator' => 'before'
-			]
-		);
+		// $this->add_control(
+		// 	'featured_media_pfa_select',
+		// 	[
+		// 		'label' => esc_html__( 'Post Format Audio', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'default' => 'default',
+		// 		'options' => [
+		// 			'default' => esc_html__( 'Featured Image', 'wpr-addons' ),
+		// 			'meta' => esc_html__( 'Meta Value', 'wpr-addons' ),
+		// 		],
+		// 		'separator' => 'before'
+		// 	]
+		// );
 
-		$this->add_control(
-			'featured_media_audio',
-			[
-				'label' => esc_html__( 'Audio Meta Value', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT2,
-				'default' => 'default',
-				'options' => $post_meta_keys[1],
-				'condition' => [
-					'featured_media_pfa_select' => 'meta',
-				],
-			]
-		);
+		// $this->add_control(
+		// 	'featured_media_audio',
+		// 	[
+		// 		'label' => esc_html__( 'Audio Meta Value', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SELECT2,
+		// 		'default' => 'default',
+		// 		'options' => $post_meta_keys[1],
+		// 		'condition' => [
+		// 			'featured_media_pfa_select' => 'meta',
+		// 		],
+		// 	]
+		// );
 
-		$this->add_control(
-			'featured_media_pfv_select',
-			[
-				'label' => esc_html__( 'Post Format Video', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'default',
-				'options' => [
-					'default' => esc_html__( 'Featured Image', 'wpr-addons' ),
-					'meta' => esc_html__( 'Meta Value', 'wpr-addons' ),
-				],
-			]
-		);
+		// $this->add_control(
+		// 	'featured_media_pfv_select',
+		// 	[
+		// 		'label' => esc_html__( 'Post Format Video', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'default' => 'default',
+		// 		'options' => [
+		// 			'default' => esc_html__( 'Featured Image', 'wpr-addons' ),
+		// 			'meta' => esc_html__( 'Meta Value', 'wpr-addons' ),
+		// 		],
+		// 	]
+		// );
 
-		$this->add_control(
-			'featured_media_video',
-			[
-				'label' => esc_html__( 'Video Meta Value', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT2,
-				'default' => 'default',
-				'options' => $post_meta_keys[1],
-				'condition' => [
-					'featured_media_pfv_select' => 'meta',
-				],
-			]
-		);
+		// $this->add_control(
+		// 	'featured_media_video',
+		// 	[
+		// 		'label' => esc_html__( 'Video Meta Value', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SELECT2,
+		// 		'default' => 'default',
+		// 		'options' => $post_meta_keys[1],
+		// 		'condition' => [
+		// 			'featured_media_pfv_select' => 'meta',
+		// 		],
+		// 	]
+		// );
 
-		$this->add_control(
-			'featured_media_pfg_select',
-			[
-				'label' => esc_html__( 'Post Format Gallery', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'default',
-				'options' => [
-					'default' => esc_html__( 'Featured Image', 'wpr-addons' ),
-					'meta' => esc_html__( 'Meta Value', 'wpr-addons' ),
-				],
-			]
-		);
+		// $this->add_control(
+		// 	'featured_media_pfg_select',
+		// 	[
+		// 		'label' => esc_html__( 'Post Format Gallery', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'default' => 'default',
+		// 		'options' => [
+		// 			'default' => esc_html__( 'Featured Image', 'wpr-addons' ),
+		// 			'meta' => esc_html__( 'Meta Value', 'wpr-addons' ),
+		// 		],
+		// 	]
+		// );
 
-		$this->add_control(
-			'featured_media_gallery',
-			[
-				'label' => esc_html__( 'Gallery Meta Value', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT2,
-				'default' => 'default',
-				'options' => $post_meta_keys[1],
-				'condition' => [
-					'featured_media_pfg_select' => 'meta',
-				],
-			]
-		);
+		// $this->add_control(
+		// 	'featured_media_gallery',
+		// 	[
+		// 		'label' => esc_html__( 'Gallery Meta Value', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SELECT2,
+		// 		'default' => 'default',
+		// 		'options' => $post_meta_keys[1],
+		// 		'condition' => [
+		// 			'featured_media_pfg_select' => 'meta',
+		// 		],
+		// 	]
+		// );
 
 		$this->end_controls_section(); // End Controls Section
 
@@ -1614,8 +1614,7 @@ class Wpr_Post_Media extends Widget_Base {
 		// Get Settings
 		$settings = $this->get_settings();
 		$thumb_id = get_post_thumbnail_id();
-		$post_format = get_post_format();
-		// $post_format = 'gallery' === get_post_format() ? 'gallery' : 'standard'; // WTF was this???
+		$post_format = 'standard';
 
 		echo '<div class="wpr-featured-media-wrap" data-caption="'. esc_attr( $post_format ) .'">';
 
