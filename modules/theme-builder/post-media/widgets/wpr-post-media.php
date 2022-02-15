@@ -861,6 +861,24 @@ class Wpr_Post_Media extends Widget_Base {
 		);
 
 		$this->add_control(
+			'image_caption_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-featured-media-caption span' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
             'image_caption_align_vr',
             [
                 'label' => esc_html__( 'Vertical Align', 'wpr-addons' ),
