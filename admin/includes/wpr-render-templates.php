@@ -217,6 +217,19 @@ class WPR_Render_Templates {
 
 			$footer_css_file->enqueue();
 		}
+
+		// Load Canvas Content Template CSS File
+		$canvas_template_id = Utilities::get_template_id(WPR_Conditions_Manager::canvas_page_content_display_conditions());
+
+		if ( false !== $canvas_template_id ) {
+			if ( class_exists( '\Elementor\Core\Files\CSS\Post' ) ) {
+				$footer_css_file = new \Elementor\Core\Files\CSS\Post( $canvas_template_id );
+			} elseif ( class_exists( '\Elementor\Post_CSS_File' ) ) {
+				$footer_css_file = new \Elementor\Post_CSS_File( $canvas_template_id );
+			}
+
+			$footer_css_file->enqueue();
+		}
 	}
 
 }
