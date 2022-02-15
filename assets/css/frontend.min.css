@@ -1488,6 +1488,11 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     margin-right: 10px
 }
 
+/* .wpr-post-info-author .wpr-post-info-text span,
+.wpr-post-info-author a span { 
+    vertical-align: middle !important;
+} */
+
 .wpr-post-info-custom-field a,
 .wpr-post-info-custom-field span {
     display: inline-block;
