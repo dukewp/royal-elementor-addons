@@ -752,9 +752,9 @@ class Wpr_Post_Navigation extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation i' => 'font-size: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-post-navigation svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}}',
+					'{{WRAPPER}} .wpr-post-navigation svg' => 'width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-post-navigation-wrap i' => 'font-size: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-post-navigation-wrap svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}}',
+					'{{WRAPPER}} .wpr-post-navigation-wrap svg' => 'width: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -805,7 +805,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation-wrap i' => 'height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-post-navigation i' => 'height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-posts-navigation-svg-wrapper' => 'height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-posts-navigation-svg-wrapper' => 'height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-post-nav-fixed.wpr-post-navigation img' => 'height: {{SIZE}}{{UNIT}};',
 				],
 			]
