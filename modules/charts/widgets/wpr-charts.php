@@ -2102,7 +2102,7 @@ class Wpr_Charts extends Widget_Base {
 				],
 			]
 		);
-
+		
 		$this->end_controls_section();
     }
 
@@ -2270,6 +2270,7 @@ class Wpr_Charts extends Widget_Base {
 			'show_lines' => isset($show_lines) ? $show_lines : '',
 			'line_dots' => isset($line_dots) ? $line_dots : '',
 			'line_dots_radius' => isset($line_dots_radius) ? $line_dots_radius['size'] : '',
+			'line_dots_radius_mobile' => isset($line_dots_radius_mobile) ? $line_dots_radius_mobile['size'] : '',
 			'border_dash_offset' => $border_dash_offset,
 			'border_dash_length' => $border_dash_length,
 			'border_dash_spacing' => $border_dash_spacing,
