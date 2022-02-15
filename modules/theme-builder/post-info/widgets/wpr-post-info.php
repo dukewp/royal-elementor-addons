@@ -646,8 +646,6 @@ class Wpr_Post_Info extends Widget_Base {
 				'default' => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-info li:not(.wpr-post-info-custom-field) i' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-post-info li:not(.wpr-post-info-custom-field) svg path' => 'fill: {{VALUE}}',
-					'{{WRAPPER}} .wpr-post-info li:not(.wpr-post-info-custom-field) svg' => 'fill: {{VALUE}}',
 				],
 				'separator' => 'after'
 			]
@@ -693,7 +691,6 @@ class Wpr_Post_Info extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-info li i' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-post-info li svg' => 'margin-right: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -1231,15 +1228,15 @@ class Wpr_Post_Info extends Widget_Base {
 
 		// Extra Icon & Text 
 		$this->render_extra_icon_text( $settings );
-
-		if ( 'yes' === $settings['post_info_show_avatar'] ) {
-			echo get_avatar( $author_id, $settings['post_info_avatar_size'] );
-		}
 		
 		// Wrap with Link
 		if ( 'yes' === $settings['post_info_link_wrap'] ) {
 			echo '<a href="'. esc_url( get_author_posts_url( $author_id ) ) .'">';
 		}
+
+			if ( 'yes' === $settings['post_info_show_avatar'] ) {
+				echo get_avatar( $author_id, $settings['post_info_avatar_size'] );
+			}
 
 			echo '<span>'. get_the_author_meta( 'display_name', $author_id ) .'</span>';
 
@@ -1333,7 +1330,7 @@ class Wpr_Post_Info extends Widget_Base {
 			echo '<span class="wpr-post-info-text">';
 				// Extra Icon
 				if ( '' !== $settings['post_info_extra_icon'] ) {
-					\Elementor\Icons_Manager::render_icon( $settings['post_info_extra_icon'], [ 'aria-hidden' => 'true' ] );
+					echo \Elementor\Icons_Manager::render_icon( $settings['post_info_extra_icon'], [ 'aria-hidden' => 'true' ] );
 				}
 
 				// Extra Text
