@@ -116,16 +116,16 @@ class Wpr_Post_Media extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'featured_media_lightbox',
-			[
-				'label' => esc_html__( 'Enable Lightbox Popup', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'prefix_class' => 'wpr-gallery-lightbox-',
-				'separator' => 'before'
-			]
-		);
+		// $this->add_control(
+		// 	'featured_media_lightbox',
+		// 	[
+		// 		'label' => esc_html__( 'Enable Lightbox Popup', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SWITCHER,
+		// 		'return_value' => 'yes',
+		// 		'prefix_class' => 'wpr-gallery-lightbox-',
+		// 		'separator' => 'before'
+		// 	]
+		// );
 
 		// $this->add_control(
 		// 	'featured_media_pfa_select',
@@ -902,6 +902,7 @@ class Wpr_Post_Media extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-featured-media-caption' => 'align-items: {{VALUE}}',
 				],
+				'separator' => 'before',
             ]
         );
 
@@ -929,7 +930,6 @@ class Wpr_Post_Media extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-featured-media-caption' => 'justify-content: {{VALUE}}',
 				],
-				'separator' => 'before',
             ]
         );
 
@@ -1511,9 +1511,9 @@ class Wpr_Post_Media extends Widget_Base {
 		$caption = wp_get_attachment_caption( $id );
 
 		// Lightbox
-		if ( 'yes' === $settings['featured_media_lightbox'] ) {
-			$lightbox = ' data-lightbox="'. esc_attr( $this->get_lightbox_settings( $settings ) ) .'"';
-		}
+		// if ( 'yes' === $settings['featured_media_lightbox'] ) {
+		// 	$lightbox = ' data-lightbox="'. esc_attr( $this->get_lightbox_settings( $settings ) ) .'"';
+		// }
 
 		if ( $id === get_post_thumbnail_id() && false === get_post_format() ) {
 			$show_caption = $settings['featured_media_caption'];
