@@ -858,6 +858,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation i' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-posts-navigation-svg-wrapper' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
 					'post_nav_layout!' => 'fixed',
@@ -879,6 +880,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation i' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-posts-navigation-svg-wrapper' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
