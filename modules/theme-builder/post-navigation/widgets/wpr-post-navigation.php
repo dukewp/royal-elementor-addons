@@ -458,6 +458,10 @@ class Wpr_Post_Navigation extends Widget_Base {
 			[
 				'name' => 'post_nav_background_filters',
 				'selector' => '{{WRAPPER}} .wpr-post-nav-overlay',
+				'condition' => [
+					'post_nav_image' => 'yes',
+					'post_nav_image_bg' => 'yes'
+				]
 			]
 		);
 
@@ -488,6 +492,10 @@ class Wpr_Post_Navigation extends Widget_Base {
 			[
 				'name' => 'post_nav_background_filters_hover',
 				'selector' => '{{WRAPPER}} .wpr-post-navigation:hover .wpr-post-nav-overlay',
+				'condition' => [
+					'post_nav_image' => 'yes',
+					'post_nav_image_bg' => 'yes'
+				]
 			]
 		);
 
@@ -542,7 +550,27 @@ class Wpr_Post_Navigation extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation-wrap > div' => 'margin-right: {{SIZE}}{{UNIT}};',
 				],
-				'separator' => 'after',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'post_nav_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 10,
+					'right' => 0,
+					'bottom' => 10,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-post-navigation-wrap.wpr-post-nav-dividers' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-post-nav-bg-images .wpr-post-navigation' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
 			]
 		);
 
@@ -570,26 +598,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation a' => 'align-items: {{VALUE}}',
 				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'post_nav_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 10,
-					'right' => 0,
-					'bottom' => 10,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-navigation-wrap.wpr-post-nav-dividers' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-post-nav-bg-images .wpr-post-navigation' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before',
+				'separator' => 'before'
 			]
 		);
 
@@ -717,6 +726,8 @@ class Wpr_Post_Navigation extends Widget_Base {
 				'step' => 0.1,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation i' => 'transition: color {{VALUE}}s, background-color {{VALUE}}s, border-color {{VALUE}}s',
+					'{{WRAPPER}} .wpr-posts-navigation-svg-wrapper svg' => 'transition: fill {{VALUE}}s',
+					'{{WRAPPER}} .wpr-posts-navigation-svg-wrapper' => 'transition: background-color {{VALUE}}s, border-color {{VALUE}}s',
 					'{{WRAPPER}} .wpr-post-nav-fixed.wpr-post-nav-hover img' => 'transition: all {{VALUE}}s ease',
 				],
 				'separator' => 'before',
