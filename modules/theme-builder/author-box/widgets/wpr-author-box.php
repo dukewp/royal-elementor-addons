@@ -877,7 +877,7 @@ class Wpr_Author_Box extends Widget_Base {
 			}
 
 			// Author Title
-			if ( '' !== $settings['author_name'] && '' !== $title && 'yes' === $settings['author_title'] ) {
+			if ( '' !== $title && 'yes' === $settings['author_title'] ) {
 				echo '<'. $settings['author_title_tag'] .' class="wpr-author-box-title">';
 					if ( 'posts' === $settings['author_title_links_to'] || $has_website ) {
 						echo '<a href="'. esc_url( $author_link ) .'" target="'. esc_attr($link_target) .'">'. $title .'</a>';
