@@ -1088,6 +1088,7 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Dots Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
+				'devices' => ['desktop', 'mobile'],
 				'range' => [
 					'px' => [
 						'min' => 0,
@@ -2056,7 +2057,7 @@ class Wpr_Charts extends Widget_Base {
 		$this->add_responsive_control(
 			'chart_res_width',
 			[
-				'label'		=> esc_html__( 'Width (px)', 'wpr-addons' ),
+				'label'		=> esc_html__( 'Min Width (px)', 'wpr-addons' ),
 				'type'		=> Controls_Manager::SLIDER,
 				'range'		=> [
 					'px'	=> [
@@ -2068,7 +2069,7 @@ class Wpr_Charts extends Widget_Base {
 					'size'	=> '800',
 				],
 				'selectors'	=> [
-					'{{WRAPPER}} .wpr-charts-wrapper' => 'width: {{SIZE}}px;',
+					'{{WRAPPER}} .wpr-charts-wrapper' => 'min-width: {{SIZE}}px;',
 				],
 				'separator'	=> 'before',
 				'condition'	=> [
@@ -2083,7 +2084,7 @@ class Wpr_Charts extends Widget_Base {
 		$this->add_responsive_control(
 			'chart_res_height',
 			[
-				'label'		=> esc_html__( 'Height (px)', 'wpr-addons' ),
+				'label'		=> esc_html__( 'Min Height (px)', 'wpr-addons' ),
 				'type'		=> Controls_Manager::SLIDER,
 				'range'		=> [
 					'px'	=> [
@@ -2095,7 +2096,7 @@ class Wpr_Charts extends Widget_Base {
 					'size'	=> '400',
 				],
 				'selectors'	=> [
-					'{{WRAPPER}} .wpr-charts-wrapper' => 'height: {{SIZE}}px;',
+					'{{WRAPPER}} .wpr-charts-wrapper' => 'min-height: {{SIZE}}px;',
 				],
 				'condition'	=> [
 					'responsive_chart' => 'yes',
