@@ -626,6 +626,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 				'default' => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-post-navigation svg path' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-posts-navigation-svg-wrapper svg' => 'fill: {{VALUE}}',
 				],
 			]
