@@ -626,6 +626,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 				'default' => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-post-navigation svg path' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-posts-navigation-svg-wrapper svg' => 'fill: {{VALUE}}',
 				],
 			]
@@ -793,7 +794,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation-wrap i' => 'height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-post-navigation i' => 'height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-posts-navigation-svg-wrapper' => 'height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-posts-navigation-svg-wrapper' => 'height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-post-nav-fixed.wpr-post-navigation img' => 'height: {{SIZE}}{{UNIT}};',
 				],
 			]
