@@ -800,6 +800,34 @@ class Wpr_Post_Navigation extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'post_nav_arrow_distance',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-post-nav-prev i' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-post-nav-prev .wpr-posts-navigation-svg-wrapper' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-post-nav-next i' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-post-nav-next .wpr-posts-navigation-svg-wrapper' => 'margin-left: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'post_nav_layout!' => 'fixed',
+				]
+			]
+		);
+
 		$this->add_control(
 			'post_nav_arrow_border_type',
 			[
@@ -844,28 +872,6 @@ class Wpr_Post_Navigation extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'post_nav_arrow_margin',
-			[
-				'label' => esc_html__( 'Margin', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-navigation i' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-posts-navigation-svg-wrapper' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'condition' => [
-					'post_nav_layout!' => 'fixed',
-				]
-			]
-		);
-
 		$this->add_control(
 			'post_nav_arrow_radius',
 			[
@@ -882,7 +888,6 @@ class Wpr_Post_Navigation extends Widget_Base {
 					'{{WRAPPER}} .wpr-post-navigation i' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-posts-navigation-svg-wrapper' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
-				'separator' => 'before',
 			]
 		);
 
