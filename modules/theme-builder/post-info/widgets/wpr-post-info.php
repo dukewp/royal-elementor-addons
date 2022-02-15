@@ -497,7 +497,7 @@ class Wpr_Post_Info extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 1,
-						'max' => 1000,
+						'max' => 300,
 					],
 					'%' => [
 						'min' => 1,
@@ -527,7 +527,7 @@ class Wpr_Post_Info extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 1,
-						'max' => 100,
+						'max' => 30,
 					],
 				],
 				'selectors' => [
