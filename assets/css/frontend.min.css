@@ -1484,7 +1484,9 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 }
 
 .wpr-post-info-author img {
-    margin-right: 10px
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
 }
 
 /* .wpr-post-info-author .wpr-post-info-text span,
