@@ -330,6 +330,35 @@ class Wpr_Post_Navigation extends Widget_Base {
 				],
 				'condition' => [
 					'post_nav_image' => 'yes',
+					'post_nav_image_bg!' => 'yes',
+					'post_nav_layout!' => 'fixed'
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'post_nav_image_distance',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-post-nav-prev img' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-post-nav-next img' => 'margin-left: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'post_nav_image' => 'yes',
+					'post_nav_image_bg!' => 'yes',
 					'post_nav_layout!' => 'fixed'
 				],
 			]
@@ -528,29 +557,6 @@ class Wpr_Post_Navigation extends Widget_Base {
 					'post_nav_layout' => 'static',
 					'post_nav_dividers' => 'yes'
 				]
-			]
-		);
-
-		$this->add_responsive_control(
-			'post_nav_gutter',
-			[
-				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 50,
-					],
-				],				
-				'default' => [
-					'unit' => 'px',
-					'size' => 10,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-navigation-wrap > div' => 'margin-right: {{SIZE}}{{UNIT}};',
-				],
-				'separator' => 'before',
 			]
 		);
 
@@ -1073,6 +1079,28 @@ class Wpr_Post_Navigation extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'post_nav_back_btn_distance',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-post-nav-back' => 'margin-left: {{SIZE}}{{UNIT}}; margin-right: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
 		$this->end_controls_section();
 
 		// Styles ====================
@@ -1158,25 +1186,6 @@ class Wpr_Post_Navigation extends Widget_Base {
 				'name'     => 'post_nav_label_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-post-nav-labels span'
-			]
-		);
-
-		$this->add_responsive_control(
-			'post_nav_label_margin',
-			[
-				'label' => esc_html__( 'Margin', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-nav-labels span' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before'
 			]
 		);
 
@@ -1268,25 +1277,6 @@ class Wpr_Post_Navigation extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'post_nav_title_margin',
-			[
-				'label' => esc_html__( 'Margin', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-nav-labels h5' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before'
-			]
-		);
-
 		$this->end_controls_section();
 
 	}
@@ -1364,7 +1354,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 			}
 
 			// Background Images
-			if ( 'yes' === $settings['post_nav_image_bg'] ) {
+			if ( 'yes' === $settings['post_nav_image'] && 'yes' === $settings['post_nav_image_bg'] ) {
 				$wrapper_class .= ' wpr-post-nav-bg-images';
 			}
 
