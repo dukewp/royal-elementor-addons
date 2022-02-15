@@ -1090,16 +1090,20 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     display: inline-block;
 }
 
-.wpr-fm-image-caption-hover [data-caption="standard"] .wpr-featured-media-caption,
-.wpr-fm-image-caption-hover [data-caption="gallery"] .wpr-featured-media-caption {
+/* [data-caption="standard"],
+ [data-caption="gallery"]*/
+.wpr-fm-image-caption-hover .wpr-featured-media-caption,
+.wpr-fm-image-caption-hover .wpr-featured-media-caption {
     opacity: 0;
     -webkit-transition-property: opacity;
     -o-transition-property: opacity;
     transition-property: opacity;
 }
 
-.wpr-fm-image-caption-hover [data-caption="standard"]:hover .wpr-featured-media-caption,
-.wpr-fm-image-caption-hover [data-caption="gallery"]:hover .wpr-featured-media-caption {
+/* [data-caption="standard"],
+[data-caption="gallery"] */
+.wpr-fm-image-caption-hover:hover .wpr-featured-media-caption,
+.wpr-fm-image-caption-hover:hover .wpr-featured-media-caption {
     opacity: 1;
 }
 
