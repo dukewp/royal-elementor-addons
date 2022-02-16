@@ -5,6 +5,7 @@ use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Text_Shadow;
+use Elementor\Group_Control_Text_Stroke;
 use Elementor\Group_Control_Typography;
 use Elementor\Core\Schemes\Typography;
 use Elementor\Core\Schemes\Color;
@@ -73,15 +74,15 @@ class Wpr_Product_Title extends Widget_Base {
                 'options' => [
 					'left'    => [
 						'title' => __( 'Left', 'wpr-addons' ),
-						'icon' => 'fa fa-align-left',
+						'icon' => 'eicon-text-align-left',
 					],
 					'center' => [
 						'title' => __( 'Center', 'wpr-addons' ),
-						'icon' => 'fa fa-align-center',
+						'icon' => 'eicon-text-align-center',
 					],
 					'right' => [
 						'title' => __( 'Right', 'wpr-addons' ),
-						'icon' => 'fa fa-align-right',
+						'icon' => 'eicon-text-align-right',
 					],
                 ],
 				'selectors' => [
@@ -131,6 +132,14 @@ class Wpr_Product_Title extends Widget_Base {
 				'name' => 'title_shadow',
 				'selector' => '{{WRAPPER}} .wpr-product-title',
 				'separator' => 'after',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Text_Stroke::get_type(),
+			[
+				'name' => 'text_stroke',
+				'selector' => '{{WRAPPER}} .wpr-product-title',
 			]
 		);
 
