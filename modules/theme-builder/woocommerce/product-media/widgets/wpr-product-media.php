@@ -6,8 +6,8 @@ use Elementor\Controls_Manager;
 use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
-use Elementor\Scheme_Typography;
-use Elementor\Scheme_Color;
+use Elementor\Core\Schemes\Typography;
+use Elementor\Core\Schemes\Color;
 use Elementor\Group_Control_Image_Size;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -553,7 +553,7 @@ class Wpr_Product_Media extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'product_saletypography',
-				'scheme' => Scheme_Typography::TYPOGRAPHY_3,
+				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-product-media-onsale'
 			]
 		);
@@ -1135,7 +1135,7 @@ class Wpr_Product_Media extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'image_caption_typography',
-				'scheme' => Scheme_Typography::TYPOGRAPHY_3,
+				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-product-media-caption span'
 			]
 		);
@@ -1384,20 +1384,6 @@ class Wpr_Product_Media extends Widget_Base {
 			'arrows' => false,
 			'dots' => false,
 			'fade' => false,
-			'responsive' => [
-				[	
-					'breakpoint' => $breakpoints['lg'],
-					'settings' => [ 
-						'slidesToShow' => absint( $settings['gallery_slider_thumb_cols_tablet'] ),
-					]
-				],
-				[
-					'breakpoint' => $breakpoints['md'],
-					'settings' => [ 
-						'slidesToShow' => absint( $settings['gallery_slider_thumb_cols_mobile'] ),
-					]
-				]
-			]
 		];
 
 		// Slider Attributes
