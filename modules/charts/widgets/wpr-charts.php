@@ -1127,6 +1127,7 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Padding', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
+				'devices' => ['desktop', 'mobile'],
 				'range' => [
 					'px' => [
 						'min' => 0,
@@ -1137,6 +1138,10 @@ class Wpr_Charts extends Widget_Base {
 				'default' => [
 					'unit' => 'px',
 					'size' => 10,
+				],
+				'mobile_default' => [
+					'unit' => 'px',
+					'size' => 0,
 				],
 			]
 		);
@@ -1830,7 +1835,7 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 		
-		$this->add_responsive_control(
+		$this->add_control(
 			'tooltip_caret_size',
 			[
 				'label' => esc_html__( 'Caret Size', 'wpr-addons' ),
@@ -1842,10 +1847,15 @@ class Wpr_Charts extends Widget_Base {
 						'max' => 100,
 					],
 				],
+				// 'devices' => ['desktop', 'mobile'],
 				'default' => [
 					'unit' => 'px',
 					'size' => 10,
 				],
+				// 'mobile_default' => [
+				// 	'unit' => 'px',
+				// 	'size' => 6,
+				// ],
 			]
 		);
 
@@ -2066,7 +2076,7 @@ class Wpr_Charts extends Widget_Base {
 					]
 				],
 				'default'	=> [
-					'size'	=> '800',
+					'size'	=> 800,
 				],
 				'selectors'	=> [
 					'{{WRAPPER}} .wpr-charts-wrapper' => 'min-width: {{SIZE}}px;',
@@ -2093,7 +2103,7 @@ class Wpr_Charts extends Widget_Base {
 					]
 				],
 				'default'	=> [
-					'size'	=> '400',
+					'size'	=> 400,
 				],
 				'selectors'	=> [
 					'{{WRAPPER}} .wpr-charts-wrapper' => 'min-height: {{SIZE}}px;',
@@ -2111,6 +2121,8 @@ class Wpr_Charts extends Widget_Base {
         $settings = $this->get_settings_for_display();
 
         extract($settings);
+
+		var_dump($tooltip_caret_size);
 
 		$data_charts_array = [];
 
@@ -2200,6 +2212,7 @@ class Wpr_Charts extends Widget_Base {
 			'stacked_bar_chart' => !empty($settings['stacked_bar_chart']) ? $settings['stacked_bar_chart'] : '',
             'data_type' => $settings['data_type'],
 			'chart_padding' => $chart_padding['size'],
+			'chart_padding_mobile' => isset($chart_padding_mobile['size']) ? $chart_padding_mobile['size'] : '',
 			'inner_datalabels' => $inner_datalabels,
 			'inner_datalabels_color' => $inner_datalabels_color,
 			// 'inner_datalabels_bg_color' => $inner_datalabels_bg_color,
@@ -2257,6 +2270,7 @@ class Wpr_Charts extends Widget_Base {
 			'tooltip_position' => $chart_tooltip_position,
 			'tooltip_padding' => $tooltip_padding['size'],
 			'tooltip_caret_size' => $tooltip_caret_size['size'],
+			// 'tooltip_caret_size_mobile' => $tooltip_caret_size_mobile['size'],
 			'chart_tooltip_bg_color' => $chart_tooltip_bg_color,
 			'chart_tooltip_title_color' => $chart_tooltip_title_color,
 			'chart_tooltip_title_font' => $chart_tooltip_title_font,
