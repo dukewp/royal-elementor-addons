@@ -89,6 +89,19 @@ class Utilities {
 	}
 
 	/**
+	** Get WooCommerce Builder Modules
+	*/
+	public static function get_woocommerce_builder_modules() {
+		return [
+			'product-title',
+			'product-media',
+			'product-price',
+			'product-add-to-cart',
+			'product-Breadcrumbs',
+		];
+	}
+
+	/**
 	** Get Available Custom Post Types or Taxonomies
 	*/
 	public static function get_custom_types_of( $query, $exclude_defaults = true ) {
