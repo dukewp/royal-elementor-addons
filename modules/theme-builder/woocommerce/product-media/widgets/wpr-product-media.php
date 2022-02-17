@@ -10,6 +10,7 @@ use Elementor\Group_Control_Typography;
 use Elementor\Core\Schemes\Typography;
 use Elementor\Core\Schemes\Color;
 use Elementor\Group_Control_Image_Size;
+use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -222,6 +223,29 @@ class Wpr_Product_Media extends Widget_Base {
 		);
 
 		$this->add_control(
+			'gallery_slider_nav_icon',
+			[
+				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'svg-angle-1-left',
+				'options' => Utilities::get_svg_icons_array( 'arrows', [
+					'fas fa-angle' => esc_html__( 'Angle', 'wpr-addons' ),
+					'fas fa-angle-double' => esc_html__( 'Angle Double', 'wpr-addons' ),
+					'fas fa-arrow' => esc_html__( 'Arrow', 'wpr-addons' ),
+					'fas fa-arrow-alt-circle' => esc_html__( 'Arrow Circle', 'wpr-addons' ),
+					'far fa-arrow-alt-circle' => esc_html__( 'Arrow Circle Alt', 'wpr-addons' ),
+					'fas fa-long-arrow-alt' => esc_html__( 'Long Arrow', 'wpr-addons' ),
+					'fas fa-chevron' => esc_html__( 'Chevron', 'wpr-addons' ),
+					'svg-icons' => esc_html__( 'SVG Icons -----', 'wpr-addons' ),
+				] ),
+				'condition' => [
+					'gallery_display_as' => 'slider',
+					'gallery_slider_nav' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
 			'gallery_slider_nav_hover',
 			[
 				'label' => esc_html__( 'Show on Hover', 'wpr-addons' ),
@@ -276,6 +300,29 @@ class Wpr_Product_Media extends Widget_Base {
 				'condition' => [
 					'gallery_display_as' => 'slider'
 				]
+			]
+		);
+
+		$this->add_control(
+			'thumbnail_slider_nav_icon',
+			[
+				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'svg-angle-1-left',
+				'options' => Utilities::get_svg_icons_array( 'arrows', [
+					'fas fa-angle' => esc_html__( 'Angle', 'wpr-addons' ),
+					'fas fa-angle-double' => esc_html__( 'Angle Double', 'wpr-addons' ),
+					'fas fa-arrow' => esc_html__( 'Arrow', 'wpr-addons' ),
+					'fas fa-arrow-alt-circle' => esc_html__( 'Arrow Circle', 'wpr-addons' ),
+					'far fa-arrow-alt-circle' => esc_html__( 'Arrow Circle Alt', 'wpr-addons' ),
+					'fas fa-long-arrow-alt' => esc_html__( 'Long Arrow', 'wpr-addons' ),
+					'fas fa-chevron' => esc_html__( 'Chevron', 'wpr-addons' ),
+					'svg-icons' => esc_html__( 'SVG Icons -----', 'wpr-addons' ),
+				] ),
+				'condition' => [
+					'gallery_display_as' => 'slider',
+					'thumbnail_slider_nav' => 'yes',
+				],
 			]
 		);
 
@@ -413,7 +460,7 @@ class Wpr_Product_Media extends Widget_Base {
 				'skin' => 'inline',
 				'label_block' => false,
 				'default' => [
-					'value' => 'fas fa-star',
+					'value' => 'fas fa-search',
 					'library' => 'solid',
 				],
 				'condition' => [
@@ -985,62 +1032,10 @@ class Wpr_Product_Media extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'gallery_slider_nav_position_top',
+			'gallery_slider_nav_position_horizontal',
 			[
 				'type' => Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Vertical Position', 'wpr-addons' ),
-				'size_units' => [ '%', 'px' ],
-				'range' => [
-					'%' => [
-						'min' => -20,
-						'max' => 120,
-					],
-					'px' => [
-						'min' => -200,
-						'max' => 2000,
-					],
-				],
-				'default' => [
-					'unit' => '%',
-					'size' => 50,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-gallery-slider-arrow' => 'top: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'gallery_slider_nav_position_left',
-			[
-				'type' => Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Left Position', 'wpr-addons' ),
-				'size_units' => [ '%', 'px' ],
-				'range' => [
-					'%' => [
-						'min' => -20,
-						'max' => 120,
-					],
-					'px' => [
-						'min' => -200,
-						'max' => 2000,
-					],
-				],
-				'default' => [
-					'unit' => '%',
-					'size' => 1,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-gallery-slider-prev-arrow' => 'left: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'gallery_slider_nav_position_right',
-			[
-				'type' => Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Right Position', 'wpr-addons' ),
+				'label' => esc_html__( 'Horizontal Position', 'wpr-addons' ),
 				'size_units' => [ '%', 'px' ],
 				'range' => [
 					'%' => [
@@ -1058,6 +1053,7 @@ class Wpr_Product_Media extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-gallery-slider-next-arrow' => 'right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-gallery-slider-prev-arrow' => 'left: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -1790,8 +1786,8 @@ class Wpr_Product_Media extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 0,
-					'right' => 0,
+					'top' => 10,
+					'right' => 10,
 					'bottom' => 0,
 					'left' => 0,
 				],
@@ -1903,6 +1899,8 @@ class Wpr_Product_Media extends Widget_Base {
 		$breakpoints = Responsive::get_breakpoints();
 		$columns = intval($settings['gallery_slider_thumb_cols']);
 		$slides_to_scroll = intval($settings['slides_to_scroll']);
+		var_dump(Utilities::get_wpr_icon($settings['thumbnail_slider_nav_icon'], 'right'));
+		// 
 
 		// Settings
 		$slider_options = [
@@ -1911,8 +1909,8 @@ class Wpr_Product_Media extends Widget_Base {
 			'slidesToScroll' => !empty($slides_to_scroll) ? $slides_to_scroll : 1, //TODO: add condition if needed
 			'arrows' => true,
 			'dots' => false,
-			'prevArrow' => '<div class="wpr-thumbnail-slider-prev-arrow wpr-thumbnail-slider-arrow"><i class="eicon-arrow-left"></i></div>',
-			'nextArrow' => '<div class="wpr-thumbnail-slider-next-arrow wpr-thumbnail-slider-arrow"><i class="eicon-arrow-right"></i></div>',
+			'prevArrow' => '<div class="wpr-thumbnail-slider-prev-arrow wpr-thumbnail-slider-arrow">'. Utilities::get_wpr_icon( $settings['thumbnail_slider_nav_icon'], 'left' ) .'</div>',
+			'nextArrow' => '<div class="wpr-thumbnail-slider-next-arrow wpr-thumbnail-slider-arrow">'. Utilities::get_wpr_icon( $settings['thumbnail_slider_nav_icon'], 'right' ) .'</div>',
 			'fade' => false,
 		];
 
@@ -1940,6 +1938,7 @@ class Wpr_Product_Media extends Widget_Base {
 		// RTL
 		$slider_is_rtl = is_rtl();
 		$slider_direction = $slider_is_rtl ? 'rtl' : 'ltr';
+		var_dump(Utilities::get_wpr_icon($settings['gallery_slider_nav_icon'], 'right'));
 
 		// Settings
 		$slider_options = [
@@ -1947,8 +1946,8 @@ class Wpr_Product_Media extends Widget_Base {
 			'speed' => absint( $settings['gallery_slider_effect_duration'] * 1000 ),
 			'arrows' => true,
 			'dots' => false,
-			'prevArrow' => '<div class="wpr-gallery-slider-prev-arrow wpr-gallery-slider-arrow"><i class="eicon-arrow-left"></i></div>',
-			'nextArrow' => '<div class="wpr-gallery-slider-next-arrow wpr-gallery-slider-arrow"><i class="eicon-arrow-right"></i></div>',
+			'prevArrow' => '<div class="wpr-gallery-slider-prev-arrow wpr-gallery-slider-arrow">'. Utilities::get_wpr_icon( $settings['gallery_slider_nav_icon'], 'left' ) .'</div>',
+			'nextArrow' => '<div class="wpr-gallery-slider-next-arrow wpr-gallery-slider-arrow">'. Utilities::get_wpr_icon( $settings['gallery_slider_nav_icon'], 'right' ) .'</div>',
 			'thumbnail_nav' => $settings['gallery_slider_thumbs']
 		];
 
