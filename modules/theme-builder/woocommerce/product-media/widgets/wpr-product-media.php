@@ -225,19 +225,9 @@ class Wpr_Product_Media extends Widget_Base {
 		$this->add_control(
 			'gallery_slider_nav_icon',
 			[
-				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'svg-angle-1-left',
-				'options' => Utilities::get_svg_icons_array( 'arrows', [
-					'fas fa-angle' => esc_html__( 'Angle', 'wpr-addons' ),
-					'fas fa-angle-double' => esc_html__( 'Angle Double', 'wpr-addons' ),
-					'fas fa-arrow' => esc_html__( 'Arrow', 'wpr-addons' ),
-					'fas fa-arrow-alt-circle' => esc_html__( 'Arrow Circle', 'wpr-addons' ),
-					'far fa-arrow-alt-circle' => esc_html__( 'Arrow Circle Alt', 'wpr-addons' ),
-					'fas fa-long-arrow-alt' => esc_html__( 'Long Arrow', 'wpr-addons' ),
-					'fas fa-chevron' => esc_html__( 'Chevron', 'wpr-addons' ),
-					'svg-icons' => esc_html__( 'SVG Icons -----', 'wpr-addons' ),
-				] ),
+				'label' => esc_html__( 'Select Icon 2', 'wpr-addons' ),
+				'type' => 'wpr-arrow-icons',
+				'default' => 'fas fa-angle',
 				'condition' => [
 					'gallery_display_as' => 'slider',
 					'gallery_slider_nav' => 'yes',
@@ -307,18 +297,8 @@ class Wpr_Product_Media extends Widget_Base {
 			'thumbnail_slider_nav_icon',
 			[
 				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'svg-angle-1-left',
-				'options' => Utilities::get_svg_icons_array( 'arrows', [
-					'fas fa-angle' => esc_html__( 'Angle', 'wpr-addons' ),
-					'fas fa-angle-double' => esc_html__( 'Angle Double', 'wpr-addons' ),
-					'fas fa-arrow' => esc_html__( 'Arrow', 'wpr-addons' ),
-					'fas fa-arrow-alt-circle' => esc_html__( 'Arrow Circle', 'wpr-addons' ),
-					'far fa-arrow-alt-circle' => esc_html__( 'Arrow Circle Alt', 'wpr-addons' ),
-					'fas fa-long-arrow-alt' => esc_html__( 'Long Arrow', 'wpr-addons' ),
-					'fas fa-chevron' => esc_html__( 'Chevron', 'wpr-addons' ),
-					'svg-icons' => esc_html__( 'SVG Icons -----', 'wpr-addons' ),
-				] ),
+				'type' => 'wpr-arrow-icons',
+				'default' => 'fas fa-angle',
 				'condition' => [
 					'gallery_display_as' => 'slider',
 					'thumbnail_slider_nav' => 'yes',
@@ -1899,7 +1879,6 @@ class Wpr_Product_Media extends Widget_Base {
 		$breakpoints = Responsive::get_breakpoints();
 		$columns = intval($settings['gallery_slider_thumb_cols']);
 		$slides_to_scroll = intval($settings['slides_to_scroll']);
-		var_dump(Utilities::get_wpr_icon($settings['thumbnail_slider_nav_icon'], 'right'));
 		// 
 
 		// Settings
@@ -1938,7 +1917,6 @@ class Wpr_Product_Media extends Widget_Base {
 		// RTL
 		$slider_is_rtl = is_rtl();
 		$slider_direction = $slider_is_rtl ? 'rtl' : 'ltr';
-		var_dump(Utilities::get_wpr_icon($settings['gallery_slider_nav_icon'], 'right'));
 
 		// Settings
 		$slider_options = [
@@ -1995,7 +1973,6 @@ class Wpr_Product_Media extends Widget_Base {
 	protected function render() {
 		// Get Settings
 		$settings = $this->get_settings();
-
 		// Get Product
 		$product = wc_get_product();
 		// $this->get_hoodies();
