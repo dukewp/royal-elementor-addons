@@ -79,10 +79,13 @@ class WPR_Render_Templates {
     ** Check if a Template has Conditions
     */
 	public function is_template_available( $type ) {
-    	$conditions = json_decode( get_option('wpr_'. $type .'_conditions', '[]'), true );
-    	$template = WPR_Conditions_Manager::header_footer_display_conditions( $conditions );
-
-    	return (!empty( $conditions ) && !is_null($template)) ? true : false;
+    	if ( 'content' === $type ) {
+    		return !is_null(WPR_Conditions_Manager::canvas_page_content_display_conditions()) ? true : false;
+    	} else {
+    		$conditions = json_decode( get_option('wpr_'. $type .'_conditions', '[]'), true );
+    		$template = WPR_Conditions_Manager::header_footer_display_conditions( $conditions );
+    		return (!empty( $conditions ) && !is_null($template)) ? true : false;
+    	}
 	}
 
     /**
@@ -155,8 +158,10 @@ class WPR_Render_Templates {
 		}
     }
 
-    public function convert_to_canvas( $template ) {//TODO: Add option to disable this
-    	if ( true ) {
+    public function convert_to_canvas( $template ) {
+    	$is_theme_builder_edit = \Elementor\Plugin::$instance->preview->is_preview_mode() && Utilities::is_theme_builder_template() ? true : false;
+
+    	if ( $this->is_template_available('content') || $is_theme_builder_edit ) {
     		return WPR_ADDONS_PATH . 'admin/templates/wpr-canvas.php';
     	} else {
     		return $template;
