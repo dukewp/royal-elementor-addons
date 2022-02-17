@@ -293,20 +293,36 @@ class Wpr_Product_Media extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
+		// $this->add_responsive_control(
+		// 	'gallery_slider_thumb_cols',
+		// 	[
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'label' => esc_html__( 'Thumbs to Show', 'wpr-addons' ),
+		// 		'default' => '4',
+		// 		'options' => [
+		// 			'1' => esc_html__( '1', 'wpr-addons' ),
+		// 			'2' => esc_html__( '2', 'wpr-addons' ),
+		// 			'3' => esc_html__( '3', 'wpr-addons' ),
+		// 			'4' => esc_html__( '4', 'wpr-addons' ),
+		// 			'5' => esc_html__( '5', 'wpr-addons' ),
+		// 			'6' => esc_html__( '6', 'wpr-addons' ),
+		// 		],
+		// 		'condition' => [
+		// 			'gallery_slider_thumbs' => 'yes'
+		// 		],
+		// 		'condition' => [
+		// 			'gallery_display_as' => 'slider'
+		// 		]
+		// 	]
+		// );
+
+		$this->add_control(
 			'gallery_slider_thumb_cols',
 			[
-				'type' => Controls_Manager::SELECT,
 				'label' => esc_html__( 'Thumbs to Show', 'wpr-addons' ),
-				'default' => '4',
-				'options' => [
-					'1' => esc_html__( '1', 'wpr-addons' ),
-					'2' => esc_html__( '2', 'wpr-addons' ),
-					'3' => esc_html__( '3', 'wpr-addons' ),
-					'4' => esc_html__( '4', 'wpr-addons' ),
-					'5' => esc_html__( '5', 'wpr-addons' ),
-					'6' => esc_html__( '6', 'wpr-addons' ),
-				],
+				'type' => Controls_Manager::NUMBER,
+				'min' => 2,
+				'default' => 4,
 				'condition' => [
 					'gallery_slider_thumbs' => 'yes'
 				],
@@ -573,6 +589,7 @@ class Wpr_Product_Media extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-media-wrap' => 'width: {{SIZE}}{{UNIT}}; display: inline-block;',
 					'{{WRAPPER}} .wpr-product-media-image img' => 'width: 100%;',
+					'{{WRAPPER}} .wpr-product-media-image' => 'width: 100%;',
 				],
 				'render_type' => 'template'
 			]
