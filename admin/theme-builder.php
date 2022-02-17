@@ -60,6 +60,15 @@ function wpr_addons_theme_builder_page() {
         <a href="?page=wpr-theme-builder&tab=wpr_tab_single" data-title="Single" class="nav-tab <?php echo $active_tab == 'wpr_tab_single' ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Single', 'wpr-addons' ); ?>
         </a>
+
+        <?php if ( class_exists( 'WooCommerce' ) ) : ?>
+        <a href="?page=wpr-theme-builder&tab=wpr_tab_product_archive" data-title="Product Archive" class="nav-tab <?php echo $active_tab == 'wpr_tab_product_archive' ? 'nav-tab-active' : ''; ?>">
+            <?php esc_html_e( 'Product Archive', 'wpr-addons' ); ?>
+        </a>
+        <a href="?page=wpr-theme-builder&tab=wpr_tab_product_single" data-title="Product Single" class="nav-tab <?php echo $active_tab == 'wpr_tab_product_single' ? 'nav-tab-active' : ''; ?>">
+            <?php esc_html_e( 'Product Single', 'wpr-addons' ); ?>
+        </a>
+        <?php endif; ?>
     </div>
 
     <?php if ( $active_tab == 'wpr_tab_header' ) : ?>
