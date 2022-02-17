@@ -1631,15 +1631,6 @@ class Wpr_Product_Media extends Widget_Base {
 			]
 		);
 
-		$this->start_controls_tabs( 'tabs_grid_lightbox_style' );
-
-		$this->start_controls_tab(
-			'product_media_lightbox_normal',
-			[
-				'label' => esc_html__( 'Normal', 'wpr-addons' ),
-			]
-		);
-
 		$this->add_control(
 			'lightbox_color',
 			[
@@ -1675,55 +1666,6 @@ class Wpr_Product_Media extends Widget_Base {
 				],
 			]
 		);
-
-		$this->end_controls_tab();
-
-		$this->start_controls_tab(
-			'tab_grid_lightbox_hover',
-			[
-				'label' => esc_html__( 'Hover', 'wpr-addons' ),
-			]
-		);
-
-		$this->add_control(
-			'lightbox_color_hr',
-			[
-				'label'  => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#605BE5',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-product-media-icon-wrapper:hover i' => 'color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_control(
-			'lightbox_bg_color_hr',
-			[
-				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-product-media-icon-wrapper:hover' => 'background-color: {{VALUE}}',
-				]
-			]
-		);
-
-		$this->add_control(
-			'lightbox_border_color_hr',
-			[
-				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#E8E8E8',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-product-media-icon-wrapper:hover' => 'border-color: {{VALUE}}',
-				],
-				'separator' => 'after',
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->end_controls_tabs();
 
 		$this->add_control(
 			'lightbox_shadow_divider',
