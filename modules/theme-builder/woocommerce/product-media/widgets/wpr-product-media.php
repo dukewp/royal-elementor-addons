@@ -317,14 +317,15 @@ class Wpr_Product_Media extends Widget_Base {
 		);
 
 		$this->add_control(
-			'gallery_slider_slides_to_scroll',
+			'slides_to_scroll',
 			[
-				'label' => esc_html__( 'Effect Duration', 'wpr-addons' ),
+				'label' => esc_html__( 'Slides To Scroll', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
-				'default' => 0.7,
 				'min' => 0,
 				'max' => 5,
-				'step' => 0.1,
+				'condition' => [
+					'gallery_slider_thumbs' => 'yes'
+				],
 				'condition' => [
 					'gallery_display_as' => 'slider'
 				]
@@ -1804,7 +1805,6 @@ class Wpr_Product_Media extends Widget_Base {
 		);
 
 		$this->end_controls_section();
-
 	}
 
 	public function get_lightbox_settings( $settings ) {
