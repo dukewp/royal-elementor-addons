@@ -321,8 +321,8 @@ class Wpr_Product_Media extends Widget_Base {
 			[
 				'label' => esc_html__( 'Slides To Scroll', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
-				'min' => 0,
-				'max' => 5,
+				'min' => 1,
+				'default' => 1,
 				'condition' => [
 					'gallery_slider_thumbs' => 'yes'
 				],
@@ -1885,12 +1885,13 @@ class Wpr_Product_Media extends Widget_Base {
 		// Breakpoints & Thumbs to Show
 		$breakpoints = Responsive::get_breakpoints();
 		$columns = intval($settings['gallery_slider_thumb_cols']);
+		$slides_to_scroll = intval($settings['slides_to_scroll']);
 
 		// Settings
 		$slider_options = [
 			'rtl' => $slider_is_rtl,
 			'slidesToShow' => $columns,
-			'slidesToScroll' => $settings['slides_to_scroll'], //TODO: add condition if needed
+			'slidesToScroll' => !empty($slides_to_scroll) ? $slides_to_scroll : 1, //TODO: add condition if needed
 			'arrows' => true,
 			'dots' => false,
 			'prevArrow' => '<div class="wpr-thumbnail-slider-prev-arrow wpr-thumbnail-slider-arrow"><i class="eicon-arrow-left"></i></div>',
