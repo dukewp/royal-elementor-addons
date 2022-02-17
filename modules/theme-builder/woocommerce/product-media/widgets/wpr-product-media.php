@@ -5,6 +5,7 @@ use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Box_Shadow;
+use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Core\Schemes\Typography;
 use Elementor\Core\Schemes\Color;
@@ -239,7 +240,8 @@ class Wpr_Product_Media extends Widget_Base {
 			[
 				'label' => esc_html__( 'Thumbnail Navigation', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => 'yes',
+				'render_type' => 'template',
+				'default' => 'yes',
 				'tablet_default' => 'yes',
 				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
@@ -250,6 +252,42 @@ class Wpr_Product_Media extends Widget_Base {
 					'{{WRAPPER}} .wpr-gallery-slider-dots' => 'display:{{VALUE}};',
 				],
 				'condition' => [
+					'gallery_display_as' => 'slider'
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'thumbnail_slider_nav',
+			[
+				'label' => esc_html__( 'Thumbnail Arrows Navigation', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'desktop_default' => 'yes',
+				'tablet_default' => 'yes',
+				'mobile_default' => 'yes',
+				'selectors_dictionary' => [
+					'' => 'none',
+					'yes' => 'block'
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'display:{{VALUE}} !important;',
+				],
+				// 'separator' => 'before',
+				'condition' => [
+					'gallery_display_as' => 'slider'
+				]
+			]
+		);
+
+		$this->add_control(
+			'thumbnail_slider_nav_hover',
+			[
+				'label' => esc_html__( 'Show on Hover', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'fade',
+				'prefix_class' => 'wpr-thumbnail-slider-nav-',
+				'condition' => [
+					'thumbnail_slider_nav' => 'yes',
 					'gallery_display_as' => 'slider'
 				]
 			]
@@ -272,6 +310,21 @@ class Wpr_Product_Media extends Widget_Base {
 				'condition' => [
 					'gallery_slider_thumbs' => 'yes'
 				],
+				'condition' => [
+					'gallery_display_as' => 'slider'
+				]
+			]
+		);
+
+		$this->add_control(
+			'gallery_slider_slides_to_scroll',
+			[
+				'label' => esc_html__( 'Effect Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.7,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
 				'condition' => [
 					'gallery_display_as' => 'slider'
 				]
@@ -321,6 +374,33 @@ class Wpr_Product_Media extends Widget_Base {
 				'tab' => Controls_Manager::TAB_CONTENT,
 				'condition' => [
 					'product_media_lightbox' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control(
+			'lightbox_extra_icon',
+			[
+				'label' => esc_html__( 'Lightbox Icon', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'true',
+				'return_value' => 'true',
+			]
+		);
+
+		$this->add_control(
+			'choose_lightbox_extra_icon',
+			[
+				'label' => __( 'Icon', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::ICONS,
+				'skin' => 'inline',
+				'label_block' => false,
+				'default' => [
+					'value' => 'fas fa-star',
+					'library' => 'solid',
+				],
+				'condition' => [
+					'lightbox_extra_icon' => 'true',
 				]
 			]
 		);
@@ -1074,6 +1154,253 @@ class Wpr_Product_Media extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		$this->start_controls_section(
+			'wpr__section_style_thumbnail_arrows_nav',
+			[
+				'label' => esc_html__( 'Thumbnail Arrows Navigation', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'gallery_display_as' => 'slider',
+				],
+			]
+		);
+
+		$this->start_controls_tabs( 'tabs_thumbnail_slider_nav_style' );
+
+		$this->start_controls_tab(
+			'tab_thumbnail_slider_nav_normal',
+			[
+				'label' => esc_html__( 'Normal', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'thumbnail_slider_nav_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => 'rgba(255,255,255,0.8)',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'thumbnail_slider_nav_bg_color',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'thumbnail_slider_nav_border_color',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => 'rgba(255,255,255,0.8)',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'border-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_thumbnail_slider_nav_hover',
+			[
+				'label' => esc_html__( 'Hover', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'thumbnail_slider_nav_hover_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow:hover' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'thumbnail_slider_nav_hover_bg_color',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow:hover' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'thumbnail_slider_nav_hover_border_color',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow:hover' => 'border-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_control(
+			'thumbnail_slider_nav_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.1,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'transition-duration: {{VALUE}}s',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'thumbnail_slider_nav_font_size',
+			[
+				'label' => esc_html__( 'Font Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%' ],
+				'range' => [
+					'px' => [
+						'min' => 10,
+						'max' => 200,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 45,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'font-size: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'thumbnail_slider_nav_size',
+			[
+				'label' => esc_html__( 'Box Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px', '%'],
+				'range' => [
+					'px' => [
+						'min' => 10,
+						'max' => 200,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 45,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'after',
+			]
+		);
+
+		$this->add_control(
+			'thumbnail_slider_nav_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'border-style: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'thumbnail_slider_nav_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 2,
+					'right' => 2,
+					'bottom' => 0,
+					'left' => 2,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'thumbnail_slider_nav_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'thumbnail_slider_nav_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'after',
+			]
+		);
+
+		$this->add_responsive_control(
+			'thumbnail_slider_nav_position_horizontal',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Horizontal Position', 'wpr-addons' ),
+				'size_units' => [ '%', 'px' ],
+				'range' => [
+					'%' => [
+						'min' => -20,
+						'max' => 120,
+					],
+					'px' => [
+						'min' => -200,
+						'max' => 2000,
+					],
+				],
+				'default' => [
+					'unit' => '%',
+					'size' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-thumbnail-slider-prev-arrow' => 'left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-thumbnail-slider-next-arrow' => 'right: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->end_controls_section(); // End Controls Section
+
 		// Styles ====================
 		// Section: Image Caption ----
 		$this->start_controls_section(
@@ -1292,6 +1619,250 @@ class Wpr_Product_Media extends Widget_Base {
 
 		$this->end_controls_section();
 
+		$this->start_controls_section(
+			'section_style_lightbox_icon',
+			[
+				'label' => esc_html__( 'Lightbox Icon', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'show_label' => false,
+				'condition' => [
+					'product_media_lightbox' => 'yes'
+				],
+			]
+		);
+
+		$this->start_controls_tabs( 'tabs_grid_lightbox_style' );
+
+		$this->start_controls_tab(
+			'product_media_lightbox_normal',
+			[
+				'label' => esc_html__( 'Normal', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'lightbox_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-media-icon-wrapper i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-product-media-icon-wrapper svg' => 'fill: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'lightbox_bg_color',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-media-icon-wrapper' => 'background-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'lightbox_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-media-icon-wrapper i' => 'border-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_grid_lightbox_hover',
+			[
+				'label' => esc_html__( 'Hover', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'lightbox_color_hr',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-media-icon-wrapper:hover i' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'lightbox_bg_color_hr',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-media-icon-wrapper:hover' => 'background-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'lightbox_border_color_hr',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-media-icon-wrapper:hover' => 'border-color: {{VALUE}}',
+				],
+				'separator' => 'after',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_control(
+			'lightbox_shadow_divider',
+			[
+				'type' => Controls_Manager::DIVIDER,
+				'style' => 'thick',
+			]
+		);
+
+		$this->add_control(
+			'lightbox_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.1,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-media-icon-wrapper i' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-product-media-icon-wrapper' => 'transition-duration: {{VALUE}}s',
+				],
+				'separator' => 'after',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'lightbox_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-product-media-icon-wrapper i'
+			]
+		);
+
+		$this->add_control(
+			'lightbox_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-media-icon-wrapper' => 'border-style: {{VALUE}};',
+				],
+				'render_type' => 'template',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'lightbox_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-media-icon-wrapper' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'render_type' => 'template',
+				'condition' => [
+					'lightbox_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'lightbox_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-media-icon-wrapper' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'render_type' => 'template',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'lightbox_margin',
+			[
+				'label' => esc_html__( 'Margin', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'render_type' => 'template',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-media-icon-wrapper' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'lightbox_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 2,
+					'right' => 2,
+					'bottom' => 2,
+					'left' => 2,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-media-icon-wrapper' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->end_controls_section();
+
 	}
 
 	public function get_lightbox_settings( $settings ) {
@@ -1319,9 +1890,6 @@ class Wpr_Product_Media extends Widget_Base {
 	public function render_product_thumbnail( $id ) {
 		// Get Settings
 		$settings = $this->get_settings();
-
-		// Get Product
-		$product = wc_get_product();
 
 		$lightbox = '';
 		$src = Group_Control_Image_Size::get_attachment_image_src( $id, 'product_media_image_crop', $settings );
@@ -1380,9 +1948,11 @@ class Wpr_Product_Media extends Widget_Base {
 		$slider_options = [
 			'rtl' => $slider_is_rtl,
 			'slidesToShow' => $columns,
-			'slidesToScroll' => $columns,
-			'arrows' => false,
+			'slidesToScroll' => $settings['slides_to_scroll'], //TODO: add condition if needed
+			'arrows' => true,
 			'dots' => false,
+			'prevArrow' => '<div class="wpr-thumbnail-slider-prev-arrow wpr-thumbnail-slider-arrow"><i class="eicon-arrow-left"></i></div>',
+			'nextArrow' => '<div class="wpr-thumbnail-slider-next-arrow wpr-thumbnail-slider-arrow"><i class="eicon-arrow-right"></i></div>',
 			'fade' => false,
 		];
 
@@ -1446,12 +2016,30 @@ class Wpr_Product_Media extends Widget_Base {
 		echo '</div>';
 	}
 
+	public function get_hoodies() {
+		// Get Product
+		$product = wc_get_product(); 
+		$args = array(
+			'post_type'      => 'product',
+			'posts_per_page' => -1,
+			'product_cat'    => 'hoodies'
+		);
+	
+		$loop = new \WP_Query( $args );
+	
+		while ( $loop->have_posts() ) : $loop->the_post();
+			global $product;
+			var_dump(get_the_title());
+		endwhile;
+	}
+
 	protected function render() {
 		// Get Settings
 		$settings = $this->get_settings();
 
 		// Get Product
 		$product = wc_get_product();
+		// $this->get_hoodies();
 
 		if ( ! $product ) {
 			return;
@@ -1464,6 +2052,14 @@ class Wpr_Product_Media extends Widget_Base {
 		// Output
 		echo '<div class="wpr-product-media-wrap">';
 			// Sale Badle
+			if ( true == $settings['lightbox_extra_icon'] && '' !== $settings['choose_lightbox_extra_icon'] ) {
+				
+				echo '<div class="wpr-product-media-icon-wrapper">';
+					\Elementor\Icons_Manager::render_icon( $settings['choose_lightbox_extra_icon'], [ 'aria-hidden' => 'true' ] );
+				echo '</div>';
+
+			}
+
 			if ( 'yes' === $settings['product_media_sale_badge'] && $product->is_on_sale() ) {
 				echo '<span class="wpr-product-media-onsale">'. esc_html__( 'Sale', 'wpr-addons' ) .'</span>';
 			}
