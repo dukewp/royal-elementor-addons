@@ -69,7 +69,7 @@ jQuery(document).ready(function( $ ) {
 		}, 500);
 	});
 
-	$('.wpr-tplib-filters').after('<a href="https://www.youtube.com/watch?v=UUQKVVHwS2E" class="wpr-premade-blocks-tutorial" target="_blank">How to use Premade Blocks <span class="dashicons dashicons-video-alt3"></span></a>');
+	$('.wpr-tplib-filters').after('<a href="https://www.youtube.com/watch?v=sTpPq0Kal9I" class="wpr-premade-blocks-tutorial" target="_blank">How to use Premade Blocks <span class="dashicons dashicons-video-alt3"></span></a>');
 
 	// Preview Links and Referrals
 	$('.wpr-tplib-template-media').on( 'click', function() {
