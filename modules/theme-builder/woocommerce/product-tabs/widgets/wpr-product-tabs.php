@@ -74,15 +74,15 @@ class Wpr_Product_Tabs extends Widget_Base {
                 'label_block' => false,
                 'default' => 'justify',
                 'options' => [
-                    'pro-lt' => [
+                    'left' => [
                         'title' => esc_html__( 'Left (Pro)', 'wpr-addons' ),
                         'icon' => 'eicon-h-align-left',
                     ],
-                    'pro-ct' => [
+                    'center' => [
                         'title' => esc_html__( 'Center (Pro)', 'wpr-addons' ),
                         'icon' => 'eicon-h-align-center',
                     ],
-                    'pro-rt' => [
+                    'right' => [
                         'title' => esc_html__( 'Right (Pro)', 'wpr-addons' ),
                         'icon' => 'eicon-h-align-right',
                     ],
@@ -141,6 +141,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'bottom' => 'flex-end'
 				],
 				'selectors' => [
+					'{{WRAPPER}} .wc-tabs-wrapper .wc-tab' => 'align-self: {{VALUE}};',
 				],
 				'condition' => [
 					'tabs_position!' => 'above',
@@ -148,7 +149,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_control( //TODO: change approach
 			'text_align',
 			[
 				'label' => esc_html__( 'Label Alignment', 'wpr-addons' ),
@@ -175,6 +176,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'right' => 'flex-end'
 				],
 				'selectors' => [
+					'{{WRAPPER}} .wc-tabs li' => 'display: flex; align-items: {{VALUE}}; justify-content: {{VALUE}};'
 				],
 				'separator' => 'before',
 			]
@@ -197,76 +199,118 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'size' => 70,
 				],
 				'selectors' => [
+					'{{WRAPPER}} .wc-tabs li' => 'min-width: {{SIZE}}px;'
 				],
 				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'tabs_icon_section',
-			[
-				'label' => esc_html__( 'Icon', 'wpr-addons' ),
-				'type' => Controls_Manager::HEADING,
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'tabs_icon_position',
-			[
-				'label' => esc_html__( 'Position', 'wpr-addons' ),
-				'type' => Controls_Manager::CHOOSE,
-				'label_block' => false,
-				'default' => 'left',
-				'options' => [
-					'left' => [
-						'title' => esc_html__( 'Left', 'wpr-addons' ),
-						'icon' => 'eicon-h-align-left',
-					],
-					'center' => [
-						'title' => esc_html__( 'Center', 'wpr-addons' ),
-						'icon' => 'eicon-h-align-center',
-					],
-					'right' => [
-						'title' => esc_html__( 'Right', 'wpr-addons' ),
-						'icon' => 'eicon-h-align-right',
-					],
-				],
-				'prefix_class' => 'wpr-tabs-icon-position-',
-			]
-		);
-
-		$this->add_responsive_control(
-			'tabs_icon_distance',
-			[
-				'label' => esc_html__( 'Distance', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 5,
-				],
-				'selectors' => [
-				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Image_Size::get_type(),
-			[
-				'name' => 'tabs_image_size',
-				'default' => 'full',
-				'separator' => 'before'
 			]
 		);
 
         $this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_settings',
+			[
+				'label' => esc_html__( 'Settings', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'tabs_trigger',
+			[
+				'label' => esc_html__( 'Trigger', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'click',
+				'options' => [
+					'click' => esc_html__( 'Click', 'wpr-addons' ),
+					'hover' => esc_html__( 'Hover', 'wpr-addons' ),
+				],
+				'separator' => 'after',
+			]
+		);
+
+		$this->add_control(
+			'active_tab',
+			[
+				'label' => esc_html__( 'Active Tab Index', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'label_block' => false,
+				'min' => 1,
+				'default' => 1,
+				'frontend_available' => true,
+			]
+		);
+
+		$this->add_control(
+			'content_animation',
+			[
+				'label' => esc_html__( 'Content Animation', 'wpr-addons' ),
+				'type' => 'wpr-animations-alt',
+				'default' => 'fade-in',
+			]
+		);
+		
+		$this->add_control(
+			'content_anim_size',
+			[
+				'type' => Controls_Manager::SELECT,
+				'label' => esc_html__( 'Animation Size', 'wpr-addons' ),
+				'default' => 'large',
+				'options' => [
+					'small' => esc_html__( 'Small', 'wpr-addons' ),
+					'medium' => esc_html__( 'Medium', 'wpr-addons' ),
+					'large' => esc_html__( 'Large', 'wpr-addons' ),
+				],
+				'condition' => [
+					'content_animation!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'content_anim_duration',
+			[
+				'label' => esc_html__( 'Animation Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.5,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+				],
+				'condition' => [
+					'content_animation!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'autoplay',
+			[
+				'label' => esc_html__( 'Autoplay', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'frontend_available' => true,
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'autoplay_duration',
+			[
+				'label' => esc_html__( 'Autoplay Speed', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 5,
+				'min' => 0,
+				'max' => 15,
+				'step' => 0.1,
+				'frontend_available' => true,
+				'condition' => [
+					'autoplay' => 'yes',
+				],
+			]
+		);
+
+		$this->end_controls_section();
 
 		$this->start_controls_section(
 			'section_product_tabs_style',

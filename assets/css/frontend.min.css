@@ -1740,13 +1740,6 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 /*--------------------------------------------------------------
   == Grid
   --------------------------------------------------------------*/
-.elementor-widget-wpr-product-tabs .wc-tabs {
-    display: flex;
-}
-
-/*--------------------------------------------------------------
-  == Grid
-  --------------------------------------------------------------*/
 
 .wpr-grid {
     opacity: 0;
@@ -9640,7 +9633,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
   == Tabs
   --------------------------------------------------------------*/
 
-.wpr-tabs {
+.wpr-tabs,
+.elementor-widget-wpr-product-tabs .wc-tabs,
+.wpr-tabs-position-left>.elementor-widget-container>.wc-tabs-wrapper,
+.wpr-tabs-position-right>.elementor-widget-container>.wc-tabs-wrapper {
     display: -moz-flex;
     display: -ms-flex;
     display: -o-flex;
@@ -9650,7 +9646,8 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 .wpr-tabs-position-above>.elementor-widget-container>.wpr-tabs, 
-.wpr-tabs-position-above>.elementor-widget-container>.wc-tabs-wrapper {
+.wpr-tabs-position-left>.elementor-widget-container .wc-tabs, 
+.wpr-tabs-position-right>.elementor-widget-container .wc-tabs  {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
@@ -9697,29 +9694,43 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 
 /* Tabs Position */
+.wpr-tabs-hr-position-center>.elementor-widget-container .wc-tabs,
+.wpr-tabs-hr-position-center>.elementor-widget-container>.wc-tabs-wrapper {
+    justify-content: center;
+}
 
+.wpr-tabs-hr-position-center>.elementor-widget-container .wc-tabs,
+.wpr-tabs-hr-position-center>.elementor-widget-container>.wc-tabs-wrapper,
 .wpr-tabs-hr-position-center>.elementor-widget-container>.wpr-tabs {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
 }
 
+.wpr-tabs-hr-position-left>.elementor-widget-container .wc-tabs,
 .wpr-tabs-hr-position-left>.elementor-widget-container>.wpr-tabs {
     -webkit-box-align: start;
     -ms-flex-align: start;
     align-items: flex-start;
 }
 
+.wpr-tabs-hr-position-right>.elementor-widget-container .wc-tabs{
+    justify-content: flex-end;
+}
+
+.wpr-tabs-hr-position-right>.elementor-widget-container .wc-tabs,
 .wpr-tabs-hr-position-right>.elementor-widget-container>.wpr-tabs {
     -webkit-box-align: end;
     -ms-flex-align: end;
     align-items: flex-end;
 }
 
+.wpr-tabs-hr-position-justify>.elementor-widget-container>.wpr-tabs .wc-tabs,
 .wpr-tabs-hr-position-justify>.elementor-widget-container>.wpr-tabs>.wpr-tabs-wrap {
     width: 100%;
 }
 
+.wpr-tabs-hr-position-justify>.elementor-widget-container .wc-tabs li,
 .elementor-widget-container>.wpr-tabs>.wpr-tabs-wrap>.wpr-tab,
 .wpr-tabs-hr-position-justify>.elementor-widget-container>.wpr-tabs>.wpr-tabs-wrap>.wpr-tab {
     -webkit-box-flex: 1;
