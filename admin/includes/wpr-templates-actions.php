@@ -73,6 +73,16 @@ class WPR_Templates_Actions {
 			update_option( 'wpr_single_conditions', $this->sanitize_conditions($_POST['wpr_single_conditions']) );
 		}
 
+		// Product Archive
+		if ( isset($_POST['wpr_product_archive_conditions']) ) {
+			update_option( 'wpr_product_archive_conditions', $this->sanitize_conditions($_POST['wpr_product_archive_conditions']) );
+		}
+
+		// Product Single
+		if ( isset($_POST['wpr_product_single_conditions']) ) {
+			update_option( 'wpr_product_single_conditions', $this->sanitize_conditions($_POST['wpr_product_single_conditions']) );
+		}
+
 		// Popup
 		if ( isset($_POST['wpr_popup_conditions']) ) {
 			update_option( 'wpr_popup_conditions', $this->sanitize_conditions($_POST['wpr_popup_conditions']) );
