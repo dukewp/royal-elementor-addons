@@ -36,6 +36,7 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 
 		$default_archives = [
 			'archive/post' => esc_html__( 'Posts Archive', 'wpr-addons' ),
+			'archive/products' => esc_html__( 'Products Archive', 'wpr-addons' ),
 			'archive/author' => esc_html__( 'Author Archive', 'wpr-addons' ),
 			'archive/search' => esc_html__( 'Search Results', 'wpr-addons' ),
 		];
