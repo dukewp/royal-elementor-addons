@@ -589,24 +589,30 @@ class Plugin {
 
 		// Add Theme Builder category in panel
 		if ( Utilities::is_theme_builder_template() ) {
-			\Elementor\Plugin::instance()->elements_manager->add_category(
-				'wpr-theme-builder-widgets',
-				[
-					'title' => sprintf(esc_html__( '%s Theme Builder', 'wpr-addons' ), Utilities::get_plugin_name()),
-					'icon' => 'font',
-				]
-			);
+			$template_type = Utilities::get_wpr_template_type(get_the_ID());
+			if ( 'archive' === $template_type || 'single' === $template_type ) {
+				\Elementor\Plugin::instance()->elements_manager->add_category(
+					'wpr-theme-builder-widgets',
+					[
+						'title' => sprintf(esc_html__( '%s Theme Builder', 'wpr-addons' ), Utilities::get_plugin_name()),
+						'icon' => 'font',
+					]
+				);
+			}
 		}
 
 		// Add Woocommerce Builder category in panel
 		if ( Utilities::is_theme_builder_template() ) {
-			\Elementor\Plugin::instance()->elements_manager->add_category(
-				'wpr-woocommerce-builder-widgets',
-				[
-					'title' => sprintf(esc_html__( '%s Woocommerce Builder', 'wpr-addons' ), Utilities::get_plugin_name()),
-					'icon' => 'font',
-				]
-			);
+			$template_type = Utilities::get_wpr_template_type(get_the_ID());
+			if ( 'product_archive' === $template_type || 'product_single' === $template_type ) {
+				\Elementor\Plugin::instance()->elements_manager->add_category(
+					'wpr-woocommerce-builder-widgets',
+					[
+						'title' => sprintf(esc_html__( '%s Woocommerce Builder', 'wpr-addons' ), Utilities::get_plugin_name()),
+						'icon' => 'font',
+					]
+				);
+			}
 		}
 		
 
