@@ -37,6 +37,16 @@ class WPR_Conditions_Manager {
         	$template = Utilities::get_template_slug( $conditions, 'global' );
         }
 
+        if ( \Elementor\Plugin::$instance->preview->is_preview_mode() ) {
+        	$post_meta = get_post_meta(get_the_ID());
+
+        	if ( isset($post_meta['_wpr_template_type']) ) {
+	        	if ( 'header' === $post_meta['_wpr_template_type'][0] || 'footer' === $post_meta['_wpr_template_type'][0] ) {
+	        		$template = NULL;
+	        	}
+        	}
+        }
+
 	    return $template;
     }
 
