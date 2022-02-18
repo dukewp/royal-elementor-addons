@@ -129,6 +129,7 @@ class Wpr_Product_Media extends Widget_Base {
 			[
 				'label' => esc_html__( 'Enable Lightbox Popup', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
+				'render_type' => 'template',
 				'return_value' => 'yes',
 				'prefix_class' => 'wpr-gallery-lightbox-',
 				'separator' => 'before'
@@ -208,13 +209,13 @@ class Wpr_Product_Media extends Widget_Base {
 				'desktop_default' => 'yes',
 				'tablet_default' => 'yes',
 				'mobile_default' => 'yes',
-				'selectors_dictionary' => [
-					'' => 'none',
-					'yes' => 'block'
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-gallery-slider-arrow' => 'display:{{VALUE}} !important;',
-				],
+				// 'selectors_dictionary' => [
+				// 	'' => 'none',
+				// 	'yes' => 'block'
+				// ],
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .wpr-gallery-slider-arrow' => 'display:{{VALUE}} !important;',
+				// ],
 				'separator' => 'before',
 				'condition' => [
 					'gallery_display_as' => 'slider'
@@ -225,7 +226,7 @@ class Wpr_Product_Media extends Widget_Base {
 		$this->add_control(
 			'gallery_slider_nav_icon',
 			[
-				'label' => esc_html__( 'Select Icon 2', 'wpr-addons' ),
+				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
 				'type' => 'wpr-arrow-icons',
 				'default' => 'fas fa-angle',
 				'condition' => [
@@ -265,6 +266,7 @@ class Wpr_Product_Media extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-gallery-slider-dots' => 'display:{{VALUE}};',
 				],
+				'separator' => 'before',
 				'condition' => [
 					'gallery_display_as' => 'slider'
 				]
@@ -276,19 +278,21 @@ class Wpr_Product_Media extends Widget_Base {
 			[
 				'label' => esc_html__( 'Thumbnail Arrows Navigation', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'desktop_default' => 'yes',
+				'render_type' => 'template',
+				'default' => 'yes',
 				'tablet_default' => 'yes',
 				'mobile_default' => 'yes',
-				'selectors_dictionary' => [
-					'' => 'none',
-					'yes' => 'block'
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'display:{{VALUE}} !important;',
-				],
+				// 'selectors_dictionary' => [
+				// 	'' => 'none',
+				// 	'yes' => 'block'
+				// ],
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'display:{{VALUE}} !important;',
+				// ],
 				// 'separator' => 'before',
 				'condition' => [
-					'gallery_display_as' => 'slider'
+					'gallery_display_as' => 'slider',
+					'gallery_slider_thumbs' => 'yes',
 				]
 			]
 		);
@@ -301,6 +305,7 @@ class Wpr_Product_Media extends Widget_Base {
 				'default' => 'fas fa-angle',
 				'condition' => [
 					'gallery_display_as' => 'slider',
+					'gallery_slider_thumbs' => 'yes',
 					'thumbnail_slider_nav' => 'yes',
 				],
 			]
@@ -314,8 +319,9 @@ class Wpr_Product_Media extends Widget_Base {
 				'return_value' => 'fade',
 				'prefix_class' => 'wpr-thumbnail-slider-nav-',
 				'condition' => [
+					'gallery_display_as' => 'slider',
 					'thumbnail_slider_nav' => 'yes',
-					'gallery_display_as' => 'slider'
+					'gallery_slider_thumbs' => 'yes',
 				]
 			]
 		);
@@ -351,10 +357,8 @@ class Wpr_Product_Media extends Widget_Base {
 				'min' => 2,
 				'default' => 4,
 				'condition' => [
+					'gallery_display_as' => 'slider',
 					'gallery_slider_thumbs' => 'yes'
-				],
-				'condition' => [
-					'gallery_display_as' => 'slider'
 				]
 			]
 		);
@@ -367,11 +371,10 @@ class Wpr_Product_Media extends Widget_Base {
 				'min' => 1,
 				'default' => 1,
 				'condition' => [
-					'gallery_slider_thumbs' => 'yes'
+					'gallery_display_as' => 'slider',
+					'gallery_slider_thumbs' => 'yes',
+					'thumbnail_slider_nav' => 'yes',
 				],
-				'condition' => [
-					'gallery_display_as' => 'slider'
-				]
 			]
 		);
 		
@@ -821,6 +824,7 @@ class Wpr_Product_Media extends Widget_Base {
 				'default' => 'rgba(255,255,255,0.8)',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-gallery-slider-arrow' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-gallery-slider-arrow svg' => 'fill: {{VALUE}};',
 				],
 			]
 		);
@@ -929,6 +933,7 @@ class Wpr_Product_Media extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-gallery-slider-arrow' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-gallery-slider-arrow svg' => 'width: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -951,7 +956,7 @@ class Wpr_Product_Media extends Widget_Base {
 					'size' => 45,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-gallery-slider-arrow' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-gallery-slider-arrow' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'after',
 			]
@@ -1176,6 +1181,7 @@ class Wpr_Product_Media extends Widget_Base {
 				'default' => 'rgba(255,255,255,0.8)',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow svg' => 'fill: {{VALUE}};',
 				],
 			]
 		);
@@ -1284,6 +1290,7 @@ class Wpr_Product_Media extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow svg' => 'width: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -1306,7 +1313,7 @@ class Wpr_Product_Media extends Widget_Base {
 					'size' => 45,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};', // remove line-height if not needed
 				],
 				'separator' => 'after',
 			]
@@ -1886,7 +1893,7 @@ class Wpr_Product_Media extends Widget_Base {
 			'rtl' => $slider_is_rtl,
 			'slidesToShow' => $columns,
 			'slidesToScroll' => !empty($slides_to_scroll) ? $slides_to_scroll : 1, //TODO: add condition if needed
-			'arrows' => true,
+			'arrows' => isset($settings['thumbnail_slider_nav']) && 'yes' === $settings['thumbnail_slider_nav'] ? true : false,
 			'dots' => false,
 			'prevArrow' => '<div class="wpr-thumbnail-slider-prev-arrow wpr-thumbnail-slider-arrow">'. Utilities::get_wpr_icon( $settings['thumbnail_slider_nav_icon'], 'left' ) .'</div>',
 			'nextArrow' => '<div class="wpr-thumbnail-slider-next-arrow wpr-thumbnail-slider-arrow">'. Utilities::get_wpr_icon( $settings['thumbnail_slider_nav_icon'], 'right' ) .'</div>',
@@ -1988,7 +1995,7 @@ class Wpr_Product_Media extends Widget_Base {
 		// Output
 		echo '<div class="wpr-product-media-wrap">';
 			// Sale Badle
-			if ( true == $settings['lightbox_extra_icon'] && '' !== $settings['choose_lightbox_extra_icon'] ) {
+			if ( 'yes' === $settings['product_media_lightbox'] && true == $settings['lightbox_extra_icon'] && '' !== $settings['choose_lightbox_extra_icon'] ) {
 				
 				echo '<div class="wpr-product-media-icon-wrapper">';
 					\Elementor\Icons_Manager::render_icon( $settings['choose_lightbox_extra_icon'], [ 'aria-hidden' => 'true' ] );
