@@ -458,8 +458,12 @@
 
 .wpr-conditions.wpr-tab-archive .global-condition-select,
 .wpr-conditions.wpr-tab-archive .singles-condition-select,
+.wpr-conditions.wpr-tab-product_archive .global-condition-select,
+.wpr-conditions.wpr-tab-product_archive .singles-condition-select,
 .wpr-conditions.wpr-tab-single .global-condition-select,
-.wpr-conditions.wpr-tab-single .archives-condition-select {
+.wpr-conditions.wpr-tab-single .archives-condition-select,
+.wpr-conditions.wpr-tab-product_single .global-condition-select,
+.wpr-conditions.wpr-tab-product_single .archives-condition-select {
   display: none !important;
 }
 
@@ -470,7 +474,9 @@
 }
 
 .wpr-conditions.wpr-tab-archive .archives-condition-select,
-.wpr-conditions.wpr-tab-single .singles-condition-select {
+.wpr-conditions.wpr-tab-product_archive .archives-condition-select,
+.wpr-conditions.wpr-tab-single .singles-condition-select,
+.wpr-conditions.wpr-tab-product_single .singles-condition-select {
   display: block !important;
 }
 

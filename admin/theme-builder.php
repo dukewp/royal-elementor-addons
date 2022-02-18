@@ -104,14 +104,14 @@ function wpr_addons_theme_builder_page() {
         <!-- Save Conditions -->
         <input type="hidden" name="wpr_product_archive_conditions" id="wpr_product_archive_conditions" value="<?php echo esc_attr(get_option('wpr_product_archive_conditions', '[]')); ?>">
 
-        <?php WPR_Templates_Loop::render_theme_builder_templates( 'archive' ); ?>
+        <?php WPR_Templates_Loop::render_theme_builder_templates( 'product_archive' ); ?>
 
     <?php elseif ( $active_tab == 'wpr_tab_product_single' ) : ?>
 
         <!-- Save Conditions -->
         <input type="hidden" name="wpr_product_single_conditions" id="wpr_product_single_conditions" value="<?php echo esc_attr(get_option('wpr_product_single_conditions', '[]')); ?>">
 
-        <?php WPR_Templates_Loop::render_theme_builder_templates( 'single' ); ?>
+        <?php WPR_Templates_Loop::render_theme_builder_templates( 'product_single' ); ?>
 
     <?php endif; ?>
 
