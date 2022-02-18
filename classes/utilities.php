@@ -248,6 +248,17 @@ class Utilities {
 
 
 	/**
+	** Get Royal Template Type
+	*/
+	public static function get_wpr_template_type( $id ) {
+		$post_meta = get_post_meta($id);
+		$template_type = isset($post_meta['_wpr_template_type'][0]) ? $post_meta['_wpr_template_type'][0] : false;
+
+        return $template_type;
+	}
+
+
+	/**
 	** Render Elementor Template
 	*/
 	public static function render_elementor_template( $slug ) {
