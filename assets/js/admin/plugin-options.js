@@ -12,7 +12,8 @@ jQuery(document).ready(function( $ ) {
 
 	// Current Tab
 	var currentTab = $('.nav-tab-active').attr( 'data-title' );
-		currentTab = currentTab.trim().toLowerCase();
+		currentTab = currentTab.trim().toLowerCase(),
+		currentTab = currentTab.replace(' ', '_');
 
 
 	/*
@@ -360,9 +361,9 @@ jQuery(document).ready(function( $ ) {
 		$('.wpr-canvas-condition').hide();
 
 		// Show Conditions
-		if ( 'single' === currentTab ) {
+		if ( 'single' === currentTab || 'product_single' === currentTab ) {
 			conditionsWrap.find(singleS).show();
-		} else if ( 'archive' === currentTab ) {
+		} else if ( 'archive' === currentTab || 'product_archive' === currentTab ) {
 			conditionsWrap.find(archiveS).show();
 		} else {
 			conditionsWrap.find(globalS).show();

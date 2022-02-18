@@ -37,6 +37,16 @@ class WPR_Conditions_Manager {
         	$template = Utilities::get_template_slug( $conditions, 'global' );
         }
 
+        if ( \Elementor\Plugin::$instance->preview->is_preview_mode() ) {
+        	$post_meta = get_post_meta(get_the_ID());
+
+        	if ( isset($post_meta['_wpr_template_type']) ) {
+	        	if ( 'header' === $post_meta['_wpr_template_type'][0] || 'footer' === $post_meta['_wpr_template_type'][0] ) {
+	        		$template = NULL;
+	        	}
+        	}
+        }
+
 	    return $template;
     }
 
@@ -47,8 +57,13 @@ class WPR_Conditions_Manager {
         $template = NULL;
 
 		// Get Conditions
-		$archives = json_decode( get_option( 'wpr_archive_conditions' ), true );
-		$singles  = json_decode( get_option( 'wpr_single_conditions' ), true );
+		if ( class_exists( 'WooCommerce' ) && is_woocommerce() ) {
+			$archives = json_decode( get_option( 'wpr_product_archive_conditions' ), true );
+			$singles  = json_decode( get_option( 'wpr_product_single_conditions' ), true );
+		} else {
+			$archives = json_decode( get_option( 'wpr_archive_conditions' ), true );
+			$singles  = json_decode( get_option( 'wpr_single_conditions' ), true );
+		}
 
         // Custom
         if ( wpr_fs()->can_use_premium_code() && defined('WPR_ADDONS_PRO_VERSION') ) {
