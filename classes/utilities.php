@@ -98,6 +98,7 @@ class Utilities {
 			'product-price',
 			'product-add-to-cart',
 			'product-Breadcrumbs',
+			'product-tabs'
 		];
 	}
 
