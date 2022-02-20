@@ -1041,7 +1041,7 @@ class Wpr_Charts extends Widget_Base {
 				'label' => esc_html__( 'Lines', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
 				'condition' => [
-					'chart_type' => ['line'],
+					'chart_type' => ['line', 'radar'],
 				]
 			]
         );
@@ -2122,7 +2122,7 @@ class Wpr_Charts extends Widget_Base {
 
         extract($settings);
 
-		var_dump($tooltip_caret_size);
+		// var_dump($tooltip_caret_size);
 
 		$data_charts_array = [];
 
