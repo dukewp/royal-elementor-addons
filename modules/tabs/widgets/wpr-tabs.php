@@ -1450,7 +1450,8 @@ class Wpr_Tabs extends Widget_Base {
 		$tabs_options = [
 			'activeTab' 		=> $settings['active_tab'],
 			'trigger' 			=>  $settings['tabs_trigger'],
-			'autoplay' 			=> ( $settings['autoplay'] === 'yes' ),
+			// 'autoplay' 			=> ( $settings['autoplay'] === 'yes' ),
+			'autoplay' 			=> isset($settings['autoplay']) ? $settings['autoplay'] : '',
 			'autoplaySpeed'		=> absint( $settings['autoplay_duration'] * 1000 ),
 		];
 

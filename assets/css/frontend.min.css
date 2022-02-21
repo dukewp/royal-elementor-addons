@@ -9633,6 +9633,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
   == Tabs
   --------------------------------------------------------------*/
 
+.elementor-widget-wpr-product-tabs, .woocommerce-Tabs-panel {
+    width: 100%;
+}
+
 .wpr-tabs,
 .elementor-widget-wpr-product-tabs .wc-tabs,
 .wpr-tabs-position-left>.elementor-widget-container>.wc-tabs-wrapper,
