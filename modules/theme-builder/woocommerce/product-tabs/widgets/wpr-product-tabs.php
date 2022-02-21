@@ -719,10 +719,7 @@ class Wpr_Product_Tabs extends Widget_Base {
         }
 
         setup_postdata( $product->get_id() );
-		echo '<div class="wpr-products-test">';
-		 echo 'darenderdi';
         wc_get_template( 'single-product/tabs/tabs.php' );
-		echo '</div>';
 
         // On render widget from Editor - trigger the init manually.
         if ( wp_doing_ajax() ) {
