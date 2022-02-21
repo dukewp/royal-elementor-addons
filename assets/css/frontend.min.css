@@ -9639,6 +9639,19 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 .elementor-widget-wpr-product-tabs p.stars a {
     position: relative;
+    display: inline-block;
+    width: 15px;
+    text-indent: -999999px;
+}
+
+.elementor-widget-wpr-product-tabs p.stars:hover a:before {
+    color: red;
+    content: "\e020";
+}
+
+.elementor-widget-wpr-product-tabs p.stars a:hover~a::before {
+    color: red;
+    content: "\e021";
 }
 
 .elementor-widget-wpr-product-tabs p.stars a::before {
