@@ -9637,6 +9637,21 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     width: 100%;
 }
 
+.elementor-widget-wpr-product-tabs p.stars a::before {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1em;
+    height: 1em;
+    line-height: 1;
+    font-family: WooCommerce;
+    content: "\e021";
+    text-indent: 0;
+    opacity: 1;
+    font-size: inherit;
+}
+
 .wpr-tabs,
 .elementor-widget-wpr-product-tabs .wc-tabs,
 .wpr-tabs-position-left>.elementor-widget-container>.wc-tabs-wrapper,

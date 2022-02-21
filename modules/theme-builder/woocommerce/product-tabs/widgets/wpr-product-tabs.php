@@ -37,7 +37,11 @@ class Wpr_Product_Tabs extends Widget_Base {
 	}
 
 	public function get_script_depends() {
-		return [ 'wc-single-product' ];
+		return [ 'wc-single-product', 'photoswipe-ui-default', 'photoswipe-default-skin', 'zoom', 'flexslider' ];
+	}
+
+	public function get_style_depends() {
+		return [ 'woocommerce-general', 'woocommerce-layout', 'woocommerce-smallscreen', 'photoswipe-ui-default', 'photoswipe-default-skin' ];
 	}
 
 	protected function _register_controls() {
@@ -214,31 +218,31 @@ class Wpr_Product_Tabs extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'tabs_trigger',
-			[
-				'label' => esc_html__( 'Trigger', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'click',
-				'options' => [
-					'click' => esc_html__( 'Click', 'wpr-addons' ),
-					'hover' => esc_html__( 'Hover', 'wpr-addons' ),
-				],
-				'separator' => 'after',
-			]
-		);
+		// $this->add_control(
+		// 	'tabs_trigger',
+		// 	[
+		// 		'label' => esc_html__( 'Trigger', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'default' => 'click',
+		// 		'options' => [
+		// 			'click' => esc_html__( 'Click', 'wpr-addons' ),
+		// 			'hover' => esc_html__( 'Hover', 'wpr-addons' ),
+		// 		],
+		// 		'separator' => 'after',
+		// 	]
+		// );
 
-		$this->add_control(
-			'active_tab',
-			[
-				'label' => esc_html__( 'Active Tab Index', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'label_block' => false,
-				'min' => 1,
-				'default' => 1,
-				'frontend_available' => true,
-			]
-		);
+		// $this->add_control(
+		// 	'active_tab',
+		// 	[
+		// 		'label' => esc_html__( 'Active Tab Index', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::NUMBER,
+		// 		'label_block' => false,
+		// 		'min' => 1,
+		// 		'default' => 1,
+		// 		'frontend_available' => true,
+		// 	]
+		// );
 
 		$this->add_control(
 			'content_animation',
@@ -283,32 +287,32 @@ class Wpr_Product_Tabs extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'autoplay',
-			[
-				'label' => esc_html__( 'Autoplay', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
-				'frontend_available' => true,
-				'separator' => 'before'
-			]
-		);
+		// $this->add_control(
+		// 	'autoplay',
+		// 	[
+		// 		'label' => esc_html__( 'Autoplay', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SWITCHER,
+		// 		'default' => 'yes',
+		// 		'frontend_available' => true,
+		// 		'separator' => 'before'
+		// 	]
+		// );
 
-		$this->add_control(
-			'autoplay_duration',
-			[
-				'label' => esc_html__( 'Autoplay Speed', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 5,
-				'min' => 0,
-				'max' => 15,
-				'step' => 0.1,
-				'frontend_available' => true,
-				'condition' => [
-					'autoplay' => 'yes',
-				],
-			]
-		);
+		// $this->add_control(
+		// 	'autoplay_duration',
+		// 	[
+		// 		'label' => esc_html__( 'Autoplay Speed', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::NUMBER,
+		// 		'default' => 5,
+		// 		'min' => 0,
+		// 		'max' => 15,
+		// 		'step' => 0.1,
+		// 		'frontend_available' => true,
+		// 		'condition' => [
+		// 			'autoplay' => 'yes',
+		// 		],
+		// 	]
+		// );
 
 		$this->end_controls_section();
 
@@ -715,8 +719,10 @@ class Wpr_Product_Tabs extends Widget_Base {
         }
 
         setup_postdata( $product->get_id() );
-
+		echo '<div class="wpr-products-test">';
+		 echo 'darenderdi';
         wc_get_template( 'single-product/tabs/tabs.php' );
+		echo '</div>';
 
         // On render widget from Editor - trigger the init manually.
         if ( wp_doing_ajax() ) {
@@ -726,11 +732,5 @@ class Wpr_Product_Tabs extends Widget_Base {
             </script>
             <?php
         }
-    }
-
-    public function render_plain_content() {}
-
-    public function get_group_name() {
-        return 'woocommerce';
     }
 }
