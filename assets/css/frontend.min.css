@@ -9638,8 +9638,17 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 .elementor-widget-wpr-product-tabs p.stars a {
-    position: relative;
+    position: relative;    
+    height: 1em;
+    width: 1em;
+    text-indent: -999em;
     display: inline-block;
+    text-decoration: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    margin: 0;
+    font-size: inherit;
+    border: none;
     width: 15px;
     text-indent: -999999px;
 }
