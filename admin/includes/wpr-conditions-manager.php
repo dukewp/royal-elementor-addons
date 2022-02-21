@@ -38,8 +38,9 @@ class WPR_Conditions_Manager {
         }
 
         if ( \Elementor\Plugin::$instance->preview->is_preview_mode() ) {
-
-        	if ( 'header' === Utilities::get_wpr_template_type(get_the_ID()) || 'footer' ===Utilities::get_wpr_template_type(get_the_ID()) ) {
+        	$template_type = Utilities::get_wpr_template_type(get_the_ID());
+        	
+        	if ( 'header' === $template_type || 'footer' ===$template_type ) {
         		$template = NULL;
         	}
         }
