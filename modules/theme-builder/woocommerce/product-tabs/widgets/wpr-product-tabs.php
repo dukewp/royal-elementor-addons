@@ -709,6 +709,14 @@ class Wpr_Product_Tabs extends Widget_Base {
 		$this->end_controls_section();
     }
 
+	public function previous_tag() {
+		echo '<div class="wpr-woo-wrap">';
+	}
+
+	public function next_tag() {
+		echo '</div>';
+	}
+
     protected function render() {
         global $product;
 
@@ -719,7 +727,10 @@ class Wpr_Product_Tabs extends Widget_Base {
         }
 
         setup_postdata( $product->get_id() );
+
+		// $this->previous_tag();
         wc_get_template( 'single-product/tabs/tabs.php' );
+		// $this->next_tag();
 
         // On render widget from Editor - trigger the init manually.
         if ( wp_doing_ajax() ) {
