@@ -9637,6 +9637,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     width: 100%;
 }
 
+.elementor-widget-wpr-product-tabs p.stars a {
+    position: relative;
+}
+
 .elementor-widget-wpr-product-tabs p.stars a::before {
     display: block;
     position: absolute;
@@ -9650,6 +9654,14 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     text-indent: 0;
     opacity: 1;
     font-size: inherit;
+}
+
+.elementor-widget-wpr-product-tabs p.stars a:hover::before {
+    content: "\e020";
+}
+
+.elementor-widget-wpr-product-tabs p.stars a.active::before {
+    content: "\e020";
 }
 
 .wpr-tabs,
