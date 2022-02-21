@@ -28,8 +28,8 @@ class WPR_Conditions_Manager {
 				}
 
 	        	// Single Pages
-				if ( !is_null( \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $conditions, true ) ) ) {
-					$template = \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $conditions, true );
+				if ( !is_null( \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $conditions ) ) ) {
+					$template = \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $conditions );
 				}
 
 	        }
@@ -38,7 +38,8 @@ class WPR_Conditions_Manager {
         }
 
         if ( \Elementor\Plugin::$instance->preview->is_preview_mode() ) {
-        	if ( 'header' === Utilities::get_wpr_template_type() || 'footer' ===Utilities::get_wpr_template_type() ) {
+
+        	if ( 'header' === Utilities::get_wpr_template_type(get_the_ID()) || 'footer' ===Utilities::get_wpr_template_type(get_the_ID()) ) {
         		$template = NULL;
         	}
         }
@@ -67,8 +68,8 @@ class WPR_Conditions_Manager {
 				}
 
 		    	// Single Pages
-				if ( !is_null( \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $singles, false ) ) ) {
-					$template = \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $singles, false );
+				if ( !is_null( \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $singles ) ) ) {
+					$template = \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $singles );
 				}
 
 	        }
