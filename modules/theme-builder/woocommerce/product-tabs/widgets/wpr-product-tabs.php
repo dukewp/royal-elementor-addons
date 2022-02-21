@@ -709,13 +709,13 @@ class Wpr_Product_Tabs extends Widget_Base {
 		$this->end_controls_section();
     }
 
-	public function previous_tag() {
-		echo '<div class="wpr-woo-wrap">';
-	}
+	// public function previous_tag() {
+	// 	echo '<div class="wpr-woo-wrap">';
+	// }
 
-	public function next_tag() {
-		echo '</div>';
-	}
+	// public function next_tag() {
+	// 	echo '</div>';
+	// }
 
     protected function render() {
         global $product;
