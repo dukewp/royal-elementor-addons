@@ -335,7 +335,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 		$this->add_control(
 			'tab_text_color',
 			[
-				'label' => esc_html__( 'Text Color', 'wpr-addons' ),
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li a' => 'color: {{VALUE}}',
@@ -365,6 +365,35 @@ class Wpr_Product_Tabs extends Widget_Base {
 					// '{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li' => 'border-color: {{VALUE}}',
 				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'tab_typography',
+				'label' => esc_html__( 'Typography', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li a',
+			]
+		);
+
+		$this->add_responsive_control(
+			'tab_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 10,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wc-tabs li a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};', // li or a ?
+					'{{WRAPPER}} .wc-tabs li' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};', // li or a ?
+				],
+				'separator' => 'before',
 			]
 		);
 		
@@ -398,7 +427,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 		$this->add_control(
 			'active_tab_text_color',
 			[
-				'label' => esc_html__( 'Text Color', 'wpr-addons' ),
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li.active a' => 'color: {{VALUE}}',
@@ -434,6 +463,35 @@ class Wpr_Product_Tabs extends Widget_Base {
 				],
 			]
 		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'tab_typography_active',
+				'label' => esc_html__( 'Typography', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li a.active',
+			]
+		);
+
+		$this->add_responsive_control(
+			'tab_padding_active',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 10,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wc-tabs li a.active' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};', // li or a ?
+					'{{WRAPPER}} .wc-tabs li.active' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};', // li or a ?
+				],
+				'separator' => 'before',
+			]
+		);
 		
 		$this->add_responsive_control(
 			'tab_margin_active',
@@ -457,22 +515,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
-
-		$this->add_control(
-			'separator_tabs_style',
-			[
-				'type' => Controls_Manager::DIVIDER,
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => 'tab_typography',
-				'label' => esc_html__( 'Typography', 'wpr-addons' ),
-				'selector' => '{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li a',
-			]
-		);
 
 		$this->add_control(
 			'tab_border_type',
@@ -527,26 +569,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'tab_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 10,
-					'right' => 10,
-					'bottom' => 10,
-					'left' => 10,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wc-tabs li a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};', // li or a ?
-					'{{WRAPPER}} .wc-tabs li' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};', // li or a ?
-				],
-				'separator' => 'before',
-			]
-		);
-
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -560,7 +582,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 		$this->add_control(
 			'text_color',
 			[
-				'label' => esc_html__( 'Text Color', 'wpr-addons' ),
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-Tabs-panel' => 'color: {{VALUE}}',
@@ -589,7 +611,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 		$this->add_control(
 			'heading_color',
 			[
-				'label' => esc_html__( 'Text Color', 'wpr-addons' ),
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-Tabs-panel h2' => 'color: {{VALUE}}',
@@ -603,13 +625,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'name' => 'content_heading_typography',
 				'label' => esc_html__( 'Typography', 'wpr-addons' ),
 				'selector' => '{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel h2',
-			]
-		);
-
-		$this->add_control(
-			'separator_panel_style',
-			[
-				'type' => Controls_Manager::DIVIDER,
 			]
 		);
 
@@ -664,6 +679,9 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; margin-top: -{{TOP}}{{UNIT}}',
 				],
+				'condition' => [
+					'content_border_type!' => 'none',
+				]
 			]
 		);
 
