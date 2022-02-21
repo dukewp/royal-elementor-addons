@@ -9653,12 +9653,17 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     text-indent: -999999px;
 }
 
-.elementor-widget-wpr-product-tabs p.stars:hover a:before {
+.elementor-widget-wpr-product-tabs p.stars.selected a.active:before,
+.elementor-widget-wpr-product-tabs p.stars:hover a:before,
+.elementor-widget-wpr-product-tabs p.stars.selected a:not(.active):before,
+.elementor-widget-wpr-product-tabs p.stars.selected a.active:before {
     color: red;
     content: "\e020";
 }
 
-.elementor-widget-wpr-product-tabs p.stars a:hover~a::before {
+.elementor-widget-wpr-product-tabs p.stars a:before,
+.elementor-widget-wpr-product-tabs p.stars a:hover~a:before,
+.elementor-widget-wpr-product-tabs p.stars.selected a.active~a:before {
     color: red;
     content: "\e021";
 }
