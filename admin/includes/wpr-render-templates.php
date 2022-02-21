@@ -67,7 +67,7 @@ class WPR_Render_Templates {
 		}
 
 		// Theme Builder
-		add_filter( 'template_include', [ $this, 'convert_to_canvas' ], 11 ); // 11 to load after WooCommerce.
+		add_filter( 'template_include', [ $this, 'convert_to_canvas' ], 12 ); // 12 after WP Pages and WooCommerce.
 		add_action( 'elementor/page_templates/canvas/wpr_print_content', [ $this, 'canvas_page_content_display' ] );
 
 		// Scripts and Styles
@@ -168,7 +168,6 @@ class WPR_Render_Templates {
     	} else {
     		return $template;
     	}
-		
     }
 
 	/**

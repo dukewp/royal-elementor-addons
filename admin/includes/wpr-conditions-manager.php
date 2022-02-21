@@ -28,8 +28,8 @@ class WPR_Conditions_Manager {
 				}
 
 	        	// Single Pages
-				if ( !is_null( \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $conditions, true ) ) ) {
-					$template = \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $conditions, true );
+				if ( !is_null( \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $conditions ) ) ) {
+					$template = \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $conditions );
 				}
 
 	        }
@@ -74,8 +74,8 @@ class WPR_Conditions_Manager {
 				}
 
 		    	// Single Pages
-				if ( !is_null( \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $singles, false ) ) ) {
-					$template = \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $singles, false );
+				if ( !is_null( \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $singles ) ) ) {
+					$template = \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $singles );
 				}
 
 	        }
