@@ -9662,6 +9662,11 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     margin-bottom: 10px;
 }
 
+.wpr-individual-rating {
+    display: flex;
+    align-items: center;
+}
+
 .wpr-individual-rating-cont {
     position: relative;
     display: inline-block;
