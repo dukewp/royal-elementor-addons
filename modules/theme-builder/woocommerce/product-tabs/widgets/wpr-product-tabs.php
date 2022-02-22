@@ -10,6 +10,7 @@ use Elementor\Group_Control_Typography;
 use Elementor\Core\Schemes\Typography;
 use Elementor\Core\Schemes\Color;
 use Elementor\Group_Control_Image_Size;
+use Elementor\Group_Control_Background;
 use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -337,6 +338,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#000',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li a' => 'color: {{VALUE}}',
 				],
@@ -440,7 +442,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#F6EFEF',
+				'default' => '#FFF',
 				'alpha' => false,
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel, {{WRAPPER}} .woocommerce-tabs ul.wc-tabs li.active' => 'background-color: {{VALUE}}',
@@ -590,6 +592,21 @@ class Wpr_Product_Tabs extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'content_border_color',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel' => 'border-color: {{VALUE}}',
+				],
+				'condition' => [
+					// 'content_border_type!' => 'none',
+				],
+			]
+		);
+
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
@@ -628,17 +645,24 @@ class Wpr_Product_Tabs extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'content_border_color',
+		$this->add_responsive_control(
+			'heading_distance',
 			[
-				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#E8E8E8',
-				'selectors' => [
-					'{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel' => 'border-color: {{VALUE}}',
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
 				],
-				'condition' => [
-					// 'content_border_type!' => 'none',
+				'default' => [
+					'unit' => 'px',
+					'size' => 5,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-Tabs-panel h2' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -725,14 +749,1208 @@ class Wpr_Product_Tabs extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_product_tabs_comments',
+			[
+				'label' => esc_html__( 'Comments', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'form_align',
+			[
+				'label' => esc_html__( 'Form Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'left' => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				'default' => 'left',
+				'prefix_class' => 'wpr-forms-align-',
+				'selectors' => [
+					'{{WRAPPER}} .comment-form-comment' => 'text-align: {{VALUE}};',
+					// '{{WRAPPER}} .wpr-forms-container .wpcf7-form' => 'text-align: {{VALUE}};',
+					// '{{WRAPPER}} .wpr-forms-container .wpforms-field-container' => 'text-align: {{VALUE}};',
+					// '{{WRAPPER}} .wpr-forms-container .nf-form-wrap' => 'text-align: {{VALUE}};',
+					// '{{WRAPPER}} .wpr-forms-container .nf-form-wrap .field-wrap' => 'justify-content: {{VALUE}};',
+				],
+				'separator' => 'after'
+			]
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'additional_info_syles',
+			[
+				'label' => esc_html__('Additional Info', 'wpr-addons'),
+				'tab'   => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'           => 'additional_info_typography',
+				'label'          => esc_html__('Typography', 'wpr-addons'),
+				'selector'       => '{{WRAPPER}} .woocommerce-Tabs-panel tr :is(td, th, p)',
+				'exclude'        => ['font_family', 'text_transform', 'text_decoration'],
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'font_size'      => [
+						'label'      => esc_html__('Font Size (px)', 'wpr-addons'),
+						'size_units' => ['px'],
+						'default'    => [
+							'size' => '16',
+							'unit' => 'px',
+						],
+					],
+					'font_weight'    => [
+						'default' => '400',
+					],
+					'text_transform' => [
+						'default' => 'none',
+					],
+					'line_height'     => [
+						'label'      => esc_html__('Line Height (px)', 'wpr-addons'),
+						'default' => [
+							'size' => '19',
+							'unit' => 'px',
+						],
+						'size_units' => ['px'],
+						'tablet_default' => [
+							'unit' => 'px',
+						],
+						'mobile_default' => [
+							'unit' => 'px',
+						],
+					],
+					'letter_spacing' => [
+						'label'      => esc_html__('Letter Spacing (px)', 'wpr-addons'),
+						'size_units' => ['px'],
+					],
+				],
+			]
+		);
+
+		$this->add_control(
+			'additional_info_divider_color',
+			[
+				'label'     => esc_html__('Divider Color', 'wpr-addons'),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => '#f2f2f2',
+				'alpha'		=> false,
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-Tabs-panel table tr:not(:last-child)' => 'border-color: {{VALUE}};',
+				],
+				'separator' => 'after',
+			]
+		);
+
+		// additional info label
+		$this->add_control(
+			'additional_info_label',
+			[
+				'label'     => esc_html__('Label', 'wpr-addons'),
+				'type'      => Controls_Manager::HEADING,
+                'separator'  => 'before',
+			]
+		);
+
+		$this->add_control(
+			'additional_info_label_color',
+			[
+				'label'     => esc_html__('Color', 'wpr-addons'),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => '#888888',
+				'alpha'		=> false,
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-Tabs-panel tr th' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'additional_info_label_bg_color',
+			[
+				'label'     => esc_html__('Background Color', 'wpr-addons'),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => '#f8f8f8',
+				'alpha'		=> false,
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-Tabs-panel tr th' => 'background: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'additional_info_label_width',
+			[
+				'label'      => esc_html__('Width', 'wpr-addons'),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => ['px', '%'],
+				'range'      => [
+					'px' => [
+						'min'  => 0,
+						'max'  => 1000,
+						'step' => 5,
+					],
+					'%'  => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'default'    => [
+					'unit' => '%',
+					'size' => 25,
+				],
+				'selectors'  => [
+					'{{WRAPPER}} .woocommerce-Tabs-panel tr th' => 'width: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		// additional info value
+		$this->add_control(
+			'additional_info_value_heading',
+			[
+				'label'     => esc_html__('Value', 'wpr-addons'),
+				'type'      => Controls_Manager::HEADING,
+                'separator'  => 'before',
+			]
+		);
+
+		$this->add_control(
+			'additional_information_value_color',
+			[
+				'label'     => esc_html__('Color', 'wpr-addons'),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => '#101010',
+				'alpha'		=> false,
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-Tabs-panel tr td p' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'additional_information_value_bg_color',
+			[
+				'label'     => esc_html__('Background', 'wpr-addons'),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => '#fdfdfd',
+				'alpha'		=> false,
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-Tabs-panel tr td' => 'background: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'additional_info_padding',
+			[
+				'label'      => esc_html__('Padding', 'wpr-addons'),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'default'    => [
+					'top'      => '15',
+					'right'    => '35',
+					'bottom'   => '15',
+					'left'     => '35',
+					'unit'     => 'px',
+					'isLinked' => false,
+				],
+				'separator' => 'before',
+				'size_units' => ['px'],
+				'selectors'  => [
+					'{{WRAPPER}} .woocommerce-Tabs-panel tr td' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-Tabs-panel tr th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->end_controls_section();
+		
+		// Styles ====================
+		// Section: Title & Description
+		$this->start_controls_section(
+			'section_style_field_label',
+			[
+				'label' => esc_html__( 'Field Label', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'show_label' => false,
+				// 'conditions' => [
+				// 	'relation' => 'or',
+				// 	'terms' => [
+				// 		[
+				// 			'name' => 'show_form_title',
+				// 			'operator' => '!==',
+				// 			'value' => '',
+				// 		],
+				// 		[
+				// 			'name' => 'show_form_description',
+				// 			'operator' => '!==',
+				// 			'value' => '',
+				// 		],
+				// 	],
+				// ],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'field_label_title_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .comment-form-comment label',
+			]
+		);
+
+		$this->add_responsive_control(
+			'header_distance',
+			[
+				'label' => esc_html__( 'Distance Top', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 30,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .comment-form-comment' => 'margin-top: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_responsive_control(
+			'field_label_distance',
+			[
+				'label' => esc_html__( 'Distance Bottom', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 30,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .comment-form-comment label' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->end_controls_section(); // End Controls Section
+		// Styles ====================
+		// Section: Inputs -----------
+		$this->start_controls_section(
+			'section_style_inputs',
+			[
+				'label' => esc_html__( 'Fields (Textarea)', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'show_label' => false,
+			]
+		);
+
+		$this->start_controls_tabs( 'tabs_forms_inputs_style' );
+
+		$this->start_controls_tab(
+			'tab_inputs_normal',
+			[
+				'label' => esc_html__( 'Normal', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'input_color',
+			[
+				'label' => esc_html__( 'Text Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#474747',
+				'selectors' => [
+					'{{WRAPPER}} .comment-form-comment textarea' => 'color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'input_placeholder_color',
+			[
+				'label' => esc_html__( 'Placeholder Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#ADADAD',
+				'selectors' => [
+					'{{WRAPPER}} .comment-form-comment textarea::placeholder' => 'color: {{VALUE}}',
+				],
+				// 'condition' => [
+				// 	'show_field_placeholders' => 'yes'
+				// ]
+			]
+		);
+
+		$this->add_control(
+			'input_background_color',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
+				'selectors' => [
+					'{{WRAPPER}} .comment-form-comment textarea' => 'background-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'input_border_color',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#e8e8e8',
+				'selectors' => [
+					'{{WRAPPER}} .comment-form-comment textarea' => 'border-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_inputs_hover',
+			[
+				'label' => esc_html__( 'Focus', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'input_color_fc',
+			[
+				'label' => esc_html__( 'Text Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#333333',
+				'selectors' => [
+					'{{WRAPPER}} .comment-form-comment textarea:focus' => 'color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'input_placeholder_color_fc',
+			[
+				'label' => esc_html__( 'Placeholder Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
+				'selectors' => [
+					'{{WRAPPER}} .comment-form-comment textarea:focus::placeholder' => 'color: {{VALUE}}',
+				],
+				// 'condition' => [
+				// 	'show_field_placeholders' => 'yes'
+				// ]
+			]
+		);
+
+		$this->add_control(
+			'input_background_color_fc',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
+				'selectors' => [
+					'{{WRAPPER}} .comment-form-comment textarea:focus' => 'background-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'input_border_color_fc',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#e8e8e8',
+				'selectors' => [
+					'{{WRAPPER}} .comment-form-comment textarea:focus' => 'border-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'input_box_shadow',
+				'selector' => '{{WRAPPER}} .comment-form-comment textarea',
+				'separator' => 'after',
+			]
+		);
+
+		$this->add_control(
+			'input_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.1,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .comment-form-comment textarea' => 'transition-duration: {{VALUE}}s',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'input_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .comment-form-comment textarea',
+			]
+		);
+
+		$this->add_control(
+			'input_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'solid',
+				'selectors' => [
+					'{{WRAPPER}} .comment-form-comment textarea' => 'border-style: {{VALUE}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'input_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .comment-form-comment textarea' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'input_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'input_border_divider',
+			[
+				'type' => Controls_Manager::DIVIDER,
+				'style' => 'thick',
+			]
+		);
+
+		$this->add_responsive_control(
+			'input_width',
+			[
+				'label' => esc_html__( 'Input Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px', '%'],
+				'range' => [
+					'px' => [
+						'min' => 30,
+						'max' => 500,
+					],
+				],				
+				'default' => [
+					'unit' => '%',
+					'size' => 100,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .comment-form-comment textarea' => 'width: {{SIZE}}{{UNIT}} !important;',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'input_textarea_height',
+			[
+				'label' => esc_html__( 'Textarea (Message) Height', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 100,
+						'max' => 1000,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 300,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .comment-form-comment textarea#comment' => 'height: {{SIZE}}{{UNIT}} !important;',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'textarea_width',
+			[
+				'label' => esc_html__( 'Textarea Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px', '%'],
+				'range' => [
+					'px' => [
+						'min' => 30,
+						'max' => 500,
+					],
+				],				
+				'default' => [
+					'unit' => '%',
+					'size' => 100,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .comment-form-comment textarea' => 'width: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'plugin_select!' => 'caldera'
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'input_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 0,
+					'right' => 15,
+					'bottom' => 0,
+					'left' => 15,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .comment-form-comment textarea' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'input_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 2,
+					'right' => 2,
+					'bottom' => 2,
+					'left' => 2,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .comment-form-comment textarea' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'input_spacing',
+			[
+				'label' => esc_html__( 'Vertical Gutter', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .comment-form-comment textarea' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->end_controls_section(); // End Controls Section
+		
+		// Styles ====================
+		// Section: Submit Button ----
+		$this->start_controls_section(
+			'section_style_submit_btn',
+			[
+				'label' => esc_html__( 'Submit Button', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'show_label' => false,
+			]
+		);
+
+		$this->add_control(
+			'submit_btn_align',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'left' => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					],
+					'justify' => [
+						'title' => esc_html__( 'Justified', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-justify',
+					], //TODO:: remove later if not needed
+				],
+				// 'prefix_class' => 'wpr-forms-submit-',
+				'selectors' => [
+					'{{WRAPPER}} .form-submit' => 'text-align: {{VALUE}}',
+				],
+				'default' => 'left',
+			]
+		);
+
+		$this->add_control(
+			'submit_btn_align_divider',
+			[
+				'type' => Controls_Manager::DIVIDER,
+				'style' => 'thick',
+			]
+		);
+
+		$this->start_controls_tabs( 'tabs_submit_btn_style' );
+
+		$this->start_controls_tab(
+			'tab_submit_btn_normal',
+			[
+				'label' => esc_html__( 'Normal', 'wpr-addons' ),
+			]
+		);
+		
+		// $this->add_group_control(
+		// 	Group_Control_Background::get_type(),
+		// 	[
+		// 		'name' => 'submit_btn_bg_color',
+		// 		'label' => esc_html__( 'Background', 'wpr-addons' ),
+		// 		'types' => [ 'classic', 'gradient' ],
+		// 		'fields_options' => [
+		// 			'color' => [
+		// 				'default' => '#605BE5',
+		// 			],
+		// 		],
+		// 		'selector' => '{{WRAPPER}} #respond .comment-form .form-submit input#submit'
+		// 	]
+		// );
+
+		$this->add_control(
+			'submit_btn_bg_color',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#919191',
+				'selectors' => [
+					'{{WRAPPER}} #respond .comment-form .form-submit input#submit' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'submit_btn_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} #respond .comment-form .form-submit input#submit' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'submit_btn_border_color',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} #respond .comment-form .form-submit input#submit' => 'border-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'submit_btn_box_shadow',
+				'selector' => '{{WRAPPER}} #respond .comment-form .form-submit input#submit',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_submit_btn_hover',
+			[
+				'label' => esc_html__( 'Hover', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'submit_btn_color_hr',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
+				'selectors' => [
+					'{{WRAPPER}}  #respond .comment-form .form-submit input#submit:hover' => 'color: {{VALUE}}',
+				],
+			]
+		);
+		
+		// $this->add_group_control(
+		// 	Group_Control_Background::get_type(),
+		// 	[
+		// 		'name' => 'submit_btn_bg_color_hover',
+		// 		'label' => esc_html__( 'Background', 'wpr-addons' ),
+		// 		'types' => [ 'classic', 'gradient' ],
+		// 		'fields_options' => [
+		// 			'color' => [
+		// 				'default' => '#4A45D2',
+		// 			],
+		// 		],
+		// 		'selector' => '{{WRAPPER}}  #respond .comment-form .form-submit input#submit:hover'
+		// 	]
+		// );
+
+		$this->add_control(
+			'submit_btn_bg_color_hover',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#919191',
+				'selectors' => [
+					'{{WRAPPER}} #respond .comment-form .form-submit input#submit:hover' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'submit_btn_border_color_hr',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} #respond .comment-form .form-submit input#submit:hover' => 'border-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'submit_btn_box_shadow_hr',
+				'selector' => '{{WRAPPER}} #respond .comment-form .form-submit input#submit:hover',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_control(
+			'submit_btn_divider',
+			[
+				'type' => Controls_Manager::DIVIDER,
+				'style' => 'thick',
+			]
+		);
+
+		$this->add_control(
+			'submit_btn_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.1,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} #respond .comment-form .form-submit input#submit' => 'transition-duration: {{VALUE}}s',
+				],
+				'separator' => 'after',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'submit_btn_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} #respond .comment-form .form-submit input#submit'
+			]
+		);
+
+		$this->add_control(
+			'submit_btn_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}} #respond .comment-form .form-submit input#submit' => 'border-style: {{VALUE}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'submit_btn_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} #respond .comment-form .form-submit input#submit' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'submit_btn_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'submit_btn_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 12,
+					'right' => 30,
+					'bottom' => 12,
+					'left' => 30,
+				],
+				'selectors' => [
+					'{{WRAPPER}} #respond .comment-form .form-submit input#submit' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'submit_btn_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 2,
+					'right' => 2,
+					'bottom' => 2,
+					'left' => 2,
+				],
+				'selectors' => [
+					'{{WRAPPER}} #respond .comment-form .form-submit input#submit' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'submit_btn_spacing',
+			[
+				'label' => esc_html__( 'Top Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 3,
+				],
+				'selectors' => [
+					'{{WRAPPER}} #respond .comment-form .form-submit input#submit' => 'margin-top: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_style_rating',
+			[
+				'label' => esc_html__( 'Rating', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'show_label' => false,
+			]
+		);
+
+		$this->add_control(
+			'rating_position',
+			[
+				'type' => Controls_Manager::SELECT,
+				'label' => esc_html__( 'Position', 'wpr-addons' ),
+				'default' => 'top',
+				'options' => [
+					'top' => esc_html__( 'Top', 'wpr-addons' ),
+					'bottom' => esc_html__( 'Bottom', 'wpr-addons' ),
+				],
+			]
+		);
+
+		$this->add_control(
+			'rating_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFD726',
+				'selectors' => [
+					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars.selected a.active:before' => 'color: {{VALUE}};',
+					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars:hover a:before' => 'color: {{VALUE}};',
+					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars.selected a:not(.active):before' => 'color: {{VALUE}};',
+					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars.selected a.active:before' => 'color: {{VALUE}};',
+					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars a:before' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'rating_color_2',
+			[
+				'label' => esc_html__( 'Color (Locate)', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFD726',
+				'selectors' => [
+					'{{WRAPPER}}.elementor-widget-wpr-product-tabs .star-rating span::before' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'rating_color_3',
+			[
+				'label' => esc_html__( 'Color (Locate)', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFD726',
+				'selectors' => [
+					'{{WRAPPER}}.elementor-widget-wpr-product-tabs .star-rating::before' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'rating_align',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'label_block' => false,
+				'default' => 'center',
+				'options' => [
+                    'left' => [
+                        'title' => esc_html__( 'Left', 'wpr-addons' ),
+                        'icon' => 'eicon-h-align-left',
+                    ],
+                    'center' => [
+                        'title' => esc_html__( 'Center', 'wpr-addons' ),
+                        'icon' => 'eicon-h-align-center',
+                    ],
+                    'right' => [
+                        'title' => esc_html__( 'Right', 'wpr-addons' ),
+                        'icon' => 'eicon-h-align-right',
+                    ]
+                ],
+                'selectors' => [
+					'{{WRAPPER}} p.stars' => 'text-align: {{VALUE}}',
+					'{{WRAPPER}} .comment-form-rating' => 'text-align: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'rating_size',
+			[
+				'label' => esc_html__( 'Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 22,
+				],
+				'selectors' => [
+					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars a::before' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.elementor-widget-wpr-product-tabs .wpr-individual-rating-cont' => 'height: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'rating_gutter',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => -5,
+						'max' => 50,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} p.stars a' => 'margin-right: {{SIZE}}{{UNIT}};',
+				],	
+			]
+		);
+
+		$this->add_responsive_control(
+			'rating_distance',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 5,
+				],
+				'selectors' => [
+					'{{WRAPPER}} p.stars a' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'after'
+			]
+		);
+
+		$this->end_controls_section();
     }
 
 	public function previous_tag() {
-		echo '<div class="wpr-woo-wrap">';
+		echo '<div class="wpr-woo-wrap woocommerce woocommerce-page">';
 	}
 
 	public function next_tag() {
 		echo '</div>';
+	}
+	
+	public function change_html($reviews_title, $count, $product) {
+
+		$average = $product->get_average_rating();
+
+		$rating_5 = $product->get_rating_count(5);
+		$rating_4 = $product->get_rating_count(4);
+		$rating_3 = $product->get_rating_count(3);
+		$rating_2 = $product->get_rating_count(2);
+		$rating_1 = $product->get_rating_count(1);
+		$total = $rating_1 + $rating_2 + $rating_3 + $rating_4 + $rating_5;
+		$pct5 = $pct4 = $pct3 = $pct2 = $pct1 = 0;
+
+		if ($total > 0) {
+			$pct5 = ceil($rating_5 * 100 / $total);
+			$pct4 = ceil($rating_4 * 100 / $total);
+			$pct3 = ceil($rating_3 * 100 / $total);
+			$pct2 = ceil($rating_2 * 100 / $total);
+			$pct1 = ceil($rating_1 * 100 / $total);
+		}
+
+		$details = '<div class="wpr-individual-rating"><span>' . esc_html__('5 star', 'wpr-addons') . '</span> <span class="wpr-individual-rating-cont"><span style="width: ' . $pct5 . '%"> </span></span> <span>' . $pct5 . '%</span></div><br/> ';
+		$details .= '<div class="wpr-individual-rating"><span>' . esc_html__('4 star', 'wpr-addons') . '</span> <span class="wpr-individual-rating-cont"><span style="width: ' . $pct4 . '%"> </span></span> <span>' . $pct4 . '%</span></div><br/> ';
+		$details .= '<div class="wpr-individual-rating"><span>' . esc_html__('3 star', 'wpr-addons') . '</span> <span class="wpr-individual-rating-cont"><span style="width: ' . $pct3 . '%"> </span></span> <span>' . $pct3 . '%</span></div><br/> ';
+		$details .= '<div class="wpr-individual-rating"><span>' . esc_html__('2 star', 'wpr-addons') . '</span> <span class="wpr-individual-rating-cont"><span style="width: ' . $pct2 . '%"> </span></span> <span>' . $pct2 . '%</span></div><br/> ';
+		$details .= '<div class="wpr-individual-rating"><span>' . esc_html__('1 star', 'wpr-addons') . '</span> <span class="wpr-individual-rating-cont"><span style="width: ' . $pct1 . '%"> </span></span> <span>' . $pct1 . '%</span></div><br/> ';
+
+
+		$htm = '</h2>';
+		$htm .= '<div class="wpr-rating-container">';
+		$htm .= '<h2>Average rating</h2>';
+		$htm .= '<div class="wpr-avg-rating">' . $average . '</div>';
+
+		$htm .= wc_get_rating_html($average, $count);
+
+		$htm .= '<strong class="wpr-avg-count">' . $count . ' Review</strong>';
+		$htm .= $details;
+		$htm .= '</div><h2 class="woocommerce-Reviews-title">';
+
+		return $htm . $reviews_title;
 	}
 
     protected function render() {
@@ -746,15 +1964,42 @@ class Wpr_Product_Tabs extends Widget_Base {
 
         setup_postdata( $product->get_id() );
 
-		// $this->previous_tag();
+		add_filter('woocommerce_reviews_title', [$this, 'change_html'], 99, 3);
+
+		$this->previous_tag();
+		// add_action('woocommerce_before_single_product_summary',function(){
+		// 	printf('<div class="wpr-woo-wrap">');
+		// });
+
         wc_get_template( 'single-product/tabs/tabs.php' );
-		// $this->next_tag();
+		
+		$this->next_tag();
+		// add_action('woocommerce_after_single_product_summary',function(){
+		// 	printf('</div>');
+		// });
+
+		// $in_editor_mode = \wpr-addons\Core\Template_Cpt::TYPE == get_post_type();
+
+		// if($in_editor_mode) {
+
+		// 	global $product, $post;
+
+		// 	$main_post = clone $post;
+
+		// 	$product = \wpr-addons\Widgets\Products::instance()->get_product($post_type);
+		// 	$post = get_post($product->get_id());
+
+		// 	add_filter('the_content', [\wpr-addons\Widgets\Products::instance(), 'product_tab_content_preview']);
+
+		// 	$product_tabs = woocommerce_default_product_tabs();
+		// }
 
         // On render widget from Editor - trigger the init manually.
         if ( wp_doing_ajax() ) {
             ?>
             <script>
                 jQuery( '.wc-tabs-wrapper, .woocommerce-tabs, #rating' ).trigger( 'init' );
+				console.log('works');
             </script>
             <?php
         }
