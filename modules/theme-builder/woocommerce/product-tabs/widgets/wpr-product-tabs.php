@@ -1114,7 +1114,11 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'name' => 'field_label_title_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .comment-form-comment label',
+				'selectors' => [
+					'{{WRAPPER}} .comment-form-comment label',
+					'{{WRAPPER}} .comment-form-author label',
+					'{{WRAPPER}} .comment-form-email label',
+				]
 			]
 		);
 
@@ -1188,10 +1192,12 @@ class Wpr_Product_Tabs extends Widget_Base {
 				],				
 				'default' => [
 					'unit' => 'px',
-					'size' => 30,
+					'size' => 10,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .comment-form-comment label' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .comment-form-author label' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .comment-form-email label' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .comment-reply-title' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before'
@@ -1226,8 +1232,10 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'default' => '#474747',
 				'selectors' => [
 					'{{WRAPPER}} .comment-form-comment textarea' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .comment-form-author input' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .comment-form-email input' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .comment-form-author input' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .comment-form-email input' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .comment-form-author label' => 'display: block;',
+					'{{WRAPPER}} .comment-form-email label' => 'display: block;',
 				]
 			]
 		);
@@ -1465,29 +1473,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'input_width',
-			[
-				'label' => esc_html__( 'Input Width', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px', '%'],
-				'range' => [
-					'px' => [
-						'min' => 30,
-						'max' => 500,
-					],
-				],				
-				'default' => [
-					'unit' => '%',
-					'size' => 100,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .comment-form-author input' => 'width: {{SIZE}}{{UNIT}} !important;',
-					'{{WRAPPER}} .comment-form-email input' => 'width: {{SIZE}}{{UNIT}} !important;',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
 			'textarea_width',
 			[
 				'label' => esc_html__( 'Textarea Width', 'wpr-addons' ),
@@ -1576,7 +1561,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 		$this->add_responsive_control(
 			'input_spacing',
 			[
-				'label' => esc_html__( 'Vertical Gutter', 'wpr-addons' ),
+				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => ['px'],
 				'range' => [
@@ -1591,6 +1576,8 @@ class Wpr_Product_Tabs extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .comment-form-comment textarea' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .comment-form-author' => 'width: calc(50% - {{SIZE}}{{UNIT}}) !important; display: inline-block !important; margin-right: calc({{SIZE}}{{UNIT}}*1.6) !important;',
+					'{{WRAPPER}} .comment-form-email' => 'width: calc(50% - {{SIZE}}{{UNIT}}) !important; display: inline-block !important;',
 				],
 				'separator' => 'before'
 			]
