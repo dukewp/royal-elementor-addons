@@ -2258,7 +2258,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 		$review = $count !== 1 ? 'Reviews' : 'Review';
 
 		$htm .= '<strong class="wpr-avg-count">' . $count . ' ' . $review . '</strong>';
-		// $htm .= $details;
+		$htm .= $details;
 		$htm .= '</div><h2 class="woocommerce-Reviews-title">';
 
 		return $htm . $reviews_title;
