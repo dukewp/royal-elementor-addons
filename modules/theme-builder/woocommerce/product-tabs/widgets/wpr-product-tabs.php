@@ -207,7 +207,8 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'size' => 70,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wc-tabs li' => 'min-width: {{SIZE}}px;'
+					'{{WRAPPER}} .wc-tabs li' => 'min-width: {{SIZE}}px;',
+					'{{WRAPPER}} .wc-tabs li a' => 'min-width: {{SIZE}}px; display: block;'
 				],
 				'separator' => 'before',
 			]
@@ -277,7 +278,8 @@ class Wpr_Product_Tabs extends Widget_Base {
 
 		$this->start_controls_tabs( 'tabs_style' );
 
-		$this->start_controls_tab( 'normal_tabs_style',
+		$this->start_controls_tab( 
+			'normal_tabs_style',
 			[
 				'label' => esc_html__( 'Normal', 'wpr-addons' ),
 			]
@@ -303,6 +305,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'alpha' => true,
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li a' => 'background-color: {{VALUE}}',
 				],
 			]
 		);
@@ -315,7 +318,8 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'default' => '#FFF',
 				'selectors' => [
 					// '{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel' => 'border-color: {{VALUE}}',
-					'{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li a' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li' => 'border-color: transparent !important;',
 				],
 			]
 		);
@@ -331,7 +335,66 @@ class Wpr_Product_Tabs extends Widget_Base {
 
 		$this->end_controls_tab();
 
-		$this->start_controls_tab( 'active_tabs_style',
+		$this->start_controls_tab( 
+			'hover_tabs_style',
+			[
+				'label' => esc_html__( 'Hover', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'hover_tab_text_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li:hover a' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'hover_tab_bg_color',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'alpha' => true,
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel, {{WRAPPER}} .woocommerce-tabs ul.wc-tabs li:hover' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel, {{WRAPPER}} .woocommerce-tabs ul.wc-tabs li:hover a' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li.active' => 'border-bottom-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'tab_hover_border_color',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#e5e5e5',
+				'selectors' => [
+					// '{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel' => 'border-color: {{VALUE}}',
+					// '{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li.active' => 'border-color: {{VALUE}} {{VALUE}} {{active_tab_bg_color.VALUE}} {{VALUE}}',
+					// '{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li:not(.active)' => 'border-bottom-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li:hover a' => 'border-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'tab_typography_hover',
+				'label' => esc_html__( 'Typography', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li a:hover',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab( 
+			'active_tabs_style',
 			[
 				'label' => esc_html__( 'Active', 'wpr-addons' ),
 			]
@@ -354,9 +417,10 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#FFF',
-				'alpha' => false,
+				'alpha' => true,
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel, {{WRAPPER}} .woocommerce-tabs ul.wc-tabs li.active' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel, {{WRAPPER}} .woocommerce-tabs ul.wc-tabs li.active a' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li.active' => 'border-bottom-color: {{VALUE}}',
 				],
 			]
@@ -372,7 +436,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 					// '{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel' => 'border-color: {{VALUE}}',
 					// '{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li.active' => 'border-color: {{VALUE}} {{VALUE}} {{active_tab_bg_color.VALUE}} {{VALUE}}',
 					// '{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li:not(.active)' => 'border-bottom-color: {{VALUE}}',
-					'{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li.active' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li.active a' => 'border-color: {{VALUE}}',
 				],
 			]
 		);
@@ -405,7 +469,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				],
 				'default' => 'solid',
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li a' => 'border-style: {{VALUE}};',
 				],
 				'separator' => 'before',
 			]
@@ -424,7 +488,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'left' => 1,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li a' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
 					'tab_border_type!' => 'none',
@@ -439,6 +503,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'type' => Controls_Manager::SLIDER,
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li' => 'border-radius: {{SIZE}}{{UNIT}} {{SIZE}}{{UNIT}} 0 0',
+					'{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li a' => 'border-radius: {{SIZE}}{{UNIT}} {{SIZE}}{{UNIT}} 0 0',
 				],
 			]
 		);
@@ -457,9 +522,9 @@ class Wpr_Product_Tabs extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wc-tabs li a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};', // li or a ?
-					'{{WRAPPER}} .wc-tabs li' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};', // li or a ?
+					// '{{WRAPPER}} .wc-tabs li' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};', // li or a ?
 					'{{WRAPPER}} .wc-tabs li a.active' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};', // li or a ?
-					'{{WRAPPER}} .wc-tabs li.active' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};', // li or a ?
+					// '{{WRAPPER}} .wc-tabs li.active' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};', // li or a ?
 				],
 				'separator' => 'before',
 			]
@@ -478,6 +543,8 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'left' => 0,
 				],
 				'selectors' => [
+					'{{WRAPPER}} .wc-tabs li a' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};', // li or a ?
+					'{{WRAPPER}} .wc-tabs li.active a' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};', // li or a ?
 					'{{WRAPPER}} .wc-tabs li' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};', // li or a ?
 					'{{WRAPPER}} .wc-tabs li.active' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};', // li or a ?
 				],
@@ -534,19 +601,41 @@ class Wpr_Product_Tabs extends Widget_Base {
 			'panel_heading_style',
 			[
 				'type' => Controls_Manager::HEADING,
-				'label' => esc_html__( 'Heading', 'wpr-addons' ),
+				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'separator' => 'before',
 			]
 		);
 
 		$this->add_control(
-			'heading_color',
+			'show_tab_content_titles',
+			[
+				'label' => esc_html__( 'Show Title', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'render_type' => 'template',
+				'label_block' => false,
+                'selectors_dictionary' => [
+					'' => 'display: none  !important;',
+					'yes' => 'display: block !important;',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-Reviews-title' => '{{value}}',
+					'{{WRAPPER}} .woocommerce-Tabs-panel h2' => '{{value}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'title_color',
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-Tabs-panel h2' => 'color: {{VALUE}}',
 				],
+				'condition' => [
+					'show_tab_content_titles' => 'yes'
+				]
 			]
 		);
 
@@ -556,6 +645,9 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'name' => 'content_heading_typography',
 				'label' => esc_html__( 'Typography', 'wpr-addons' ),
 				'selector' => '{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel h2',
+				'condition' => [
+					'show_tab_content_titles' => 'yes'
+				]
 			]
 		);
 
@@ -578,6 +670,9 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-Tabs-panel h2' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
+				'condition' => [
+					'show_tab_content_titles' => 'yes'
+				]
 			]
 		);
 
@@ -817,7 +912,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'label'     => esc_html__('Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#888888',
-				'alpha'		=> false,
+				'alpha'  => true,
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-Tabs-panel tr th' => 'color: {{VALUE}};',
 				],
@@ -830,7 +925,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'label'     => esc_html__('Background Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#f8f8f8',
-				'alpha'		=> false,
+				'alpha'  => true,
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-Tabs-panel tr th' => 'background: {{VALUE}};',
 				],
@@ -953,7 +1048,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'label'     => esc_html__('Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#101010',
-				'alpha'		=> false,
+				'alpha'  => true,
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-Tabs-panel tr td p' => 'color: {{VALUE}};',
 				],
@@ -966,7 +1061,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'label'     => esc_html__('Background Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#fdfdfd',
-				'alpha'		=> false,
+				'alpha'  => true,
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-Tabs-panel tr td' => 'background: {{VALUE}};',
 				],
@@ -1048,7 +1143,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'label'     => esc_html__('Divider (Border) Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#f2f2f2',
-				'alpha'		=> false,
+				'alpha'  => true,
 				'selectors' => [
 					'{{WRAPPER}} table.shop_attributes' => 'border-color: {{VALUE}};',
 					'{{WRAPPER}} table.shop_attributes th' => 'border-color: {{VALUE}};',
@@ -1473,28 +1568,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'textarea_width',
-			[
-				'label' => esc_html__( 'Textarea Width', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px', '%'],
-				'range' => [
-					'px' => [
-						'min' => 30,
-						'max' => 500,
-					],
-				],				
-				'default' => [
-					'unit' => '%',
-					'size' => 100,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .comment-form-comment textarea' => 'width: {{SIZE}}{{UNIT}} !important;',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
 			'input_height',
 			[
 				'label' => esc_html__( 'Input Height', 'wpr-addons' ),
@@ -1584,9 +1657,239 @@ class Wpr_Product_Tabs extends Widget_Base {
 		);
 
 		$this->end_controls_section(); // End Controls Section
+
+		$this->start_controls_section(
+			'section_style_rating',
+			[
+				'label' => esc_html__( 'Rating', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'show_label' => false,
+			]
+		);
+
+		$this->add_control(
+			'rating_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFD726',
+				'selectors' => [
+					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars.selected a.active:before' => 'color: {{VALUE}};',
+					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars:hover a:before' => 'color: {{VALUE}};',
+					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars.selected a:not(.active):before' => 'color: {{VALUE}};',
+					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars.selected a.active:before' => 'color: {{VALUE}};',
+					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars a:before' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'rating_color_2',
+			[
+				'label' => esc_html__( 'Color (Locate)', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFD726',
+				'selectors' => [
+					'{{WRAPPER}}.elementor-widget-wpr-product-tabs .star-rating span::before' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'rating_color_3',
+			[
+				'label' => esc_html__( 'Color (Locate)', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFD726',
+				'selectors' => [
+					'{{WRAPPER}}.elementor-widget-wpr-product-tabs .star-rating::before' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'panel_icons_style',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Your Rating Icons', 'wpr-addons' ),
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'rating_size',
+			[
+				'label' => esc_html__( 'Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 22,
+				],
+				'selectors' => [
+					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars a::before' => 'font-size: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'rating_gutter',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Icons Gutter', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => -5,
+						'max' => 50,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 0,
+				],
+				'separator' => 'before',
+				'selectors' => [
+					'{{WRAPPER}} p.stars a' => 'margin-right: {{SIZE}}{{UNIT}};',
+				],	
+			]
+		);
+
+		// $this->add_control(
+		// 	'panel_stats_style',
+		// 	[
+		// 		'type' => Controls_Manager::HEADING,
+		// 		'label' => esc_html__( 'Stats', 'wpr-addons' ),
+		// 		'separator' => 'before',
+		// 	]
+		// );
+
+		// $this->add_responsive_control(
+		// 	'stats_size',
+		// 	[
+		// 		'label' => esc_html__( 'Stats Size', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'size_units' => ['px' ],
+		// 		'range' => [
+		// 			'px' => [
+		// 				'min' => 0,
+		// 				'max' => 50,
+		// 			],
+		// 		],
+		// 		'default' => [
+		// 			'unit' => 'px',
+		// 			'size' => 22,
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}}.elementor-widget-wpr-product-tabs .wpr-individual-rating span' => 'font-size: {{SIZE}}{{UNIT}};',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_responsive_control(
+		// 	'average_rating_bar_width',
+		// 	[
+		// 		'label'      => esc_html__('Rating Bar Width', 'wpr-addons'),
+		// 		'type'       => Controls_Manager::SLIDER,
+		// 		'size_units' => ['px', '%'],
+		// 		'range'      => [
+		// 			'px' => [
+		// 				'min'  => 0,
+		// 				'max'  => 200,
+		// 				'step' => 5,
+		// 			],
+		// 			'%'  => [
+		// 				'min'  => 0,
+		// 				'max'  => 100,
+		// 				'step' => 5,
+		// 			],
+		// 		],
+		// 		'default'    => [
+		// 			'unit' => 'px',
+		// 			'size' => 150,
+		// 		],
+		// 		'selectors'  => [
+		// 			'{{WRAPPER}}.elementor-widget-wpr-product-tabs .wpr-individual-rating-cont' => 'width: {{SIZE}}{{UNIT}};',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_responsive_control(
+		// 	'average_rating_bar_height',
+		// 	[
+		// 		'label'      => esc_html__('Rating Bar Height (px)', 'wpr-addons'),
+		// 		'type'       => Controls_Manager::SLIDER,
+		// 		'size_units' => ['px'],
+		// 		'range'      => [
+		// 			'%' => [
+		// 				'min'  => 0,
+		// 				'max'  => 200,
+		// 				'step' => 5,
+		// 			],
+		// 		],
+		// 		'default'    => [
+		// 			'unit' => 'px',
+		// 			'size' => 10,
+		// 		],
+		// 		'selectors'  => [
+		// 			'{{WRAPPER}}.elementor-widget-wpr-product-tabs .wpr-individual-rating-cont' => 'height: {{SIZE}}{{UNIT}};',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_responsive_control(
+		// 	'rating_percentage_bar_gutter',
+		// 	[
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'label' => esc_html__( 'Bar Gutter', 'wpr-addons' ),
+		// 		'size_units' => [ 'px' ],
+		// 		'range' => [
+		// 			'px' => [
+		// 				'min' => -5,
+		// 				'max' => 50,
+		// 			]
+		// 		],
+		// 		'default' => [
+		// 			'unit' => 'px',
+		// 			'size' => 0,
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-individual-rating-cont' => 'margin-right: {{SIZE}}{{UNIT}}; margin-left: {{SIZE}}{{UNIT}}',
+		// 		],	
+		// 	]
+		// );
+
+		$this->add_responsive_control(
+			'rating_distance',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 5,
+				],
+				'selectors' => [
+					'{{WRAPPER}} p.stars a' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->end_controls_section();
 		
-		// Styles ====================
-		// Section: Submit Button ----
 		$this->start_controls_section(
 			'section_style_submit_btn',
 			[
@@ -1911,266 +2214,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 		);
 
 		$this->end_controls_section();
-
-		$this->start_controls_section(
-			'section_style_rating',
-			[
-				'label' => esc_html__( 'Rating', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-				'show_label' => false,
-			]
-		);
-
-		$this->add_control(
-			'rating_color',
-			[
-				'label' => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#FFD726',
-				'selectors' => [
-					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars.selected a.active:before' => 'color: {{VALUE}};',
-					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars:hover a:before' => 'color: {{VALUE}};',
-					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars.selected a:not(.active):before' => 'color: {{VALUE}};',
-					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars.selected a.active:before' => 'color: {{VALUE}};',
-					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars a:before' => 'color: {{VALUE}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'rating_color_2',
-			[
-				'label' => esc_html__( 'Color (Locate)', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#FFD726',
-				'selectors' => [
-					'{{WRAPPER}}.elementor-widget-wpr-product-tabs .star-rating span::before' => 'color: {{VALUE}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'rating_color_3',
-			[
-				'label' => esc_html__( 'Color (Locate)', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#FFD726',
-				'selectors' => [
-					'{{WRAPPER}}.elementor-widget-wpr-product-tabs .star-rating::before' => 'color: {{VALUE}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'rating_align',
-			[
-				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
-				'type' => Controls_Manager::CHOOSE,
-				'label_block' => false,
-				'default' => 'center',
-				'options' => [
-                    'left' => [
-                        'title' => esc_html__( 'Left', 'wpr-addons' ),
-                        'icon' => 'eicon-h-align-left',
-                    ],
-                    'center' => [
-                        'title' => esc_html__( 'Center', 'wpr-addons' ),
-                        'icon' => 'eicon-h-align-center',
-                    ],
-                    'right' => [
-                        'title' => esc_html__( 'Right', 'wpr-addons' ),
-                        'icon' => 'eicon-h-align-right',
-                    ]
-                ],
-                'selectors' => [
-					'{{WRAPPER}} p.stars' => 'text-align: {{VALUE}}',
-					'{{WRAPPER}} .comment-form-rating' => 'text-align: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_control(
-			'panel_icons_style',
-			[
-				'type' => Controls_Manager::HEADING,
-				'label' => esc_html__( 'Your Rating Icons', 'wpr-addons' ),
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_responsive_control(
-			'rating_size',
-			[
-				'label' => esc_html__( 'Size', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 50,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 22,
-				],
-				'selectors' => [
-					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars a::before' => 'font-size: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'rating_gutter',
-			[
-				'type' => Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Icons Gutter', 'wpr-addons' ),
-				'size_units' => [ 'px' ],
-				'range' => [
-					'px' => [
-						'min' => -5,
-						'max' => 50,
-					]
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 0,
-				],
-				'separator' => 'before',
-				'selectors' => [
-					'{{WRAPPER}} p.stars a' => 'margin-right: {{SIZE}}{{UNIT}};',
-				],	
-			]
-		);
-
-		// $this->add_control(
-		// 	'panel_stats_style',
-		// 	[
-		// 		'type' => Controls_Manager::HEADING,
-		// 		'label' => esc_html__( 'Stats', 'wpr-addons' ),
-		// 		'separator' => 'before',
-		// 	]
-		// );
-
-		// $this->add_responsive_control(
-		// 	'stats_size',
-		// 	[
-		// 		'label' => esc_html__( 'Stats Size', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'size_units' => ['px' ],
-		// 		'range' => [
-		// 			'px' => [
-		// 				'min' => 0,
-		// 				'max' => 50,
-		// 			],
-		// 		],
-		// 		'default' => [
-		// 			'unit' => 'px',
-		// 			'size' => 22,
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}}.elementor-widget-wpr-product-tabs .wpr-individual-rating span' => 'font-size: {{SIZE}}{{UNIT}};',
-		// 		],
-		// 	]
-		// );
-
-		// $this->add_responsive_control(
-		// 	'average_rating_bar_width',
-		// 	[
-		// 		'label'      => esc_html__('Rating Bar Width', 'wpr-addons'),
-		// 		'type'       => Controls_Manager::SLIDER,
-		// 		'size_units' => ['px', '%'],
-		// 		'range'      => [
-		// 			'px' => [
-		// 				'min'  => 0,
-		// 				'max'  => 200,
-		// 				'step' => 5,
-		// 			],
-		// 			'%'  => [
-		// 				'min'  => 0,
-		// 				'max'  => 100,
-		// 				'step' => 5,
-		// 			],
-		// 		],
-		// 		'default'    => [
-		// 			'unit' => 'px',
-		// 			'size' => 150,
-		// 		],
-		// 		'selectors'  => [
-		// 			'{{WRAPPER}}.elementor-widget-wpr-product-tabs .wpr-individual-rating-cont' => 'width: {{SIZE}}{{UNIT}};',
-		// 		],
-		// 	]
-		// );
-
-		// $this->add_responsive_control(
-		// 	'average_rating_bar_height',
-		// 	[
-		// 		'label'      => esc_html__('Rating Bar Height (px)', 'wpr-addons'),
-		// 		'type'       => Controls_Manager::SLIDER,
-		// 		'size_units' => ['px'],
-		// 		'range'      => [
-		// 			'%' => [
-		// 				'min'  => 0,
-		// 				'max'  => 200,
-		// 				'step' => 5,
-		// 			],
-		// 		],
-		// 		'default'    => [
-		// 			'unit' => 'px',
-		// 			'size' => 10,
-		// 		],
-		// 		'selectors'  => [
-		// 			'{{WRAPPER}}.elementor-widget-wpr-product-tabs .wpr-individual-rating-cont' => 'height: {{SIZE}}{{UNIT}};',
-		// 		],
-		// 	]
-		// );
-
-		// $this->add_responsive_control(
-		// 	'rating_percentage_bar_gutter',
-		// 	[
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'label' => esc_html__( 'Bar Gutter', 'wpr-addons' ),
-		// 		'size_units' => [ 'px' ],
-		// 		'range' => [
-		// 			'px' => [
-		// 				'min' => -5,
-		// 				'max' => 50,
-		// 			]
-		// 		],
-		// 		'default' => [
-		// 			'unit' => 'px',
-		// 			'size' => 0,
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-individual-rating-cont' => 'margin-right: {{SIZE}}{{UNIT}}; margin-left: {{SIZE}}{{UNIT}}',
-		// 		],	
-		// 	]
-		// );
-
-		$this->add_responsive_control(
-			'rating_distance',
-			[
-				'label' => esc_html__( 'Distance', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 50,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 5,
-				],
-				'selectors' => [
-					'{{WRAPPER}} p.stars a' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-				],
-				'separator' => 'before'
-			]
-		);
-
-		$this->end_controls_section();
     }
 
 	public function previous_tag() {
@@ -2218,6 +2261,8 @@ class Wpr_Product_Tabs extends Widget_Base {
 	}
 
     protected function render() {
+        // $settings = $this->get_settings_for_display();
+		// var_dump($settings['show_panel_titles']);
         global $product;
 
         $product = wc_get_product();
