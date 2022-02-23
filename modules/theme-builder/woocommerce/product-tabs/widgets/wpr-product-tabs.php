@@ -2249,11 +2249,10 @@ class Wpr_Product_Tabs extends Widget_Base {
 
 
 		$htm = '</h2>';
-		$htm .= '<div class="wpr-rating-container">';
 
 		$htm .= wc_get_rating_html($average, $count);
-		
-		$htm .= '</div><h2 class="woocommerce-Reviews-title">';
+
+		$htm .= '<h2 class="woocommerce-Reviews-title">';
 
 		return $htm . $reviews_title;
 	}
