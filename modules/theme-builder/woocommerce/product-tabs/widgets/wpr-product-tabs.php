@@ -802,29 +802,12 @@ class Wpr_Product_Tabs extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'additional_info_divider_color',
-			[
-				'label'     => esc_html__('Border Color', 'wpr-addons'),
-				'type'      => Controls_Manager::COLOR,
-				'default'   => '#f2f2f2',
-				'alpha'		=> false,
-				'selectors' => [
-					'{{WRAPPER}} .woocommerce table.shop_attributes' => 'border-color: {{VALUE}};',
-					'{{WRAPPER}} .woocommerce table.shop_attributes th' => 'border-color: {{VALUE}};',
-					'{{WRAPPER}} .woocommerce table.shop_attributes td' => 'border-color: {{VALUE}};',
-				],
-				'separator' => 'after',
-			]
-		);
-
 		// additional info label
 		$this->add_control(
 			'additional_info_label',
 			[
-				'label'     => esc_html__('Label', 'wpr-addons'),
+				'label'     => esc_html__('Attribute Name', 'wpr-addons'),
 				'type'      => Controls_Manager::HEADING,
-                'separator'  => 'before',
 			]
 		);
 
@@ -920,7 +903,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 						'icon' => 'eicon-text-align-right',
 					],
 				],
-				// 'prefix_class' => 'wpr-forms-submit-',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-Tabs-panel tr th' => 'text-align: {{VALUE}}',
 				],
@@ -959,7 +941,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 		$this->add_control(
 			'additional_info_value_heading',
 			[
-				'label'     => esc_html__('Value', 'wpr-addons'),
+				'label'     => esc_html__('Attribute Value', 'wpr-addons'),
 				'type'      => Controls_Manager::HEADING,
                 'separator'  => 'before',
 			]
@@ -1038,33 +1020,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'additional_info_td_align',
-			[
-				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
-				'type' => Controls_Manager::CHOOSE,
-				'options' => [
-					'left' => [
-						'title' => esc_html__( 'Left', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-left',
-					],
-					'center' => [
-						'title' => esc_html__( 'Center', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-center',
-					],
-					'right' => [
-						'title' => esc_html__( 'Right', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-right',
-					],
-				],
-				// 'prefix_class' => 'wpr-forms-submit-',
-				'selectors' => [
-					'{{WRAPPER}} .woocommerce-Tabs-panel tr td' => 'text-align: {{VALUE}}',
-				],
-				'default' => 'left',
-			]
-		);
-
 		$this->add_responsive_control(
 			'additional_info_padding',
 			[
@@ -1088,33 +1043,46 @@ class Wpr_Product_Tabs extends Widget_Base {
 		);
 
 		$this->add_control(
-			'additional_info_border_type',
+			'additional_info_divider_color',
 			[
-				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'none' => esc_html__( 'None', 'wpr-addons' ),
-					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
-					'double' => esc_html__( 'Double', 'wpr-addons' ),
-					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
-					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
-					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
-				],
-				'default' => 'none',
+				'label'     => esc_html__('Divider (Border) Color', 'wpr-addons'),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => '#f2f2f2',
+				'alpha'		=> false,
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce table.shop_attributes' => 'border-style: {{VALUE}};',
-					'{{WRAPPER}} .woocommerce table.shop_attributes th' => 'border-style: {{VALUE}};',
-					'{{WRAPPER}} .woocommerce table.shop_attributes td' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce table.shop_attributes' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce table.shop_attributes th' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce table.shop_attributes td' => 'border-color: {{VALUE}};',
 				],
 				'separator' => 'before',
 			]
 		);
 
 		$this->add_control(
+			'additional_info_show_dividers',
+			[
+				'label' => esc_html__( 'Show Dividers', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'label_block' => false
+			]
+		);
+
+		$this->add_control(
+			'additional_info_show_borders',
+			[
+				'label' => esc_html__( 'Show Borders', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'label_block' => false
+			]
+		);
+
+		$this->add_control(
 			'additional_info_border_width',
 			[
-				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
+				'label' => esc_html__( 'Divider (Border) Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px' ],
 				'default' => [
 					'top' => 1,
@@ -1123,12 +1091,9 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'left' => 1,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce table.shop_attributes' => 'border-style: {{VALUE}};',
-					'{{WRAPPER}} .woocommerce table.shop_attributes th' => 'border-style: {{VALUE}};',
-					'{{WRAPPER}} .woocommerce table.shop_attributes td' => 'border-style: {{VALUE}};',
-				],
-				'condition' => [
-					'additional_info_border_type!' => 'none',
+					'{{WRAPPER}} .woocommerce table.shop_attributes' => 'border-width: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce table.shop_attributes th' => 'border-width: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce table.shop_attributes td' => 'border-width: {{VALUE}};',
 				],
 			]
 		);

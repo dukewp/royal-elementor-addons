@@ -1,12 +1,16 @@
 <?php
 
 use Elementor\Utils;
+use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
 \Elementor\Plugin::$instance->frontend->add_body_class( 'elementor-template-canvas' );
+
+$is_preview_mode = \Elementor\Plugin::$instance->preview->is_preview_mode();
+$woocommerce_class =  $is_preview_mode && class_exists( 'WooCommerce' ) ? 'woocommerce woocommerce-page' : '';
 
 ?>
 <!DOCTYPE html>
@@ -23,7 +27,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	Utils::print_unescaped_internal_string( Utils::get_meta_viewport( 'canvas' ) );
 	?>
 </head>
-<body <?php body_class(); ?>>
+
+<body <?php body_class($woocommerce_class); ?>>
 	<?php
 	Elementor\Modules\PageTemplates\Module::body_open();
 	/**
@@ -36,7 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	do_action( 'elementor/page_templates/canvas/before_content' );
 
 	// Elementor Editor
-	if ( \Elementor\Plugin::$instance->preview->is_preview_mode() ) {
+	if ( $is_preview_mode ) {
 	     \Elementor\Plugin::$instance->modules_manager->get_modules( 'page-templates' )->print_content();
 
 	// Frontend
