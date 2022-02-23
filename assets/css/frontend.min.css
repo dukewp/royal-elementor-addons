@@ -1818,6 +1818,12 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     vertical-align: middle;
 }
 
+.elementor-widget-wpr-product-tabs .wpr-product-tabs table,
+.elementor-widget-wpr-product-tabs .wpr-product-tabs tr:last-child th,
+.elementor-widget-wpr-product-tabs .wpr-product-tabs tr:last-child td {
+  border: none;
+}
+
 /* according to woocommerce styles line-height */
 .elementor-widget-wpr-product-tabs .form-submit #submit {
     line-height: 1;

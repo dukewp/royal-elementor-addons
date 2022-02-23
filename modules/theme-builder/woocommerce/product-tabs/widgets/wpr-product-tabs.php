@@ -797,12 +797,11 @@ class Wpr_Product_Tabs extends Widget_Base {
 		$this->start_controls_section(
 			'additional_info_syles',
 			[
-				'label' => esc_html__('Additional Info', 'wpr-addons'),
+				'label' => esc_html__('Additional Information', 'wpr-addons'),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
 
-		// additional info label
 		$this->add_control(
 			'additional_info_label',
 			[
@@ -819,20 +818,33 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'default'   => '#888888',
 				'alpha'		=> false,
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce-Tabs-panel tr th' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-product-tabs table th' => 'color: {{VALUE}};',
 				],
 			]
 		);
 
 		$this->add_control(
-			'additional_info_label_bg_color',
+			'additional_info_label_odd_bg_color',
 			[
-				'label'     => esc_html__('Background Color', 'wpr-addons'),
+				'label'     => esc_html__('Odd Background Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#f8f8f8',
 				'alpha'		=> false,
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce-Tabs-panel tr th' => 'background: {{VALUE}};',
+					'{{WRAPPER}} .wpr-product-tabs table tr:nth-child(odd) th' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'additional_info_label_even_bg_color',
+			[
+				'label'     => esc_html__('Even Background Color', 'wpr-addons'),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => '#f8f8f8',
+				'alpha'		=> false,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-tabs table tr:nth-child(even) th' => 'background-color: {{VALUE}};',
 				],
 			]
 		);
@@ -904,7 +916,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce-Tabs-panel tr th' => 'text-align: {{VALUE}}',
+					'{{WRAPPER}} .wpr-product-tabs table th' => 'text-align: {{VALUE}}',
 				],
 				'default' => 'left',
 			]
@@ -932,12 +944,11 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'size' => 25,
 				],
 				'selectors'  => [
-					'{{WRAPPER}} .woocommerce-Tabs-panel tr th' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-product-tabs table th' => 'width: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
 
-		// additional info value
 		$this->add_control(
 			'additional_info_value_heading',
 			[
@@ -955,20 +966,33 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'default'   => '#101010',
 				'alpha'		=> false,
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce-Tabs-panel tr td p' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-product-tabs table td p' => 'color: {{VALUE}};',
 				],
 			]
 		);
 
 		$this->add_control(
-			'additional_information_value_bg_color',
+			'additional_information_value_odd_bg_color',
 			[
-				'label'     => esc_html__('Background Color', 'wpr-addons'),
+				'label'     => esc_html__('Odd Background Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#fdfdfd',
 				'alpha'		=> false,
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce-Tabs-panel tr td' => 'background: {{VALUE}};',
+					'{{WRAPPER}} .wpr-product-tabs table tr:nth-child(odd) td' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'additional_information_value_even_bg_color',
+			[
+				'label'     => esc_html__('Even Background Color', 'wpr-addons'),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => '#fdfdfd',
+				'alpha'		=> false,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-tabs table tr:nth-child(even) td' => 'background-color: {{VALUE}};',
 				],
 			]
 		);
@@ -1036,8 +1060,8 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'separator' => 'before',
 				'size_units' => ['px'],
 				'selectors'  => [
-					'{{WRAPPER}} .woocommerce-Tabs-panel tr td' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .woocommerce-Tabs-panel tr th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-product-tabs table td' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-product-tabs table th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -1050,31 +1074,10 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'default'   => '#f2f2f2',
 				'alpha'		=> false,
 				'selectors' => [
-					'{{WRAPPER}} table.shop_attributes' => 'border-color: {{VALUE}};',
-					'{{WRAPPER}} table.shop_attributes th' => 'border-color: {{VALUE}};',
-					'{{WRAPPER}} table.shop_attributes td' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-product-tabs table td' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-product-tabs table th' => 'border-color: {{VALUE}};',
 				],
 				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'additional_info_show_dividers',
-			[
-				'label' => esc_html__( 'Show Dividers', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'label_block' => false
-			]
-		);
-
-		$this->add_control(
-			'additional_info_show_borders',
-			[
-				'label' => esc_html__( 'Show Borders', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'label_block' => false
 			]
 		);
 
@@ -1084,17 +1087,32 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'label' => esc_html__( 'Divider (Border) Width', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 5,
+					],
+				],
 				'default' => [
-					'top' => 1,
-					'right' => 1,
-					'bottom' => 1,
-					'left' => 1,
+					'unit' => 'px',
+					'size' => 1,
 				],
 				'selectors' => [
-					'{{WRAPPER}} table.shop_attributes' => 'border-width: {{VALUE}};',
-					'{{WRAPPER}} table.shop_attributes th' => 'border-width: {{VALUE}};',
-					'{{WRAPPER}} table.shop_attributes td' => 'border-width: {{VALUE}};',
+					'{{WRAPPER}} .wpr-product-tabs table tr:not(:last-child) td' => 'border-bottom-width: {{SIZE}}px; border-bottom-style: solid;',
+					'{{WRAPPER}} .wpr-product-tabs table tr:not(:last-child) th' => 'border-bottom-width: {{SIZE}}px; border-bottom-style: solid;',
+					'{{WRAPPER}}.wpr-add-info-borders-yes .wpr-product-tabs table td' => 'border-width: {{SIZE}}px; border-style: solid;',
+					'{{WRAPPER}}.wpr-add-info-borders-yes .wpr-product-tabs table th' => 'border-width: {{SIZE}}px; border-style: solid;',
 				],
+			]
+		);
+
+		$this->add_control(
+			'additional_info_show_borders',
+			[
+				'label' => esc_html__( 'Show Table Borders', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'prefix_class' => 'wpr-add-info-borders-'
 			]
 		);
 
@@ -1145,10 +1163,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'prefix_class' => 'wpr-forms-align-',
 				'selectors' => [
 					'{{WRAPPER}} .comment-form-comment' => 'text-align: {{VALUE}};',
-					// '{{WRAPPER}} .wpr-forms-container .wpcf7-form' => 'text-align: {{VALUE}};',
-					// '{{WRAPPER}} .wpr-forms-container .wpforms-field-container' => 'text-align: {{VALUE}};',
-					// '{{WRAPPER}} .wpr-forms-container .nf-form-wrap' => 'text-align: {{VALUE}};',
-					// '{{WRAPPER}} .wpr-forms-container .nf-form-wrap .field-wrap' => 'justify-content: {{VALUE}};',
 				],
 				'separator' => 'before'
 			]
@@ -1165,7 +1179,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 						'min' => 0,
 						'max' => 100,
 					],
-				],				
+				],
 				'default' => [
 					'unit' => 'px',
 					'size' => 30,
@@ -2172,14 +2186,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 
 		$this->end_controls_section();
     }
-
-	public function previous_tag() {
-		echo '<div class="wpr-woo-wrap woocommerce woocommerce-page">';
-	}
-
-	public function next_tag() {
-		echo '</div>';
-	}
 	
 	public function change_html($reviews_title, $count, $product) {
 
@@ -2230,17 +2236,11 @@ class Wpr_Product_Tabs extends Widget_Base {
 
 		add_filter('woocommerce_reviews_title', [$this, 'change_html'], 99, 3);
 
-		$this->previous_tag();
-		// add_action('woocommerce_before_single_product_summary',function(){
-		// 	printf('<div class="wpr-woo-wrap">');
-		// });
+		echo '<div class="wpr-product-tabs">';
 
         wc_get_template( 'single-product/tabs/tabs.php' );
 		
-		$this->next_tag();
-		// add_action('woocommerce_after_single_product_summary',function(){
-		// 	printf('</div>');
-		// });
+		echo '</div>';
 
 		// $in_editor_mode = \wpr-addons\Core\Template_Cpt::TYPE == get_post_type();
 
