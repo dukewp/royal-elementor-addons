@@ -304,7 +304,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'alpha' => true,
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li a' => 'background-color: {{VALUE}}',
 				],
 			]
@@ -360,7 +359,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'alpha' => true,
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel, {{WRAPPER}} .woocommerce-tabs ul.wc-tabs li:hover' => 'background-color: {{VALUE}}',
+					// '{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel, {{WRAPPER}} .woocommerce-tabs ul.wc-tabs li:hover' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel, {{WRAPPER}} .woocommerce-tabs ul.wc-tabs li:hover a' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li.active' => 'border-bottom-color: {{VALUE}}',
 				],
@@ -419,7 +418,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'default' => '#FFF',
 				'alpha' => true,
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel, {{WRAPPER}} .woocommerce-tabs ul.wc-tabs li.active' => 'background-color: {{VALUE}}',
+					// '{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel, {{WRAPPER}} .woocommerce-tabs ul.wc-tabs li.active' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel, {{WRAPPER}} .woocommerce-tabs ul.wc-tabs li.active a' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-tabs ul.wc-tabs li.active' => 'border-bottom-color: {{VALUE}}',
 				],
@@ -612,7 +611,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'label' => esc_html__( 'Show Title', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
-				'render_type' => 'template',
 				'label_block' => false,
                 'selectors_dictionary' => [
 					'' => 'display: none  !important;',
@@ -1258,6 +1256,8 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'prefix_class' => 'wpr-forms-align-',
 				'selectors' => [
 					'{{WRAPPER}} .comment-form-comment' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} .comment-form-author label' => 'text-align {{VALUE}};',
+					'{{WRAPPER}} .comment-form-email label' => 'text-align {{VALUE}};',
 				],
 				'separator' => 'before'
 			]
