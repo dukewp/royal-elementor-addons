@@ -690,7 +690,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'size' => 35,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce #reviews #comments ol.commentlist li img.avatar' => 'width: {{SIZE}}px; height: auto;',
+					'{{WRAPPER}} #reviews #comments ol.commentlist li img.avatar' => 'width: {{SIZE}}px; height: auto;',
 				],
 				'separator' => 'before',
 			]
@@ -704,7 +704,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'default' => '#FFF',
 				'selectors' => [
 					// '{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel' => 'border-color: {{VALUE}}',
-					'{{WRAPPER}} .woocommerce #reviews #comments ol.commentlist li img.avatar' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} #reviews #comments ol.commentlist li img.avatar' => 'border-color: {{VALUE}}',
 				],
 			]
 		);
@@ -724,7 +724,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				],
 				'default' => 'solid',
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce #reviews #comments ol.commentlist li img.avatar' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} #reviews #comments ol.commentlist li img.avatar' => 'border-style: {{VALUE}};',
 				],
 				'separator' => 'before',
 			]
@@ -743,7 +743,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'left' => 2,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce #reviews #comments ol.commentlist li img.avatar' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} #reviews #comments ol.commentlist li img.avatar' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
 					'avatar_border_type!' => 'none',
@@ -764,7 +764,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'left' => 0,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce #reviews #comments ol.commentlist li img.avatar' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} #reviews #comments ol.commentlist li img.avatar' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -1050,9 +1050,9 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'default'   => '#f2f2f2',
 				'alpha'		=> false,
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce table.shop_attributes' => 'border-color: {{VALUE}};',
-					'{{WRAPPER}} .woocommerce table.shop_attributes th' => 'border-color: {{VALUE}};',
-					'{{WRAPPER}} .woocommerce table.shop_attributes td' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} table.shop_attributes' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} table.shop_attributes th' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} table.shop_attributes td' => 'border-color: {{VALUE}};',
 				],
 				'separator' => 'before',
 			]
@@ -1091,9 +1091,9 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'left' => 1,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce table.shop_attributes' => 'border-width: {{VALUE}};',
-					'{{WRAPPER}} .woocommerce table.shop_attributes th' => 'border-width: {{VALUE}};',
-					'{{WRAPPER}} .woocommerce table.shop_attributes td' => 'border-width: {{VALUE}};',
+					'{{WRAPPER}} table.shop_attributes' => 'border-width: {{VALUE}};',
+					'{{WRAPPER}} table.shop_attributes th' => 'border-width: {{VALUE}};',
+					'{{WRAPPER}} table.shop_attributes td' => 'border-width: {{VALUE}};',
 				],
 			]
 		);
@@ -1171,7 +1171,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'size' => 30,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce #review_form #respond p.comment-form-comment' => 'margin-top: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} #review_form #respond p.comment-form-comment' => 'margin-top: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .comment-reply-title' => 'margin-top: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before'
