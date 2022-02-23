@@ -9767,8 +9767,8 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 .wpr-tabs,
 .elementor-widget-wpr-product-tabs .wc-tabs,
-.wpr-tabs-position-left>.elementor-widget-container>.wc-tabs-wrapper,
-.wpr-tabs-position-right>.elementor-widget-container>.wc-tabs-wrapper {
+.wpr-tabs-position-left .elementor-widget-container .wc-tabs-wrapper,
+.wpr-tabs-position-right .elementor-widget-container .wc-tabs-wrapper {
     display: -moz-flex;
     display: -ms-flex;
     display: -o-flex;
@@ -9795,7 +9795,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 .wpr-tabs-position-right>.elementor-widget-container>.wpr-tabs,
-.wpr-tabs-position-right>.elementor-widget-container>.wc-tabs-wrapper {
+.wpr-tabs-position-right>.elementor-widget-container .wc-tabs-wrapper {
     -webkit-box-orient: horizontal;
     -webkit-box-direction: reverse;
     -ms-flex-direction: row-reverse;
