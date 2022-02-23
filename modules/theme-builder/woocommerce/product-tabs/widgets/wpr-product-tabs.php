@@ -911,7 +911,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'label'     => esc_html__('Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#888888',
-				'alpha'  => true,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-tabs table th' => 'color: {{VALUE}};',
 				],
@@ -921,12 +920,11 @@ class Wpr_Product_Tabs extends Widget_Base {
 		$this->add_control(
 			'additional_info_label_odd_bg_color',
 			[
-				'label'     => esc_html__('Odd Background Color', 'wpr-addons'),
+				'label'     => esc_html__('Background Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#f8f8f8',
-				'alpha'  => true,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-tabs table tr:nth-child(odd) th' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-product-tabs table th' => 'background-color: {{VALUE}};',
 				],
 			]
 		);
@@ -936,8 +934,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label'     => esc_html__('Even Background Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#f8f8f8',
-				'alpha'		=> false,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-tabs table tr:nth-child(even) th' => 'background-color: {{VALUE}};',
 				],
@@ -1059,7 +1055,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'label'     => esc_html__('Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#101010',
-				'alpha'  => true,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-tabs table td p' => 'color: {{VALUE}};',
 				],
@@ -1069,12 +1064,11 @@ class Wpr_Product_Tabs extends Widget_Base {
 		$this->add_control(
 			'additional_information_value_odd_bg_color',
 			[
-				'label'     => esc_html__('Odd Background Color', 'wpr-addons'),
+				'label'     => esc_html__('Background Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#fdfdfd',
-				'alpha'  => true,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-tabs table tr:nth-child(odd) td' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-product-tabs table td' => 'background-color: {{VALUE}};',
 				],
 			]
 		);
@@ -1084,8 +1078,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label'     => esc_html__('Even Background Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#fdfdfd',
-				'alpha'		=> false,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-tabs table tr:nth-child(even) td' => 'background-color: {{VALUE}};',
 				],
@@ -1167,7 +1159,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'label'     => esc_html__('Divider (Border) Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#f2f2f2',
-				'alpha'  => true,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-tabs table td' => 'border-color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-product-tabs table th' => 'border-color: {{VALUE}};',
