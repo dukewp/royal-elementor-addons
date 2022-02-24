@@ -100,7 +100,8 @@ class Utilities {
 			'product-Breadcrumbs',
 			'product-tabs',
 			'product-excerpt',
-			'product-rating'
+			'product-rating',
+			'product-meta'
 		];
 	}
 
