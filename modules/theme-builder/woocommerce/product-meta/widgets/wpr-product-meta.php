@@ -48,18 +48,18 @@ class Wpr_Product_Meta extends Widget_Base {
 				'type' => Controls_Manager::CHOOSE,
 				'default' => 'vertical',
 				'options' => [
-					'block' => [
+					'column' => [
 						'title' => esc_html__( 'Vertical', 'wpr-addons' ),
 						'icon' => 'eicon-editor-list-ul',
 					],
-					'flex' => [
+					'row' => [
 						'title' => esc_html__( 'Horizontal', 'wpr-addons' ),
 						'icon' => 'eicon-ellipsis-h',
 					],
 				],
                 'prefix_class' => 'wpr-product-rating-',
                 'selectors' => [
-                    '{{WRAPPER}} .wpr-product-meta .product_meta' => 'display: {{VALUE}}; align-items: center;'
+                    '{{WRAPPER}} .wpr-product-meta .product_meta' => 'display: flex; flex-direction: {{VALUE}};'
                 ],
 				'default' => 'flex',
 				'label_block' => false,
