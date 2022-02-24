@@ -37,6 +37,10 @@ class Wpr_Product_Tabs extends Widget_Base {
 		return [ 'qq', 'product-tabs', 'product', 'tabs' ];//tmp
 	}
 
+	public function get_script_depends() {
+		return [ 'wc-single-product' ];
+	}
+	
 	protected function _register_controls() {
 
 		$this->start_controls_section(
