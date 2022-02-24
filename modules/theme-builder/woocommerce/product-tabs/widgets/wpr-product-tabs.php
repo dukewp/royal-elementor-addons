@@ -2562,6 +2562,5 @@ class Wpr_Product_Tabs extends Widget_Base {
         wc_get_template( 'single-product/tabs/tabs.php' );
 		
 		echo '</div>';
-
     }
 }
