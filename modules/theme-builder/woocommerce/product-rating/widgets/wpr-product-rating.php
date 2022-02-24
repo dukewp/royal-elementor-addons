@@ -4,13 +4,9 @@ namespace WprAddons\Modules\ThemeBuilder\Woocommerce\ProductRating\Widgets;
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Core\Responsive\Responsive;
-use Elementor\Group_Control_Box_Shadow;
-use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Core\Schemes\Typography;
 use Elementor\Core\Schemes\Color;
-use Elementor\Group_Control_Image_Size;
-use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -88,7 +84,7 @@ class Wpr_Product_Rating extends Widget_Base {
 		);
 
 		$this->add_control(
-			'product_rating_score_color',
+			'product_rating_text_color',
 			[
 				'label' => esc_html__( 'Text Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
@@ -100,7 +96,7 @@ class Wpr_Product_Rating extends Widget_Base {
 		);
 
 		$this->add_control(
-			'product_rating_score_color',
+			'product_rating_text_color_hover',
 			[
 				'label' => esc_html__( 'Text Color Hover', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
