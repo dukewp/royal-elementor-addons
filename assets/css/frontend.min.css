@@ -1811,6 +1811,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 .elementor-widget-wpr-product-tabs .woocommerce-Tabs-panel {
     width: 100%;
+    display: none;
 }
 
 .elementor-widget-wpr-product-tabs table td,
@@ -1859,6 +1860,12 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 .wpr-product-tabs h2.woocommerce-Reviews-title:first-of-type {
     display: none;
+}
+
+.elementor-widget-wpr-product-tabs .woocommerce-Reviews .comment_container {
+    border-bottom: none;
+    padding: 0;
+    margin: 0;
 }
 
 .wpr-individual-rating-cont {
