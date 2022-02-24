@@ -2590,8 +2590,8 @@ class Wpr_Product_Tabs extends Widget_Base {
 			$counter == 1;
             ?>
             <script>
-				elementorFrontend.hooks.addAction( 'frontend/element_ready/wpr-product-tabs', function() {
-					elementor.reloadPreview();
+				elementorFrontend.hooks.addAction( 'frontend/element_ready/wpr-product-tabs.default', function() {
+					// elementor.reloadPreview();
 				} );
             </script>
             <?php
