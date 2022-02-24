@@ -1966,6 +1966,19 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     display: block;
 }
 
+/* Product Rating */
+.wpr-product-rating-flex.wpr-product-rating-left .inner-block {
+    justify-content: flex-start;
+}
+
+.wpr-product-rating-flex.wpr-product-rating-center .inner-block {
+    justify-content: center;
+}
+
+.wpr-product-rating-flex.wpr-product-rating-right .inner-block {
+    justify-content: flex-end;
+}
+
 /*--------------------------------------------------------------
  == Grid
 --------------------------------------------------------------*/
