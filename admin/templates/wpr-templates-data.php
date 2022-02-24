@@ -45,7 +45,7 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,services,pricing,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'cybersecurity data protection hacker security dark digital technology cybercrime computer windows technician',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
 			'photographer' => [
@@ -61,7 +61,7 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,services,portfolio,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .', "media-library-assistant":'. $is_mla_active .'}',
 					'tags' => 'portfolio personal cv designer ux artist artwork personal resume camera fashion lens modelling photographer photography videography wedding shoot ',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
 			'cryptocurrency' => [
@@ -97,13 +97,20 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,services,doctors,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'medical clinic dental health healthcare doctor therapist wellness treatment cure',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
 			'digitalagency' => [
 				'v1' => [
 					'name' => 'Digital Agency',
 					'pages' => 'home,about,services,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'digital agency company corporate digital services office agency web marketing',
+					'price' => $is_pro_active ? 'free' : 'free',
+				],
+				'v2' => [
+					'name' => 'Digital Agency',
+					'pages' => 'home,about,services,pricing,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'digital agency company corporate digital services office agency web marketing',
 					'price' => $is_pro_active ? 'free' : 'free',
@@ -176,7 +183,7 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,gallery,menu,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'restaurant fastfood slider hotel italian pizza pizzeria pasta dinner fast food wine recipe recipes cooking',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
 			'winebar' => [

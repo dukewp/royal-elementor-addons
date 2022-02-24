@@ -1,7 +1,7 @@
 ﻿=== Royal Elementor Addons (Header Footer Builder, Popups, Post Grid, Woocommerce Product Grid, Slider, Parallax Image, Free Elementor Widgets & Elementor Templates) ===
 Contributors: WP Royal, rubeushagrid13, cyberpinky, elementoraddonswpr
 Tags: elementor, elements, widgets for elementor, elementor addons, elementor widgets, elementor form, woocommerce elementor, page builder, elementor templates, wordpress page builder
-Stable tag: 1.3.31
+Stable tag: 1.3.32
 Requires at least: 5.0
 Tested up to: 5.9
 Requires PHP: 5.6
@@ -316,6 +316,10 @@ memory_limit 256M or more
 post_max_size 64M
 
 == Changelog ==
+
+= Royal Elementor Addons v1.3.32 - 2022-24-02 =
+* ADDED: Digital Agency Elementor Template Kit.
+* ADDED: Video Tutorials to Particles Effects addon for Elementor and Sticky Section addon Elementor.
 
 = Royal Elementor Addons v1.3.30 - 2022-14-02 =
 * ADDED: Lawyer Elementor Template Kit.

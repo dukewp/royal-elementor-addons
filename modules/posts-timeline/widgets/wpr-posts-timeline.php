@@ -34,7 +34,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return ['post timeline', 'post', 'posts', 'timeline', 'posts timeline', 'story timeline', 'content timeline'];
+		return ['post timeline', 'blog', 'post', 'posts', 'timeline', 'posts timeline', 'story timeline', 'content timeline'];
 	}
 
 	public function get_script_depends() {

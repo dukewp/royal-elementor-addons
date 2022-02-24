@@ -37,7 +37,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'royal', 'magazin grid', 'magazin slider', 'isotope', 'post tiles', 'posts tiles' ];
+		return [ 'royal', 'blog', 'magazin grid', 'magazin slider', 'isotope', 'post tiles', 'posts tiles' ];
 	}
 
 	public function get_script_depends() {

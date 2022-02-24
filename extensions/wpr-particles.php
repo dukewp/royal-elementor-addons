@@ -39,6 +39,14 @@ class Wpr_Particles {
 			]
 		);
 
+        $element->add_control(
+            'particles_video_tutorial',
+            [
+                'raw' => '<br><a href="https://www.youtube.com/watch?v=8OdnaoFSj94" target="_blank">Watch Video Tutorial <span class="dashicons dashicons-video-alt3"></span></a>',
+                'type' => Controls_Manager::RAW_HTML,
+            ]
+        );
+
 		$element->add_control (
 			'wpr_enable_particles',
 			[
