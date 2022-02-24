@@ -2562,5 +2562,21 @@ class Wpr_Product_Tabs extends Widget_Base {
         wc_get_template( 'single-product/tabs/tabs.php' );
 		
 		echo '</div>';
+
+		// Fix Tabs in Editor
+        if ( \Elementor\Plugin::$instance->editor->is_edit_mode()  ) {
+        ?>
+        <script>
+			elementorFrontend.hooks.addAction( 'frontend/element_ready/wpr-product-tabs.default', function( $scope ) {
+				$scope.find('.description_tab a').trigger('click');
+
+				if ( !$scope.find('p.stars').length ) {
+					$scope.find('#rating').hide();
+					$scope.find('#rating').before('<p class="stars"><span><a class="star-1" href="#">1</a><a class="star-2" href="#">2</a><a class="star-3" href="#">3</a><a class="star-4" href="#">4</a><a class="star-5" href="#">5</a></span></p>');
+				}
+			} );
+        </script>
+        <?php
+        }
     }
 }
