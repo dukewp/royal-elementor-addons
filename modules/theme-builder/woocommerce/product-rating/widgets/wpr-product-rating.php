@@ -90,11 +90,23 @@ class Wpr_Product_Rating extends Widget_Base {
 		$this->add_control(
 			'product_rating_score_color',
 			[
-				'label' => esc_html__( 'Score Color', 'wpr-addons' ),
+				'label' => esc_html__( 'Text Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#ffd726',
+				'default' => '#000',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-woo-rating span' => 'color: {{VALUE}};',
+					'{{WRAPPER}} a.woocommerce-review-link' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'product_rating_score_color',
+			[
+				'label' => esc_html__( 'Text Color Hover', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#000',
+				'selectors' => [
+					'{{WRAPPER}} a.woocommerce-review-link:hover' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -163,7 +175,7 @@ class Wpr_Product_Rating extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}}.wpr-product-rating-flex .wpr-product-rating a.woocommerce-review-link' => 'margin-left: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-product-rating-block .wpr-product-rating a.woocommerce-review-link' => 'margin-top: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-product-rating-block .wpr-product-rating a.woocommerce-review-link' => 'margin-top: {{SIZE}}{{UNIT}}; display: block;',
 				],
 				'separator' => 'after'
 			]
@@ -174,7 +186,36 @@ class Wpr_Product_Rating extends Widget_Base {
 			[
 				'name'     => 'product_rating_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-woo-rating span'
+				'selector' => '{{WRAPPER}} .wpr-product-rating .woocommerce-review-link'
+			]
+		);
+
+		$this->add_responsive_control(
+			'shopengine_rating_alignment',
+			[
+				'label'        => esc_html__('Alignment', 'shopengine'),
+				'type'         => Controls_Manager::CHOOSE,
+				'options'      => [
+					'left'    => [
+						'title' => esc_html__('Left', 'shopengine'),
+						'icon'  => 'eicon-text-align-left',
+					],
+					'center'  => [
+						'title' => esc_html__('Center', 'shopengine'),
+						'icon'  => 'eicon-text-align-center',
+					],
+					'right'   => [
+						'title' => esc_html__('Right', 'shopengine'),
+						'icon'  => 'eicon-text-align-right',
+					]
+				],
+				'prefix_class' => 'wpr-product-rating-',
+				'default'      => 'left',
+                'selectors' => [
+                    '{{WRAPPER}}.wpr-product-rating-block .wpr-woo-rating' => 'text-align: {{VALUE}};',
+                    '{{WRAPPER}}.wpr-product-rating-block .woocommerce-review-link' => 'text-align: {{VALUE}};'
+                ],
+				'separator'    => 'before',
 			]
 		);
 
