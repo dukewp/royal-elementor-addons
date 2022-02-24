@@ -1654,7 +1654,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .comment-form-comment textarea' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .comment-form-author' => 'width: calc(50% - {{SIZE}}{{UNIT}}) !important; display: inline-block !important; margin-right: calc({{SIZE}}{{UNIT}}*1.6) !important;',
+					'{{WRAPPER}} .comment-form-author' => 'width: calc(50% - {{SIZE}}{{UNIT}}) !important; display: inline-block !important; margin-right: calc({{SIZE}}{{UNIT}}*1.5) !important;',
 					'{{WRAPPER}} .comment-form-email' => 'width: calc(50% - {{SIZE}}{{UNIT}}) !important; display: inline-block !important;',
 				],
 				'separator' => 'before'
@@ -2268,6 +2268,9 @@ class Wpr_Product_Tabs extends Widget_Base {
             return;
         }
 
+		// var_dump(\Elementor\Plugin::$instance->preview->is_preview_mode());
+		// var_dump(\Elementor\Plugin::$instance->editor->is_edit_mode());
+
         setup_postdata( $product->get_id() );
 
 		add_filter('woocommerce_reviews_title', [$this, 'change_html'], 99, 3);
@@ -2295,11 +2298,14 @@ class Wpr_Product_Tabs extends Widget_Base {
 		// }
 
         // On render widget from Editor - trigger the init manually.
-        if ( wp_doing_ajax() ) {
+		$counter = 0;
+        if ( \Elementor\Plugin::$instance->editor->is_edit_mode() && $counter == 0  ) { // was 
+			$counter == 1;
             ?>
             <script>
-                jQuery( '.wc-tabs-wrapper, .woocommerce-tabs, #rating' ).trigger( 'init' );
-				console.log('works');
+				elementorFrontend.hooks.addAction( 'frontend/element_ready/wpr-product-tabs', function() {
+					elementor.reloadPreview();
+				} );
             </script>
             <?php
         }
