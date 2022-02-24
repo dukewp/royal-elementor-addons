@@ -2545,8 +2545,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 	}
 
     protected function render() {
-        // $settings = $this->get_settings_for_display();
-		// var_dump($settings['show_panel_titles']);
         global $product;
 
         $product = wc_get_product();
@@ -2554,9 +2552,6 @@ class Wpr_Product_Tabs extends Widget_Base {
         if ( empty( $product ) ) {
             return;
         }
-
-		// var_dump(\Elementor\Plugin::$instance->preview->is_preview_mode());
-		// var_dump(\Elementor\Plugin::$instance->editor->is_edit_mode());
 
         setup_postdata( $product->get_id() );
 
@@ -2567,34 +2562,5 @@ class Wpr_Product_Tabs extends Widget_Base {
         wc_get_template( 'single-product/tabs/tabs.php' );
 		
 		echo '</div>';
-
-		// $in_editor_mode = \wpr-addons\Core\Template_Cpt::TYPE == get_post_type();
-
-		// if($in_editor_mode) {
-
-		// 	global $product, $post;
-
-		// 	$main_post = clone $post;
-
-		// 	$product = \wpr-addons\Widgets\Products::instance()->get_product($post_type);
-		// 	$post = get_post($product->get_id());
-
-		// 	add_filter('the_content', [\wpr-addons\Widgets\Products::instance(), 'product_tab_content_preview']);
-
-		// 	$product_tabs = woocommerce_default_product_tabs();
-		// }
-
-        // On render widget from Editor - trigger the init manually.
-		$counter = 0;
-        if ( \Elementor\Plugin::$instance->editor->is_edit_mode() && $counter == 0  ) { // was 
-			$counter == 1;
-            ?>
-            <script>
-				elementorFrontend.hooks.addAction( 'frontend/element_ready/wpr-product-tabs.default', function() {
-					// elementor.reloadPreview();
-				} );
-            </script>
-            <?php
-        }
     }
 }
