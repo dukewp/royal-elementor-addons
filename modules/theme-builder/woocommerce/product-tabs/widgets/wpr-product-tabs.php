@@ -35,12 +35,12 @@ class Wpr_Product_Tabs extends Widget_Base {
 
 	public function get_keywords() {
 		return [ 'qq', 'product-tabs', 'product', 'tabs' ];//tmp
-	}
-
+	}	
+	
 	public function get_script_depends() {
 		return [ 'wc-single-product' ];
 	}
-	
+
 	protected function _register_controls() {
 
 		$this->start_controls_section(
@@ -613,8 +613,8 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'yes' => 'display: block !important;',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce-Reviews-title' => '{{value}}',
-					'{{WRAPPER}} .woocommerce-Tabs-panel h2' => '{{value}}',
+					'{{WRAPPER}} .woocommerce-Tabs-panel h2:not(.woocommerce-Reviews-title)' => '{{value}}',
+					'{{WRAPPER}} .woocommerce-Reviews-title:not(:first-of-type)' => '{{value}}',
 				]
 			]
 		);
@@ -1198,12 +1198,330 @@ class Wpr_Product_Tabs extends Widget_Base {
 
 		$this->end_controls_section();
 
+		// Styles ====================
+		// Section: Comments ---------
+		$this->start_controls_section(
+			'section_style_comments',
+			[
+				'label' => esc_html__( 'Review Comments', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'show_label' => false,
+			]
+		);
+
+		$this->add_control(
+			'comment_author_color',
+			[
+				'label' => esc_html__( 'Author Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#000',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-review__author' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'comment_date_color',
+			[
+				'label' => esc_html__( 'Date Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#767676',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-review__published-date' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'comment_rating_color',
+			[
+				'label' => esc_html__( 'Rating Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFD726',
+				'selectors' => [
+					'{{WRAPPER}}.elementor-widget-wpr-product-tabs .star-rating span::before' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'comment_rating_unmarked_color',
+			[
+				'label' => esc_html__( 'Rating Unmarked Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#767676',
+				'selectors' => [
+					'{{WRAPPER}}.elementor-widget-wpr-product-tabs .star-rating::before' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'comment_description_color',
+			[
+				'label' => esc_html__( 'Description Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#000',
+				'selectors' => [
+					'{{WRAPPER}} .description p' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'comment_bg_color',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ), 
+				'type' => Controls_Manager::COLOR,
+				'default' => '#fcfcfc',
+				'selectors' => [
+					'{{WRAPPER}} .comment-text' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'comment_border_color',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#e8e8e8',
+				'selectors' => [
+					'{{WRAPPER}} #reviews #comments ol.commentlist li .comment-text' => 'border-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'comment_shadow',
+				'selector' => '{{WRAPPER}} .comment-text',
+			]
+		);
+
+		$this->add_control(
+			'comment_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'solid',
+				'selectors' => [
+					'{{WRAPPER}} #reviews #comments ol.commentlist li .comment-text' => 'border-style: {{VALUE}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'comment_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} #reviews #comments ol.commentlist li .comment-text' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'comment_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'comment_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} #reviews #comments ol.commentlist li .comment-text' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'comment_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'comment_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 5,
+					'right' => 5,
+					'bottom' => 5,
+					'left' => 5,
+				],
+				'selectors' => [
+					'{{WRAPPER}} #reviews #comments ol.commentlist li .comment-text' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'comment_spacing',
+			[
+				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} #reviews #comments ol.commentlist li .comment-text' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		// $this->add_responsive_control(
+		// 	'comment_rating_size',
+		// 	[
+		// 		'label' => esc_html__( 'Rating Width', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'size_units' => ['px', 'rem', '%'],
+		// 		'range' => [
+		// 			'px' => [
+		// 				'min' => 0,
+		// 				'max' => 200,
+		// 			],
+		// 		],				
+		// 		'default' => [
+		// 			'unit' => 'px',
+		// 			'size' => 100,
+		// 		],
+		// 		'selectors' => [
+		// 			// '{{WRAPPER}}.elementor-widget-wpr-product-tabs .star-rating span::before' => 'font-size: {{VALUE}}px;',
+		// 			'{{WRAPPER}}.elementor-widget-wpr-product-tabs .star-rating' => 'width: {{SIZE}}{{UNIT}};',
+		// 		],
+		// 		'separator' => 'before',
+		// 	]
+		// );
+
+		$this->add_responsive_control(
+			'comment_rating_font_size',
+			[
+				'label' => esc_html__( 'Rating Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px', 'rem', '%'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+				'selectors' => [
+					// '{{WRAPPER}}.elementor-widget-wpr-product-tabs .star-rating span::before' => 'font-size: {{VALUE}}px;',
+					'{{WRAPPER}}.elementor-widget-wpr-product-tabs .star-rating' => 'font-size: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		// $this->add_responsive_control(
+		// 	'comment_rating_spacing',
+		// 	[
+		// 		'label' => esc_html__( 'Rating Spacing', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'size_units' => ['px', 'rem', '%'],
+		// 		'range' => [
+		// 			'px' => [
+		// 				'min' => 0,
+		// 				'max' => 20,
+		// 			],
+		// 		],				
+		// 		'default' => [
+		// 			'unit' => 'px',
+		// 			'size' => 2,
+		// 		],
+		// 		'selectors' => [
+		// 			// '{{WRAPPER}}.elementor-widget-wpr-product-tabs .star-rating span::before' => 'font-size: {{VALUE}}px;',
+		// 			'{{WRAPPER}}.elementor-widget-wpr-product-tabs .star-rating' => 'letter-spacing: {{SIZE}}{{UNIT}};',
+		// 		],
+		// 		'separator' => 'before',
+		// 	]
+		// );
+
+		$this->end_controls_section();
+
 		$this->start_controls_section(
 			'section_review_styles',
 			[
-				'label' => esc_html__( 'Reviews Styles', 'wpr-addons' ),
+				'label' => esc_html__( 'Review Styles', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
+			]
+		);
+
+		$this->add_control(
+			'review_labels_styles',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Labels', 'wpr-addons' ),
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'labels_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#000',
+				'selectors' => [
+					'{{WRAPPER}} .comment-form-rating label' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .comment-form-comment label' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .comment-form-author label' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .comment-form-email label' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'labels_color_required',
+			[
+				'label' => esc_html__( 'Required Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#000',
+				'selectors' => [
+					'{{WRAPPER}} .required' => 'color: {{VALUE}};',
+				],
 			]
 		);
 
@@ -1212,11 +1530,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'name' => 'field_label_title_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selectors' => [
-					'{{WRAPPER}} .comment-form-comment label',
-					'{{WRAPPER}} .comment-form-author label',
-					'{{WRAPPER}} .comment-form-email label',
-				]
+				'selector' => '{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel label',
 			]
 		);
 
@@ -1264,11 +1578,13 @@ class Wpr_Product_Tabs extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 30,
+					'size' => 5,
 				],
 				'selectors' => [
 					'{{WRAPPER}} #review_form #respond p.comment-form-comment' => 'margin-top: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .comment-reply-title' => 'margin-top: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} #review_form #respond div.comment-form-rating' => 'margin-top: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} #review_form #respond .comment-form-author' => 'margin-top: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} #review_form #respond .comment-form-email' => 'margin-top: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before'
 			]
@@ -1292,9 +1608,216 @@ class Wpr_Product_Tabs extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .comment-form-comment label' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .comment-form-rating label' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .comment-form-author label' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .comment-form-email label' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .comment-reply-title' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'review_rating_styles',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Rating', 'wpr-addons' ),
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'rating_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFD726',
+				'selectors' => [
+					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars.selected a.active:before' => 'color: {{VALUE}};',
+					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars:hover a:before' => 'color: {{VALUE}};',
+					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars.selected a:not(.active):before' => 'color: {{VALUE}};',
+					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars.selected a.active:before' => 'color: {{VALUE}};',
+					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars a:before' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'panel_icons_style',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Your Rating Icons', 'wpr-addons' ),
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'rating_size',
+			[
+				'label' => esc_html__( 'Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 22,
+				],
+				'selectors' => [
+					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars a::before' => 'font-size: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'rating_gutter',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Icons Gutter', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 0,
+				],
+				'separator' => 'before',
+				'selectors' => [
+					'{{WRAPPER}} p.stars a' => 'margin-right: {{SIZE}}{{UNIT}};',
+				],	
+			]
+		);
+
+		// $this->add_control(
+		// 	'panel_stats_style',
+		// 	[
+		// 		'type' => Controls_Manager::HEADING,
+		// 		'label' => esc_html__( 'Stats', 'wpr-addons' ),
+		// 		'separator' => 'before',
+		// 	]
+		// );
+
+		// $this->add_responsive_control(
+		// 	'stats_size',
+		// 	[
+		// 		'label' => esc_html__( 'Stats Size', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'size_units' => ['px' ],
+		// 		'range' => [
+		// 			'px' => [
+		// 				'min' => 0,
+		// 				'max' => 50,
+		// 			],
+		// 		],
+		// 		'default' => [
+		// 			'unit' => 'px',
+		// 			'size' => 22,
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}}.elementor-widget-wpr-product-tabs .wpr-individual-rating span' => 'font-size: {{SIZE}}{{UNIT}};',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_responsive_control(
+		// 	'average_rating_bar_width',
+		// 	[
+		// 		'label'      => esc_html__('Rating Bar Width', 'wpr-addons'),
+		// 		'type'       => Controls_Manager::SLIDER,
+		// 		'size_units' => ['px', '%'],
+		// 		'range'      => [
+		// 			'px' => [
+		// 				'min'  => 0,
+		// 				'max'  => 200,
+		// 				'step' => 5,
+		// 			],
+		// 			'%'  => [
+		// 				'min'  => 0,
+		// 				'max'  => 100,
+		// 				'step' => 5,
+		// 			],
+		// 		],
+		// 		'default'    => [
+		// 			'unit' => 'px',
+		// 			'size' => 150,
+		// 		],
+		// 		'selectors'  => [
+		// 			'{{WRAPPER}}.elementor-widget-wpr-product-tabs .wpr-individual-rating-cont' => 'width: {{SIZE}}{{UNIT}};',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_responsive_control(
+		// 	'average_rating_bar_height',
+		// 	[
+		// 		'label'      => esc_html__('Rating Bar Height (px)', 'wpr-addons'),
+		// 		'type'       => Controls_Manager::SLIDER,
+		// 		'size_units' => ['px'],
+		// 		'range'      => [
+		// 			'%' => [
+		// 				'min'  => 0,
+		// 				'max'  => 200,
+		// 				'step' => 5,
+		// 			],
+		// 		],
+		// 		'default'    => [
+		// 			'unit' => 'px',
+		// 			'size' => 10,
+		// 		],
+		// 		'selectors'  => [
+		// 			'{{WRAPPER}}.elementor-widget-wpr-product-tabs .wpr-individual-rating-cont' => 'height: {{SIZE}}{{UNIT}};',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_responsive_control(
+		// 	'rating_percentage_bar_gutter',
+		// 	[
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'label' => esc_html__( 'Bar Gutter', 'wpr-addons' ),
+		// 		'size_units' => [ 'px' ],
+		// 		'range' => [
+		// 			'px' => [
+		// 				'min' => -5,
+		// 				'max' => 50,
+		// 			]
+		// 		],
+		// 		'default' => [
+		// 			'unit' => 'px',
+		// 			'size' => 0,
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-individual-rating-cont' => 'margin-right: {{SIZE}}{{UNIT}}; margin-left: {{SIZE}}{{UNIT}}',
+		// 		],	
+		// 	]
+		// );
+
+		$this->add_responsive_control(
+			'rating_distance',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 5,
+				],
+				'selectors' => [
+					'{{WRAPPER}} p.stars a' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before'
 			]
@@ -1305,7 +1828,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 		$this->start_controls_section(
 			'section_review_styles_forms',
 			[
-				'label' => esc_html__( 'Reviews Forms', 'wpr-addons' ),
+				'label' => esc_html__( 'Review Forms', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 			]
@@ -1658,238 +2181,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 		);
 
 		$this->end_controls_section(); // End Controls Section
-
-		$this->start_controls_section(
-			'section_style_rating',
-			[
-				'label' => esc_html__( 'Rating', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-				'show_label' => false,
-			]
-		);
-
-		$this->add_control(
-			'rating_color',
-			[
-				'label' => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#FFD726',
-				'selectors' => [
-					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars.selected a.active:before' => 'color: {{VALUE}};',
-					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars:hover a:before' => 'color: {{VALUE}};',
-					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars.selected a:not(.active):before' => 'color: {{VALUE}};',
-					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars.selected a.active:before' => 'color: {{VALUE}};',
-					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars a:before' => 'color: {{VALUE}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'rating_color_2',
-			[
-				'label' => esc_html__( 'Color (Locate)', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#FFD726',
-				'selectors' => [
-					'{{WRAPPER}}.elementor-widget-wpr-product-tabs .star-rating span::before' => 'color: {{VALUE}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'rating_color_3',
-			[
-				'label' => esc_html__( 'Color (Locate)', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#FFD726',
-				'selectors' => [
-					'{{WRAPPER}}.elementor-widget-wpr-product-tabs .star-rating::before' => 'color: {{VALUE}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'panel_icons_style',
-			[
-				'type' => Controls_Manager::HEADING,
-				'label' => esc_html__( 'Your Rating Icons', 'wpr-addons' ),
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_responsive_control(
-			'rating_size',
-			[
-				'label' => esc_html__( 'Size', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 50,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 22,
-				],
-				'selectors' => [
-					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars a::before' => 'font-size: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'rating_gutter',
-			[
-				'type' => Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Icons Gutter', 'wpr-addons' ),
-				'size_units' => [ 'px' ],
-				'range' => [
-					'px' => [
-						'min' => -5,
-						'max' => 50,
-					]
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 0,
-				],
-				'separator' => 'before',
-				'selectors' => [
-					'{{WRAPPER}} p.stars a' => 'margin-right: {{SIZE}}{{UNIT}};',
-				],	
-			]
-		);
-
-		// $this->add_control(
-		// 	'panel_stats_style',
-		// 	[
-		// 		'type' => Controls_Manager::HEADING,
-		// 		'label' => esc_html__( 'Stats', 'wpr-addons' ),
-		// 		'separator' => 'before',
-		// 	]
-		// );
-
-		// $this->add_responsive_control(
-		// 	'stats_size',
-		// 	[
-		// 		'label' => esc_html__( 'Stats Size', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'size_units' => ['px' ],
-		// 		'range' => [
-		// 			'px' => [
-		// 				'min' => 0,
-		// 				'max' => 50,
-		// 			],
-		// 		],
-		// 		'default' => [
-		// 			'unit' => 'px',
-		// 			'size' => 22,
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}}.elementor-widget-wpr-product-tabs .wpr-individual-rating span' => 'font-size: {{SIZE}}{{UNIT}};',
-		// 		],
-		// 	]
-		// );
-
-		// $this->add_responsive_control(
-		// 	'average_rating_bar_width',
-		// 	[
-		// 		'label'      => esc_html__('Rating Bar Width', 'wpr-addons'),
-		// 		'type'       => Controls_Manager::SLIDER,
-		// 		'size_units' => ['px', '%'],
-		// 		'range'      => [
-		// 			'px' => [
-		// 				'min'  => 0,
-		// 				'max'  => 200,
-		// 				'step' => 5,
-		// 			],
-		// 			'%'  => [
-		// 				'min'  => 0,
-		// 				'max'  => 100,
-		// 				'step' => 5,
-		// 			],
-		// 		],
-		// 		'default'    => [
-		// 			'unit' => 'px',
-		// 			'size' => 150,
-		// 		],
-		// 		'selectors'  => [
-		// 			'{{WRAPPER}}.elementor-widget-wpr-product-tabs .wpr-individual-rating-cont' => 'width: {{SIZE}}{{UNIT}};',
-		// 		],
-		// 	]
-		// );
-
-		// $this->add_responsive_control(
-		// 	'average_rating_bar_height',
-		// 	[
-		// 		'label'      => esc_html__('Rating Bar Height (px)', 'wpr-addons'),
-		// 		'type'       => Controls_Manager::SLIDER,
-		// 		'size_units' => ['px'],
-		// 		'range'      => [
-		// 			'%' => [
-		// 				'min'  => 0,
-		// 				'max'  => 200,
-		// 				'step' => 5,
-		// 			],
-		// 		],
-		// 		'default'    => [
-		// 			'unit' => 'px',
-		// 			'size' => 10,
-		// 		],
-		// 		'selectors'  => [
-		// 			'{{WRAPPER}}.elementor-widget-wpr-product-tabs .wpr-individual-rating-cont' => 'height: {{SIZE}}{{UNIT}};',
-		// 		],
-		// 	]
-		// );
-
-		// $this->add_responsive_control(
-		// 	'rating_percentage_bar_gutter',
-		// 	[
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'label' => esc_html__( 'Bar Gutter', 'wpr-addons' ),
-		// 		'size_units' => [ 'px' ],
-		// 		'range' => [
-		// 			'px' => [
-		// 				'min' => -5,
-		// 				'max' => 50,
-		// 			]
-		// 		],
-		// 		'default' => [
-		// 			'unit' => 'px',
-		// 			'size' => 0,
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-individual-rating-cont' => 'margin-right: {{SIZE}}{{UNIT}}; margin-left: {{SIZE}}{{UNIT}}',
-		// 		],	
-		// 	]
-		// );
-
-		$this->add_responsive_control(
-			'rating_distance',
-			[
-				'label' => esc_html__( 'Distance', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 50,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 5,
-				],
-				'selectors' => [
-					'{{WRAPPER}} p.stars a' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-				],
-				'separator' => 'before'
-			]
-		);
-
-		$this->end_controls_section();
 		
 		$this->start_controls_section(
 			'section_style_submit_btn',

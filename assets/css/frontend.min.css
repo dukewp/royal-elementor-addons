@@ -1831,13 +1831,21 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 .elementor-widget-wpr-product-tabs #reviews #comments ol.commentlist li .comment-text {
     margin: 0 0 0 50px;
-    border: 1px solid #e4e1e3;
+    border: 1px solid;
     border-radius: 4px;
     padding: 1em 1em 0;
 }
 
 .elementor-widget-wpr-product-tabs .comment_container {
     position: relative;
+}
+
+.elementor-widget-wpr-product-tabs .comment-reply-title {
+    display: none;
+}
+
+.elementor-widget-wpr-product-tabs #reviews #comments ol.commentlist li .comment-text .description p {
+    margin-bottom: 0;
 }
 
 .elementor-widget-wpr-product-tabs .commentlist li {
@@ -1847,6 +1855,10 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 .wpr-individual-rating {
     display: flex;
     align-items: center;
+}
+
+.wpr-product-tabs h2.woocommerce-Reviews-title:first-of-type {
+    display: none;
 }
 
 .wpr-individual-rating-cont {
