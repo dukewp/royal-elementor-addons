@@ -37,14 +37,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 		return [ 'qq', 'product-tabs', 'product', 'tabs' ];//tmp
 	}
 
-	public function get_script_depends() {
-		return [ 'wc-single-product', 'photoswipe-ui-default', 'photoswipe-default-skin', 'zoom', 'flexslider' ];
-	}
-
-	public function get_style_depends() {
-		return [ 'woocommerce-general', 'woocommerce-layout', 'woocommerce-smallscreen', 'photoswipe-ui-default', 'photoswipe-default-skin' ];
-	}
-
 	protected function _register_controls() {
 
 		$this->start_controls_section(
