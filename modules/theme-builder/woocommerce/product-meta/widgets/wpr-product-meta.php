@@ -283,7 +283,7 @@ class Wpr_Product_Meta extends Widget_Base {
         }
 
         $post = get_post( $product->get_id() );
-        setup_postdata( $product->get_id() );;
+        setup_postdata( $product->get_id() );
 
         echo '<div class="wpr-product-meta">';
             woocommerce_template_single_meta();

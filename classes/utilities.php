@@ -102,7 +102,8 @@ class Utilities {
 			'product-excerpt',
 			'product-rating',
 			'product-meta',
-			'product-sales-badge'
+			'product-sales-badge',
+			'product-stock'
 		];
 	}
 
