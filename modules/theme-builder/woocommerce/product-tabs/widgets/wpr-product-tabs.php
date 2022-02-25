@@ -44,10 +44,10 @@ class Wpr_Product_Tabs extends Widget_Base {
 	protected function _register_controls() {
 
 		$this->start_controls_section(
-			'section_product_tabs_content',
+			'section_product_tabs_style',
 			[
 				'label' => esc_html__( 'Tab Labels', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_CONTENT,
+				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
 
@@ -63,7 +63,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'right' => esc_html__( 'Right', 'wpr-addons' ),
 				],
 				'prefix_class' => 'wpr-tabs-position-',
-				'separator' => 'before',
 			]
 		);
 
@@ -182,7 +181,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'{{WRAPPER}} .wc-tabs li' => 'text-align: {{VALUE}};',
 					'{{WRAPPER}} .wc-tabs li a' => 'text-align: {{VALUE}};'
 				],
-				'separator' => 'before',
 			]
 		);
 
@@ -206,72 +204,17 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'{{WRAPPER}} .wc-tabs li' => 'min-width: {{SIZE}}px;',
 					'{{WRAPPER}} .wc-tabs li a' => 'min-width: {{SIZE}}px; display: block;'
 				],
-				'separator' => 'before',
-			]
-		);
-
-        $this->end_controls_section();
-
-		$this->start_controls_section(
-			'section_settings',
-			[
-				'label' => esc_html__( 'Settings', 'wpr-addons' ),
 			]
 		);
 
 		$this->add_control(
-			'content_animation',
+			'tabs_style_divider',
 			[
-				'label' => esc_html__( 'Content Animation', 'wpr-addons' ),
-				'type' => 'wpr-animations-alt',
-				'default' => 'fade-in',
+				'type' => Controls_Manager::DIVIDER,
+				'style' => 'thick',
 			]
 		);
 		
-		$this->add_control(
-			'content_anim_size',
-			[
-				'type' => Controls_Manager::SELECT,
-				'label' => esc_html__( 'Animation Size', 'wpr-addons' ),
-				'default' => 'large',
-				'options' => [
-					'small' => esc_html__( 'Small', 'wpr-addons' ),
-					'medium' => esc_html__( 'Medium', 'wpr-addons' ),
-					'large' => esc_html__( 'Large', 'wpr-addons' ),
-				],
-				'condition' => [
-					'content_animation!' => 'none',
-				],
-			]
-		);
-
-		$this->add_control(
-			'content_anim_duration',
-			[
-				'label' => esc_html__( 'Animation Duration', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.5,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'selectors' => [
-				],
-				'condition' => [
-					'content_animation!' => 'none',
-				],
-			]
-		);
-
-		$this->end_controls_section();
-
-		$this->start_controls_section(
-			'section_product_tabs_style',
-			[
-				'label' => esc_html__( 'Tab Labels', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-			]
-		);
-
 		$this->start_controls_tabs( 'tabs_style' );
 
 		$this->start_controls_tab( 
