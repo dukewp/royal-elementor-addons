@@ -1746,6 +1746,10 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     display: flex;
 }
 
+.elementor-widget-wpr-product-tabs.wpr-tabs-position-above .wc-tabs {
+    align-items: flex-end;
+}
+
 .wpr-tabs-position-left>.elementor-widget-container .wc-tabs, 
 .wpr-tabs-position-right>.elementor-widget-container .wc-tabs  {
     -webkit-box-orient: vertical;
@@ -1802,7 +1806,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 }
 
 .wc-tabs li {
-    /* position: relative; */
+    position: relative;
 }
 
 .wpr-tabs-hr-position-justify>.elementor-widget-container .wc-tabs li {
@@ -2012,6 +2016,8 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     display: none;
     position: relative;
 }
+
+/* Sale Badge */
 
 /*--------------------------------------------------------------
  == Grid
