@@ -33,8 +33,6 @@ class Wpr_Product_SalesBadge extends Widget_Base {
 
 	protected function _register_controls() {
 
-		// Tab: Content ==============
-		// Section: General ----------
 		$this->start_controls_section(
 			'section_product_sales_badge_styles',
 			[
@@ -99,31 +97,6 @@ class Wpr_Product_SalesBadge extends Widget_Base {
 			[
 				'name'     => 'sales_badge_box_shadow',
 				'selector' => '{{WRAPPER}} .wpr-product-sales-badge .wpr-onsale',
-			]
-		);
-
-		$this->add_responsive_control(
-			'sales_badge_alignment',
-			[
-				'label'     => esc_html__( 'Alignment', 'wpr-addons' ),
-				'type'      => Controls_Manager::CHOOSE,
-				'options' => [
-					'left' => [
-						'title' => esc_html__( 'Left', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-left',
-					],
-					'center' => [
-						'title' => esc_html__( 'Center', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-center',
-					],
-					'right' => [
-						'title' => esc_html__( 'Right', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-right',
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-product-sales-badge' => 'text-align: {{VALUE}};',
-				],
 			]
 		);
 
@@ -207,6 +180,33 @@ class Wpr_Product_SalesBadge extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'sales_badge_alignment',
+			[
+				'label'     => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type'      => Controls_Manager::CHOOSE,
+				'options' => [
+					'left' => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-sales-badge' => 'text-align: {{VALUE}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
+
         $this->end_controls_section();
     }
 
@@ -225,8 +225,6 @@ class Wpr_Product_SalesBadge extends Widget_Base {
         setup_postdata( $product->get_id() );
 
 		$sales_badge_text = '<span class="wpr-onsale">' . $settings['sales_badge_text'] . '</span>';
-
-
 
         echo '<div class="wpr-product-sales-badge">';
 			if ( $product->is_on_sale() ) {
