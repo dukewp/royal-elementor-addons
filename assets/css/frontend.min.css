@@ -1801,6 +1801,10 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     width: 100%;
 }
 
+.wc-tabs li {
+    /* position: relative; */
+}
+
 .wpr-tabs-hr-position-justify>.elementor-widget-container .wc-tabs li {
     -webkit-box-flex: 1;
     -ms-flex-positive: 1;

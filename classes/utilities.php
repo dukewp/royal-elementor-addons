@@ -101,7 +101,8 @@ class Utilities {
 			'product-tabs',
 			'product-excerpt',
 			'product-rating',
-			'product-meta'
+			'product-meta',
+			'product-sales-badge'
 		];
 	}
 
