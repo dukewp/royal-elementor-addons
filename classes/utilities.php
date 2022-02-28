@@ -103,7 +103,8 @@ class Utilities {
 			'product-rating',
 			'product-meta',
 			'product-sales-badge',
-			'product-stock'
+			'product-stock',
+			'product-additional-information'
 		];
 	}
 

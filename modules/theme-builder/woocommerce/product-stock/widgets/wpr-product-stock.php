@@ -37,7 +37,7 @@ class Wpr_Product_Stock extends Widget_Base {
 			'section_product_stock',
 			[
 				'label' => esc_html__( 'Settings', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_CONTENT,
+				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
 
@@ -307,23 +307,22 @@ class Wpr_Product_Stock extends Widget_Base {
             $icon = isset($settings['product_available_on_backorder_icon']) ? $settings['product_available_on_backorder_icon'] : '';
         }
 
+		if ( $product->is_on_backorder() ) {
+			$stock_html = $availability['availability'] ? $availability['availability'] : esc_html__('On backorder', 'shopengine');
+		} elseif ( $product->is_in_stock() ) {
+			$stock_html = $availability['availability'] ? $availability['availability'] : esc_html__('In Stock', 'shopengine');
+		} else {
+			$stock_html = $availability['availability'] ? $availability['availability'] : esc_html__('Out of stock', 'shopengine');
+		}
+
         echo '<div class="wpr-product-stock">';
             echo '<p class="' . esc_attr($availability['class']) . '">';
 
             if(!empty($icon)) {
                 \Elementor\Icons_Manager::render_icon($icon, ['aria-hidden' => 'true']);
             }
-
-            if ( $product->is_on_backorder() ) {
-                $stock_html = $availability['availability'] ? $availability['availability'] : esc_html__('On backorder', 'shopengine');
-            } elseif ( $product->is_in_stock() ) {
-                $stock_html = $availability['availability'] ? $availability['availability'] : esc_html__('In Stock', 'shopengine');
-            } else {
-                $stock_html = $availability['availability'] ? $availability['availability'] : esc_html__('Out of stock', 'shopengine');
-            }
             
             echo apply_filters( 'woocommerce_stock_html', $stock_html, wp_kses_post($availability['availability']), $product );
-
         echo '</div>';
     }
 }

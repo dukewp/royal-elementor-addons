@@ -1822,6 +1822,8 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     display: none;
 }
 
+.wpr-product-additional-information table td,
+.wpr-product-additional-information table th,
 .elementor-widget-wpr-product-tabs table td,
 .elementor-widget-wpr-product-tabs table th {
     vertical-align: middle;
@@ -2018,6 +2020,75 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 }
 
 /* Sale Badge */
+/* Add To Cart */
+.wpr-product-add-to-cart-left .cart {
+    justify-content: flex-start;
+}
+
+.wpr-product-add-to-cart-center .cart {
+    justify-content: center;
+}
+
+.wpr-product-add-to-cart-right .cart {
+    justify-content: flex-end;
+}
+
+.wpr-add-to-cart-icons-wrap {
+    display: flex;
+    flex-direction: column;
+}
+
+.wpr-product-add-to-cart .quantity {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wpr-product-add-to-cart .quantity i {
+    cursor: pointer;
+}
+
+.wpr-quantity-wrap {
+    width: 100%;
+    min-height: 100px;
+}
+
+.elementor-widget-wpr-product-add-to-cart:not(.wpr-product-add-to-cart-default) .wpr-quantity-wrap input[type="number"] {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+  
+.elementor-widget-wpr-product-add-to-cart:not(.wpr-product-add-to-cart-default) .wpr-quantity-wrap input[type=number]::-webkit-inner-spin-button,
+  .wpr-quantity-wrap input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+  }
+  
+  /* .wpr-quantity-wrap button {
+    outline:none;
+    -webkit-appearance: none;
+    background-color: transparent;
+    border: none;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+    margin: 0;
+    position: relative;
+  }
+  
+  .wpr-quantity-wrap input[type=number] {
+    font-family: sans-serif;
+    max-width: 5rem;
+    padding: .5rem;
+    border: solid #ddd;
+    border-width: 0 2px;
+    font-size: 2rem;
+    height: 3rem;
+    font-weight: bold;
+    text-align: center;
+  } */
 
 /*--------------------------------------------------------------
  == Grid
