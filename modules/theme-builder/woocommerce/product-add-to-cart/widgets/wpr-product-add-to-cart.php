@@ -457,7 +457,9 @@ class Wpr_Product_AddToCart extends Widget_Base {
 			]
 		);
 
-		$this->end_controls_section();// Styles ====================
+		$this->end_controls_section();
+		
+		// Styles ====================
 		// Section: Add to Cart ------
 		$this->start_controls_section(
 			'section_style_add_to_cart_icons',
@@ -635,24 +637,24 @@ class Wpr_Product_AddToCart extends Widget_Base {
 			]
 		);
 
-		// $this->add_responsive_control(
-		// 	'add_to_cart_icons_padding',
-		// 	[
-		// 		'label' => esc_html__( 'Padding', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::DIMENSIONS,
-		// 		'size_units' => [ 'px', '%' ],
-		// 		'default' => [
-		// 			'top' => 5,
-		// 			'right' => 15,
-		// 			'bottom' => 5,
-		// 			'left' => 15,
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-product-add-to-cart .quantity i' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-		// 		],
-		// 		'separator' => 'before',
-		// 	]
-		// );
+		$this->add_responsive_control(
+			'add_to_cart_icons_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 5,
+					'right' => 15,
+					'bottom' => 5,
+					'left' => 15,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-add-to-cart .quantity i' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
 
 		$this->add_control(
 			'add_to_cart_icons_radius',
