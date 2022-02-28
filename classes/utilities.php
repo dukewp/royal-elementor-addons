@@ -402,6 +402,9 @@ class Utilities {
 		foreach ( $data as $array ) {
 			$merged_meta_keys = array_unique( array_merge( $merged_meta_keys, $array ) );
 		}
+		
+		// Rekey
+		$merged_meta_keys = array_values($merged_meta_keys);
 
 		for ( $i = 0; $i < count( $merged_meta_keys ); $i++ ) {
 			$options[ $merged_meta_keys[$i] ] = $merged_meta_keys[$i];
