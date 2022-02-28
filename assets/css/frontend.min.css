@@ -1178,11 +1178,14 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     visibility: visible;
 }
 
-.wpr-product-media-icon-wrapper {
+.wpr-product-media-lightbox {
     position: absolute;
     top: 0;
     right: 0;
     z-index: 9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Gallery Slider Pagination */
