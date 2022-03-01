@@ -112,7 +112,7 @@ class WPR_Templates_Loop {
 	/**
 	** Render Conditions Popup
 	*/
-	public static function render_conditions_popup( $canvas = false ) {
+	public static function render_conditions_popup( $canvas = false, $products = false ) {
 	?>
 
     <div class="wpr-condition-popup-wrap wpr-admin-popup-wrap">
@@ -148,6 +148,10 @@ class WPR_Templates_Loop {
                         <?php // Custom Taxonomies
                             $custom_taxonomies = Utilities::get_custom_types_of( 'tax', true );
                             foreach ($custom_taxonomies as $key => $value) {
+                            	if ( 'wpr_tab_archive' !== $_GET['tab'] ) {
+                            		return;
+                            	}
+                            	
                                 // Add Shop Archives
                                 if ( 'product_cat' === $key ) {
                                     echo '<option value="products">'. esc_html__( 'Products Archive', 'wpr-addons' ) .'</option>';

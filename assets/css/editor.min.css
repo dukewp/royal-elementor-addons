@@ -800,6 +800,10 @@
           order: 1 !important;
 }
 
+.elementor-editor-wpr-theme-builder #elementor-panel-footer-saver-preview {
+  display: none !important;
+}
+
 
 /*--------------------------------------------------------------
 == Elementor Search Notice

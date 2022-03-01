@@ -556,7 +556,7 @@ class Wpr_Post_Info extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_post_info_elements',
 			[
-				'label' => esc_html__( 'Elements', 'wpr-addons' ),
+				'label' => esc_html__( 'Elements (Date, Comments, Author)', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 			]

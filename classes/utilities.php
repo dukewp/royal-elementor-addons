@@ -262,12 +262,22 @@ class Utilities {
 	** Theme Builder Show Widgets on Spacific Pages
 	*/
 	public static function show_theme_buider_widget_on( $type ) {
+		global $post;
 		$display = false;
 
 		if ( Utilities::is_theme_builder_template() ) {
 			$template_type = Utilities::get_wpr_template_type(get_the_ID());
+
 			if ( $type === $template_type ) {
 				$display = true;
+			}
+
+			$conditions = json_decode(get_option('wpr_single_conditions'));
+			$front_page = Utilities::get_template_slug($conditions, 'single/front_page', get_the_ID());
+			$page_404 = Utilities::get_template_slug($conditions, 'single/page_404', get_the_ID());
+
+			if ( $post->post_name == $front_page || $post->post_name == $page_404 ) {
+				$display = false;
 			}
 		}
 
