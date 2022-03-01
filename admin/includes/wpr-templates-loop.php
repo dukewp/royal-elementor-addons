@@ -112,7 +112,7 @@ class WPR_Templates_Loop {
 	/**
 	** Render Conditions Popup
 	*/
-	public static function render_conditions_popup( $canvas = false ) {
+	public static function render_conditions_popup( $canvas = false, $products = false ) {
 	?>
 
     <div class="wpr-condition-popup-wrap wpr-admin-popup-wrap">
@@ -138,37 +138,54 @@ class WPR_Templates_Loop {
                     </select>
                     <!-- Archive -->
                     <select name="archives_condition_select" class="archives-condition-select">
-                        <option value="all_archives"><?php esc_html_e( 'All Archives', 'wpr-addons' ); ?></option>
-                        <option value="posts"><?php esc_html_e( 'Posts Archive', 'wpr-addons' ); ?></option>
-                        <option value="author"><?php esc_html_e( 'Author Archive', 'wpr-addons' ); ?></option>
-                        <option value="date"><?php esc_html_e( 'Date Archive', 'wpr-addons' ); ?></option>
-                        <option value="search"><?php esc_html_e( 'Search Results', 'wpr-addons' ); ?></option>
-                        <option value="categories" class="custom-ids"><?php esc_html_e( 'Post Categories', 'wpr-addons' ); ?></option>
-                        <option value="tags" class="custom-ids"><?php esc_html_e( 'Post Tags', 'wpr-addons' ); ?></option>
-                        <?php // Custom Taxonomies
-                            $custom_taxonomies = Utilities::get_custom_types_of( 'tax', true );
-                            foreach ($custom_taxonomies as $key => $value) {
-                                // Add Shop Archives
-                                if ( 'product_cat' === $key ) {
-                                    echo '<option value="products">'. esc_html__( 'Products Archive', 'wpr-addons' ) .'</option>';
-                                }
-                                // List Taxonomies
-                                echo '<option value="'. esc_attr($key) .'" class="custom-type-ids">'. esc_html($value) .'</option>';
-                            }
-                        ?>
+                    	<?php if ( 'wpr_tab_product_archive' !== $_GET['tab'] ) : ?>
+	                        <option value="all_archives"><?php esc_html_e( 'All Archives', 'wpr-addons' ); ?></option>
+	                        <option value="posts"><?php esc_html_e( 'Posts Archive', 'wpr-addons' ); ?></option>
+	                        <option value="author"><?php esc_html_e( 'Author Archive', 'wpr-addons' ); ?></option>
+	                        <option value="date"><?php esc_html_e( 'Date Archive', 'wpr-addons' ); ?></option>
+	                        <option value="search"><?php esc_html_e( 'Search Results', 'wpr-addons' ); ?></option>
+	                        <option value="categories" class="custom-ids"><?php esc_html_e( 'Post Categories', 'wpr-addons' ); ?></option>
+	                        <option value="tags" class="custom-ids"><?php esc_html_e( 'Post Tags', 'wpr-addons' ); ?></option>
+	                        <?php // Custom Taxonomies
+	                            $custom_taxonomies = Utilities::get_custom_types_of( 'tax', true );
+	                            foreach ($custom_taxonomies as $key => $value) {
+                            		if ( 'wpr_tab_header' !== $_GET['tab'] && 'wpr_tab_footer' !== $_GET['tab'] && ('product_cat' === $key || 'product_tag' === $key) ) {
+                            			continue;
+                            		} elseif ( 'product_cat' === $key ) {
+	                                    echo '<option value="products">'. esc_html__( 'Products Archive', 'wpr-addons' ) .'</option>';
+	                                }
+
+	                                // List Taxonomies
+	                                echo '<option value="'. esc_attr($key) .'" class="custom-type-ids">'. esc_html($value) .'</option>';
+	                            }
+	                        ?>
+	                     <?php else: ?>
+	                        <option value="products"><?php esc_html_e( 'Products Archive', 'wpr-addons' ); ?></option>
+	                        <option value="product_cat" class="custom-type-ids"><?php esc_html_e( 'Products Categories', 'wpr-addons' ); ?></option>
+	                        <option value="product_tag" class="custom-type-ids"><?php esc_html_e( 'Products Tags', 'wpr-addons' ); ?></option>
+	                     <?php endif; ?>
                     </select>
                     <!-- Single -->
                     <select name="singles_condition_select" class="singles-condition-select">
-                        <option value="front_page"><?php esc_html_e( 'Front Page', 'wpr-addons' ); ?></option>
-                        <option value="page_404"><?php esc_html_e( '404 Page', 'wpr-addons' ); ?></option>
-                        <option value="pages" class="custom-ids"><?php esc_html_e( 'Pages', 'wpr-addons' ); ?></option>
-                        <option value="posts" class="custom-ids"><?php esc_html_e( 'Posts', 'wpr-addons' ); ?></option>
-                        <?php // Custom Post Types
-                            $custom_taxonomies = Utilities::get_custom_types_of( 'post', true );
-                            foreach ($custom_taxonomies as $key => $value) {
-                                echo '<option value="'. esc_attr($key) .'" class="custom-type-ids">'. esc_html($value) .'</option>';
-                            }
-                        ?>
+                    	<?php if ( 'wpr_tab_product_single' !== $_GET['tab'] ) : ?>
+	                        <option value="front_page"><?php esc_html_e( 'Front Page', 'wpr-addons' ); ?></option>
+	                        <option value="page_404"><?php esc_html_e( '404 Page', 'wpr-addons' ); ?></option>
+	                        <option value="pages" class="custom-ids"><?php esc_html_e( 'Pages', 'wpr-addons' ); ?></option>
+	                        <option value="posts" class="custom-ids"><?php esc_html_e( 'Posts', 'wpr-addons' ); ?></option>
+	                        <?php // Custom Post Types
+	                            $custom_taxonomies = Utilities::get_custom_types_of( 'post', true );
+	                            foreach ($custom_taxonomies as $key => $value) {
+                            		if ( 'wpr_tab_header' !== $_GET['tab'] && 'wpr_tab_footer' !== $_GET['tab'] && 'product' === $key ) {
+                            			continue;
+                            		}
+
+	                                echo '<option value="'. esc_attr($key) .'" class="custom-type-ids">'. esc_html($value) .'</option>';
+	                            }
+	                        ?>
+	                     <?php else: ?>
+	                        <option value="product" class="custom-type-ids"><?php esc_html_e( 'Products', 'wpr-addons' ); ?></option>
+	                        <option value="productzz"><?php esc_html_e( 'Products in Category (Like Elementor Pro)', 'wpr-addons' ); ?></option>
+	                     <?php endif; ?>
                     </select>
 
                     <input type="text" placeholder="<?php esc_html_e( 'Enter comma separated IDs', 'wpr-addons' ); ?>" name="condition_input_ids" class="wpr-condition-input-ids">
@@ -184,37 +201,54 @@ class WPR_Templates_Loop {
                     </select>
                     <!-- Archive -->
                     <select name="archives_condition_select" class="archives-condition-select">
-                        <option value="all_archives"><?php esc_html_e( 'All Archives (Pro)', 'wpr-addons' ); ?></option>
-                        <option value="posts"><?php esc_html_e( 'Posts Archive (Pro)', 'wpr-addons' ); ?></option>
-                        <option value="author"><?php esc_html_e( 'Author Archive (Pro)', 'wpr-addons' ); ?></option>
-                        <option value="date"><?php esc_html_e( 'Date Archive (Pro)', 'wpr-addons' ); ?></option>
-                        <option value="search"><?php esc_html_e( 'Search Results (Pro)', 'wpr-addons' ); ?></option>
-                        <option value="categories" class="custom-ids"><?php esc_html_e( 'Post Categories (Pro)', 'wpr-addons' ); ?></option>
-                        <option value="tags" class="custom-ids"><?php esc_html_e( 'Post Tags (Pro)', 'wpr-addons' ); ?></option>
-                        <?php // Custom Taxonomies
-                            $custom_taxonomies = Utilities::get_custom_types_of( 'tax', true );
-                            foreach ($custom_taxonomies as $key => $value) {
-                                // Add Shop Archives
-                                if ( 'product_cat' === $key ) {
-                                    echo '<option value="products">'. esc_html__( 'Products Archive (Pro)', 'wpr-addons' ) .'</option>';
-                                }
-                                // List Taxonomies
-                                echo '<option value="'. esc_attr($key) .'" class="custom-type-ids">'. esc_html($value) .' (Pro)</option>';
-                            }
-                        ?>
+                    	<?php if ( 'wpr_tab_product_archive' !== $_GET['tab'] ) : ?>
+	                        <option value="all_archives"><?php esc_html_e( 'All Archives (Pro)', 'wpr-addons' ); ?></option>
+	                        <option value="posts"><?php esc_html_e( 'Posts Archive (Pro)', 'wpr-addons' ); ?></option>
+	                        <option value="author"><?php esc_html_e( 'Author Archive (Pro)', 'wpr-addons' ); ?></option>
+	                        <option value="date"><?php esc_html_e( 'Date Archive (Pro)', 'wpr-addons' ); ?></option>
+	                        <option value="search"><?php esc_html_e( 'Search Results (Pro)', 'wpr-addons' ); ?></option>
+	                        <option value="categories" class="custom-ids"><?php esc_html_e( 'Post Categories (Pro)', 'wpr-addons' ); ?></option>
+	                        <option value="tags" class="custom-ids"><?php esc_html_e( 'Post Tags (Pro)', 'wpr-addons' ); ?></option>
+	                        <?php // Custom Taxonomies
+	                            $custom_taxonomies = Utilities::get_custom_types_of( 'tax', true );
+	                            foreach ($custom_taxonomies as $key => $value) {
+                            		if ( 'wpr_tab_header' !== $_GET['tab'] && 'wpr_tab_footer' !== $_GET['tab'] && ('product_cat' === $key || 'product_tag' === $key) ) {
+                            			continue;
+                            		} elseif ( 'product_cat' === $key ) {
+	                                    echo '<option value="products">'. esc_html__( 'Products Archive (Pro)', 'wpr-addons' ) .'</option>';
+	                                }
+
+	                                // List Taxonomies
+	                                echo '<option value="'. esc_attr($key) .'" class="custom-type-ids">'. esc_html($value) .' (Pro)</option>';
+	                            }
+	                        ?>
+	                     <?php else: ?>
+	                        <option value="products"><?php esc_html_e( 'Products Archive (Pro)', 'wpr-addons' ); ?></option>
+	                        <option value="product_cat" class="custom-type-ids"><?php esc_html_e( 'Products Categories (Pro)', 'wpr-addons' ); ?></option>
+	                        <option value="product_tag" class="custom-type-ids"><?php esc_html_e( 'Products Tags (Pro)', 'wpr-addons' ); ?></option>
+	                     <?php endif; ?>
                     </select>
                     <!-- Single -->
                     <select name="singles_condition_select" class="singles-condition-select">
-                        <option value="front_page"><?php esc_html_e( 'Front Page (Pro)', 'wpr-addons' ); ?></option>
-                        <option value="page_404"><?php esc_html_e( '404 Page (Pro)', 'wpr-addons' ); ?></option>
-                        <option value="pages" class="custom-ids"><?php esc_html_e( 'Pages (Pro)', 'wpr-addons' ); ?></option>
-                        <option value="posts" class="custom-ids"><?php esc_html_e( 'Posts (Pro)', 'wpr-addons' ); ?></option>
-                        <?php // Custom Post Types
-                            $custom_taxonomies = Utilities::get_custom_types_of( 'post', true );
-                            foreach ($custom_taxonomies as $key => $value) {
-                                echo '<option value="'. esc_attr($key) .'" class="custom-type-ids">'. esc_html($value) .' (Pro)</option>';
-                            }
-                        ?>
+                    	<?php if ( 'wpr_tab_product_single' !== $_GET['tab'] ) : ?>
+	                        <option value="front_page"><?php esc_html_e( 'Front Page (Pro)', 'wpr-addons' ); ?></option>
+	                        <option value="page_404"><?php esc_html_e( '404 Page (Pro)', 'wpr-addons' ); ?></option>
+	                        <option value="pages" class="custom-ids"><?php esc_html_e( 'Pages (Pro)', 'wpr-addons' ); ?></option>
+	                        <option value="posts" class="custom-ids"><?php esc_html_e( 'Posts (Pro)', 'wpr-addons' ); ?></option>
+	                        <?php // Custom Post Types
+	                            $custom_taxonomies = Utilities::get_custom_types_of( 'post', true );
+	                            foreach ($custom_taxonomies as $key => $value) {
+                            		if ( 'wpr_tab_header' !== $_GET['tab'] && 'wpr_tab_footer' !== $_GET['tab'] && 'product' === $key ) {
+                            			continue;
+                            		}
+
+	                                echo '<option value="'. esc_attr($key) .'" class="custom-type-ids">'. esc_html($value) .' (Pro)</option>';
+	                            }
+	                        ?>
+	                     <?php else: ?>
+	                        <option value="product" class="custom-type-ids"><?php esc_html_e( 'Products (Pro)', 'wpr-addons' ); ?></option>
+	                        <option value="productzz"><?php esc_html_e( 'Products in Category (Like Elementor Pro)', 'wpr-addons' ); ?></option>
+	                     <?php endif; ?>
                     </select>
 
                     <input type="text" placeholder="<?php esc_html_e( 'Enter comma separated IDs (Pro)', 'wpr-addons' ); ?>" name="condition_input_ids" class="wpr-condition-input-ids">
