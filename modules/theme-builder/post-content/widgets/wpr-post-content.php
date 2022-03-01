@@ -7,6 +7,7 @@ use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Typography;
 use Elementor\Core\Schemes\Typography;
 use Elementor\Core\Schemes\Color;
+use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -25,7 +26,7 @@ class Wpr_Post_Content extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return [ 'wpr-theme-builder-widgets' ];
+		return Utilities::show_theme_buider_widget_on('single') ? [ 'wpr-theme-builder-widgets' ] : [];
 	}
 
 	public function get_keywords() {

@@ -259,6 +259,23 @@ class Utilities {
 
 
 	/**
+	** Theme Builder Show Widgets on Spacific Pages
+	*/
+	public static function show_theme_buider_widget_on( $type ) {
+		$display = false;
+
+		if ( Utilities::is_theme_builder_template() ) {
+			$template_type = Utilities::get_wpr_template_type(get_the_ID());
+			if ( $type === $template_type ) {
+				$display = true;
+			}
+		}
+
+		return $display;
+	}
+
+
+	/**
 	** Render Elementor Template
 	*/
 	public static function render_elementor_template( $slug ) {
