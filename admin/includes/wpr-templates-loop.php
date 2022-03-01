@@ -159,8 +159,8 @@ class WPR_Templates_Loop {
 	                        ?>
 	                     <?php else: ?>
 	                        <option value="products"><?php esc_html_e( 'Products Archive', 'wpr-addons' ); ?></option>
-	                        <option value="product_cat"><?php esc_html_e( 'Products Categories', 'wpr-addons' ); ?></option>
-	                        <option value="product_tag"><?php esc_html_e( 'Products Tags', 'wpr-addons' ); ?></option>
+	                        <option value="product_cat" class="custom-type-ids"><?php esc_html_e( 'Products Categories', 'wpr-addons' ); ?></option>
+	                        <option value="product_tag" class="custom-type-ids"><?php esc_html_e( 'Products Tags', 'wpr-addons' ); ?></option>
 	                     <?php endif; ?>
                     </select>
                     <!-- Single -->
@@ -181,7 +181,7 @@ class WPR_Templates_Loop {
 	                            }
 	                        ?>
 	                     <?php else: ?>
-	                        <option value="product"><?php esc_html_e( 'Product', 'wpr-addons' ); ?></option>
+	                        <option value="product" class="custom-type-ids"><?php esc_html_e( 'Product', 'wpr-addons' ); ?></option>
 	                        <option value="productzz"><?php esc_html_e( 'Products in Category (Like Elementor Pro)', 'wpr-addons' ); ?></option>
 	                     <?php endif; ?>
                     </select>
