@@ -148,8 +148,10 @@ class WPR_Templates_Loop {
                         <?php // Custom Taxonomies
                             $custom_taxonomies = Utilities::get_custom_types_of( 'tax', true );
                             foreach ($custom_taxonomies as $key => $value) {
-                            	if ( 'wpr_tab_archive' !== $_GET['tab'] ) {
-                            		return;
+                            	if ( 'wpr_tab_product_archive' !== $_GET['tab'] ) {
+                            		if ( 'product_cat' === $key || 'product_tag' === $key ) {
+                            			continue;
+                            		}
                             	}
                             	
                                 // Add Shop Archives
