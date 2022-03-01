@@ -182,6 +182,7 @@ class WPR_Templates_Loop {
 	                        ?>
 	                     <?php else: ?>
 	                        <option value="product"><?php esc_html_e( 'Product', 'wpr-addons' ); ?></option>
+	                        <option value="productzz"><?php esc_html_e( 'Products in Category (Like Elementor Pro)', 'wpr-addons' ); ?></option>
 	                     <?php endif; ?>
                     </select>
 
