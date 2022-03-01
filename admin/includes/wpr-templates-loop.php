@@ -149,9 +149,11 @@ class WPR_Templates_Loop {
 	                        <?php // Custom Taxonomies
 	                            $custom_taxonomies = Utilities::get_custom_types_of( 'tax', true );
 	                            foreach ($custom_taxonomies as $key => $value) {
-                            		if ( 'product_cat' === $key || 'product_tag' === $key ) {
+                            		if ( 'wpr_tab_header' !== $_GET['tab'] && 'wpr_tab_footer' !== $_GET['tab'] && ('product_cat' === $key || 'product_tag' === $key) ) {
                             			continue;
-                            		}
+                            		} elseif ( 'product_cat' === $key ) {
+	                                    echo '<option value="products">'. esc_html__( 'Products Archive', 'wpr-addons' ) .'</option>';
+	                                }
 
 	                                // List Taxonomies
 	                                echo '<option value="'. esc_attr($key) .'" class="custom-type-ids">'. esc_html($value) .'</option>';
@@ -173,7 +175,7 @@ class WPR_Templates_Loop {
 	                        <?php // Custom Post Types
 	                            $custom_taxonomies = Utilities::get_custom_types_of( 'post', true );
 	                            foreach ($custom_taxonomies as $key => $value) {
-                            		if ( 'product' === $key ) {
+                            		if ( 'wpr_tab_header' !== $_GET['tab'] && 'wpr_tab_footer' !== $_GET['tab'] && 'product' === $key ) {
                             			continue;
                             		}
 
