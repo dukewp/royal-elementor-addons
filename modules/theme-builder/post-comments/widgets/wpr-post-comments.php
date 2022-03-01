@@ -9,6 +9,7 @@ use Elementor\Core\Schemes\Typography;
 use Elementor\Core\Schemes\Color;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Border;
+use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -27,7 +28,7 @@ class Wpr_Post_Comments extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return [ 'wpr-theme-builder-widgets' ];
+		return Utilities::show_theme_buider_widget_on('single') ? [ 'wpr-theme-builder-widgets' ] : [];
 	}
 
 	public function get_keywords() {
@@ -345,7 +346,7 @@ class Wpr_Post_Comments extends Widget_Base {
 		$this->add_control(
 			'section_title_bd_type',
 			[
-				'label' => esc_html__( 'Style', 'wpr-addons' ),
+				'label' => esc_html__( 'Border Style', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'none' => esc_html__( 'None', 'wpr-addons' ),
@@ -1359,11 +1360,11 @@ class Wpr_Post_Comments extends Widget_Base {
 		$this->end_controls_section();	
 
 		// Styles ====================
-		// Section: Contact Form Title
+		// Section: Comment Form Title
 		$this->start_controls_section(
 			'section_style_cf_title',
 			[
-				'label' => esc_html__( 'Contact Form Title', 'wpr-addons' ),
+				'label' => esc_html__( 'Comment Form Title', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 			]
@@ -1530,17 +1531,17 @@ class Wpr_Post_Comments extends Widget_Base {
 			]
 		);
 
-		$this->start_controls_tabs( 'tabs_contact_form_style' );
+		$this->start_controls_tabs( 'tabs_comment_form_style' );
 
 		$this->start_controls_tab(
-			'tab_contact_form_normal',
+			'tab_comment_form_normal',
 			[
 				'label' => __( 'Normal', 'wpr-addons' ),
 			]
 		);
 
 		$this->add_control(
-			'contact_form_color',
+			'comment_form_color',
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
@@ -1557,7 +1558,7 @@ class Wpr_Post_Comments extends Widget_Base {
 		);
 
 		$this->add_control(
-			'contact_form_bg_color',
+			'comment_form_bg_color',
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
@@ -1569,7 +1570,7 @@ class Wpr_Post_Comments extends Widget_Base {
 		);
 
 		$this->add_control(
-			'contact_form_border_color',
+			'comment_form_border_color',
 			[
 				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
@@ -1583,14 +1584,14 @@ class Wpr_Post_Comments extends Widget_Base {
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
-			'tab_contact_form_hover',
+			'tab_comment_form_hover',
 			[
 				'label' => __( 'Focus', 'wpr-addons' ),
 			]
 		);
 
 		$this->add_control(
-			'contact_form_color_hr',
+			'comment_form_color_hr',
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
@@ -1605,7 +1606,7 @@ class Wpr_Post_Comments extends Widget_Base {
 		);
 
 		$this->add_control(
-			'contact_form_bg_color_hr',
+			'comment_form_bg_color_hr',
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
@@ -1617,7 +1618,7 @@ class Wpr_Post_Comments extends Widget_Base {
 		);
 
 		$this->add_control(
-			'contact_form_border_color_hr',
+			'comment_form_border_color_hr',
 			[
 				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
@@ -1635,7 +1636,7 @@ class Wpr_Post_Comments extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'contact_form_typography',
+				'name' => 'comment_form_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-comment-form label, {{WRAPPER}} .wpr-comment-form input[type=text], {{WRAPPER}} .wpr-comment-form textarea, {{WRAPPER}} .wpr-comment-form .logged-in-as',
 				'separator' => 'before',
@@ -1643,7 +1644,7 @@ class Wpr_Post_Comments extends Widget_Base {
 		);
 
 		$this->add_control(
-			'contact_form_transition_duration',
+			'comment_form_transition_duration',
 			[
 				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
@@ -1662,7 +1663,7 @@ class Wpr_Post_Comments extends Widget_Base {
 		);
 
 		$this->add_control(
-			'contact_form_border_type',
+			'comment_form_border_type',
 			[
 				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
@@ -1684,7 +1685,7 @@ class Wpr_Post_Comments extends Widget_Base {
 		);
 
 		$this->add_control(
-			'contact_form_border_width',
+			'comment_form_border_width',
 			[
 				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
@@ -1700,13 +1701,13 @@ class Wpr_Post_Comments extends Widget_Base {
 					'{{WRAPPER}} .wpr-comment-form textarea' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
-					'contact_form_border_type!' => 'none',
+					'comment_form_border_type!' => 'none',
 				],
 			]
 		);
 
 		$this->add_responsive_control(
-			'contact_form_padding',
+			'comment_form_padding',
 			[
 				'label' => esc_html__( 'Padding', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
@@ -1726,7 +1727,7 @@ class Wpr_Post_Comments extends Widget_Base {
 		);
 
 		$this->add_control(
-			'contact_form_radius',
+			'comment_form_radius',
 			[
 				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
@@ -2032,7 +2033,8 @@ class Wpr_Post_Comments extends Widget_Base {
 	// Outputs a comment in the HTML5 format
 	public static function html5_comment( $comment, $args, $depth ) {
 		// Get Settings
-		$settings = $this->get_settings();
+		$this_widget = $GLOBALS['wpr_post_comments_widget'];
+		$settings = $this_widget->get_settings();
 
 		// Class, URL, Name
 		$comment_class = implode( ' ', get_comment_class( $comment->has_children ? 'parent' : '', $comment ) );
@@ -2113,6 +2115,8 @@ class Wpr_Post_Comments extends Widget_Base {
 		//  Get Settings
 		$settings = $this->get_settings();
 
+		$GLOBALS['wpr_post_comments_widget'] = $this;
+
 		if ( ! comments_open( get_the_ID() ) ) {
 			return;
 		}
@@ -2144,6 +2148,8 @@ class Wpr_Post_Comments extends Widget_Base {
 				echo '<ul class="wpr-comments-list">';
 					wp_list_comments( [ 'callback' => [$this, 'html5_comment'] ], $get_comments );
 				echo '</ul>';
+
+				unset( $GLOBALS['wpr_post_comments_widget'] );
 
 				// Comments Navigation
 				if ( get_comment_pages_count($get_comments) > 1 && get_option( 'page_comments' ) ) {
@@ -2184,7 +2190,7 @@ class Wpr_Post_Comments extends Widget_Base {
 
 				$fields = [
 					// name
-					'author' => '<div class="wpr-contact-form-fields"> <div class="wpr-comment-form-author">'. $author_label .
+					'author' => '<div class="wpr-comment-form-fields"> <div class="wpr-comment-form-author">'. $author_label .
 					'<input type="text" name="author" placeholder="'. $author_ph .'"/></div>',
 					// Email
 					'email' => '<div class="wpr-comment-form-email">'. $email_label .

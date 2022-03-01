@@ -20,7 +20,7 @@ class Wpr_Post_Info extends Widget_Base {
 	}
 
 	public function get_title() {
-		return esc_html__( 'Post Info', 'wpr-addons' );
+		return esc_html__( 'Post Meta', 'wpr-addons' );
 	}
 
 	public function get_icon() {
@@ -28,7 +28,7 @@ class Wpr_Post_Info extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return [ 'wpr-theme-builder-widgets' ];
+		return Utilities::show_theme_buider_widget_on('single') ? [ 'wpr-theme-builder-widgets' ] : [];
 	}
 
 	public function get_keywords() {
@@ -357,6 +357,15 @@ class Wpr_Post_Info extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'post_info_notice',
+			[
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => esc_html__( 'These options will only apply if you have multiple Post Meta Elements.', 'wpr-addons' ),
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+			]
+		);
+
 		$this->add_responsive_control(
 			'post_info_gutter',
 			[
@@ -547,7 +556,7 @@ class Wpr_Post_Info extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_post_info_elements',
 			[
-				'label' => esc_html__( 'Elements', 'wpr-addons' ),
+				'label' => esc_html__( 'Elements (Date, Comments, Author)', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 			]
@@ -628,133 +637,11 @@ class Wpr_Post_Info extends Widget_Base {
 		$this->end_controls_section();
 
 		// Styles ====================
-		// Section: Extra Icon -------
-		$this->start_controls_section(
-			'section_style_post_info_icon',
-			[
-				'label' => esc_html__( 'Extra Icon', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-				'show_label' => false,
-			]
-		);
-
-		$this->add_control(
-			'post_info_icon_color',
-			[
-				'label'  => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-info li:not(.wpr-post-info-custom-field) i' => 'color: {{VALUE}}',
-				],
-				'separator' => 'after'
-			]
-		);
-
-		$this->add_responsive_control(
-			'post_info_icon_size',
-			[
-				'label' => esc_html__( 'Size', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'unit' => 'px',
-					'size' => 16
-				],
-				'range' => [
-					'px' => [
-						'min' => 1,
-						'max' => 50,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-info li i' => 'font-size: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'post_info_icon_space',
-			[
-				'label' => esc_html__( 'Spacing', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'unit' => 'px',
-					'size' => 5
-				],
-				'range' => [
-					'px' => [
-						'min' => 1,
-						'max' => 25,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-info li i' => 'margin-right: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->end_controls_section();
-
-		// Styles ====================
-		// Section: Extra Text -------
-		$this->start_controls_section(
-			'section_style_post_info_text',
-			[
-				'label' => esc_html__( 'Extra Text', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-				'show_label' => false,
-			]
-		);
-
-		$this->add_control(
-			'post_info_text_color',
-			[
-				'label'  => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-info li:not(.wpr-post-info-custom-field) .wpr-post-info-text' => 'color: {{VALUE}}',
-				],
-				'separator' => 'after'
-			]
-		);
-
-		$this->add_responsive_control(
-			'post_info_text_width',
-			[
-				'label' => esc_html__( 'Distance', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'unit' => 'px',
-					'size' => 10
-				],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 25,
-					],
-					'%' => [
-						'min' => 5,
-						'max' => 50,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-info li .wpr-post-info-text span' => 'margin-right: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->end_controls_section();
-
-		// Styles ====================
 		// Section: Taxonomy ---------
 		$this->start_controls_section(
 			'section_style_post_info_tax',
 			[
-				'label' => esc_html__( 'Taxonomy', 'wpr-addons' ),
+				'label' => esc_html__( 'Taxonomy (Categories, Tags, etc..)', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 			]
@@ -1158,6 +1045,128 @@ class Wpr_Post_Info extends Widget_Base {
 					'{{WRAPPER}} .wpr-post-info-custom-field > span' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
+			]
+		);
+
+		$this->end_controls_section();
+
+		// Styles ====================
+		// Section: Extra Icon -------
+		$this->start_controls_section(
+			'section_style_post_info_icon',
+			[
+				'label' => esc_html__( 'Extra Icon', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'show_label' => false,
+			]
+		);
+
+		$this->add_control(
+			'post_info_icon_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#333333',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-post-info li:not(.wpr-post-info-custom-field) i' => 'color: {{VALUE}}',
+				],
+				'separator' => 'after'
+			]
+		);
+
+		$this->add_responsive_control(
+			'post_info_icon_size',
+			[
+				'label' => esc_html__( 'Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'unit' => 'px',
+					'size' => 16
+				],
+				'range' => [
+					'px' => [
+						'min' => 1,
+						'max' => 50,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-post-info li i' => 'font-size: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'post_info_icon_space',
+			[
+				'label' => esc_html__( 'Spacing', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'unit' => 'px',
+					'size' => 5
+				],
+				'range' => [
+					'px' => [
+						'min' => 1,
+						'max' => 25,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-post-info li i' => 'margin-right: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->end_controls_section();
+
+		// Styles ====================
+		// Section: Extra Text -------
+		$this->start_controls_section(
+			'section_style_post_info_text',
+			[
+				'label' => esc_html__( 'Extra Text', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'show_label' => false,
+			]
+		);
+
+		$this->add_control(
+			'post_info_text_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#333333',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-post-info li:not(.wpr-post-info-custom-field) .wpr-post-info-text' => 'color: {{VALUE}}',
+				],
+				'separator' => 'after'
+			]
+		);
+
+		$this->add_responsive_control(
+			'post_info_text_width',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'unit' => 'px',
+					'size' => 10
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 25,
+					],
+					'%' => [
+						'min' => 5,
+						'max' => 50,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-post-info li .wpr-post-info-text span' => 'margin-right: {{SIZE}}{{UNIT}};',
+				],
 			]
 		);
 
