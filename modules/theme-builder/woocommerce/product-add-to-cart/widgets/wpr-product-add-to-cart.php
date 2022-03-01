@@ -425,7 +425,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 15,
+					'top' => 0,
 					'right' => 0,
 					'bottom' => 0,
 					'left' => 0,
