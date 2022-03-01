@@ -165,16 +165,24 @@ class WPR_Templates_Loop {
                     </select>
                     <!-- Single -->
                     <select name="singles_condition_select" class="singles-condition-select">
-                        <option value="front_page"><?php esc_html_e( 'Front Page', 'wpr-addons' ); ?></option>
-                        <option value="page_404"><?php esc_html_e( '404 Page', 'wpr-addons' ); ?></option>
-                        <option value="pages" class="custom-ids"><?php esc_html_e( 'Pages', 'wpr-addons' ); ?></option>
-                        <option value="posts" class="custom-ids"><?php esc_html_e( 'Posts', 'wpr-addons' ); ?></option>
-                        <?php // Custom Post Types
-                            $custom_taxonomies = Utilities::get_custom_types_of( 'post', true );
-                            foreach ($custom_taxonomies as $key => $value) {
-                                echo '<option value="'. esc_attr($key) .'" class="custom-type-ids">'. esc_html($value) .'</option>';
-                            }
-                        ?>
+                    	<?php if ( 'wpr_tab_product_single' !== $_GET['tab'] ) : ?>
+	                        <option value="front_page"><?php esc_html_e( 'Front Page', 'wpr-addons' ); ?></option>
+	                        <option value="page_404"><?php esc_html_e( '404 Page', 'wpr-addons' ); ?></option>
+	                        <option value="pages" class="custom-ids"><?php esc_html_e( 'Pages', 'wpr-addons' ); ?></option>
+	                        <option value="posts" class="custom-ids"><?php esc_html_e( 'Posts', 'wpr-addons' ); ?></option>
+	                        <?php // Custom Post Types
+	                            $custom_taxonomies = Utilities::get_custom_types_of( 'post', true );
+	                            foreach ($custom_taxonomies as $key => $value) {
+                            		if ( 'product' === $key ) {
+                            			continue;
+                            		}
+
+	                                echo '<option value="'. esc_attr($key) .'" class="custom-type-ids">'. esc_html($value) .'</option>';
+	                            }
+	                        ?>
+	                     <?php else: ?>
+	                        <option value="product"><?php esc_html_e( 'Product', 'wpr-addons' ); ?></option>
+	                     <?php endif; ?>
                     </select>
 
                     <input type="text" placeholder="<?php esc_html_e( 'Enter comma separated IDs', 'wpr-addons' ); ?>" name="condition_input_ids" class="wpr-condition-input-ids">
