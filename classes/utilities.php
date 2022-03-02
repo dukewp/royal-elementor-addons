@@ -85,6 +85,7 @@ class Utilities {
 			'post-navigation',
 			'post-comments',
 			'author-box',
+			'archive-title',
 		];
 	}
 
