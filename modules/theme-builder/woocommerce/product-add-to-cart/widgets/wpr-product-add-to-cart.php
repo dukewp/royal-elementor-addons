@@ -1443,8 +1443,8 @@ class Wpr_Product_AddToCart extends Widget_Base {
 					'size' => 5,
 				],
 				'selectors' => [
-					'{{WRAPPER}}.wpr-buttons-layout-row .wpr-product-add-to-cart .quantity' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-buttons-layout-column .wpr-product-add-to-cart .quantity' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-buttons-layout-row .wpr-product-add-to-cart .wpr-quantity-wrapper' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-buttons-layout-column .wpr-product-add-to-cart .wpr-quantity-wrapper' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -1467,7 +1467,9 @@ class Wpr_Product_AddToCart extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-add-to-cart .quantity .qty' => 'height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-product-add-to-cart .quantity i' => 'height: calc({{SIZE}}{{UNIT}}/2);',
+					'{{WRAPPER}} .wpr-product-add-to-cart .wpr-quantity-wrapper i' => 'height: calc({{SIZE}}{{UNIT}}/2);',
 					'{{WRAPPER}}.wpr-product-add-to-cart-both .wpr-product-add-to-cart .quantity i' => 'height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-product-add-to-cart-both .wpr-product-add-to-cart .wpr-quantity-wrapper i' => 'height: {{SIZE}}{{UNIT}};',
 				]
 			]
 		);
@@ -1528,6 +1530,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-add-to-cart .quantity i' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-product-add-to-cart .wpr-quantity-wrapper i' => 'width: {{SIZE}}{{UNIT}};',
 				]
 			]
 		);

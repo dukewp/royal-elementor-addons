@@ -2070,13 +2070,13 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     min-height: 100px;
 }
 
-.elementor-widget-wpr-product-add-to-cart:not(.wpr-product-add-to-cart-default) .wpr-quantity-wrap input[type="number"] {
+.elementor-widget-wpr-product-add-to-cart:not(.wpr-product-add-to-cart-default) .wpr-quantity-wrapper input[type="number"] {
     -webkit-appearance: textfield;
     -moz-appearance: textfield;
     appearance: textfield;
 }
   
-.elementor-widget-wpr-product-add-to-cart:not(.wpr-product-add-to-cart-default) .wpr-quantity-wrap input[type=number]::-webkit-inner-spin-button,
+.elementor-widget-wpr-product-add-to-cart:not(.wpr-product-add-to-cart-default) .wpr-quantity-wrapper input[type=number]::-webkit-inner-spin-button,
 .wpr-quantity-wrap input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
 }
@@ -2098,15 +2098,18 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     display: inline-flex;
 }
 
-.wpr-product-add-to-cart-left.wpr-buttons-layout-column .woocommerce-variation-add-to-cart .quantity {
+/* .wpr-product-add-to-cart-left.wpr-buttons-layout-column .woocommerce-variation-add-to-cart .quantity, */
+.wpr-product-add-to-cart-left.wpr-buttons-layout-column .woocommerce-variation-add-to-cart .wpr-quantity-wrapper {
     align-self: flex-start;
 }
 
-.wpr-product-add-to-cart-center.wpr-buttons-layout-column .woocommerce-variation-add-to-cart .quantity {
+/* .wpr-product-add-to-cart-center.wpr-buttons-layout-column .woocommerce-variation-add-to-cart .quantity, */
+.wpr-product-add-to-cart-center.wpr-buttons-layout-column .woocommerce-variation-add-to-cart .wpr-quantity-wrapper {
     align-self: center;
 }
 
-.wpr-product-add-to-cart-right.wpr-buttons-layout-column .woocommerce-variation-add-to-cart .quantity {
+/* .wpr-product-add-to-cart-right.wpr-buttons-layout-column .woocommerce-variation-add-to-cart .quantity, */
+.wpr-product-add-to-cart-right.wpr-buttons-layout-column .woocommerce-variation-add-to-cart .wpr-quantity-wrapper {
     align-self: flex-end;
 }
 
