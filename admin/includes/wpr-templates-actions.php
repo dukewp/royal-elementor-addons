@@ -185,11 +185,16 @@ class WPR_Templates_Actions {
 
 		}
 
-
 		if ( strpos($hook, 'wpr-templates-kit') ) {
 			wp_enqueue_style( 'wpr-templates-kit-css', WPR_ADDONS_URL .'assets/css/admin/templates-kit.css', [], $version );
-			
 		    wp_enqueue_script( 'wpr-templates-kit-js', WPR_ADDONS_URL .'assets/js/admin/templates-kit.js', ['jquery', 'updates'], $version );
+		}
+
+		if ( strpos($hook, 'wpr-premade-blocks') ) {
+			wp_enqueue_style( 'wpr-premade-blocks-css', WPR_ADDONS_URL .'assets/css/admin/premade-blocks.css', [], $version );
+
+		    wp_enqueue_script( 'wpr-macy-js', WPR_ADDONS_URL .'assets/js/lib/macy/macy.js', ['jquery'], $version );
+		    wp_enqueue_script( 'wpr-premade-blocks-js', WPR_ADDONS_URL .'assets/js/admin/premade-blocks.js', ['jquery'], $version );
 		}
 	}
 

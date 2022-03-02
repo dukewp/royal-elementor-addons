@@ -38,7 +38,7 @@ class Wpr_Promo_Box extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'royal', 'promo box', 'banner box', 'animated banner', 'interactive banner' ];
+		return [ 'royal', 'image hover', 'image effects', 'image box', 'promo box', 'banner box', 'animated banner', 'interactive banner' ];
 	}
 
 	public function get_style_depends() {

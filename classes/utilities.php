@@ -23,7 +23,7 @@ class Utilities {
 			'WooCommerce Grid' => ['woo-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-woo-grid'],
 			'Image Grid' => ['media-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-gallery-grid'],
 			'Magazine Grid' => ['magazine-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-magazine-grid'],
-			'Posts Timeline' => ['posts-timeline', 'https://royal-elementor-addons.com/elementor-timeline-widget/', ''],
+			'Posts/Story Timeline' => ['posts-timeline', 'https://royal-elementor-addons.com/elementor-timeline-widget/', ''],
 			'Advanced Slider' => ['advanced-slider', 'https://royal-elementor-addons.com/elementor-advanced-slider-widget/', ''],
 			'Testimonial' => ['testimonial', 'https://royal-elementor-addons.com/elementor-testimonials-slider-widget/', ''],
 			'Nav Menu' => ['nav-menu', 'http://royal-elementor-addons.com/elementor-menu-widget/', ''],
@@ -464,6 +464,9 @@ class Utilities {
 		foreach ( $data as $array ) {
 			$merged_meta_keys = array_unique( array_merge( $merged_meta_keys, $array ) );
 		}
+		
+		// Rekey
+		$merged_meta_keys = array_values($merged_meta_keys);
 
 		for ( $i = 0; $i < count( $merged_meta_keys ); $i++ ) {
 			$options[ $merged_meta_keys[$i] ] = $merged_meta_keys[$i];

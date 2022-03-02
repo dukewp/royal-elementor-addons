@@ -1476,10 +1476,14 @@ class Wpr_Tabs extends Widget_Base {
 
 				$tab_count = $index + 1;
 				$tab_setting_key = $this->get_repeater_setting_key( 'tab_control', 'tabs', $index );
-				$tab_image_src = Group_Control_Image_Size::get_attachment_image_src( $item['tab_image']['id'], 'tabs_image_size', $settings );
+				$tab_image_src = false;
+		
+				if ( isset($item['tab_image']['id']) ) {
+					$tab_image_src = Group_Control_Image_Size::get_attachment_image_src( $item['tab_image']['id'], 'tabs_image_size', $settings );
 
-				if ( ! $tab_image_src ) {
-					$tab_image_src = $item['tab_image']['url'];
+					if ( ! $tab_image_src ) {
+						$tab_image_src = $item['tab_image']['url'];
+					}
 				}
 
 				$this->add_render_attribute( $tab_setting_key, [
