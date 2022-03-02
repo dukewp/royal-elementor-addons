@@ -32,7 +32,7 @@ class Wpr_Grid extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return [ 'wpr-widgets'];
+		return Utilities::show_theme_buider_widget_on('archive') ? [ 'wpr-theme-builder-widgets' ] : [ 'wpr-widgets'];
 	}
 
 	public function get_keywords() {
@@ -682,6 +682,9 @@ class Wpr_Grid extends Widget_Base {
 				'type' => Controls_Manager::NUMBER,
 				'default' => 9,
 				'min' => 0,
+				'condition' => [
+					'query_source!' => 'current',
+				],
 			]
 		);
 
@@ -694,6 +697,7 @@ class Wpr_Grid extends Widget_Base {
 				'min' => 0,
 				'condition' => [
 					'query_selection' => 'dynamic',
+					'query_source!' => 'current',
 				]
 			]
 		);
@@ -720,6 +724,18 @@ class Wpr_Grid extends Widget_Base {
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'label_block' => false
+			]
+		);
+
+		$this->add_control(
+			'current_query_notice',
+			[
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => sprintf( __( 'To set <strong>Posts per Page</strong> for all Blog <strong>Archive Pages</strong>, navigate to <strong><a href="%s" target="_blank">Settings > Reading<a></strong>.', 'wpr-addons' ), admin_url( 'options-reading.php' ) ),
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				'condition' => [
+					'query_source' => 'current',
+				],
 			]
 		);
 
@@ -7606,12 +7622,11 @@ class Wpr_Grid extends Widget_Base {
 			];
 		}
 
-		// Get Post Type
+		// Current
 		if ( 'current' === $settings[ 'query_source' ] ) {
 			global $wp_query;
 
 			$args = $wp_query->query_vars;
-			$args['posts_per_page'] = $settings['query_posts_per_page'];
 			$args['orderby'] = $settings['query_randomize'];
 		}
 
