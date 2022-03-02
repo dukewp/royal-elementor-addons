@@ -95,6 +95,7 @@ class Utilities {
 		return [
 			'product-title',
 			'product-media',
+			'product-mediaflex',
 			'product-price',
 			'product-add-to-cart',
 			'product-Breadcrumbs',
