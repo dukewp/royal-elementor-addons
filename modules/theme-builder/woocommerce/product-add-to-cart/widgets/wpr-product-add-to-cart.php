@@ -125,6 +125,35 @@ class Wpr_Product_AddToCart extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'product_buttons_layout',
+			[
+				'label' => esc_html__( 'Buttons Layout', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'default' => 'vertical',
+				'options' => [
+					'column' => [
+						'title' => esc_html__( 'Vertical', 'wpr-addons' ),
+						'icon' => 'eicon-editor-list-ul',
+					],
+					'row' => [
+						'title' => esc_html__( 'Horizontal', 'wpr-addons' ),
+						'icon' => 'eicon-ellipsis-h',
+					],
+				],
+				'prefix_class' => 'wpr-buttons-layout-',
+				'selectors_dictionary' => [
+					'row' => 'flex-direction: row;',
+					'column' => 'flex-direction: column;',
+				],
+                'selectors' => [
+                    '{{WRAPPER}}.elementor-widget-wpr-product-add-to-cart .woocommerce-variation-add-to-cart' => '{{VALUE}};'
+                ],
+				'default' => 'column',
+				'label_block' => false,
+			]
+		);
+
         $this->add_responsive_control(
             'add_to_cart_alignment',
             [
@@ -148,43 +177,64 @@ class Wpr_Product_AddToCart extends Widget_Base {
                 'default'   => 'left',
                 'selectors' => [
                     '{{WRAPPER}} .wpr-product-add-to-cart .cart' => 'text-align: {{VALUE}}',
+                    '{{WRAPPER}} .single_variation_wrap' => 'text-align: {{VALUE}}',
                 ],
             ]
         );
 
-		$this->end_controls_section(); // End Controls Section
+        $this->add_responsive_control(
+            'add_to_cart_buttons_vertical_alignment',
+            [
+                'label'     => esc_html__('Alignment', 'wpr-addons'),
+                'type'      => Controls_Manager::CHOOSE,
+                'options'   => [
+                    'end'   => [
+                        'title' => esc_html__('Left', 'wpr-addons'),
+                        'icon'  => 'eicon-v-align-bottom',
+                    ],
+                    'center' => [
+                        'title' => esc_html__('Center', 'wpr-addons'),
+                        'icon'  => 'eicon-v-align-middle',
+                    ],
+                    'start'  => [
+                        'title' => esc_html__('Right', 'wpr-addons'),
+                        'icon'  => 'eicon-v-align-top',
+                    ],
+                ],
+                'default'   => 'left',
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-product-add-to-cart .cart button' => 'align-self: {{VALUE}}',
+                    '{{WRAPPER}} .single_variation_wrap' => 'align-self: {{VALUE}}',
+                ],
+            ]
+        );
 
-		$this->start_controls_section(
-			'section_style_title',
+		$this->add_responsive_control(
+			'table_distance',
 			[
-				'label' => esc_html__( 'Title', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-				'show_label' => false,
-			]
-		);
-
-		$this->add_control(
-			'title_color',
-			[
-				'label'  => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'label' => esc_html__( 'Table Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 150,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 5,
+				],
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce-grouped-product-list-item__label a' => 'color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-add-to-cart-layout-row table' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-add-to-cart-layout-column table' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-add-to-cart-layout-row table.variations' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-add-to-cart-layout-column table.variations' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
 
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'title_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .woocommerce-grouped-product-list-item__label a'
-			]
-		);
-
-		$this->end_controls_section();
+		$this->end_controls_section(); // End Controls Section
 
 		// Styles ====================
 		// Section: Title ------------
@@ -194,6 +244,49 @@ class Wpr_Product_AddToCart extends Widget_Base {
 				'label' => esc_html__( 'Variations', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
+			]
+		);
+
+		$this->add_control(
+			'add_to_cart_group',
+			[
+				'label'     => esc_html__('Grouped', 'wpr-addons'),
+				'type'      => Controls_Manager::HEADING,
+			]
+		);
+
+		$this->add_control(
+			'add_to_cart_group_odd_bg_color',
+			[
+				'label'     => esc_html__('Background Color', 'wpr-addons'),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => '#f8f8f8',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-grouped-product-list tr.woocommerce-grouped-product-list-item td' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'add_to_cart_group_even_bg_color',
+			[
+				'label'     => esc_html__('Even Background Color', 'wpr-addons'),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-grouped-product-list tr.woocommerce-grouped-product-list-item:nth-child(even) td' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'add_to_cart_group_border_color',
+			[
+				'label'     => esc_html__('Border Color', 'wpr-addons'),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => '#f8f8f8',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-grouped-product-list tr.woocommerce-grouped-product-list-item td' => 'border-color: {{VALUE}};',
+				],
 			]
 		);
 
@@ -323,6 +416,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .variations td' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} .variations th' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-grouped-product-list tr.woocommerce-grouped-product-list-item td' => 'border-style: {{VALUE}};',
 				],
 				'separator' => 'before',
 			]
@@ -343,6 +437,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .variations td' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .variations th' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-grouped-product-list tr.woocommerce-grouped-product-list-item td' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
 					'variations_table_border_type!' => 'none',
@@ -609,9 +704,41 @@ class Wpr_Product_AddToCart extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_variations_description',
 			[
-				'label' => esc_html__( 'Variation Item', 'wpr-addons' ),
+				'label' => esc_html__( 'Variation Item Info', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
+			]
+		);
+
+		$this->add_control(
+			'variation_title_heading',
+			[
+				'label' => esc_html__( 'Title', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'variation_title_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#000',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-grouped-product-list-item__label a' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-grouped-product-list-item__label label' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'variation_title_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .woocommerce-grouped-product-list-item__label a',
+				'selector' => '{{WRAPPER}} .woocommerce-grouped-product-list-item__label label'
 			]
 		);
 
@@ -693,6 +820,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 				'default' => '#000',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-variation-price span' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-grouped-product-list-item__price span' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -702,7 +830,8 @@ class Wpr_Product_AddToCart extends Widget_Base {
 			[
 				'name'     => 'variation_price_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .woocommerce-variation-price span'
+				'selector' => '{{WRAPPER}} .woocommerce-variation-price span',
+				'selector' => '{{WRAPPER}} .woocommerce-grouped-product-list-item__price span'
 			]
 		);
 
@@ -710,6 +839,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 			'variation_price_alignment',
 			[
 				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'description' => esc_html__('For Variable Products Only', 'wpr-addons'),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'left'    => [
@@ -747,13 +877,26 @@ class Wpr_Product_AddToCart extends Widget_Base {
 		);
 
 		$this->add_control(
-			'variation_availability_color',
+			'variation_availability_color_in_stock',
 			[
-				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'label'  => esc_html__( 'In Stock Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#000',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-variation-availability p.stock' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-variation-availability p.in-stock' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'variation_availability_color_out_of_stock',
+			[
+				'label'  => esc_html__( 'Out Of Stock Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#D21616',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-variation-availability p.stock.out-of-stock' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -1319,7 +1462,8 @@ class Wpr_Product_AddToCart extends Widget_Base {
 					'size' => 5,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-add-to-cart .quantity' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-buttons-layout-row .wpr-product-add-to-cart .quantity' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-buttons-layout-column .wpr-product-add-to-cart .quantity' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -1430,7 +1574,39 @@ class Wpr_Product_AddToCart extends Widget_Base {
 
 		$this->end_controls_section();
 
+		$this->start_controls_section(
+			'section_style_title',
+			[
+				'label' => esc_html__( 'Reset', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'show_label' => false,
+			]
+		);
+
+		$this->add_control(
+			'reset_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#333333',
+				'selectors' => [
+					'{{WRAPPER}} .reset_variations' => 'color: {{VALUE}};',
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'reset_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .reset_variations'
+			]
+		);
+
+		$this->end_controls_section();
 	}
+
 	public function wpr_change_clear_text() {
 	   echo '<a class="reset_variations" href="#">' . esc_html__( 'Clear', 'woocommerce' ) . '</a>';
 	 
@@ -1438,14 +1614,18 @@ class Wpr_Product_AddToCart extends Widget_Base {
 
 	protected function render() {
 		// Get Settings
-		$settings = $this->get_settings();
+		$settings = $this->get_settings_for_display();
+
+		var_dump($settings['quantity_plus_icon']['value']);
 
 		$this->add_render_attribute(
 			'add_to_cart_wrapper',
 			[
 				'id' => 'add-to-cart-attributes',
 				'class' => [ 'wpr-product-add-to-cart' ],
-				'layout-settings' => $settings['quantity_btn_position'], 
+				'layout-settings' => $settings['quantity_btn_position'],
+				'quantity-plus-icon' => $settings['quantity_plus_icon']['value'],
+				'quantity-minus-icon' => $settings['quantity_minus_icon']['value']
 			]
 		);
 
@@ -1458,7 +1638,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 		
 		add_action( 'woocommerce_reset_variations_link' , [$this, 'wpr_change_clear_text'], 15 );
 
-		echo '<div'. $this->get_render_attribute_string( 'add_to_cart_wrapper' ) .'>';
+		echo '<div' . ' ' . $this->get_render_attribute_string( 'add_to_cart_wrapper' ) .'>';
 
 			echo woocommerce_template_single_add_to_cart();
 
