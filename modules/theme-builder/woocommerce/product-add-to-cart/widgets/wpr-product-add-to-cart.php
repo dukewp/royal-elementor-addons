@@ -65,38 +65,6 @@ class Wpr_Product_AddToCart extends Widget_Base {
         );
 
 		$this->add_control(
-			'quantity_plus_icon',
-			[
-				'label'   => esc_html__('Plus Icon', 'wpr-addons'),
-				'type'    => Controls_Manager::ICONS,
-				'skin' => 'inline',
-				'default' => [
-					'value'   => 'fas fa-plus',
-					'library' => 'fa-solid',
-				],
-				'condition' => [
-					'quantity_btn_position!' => 'default',
-				]
-			]
-		);
-
-		$this->add_control(
-			'quantity_minus_icon',
-			[
-				'label'   => esc_html__('Minus Icon', 'wpr-addons'),
-				'type'    => Controls_Manager::ICONS,
-				'skin' => 'inline',
-				'default' => [
-					'value'   => 'fas fa-minus',
-					'library' => 'fa-solid',
-				],
-				'condition' => [
-					'quantity_btn_position!' => 'default',
-				]
-			]
-		);
-
-		$this->add_control(
 			'product_meta_layout',
 			[
 				'label' => esc_html__( 'List Layout', 'wpr-addons' ),
@@ -1616,16 +1584,12 @@ class Wpr_Product_AddToCart extends Widget_Base {
 		// Get Settings
 		$settings = $this->get_settings_for_display();
 
-		var_dump($settings['quantity_plus_icon']['value']);
-
 		$this->add_render_attribute(
 			'add_to_cart_wrapper',
 			[
 				'id' => 'add-to-cart-attributes',
 				'class' => [ 'wpr-product-add-to-cart' ],
 				'layout-settings' => $settings['quantity_btn_position'],
-				'quantity-plus-icon' => $settings['quantity_plus_icon']['value'],
-				'quantity-minus-icon' => $settings['quantity_minus_icon']['value']
 			]
 		);
 
