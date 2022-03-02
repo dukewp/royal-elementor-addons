@@ -1068,8 +1068,12 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 
 /*--------------------------------------------------------------
-  == Single Post Elements
-  --------------------------------------------------------------*/
+== Single Post Elements
+--------------------------------------------------------------*/
+.wpr-archive-title:after {
+      content: ' ';
+      display: block;
+}
 
 .wpr-featured-media-image {
     position: relative;

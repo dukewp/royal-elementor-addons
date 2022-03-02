@@ -85,8 +85,15 @@ class Wpr_Archive_Title extends Widget_Base {
 						'icon' => 'eicon-text-align-right',
 					],
                 ],
+				'selectors_dictionary' => [
+					'left' => 'text-align: left;',
+					'center' => 'text-align: center; margin: 0 auto;',
+					'right' => 'text-align: right; margin-left: auto;',
+				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-post-title' => 'text-align: {{VALUE}}',
+					'{{WRAPPER}} .wpr-archive-title' => '{{VALUE}}',
+					'{{WRAPPER}} .wpr-archive-title:after' => '{{VALUE}}',
+					'{{WRAPPER}} .wpr-archive-description' => '{{VALUE}}',
 				],
 				'separator' => 'before'
             ]
@@ -99,7 +106,7 @@ class Wpr_Archive_Title extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_title',
 			[
-				'label' => esc_html__( 'Title', 'wpr-addons' ),
+				'label' => esc_html__( 'Title & Description', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 			]
@@ -112,7 +119,7 @@ class Wpr_Archive_Title extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#333333',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-post-title' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-archive-title' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -122,7 +129,7 @@ class Wpr_Archive_Title extends Widget_Base {
 			[
 				'name'     => 'title_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-post-title'
+				'selector' => '{{WRAPPER}} .wpr-archive-title'
 			]
 		);
 
@@ -130,7 +137,7 @@ class Wpr_Archive_Title extends Widget_Base {
 			Group_Control_Text_Stroke::get_type(),
 			[
 				'name' => 'text_stroke',
-				'selector' => '{{WRAPPER}} .wpr-post-title',
+				'selector' => '{{WRAPPER}} .wpr-archive-title',
 			]
 		);
 
@@ -138,7 +145,7 @@ class Wpr_Archive_Title extends Widget_Base {
 			Group_Control_Text_Shadow::get_type(),
 			[
 				'name' => 'title_shadow',
-				'selector' => '{{WRAPPER}} .wpr-post-title',
+				'selector' => '{{WRAPPER}} .wpr-archive-title',
 				'separator' => 'after',
 			]
 		);
@@ -164,9 +171,169 @@ class Wpr_Archive_Title extends Widget_Base {
 					'luminosity' => 'Luminosity',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-post-title' => 'mix-blend-mode: {{VALUE}}',
+					'{{WRAPPER}} .wpr-archive-title' => 'mix-blend-mode: {{VALUE}};',
 				],
-				'separator' => 'none',
+			]
+		);
+
+		$this->add_control(
+			'title_desc_heading',
+			[
+				'label' => esc_html__( 'Description', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'desc_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#333333',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-archive-description' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'desc_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-archive-description'
+			]
+		);
+
+		$this->add_control(
+			'title_divider_heading',
+			[
+				'label' => esc_html__( 'Divider', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'title_divider_show',
+			[
+				'label' => esc_html__( 'Show Divider', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+			]
+		);
+
+		$this->add_responsive_control(
+			'title_divider_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#333333',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-archive-title:after' => 'background-color: {{VALUE}};',
+				],
+				'condition' => [
+					'title_divider_show' => 'yes',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'title_divider_height',
+			[
+				'label' => esc_html__( 'Height', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 0,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 5,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-archive-title:after' => 'height: {{SIZE}}px;',
+				],
+				'condition' => [
+					'title_divider_show' => 'yes',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'title_divider_width',
+			[
+				'label' => esc_html__( 'Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ '%', 'px' ],
+				'range' => [
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					],
+					'px' => [
+						'min' => 0,
+						'max' => 300,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 200,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-archive-title:after' => 'width: {{SIZE}}px;',
+				],
+				'condition' => [
+					'title_divider_show' => 'yes',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'title_divider_distance_top',
+			[
+				'label' => esc_html__( 'Top Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 0,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-archive-title:after' => 'margin-top: {{SIZE}}px;',
+				],
+				'condition' => [
+					'title_divider_show' => 'yes',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'title_divider_distance_bot',
+			[
+				'label' => esc_html__( 'Bottom Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 0,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-archive-title:after' => 'margin-bottom: {{SIZE}}px;',
+				],
+				'condition' => [
+					'title_divider_show' => 'yes',
+				],
 			]
 		);
 
@@ -177,22 +344,24 @@ class Wpr_Archive_Title extends Widget_Base {
 	protected function render() {
 		// Get Settings
 		$settings = $this->get_settings();
-
-		// $categories = get_category( get_query_var( 'cat' ) );
-		// $category_name = $categories->name;
-		// $category_description = $categories->category_description;
-
 		$tax = get_queried_object();
+
+		if ( is_null($tax) ) {
+			return;
+		}
+
 		$title = isset($tax->post_title) ? $tax->post_title : $tax->name;
 		$description = isset($tax->description) ? $tax->description : '';
-		echo $title;
-		echo $description;
 
-		var_dump($tax);
+		if ( '' !== $title ) {
+			echo '<'. $settings['post_title_tag'] .' class="wpr-archive-title">';
+				echo $title;
+			echo '</'. $settings['post_title_tag'] .'>';
+		}
 
-		// echo '<'. $settings['post_title_tag'] .' class="wpr-post-title">';
-		// 	echo get_the_title();
-		// echo '</'. $settings['post_title_tag'] .'>';
+		if ( '' !== $description ) {
+			echo '<p class="wpr-archive-description">'. $description .'</p>';
+		}
 
 	}
 	
