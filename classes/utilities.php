@@ -320,7 +320,7 @@ class Utilities {
 		$front_page = get_option( 'page_on_front' );
 		$posts_page = get_option( 'page_for_posts' );
 
-		if ( is_home() && '0' === $front_page && '0' === $posts_page || intval($posts_page) === get_queried_object_id() ) {
+		if ( is_home() && '0' === $front_page && '0' === $posts_page || (intval($posts_page) === get_queried_object_id() && !is_404()) ) {
 			$result = true;
 		}
 

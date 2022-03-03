@@ -697,7 +697,6 @@ class Wpr_Grid extends Widget_Base {
 				'min' => 0,
 				'condition' => [
 					'query_selection' => 'dynamic',
-					'query_source!' => 'current',
 				]
 			]
 		);
@@ -7628,6 +7627,7 @@ class Wpr_Grid extends Widget_Base {
 
 			$args = $wp_query->query_vars;
 			$args['orderby'] = $settings['query_randomize'];
+			$args['offset'] = ( $paged - 1 ) * get_option('posts_per_page') + $settings[ 'query_offset' ];
 		}
 
 		// Related
