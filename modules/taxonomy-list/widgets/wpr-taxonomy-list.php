@@ -753,7 +753,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
         $count = 0;
         $array = [];
 
-        $this->count_term_use('');
+        // $this->count_term_use('');
 
 		if ( $posts->have_posts() ) {
 			while ( $posts->have_posts() ) {
