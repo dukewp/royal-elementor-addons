@@ -17,7 +17,7 @@ class Module extends Module_Base {
 
 	public function get_widgets() {
 		return [
-			'Wpr_TaxonomyList', // This should match the widget/element class.
+			'Wpr_Taxonomy_List', // This should match the widget/element class.
 		];
 	}
 	
