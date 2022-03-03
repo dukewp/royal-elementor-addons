@@ -129,7 +129,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
         $this->add_responsive_control(
             'add_to_cart_alignment',
             [
-                'label'     => esc_html__('Alignment', 'wpr-addons'),
+                'label'     => esc_html__('Align', 'wpr-addons'),
                 'type'      => Controls_Manager::CHOOSE,
                 'options'   => [
                     'left'   => [
@@ -157,7 +157,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
         $this->add_responsive_control(
             'add_to_cart_buttons_vertical_alignment',
             [
-                'label'     => esc_html__('Alignment', 'wpr-addons'),
+                'label'     => esc_html__('Vertical Align', 'wpr-addons'),
                 'type'      => Controls_Manager::CHOOSE,
                 'options'   => [
                     'end'   => [
@@ -178,6 +178,9 @@ class Wpr_Product_AddToCart extends Widget_Base {
                     '{{WRAPPER}} .wpr-product-add-to-cart .cart button' => 'align-self: {{VALUE}}',
                     '{{WRAPPER}} .single_variation_wrap' => 'align-self: {{VALUE}}',
                 ],
+				'condition' => [
+					'product_meta_layout' => 'row'
+				]
             ]
         );
 
@@ -195,7 +198,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 5,
+					'size' => 10,
 				],
 				'selectors' => [
 					'{{WRAPPER}}.wpr-add-to-cart-layout-row table' => 'margin-right: {{SIZE}}{{UNIT}};',
@@ -1440,7 +1443,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 5,
+					'size' => 10,
 				],
 				'selectors' => [
 					'{{WRAPPER}}.wpr-buttons-layout-row .wpr-product-add-to-cart .wpr-quantity-wrapper' => 'margin-right: {{SIZE}}{{UNIT}};',
@@ -1579,12 +1582,60 @@ class Wpr_Product_AddToCart extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'reset_bg_color',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#333333',
+				'selectors' => [
+					'{{WRAPPER}} .reset_variations' => 'background-color: {{VALUE}};',
+				]
+			]
+		);
+
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'reset_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .reset_variations'
+			]
+		);
+
+		$this->add_responsive_control(
+			'reset_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 5,
+					'right' => 10,
+					'bottom' => 5,
+					'left' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .reset_variations' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'reset_margin',
+			[
+				'label' => esc_html__( 'Margin', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 10,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .reset_variations' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
 			]
 		);
 
