@@ -11203,8 +11203,14 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     flex-direction: column;
 }
 
-.wpr-taxonomy-list-horizontal .wpr-taxonomy-list li {
+.wpr-taxonomy-list li {
     cursor: pointer;
+}
+
+.wpr-taxonomy-list-vertical .wpr-taxonomy-list li a,
+.wpr-taxonomy-list-vertical .wpr-taxonomy-list li {
+    cursor: pointer;
+    display: block;
 }
 /* 
 .wpr-taxonomy-list-horizontal .wpr-taxonomy-list li {
