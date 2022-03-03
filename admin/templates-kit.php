@@ -367,6 +367,10 @@ function wpr_final_settings_setup() {
     update_option('wpr_footer_conditions', '{"user-footer-'. $kit .'":["global"]}');
     update_post_meta( Utilities::get_template_id('user-footer-'. $kit), 'wpr_footer_show_on_canvas', 'true' );
 
+    // Theme Builder
+    update_option('wpr_archive_conditions', '{"user-archive-'. $kit .'-blog":["archive/posts"],"user-archive-'. $kit .'-author":["archive/author"],"user-archive-'. $kit .'-date":["archive/date"],"user-archive-'. $kit .'-category-tag":["archive/categories/all","archive/tags/all"],"user-archive-'. $kit .'-search":["archive/search"]}');
+    update_option('wpr_single_conditions', '{"user-single-'. $kit .'-404":["single/page_404"],"user-single-'. $kit .'-post":["single/posts/all"],"user-single-'. $kit .'-page":["single/pages/all"]}');
+
     // Set Popup
     update_option('wpr_popup_conditions', '{"user-popup-'. $kit .'":["global"]}');
 

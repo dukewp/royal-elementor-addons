@@ -58,6 +58,7 @@ jQuery(document).ready(function( $ ) {
 	** Create User Template -------------------------
 	*/
 	function craeteUserTemplate() {
+		console.log(getActiveFilter)
 		// Get Template Library
 		var library = 'my-templates' === getActiveFilter() ? 'elementor_library' : 'wpr_templates';
 		// Get Template Title
@@ -599,11 +600,13 @@ jQuery(document).ready(function( $ ) {
 	** Highlight Templates with Active Conditions --------
 	*/
 	if ( $('body').hasClass('royal-addons_page_wpr-theme-builder') || $('body').hasClass('royal-addons_page_wpr-popups') ) {
-		var conditions = $( '#wpr_'+ currentTab +'_conditions' ).val(),
-			conditions = ('' === conditions || '[]' === conditions) ? {} : JSON.parse(conditions);
+		if ( 'my templates' !== currentTab ) {
+			var conditions = $( '#wpr_'+ currentTab +'_conditions' ).val(),
+				conditions = ('' === conditions || '[]' === conditions) ? {} : JSON.parse(conditions);
 
-		for ( var key in conditions ) {
-			$('.wpr-delete-template[data-slug="'+ key +'"]').closest('li').addClass('wpr-active-conditions-template');
+			for ( var key in conditions ) {
+				$('.wpr-delete-template[data-slug="'+ key +'"]').closest('li').addClass('wpr-active-conditions-template');
+			}
 		}
 	}
 

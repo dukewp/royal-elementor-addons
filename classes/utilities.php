@@ -308,7 +308,7 @@ class Utilities {
 	public static function is_theme_builder_template() {
 		$current_page = get_post(get_the_ID());
 
-		return str_contains($current_page->post_name, 'user-archive') || str_contains($current_page->post_name, 'user-single');
+		return strpos($current_page->post_name, 'user-archive') !== false || strpos($current_page->post_name, 'user-single') !== false;
 	}
 
 
