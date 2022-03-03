@@ -7581,7 +7581,7 @@ class Wpr_Grid extends Widget_Base {
 			$paged = 1;
 		}
 
-		$offset = ( $paged - 1 ) * $settings['query_posts_per_page'] + $settings[ 'query_offset' ];
+		$offset = ( $paged - 1 ) * intval($settings['query_posts_per_page']) + intval($settings[ 'query_offset' ]);
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$settings[ 'query_randomize' ] = '';
@@ -7627,7 +7627,7 @@ class Wpr_Grid extends Widget_Base {
 
 			$args = $wp_query->query_vars;
 			$args['orderby'] = $settings['query_randomize'];
-			$args['offset'] = ( $paged - 1 ) * get_option('posts_per_page') + $settings[ 'query_offset' ];
+			$args['offset'] = ( $paged - 1 ) * intval(get_option('posts_per_page')) + intval($settings[ 'query_offset' ]);
 		}
 
 		// Related

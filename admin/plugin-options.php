@@ -100,8 +100,6 @@ function wpr_addons_settings_page() {
         $active_tab = isset( $_GET['tab'] ) ? esc_attr($_GET['tab']) : 'wpr_tab_settings';
     } elseif ( empty(get_option('wpr_wl_hide_white_label_tab')) ) {
         $active_tab = isset( $_GET['tab'] ) ? esc_attr($_GET['tab']) : 'wpr_tab_white_label';
-    } else {
-        $active_tab = isset( $_GET['tab'] ) ? esc_attr($_GET['tab']) : 'wpr_tab_my_templates';
     }
     
 
@@ -123,11 +121,7 @@ function wpr_addons_settings_page() {
             <?php esc_html_e( 'Extensions', 'wpr-addons' ); ?>
         </a>
         <?php endif; ?>
-
-        <a href="?page=wpr-addons&tab=wpr_tab_my_templates" data-title="My Templates" class="nav-tab <?php echo $active_tab == 'wpr_tab_my_templates' ? 'nav-tab-active' : ''; ?>">
-            <?php esc_html_e( 'My Templates', 'wpr-addons' ); ?>
-        </a>
-
+        
         <?php if ( empty(get_option('wpr_wl_hide_settings_tab')) ) : ?>
         <a href="?page=wpr-addons&tab=wpr_tab_settings" data-title="Settings" class="nav-tab <?php echo $active_tab == 'wpr_tab_settings' ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Settings', 'wpr-addons' ); ?>
@@ -184,16 +178,6 @@ function wpr_addons_settings_page() {
     </div>
 
     <?php submit_button( '', 'wpr-options-button' ); ?>
-
-    <?php elseif ( $active_tab == 'wpr_tab_my_templates' ) : ?>
-
-        <!-- Custom Template -->
-        <div class="wpr-user-template">
-            <span><?php esc_html_e( 'Create Template', 'wpr-addons' ); ?></span>
-            <span class="plus-icon">+</span>
-        </div>
-
-        <?php Wpr_Templates_Loop::render_elementor_saved_templates(); ?>
 
     <?php elseif ( $active_tab == 'wpr_tab_settings' ) : ?>
 
