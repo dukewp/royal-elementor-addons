@@ -2151,6 +2151,46 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     text-align: center;
   } */
 
+  /* Cart Page */
+  .wpr-cart-wrapper {
+    display: flex;
+  }
+
+  .wpr-cart-vertical .wpr-cart-wrapper {
+    flex-direction: column;
+  }
+
+  .wpr-cart-horizontal .wpr-cart-wrapper .cart-collaterals .cart_totals {
+      float: none;
+      width: 100%;
+  }
+
+  .wpr-cart-sticky-yes .cart-collaterals {
+      position: sticky;
+      top: 0;
+  }
+
+  .wpr-checkout-flex-justify .wc-proceed-to-checkout a {
+    width: 100%;
+  }
+
+  .wpr-cart-wrapper .form-row.coupon-col {
+      display: flex;
+      align-items: center;
+  }
+
+  .wpr-cart-wrapper .form-row.coupon-col .coupon-col-start {
+      flex: 2;
+  }
+
+  .wpr-cart-wrapper .form-row.coupon-col .coupon-col-end {
+      flex: 1;
+  }
+
+  .wpr-cart-wrapper .form-row.coupon-col .coupon-col-end button {
+      width: 100%;
+  }
+
 /*--------------------------------------------------------------
  == Grid
 --------------------------------------------------------------*/
