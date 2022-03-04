@@ -4,17 +4,12 @@ namespace WprAddons\Modules\TaxonomyList\Widgets;
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Core\Responsive\Responsive;
-use Elementor\Group_Control_Border;
-use Elementor\Group_Control_Box_Shadow;
-use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Background;
 use Elementor\Core\Schemes\Color;
 use Elementor\Core\Schemes\Typography;
-use Elementor\Repeater;
 use Elementor\Group_Control_Image_Size;
 use WprAddons\Classes\Utilities;
-use WprAddons\Classes\WPR_Post_Likes;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -38,31 +33,6 @@ class Wpr_Taxonomy_List extends Widget_Base {
 
 	public function get_keywords() {
 		return [ 'royal', 'taxonomy-list', 'taxonomy', 'category', 'categories', 'tag', 'list'];
-	}
-
-	public function add_option_query_source() {
-		$pro_query = [
-			'pro-rl' => 'Related Query (Pro)',
-			'pro-cr' => 'Current Query (Pro)',
-		];
-		
-		return array_merge(Utilities::get_custom_types_of( 'post', false ), $pro_query);
-	}
-
-	// Get Taxonomies Related to Post Type
-	public function get_related_taxonomies() {
-		$relations = [];
-		$post_types = Utilities::get_custom_types_of( 'post', false );
-
-		foreach ( $post_types as $slug => $title ) {
-			$relations[$slug] = [];
-
-			foreach ( get_object_taxonomies( $slug ) as $tax ) {
-				array_push( $relations[$slug], $tax );
-			}
-		}
-
-		return json_encode( $relations );
 	}
 
     protected function register_controls() {
@@ -91,9 +61,18 @@ class Wpr_Taxonomy_List extends Widget_Base {
 		);
 
 		$this->add_control(
+			'query_hide_empty',
+			[
+				'label' => esc_html__( 'Hide Empty', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+			]
+		);
+
+		$this->add_control(
 			'taxonomy_list_layout',
 			[
-				'label' => esc_html__( 'List Layout', 'wpr-addons' ),
+				'label' => esc_html__( 'Select Layout', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
 				'default' => 'horizontal',
 				'options' => [
@@ -297,29 +276,6 @@ class Wpr_Taxonomy_List extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'tax_gutter',
-			[
-				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 20,
-					],
-				],				
-				'default' => [
-					'unit' => 'px',
-					'size' => 3,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-taxonomy-list li a' => 'margin-right: {{SIZE}}{{UNIT}};',
-				],
-				'separator' => 'before',
-			]
-		);
-
 		$this->add_responsive_control(
 			'tax_padding',
 			[
@@ -382,16 +338,23 @@ class Wpr_Taxonomy_List extends Widget_Base {
 		// Get Settings
         $settings = $this->get_settings_for_display();
 
-        echo '<div class="wpr-taxonomy-list-wrapper">';
+        // Get Taxonomies
+		$terms = get_terms([
+			'taxonomy' => $settings['query_tax_selection'],
+			'hide_empty' => 'yes' === $settings['query_hide_empty'],
+		]);
+
          echo '<ul class="wpr-taxonomy-list">';
 
-            foreach (get_terms() as $key => $value) {
-                echo '<li>';
-                 echo '<a>' . $value->name . ' ' . ( $settings['show_tax_count'] ? '(' . $value->count . ')' : '') . '</a>';
-                echo '</li>'; 
-            }
+        foreach ($terms as $key => $value) {
+            echo '<li>';
+	            echo '<a href="'. esc_url(get_term_link($value->term_id)) .'">';
+		            echo '<span>'. $value->name .'</span>';
+		            echo $settings['show_tax_count'] ? '<span>(' . $value->count . ')</span>' : '';
+	            echo '</a>';
+            echo '</li>';
+        }
 
          echo '</ul>';
-        echo '</div>';
     }
 }

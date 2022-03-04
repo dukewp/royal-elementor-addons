@@ -11183,49 +11183,41 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 
 /*--------------------------------------------------------------
-  == Lottie Animations
-  --------------------------------------------------------------*/
+== Lottie Animations
+--------------------------------------------------------------*/
 .wpr-lottie-animations-wrapper {
     min-height: 1px;
 }
 
+
 /*--------------------------------------------------------------
-  == Taxonomy List
-  --------------------------------------------------------------*/
+ == Taxonomy List
+--------------------------------------------------------------*/
+.wpr-taxonomy-list {
+     display: flex;
+}
+
+.wpr-taxonomy-list li {
+    text-align: left;
+}
+
+.wpr-taxonomy-list li a {
+    display: inline-block;
+}
 
 .wpr-taxonomy-list-horizontal .wpr-taxonomy-list {
-    display: flex;
     flex-wrap: wrap;
 }
 
 .wpr-taxonomy-list-vertical .wpr-taxonomy-list {
-    display: flex;
     flex-direction: column;
 }
 
-.wpr-taxonomy-list li {
-    cursor: pointer;
+.wpr-taxonomy-list-vertical .wpr-taxonomy-list li a {
+    display: flex;
+    justify-content: space-between;
 }
 
-.wpr-taxonomy-list-vertical .wpr-taxonomy-list li a,
-.wpr-taxonomy-list-vertical .wpr-taxonomy-list li {
-    cursor: pointer;
-    display: block;
-}
-/* 
-.wpr-taxonomy-list-horizontal .wpr-taxonomy-list li {
-    margin: 5px;
-    padding: 5px 10px;
-    color: white;
-    background: black;
-}
-
-.wpr-taxonomy-list-vertical .wpr-taxonomy-list li {
-    margin: 5px;
-    padding: 5px 10px;
-    color: black;
-    border-bottom: 1px solid black;
-} */
 
 /*--------------------------------------------------------------
   == Section Extensions
