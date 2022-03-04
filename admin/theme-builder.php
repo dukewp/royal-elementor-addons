@@ -61,7 +61,7 @@ function wpr_addons_theme_builder_page() {
             <?php esc_html_e( 'Single', 'wpr-addons' ); ?>
         </a>
         <a href="?page=wpr-theme-builder&tab=wpr_tab_my_templates" data-title="My Templates" class="nav-tab <?php echo $active_tab == 'wpr_tab_my_templates' ? 'nav-tab-active' : ''; ?>">
-            <?php esc_html_e( 'My Templates', 'wpr-addons' ); ?>
+            <?php esc_html_e( 'Saved Templates', 'wpr-addons' ); ?>
         </a>
     </div>
 
