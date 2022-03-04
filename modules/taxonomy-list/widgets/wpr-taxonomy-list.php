@@ -68,12 +68,25 @@ class Wpr_Taxonomy_List extends Widget_Base {
     protected function register_controls() {
 
 		// Tab: Content ==============
-		// Section: Query ------------
+		// Section: General ----------
 		$this->start_controls_section(
-			'section_taxonomy_list_layout',
+			'section_taxonomy_list_general',
 			[
-				'label' => esc_html__( 'Layout', 'wpr-addons' ),
+				'label' => esc_html__( 'General', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		// Get Available Taxonomies
+		$post_taxonomies = Utilities::get_custom_types_of( 'tax', false );
+
+		$this->add_control(
+			'query_tax_selection',
+			[
+				'label' => esc_html__( 'Select Taxonomy', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'category',
+				'options' => $post_taxonomies,
 			]
 		);
 
@@ -95,6 +108,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				],
                 'prefix_class' => 'wpr-taxonomy-list-',
 				'label_block' => false,
+				'separator' => 'before',
 			]
 		);
 
@@ -110,244 +124,9 @@ class Wpr_Taxonomy_List extends Widget_Base {
 
         $this->end_controls_section();
 
-		// Tab: Content ==============
-		// Section: Query ------------
-		$this->start_controls_section(
-			'section_grid_query',
-			[
-				'label' => esc_html__( 'Query', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_CONTENT,
-			]
-		);
-
-		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
-
-		// Get Available Post Types
-		$post_types = $this->add_option_query_source();
-
-		// Remove WooCommerce
-		unset( $post_types['product'] );
-
-		// Get Available Taxonomies
-		$post_taxonomies = Utilities::get_custom_types_of( 'tax', false );
-
-		// Get Available Meta Keys
-		$post_meta_keys = Utilities::get_custom_meta_keys();
-
-		$this->add_control(
-			'query_source',
-			[
-				'label' => esc_html__( 'Source', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'post',
-				'options' => $post_types,
-			]
-		);
-
-		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'query_source', ['pro-rl', 'pro-cr'] );
-
-		$this->add_control(
-			'query_selection',
-			[
-				'label' => esc_html__( 'Selection', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'dynamic',
-				'options' => [
-					'dynamic' => esc_html__( 'Dynamic', 'wpr-addons' ),
-					'manual' => esc_html__( 'Manual', 'wpr-addons' ),
-				],
-				'condition' => [
-					'query_source!' => [ 'current', 'related' ],
-				],
-			]
-		);
-
-		$this->add_control(
-			'query_tax_selection',
-			[
-				'label' => esc_html__( 'Select Taxonomy', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'category',
-				'options' => $post_taxonomies,
-				'condition' => [
-					'query_source' => 'related',
-				],
-			]
-		);
-
-		$this->add_control(
-			'query_author',
-			[
-				'label' => esc_html__( 'Authors', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT2,
-				'multiple' => true,
-				'label_block' => true,
-				'options' => Utilities::get_users(),
-				'separator' => 'before',
-				'condition' => [
-					'query_source!' => [ 'current', 'related' ],
-					'query_selection' => 'dynamic',
-				],
-			]
-		);
-
-		// Taxonomies
-		foreach ( $post_taxonomies as $slug => $title ) {
-			global $wp_taxonomies;
-			$post_type = '';
-
-			if ( isset($wp_taxonomies[$slug]) && isset($wp_taxonomies[$slug]->object_type[0]) ) {
-				$post_type = $wp_taxonomies[$slug]->object_type[0];
-			}
-
-			$this->add_control(
-				'query_taxonomy_'. $slug,
-				[
-					'label' => $title,
-					'type' => Controls_Manager::SELECT2,
-					'multiple' => true,
-					'label_block' => true,
-					'options' => Utilities::get_terms_by_taxonomy( $slug ),
-					'condition' => [
-						'query_source' => $post_type,
-						'query_selection' => 'dynamic',
-					],
-				]
-			);
-		}
-
-		// Exclude
-		foreach ( $post_types as $slug => $title ) {
-			$this->add_control(
-				'query_exclude_'. $slug,
-				[
-					'label' => esc_html__( 'Exclude ', 'wpr-addons' ) . $title,
-					'type' => Controls_Manager::SELECT2,
-					'multiple' => true,
-					'label_block' => true,
-					'options' => Utilities::get_posts_by_post_type( $slug ),
-					'condition' => [
-						'query_source' => $slug,
-						'query_source!' => [ 'current', 'related' ],
-						'query_selection' => 'dynamic',
-					],
-				]
-			);
-		}
-
-		// Manual Selection
-		foreach ( $post_types as $slug => $title ) {
-			$this->add_control(
-				'query_manual_'. $slug,
-				[
-					'label' => esc_html__( 'Select ', 'wpr-addons' ) . $title,
-					'type' => Controls_Manager::SELECT2,
-					'multiple' => true,
-					'label_block' => true,
-					'options' => Utilities::get_posts_by_post_type( $slug ),
-					'condition' => [
-						'query_source' => $slug,
-						'query_selection' => 'manual',
-					],
-					'separator' => 'before',
-				]
-			);
-		}
-
-		$this->add_control(
-			'query_posts_per_page',
-			[
-				'label' => esc_html__( 'Items Per Page', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 9,
-				'min' => 0,
-				'condition' => [
-					'query_source!' => 'current',
-				],
-			]
-		);
-
-		$this->add_control(
-			'query_offset',
-			[
-				'label' => esc_html__( 'Offset', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0,
-				'min' => 0,
-				'condition' => [
-					'query_selection' => 'dynamic',
-				]
-			]
-		);
-
-		$this->add_control(
-			'query_not_found_text',
-			[
-				'label' => esc_html__( 'Not Found Text', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => 'No Posts Found!',
-				'condition' => [
-					'query_selection' => 'dynamic',
-					'query_source!' => 'related',
-				]
-			]
-		);
-
-		$this->add_control(
-			'query_exclude_no_images',
-			[
-				'label' => esc_html__( 'Exclude Items w/o Thumbnail', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'label_block' => false
-			]
-		);
-
-		$this->add_control(
-			'current_query_notice',
-			[
-				'type' => Controls_Manager::RAW_HTML,
-				'raw' => sprintf( __( 'To set <strong>Posts per Page</strong> for all Blog <strong>Archive Pages</strong>, navigate to <strong><a href="%s" target="_blank">Settings > Reading<a></strong>.', 'wpr-addons' ), admin_url( 'options-reading.php' ) ),
-				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
-				'condition' => [
-					'query_source' => 'current',
-				],
-			]
-		);
-
-		// if ( Utilities::is_new_free_user() && ! wpr_fs()->can_use_premium_code() ) {
-		// 	$this->add_control(
-		// 		'limit_grid_items_pro_notice',
-		// 		[
-		// 			'type' => Controls_Manager::RAW_HTML,
-		// 			'raw' => 'More than <strong>12 Items</strong> in total<br> are available in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-grid-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
-		// 			// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
-		// 			'content_classes' => 'wpr-pro-notice',
-		// 		]
-		// 	);
-		// }
-
-		$this->add_control(
-			'element_select_filter',
-			[
-				'type' => Controls_Manager::HIDDEN,
-				'default' => $this->get_related_taxonomies(),
-			]
-		);
-
-		$this->add_control(
-			'post_meta_keys_filter',
-			[
-				'type' => Controls_Manager::HIDDEN,
-				'default' => json_encode( $post_meta_keys[0] ),
-			]
-		);
-
-        $this->end_controls_section();
 
 		// Styles ====================
-		// Section: Taxonomy Style ------
+		// Section: Taxonomy Style ---
 		$this->start_controls_section(
 			'section_style_tax',
 			[
@@ -599,173 +378,14 @@ class Wpr_Taxonomy_List extends Widget_Base {
 		$this->end_controls_section();
     }
 
-    // Main Query Args
-	public function get_main_query_args() {
-		$settings = $this->get_settings();
-		$author = ! empty( $settings[ 'query_author' ] ) ? implode( ',', $settings[ 'query_author' ] ) : '';
-
-		// Get Paged
-		if ( get_query_var( 'paged' ) ) {
-			$paged = get_query_var( 'paged' );
-		} else if ( get_query_var( 'page' ) ) {
-			$paged = get_query_var( 'page' );
-		} else {
-			$paged = 1;
-		}
-
-		$offset = ( $paged - 1 ) * $settings['query_posts_per_page'] + $settings[ 'query_offset' ];
-
-		// Dynamic
-		$args = [
-			'post_type' => $settings[ 'query_source' ],
-			'tax_query' => $this->get_tax_query_args(),
-			'post__not_in' => $settings[ 'query_exclude_'. $settings[ 'query_source' ] ],
-			'posts_per_page' => $settings['query_posts_per_page'],
-			'author' => $author,
-			'paged' => $paged,
-			'offset' => $offset
-		];
-
-		// Exclude Items without F/Image
-		if ( 'yes' === $settings['query_exclude_no_images'] ) {
-			$args['meta_key'] = '_thumbnail_id';
-		}
-
-		// Manual
-		if ( 'manual' === $settings[ 'query_selection' ] ) {
-			$post_ids = [''];
-
-			if ( ! empty($settings[ 'query_manual_'. $settings[ 'query_source' ] ]) ) {
-				$post_ids = $settings[ 'query_manual_'. $settings[ 'query_source' ] ];
-			}
-
-			$args = [
-				'post_type' => $settings[ 'query_source' ],
-				'post__in' => $post_ids,
-				'posts_per_page' => $settings['query_posts_per_page'],
-				'paged' => $paged,
-			];
-		}
-
-		// Current
-		if ( 'current' === $settings[ 'query_source' ] ) {
-			global $wp_query;
-
-			$args = $wp_query->query_vars;
-			$args['offset'] = ( $paged - 1 ) * get_option('posts_per_page') + $settings[ 'query_offset' ];
-		}
-
-		// Related
-		if ( 'related' === $settings[ 'query_source' ] ) {
-			$args = [
-				'post_type' => get_post_type( get_the_ID() ),
-				'tax_query' => $this->get_tax_query_args(),
-				'post__not_in' => [ get_the_ID() ],
-				'ignore_sticky_posts' => 1,
-				'posts_per_page' => $settings['query_posts_per_page'],
-				'offset' => $offset,
-			];
-		}
-
-		return $args;
-	}
-
-    // Taxonomy Query Args
-	public function get_tax_query_args() {
-		$settings = $this->get_settings();
-		$tax_query = [];
-
-		if ( 'related' === $settings[ 'query_source' ] ) {
-			$tax_query = [
-				[
-					'taxonomy' => $settings['query_tax_selection'],
-					'field' => 'term_id',
-					'terms' => wp_get_object_terms( get_the_ID(), $settings['query_tax_selection'], array( 'fields' => 'ids' ) ),
-				]
-			];
-		} else {
-			foreach ( get_object_taxonomies($settings[ 'query_source' ]) as $tax ) {
-				if ( ! empty($settings[ 'query_taxonomy_'. $tax ]) ) {
-					array_push( $tax_query, [
-						'taxonomy' => $tax,
-						'field' => 'id',
-						'terms' => $settings[ 'query_taxonomy_'. $tax ]
-					] );
-				}
-			}
-		}
-
-		return $tax_query;
-	}
-    
-    // Render Post Taxonomies
-	public function render_post_taxonomies( $settings, $class, $post_id ) {
-		$terms = wp_get_post_terms( $post_id, $settings['element_select'] );
-		$count = 0;
-
-		echo '<div class="'. esc_attr($class) .' '. $settings['element_tax_style'] .'">';
-			echo '<div class="inner-block">';
-				// Text: Before
-				if ( 'before' === $settings['element_extra_text_pos'] ) {
-					echo '<span class="wpr-grid-extra-text-left">'. esc_html( $settings['element_extra_text'] ) .'</span>';
-				}
-				// Icon: Before
-				if ( 'before' === $settings['element_extra_icon_pos'] ) {
-					echo '<i class="wpr-grid-extra-icon-left '. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
-				}
-
-				// Taxonomies
-				foreach ( $terms as $term ) {
-					echo '<a href="'. get_term_link( $term->term_id ) .'" class="wpr-pointer-item">'. esc_html( $term->name );
-						if ( ++$count !== count( $terms ) ) {
-							echo '<span class="tax-sep">'. $settings['element_tax_sep'] .'</span>';
-						}
-					echo '</a>';
-				}
-
-				// Icon: After
-				if ( 'after' === $settings['element_extra_icon_pos'] ) {
-					echo '<i class="wpr-grid-extra-icon-right '. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
-				}
-				// Text: After
-				if ( 'after' === $settings['element_extra_text_pos'] ) {
-					echo '<span class="wpr-grid-extra-text-right">'. esc_html( $settings['element_extra_text'] ) .'</span>';
-				}
-			echo '</div>';
-		echo '</div>';
-	}
-        
-    public function count_term_use ($post_type) {
-        $args = [
-            'taxonomy' => get_object_taxonomies ($post_type, 'names'),
-        ];
-
-        foreach (get_terms ($args) as $term) {
-            echo "$term->name - $term->count\n" ;
-        }
-    
-        return ;
-    }
-
     protected function render() {
+		// Get Settings
         $settings = $this->get_settings_for_display();
-		$posts = new \WP_Query( $this->get_main_query_args() );
-        $count = 0;
-        $array = [];
-
-        // $this->count_term_use('');
-
-		if ( $posts->have_posts() ) {
-			while ( $posts->have_posts() ) {
-                $posts->the_post();
-                $count++;
-            }
-        }
 
         echo '<div class="wpr-taxonomy-list-wrapper">';
          echo '<ul class="wpr-taxonomy-list">';
 
-            foreach (get_terms() as $key=>$value) {
+            foreach (get_terms() as $key => $value) {
                 echo '<li>';
                  echo '<a>' . $value->name . ' ' . ( $settings['show_tax_count'] ? '(' . $value->count . ')' : '') . '</a>';
                 echo '</li>'; 
