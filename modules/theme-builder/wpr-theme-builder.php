@@ -245,8 +245,7 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 
 	public function switch_to_preview_query() {
 		if ( 'wpr_templates' === get_post_type( get_the_ID() ) ) {
-		$document = Elementor\Plugin::instance()->documents->get_doc_or_auto_save( get_the_ID() );
-
+			$document = Elementor\Plugin::instance()->documents->get_doc_or_auto_save( get_the_ID() );
 			Elementor\Plugin::instance()->db->switch_to_query( $document->get_document_query_args() );
 		}
 	}

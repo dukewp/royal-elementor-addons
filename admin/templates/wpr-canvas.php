@@ -1,6 +1,7 @@
 <?php
 
 use Elementor\Utils;
+use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -36,7 +37,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	do_action( 'elementor/page_templates/canvas/before_content' );
 
 	// Elementor Editor
-	if ( \Elementor\Plugin::$instance->preview->is_preview_mode() ) {
+	if ( \Elementor\Plugin::$instance->preview->is_preview_mode() && Utilities::is_theme_builder_template() ) {
 	     \Elementor\Plugin::$instance->modules_manager->get_modules( 'page-templates' )->print_content();
 
 	// Frontend

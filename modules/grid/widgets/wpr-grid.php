@@ -1913,7 +1913,7 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'overlay_width',
 			[
 				'label' => esc_html__( 'Overlay Width', 'wpr-addons' ),

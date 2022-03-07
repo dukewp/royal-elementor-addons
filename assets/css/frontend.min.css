@@ -241,6 +241,15 @@ button:-moz-focusring,
     outline: none;
 }
 
+[type=button]:focus,
+[type=button]:hover,
+[type=submit]:focus,
+[type=submit]:hover,
+button:focus,
+button:hover {
+    outline: 0;
+}
+
 legend {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -266,23 +275,27 @@ textarea {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     padding: 0;
+    outline: 0;
 }
 
 [type="number"]::-webkit-inner-spin-button,
 [type="number"]::-webkit-outer-spin-button {
     height: auto;
+    outline: 0;
 }
 
 [type="search"] {
     -webkit-appearance: none !important;
     -moz-appearance: none !important;
     appearance: none !important;
+    outline: 0;
 }
 
 [type="search"]:focus {
     -webkit-appearance: none !important;
     -moz-appearance: none !important;
     appearance: none !important;
+    outline: 0;
 }
 
 [type="search"] {
@@ -1075,6 +1088,12 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
       display: block;
 }
 
+/* Post Content */
+.wpr-post-content .elementor-column-gap-default>.elementor-column>.elementor-element-populated {
+  padding: 0 !important;
+}
+
+/* Featured Media */
 .wpr-featured-media-image {
     position: relative;
     display: inline-block;
@@ -1125,7 +1144,6 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 
 /* Gallery Slider Navigation */
-
 .wpr-gallery-slider-arrow {
     position: absolute;
     z-index: 120;
@@ -1163,7 +1181,6 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 
 /* Gallery Slider Pagination */
-
 .wpr-gallery-slider-dots {
     position: absolute;
     display: inline-table;
@@ -1194,7 +1211,6 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 
 /* Author Box */
-
 .wpr-author-box-image {
     display: inline-block;
     overflow: hidden;
@@ -1235,7 +1251,6 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 
 /* Post Navigation */
-
 .wpr-post-navigation-wrap {
     display: -webkit-box;
     display: -ms-flexbox;
