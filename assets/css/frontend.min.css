@@ -2152,15 +2152,25 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
   } */
 
   /* Cart Page */
-  .wpr-cart-wrapper {
+  .wpr-cart-wrapper,
+  .wpr-cart-section-wrap .coupon {
     display: flex;
+  }
+
+  .wpr-cart-wrapper table.shop_table {
+      border-collapse: collapse !important;
   }
 
   .wpr-cart-vertical .wpr-cart-wrapper {
     flex-direction: column;
   }
 
-  .wpr-cart-horizontal .wpr-cart-wrapper .cart-collaterals .cart_totals {
+  .wpr-cart-horizontal .wpr-cart-section-wrap {
+      display: flex;
+  }
+
+  .wpr-cart-horizontal .wpr-cart-wrapper .cart-collaterals .cart_totals,
+  .wpr-cart-vertical .cart-collaterals .cart_totals {
       float: none;
       width: 100%;
   }
@@ -2189,6 +2199,12 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
   .wpr-cart-wrapper .form-row.coupon-col .coupon-col-end button {
       width: 100%;
+  }
+
+  .wpr-cart-wrapper .product-remove .remove {
+    display: flex;
+    justify-content: center;
+    align-content: center;
   }
 
 /*--------------------------------------------------------------
