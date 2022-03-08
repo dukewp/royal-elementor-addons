@@ -32,11 +32,11 @@ class Wpr_Grid extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return [ 'wpr-widgets'];
+		return Utilities::show_theme_buider_widget_on('archive') ? [ 'wpr-theme-builder-widgets' ] : [ 'wpr-widgets'];
 	}
 
 	public function get_keywords() {
-		return [ 'royal', 'portfolio grid', 'posts', 'post grid', 'posts grid', 'post slider', 'posts slider', 'post carousel', 'posts carousel', 'massonry grid', 'isotope', 'post gallery', 'posts gallery', 'filterable grid' ];
+		return [ 'royal', 'blog', 'portfolio grid', 'posts', 'post grid', 'posts grid', 'post slider', 'posts slider', 'post carousel', 'posts carousel', 'massonry grid', 'isotope', 'post gallery', 'posts gallery', 'filterable grid' ];
 	}
 
 	public function get_script_depends() {
@@ -682,6 +682,9 @@ class Wpr_Grid extends Widget_Base {
 				'type' => Controls_Manager::NUMBER,
 				'default' => 9,
 				'min' => 0,
+				'condition' => [
+					'query_source!' => 'current',
+				],
 			]
 		);
 
@@ -723,17 +726,29 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
-		if ( Utilities::is_new_free_user() && ! wpr_fs()->can_use_premium_code() ) {
-			$this->add_control(
-				'limit_grid_items_pro_notice',
-				[
-					'type' => Controls_Manager::RAW_HTML,
-					'raw' => 'More than <strong>12 Items</strong> in total<br> are available in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-grid-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
-					// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
-					'content_classes' => 'wpr-pro-notice',
-				]
-			);
-		}
+		$this->add_control(
+			'current_query_notice',
+			[
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => sprintf( __( 'To set <strong>Posts per Page</strong> for all Blog <strong>Archive Pages</strong>, navigate to <strong><a href="%s" target="_blank">Settings > Reading<a></strong>.', 'wpr-addons' ), admin_url( 'options-reading.php' ) ),
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				'condition' => [
+					'query_source' => 'current',
+				],
+			]
+		);
+
+		// if ( Utilities::is_new_free_user() && ! wpr_fs()->can_use_premium_code() ) {
+		// 	$this->add_control(
+		// 		'limit_grid_items_pro_notice',
+		// 		[
+		// 			'type' => Controls_Manager::RAW_HTML,
+		// 			'raw' => 'More than <strong>12 Items</strong> in total<br> are available in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-grid-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+		// 			// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+		// 			'content_classes' => 'wpr-pro-notice',
+		// 		]
+		// 	);
+		// }
 
 		$this->add_control(
 			'element_select_filter',
@@ -1898,7 +1913,7 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'overlay_width',
 			[
 				'label' => esc_html__( 'Overlay Width', 'wpr-addons' ),
@@ -7566,7 +7581,7 @@ class Wpr_Grid extends Widget_Base {
 			$paged = 1;
 		}
 
-		$offset = ( $paged - 1 ) * $settings['query_posts_per_page'] + $settings[ 'query_offset' ];
+		$offset = ( $paged - 1 ) * intval($settings['query_posts_per_page']) + intval($settings[ 'query_offset' ]);
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$settings[ 'query_randomize' ] = '';
@@ -7606,13 +7621,13 @@ class Wpr_Grid extends Widget_Base {
 			];
 		}
 
-		// Get Post Type
+		// Current
 		if ( 'current' === $settings[ 'query_source' ] ) {
 			global $wp_query;
 
 			$args = $wp_query->query_vars;
-			$args['posts_per_page'] = $settings['query_posts_per_page'];
 			$args['orderby'] = $settings['query_randomize'];
+			$args['offset'] = ( $paged - 1 ) * intval(get_option('posts_per_page')) + intval($settings[ 'query_offset' ]);
 		}
 
 		// Related
@@ -8772,10 +8787,10 @@ class Wpr_Grid extends Widget_Base {
 
 		while ( $posts->have_posts() ) : $posts->the_post();
 
-			$post_index++;
-			if ( Utilities::is_new_free_user() && $post_index > 12 ) {
-				return;
-			}
+			// $post_index++;
+			// if ( Utilities::is_new_free_user() && $post_index > 12 ) {
+			// 	return;
+			// }
 
 			// Post Class
 			$post_class = implode( ' ', get_post_class( 'wpr-grid-item elementor-clearfix', get_the_ID() ) );

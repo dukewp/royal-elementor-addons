@@ -44,8 +44,8 @@ class WPR_Templates_Data {
 					'name' => 'Cybersecurity',
 					'pages' => 'home,about,services,pricing,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
-					'tags' => 'cybersecurity data protection hacker security dark digital technology cybercrime',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'tags' => 'cybersecurity data protection hacker security dark digital technology cybercrime computer windows technician',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
 			'photographer' => [
@@ -61,7 +61,7 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,services,portfolio,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .', "media-library-assistant":'. $is_mla_active .'}',
 					'tags' => 'portfolio personal cv designer ux artist artwork personal resume camera fashion lens modelling photographer photography videography wedding shoot ',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
 			'cryptocurrency' => [
@@ -82,19 +82,35 @@ class WPR_Templates_Data {
 					'price' => $is_pro_active ? 'free' : 'free',
 				],
 			],
+			'lawyer' => [
+				'v1' => [
+					'name' => 'Lawyer',
+					'pages' => 'home,practice,faq,reviews,attorney,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'lawyers criminal defence lawyer firm divorce lawyer family lawyer law legal firm ',
+					'price' => $is_pro_active ? 'free' : 'free',
+				],
+			],
 			'medical' => [
 				'v1' => [
 					'name' => 'Medical',
 					'pages' => 'home,about,services,doctors,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'medical clinic dental health healthcare doctor therapist wellness treatment cure',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
 			'digitalagency' => [
 				'v1' => [
 					'name' => 'Digital Agency',
 					'pages' => 'home,about,services,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'digital agency company corporate digital services office agency web marketing',
+					'price' => $is_pro_active ? 'free' : 'free',
+				],
+				'v2' => [
+					'name' => 'Digital Agency',
+					'pages' => 'home,about,services,pricing,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'digital agency company corporate digital services office agency web marketing',
 					'price' => $is_pro_active ? 'free' : 'free',
@@ -141,14 +157,14 @@ class WPR_Templates_Data {
 					'name' => 'IT Tech v1',
 					'pages' => 'home,about,services,pricing,faq,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
-					'tags' => 'ittech advanced technology it technique',
+					'tags' => 'ittech advanced technology it technique computer windows technician digital',
 					'price' => $is_pro_active ? 'free' : 'free',
 				],
 				'v2' => [
 					'name' => 'IT Tech v2',
 					'pages' => 'home,about,services,pricing,faq,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
-					'tags' => 'ittech advanced technology it technique',
+					'tags' => 'ittech advanced technology it technique computer windows technician digital',
 					'price' => $is_pro_active ? 'free' : 'free',
 				],
 			],
@@ -167,7 +183,7 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,gallery,menu,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'restaurant fastfood slider hotel italian pizza pizzeria pasta dinner fast food wine recipe recipes cooking',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
 			'winebar' => [
@@ -244,6 +260,13 @@ class WPR_Templates_Data {
 				'v6-pro' => ['type' => 'iframe', 'url' => 'advanced-slider/v6/'],
 				'v7-pro' => ['type' => 'iframe', 'url' => 'advanced-slider/v7/'],
 				'v8-pro' => ['type' => 'iframe', 'url' => 'advanced-slider/v8/'],
+			],
+			'posts-timeline' => [
+				'v1' => ['type' => 'iframe', 'url' => 'timeline/v1/'],
+				'v2' => ['type' => 'iframe', 'url' => 'timeline/v2/'],
+				'v3' => ['type' => 'iframe', 'url' => 'timeline/v3/'],
+				'v4' => ['type' => 'iframe', 'url' => 'timeline/v4/'],
+				'v5' => ['type' => 'iframe', 'url' => 'timeline/v5/'],
 			],
 			'testimonial' => [
 				'v1' => ['type' => 'iframe', 'url' => 'testimonial-slider/v1/'],
@@ -416,7 +439,6 @@ class WPR_Templates_Data {
 			],
 			'phone-call' => [],
 			'back-to-top' => [],
-			'posts-timeline' => [],
 			'lottie-animations' => [],
 			'popup-trigger' => [],
 		];

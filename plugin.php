@@ -118,6 +118,9 @@ class Plugin {
 			// Plugin Options
 			require WPR_ADDONS_PATH . 'admin/plugin-options.php';
 
+			// Premade Blocks
+			require WPR_ADDONS_PATH . 'admin/premade-blocks.php';
+
 			// Templates Kit
 			require WPR_ADDONS_PATH . 'admin/templates-kit.php';
 
@@ -356,6 +359,16 @@ class Plugin {
 	}
 
 	public function register_scripts() {
+
+		wp_register_script(
+			'wpr-infinite-scroll',
+			WPR_ADDONS_URL . 'assets/js/lib/infinite-scroll/infinite-scroll' . $this->script_suffix() . '.js',
+			[
+				'jquery',
+			],
+			'3.0.5',
+			true
+		);
 
 		wp_register_script(
 			'wpr-isotope',

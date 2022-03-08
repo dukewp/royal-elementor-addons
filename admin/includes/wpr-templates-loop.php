@@ -94,9 +94,10 @@ class WPR_Templates_Loop {
 
 				// List
 				echo '<li>';
-					echo '<h3>'. $user_template->post_title .'</h3>';
+					echo '<h3 class="wpr-title">'. $user_template->post_title .'</h3>';
+					
 					echo '<span class="wpr-action-buttons">';
-						echo '<a href="'. esc_url($edit_url) .'" class="button button-primary">'. esc_html__( 'Edit', 'wpr-addons' ) .'</a>';
+						echo '<a href="'. esc_url($edit_url) .'" class="wpr-edit-template button button-primary">'. esc_html__( 'Edit', 'wpr-addons' ) .'</a>';
 						echo '<span class="wpr-delete-template button button-primary" data-slug="'. esc_attr($user_template->post_name) .'" data-warning="'. esc_html__( 'Are you sure you want to delete this template?', 'wpr-addons' ) .'"><span class="dashicons dashicons-no-alt"></span></span>';
 					echo '</span>';
 				echo '</li>';
@@ -112,7 +113,8 @@ class WPR_Templates_Loop {
 	/**
 	** Render Conditions Popup
 	*/
-	public static function render_conditions_popup( $canvas = false, $products = false ) {
+	public static function render_conditions_popup( $canvas = false ) {
+		
 	?>
 
     <div class="wpr-condition-popup-wrap wpr-admin-popup-wrap">

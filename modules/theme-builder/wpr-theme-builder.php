@@ -35,22 +35,72 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 		);
 
 		$default_archives = [
-			'archive/post' => esc_html__( 'Posts Archive', 'wpr-addons' ),
+			'archive/posts' => esc_html__( 'Posts Archive', 'wpr-addons' ),
 			'archive/products' => esc_html__( 'Products Archive', 'wpr-addons' ),
 			'archive/author' => esc_html__( 'Author Archive', 'wpr-addons' ),
+			'archive/date' => esc_html__( 'Date Archive', 'wpr-addons' ),
 			'archive/search' => esc_html__( 'Search Results', 'wpr-addons' ),
 		];
 
 		$taxonomy_archives = $post_taxonomies;
-		$taxonomy_archives['category'] = esc_html__( 'Post Category', 'wpr-addons' );
-		$taxonomy_archives['post_tag'] = esc_html__( 'Post Tag', 'wpr-addons' );
+
+		$id = get_the_ID();
+		$template_type = get_post_meta( $id, '_wpr_template_type', true  );
+		$template_slug = get_post($id)->post_name;
+		$query = '';
+
+		if ( 0 === strpos( $template_type, 'single' ) ) {
+			$conds = json_decode(get_option('wpr_single_conditions'));
+			
+			if ( $template_slug == Utilities::get_template_slug($conds, 'single/posts', $id) ) {
+				$query = 'post';
+			} elseif ( $template_slug == Utilities::get_template_slug($conds, 'single/pages', $id) ) {
+				$query = 'page';
+			} else {
+				foreach ($post_types as $post_type => $value) {
+					if ( 'post' === $post_type || 'page' === $post_type ) {
+						continue;
+					}
+
+					if ( $template_slug == Utilities::get_template_slug($conds, 'single/'. $post_type, $id) ) {
+						$query = $post_type;
+					}
+				}
+			}
+		} else {
+			$conds = json_decode(get_option('wpr_archive_conditions'));
+
+			if ( $template_slug == Utilities::get_template_slug($conds, 'archive/posts', $id) || $template_slug == Utilities::get_template_slug($conds, 'archive/all_archives', $id) ) {
+				$query = 'archive/posts';
+			} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/search', $id) ) {
+				$query = 'archive/search';
+			} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/author', $id) ) {
+				$query = 'archive/author';
+			} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/date', $id) ) {
+				$query = 'archive/date';
+			} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/categories', $id) ) {
+				$query = 'category';
+			} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/tags', $id) ) {
+				$query = 'post_tag';
+			} else {
+				foreach ($post_taxonomies as $tax => $value) {
+					if ( 'category' === $tax || 'tag' === $tax ) {
+						continue;
+					}
+
+					if ( $template_slug == Utilities::get_template_slug($conds, 'archive/'. $tax, $id) ) {
+						$query = $tax;
+					}
+				}
+			}
+		}
 
 		$this->add_control(
 			'preview_source',
 			[
 				'label' => esc_html__( 'Preview Source', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => $this->get_default_post_type(),
+				'default' => $query,
 				'groups' => [
 					'archive' => [
 						'label' => __( 'Archives', 'wpr-addons' ),
@@ -70,6 +120,7 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 				'label' => esc_html__( 'Select Author', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT2,
 				'options' => Utilities::get_users(),
+				'default' => Utilities::get_users()['1'],
 				'separator' => 'before',
 				'condition' => [
 					'preview_source' => 'archive/author'
@@ -83,6 +134,7 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 				'label' => esc_html__( 'Search Keyword', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
 				'separator' => 'before',
+				'default' => 'a',
 				'condition' => [
 					'preview_source' => 'archive/search',
 				]
@@ -98,8 +150,8 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 				[
 					'label' => 'Select '. $title,
 					'type' => Controls_Manager::SELECT2,
-					'default' => !empty($latest_post) ? $latest_post[0]->ID : '',
 					'label_block' => true,
+					'default' => !empty($latest_post) ? $latest_post[0]->ID : '',
 					'options' => Utilities::get_posts_by_post_type( $slug ),
 					'separator' => 'before',
 					'condition' => [
@@ -115,12 +167,15 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 				$title = 'Post '. $title;
 			}
 
+			$terms = get_terms( $slug, 'orderby=date&hide_empty=0&number=1' );
+
 			$this->add_control(
 				'preview_archive_'. $slug,
 				[
 					'label' => 'Select '. $title,
 					'type' => Controls_Manager::SELECT2,
 					'label_block' => true,
+					'default' => !empty($terms) ? $terms[0]->term_id : '',
 					'options' => Utilities::get_terms_by_taxonomy( $slug ),
 					'separator' => 'before',
 					'condition' => [
@@ -143,16 +198,6 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 
 		// Default Document Settings
 		parent::_register_controls();
-	}
-
-	public function get_default_post_type() {
-		$slug = get_post_meta( get_the_ID(), '_wpr_template_type', true  );
-
-		if ( 0 === strpos( $slug, 'single' ) ) {
-			return 'post';
-		} else {
-			return 'archive/post';
-		}
 	}
 
 	public function get_tax_query_args( $tax, $terms ) {
@@ -178,7 +223,7 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 
 		// Default Archives
 		switch ( $source ) {
-			case 'archive/post':
+			case 'archive/posts':
 				$args = [ 'post_type' => 'post' ];
 				break;
 
@@ -246,8 +291,7 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 
 	public function switch_to_preview_query() {
 		if ( 'wpr_templates' === get_post_type( get_the_ID() ) ) {
-		$document = Elementor\Plugin::instance()->documents->get_doc_or_auto_save( get_the_ID() );
-
+			$document = Elementor\Plugin::instance()->documents->get_doc_or_auto_save( get_the_ID() );
 			Elementor\Plugin::instance()->db->switch_to_query( $document->get_document_query_args() );
 		}
 	}

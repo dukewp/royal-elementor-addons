@@ -6115,9 +6115,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 
 /* Icon */
-
 .wpr-testimonial-content .wpr-testimonial-icon {
-    position: absolute;
     width: 100%;
     z-index: 1;
 }
@@ -6128,7 +6126,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 
 /* Triangle */
-
 .wpr-testimonial-content-inner {
     position: relative;
     background-color: #f9f9f9;

@@ -69,6 +69,10 @@ function wpr_addons_theme_builder_page() {
             <?php esc_html_e( 'Product Single', 'wpr-addons' ); ?>
         </a>
         <?php endif; ?>
+
+        <a href="?page=wpr-theme-builder&tab=wpr_tab_my_templates" data-title="My Templates" class="nav-tab <?php echo $active_tab == 'wpr_tab_my_templates' ? 'nav-tab-active' : ''; ?>">
+            <?php esc_html_e( 'Saved Templates', 'wpr-addons' ); ?>
+        </a>
     </div>
 
     <?php if ( $active_tab == 'wpr_tab_header' ) : ?>
@@ -112,6 +116,10 @@ function wpr_addons_theme_builder_page() {
         <input type="hidden" name="wpr_product_single_conditions" id="wpr_product_single_conditions" value="<?php echo esc_attr(get_option('wpr_product_single_conditions', '[]')); ?>">
 
         <?php WPR_Templates_Loop::render_theme_builder_templates( 'product_single' ); ?>
+
+    <?php elseif ( $active_tab == 'wpr_tab_my_templates' ) : ?>
+
+        <?php Wpr_Templates_Loop::render_elementor_saved_templates(); ?>
 
     <?php endif; ?>
 

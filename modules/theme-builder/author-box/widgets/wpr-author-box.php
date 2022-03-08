@@ -28,7 +28,7 @@ class Wpr_Author_Box extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return Utilities::show_theme_buider_widget_on('single') ? [ 'wpr-theme-builder-widgets' ] : [];
+		return Utilities::show_theme_buider_widget_on('single') || Utilities::show_theme_buider_widget_on('archive') ? [ 'wpr-theme-builder-widgets' ] : [];
 	}
 
 	public function get_keywords() {

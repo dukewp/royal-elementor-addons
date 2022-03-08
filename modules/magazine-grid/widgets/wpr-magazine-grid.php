@@ -33,11 +33,11 @@ class Wpr_Magazine_Grid extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return [ 'wpr-widgets'];
+		return Utilities::show_theme_buider_widget_on('archive') ? [ 'wpr-theme-builder-widgets' ] : [ 'wpr-widgets'];
 	}
 
 	public function get_keywords() {
-		return [ 'royal', 'magazin grid', 'magazin slider', 'isotope', 'post tiles', 'posts tiles' ];
+		return [ 'royal', 'blog', 'magazin grid', 'magazin slider', 'isotope', 'post tiles', 'posts tiles' ];
 	}
 
 	public function get_script_depends() {
