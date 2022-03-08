@@ -2144,107 +2144,87 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     vertical-align: middle;
 }
 
-  /* .wpr-quantity-wrap button {
-    outline:none;
-    -webkit-appearance: none;
-    background-color: transparent;
-    border: none;
-    align-items: center;
-    justify-content: center;
-    width: 3rem;
-    height: 3rem;
-    cursor: pointer;
-    margin: 0;
-    position: relative;
-  }
-  
-  .wpr-quantity-wrap input[type=number] {
-    font-family: sans-serif;
-    max-width: 5rem;
-    padding: .5rem;
-    border: solid #ddd;
-    border-width: 0 2px;
-    font-size: 2rem;
-    height: 3rem;
-    font-weight: bold;
-    text-align: center;
-  } */
+.wpr-product-add-to-cart .reset_variations {
+    display: inline-block;
+}
 
-  /* Cart Page */
-  .wpr-cart-wrapper,
-  .wpr-cart-section-wrap .coupon {
+/*--------------------------------------------------------------
+ == Cart Page
+--------------------------------------------------------------*/
+.wpr-cart-wrapper,
+.wpr-cart-section-wrap .coupon {
+display: flex;
+}
+
+.wpr-cart-wrapper table.shop_table {
+    border-collapse: collapse !important;
+}
+
+.wpr-cart-vertical .wpr-cart-wrapper {
+flex-direction: column;
+}
+
+.wpr-cart-horizontal .wpr-cart-section-wrap {
     display: flex;
-  }
+}
 
-  .wpr-cart-wrapper table.shop_table {
-      border-collapse: collapse !important;
-  }
-
-  .wpr-cart-vertical .wpr-cart-wrapper {
-    flex-direction: column;
-  }
-
-  .wpr-cart-horizontal .wpr-cart-section-wrap {
-      display: flex;
-  }
-
-  .wpr-cart-horizontal .wpr-cart-wrapper .cart-collaterals .cart_totals,
-  .wpr-cart-vertical .cart-collaterals .cart_totals {
-      float: none;
-      width: 100%;
-  }
-
-  .wpr-cart-sticky-yes .cart-collaterals {
-      position: sticky;
-      top: 0;
-  }
-
-  .wpr-checkout-flex-justify .wc-proceed-to-checkout a {
+.wpr-cart-horizontal .wpr-cart-wrapper .cart-collaterals .cart_totals,
+.wpr-cart-vertical .cart-collaterals .cart_totals {
+    float: none;
     width: 100%;
-  }
+}
 
-  .wpr-cart-wrapper .form-row.coupon-col {
-      display: flex;
-      align-items: center;
-  }
+.wpr-cart-sticky-yes .cart-collaterals {
+    position: sticky;
+    top: 0;
+}
 
-  .wpr-cart-wrapper .form-row.coupon-col .coupon-col-start {
-      flex: 2;
-  }
+.wpr-checkout-flex-justify .wc-proceed-to-checkout a {
+width: 100%;
+}
 
-  .wpr-cart-wrapper .form-row.coupon-col .coupon-col-end {
-      flex: 1;
-  }
-
-  .wpr-cart-wrapper .form-row.coupon-col .coupon-col-end button {
-      width: 100%;
-  }
-
-  .wpr-cart-wrapper .product-remove .remove:hover {
-    background-color: transparent;
-    color: black;
-  }
-
-  .wpr-cart-wrapper img {
-      display: inline;
-  }
-
-  .wpr-cart-wrapper .select2-selection {
-      position: relative;
-  }
-
-  .wpr-cart-wrapper .select2-container--focus span,
-  .wpr-cart-wrapper .select2-container--default .select2-selection--single {
-      border: none !important;
-      outline: none !important;
-  }
-
-  .wpr-cart-wrapper .product-remove .remove {
+.wpr-cart-wrapper .form-row.coupon-col {
     display: flex;
-    justify-content: center;
-    align-content: center;
-    background-color: transparent;
-  }
+    align-items: center;
+}
+
+.wpr-cart-wrapper .form-row.coupon-col .coupon-col-start {
+    flex: 2;
+}
+
+.wpr-cart-wrapper .form-row.coupon-col .coupon-col-end {
+    flex: 1;
+}
+
+.wpr-cart-wrapper .form-row.coupon-col .coupon-col-end button {
+    width: 100%;
+}
+
+.wpr-cart-wrapper .product-remove .remove:hover {
+background-color: transparent;
+color: black;
+}
+
+.wpr-cart-wrapper img {
+    display: inline;
+}
+
+.wpr-cart-wrapper .select2-selection {
+    position: relative;
+}
+
+.wpr-cart-wrapper .select2-container--focus span,
+.wpr-cart-wrapper .select2-container--default .select2-selection--single {
+    border: none !important;
+    outline: none !important;
+}
+
+.wpr-cart-wrapper .product-remove .remove {
+display: flex;
+justify-content: center;
+align-content: center;
+background-color: transparent;
+}
 
 /*--------------------------------------------------------------
  == Grid
