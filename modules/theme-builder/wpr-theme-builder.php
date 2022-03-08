@@ -113,13 +113,17 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 			]
 		);
 
+		$wp_users = Utilities::get_users();
+		reset($wp_users);
+		$first_user_id = key($wp_users);
+
 		$this->add_control(
 			'preview_archive_author',
 			[
 				'label' => esc_html__( 'Select Author', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT2,
 				'options' => Utilities::get_users(),
-				'default' => Utilities::get_users()['1'],
+				'default' => $first_user_id,
 				'separator' => 'before',
 				'condition' => [
 					'preview_source' => 'archive/author'
