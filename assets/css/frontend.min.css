@@ -2165,12 +2165,12 @@ display: flex;
 }
 
 .wpr-cart-vertical .wpr-cart-wrapper {
-flex-direction: column;
+    flex-direction: column;
 }
 
-.wpr-cart-horizontal .wpr-cart-section-wrap {
+/* .wpr-cart-horizontal .wpr-cart-section-wrap {
     display: flex;
-}
+} */
 
 .wpr-cart-horizontal .wpr-cart-wrapper .cart-collaterals .cart_totals,
 .wpr-cart-vertical .cart-collaterals .cart_totals {
