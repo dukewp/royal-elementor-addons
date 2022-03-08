@@ -330,8 +330,11 @@ class Utilities {
 	*/
 	public static function is_theme_builder_template() {
 		$current_page = get_post(get_the_ID());
-
-		return strpos($current_page->post_name, 'user-archive') !== false || strpos($current_page->post_name, 'user-single') !== false;
+		$archive = strpos($current_page->post_name, 'user-archive') !== false;
+		$single = strpos($current_page->post_name, 'user-single') !== false;
+		$product_archive_single = strpos($current_page->post_name, 'user-product') !== false;
+ 
+		return $archive || $single || $product_archive_single;
 	}
 
 

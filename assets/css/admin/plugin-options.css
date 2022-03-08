@@ -115,6 +115,13 @@
   border: none;
 }
 
+@media screen and (max-width: 1355px) {
+  .wpr-nav-tab-wrapper a {
+    padding: 13px 25px;
+    font-size: 14px;
+  }
+}
+
 
 /*--------------------------------------------------------------
 == Elements

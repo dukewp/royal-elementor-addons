@@ -27,7 +27,7 @@ class Wpr_Page_Cart extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return [ 'wpr-woocommerce-builder-widgets'];
+		return [ 'wpr-widgets'];
 	}
 
 	public function get_keywords() {

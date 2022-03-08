@@ -5,6 +5,7 @@ use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
 use Elementor\Core\Schemes\Color;
+use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -23,7 +24,7 @@ class Wpr_Product_Meta extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return [ 'wpr-woocommerce-builder-widgets'];
+		return Utilities::show_theme_buider_widget_on('product_single') ? [ 'wpr-woocommerce-builder-widgets' ] : [];
 	}
 
 	public function get_keywords() {

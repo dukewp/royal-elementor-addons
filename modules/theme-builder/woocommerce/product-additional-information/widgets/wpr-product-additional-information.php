@@ -30,7 +30,7 @@ class Wpr_Product_AdditionalInformation extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return [ 'wpr-woocommerce-builder-widgets'];
+		return Utilities::show_theme_buider_widget_on('product_single') ? [ 'wpr-woocommerce-builder-widgets' ] : [];
 	}
 
 	public function get_keywords() {
