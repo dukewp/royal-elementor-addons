@@ -1587,7 +1587,6 @@ class Wpr_Product_AddToCart extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} .reset_variations' => 'background-color: {{VALUE}};',
 				]
