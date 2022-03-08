@@ -155,10 +155,14 @@ class Wpr_Post_Content extends Widget_Base {
 		$dropcap_class = 'yes' === $settings['post_content_dropcap'] ? ' wpr-enable-dropcap' : '';
 
 		echo '<div class="wpr-post-content'. $dropcap_class .'">';
-			if ( 'content' === $settings['post_content_display'] ) {
-				the_content();
+			if ( \Elementor\Plugin::$instance->preview->is_preview_mode() ) {
+			     \Elementor\Plugin::$instance->modules_manager->get_modules( 'page-templates' )->print_content();
 			} else {
-				the_excerpt();
+				if ( 'content' === $settings['post_content_display'] ) {
+					the_content();
+				} else {
+					the_excerpt();
+				}
 			}
 		echo '</div>';
 

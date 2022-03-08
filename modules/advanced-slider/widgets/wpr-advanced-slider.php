@@ -185,7 +185,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			'posts_slider_notice',
 			[
 				'type' => Controls_Manager::RAW_HTML,
-				'raw' => sprintf( __( 'Looking for a <strong>Post Slider or Carousel?</strong>, <ul><li>1. Search for the <strong>"Post Slider"</strong> in widgets</li><li>2. Add <strong>"Posts Grid/Slider/Carousel"</strong></li><li>3. Navigate to <strong>"Layout"</strong> section</li><li>4. Select Layout: <strong>"Slider / Carousel"</strong></li></ul>', 'wpr-addons' ), admin_url( 'nav-menus.php?action=edit&menu=0' ) ),
+				'raw' => __( 'Looking for a <strong>Post Slider or Carousel?</strong>, <ul><li>1. Search for the <strong>"Post Slider"</strong> in widgets</li><li>2. Add <strong>"Posts Grid/Slider/Carousel"</strong></li><li>3. Navigate to <strong>"Layout"</strong> section</li><li>4. Select Layout: <strong>"Slider / Carousel"</strong></li></ul>', 'wpr-addons' ),
 				'separator' => 'after',
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 			]

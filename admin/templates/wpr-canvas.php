@@ -41,20 +41,21 @@ $woocommerce_class =  $is_preview_mode && class_exists( 'WooCommerce' ) ? 'wooco
 	do_action( 'elementor/page_templates/canvas/before_content' );
 
 	// Elementor Editor
-	if ( $is_preview_mode ) {
+	if ( \Elementor\Plugin::$instance->preview->is_preview_mode() && Utilities::is_theme_builder_template() ) {
 	     \Elementor\Plugin::$instance->modules_manager->get_modules( 'page-templates' )->print_content();
 
 	// Frontend
 	} else {
 		// Display Custom Elementor Templates
 	
-	// TODO: This Woo product wrapper div should to be moved to wpr-render-templates.php file 
-	$classes = get_post_class( '', get_the_ID() );
-	echo '<div id="product-'. get_the_ID() .'" class="'. esc_attr( implode( ' ', $classes ) ) .'">';
+		// TODO: This Woo product wrapper div should to be moved to wpr-render-templates.php file 
+		$classes = get_post_class( '', get_the_ID() );
+		echo '<div id="product-'. get_the_ID() .'" class="'. esc_attr( implode( ' ', $classes ) ) .'">';
 
-		do_action( 'elementor/page_templates/canvas/wpr_print_content' );
+			do_action( 'elementor/page_templates/canvas/wpr_print_content' );
+			
+		echo '</div>';
 
-	do_action( 'elementor/page_templates/canvas/after_content' );
 	}
 
 	/**
@@ -64,7 +65,7 @@ $woocommerce_class =  $is_preview_mode && class_exists( 'WooCommerce' ) ? 'wooco
 	 *
 	 * @since 1.0.0
 	 */
-	echo '</div>';
+	do_action( 'elementor/page_templates/canvas/after_content' );
 
 	wp_footer();
 	?>

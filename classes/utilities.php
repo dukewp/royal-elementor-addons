@@ -23,7 +23,7 @@ class Utilities {
 			'WooCommerce Grid' => ['woo-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-woo-grid'],
 			'Image Grid' => ['media-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-gallery-grid'],
 			'Magazine Grid' => ['magazine-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-magazine-grid'],
-			'Posts Timeline' => ['posts-timeline', 'https://royal-elementor-addons.com/elementor-timeline-widget/', ''],
+			'Posts/Story Timeline' => ['posts-timeline', 'https://royal-elementor-addons.com/elementor-timeline-widget/', ''],
 			'Advanced Slider' => ['advanced-slider', 'https://royal-elementor-addons.com/elementor-advanced-slider-widget/', ''],
 			'Testimonial' => ['testimonial', 'https://royal-elementor-addons.com/elementor-testimonials-slider-widget/', ''],
 			'Nav Menu' => ['nav-menu', 'http://royal-elementor-addons.com/elementor-menu-widget/', ''],
@@ -54,6 +54,7 @@ class Utilities {
 			'Lottie Animations' => ['lottie-animations', 'https://royal-elementor-addons.com/elementor-lottie-animation-widget/?ref=rea-plugin-backend-elements-widget-prev', ''],
 			'Site Logo' => ['logo', '', ''],
 			'Popup Trigger' => ['popup-trigger', '', ''],
+			'Taxonomy List' => ['taxonomy-list', '', ''],
 			// 'Random Image' => ['random-image', '', ''],
 		];
 	}
@@ -85,6 +86,7 @@ class Utilities {
 			'post-navigation',
 			'post-comments',
 			'author-box',
+			'archive-title',
 		];
 	}
 
@@ -329,7 +331,7 @@ class Utilities {
 	public static function is_theme_builder_template() {
 		$current_page = get_post(get_the_ID());
 
-		return str_contains($current_page->post_name, 'user-archive') || str_contains($current_page->post_name, 'user-single') || str_contains($current_page->post_name, 'user-product');
+		return strpos($current_page->post_name, 'user-archive') !== false || strpos($current_page->post_name, 'user-single') !== false;
 	}
 
 
@@ -341,7 +343,7 @@ class Utilities {
 		$front_page = get_option( 'page_on_front' );
 		$posts_page = get_option( 'page_for_posts' );
 
-		if ( is_home() && '0' === $front_page && '0' === $posts_page || intval($posts_page) === get_queried_object_id() ) {
+		if ( is_home() && '0' === $front_page && '0' === $posts_page || (intval($posts_page) === get_queried_object_id() && !is_404()) ) {
 			$result = true;
 		}
 
@@ -486,6 +488,9 @@ class Utilities {
 		foreach ( $data as $array ) {
 			$merged_meta_keys = array_unique( array_merge( $merged_meta_keys, $array ) );
 		}
+		
+		// Rekey
+		$merged_meta_keys = array_values($merged_meta_keys);
 
 		for ( $i = 0; $i < count( $merged_meta_keys ); $i++ ) {
 			$options[ $merged_meta_keys[$i] ] = $merged_meta_keys[$i];

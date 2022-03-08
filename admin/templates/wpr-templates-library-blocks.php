@@ -25,7 +25,7 @@ class WPR_Templates_Library_Blocks {
 	/**
 	** Template Library Popup
 	*/
-	public function render_library_templates_blocks() {
+	public static function render_library_templates_blocks() {
 
 		?>
 
@@ -38,7 +38,7 @@ class WPR_Templates_Library_Blocks {
 			<div class="wpr-tplib-filters-wrap">
 				<div class="wpr-tplib-filters">
 					<h3>
-						<span><?php esc_html_e( 'Category', 'wpr-addons' ); ?></span>
+						<span data-filter="all"><?php esc_html_e( 'Category', 'wpr-addons' ); ?></span>
 						<i class="fas fa-angle-down"></i>
 					</h3>
 
@@ -58,7 +58,6 @@ class WPR_Templates_Library_Blocks {
 								'back-to-top',
 								'popup-trigger',
 								'lottie-animations',
-								'posts-timeline',
 							];
 							
 							foreach ($modules as $title => $slug) {
@@ -81,7 +80,6 @@ class WPR_Templates_Library_Blocks {
 					</ul>
 				</div>
 			</div>
-
 		</div>
 
 		<div class="wpr-tplib-template-gird elementor-clearfix">
@@ -97,35 +95,35 @@ class WPR_Templates_Library_Blocks {
 
 					$template_slug 	= array_keys($blocks[$module_slug])[$i];
 					$template_title = $title .' '. $template_slug;
-					$template_sub 	= $blocks[$module_slug][$template_slug]['sub'];
+					$template_sub 	= isset($blocks[$module_slug][$template_slug]['sub']) ? $blocks[$module_slug][$template_slug]['sub'] : '';
 					$preview_type 	= $blocks[$module_slug][$template_slug]['type'];
 					$preview_url 	= $blocks[$module_slug][$template_slug]['url'];
 					$templte_class 	= ( strpos($template_slug, 'pro') && ! wpr_fs()->can_use_premium_code() ) ? ' wpr-tplib-pro-wrap' : '';
 
 			?>
 
-			<div class="wpr-tplib-template-wrap<?php echo esc_attr($templte_class); ?>">
-				<div class="wpr-tplib-template" data-slug="<?php echo esc_attr($template_slug); ?>" data-filter="<?php echo esc_attr($module_slug); ?>" data-sub-filter="<?php echo esc_attr($template_sub); ?>" data-preview-type="<?php echo esc_attr($preview_type); ?>" data-preview-url="<?php echo esc_attr($preview_url); ?>">
-					<div class="wpr-tplib-template-media">
-						<img src="<?php echo 'https://royal-elementor-addons.com/library/premade-styles/'. $module_slug .'/'. $template_slug .'.jpg'; ?>">
-						<div class="wpr-tplib-template-media-overlay">
-							<i class="eicon-eye"></i>
+				<div class="wpr-tplib-template-wrap<?php echo esc_attr($templte_class); ?>">
+					<div class="wpr-tplib-template" data-slug="<?php echo esc_attr($template_slug); ?>" data-filter="<?php echo esc_attr($module_slug); ?>" data-sub-filter="<?php echo esc_attr($template_sub); ?>" data-preview-type="<?php echo esc_attr($preview_type); ?>" data-preview-url="<?php echo esc_attr($preview_url); ?>">
+						<div class="wpr-tplib-template-media">
+							<img src="<?php echo 'https://royal-elementor-addons.com/library/premade-styles/'. $module_slug .'/'. $template_slug .'.jpg'; ?>">
+							<div class="wpr-tplib-template-media-overlay">
+								<i class="eicon-eye"></i>
+							</div>
+						</div>
+						<div class="wpr-tplib-template-footer elementor-clearfix">
+							<h3><?php echo str_replace('-pro', ' Pro', $template_title); ?></h3>
+
+							<?php if ( strpos($template_slug, 'pro') && ! wpr_fs()->can_use_premium_code() ) : ?>
+								<span class="wpr-tplib-insert-template wpr-tplib-insert-pro"><i class="eicon-star"></i> <span><?php esc_html_e( 'Go Pro', 'wpr-addons' ); ?></span></span>
+							<?php else : ?>
+								<span class="wpr-tplib-insert-template"><i class="eicon-file-download"></i> <span><?php esc_html_e( 'Insert', 'wpr-addons' ); ?></span></span>
+							<?php endif; ?>
 						</div>
 					</div>
-					<div class="wpr-tplib-template-footer elementor-clearfix">
-						<h3><?php echo str_replace('-pro', ' Pro', $template_title); ?></h3>
-
-						<?php if ( strpos($template_slug, 'pro') && ! wpr_fs()->can_use_premium_code() ) : ?>
-							<span class="wpr-tplib-insert-template wpr-tplib-insert-pro"><i class="eicon-star"></i> <span><?php esc_html_e( 'Go Pro', 'wpr-addons' ); ?></span></span>
-						<?php else : ?>
-							<span class="wpr-tplib-insert-template"><i class="eicon-file-download"></i> <span><?php esc_html_e( 'Insert', 'wpr-addons' ); ?></span></span>
-						<?php endif; ?>
-					</div>
 				</div>
-			</div>
 
 				<?php endfor; ?>
-			<?php endforeach; ?>
+			<?php endforeach;?>
 
 			</div>
 		</div>

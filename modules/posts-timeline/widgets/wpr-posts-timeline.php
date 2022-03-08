@@ -30,16 +30,16 @@ class Wpr_Posts_Timeline extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return [ 'wpr-widgets' ];
+		return Utilities::show_theme_buider_widget_on('archive') ? [ 'wpr-theme-builder-widgets' ] : [ 'wpr-widgets' ];
 	}
 
 	public function get_keywords() {
-		return ['post timeline', 'post', 'posts', 'timeline', 'posts timeline', 'story timeline', 'content timeline'];
+		return ['post timeline', 'blog', 'post', 'posts', 'timeline', 'posts timeline', 'story timeline', 'content timeline'];
 	}
 
 	public function get_script_depends() {
 		// TODO: separate infinite-scroll from isotope
-		return [ 'swiper', 'wpr-aos-js', 'wpr-isotope' ];
+		return [ 'swiper', 'wpr-aos-js', 'wpr-infinite-scroll' ];
 	}
 
 	public function get_style_depends() {
@@ -153,7 +153,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			]
 		);
 		
-		// Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
+		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 	
 		$this->add_control(
 			'timeline_content',
@@ -1256,6 +1256,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$this->end_controls_section();
 
 		$post_types = Utilities::get_custom_types_of( 'post', false );
+		$post_types = $this->add_option_query_source();
 		unset( $post_types['product'] );
 		// unset($post_types['page']);
 		// unset($post_types['e-landing-page']);
@@ -1366,7 +1367,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'label' => $title,
 					'type' => Controls_Manager::SELECT2,
 					'multiple' => true,
-					'default' => 'post',
 					'label_block' => true,
 					'options' => Utilities::get_terms_by_taxonomy( $slug ),
 					'condition' => [
@@ -4894,12 +4894,12 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			$paged = 1;
 		}
 
-		$posts_per_page =  (!wpr_fs()->can_use_premium_code() && $settings['posts_per_page'] > 4) ? 4 : $settings['posts_per_page'];
+		$posts_per_page =  (!wpr_fs()->can_use_premium_code() && $settings['posts_per_page'] > 4) ? 4 : (empty($settings['posts_per_page']) ? 4 : $settings['posts_per_page']);
 
 		// Dynamic
 		$args = [
 			'post_type' => $settings[ 'timeline_post_types' ],
-			// 'tax_query' => $this->get_tax_query_args(),
+			'tax_query' => $this->get_tax_query_args(),
 			'post__not_in' => !empty($settings[ 'query_exclude_'. $settings[ 'timeline_post_types' ] ]) ? $settings[ 'query_exclude_'. $settings[ 'timeline_post_types' ] ] : '',
 			'posts_per_page' =>  $posts_per_page,
 			'orderby' => $settings[ 'order_posts' ],
@@ -5482,6 +5482,15 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			// <span class="wpr-label">'. get_the_date('Y') .'</span> 
 			// <span class="wpr-sub-label">'. get_the_date('M ') .'</span>
 	
+	}
+
+	public function add_option_query_source() {
+		$pro_query = [
+			'pro-rl' => 'Related Query (Pro)',
+			'pro-cr' => 'Current Query (Pro)',
+		];
+		
+		return array_merge(Utilities::get_custom_types_of( 'post', false ), $pro_query);
 	}
 
 	protected function render() {

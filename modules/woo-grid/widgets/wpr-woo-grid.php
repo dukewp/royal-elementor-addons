@@ -643,17 +643,17 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
-		if ( Utilities::is_new_free_user() && ! wpr_fs()->can_use_premium_code() ) {
-			$this->add_control(
-				'limit_grid_items_pro_notice',
-				[
-					'type' => Controls_Manager::RAW_HTML,
-					'raw' => 'More than <strong>12 Items</strong> in total<br> are available in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-woo-grid-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
-					// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
-					'content_classes' => 'wpr-pro-notice',
-				]
-			);
-		}
+		// if ( Utilities::is_new_free_user() && ! wpr_fs()->can_use_premium_code() ) {
+		// 	$this->add_control(
+		// 		'limit_grid_items_pro_notice',
+		// 		[
+		// 			'type' => Controls_Manager::RAW_HTML,
+		// 			'raw' => 'More than <strong>12 Items</strong> in total<br> are available in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-woo-grid-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+		// 			// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+		// 			'content_classes' => 'wpr-pro-notice',
+		// 		]
+		// 	);
+		// }
 
 		$this->add_control(
 			'post_meta_keys_filter',
@@ -1795,7 +1795,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'overlay_width',
 			[
 				'label' => esc_html__( 'Overlay Width', 'wpr-addons' ),
@@ -8009,10 +8009,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		while ( $posts->have_posts() ) : $posts->the_post();
 
-			$post_index++;
-			if ( Utilities::is_new_free_user() && $post_index > 12 ) {
-				return;
-			}
+			// $post_index++;
+			// if ( Utilities::is_new_free_user() && $post_index > 12 ) {
+			// 	return;
+			// }
 
 			// Post Class
 			$post_class = implode( ' ', get_post_class( 'wpr-grid-item elementor-clearfix', get_the_ID() ) );
