@@ -119,6 +119,83 @@ class Wpr_Page_Cart extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'coupon_input_width',
+			[
+				'label' => esc_html__( 'Coupon Input Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					],
+					'px' => [
+						'min' => 0,
+						'max' => 700,
+					],
+				],
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'unit' => '%',
+					'size' => 80,
+				],
+				'selectors' => [
+					// '{{WRAPPER}} table.cart td.actions .input-text' => 'width: {{SIZE}}{{UNIT}} !important;',
+					'{{WRAPPER}} .input-text:not(.qty)' => 'width: 100% !important;',
+					'{{WRAPPER}} .coupon' => 'width: {{SIZE}}{{UNIT}} !important;',
+					// '{{WRAPPER}} .wpr-cart-section .input-text' => 'width: 100% !important;',
+					// '{{WRAPPER}} .wpr-cart-section .coupon-col-start' => 'width: {{SIZE}}{{UNIT}} !important;',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'coupon_input_gutter',
+			[
+				'label' => esc_html__( 'Coupon gutter', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 500,
+					],
+				],
+				'size_units' => [ 'px'],
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} input[name="coupon_code"]' => 'margin-right: {{SIZE}}{{UNIT}} !important;',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'product_summary_gutter',
+			[
+				'label' => esc_html__( 'Tables gutter', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 500,
+					],
+				],
+				'size_units' => [ 'px'],
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} table.cart' => 'margin-right: {{SIZE}}{{UNIT}} !important;',
+				],
+				'separator' => 'before',
+			]
+		);
+
 		$this->add_control(
 			'totals_title_heading',
 			[
@@ -184,7 +261,7 @@ class Wpr_Page_Cart extends Widget_Base {
 					],
 				],
 				'prefix_class' => 'wpr-checkout-flex-',
-				'default' => 'justify',
+				'default' => 'end',
 				'selectors_dictionary' => [
 					'start' => 'justify-content: flex-start;',
 					'center' => 'justify-content: center;',
@@ -194,60 +271,6 @@ class Wpr_Page_Cart extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wc-proceed-to-checkout' => 'display: flex; {{VALUE}};',
 				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'coupon_input_width',
-			[
-				'label' => esc_html__( 'Coupon Input Width', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
-					'px' => [
-						'min' => 0,
-						'max' => 500,
-					],
-				],
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'unit' => '%',
-					'size' => 100,
-				],
-				'selectors' => [
-					// '{{WRAPPER}} table.cart td.actions .input-text' => 'width: {{SIZE}}{{UNIT}} !important;',
-					'{{WRAPPER}} .input-text:not(.qty)' => 'width: 100% !important;',
-					'{{WRAPPER}} .coupon' => 'width: {{SIZE}}{{UNIT}} !important;',
-					// '{{WRAPPER}} .wpr-cart-section .input-text' => 'width: 100% !important;',
-					// '{{WRAPPER}} .wpr-cart-section .coupon-col-start' => 'width: {{SIZE}}{{UNIT}} !important;',
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_responsive_control(
-			'coupon_input_gutter',
-			[
-				'label' => esc_html__( 'gutter', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 500,
-					],
-				],
-				'size_units' => [ 'px'],
-				'default' => [
-					'unit' => 'px',
-					'size' => 10,
-				],
-				'selectors' => [
-					'{{WRAPPER}} input[name="coupon_code"]' => 'margin-right: {{SIZE}}{{UNIT}} !important;',
-				],
-				'separator' => 'before',
 			]
 		);
 
@@ -269,6 +292,7 @@ class Wpr_Page_Cart extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#FFF',
 				'selectors' => [
 					'{{WRAPPER}} table th' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} table td' => 'background-color: {{VALUE}}',
@@ -299,7 +323,7 @@ class Wpr_Page_Cart extends Widget_Base {
 					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
 					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
 				],
-				'default' => 'none',
+				'default' => 'solid',
 				'selectors' => [
 					'{{WRAPPER}} table th' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} table td' => 'border-style: {{VALUE}};',
@@ -330,10 +354,10 @@ class Wpr_Page_Cart extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 1,
-					'right' => 1,
+					'top' => 0,
+					'right' => 0,
 					'bottom' => 1,
-					'left' => 1,
+					'left' => 0,
 				],
 				'selectors' => [
 					'{{WRAPPER}} table th' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -465,6 +489,7 @@ class Wpr_Page_Cart extends Widget_Base {
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} table.cart td' => 'color: {{VALUE}}',
+					'{{WRAPPER}} table.cart td a' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -549,19 +574,15 @@ class Wpr_Page_Cart extends Widget_Base {
 				'label' => esc_html__( 'Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
 					'px' => [
 						'min' => 0,
 						'max' => 300,
 					],
 				],
-				'size_units' => [ 'px', '%' ],
+				'size_units' => [ 'px' ],
 				'default' => [
-					'unit' => '%',
-					'size' => 10,
+					'unit' => 'px',
+					'size' => 50,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .product-thumbnail img' => 'width: {{SIZE}}{{UNIT}};',
@@ -647,7 +668,7 @@ class Wpr_Page_Cart extends Widget_Base {
 			[
 				'name' => 'forms_fields_normal_box_shadow',
 				'label' => esc_html__( 'Box Shadow', 'wpr-addons' ),
-				'selector' => '{{WRAPPER}} .input-text, {{WRAPPER}} select, {{WRAPPER}} .woocommerce-shipping-calculator span',
+				'selector' => '{{WRAPPER}} .woocommerce-shipping-calculator .input-text, {{WRAPPER}} .woocommerce-shipping-calculator .select2-container',
 			]
 		);
 
@@ -703,7 +724,8 @@ class Wpr_Page_Cart extends Widget_Base {
 				'default' => 'solid',
 				'selectors' => [
 					'{{WRAPPER}} .input-text' => 'border-style: {{VALUE}};',
-					'{{WRAPPER}} select' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .select2-container' => 'border-style: {{VALUE}};',
+					// '{{WRAPPER}} .select2-selection--single' => 'border-style: {{VALUE}};',
 					// '{{WRAPPER}} .form-row' => 'border-style: {{VALUE}};',
 				],
 				'separator' => 'before',
@@ -724,7 +746,8 @@ class Wpr_Page_Cart extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .input-text' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} select' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .select2-container' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					// '{{WRAPPER}} .select2-selection--single' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .form-row' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
@@ -747,8 +770,30 @@ class Wpr_Page_Cart extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .input-text' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} select' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .form-row' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .select2-container' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					// '{{WRAPPER}} .select2-selection--single' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					// '{{WRAPPER}} .form-row' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'form_fields_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 10,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .input-text' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .select2-container' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					// '{{WRAPPER}} .select2-selection--single' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					// '{{WRAPPER}} .form-row' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -1003,6 +1048,203 @@ class Wpr_Page_Cart extends Widget_Base {
 		$this->end_controls_section();
 
 		// Styles ====================
+		// Section: Shipping Calc ------
+		$this->start_controls_section(
+			'section_style_shipping_calc_button',
+			[
+				'label' => esc_html__( 'Shipping Calc', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'show_label' => false,
+			]
+		);
+
+		$this->start_controls_tabs( 'shipping_calc_styles' );
+
+		$this->start_controls_tab(
+			'shipping_calc_normal',
+			[
+				'label' => esc_html__( 'Normal', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'shipping_calc_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#333333',
+				'selectors' => [
+					'{{WRAPPER}} .shipping-calculator-button' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'shipping_calc_bg_color',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .shipping-calculator-button' => 'background-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'shipping_calc_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .shipping-calucalator-button' => 'border-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'shipping_calc_hover',
+			[
+				'label' => esc_html__( 'Hover', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'shipping_calc_color_hr',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}} .shipping-calculator-button:hover' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'shipping_calc_bg_color_hr',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .shipping-calculator-button:hover' => 'background-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'shipping_calc_border_color_hr',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}} .shipping-calculator-button:hover' => 'border-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_control(
+			'shipping_calc_divider',
+			[
+				'type' => Controls_Manager::DIVIDER,
+				'style' => 'thick',
+			]
+		);
+
+		$this->add_control(
+			'shipping_calc_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.1,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .shipping-calculator-button' => 'transition-duration: {{VALUE}}s',
+				],
+			]
+		);
+
+		$this->add_control(
+			'shipping_calc_typo_divider',
+			[
+				'type' => Controls_Manager::DIVIDER,
+				'style' => 'thick',
+			]
+		);
+
+		$this->add_control(
+			'shipping_calc_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}} .shipping-calculator-button' => 'border-style: {{VALUE}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'shipping_calc_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 2,
+					'right' => 2,
+					'bottom' => 2,
+					'left' => 2,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .shipping-calculator-button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'shipping_calc_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'shipping_calc_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 2,
+					'right' => 2,
+					'bottom' => 2,
+					'left' => 2,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .shipping-calculator-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->end_controls_section();
+
+		// Styles ====================
 		// Section: Checkout Button ------
 		$this->start_controls_section(
 			'section_style_checkout_button',
@@ -1081,7 +1323,7 @@ class Wpr_Page_Cart extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605BE5',
+				'default' => '#FFF',
 				'selectors' => [
 					'{{WRAPPER}} .wc-proceed-to-checkout .checkout-button:hover' => 'color: {{VALUE}}',
 				],
@@ -1178,7 +1420,7 @@ class Wpr_Page_Cart extends Widget_Base {
 					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
 					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
 				],
-				'default' => 'solid',
+				'default' => 'none',
 				'selectors' => [
 					'{{WRAPPER}} .wc-proceed-to-checkout .checkout-button' => 'border-style: {{VALUE}}',
 				],
@@ -1257,9 +1499,9 @@ class Wpr_Page_Cart extends Widget_Base {
 				'size_units' => [ 'px', '%' ],
 				'default' => [
 					'top' => 10,
-					'right' => 0,
+					'right' => 15,
 					'bottom' => 10,
-					'left' => 0,
+					'left' => 15,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wc-proceed-to-checkout .checkout-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
