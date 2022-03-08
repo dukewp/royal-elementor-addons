@@ -161,8 +161,6 @@ class WPR_Render_Templates {
     public function convert_to_canvas( $template ) {
     	$is_theme_builder_edit = \Elementor\Plugin::$instance->preview->is_preview_mode() && Utilities::is_theme_builder_template() ? true : false;
 
-// var_dump(get_post_meta(get_the_ID()));
-
     	if ( $this->is_template_available('content') || $is_theme_builder_edit ) {
     		return WPR_ADDONS_PATH . 'admin/templates/wpr-canvas.php';
     	} else {
