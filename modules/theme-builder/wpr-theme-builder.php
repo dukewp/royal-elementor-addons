@@ -345,4 +345,16 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 
 		return $render_html;
 	}
+
+	// Add Post Class to Single Pages
+	public function get_container_attributes() {
+		$attributes = parent::get_container_attributes();
+
+		if ( is_singular() /* Not 404 */ ) {
+			$post_classes = get_post_class( '', get_the_ID() );
+			$attributes['class'] .= ' ' . implode( ' ', $post_classes );
+		}
+
+		return $attributes;
+	}
 }
