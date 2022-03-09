@@ -108,7 +108,8 @@ class Utilities {
 			'product-sales-badge',
 			'product-stock',
 			'product-additional-information',
-			'page-cart'
+			'page-cart',
+			'page-checkout'
 		];
 	}
 
