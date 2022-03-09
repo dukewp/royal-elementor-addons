@@ -419,15 +419,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			'pro-zmor',
 		] );
 
-		// $this->add_responsive_control(
-		// 	'timeline_animation',
-		// 	[
-		// 		'label' => esc_html__( 'Entrance Animation', 'elementor' ),
-		// 		'type' => Controls_Manager::ANIMATION,
-		// 		'frontend_available' => true,
-		// 	]
-		// );
-		
 		$this->add_control(
 			'animation_offset',
 			[
@@ -2630,7 +2621,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$this->add_responsive_control(
 			'width',
 			[
-				'label' => esc_html__( 'Image Width', 'elementor' ),
+				'label' => esc_html__( 'Image Width', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 100,

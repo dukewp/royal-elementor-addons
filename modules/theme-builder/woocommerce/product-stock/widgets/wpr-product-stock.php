@@ -68,7 +68,7 @@ class Wpr_Product_Stock extends Widget_Base {
 		$this->add_control(
 			'product_in_stock_color',
 			[
-				'label'     => esc_html__('Icon Color', 'shopengine'),
+				'label'     => esc_html__('Icon Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#169543',
 				'selectors' => [
@@ -80,7 +80,7 @@ class Wpr_Product_Stock extends Widget_Base {
 		$this->add_control(
 			'product_in_stock_text_color',
 			[
-				'label'     => esc_html__('Text Color', 'shopengine'),
+				'label'     => esc_html__('Text Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#000',
 				'selectors' => [
@@ -115,7 +115,7 @@ class Wpr_Product_Stock extends Widget_Base {
 		$this->add_control(
 			'product_out_of_stock_color',
 			[
-				'label'     => esc_html__('Icon Color', 'shopengine'),
+				'label'     => esc_html__('Icon Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#d9534f',
 				'selectors' => [
@@ -127,7 +127,7 @@ class Wpr_Product_Stock extends Widget_Base {
 		$this->add_control(
 			'product_out_of_stock_text_color',
 			[
-				'label'     => esc_html__('Text Color', 'shopengine'),
+				'label'     => esc_html__('Text Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#000',
 				'selectors' => [
@@ -162,7 +162,7 @@ class Wpr_Product_Stock extends Widget_Base {
 		$this->add_control(
 			'product_available_on_backorder_color',
 			[
-				'label'     => esc_html__('Icon Color', 'shopengine'),
+				'label'     => esc_html__('Icon Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#ee9800',
 				'selectors' => [
@@ -174,7 +174,7 @@ class Wpr_Product_Stock extends Widget_Base {
 		$this->add_control(
 			'product_available_on_backorder_text_color',
 			[
-				'label'     => esc_html__('Text Color', 'shopengine'),
+				'label'     => esc_html__('Text Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#000',
 				'selectors' => [
@@ -252,7 +252,7 @@ class Wpr_Product_Stock extends Widget_Base {
 						'default' => '500',
 					],
 					'font_size'      => [
-						'label'      => esc_html__('Font Size (px)', 'shopengine'),
+						'label'      => esc_html__('Font Size (px)', 'wpr-addons'),
 						'default' => [
 							'size' => '14',
 							'unit' => 'px'
@@ -263,7 +263,7 @@ class Wpr_Product_Stock extends Widget_Base {
 						'default' => 'uppercase',
 					],
 					'line_height'    => [
-						'label'      => esc_html__('Line Height (px)', 'shopengine'),
+						'label'      => esc_html__('Line Height (px)', 'wpr-addons'),
 						'default'    => [
 							'size' => '17',
 							'unit' => 'px',
@@ -309,11 +309,11 @@ class Wpr_Product_Stock extends Widget_Base {
         }
 
 		if ( $product->is_on_backorder() ) {
-			$stock_html = $availability['availability'] ? $availability['availability'] : esc_html__('On backorder', 'shopengine');
+			$stock_html = $availability['availability'] ? $availability['availability'] : esc_html__('On backorder', 'wpr-addons');
 		} elseif ( $product->is_in_stock() ) {
-			$stock_html = $availability['availability'] ? $availability['availability'] : esc_html__('In Stock', 'shopengine');
+			$stock_html = $availability['availability'] ? $availability['availability'] : esc_html__('In Stock', 'wpr-addons');
 		} else {
-			$stock_html = $availability['availability'] ? $availability['availability'] : esc_html__('Out of stock', 'shopengine');
+			$stock_html = $availability['availability'] ? $availability['availability'] : esc_html__('Out of stock', 'wpr-addons');
 		}
 
         echo '<div class="wpr-product-stock">';

@@ -238,7 +238,7 @@ class Wpr_Product_Meta extends Widget_Base {
 						'default' => 'custom',
 					],
 					'font_size'       => [
-						'label'      => esc_html__('Font Size (px)', 'shopengine'),
+						'label'      => esc_html__('Font Size (px)', 'wpr-addons'),
 						'size_units' => ['px'],
 						'default'    => [
 							'size' => '14',
@@ -252,7 +252,7 @@ class Wpr_Product_Meta extends Widget_Base {
 						'default' => 'none',
 					],
 					'line_height'     => [
-						'label'      => esc_html__('Line Height (px)', 'shopengine'),
+						'label'      => esc_html__('Line Height (px)', 'wpr-addons'),
 						'default' => [
 							'size' => '17',
 							'unit' => 'px',
