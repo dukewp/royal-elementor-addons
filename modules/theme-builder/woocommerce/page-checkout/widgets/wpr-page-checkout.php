@@ -53,7 +53,7 @@ class Wpr_Page_Checkout extends Widget_Base {
     }
 
     protected function render() {
-		$is_editor = Plugin::elementor()->editor->is_edit_mode();
+		$is_editor = Plugin::$instance->editor->is_edit_mode();
 
 		// Simulate a logged out user so that all WooCommerce sections will render in the Editor
 		if ( $is_editor ) {
