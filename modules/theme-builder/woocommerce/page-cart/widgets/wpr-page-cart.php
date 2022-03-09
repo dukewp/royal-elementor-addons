@@ -72,6 +72,227 @@ class Wpr_Page_Cart extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'update_heading',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Update', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'update_cart_button_text',
+			[
+				'label' => esc_html__( 'Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
+				'placeholder' => esc_html__( 'Update Cart', 'wpr-addons' ),
+				'default' => esc_html__( 'Update Cart', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'totals_heading',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Totals', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'totals_section_title',
+			[
+				'label' => esc_html__( 'Title', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
+				'placeholder' => esc_html__( 'Cart Totals', 'wpr-addons' ),
+				'default' => esc_html__( 'Cart Totals', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_responsive_control(
+			'section_totals_title_alignment',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'start' => [
+						'title' => esc_html__( 'Start', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'end' => [
+						'title' => esc_html__( 'End', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .cart_totals h2' => 'text-align: {{VALUE}};',
+				], //TODO: doesnt work
+			]
+		);
+
+		$this->add_control(
+			'checkout_heading',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Checkout', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'checkout_button_text',
+			[
+				'label' => esc_html__( 'Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
+				'placeholder' => esc_html__( 'Proceed to Checkout', 'wpr-addons' ),
+				'default' => esc_html__( 'Proceed to Checkout', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'update_shipping_heading',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Update', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_responsive_control(
+			'checkout_button_alignment',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'start' => [
+						'title' => esc_html__( 'Start', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'end' => [
+						'title' => esc_html__( 'End', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					],
+					'justify' => [
+						'title' => esc_html__( 'Justify', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-justify',
+					],
+				],
+				'prefix_class' => 'wpr-checkout-flex-',
+				'default' => 'end',
+				'selectors_dictionary' => [
+					'start' => 'justify-content: flex-start;',
+					'center' => 'justify-content: center;',
+					'end' => 'justify-content: flex-end;',
+					'justify' => 'justify-content: stretch;',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wc-proceed-to-checkout' => 'display: flex; {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'update_shipping_button_text',
+			[
+				'label' => esc_html__( 'Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
+				'placeholder' => esc_html__( 'Update', 'wpr-addons' ),
+				'default' => esc_html__( 'Update', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'apply_coupon_heading',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Coupon', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'apply_coupon_button_text',
+			[
+				'label' => esc_html__( 'Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
+				'placeholder' => esc_html__( 'Apply coupon', 'wpr-addons' ),
+				'default' => esc_html__( 'Apply coupon', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_responsive_control(
+			'coupon_input_width',
+			[
+				'label' => esc_html__( 'Coupon Input Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					],
+					'px' => [
+						'min' => 0,
+						'max' => 700,
+					],
+				],
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'unit' => '%',
+					'size' => 80,
+				],
+				'selectors' => [
+					// '{{WRAPPER}} table.cart td.actions .input-text' => 'width: {{SIZE}}{{UNIT}} !important;',
+					'{{WRAPPER}} .input-text:not(.qty)' => 'width: 100% !important;',
+					'{{WRAPPER}} .coupon-col' => 'width: 100% !important;',
+					// '{{WRAPPER}} .wpr-cart-section .input-text' => 'width: 100% !important;',
+					'{{WRAPPER}} .wpr-cart-section .coupon-col-start' => 'width: {{SIZE}}{{UNIT}} !important;',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'coupon_input_gutter',
+			[
+				'label' => esc_html__( 'Coupon gutter', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 500,
+					],
+				],
+				'size_units' => [ 'px'],
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .coupon-col-start' => 'margin-right: {{SIZE}}{{UNIT}} !important;',
+				],
+				'separator' => 'before',
+			]
+		);
+
 		// $this->add_control(
 		// 	'sticky_right_column',
 		// 	[
@@ -120,60 +341,6 @@ class Wpr_Page_Cart extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'coupon_input_width',
-			[
-				'label' => esc_html__( 'Coupon Input Width', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
-					'px' => [
-						'min' => 0,
-						'max' => 700,
-					],
-				],
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'unit' => '%',
-					'size' => 80,
-				],
-				'selectors' => [
-					// '{{WRAPPER}} table.cart td.actions .input-text' => 'width: {{SIZE}}{{UNIT}} !important;',
-					'{{WRAPPER}} .input-text:not(.qty)' => 'width: 100% !important;',
-					'{{WRAPPER}} .coupon' => 'width: {{SIZE}}{{UNIT}} !important;',
-					// '{{WRAPPER}} .wpr-cart-section .input-text' => 'width: 100% !important;',
-					// '{{WRAPPER}} .wpr-cart-section .coupon-col-start' => 'width: {{SIZE}}{{UNIT}} !important;',
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_responsive_control(
-			'coupon_input_gutter',
-			[
-				'label' => esc_html__( 'Coupon gutter', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 500,
-					],
-				],
-				'size_units' => [ 'px'],
-				'default' => [
-					'unit' => 'px',
-					'size' => 10,
-				],
-				'selectors' => [
-					'{{WRAPPER}} input[name="coupon_code"]' => 'margin-right: {{SIZE}}{{UNIT}} !important;',
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_responsive_control(
 			'product_summary_gutter',
 			[
 				'label' => esc_html__( 'Tables gutter', 'wpr-addons' ),
@@ -193,84 +360,6 @@ class Wpr_Page_Cart extends Widget_Base {
 					'{{WRAPPER}} table.cart' => 'margin-right: {{SIZE}}{{UNIT}} !important;',
 				],
 				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'totals_title_heading',
-			[
-				'type' => Controls_Manager::HEADING,
-				'label' => esc_html__( 'Title', 'wpr-addons' ),
-			]
-		);
-
-		$this->add_responsive_control(
-			'section_totals_title_alignment',
-			[
-				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
-				'type' => Controls_Manager::CHOOSE,
-				'options' => [
-					'start' => [
-						'title' => esc_html__( 'Start', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-left',
-					],
-					'center' => [
-						'title' => esc_html__( 'Center', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-center',
-					],
-					'end' => [
-						'title' => esc_html__( 'End', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-right',
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .cart_totals h2' => 'text-align: {{VALUE}};',
-				], //TODO: doesnt work
-			]
-		);
-
-		$this->add_control(
-			'checkout_button_heading',
-			[
-				'type' => Controls_Manager::HEADING,
-				'label' => esc_html__( 'Checkout Button', 'wpr-addons' ),
-			]
-		);
-
-		$this->add_responsive_control(
-			'checkout_button_alignment',
-			[
-				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
-				'type' => Controls_Manager::CHOOSE,
-				'options' => [
-					'start' => [
-						'title' => esc_html__( 'Start', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-left',
-					],
-					'center' => [
-						'title' => esc_html__( 'Center', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-center',
-					],
-					'end' => [
-						'title' => esc_html__( 'End', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-right',
-					],
-					'justify' => [
-						'title' => esc_html__( 'Justify', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-justify',
-					],
-				],
-				'prefix_class' => 'wpr-checkout-flex-',
-				'default' => 'end',
-				'selectors_dictionary' => [
-					'start' => 'justify-content: flex-start;',
-					'center' => 'justify-content: center;',
-					'end' => 'justify-content: flex-end;',
-					'justify' => 'justify-content: stretch;',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wc-proceed-to-checkout' => 'display: flex; {{VALUE}};',
-				],
 			]
 		);
 
@@ -1648,25 +1737,50 @@ class Wpr_Page_Cart extends Widget_Base {
 		return false;
 	}
 
+	protected function init_gettext_modifications() {
+		$instance = $this->get_settings_for_display();
+
+		$this->gettext_modifications = [
+			'Update cart' => isset( $instance['update_cart_button_text'] ) ? $instance['update_cart_button_text'] : '',
+			'Cart totals' => isset( $instance['totals_section_title'] ) ? $instance['totals_section_title'] : '',
+			'Proceed to checkout' => isset( $instance['checkout_button_text'] ) ? $instance['checkout_button_text'] : '',
+			'Update' => isset( $instance['update_shipping_button_text'] ) ? $instance['update_shipping_button_text'] : '',
+			'Apply coupon' => isset( $instance['apply_coupon_button_text'] ) ? $instance['apply_coupon_button_text'] : '',
+		];
+	}
+
+	public function filter_gettext( $translation, $text, $domain ) {
+		if ( 'woocommerce' !== $domain && 'wpr-addons' !== $domain ) {
+			return $translation;
+		}
+
+		if ( ! isset( $this->gettext_modifications ) ) {
+			$this->init_gettext_modifications();
+		}
+
+		return array_key_exists( $text, $this->gettext_modifications ) ? $this->gettext_modifications[ $text ] : $translation;
+	}
+
     protected function render() {
         $settings = $this->get_settings_for_display();
 
-		// add_filter( 'gettext', [ $this, 'filter_gettext' ], 20, 3 );
+		add_filter( 'gettext', [ $this, 'filter_gettext' ], 20, 3 );
 		add_action( 'woocommerce_before_cart', [ $this, 'woocommerce_before_cart' ] );
-		// add_action( 'woocommerce_after_cart_table', [ $this, 'woocommerce_after_cart_table' ] );
+		add_action( 'woocommerce_after_cart_table', [ $this, 'woocommerce_after_cart_table' ] );
 		add_action( 'woocommerce_before_cart_table', [ $this, 'woocommerce_before_cart_table' ] );
 		// add_action( 'woocommerce_before_cart_collaterals', [ $this, 'woocommerce_before_cart_collaterals' ] );
 		add_action( 'woocommerce_after_cart', [ $this, 'woocommerce_after_cart' ] );
-		// add_action( 'woocommerce_cart_contents', [ $this, 'disable_cart_coupon' ] );
+		add_action( 'woocommerce_cart_contents', [ $this, 'disable_cart_coupon' ] );
 		add_action( 'woocommerce_after_cart_contents', [ $this, 'enable_cart_coupon' ] );
 
 			echo do_shortcode( '[woocommerce_cart]' );
 
+		remove_filter( 'gettext', [ $this, 'filter_gettext' ], 20 );
 		remove_action( 'woocommerce_before_cart', [ $this, 'woocommerce_before_cart' ] );
-		// remove_action( 'woocommerce_after_cart_table', [ $this, 'woocommerce_after_cart_table' ] );
+		remove_action( 'woocommerce_after_cart_table', [ $this, 'woocommerce_after_cart_table' ] );
 		remove_action( 'woocommerce_before_cart_table', [ $this, 'woocommerce_before_cart_table' ] );
 		// remove_action( 'woocommerce_before_cart_collaterals', [ $this, 'woocommerce_before_cart_collaterals' ] );
 		remove_action( 'woocommerce_after_cart', [ $this, 'woocommerce_after_cart' ] );
-		// remove_filter( 'woocommerce_coupons_enabled', [ $this, 'hide_coupon_field_on_cart' ] );
+		remove_filter( 'woocommerce_coupons_enabled', [ $this, 'hide_coupon_field_on_cart' ] );
     }
 }
