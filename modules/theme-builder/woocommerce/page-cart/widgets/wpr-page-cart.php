@@ -4,7 +4,6 @@ namespace WprAddons\Modules\ThemeBuilder\Woocommerce\PageCart\Widgets;
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Core\Responsive\Responsive;
-use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Core\Schemes\Typography;
@@ -1537,48 +1536,6 @@ class Wpr_Page_Cart extends Widget_Base {
 				],
 			]
 		);
-
-		// $this->add_control(
-		// 	'add_to_cart_width',
-		// 	[
-		// 		'label' => esc_html__( 'Width', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'size_units' => ['px'],
-		// 		'range' => [
-		// 			'px' => [
-		// 				'min' => 1,
-		// 				'max' => 300,
-		// 			],
-		// 		],
-		// 		'default' => [
-		// 			'size' => 125,
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}}  .wpr-product-add-to-cart .single_add_to_cart_button' => 'width: {{SIZE}}{{UNIT}};',
-		// 		]
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'add_to_cart_height',
-		// 	[
-		// 		'label' => esc_html__( 'Height', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'size_units' => ['px'],
-		// 		'range' => [
-		// 			'px' => [
-		// 				'min' => 1,
-		// 				'max' => 100,
-		// 			],
-		// 		],
-		// 		'default' => [
-		// 			'size' => 50,
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}}  .wpr-product-add-to-cart .single_add_to_cart_button' => 'height: {{SIZE}}{{UNIT}};',
-		// 		]
-		// 	]
-		// );
 
 		$this->add_responsive_control(
 			'checkout_button_padding',

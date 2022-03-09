@@ -2200,7 +2200,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 --------------------------------------------------------------*/
 .wpr-cart-wrapper,
 .wpr-cart-section-wrap .coupon {
-display: flex;
+    display: flex;
 }
 
 .wpr-cart-wrapper table.shop_table {
@@ -2227,7 +2227,7 @@ display: flex;
 }
 
 .wpr-checkout-flex-justify .wc-proceed-to-checkout a {
-width: 100%;
+    width: 100%;
 }
 
 .wpr-cart-wrapper .form-row.coupon-col {
@@ -2248,8 +2248,8 @@ width: 100%;
 }
 
 .wpr-cart-wrapper .product-remove .remove:hover {
-background-color: transparent;
-color: black;
+    background-color: transparent;
+    color: black;
 }
 
 .wpr-cart-wrapper img {
@@ -2267,15 +2267,41 @@ color: black;
 }
 
 .wpr-cart-wrapper .product-remove .remove {
-display: flex;
-justify-content: center;
-align-content: center;
-background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    background-color: transparent;
 }
 
 /*--------------------------------------------------------------
  == Checkout Page
 --------------------------------------------------------------*/
+
+.wpr-checkout-horizontal .woocommerce-checkout .col2-set {
+  display: flex;
+  flex-direction: column;
+  margin-right: 15px;
+}
+
+.wpr-checkout-horizontal .woocommerce-checkout {
+  display: flex;
+}
+
+.wpr-checkout-horizontal .col2-set .col-1,
+.wpr-checkout-horizontal .col2-set .col-2 {
+  float: none;
+  width: 100%;
+}
+
+.elementor-widget-wpr-page-checkout .select2-container--focus span,
+.elementor-widget-wpr-page-checkout .select2-container--default .select2-selection--single {
+    border: none !important;
+    outline: none !important;
+}
+
+.elementor-widget-wpr-page-checkout .select2-selection {
+    position: relative;
+}
 
 /*--------------------------------------------------------------
  == Grid
