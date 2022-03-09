@@ -47,15 +47,7 @@ $woocommerce_class =  $is_preview_mode && class_exists( 'WooCommerce' ) ? 'wooco
 	// Frontend
 	} else {
 		// Display Custom Elementor Templates
-	
-		// TODO: This Woo product wrapper div should to be moved to wpr-render-templates.php file 
-		$classes = get_post_class( '', get_the_ID() );
-		echo '<div id="product-'. get_the_ID() .'" class="'. esc_attr( implode( ' ', $classes ) ) .'">';
-
-			do_action( 'elementor/page_templates/canvas/wpr_print_content' );
-			
-		echo '</div>';
-
+		do_action( 'elementor/page_templates/canvas/wpr_print_content' );
 	}
 
 	/**
