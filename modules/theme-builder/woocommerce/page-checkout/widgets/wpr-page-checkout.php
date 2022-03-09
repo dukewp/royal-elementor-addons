@@ -114,8 +114,9 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .col2-set .input-text' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .col2-set .input-text::placeholder' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .form-row .input-text' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .form-row .input-text::placeholder' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .col2-set select' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .col2-set .select2-results__options' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .col2-set .select2-container' => 'color: {{VALUE}};',
 				],
 			]
@@ -128,8 +129,8 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .col2-set .input-text' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .form-row .input-text' => 'border-color: {{VALUE}};',
 					'{{WRAPPER}} .col2-set select' => 'border-color: {{VALUE}};',
-					'{{WRAPPER}} .col2-set .select2-results__options' => 'border-color: {{VALUE}};',
 					'{{WRAPPER}} .col2-set .select2-container' => 'border-color: {{VALUE}};',
 				],
 			]
@@ -142,8 +143,8 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .col2-set .input-text' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .form-row .input-text' => 'background-color: {{VALUE}};',
 					'{{WRAPPER}} .col2-set select' => 'background-color: {{VALUE}};',
-					'{{WRAPPER}} .col2-set .select2-results__options' => 'background-color: {{VALUE}};',
 					'{{WRAPPER}} .col2-set .select2-container' => 'background-color: {{VALUE}};',
 					'{{WRAPPER}} .col2-set .select2-container span' => 'background-color: {{VALUE}};',
 				],
@@ -174,9 +175,6 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .input-text:focus' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .woocommerce-shipping-calculator .input-text:focus' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .woocommerce-shipping-calculator span:focus' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .woocommerce-shipping-calculator select:focus' => 'color: {{VALUE}};',
 				],
 			]
 		);
