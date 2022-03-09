@@ -48,9 +48,513 @@ class Wpr_Page_Checkout extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+            'apply_changes',
+            [
+                'type' => Controls_Manager::RAW_HTML,
+                'raw' => '<div style="text-align: center;"><button class="elementor-update-preview-button elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply Changes</button></div>',
+            ]
+        );
+
+		$this->add_control(
+			'checkout_layout',
+			[
+				'label' => esc_html__( 'Layout', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'vertical',
+				'prefix_class' => 'wpr-checkout-',
+				'options' => [
+					'vertical' => esc_html__( 'One Column', 'wpr-addons' ),
+					'horizontal' => esc_html__( 'Two Columns', 'wpr-addons' ),
+				],
+				'label_block' => false,
+			]
+		);
+
         $this->end_controls_section();
 
+		$this->start_controls_section(
+			'section_checkout_forms',
+			[
+				'label' => esc_html__( 'Forms', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'forms_field_title',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Field', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'forms_field_typography',
+				'selector' => '{{WRAPPER}} .col2-set label',
+			]
+		);
+
+		$this->start_controls_tabs( 'forms_fields_styles' );
+
+		$this->start_controls_tab( 
+            'forms_fields_normal_styles',
+            [ 
+                'label' => esc_html__( 'Normal', 'wpr-addons' ) 
+            ] 
+        );
+
+		$this->add_control(
+			'forms_fields_normal_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .col2-set .input-text' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .col2-set .input-text::placeholder' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .col2-set select' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .col2-set .select2-results__options' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .col2-set .select2-container' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'forms_fields_normal_border_color',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .col2-set .input-text' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .col2-set select' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .col2-set .select2-results__options' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .col2-set .select2-container' => 'border-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'forms_fields_normal_bg_color',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .col2-set .input-text' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .col2-set select' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .col2-set .select2-results__options' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .col2-set .select2-container' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .col2-set .select2-container span' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'forms_fields_normal_box_shadow',
+				'label' => esc_html__( 'Box Shadow', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}} .input-text, {{WRAPPER}} .select2-container',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab( 'forms_fields_focus_styles', 
+			[ 
+				'label' => esc_html__( 'Focus', 'wpr-addons' )
+			] 
+		);
+
+		$this->add_control(
+			'forms_fields_focus_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .input-text:focus' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-shipping-calculator .input-text:focus' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-shipping-calculator span:focus' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-shipping-calculator select:focus' => 'color: {{VALUE}};',
+				],
+			]
+		);
+		
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'forms_fields_focus_box_shadow',
+				'label' => esc_html__( 'Box Shadow', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}} .input-text:focus, {{WRAPPER}} select:focus',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_control(
+			'form_fields_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'solid',
+				'selectors' => [
+					'{{WRAPPER}} .input-text' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .col2-set select' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .col2-set .select2-container' => 'border-style: {{VALUE}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'form_fields_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .input-text' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .col2-set .select2-container' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .col2-set select' => 'border-width: {{VALUE}};',
+				],
+				'condition' => [
+					'form_fields_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'form_fields_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 2,
+					'right' => 2,
+					'bottom' => 2,
+					'left' => 2,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .input-text' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .col2-set .select2-container' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .col2-set select' => 'border-radius: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'form_fields_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 10,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .input-text' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .select2-container' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					// '{{WRAPPER}} .select2-selection--single' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					// '{{WRAPPER}} .form-row' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->end_controls_section();
+
+		// Styles ====================
+		// Section: Place Order Button ------
+		$this->start_controls_section(
+			'section_style_place_order_button',
+			[
+				'label' => esc_html__( 'Place Order Button', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'show_label' => false,
+			]
+		);
+
+		$this->start_controls_tabs( 'place_order_button_styles' );
+
+		$this->start_controls_tab(
+			'cart_place_order_button_normal',
+			[
+				'label' => esc_html__( 'Normal', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'place_order_button_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#333333',
+				'selectors' => [
+					'{{WRAPPER}} .place-order button' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'place_order_button_bg_color',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .place-order button' => 'background-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'place_order_button_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .place-order button' => 'border-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'place_order_button_box_shadow',
+				'selector' => '{{WRAPPER}} .actions .button,
+				{{WRAPPER}} .coupon .button,
+				{{WRAPPER}} .place-order button',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'place_order_button_hover',
+			[
+				'label' => esc_html__( 'Hover', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'place_order_button_color_hr',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFF',
+				'selectors' => [
+					'{{WRAPPER}} .place-order button:hover' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'place_order_button_bg_color_hr',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .place-order button:hover' => 'background-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'place_order_button_border_color_hr',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}} .place-order button:hover' => 'border-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'place_order_button_box_shadow_hr',
+				'selector' => '{{WRAPPER}} .place-order button:hover',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_control(
+			'place_order_button_divider',
+			[
+				'type' => Controls_Manager::DIVIDER,
+				'style' => 'thick',
+			]
+		);
+
+		$this->add_control(
+			'place_order_button_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.1,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .place-order button' => 'transition-duration: {{VALUE}}s',
+				],
+			]
+		);
+
+		$this->add_control(
+			'place_order_button_typo_divider',
+			[
+				'type' => Controls_Manager::DIVIDER,
+				'style' => 'thick',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'place_order_button_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .actions .button',
+				'{{WRAPPER}} .coupon .button',
+				'{{WRAPPER}} .place-order button'
+			]
+		);
+
+		$this->add_control(
+			'place_order_button_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}} .place-order button' => 'border-style: {{VALUE}}',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'place_order_button_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 2,
+					'right' => 2,
+					'bottom' => 2,
+					'left' => 2,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .place-order button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'buttons_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'place_order_button_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 10,
+					'right' => 15,
+					'bottom' => 10,
+					'left' => 15,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .place-order button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'place_order_button_margin',
+			[
+				'label' => esc_html__( 'Margin', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .place-order button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'place_order_button_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 2,
+					'right' => 2,
+					'bottom' => 2,
+					'left' => 2,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .place-order button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->end_controls_section();
+
     }
+
+	public function woocommerce_checkout_before_order_review_heading() {
+        echo '<div class="e-checkout__order_review">';
+	}
+
+	public function woocommerce_checkout_after_order_review() {
+        echo '</div>';
+	}
 
     protected function render() {
 		$is_editor = \Elementor\Plugin::$instance->editor->is_edit_mode();
@@ -61,7 +565,15 @@ class Wpr_Page_Checkout extends Widget_Base {
 			wp_set_current_user( 0 );
 		}
 
-		echo do_shortcode( '[woocommerce_checkout]' );
+		add_action( 'woocommerce_checkout_before_order_review_heading', [ $this, 'woocommerce_checkout_before_order_review_heading' ], 95 );
+
+		add_action( 'woocommerce_checkout_after_order_review', [ $this, 'woocommerce_checkout_after_order_review' ], 95 );
+
+        echo do_shortcode( '[woocommerce_checkout]' );
+
+		remove_action( 'woocommerce_checkout_before_order_review_heading', [ $this, 'woocommerce_checkout_before_order_review_heading' ], 95 );
+
+		remove_action( 'woocommerce_checkout_after_order_review', [ $this, 'woocommerce_checkout_after_order_review' ], 95 );
 
 		// Return to existing logged-in user after widget is rendered.
 		if ( $is_editor ) {
