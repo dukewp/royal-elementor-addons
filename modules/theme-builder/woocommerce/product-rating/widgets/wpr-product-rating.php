@@ -44,7 +44,7 @@ class Wpr_Product_Rating extends Widget_Base {
 		);
 
 		$this->add_control(
-			'element_rating_layout',
+			'product_rating_layout',
 			[
 				'label' => esc_html__( 'Layout', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
@@ -54,9 +54,38 @@ class Wpr_Product_Rating extends Widget_Base {
 				],
                 'prefix_class' => 'wpr-product-rating-',
                 'selectors' => [
-                    '{{WRAPPER}} .wpr-product-rating .inner-block' => 'display: {{VALUE}}; align-items: center;'
+                    '{{WRAPPER}} .wpr-product-rating' => 'display: {{VALUE}}; align-items: center;'
                 ],
 				'default' => 'flex',
+			]
+		);
+
+		$this->add_responsive_control(
+			'product_rating_alignment',
+			[
+				'label'        => esc_html__('Alignment', 'wpr-addons'),
+				'type'         => Controls_Manager::CHOOSE,
+				'options'      => [
+					'left'    => [
+						'title' => esc_html__('Left', 'wpr-addons'),
+						'icon'  => 'eicon-text-align-left',
+					],
+					'center'  => [
+						'title' => esc_html__('Center', 'wpr-addons'),
+						'icon'  => 'eicon-text-align-center',
+					],
+					'right'   => [
+						'title' => esc_html__('Right', 'wpr-addons'),
+						'icon'  => 'eicon-text-align-right',
+					]
+				],
+				'prefix_class' => 'wpr-product-rating-',
+				'default'      => 'left',
+                'selectors' => [
+                    '{{WRAPPER}}.wpr-product-rating-block .wpr-woo-rating' => 'text-align: {{VALUE}};',
+                    '{{WRAPPER}}.wpr-product-rating-block .woocommerce-review-link' => 'text-align: {{VALUE}};'
+                ],
+				'separator'    => 'after',
 			]
 		);
 
@@ -108,10 +137,34 @@ class Wpr_Product_Rating extends Widget_Base {
 			]
 		);
 
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'product_rating_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-product-rating .woocommerce-review-link'
+			]
+		);
+
+		$this->add_control(
+			'product_rating_tr_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.1,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-rating .woocommerce-review-link' => 'transition-duration: {{VALUE}}s;'
+				],
+			]
+		);
+
 		$this->add_control(
 			'product_rating_size',
 			[
-				'label' => esc_html__( 'Size', 'wpr-addons' ),
+				'label' => esc_html__( 'Icon Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => ['px' ],
 				'range' => [
@@ -135,7 +188,7 @@ class Wpr_Product_Rating extends Widget_Base {
 			'product_rating_gutter',
 			[
 				'type' => Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
+				'label' => esc_html__( 'Icon Gutter', 'wpr-addons' ),
 				'size_units' => [ 'px' ],
 				'range' => [
 					'px' => [
@@ -178,49 +231,10 @@ class Wpr_Product_Rating extends Widget_Base {
 			]
 		);
 
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'product_rating_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-product-rating .woocommerce-review-link'
-			]
-		);
-
-		$this->add_responsive_control(
-			'shopengine_rating_alignment',
-			[
-				'label'        => esc_html__('Alignment', 'shopengine'),
-				'type'         => Controls_Manager::CHOOSE,
-				'options'      => [
-					'left'    => [
-						'title' => esc_html__('Left', 'shopengine'),
-						'icon'  => 'eicon-text-align-left',
-					],
-					'center'  => [
-						'title' => esc_html__('Center', 'shopengine'),
-						'icon'  => 'eicon-text-align-center',
-					],
-					'right'   => [
-						'title' => esc_html__('Right', 'shopengine'),
-						'icon'  => 'eicon-text-align-right',
-					]
-				],
-				'prefix_class' => 'wpr-product-rating-',
-				'default'      => 'left',
-                'selectors' => [
-                    '{{WRAPPER}}.wpr-product-rating-block .wpr-woo-rating' => 'text-align: {{VALUE}};',
-                    '{{WRAPPER}}.wpr-product-rating-block .woocommerce-review-link' => 'text-align: {{VALUE}};'
-                ],
-				'separator'    => 'before',
-			]
-		);
-
         $this->end_controls_section();
     }
     
-    public function render_product_rating( $settings, $class ) {
-
+    public function render_product_rating( $settings ) {
 		global $product;
 
 		// If NOT a Product
@@ -231,42 +245,39 @@ class Wpr_Product_Rating extends Widget_Base {
         $rating_count = $product->get_rating_count();
 		$rating_amount = floatval( $product->get_average_rating() );
 		$round_rating = (int)$rating_amount;
-		$rating_icon = '&#xE934;';
-
-        // $rating_icon = '&#9733;';
-        $style_class = ' wpr-woo-rating-style-2';
         $rating_icon = '&#9734;';
 
-		echo '<div class="'. esc_attr($class . $style_class) .'">';
-			echo '<div class="inner-block">';
+		echo '<div class="wpr-woo-rating">';
 
-				echo '<div class="wpr-woo-rating">';
+			for ( $i = 1; $i <= 5; $i++ ) {
+				if ( $i <= $rating_amount ) {
+					echo '<i class="wpr-rating-icon-full">'. $rating_icon .'</i>';
+				} elseif ( $i === $round_rating + 1 && $rating_amount !== $round_rating ) {
+					echo '<i class="wpr-rating-icon-'. ( $rating_amount - $round_rating ) * 10 .'">'. $rating_icon .'</i>';
+				} else {
+					echo '<i class="wpr-rating-icon-empty">'. $rating_icon .'</i>';
+				}
+	     	}
 
-					for ( $i = 1; $i <= 5; $i++ ) {
-						if ( $i <= $rating_amount ) {
-							echo '<i class="wpr-rating-icon-full">'. $rating_icon .'</i>';
-						} elseif ( $i === $round_rating + 1 && $rating_amount !== $round_rating ) {
-							echo '<i class="wpr-rating-icon-'. ( $rating_amount - $round_rating ) * 10 .'">'. $rating_icon .'</i>';
-						} else {
-							echo '<i class="wpr-rating-icon-empty">'. $rating_icon .'</i>';
-						}
-			     	}
-
-				echo '</div>'; ?>
-
-                <a href="#reviews" class="woocommerce-review-link" rel="nofollow">
-                    (<?php printf( _n( '%s customer review', '%s customer reviews', 10, 'shopengine' ), '<span class="count">' . esc_html( $rating_count ) . '</span>' ); ?>)
-                </a>
-
-			<?php echo '</div>';
 		echo '</div>';
+
+		// Another option
+		// $rating  = $product->get_average_rating();
+		// $count   = $product->get_rating_count();
+		// echo wc_get_rating_html( $rating, $count );
+
+		?>
+
+        <a href="#reviews" class="woocommerce-review-link" rel="nofollow">
+            (<?php printf( _n( '%s customer review', '%s customer reviews', 10, 'wpr-addons' ), '<span class="count">' . esc_html( $rating_count ) . '</span>' ); ?>)
+        </a>
+
+		<?php
 	}
 
     protected function render() {
-        // \Elementor\Plugin::$instance->editor->is_edit_mode();
+        // Get Settings
         $settings = $this->get_settings_for_display();
-        $class = '';
-		// var_dump($settings);
         global $product;
 
         $product = wc_get_product();
@@ -278,7 +289,7 @@ class Wpr_Product_Rating extends Widget_Base {
         setup_postdata( $product->get_id() );
 
         echo '<div class="wpr-product-rating">';
-            $this->render_product_rating($settings, '');
+            $this->render_product_rating($settings);
         echo '</div>';
     }
 }
