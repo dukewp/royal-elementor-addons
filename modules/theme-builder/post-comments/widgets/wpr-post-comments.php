@@ -2112,6 +2112,15 @@ class Wpr_Post_Comments extends Widget_Base {
 	}
 
 	protected function render() {
+		$is_editor = \Elementor\Plugin::$instance->editor->is_edit_mode();
+
+		// Temp log out user
+		if ( $is_editor ) {
+			$store_current_user = wp_get_current_user()->ID;
+			wp_set_current_user( 0 );
+		}
+
+
 		//  Get Settings
 		$settings = $this->get_settings();
 
@@ -2256,6 +2265,11 @@ class Wpr_Post_Comments extends Widget_Base {
 
 		echo '</div>'; // End .wpr-comments-wrap
 
+
+		// Logged-in user back.
+		if ( $is_editor ) {
+			wp_set_current_user( $store_current_user );
+		}
 	}
 	
 }

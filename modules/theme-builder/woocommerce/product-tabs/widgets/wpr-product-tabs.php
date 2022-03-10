@@ -271,6 +271,22 @@ class Wpr_Product_Tabs extends Widget_Base {
 		);
 
 		$this->add_control(
+			'tab_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.1,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'frontend_available' => true,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li a' => '-webkit-transition-duration: {{VALUE}}s;transition-duration: {{VALUE}}s',
+				],
+			]
+		);
+
+		$this->add_control(
 			'tab_border_type',
 			[
 				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
@@ -305,6 +321,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li a' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-tabs-position-above .wpr-product-tabs .woocommerce-tabs ul.tabs li.active:after' => 'margin-bottom: -{{TOP}}px; height: {{TOP}}px; width: calc(100% - {{TOP}}*2px)',
 				],
 				'condition' => [
 					'tab_border_type!' => 'none',
@@ -328,7 +345,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li'=> 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li a'=> 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
-				'separator' => 'before',
 			]
 		);
 
@@ -370,7 +386,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'{{WRAPPER}} .wc-tabs li' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};', // li or a ?
 					'{{WRAPPER}} .wc-tabs li.active' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} -0.1px {{LEFT}}{{UNIT}};', // li or a ?
 				],
-				'separator' => 'before',
 			]
 		);
 
@@ -429,80 +444,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'name' => 'tab_typography_hover',
 				'label' => esc_html__( 'Typography', 'wpr-addons' ),
 				'selector' => '{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li a:hover',
-			]
-		);
-
-		$this->add_control(
-			'tab_hover_border_type',
-			[
-				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'none' => esc_html__( 'None', 'wpr-addons' ),
-					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
-					'double' => esc_html__( 'Double', 'wpr-addons' ),
-					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
-					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
-					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
-				],
-				'default' => 'solid',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li a:hover' => 'border-style: {{VALUE}};',
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_responsive_control(
-			'tab_hover_border_width',
-			[
-				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 1,
-					'right' => 1,
-					'bottom' => 0,
-					'left' => 1,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li a:hover' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'condition' => [
-					'tab_border_type!' => 'none',
-				],
-			]
-		);
-		
-		// $this->add_control(
-		// 	'tab_hover_border_radius',
-		// 	[
-		// 		'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li:hover' => 'border-radius: {{SIZE}}{{UNIT}} {{SIZE}}{{UNIT}} 0 0',
-		// 			'{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li a:hover' => 'border-radius: {{SIZE}}{{UNIT}} {{SIZE}}{{UNIT}} 0 0',
-		// 		],
-		// 	]
-		// );
-
-		$this->add_responsive_control(
-			'tab_hover_border_radius',
-			[
-				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li:hover' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li a:hover' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before',
 			]
 		);
 
@@ -565,91 +506,10 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'separator' => 'before'
 			]
 		);
-		
-		$this->add_control(
-			'tab_active_border_type',
-			[
-				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'none' => esc_html__( 'None', 'wpr-addons' ),
-					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
-					'double' => esc_html__( 'Double', 'wpr-addons' ),
-					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
-					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
-					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
-				],
-				'default' => 'solid',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li.active a' => 'border-style: {{VALUE}};',
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_responsive_control(//horizontalze tu vertikalze unda knas marto am :afteris damateba
-			'tab_active_border_width',
-			[
-				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 1,
-					'right' => 1,
-					'bottom' => 0,
-					'left' => 1,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li.active a' => 'border-width: {{SIZE}}px;',
-					'{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li.active:after' => 'margin-bottom: -{{SIZE}}px; height: {{SIZE}}px; width: calc(100% - {{SIZE}}*2px)',
-				],
-				'condition' => [
-					'tab_border_type!' => 'none',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'tab_active_border_radius',
-			[
-				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li.active' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li.active a' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before',
-			]
-		);
-
 
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
-
-		$this->add_control(
-			'tab_transition_duration',
-			[
-				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.1,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'frontend_available' => true,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li' => '-webkit-transition-duration: {{VALUE}}s;transition-duration: {{VALUE}}s',
-				],
-				'separator' => 'after',
-			]
-		);
 
 		$this->end_controls_section();
 
@@ -787,6 +647,25 @@ class Wpr_Product_Tabs extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'panel_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 10,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};', // li or a ?
+				],
+				'separator' => 'before',
+			]
+		);
+
 		$this->add_control(
 			'content_border_type',
 			[
@@ -838,163 +717,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
 					'{{WRAPPER}} .woocommerce-tabs ul.wc-tabs' => 'margin-left: {{TOP}}{{UNIT}}; margin-right: {{RIGHT}}{{UNIT}}',
 				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'panel_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 10,
-					'right' => 10,
-					'bottom' => 10,
-					'left' => 10,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};', // li or a ?
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Box_Shadow::get_type(),
-			[
-				'name' => 'panel_box_shadow',
-				'selector' => '{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel',
-			]
-		);
-
-		$this->end_controls_section();
-
-		$this->start_controls_section(
-			'sectoion_avatar_styles',
-			[
-				'label' => esc_html__( 'Avatar', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-				'show_label' => false,
-			]
-		);
-
-		$this->add_responsive_control(
-			'avatar_size',
-			[
-				'label' => esc_html__( 'Avatar Size', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 35,
-				],
-				'selectors' => [
-					'{{WRAPPER}} #reviews #comments ol.commentlist li img.avatar' => 'width: {{SIZE}}px; height: auto;',
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'avatar_border_color',
-			[
-				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
-				'selectors' => [
-					// '{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel' => 'border-color: {{VALUE}}',
-					'{{WRAPPER}} #reviews #comments ol.commentlist li img.avatar' => 'border-color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_control(
-			'avatar_border_type',
-			[
-				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'none' => esc_html__( 'None', 'wpr-addons' ),
-					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
-					'double' => esc_html__( 'Double', 'wpr-addons' ),
-					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
-					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
-					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
-				],
-				'default' => 'solid',
-				'selectors' => [
-					'{{WRAPPER}} #reviews #comments ol.commentlist li img.avatar' => 'border-style: {{VALUE}};',
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_responsive_control(
-			'avatar_border_width',
-			[
-				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 2,
-					'right' => 2,
-					'bottom' => 2,
-					'left' => 2,
-				],
-				'selectors' => [
-					'{{WRAPPER}} #reviews #comments ol.commentlist li img.avatar' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'condition' => [
-					'avatar_border_type!' => 'none',
-				],
-			]
-		);
-
-		$this->add_control(
-			'avatar_border_radius',
-			[
-				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} #reviews #comments ol.commentlist li img.avatar' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'avatar_margin',
-			[
-				'label' => esc_html__( 'Distance', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 3,
-				],
-				'selectors' => [
-					'{{WRAPPER}}.elementor-widget-wpr-product-tabs #reviews #comments ol.commentlist li .comment-text' => 'margin-left: calc({{SIZE}}px + {{avatar_size.SIZE}}px);'
-				],
-				'separator' => 'before',
 			]
 		);
 
@@ -1503,7 +1225,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 		$this->add_responsive_control(
 			'comment_spacing',
 			[
-				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
+				'label' => esc_html__( 'Vertical Gutter', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => ['px'],
 				'range' => [
@@ -1519,38 +1241,13 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} #reviews #comments ol.commentlist li .comment-text' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
-				'separator' => 'before',
 			]
 		);
-
-		// $this->add_responsive_control(
-		// 	'comment_rating_size',
-		// 	[
-		// 		'label' => esc_html__( 'Rating Width', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'size_units' => ['px', 'rem', '%'],
-		// 		'range' => [
-		// 			'px' => [
-		// 				'min' => 0,
-		// 				'max' => 200,
-		// 			],
-		// 		],				
-		// 		'default' => [
-		// 			'unit' => 'px',
-		// 			'size' => 100,
-		// 		],
-		// 		'selectors' => [
-		// 			// '{{WRAPPER}}.elementor-widget-wpr-product-tabs .star-rating span::before' => 'font-size: {{VALUE}}px;',
-		// 			'{{WRAPPER}}.elementor-widget-wpr-product-tabs .star-rating' => 'width: {{SIZE}}{{UNIT}};',
-		// 		],
-		// 		'separator' => 'before',
-		// 	]
-		// );
 
 		$this->add_responsive_control(
 			'comment_rating_font_size',
 			[
-				'label' => esc_html__( 'Rating Size', 'wpr-addons' ),
+				'label' => esc_html__( 'Rating Icon Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => ['px', 'rem', '%'],
 				'range' => [
@@ -1567,40 +1264,141 @@ class Wpr_Product_Tabs extends Widget_Base {
 					// '{{WRAPPER}}.elementor-widget-wpr-product-tabs .star-rating span::before' => 'font-size: {{VALUE}}px;',
 					'{{WRAPPER}}.elementor-widget-wpr-product-tabs .star-rating' => 'font-size: {{SIZE}}{{UNIT}};',
 				],
+			]
+		);
+
+		$this->add_control(
+			'review_avatar_styles',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Avatar', 'wpr-addons' ),
 				'separator' => 'before',
 			]
 		);
 
-		// $this->add_responsive_control(
-		// 	'comment_rating_spacing',
-		// 	[
-		// 		'label' => esc_html__( 'Rating Spacing', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'size_units' => ['px', 'rem', '%'],
-		// 		'range' => [
-		// 			'px' => [
-		// 				'min' => 0,
-		// 				'max' => 20,
-		// 			],
-		// 		],				
-		// 		'default' => [
-		// 			'unit' => 'px',
-		// 			'size' => 2,
-		// 		],
-		// 		'selectors' => [
-		// 			// '{{WRAPPER}}.elementor-widget-wpr-product-tabs .star-rating span::before' => 'font-size: {{VALUE}}px;',
-		// 			'{{WRAPPER}}.elementor-widget-wpr-product-tabs .star-rating' => 'letter-spacing: {{SIZE}}{{UNIT}};',
-		// 		],
-		// 		'separator' => 'before',
-		// 	]
-		// );
+		$this->add_responsive_control(
+			'avatar_size',
+			[
+				'label' => esc_html__( 'Image Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 35,
+				],
+				'selectors' => [
+					'{{WRAPPER}} #reviews #comments ol.commentlist li img.avatar' => 'width: {{SIZE}}px; height: auto;',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'avatar_margin',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 3,
+				],
+				'selectors' => [
+					'{{WRAPPER}}.elementor-widget-wpr-product-tabs #reviews #comments ol.commentlist li .comment-text' => 'margin-left: calc({{SIZE}}px + {{avatar_size.SIZE}}px);'
+				],
+				'separator' => 'after',
+			]
+		);
+
+		$this->add_control(
+			'avatar_border_color',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFF',
+				'selectors' => [
+					// '{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} #reviews #comments ol.commentlist li img.avatar' => 'border-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'avatar_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'solid',
+				'selectors' => [
+					'{{WRAPPER}} #reviews #comments ol.commentlist li img.avatar' => 'border-style: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'avatar_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 2,
+					'right' => 2,
+					'bottom' => 2,
+					'left' => 2,
+				],
+				'selectors' => [
+					'{{WRAPPER}} #reviews #comments ol.commentlist li img.avatar' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'avatar_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'avatar_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} #reviews #comments ol.commentlist li img.avatar' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
 
 		$this->end_controls_section();
 
 		$this->start_controls_section(
-			'section_review_styles',
+			'section_review_styles_forms',
 			[
-				'label' => esc_html__( 'Review Styles', 'wpr-addons' ),
+				'label' => esc_html__( 'Review Forms', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 			]
@@ -1622,6 +1420,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#000',
 				'selectors' => [
+					'{{WRAPPER}} .comment-notes' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .comment-form-rating label' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .comment-form-comment label' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .comment-form-author label' => 'color: {{VALUE}};',
@@ -1651,72 +1450,16 @@ class Wpr_Product_Tabs extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'form_align',
-			[
-				'label' => esc_html__( 'Form Alignment', 'wpr-addons' ),
-				'type' => Controls_Manager::CHOOSE,
-				'options' => [
-					'left' => [
-						'title' => esc_html__( 'Left', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-left',
-					],
-					'center' => [
-						'title' => esc_html__( 'Center', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-center',
-					],
-					'right' => [
-						'title' => esc_html__( 'Right', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-right',
-					],
-				],
-				'default' => 'left',
-				'prefix_class' => 'wpr-forms-align-',
-				'selectors' => [
-					'{{WRAPPER}} .comment-form-comment' => 'text-align: {{VALUE}};',
-					'{{WRAPPER}} .comment-form-author label' => 'text-align {{VALUE}};',
-					'{{WRAPPER}} .comment-form-email label' => 'text-align {{VALUE}};',
-				],
-				'separator' => 'before'
-			]
-		);
-
-		$this->add_responsive_control(
-			'header_distance',
-			[
-				'label' => esc_html__( 'Distance Top', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 5,
-				],
-				'selectors' => [
-					'{{WRAPPER}} #review_form #respond p.comment-form-comment' => 'margin-top: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} #review_form #respond div.comment-form-rating' => 'margin-top: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} #review_form #respond .comment-form-author' => 'margin-top: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} #review_form #respond .comment-form-email' => 'margin-top: {{SIZE}}{{UNIT}};',
-				],
-				'separator' => 'before'
-			]
-		);
-
 		$this->add_responsive_control(
 			'field_label_distance',
 			[
-				'label' => esc_html__( 'Distance Bottom', 'wpr-addons' ),
+				'label' => esc_html__( 'Bottom Distance', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => ['px'],
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 100,
+						'max' => 25,
 					],
 				],				
 				'default' => [
@@ -1730,7 +1473,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'{{WRAPPER}} .comment-form-email label' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .comment-reply-title' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
-				'separator' => 'before'
 			]
 		);
 
@@ -1746,7 +1488,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 		$this->add_control(
 			'rating_color',
 			[
-				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'label' => esc_html__( 'Icon Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#FFD726',
 				'selectors' => [
@@ -1759,19 +1501,10 @@ class Wpr_Product_Tabs extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'panel_icons_style',
-			[
-				'type' => Controls_Manager::HEADING,
-				'label' => esc_html__( 'Your Rating Icons', 'wpr-addons' ),
-				'separator' => 'before',
-			]
-		);
-
 		$this->add_responsive_control(
 			'rating_size',
 			[
-				'label' => esc_html__( 'Size', 'wpr-addons' ),
+				'label' => esc_html__( 'Icon Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => ['px' ],
 				'range' => [
@@ -1794,7 +1527,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			'rating_gutter',
 			[
 				'type' => Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Icons Gutter', 'wpr-addons' ),
+				'label' => esc_html__( 'Icon Gutter', 'wpr-addons' ),
 				'size_units' => [ 'px' ],
 				'range' => [
 					'px' => [
@@ -1806,148 +1539,17 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'unit' => 'px',
 					'size' => 0,
 				],
-				'separator' => 'before',
 				'selectors' => [
 					'{{WRAPPER}} p.stars a' => 'margin-right: {{SIZE}}{{UNIT}};',
-				],	
+				],
 			]
 		);
 
-		// $this->add_control(
-		// 	'panel_stats_style',
-		// 	[
-		// 		'type' => Controls_Manager::HEADING,
-		// 		'label' => esc_html__( 'Stats', 'wpr-addons' ),
-		// 		'separator' => 'before',
-		// 	]
-		// );
-
-		// $this->add_responsive_control(
-		// 	'stats_size',
-		// 	[
-		// 		'label' => esc_html__( 'Stats Size', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'size_units' => ['px' ],
-		// 		'range' => [
-		// 			'px' => [
-		// 				'min' => 0,
-		// 				'max' => 50,
-		// 			],
-		// 		],
-		// 		'default' => [
-		// 			'unit' => 'px',
-		// 			'size' => 22,
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}}.elementor-widget-wpr-product-tabs .wpr-individual-rating span' => 'font-size: {{SIZE}}{{UNIT}};',
-		// 		],
-		// 	]
-		// );
-
-		// $this->add_responsive_control(
-		// 	'average_rating_bar_width',
-		// 	[
-		// 		'label'      => esc_html__('Rating Bar Width', 'wpr-addons'),
-		// 		'type'       => Controls_Manager::SLIDER,
-		// 		'size_units' => ['px', '%'],
-		// 		'range'      => [
-		// 			'px' => [
-		// 				'min'  => 0,
-		// 				'max'  => 200,
-		// 				'step' => 5,
-		// 			],
-		// 			'%'  => [
-		// 				'min'  => 0,
-		// 				'max'  => 100,
-		// 				'step' => 5,
-		// 			],
-		// 		],
-		// 		'default'    => [
-		// 			'unit' => 'px',
-		// 			'size' => 150,
-		// 		],
-		// 		'selectors'  => [
-		// 			'{{WRAPPER}}.elementor-widget-wpr-product-tabs .wpr-individual-rating-cont' => 'width: {{SIZE}}{{UNIT}};',
-		// 		],
-		// 	]
-		// );
-
-		// $this->add_responsive_control(
-		// 	'average_rating_bar_height',
-		// 	[
-		// 		'label'      => esc_html__('Rating Bar Height (px)', 'wpr-addons'),
-		// 		'type'       => Controls_Manager::SLIDER,
-		// 		'size_units' => ['px'],
-		// 		'range'      => [
-		// 			'%' => [
-		// 				'min'  => 0,
-		// 				'max'  => 200,
-		// 				'step' => 5,
-		// 			],
-		// 		],
-		// 		'default'    => [
-		// 			'unit' => 'px',
-		// 			'size' => 10,
-		// 		],
-		// 		'selectors'  => [
-		// 			'{{WRAPPER}}.elementor-widget-wpr-product-tabs .wpr-individual-rating-cont' => 'height: {{SIZE}}{{UNIT}};',
-		// 		],
-		// 	]
-		// );
-
-		// $this->add_responsive_control(
-		// 	'rating_percentage_bar_gutter',
-		// 	[
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'label' => esc_html__( 'Bar Gutter', 'wpr-addons' ),
-		// 		'size_units' => [ 'px' ],
-		// 		'range' => [
-		// 			'px' => [
-		// 				'min' => -5,
-		// 				'max' => 50,
-		// 			]
-		// 		],
-		// 		'default' => [
-		// 			'unit' => 'px',
-		// 			'size' => 0,
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-individual-rating-cont' => 'margin-right: {{SIZE}}{{UNIT}}; margin-left: {{SIZE}}{{UNIT}}',
-		// 		],	
-		// 	]
-		// );
-
-		$this->add_responsive_control(
-			'rating_distance',
+		$this->add_control(
+			'rating_gutter_divider',
 			[
-				'label' => esc_html__( 'Distance', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 50,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 5,
-				],
-				'selectors' => [
-					'{{WRAPPER}} p.stars a' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-				],
-				'separator' => 'before'
-			]
-		);
-
-		$this->end_controls_section();
-
-		$this->start_controls_section(
-			'section_review_styles_forms',
-			[
-				'label' => esc_html__( 'Review Forms', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-				'show_label' => false,
+				'type' => Controls_Manager::DIVIDER,
+				'style' => 'thick',
 			]
 		);
 
@@ -1973,23 +1575,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'{{WRAPPER}} .comment-form-author label' => 'display: block;',
 					'{{WRAPPER}} .comment-form-email label' => 'display: block;',
 				]
-			]
-		);
-
-		$this->add_control(
-			'input_placeholder_color',
-			[
-				'label' => esc_html__( 'Placeholder Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#ADADAD',
-				'selectors' => [
-					'{{WRAPPER}} .comment-form-comment textarea::placeholder' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .comment-form-author input::placeholder' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .comment-form-email input::placeholder' => 'color: {{VALUE}}',
-				],
-				// 'condition' => [
-				// 	'show_field_placeholders' => 'yes'
-				// ]
 			]
 		);
 
@@ -2021,10 +1606,45 @@ class Wpr_Product_Tabs extends Widget_Base {
 			]
 		);
 
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'input_box_shadow',
+				'selector' => '{{WRAPPER}} .comment-form-comment textarea, {{WRAPPER}} .comment-form-author input, {{WRAPPER}} .comment-form-email input',
+				'separator' => 'after',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'input_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .comment-form-comment textarea, {{WRAPPER}} .comment-form-author input, {{WRAPPER}} .comment-form-email input',
+			]
+		);
+
+		$this->add_control(
+			'input_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.1,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .comment-form-comment textarea' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .comment-form-author input' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .comment-form-email input' => 'transition-duration: {{VALUE}}s',
+				],
+			]
+		);
+
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
-			'tab_inputs_hover',
+			'tab_inputs_focus',
 			[
 				'label' => esc_html__( 'Focus', 'wpr-addons' ),
 			]
@@ -2041,23 +1661,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'{{WRAPPER}} .comment-form-author input:focus' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .comment-form-email input:focus' => 'color: {{VALUE}}',
 				]
-			]
-		);
-
-		$this->add_control(
-			'input_placeholder_color_fc',
-			[
-				'label' => esc_html__( 'Placeholder Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#FFFFFF',
-				'selectors' => [
-					'{{WRAPPER}} .comment-form-comment textarea:focus::placeholder' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .comment-form-author input::placeholder' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .comment-form-email input::placeholder' => 'color: {{VALUE}}',
-				],
-				// 'condition' => [
-				// 	'show_field_placeholders' => 'yes'
-				// ]
 			]
 		);
 
@@ -2082,57 +1685,25 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#e8e8e8',
 				'selectors' => [
-					'{{WRAPPER}} .comment-form-comment textarea:focus' => 'border-color: {{VALUE}}; outline-width: 0px !important;',
-					'{{WRAPPER}} .comment-form-author input:focus' => 'border-color: {{VALUE}}; outline-width: 0px !important;',
-					'{{WRAPPER}} .comment-form-email input:focus' => 'border-color: {{VALUE}}; outline-width: 0px !important;',
-					'{{WRAPPER}} .comment-form-comment textarea:focus-visible' => 'border-color: {{VALUE}}; outline-width: 0px !important;',
-					'{{WRAPPER}} .comment-form-author input:focus-visible' => 'border-color: {{VALUE}}; outline-width: 0px !important;',
-					'{{WRAPPER}} .comment-form-email input:focus-visible' => 'border-color: {{VALUE}}; outline-width: 0px !important;',
+					'{{WRAPPER}} .comment-form-comment textarea:focus' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .comment-form-author input:focus' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .comment-form-email input:focus' => 'border-color: {{VALUE}};',
 				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'input_box_shadow_fc',
+				'selector' => '{{WRAPPER}} .comment-form-comment textarea:focus, {{WRAPPER}} .comment-form-author input:focus, {{WRAPPER}} .comment-form-email input:focus',
+				'separator' => 'after',
 			]
 		);
 
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
-
-		$this->add_group_control(
-			Group_Control_Box_Shadow::get_type(),
-			[
-				'name' => 'input_box_shadow',
-				'selector' => '{{WRAPPER}} .comment-form-comment textarea',
-				'separator' => 'after',
-			]
-		);
-
-		$this->add_control(
-			'input_transition_duration',
-			[
-				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.1,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'selectors' => [
-					'{{WRAPPER}} .comment-form-comment textarea' => 'transition-duration: {{VALUE}}s',
-					'{{WRAPPER}} .comment-form-author input' => 'transition-duration: {{VALUE}}s',
-					'{{WRAPPER}} .comment-form-email input' => 'transition-duration: {{VALUE}}s',
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => 'input_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .comment-form-comment textarea',
-				'{{WRAPPER}} .comment-form-author input',
-				'{{WRAPPER}} .comment-form-email input',
-			]
-		);
 
 		$this->add_control(
 			'input_border_type',
@@ -2200,11 +1771,24 @@ class Wpr_Product_Tabs extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'input_border_divider',
+		$this->add_responsive_control(
+			'input_padding',
 			[
-				'type' => Controls_Manager::DIVIDER,
-				'style' => 'thick',
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 0,
+					'right' => 15,
+					'bottom' => 0,
+					'left' => 15,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .comment-form-comment textarea' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .comment-form-author input' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .comment-form-email input' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'after',
 			]
 		);
 
@@ -2240,7 +1824,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 100,
-						'max' => 1000,
+						'max' => 500,
 					],
 				],				
 				'default' => [
@@ -2254,34 +1838,15 @@ class Wpr_Product_Tabs extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'input_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 0,
-					'right' => 15,
-					'bottom' => 0,
-					'left' => 15,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .comment-form-comment textarea' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_responsive_control(
 			'input_spacing',
 			[
-				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
+				'label' => esc_html__( 'Vertical Gutter', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => ['px'],
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 50,
+						'max' => 25,
 					],
 				],				
 				'default' => [
@@ -2289,11 +1854,10 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'size' => 10,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .comment-form-comment textarea' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .comment-form-author' => 'width: calc(50% - {{SIZE}}{{UNIT}}) !important; display: inline-block !important; margin-right: calc({{SIZE}}{{UNIT}}*1.5) !important;',
-					'{{WRAPPER}} .comment-form-email' => 'width: calc(50% - {{SIZE}}{{UNIT}}) !important; display: inline-block !important;',
+					'{{WRAPPER}} #review_form #respond p:not(.form-submit)' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} #review_form #respond .comment-form-author' => 'width: calc(50% - {{SIZE}}px/2); margin-right: {{SIZE}}px;',
+					'{{WRAPPER}} #review_form #respond .comment-form-email' => 'width: calc(50% - {{SIZE}}px/2);',
 				],
-				'separator' => 'before'
 			]
 		);
 
@@ -2329,9 +1893,9 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'justify' => [
 						'title' => esc_html__( 'Justified', 'wpr-addons' ),
 						'icon' => 'eicon-text-align-justify',
-					], //TODO:: remove later if not needed
+					],
 				],
-				// 'prefix_class' => 'wpr-forms-submit-',
+				'prefix_class' => 'wpr-forms-submit-',
 				'selectors' => [
 					'{{WRAPPER}} .form-submit' => 'text-align: {{VALUE}}',
 				],
@@ -2355,21 +1919,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'label' => esc_html__( 'Normal', 'wpr-addons' ),
 			]
 		);
-		
-		// $this->add_group_control(
-		// 	Group_Control_Background::get_type(),
-		// 	[
-		// 		'name' => 'submit_btn_bg_color',
-		// 		'label' => esc_html__( 'Background', 'wpr-addons' ),
-		// 		'types' => [ 'classic', 'gradient' ],
-		// 		'fields_options' => [
-		// 			'color' => [
-		// 				'default' => '#605BE5',
-		// 			],
-		// 		],
-		// 		'selector' => '{{WRAPPER}} #respond .comment-form .form-submit input#submit'
-		// 	]
-		// );
 
 		$this->add_control(
 			'submit_btn_bg_color',
@@ -2415,6 +1964,30 @@ class Wpr_Product_Tabs extends Widget_Base {
 			]
 		);
 
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'submit_btn_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} #respond .comment-form .form-submit input#submit'
+			]
+		);
+
+		$this->add_control(
+			'submit_btn_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.1,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} #respond .comment-form .form-submit input#submit' => 'transition-duration: {{VALUE}}s',
+				],
+			]
+		);
+
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
@@ -2435,21 +2008,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 				],
 			]
 		);
-		
-		// $this->add_group_control(
-		// 	Group_Control_Background::get_type(),
-		// 	[
-		// 		'name' => 'submit_btn_bg_color_hover',
-		// 		'label' => esc_html__( 'Background', 'wpr-addons' ),
-		// 		'types' => [ 'classic', 'gradient' ],
-		// 		'fields_options' => [
-		// 			'color' => [
-		// 				'default' => '#4A45D2',
-		// 			],
-		// 		],
-		// 		'selector' => '{{WRAPPER}}  #respond .comment-form .form-submit input#submit:hover'
-		// 	]
-		// );
 
 		$this->add_control(
 			'submit_btn_bg_color_hover',
@@ -2485,39 +2043,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
-
-		$this->add_control(
-			'submit_btn_divider',
-			[
-				'type' => Controls_Manager::DIVIDER,
-				'style' => 'thick',
-			]
-		);
-
-		$this->add_control(
-			'submit_btn_transition_duration',
-			[
-				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.1,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'selectors' => [
-					'{{WRAPPER}} #respond .comment-form .form-submit input#submit' => 'transition-duration: {{VALUE}}s',
-				],
-				'separator' => 'after',
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => 'submit_btn_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} #respond .comment-form .form-submit input#submit'
-			]
-		);
 
 		$this->add_control(
 			'submit_btn_border_type',
@@ -2561,6 +2086,24 @@ class Wpr_Product_Tabs extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'submit_btn_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 2,
+					'right' => 2,
+					'bottom' => 2,
+					'left' => 2,
+				],
+				'selectors' => [
+					'{{WRAPPER}} #respond .comment-form .form-submit input#submit' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
 		$this->add_responsive_control(
 			'submit_btn_padding',
 			[
@@ -2580,25 +2123,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'submit_btn_radius',
-			[
-				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 2,
-					'right' => 2,
-					'bottom' => 2,
-					'left' => 2,
-				],
-				'selectors' => [
-					'{{WRAPPER}} #respond .comment-form .form-submit input#submit' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before',
-			]
-		);
-
 		$this->add_responsive_control(
 			'submit_btn_spacing',
 			[
@@ -2608,7 +2132,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 50,
+						'max' => 25,
 					],
 				],				
 				'default' => [
@@ -2618,7 +2142,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} #respond .comment-form .form-submit input#submit' => 'margin-top: {{SIZE}}{{UNIT}};',
 				],
-				'separator' => 'before'
 			]
 		);
 
@@ -2662,6 +2185,14 @@ class Wpr_Product_Tabs extends Widget_Base {
 	}
 
     protected function render() {
+		$is_editor = \Elementor\Plugin::$instance->editor->is_edit_mode();
+
+		// Temp log out user
+		if ( $is_editor ) {
+			$store_current_user = wp_get_current_user()->ID;
+			wp_set_current_user( 0 );
+		}
+
         global $product;
 
         $product = wc_get_product();
@@ -2680,8 +2211,12 @@ class Wpr_Product_Tabs extends Widget_Base {
 		
 		echo '</div>';
 
+
+		// Logged-in user back.
+		if ( $is_editor ) {
+			wp_set_current_user( $store_current_user );
+
 		// Fix Tabs in Editor
-        if ( \Elementor\Plugin::$instance->editor->is_edit_mode()  ) {
         ?>
         <script>
 			elementorFrontend.hooks.addAction( 'frontend/element_ready/wpr-product-tabs.default', function( $scope ) {
@@ -2694,6 +2229,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			} );
         </script>
         <?php
+
         }
     }
 }
