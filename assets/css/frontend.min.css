@@ -1733,6 +1733,10 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     opacity: 1;
 }
 
+.wpr-product-media-wrap .slick-track {
+    margin: 0;
+}
+
 .wpr-product-thumb-nav {
     display: flex;
 }
@@ -5961,7 +5965,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 
 /* Slider Overlay */
-
 .wpr-slider-item-overlay {
     position: absolute;
     left: 0;
@@ -5973,7 +5976,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 
 /* Slick Slider */
-
 .slick-slider {
     position: relative;
     display: block;
