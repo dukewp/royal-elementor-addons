@@ -1782,7 +1782,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
   display: none;
 }
 
-.wpr-product-tabs .woocommerce-tabs ul.tabs li.active:after {
+.wpr-tabs-position-above .wpr-product-tabs .woocommerce-tabs ul.tabs li.active:after {
   content: ' ';
   display: block;
   border: none;
@@ -1794,7 +1794,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
   margin-right: auto;
 }
 
-.wpr-product-tabs .woocommerce-tabs ul.tabs li a {
+.wpr-tabs-position-above .wpr-product-tabs .woocommerce-tabs ul.tabs li a {
     border-bottom: none !important;
 }
 
