@@ -212,6 +212,7 @@ svg:not(:root) {
 button,
 input {
     overflow: visible;
+    outline: 0;
 }
 
 button,
@@ -268,6 +269,7 @@ progress {
 
 textarea {
     overflow: auto;
+    outline: 0;
 }
 
 [type="checkbox"],
@@ -1286,9 +1288,15 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 }
 
 .wpr-posts-navigation-svg-wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 }
 
 .wpr-post-navigation-wrap>div:last-child {
@@ -1412,6 +1420,8 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 }
 
 .wpr-post-nav-labels h5 {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     overflow: hidden;
     white-space: nowrap;
@@ -1421,12 +1431,16 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 }
 
 .wpr-post-nav-labels span {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
 }
 
 .wpr-post-nav-next .wpr-post-nav-labels > span,
 .wpr-post-nav-next .wpr-post-nav-labels h5 {
-    justify-content: flex-end;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
 }
 
 .wpr-post-navigation i {
@@ -1660,12 +1674,12 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     margin-right: 0 !important;
 }
 
-.wpr-cf-style-4.wpr-comment-form .wpr-comment-form-text,
-.wpr-cf-style-5.wpr-comment-form .wpr-comment-form-text,
-.wpr-cf-style-6.wpr-comment-form .wpr-comment-form-text {
+.wpr-cf-style-4.wpr-comment-form .wpr-comment-form-fields,
+.wpr-cf-style-5.wpr-comment-form .wpr-comment-form-fields,
+.wpr-cf-style-6.wpr-comment-form .wpr-comment-form-fields {
     -webkit-box-ordinal-group: 0;
-    -ms-flex-order: -1;
-    order: -1;
+        -ms-flex-order: -1;
+            order: -1;
 }
 
 .wpr-submit-comment {
@@ -11781,6 +11795,8 @@ body:not(.elementor-editor-active) .wpr-template-popup {
  == Taxonomy List
 --------------------------------------------------------------*/
 .wpr-taxonomy-list {
+     display: -webkit-box;
+     display: -ms-flexbox;
      display: flex;
 }
 
@@ -11793,16 +11809,24 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 .wpr-taxonomy-list-horizontal .wpr-taxonomy-list {
-    flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
 }
 
 .wpr-taxonomy-list-vertical .wpr-taxonomy-list {
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
 }
 
 .wpr-taxonomy-list-vertical .wpr-taxonomy-list li a {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: space-between;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
 }
 
 
