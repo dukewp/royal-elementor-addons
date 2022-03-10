@@ -2280,7 +2280,6 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 .wpr-checkout-horizontal .woocommerce-checkout .col2-set {
   display: flex;
   flex-direction: column;
-  margin-right: 15px;
 }
 
 .wpr-checkout-horizontal .woocommerce-checkout {
@@ -2301,6 +2300,22 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 .elementor-widget-wpr-page-checkout .select2-selection {
     position: relative;
+}
+
+.elementor-widget-wpr-page-checkout table.shop_table {
+    margin: 0;
+}
+
+.elementor-widget-wpr-page-checkout form .form-row {
+    margin: 0;
+}
+
+/*--------------------------------------------------------------
+ == My Account
+--------------------------------------------------------------*/
+
+.elementor-widget-wpr-my-account {
+    
 }
 
 /*--------------------------------------------------------------

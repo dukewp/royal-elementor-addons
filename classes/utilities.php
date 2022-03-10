@@ -109,7 +109,8 @@ class Utilities {
 			'product-stock',
 			'product-additional-information',
 			'page-cart',
-			'page-checkout'
+			'page-checkout',
+			'page-my-account'
 		];
 	}
 

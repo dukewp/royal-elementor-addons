@@ -3,7 +3,6 @@ namespace WprAddons\Modules\ThemeBuilder\Woocommerce\PageCheckout\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
-use Elementor\Plugin;
 use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
@@ -43,7 +42,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 		$this->start_controls_section(
 			'section_general',
 			[
-				'label' => esc_html__( 'General', 'wpr-addons' ),
+				'label' => esc_html__( 'Settings', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -74,6 +73,162 @@ class Wpr_Page_Checkout extends Widget_Base {
         $this->end_controls_section();
 
 		$this->start_controls_section(
+			'checkout_general_styles',
+			[
+				'label' => esc_html__( 'General', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'checkout_general_bg_color',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFF',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-checkout #payment' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .col-1' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .col-2' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-checkout-order-review-table-inner' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'checkout_general_border_color',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#CCC',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-checkout #payment' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .col-1' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .col-2' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-checkout-order-review-table-inner' => 'border-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'checkout_general_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'solid',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-checkout #payment' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .col-1' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .col-2' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .wpr-checkout-order-review-table-inner' => 'border-style: {{VALUE}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'checkout_general_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-checkout #payment' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .col-1' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .col-2' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-checkout-order-review-table-inner' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'checkout_general_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'checkout_general_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 2,
+					'right' => 2,
+					'bottom' => 2,
+					'left' => 2,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-checkout #payment' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .col-1' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .col-2' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-checkout-order-review-table-inner' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'checkout_general_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 10,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-checkout #payment' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .col-1' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .col-2' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-checkout-order-review-table-inner' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'nav_gutter',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],			
+				'selectors' => [
+					'{{WRAPPER}}.wpr-checkout-horizontal .woocommerce-checkout .col2-set' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-checkout-horizontal .col-1' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-checkout-horizontal .wpr-checkout-order-review-table-inner' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-checkout-vertical .col-1' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-checkout-vertical .wpr-checkout-order-review-table-inner' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+        $this->end_controls_section();
+
+		$this->start_controls_section(
 			'section_checkout_forms',
 			[
 				'label' => esc_html__( 'Forms', 'wpr-addons' ),
@@ -82,17 +237,29 @@ class Wpr_Page_Checkout extends Widget_Base {
 		);
 
 		$this->add_control(
-			'forms_field_title',
+			'form_labels_title',
 			[
 				'type' => Controls_Manager::HEADING,
-				'label' => esc_html__( 'Field', 'wpr-addons' ),
+				'label' => esc_html__( 'Labels', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'form_labels_color',
+			[
+				'label' => esc_html__( 'Text Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#000',
+				'selectors' => [
+					'{{WRAPPER}} .col2-set label' => 'color: {{VALUE}}',
+				],
 			]
 		);
 
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'forms_field_typography',
+				'name' => 'form_labels_typography',
 				'selector' => '{{WRAPPER}} .col2-set label',
 			]
 		);
@@ -141,6 +308,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#F3F3F3',
 				'selectors' => [
 					'{{WRAPPER}} .col2-set .input-text' => 'background-color: {{VALUE}};',
 					'{{WRAPPER}} .form-row .input-text' => 'background-color: {{VALUE}};',
@@ -254,7 +422,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .input-text' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .col2-set .select2-container' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .col2-set select' => 'border-radius: {{VALUE}};',
+					'{{WRAPPER}} .col2-set select' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -274,9 +442,20 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .input-text' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .select2-container' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					// '{{WRAPPER}} .select2-selection--single' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					// '{{WRAPPER}} .form-row' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
+			]
+		);
+
+		$this->end_controls_section();
+
+		// Styles ====================
+		// Section: Place Order ------
+		$this->start_controls_section(
+			'section_style_place_order',
+			[
+				'label' => esc_html__( 'Place Order', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'show_label' => false,
 			]
 		);
 
@@ -547,11 +726,26 @@ class Wpr_Page_Checkout extends Widget_Base {
     }
 
 	public function woocommerce_checkout_before_order_review_heading() {
-        echo '<div class="e-checkout__order_review">';
+        echo '<div class="wpr-checkout-order-review-table">';
+	}
+
+	public function woocommerce_checkout_before_order_review_heading_inner() {
+        echo '<div class="wpr-checkout-order-review-table-inner">';
 	}
 
 	public function woocommerce_checkout_after_order_review() {
-        echo '</div>';
+		echo '<!-- close order_review --></div>';
+        echo '<!-- after_order --></div>'; //TODO: remove
+	}
+
+	private function should_render_coupon() {
+		return ( WC()->cart->needs_payment() || \Elementor\Plugin::$instance->editor->is_edit_mode() ) && wc_coupons_enabled();
+	}
+
+	public function woocommerce_checkout_order_review() {
+		echo '<!-- close order_review-table-inner --></div>';
+		echo '<!-- close order_review-table-inner-2 --></div>';
+		echo '<div class="wpr-checkout-order-review">';
 	}
 
     protected function render() {
@@ -565,6 +759,10 @@ class Wpr_Page_Checkout extends Widget_Base {
 
 		add_action( 'woocommerce_checkout_before_order_review_heading', [ $this, 'woocommerce_checkout_before_order_review_heading' ], 95 );
 
+		add_action( 'woocommerce_checkout_before_order_review_heading', [ $this, 'woocommerce_checkout_before_order_review_heading_inner' ], 95 );
+
+		add_action( 'woocommerce_checkout_order_review', [ $this, 'woocommerce_checkout_order_review' ], 15 );
+
 		add_action( 'woocommerce_checkout_after_order_review', [ $this, 'woocommerce_checkout_after_order_review' ], 95 );
 
         echo do_shortcode( '[woocommerce_checkout]' );
@@ -572,6 +770,8 @@ class Wpr_Page_Checkout extends Widget_Base {
 		remove_action( 'woocommerce_checkout_before_order_review_heading', [ $this, 'woocommerce_checkout_before_order_review_heading' ], 95 );
 
 		remove_action( 'woocommerce_checkout_after_order_review', [ $this, 'woocommerce_checkout_after_order_review' ], 95 );
+
+		remove_action( 'woocommerce_checkout_order_review', [ $this, 'woocommerce_checkout_order_review' ], 15 );
 
 		// Return to existing logged-in user after widget is rendered.
 		if ( $is_editor ) {
