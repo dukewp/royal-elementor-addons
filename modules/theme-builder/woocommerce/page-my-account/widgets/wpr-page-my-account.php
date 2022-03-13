@@ -49,6 +49,17 @@ class Wpr_Page_My_Account extends Widget_Base {
 		);
 
 		$this->add_control(
+			'text_bg_color',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
             'apply_changes',
             [
                 'type' => Controls_Manager::RAW_HTML,

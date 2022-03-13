@@ -53,7 +53,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 		);
 
 		$this->add_control(
-			'product_meta_layout',
+			'add_to_cart_layout',
 			[
 				'label' => esc_html__( 'Select Layout', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
@@ -134,7 +134,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
                     '{{WRAPPER}} .single_variation_wrap' => 'align-self: {{VALUE}}',
                 ],
 				'condition' => [
-					'product_meta_layout' => 'row'
+					'add_to_cart_layout' => 'row'
 				]
             ]
         );
@@ -478,7 +478,6 @@ class Wpr_Product_AddToCart extends Widget_Base {
 					'{{WRAPPER}} .wpr-product-add-to-cart .wpr-quantity-wrapper i' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} .wpr-product-add-to-cart .quantity .qty' => 'border-style: {{VALUE}};',
 				],
-				'render_type' => 'template',
 				'separator' => 'before',
 			]
 		);
@@ -499,10 +498,9 @@ class Wpr_Product_AddToCart extends Widget_Base {
 					'{{WRAPPER}} .wpr-product-add-to-cart .wpr-quantity-wrapper i' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-product-add-to-cart .quantity .qty' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
-				'render_type' => 'template',
 				'condition' => [
 					'quantity_border_type!' => 'none',
-				],
+				]
 			]
 		);
 
@@ -755,8 +753,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-add-to-cart .single_add_to_cart_button' => 'border-style: {{VALUE}};',
 				],
-				'render_type' => 'template',
-				'separator' => 'before',
+				'separator' => 'before'
 			]
 		);
 
@@ -775,10 +772,9 @@ class Wpr_Product_AddToCart extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-add-to-cart .single_add_to_cart_button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
-				'render_type' => 'template',
 				'condition' => [
 					'add_to_cart_border_type!' => 'none',
-				],
+				]
 			]
 		);
 
@@ -1642,7 +1638,6 @@ class Wpr_Product_AddToCart extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-add-to-cart .reset_variations' => 'border-style: {{VALUE}};',
 				],
-				'render_type' => 'template',
 				'separator' => 'before',
 			]
 		);
@@ -1662,7 +1657,6 @@ class Wpr_Product_AddToCart extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-add-to-cart .reset_variations' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
-				'render_type' => 'template',
 				'condition' => [
 					'reset_border_type!' => 'none',
 				],
@@ -1690,7 +1684,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 		$this->end_controls_section();
 	}
 
-	public function wpr_change_clear_text() {
+	public function change_clear_text() {
 	   echo '<a class="reset_variations" href="#">' . esc_html__( 'Clear', 'woocommerce' ) . '</a>';
 	}
 
@@ -1748,7 +1742,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 
 		});
 		
-		add_action( 'woocommerce_reset_variations_link' , [$this, 'wpr_change_clear_text'], 15 );
+		add_action( 'woocommerce_reset_variations_link' , [$this, 'change_clear_text'], 15 );
 
 		echo '<div '. $this->get_render_attribute_string( 'add_to_cart_wrapper' ) .'>';
 
