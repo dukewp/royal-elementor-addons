@@ -44,60 +44,9 @@ class Wpr_Product_Meta extends Widget_Base {
 		);
 
 		$this->add_control(
-			'meta_sku_hide',
-			[
-				'label'        => esc_html__('SKU', 'wpr-addons'),
-				'type'         => Controls_Manager::SWITCHER,
-				'label_on'     => esc_html__('Show', 'wpr-addons'),
-				'label_off'    => esc_html__('Hide', 'wpr-addons'),
-				'default'      => "yes",
-				'return_value' => "yes",
-				'prefix_class' => 'wpr-product-meta-sku-',
-				'selectors'    => [
-					'{{WRAPPER}}.wpr-product-meta-column .wpr-product-meta .sku_wrapper' => 'display: inline-block;',
-					'{{WRAPPER}}.wpr-product-meta-row .wpr-product-meta .sku_wrapper'	=> 'display: inline-block;',
-				],
-			]
-		);
-
-		$this->add_control(
-			'meta_category_hide',
-			[
-				'label'        => esc_html__('Category', 'wpr-addons'),
-				'type'         => Controls_Manager::SWITCHER,
-				'label_on'     => esc_html__('Show', 'wpr-addons'),
-				'label_off'    => esc_html__('Hide', 'wpr-addons'),
-				'default'      => "yes",
-				'return_value' => "yes",
-				'prefix_class' => 'wpr-product-meta-cat-',
-				'selectors'    => [
-					'{{WRAPPER}}.wpr-product-meta-column .wpr-product-meta .posted_in' => 'display: inline-block;',
-					'{{WRAPPER}}.wpr-product-meta-row .wpr-product-meta .posted_in'	=> 'display: inline-block;',
-				],
-			]
-		);
-
-		$this->add_control(
-			'meta_tag_hide',
-			[
-				'label'        => esc_html__('Tag', 'wpr-addons'),
-				'type'         => Controls_Manager::SWITCHER,
-				'label_on'     => esc_html__('Show', 'wpr-addons'),
-				'label_off'    => esc_html__('Hide', 'wpr-addons'),
-				'default'      => "yes",
-				'return_value' => "yes",
-				'prefix_class' => 'wpr-product-meta-tag-',
-				'selectors'    => [
-					'{{WRAPPER}}.wpr-product-meta-column .wpr-product-meta .tagged_as'							=> 'display: inline-block;',
-					'{{WRAPPER}}.wpr-product-meta-row .wpr-product-meta .tagged_as'	=> 'display: inline-block;',
-				],
-			]
-		);
-
-		$this->add_control(
 			'product_meta_layout',
 			[
-				'label' => esc_html__( 'List Layout', 'wpr-addons' ),
+				'label' => esc_html__( 'Select Layout', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
 				'default' => 'vertical',
 				'options' => [
@@ -120,36 +69,9 @@ class Wpr_Product_Meta extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'product_meta_gutter',
-			[
-				'label' => esc_html__( 'List Gutter', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],				
-				'default' => [
-					'unit' => 'px',
-					'size' => 10,
-				],
-				'selectors' => [
-					'{{WRAPPER}}.wpr-product-meta-column .product_meta span.sku_wrapper' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-product-meta-column .product_meta span.posted_in' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-product-meta-column .product_meta span.tagged_as' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-product-meta-row .product_meta span.sku_wrapper' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-product-meta-row .product_meta span.posted_in' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-product-meta-row .product_meta span.tagged_as' => 'margin-right: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
 			'meta_align',
 			[
-				'label'     => esc_html__('Align', 'wpr-addons'),
+				'label'     => esc_html__('Alignment', 'wpr-addons'),
 				'type'      => Controls_Manager::CHOOSE,
 				'options'   => [
 					'left'   => [
@@ -172,6 +94,29 @@ class Wpr_Product_Meta extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'product_meta_gutter',
+			[
+				'label' => esc_html__( 'List Gutter', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}}.wpr-product-meta-column .product_meta span:not(:last-child)' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-product-meta-row .product_meta span:not(last-child)' => 'margin-right: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
 		$this->add_control(
 			'meta_label_title',
 			[
@@ -189,6 +134,48 @@ class Wpr_Product_Meta extends Widget_Base {
 				'default'   => '#101010',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-meta .product_meta :is(.sku_wrapper, .posted_in, .tagged_as)' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'product_meta_typography',
+				'label' => esc_html__('Typography', 'wpr-addons'),
+				'selector' => '{{WRAPPER}} .wpr-product-meta .product_meta :is(a, span, .sku_wrapper, .posted_in, .tagged_as)',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'font_size'       => [
+						'label'      => esc_html__('Font Size (px)', 'wpr-addons'),
+						'size_units' => ['px'],
+						'default'    => [
+							'size' => '14',
+							'unit' => 'px',
+						],
+					],
+					'font_weight'     => [
+						'default' => '500',
+					],
+					'text_transform'  => [
+						'default' => 'none',
+					],
+					'line_height'     => [
+						'label'      => esc_html__('Line Height (px)', 'wpr-addons'),
+						'default' => [
+							'size' => '17',
+							'unit' => 'px',
+						],
+						'size_units' => ['px'],
+						'tablet_default' => [
+							'unit' => 'px',
+						],
+						'mobile_default' => [
+							'unit' => 'px',
+						],
+					],
 				],
 			]
 		);
@@ -226,45 +213,54 @@ class Wpr_Product_Meta extends Widget_Base {
 			]
 		);
 
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
+		$this->add_control(
+			'meta_sku_hide',
 			[
-				'name'           => 'product_meta_typography',
-				'label'          => esc_html__('Typography', 'wpr-addons'),
-				'selector'       => '{{WRAPPER}} .wpr-product-meta .product_meta :is(a, span, .sku_wrapper, .posted_in, .tagged_as)',
+				'label'        => esc_html__('SKU', 'wpr-addons'),
+				'type'         => Controls_Manager::SWITCHER,
+				'label_on'     => esc_html__('Show', 'wpr-addons'),
+				'label_off'    => esc_html__('Hide', 'wpr-addons'),
+				'default'      => "yes",
+				'return_value' => "yes",
+				'prefix_class' => 'wpr-product-meta-sku-',
+				'selectors'    => [
+					'{{WRAPPER}}.wpr-product-meta-column .wpr-product-meta .sku_wrapper' => 'display: inline-block;',
+					'{{WRAPPER}}.wpr-product-meta-row .wpr-product-meta .sku_wrapper'	=> 'display: inline-block;',
+				],
 				'separator' => 'before',
-				'fields_options' => [
-					'typography'      => [
-						'default' => 'custom',
-					],
-					'font_size'       => [
-						'label'      => esc_html__('Font Size (px)', 'wpr-addons'),
-						'size_units' => ['px'],
-						'default'    => [
-							'size' => '14',
-							'unit' => 'px',
-						],
-					],
-					'font_weight'     => [
-						'default' => '500',
-					],
-					'text_transform'  => [
-						'default' => 'none',
-					],
-					'line_height'     => [
-						'label'      => esc_html__('Line Height (px)', 'wpr-addons'),
-						'default' => [
-							'size' => '17',
-							'unit' => 'px',
-						],
-						'size_units' => ['px'],
-						'tablet_default' => [
-							'unit' => 'px',
-						],
-						'mobile_default' => [
-							'unit' => 'px',
-						],
-					],
+			]
+		);
+
+		$this->add_control(
+			'meta_category_hide',
+			[
+				'label'        => esc_html__('Category', 'wpr-addons'),
+				'type'         => Controls_Manager::SWITCHER,
+				'label_on'     => esc_html__('Show', 'wpr-addons'),
+				'label_off'    => esc_html__('Hide', 'wpr-addons'),
+				'default'      => "yes",
+				'return_value' => "yes",
+				'prefix_class' => 'wpr-product-meta-cat-',
+				'selectors'    => [
+					'{{WRAPPER}}.wpr-product-meta-column .wpr-product-meta .posted_in' => 'display: inline-block;',
+					'{{WRAPPER}}.wpr-product-meta-row .wpr-product-meta .posted_in'	=> 'display: inline-block;',
+				],
+			]
+		);
+
+		$this->add_control(
+			'meta_tag_hide',
+			[
+				'label'        => esc_html__('Tag', 'wpr-addons'),
+				'type'         => Controls_Manager::SWITCHER,
+				'label_on'     => esc_html__('Show', 'wpr-addons'),
+				'label_off'    => esc_html__('Hide', 'wpr-addons'),
+				'default'      => "yes",
+				'return_value' => "yes",
+				'prefix_class' => 'wpr-product-meta-tag-',
+				'selectors'    => [
+					'{{WRAPPER}}.wpr-product-meta-column .wpr-product-meta .tagged_as'							=> 'display: inline-block;',
+					'{{WRAPPER}}.wpr-product-meta-row .wpr-product-meta .tagged_as'	=> 'display: inline-block;',
 				],
 			]
 		);
