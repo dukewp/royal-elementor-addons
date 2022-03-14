@@ -2370,8 +2370,21 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
  == My Account
 --------------------------------------------------------------*/
 
-.elementor-widget-wpr-my-account {
-    
+.wpr-my-account-tabs-horizontal nav.woocommerce-MyAccount-navigation,
+.wpr-my-account-tabs-horizontal .woocommerce-MyAccount-content {
+    float: none;
+    width: 100%;
+}
+
+.wpr-my-account-tabs-horizontal nav ul {
+    display: flex;
+    justify-content: space-between;
+}
+
+.wpr-my-account-tabs-horizontal .woocommerce-MyAccount-navigation-link,
+.woocommerce-MyAccount-navigation-link a {
+  display: inline-block;
+  width: 100%;
 }
 
 /*--------------------------------------------------------------

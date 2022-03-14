@@ -661,7 +661,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} .place-order button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
-					'buttons_border_type!' => 'none',
+					'place_order_button_border_type!' => 'none',
 				],
 			]
 		);
