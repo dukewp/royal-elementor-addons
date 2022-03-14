@@ -39,6 +39,8 @@ class Wpr_Page_Checkout extends Widget_Base {
 
 	protected function _register_controls() {
 
+		// Tab: Style ==============
+		// Section: Settings ---------
 		$this->start_controls_section(
 			'section_general',
 			[
@@ -72,6 +74,8 @@ class Wpr_Page_Checkout extends Widget_Base {
 
         $this->end_controls_section();
 
+		// Tab: Style ==============
+		// Section: General ---------
 		$this->start_controls_section(
 			'checkout_general_styles',
 			[
@@ -228,6 +232,8 @@ class Wpr_Page_Checkout extends Widget_Base {
 
         $this->end_controls_section();
 
+		// Tab: Style ==============
+		// Section: Forms ---------
 		$this->start_controls_section(
 			'section_checkout_forms',
 			[
@@ -475,7 +481,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 		$this->start_controls_tabs( 'place_order_button_styles' );
 
 		$this->start_controls_tab(
-			'cart_place_order_button_normal',
+			'place_order_button_normal',
 			[
 				'label' => esc_html__( 'Normal', 'wpr-addons' ),
 			]
@@ -618,9 +624,8 @@ class Wpr_Page_Checkout extends Widget_Base {
 			[
 				'name'     => 'place_order_button_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .actions .button',
-				'{{WRAPPER}} .coupon .button',
-				'{{WRAPPER}} .place-order button'
+				'selector' => '{{WRAPPER}} .actions .button, 
+				{{WRAPPER}} .place-order button, {{WRAPPER}} .coupon .button',
 			]
 		);
 
@@ -734,8 +739,8 @@ class Wpr_Page_Checkout extends Widget_Base {
 	}
 
 	public function woocommerce_checkout_after_order_review() {
-		echo '<!-- close order_review --></div>';
-        echo '<!-- after_order --></div>'; //TODO: remove
+		echo '</div>';
+        echo '</div>'; //TODO: remove
 	}
 
 	private function should_render_coupon() {

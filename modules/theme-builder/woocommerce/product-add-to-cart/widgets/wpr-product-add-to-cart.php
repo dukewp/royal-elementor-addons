@@ -1417,8 +1417,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 			[
 				'name'     => 'variation_price_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .woocommerce-variation-price span',
-				'selector' => '{{WRAPPER}} .woocommerce-grouped-product-list-item__price span'
+				'selector' => '{{WRAPPER}} .woocommerce-variation-price span, {{WRAPPER}} .woocommerce-grouped-product-list-item__price span',
 			]
 		);
 

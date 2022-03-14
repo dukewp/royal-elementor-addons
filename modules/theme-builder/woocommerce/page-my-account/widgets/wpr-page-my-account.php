@@ -40,6 +40,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 
 	protected function _register_controls() {
 
+		// Tab: Content ==============
+		// Section: Settings ---------
 		$this->start_controls_section(
 			'section_general',
 			[
@@ -126,6 +128,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 
 		$this->end_controls_section();
 
+		// Tab: Style ==============
+		// Section: Tab Labels ---------
 		$this->start_controls_section(
 			'section_tab_styles',
 			[
@@ -426,6 +430,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 
 		$this->end_controls_section();
 
+		// Tab: Style ==============
+		// Section: Tab Content ---------
 		$this->start_controls_section(
 			'section_tab_content_styles',
 			[
@@ -448,6 +454,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 
 		$this->end_controls_section();
 
+		// Tab: Style ==============
+		// Section: Forms ---------
 		$this->start_controls_section(
 			'section_account_forms',
 			[
@@ -650,8 +658,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 
 		$this->end_controls_section();
 
-		// Styles ====================
-		// Section: Place Order Button ------
+		// Tab: Style ==============
+		// Section: Button ---------
 		$this->start_controls_section(
 			'section_style_account_details_button',
 			[

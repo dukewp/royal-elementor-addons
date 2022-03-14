@@ -39,14 +39,13 @@ class Wpr_Page_Cart extends Widget_Base {
 
 	protected function _register_controls() {
 
+		// Tab: Content ==============
+		// Section: General ---------
 		$this->start_controls_section(
 			'section_general',
 			[
 				'label' => esc_html__( 'General', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
-				// 'condition' => [
-				// 	'update_cart_automatically' => '',
-				// ],
 			]
 		);
 
@@ -364,14 +363,13 @@ class Wpr_Page_Cart extends Widget_Base {
 
         $this->end_controls_section();
 
+		// Tab: Style ==============
+		// Section: Styles ---------
 		$this->start_controls_section(
 			'section_cart_styles',
 			[
 				'label' => esc_html__( 'Styles', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
-				// 'condition' => [
-				// 	'update_cart_automatically' => '',
-				// ],
 			]
 		);
 
@@ -477,6 +475,8 @@ class Wpr_Page_Cart extends Widget_Base {
 
         $this->end_controls_section();
 
+		// Tab: Style ==============
+		// Section: Table Heading ---------
 		$this->start_controls_section(
 			'cart_table_heading_styles',
 			[
@@ -562,6 +562,8 @@ class Wpr_Page_Cart extends Widget_Base {
 
 		$this->end_controls_section();
 
+		// Tab: Style ==============
+		// Section: Table Description ---------
 		$this->start_controls_section(
 			'cart_table_description_styles',
 			[
@@ -648,6 +650,8 @@ class Wpr_Page_Cart extends Widget_Base {
 
 		$this->end_controls_section();
 
+		// Tab: Style ==============
+		// Section: Product Image ---------
 		$this->start_controls_section(
 			'section_cart_product_image',
 			[
@@ -681,6 +685,8 @@ class Wpr_Page_Cart extends Widget_Base {
 
 		$this->end_controls_section();
 
+		// Tab: Style ==============
+		// Section: Forms ---------
 		$this->start_controls_section(
 			'section_cart_tabs_forms',
 			[
@@ -888,8 +894,8 @@ class Wpr_Page_Cart extends Widget_Base {
 
 		$this->end_controls_section();
 
-		// Styles ====================
-		// Section: Buttons ------
+		// Tab: Style ==============
+		// Section: Buttons ---------
 		$this->start_controls_section(
 			'section_style_buttons',
 			[
@@ -1135,8 +1141,8 @@ class Wpr_Page_Cart extends Widget_Base {
 
 		$this->end_controls_section();
 
-		// Styles ====================
-		// Section: Shipping Calc ------
+		// Tab: Style ==============
+		// Section: Shipping Calc ---------
 		$this->start_controls_section(
 			'section_style_shipping_calc_button',
 			[
@@ -1332,8 +1338,8 @@ class Wpr_Page_Cart extends Widget_Base {
 
 		$this->end_controls_section();
 
-		// Styles ====================
-		// Section: Checkout Button ------
+		// Tab: Style ==============
+		// Section: Checkout Button ---------
 		$this->start_controls_section(
 			'section_style_checkout_button',
 			[
