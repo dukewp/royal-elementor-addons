@@ -58,8 +58,40 @@ class Wpr_Page_My_Account extends Widget_Base {
 
 		$this->end_controls_section();
     }
+	
+	private function render_html_front_end() {
+		$current_endpoint = $this->get_current_endpoint();
+		?>
+		<div class="e-my-account-tab e-my-account-tab__<?php echo sanitize_html_class( $current_endpoint ); ?>">
+			<span class="elementor-hidden">[[woocommerce_my_account]]</span>
+			<?php echo do_shortcode( '[woocommerce_my_account]' ); ?>
+		</div>
+		<?php
+	}
 
     protected function render() {
-        echo do_shortcode('[woocommerce_my_account]');
+
+		// Add actions & filters before displaying our Widget.
+		add_action( 'woocommerce_account_navigation', [ $this, 'woocommerce_account_navigation' ], 1 );
+		add_filter( 'woocommerce_account_menu_items', [ $this, 'modify_menu_items' ], 10, 2 );
+		add_action( 'woocommerce_account_content', [ $this, 'before_account_content' ], 2 );
+		add_action( 'woocommerce_account_content', [ $this, 'after_account_content' ], 95 );
+		add_filter( 'woocommerce_get_myaccount_page_permalink', [ $this, 'woocommerce_get_myaccount_page_permalink' ], 10, 1 );
+		add_filter( 'woocommerce_logout_default_redirect_url', [ $this, 'woocommerce_logout_default_redirect_url' ], 10, 1 );
+
+		// Display our Widget.
+		if ( ! \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
+			$this->render_html_front_end();
+		} else {
+			$this->render_html_editor();
+		}
+
+		// Remove actions & filters after displaying our Widget.
+		remove_action( 'woocommerce_account_navigation', [ $this, 'woocommerce_account_navigation' ], 2 );
+		remove_action( 'woocommerce_account_menu_items', [ $this, 'modify_menu_items' ], 10 );
+		remove_action( 'woocommerce_account_content', [ $this, 'before_account_content' ], 5 );
+		remove_action( 'woocommerce_account_content', [ $this, 'after_account_content' ], 95 );
+		remove_filter( 'woocommerce_get_myaccount_page_permalink', [ $this, 'woocommerce_get_myaccount_page_permalink' ], 10, 1 );
+		remove_filter( 'woocommerce_logout_default_redirect_url', [ $this, 'woocommerce_logout_default_redirect_url' ], 10, 1 );
     }
 }
