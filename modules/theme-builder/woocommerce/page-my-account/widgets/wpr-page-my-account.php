@@ -1101,6 +1101,13 @@ class Wpr_Page_My_Account extends Widget_Base {
 	}
 
     protected function render() {
+		$is_editor = \Elementor\Plugin::$instance->editor->is_edit_mode();
+
+		// Simulate a logged out user so that all WooCommerce sections will render in the Editor
+		if ( $is_editor ) {
+			$store_current_user = wp_get_current_user()->ID;
+			wp_set_current_user( 0 );
+		}
 
 		// Add actions & filters before displaying our Widget.
 		add_action( 'woocommerce_account_content', [ $this, 'before_account_content' ], 2 );
@@ -1120,5 +1127,10 @@ class Wpr_Page_My_Account extends Widget_Base {
 		remove_action( 'woocommerce_account_content', [ $this, 'after_account_content' ], 95 );
 		remove_filter( 'woocommerce_get_myaccount_page_permalink', [ $this, 'woocommerce_get_myaccount_page_permalink' ], 10, 1 );
 		remove_filter( 'woocommerce_logout_default_redirect_url', [ $this, 'woocommerce_logout_default_redirect_url' ], 10, 1 );
+		
+		// Return to existing logged-in user after widget is rendered.
+		if ( $is_editor ) {
+			wp_set_current_user( $store_current_user );
+		}
     }
 }

@@ -748,8 +748,8 @@ class Wpr_Page_Checkout extends Widget_Base {
 	}
 
 	public function woocommerce_checkout_order_review() {
-		echo '<!-- close order_review-table-inner --></div>';
-		echo '<!-- close order_review-table-inner-2 --></div>';
+		echo '</div>';
+		echo '</div>';
 		echo '<div class="wpr-checkout-order-review">';
 	}
 

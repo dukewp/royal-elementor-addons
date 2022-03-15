@@ -258,10 +258,8 @@ class Wpr_Page_Cart extends Widget_Base {
 					'size' => 80,
 				],
 				'selectors' => [
-					// '{{WRAPPER}} table.cart td.actions .input-text' => 'width: {{SIZE}}{{UNIT}} !important;',
 					'{{WRAPPER}} .input-text:not(.qty)' => 'width: 100% !important;',
 					'{{WRAPPER}} .coupon-col' => 'width: 100% !important;',
-					// '{{WRAPPER}} .wpr-cart-section .input-text' => 'width: 100% !important;',
 					'{{WRAPPER}} .wpr-cart-section .coupon-col-start' => 'width: {{SIZE}}{{UNIT}} !important;',
 				],
 				'separator' => 'before',
@@ -290,21 +288,6 @@ class Wpr_Page_Cart extends Widget_Base {
 				'separator' => 'before',
 			]
 		);
-
-		// $this->add_control(
-		// 	'sticky_right_column',
-		// 	[
-		// 		'label' => esc_html__( 'Sticky Totals', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SWITCHER,
-		// 		'label_on' => esc_html__( 'Yes', 'wpr-addons' ),
-		// 		'label_off' => esc_html__( 'No', 'wpr-addons' ),
-		// 		'frontend_available' => true,
-		// 		'prefix_class' => 'wpr-cart-sticky-',
-		// 		'condition' => [
-		// 			'cart_layout!' => 'vertical',
-		// 		],
-		// 	]
-		// );
 
 		$this->add_responsive_control(
 			'heading_width',
@@ -819,8 +802,6 @@ class Wpr_Page_Cart extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .input-text' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} .select2-container' => 'border-style: {{VALUE}};',
-					// '{{WRAPPER}} .select2-selection--single' => 'border-style: {{VALUE}};',
-					// '{{WRAPPER}} .form-row' => 'border-style: {{VALUE}};',
 				],
 				'separator' => 'before',
 			]
@@ -841,7 +822,6 @@ class Wpr_Page_Cart extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .input-text' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .select2-container' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					// '{{WRAPPER}} .select2-selection--single' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .form-row' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
@@ -865,8 +845,6 @@ class Wpr_Page_Cart extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .input-text' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .select2-container' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					// '{{WRAPPER}} .select2-selection--single' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					// '{{WRAPPER}} .form-row' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -886,8 +864,6 @@ class Wpr_Page_Cart extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .input-text' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .select2-container' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					// '{{WRAPPER}} .select2-selection--single' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					// '{{WRAPPER}} .form-row' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -1601,17 +1577,6 @@ class Wpr_Page_Cart extends Widget_Base {
 		$this->end_controls_section();
         
     }
-
-	public static function get_custom_border_type_options() {
-		return [
-			'none' => esc_html__( 'None', 'wpr-addons' ),
-			'solid' => esc_html__( 'Solid', 'wpr-addons' ),
-			'double' => esc_html__( 'Double', 'wpr-addons' ),
-			'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
-			'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
-			'groove' => esc_html__( 'Groove', 'wpr-addons' ),
-		];
-	}
 
 	public function woocommerce_before_cart() {
 		echo '<div class="wpr-cart-wrapper">';
