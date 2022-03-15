@@ -131,6 +131,9 @@ class Wpr_Post_Content extends Widget_Base {
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-post-content',
 				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
 					'font_size'      => [
 						'default'    => [
 							'size' => '14',

@@ -6,6 +6,7 @@ use Elementor\Controls_Manager;
 use WprAddons\Includes\Controls\WPR_Control_Animations;
 use WprAddons\Includes\Controls\WPR_Control_Animations_Alt;
 use WprAddons\Includes\Controls\WPR_Control_Button_Animations;
+use WprAddons\Includes\Controls\WPR_Control_Arrow_Icons;
 use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) {	exit; } // Exit if accessed directly
@@ -79,6 +80,7 @@ class Plugin {
 
 		// Custom Controls
 		require WPR_ADDONS_PATH . 'includes/controls/wpr-control-animations.php';
+		require WPR_ADDONS_PATH . 'includes/controls/wpr-control-icons.php';
 
 		// Templates Library
 		require WPR_ADDONS_PATH . 'admin/includes/wpr-templates-library.php';
@@ -186,6 +188,7 @@ class Plugin {
 		$controls_manager->register_control( 'wpr-animations', new WPR_Control_Animations() );
 		$controls_manager->register_control( 'wpr-animations-alt', new WPR_Control_Animations_Alt() );
 		$controls_manager->register_control( 'wpr-button-animations', new WPR_Control_Button_Animations() );
+		$controls_manager->register_control( 'wpr-arrow-icons', new WPR_Control_Arrow_Icons() );
 
 	}
 

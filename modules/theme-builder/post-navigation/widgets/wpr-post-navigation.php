@@ -165,26 +165,16 @@ class Wpr_Post_Navigation extends Widget_Base {
 				],
 			]
 		);
-
+		
 		$this->add_control(
 			'post_nav_arrow_icon',
 			[
 				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
+				'type' => 'wpr-arrow-icons',
 				'default' => 'svg-angle-2-left',
-				'options' => Utilities::get_svg_icons_array( 'arrows', [
-					'fas fa-angle' => esc_html__( 'Angle', 'wpr-addons' ),
-					'fas fa-angle-double' => esc_html__( 'Angle Double', 'wpr-addons' ),
-					'fas fa-arrow' => esc_html__( 'Arrow', 'wpr-addons' ),
-					'fas fa-arrow-alt-circle' => esc_html__( 'Arrow Circle', 'wpr-addons' ),
-					'far fa-arrow-alt-circle' => esc_html__( 'Arrow Circle Alt', 'wpr-addons' ),
-					'fas fa-long-arrow-alt' => esc_html__( 'Long Arrow', 'wpr-addons' ),
-					'fas fa-chevron' => esc_html__( 'Chevron', 'wpr-addons' ),
-					'svg-icons' => esc_html__( 'SVG Icons -----', 'wpr-addons' ),
-				] ),
 				'condition' => [
 					'post_nav_arrows' => 'yes',
-				]
+				],
 			]
 		);
 
@@ -635,7 +625,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation i' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-post-navigation svg path' => 'color: {{VALUE}}',
@@ -660,6 +650,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 			'post_nav_arrow_border_color',
 			[
 				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'default' => '#E8E8E8',
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation i' => 'border-color: {{VALUE}}',
@@ -682,7 +673,6 @@ class Wpr_Post_Navigation extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#54595f',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation i:hover' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-posts-navigation-svg-wrapper:hover svg' => 'fill: {{VALUE}}',
@@ -723,7 +713,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 			[
 				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
-				'default' => 0.1,
+				'default' => 0.5,
 				'min' => 0,
 				'max' => 5,
 				'step' => 0.1,
@@ -751,7 +741,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 				],				
 				'default' => [
 					'unit' => 'px',
-					'size' => 20,
+					'size' => 7,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation i' => 'font-size: {{SIZE}}{{UNIT}};',
@@ -777,7 +767,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 				],				
 				'default' => [
 					'unit' => 'px',
-					'size' => 50,
+					'size' => 40,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation-wrap i' => 'width: {{SIZE}}{{UNIT}};',
@@ -828,7 +818,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 				],				
 				'default' => [
 					'unit' => 'px',
-					'size' => 10,
+					'size' => 0,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-nav-prev i' => 'margin-right: {{SIZE}}{{UNIT}};',
@@ -1129,7 +1119,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-nav-labels span' => 'color: {{VALUE}}',
 				],
@@ -1166,7 +1156,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 			[
 				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
-				'default' => 0.1,
+				'default' => 0.5,
 				'min' => 0,
 				'max' => 5,
 				'step' => 0.1,
@@ -1180,9 +1170,20 @@ class Wpr_Post_Navigation extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name'     => 'post_nav_label_typography',
+				'name'     => 'content_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-post-nav-labels span'
+				'selector' => '{{WRAPPER}} .wpr-post-content',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'font_size'      => [
+						'default'    => [
+							'size' => '15',
+							'unit' => 'px',
+						],
+					],
+				]
 			]
 		);
 
