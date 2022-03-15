@@ -82,8 +82,11 @@ class Wpr_Page_My_Account extends Widget_Base {
 					'size' => 5,
 				],
 				'selectors' => [
-					'{{WRAPPER}}.wpr-my-account-tabs-horizontal .woocommerce-MyAccount-navigation' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-my-account-tabs-vertical .woocommerce-MyAccount-navigation' => 'margin-right: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}}.wpr-my-account-tabs-horizontal .woocommerce-MyAccount-navigation' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}}.wpr-my-account-tabs-vertical .woocommerce-MyAccount-navigation' => 'margin-right: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}}.wpr-my-account-tabs-vertical .woocommerce-MyAccount-content' => 'width: calc(70% - {{SIZE}}px);'
+					'{{WRAPPER}}.wpr-my-account-tabs-horizontal .woocommerce-MyAccount-content' => 'margin-top: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-my-account-tabs-vertical .woocommerce-MyAccount-content' => 'margin-left: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-my-account-tabs-vertical .woocommerce-MyAccount-content' => 'width: calc(70% - {{SIZE}}px);'
 				],
 				'separator' => 'before',
@@ -236,13 +239,11 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'default' => [
 					'top' => 1,
 					'right' => 1,
-					'bottom' => 0,
+					'bottom' => 1,
 					'left' => 1,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link a' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					// '{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li a' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					// '{{WRAPPER}}.wpr-tabs-position-above .wpr-product-tabs .woocommerce-tabs ul.tabs li.active:after' => 'margin-bottom: -{{TOP}}px; height: {{TOP}}px; width: calc(100% - {{TOP}}*2px)',
 				],
 				'condition' => [
 					'tab_border_type!' => 'none',
@@ -302,10 +303,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 					'left' => 0,
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .wc-tabs li a' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};', // li or a ?
-					// '{{WRAPPER}} .wc-tabs li.active a' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} -0.1px {{LEFT}}{{UNIT}};', // li or a ?
-					// '{{WRAPPER}} .wc-tabs li.active' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} -0.1px {{LEFT}}{{UNIT}};', // li or a ?
-					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link a' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};', // li or a ?
+					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link a' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -349,9 +347,6 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#e5e5e5',
 				'selectors' => [
-					// '{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel' => 'border-color: {{VALUE}}',
-					// '{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li.active' => 'border-color: {{VALUE}} {{VALUE}} {{active_tab_bg_color.VALUE}} {{VALUE}}',
-					// '{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li:not(.active)' => 'border-bottom-color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link:hover a' => 'border-color: {{VALUE}}',
 				],
 			]
@@ -406,9 +401,6 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#e5e5e5',
 				'selectors' => [
-					// '{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel' => 'border-color: {{VALUE}}',
-					// '{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li.active' => 'border-color: {{VALUE}} {{VALUE}} {{active_tab_bg_color.VALUE}} {{VALUE}}',
-					// '{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li:not(.active)' => 'border-bottom-color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link.is-active a' => 'border-color: {{VALUE}}',
 				],
 			]
@@ -441,6 +433,18 @@ class Wpr_Page_My_Account extends Widget_Base {
 		);
 
 		$this->add_control(
+			'tab_content_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#000',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
 			'tab_content_bg_color',
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
@@ -449,6 +453,193 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper' => 'background-color: {{VALUE}}',
 				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'tab_content_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content-wrapper'
+			]
+		);
+
+		$this->end_controls_section();
+
+		// Tab: Style ==============
+		// Section: Orders Table ---------
+		$this->start_controls_section(
+			'my_account_heading_styles',
+			[
+				'label' => __( 'Orders Table', 'wpr-addons' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'my_account_table_heading_title',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Table Heading', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'my_account_heading_color',
+			[
+				'label'     => esc_html__( 'Color', 'wpr-addons' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} table.woocommerce-orders-table th' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'my_account_heading_bg_color',
+			[
+				'label'     => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} table.woocommerce-orders-table th' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'my_account_heading_typography',
+				'label'    => esc_html__( 'Typography', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}} table.woocommerce-orders-table th',
+			]
+		);
+
+		$this->add_responsive_control(
+			'my_account_heading_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 5,
+					'right' => 5,
+					'bottom' => 5,
+					'left' => 5,
+				],
+				'selectors' => [
+					'{{WRAPPER}} table.woocommerce-orders-table th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'my_account_heading_alignment',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'start' => [
+						'title' => esc_html__( 'Start', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'end' => [
+						'title' => esc_html__( 'End', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} table.woocommerce-orders-table th' => 'text-align: {{VALUE}};',
+				], //TODO: doesnt work
+			]
+		);
+
+		$this->add_control(
+			'my_account_table_description_title',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Table Description', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'my_account_description_color',
+			[
+				'label'     => esc_html__( 'Color', 'wpr-addons' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} table.cart td' => 'color: {{VALUE}}',
+					'{{WRAPPER}} table.cart td a' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'my_account_description_bg_color',
+			[
+				'label'     => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} table.cart td' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} table.shop_table td' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'my_account_description_typography',
+				'label'    => esc_html__( 'Typography', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}} table.cart tr.cart_item td',
+			]
+		);
+
+		$this->add_responsive_control(
+			'my_account_description_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 10,
+					'right' => 0,
+					'bottom' => 10,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} table.cart td' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'my_account_description_alignment',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'start' => [
+						'title' => esc_html__( 'Start', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'end' => [
+						'title' => esc_html__( 'End', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} table.cart td' => 'text-align: {{VALUE}};',
+				], //TODO: doesnt work
 			]
 		);
 
@@ -965,7 +1156,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 	private function render_html_front_end() {
 		$current_endpoint = $this->get_current_endpoint();
 		?>
-		<div class="e-my-account-tab e-my-account-tab__<?php echo sanitize_html_class( $current_endpoint ); ?>">
+		<div class="wpr-my-account-tab wpr-my-account-tab__<?php echo sanitize_html_class( $current_endpoint ); ?>">
 			<?php echo do_shortcode( '[woocommerce_my_account]' ); ?>
 		</div>
 		<?php
@@ -973,10 +1164,10 @@ class Wpr_Page_My_Account extends Widget_Base {
 
 	private function render_html_editor() {
 		$settings = $this->get_settings_for_display();
-		// Add .e-my-account-tab__dashboard as the default class when the editor loads.
+		// Add .wpr-my-account-tab-dashboard as the default class when the editor loads.
 		// This class will be replaced with JS when tabs are switched.
 		?>
-		<div class="e-my-account-tab e-my-account-tab__dashboard">
+		<div class="wpr-my-account-tab wpr-my-account-tab-dashboard">
 			<div class="woocommerce">
 			<?php
 				wc_get_template( 'myaccount/navigation.php' );
@@ -996,7 +1187,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 					'page' => $page,
 				] );
 				?>
-				<div class="woocommerce-MyAccount-content" <?php echo $page ? 'e-my-account-page="' . esc_attr( $page ) . '"' : ''; ?>>
+				<div class="woocommerce-MyAccount-content" <?php echo $page ? 'wpr-my-account-page="' . esc_attr( $page ) . '"' : ''; ?>>
 					<div class="<?php echo sanitize_html_class( $wrapper_class ); ?>">
 						<?php
 						if ( 'dashboard' === $page ) {
@@ -1127,7 +1318,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 		remove_action( 'woocommerce_account_content', [ $this, 'after_account_content' ], 95 );
 		remove_filter( 'woocommerce_get_myaccount_page_permalink', [ $this, 'woocommerce_get_myaccount_page_permalink' ], 10, 1 );
 		remove_filter( 'woocommerce_logout_default_redirect_url', [ $this, 'woocommerce_logout_default_redirect_url' ], 10, 1 );
-		
+
 		// Return to existing logged-in user after widget is rendered.
 		if ( $is_editor ) {
 			wp_set_current_user( $store_current_user );

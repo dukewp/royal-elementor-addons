@@ -294,20 +294,6 @@ class Wpr_Product_AddToCart extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'quantity_border_color_hr',
-			[
-				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#605BE5',
-				'selectors' => [
-					
-					'{{WRAPPER}} .wpr-product-add-to-cart .wpr-quantity-wrapper i:hover' => 'border-color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-product-add-to-cart .quantity .qty:hover' => 'border-color: {{VALUE}}',
-				]
-			]
-		);
-
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
