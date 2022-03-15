@@ -776,7 +776,8 @@ class Utilities {
 	** Check for New Free Users
 	*/
 	public static function is_new_free_user() {
-		return !wpr_fs()->can_use_premium_code() && (intval(get_option('royal_elementor_addons_activation_time')) > 1647346157);
+		return true;
+		// return !wpr_fs()->can_use_premium_code() && (intval(get_option('royal_elementor_addons_activation_time')) > 1647346157);
 	}
 
 }

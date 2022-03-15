@@ -701,23 +701,23 @@ class Wpr_Grid extends Widget_Base {
 			);
 		}
 
-		$this->add_control(
-			'query_posts_per_page',
-			[
-				'label' => esc_html__( 'Items Per Page', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 9,
-				'min' => 0,
-				'condition' => [
-					'query_source!' => 'current',
-					'layout_select!' => 'slider',
-				],
-			]
-		);
-
-		$this->add_control_query_slides_to_show();
-
 		if ( Utilities::is_new_free_user() ) {
+			$this->add_control(
+				'query_posts_per_page',
+				[
+					'label' => esc_html__( 'Items Per Page', 'wpr-addons' ),
+					'type' => Controls_Manager::NUMBER,
+					'default' => 9,
+					'min' => 0,
+					'condition' => [
+						'query_source!' => 'current',
+						'layout_select!' => 'slider',
+					],
+				]
+			);
+
+			$this->add_control_query_slides_to_show();
+
 			$this->add_control(
 				'limit_slides_to_show_pro_notice',
 				[
@@ -725,6 +725,19 @@ class Wpr_Grid extends Widget_Base {
 					'raw' => 'More than <strong>4 Slides</strong> are available<br>in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-grid-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
 					// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
 					'content_classes' => 'wpr-pro-notice',
+				]
+			);
+		} else {
+			$this->add_control(
+				'query_posts_per_page',
+				[
+					'label' => esc_html__( 'Items Per Page', 'wpr-addons' ),
+					'type' => Controls_Manager::NUMBER,
+					'default' => 9,
+					'min' => 0,
+					'condition' => [
+						'query_source!' => 'current',
+					],
 				]
 			);
 		}
