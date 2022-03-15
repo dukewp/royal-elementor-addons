@@ -1310,8 +1310,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 			[
 				'name'     => 'variation_title_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .woocommerce-grouped-product-list-item__label a',
-				'selector' => '{{WRAPPER}} .woocommerce-grouped-product-list-item__label label'
+				'selector' => '{{WRAPPER}} .woocommerce-grouped-product-list-item__label a, {{WRAPPER}} .woocommerce-grouped-product-list-item__label label',
 			]
 		);
 
