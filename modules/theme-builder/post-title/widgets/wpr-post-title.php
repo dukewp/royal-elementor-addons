@@ -122,7 +122,18 @@ class Wpr_Post_Title extends Widget_Base {
 			[
 				'name'     => 'title_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-post-title'
+				'selector' => '{{WRAPPER}} .wpr-post-title',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'font_size'      => [
+						'default'    => [
+							'size' => '30',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
