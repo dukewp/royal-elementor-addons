@@ -337,6 +337,9 @@ class Wpr_Post_Info extends Widget_Base {
 				'fields' => $repeater->get_controls(),
 				'default' => [
 					[
+						'post_info_select' => 'taxonomy',
+					],
+					[
 						'post_info_select' => 'date',
 					],
 				],
@@ -380,7 +383,7 @@ class Wpr_Post_Info extends Widget_Base {
 				],				
 				'default' => [
 					'unit' => 'px',
-					'size' => 10,
+					'size' => 2,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-info-vertical li' => 'padding-bottom: {{SIZE}}{{UNIT}};',
@@ -396,7 +399,7 @@ class Wpr_Post_Info extends Widget_Base {
                 'label' => esc_html__( 'Align', 'wpr-addons' ),
                 'type' => Controls_Manager::CHOOSE,
                 'label_block' => false,
-                'default' => 'left',
+                'default' => 'center',
                 'options' => [
                     'left' => [
                         'title' => esc_html__( 'Left', 'wpr-addons' ),
@@ -576,7 +579,7 @@ class Wpr_Post_Info extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#959595',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-info li' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-post-info li:not(.wpr-post-info-taxonomy):not(.wpr-post-info-custom-field) a' => 'color: {{VALUE}}',
@@ -598,7 +601,6 @@ class Wpr_Post_Info extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#54595f',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-info li:not(.wpr-post-info-taxonomy):not(.wpr-post-info-custom-field) a:hover' => 'color: {{VALUE}}',
 				],
@@ -612,9 +614,21 @@ class Wpr_Post_Info extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'post_info_elements_typography',
+				'name'           => 'post_info_elements_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-post-info li:not(.wpr-post-info-taxonomy):not(.wpr-post-info-custom-field)'
+				'label'          => esc_html__('Typography', 'wpr-addons'),
+				'selector' => '{{WRAPPER}} .wpr-post-info li:not(.wpr-post-info-taxonomy):not(.wpr-post-info-custom-field)',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'font_size'      => [
+						'default'    => [
+							'size' => '12',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 

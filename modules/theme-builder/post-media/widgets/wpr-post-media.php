@@ -673,7 +673,7 @@ class Wpr_Post_Media extends Widget_Base {
 				],				
 				'default' => [
 					'unit' => 'px',
-					'size' => 800,
+					'size' => 500,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-featured-media-image' => 'width: {{SIZE}}{{UNIT}};',
