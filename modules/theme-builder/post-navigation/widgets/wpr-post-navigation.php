@@ -57,7 +57,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 			[
 				'label' => esc_html__( 'Layout', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => 'fixed',
+				'default' => 'static',
 				'options' => [
 					'fixed-default' => esc_html__( 'Fixed Default', 'wpr-addons' ),
 					'fixed' => esc_html__( 'Fixed Left/Right', 'wpr-addons' ),
@@ -171,7 +171,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 			[
 				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => 'svg-angle-1-left',
+				'default' => 'svg-angle-2-left',
 				'options' => Utilities::get_svg_icons_array( 'arrows', [
 					'fas fa-angle' => esc_html__( 'Angle', 'wpr-addons' ),
 					'fas fa-angle-double' => esc_html__( 'Angle Double', 'wpr-addons' ),
@@ -207,7 +207,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 			[
 				'label' => esc_html__( 'Previous Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => 'Previous Posts',
+				'default' => 'Previous Post',
 				'condition' => [
 					'post_nav_labels' => 'yes',
 					'post_nav_layout!' => 'fixed',
@@ -437,7 +437,6 @@ class Wpr_Post_Navigation extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#ffffff',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation-wrap' => 'background-color: {{VALUE}}',
 				],
@@ -475,7 +474,6 @@ class Wpr_Post_Navigation extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Overlay Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#ffffff',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-nav-overlay' => 'background-color: {{VALUE}}',
 				],
@@ -509,7 +507,6 @@ class Wpr_Post_Navigation extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Overlay Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#ffffff',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation:hover .wpr-post-nav-overlay' => 'background-color: {{VALUE}}',
 				],
@@ -567,9 +564,9 @@ class Wpr_Post_Navigation extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 10,
+					'top' => 0,
 					'right' => 0,
-					'bottom' => 10,
+					'bottom' => 0,
 					'left' => 0,
 				],
 				'selectors' => [
