@@ -73,7 +73,6 @@ class Wpr_Post_Content extends Widget_Base {
             [
                 'label' => esc_html__( 'Alignment', 'wpr-addons' ),
                 'type' => Controls_Manager::CHOOSE,
-                'default' => 'center',
                 'label_block' => false,
                 'options' => [
 					'left'    => [
@@ -118,7 +117,7 @@ class Wpr_Post_Content extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#777777',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-content' => 'color: {{VALUE}}',
 				],
@@ -130,7 +129,12 @@ class Wpr_Post_Content extends Widget_Base {
 			[
 				'name'     => 'content_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-post-content'
+				'selector' => '{{WRAPPER}} .wpr-post-content',
+				'fields_options' => [
+					'font_size'   => [
+						'default' => '14px',
+					],
+				],
 			]
 		);
 
