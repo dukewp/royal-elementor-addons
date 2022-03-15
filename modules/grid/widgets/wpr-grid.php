@@ -54,15 +54,30 @@ class Wpr_Grid extends Widget_Base {
     }
 
 	public function add_option_query_source() {
-		$pro_query = [
-			'pro-rl' => 'Related Query (Pro)',
-			'pro-cr' => 'Current Query (Pro)',
-		];
+		$post_types = Utilities::get_custom_types_of( 'post', false );
+		$post_types['current'] = esc_html__( 'Current Query', 'wpr-addons' );
+		$post_types['pro-rl'] = esc_html__( 'Related Query (Pro)', 'wpr-addons' );
 		
-		return array_merge(Utilities::get_custom_types_of( 'post', false ), $pro_query);
+		return $post_types;
 	}
 
 	public function add_control_query_randomize() {}
+
+	public function add_control_query_slides_to_show() {
+		$this->add_control(
+			'query_slides_to_show',
+			[
+				'label' => esc_html__( 'Slides to Show', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 4,
+				'min' => 0,
+				'max' => 4,
+				'condition' => [
+					'layout_select' => 'slider',
+				],
+			]
+		);
+	}
 
 	public function add_control_layout_select() {
 		$this->add_control(
@@ -437,18 +452,29 @@ class Wpr_Grid extends Widget_Base {
 	public function add_control_filters_default_filter() {}
 
 	public function add_control_pagination_type() {
+		$options = [
+			'default' => esc_html__( 'Default', 'wpr-addons' ),
+			'numbered' => esc_html__( 'Numbered', 'wpr-addons' ),
+			'load-more' => esc_html__( 'Load More Button', 'wpr-addons' ),
+			'pro-is' => esc_html__( 'Infinite Scrolling (Pro)', 'wpr-addons' ),
+		];
+
+		if ( Utilities::is_new_free_user() ) {
+			$options = [
+				'default' => esc_html__( 'Default', 'wpr-addons' ),
+				'load-more' => esc_html__( 'Load More Button', 'wpr-addons' ),
+				'pro-nb' => esc_html__( 'Numbered (Pro)', 'wpr-addons' ),
+				'pro-is' => esc_html__( 'Infinite Scrolling (Pro)', 'wpr-addons' ),
+			];
+		}
+
 		$this->add_control(
 			'pagination_type',
 			[
 				'label' => esc_html__( 'Select Type', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'load-more',
-				'options' => [
-					'default' => esc_html__( 'Default', 'wpr-addons' ),
-					'numbered' => esc_html__( 'Numbered', 'wpr-addons' ),
-					'load-more' => esc_html__( 'Load More Button', 'wpr-addons' ),
-					'pro-is' => esc_html__( 'Infinite Scrolling (Pro)', 'wpr-addons' ),
-				],
+				'options' => $options,
 				'separator' => 'after'
 			]
 		);
@@ -565,7 +591,7 @@ class Wpr_Grid extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'query_source', ['pro-rl', 'pro-cr'] );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'query_source', ['pro-rl'] );
 
 		$this->add_control(
 			'query_selection',
@@ -684,9 +710,24 @@ class Wpr_Grid extends Widget_Base {
 				'min' => 0,
 				'condition' => [
 					'query_source!' => 'current',
+					'layout_select!' => 'slider',
 				],
 			]
 		);
+
+		$this->add_control_query_slides_to_show();
+
+		if ( Utilities::is_new_free_user() ) {
+			$this->add_control(
+				'limit_slides_to_show_pro_notice',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => 'More than <strong>4 Slides</strong> are available<br>in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-grid-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+					'content_classes' => 'wpr-pro-notice',
+				]
+			);
+		}
 
 		$this->add_control(
 			'query_offset',
@@ -2521,7 +2562,7 @@ class Wpr_Grid extends Widget_Base {
 		$this->add_control_pagination_type();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'pagination_type', ['pro-is'] );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'pagination_type', ['pro-is', 'pro-nb'] );
 
 		$this->add_control(
 			'pagination_older_text',
@@ -7579,6 +7620,11 @@ class Wpr_Grid extends Widget_Base {
 			$paged = get_query_var( 'page' );
 		} else {
 			$paged = 1;
+		}
+
+		// Change Posts Per Page for Slider Layout
+		if ( 'slider' === $settings['layout_select'] && Utilities::is_new_free_user() ) {
+			$settings['query_posts_per_page'] = $settings['query_slides_to_show'];
 		}
 
 		$offset = ( $paged - 1 ) * intval($settings['query_posts_per_page']) + intval($settings[ 'query_offset' ]);

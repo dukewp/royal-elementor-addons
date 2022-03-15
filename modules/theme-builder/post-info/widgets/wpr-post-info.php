@@ -155,7 +155,7 @@ class Wpr_Post_Info extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-info-taxonomy a' => 'display: {{VALUE}}',
-					'{{WRAPPER}} .wpr-post-info-taxonomy span' => 'display: {{VALUE}}',
+					'{{WRAPPER}} .wpr-post-info-taxonomy > span:not(.wpr-post-info-text)' => 'display: {{VALUE}}',
 				],
 				'condition' => [
 					'post_info_select' => 'taxonomy',
@@ -664,6 +664,7 @@ class Wpr_Post_Info extends Widget_Base {
 				'default' => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-info-taxonomy a' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-post-info-taxonomy > span:not(.wpr-post-info-text)' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -675,6 +676,7 @@ class Wpr_Post_Info extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-info-taxonomy a' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-post-info-taxonomy > span:not(.wpr-post-info-text)' => 'background-color: {{VALUE}}',
 				]
 			]
 		);
@@ -686,6 +688,7 @@ class Wpr_Post_Info extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-info-taxonomy a' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-post-info-taxonomy > span:not(.wpr-post-info-text)' => 'border-color: {{VALUE}}',
 				],
 			]
 		);
@@ -742,7 +745,7 @@ class Wpr_Post_Info extends Widget_Base {
 			[
 				'name' => 'post_info_tax_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-post-info-taxonomy a',
+				'selector' => '{{WRAPPER}} .wpr-post-info-taxonomy a, {{WRAPPER}} .wpr-post-info-taxonomy > span:not(.wpr-post-info-text)',
 				'separator' => 'before',
 			]
 		);
@@ -763,6 +766,7 @@ class Wpr_Post_Info extends Widget_Base {
 				'default' => 'none',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-info-taxonomy a' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .wpr-post-info-taxonomy > span:not(.wpr-post-info-text)' => 'border-style: {{VALUE}};',
 				],
 				'separator' => 'before',
 			]
@@ -782,6 +786,7 @@ class Wpr_Post_Info extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-info-taxonomy a' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-post-info-taxonomy > span:not(.wpr-post-info-text)' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
 					'post_info_tax_border_type!' => 'none',
@@ -803,6 +808,7 @@ class Wpr_Post_Info extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-info-taxonomy a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-post-info-taxonomy > span:not(.wpr-post-info-text)' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before'
 			]
@@ -822,6 +828,7 @@ class Wpr_Post_Info extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-info-taxonomy a' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-post-info-taxonomy > span:not(.wpr-post-info-text)' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -840,6 +847,7 @@ class Wpr_Post_Info extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-info-taxonomy a' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-post-info-taxonomy > span:not(.wpr-post-info-text)' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]

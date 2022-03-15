@@ -1091,7 +1091,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 }
 
 /* Post Content */
-.wpr-post-content .elementor-column-gap-default>.elementor-column>.elementor-element-populated {
+.wpr-post-content > .elementor > .elementor-section-wrap > .elementor-section > .elementor-column-gap-default > .elementor-column > .elementor-element-populated {
   padding: 0 !important;
 }
 
