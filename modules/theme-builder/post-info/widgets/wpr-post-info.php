@@ -675,7 +675,7 @@ class Wpr_Post_Info extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-info-taxonomy a' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-post-info-taxonomy > span:not(.wpr-post-info-text)' => 'color: {{VALUE}}',
@@ -721,7 +721,7 @@ class Wpr_Post_Info extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#54595f',
+				'default' => '#54595F',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-info-taxonomy a:hover' => 'color: {{VALUE}}',
 				],
@@ -761,6 +761,17 @@ class Wpr_Post_Info extends Widget_Base {
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-post-info-taxonomy a, {{WRAPPER}} .wpr-post-info-taxonomy > span:not(.wpr-post-info-text)',
 				'separator' => 'before',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'font_size'      => [
+						'default'    => [
+							'size' => '15',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -941,7 +952,6 @@ class Wpr_Post_Info extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#54595f',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-info-custom-field a:hover' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-post-info-custom-field > span:hover' => 'color: {{VALUE}}',
