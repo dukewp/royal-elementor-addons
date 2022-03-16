@@ -176,7 +176,7 @@ class Wpr_Author_Box extends Widget_Base {
 			[
 				'label' => esc_html__( 'Show Title', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
+				'default' => '',
 				'return_value' => 'yes',
 				'separator' => 'before',
 			]
@@ -312,7 +312,7 @@ class Wpr_Author_Box extends Widget_Base {
 				'label' => esc_html__( 'Image Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
-					'size' => 48,
+					'size' => 65,
 				],
 				'range' => [
 					'px' => [
@@ -333,7 +333,7 @@ class Wpr_Author_Box extends Widget_Base {
 				'label' => esc_html__( 'Distance', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
-					'size' => 20,
+					'size' => 0,
 				],
 				'range' => [
 					'px' => [
@@ -356,7 +356,7 @@ class Wpr_Author_Box extends Widget_Base {
 				'name' => 'avatar_border',
 				'fields_options' => [
 					'border' => [
-						'default' => 'solid',
+						'default' => '',
 					],
 					'width' => [
 						'default' => [
@@ -383,10 +383,10 @@ class Wpr_Author_Box extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
+					'top' => 50,
+					'right' => 50,
+					'bottom' => 50,
+					'left' => 50,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-author-box-image img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -422,7 +422,7 @@ class Wpr_Author_Box extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-author-box-name' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-author-box-name a' => 'color: {{VALUE}}',
@@ -436,7 +436,26 @@ class Wpr_Author_Box extends Widget_Base {
 			[
 				'name'     => 'name_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-author-box-name'
+				'selector' => '{{WRAPPER}} .wpr-author-box-name',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'font_weight'    => [
+						'default' => '500',
+					],
+					'font_size'      => [
+						'default'    => [
+							'size' => '18',
+							'unit' => 'px',
+						],
+					],
+					'letter_spacing' => [
+						'default' => [
+							'size' => '0.2'
+						]
+					],
+				]
 			]
 		);
 
@@ -467,7 +486,7 @@ class Wpr_Author_Box extends Widget_Base {
 				'label' => esc_html__( 'Bottom Distance', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
-					'size' => 15,
+					'size' => 10,
 				],
 				'range' => [
 					'px' => [
@@ -513,7 +532,21 @@ class Wpr_Author_Box extends Widget_Base {
 			[
 				'name' => 'title_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-author-box-title'
+				'selector' => '{{WRAPPER}} .wpr-author-box-title',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'font_weight'    => [
+						'default' => '500',
+					],
+					'font_size'      => [
+						'default'    => [
+							'size' => '15',
+							'unit' => 'px',
+						],
+					],
+				]
 			]
 		);
 
@@ -576,7 +609,7 @@ class Wpr_Author_Box extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#555555',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-author-box-bio' => 'color: {{VALUE}}',
 				],
@@ -589,7 +622,18 @@ class Wpr_Author_Box extends Widget_Base {
 			[
 				'name' => 'bio_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-author-box-bio'
+				'selector' => '{{WRAPPER}} .wpr-author-box-bio',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'font_size'      => [
+						'default'    => [
+							'size' => '15',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
