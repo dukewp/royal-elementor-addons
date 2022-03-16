@@ -7628,6 +7628,7 @@ class Wpr_Grid extends Widget_Base {
 		// Change Posts Per Page for Slider Layout
 		if ( 'slider' === $settings['layout_select'] && Utilities::is_new_free_user() ) {
 			$settings['query_posts_per_page'] = $settings['query_slides_to_show'];
+			$settings['query_posts_per_page'] = $settings['query_posts_per_page'] > 4 ? 4 : $settings['query_posts_per_page'];
 		}
 
 		$offset = ( $paged - 1 ) * intval($settings['query_posts_per_page']) + intval($settings[ 'query_offset' ]);
