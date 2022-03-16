@@ -37,10 +37,45 @@ class Wpr_Post_Navigation extends Widget_Base {
 		return [ 'navigation', 'arrows', 'pagination' ];
 	}
 
-	protected function _register_controls() {
+	public function add_control_post_nav_layout() {
+		$this->add_control(
+			'post_nav_layout',
+			[
+				'label' => esc_html__( 'Layout', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'static',
+				'options' => [
+					'static' => esc_html__( 'Static Left/Right', 'wpr-addons' ),
+					'pro-fx' => esc_html__( 'Fixed Left/Right (Pro)', 'wpr-addons' ),
+					'pro-fd' => esc_html__( 'Fixed Default (Pro)', 'wpr-addons' ),
+				],
+			]
+		);
+	}
 
-		// Get Available Taxonomies
-		$post_taxonomies = Utilities::get_custom_types_of( 'tax', false );
+	public function add_control_post_nav_fixed_default_align() {}
+
+	public function add_control_post_nav_fixed_vr() {}
+	
+	public function add_control_post_nav_arrows_loc() {}
+	
+	public function add_control_post_nav_title() {}
+
+	public function add_controls_group_post_nav_image() {}
+
+	public function add_controls_group_post_nav_back() {}
+
+	public function add_control_post_nav_query() {}
+
+	public function add_controls_group_post_nav_overlay_style() {}
+
+	public function add_control_post_nav_align_vr() {}
+
+	public function add_section_style_post_nav_back_btn() {}
+
+	public function add_section_style_post_nav_title() {}
+
+	protected function _register_controls() {
 
 		// Tab: Content ==============
 		// Section: General ----------
@@ -52,79 +87,14 @@ class Wpr_Post_Navigation extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'post_nav_layout',
-			[
-				'label' => esc_html__( 'Layout', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'static',
-				'options' => [
-					'fixed-default' => esc_html__( 'Fixed Default', 'wpr-addons' ),
-					'fixed' => esc_html__( 'Fixed Left/Right', 'wpr-addons' ),
-					'static' => esc_html__( 'Static Left/Right', 'wpr-addons' ),
-				],
-			]
-		);
+		$this->add_control_post_nav_layout();
 
-		$this->add_control(
-            'post_nav_fixed_default_align',
-            [
-                'label' => esc_html__( 'Horizontal Align', 'wpr-addons' ),
-                'type' => Controls_Manager::CHOOSE,
-                'label_block' => false,
-                'default' => 'center',
-                'options' => [
-                    'left' => [
-                        'title' => esc_html__( 'Left', 'wpr-addons' ),
-                        'icon' => 'eicon-h-align-left',
-                    ],
-                    'center' => [
-                        'title' => esc_html__( 'Center', 'wpr-addons' ),
-                        'icon' => 'eicon-h-align-center',
-                    ],
-                    'right' => [
-                        'title' => esc_html__( 'Right', 'wpr-addons' ),
-                        'icon' => 'eicon-h-align-right',
-                    ]
-                ],
-				'selectors_dictionary' => [
-					'left' => 'left: 0;',
-					'center' => 'left: 50%;-webkit-transform: translateX(-50%);transform: translateX(-50%);',
-					'right' => 'right: 0;'
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-nav-fixed-default-wrap' => '{{VALUE}}',
-				],
-				'condition' => [
-					'post_nav_layout' => 'fixed-default',
-				]
-            ]
-        );
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'post-navigation', 'post_nav_layout', ['pro-fx', 'pro-fd'] );
 
-		$this->add_responsive_control(
-			'post_nav_fixed_vr',
-			[
-				'label' => esc_html__( 'Vertical Position', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['%'],
-				'range' => [
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],				
-				'default' => [
-					'unit' => '%',
-					'size' => 50,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-nav-fixed.wpr-post-navigation' => 'top: {{SIZE}}%;',
-				],
-				'condition' => [
-					'post_nav_layout' => 'fixed',
-				],
-			]
-		);
+		$this->add_control_post_nav_fixed_default_align();
+
+		$this->add_control_post_nav_fixed_vr();
 
 		$this->add_control(
 			'post_nav_arrows',
@@ -137,34 +107,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'post_nav_arrows_loc',
-			[
-				'label' => esc_html__( 'Arrows Location', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'separate',
-				'options' => [
-					'separate' => esc_html__( 'Separate', 'wpr-addons' ),
-					'label' => esc_html__( 'Next to Label', 'wpr-addons' ),
-					'title' => esc_html__( 'Next to Title', 'wpr-addons' ),
-				],
-				'conditions' => [
-					'relation' => 'and',
-					'terms' => [
-						[
-							'name' => 'post_nav_arrows',
-							'operator' => '!=',
-							'value' => '',
-						],
-						[
-							'name' => 'post_nav_layout',
-							'operator' => '!=',
-							'value' => 'fixed',
-						],
-					],
-				],
-			]
-		);
+		$this->add_control_post_nav_arrows_loc();
 		
 		$this->add_control(
 			'post_nav_arrow_icon',
@@ -218,166 +161,11 @@ class Wpr_Post_Navigation extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'post_nav_title',
-			[
-				'label' => esc_html__( 'Show Title', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'separator' => 'before',
-				'condition' => [
-					'post_nav_layout!' => 'fixed'
-				]
-			]
-		);
+		$this->add_control_post_nav_title();
 
-		$this->add_control(
-			'post_nav_image',
-			[
-				'label' => esc_html__( 'Show Post Thumbnail', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'separator' => 'before'
-			]
-		);
+		$this->add_controls_group_post_nav_image();
 
-		$this->add_control(
-			'post_nav_image_bg',
-			[
-				'label' => esc_html__( 'Set as Background Image', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'conditions' => [
-					'relation' => 'and',
-					'terms' => [
-						[
-							'name' => 'post_nav_image',
-							'operator' => '!=',
-							'value' => '',
-						],
-						[
-							'name' => 'post_nav_layout',
-							'operator' => '!=',
-							'value' => 'fixed',
-						],
-					],
-				],
-			]
-		);
-
-		$this->add_control(
-			'post_nav_image_hover',
-			[
-				'label' => esc_html__( 'Show Image on Hover', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'conditions' => [
-					'relation' => 'and',
-					'terms' => [
-						[
-							'name' => 'post_nav_image',
-							'operator' => '!=',
-							'value' => '',
-						],
-						[
-							'name' => 'post_nav_layout',
-							'operator' => '==',
-							'value' => 'fixed',
-						],
-					],
-				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Image_Size::get_type(),
-			[
-				'name' => 'post_nav_image_width_crop',
-				'default' => 'medium',
-				'condition' => [
-					'post_nav_image' => 'yes',
-					'post_nav_layout!' => 'fixed'
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'post_nav_image_width',
-			[
-				'label' => __( 'Image Width', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'default' => [
-					'size' => 140,
-				],
-				'range' => [
-					'px' => [
-						'min' => 50,
-						'max' => 300,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-navigation img' => 'width: {{SIZE}}px;',
-				],
-				'condition' => [
-					'post_nav_image' => 'yes',
-					'post_nav_image_bg!' => 'yes',
-					'post_nav_layout!' => 'fixed'
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'post_nav_image_distance',
-			[
-				'label' => esc_html__( 'Distance', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 50,
-					],
-				],				
-				'default' => [
-					'unit' => 'px',
-					'size' => 10,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-nav-prev img' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-post-nav-next img' => 'margin-left: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'post_nav_image' => 'yes',
-					'post_nav_image_bg!' => 'yes',
-					'post_nav_layout!' => 'fixed'
-				],
-			]
-		);
-
-		$this->add_control(
-			'post_nav_back',
-			[
-				'label' => esc_html__( 'Show Back Button', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'separator' => 'before',
-				'condition' => [
-					'post_nav_layout!' => 'fixed',
-				]
-			]
-		);
-
-		$this->add_control(
-			'post_nav_back_link',
-			[
-				'label' => esc_html__( 'Back Button Link', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'condition' => [
-					'post_nav_back' => 'yes',
-					'post_nav_layout!' => 'fixed',
-				]
-			]
-		);
+		$this->add_controls_group_post_nav_back();
 
 		$this->add_control(
 			'post_nav_dividers',
@@ -385,6 +173,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 				'label' => esc_html__( 'Show Dividers', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
+				'default' => 'yes',
 				'separator' => 'before',
 				'condition' => [
 					'post_nav_layout' => 'static'
@@ -392,21 +181,19 @@ class Wpr_Post_Navigation extends Widget_Base {
 			]
 		);
 
-		$post_taxonomies['all'] = esc_html__( 'All', 'wpr-addons' );
-
-		$this->add_control(
-			'post_nav_query',
-			[
-				'label' => esc_html__( 'Navigate Through', 'wpr-addons' ),
-				'description' => esc_html__( 'If you select a taxonomy, Next and Previous posts will be in the same toxonomy term as the current post.', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => array_reverse($post_taxonomies),
-				'default' => 'all',
-				'separator' => 'before',
-			]
-		);
+		$this->add_control_post_nav_query();
 
 		$this->end_controls_section();
+
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'post-navigation', [
+			'Set Navigation Query - Force to navigate posts through specific Taxonomy (category).',
+			'Advanced Layout Options - Fixed Left-Right, Fixed Bottom.',
+			'Multiple Navigation Arrows Locations.',
+			'Show/Hide Post Title.',
+			'Show/Hide Post Thumbnail, Show on hover or set as Navigation Label Background.',
+			'Show/Hide Back Button - Set custom link to any page to go back to.',
+		] );
 
 		// Styles ====================
 		// Section: General ----------
@@ -422,10 +209,12 @@ class Wpr_Post_Navigation extends Widget_Base {
 			]
 		);
 
+		$this->add_controls_group_post_nav_overlay_style();
+
 		$this->add_control(
 			'post_nav_background',
 			[
-				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'label'  => esc_html__( 'Section Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation-wrap' => 'background-color: {{VALUE}}',
@@ -438,86 +227,18 @@ class Wpr_Post_Navigation extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Divider Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#ffffff',
+				'default' => '#e8e8e8',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-navigation-wrap' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-post-nav-divider' => 'background-color: {{VALUE}}',
 				],
+				'separator' => 'before',
 				'condition' => [
 					'post_nav_layout' => 'static',
 					'post_nav_dividers' => 'yes'
 				]
 			]
 		);
-
-		$this->start_controls_tabs( 'tabs_popup_close_btn_style' );
-
-		$this->start_controls_tab(
-			'tab_post_nav_overlay_normal',
-			[
-				'label' => __( 'Normal', 'wpr-addons' ),
-			]
-		);
-
-		$this->add_control(
-			'post_nav_overlay_color',
-			[
-				'label'  => esc_html__( 'Overlay Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-nav-overlay' => 'background-color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Css_Filter::get_type(),
-			[
-				'name' => 'post_nav_background_filters',
-				'selector' => '{{WRAPPER}} .wpr-post-nav-overlay',
-				'condition' => [
-					'post_nav_image' => 'yes',
-					'post_nav_image_bg' => 'yes'
-				]
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->start_controls_tab(
-			'tab_post_nav_overlay_hover',
-			[
-				'label' => __( 'Hover', 'wpr-addons' ),
-			]
-		);
-
-
-		$this->add_control(
-			'post_nav_overlay_color_hover',
-			[
-				'label'  => esc_html__( 'Overlay Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-navigation:hover .wpr-post-nav-overlay' => 'background-color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Css_Filter::get_type(),
-			[
-				'name' => 'post_nav_background_filters_hover',
-				'selector' => '{{WRAPPER}} .wpr-post-navigation:hover .wpr-post-nav-overlay',
-				'condition' => [
-					'post_nav_image' => 'yes',
-					'post_nav_image_bg' => 'yes'
-				]
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->end_controls_tabs();
 
 		$this->add_control(
 			'post_nav_divider_width',
@@ -528,7 +249,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 1,
-						'max' => 10,
+						'max' => 5,
 					],
 				],				
 				'default' => [
@@ -539,7 +260,6 @@ class Wpr_Post_Navigation extends Widget_Base {
 					'{{WRAPPER}} .wpr-post-nav-divider' => 'width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-post-navigation-wrap' => 'border-width: {{SIZE}}{{UNIT}} 0 {{SIZE}}{{UNIT}} 0;',
 				],
-				'separator' => 'before',
 				'condition' => [
 					'post_nav_layout' => 'static',
 					'post_nav_dividers' => 'yes'
@@ -567,33 +287,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'post_nav_align_vr',
-			[
-				'label' => esc_html__( 'Vertical Align', 'wpr-addons' ),
-				'type' => Controls_Manager::CHOOSE,
-				'label_block' => false,
-                'default' => 'center',
-				'options' => [
-					'flex-start' => [
-						'title' => esc_html__( 'Top', 'wpr-addons' ),
-						'icon' => 'eicon-v-align-top',
-					],
-					'center' => [
-						'title' => esc_html__( 'Middle', 'wpr-addons' ),
-						'icon' => 'eicon-v-align-middle',
-					],
-					'flex-end' => [
-						'title' => esc_html__( 'Bottom', 'wpr-addons' ),
-						'icon' => 'eicon-v-align-bottom',
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-navigation a' => 'align-items: {{VALUE}}',
-				],
-				'separator' => 'before'
-			]
-		);
+		$this->add_control_post_nav_align_vr();
 
 		$this->end_controls_section();
 
@@ -899,196 +593,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 
 		// Styles ====================
 		// Section: Back Button ------
-		$this->start_controls_section(
-			'section_style_post_nav_back_btn',
-			[
-				'label' => esc_html__( 'Back Button', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-				'show_label' => false,
-				'condition' => [
-					'post_nav_back' => 'yes',
-					'post_nav_layout!' => 'fixed'
-				]
-			]
-		);
-
-		$this->start_controls_tabs( 'tabs_grid_post_nav_back_btn_style' );
-
-		$this->start_controls_tab(
-			'tab_grid_post_nav_back_btn_normal',
-			[
-				'label' => __( 'Normal', 'wpr-addons' ),
-			]
-		);
-
-		$this->add_control(
-			'post_nav_back_btn_color',
-			[
-				'label'  => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-nav-back span' => 'color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_control(
-			'post_nav_back_btn_fill_color',
-			[
-				'label'  => esc_html__( 'Fill Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-nav-back span' => 'background-color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->start_controls_tab(
-			'tab_grid_post_nav_back_btn_hover',
-			[
-				'label' => __( 'Hover', 'wpr-addons' ),
-			]
-		);
-
-		$this->add_control(
-			'post_nav_back_btn_color_hr',
-			[
-				'label'  => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#54595f',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-nav-back a:hover span' => 'color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_control(
-			'post_nav_back_btn_fill_color_ht',
-			[
-				'label'  => esc_html__( 'Fill Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-nav-back a:hover span' => 'background-color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->end_controls_tabs();
-
-		$this->add_control(
-			'post_nav_back_btn_transition_duration',
-			[
-				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.1,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-nav-back span' => 'transition: background-color {{VALUE}}s, color {{VALUE}}s',
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_responsive_control(
-			'post_nav_back_btn_size',
-			[
-				'label' => esc_html__( 'Box Size', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 20,
-						'max' => 100,
-					],
-				],				
-				'default' => [
-					'unit' => 'px',
-					'size' => 30,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-nav-back a' => 'width: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-post-nav-back span' => 'width: calc({{SIZE}}px / 2 - {{post_nav_back_btn_gutter.SIZE}}px); height: calc({{SIZE}}px / 2 - {{post_nav_back_btn_gutter.SIZE}}px);',
-				],
-				'separator' => 'before'
-			]
-		);
-
-		$this->add_control(
-			'post_nav_back_btn_border_width',
-			[
-				'label' => esc_html__( 'Box Border Width', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 1,
-						'max' => 5,
-					],
-				],				
-				'default' => [
-					'unit' => 'px',
-					'size' => 1,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-nav-back span' => 'border-width: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'post_nav_back_btn_gutter',
-			[
-				'label' => esc_html__( 'Box Gutter', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 1,
-						'max' => 10,
-					],
-				],				
-				'default' => [
-					'unit' => 'px',
-					'size' => 1,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-nav-back span' => 'margin-right: {{SIZE}}{{UNIT}}; margin-bottom: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'post_nav_back_btn_distance',
-			[
-				'label' => esc_html__( 'Distance', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 50,
-					],
-				],				
-				'default' => [
-					'unit' => 'px',
-					'size' => 10,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-nav-back' => 'margin-left: {{SIZE}}{{UNIT}}; margin-right: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->end_controls_section();
+		$this->add_section_style_post_nav_back_btn();
 
 		// Styles ====================
 		// Section: Labels -----------
@@ -1126,6 +631,41 @@ class Wpr_Post_Navigation extends Widget_Base {
 			]
 		);
 
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'content_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-post-content',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'font_size'      => [
+						'default'    => [
+							'size' => '15',
+							'unit' => 'px',
+						],
+					],
+				]
+			]
+		);
+
+		$this->add_control(
+			'post_nav_label_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.5,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-post-nav-labels span' => 'transition: color {{VALUE}}s',
+				],
+			]
+		);
+
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
@@ -1151,144 +691,26 @@ class Wpr_Post_Navigation extends Widget_Base {
 
 		$this->end_controls_tabs();
 
-		$this->add_control(
-			'post_nav_label_transition_duration',
-			[
-				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.5,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-nav-labels span' => 'transition: color {{VALUE}}s',
-				],
-				'separator' => 'after',
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'content_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-post-content',
-				'fields_options' => [
-					'typography'      => [
-						'default' => 'custom',
-					],
-					'font_size'      => [
-						'default'    => [
-							'size' => '15',
-							'unit' => 'px',
-						],
-					],
-				]
-			]
-		);
-
 		$this->end_controls_section();
 
 		// Styles ====================
 		// Section: Title ------------
-		$this->start_controls_section(
-			'section_style_post_nav_title',
-			[
-				'label' => esc_html__( 'Title', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-				'show_label' => false,
-				'condition' => [
-					'post_nav_title' => 'yes',
-					'post_nav_layout!' => 'fixed'
-				]
-			]
-		);
-
-		$this->start_controls_tabs( 'tabs_grid_post_nav_title_style' );
-
-		$this->start_controls_tab(
-			'tab_grid_post_nav_title_normal',
-			[
-				'label' => __( 'Normal', 'wpr-addons' ),
-			]
-		);
-
-		$this->add_control(
-			'post_nav_title_color',
-			[
-				'label'  => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-nav-labels h5' => 'color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->start_controls_tab(
-			'tab_grid_post_nav_title_hover',
-			[
-				'label' => __( 'Hover', 'wpr-addons' ),
-			]
-		);
-
-		$this->add_control(
-			'post_nav_title_color_hr',
-			[
-				'label'  => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#54595f',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-nav-labels h5:hover' => 'color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->end_controls_tabs();
-
-		$this->add_control(
-			'post_nav_title_transition_duration',
-			[
-				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.1,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-post-nav-labels h5' => 'transition: color {{VALUE}}s',
-				],
-				'separator' => 'after',
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'post_nav_title_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-post-nav-labels h5'
-			]
-		);
-
-		$this->end_controls_section();
+		$this->add_section_style_post_nav_title();
 
 	}
 
 	// Arrow Icon
 	public function render_arrow_by_location( $settings, $location, $dir ) {
-		if ( 'fixed' === $settings['post_nav_layout'] ) {
+		if ( 'fixed' === $settings['post_nav_layout'] || !wpr_fs()->can_use_premium_code() ) {
 			$settings['post_nav_arrows_loc'] = 'separate';
 		}
 
-		if ( 'yes' === $settings['post_nav_arrows'] && $location === $settings['post_nav_arrows_loc'] && false !== strpos( $settings['post_nav_arrow_icon'], 'svg-' ) ) {
-			echo  '<div class="wpr-posts-navigation-svg-wrapper">' . Utilities::get_wpr_icon( $settings['post_nav_arrow_icon'], $dir ) . '</div>';
-		} else if ( 'yes' === $settings['post_nav_arrows'] && $location === $settings['post_nav_arrows_loc'] && false == strpos( $settings['post_nav_arrow_icon'], 'svg-' ) ) {
-			echo  Utilities::get_wpr_icon( $settings['post_nav_arrow_icon'], $dir );
+		if ( 'yes' === $settings['post_nav_arrows'] && $location === $settings['post_nav_arrows_loc'] ) {
+			if (  false !== strpos( $settings['post_nav_arrow_icon'], 'svg-' ) ) {
+				echo  '<div class="wpr-posts-navigation-svg-wrapper">' . Utilities::get_wpr_icon( $settings['post_nav_arrow_icon'], $dir ) . '</div>';
+			} else {
+				echo  Utilities::get_wpr_icon( $settings['post_nav_arrow_icon'], $dir );
+			}
 		}
 	}
 
@@ -1296,20 +718,30 @@ class Wpr_Post_Navigation extends Widget_Base {
 		// Get Settings
 		$settings = $this->get_settings();
 
+		if ( !wpr_fs()->can_use_premium_code() ) {
+			$settings['post_nav_image'] = '';
+			$settings['post_nav_image_bg'] = '';
+			$settings['post_nav_back'] = '';
+			$settings['post_nav_title'] = '';
+		}
+
+		// Set Query
+		$nav_query = isset($settings['post_nav_query']) ? $settings['post_nav_query'] : 'all';
+
 		// Get Previous and Next Posts
-		if ( 'all' === $settings['post_nav_query'] ) {
+		if ( 'all' === $nav_query || !wpr_fs()->can_use_premium_code() ) {
 			$prev_post = get_adjacent_post( false, '', true );
 			$next_post = get_adjacent_post( false, '', false );
 		} else {
-			$prev_post = get_adjacent_post( true, '', true, $settings['post_nav_query'] );
-			$next_post = get_adjacent_post( true, '', false, $settings['post_nav_query'] );
+			$prev_post = get_adjacent_post( true, '', true, $nav_query );
+			$next_post = get_adjacent_post( true, '', false, $nav_query );
 		}
 
 		// Layout Class
 		$layout_class = 'wpr-post-navigation wpr-post-nav-'. $settings['post_nav_layout'];
 
 		// Show Image on Hover
-		if ( 'yes' === $settings['post_nav_image_hover'] ) {
+		if ( (isset($settings['post_nav_image_hover']) && 'yes' === $settings['post_nav_image_hover']) ) {
 			$layout_class .= ' wpr-post-nav-hover';
 		}
 
@@ -1319,11 +751,11 @@ class Wpr_Post_Navigation extends Widget_Base {
 		$next_post_bg = '';
 
 		// Image URLs
-		if ( ! empty($prev_post) ) {
+		if ( ! empty($prev_post) && 'yes' === $settings['post_nav_image'] ) {
 			$prev_img_id = get_post_thumbnail_id( $prev_post->ID );
 			$prev_image_url = Group_Control_Image_Size::get_attachment_image_src( $prev_img_id, 'post_nav_image_width_crop', $settings );
 		}
-		if ( ! empty($next_post) ) {
+		if ( ! empty($next_post) && 'yes' === $settings['post_nav_image'] ) {
 			$next_img_id = get_post_thumbnail_id( $next_post->ID );
 			$next_image_url = Group_Control_Image_Size::get_attachment_image_src( $next_img_id, 'post_nav_image_width_crop', $settings );
 		}

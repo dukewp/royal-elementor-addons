@@ -20,7 +20,7 @@ class Wpr_Post_Media extends Widget_Base {
 	}
 
 	public function get_title() {
-		return esc_html__( 'Post Media', 'wpr-addons' );
+		return esc_html__( 'Post Thumbnail', 'wpr-addons' );
 	}
 
 	public function get_icon() {
@@ -788,10 +788,10 @@ class Wpr_Post_Media extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
+					'top' => 5,
+					'right' => 10,
+					'bottom' => 5,
+					'left' => 10,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-featured-media-caption span' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -807,10 +807,10 @@ class Wpr_Post_Media extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
+					'top' => 10,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-featured-media-caption span' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -867,10 +867,10 @@ class Wpr_Post_Media extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
+					'top' => 3,
+					'right' => 3,
+					'bottom' => 3,
+					'left' => 3,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-featured-media-caption span' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -884,7 +884,7 @@ class Wpr_Post_Media extends Widget_Base {
                 'label' => esc_html__( 'Vertical Align', 'wpr-addons' ),
                 'type' => Controls_Manager::CHOOSE,
                 'label_block' => false,
-                'default' => 'center',
+                'default' => 'flex-end',
 				'options' => [
 					'flex-start' => [
 						'title' => esc_html__( 'Top', 'wpr-addons' ),
@@ -1515,11 +1515,13 @@ class Wpr_Post_Media extends Widget_Base {
 		// 	$lightbox = ' data-lightbox="'. esc_attr( $this->get_lightbox_settings( $settings ) ) .'"';
 		// }
 
-		if ( $id === get_post_thumbnail_id() && false === get_post_format() ) {
-			$show_caption = $settings['featured_media_caption'];
-		} else {
-			$show_caption = $settings['gallery_caption'];
-		}
+		// if ( $id === get_post_thumbnail_id() && false === get_post_format() ) {
+		// 	$show_caption = $settings['featured_media_caption'];
+		// } else {
+		// 	$show_caption = $settings['gallery_caption'];
+		// }
+
+		$show_caption = $settings['featured_media_caption'];
 		
 		// Render Image
 		if ( has_post_thumbnail() ) {

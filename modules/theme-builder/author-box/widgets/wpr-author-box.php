@@ -35,6 +35,48 @@ class Wpr_Author_Box extends Widget_Base {
 		return [ 'royal', 'qq', 'author box', 'post', 'title' ];//tmp
 	}
 
+	public function add_controls_group_author_name_links_to() {
+		$this->add_control(
+			'author_name_links_to',
+			[
+				'label' => esc_html__( 'Links To', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'Nothing', 'wpr-addons' ),
+					'posts' => esc_html__( 'Author Posts', 'wpr-addons' ),
+					'pro-ws' => esc_html__( 'Website (Pro)', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'condition' => [
+					'author_name' => 'yes',
+				]
+			]
+		);
+	}
+
+	public function add_controls_group_author_title_links_to() {
+		$this->add_control(
+			'author_title_links_to',
+			[
+				'label' => esc_html__( 'Links To', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'Nothing', 'wpr-addons' ),
+					'posts' => esc_html__( 'Author Posts', 'wpr-addons' ),
+					'pro-ws' => esc_html__( 'Website (Pro)', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'condition' => [
+					'author_title' => 'yes',
+				]
+			]
+		);
+	}
+
+	public function add_control_author_bio() {}
+
+	public function add_section_style_bio() {}
+
 	protected function register_controls() {
 
 		// Tab: Content ==============
@@ -141,42 +183,16 @@ class Wpr_Author_Box extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'author_name_links_to',
-			[
-				'label' => esc_html__( 'Links To', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'none' => esc_html__( 'Nothing', 'wpr-addons' ),
-					'website' => esc_html__( 'Website', 'wpr-addons' ),
-					'posts' => esc_html__( 'Author Posts', 'wpr-addons' ),
-				],
-				'default' => 'none',
-				'condition' => [
-					'author_name' => 'yes',
-				]
-			]
-		);
+		$this->add_controls_group_author_name_links_to();
 
-		$this->add_control(
-			'author_link_tab',
-			[
-				'label' => esc_html__( 'Open in New Tab', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'condition' => [
-					'author_name' => 'yes',
-					'author_name_links_to!' => 'none',
-				]
-			]
-		);
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'author-box', 'author_name_links_to', ['pro-ws'] );
 
 		$this->add_control(
 			'author_title',
 			[
 				'label' => esc_html__( 'Show Title', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'default' => '',
+				'default' => 'yes',
 				'return_value' => 'yes',
 				'separator' => 'before',
 			]
@@ -214,46 +230,11 @@ class Wpr_Author_Box extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'author_title_links_to',
-			[
-				'label' => esc_html__( 'Links To', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'none' => esc_html__( 'Nothing', 'wpr-addons' ),
-					'website' => esc_html__( 'Website', 'wpr-addons' ),
-					'posts' => esc_html__( 'Author Posts', 'wpr-addons' ),
-				],
-				'default' => 'none',
-				'condition' => [
-					'author_title' => 'yes',
-				]
-			]
-		);
+		$this->add_controls_group_author_title_links_to();
 
-		$this->add_control(
-			'author_title_link_tab',
-			[
-				'label' => esc_html__( 'Open in New Tab', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'condition' => [
-					'author_title' => 'yes',
-					'author_title_links_to!' => 'none',
-				]
-			]
-		);
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'author-box', 'author_title_links_to', ['pro-ws'] );
 
-		$this->add_control(
-			'author_bio',
-			[
-				'label' => esc_html__( 'Show Biography', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
-				'return_value' => 'yes',
-				'separator' => 'before'
-			]
-		);
+		$this->add_control_author_bio();
 
 		$this->add_control(
 			'author_posts_link',
@@ -278,6 +259,12 @@ class Wpr_Author_Box extends Widget_Base {
 		);
 
 		$this->end_controls_section(); // End Controls Section
+
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'author-box', [
+			'Link to Author Website.',
+			'Show/Hide Author Biography (description).'
+		] );
 
 		// Styles ====================
 		// Section: Avatar -----------
@@ -595,70 +582,7 @@ class Wpr_Author_Box extends Widget_Base {
 
 		// Styles ====================
 		// Section: Biography --------
-		$this->start_controls_section(
-			'section_style_bio',
-			[
-				'label' => esc_html__( 'Biography', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-				'show_label' => false,
-			]
-		);
-
-		$this->add_control(
-			'bio_color',
-			[
-				'label'  => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#555555',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-author-box-bio' => 'color: {{VALUE}}',
-				],
-				'separator' => 'after',
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => 'bio_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-author-box-bio',
-				'fields_options' => [
-					'typography'      => [
-						'default' => 'custom',
-					],
-					'font_size'      => [
-						'default'    => [
-							'size' => '15',
-							'unit' => 'px',
-						],
-					]
-				]
-			]
-		);
-
-		$this->add_responsive_control(
-			'bio_distance',
-			[
-				'label' => esc_html__( 'Distance', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'default' => [
-					'size' => 15,
-				],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-author-box-bio' => 'margin-bottom: {{SIZE}}px',
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->end_controls_section(); // End Controls Section
+		$this->add_section_style_bio();
 
 		// Styles ====================
 		// Section: Author Posts Link
@@ -685,7 +609,7 @@ class Wpr_Author_Box extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#ffffff',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-author-box-btn' => 'color: {{VALUE}}',
 				],
@@ -697,6 +621,7 @@ class Wpr_Author_Box extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-author-box-btn' => 'background-color: {{VALUE}}',
 				]
@@ -711,7 +636,30 @@ class Wpr_Author_Box extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-author-box-btn' => 'border-color: {{VALUE}}',
 				],
-				'separator' => 'after',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'archive_link_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-author-box-btn'
+			]
+		);
+
+		$this->add_control(
+			'archive_link_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.1,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-author-box-btn' => 'transition-duration: {{VALUE}}s',
+				],
 			]
 		);
 
@@ -729,7 +677,7 @@ class Wpr_Author_Box extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#54595f',
+				'default' => '#ffffff',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-author-box-btn:hover' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-author-box-btn:hover a' => 'color: {{VALUE}}',
@@ -756,7 +704,6 @@ class Wpr_Author_Box extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-author-box-btn:hover' => 'border-color: {{VALUE}}',
 				],
-				'separator' => 'after',
 			]
 		);
 
@@ -764,28 +711,22 @@ class Wpr_Author_Box extends Widget_Base {
 
 		$this->end_controls_tabs();
 
-		$this->add_control(
-			'archive_link_transition_duration',
+		$this->add_responsive_control(
+			'archive_link_padding',
 			[
-				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.1,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-author-box-btn' => 'transition-duration: {{VALUE}}s',
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 5,
+					'right' => 15,
+					'bottom' => 5,
+					'left' => 15,
 				],
-				'separator' => 'after',
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'archive_link_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-author-box-btn'
+				'selectors' => [
+					'{{WRAPPER}} .wpr-author-box-btn' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
 			]
 		);
 
@@ -831,24 +772,6 @@ class Wpr_Author_Box extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'archive_link_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-author-box-btn' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
-
 		$this->add_control(
 			'archive_link_radius',
 			[
@@ -856,15 +779,14 @@ class Wpr_Author_Box extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
+					'top' => 3,
+					'right' => 3,
+					'bottom' => 3,
+					'left' => 3,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-author-box-btn' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
-				'separator' => 'before',
 			]
 		);
 
@@ -876,6 +798,11 @@ class Wpr_Author_Box extends Widget_Base {
 		// Get Settings
 		$settings = $this->get_settings();
 
+		if ( !wpr_fs()->can_use_premium_code() ) {
+			$settings['author_bio'] = '';
+			$settings['author_link_tab'] = '';
+		}
+
 		// Get Author Info
 		$id = get_the_author_meta( 'ID' );
 		$avatar = get_avatar( $id, 264 );
@@ -884,13 +811,11 @@ class Wpr_Author_Box extends Widget_Base {
 		$biography = get_the_author_meta( 'description' );
 		$website = get_the_author_meta( 'user_url' );
 		$archive_url = get_author_posts_url( $id );
-		$author_link = 'website' === $settings['author_name_links_to'] ? $website : $archive_url;
+		$author_name_link = 'website' === $settings['author_name_links_to'] ? $website : $archive_url;
+		$author_title_link = 'website' === $settings['author_title_links_to'] ? $website : $archive_url;
 		$link_target = 'yes' === $settings['author_link_tab'] ? '_blank' : '_self';
-		$has_website = false;
-
-		if ( 'website' === $settings['author_name_links_to'] && '' !== $website ) {
-			$has_website = true;
-		}
+		$author_name_has_website = 'website' === $settings['author_name_links_to'] && '' !== $website ? true : false;
+		$author_title_has_website = 'website' === $settings['author_title_links_to'] && '' !== $website ? true : false;
 
 		// HTML
 		echo '<div class="wpr-author-box">';
@@ -898,8 +823,8 @@ class Wpr_Author_Box extends Widget_Base {
 			// Avatar
 			if ( '' !== $settings['author_avatar'] && false !== $avatar ) {
 				echo '<div class="wpr-author-box-image">';
-					if ( 'posts' === $settings['author_name_links_to'] || $has_website ) {
-						echo '<a href="'. esc_url( $author_link ) .'" target="'. esc_attr($link_target) .'">'. $avatar .'</a>';
+					if ( 'posts' === $settings['author_name_links_to'] || $author_name_has_website ) {
+						echo '<a href="'. esc_url( $author_name_link ) .'" target="'. esc_attr($link_target) .'">'. $avatar .'</a>';
 					} else {
 						echo $avatar;
 					}
@@ -912,8 +837,8 @@ class Wpr_Author_Box extends Widget_Base {
 			// Author Name
 			if ( '' !== $settings['author_name'] && '' !== $name ) {
 				echo '<'. $settings['author_name_tag'] .' class="wpr-author-box-name">';
-					if ( 'posts' === $settings['author_name_links_to'] || $has_website ) {
-						echo '<a href="'. esc_url( $author_link ) .'" target="'. esc_attr($link_target) .'">'. $name .'</a>';
+					if ( 'posts' === $settings['author_name_links_to'] || $author_name_has_website ) {
+						echo '<a href="'. esc_url( $author_name_link ) .'" target="'. esc_attr($link_target) .'">'. $name .'</a>';
 					} else {
 						echo $name;
 					}
@@ -923,8 +848,8 @@ class Wpr_Author_Box extends Widget_Base {
 			// Author Title
 			if ( '' !== $title && 'yes' === $settings['author_title'] ) {
 				echo '<'. $settings['author_title_tag'] .' class="wpr-author-box-title">';
-					if ( 'posts' === $settings['author_title_links_to'] || $has_website ) {
-						echo '<a href="'. esc_url( $author_link ) .'" target="'. esc_attr($link_target) .'">'. $title .'</a>';
+					if ( 'posts' === $settings['author_title_links_to'] || $author_title_has_website ) {
+						echo '<a href="'. esc_url( $author_title_link ) .'" target="'. esc_attr($link_target) .'">'. $title .'</a>';
 					} else {
 						echo $title;
 					}
