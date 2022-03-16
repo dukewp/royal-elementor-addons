@@ -701,20 +701,20 @@ class Wpr_Grid extends Widget_Base {
 			);
 		}
 
+		$qqq_condition = Utilities::is_new_free_user() ? [ 'query_source!' => 'current', 'layout_select!' => 'slider', ] : [ 'query_source!' => 'current' ];
+
+		$this->add_control(
+			'query_posts_per_page',
+			[
+				'label' => esc_html__( 'Items Per Page', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 9,
+				'min' => 0,
+				'condition' => $qqq_condition,
+			]
+		);
+
 		if ( Utilities::is_new_free_user() ) {
-			$this->add_control(
-				'query_posts_per_page',
-				[
-					'label' => esc_html__( 'Items Per Page', 'wpr-addons' ),
-					'type' => Controls_Manager::NUMBER,
-					'default' => 9,
-					'min' => 0,
-					'condition' => [
-						'query_source!' => 'current',
-						'layout_select!' => 'slider',
-					],
-				]
-			);
 
 			$this->add_control_query_slides_to_show();
 
@@ -725,19 +725,9 @@ class Wpr_Grid extends Widget_Base {
 					'raw' => 'More than <strong>4 Slides</strong> are available<br>in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-grid-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
 					// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
 					'content_classes' => 'wpr-pro-notice',
-				]
-			);
-		} else {
-			$this->add_control(
-				'query_posts_per_page',
-				[
-					'label' => esc_html__( 'Items Per Page', 'wpr-addons' ),
-					'type' => Controls_Manager::NUMBER,
-					'default' => 9,
-					'min' => 0,
 					'condition' => [
-						'query_source!' => 'current',
-					],
+						'layout_select' => 'slider',
+					]
 				]
 			);
 		}
@@ -7638,6 +7628,7 @@ class Wpr_Grid extends Widget_Base {
 		// Change Posts Per Page for Slider Layout
 		if ( 'slider' === $settings['layout_select'] && Utilities::is_new_free_user() ) {
 			$settings['query_posts_per_page'] = $settings['query_slides_to_show'];
+			$settings['query_posts_per_page'] = $settings['query_posts_per_page'] > 4 ? 4 : $settings['query_posts_per_page'];
 		}
 
 		$offset = ( $paged - 1 ) * intval($settings['query_posts_per_page']) + intval($settings[ 'query_offset' ]);
