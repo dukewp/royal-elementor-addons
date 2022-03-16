@@ -685,7 +685,7 @@ class Wpr_Author_Box extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-author-box-btn' => 'color: {{VALUE}}',
 				],
@@ -729,7 +729,6 @@ class Wpr_Author_Box extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#54595f',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-author-box-btn:hover' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-author-box-btn:hover a' => 'color: {{VALUE}}',
