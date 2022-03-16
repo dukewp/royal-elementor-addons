@@ -800,7 +800,8 @@ class Wpr_Author_Box extends Widget_Base {
 
 		if ( !wpr_fs()->can_use_premium_code() ) {
 			$settings['author_bio'] = '';
-			$settings['author_link_tab'] = '';
+			$settings['author_name_link_tab'] = '';
+			$settings['author_title_link_tab'] = '';
 		}
 
 		// Get Author Info
@@ -812,9 +813,10 @@ class Wpr_Author_Box extends Widget_Base {
 		$website = get_the_author_meta( 'user_url' );
 		$archive_url = get_author_posts_url( $id );
 		$author_name_link = 'website' === $settings['author_name_links_to'] ? $website : $archive_url;
-		$author_title_link = 'website' === $settings['author_title_links_to'] ? $website : $archive_url;
-		$link_target = 'yes' === $settings['author_link_tab'] ? '_blank' : '_self';
+		$author_name_target = 'yes' === $settings['author_name_link_tab'] ? '_blank' : '_self';
 		$author_name_has_website = 'website' === $settings['author_name_links_to'] && '' !== $website ? true : false;
+		$author_title_link = 'website' === $settings['author_title_links_to'] ? $website : $archive_url;
+		$author_title_target = 'yes' === $settings['author_title_link_tab'] ? '_blank' : '_self';
 		$author_title_has_website = 'website' === $settings['author_title_links_to'] && '' !== $website ? true : false;
 
 		// HTML
@@ -824,7 +826,7 @@ class Wpr_Author_Box extends Widget_Base {
 			if ( '' !== $settings['author_avatar'] && false !== $avatar ) {
 				echo '<div class="wpr-author-box-image">';
 					if ( 'posts' === $settings['author_name_links_to'] || $author_name_has_website ) {
-						echo '<a href="'. esc_url( $author_name_link ) .'" target="'. esc_attr($link_target) .'">'. $avatar .'</a>';
+						echo '<a href="'. esc_url( $author_name_link ) .'" target="'. esc_attr($author_name_target) .'">'. $avatar .'</a>';
 					} else {
 						echo $avatar;
 					}
@@ -838,7 +840,7 @@ class Wpr_Author_Box extends Widget_Base {
 			if ( '' !== $settings['author_name'] && '' !== $name ) {
 				echo '<'. $settings['author_name_tag'] .' class="wpr-author-box-name">';
 					if ( 'posts' === $settings['author_name_links_to'] || $author_name_has_website ) {
-						echo '<a href="'. esc_url( $author_name_link ) .'" target="'. esc_attr($link_target) .'">'. $name .'</a>';
+						echo '<a href="'. esc_url( $author_name_link ) .'" target="'. esc_attr($author_name_target) .'">'. $name .'</a>';
 					} else {
 						echo $name;
 					}
@@ -849,7 +851,7 @@ class Wpr_Author_Box extends Widget_Base {
 			if ( '' !== $title && 'yes' === $settings['author_title'] ) {
 				echo '<'. $settings['author_title_tag'] .' class="wpr-author-box-title">';
 					if ( 'posts' === $settings['author_title_links_to'] || $author_title_has_website ) {
-						echo '<a href="'. esc_url( $author_title_link ) .'" target="'. esc_attr($link_target) .'">'. $title .'</a>';
+						echo '<a href="'. esc_url( $author_title_link ) .'" target="'. esc_attr($author_title_target) .'">'. $title .'</a>';
 					} else {
 						echo $title;
 					}
