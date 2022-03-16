@@ -66,6 +66,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				'label' => esc_html__( 'Hide Empty', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
+				'default' => 'yes'
 			]
 		);
 
@@ -74,7 +75,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 			[
 				'label' => esc_html__( 'Select Layout', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
-				'default' => 'horizontal',
+				'default' => 'vertical',
 				'options' => [
 					'vertical' => [
 						'title' => esc_html__( 'Vertical', 'wpr-addons' ),
@@ -97,7 +98,8 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				'label' => esc_html__( 'Show Count', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
-				'label_block' => false
+				'label_block' => false,
+				'default' => 'yes'
 			]
 		);
 
@@ -129,7 +131,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-taxonomy-list li a' => 'color: {{VALUE}}',
 				],
@@ -141,7 +143,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-                'default' => '#000',
+                'default' => '#00000000',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-taxonomy-list li a' => 'background-color: {{VALUE}}',
 				]
@@ -160,6 +162,41 @@ class Wpr_Taxonomy_List extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'tax_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.5,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-taxonomy-list li a' => 'transition-duration: {{VALUE}}s',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'tax_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-taxonomy-list li a',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'font_size'      => [
+						'default'    => [
+							'size' => '14',
+							'unit' => 'px',
+						],
+					]
+				]
+			]
+		);
+
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
@@ -174,7 +211,6 @@ class Wpr_Taxonomy_List extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-taxonomy-list li a:hover' => 'color: {{VALUE}}',
 				],
@@ -197,7 +233,6 @@ class Wpr_Taxonomy_List extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-taxonomy-list li a:hover' => 'border-color: {{VALUE}}',
 				],
@@ -206,31 +241,6 @@ class Wpr_Taxonomy_List extends Widget_Base {
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
-
-		$this->add_control(
-			'tax_transition_duration',
-			[
-				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.1,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-taxonomy-list li a' => 'transition-duration: {{VALUE}}s',
-				],
-				'separator' => 'after',
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'tax_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-taxonomy-list li a'
-			]
-		);
 
 		$this->add_control(
 			'tax_border_type',
@@ -245,7 +255,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
 					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
 				],
-				'default' => 'none',
+				'default' => 'solid',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-taxonomy-list li a' => 'border-style: {{VALUE}};',
 				],
@@ -261,10 +271,10 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 1,
-					'right' => 1,
+					'top' => 0,
+					'right' => 0,
 					'bottom' => 1,
-					'left' => 1,
+					'left' => 0,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-taxonomy-list li a' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -284,9 +294,9 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				'size_units' => [ 'px', '%' ],
 				'default' => [
 					'top' => 5,
-					'right' => 10,
+					'right' => 0,
 					'bottom' => 5,
-					'left' => 10,
+					'left' => 0,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-taxonomy-list li a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -302,9 +312,9 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				'size_units' => [ 'px', '%' ],
 				'default' => [
 					'top' => 5,
-					'right' => 5,
-					'bottom' => 5,
-					'left' => 5,
+					'right' => 8,
+					'bottom' => 0,
+					'left' => 0,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-taxonomy-list li' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',

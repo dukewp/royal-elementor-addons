@@ -55,7 +55,7 @@
 				'opacity' : '1',
 				'background-color' : '#333',
 				'box-shadow' : '1px 1px 3px 0 #000',
-			}).html( '<i class="fas fa-times"></i>');
+			}).html( '<i class="eicon-close"></i>');
 
 			$( '#wpr-template-editor-popup .dialog-close-button i' ).css({
 				'font-size' : '15px',
