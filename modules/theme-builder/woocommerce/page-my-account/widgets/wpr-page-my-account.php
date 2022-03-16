@@ -68,7 +68,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 		$this->add_control(
 			'tabs_spacing',
 			[
-				'label' => esc_html__( 'Tabs Spacing', 'wpr-addons' ),
+				'label' => esc_html__( 'Tabs Distance', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => ['px'],
 				'range' => [
@@ -440,7 +440,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'default' => '#000',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper' => 'color: {{VALUE}}',
-				],
+				]
 			]
 		);
 
@@ -452,7 +452,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'default' => '#FFF',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper' => 'background-color: {{VALUE}}',
-				],
+				]
 			]
 		);
 
@@ -465,12 +465,35 @@ class Wpr_Page_My_Account extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'title_paragraph_distance',
+			[
+				'label' => esc_html__( 'Headlines Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 5,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper>p:first-child' => 'margin-bottom: {{SIZE}}px'
+				],
+				'separator' => 'before',
+			]
+		);
+
 		$this->end_controls_section();
 
 		// Tab: Style ==============
-		// Section: Orders Table ---------
+		// Section: Orders ---------
 		$this->start_controls_section(
-			'my_account_heading_styles',
+			'my_account_order_styles',
 			[
 				'label' => __( 'Orders Table', 'wpr-addons' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
@@ -486,38 +509,42 @@ class Wpr_Page_My_Account extends Widget_Base {
 		);
 
 		$this->add_control(
-			'my_account_heading_color',
+			'my_account_table_heading_color',
 			[
 				'label'     => esc_html__( 'Color', 'wpr-addons' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} table.woocommerce-orders-table th' => 'color: {{VALUE}}',
-				],
+					'{{WRAPPER}} table.shop_table thead th' => 'color: {{VALUE}}',
+					'{{WRAPPER}} table.shop_table tfoot th' => 'color: {{VALUE}}',
+				]
 			]
 		);
 
 		$this->add_control(
-			'my_account_heading_bg_color',
+			'my_account_table_heading_bg_color',
 			[
 				'label'     => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} table.woocommerce-orders-table th' => 'background-color: {{VALUE}}',
-				],
+					'{{WRAPPER}} table.shop_table thead th' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} table.shop_table tfoot th' => 'background-color: {{VALUE}}',
+				]
 			]
 		);
 
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name'     => 'my_account_heading_typography',
+				'name'     => 'my_account_table_heading_typography',
 				'label'    => esc_html__( 'Typography', 'wpr-addons' ),
-				'selector' => '{{WRAPPER}} table.woocommerce-orders-table th',
+				'selector' => '{{WRAPPER}} table.woocommerce-orders-table th, {{WRAPPER}} table.shop_table thead th, {{WRAPPER}} table.shop_table tfoot th',
 			]
 		);
 
 		$this->add_responsive_control(
-			'my_account_heading_padding',
+			'my_account_table_heading_padding',
 			[
 				'label' => esc_html__( 'Padding', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
@@ -530,12 +557,14 @@ class Wpr_Page_My_Account extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} table.woocommerce-orders-table th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
+					'{{WRAPPER}} table.shop_table thead th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} table.shop_table tfoot th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				]
 			]
 		);
 
 		$this->add_responsive_control(
-			'my_account_heading_alignment',
+			'my_account_table_heading_alignment',
 			[
 				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
@@ -555,7 +584,9 @@ class Wpr_Page_My_Account extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} table.woocommerce-orders-table th' => 'text-align: {{VALUE}};',
-				], //TODO: doesnt work
+					'{{WRAPPER}} table.shop_table thead th' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} table.shop_table tfoot th' => 'text-align: {{VALUE}};'
+				] //TODO: doesnt work
 			]
 		);
 
@@ -568,24 +599,23 @@ class Wpr_Page_My_Account extends Widget_Base {
 		);
 
 		$this->add_control(
-			'my_account_description_color',
+			'my_account_table_description_color',
 			[
 				'label'     => esc_html__( 'Color', 'wpr-addons' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} table.cart td' => 'color: {{VALUE}}',
-					'{{WRAPPER}} table.cart td a' => 'color: {{VALUE}}',
+					'{{WRAPPER}} table.shop_table td' => 'color: {{VALUE}}',
+					'{{WRAPPER}} table.shop_table td a' => 'color: {{VALUE}}',
 				],
 			]
 		);
 
 		$this->add_control(
-			'my_account_description_bg_color',
+			'my_account_table_description_bg_color',
 			[
 				'label'     => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} table.cart td' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} table.shop_table td' => 'background-color: {{VALUE}}',
 				],
 			]
@@ -594,14 +624,14 @@ class Wpr_Page_My_Account extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name'     => 'my_account_description_typography',
+				'name'     => 'my_account_table_description_typography',
 				'label'    => esc_html__( 'Typography', 'wpr-addons' ),
-				'selector' => '{{WRAPPER}} table.cart tr.cart_item td',
+				'selector' => '{{WRAPPER}} table.shop_table td',
 			]
 		);
 
 		$this->add_responsive_control(
-			'my_account_description_padding',
+			'my_account_table_description_padding',
 			[
 				'label' => esc_html__( 'Padding', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
@@ -613,13 +643,13 @@ class Wpr_Page_My_Account extends Widget_Base {
 					'left' => 0,
 				],
 				'selectors' => [
-					'{{WRAPPER}} table.cart td' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} table.shop_table td' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
 
 		$this->add_responsive_control(
-			'my_account_description_alignment',
+			'my_account_table_description_alignment',
 			[
 				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
@@ -638,8 +668,20 @@ class Wpr_Page_My_Account extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} table.cart td' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} table.shop_table td' => 'text-align: {{VALUE}};',
 				], //TODO: doesnt work
+			]
+		);
+
+		$this->end_controls_section();
+
+		// Tab: Style ==============
+		// Section: Addresses ---------
+		$this->start_controls_section(
+			'my_account_addresses_styles',
+			[
+				'label' => __( 'Addresses', 'wpr-addons' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
 

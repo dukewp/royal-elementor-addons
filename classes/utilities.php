@@ -108,6 +108,7 @@ class Utilities {
 			'product-sales-badge',
 			'product-stock',
 			'product-additional-information',
+			'product-notice',
 			'page-cart',
 			'page-checkout',
 			'page-my-account'
