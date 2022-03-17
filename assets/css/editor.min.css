@@ -663,7 +663,8 @@
 .elementor-control.elementor-control-limit_grid_items_pro_notice,
 .elementor-control.elementor-control-post_nav_layout_pro_notice,
 .elementor-control.elementor-control-author_name_links_to_pro_notice,
-.elementor-control.elementor-control-author_title_links_to_pro_notice {
+.elementor-control.elementor-control-author_title_links_to_pro_notice,
+.elementor-control.elementor-control-comments_form_layout_pro_notice {
 	padding-bottom: 0 !important;
 }
 
@@ -702,7 +703,8 @@
 .elementor-control-group_popup_settings_pro_notice .wpr-pro-notice,
 .elementor-control-post_nav_layout_pro_notice .wpr-pro-notice,
 .elementor-control-author_name_links_to_pro_notice .wpr-pro-notice,
-.elementor-control-author_title_links_to_pro_notice .wpr-pro-notice {
+.elementor-control-author_title_links_to_pro_notice .wpr-pro-notice,
+.elementor-control-comments_form_layout_pro_notice .wpr-pro-notice {
 	border-bottom: none !important;
 }
 
