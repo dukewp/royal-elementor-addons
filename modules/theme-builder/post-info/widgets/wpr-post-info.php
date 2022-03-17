@@ -367,7 +367,6 @@ class Wpr_Post_Info extends Widget_Base {
 			'Query Custom Post Type Taxonomies (categories).'
 		] );
 
-
 		// Styles ====================
 		// Section: List -------------
 		$this->start_controls_section(

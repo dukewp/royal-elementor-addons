@@ -638,11 +638,11 @@ class Wpr_Post_Navigation extends Widget_Base {
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-post-content',
 				'fields_options' => [
-					'typography'      => [
+					'typography' => [
 						'default' => 'custom',
 					],
 					'font_size'      => [
-						'default'    => [
+						'default' => [
 							'size' => '15',
 							'unit' => 'px',
 						],

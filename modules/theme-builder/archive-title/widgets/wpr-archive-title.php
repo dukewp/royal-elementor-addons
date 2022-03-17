@@ -35,6 +35,8 @@ class Wpr_Archive_Title extends Widget_Base {
 		return [ 'archive', 'title', 'Description', 'category' ];
 	}
 
+	public function add_control_archive_description() {}
+
 	protected function _register_controls() {
 
 		// Tab: Content ==============
@@ -44,23 +46,6 @@ class Wpr_Archive_Title extends Widget_Base {
 			[
 				'label' => esc_html__( 'General', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
-			]
-		);
-
-		$this->add_control(
-			'post_title_tag',
-			[
-				'label' => esc_html__( 'Title HTML Tag', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'h1' => 'H1',
-					'h2' => 'H2',
-					'h3' => 'H3',
-					'h4' => 'H4',
-					'h5' => 'H5',
-					'h6' => 'H6',
-				],
-				'default' => 'h1',
 			]
 		);
 
@@ -95,11 +80,34 @@ class Wpr_Archive_Title extends Widget_Base {
 					'{{WRAPPER}} .wpr-archive-title:after' => '{{VALUE}}',
 					'{{WRAPPER}} .wpr-archive-description' => '{{VALUE}}',
 				],
-				'separator' => 'before'
             ]
         );
 
+		$this->add_control(
+			'post_title_tag',
+			[
+				'label' => esc_html__( 'Title HTML Tag', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => 'H1',
+					'h2' => 'H2',
+					'h3' => 'H3',
+					'h4' => 'H4',
+					'h5' => 'H5',
+					'h6' => 'H6',
+				],
+				'default' => 'h1',
+			]
+		);
+
+		$this->add_control_archive_description();
+
 		$this->end_controls_section(); // End Controls Section
+
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'archive-title', [
+			'Show/Hide Taxonomy (Category) Description, also change Color and Typography.',
+		] );
 
 		// Styles ====================
 		// Section: Title ------------
@@ -129,6 +137,17 @@ class Wpr_Archive_Title extends Widget_Base {
 			[
 				'name'     => 'title_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '24',
+							'unit' => 'px',
+						],
+					],
+				],
 				'selector' => '{{WRAPPER}} .wpr-archive-title'
 			]
 		);
@@ -182,6 +201,9 @@ class Wpr_Archive_Title extends Widget_Base {
 				'label' => esc_html__( 'Description', 'wpr-addons' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
+				'condition' => [
+					'archive_description' => 'yes',
+				],
 			]
 		);
 
@@ -190,9 +212,12 @@ class Wpr_Archive_Title extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#666666',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-archive-description' => 'color: {{VALUE}}',
+				],
+				'condition' => [
+					'archive_description' => 'yes',
 				],
 			]
 		);
@@ -202,7 +227,21 @@ class Wpr_Archive_Title extends Widget_Base {
 			[
 				'name'     => 'desc_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-archive-description'
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px',
+						],
+					],
+				],
+				'selector' => '{{WRAPPER}} .wpr-archive-description',
+				'condition' => [
+					'archive_description' => 'yes',
+				],
 			]
 		);
 
@@ -220,6 +259,7 @@ class Wpr_Archive_Title extends Widget_Base {
 			[
 				'label' => esc_html__( 'Show Divider', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
 				'return_value' => 'yes',
 			]
 		);
@@ -229,7 +269,7 @@ class Wpr_Archive_Title extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#e8e8e8',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-archive-title:after' => 'background-color: {{VALUE}};',
 				],
@@ -245,7 +285,7 @@ class Wpr_Archive_Title extends Widget_Base {
 				'label' => esc_html__( 'Height', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
-					'size' => 0,
+					'size' => 1,
 				],
 				'range' => [
 					'px' => [
@@ -280,10 +320,10 @@ class Wpr_Archive_Title extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 200,
+					'size' => 100,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-archive-title:after' => 'width: {{SIZE}}px;',
+					'{{WRAPPER}} .wpr-archive-title:after' => 'width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'title_divider_show' => 'yes',
@@ -297,12 +337,12 @@ class Wpr_Archive_Title extends Widget_Base {
 				'label' => esc_html__( 'Top Distance', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
-					'size' => 0,
+					'size' => 7,
 				],
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 50,
+						'max' => 25,
 					],
 				],
 				'selectors' => [
@@ -320,12 +360,12 @@ class Wpr_Archive_Title extends Widget_Base {
 				'label' => esc_html__( 'Bottom Distance', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
-					'size' => 0,
+					'size' => 5,
 				],
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 50,
+						'max' => 25,
 					],
 				],
 				'selectors' => [
@@ -359,8 +399,10 @@ class Wpr_Archive_Title extends Widget_Base {
 			echo '</'. $settings['post_title_tag'] .'>';
 		}
 
-		if ( '' !== $description ) {
-			echo '<p class="wpr-archive-description">'. $description .'</p>';
+		if ( wpr_fs()->can_use_premium_code() ) {
+			if ( '' !== $description && '' !== $settings['archive_description'] ) {
+				echo '<p class="wpr-archive-description">'. $description .'</p>';
+			}
 		}
 
 	}
