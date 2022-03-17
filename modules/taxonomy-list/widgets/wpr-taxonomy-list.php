@@ -488,7 +488,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
             echo '<li'. $sub_class .'>';
 	            echo '<a href="'. esc_url(get_term_link($term->term_id)) .'">';
 					echo '<span  class="wpr-tax-wrap">' . $icon_wrapper . '<span>' . $term->name . '</span>' .'</span>';
-		            echo $settings['show_tax_count'] ? ' <span><span class="wpr-term-count">(' . $term->count . ')</span></span>' : '';
+		            echo $settings['show_tax_count'] ? '<span><span class="wpr-term-count">&nbsp;(' . $term->count . ')</span></span>' : '';
 	            echo '</a>';
             echo '</li>';
         }

@@ -11265,7 +11265,8 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 .wpr-term-count {
-    vertical-align: middle;
+    display: block;
+    /* vertical-align: middle; */
 }
 
 .wpr-taxonomy-list-horizontal .wpr-taxonomy-list {
