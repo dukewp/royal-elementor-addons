@@ -472,7 +472,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 		ob_start();
 		\Elementor\Icons_Manager::render_icon( $settings['tax_list_icon'], [ 'aria-hidden' => 'true' ] );
 		$icon = ob_get_clean();
-		$icon = !empty($settings['tax_list_icon']) ?  $icon : '';
+		$icon_wrapper = !empty($settings['tax_list_icon']) ? '<span>' . $icon . '</span>' : '';
 
         // Get Taxonomies
 		$terms = get_terms([
@@ -487,8 +487,8 @@ class Wpr_Taxonomy_List extends Widget_Base {
         	
             echo '<li'. $sub_class .'>';
 	            echo '<a href="'. esc_url(get_term_link($term->term_id)) .'">';
-					echo '<span>' . $icon . $term->name .'</span>';
-		            echo $settings['show_tax_count'] ? '<span>(' . $term->count . ')</span>' : '';
+					echo '<span  class="wpr-tax-wrap">' . $icon_wrapper . '<span>' . $term->name . '</span>' .'</span>';
+		            echo $settings['show_tax_count'] ? ' <span><span class="wpr-term-count">(' . $term->count . ')</span></span>' : '';
 	            echo '</a>';
             echo '</li>';
         }
