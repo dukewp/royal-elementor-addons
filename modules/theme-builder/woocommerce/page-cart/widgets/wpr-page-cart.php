@@ -237,7 +237,7 @@ class Wpr_Page_Cart extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
+		$this->add_responsive_control( //TODO: remove
 			'coupon_input_width',
 			[
 				'label' => esc_html__( 'Coupon Input Width', 'wpr-addons' ),
@@ -260,7 +260,7 @@ class Wpr_Page_Cart extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .input-text:not(.qty)' => 'width: 100% !important;',
 					'{{WRAPPER}} .coupon-col' => 'width: 100% !important;',
-					'{{WRAPPER}} .wpr-cart-section .coupon-col-start' => 'width: {{SIZE}}{{UNIT}} !important;',
+					'{{WRAPPER}} .wpr-cart-section-wrap .coupon-col-start' => 'width: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -290,9 +290,9 @@ class Wpr_Page_Cart extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'heading_width',
+			'table_width',
 			[
-				'label' => esc_html__( 'Width', 'wpr-addons' ),
+				'label' => esc_html__( 'Table Width', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'%' => [
@@ -310,8 +310,7 @@ class Wpr_Page_Cart extends Widget_Base {
 					'size' => 80,
 				],
 				'selectors' => [
-					'{{WRAPPER}}.wpr-cart-horizontal .woocommerce-cart-form' => 'width: 100%;',
-					'{{WRAPPER}}.wpr-cart-horizontal table.cart' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-cart-horizontal .woocommerce-cart-form' => 'width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-cart-horizontal .cart-collaterals' => 'width: calc(100% - {{SIZE}}{{UNIT}});',
 				],
 				'separator' => 'before',
@@ -338,7 +337,7 @@ class Wpr_Page_Cart extends Widget_Base {
 					'size' => 10,
 				],
 				'selectors' => [
-					'{{WRAPPER}} table.cart' => 'margin-right: {{SIZE}}{{UNIT}} !important;',
+					'{{WRAPPER}}.wpr-cart-horizontal .woocommerce-cart-form' => 'margin-right: {{SIZE}}{{UNIT}} !important;',
 				],
 				'separator' => 'before',
 			]

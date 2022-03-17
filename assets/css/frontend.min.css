@@ -2295,15 +2295,17 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 }
 
 .wpr-cart-wrapper .form-row.coupon-col .coupon-col-start {
-    flex: 2;
+    /* flex: 2; */
 }
 
 .wpr-cart-wrapper .form-row.coupon-col .coupon-col-end {
-    flex: 1;
+    /* flex: 1; */
+    height: 100%;
 }
 
 .wpr-cart-wrapper .form-row.coupon-col .coupon-col-end button {
     width: 100%;
+    height: 100%;
 }
 
 .wpr-cart-wrapper .product-remove .remove:hover {
