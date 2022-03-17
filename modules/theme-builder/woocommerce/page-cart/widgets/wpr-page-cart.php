@@ -30,7 +30,7 @@ class Wpr_Page_Cart extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'qq', 'cart', 'product', 'page', 'cart-page', 'page-cart' ];//tmp
+		return [ 'qq', 'royal', 'cart', 'product', 'page', 'cart page', 'page cart' ];//tmp
 	}
 
 	public function get_script_depends() {
@@ -40,7 +40,7 @@ class Wpr_Page_Cart extends Widget_Base {
 	protected function _register_controls() {
 
 		// Tab: Content ==============
-		// Section: General ---------
+		// Section: General ----------
 		$this->start_controls_section(
 			'section_general',
 			[
@@ -337,7 +337,8 @@ class Wpr_Page_Cart extends Widget_Base {
 					'size' => 10,
 				],
 				'selectors' => [
-					'{{WRAPPER}}.wpr-cart-horizontal .woocommerce-cart-form' => 'margin-right: {{SIZE}}{{UNIT}} !important;',
+					'{{WRAPPER}}.wpr-cart-horizontal .woocommerce-cart-form' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-cart-vertical .woocommerce-cart-form' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
