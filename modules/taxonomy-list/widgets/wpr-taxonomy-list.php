@@ -392,8 +392,8 @@ class Wpr_Taxonomy_List extends Widget_Base {
 
 		$this->end_controls_section();
 
-		// Tab: Content ==============
-		// Section: General ----------
+		// Tab: Style ==============
+		// Section: Content --------
 		$this->start_controls_section(
 			'section_style_icon',
 			[
