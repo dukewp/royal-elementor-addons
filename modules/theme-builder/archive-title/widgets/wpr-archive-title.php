@@ -100,6 +100,15 @@ class Wpr_Archive_Title extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'post_title_before_text',
+			[
+				'label' => esc_html__( 'Text Before Title', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => '',
+			]
+		);
+
 		$this->add_control_archive_description();
 
 		$this->end_controls_section(); // End Controls Section
@@ -128,6 +137,18 @@ class Wpr_Archive_Title extends Widget_Base {
 				'default' => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-archive-title' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'title_before_text_color',
+			[
+				'label'  => esc_html__( 'Before Text Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#555555',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-archive-title span' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -386,23 +407,25 @@ class Wpr_Archive_Title extends Widget_Base {
 		$settings = $this->get_settings();
 		$tax = get_queried_object();
 
-		if ( is_null($tax) ) {
-			return;
-		}
+		if ( !is_null($tax) ) {
+			$title = isset($tax->post_title) ? $tax->post_title : $tax->name;
+			$description = isset($tax->description) ? $tax->description : '';
 
-		$title = isset($tax->post_title) ? $tax->post_title : $tax->name;
-		$description = isset($tax->description) ? $tax->description : '';
-
-		if ( '' !== $title ) {
-			echo '<'. $settings['post_title_tag'] .' class="wpr-archive-title">';
-				echo $title;
-			echo '</'. $settings['post_title_tag'] .'>';
-		}
-
-		if ( wpr_fs()->can_use_premium_code() ) {
-			if ( '' !== $description && '' !== $settings['archive_description'] ) {
-				echo '<p class="wpr-archive-description">'. $description .'</p>';
+			if ( '' !== $title ) {
+				echo '<'. $settings['post_title_tag'] .' class="wpr-archive-title">';
+					echo '<span>'. $settings['post_title_before_text'] .'</span>' . $title;
+				echo '</'. $settings['post_title_tag'] .'>';
 			}
+
+			if ( wpr_fs()->can_use_premium_code() ) {
+				if ( '' !== $description && '' !== $settings['archive_description'] ) {
+					echo '<p class="wpr-archive-description">'. $description .'</p>';
+				}
+			}
+		} elseif ( is_search() ) {
+			echo '<'. $settings['post_title_tag'] .' class="wpr-archive-title">';
+				echo '<span>'. $settings['post_title_before_text'] .'</span>' . get_search_query();
+			echo '</'. $settings['post_title_tag'] .'>';	
 		}
 
 	}
