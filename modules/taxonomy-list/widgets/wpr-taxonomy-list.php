@@ -390,43 +390,6 @@ class Wpr_Taxonomy_List extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'tax_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 5,
-					'right' => 0,
-					'bottom' => 5,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-taxonomy-list li a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_responsive_control(
-			'tax_margin',
-			[
-				'label' => esc_html__( 'Margin', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 5,
-					'right' => 8,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-taxonomy-list li' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
-
 		$this->end_controls_section();
 
 		// Tab: Content ==============
@@ -524,8 +487,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
         	
             echo '<li'. $sub_class .'>';
 	            echo '<a href="'. esc_url(get_term_link($term->term_id)) .'">';
-		            echo '<span>' . $icon . $value->name .'</span>';
-		            echo '<span>'. $term->name .'</span>';
+					echo '<span>' . $icon . $term->name .'</span>';
 		            echo $settings['show_tax_count'] ? '<span>(' . $term->count . ')</span>' : '';
 	            echo '</a>';
             echo '</li>';
