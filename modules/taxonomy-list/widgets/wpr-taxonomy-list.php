@@ -57,6 +57,14 @@ class Wpr_Taxonomy_List extends Widget_Base {
 		);
 
 		$this->add_control(
+			'query_heading',
+			[
+				'label' => esc_html__( 'Query', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+			]
+		);
+
+		$this->add_control(
 			'query_tax_selection',
 			[
 				'label' => esc_html__( 'Select Taxonomy', 'wpr-addons' ),
@@ -73,6 +81,15 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default' => 'yes'
+			]
+		);
+
+		$this->add_control(
+			'layout_heading',
+			[
+				'label' => esc_html__( 'Layout', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
 			]
 		);
 
@@ -94,7 +111,31 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				],
                 'prefix_class' => 'wpr-taxonomy-list-',
 				'label_block' => false,
-				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'show_tax_list_icon',
+			[
+				'label' => esc_html__( 'Show Icon', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'label_block' => false,
+				'default' => 'yes'
+			]
+		);
+
+		$this->add_control(
+			'tax_list_icon',
+			[
+				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
+				'type' => Controls_Manager::ICONS,
+				'skin' => 'inline',
+				'label_block' => false,
+				'exclude_inline_options' => 'svg',
+				'condition' => [
+					'show_tax_list_icon' => 'yes'
+				]
 			]
 		);
 
@@ -345,16 +386,130 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-taxonomy-list li a' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'tax_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 5,
+					'right' => 0,
+					'bottom' => 5,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-taxonomy-list li a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'tax_margin',
+			[
+				'label' => esc_html__( 'Margin', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 5,
+					'right' => 8,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-taxonomy-list li' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
 
 		$this->end_controls_section();
+
+		// Tab: Content ==============
+		// Section: General ----------
+		$this->start_controls_section(
+			'section_style_icon',
+			[
+				'label' => esc_html__( 'Icon', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'show_tax_list_icon' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control(
+			'icon_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-taxonomy-list li i' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'icon_size',
+			[
+				'label' => esc_html__( 'Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 15,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-taxonomy-list li i' => 'font-size: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_responsive_control(
+			'icon_distance',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 5,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-taxonomy-list li i' => 'margin-right: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+        $this->end_controls_section();
     }
 
     protected function render() {
 		// Get Settings
         $settings = $this->get_settings_for_display();
+
+		ob_start();
+		\Elementor\Icons_Manager::render_icon( $settings['tax_list_icon'], [ 'aria-hidden' => 'true' ] );
+		$icon = ob_get_clean();
+		$icon = !empty($settings['tax_list_icon']) ?  $icon : '';
 
         // Get Taxonomies
 		$terms = get_terms([
@@ -369,6 +524,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
         	
             echo '<li'. $sub_class .'>';
 	            echo '<a href="'. esc_url(get_term_link($term->term_id)) .'">';
+		            echo '<span>' . $icon . $value->name .'</span>';
 		            echo '<span>'. $term->name .'</span>';
 		            echo $settings['show_tax_count'] ? '<span>(' . $term->count . ')</span>' : '';
 	            echo '</a>';
