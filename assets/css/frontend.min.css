@@ -11265,6 +11265,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
             justify-content: space-between;
 }
 
+.wpr-taxonomy-list-vertical .wpr-sub-taxonomy {
+    padding-left: 20px;
+}
+
 
 /*--------------------------------------------------------------
   == Section Extensions

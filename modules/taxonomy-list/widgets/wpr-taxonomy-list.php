@@ -252,50 +252,6 @@ class Wpr_Taxonomy_List extends Widget_Base {
 
 		$this->end_controls_tabs();
 
-		$this->add_control(
-			'tax_border_type',
-			[
-				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'none' => esc_html__( 'None', 'wpr-addons' ),
-					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
-					'double' => esc_html__( 'Double', 'wpr-addons' ),
-					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
-					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
-					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
-				],
-				'default' => 'solid',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-taxonomy-list li a' => 'border-style: {{VALUE}};',
-				],
-				'render_type' => 'template',
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'tax_border_width',
-			[
-				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 1,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-taxonomy-list li a' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'render_type' => 'template',
-				'condition' => [
-					'tax_border_type!' => 'none',
-				],
-			]
-		);
-
 		$this->add_responsive_control(
 			'tax_padding',
 			[
@@ -311,6 +267,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-taxonomy-list li a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
+				'separator' => 'before',
 			]
 		);
 
@@ -333,6 +290,48 @@ class Wpr_Taxonomy_List extends Widget_Base {
 		);
 
 		$this->add_control(
+			'tax_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'solid',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-taxonomy-list li a' => 'border-style: {{VALUE}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'tax_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 1,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-taxonomy-list li a' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'tax_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
 			'tax_radius',
 			[
 				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
@@ -347,7 +346,6 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-taxonomy-list li a' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
-				'separator' => 'before',
 			]
 		);
 
@@ -366,11 +364,13 @@ class Wpr_Taxonomy_List extends Widget_Base {
 
          echo '<ul class="wpr-taxonomy-list">';
 
-        foreach ($terms as $key => $value) {
-            echo '<li>';
-	            echo '<a href="'. esc_url(get_term_link($value->term_id)) .'">';
-		            echo '<span>'. $value->name .'</span>';
-		            echo $settings['show_tax_count'] ? '<span>(' . $value->count . ')</span>' : '';
+        foreach ($terms as $key => $term) {
+        	$sub_class = $term->parent > 0 ? ' class="wpr-sub-taxonomy"' : '';
+        	
+            echo '<li'. $sub_class .'>';
+	            echo '<a href="'. esc_url(get_term_link($term->term_id)) .'">';
+		            echo '<span>'. $term->name .'</span>';
+		            echo $settings['show_tax_count'] ? '<span>(' . $term->count . ')</span>' : '';
 	            echo '</a>';
             echo '</li>';
         }
