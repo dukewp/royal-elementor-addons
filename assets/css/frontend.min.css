@@ -11251,7 +11251,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     height: 100%;
 }
 
-.wpr-taxonomy-list-horizontal .wpr-taxonomy-list i,
+.wpr-taxonomy-list-vertical .wpr-taxonomy-list i,
 .wpr-taxonomy-list span {
     line-height: 1.5;
     vertical-align: middle;
