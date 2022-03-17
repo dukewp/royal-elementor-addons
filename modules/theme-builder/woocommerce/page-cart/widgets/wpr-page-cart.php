@@ -74,7 +74,8 @@ class Wpr_Page_Cart extends Widget_Base {
 			'update_heading',
 			[
 				'type' => Controls_Manager::HEADING,
-				'label' => esc_html__( 'Update', 'wpr-addons' ),
+				'label' => esc_html__( 'Cart Update', 'wpr-addons' ),
+				'separator' => 'before'
 			]
 		);
 
@@ -96,11 +97,12 @@ class Wpr_Page_Cart extends Widget_Base {
 			[
 				'type' => Controls_Manager::HEADING,
 				'label' => esc_html__( 'Totals', 'wpr-addons' ),
+				'separator' => 'before'
 			]
 		);
 
 		$this->add_control(
-			'totals_section_title',
+			'totals_title',
 			[
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
@@ -113,7 +115,7 @@ class Wpr_Page_Cart extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'section_totals_title_alignment',
+			'totals_title_alignment',
 			[
 				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
@@ -133,7 +135,7 @@ class Wpr_Page_Cart extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .cart_totals h2' => 'text-align: {{VALUE}};',
-				], //TODO: doesnt work
+				]
 			]
 		);
 
@@ -142,6 +144,7 @@ class Wpr_Page_Cart extends Widget_Base {
 			[
 				'type' => Controls_Manager::HEADING,
 				'label' => esc_html__( 'Checkout', 'wpr-addons' ),
+				'separator' => 'before'
 			]
 		);
 
@@ -155,14 +158,6 @@ class Wpr_Page_Cart extends Widget_Base {
 				],
 				'placeholder' => esc_html__( 'Proceed to Checkout', 'wpr-addons' ),
 				'default' => esc_html__( 'Proceed to Checkout', 'wpr-addons' ),
-			]
-		);
-
-		$this->add_control(
-			'update_shipping_heading',
-			[
-				'type' => Controls_Manager::HEADING,
-				'label' => esc_html__( 'Update', 'wpr-addons' ),
 			]
 		);
 
@@ -204,6 +199,15 @@ class Wpr_Page_Cart extends Widget_Base {
 		);
 
 		$this->add_control(
+			'update_shipping_heading',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Shipping Update', 'wpr-addons' ),
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
 			'update_shipping_button_text',
 			[
 				'label' => esc_html__( 'Text', 'wpr-addons' ),
@@ -216,11 +220,37 @@ class Wpr_Page_Cart extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'update_shipping_title_alignment',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'left' => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .shipping-calculator-form p:last-of-type' => 'text-align: {{VALUE}};',
+				],
+			]
+		);
+
 		$this->add_control(
 			'apply_coupon_heading',
 			[
 				'type' => Controls_Manager::HEADING,
 				'label' => esc_html__( 'Coupon', 'wpr-addons' ),
+				'separator' => 'before'
 			]
 		);
 
@@ -237,10 +267,10 @@ class Wpr_Page_Cart extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control( //TODO: remove
+		$this->add_responsive_control(
 			'coupon_input_width',
 			[
-				'label' => esc_html__( 'Coupon Input Width', 'wpr-addons' ),
+				'label' => esc_html__( 'Input Width', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'%' => [
@@ -258,8 +288,8 @@ class Wpr_Page_Cart extends Widget_Base {
 					'size' => 80,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .input-text:not(.qty)' => 'width: 100% !important;',
-					'{{WRAPPER}} .coupon-col' => 'width: 100% !important;',
+					'{{WRAPPER}} .input-text:not(.qty)' => 'width: 100%;',
+					'{{WRAPPER}} .coupon-col' => 'width: 100%;',
 					'{{WRAPPER}} .wpr-cart-section-wrap .coupon-col-start' => 'width: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
@@ -269,7 +299,7 @@ class Wpr_Page_Cart extends Widget_Base {
 		$this->add_responsive_control(
 			'coupon_input_gutter',
 			[
-				'label' => esc_html__( 'Coupon gutter', 'wpr-addons' ),
+				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -285,14 +315,22 @@ class Wpr_Page_Cart extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .coupon-col-start' => 'margin-right: {{SIZE}}{{UNIT}} !important;',
 				],
-				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'product_summary_dimensions_heading',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Product Summary', 'wpr-addons' ),
+				'separator' => 'before'
 			]
 		);
 
 		$this->add_responsive_control(
-			'table_width',
+			'product_summary_width',
 			[
-				'label' => esc_html__( 'Table Width', 'wpr-addons' ),
+				'label' => esc_html__( 'Width', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'%' => [
@@ -313,7 +351,6 @@ class Wpr_Page_Cart extends Widget_Base {
 					'{{WRAPPER}}.wpr-cart-horizontal .woocommerce-cart-form' => 'width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-cart-horizontal .cart-collaterals' => 'width: calc(100% - {{SIZE}}{{UNIT}});',
 				],
-				'separator' => 'before',
 				'condition' => [
 					'cart_layout' => 'horizontal'
 				]
@@ -323,7 +360,7 @@ class Wpr_Page_Cart extends Widget_Base {
 		$this->add_responsive_control(
 			'product_summary_gutter',
 			[
-				'label' => esc_html__( 'Tables gutter', 'wpr-addons' ),
+				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -340,7 +377,6 @@ class Wpr_Page_Cart extends Widget_Base {
 					'{{WRAPPER}}.wpr-cart-horizontal .woocommerce-cart-form' => 'margin-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-cart-vertical .woocommerce-cart-form' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
-				'separator' => 'before',
 			]
 		);
 
@@ -375,7 +411,7 @@ class Wpr_Page_Cart extends Widget_Base {
 			[
 				'name' => 'cart_sections_box_shadow',
 				'label' => esc_html__( 'Box Shadow', 'wpr-addons' ),
-				'selector' => '{{WRAPPER}} .cart_totals, {{WRAPPER}} table.cart',
+				'selector' => '{{WRAPPER}} .cart_totals, {{WRAPPER}} table.cart, {{WRAPPER}} .wpr-cart-section',
 			]
 		);
 
@@ -452,6 +488,8 @@ class Wpr_Page_Cart extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .cart_totals h2' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} table.shop_table' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-cart-section' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -459,7 +497,7 @@ class Wpr_Page_Cart extends Widget_Base {
         $this->end_controls_section();
 
 		// Tab: Style ==============
-		// Section: Table Heading ---------
+		// Section: Table Heading --
 		$this->start_controls_section(
 			'cart_table_heading_styles',
 			[
@@ -546,12 +584,106 @@ class Wpr_Page_Cart extends Widget_Base {
 		$this->end_controls_section();
 
 		// Tab: Style ==============
-		// Section: Table Description ---------
+		// Section: Table Des ------
 		$this->start_controls_section(
 			'cart_table_description_styles',
 			[
 				'label' => __( 'Table Description', 'wpr-addons' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'cart_table_product_name_heading',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Name', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'cart_table_product_name_color',
+			[
+				'label'     => esc_html__( 'Color', 'wpr-addons' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} table.cart td.product-name' => 'color: {{VALUE}}',
+				],
+				'separator' => 'after'
+			]
+		);
+
+		$this->add_control(
+			'cart_table_remove_icon_heading',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Remove Icon', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'cart_table_remove_icon_color',
+			[
+				'label'     => esc_html__( 'Color', 'wpr-addons' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} table.cart td.product-remove a.remove' => 'color: {{VALUE}}!important;',
+				]
+			]
+		);
+
+		$this->add_control(
+			'cart_table_remove_icon_bg_color',
+			[
+				'label'     => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} table.cart td.product-remove a.remove' => 'background-color: {{VALUE}}!important;',
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'cart_table_remove_icon_size',
+			[
+				'label' => esc_html__( 'Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'size_units' => [ 'px' ],
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} table.cart td.product-remove a.remove::before' => 'font-size: {{SIZE}}{{UNIT}};',
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'cart_table_remove_icon_bg_size',
+			[
+				'label' => esc_html__( 'Box Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'size_units' => [ 'px' ],
+				'default' => [
+					'unit' => 'px',
+					'size' => 25,
+				],
+				'selectors' => [
+					'{{WRAPPER}} table.cart td.product-remove a.remove' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+				]
 			]
 		);
 
@@ -562,8 +694,9 @@ class Wpr_Page_Cart extends Widget_Base {
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} table.cart td' => 'color: {{VALUE}}',
-					'{{WRAPPER}} table.cart td a' => 'color: {{VALUE}}',
+					'{{WRAPPER}} table.cart td input' => 'color: {{VALUE}}',
 				],
+				'separator' => 'before'
 			]
 		);
 
@@ -627,14 +760,15 @@ class Wpr_Page_Cart extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} table.cart td' => 'text-align: {{VALUE}};',
-				], //TODO: doesnt work
+					'{{WRAPPER}} table.cart .variation' => 'justify-content: {{VALUE}};',
+				]
 			]
 		);
 
 		$this->end_controls_section();
 
 		// Tab: Style ==============
-		// Section: Product Image ---------
+		// Section: Product Image --
 		$this->start_controls_section(
 			'section_cart_product_image',
 			[
@@ -669,7 +803,7 @@ class Wpr_Page_Cart extends Widget_Base {
 		$this->end_controls_section();
 
 		// Tab: Style ==============
-		// Section: Forms ---------
+		// Section: Forms ----------
 		$this->start_controls_section(
 			'section_cart_tabs_forms',
 			[
@@ -730,6 +864,7 @@ class Wpr_Page_Cart extends Widget_Base {
 			'forms_fields_normal_bg_color',
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'default' => '#FFF',
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .coupon-col-start .input-text' => 'background-color: {{VALUE}};',
@@ -871,7 +1006,7 @@ class Wpr_Page_Cart extends Widget_Base {
 		$this->end_controls_section();
 
 		// Tab: Style ==============
-		// Section: Buttons ---------
+		// Section: Buttons --------
 		$this->start_controls_section(
 			'section_style_buttons',
 			[
@@ -1118,7 +1253,7 @@ class Wpr_Page_Cart extends Widget_Base {
 		$this->end_controls_section();
 
 		// Tab: Style ==============
-		// Section: Shipping Calc ---------
+		// Section: Shipping Calc --
 		$this->start_controls_section(
 			'section_style_shipping_calc_button',
 			[
@@ -1244,14 +1379,6 @@ class Wpr_Page_Cart extends Widget_Base {
 		);
 
 		$this->add_control(
-			'shipping_calc_typo_divider',
-			[
-				'type' => Controls_Manager::DIVIDER,
-				'style' => 'thick',
-			]
-		);
-
-		$this->add_control(
 			'shipping_calc_border_type',
 			[
 				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
@@ -1315,7 +1442,7 @@ class Wpr_Page_Cart extends Widget_Base {
 		$this->end_controls_section();
 
 		// Tab: Style ==============
-		// Section: Checkout Button ---------
+		// Section: Checkout Button --
 		$this->start_controls_section(
 			'section_style_checkout_button',
 			[
@@ -1670,7 +1797,7 @@ class Wpr_Page_Cart extends Widget_Base {
 
 		$this->gettext_modifications = [
 			'Update cart' => isset( $instance['update_cart_button_text'] ) ? $instance['update_cart_button_text'] : '',
-			'Cart totals' => isset( $instance['totals_section_title'] ) ? $instance['totals_section_title'] : '',
+			'Cart totals' => isset( $instance['totals_title'] ) ? $instance['totals_title'] : '',
 			'Proceed to checkout' => isset( $instance['checkout_button_text'] ) ? $instance['checkout_button_text'] : '',
 			'Update' => isset( $instance['update_shipping_button_text'] ) ? $instance['update_shipping_button_text'] : '',
 			'Apply coupon' => isset( $instance['apply_coupon_button_text'] ) ? $instance['apply_coupon_button_text'] : '',

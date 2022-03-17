@@ -2078,9 +2078,6 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 }
 
 /* Product Rating */
-.wpr-product-meta {
-    min-height: 1px;
-}
 .wpr-product-rating-flex.wpr-product-rating-left .inner-block {
     justify-content: flex-start;
 }
@@ -2163,7 +2160,6 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 .wpr-quantity-wrap {
     width: 100%;
-    min-height: 100px;
 }
 
 .elementor-widget-wpr-product-add-to-cart:not(.wpr-product-qty-align-default) .wpr-quantity-wrapper .qty {
@@ -2262,17 +2258,30 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     display: flex;
 }
 
+.wpr-cart-wrapper form .form-row {
+    margin: 0;
+}
+
 .wpr-cart-wrapper table.shop_table {
     border-collapse: collapse !important;
+    border-radius: 0;
+}
+
+.wpr-cart-wrapper table.shop_table .variation {
+    display: flex;
+}
+
+.wpr-cart-wrapper .variation-Size {
+    float: none !important;
 }
 
 .wpr-cart-vertical .wpr-cart-wrapper {
     flex-direction: column;
 }
 
-/* .wpr-cart-horizontal .wpr-cart-section-wrap {
-    display: flex;
-} */
+.wpr-cart-wrapper table.shop_table img {
+    vertical-align: middle;
+}
 
 .wpr-cart-horizontal .wpr-cart-wrapper .cart-collaterals .cart_totals,
 .wpr-cart-vertical .cart-collaterals .cart_totals {
@@ -2307,6 +2316,23 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     width: 100%;
     height: 100%;
 }
+ 
+.wpr-cart-wrapper a.remove:before {
+    font-family: "Font Awesome 5 Free";
+    content: '\f00d';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    text-indent: 0;
+}
+
+.wpr-cart-wrapper .product-remove .remove {
+    display: inline-flex;
+    justify-content: center;
+    align-content: center;
+    position: relative;
+    text-indent: -9999px;
+}
 
 .wpr-cart-wrapper .product-remove .remove:hover {
     background-color: transparent;
@@ -2325,13 +2351,6 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 .wpr-cart-wrapper .select2-container--default .select2-selection--single {
     border: none !important;
     outline: none !important;
-}
-
-.wpr-cart-wrapper .product-remove .remove {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    background-color: transparent;
 }
 
 /*--------------------------------------------------------------
