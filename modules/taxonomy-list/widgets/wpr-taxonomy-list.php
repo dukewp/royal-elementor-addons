@@ -35,6 +35,15 @@ class Wpr_Taxonomy_List extends Widget_Base {
 		return [ 'royal', 'taxonomy-list', 'taxonomy', 'category', 'categories', 'tag', 'list'];
 	}
 
+	public function get_post_taxonomies() {
+		return [
+			'category' => esc_html__( 'Categories', 'wpr-addons' ),
+			'post_tag' => esc_html__( 'Tags', 'wpr-addons' ),
+			'product_cat' => esc_html__( 'Product Categories', 'wpr-addons' ),
+			'product_tag' => esc_html__( 'Product Tags', 'wpr-addons' ),
+		];
+	}
+
     protected function register_controls() {
 
 		// Tab: Content ==============
@@ -47,16 +56,13 @@ class Wpr_Taxonomy_List extends Widget_Base {
 			]
 		);
 
-		// Get Available Taxonomies
-		$post_taxonomies = Utilities::get_custom_types_of( 'tax', false );
-
 		$this->add_control(
 			'query_tax_selection',
 			[
 				'label' => esc_html__( 'Select Taxonomy', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'category',
-				'options' => $post_taxonomies,
+				'options' => $this->get_post_taxonomies(),
 			]
 		);
 
@@ -105,6 +111,10 @@ class Wpr_Taxonomy_List extends Widget_Base {
 
         $this->end_controls_section();
 
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'taxonomy-list', [
+			'Query Custom Post Type Taxonomies (categories).'
+		] );
 
 		// Styles ====================
 		// Section: Taxonomy Style ---

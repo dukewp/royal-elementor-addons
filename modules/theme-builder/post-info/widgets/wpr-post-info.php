@@ -48,19 +48,14 @@ class Wpr_Post_Info extends Widget_Base {
 
 	public function add_section_style_custom_field() {}
 
-	protected function _register_controls() {
+	public function get_post_taxonomies() {
+		return [
+			'category' => esc_html__( 'Categories', 'wpr-addons' ),
+			'post_tag' => esc_html__( 'Tags', 'wpr-addons' ),
+		];		
+	}
 
-		// Get Available Taxonomies
-		if ( wpr_fs()->can_use_premium_code() ) {
-			$post_taxonomies = Utilities::get_custom_types_of( 'tax', false );
-			unset($post_taxonomies['product_cat']);
-			unset($post_taxonomies['product_tag']);
-		} else {
-			$post_taxonomies = [
-				'category' => esc_html__( 'Categories', 'wpr-addons' ),
-				'post_tag' => esc_html__( 'Tags', 'wpr-addons' ),
-			];
-		}
+	protected function _register_controls() {
 
 		// Get Available Meta Keys
 		$post_meta_keys = Utilities::get_custom_meta_keys();
@@ -153,7 +148,7 @@ class Wpr_Post_Info extends Widget_Base {
 				'label' => esc_html__( 'Select Taxonomy', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'category',
-				'options' => $post_taxonomies,
+				'options' => $this->get_post_taxonomies(),
 				'condition' => [
 					'post_info_select' => 'taxonomy',
 				]
@@ -369,6 +364,7 @@ class Wpr_Post_Info extends Widget_Base {
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'post-info', [
 			'Display and Style Custom Fields in and Advanced way.',
+			'Query Custom Post Type Taxonomies (categories).'
 		] );
 
 
@@ -614,16 +610,16 @@ class Wpr_Post_Info extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name'           => 'post_info_elements_typography',
+				'name' => 'post_info_elements_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'label'          => esc_html__('Typography', 'wpr-addons'),
+				'label' => esc_html__('Typography', 'wpr-addons'),
 				'selector' => '{{WRAPPER}} .wpr-post-info li:not(.wpr-post-info-taxonomy):not(.wpr-post-info-custom-field)',
 				'fields_options' => [
-					'typography'      => [
+					'typography' => [
 						'default' => 'custom',
 					],
-					'font_size'      => [
-						'default'    => [
+					'font_size' => [
+						'default' => [
 							'size' => '12',
 							'unit' => 'px',
 						],
