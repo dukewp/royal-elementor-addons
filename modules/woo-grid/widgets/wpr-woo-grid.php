@@ -3080,7 +3080,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'name'     => 'title_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-grid-item-title'
+				'selector' => '{{WRAPPER}} .wpr-grid-item-title a'
 			]
 		);
 
