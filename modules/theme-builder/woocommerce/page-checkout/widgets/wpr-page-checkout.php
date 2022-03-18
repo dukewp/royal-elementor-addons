@@ -30,7 +30,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'qq', 'checkout', 'product', 'page', 'checkout-page', 'page-checkout' ];//tmp
+		return [ 'qq', 'checkout', 'product', 'page', 'checkout page', 'page checkout' ];//tmp
 	}
 
 	public function get_script_depends() {
@@ -40,7 +40,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 	protected function _register_controls() {
 
 		// Tab: Style ==============
-		// Section: Settings ---------
+		// Section: Settings -------
 		$this->start_controls_section(
 			'section_general',
 			[
@@ -75,7 +75,7 @@ class Wpr_Page_Checkout extends Widget_Base {
         $this->end_controls_section();
 
 		// Tab: Style ==============
-		// Section: General ---------
+		// Section: General --------
 		$this->start_controls_section(
 			'checkout_general_styles',
 			[
@@ -205,7 +205,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'nav_gutter',
+			'checkout_general_gutter',
 			[
 				'type' => Controls_Manager::SLIDER,
 				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
@@ -225,6 +225,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}}.wpr-checkout-horizontal .col-1' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-checkout-horizontal .wpr-checkout-order-review-table-inner' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-checkout-vertical .col-1' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-checkout-vertical .col-2' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-checkout-vertical .wpr-checkout-order-review-table-inner' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
 			]
@@ -233,7 +234,7 @@ class Wpr_Page_Checkout extends Widget_Base {
         $this->end_controls_section();
 
 		// Tab: Style ==============
-		// Section: Forms ---------
+		// Section: Forms ----------
 		$this->start_controls_section(
 			'section_checkout_forms',
 			[
@@ -454,6 +455,192 @@ class Wpr_Page_Checkout extends Widget_Base {
 
 		$this->end_controls_section();
 
+		// Tab: Style ==============
+		// Section: Orders ---------
+		$this->start_controls_section(
+			'checkout_order_styles',
+			[
+				'label' => __( 'Orders Table', 'wpr-addons' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'checkout_table_heading_title',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Table Heading', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'checkout_table_heading_color',
+			[
+				'label'     => esc_html__( 'Color', 'wpr-addons' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} table.woocommerce-orders-table th' => 'color: {{VALUE}}',
+					'{{WRAPPER}} table.shop_table thead th' => 'color: {{VALUE}}',
+					'{{WRAPPER}} table.shop_table tfoot th' => 'color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'checkout_table_heading_bg_color',
+			[
+				'label'     => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} table.woocommerce-orders-table th' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} table.shop_table thead th' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} table.shop_table tfoot th' => 'background-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'checkout_table_heading_typography',
+				'label'    => esc_html__( 'Typography', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}} table.woocommerce-orders-table th, {{WRAPPER}} table.shop_table thead th, {{WRAPPER}} table.shop_table tfoot th',
+			]
+		);
+
+		$this->add_responsive_control(
+			'checkout_table_heading_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 10,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} table.woocommerce-orders-table th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} table.shop_table thead th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} table.shop_table tfoot th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'checkout_table_heading_alignment',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'start' => [
+						'title' => esc_html__( 'Start', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'end' => [
+						'title' => esc_html__( 'End', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} table.woocommerce-orders-table th' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} table.shop_table thead th' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} table.shop_table tfoot th' => 'text-align: {{VALUE}};'
+				]
+			]
+		);
+
+		$this->add_control(
+			'checkout_table_description_title',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Table Description', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'checkout_table_description_color',
+			[
+				'label'     => esc_html__( 'Color', 'wpr-addons' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} table.shop_table td' => 'color: {{VALUE}}',
+					'{{WRAPPER}} table.shop_table td a' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'checkout_table_description_bg_color',
+			[
+				'label'     => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} table.shop_table td' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'checkout_table_description_typography',
+				'label'    => esc_html__( 'Typography', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}} table.shop_table td',
+			]
+		);
+
+		$this->add_responsive_control(
+			'checkout_table_description_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 10,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} table.shop_table td' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'checkout_table_description_alignment',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'start' => [
+						'title' => esc_html__( 'Start', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'end' => [
+						'title' => esc_html__( 'End', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} table.shop_table td' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} table.shop_table .variation' => 'justify-content: {{VALUE}};'
+				]
+			]
+		);
+
+		$this->end_controls_section();
+
 		// Styles ====================
 		// Section: Place Order ------
 		$this->start_controls_section(
@@ -462,6 +649,117 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'label' => esc_html__( 'Place Order', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
+			]
+		);
+
+		$this->add_control(
+			'payment_methods_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#333333',
+				'selectors' => [
+					'{{WRAPPER}} #payment .place-order' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'payment_methods_link_color',
+			[
+				'label'  => esc_html__( 'Link Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#c36',
+				'selectors' => [
+					'{{WRAPPER}} #payment .woocommerce-privacy-policy-link' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'payment_methods_link_hover_color',
+			[
+				'label'  => esc_html__( 'Link Hover Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#333333',
+				'selectors' => [
+					'{{WRAPPER}} #payment .woocommerce-privacy-policy-link:hover' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'place_order_payment_methods_inputs',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Input', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'payment_methods_labels_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#333333',
+				'selectors' => [
+					'{{WRAPPER}} li.wc_payment_method label' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'payment_methods_inputs_distance',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],			
+				'selectors' => [
+					'{{WRAPPER}} ul.payment_methods li.wc_payment_method .input-radio' => 'margin-right: {{SIZE}}{{UNIT}} !important;',
+				],
+			]
+		);
+
+		$this->add_control(
+			'place_order_payment_methods_tooltips',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Tooltips', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'payment_methods_tooltips_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#333333',
+				'selectors' => [
+					'{{WRAPPER}} .payment_box p' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'payment_methods_tooltips_bg_color',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#f7f7f7',
+				'selectors' => [
+					'{{WRAPPER}} #payment .payment_box' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} #payment .payment_box::before' => 'border-bottom-color: {{VALUE}}',
+				],
 			]
 		);
 
@@ -492,7 +790,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#FFF',
 				'selectors' => [
 					'{{WRAPPER}} .place-order button' => 'color: {{VALUE}}',
 				],

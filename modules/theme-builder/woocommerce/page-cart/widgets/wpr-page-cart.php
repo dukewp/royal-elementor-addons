@@ -345,7 +345,7 @@ class Wpr_Page_Cart extends Widget_Base {
 				'size_units' => [ 'px', '%' ],
 				'default' => [
 					'unit' => '%',
-					'size' => 80,
+					'size' => 70,
 				],
 				'selectors' => [
 					'{{WRAPPER}}.wpr-cart-horizontal .woocommerce-cart-form' => 'width: {{SIZE}}{{UNIT}};',
@@ -402,6 +402,7 @@ class Wpr_Page_Cart extends Widget_Base {
 					'{{WRAPPER}} table th' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} table td' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-cart-section' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .cart_totals' => 'background-color: {{VALUE}}',
 				]
 			]
 		);
@@ -412,6 +413,85 @@ class Wpr_Page_Cart extends Widget_Base {
 				'name' => 'cart_sections_box_shadow',
 				'label' => esc_html__( 'Box Shadow', 'wpr-addons' ),
 				'selector' => '{{WRAPPER}} .cart_totals, {{WRAPPER}} table.cart, {{WRAPPER}} .wpr-cart-section',
+			]
+		);
+
+		$this->add_control(
+			'cart_wrappers_general_heading',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Wrappers', 'wpr-addons' ),
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'cart_wrappers_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-cart-section' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .cart_totals' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .wpr-cart-section-wrap table.shop_table' => 'border-style: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'cart_wrappers_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-cart-section' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .cart_totals' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-cart-section-wrap table.shop_table' => 'border-color: {{VALUE}}',
+				],
+				'condition' => [
+					'cart_wrappers_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'cart_wrappers_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-cart-section' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .cart_totals' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-cart-section-wrap table.shop_table' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'cart_wrappers_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'cart_table_general_heading',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Tables', 'wpr-addons' ),
+				'separator' => 'before'
 			]
 		);
 
@@ -432,8 +512,7 @@ class Wpr_Page_Cart extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} table th' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} table td' => 'border-style: {{VALUE}};',
-				],
-				'separator' => 'before',
+				]
 			]
 		);
 
@@ -482,15 +561,16 @@ class Wpr_Page_Cart extends Widget_Base {
 				'size_units' => [ 'px', '%' ],
 				'default' => [
 					'top' => 10,
-					'right' => 0,
+					'right' => 10,
 					'bottom' => 10,
-					'left' => 0,
+					'left' => 10,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .cart_totals h2' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} table.shop_table' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-cart-section' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
+				'separator' => 'before'
 			]
 		);
 
@@ -1253,27 +1333,70 @@ class Wpr_Page_Cart extends Widget_Base {
 		$this->end_controls_section();
 
 		// Tab: Style ==============
-		// Section: Shipping Calc --
+		// Section: Cart Totals --
 		$this->start_controls_section(
-			'section_style_shipping_calc_button',
+			'section_style_cart_totals_button',
 			[
-				'label' => esc_html__( 'Shipping Calc', 'wpr-addons' ),
+				'label' => esc_html__( 'Cart Totals', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 			]
 		);
 
-		$this->start_controls_tabs( 'shipping_calc_styles' );
+		$this->add_control(
+			'cart_totals_table_heading',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Headings', 'wpr-addons' ),
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'cart_totals_th_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#333333',
+				'selectors' => [
+					'{{WRAPPER}} .cart_totals th' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'cart_totals_table_description',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Descriptions', 'wpr-addons' ),
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'cart_totals_td_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#333333',
+				'selectors' => [
+					'{{WRAPPER}} .cart_totals td' => 'color: {{VALUE}}',
+				]
+			]
+		);
+
+
+		$this->start_controls_tabs( 'cart_totals_styles' );
 
 		$this->start_controls_tab(
-			'shipping_calc_normal',
+			'cart_totals_normal',
 			[
 				'label' => esc_html__( 'Normal', 'wpr-addons' ),
 			]
 		);
 
 		$this->add_control(
-			'shipping_calc_color',
+			'cart_totals_color',
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
@@ -1285,7 +1408,7 @@ class Wpr_Page_Cart extends Widget_Base {
 		);
 
 		$this->add_control(
-			'shipping_calc_bg_color',
+			'cart_totals_bg_color',
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
@@ -1296,7 +1419,7 @@ class Wpr_Page_Cart extends Widget_Base {
 		);
 
 		$this->add_control(
-			'shipping_calc_border_color',
+			'cart_totals_border_color',
 			[
 				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
@@ -1310,14 +1433,14 @@ class Wpr_Page_Cart extends Widget_Base {
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
-			'shipping_calc_hover',
+			'cart_totals_hover',
 			[
 				'label' => esc_html__( 'Hover', 'wpr-addons' ),
 			]
 		);
 
 		$this->add_control(
-			'shipping_calc_color_hr',
+			'cart_totals_color_hr',
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
@@ -1329,7 +1452,7 @@ class Wpr_Page_Cart extends Widget_Base {
 		);
 
 		$this->add_control(
-			'shipping_calc_bg_color_hr',
+			'cart_totals_bg_color_hr',
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
@@ -1340,7 +1463,7 @@ class Wpr_Page_Cart extends Widget_Base {
 		);
 
 		$this->add_control(
-			'shipping_calc_border_color_hr',
+			'cart_totals_border_color_hr',
 			[
 				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
@@ -1356,7 +1479,7 @@ class Wpr_Page_Cart extends Widget_Base {
 		$this->end_controls_tabs();
 
 		$this->add_control(
-			'shipping_calc_divider',
+			'cart_totals_divider',
 			[
 				'type' => Controls_Manager::DIVIDER,
 				'style' => 'thick',
@@ -1364,7 +1487,7 @@ class Wpr_Page_Cart extends Widget_Base {
 		);
 
 		$this->add_control(
-			'shipping_calc_transition_duration',
+			'cart_totals_transition_duration',
 			[
 				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
@@ -1379,7 +1502,7 @@ class Wpr_Page_Cart extends Widget_Base {
 		);
 
 		$this->add_control(
-			'shipping_calc_border_type',
+			'cart_totals_border_type',
 			[
 				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
@@ -1400,7 +1523,7 @@ class Wpr_Page_Cart extends Widget_Base {
 		);
 
 		$this->add_control(
-			'shipping_calc_border_width',
+			'cart_totals_border_width',
 			[
 				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
@@ -1415,13 +1538,13 @@ class Wpr_Page_Cart extends Widget_Base {
 					'{{WRAPPER}} .shipping-calculator-button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
-					'shipping_calc_border_type!' => 'none',
+					'cart_totals_border_type!' => 'none',
 				],
 			]
 		);
 
 		$this->add_control(
-			'shipping_calc_border_radius',
+			'cart_totals_border_radius',
 			[
 				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,

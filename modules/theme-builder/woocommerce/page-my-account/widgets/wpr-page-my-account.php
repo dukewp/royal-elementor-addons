@@ -669,7 +669,9 @@ class Wpr_Page_My_Account extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} table.shop_table td' => 'text-align: {{VALUE}};',
-				], //TODO: doesnt work
+					'{{WRAPPER}} table.shop_table .variation' => 'justify-content: {{VALUE}};',
+					'{{WRAPPER}} table.shop_table .wc-item-meta' => 'justify-content: {{VALUE}};'
+				]
 			]
 		);
 
@@ -918,7 +920,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#333333',
 				'selectors' => [
-					'{{WRAPPER}} button' => 'color: {{VALUE}}',
+					'{{WRAPPER}} button.button' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -929,7 +931,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} button' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} button.button' => 'background-color: {{VALUE}}',
 				]
 			]
 		);
@@ -941,7 +943,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#E8E8E8',
 				'selectors' => [
-					'{{WRAPPER}} button' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} button.button' => 'border-color: {{VALUE}}',
 				],
 			]
 		);
@@ -950,7 +952,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'account_details_button_box_shadow',
-				'selector' => '{{WRAPPER}} button',
+				'selector' => '{{WRAPPER}} button.button',
 			]
 		);
 
@@ -970,7 +972,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#FFF',
 				'selectors' => [
-					'{{WRAPPER}} button:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} button.button:hover' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -981,7 +983,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} button:hover' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} button.button:hover' => 'background-color: {{VALUE}}',
 				]
 			]
 		);
@@ -993,7 +995,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#605BE5',
 				'selectors' => [
-					'{{WRAPPER}} button:hover' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} button.button:hover' => 'border-color: {{VALUE}}',
 				]
 			]
 		);
@@ -1002,7 +1004,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'account_details_button_box_shadow_hr',
-				'selector' => '{{WRAPPER}} button:hover',
+				'selector' => '{{WRAPPER}} button.button:hover',
 			]
 		);
 
@@ -1028,7 +1030,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'max' => 5,
 				'step' => 0.1,
 				'selectors' => [
-					'{{WRAPPER}} button' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} button.button' => 'transition-duration: {{VALUE}}s',
 				],
 			]
 		);
@@ -1046,7 +1048,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'name'     => 'account_details_button_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} button',
+				'selector' => '{{WRAPPER}} button.button',
 			]
 		);
 
@@ -1065,7 +1067,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				],
 				'default' => 'none',
 				'selectors' => [
-					'{{WRAPPER}} button' => 'border-style: {{VALUE}}',
+					'{{WRAPPER}} button.button' => 'border-style: {{VALUE}}',
 				],
 				'separator' => 'before',
 			]
@@ -1084,7 +1086,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 					'left' => 2,
 				],
 				'selectors' => [
-					'{{WRAPPER}} button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} button.button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
 					'account_details_buttons_border_type!' => 'none',
@@ -1105,7 +1107,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 					'left' => 15,
 				],
 				'selectors' => [
-					'{{WRAPPER}} button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} button.button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -1123,7 +1125,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 					'left' => 0,
 				],
 				'selectors' => [
-					'{{WRAPPER}} button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} button.button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -1141,7 +1143,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 					'left' => 2,
 				],
 				'selectors' => [
-					'{{WRAPPER}} button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} button.button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -1193,7 +1195,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 
 	public function woocommerce_logout_default_redirect_url( $redirect ) {
 		return $redirect . '?wpr-addons_wc_logout=true&wpr-addons_my_account_redirect=' . esc_url( get_permalink() );
-	}
+	} // TODO: what to use instead wpr-addons prefix
 	
 	private function render_html_front_end() {
 		$current_endpoint = $this->get_current_endpoint();
@@ -1346,7 +1348,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 		add_action( 'woocommerce_account_content', [ $this, 'before_account_content' ], 2 );
 		add_action( 'woocommerce_account_content', [ $this, 'after_account_content' ], 95 );
 		add_filter( 'woocommerce_get_myaccount_page_permalink', [ $this, 'woocommerce_get_myaccount_page_permalink' ], 10, 1 );
-		add_filter( 'woocommerce_logout_default_redirect_url', [ $this, 'woocommerce_logout_default_redirect_url' ], 10, 1 );
+		// add_filter( 'woocommerce_logout_default_redirect_url', [ $this, 'woocommerce_logout_default_redirect_url' ], 10, 1 );
 
 		// Display our Widget.
 		if ( ! \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
@@ -1359,7 +1361,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 		remove_action( 'woocommerce_account_content', [ $this, 'before_account_content' ], 5 );
 		remove_action( 'woocommerce_account_content', [ $this, 'after_account_content' ], 95 );
 		remove_filter( 'woocommerce_get_myaccount_page_permalink', [ $this, 'woocommerce_get_myaccount_page_permalink' ], 10, 1 );
-		remove_filter( 'woocommerce_logout_default_redirect_url', [ $this, 'woocommerce_logout_default_redirect_url' ], 10, 1 );
+		// remove_filter( 'woocommerce_logout_default_redirect_url', [ $this, 'woocommerce_logout_default_redirect_url' ], 10, 1 );
 
 		// Return to existing logged-in user after widget is rendered.
 		if ( $is_editor ) {
