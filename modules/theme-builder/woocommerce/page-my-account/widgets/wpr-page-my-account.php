@@ -132,7 +132,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 		$this->end_controls_section();
 
 		// Tab: Style ==============
-		// Section: Tab Labels ---------
+		// Section: Tab Labels -----
 		$this->start_controls_section(
 			'section_tab_styles',
 			[
@@ -445,6 +445,32 @@ class Wpr_Page_My_Account extends Widget_Base {
 		);
 
 		$this->add_control(
+			'tab_content_link_color',
+			[
+				'label' => esc_html__( 'Link Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#c36',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper a' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-form-login .woocommerce-LostPassword a' => 'color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_control(
+			'tab_content_link_color_hover',
+			[
+				'label' => esc_html__( 'Link Hover Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#000',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper a:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-form-login .woocommerce-LostPassword a:hover' => 'color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_control(
 			'tab_content_bg_color',
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
@@ -715,7 +741,27 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'default' => '#000',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper label' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-form-login label' => 'color: {{VALUE}}'
 				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'my_account_labels_margin',
+			[
+				'label' => esc_html__( 'Margin', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 5,
+					'right' => 5,
+					'bottom' => 5,
+					'left' => 5,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper label' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-form-login label' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				]
 			]
 		);
 
@@ -723,7 +769,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'form_labels_typography',
-				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content-wrapper label',
+				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content-wrapper label, {{WRAPPER}} .woocommerce-form-login label',
 			]
 		);
 
@@ -743,8 +789,9 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text::placeholder' => 'color: {{VALUE}};',
-				],
+					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text::placeholder' => 'color: {{VALUE}};'
+				]
 			]
 		);
 
@@ -755,7 +802,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'border-color: {{VALUE}};',
-				],
+					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'border-color: {{VALUE}};'
+				]
 			]
 		);
 
@@ -767,7 +815,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'default' => '#F3F3F3',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'background-color: {{VALUE}};',
-				],
+					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'background-color: {{VALUE}};'
+				]
 			]
 		);
 
@@ -776,7 +825,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'name' => 'forms_fields_normal_box_shadow',
 				'label' => esc_html__( 'Box Shadow', 'wpr-addons' ),
-				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text',
+				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text, {{WRAPPER}} .woocommerce-form-login .input-text',
 			]
 		);
 
@@ -795,6 +844,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text:focus' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-form-login .input-text:focus' => 'color: {{VALUE}};'
 				],
 			]
 		);
@@ -805,7 +855,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'name' => 'forms_fields_focus_box_shadow',
 				'label' => esc_html__( 'Box Shadow', 'wpr-addons' ),
-				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text:focus, {{WRAPPER}} select:focus',
+				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text:focus, {{WRAPPER}} select:focus, {{WRAPPER}} .woocommerce-form-login .input-text:focus',
 			]
 		);
 
@@ -829,6 +879,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'default' => 'solid',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'border-style: {{VALUE}};',
 				],
 				'separator' => 'before',
 			]
@@ -848,6 +899,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
 					'form_fields_border_type!' => 'none',
@@ -869,6 +921,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -887,6 +940,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -1089,43 +1143,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 					'{{WRAPPER}} button.button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
-					'account_details_buttons_border_type!' => 'none',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'account_details_button_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 10,
-					'right' => 15,
-					'bottom' => 10,
-					'left' => 15,
-				],
-				'selectors' => [
-					'{{WRAPPER}} button.button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'account_details_button_margin',
-			[
-				'label' => esc_html__( 'Margin', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} button.button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'account_details_button_border_type!' => 'none',
 				],
 			]
 		);
@@ -1144,8 +1162,44 @@ class Wpr_Page_My_Account extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} button.button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'account_details_button_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 10,
+					'right' => 15,
+					'bottom' => 10,
+					'left' => 15,
 				],
-				'separator' => 'before',
+				'selectors' => [
+					'{{WRAPPER}} button.button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_responsive_control(
+			'account_details_button_margin',
+			[
+				'label' => esc_html__( 'Margin', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} button.button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
 			]
 		);
 
@@ -1355,6 +1409,30 @@ class Wpr_Page_My_Account extends Widget_Base {
 			$this->render_html_front_end();
 		} else {
 			$this->render_html_editor();
+			?>
+
+			<form class="woocommerce-form woocommerce-form-login login" method="post">
+			<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+				<label for="username">Username or email address&nbsp;<span class="required">*</span></label>
+				<input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="username" id="username" autocomplete="username" value="">			</p>
+			<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+				<label for="password">Password&nbsp;<span class="required">*</span></label>
+				<span class="password-input"><input class="woocommerce-Input woocommerce-Input--text input-text" type="password" name="password" id="password" autocomplete="current-password"><span class="show-password-input"></span></span>
+			</p>
+
+			
+			<p class="form-row">
+				<label class="woocommerce-form__label woocommerce-form__label-for-checkbox woocommerce-form-login__rememberme">
+					<input class="woocommerce-form__input woocommerce-form__input-checkbox" name="rememberme" type="checkbox" id="rememberme" value="forever"> <span>Remember me</span>
+				</label>
+				<input type="hidden" id="woocommerce-login-nonce" name="woocommerce-login-nonce" value="7e7ee3206a"><input type="hidden" name="_wp_http_referer" value="/royal-wp/my-account/">				<button type="submit" class="woocommerce-button button woocommerce-form-login__submit" name="login" value="Log in">Log in</button>
+			</p>
+			<p class="woocommerce-LostPassword lost_password">
+				<a href="http://localhost/royal-wp/my-account/lost-password/">Lost your password?</a>
+			</p>
+			</form>
+
+			<?php
 		}
 
 		// Remove actions & filters after displaying our Widget.
