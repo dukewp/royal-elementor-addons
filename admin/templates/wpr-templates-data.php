@@ -210,9 +210,9 @@ class WPR_Templates_Data {
 	public static function get_available_blocks() {
 		return [
 			'grid' => [
-				'v1' => ['type' => 'iframe', 'url' => 'grid/v1/'],
-				'v2' => ['type' => 'iframe', 'url' => 'grid/v2/'],
-				'v3' => ['type' => 'iframe', 'url' => 'grid/v3/'],
+				'v1-zzz' => ['type' => 'iframe', 'url' => 'grid/v1/'],
+				'v2-zzz' => ['type' => 'iframe', 'url' => 'grid/v2/'],
+				'v3-zzz' => ['type' => 'iframe', 'url' => 'grid/v3/'],
 				'v4' => ['type' => 'iframe', 'url' => 'grid/v4/'],
 				'v5-pro' => ['type' => 'iframe', 'url' => 'grid/v5/'],
 				'v6-pro' => ['type' => 'iframe', 'url' => 'grid/v6/'],

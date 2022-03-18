@@ -32,7 +32,7 @@ class Wpr_Archive_Title extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'archive', 'title', 'Description', 'category' ];
+		return [ 'archive', 'title', 'description', 'category', 'tag' ];
 	}
 
 	public function add_control_archive_description() {}

@@ -20,7 +20,7 @@ class Wpr_Post_Title extends Widget_Base {
 	}
 
 	public function get_title() {
-		return esc_html__( 'Post Title', 'wpr-addons' );
+		return Utilities::show_theme_buider_widget_on('single') ? esc_html__( 'Post Title', 'wpr-addons' ) : '';
 	}
 
 	public function get_icon() {
@@ -28,11 +28,11 @@ class Wpr_Post_Title extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return Utilities::show_theme_buider_widget_on('single') ? [ 'wpr-theme-builder-widgets' ] : [];
+		return Utilities::show_theme_buider_widget_on('single') ? [ 'wpr-theme-builder-widgets' ] : ['wpr-theme-builder-widgets'];
 	}
 
 	public function get_keywords() {
-		return [ 'post', 'title' ];
+		return Utilities::show_theme_buider_widget_on('single') ? [ 'post', 'title' ] : [];
 	}
 
 	protected function _register_controls() {
