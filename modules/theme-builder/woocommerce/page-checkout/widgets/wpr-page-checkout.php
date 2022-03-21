@@ -1030,11 +1030,11 @@ class Wpr_Page_Checkout extends Widget_Base {
 
 	public function woocommerce_checkout_before_order_review_heading() {
         echo '<div class="wpr-checkout-order-review-table">';
-	}
-
-	public function woocommerce_checkout_before_order_review_heading_inner() {
         echo '<div class="wpr-checkout-order-review-table-inner">';
 	}
+
+	// public function woocommerce_checkout_before_order_review_heading_inner() {
+	// }
 
 	public function woocommerce_checkout_after_order_review() {
 		echo '</div>';
@@ -1059,6 +1059,8 @@ class Wpr_Page_Checkout extends Widget_Base {
 			$store_current_user = wp_get_current_user()->ID;
 			wp_set_current_user( 0 );
 		}
+
+		$actions_array = ['woocommerce_checkout_before_order_review_heading', ''];
 
 		add_action( 'woocommerce_checkout_before_order_review_heading', [ $this, 'woocommerce_checkout_before_order_review_heading' ], 95 );
 

@@ -1833,7 +1833,6 @@ class Wpr_Page_Cart extends Widget_Base {
 	}
 
 	public function woocommerce_after_cart() {
-		// closing wrapper div
 		echo '</div>';
 	}
 
@@ -1905,10 +1904,10 @@ class Wpr_Page_Cart extends Widget_Base {
 	public function hide_coupon_field_on_cart( $enabled ) {
 		return is_cart() ? false : $enabled;
 	}
-	public function disable_cart_coupon() {
+	public function woocommerce_cart_contents() {
 		add_filter( 'woocommerce_coupons_enabled', [ $this, 'cart_coupon_return_false' ], 90 );
 	}
-	public function enable_cart_coupon() {
+	public function woocommerce_after_cart_contents() {
 		remove_filter( 'woocommerce_coupons_enabled', [ $this, 'cart_coupon_return_false' ], 90 );
 	}
 	public function cart_coupon_return_false() {
@@ -1942,23 +1941,23 @@ class Wpr_Page_Cart extends Widget_Base {
     protected function render() {
         $settings = $this->get_settings_for_display();
 
-		add_filter( 'gettext', [ $this, 'filter_gettext' ], 20, 3 );
-		add_action( 'woocommerce_before_cart', [ $this, 'woocommerce_before_cart' ] );
-		add_action( 'woocommerce_after_cart_table', [ $this, 'woocommerce_after_cart_table' ] );
-		add_action( 'woocommerce_before_cart_table', [ $this, 'woocommerce_before_cart_table' ] );
-		// add_action( 'woocommerce_before_cart_collaterals', [ $this, 'woocommerce_before_cart_collaterals' ] );
-		add_action( 'woocommerce_after_cart', [ $this, 'woocommerce_after_cart' ] );
-		add_action( 'woocommerce_cart_contents', [ $this, 'disable_cart_coupon' ] );
-		add_action( 'woocommerce_after_cart_contents', [ $this, 'enable_cart_coupon' ] );
+		$actions_array = ['woocommerce_before_cart', 'woocommerce_after_cart_table', 'woocommerce_before_cart_table', 'woocommerce_after_cart', 'woocommerce_cart_contents', 'woocommerce_after_cart_contents' ];
 
-			echo do_shortcode( '[woocommerce_cart]' );
+		add_filter( 'gettext', [ $this, 'filter_gettext' ], 20, 3 );
+
+		foreach ($actions_array as $key => $value) {
+			add_action($value, [$this, $value]);
+		}
+
+		echo do_shortcode( '[woocommerce_cart]' );
+		
 
 		remove_filter( 'gettext', [ $this, 'filter_gettext' ], 20 );
-		remove_action( 'woocommerce_before_cart', [ $this, 'woocommerce_before_cart' ] );
-		remove_action( 'woocommerce_after_cart_table', [ $this, 'woocommerce_after_cart_table' ] );
-		remove_action( 'woocommerce_before_cart_table', [ $this, 'woocommerce_before_cart_table' ] );
-		// remove_action( 'woocommerce_before_cart_collaterals', [ $this, 'woocommerce_before_cart_collaterals' ] );
-		remove_action( 'woocommerce_after_cart', [ $this, 'woocommerce_after_cart' ] );
+
+		foreach ($actions_array as $key => $value) {
+			remove_action($value, [$this, $value]);
+		}
+
 		remove_filter( 'woocommerce_coupons_enabled', [ $this, 'hide_coupon_field_on_cart' ] );
     }
 }
