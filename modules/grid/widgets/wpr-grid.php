@@ -7600,6 +7600,7 @@ class Wpr_Grid extends Widget_Base {
 			$args = [
 				'post_type' => $settings[ 'query_source' ],
 				'post__in' => $post_ids,
+				'ignore_sticky_posts' => 1,
 				'posts_per_page' => $settings['query_posts_per_page'],
 				'orderby' => $settings[ 'query_randomize' ],
 				'paged' => $paged,
@@ -8762,20 +8763,13 @@ class Wpr_Grid extends Widget_Base {
 			$render_attribute = $this->get_render_attribute_string( 'slider-settings' );
 		}
 
-		// Grid Wrap
-		echo '<section class="wpr-grid elementor-clearfix" '. $render_attribute .'>';
-
 		// Loop: Start
 		if ( $posts->have_posts() ) :
 
-		$post_index = 0;
+		// Grid Wrap
+		echo '<section class="wpr-grid elementor-clearfix" '. $render_attribute .'>';
 
 		while ( $posts->have_posts() ) : $posts->the_post();
-
-			// $post_index++;
-			// if ( Utilities::is_new_free_user() && $post_index > 12 ) {
-			// 	return;
-			// }
 
 			// Post Class
 			$post_class = implode( ' ', get_post_class( 'wpr-grid-item elementor-clearfix', get_the_ID() ) );
@@ -8817,19 +8811,23 @@ class Wpr_Grid extends Widget_Base {
 
 		endwhile;
 
+		// Grid Wrap
+		echo '</section>';
+
 		// reset
 		wp_reset_postdata();
 
 		// No Posts Found
 		else:
 
-			echo '<h2>'. $settings['query_not_found_text'] .'</h2>';
+			echo '<section class="wpr-grid elementor-clearfix" '. $render_attribute .'>';
+				if ( 'dynamic' === $settings['query_selection'] ) {
+					echo '<h2>'. $settings['query_not_found_text'] .'</h2>';
+				}
+			echo '</section>';
 
 		// Loop: End
 		endif;
-
-		// Grid Wrap
-		echo '</section>';
 
 		if ( 'slider' === $settings['layout_select'] ) {
 			// Slider Navigation
