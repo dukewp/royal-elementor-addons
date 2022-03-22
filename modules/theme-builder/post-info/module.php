@@ -2,6 +2,7 @@
 namespace WprAddons\Modules\ThemeBuilder\PostInfo;
 
 use WprAddons\Base\Module_Base;
+use WprAddons\Classes\Utilities;
 
 class Module extends Module_Base {
 
@@ -16,9 +17,7 @@ class Module extends Module_Base {
 	}
 
 	public function get_widgets() {
-		return [
-			'Wpr_Post_Info', // This should match the widget/element class.
-		];
+		return Utilities::show_theme_buider_widget_on('single') ? ['Wpr_Post_Info'] : [];  // This should match the widget/element class.
 	}
 	
 }

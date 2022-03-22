@@ -2,6 +2,7 @@
 namespace WprAddons\Modules\ThemeBuilder\AuthorBox;
 
 use WprAddons\Base\Module_Base;
+use wpraddons\Classes\Utilities;
 
 class Module extends Module_Base {
 
@@ -16,9 +17,7 @@ class Module extends Module_Base {
 	}
 
 	public function get_widgets() {
-		return [
-			'Wpr_Author_Box', // This should match the widget/element class.
-		];
+		return Utilities::show_theme_buider_widget_on('single') || Utilities::show_theme_buider_widget_on('archive') ? ['Wpr_Author_Box'] : []; // This should match the widget/element class.
 	}
 	
 }

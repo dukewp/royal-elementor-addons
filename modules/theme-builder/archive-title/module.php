@@ -2,6 +2,7 @@
 namespace WprAddons\Modules\ThemeBuilder\ArchiveTitle;
 
 use WprAddons\Base\Module_Base;
+use WprAddons\Classes\Utilities;
 
 class Module extends Module_Base {
 
@@ -16,9 +17,8 @@ class Module extends Module_Base {
 	}
 
 	public function get_widgets() {
-		return [
-			'Wpr_Archive_Title', // This should match the widget/element class.
-		];
+
+		return ! Utilities::show_theme_buider_widget_on('archive') ? [] : ['Wpr_Archive_Title'];  // This should match the widget/element class.
 	}
 	
 }
