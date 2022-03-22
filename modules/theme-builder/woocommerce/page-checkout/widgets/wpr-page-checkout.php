@@ -1028,27 +1028,28 @@ class Wpr_Page_Checkout extends Widget_Base {
 
     }
 
+	public function woocommerce_checkout_before_customer_details() {
+		echo '<div class="wpr-customer-details-wrapper">';
+	}
 	public function woocommerce_checkout_before_order_review_heading() {
         echo '<div class="wpr-checkout-order-review-table">';
         echo '<div class="wpr-checkout-order-review-table-inner">';
 	}
 
-	// public function woocommerce_checkout_before_order_review_heading_inner() {
-	// }
-
 	public function woocommerce_checkout_after_order_review() {
 		echo '</div>';
-        echo '</div>'; //TODO: remove
-	}
-
-	private function should_render_coupon() {
-		return ( WC()->cart->needs_payment() || \Elementor\Plugin::$instance->editor->is_edit_mode() ) && wc_coupons_enabled();
+		echo '</div>';
+        echo '</div>';
 	}
 
 	public function woocommerce_checkout_order_review() {
 		echo '</div>';
 		echo '</div>';
 		echo '<div class="wpr-checkout-order-review">';
+	}
+
+	private function should_render_coupon() {
+		return ( WC()->cart->needs_payment() || \Elementor\Plugin::$instance->editor->is_edit_mode() ) && wc_coupons_enabled();
 	}
 
     protected function render() {
@@ -1060,11 +1061,9 @@ class Wpr_Page_Checkout extends Widget_Base {
 			wp_set_current_user( 0 );
 		}
 
-		$actions_array = ['woocommerce_checkout_before_order_review_heading', ''];
+		add_action( 'woocommerce_checkout_before_customer_details', [ $this, 'woocommerce_checkout_before_order_review_heading' ], 95 );
 
 		add_action( 'woocommerce_checkout_before_order_review_heading', [ $this, 'woocommerce_checkout_before_order_review_heading' ], 95 );
-
-		add_action( 'woocommerce_checkout_before_order_review_heading', [ $this, 'woocommerce_checkout_before_order_review_heading_inner' ], 95 );
 
 		add_action( 'woocommerce_checkout_order_review', [ $this, 'woocommerce_checkout_order_review' ], 15 );
 
@@ -1072,11 +1071,13 @@ class Wpr_Page_Checkout extends Widget_Base {
 
         echo do_shortcode( '[woocommerce_checkout]' );
 
+		remove_action( 'woocommerce_checkout_before_customer_details', [ $this, 'woocommerce_checkout_before_order_review_heading' ], 95 );
+
 		remove_action( 'woocommerce_checkout_before_order_review_heading', [ $this, 'woocommerce_checkout_before_order_review_heading' ], 95 );
 
-		remove_action( 'woocommerce_checkout_after_order_review', [ $this, 'woocommerce_checkout_after_order_review' ], 95 );
-
 		remove_action( 'woocommerce_checkout_order_review', [ $this, 'woocommerce_checkout_order_review' ], 15 );
+
+		remove_action( 'woocommerce_checkout_after_order_review', [ $this, 'woocommerce_checkout_after_order_review' ], 95 );
 
 		// Return to existing logged-in user after widget is rendered.
 		if ( $is_editor ) {

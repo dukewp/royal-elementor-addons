@@ -53,6 +53,15 @@ class Wpr_Product_AddToCart extends Widget_Base {
 		);
 
 		$this->add_control(
+            'apply_changes',
+            [
+                'type' => Controls_Manager::RAW_HTML,
+                'raw' => '<div style="text-align: center;"><button class="elementor-update-preview-button elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply Changes</button></div>',
+            ]
+        );
+
+
+		$this->add_control(
 			'add_to_cart_layout',
 			[
 				'label' => esc_html__( 'Select Layout', 'wpr-addons' ),
@@ -364,7 +373,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 					],
 				],
 				'default' => [
-					'size' => 50,
+					'size' => 70,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-add-to-cart .quantity .qty' => 'width: {{SIZE}}{{UNIT}};',

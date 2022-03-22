@@ -2372,7 +2372,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
   flex-direction: column;
 }
 
-.wpr-checkout-horizontal .woocommerce-checkout {
+.wpr-checkout-horizontal .wpr-customer-details-wrapper {
   display: flex;
 }
 
