@@ -3270,7 +3270,7 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'name'     => 'title_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-grid-item-title'
+				'selector' => '{{WRAPPER}} .wpr-grid-item-title a'
 			]
 		);
 
@@ -7665,6 +7665,7 @@ class Wpr_Grid extends Widget_Base {
 			$args = [
 				'post_type' => $settings[ 'query_source' ],
 				'post__in' => $post_ids,
+				'ignore_sticky_posts' => 1,
 				'posts_per_page' => $settings['query_posts_per_page'],
 				'orderby' => $settings[ 'query_randomize' ],
 				'paged' => $paged,
@@ -8888,7 +8889,9 @@ class Wpr_Grid extends Widget_Base {
 		// No Posts Found
 		else:
 
-			echo '<h2>'. $settings['query_not_found_text'] .'</h2>';
+			if ( 'dynamic' === $settings['query_selection'] ) {
+				echo '<h2>'. $settings['query_not_found_text'] .'</h2>';
+			}
 
 		// Loop: End
 		endif;

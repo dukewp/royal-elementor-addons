@@ -80,12 +80,7 @@ class WPR_Render_Templates {
     */
 	public function is_template_available( $type ) {
     	if ( 'content' === $type ) {
-    		if ( 'elementor_canvas' === get_post_meta(get_the_ID(), '_wp_page_template', true) ) {
-    			return false;
-    		} else {
-    			return !is_null(WPR_Conditions_Manager::canvas_page_content_display_conditions()) ? true : false;
-    		}
-    		
+			return !is_null(WPR_Conditions_Manager::canvas_page_content_display_conditions()) ? true : false;
     	} else {
     		$conditions = json_decode( get_option('wpr_'. $type .'_conditions', '[]'), true );
     		$template = WPR_Conditions_Manager::header_footer_display_conditions( $conditions );
@@ -167,7 +162,11 @@ class WPR_Render_Templates {
     	$is_theme_builder_edit = \Elementor\Plugin::$instance->preview->is_preview_mode() && Utilities::is_theme_builder_template() ? true : false;
 
     	if ( $this->is_template_available('content') || $is_theme_builder_edit ) {
-    		return WPR_ADDONS_PATH . 'admin/templates/wpr-canvas.php';
+    		if ( (is_page() || is_single()) && 'elementor_canvas' === get_post_meta(get_the_ID(), '_wp_page_template', true) ) {
+    			return $template;
+    		} else {
+    			return WPR_ADDONS_PATH . 'admin/templates/wpr-canvas.php';
+    		}
     	} else {
     		return $template;
     	}
