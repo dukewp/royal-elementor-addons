@@ -253,7 +253,7 @@
             box-shadow: 0 1px 20px 0 rgba(0,0,0,0.07);
 }
 
-.wpr-tplib-template-wrap:before {
+.wpr-tplib-template-wrap:before:not(.wpr-tplib-pro-active) {
     content: 'Free';
     display: block;
     position: absolute;
