@@ -98,7 +98,11 @@ class WPR_Templates_Library_Blocks {
 					$template_title = $title .' '. $template_slug;
 					$preview_type 	= $blocks[$module_slug][$template_slug]['type'];
 					$preview_url 	= $blocks[$module_slug][$template_slug]['url'];
-					$template_class 	= ( strpos($template_slug, 'pro') && ! wpr_fs()->can_use_premium_code() ) || ( strpos($template_slug, 'zzz') && ! wpr_fs()->can_use_premium_code() ) ? ' wpr-tplib-pro-wrap' : 'wpr-tplib-pro-active';
+					$template_class = (strpos($template_slug, 'pro') && !wpr_fs()->can_use_premium_code()) || (strpos($template_slug, 'zzz') && !wpr_fs()->can_use_premium_code()) ? ' wpr-tplib-pro-wrap' : '';
+
+					if (defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code()) {
+						$template_class .= ' wpr-tplib-pro-active';
+					}
 
 					$template_slug_for_image = strpos($template_slug, 'zzz') ? substr($template_slug, 0, -4) : $template_slug;
 
@@ -119,7 +123,7 @@ class WPR_Templates_Library_Blocks {
 								<h3><?php echo strpos($template_slug, 'pro') ? str_replace('-pro', '', $template_title) : str_replace('-zzz', '', $template_title); ?></h3>
 							<?php endif; ?>
 
-							<?php if ( ( strpos($template_slug, 'pro') || strpos($template_slug, 'zzz') ) && ! wpr_fs()->can_use_premium_code() ) : ?>
+							<?php if ( ( strpos($template_slug, 'pro') && !wpr_fs()->can_use_premium_code() ) || ( strpos($template_slug, 'zzz') ) && !wpr_fs()->can_use_premium_code() ) : ?>
 								<span class="wpr-tplib-insert-template wpr-tplib-insert-pro"><i class="eicon-star"></i> <span><?php esc_html_e( 'Go Pro', 'wpr-addons' ); ?></span></span>
 							<?php else : ?>
 								<span class="wpr-tplib-insert-template"><i class="eicon-file-download"></i> <span><?php esc_html_e( 'Insert', 'wpr-addons' ); ?></span></span>
