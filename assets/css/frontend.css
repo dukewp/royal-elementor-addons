@@ -326,6 +326,15 @@ template {
     vertical-align: baseline;
 }
 
+/* Reset Library Popup */
+.wpr-tplib-popup ul {
+    list-style: none;
+}
+
+.wpr-tplib-popup h3 {
+    margin: 0;
+}
+
 
 /*--------------------------------------------------------------
 == General
