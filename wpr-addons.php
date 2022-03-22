@@ -216,11 +216,4 @@ function royal_elementor_addons_activation_time() {//TODO: Try to locate this in
 	}
 }
 
-// make it together with templates_kit_notice when merged
-function royal_elementor_addons_deactivate() {
-	delete_option('wpr_theme_builder_dismiss_notice');
-}
-
 register_activation_hook( __FILE__, 'royal_elementor_addons_activation_time' );
-// hook already exists with template kits notice
-register_deactivation_hook( __FILE__, 'royal_elementor_addons_deactivate' );

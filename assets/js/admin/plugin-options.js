@@ -553,11 +553,9 @@ jQuery(document).ready(function( $ ) {
 			var conditions = getConditions( template, $( '#wpr_'+ currentTab +'_conditions' ).val() );
 
 			// Don't save if not active
-			if ( 'header' === currentTab || 'footer' == currentTab ) {
-				if ( !proActive && (('global' !== conditions[template][0] && 'undefined' !== typeof conditions[template][0]) || conditions[template].length > 1) ) {
-					alert('Please select "Entire Site" to continue! Mutiple and custom conditions are fully supported in the Pro version.');
-					return;
-				}
+			if ( !proActive && (('global' !== conditions[template][0] && 'undefined' !== typeof conditions[template][0]) || conditions[template].length > 1) ) {
+				alert('Please select "Entire Site" to continue! Mutiple and custom conditions are fully supported in the Pro version.');
+				return;
 			}
 
 			// Set Conditions

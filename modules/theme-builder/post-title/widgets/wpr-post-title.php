@@ -20,7 +20,7 @@ class Wpr_Post_Title extends Widget_Base {
 	}
 
 	public function get_title() {
-		return Utilities::show_theme_buider_widget_on('single') ? esc_html__( 'Post Title', 'wpr-addons' ) : '';
+		return esc_html__( 'Post Title', 'wpr-addons' );
 	}
 
 	public function get_icon() {
@@ -28,11 +28,11 @@ class Wpr_Post_Title extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return Utilities::show_theme_buider_widget_on('single') ? [ 'wpr-theme-builder-widgets' ] : ['wpr-theme-builder-widgets'];
+		return Utilities::show_theme_buider_widget_on('single') ? [ 'wpr-theme-builder-widgets' ] : [];
 	}
 
 	public function get_keywords() {
-		return Utilities::show_theme_buider_widget_on('single') ? [ 'post', 'title' ] : [];
+		return [ 'post', 'title' ];
 	}
 
 	protected function _register_controls() {
@@ -122,18 +122,7 @@ class Wpr_Post_Title extends Widget_Base {
 			[
 				'name'     => 'title_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-post-title',
-				'fields_options' => [
-					'typography'      => [
-						'default' => 'custom',
-					],
-					'font_size'      => [
-						'default'    => [
-							'size' => '30',
-							'unit' => 'px',
-						],
-					]
-				]
+				'selector' => '{{WRAPPER}} .wpr-post-title'
 			]
 		);
 
