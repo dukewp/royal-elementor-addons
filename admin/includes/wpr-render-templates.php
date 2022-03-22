@@ -80,7 +80,11 @@ class WPR_Render_Templates {
     */
 	public function is_template_available( $type ) {
     	if ( 'content' === $type ) {
-    		return !is_null(WPR_Conditions_Manager::canvas_page_content_display_conditions()) ? true : false;
+    		if ( 'elementor_canvas' === get_post_meta(get_the_ID(), '_wp_page_template', true) ) {
+    			return false;
+    		} else {
+    			return !is_null(WPR_Conditions_Manager::canvas_page_content_display_conditions()) ? true : false;
+    		}
     	} else {
     		$conditions = json_decode( get_option('wpr_'. $type .'_conditions', '[]'), true );
     		$template = WPR_Conditions_Manager::header_footer_display_conditions( $conditions );
