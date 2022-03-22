@@ -85,6 +85,7 @@ class WPR_Render_Templates {
     		} else {
     			return !is_null(WPR_Conditions_Manager::canvas_page_content_display_conditions()) ? true : false;
     		}
+    		
     	} else {
     		$conditions = json_decode( get_option('wpr_'. $type .'_conditions', '[]'), true );
     		$template = WPR_Conditions_Manager::header_footer_display_conditions( $conditions );
