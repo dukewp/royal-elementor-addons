@@ -35,6 +35,56 @@ class Wpr_Post_Comments extends Widget_Base {
 		return [ 'comments', 'post' ];
 	}
 
+	public function add_control_comments_avatar_size() {}
+
+	public function add_control_avatar_gutter() {
+		$this->add_responsive_control(
+			'avatar_gutter',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 20,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-comment-meta, .wpr-comment-content' => 'margin-left: calc(60px + {{SIZE}}{{UNIT}});',
+					'{{WRAPPER}}.wpr-comment-reply-separate .wpr-comment-reply' => 'margin-left: calc(60px + {{SIZE}}{{UNIT}});',
+				],
+				'separator' => 'after',
+			]
+		);
+	}
+
+	public function add_control_comments_form_layout() {
+		$this->add_control(
+			'comments_form_layout',
+			[
+				'label' => esc_html__( 'Select Layout', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'style-5',
+				'options' => [
+					'pro-s1' => esc_html__( 'Style 1 (Pro)', 'wpr-addons' ),
+					'style-2' => esc_html__( 'Style 2', 'wpr-addons' ),
+					'pro-s3' => esc_html__( 'Style 3 (Pro)', 'wpr-addons' ),
+					'pro-s4' => esc_html__( 'Style 4 (Pro)', 'wpr-addons' ),
+					'style-5' => esc_html__( 'Style 5', 'wpr-addons' ),
+					'pro-s6' => esc_html__( 'Style 6 (Pro)', 'wpr-addons' ),
+				],
+				'separator' => 'before'
+			]
+		);
+	}
+
+	public function add_control_comment_form_placeholders() {}
+
 	protected function _register_controls() {
 
 		// Tab: Content ==============
@@ -90,29 +140,14 @@ class Wpr_Post_Comments extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'comments_avatar_size',
-			[
-				'label' => esc_html__( 'Avatar Size', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 60,
-				'min' => 10,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-comment-avatar img' => 'width: {{SIZE}}px;',
-				],
-				'render_type' => 'template',
-				'condition' => [
-					'comments_avatar' => 'yes'
-				],
-			]
-		);
+		$this->add_control_comments_avatar_size();
 
 		$this->add_control(
 			'comments_reply_location',
 			[
 				'label' => esc_html__( 'Reply Location', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => 'inline',
+				'default' => 'separate',
 				'options' => [
 					'inline' => esc_html__( 'Inline', 'wpr-addons' ),
 					'separate' => esc_html__( 'Separate', 'wpr-addons' ),
@@ -157,7 +192,7 @@ class Wpr_Post_Comments extends Widget_Base {
 			[
 				'label' => esc_html__( 'Show Arrows', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
+				'default' => '',
 				'selectors_dictionary' => [
 					'' => 'display: none;',
 					'yes' => ''
@@ -174,7 +209,7 @@ class Wpr_Post_Comments extends Widget_Base {
 			[
 				'label' => esc_html__( 'Show Numbers', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
+				'default' => '',
 				'selectors_dictionary' => [
 					'' => 'display: none;',
 					'yes' => ''
@@ -209,23 +244,9 @@ class Wpr_Post_Comments extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'comments_form_layout',
-			[
-				'label' => esc_html__( 'Select Layout', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'style-1',
-				'options' => [
-					'style-1' => esc_html__( 'Style 1', 'wpr-addons' ),
-					'style-2' => esc_html__( 'Style 2', 'wpr-addons' ),
-					'style-3' => esc_html__( 'Style 3', 'wpr-addons' ),
-					'style-4' => esc_html__( 'Style 4', 'wpr-addons' ),
-					'style-5' => esc_html__( 'Style 5', 'wpr-addons' ),
-					'style-6' => esc_html__( 'Style 6', 'wpr-addons' ),
-				],
-				'separator' => 'before'
-			]
-		);
+		$this->add_control_comments_form_layout();
+
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'post-comments', 'comments_form_layout', ['pro-s1','pro-s3','pro-s4','pro-s6'] );
 
 		$this->add_control(
 			'comment_form_labels',
@@ -237,14 +258,9 @@ class Wpr_Post_Comments extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'comment_form_placeholders',
-			[
-				'label' => esc_html__( 'Show Placeholders', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
-			]
-		);
+
+
+		$this->add_control_comment_form_placeholders();
 
 		$this->add_control(
 			'comment_form_website',
@@ -268,6 +284,13 @@ class Wpr_Post_Comments extends Widget_Base {
 
 		$this->end_controls_section();
 
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'post-comments', [
+			'6 different Comment Form Layouts.',
+			'Custom comment author Avatar Size.',
+			'Comment Form - Show/Hide Input Placeholder Text (Set Placeholder Text instead of Input Labels).'
+		] );
+
 		// Styles ====================
 		// Section: Section Title ----
 		$this->start_controls_section(
@@ -288,7 +311,7 @@ class Wpr_Post_Comments extends Widget_Base {
                 'label' => esc_html__( 'Align', 'wpr-addons' ),
                 'type' => Controls_Manager::CHOOSE,
                 'label_block' => false,
-                'default' => 'left',
+                'default' => 'center',
                 'options' => [
                     'left' => [
                         'title' => esc_html__( 'Left', 'wpr-addons' ),
@@ -315,7 +338,7 @@ class Wpr_Post_Comments extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#ddd',
+				'default' => '#222222',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-comments-wrap > h3' => 'color: {{VALUE}};',
 				],
@@ -339,7 +362,23 @@ class Wpr_Post_Comments extends Widget_Base {
 			[
 				'name' => 'section_title_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-comments-wrap > h3'
+				'selector' => '{{WRAPPER}} .wpr-comments-wrap > h3',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'font_size'      => [
+						'default'    => [
+							'size' => '17',
+							'unit' => 'px',
+						],
+					],
+					'letter_spacing' => [
+						'default' => [
+							'size' => '0.5'
+						]
+					],
+				]
 			]
 		);
 
@@ -450,7 +489,7 @@ class Wpr_Post_Comments extends Widget_Base {
 			[
 				'label' => esc_html__( 'By Post Author Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#e8e8e8',
+				'default' => '#EFEFEF',
 				'selectors' => [
 					'{{WRAPPER}} .bypostauthor .wpr-post-comment' => 'background-color: {{VALUE}};',
 				],
@@ -477,6 +516,25 @@ class Wpr_Post_Comments extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'comment_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 20,
+					'right' => 20,
+					'bottom' => 20,
+					'left' => 20,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-post-comment' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
 		$this->add_control(
 			'comment_border_type',
 			[
@@ -490,7 +548,7 @@ class Wpr_Post_Comments extends Widget_Base {
 					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
 					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
 				],
-				'default' => 'none',
+				'default' => 'solid',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-comment' => 'border-style: {{VALUE}};',
 				],
@@ -519,12 +577,12 @@ class Wpr_Post_Comments extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'comment_padding',
+		$this->add_control(
+			'comment_radius',
 			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
+				'size_units' => [ 'px', '%' ],
 				'default' => [
 					'top' => 0,
 					'right' => 0,
@@ -532,9 +590,8 @@ class Wpr_Post_Comments extends Widget_Base {
 					'left' => 0,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-post-comment' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-post-comment' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
-				'separator' => 'before',
 			]
 		);
 
@@ -552,7 +609,7 @@ class Wpr_Post_Comments extends Widget_Base {
 				],				
 				'default' => [
 					'unit' => 'px',
-					'size' => 10,
+					'size' => 50,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-comment' => 'margin-bottom: {{SIZE}}{{UNIT}};',
@@ -575,7 +632,7 @@ class Wpr_Post_Comments extends Widget_Base {
 				],				
 				'default' => [
 					'unit' => 'px',
-					'size' => 30,
+					'size' => 24,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-comments-list .children' => 'padding-left: {{SIZE}}{{UNIT}};',
@@ -599,37 +656,7 @@ class Wpr_Post_Comments extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'avatar_gutter',
-			[
-				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 50,
-					],
-				],				
-				'default' => [
-					'unit' => 'px',
-					'size' => 20,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-comment-meta, .wpr-comment-content' => 'margin-left: calc({{comments_avatar_size.VALUE}}px + {{SIZE}}{{UNIT}});',
-					'{{WRAPPER}}.wpr-comment-reply-separate .wpr-comment-reply' => 'margin-left: calc({{comments_avatar_size.VALUE}}px + {{SIZE}}{{UNIT}});',
-				],
-				'separator' => 'after',
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Box_Shadow::get_type(),
-			[
-				'name' => 'avatar_shadow',
-				'selector' => '{{WRAPPER}} .wpr-comment-avatar',
-			]
-		);
+		$this->add_control_avatar_gutter();
 
 		$this->add_group_control(
 			Group_Control_Border::get_type(),
@@ -637,7 +664,7 @@ class Wpr_Post_Comments extends Widget_Base {
 				'name' => 'avatar_border',
 				'fields_options' => [
 					'border' => [
-						'default' => 'solid',
+						'default' => '',
 					],
 					'width' => [
 						'default' => [
@@ -653,7 +680,6 @@ class Wpr_Post_Comments extends Widget_Base {
 					],
 				],
 				'selector' => '{{WRAPPER}} .wpr-comment-avatar',
-				'separator' => 'before',
 			]
 		);
 
@@ -672,7 +698,6 @@ class Wpr_Post_Comments extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-comment-avatar' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
-				'separator' => 'before',
 			]
 		);
 
@@ -711,37 +736,23 @@ class Wpr_Post_Comments extends Widget_Base {
 			]
 		);
 
-		$this->end_controls_tab();
-
-		$this->start_controls_tab(
-			'tab_nickname_hover',
-			[
-				'label' => __( 'Hover', 'wpr-addons' ),
-			]
-		);
-
-		$this->add_control(
-			'nickname_color_hr',
-			[
-				'label'  => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#54595f',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-comment-author a:hover' => 'color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->end_controls_tabs();
-
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'nickname_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-comment-author'
+				'selector' => '{{WRAPPER}} .wpr-comment-author',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'font_size'      => [
+						'default'    => [
+							'size' => '15',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -757,9 +768,32 @@ class Wpr_Post_Comments extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-comment-author a' => 'transition-duration: {{VALUE}}s',
 				],
-				'separator' => 'before',
 			]
 		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_nickname_hover',
+			[
+				'label' => __( 'Hover', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'nickname_color_hr',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-comment-author a:hover' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
 
 		$this->add_responsive_control(
 			'nickname_space',
@@ -775,7 +809,7 @@ class Wpr_Post_Comments extends Widget_Base {
 				],				
 				'default' => [
 					'unit' => 'px',
-					'size' => 5,
+					'size' => 2,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-comment-author' => 'margin-bottom: {{SIZE}}{{UNIT}};',
@@ -802,7 +836,7 @@ class Wpr_Post_Comments extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#9B9B9B',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-comment-metadata' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-comment-metadata a' => 'color: {{VALUE}}',
@@ -814,9 +848,23 @@ class Wpr_Post_Comments extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name'     => 'metadata_typography',
+				'name' => 'metadata_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-comment-metadata'
+				'selector' => '{{WRAPPER}} .wpr-comment-metadata',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_family' => [
+						'default' => 'Open Sans',
+					],
+					'font_size'      => [
+						'default'    => [
+							'size' => '12',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -850,7 +898,7 @@ class Wpr_Post_Comments extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_content',
 			[
-				'label' => esc_html__( 'Content', 'wpr-addons' ),
+				'label' => esc_html__( 'Content (Comment Text)', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 			]
@@ -861,7 +909,7 @@ class Wpr_Post_Comments extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#666666',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-comment-content' => 'color: {{VALUE}}',
 				],
@@ -873,7 +921,7 @@ class Wpr_Post_Comments extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Link Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-comment-content a' => 'color: {{VALUE}}',
 				],
@@ -885,7 +933,24 @@ class Wpr_Post_Comments extends Widget_Base {
 			[
 				'name'     => 'content_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-comment-content'
+				'selector' => '{{WRAPPER}} .wpr-comment-content',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'font_family' => [
+						'default' => 'Open Sans',
+					],
+					'font_weight'    => [
+						'default' => '400',
+					],
+					'font_size'      => [
+						'default'    => [
+							'size' => '14',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -916,7 +981,7 @@ class Wpr_Post_Comments extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-comment-reply a' => 'color: {{VALUE}}',
 				],
@@ -941,6 +1006,41 @@ class Wpr_Post_Comments extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-comment-reply a' => 'border-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'reply_link_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-comment-reply a',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'font_size'      => [
+						'default'    => [
+							'size' => '13',
+							'unit' => 'px',
+						],
+					]
+				]
+			]
+		);
+
+		$this->add_control(
+			'reply_link_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.6,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-comment-reply a' => 'transition-duration: {{VALUE}}s',
 				],
 			]
 		);
@@ -992,29 +1092,40 @@ class Wpr_Post_Comments extends Widget_Base {
 
 		$this->end_controls_tabs();
 
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
+		$this->add_responsive_control(
+			'reply_link_padding',
 			[
-				'name' => 'reply_link_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-comment-reply a',
-				'separator' => 'before',
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-comment-reply a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before'
 			]
 		);
 
-		$this->add_control(
-			'reply_link_transition_duration',
+		$this->add_responsive_control(
+			'reply_link_margin',
 			[
-				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.1,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-comment-reply a' => 'transition-duration: {{VALUE}}s',
+				'label' => esc_html__( 'Margin', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
 				],
-				'separator' => 'before',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-comment-reply a' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
 			]
 		);
 
@@ -1060,43 +1171,6 @@ class Wpr_Post_Comments extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'reply_link_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-comment-reply a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before'
-			]
-		);
-
-		$this->add_responsive_control(
-			'reply_link_margin',
-			[
-				'label' => esc_html__( 'Margin', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-comment-reply a' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
-
 		$this->add_control(
 			'reply_link_radius',
 			[
@@ -1112,7 +1186,6 @@ class Wpr_Post_Comments extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-comment-reply a' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
-				'separator' => 'before',
 			]
 		);
 
@@ -1125,11 +1198,11 @@ class Wpr_Post_Comments extends Widget_Base {
 				'options' => [
 					'left'    => [
 						'title' => __( 'Left', 'wpr-addons' ),
-						'icon' => 'fa fa-align-left',
+						'icon' => 'eicon-text-align-left',
 					],
 					'right' => [
 						'title' => __( 'Right', 'wpr-addons' ),
-						'icon' => 'fa fa-align-right',
+						'icon' => 'eicon-text-align-right',
 					],
 				],
 				'default' => 'right',
@@ -1197,6 +1270,41 @@ class Wpr_Post_Comments extends Widget_Base {
 			]
 		);
 
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'navigation_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-comments-navigation a, {{WRAPPER}} .wpr-comments-navigation span',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'font_size'      => [
+						'default'    => [
+							'size' => '13',
+							'unit' => 'px',
+						],
+					]
+				]
+			]
+		);
+
+		$this->add_control(
+			'navigation_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.1,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-comments-navigation a' => 'transition-duration: {{VALUE}}s',
+				],
+			]
+		);
+
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
@@ -1247,29 +1355,23 @@ class Wpr_Post_Comments extends Widget_Base {
 
 		$this->end_controls_tabs();
 
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
+		$this->add_responsive_control(
+			'navigation_padding',
 			[
-				'name' => 'navigation_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-comments-navigation a, {{WRAPPER}} .wpr-comments-navigation span',
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'navigation_transition_duration',
-			[
-				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.1,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-comments-navigation a' => 'transition-duration: {{VALUE}}s',
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
 				],
-				'separator' => 'before',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-comments-navigation a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-comments-navigation span' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before'
 			]
 		);
 
@@ -1317,26 +1419,6 @@ class Wpr_Post_Comments extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'navigation_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-comments-navigation a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-comments-navigation span' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before'
-			]
-		);
-
 		$this->add_control(
 			'navigation_radius',
 			[
@@ -1353,7 +1435,6 @@ class Wpr_Post_Comments extends Widget_Base {
 					'{{WRAPPER}} .wpr-comments-navigation a' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-comments-navigation span' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
-				'separator' => 'before',
 			]
 		);
 
@@ -1370,40 +1451,12 @@ class Wpr_Post_Comments extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-            'cf_title_align',
-            [
-                'label' => esc_html__( 'Align', 'wpr-addons' ),
-                'type' => Controls_Manager::CHOOSE,
-                'label_block' => false,
-                'default' => 'left',
-                'options' => [
-                    'left' => [
-                        'title' => esc_html__( 'Left', 'wpr-addons' ),
-                        'icon' => 'eicon-h-align-left',
-                    ],
-                    'center' => [
-                        'title' => esc_html__( 'Center', 'wpr-addons' ),
-                        'icon' => 'eicon-h-align-center',
-                    ],
-                    'right' => [
-                        'title' => esc_html__( 'Right', 'wpr-addons' ),
-                        'icon' => 'eicon-h-align-right',
-                    ]
-                ],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-comment-reply-title' => 'text-align: {{VALUE}}',
-				],
-				'separator' => 'after'
-            ]
-        );
-
 		$this->add_control(
 			'cf_title_color',
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#ddd',
+				'default' => '#222222',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-comment-reply-title' => 'color: {{VALUE}};',
 				],
@@ -1427,7 +1480,29 @@ class Wpr_Post_Comments extends Widget_Base {
 			[
 				'name' => 'cf_title_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-comment-reply-title'
+				'selector' => '{{WRAPPER}} .wpr-comment-reply-title',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'font_family' => [
+						'default' => 'Raleway',
+					],
+					'font_weight'    => [
+						'default' => '500',
+					],
+					'letter_spacing' => [
+						'default' => [
+							'size' => '0.5'
+						]
+					],
+					'font_size'      => [
+						'default'    => [
+							'size' => '17',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -1487,7 +1562,7 @@ class Wpr_Post_Comments extends Widget_Base {
 				],				
 				'default' => [
 					'unit' => 'px',
-					'size' => 25,
+					'size' => 85,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-comment-reply-title' => 'margin-top: {{SIZE}}{{UNIT}};',
@@ -1510,13 +1585,41 @@ class Wpr_Post_Comments extends Widget_Base {
 				],				
 				'default' => [
 					'unit' => 'px',
-					'size' => 25,
+					'size' => 20,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-comment-reply-title' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
+
+		$this->add_responsive_control(
+            'cf_title_align',
+            [
+                'label' => esc_html__( 'Align', 'wpr-addons' ),
+                'type' => Controls_Manager::CHOOSE,
+                'label_block' => false,
+                'default' => 'left',
+                'options' => [
+                    'left' => [
+                        'title' => esc_html__( 'Left', 'wpr-addons' ),
+                        'icon' => 'eicon-h-align-left',
+                    ],
+                    'center' => [
+                        'title' => esc_html__( 'Center', 'wpr-addons' ),
+                        'icon' => 'eicon-h-align-center',
+                    ],
+                    'right' => [
+                        'title' => esc_html__( 'Right', 'wpr-addons' ),
+                        'icon' => 'eicon-h-align-right',
+                    ]
+                ],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-comment-reply-title' => 'text-align: {{VALUE}}',
+				],
+				'separator' => 'before'
+            ]
+        );
 
 		$this->end_controls_section();
 
@@ -1545,15 +1648,31 @@ class Wpr_Post_Comments extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#666666',
 				'selectors' => [
+					'{{WRAPPER}} .wpr-comment-form input[type=text]' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-comment-form textarea' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-comment-form label' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-comment-form .logged-in-as a' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'comment_form_placeholder_color',
+			[
+				'label'  => esc_html__( 'Placeholder Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#B8B8B8',
+				'selectors' => [
 					'{{WRAPPER}} .wpr-comment-form input[type=text]::placeholder' => 'color: {{VALUE}}; opacity: 1;',
 					'{{WRAPPER}} .wpr-comment-form textarea::placeholder' => 'color: {{VALUE}}; opacity: 1;',
 					'{{WRAPPER}} .wpr-comment-form input[type=text]::-ms-input-placeholder' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-comment-form textarea::-ms-input-placeholder' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .wpr-comment-form .logged-in-as a' => 'color: {{VALUE}};',
 				],
+				'condition' => [
+					'comment_form_placeholders' => 'yes'
+				]
 			]
 		);
 
@@ -1562,6 +1681,7 @@ class Wpr_Post_Comments extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#ffffff',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-comment-form input[type=text]' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-comment-form textarea' => 'background-color: {{VALUE}}',
@@ -1574,9 +1694,48 @@ class Wpr_Post_Comments extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#DBDBDB',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-comment-form input[type=text]' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-comment-form textarea' => 'border-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'comment_form_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-comment-form label, {{WRAPPER}} .wpr-comment-form input[type=text], {{WRAPPER}} .wpr-comment-form textarea, {{WRAPPER}} .wpr-comment-form .logged-in-as',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'font_size'      => [
+						'default'    => [
+							'size' => '14',
+							'unit' => 'px',
+						],
+					]
+				]
+			]
+		);
+
+		$this->add_control(
+			'comment_form_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.6,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-comment-form input[type=text]' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-comment-form input[type=text]::placeholder' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-comment-form input[type=text]::-ms-input-placeholder' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-comment-form textarea' => 'transition-duration: {{VALUE}}s',
 				],
 			]
 		);
@@ -1595,13 +1754,29 @@ class Wpr_Post_Comments extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#54595f',
+				'default' => '#666666',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-comment-form input[type=text]:focus' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-comment-form textarea:focus' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'comment_form_placeholder_color_hr',
+			[
+				'label'  => esc_html__( 'Placeholder Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#B8B8B8',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-comment-form input[type=text]:focus::placeholder' => 'color: {{VALUE}}; opacity: 1;',
 					'{{WRAPPER}} .wpr-comment-form textarea:focus::placeholder' => 'color: {{VALUE}}; opacity: 1;',
 					'{{WRAPPER}} .wpr-comment-form input[type=text]:focus::-ms-input-placeholder' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-comment-form textarea:focus::-ms-input-placeholder' => 'color: {{VALUE}};',
 				],
+				'condition' => [
+					'comment_form_placeholders' => 'yes'
+				]
 			]
 		);
 
@@ -1610,6 +1785,7 @@ class Wpr_Post_Comments extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#ffffff',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-comment-form input[type=text]:focus' => 'background-color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-comment-form textarea:focus' => 'background-color: {{VALUE}};',
@@ -1633,32 +1809,23 @@ class Wpr_Post_Comments extends Widget_Base {
 
 		$this->end_controls_tabs();
 
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
+		$this->add_responsive_control(
+			'comment_form_padding',
 			[
-				'name' => 'comment_form_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-comment-form label, {{WRAPPER}} .wpr-comment-form input[type=text], {{WRAPPER}} .wpr-comment-form textarea, {{WRAPPER}} .wpr-comment-form .logged-in-as',
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'comment_form_transition_duration',
-			[
-				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.1,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-comment-form input[type=text]' => 'transition-duration: {{VALUE}}s',
-					'{{WRAPPER}} .wpr-comment-form input[type=text]::placeholder' => 'transition-duration: {{VALUE}}s',
-					'{{WRAPPER}} .wpr-comment-form input[type=text]::-ms-input-placeholder' => 'transition-duration: {{VALUE}}s',
-					'{{WRAPPER}} .wpr-comment-form textarea' => 'transition-duration: {{VALUE}}s',
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 10,
+					'right' => 0,
+					'bottom' => 10,
+					'left' => 10,
 				],
-				'separator' => 'before',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-comment-form input[type=text]' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-comment-form textarea' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before'
 			]
 		);
 
@@ -1675,7 +1842,7 @@ class Wpr_Post_Comments extends Widget_Base {
 					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
 					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
 				],
-				'default' => 'none',
+				'default' => 'solid',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-comment-form input[type=text]' => 'border-style: {{VALUE}}',
 					'{{WRAPPER}} .wpr-comment-form textarea' => 'border-style: {{VALUE}}',
@@ -1706,26 +1873,6 @@ class Wpr_Post_Comments extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'comment_form_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-comment-form input[type=text]' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-comment-form textarea' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before'
-			]
-		);
-
 		$this->add_control(
 			'comment_form_radius',
 			[
@@ -1742,7 +1889,6 @@ class Wpr_Post_Comments extends Widget_Base {
 					'{{WRAPPER}} .wpr-comment-form input[type=text]' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-comment-form textarea' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
-				'separator' => 'before',
 			]
 		);
 
@@ -1799,7 +1945,7 @@ class Wpr_Post_Comments extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#ffffff',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-submit-comment' => 'color: {{VALUE}}',
 				],
@@ -1811,6 +1957,7 @@ class Wpr_Post_Comments extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-submit-comment' => 'background-color: {{VALUE}}',
 				]
@@ -1822,8 +1969,49 @@ class Wpr_Post_Comments extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#DBDBDB',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-submit-comment' => 'border-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'submit_button_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-submit-comment',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'letter_spacing' => [
+						'default' => [
+							'size' => '0.5'
+						]
+					],
+					'font_size'      => [
+						'default'    => [
+							'size' => '15',
+							'unit' => 'px',
+						],
+					]
+				]
+			]
+		);
+
+		$this->add_control(
+			'submit_button_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.7,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-submit-comment' => 'transition-duration: {{VALUE}}s',
 				],
 			]
 		);
@@ -1842,7 +2030,7 @@ class Wpr_Post_Comments extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#54595f',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-submit-comment:hover' => 'color: {{VALUE}}',
 				],
@@ -1854,6 +2042,7 @@ class Wpr_Post_Comments extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#4C48BD',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-submit-comment:hover' => 'background-color: {{VALUE}}',
 				]
@@ -1875,29 +2064,40 @@ class Wpr_Post_Comments extends Widget_Base {
 
 		$this->end_controls_tabs();
 
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
+		$this->add_responsive_control(
+			'submit_button_padding',
 			[
-				'name' => 'submit_button_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-submit-comment',
-				'separator' => 'before',
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 10,
+					'right' => 45,
+					'bottom' => 10,
+					'left' => 45,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-submit-comment' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before'
 			]
 		);
 
-		$this->add_control(
-			'submit_button_transition_duration',
+		$this->add_responsive_control(
+			'submit_button_margin',
 			[
-				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.1,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-submit-comment' => 'transition-duration: {{VALUE}}s',
+				'label' => esc_html__( 'Margin', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 25,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
 				],
-				'separator' => 'before',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-submit-comment' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
 			]
 		);
 
@@ -1943,43 +2143,6 @@ class Wpr_Post_Comments extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'submit_button_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-submit-comment' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before'
-			]
-		);
-
-		$this->add_responsive_control(
-			'submit_button_margin',
-			[
-				'label' => esc_html__( 'Margin', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-submit-comment' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
-
 		$this->add_control(
 			'submit_button_radius',
 			[
@@ -1995,9 +2158,9 @@ class Wpr_Post_Comments extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-submit-comment' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
-				'separator' => 'before',
 			]
 		);
+
 		$this->add_control(
             'submit_button_align',
             [
@@ -2035,6 +2198,10 @@ class Wpr_Post_Comments extends Widget_Base {
 		// Get Settings
 		$this_widget = $GLOBALS['wpr_post_comments_widget'];
 		$settings = $this_widget->get_settings();
+
+		if ( !wpr_fs()->can_use_premium_code() ) {
+			$settings['comments_avatar_size'] = 60;
+		}
 
 		// Class, URL, Name
 		$comment_class = implode( ' ', get_comment_class( $comment->has_children ? 'parent' : '', $comment ) );
@@ -2190,6 +2357,10 @@ class Wpr_Post_Comments extends Widget_Base {
 					$url_label = '<label>'. esc_html__( 'Website', 'wpr-addons' ) .'</label>';					
 				}
 
+				if ( !wpr_fs()->can_use_premium_code() ) {
+					$settings['comment_form_placeholders'] = '';
+				}
+
 				// Placeholders
 				if ( 'yes' === $settings['comment_form_placeholders'] ) {
 					$author_ph = esc_html__( 'Name', 'wpr-addons' ) . ($req ? '*' : '');
@@ -2226,6 +2397,10 @@ class Wpr_Post_Comments extends Widget_Base {
 				// Text Input Label
 				if ( 'yes' === $settings['comment_form_labels'] ) {
 					$text_label = '<label>'. esc_html__( 'Message', 'wpr-addons' ) . ($req ? '<span>*</span>' : '') .'</label>';
+				}
+
+				if ( !wpr_fs()->can_use_premium_code() ) {
+					$settings['comment_form_placeholders'] = '';
 				}
 
 				// Text Input Placeholder

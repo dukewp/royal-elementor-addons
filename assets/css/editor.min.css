@@ -120,7 +120,8 @@
 .elementor-control-tax2_transition_duration,
 .elementor-control-filters_transition_duration,
 .elementor-control-pagination_older_text,
-.elementor-control-tooltip_position {
+.elementor-control-tooltip_position,
+.elementor-control-post_info_comments_text_1 {
 	padding-top: 15px !important;
 }
 
@@ -659,7 +660,12 @@
 .elementor-control.elementor-control-paralax_repeater_pro_notice,
 .elementor-control.elementor-control-opnepage_pro_notice,
 .elementor-control.elementor-control-timeline_repeater_pro_notice,
-.elementor-control.elementor-control-limit_grid_items_pro_notice {
+.elementor-control.elementor-control-limit_grid_items_pro_notice,
+.elementor-control.elementor-control-post_nav_layout_pro_notice,
+.elementor-control.elementor-control-author_name_links_to_pro_notice,
+.elementor-control.elementor-control-author_title_links_to_pro_notice,
+.elementor-control.elementor-control-comments_form_layout_pro_notice,
+.elementor-control.elementor-control-sharing_repeater_pro_notice {
 	padding-bottom: 0 !important;
 }
 
@@ -695,13 +701,19 @@
 .elementor-control-sharing_columns_pro_notice .wpr-pro-notice,
 .elementor-control-popup_trigger_pro_notice .wpr-pro-notice,
 .elementor-control-popup_show_again_delay_pro_notice .wpr-pro-notice,
-.elementor-control-group_popup_settings_pro_notice .wpr-pro-notice {
+.elementor-control-group_popup_settings_pro_notice .wpr-pro-notice,
+.elementor-control-post_nav_layout_pro_notice .wpr-pro-notice,
+.elementor-control-author_name_links_to_pro_notice .wpr-pro-notice,
+.elementor-control-author_title_links_to_pro_notice .wpr-pro-notice,
+.elementor-control-comments_form_layout_pro_notice .wpr-pro-notice,
+.elementor-control-sharing_repeater_pro_notice .wpr-pro-notice {
 	border-bottom: none !important;
 }
 
 /* Both */
 .elementor-control.elementor-control-pagination_type_pro_notice,
-.elementor-control.elementor-control-tooltip_trigger_pro_notice {
+.elementor-control.elementor-control-tooltip_trigger_pro_notice,
+.elementor-control.elementor-control-post_info_select_pro_notice {
 	padding-top: 0 !important;
 	padding-bottom: 0 !important;
 }

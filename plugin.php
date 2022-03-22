@@ -80,6 +80,7 @@ class Plugin {
 
 		// Custom Controls
 		require WPR_ADDONS_PATH . 'includes/controls/wpr-control-animations.php';
+		require WPR_ADDONS_PATH . 'includes/controls/wpr-control-icons.php';
 
 		// Templates Library
 		require WPR_ADDONS_PATH . 'admin/includes/wpr-templates-library.php';
@@ -111,7 +112,10 @@ class Plugin {
 		require WPR_ADDONS_PATH . 'extensions/wpr-custom-css.php';
 
 		// Rating Notice 
-		require WPR_ADDONS_PATH . 'classes/rating-notice.php';	
+		require WPR_ADDONS_PATH . 'classes/rating-notice.php';
+		
+		// Theme Builder Notice
+		require WPR_ADDONS_PATH . 'classes/theme-builder-notice.php';
 
 		// Admin Files
 		if ( is_admin() ) {
