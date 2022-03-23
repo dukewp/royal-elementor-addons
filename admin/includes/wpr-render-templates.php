@@ -160,9 +160,10 @@ class WPR_Render_Templates {
 
     public function convert_to_canvas( $template ) {
     	$is_theme_builder_edit = \Elementor\Plugin::$instance->preview->is_preview_mode() && Utilities::is_theme_builder_template() ? true : false;
+    	$_wp_page_template = get_post_meta(get_the_ID(), '_wp_page_template', true);
 
     	if ( $this->is_template_available('content') || $is_theme_builder_edit ) {
-    		if ( (is_page() || is_single()) && 'elementor_canvas' === get_post_meta(get_the_ID(), '_wp_page_template', true) ) {
+    		if ( (is_page() || is_single()) && 'elementor_canvas' === $_wp_page_template && !$is_theme_builder_edit ) {
     			return $template;
     		} else {
     			return WPR_ADDONS_PATH . 'admin/templates/wpr-canvas.php';
