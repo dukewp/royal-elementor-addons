@@ -993,6 +993,7 @@ class Wpr_Post_Comments extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#FCFCFC',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-comment-reply a' => 'background-color: {{VALUE}}',
 				]
@@ -1654,6 +1655,7 @@ class Wpr_Post_Comments extends Widget_Base {
 					'{{WRAPPER}} .wpr-comment-form textarea' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-comment-form label' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-comment-form .logged-in-as a' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-comment-form .logged-in-as .required-field-message' => 'color: {{VALUE}};',
 				],
 			]
 		);

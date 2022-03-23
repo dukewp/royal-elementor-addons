@@ -12,6 +12,12 @@ html,
 body,
 div,
 span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
 applet,
 object,
 iframe,
@@ -322,32 +328,10 @@ template {
     display: none;
 }
 
-.elementor-widget:not([class*="elementor-widget-wpr-"]) ul,
-.elementor-widget:not([class*="elementor-widget-wpr-"]) ol {
-    padding-left: 25px;
-}
-
-/* Reset Royal Widgets */
-.elementor-widget[class*="elementor-widget-wpr-"] h1,
-.elementor-widget[class*="elementor-widget-wpr-"] h2,
-.elementor-widget[class*="elementor-widget-wpr-"] h3,
-.elementor-widget[class*="elementor-widget-wpr-"] h4,
-.elementor-widget[class*="elementor-widget-wpr-"] h5,
-.elementor-widget[class*="elementor-widget-wpr-"] h6 {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    vertical-align: baseline;
-}
-
-/* Reset Library Popup */
-.wpr-tplib-popup ul {
+ul,
+ul ul,
+ol {
     list-style: none;
-}
-
-.wpr-tplib-popup h3 {
-    margin: 0;
 }
 
 
