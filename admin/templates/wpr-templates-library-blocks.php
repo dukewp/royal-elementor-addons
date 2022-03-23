@@ -94,26 +94,36 @@ class WPR_Templates_Library_Blocks {
 				for ( $i=0; $i < count($blocks[$module_slug]); $i++ ) :
 
 					$template_slug 	= array_keys($blocks[$module_slug])[$i];
-					$template_title = $title .' '. $template_slug;
 					$template_sub 	= isset($blocks[$module_slug][$template_slug]['sub']) ? $blocks[$module_slug][$template_slug]['sub'] : '';
+					$template_title = $title .' '. $template_slug;
 					$preview_type 	= $blocks[$module_slug][$template_slug]['type'];
 					$preview_url 	= $blocks[$module_slug][$template_slug]['url'];
-					$templte_class 	= ( strpos($template_slug, 'pro') && ! wpr_fs()->can_use_premium_code() ) ? ' wpr-tplib-pro-wrap' : '';
+					$template_class = (strpos($template_slug, 'pro') && !wpr_fs()->can_use_premium_code()) || (strpos($template_slug, 'zzz') && !wpr_fs()->can_use_premium_code()) ? ' wpr-tplib-pro-wrap' : '';
+
+					if (defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code()) {
+						$template_class .= ' wpr-tplib-pro-active';
+					}
+
+					$template_slug_for_image = strpos($template_slug, 'zzz') ? substr($template_slug, 0, -4) : $template_slug;
 
 			?>
 
-				<div class="wpr-tplib-template-wrap<?php echo esc_attr($templte_class); ?>">
+				<div class="wpr-tplib-template-wrap<?php echo esc_attr($template_class); ?>">
 					<div class="wpr-tplib-template" data-slug="<?php echo esc_attr($template_slug); ?>" data-filter="<?php echo esc_attr($module_slug); ?>" data-sub-filter="<?php echo esc_attr($template_sub); ?>" data-preview-type="<?php echo esc_attr($preview_type); ?>" data-preview-url="<?php echo esc_attr($preview_url); ?>">
 						<div class="wpr-tplib-template-media">
-							<img src="<?php echo 'https://royal-elementor-addons.com/library/premade-styles/'. $module_slug .'/'. $template_slug .'.jpg'; ?>">
+							<img src="<?php echo 'https://royal-elementor-addons.com/library/premade-styles/'. $module_slug .'/'.  $template_slug_for_image .'.jpg'; ?>">
 							<div class="wpr-tplib-template-media-overlay">
 								<i class="eicon-eye"></i>
 							</div>
 						</div>
 						<div class="wpr-tplib-template-footer elementor-clearfix">
-							<h3><?php echo str_replace('-pro', ' Pro', $template_title); ?></h3>
+							<?php if ( !defined('WPR_ADDONS_PRO_VERSION') && ! wpr_fs()->can_use_premium_code() ) : ?>
+								<h3><?php echo strpos($template_slug, 'pro') ? str_replace('-pro', ' Pro', $template_title) : str_replace('-zzz', ' Pro', $template_title); ?></h3>
+							<?php else : ?>
+								<h3><?php echo strpos($template_slug, 'pro') ? str_replace('-pro', '', $template_title) : str_replace('-zzz', '', $template_title); ?></h3>
+							<?php endif; ?>
 
-							<?php if ( strpos($template_slug, 'pro') && ! wpr_fs()->can_use_premium_code() ) : ?>
+							<?php if ( ( strpos($template_slug, 'pro') && !wpr_fs()->can_use_premium_code() ) || ( strpos($template_slug, 'zzz') ) && !wpr_fs()->can_use_premium_code() ) : ?>
 								<span class="wpr-tplib-insert-template wpr-tplib-insert-pro"><i class="eicon-star"></i> <span><?php esc_html_e( 'Go Pro', 'wpr-addons' ); ?></span></span>
 							<?php else : ?>
 								<span class="wpr-tplib-insert-template"><i class="eicon-file-download"></i> <span><?php esc_html_e( 'Insert', 'wpr-addons' ); ?></span></span>

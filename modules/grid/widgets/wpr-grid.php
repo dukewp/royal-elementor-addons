@@ -4342,6 +4342,24 @@ class Wpr_Grid extends Widget_Base {
 		);
 
 		$this->add_control(
+			'author_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-item-author .inner-block a img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
+			]
+		);
+
+		$this->add_control(
 			'author_text_spacing',
 			[
 				'label' => esc_html__( 'Extra Text Spacing', 'wpr-addons' ),
@@ -8828,20 +8846,13 @@ class Wpr_Grid extends Widget_Base {
 			$render_attribute = $this->get_render_attribute_string( 'slider-settings' );
 		}
 
-		// Grid Wrap
-		echo '<section class="wpr-grid elementor-clearfix" '. $render_attribute .'>';
-
 		// Loop: Start
 		if ( $posts->have_posts() ) :
 
-		$post_index = 0;
+		// Grid Wrap
+		echo '<section class="wpr-grid elementor-clearfix" '. $render_attribute .'>';
 
 		while ( $posts->have_posts() ) : $posts->the_post();
-
-			// $post_index++;
-			// if ( Utilities::is_new_free_user() && $post_index > 12 ) {
-			// 	return;
-			// }
 
 			// Post Class
 			$post_class = implode( ' ', get_post_class( 'wpr-grid-item elementor-clearfix', get_the_ID() ) );
@@ -8883,6 +8894,9 @@ class Wpr_Grid extends Widget_Base {
 
 		endwhile;
 
+		// Grid Wrap
+		echo '</section>';
+
 		// reset
 		wp_reset_postdata();
 
@@ -8895,9 +8909,6 @@ class Wpr_Grid extends Widget_Base {
 
 		// Loop: End
 		endif;
-
-		// Grid Wrap
-		echo '</section>';
 
 		if ( 'slider' === $settings['layout_select'] ) {
 			// Slider Navigation
