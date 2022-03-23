@@ -315,6 +315,10 @@
   background: #535353;
 }
 
+.wpr-edit-template:focus {
+  box-shadow: none !important;
+}
+
 .wpr-my-templates-list .wpr-delete-template {
   background: #ff5a4b;
 }
