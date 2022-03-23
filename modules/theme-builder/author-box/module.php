@@ -17,7 +17,9 @@ class Module extends Module_Base {
 	}
 
 	public function get_widgets() {
-		return Utilities::show_theme_buider_widget_on('single') || Utilities::show_theme_buider_widget_on('archive') ? ['Wpr_Author_Box'] : []; // This should match the widget/element class.
+		return [
+			'Wpr_Author_Box', // This should match the widget/element class.
+		];
 	}
 	
 }

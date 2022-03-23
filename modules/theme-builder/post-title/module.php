@@ -17,7 +17,9 @@ class Module extends Module_Base {
 	}
 
 	public function get_widgets() {
-		return Utilities::show_theme_buider_widget_on('single') ? ['Wpr_Post_Title'] : []; // This should match the widget/element class.
+		return [
+			'Wpr_Post_Title', // This should match the widget/element class.
+		];
 	}
 	
 }
