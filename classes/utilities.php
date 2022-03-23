@@ -341,7 +341,8 @@ class Utilities {
 			$sharing_url = 'https://www.linkedin.com/shareArticle?mini=true&url='. $args['url'] .'&title='. $args['title'] .'&summary='. $args['text'] .'&source='. $args['url'];
 			$network_title = esc_html__( 'LinkedIn', 'wpr-addons' );
 		} elseif ( 'pinterest-p' === $args['network'] ) {
-			$sharing_url = 'https://www.pinterest.com/pin/find/?url='. $args['url'];
+			// $sharing_url = 'https://www.pinterest.com/pin/find/?url='. $args['url'];
+			$sharing_url = 'https://www.pinterest.com/pin/create/button/?url=' . $args['url'] . '&media=' . $args['image'];
 			$network_title = esc_html__( 'Pinterest', 'wpr-addons' );
 		} elseif ( 'reddit' === $args['network'] ) {
 			$sharing_url = 'https://reddit.com/submit?url='. $args['url'] .'&title='. $args['title'];
