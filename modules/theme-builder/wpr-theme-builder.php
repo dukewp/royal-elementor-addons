@@ -93,7 +93,7 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 					}
 				}
 			}
-		}
+		} 
 
 		$this->add_control(
 			'preview_source',
