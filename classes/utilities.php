@@ -236,7 +236,7 @@ class Utilities {
 		if ( is_null($data) ) {
 			return;
 		}
-		
+		// var_dump($data);
 		$template = NULL;
 
 		// Find a Custom Condition

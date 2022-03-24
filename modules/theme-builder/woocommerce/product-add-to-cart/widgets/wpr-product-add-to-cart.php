@@ -40,7 +40,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 	}
 
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Tab: Content ==============
 		// Section: General ----------

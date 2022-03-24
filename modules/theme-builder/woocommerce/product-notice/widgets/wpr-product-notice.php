@@ -39,7 +39,7 @@ class Wpr_Product_Notice extends Widget_Base {
 		return ['wc-add-to-cart', 'wc-add-to-cart-variation', 'wc-single-product'];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		$this->start_controls_section(
 			'section_notice_styles',

@@ -39,7 +39,7 @@ class Wpr_Product_Mediaflex extends Widget_Base {
 	public function get_script_depends() {
 		return [ 'flexslider', 'zoom', 'wc-single-product'  ];
 	}
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Tab: Content ==============
 		// Section: General ----------

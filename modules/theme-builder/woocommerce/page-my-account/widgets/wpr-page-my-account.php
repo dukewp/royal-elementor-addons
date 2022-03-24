@@ -38,7 +38,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 		return [];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Tab: Content ==============
 		// Section: Settings ---------

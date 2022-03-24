@@ -37,7 +37,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 		return [ 'navigation', 'arrows', 'pagination' ];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Get Available Taxonomies
 		$post_taxonomies = Utilities::get_custom_types_of( 'tax', false );
