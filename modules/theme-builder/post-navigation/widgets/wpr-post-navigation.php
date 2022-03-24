@@ -75,7 +75,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 
 	public function add_section_style_post_nav_title() {}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Tab: Content ==============
 		// Section: General ----------

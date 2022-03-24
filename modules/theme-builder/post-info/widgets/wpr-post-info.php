@@ -55,7 +55,7 @@ class Wpr_Post_Info extends Widget_Base {
 		];		
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Get Available Meta Keys
 		$post_meta_keys = Utilities::get_custom_meta_keys();
