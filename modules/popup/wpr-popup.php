@@ -1,6 +1,7 @@
 <?php
 
 use Elementor\Controls_Manager;
+use Elementor\Controls_Stack;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_Border;
@@ -86,7 +87,7 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 
 	public function add_controls_group_popup_settings() {}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		$this->start_controls_section(
 			'popup_settings',
@@ -646,7 +647,7 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 		}
 
 		// Default Document Settings
-		parent::_register_controls();
+		parent::register_controls();
 
 		$this->start_controls_section(
 			'popup_container_styles',
