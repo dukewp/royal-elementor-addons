@@ -8397,7 +8397,6 @@ class Wpr_Grid extends Widget_Base {
 			
 			foreach ( $custom_filters as $key => $term_id ) {
 				$filter = get_term_by( 'id', $term_id, $taxonomy );
-				var_dump($filter->slug);
 				$data_attr = 'post_tag' === $taxonomy ? 'tag-'. $filter->slug : $taxonomy .'-'. $filter->slug;
 
 				// Parent Filters

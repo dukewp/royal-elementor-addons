@@ -2304,6 +2304,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     display: inline-block;
 }
 
+.wpr-grid-pagination i,
 .wpr-grid-pagination svg {
     vertical-align: middle;
 }
