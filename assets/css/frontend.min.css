@@ -1083,11 +1083,6 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
       display: block;
 }
 
-/* Post Content */
-.wpr-post-content > .elementor[data-elementor-type="wp-post"] > .elementor-section-wrap > .elementor-section > .elementor-column-gap-default > .elementor-column > .elementor-element-populated {
-  padding: 0 !important;
-}
-
 /* Featured Media */
 .wpr-featured-media-image {
     position: relative;
