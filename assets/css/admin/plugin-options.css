@@ -11,8 +11,29 @@
 }
 
 .wpr-settings-page-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   padding: 10px 30px 130px;
   background: #f6f6f6
+}
+
+.wpr-settings-page-header h1,
+.wpr-settings-page-header p,
+.wpr-settings-page-header .wpr-options-button,
+.wpr-settings-page-header .wpr-user-template{
+  -webkit-box-ordinal-group: 3;
+      -ms-flex-order: 2;
+          order: 2;
+}
+
+.wpr-settings-page-header .wpr-options-button {
+  -ms-flex-item-align: start;
+      align-self: flex-start;
 }
 
 .wpr-settings-page-header h1 {
@@ -316,7 +337,8 @@
 }
 
 .wpr-edit-template:focus {
-  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
 }
 
 .wpr-my-templates-list .wpr-delete-template {

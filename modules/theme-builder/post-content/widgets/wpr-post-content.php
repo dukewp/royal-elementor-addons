@@ -58,15 +58,15 @@ class Wpr_Post_Content extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'post_content_dropcap',
-			[
-				'label' => esc_html__( 'Enable Drop Cap', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'separator' => 'before'
-			]
-		);
+		// $this->add_control(
+		// 	'post_content_dropcap',
+		// 	[
+		// 		'label' => esc_html__( 'Enable Drop Cap', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SWITCHER,
+		// 		'return_value' => 'yes',
+		// 		'separator' => 'before'
+		// 	]
+		// );
 
 		$this->add_responsive_control(
             'post_content_align',
@@ -124,6 +124,28 @@ class Wpr_Post_Content extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'title_link_color',
+			[
+				'label'  => esc_html__( 'Link Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-post-content a' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'title_link_hover_color',
+			[
+				'label'  => esc_html__( 'Link Hover Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-post-content a:hover' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
@@ -144,15 +166,30 @@ class Wpr_Post_Content extends Widget_Base {
 			]
 		);
 
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
+		$this->add_control(
+			'title_link_transition_duration',
 			[
-				'name'     => 'content_dropcap_typography',
-				'label' => esc_html__( 'Drop Cap Typography', 'wpr-addons' ),
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-post-content.wpr-enable-dropcap p:first-child:first-letter'
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.1,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-post-content a' => 'transition-duration: {{VALUE}}s',
+				],
 			]
 		);
+
+		// $this->add_group_control(
+		// 	Group_Control_Typography::get_type(),
+		// 	[
+		// 		'name'     => 'content_dropcap_typography',
+		// 		'label' => esc_html__( 'Drop Cap Typography', 'wpr-addons' ),
+		// 		'scheme' => Typography::TYPOGRAPHY_3,
+		// 		'selector' => '{{WRAPPER}} .wpr-post-content.wpr-enable-dropcap p:first-child:first-letter'
+		// 	]
+		// );
 
 		$this->end_controls_section();
 
@@ -162,9 +199,9 @@ class Wpr_Post_Content extends Widget_Base {
 		// Get Settings
 		$settings = $this->get_settings();
 
-		$dropcap_class = 'yes' === $settings['post_content_dropcap'] ? ' wpr-enable-dropcap' : '';
+		// $dropcap_class = 'yes' === $settings['post_content_dropcap'] ? ' wpr-enable-dropcap' : '';
 
-		echo '<div class="wpr-post-content'. $dropcap_class .'">';
+		echo '<div class="wpr-post-content">';
 			if ( \Elementor\Plugin::$instance->preview->is_preview_mode() ) {
 			     \Elementor\Plugin::$instance->modules_manager->get_modules( 'page-templates' )->print_content();
 			} else {

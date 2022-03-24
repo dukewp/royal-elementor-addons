@@ -130,7 +130,9 @@ class WprRatingNotice {
 
         <style>
             .wpr-rating-notice {
-              padding: 0 15px;
+              padding: 10px 20px;
+              border-top: 0;
+              border-bottom: 0;
             }
 
             .wpr-rating-notice-logo {
@@ -165,7 +167,7 @@ class WprRatingNotice {
             .wpr-already-rated .dashicons,
             .wpr-maybe-later .dashicons,
             .wpr-need-support .dashicons {
-              vertical-align: sub;
+              vertical-align: middle;
             }
 
             .wpr-notice-dismiss-2 .dashicons {
@@ -175,7 +177,6 @@ class WprRatingNotice {
             .wpr-rating-notice .notice-dismiss {
                 display: none;
             }
-
         </style>
         ";
     }
