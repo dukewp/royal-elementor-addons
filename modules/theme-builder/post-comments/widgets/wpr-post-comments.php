@@ -85,7 +85,7 @@ class Wpr_Post_Comments extends Widget_Base {
 
 	public function add_control_comment_form_placeholders() {}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Tab: Content ==============
 		// Section: General ----------

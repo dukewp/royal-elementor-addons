@@ -37,7 +37,7 @@ class Wpr_Archive_Title extends Widget_Base {
 
 	public function add_control_archive_description() {}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Tab: Content ==============
 		// Section: General ----------

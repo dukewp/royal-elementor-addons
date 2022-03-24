@@ -43,7 +43,7 @@ class Wpr_Post_Media extends Widget_Base {
 		return [ 'wpr-lightgallery-css' ];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Get Available Meta Keys
 		$post_meta_keys = Utilities::get_custom_meta_keys();

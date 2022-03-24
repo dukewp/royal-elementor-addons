@@ -86,7 +86,7 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 
 	public function add_controls_group_popup_settings() {}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		$this->start_controls_section(
 			'popup_settings',
@@ -646,7 +646,7 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 		}
 
 		// Default Document Settings
-		parent::_register_controls();
+		parent::register_controls();
 
 		$this->start_controls_section(
 			'popup_container_styles',
