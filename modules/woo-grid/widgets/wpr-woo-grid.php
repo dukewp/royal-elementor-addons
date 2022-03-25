@@ -6789,23 +6789,25 @@ class Wpr_Woo_Grid extends Widget_Base {
 	
 			$meta_query = WC()->query->get_meta_query();
 	
-			$my_upsells = $product->get_upsell_ids();
+			$this->my_upsells = $product->get_upsell_ids();
 			
 			$args = array(
 				'post_type'           => 'product',
+				'post__not_in' => $settings[ 'query_exclude_products' ],
 				'ignore_sticky_posts' => 1,
 				'no_found_rows'       => 1,
 				'posts_per_page'      => $settings['query_posts_per_page'],
 				'orderby'             => 'post__in',
 				'order'               => 'asc',
-				'post__in'            => $my_upsells,
+				'paged' => $paged,
+				'post__in'            => $this->my_upsells,
 				'meta_query'          => $meta_query
 			);
 		}
 
 		if ( 'cross-sell' === $settings['query_selection'] ) {
 			// Get Product
-			$crossell_ids = [];
+			$this->crossell_ids = [];
 			
 			if(is_cart()) {
 				$items = WC()->cart->get_cart();
@@ -6814,7 +6816,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					$product = $values['data'];
 					$cross_sell_products = $product->get_cross_sell_ids();
 					foreach($cross_sell_products as $cs_product) {
-						array_push($crossell_ids, $cs_product);
+						array_push($this->crossell_ids, $cs_product);
 					}
 				  }
 			}
@@ -6826,18 +6828,24 @@ class Wpr_Woo_Grid extends Widget_Base {
 					return;
 				}
 
-				$crossell_ids = $product->get_cross_sell_ids();
+				$this->crossell_ids = $product->get_cross_sell_ids();
 			}
+	
+			$meta_query = WC()->query->get_meta_query();
 			
 			$args = array(
 				'post_type'           => 'product',
+				'post__not_in' => $settings[ 'query_exclude_products' ],
+				'tax_query' => $this->get_tax_query_args(),
 				'ignore_sticky_posts' => 1,
 				'no_found_rows'       => 1,
 				'posts_per_page'      => $settings['query_posts_per_page'],
 				'orderby'             => 'post__in',
 				'order'               => 'asc',
-				'post__in'            => $crossell_ids
-			);	
+				'paged' => $paged,
+				'post__in'            => $this->crossell_ids,
+				'meta_query'          => $meta_query
+			);
 		}
 
 		// Order By
@@ -7717,6 +7725,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 	public function render_grid_pagination( $settings ) {
 		// Return if Disabled
 		if ( 'yes' !== $settings['layout_pagination'] || 1 === $this->get_max_num_pages( $settings ) || 'slider' === $settings['layout_select'] ) {
+			return;
+		}
+
+		if ( (isset($this->my_upsells) && (count($this->my_upsells) <= $settings['query_posts_per_page'])) || (isset($this->crossell_ids) && (count($this->crossell_ids) <= $settings['query_posts_per_page'])) ) {
 			return;
 		}
 
