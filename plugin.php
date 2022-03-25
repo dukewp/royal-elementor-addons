@@ -266,12 +266,14 @@ class Plugin {
 			Plugin::instance()->get_version()
 		);
 
-		wp_enqueue_style(
-			'wpr-addons-library-frontend-css',
-			WPR_ADDONS_URL . 'assets/css/library-frontend' . $this->script_suffix() . '.css',
-			[],
-			Plugin::instance()->get_version()
-		);
+        if ( \Elementor\Plugin::$instance->preview->is_preview_mode() ) {
+			wp_enqueue_style(
+				'wpr-addons-library-frontend-css',
+				WPR_ADDONS_URL . 'assets/css/library-frontend' . $this->script_suffix() . '.css',
+				[],
+				Plugin::instance()->get_version()
+			);
+		}
 	}
 
 	public function enqueue_editor_styles() {

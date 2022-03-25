@@ -94,6 +94,7 @@
             justify-content: center;
     width: 100%;
     margin-left: -130px;
+    list-style: none;
 }
 
 .wpr-tplib-header ul li {
@@ -142,6 +143,10 @@
 .wpr-tplib-close i {
     line-height: 20px;
     padding-left: 20px;
+}
+
+.wpr-tplib-popup h3 {
+    margin: 0;
 }
 
 .wpr-tplib-header .wpr-tplib-insert-template {
@@ -338,6 +343,8 @@
     display: flex;
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;
+    list-style: none;
+    padding-left: 0;
 }
 
 .wpr-tplib-filters-list ul li {
