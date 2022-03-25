@@ -636,7 +636,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 			[
 				'name'     => 'content_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-post-content',
+				'selector' => '{{WRAPPER}} .wpr-post-nav-labels span',
 				'fields_options' => [
 					'typography' => [
 						'default' => 'custom',
