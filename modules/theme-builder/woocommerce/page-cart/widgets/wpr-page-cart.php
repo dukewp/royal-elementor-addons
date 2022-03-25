@@ -1944,20 +1944,19 @@ class Wpr_Page_Cart extends Widget_Base {
 		$actions_array = ['woocommerce_before_cart', 'woocommerce_after_cart_table', 'woocommerce_before_cart_table', 'woocommerce_after_cart', 'woocommerce_cart_contents', 'woocommerce_after_cart_contents' ];
 
 		add_filter( 'gettext', [ $this, 'filter_gettext' ], 20, 3 );
+		remove_action( 'woocommerce_cart_collaterals', 'woocommerce_cross_sell_display' );
 
 		foreach ($actions_array as $key => $value) {
 			add_action($value, [$this, $value]);
 		}
 
 		echo do_shortcode( '[woocommerce_cart]' );
-		
 
 		remove_filter( 'gettext', [ $this, 'filter_gettext' ], 20 );
 
 		foreach ($actions_array as $key => $value) {
 			remove_action($value, [$this, $value]);
 		}
-
 		remove_filter( 'woocommerce_coupons_enabled', [ $this, 'hide_coupon_field_on_cart' ] );
     }
 }

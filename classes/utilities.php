@@ -109,6 +109,7 @@ class Utilities {
 			'product-stock',
 			'product-additional-information',
 			'product-notice',
+			'product-upsell',
 			'page-cart',
 			'page-checkout',
 			'page-my-account'

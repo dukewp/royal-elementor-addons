@@ -1680,6 +1680,11 @@ class Wpr_Product_AddToCart extends Widget_Base {
 	public function change_clear_text() {
 	   echo '<a class="reset_variations" href="#">' . esc_html__( 'Clear', 'woocommerce' ) . '</a>';
 	}
+ 
+	function quadlayers_custom_wc_add_to_cart_message( $message, $product_id ) { 
+		$message = sprintf(esc_html__('%s has been added to your cart. Thank you for shopping!','tm-organik'), get_the_title( $product_id ) ); 
+		return $message; 
+	}
 
 	protected function render() {
 		// Get Settings
@@ -1734,6 +1739,8 @@ class Wpr_Product_AddToCart extends Widget_Base {
 			echo '</div>';
 
 		});
+		
+		add_filter( 'wc_add_to_cart_message', 'quadlayers_custom_wc_add_to_cart_message', 10, 2 ); 
 		
 		add_action( 'woocommerce_reset_variations_link' , [$this, 'change_clear_text'], 15 );
 
