@@ -8059,9 +8059,11 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$posts = new \WP_Query( $this->get_main_query_args() );
 
 		// Grid Settings
-		if ( 'slider' !== $settings['layout_select'] ) {
+		if ( 'slider' !== $settings['layout_select'] ) { 
 			// Filters
-			$this->render_grid_filters( $settings );
+			if ( 'upsell' !== $settings['query_selection'] && 'cross-sell' !== $settings['query_selection'] ) {
+				$this->render_grid_filters( $settings );
+			}
 
 			$this->add_grid_settings( $settings );
 			$render_attribute = $this->get_render_attribute_string( 'grid-settings' );
