@@ -32,6 +32,7 @@
 				'wpr-back-to-top.default': WprElements.widgetBackToTop,
 				'wpr-lottie-animations.default': WprElements.widgetLottieAnimations,
 				'wpr-posts-timeline.default' : WprElements.widgetPostsTimeline,
+				'wpr-sharing-buttons.default' : WprElements.widgetSharingButtons,
 				'global': WprElements.widgetSection,
 			};
 			
@@ -1168,7 +1169,7 @@
 					columnsMobileExtra,
 					columnsTablet = 2,
 					columnsTabletExtra,
-					columnsDesktop = settings.columns_desktop,
+					columnsDesktop = parseInt(settings.columns_desktop, 10),
 					columnsLaptop,
 					columnsWideScreen,
 					gutterHr = settings.gutter_hr,
@@ -1232,13 +1233,13 @@
 
 				// Larger Screens
 				} else if ( 2300 >= viewportWidth ) {
-					columns = columnsDesktop + 1;
+					columns = columnsDesktop;
 				} else if ( 2650 >= viewportWidth ) {
-					columns = (columnsWideScreen) ? columnsWideScreen : columnsDesktop + 2;
+					columns = (columnsWideScreen) ? columnsWideScreen : columnsDesktop + 1;
 				} else if ( 3000 >= viewportWidth ) {
-					columns = columnsDesktop + 3;
+					columns = (columnsWideScreen) ? columnsWideScreen : columnsDesktop + 2;
 				} else {
-					columns = columnsDesktop + 4;
+					columns = (columnsWideScreen) ? columnsWideScreen : columnsDesktop + 3;
 				}
 
 				// Limit Columns for Higher Screens
@@ -3863,6 +3864,19 @@
 				timelineFill !== '' ? timelineFill.css('top', middleLineTop) : '';
 		  }
 		}, // end widgetPostsTimeline
+
+        widgetSharingButtons: function($scope) {
+			$scope.find('.wpr-sharing-print').on('click', function(e) {
+				e.preventDefault();
+				window.print();
+			});
+
+			$scope.find('.wpr-sharing-pinterest-p');
+			// shareLinkSettings.url = location.href;
+			// shareLinkSettings.title = elementorFrontend.config.post.title;
+			// shareLinkSettings.text = elementorFrontend.config.post.excerpt;
+			// shareLinkSettings.image = elementorFrontend.config.post.featuredImage;
+        },
 
 		// Editor Check
 		editorCheck: function() {
