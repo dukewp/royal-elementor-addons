@@ -20,12 +20,25 @@ add_action( 'admin_menu', 'wpr_addons_add_admin_menu' );
 function wpr_settings_link( $links ) {
     $settings_link = '<a href="admin.php?page=wpr-addons">Settings</a>';
     array_push( $links, $settings_link );
-
-    if (!is_plugin_active('royal-elementor-addons-pro/wpr-addons-pro.php')) { //TODO: choose correct path for pro plugin
-        $links[] = '<a href="#" style="color:#ABC214;font-weight:700" target="_blank">' . esc_html__('Go Pro', 'wpr-addons') . '</a>';
+    if (!is_plugin_installed('royal-elementor-addons-pro/wpr-addons-pro.php')) {
+        $links[] = '<a href="https://royal-elementor-addons.com/#purchasepro" style="color:#7A75FF;font-weight:700" target="_blank">' . esc_html__('Go Pro', 'wpr-addons') . '</a>';
     }
 
     return $links;
+}
+
+function is_plugin_installed($file) {
+    $installed_plugins = [];
+
+    foreach(get_plugins() as $slug => $plugin_info ) {
+        array_push($installed_plugins, $slug);
+    }
+
+    if (in_array($file, $installed_plugins)) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 // Register Settings
