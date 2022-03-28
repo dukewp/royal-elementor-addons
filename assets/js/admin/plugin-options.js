@@ -14,6 +14,12 @@ jQuery(document).ready(function( $ ) {
 	var currentTab = $('.nav-tab-active').attr( 'data-title' );
 		currentTab = currentTab.trim().toLowerCase();
 
+	/*
+	** WooCommerce Comming Soon -------------------------
+	*/
+	if ( 'product archive' === currentTab ) {
+		$('.wpr-user-template').after('<div class="wpr-button-lock"></div>');
+	}
 
 	/*
 	** Get Active Filter -------------------------
