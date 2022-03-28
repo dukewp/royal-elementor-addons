@@ -1357,6 +1357,10 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 
 /* Post Info */
+.wpr-post-info {
+    padding: 0;
+    list-style: none;
+}
 
 .wpr-post-info li {
     position: relative;
@@ -1432,6 +1436,11 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 
 /* Post Comments */
+.wpr-comments-list,
+.wpr-comments-list ul.children {
+    list-style: none;
+    padding: 0;
+}
 
 .wpr-comment-avatar {
     float: left;
