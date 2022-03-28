@@ -21,6 +21,10 @@ function wpr_settings_link( $links ) {
     $settings_link = '<a href="admin.php?page=wpr-addons">Settings</a>';
     array_push( $links, $settings_link );
 
+    if (!is_plugin_active('royal-elementor-addons-pro/wpr-addons-pro.php')) { //TODO: choose correct path for pro plugin
+        $links[] = '<a href="#" style="color:#ABC214;font-weight:700" target="_blank">' . esc_html__('Go Pro', 'wpr-addons') . '</a>';
+    }
+
     return $links;
 }
 
