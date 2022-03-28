@@ -1,101 +1,6 @@
 /*--------------------------------------------------------------
 == Reset
 --------------------------------------------------------------*/
-
-html {
-    line-height: 1.15;
-    -ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
-}
-
-html,
-body,
-div,
-span,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-applet,
-object,
-iframe,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    vertical-align: baseline;
-}
-
 article,
 aside,
 footer,
@@ -127,6 +32,10 @@ a {
     text-decoration: none;
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
+}
+
+[class*="elementor-widget-wpr-"] a {
+    text-decoration: none;
 }
 
 abbr[title] {
@@ -328,12 +237,6 @@ template {
     display: none;
 }
 
-ul,
-ul ul,
-ol {
-    list-style: none;
-}
-
 
 /*--------------------------------------------------------------
 == General
@@ -434,7 +337,10 @@ ol {
 == Nav Menu
 --------------------------------------------------------------*/
 .wpr-nav-menu,
-.wpr-mobile-nav-menu {
+.wpr-nav-menu ul,
+.wpr-mobile-nav-menu,
+.wpr-mobile-nav-menu ul {
+    padding: 0;
     list-style: none;
     font-size: 0;
 }
@@ -619,7 +525,6 @@ div[class*="wpr-main-menu-align-"] .wpr-nav-menu-vertical .wpr-nav-menu>li>.wpr-
 
 
 /* --- Sub Menu --- */
-
 .wpr-nav-menu .wpr-sub-menu {
     display: none;
     position: absolute;
@@ -4910,10 +4815,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 
 /* Defaults */
-
 .elementor-widget-wpr-mailchimp .wpr-mailchimp-header h3 {
     font-size: 28px;
     font-weight: 800;
+    margin-top: 0;
 }
 
 .elementor-widget-wpr-mailchimp .wpr-mailchimp-header p {
@@ -6057,6 +5962,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 .wpr-testimonial-dots ul {
     list-style: none;
+    padding: 0;
     margin: 0;
 }
 
@@ -7354,11 +7260,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 .wpr-advanced-text {
     display: block;
+    margin: 0;
 }
 
-
 /* Clipped Text */
-
 .wpr-clipped-text {
     position: relative;
     -ms-transform: translate(0, 0);
@@ -9315,11 +9220,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 /* Content */
 
 .wpr-ticker-title {
-    display: -moz-flex;
-    display: -ms-flex;
-    display: -o-flex;
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
     -webkit-align-items: center;
     overflow: hidden;
@@ -9332,6 +9232,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     -webkit-transition-duration: 200ms;
     -o-transition-duration: 200ms;
     transition-duration: 200ms;
+    margin: 0;
 }
 
 .wpr-ticker-title a,
@@ -9353,7 +9254,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 
 /* Heading */
-
 .wpr-ticker-heading {
     display: -webkit-box;
     display: -ms-flexbox;
