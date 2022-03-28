@@ -6792,16 +6792,16 @@ class Wpr_Woo_Grid extends Widget_Base {
 			$this->my_upsells = $product->get_upsell_ids();
 			
 			$args = array(
-				'post_type'           => 'product',
+				'post_type' => 'product',
 				'post__not_in' => $settings[ 'query_exclude_products' ],
 				'ignore_sticky_posts' => 1,
-				'no_found_rows'       => 1,
-				'posts_per_page'      => $settings['query_posts_per_page'],
-				'orderby'             => 'post__in',
-				'order'               => 'asc',
+				'no_found_rows' => 1,
+				'posts_per_page' => $settings['query_posts_per_page'],
+				'orderby' => 'post__in',
+				'order' => 'asc',
 				'paged' => $paged,
-				'post__in'            => $this->my_upsells,
-				'meta_query'          => $meta_query
+				'post__in' => $this->my_upsells,
+				'meta_query' => $meta_query
 			);
 		}
 
@@ -6834,17 +6834,17 @@ class Wpr_Woo_Grid extends Widget_Base {
 			$meta_query = WC()->query->get_meta_query();
 			
 			$args = array(
-				'post_type'           => 'product',
+				'post_type' => 'product',
 				'post__not_in' => $settings[ 'query_exclude_products' ],
 				'tax_query' => $this->get_tax_query_args(),
 				'ignore_sticky_posts' => 1,
-				'no_found_rows'       => 1,
-				'posts_per_page'      => $settings['query_posts_per_page'],
-				'orderby'             => 'post__in',
-				'order'               => 'asc',
+				'no_found_rows' => 1,
+				'posts_per_page' => $settings['query_posts_per_page'],
+				'orderby' => 'post__in',
+				'order' => 'asc',
 				'paged' => $paged,
-				'post__in'            => $this->crossell_ids,
-				'meta_query'          => $meta_query
+				'post__in' => $this->crossell_ids,
+				'meta_query' => $meta_query
 			);
 		}
 
