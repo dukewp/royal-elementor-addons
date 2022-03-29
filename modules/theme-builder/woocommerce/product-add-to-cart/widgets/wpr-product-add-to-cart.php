@@ -60,6 +60,13 @@ class Wpr_Product_AddToCart extends Widget_Base {
             ]
         );
 
+		$this->add_control(
+			'ajax_add_to_cart',
+			[
+				'label' => esc_html__( 'AJAX add to cart', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+			]
+		);
 
 		$this->add_control(
 			'add_to_cart_layout',
@@ -1681,21 +1688,26 @@ class Wpr_Product_AddToCart extends Widget_Base {
 	   echo '<a class="reset_variations" href="#">' . esc_html__( 'Clear', 'woocommerce' ) . '</a>';
 	}
  
-	function quadlayers_custom_wc_add_to_cart_message( $message, $product_id ) { 
-		$message = sprintf(esc_html__('%s has been added to your cart. Thank you for shopping!','tm-organik'), get_the_title( $product_id ) ); 
+	function custom_wc_add_to_cart_message( $message, $product_id ) { 
+		$message = sprintf(esc_html__('%s has been added to your cart. Thank you for shopping!','wpr-addons'), get_the_title( $product_id ) ); 
 		return $message; 
+	}
+
+	function action_woocommerce_add_to_cart() {
+		return 'product is added to your cart!';
 	}
 
 	protected function render() {
 		// Get Settings
 		$settings = $this->get_settings_for_display();
-
+		
 		$this->add_render_attribute(
 			'add_to_cart_wrapper',
 			[
 				'id' => 'add-to-cart-attributes',
 				'class' => [ 'wpr-product-add-to-cart' ],
 				'layout-settings' => $settings['quantity_btn_position'],
+				'data-ajax-add-to-cart' => $settings['ajax_add_to_cart']
 			]
 		);
 
@@ -1739,8 +1751,12 @@ class Wpr_Product_AddToCart extends Widget_Base {
 			echo '</div>';
 
 		});
+
+		do_action( 'woocommerce_before_single_product' ); // locate it in condition if ajax activated
 		
-		add_filter( 'wc_add_to_cart_message', 'quadlayers_custom_wc_add_to_cart_message', 10, 2 ); 
+		add_filter( 'wc_add_to_cart_message', 'custom_wc_add_to_cart_message', 10, 2 );
+
+		// add_action( 'woocommerce_add_to_cart', 'action_woocommerce_add_to_cart', 10, 6 );
 		
 		add_action( 'woocommerce_reset_variations_link' , [$this, 'change_clear_text'], 15 );
 
