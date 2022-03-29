@@ -1746,7 +1746,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 
 		echo '<div '. $this->get_render_attribute_string( 'add_to_cart_wrapper' ) .'>';
 
-			echo woocommerce_template_single_add_to_cart();
+			woocommerce_template_single_add_to_cart();
 
 		echo '</div>';
 	}
