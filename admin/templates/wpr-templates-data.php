@@ -36,7 +36,7 @@ class WPR_Templates_Data {
 					'pages' => 'home,menu,about,offer,gallery,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'pizza italian restaurant food slider pasta fastfood fast food recipes cooking',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
 			'travel' => [
@@ -45,7 +45,7 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,stories,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'nature influencer travel blogger blog content tourism influencers creator tourism tourism travel forest slider generic multipurpose national-park nature-park sanctuary wilderness hitchhiking mountain river lakes outdoors',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
 			'cybersecurity' => [
@@ -79,7 +79,7 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,services,token,pricing,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'cryptocurrency bitcoin ethereum etherium blockchain protection nft coin corporate crypto dark startup token digital',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
 			'skincare' => [
@@ -88,7 +88,7 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,services,procedures,gallery,pricing,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'skincare skin care beauty clean face skin-beauty health wellness',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
 			'lawyer' => [
@@ -122,7 +122,7 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,services,pricing,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'digital agency company corporate digital services office agency web marketing',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
 			'drone' => [
@@ -131,7 +131,7 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,gallery,services,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'drone photography aerial photo ',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
 			'architecture' => [
@@ -158,7 +158,7 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,services,projects,pricing,contact,faq,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'construction architecture company interior office real estate',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
 			'ittech' => [
@@ -167,14 +167,14 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,services,pricing,faq,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'ittech advanced technology it technique computer windows technician digital',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 				'v2' => [
 					'name' => 'IT Tech v2',
 					'pages' => 'home,about,services,pricing,faq,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'ittech advanced technology it technique computer windows technician digital',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
 			'realestate' => [
@@ -210,7 +210,7 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,services,blog,gallery,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'wedding party event slider invitation planner',
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 				],
 			],
 		];

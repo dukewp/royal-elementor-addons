@@ -241,8 +241,6 @@ template {
 /*--------------------------------------------------------------
 == General
 --------------------------------------------------------------*/
-
-
 /*.wpr-float-align-left .wpr-nav-menu li {
     float: left;
   }
@@ -585,7 +583,6 @@ div[class*="wpr-main-menu-align-"] .wpr-nav-menu-vertical .wpr-nav-menu>li>.wpr-
 
 
 /* Mobile Menu */
-
 .wpr-mobile-nav-menu,
 .wpr-mobile-nav-menu-container {
     display: none;
@@ -695,7 +692,6 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 
 /* Mobile Menu Toggle Button */
-
 .wpr-mobile-toggle-wrap {
     font-size: 0;
     line-height: 0;
@@ -789,7 +785,6 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 
 /* Highlight Active */
-
 .wpr-pointer-line-fx .wpr-active-menu-item:before,
 .wpr-pointer-line-fx .wpr-active-menu-item:after,
 .wpr-pointer-border-fx .wpr-active-menu-item:before,
@@ -839,14 +834,12 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 
 /* WP Default Fix */
-
 .wpr-mobile-nav-menu .sub-menu-toggle {
     display: none !important;
 }
 
 
 /* Defaults */
-
 .elementor-widget-wpr-nav-menu .wpr-nav-menu .wpr-menu-item,
 .elementor-widget-wpr-nav-menu .wpr-mobile-nav-menu a,
 .elementor-widget-wpr-nav-menu .wpr-mobile-toggle-text {
@@ -859,9 +852,8 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 
 /*--------------------------------------------------------------
-  == Onepage Nav
-  --------------------------------------------------------------*/
-
+== Onepage Nav
+--------------------------------------------------------------*/
 .wpr-onepage-nav {
     position: fixed;
     z-index: 99999;
@@ -968,7 +960,6 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 
 /* Defaults */
-
 .elementor-widget-wpr-onepage-nav .wpr-onepage-nav {
     background-color: #605BE5;
     -webkit-box-shadow: 0px 0px 15px 0px #D7D7D7;
@@ -1581,9 +1572,8 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 
 /*--------------------------------------------------------------
-  == Single Product Elements
-  --------------------------------------------------------------*/
-
+== Single Product Elements
+--------------------------------------------------------------*/
 .wpr-product-media-wrap {
     position: relative;
     display: inline-block;
@@ -1659,9 +1649,8 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 
 /*--------------------------------------------------------------
-  == Grid
-  --------------------------------------------------------------*/
-
+== Grid
+--------------------------------------------------------------*/
 .wpr-grid {
     opacity: 0;
 }
@@ -2456,7 +2445,6 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 
 /* Defaults */
-
 .elementor-widget-wpr-grid .wpr-grid-media-hover-bg,
 .elementor-widget-wpr-media-grid .wpr-grid-media-hover-bg,
 .elementor-widget-wpr-woo-grid .wpr-grid-media-hover-bg {
@@ -2474,16 +2462,18 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     font-size: 21px;
     font-weight: 700;
     line-height: 23px;
-    margin: 0 !important;
+    margin: 0;
 }
 
 .elementor-widget-wpr-magazine-grid .wpr-grid-item-title {
     font-size: 22px;
+    margin: 0;
 }
 
 .elementor-widget-wpr-media-grid .wpr-grid-item-title {
     font-size: 15px;
     font-weight: 500;
+    margin: 0;
 }
 
 .elementor-widget-wpr-grid .wpr-grid-item-content,
@@ -5720,7 +5710,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 
 /* Text */
-
 .wpr-pricing-table-text {
     font-size: 13px;
     line-height: 1.3;
@@ -5728,14 +5717,13 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 
 /* Divider */
-
 .wpr-pricing-table-divider {
     margin: 0 auto;
+    border: 0;
 }
 
 
 /* Animation */
-
 .wpr-pricing-table-animation-slide {
     -webkit-transition-property: margin;
     -o-transition-property: margin;
@@ -9229,6 +9217,8 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 /* Content */
 
 .wpr-ticker-title {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     -webkit-align-items: center;
     overflow: hidden;
