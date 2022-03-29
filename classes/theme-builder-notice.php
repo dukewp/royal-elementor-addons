@@ -8,9 +8,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WprPluginUpdateNotice {
     public function __construct() {
         if ( current_user_can('administrator') ) {
-            delete_option('wpr_plugin_update_dismiss_notice');
             if ( empty(get_option('wpr_plugin_update_dismiss_notice', false)) ) {
-                add_action( 'admin_init', [$this, 'check_plugin_update_notice_condition'] );
+                add_action( 'admin_init', [$this, 'render_notice'] );
             }
         }
 
@@ -21,7 +20,7 @@ class WprPluginUpdateNotice {
         add_action( 'wp_ajax_wpr_plugin_update_dismiss_notice', [$this, 'wpr_plugin_update_dismiss_notice'] );
     }
 
-    public function check_plugin_update_notice_condition() {
+    public function render_notice() {
         add_action( 'admin_notices', [$this, 'render_plugin_update_notice' ]);
     }
     
@@ -48,6 +47,7 @@ class WprPluginUpdateNotice {
                 </div>';
         }
     }
+    
     public static function enqueue_scripts() {
         echo "
         <script>
