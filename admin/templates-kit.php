@@ -8,7 +8,7 @@ use Elementor\Plugin;
 
 // Register Menus
 function wpr_addons_add_templates_kit_menu() {
-	add_submenu_page( 'wpr-addons', 'Templates Kit', 'Templates Kit', 'manage_options', 'wpr-templates-kit', 'wpr_addons_templates_kit_page' );
+    add_submenu_page( 'wpr-addons', 'Templates Kit', 'Templates Kit', 'manage_options', 'wpr-templates-kit', 'wpr_addons_templates_kit_page' );
 }
 add_action( 'admin_menu', 'wpr_addons_add_templates_kit_menu' );
 
@@ -266,6 +266,56 @@ function download_template( $kit, $file ) {
 }
 
 /**
+** Import Elementor Site Settings
+*/
+function import_elementor_site_settings( $kit ) {
+    // Avoid Cache
+    // $randomNum = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 7);
+
+    // Get Remote File
+    $site_settings = @file_get_contents('https://royal-elementor-addons.com/library/templates-kit/'. $kit .'/site-settings.json');
+
+    if ( false !== $site_settings ) {
+        $site_settings = json_decode($site_settings, true);
+
+        if ( ! empty($site_settings['settings']) ) {
+            $default_kit = \Elementor\Plugin::$instance->documents->get_doc_for_frontend( get_option( 'elementor_active_kit' ) );
+
+            $kit_settings = $default_kit->get_settings();
+            $new_settings = $site_settings['settings'];
+            $settings = array_merge($kit_settings, $new_settings);
+
+            $default_kit->save( [ 'settings' => $settings ] );
+        }
+    }
+}
+
+/**
+** Setup WPR Templates
+*/
+function setup_wpr_templates( $kit ) {
+    $kit = 'test-v1';
+    
+    // Set Home Page
+    $page = get_page_by_path('home-'. $kit);
+    update_option( 'show_on_front', 'page' );
+    update_option( 'page_on_front', $page->ID );
+
+    // Set Headers and Footers
+    update_option('wpr_header_conditions', '{"user-header-'. $kit .'":["global"]}');
+    update_post_meta( Utilities::get_template_id('user-header-'. $kit), 'wpr_header_show_on_canvas', 'true' );
+    update_option('wpr_footer_conditions', '{"user-footer-'. $kit .'":["global"]}');
+    update_post_meta( Utilities::get_template_id('user-footer-'. $kit), 'wpr_footer_show_on_canvas', 'true' );
+
+    // Theme Builder
+    update_option('wpr_archive_conditions', '{"user-archive-'. $kit .'-blog":["archive/posts"],"user-archive-'. $kit .'-author":["archive/author"],"user-archive-'. $kit .'-date":["archive/date"],"user-archive-'. $kit .'-category-tag":["archive/categories/all","archive/tags/all"],"user-archive-'. $kit .'-search":["archive/search"]}');
+    update_option('wpr_single_conditions', '{"user-single-'. $kit .'-404":["single/page_404"],"user-single-'. $kit .'-post":["single/posts/all"],"user-single-'. $kit .'-page":["single/pages/all"]}');
+
+    // Set Popup
+    update_option('wpr_popup_conditions', '{"user-popup-'. $kit .'":["global"]}'); 
+}
+
+/**
 ** Fix Elementor Images
 */
 function wpr_fix_elementor_images() {
@@ -350,29 +400,17 @@ function fix_contact_form_7() {
 function wpr_final_settings_setup() {
     $kit = get_option('wpr-import-kit-id');
 
+    // Elementor Site Settings
+    import_elementor_site_settings($kit);
+
+    // Setup WPR Templates
+    setup_wpr_templates($kit);
+
     // Fix Elementor Images
     wpr_fix_elementor_images();
 
     // Fix Contact Form 7
     fix_contact_form_7();
-
-    // Set Home Page
-    $page = get_page_by_path('home-'. $kit);
-    update_option( 'show_on_front', 'page' );
-    update_option( 'page_on_front', $page->ID );
-
-    // Set Headers and Footers
-    update_option('wpr_header_conditions', '{"user-header-'. $kit .'":["global"]}');
-    update_post_meta( Utilities::get_template_id('user-header-'. $kit), 'wpr_header_show_on_canvas', 'true' );
-    update_option('wpr_footer_conditions', '{"user-footer-'. $kit .'":["global"]}');
-    update_post_meta( Utilities::get_template_id('user-footer-'. $kit), 'wpr_footer_show_on_canvas', 'true' );
-
-    // Theme Builder
-    update_option('wpr_archive_conditions', '{"user-archive-'. $kit .'-blog":["archive/posts"],"user-archive-'. $kit .'-author":["archive/author"],"user-archive-'. $kit .'-date":["archive/date"],"user-archive-'. $kit .'-category-tag":["archive/categories/all","archive/tags/all"],"user-archive-'. $kit .'-search":["archive/search"]}');
-    update_option('wpr_single_conditions', '{"user-single-'. $kit .'-404":["single/page_404"],"user-single-'. $kit .'-post":["single/posts/all"],"user-single-'. $kit .'-page":["single/pages/all"]}');
-
-    // Set Popup
-    update_option('wpr_popup_conditions', '{"user-popup-'. $kit .'":["global"]}');
 
     // Track Kit
     wpr_track_imported_kit( $kit );
