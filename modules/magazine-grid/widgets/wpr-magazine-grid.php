@@ -1875,13 +1875,13 @@ class Wpr_Magazine_Grid extends Widget_Base {
 					'size' => 38,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-mgzn-grid-1-2 article:nth-child(1) .wpr-grid-item-title' => 'font-size: {{SIZE}}px;',
-					'{{WRAPPER}} .wpr-mgzn-grid-1-3 article:nth-child(1) .wpr-grid-item-title' => 'font-size: {{SIZE}}px;',
-					'{{WRAPPER}} .wpr-mgzn-grid-1-4 article:nth-child(1) .wpr-grid-item-title' => 'font-size: {{SIZE}}px;',
-					'{{WRAPPER}} .wpr-mgzn-grid-1-1-2 article:nth-child(1) .wpr-grid-item-title' => 'font-size: {{SIZE}}px;',
-					'{{WRAPPER}} .wpr-mgzn-grid-2-1-2 article:nth-child(2) .wpr-grid-item-title' => 'font-size: {{SIZE}}px;',
-					'{{WRAPPER}} .wpr-mgzn-grid-1vh-3h article:nth-child(1) .wpr-grid-item-title' => 'font-size: {{SIZE}}px;',
-					'{{WRAPPER}} .wpr-mgzn-grid-1-1-1 article:nth-child(2) .wpr-grid-item-title' => 'font-size: {{SIZE}}px;',
+					'{{WRAPPER}} .wpr-mgzn-grid-1-2 article:nth-child(1) .wpr-grid-item-title a' => 'font-size: {{SIZE}}px;',
+					'{{WRAPPER}} .wpr-mgzn-grid-1-3 article:nth-child(1) .wpr-grid-item-title a' => 'font-size: {{SIZE}}px;',
+					'{{WRAPPER}} .wpr-mgzn-grid-1-4 article:nth-child(1) .wpr-grid-item-title a' => 'font-size: {{SIZE}}px;',
+					'{{WRAPPER}} .wpr-mgzn-grid-1-1-2 article:nth-child(1) .wpr-grid-item-title a' => 'font-size: {{SIZE}}px;',
+					'{{WRAPPER}} .wpr-mgzn-grid-2-1-2 article:nth-child(2) .wpr-grid-item-title a' => 'font-size: {{SIZE}}px;',
+					'{{WRAPPER}} .wpr-mgzn-grid-1vh-3h article:nth-child(1) .wpr-grid-item-title a' => 'font-size: {{SIZE}}px;',
+					'{{WRAPPER}} .wpr-mgzn-grid-1-1-1 article:nth-child(2) .wpr-grid-item-title a' => 'font-size: {{SIZE}}px;',
 				],
 				'condition' => [
 					'layout_select' => [ '1-2', '1-3', '1-4', '1-1-2', '2-1-2', '1vh-3h', '1-1-1' ]
