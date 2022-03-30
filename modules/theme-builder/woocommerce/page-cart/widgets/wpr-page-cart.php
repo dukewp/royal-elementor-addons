@@ -1943,7 +1943,7 @@ class Wpr_Page_Cart extends Widget_Base {
         $settings = $this->get_settings_for_display();
 
 		$actions_array = ['woocommerce_before_cart', 'woocommerce_after_cart_table', 'woocommerce_before_cart_table', 'woocommerce_after_cart', 'woocommerce_cart_contents', 'woocommerce_after_cart_contents' ];
-
+		
 		add_filter( 'gettext', [ $this, 'filter_gettext' ], 20, 3 );
 		remove_action( 'woocommerce_cart_collaterals', 'woocommerce_cross_sell_display' );
 

@@ -1703,17 +1703,11 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     position: absolute;
     display: none;
     top: 100%;
-    width: 600px;
     z-index: 999;
 }
 
 .wpr-menu-cart-btn-icon i {
     position: relative;
-}
-
-.wpr-menu-cart-icon-count {
-    position: absolute;
-    bottom: 100%;
 }
 
 .wpr-menu-cart-btn-icon i::before {

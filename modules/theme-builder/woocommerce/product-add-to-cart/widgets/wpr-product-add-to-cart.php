@@ -1752,9 +1752,29 @@ class Wpr_Product_AddToCart extends Widget_Base {
 
 		});
 
-		do_action( 'woocommerce_before_single_product' ); // locate it in condition if ajax activated
+		if ( 'yes' !== $settings['ajax_add_to_cart'] ) {
+			do_action( 'woocommerce_before_single_product' ); // locate it in condition if ajax activated
+		}
 		
 		add_filter( 'wc_add_to_cart_message', 'custom_wc_add_to_cart_message', 10, 2 );
+		
+		add_filter('add_to_cart_fragments', 'woocommerce_header_add_to_cart_fragment');
+
+function woocommerce_header_add_to_cart_fragment( $fragments ) {
+    global $woocommerce;
+
+    ob_start();
+
+    ?>
+    <a class="cart-customlocation" href="<?php echo wc_get_cart_url(); ?>" title="<?php _e( 'View your shopping cart' ); ?>"><?php WC()->cart->get_cart_contents_count(); ?></a>
+
+    <?php
+
+    $fragments['a.cart-customlocation'] = ob_get_clean();
+
+    return $fragments;
+
+}
 
 		// add_action( 'woocommerce_add_to_cart', 'action_woocommerce_add_to_cart', 10, 6 );
 		
@@ -1763,6 +1783,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 		echo '<div '. $this->get_render_attribute_string( 'add_to_cart_wrapper' ) .'>';
 
 			woocommerce_template_single_add_to_cart();
+			// woocommerce_template_loop_add_to_cart();
 
 		echo '</div>';
 	}
