@@ -319,6 +319,8 @@ img {
 
 .wpr-import-kit-popup-wrap {
   display: none;
+  position: relative;
+  z-index: 9999999;
 }
 
 .wpr-import-kit-popup-wrap .overlay {

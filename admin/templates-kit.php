@@ -294,7 +294,6 @@ function import_elementor_site_settings( $kit ) {
 ** Setup WPR Templates
 */
 function setup_wpr_templates( $kit ) {
-    $kit = 'test-v1';
     
     // Set Home Page
     $page = get_page_by_path('home-'. $kit);

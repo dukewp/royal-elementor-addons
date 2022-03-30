@@ -974,6 +974,13 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 /*--------------------------------------------------------------
 == Single Post Elements
 --------------------------------------------------------------*/
+.wpr-post-title,
+.wpr-archive-title,
+.wpr-author-box-name,
+.wpr-author-box-title {
+    margin: 0;
+}
+
 .wpr-archive-title:after {
       content: ' ';
       display: block;
@@ -2271,8 +2278,8 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     .wpr-grid-pagination a>span {
         display: none;
     }
-    .wpr-grid-pagination span i,
-    .wpr-grid-pagination a i {
+    .wpr-grid-pagination.wpr-grid-pagination-numbered span i,
+    .wpr-grid-pagination.wpr-grid-pagination-numbered a i {
         padding: 0 !important;
     }
 }

@@ -369,7 +369,7 @@ class Wpr_Search extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'input_align',
 			[
 				'label' => esc_html__( 'Alignment', 'wpr-addons' ),

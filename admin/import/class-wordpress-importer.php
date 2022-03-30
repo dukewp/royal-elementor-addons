@@ -22,7 +22,7 @@ if ( ! class_exists( 'WP_Importer' ) ) {
 // include WXR file parsers
 require WPR_ADDONS_PATH .'admin/import/class-parsers.php';
 
-class WP_Import extends WP_Importer {
+class WP_Import extends \WP_Importer {
 	const DEFAULT_BUMP_REQUEST_TIMEOUT = 60;
 	const DEFAULT_ALLOW_CREATE_USERS = true;
 	const DEFAULT_IMPORT_ATTACHMENT_SIZE_LIMIT = 0; // 0 = unlimited.
@@ -61,14 +61,14 @@ class WP_Import extends WP_Importer {
 	private $page_on_front;
 
 	// Mappings from old information to new.
-	private $processed_authors = [];
-	private $author_mapping = [];
 	private $processed_terms = [];
 	private $processed_posts = [];
-	private $post_orphans = [];
+	private $processed_authors = [];
+	private $author_mapping = [];
 	private $processed_menu_items = [];
+	private $post_orphans = [];
 	private $menu_item_orphans = [];
-	private $missing_menu_items = [];
+	private $mapped_terms_slug = [];
 
 	private $fetch_attachments = false;
 	private $url_remap = [];
@@ -518,16 +518,22 @@ class WP_Import extends WP_Importer {
 		}
 
 		foreach ( $this->terms as $term ) {
+
 			// if the term already exists in the correct taxonomy leave it alone
 			$term_id = term_exists( $term['slug'], $term['term_taxonomy'] );
 			if ( $term_id ) {
 				if ( is_array( $term_id ) ) {
 					$term_id = $term_id['term_id'];
 				}
+
 				if ( isset( $term['term_id'] ) ) {
-					$this->processed_terms[ intval( $term['term_id'] ) ] = (int) $term_id;
+					if ( 'nav_menu' === $term['term_taxonomy'] ) {
+						$term = $this->handle_duplicated_nav_menu_term( $term );
+					} else {
+						$this->processed_terms[ intval( $term['term_id'] ) ] = (int) $term_id;
+						continue;
+					}
 				}
-				continue;
 			}
 
 			if ( empty( $term['term_parent'] ) ) {
@@ -552,6 +558,7 @@ class WP_Import extends WP_Importer {
 					$this->processed_terms[ intval( $term['term_id'] ) ] = $id['term_id'];
 				}
 				$result++;
+
 			} else {
 				/* translators: 1: Term taxonomy, 2: Term name. */
 				$error = sprintf( esc_html__( 'Failed to import %1$s %2$s', 'wpr-addons' ), $term['term_taxonomy'], $term['term_name'] );
@@ -666,7 +673,8 @@ class WP_Import extends WP_Importer {
 			}
 
 			if ( 'nav_menu_item' === $post['post_type'] ) {
-				$this->process_menu_item( $post );
+				$result['succeed'] += $this->process_menu_item( $post );
+
 				continue;
 			}
 
@@ -693,7 +701,7 @@ class WP_Import extends WP_Importer {
 			}
 
 			$postdata = [
-				'import_id' => $post['post_id'],
+				'import_id' => $post['post_id'], // by Duke (this line was removed in Elementor's new import code, I've added it back bcz import was not working as expected)
 				'post_author' => $author,
 				'post_content' => $post['post_content'],
 				'post_excerpt' => $post['post_excerpt'],
@@ -920,6 +928,8 @@ class WP_Import extends WP_Importer {
 	 * @param array $item Menu item details from WXR file
 	 */
 	private function process_menu_item( $item ) {
+		$result = [];
+
 		// Skip draft, orphaned menu items.
 		if ( 'draft' === $item['status'] ) {
 			return;
@@ -943,6 +953,11 @@ class WP_Import extends WP_Importer {
 			return;
 		}
 
+		// If menu was already exists, refer the items to the duplicated menu created.
+		if ( array_key_exists( $menu_slug, $this->mapped_terms_slug ) ) {
+			$menu_slug = $this->mapped_terms_slug[ $menu_slug ];
+		}
+
 		$menu_id = term_exists( $menu_slug, 'nav_menu' );
 		if ( ! $menu_id ) {
 			/* translators: %s: Menu slug. */
@@ -963,14 +978,9 @@ class WP_Import extends WP_Importer {
 			$_menu_item_object_id = $this->processed_terms[ intval( $_menu_item_object_id ) ];
 		} elseif ( 'post_type' === $post_meta_key_value['_menu_item_type'] && isset( $this->processed_posts[ intval( $_menu_item_object_id ) ] ) ) {
 			$_menu_item_object_id = $this->processed_posts[ intval( $_menu_item_object_id ) ];
-		} elseif ( 'custom' !== $post_meta_key_value['_menu_item_type'] ) {
-			// Associated object is missing or not imported yet, we'll retry later.
-			$this->missing_menu_items[] = $item;
-
-			return;
 		}
 
-		$_menu_item_menu_item_parent = $post_meta_key_value['menu_item_menu_item_parent'];
+		$_menu_item_menu_item_parent = $post_meta_key_value['_menu_item_menu_item_parent'];
 		if ( isset( $this->processed_menu_items[ intval( $_menu_item_menu_item_parent ) ] ) ) {
 			$_menu_item_menu_item_parent = $this->processed_menu_items[ intval( $_menu_item_menu_item_parent ) ];
 		} elseif ( $_menu_item_menu_item_parent ) {
@@ -1003,7 +1013,10 @@ class WP_Import extends WP_Importer {
 		$id = wp_update_nav_menu_item( $menu_id, 0, $args );
 		if ( $id && ! is_wp_error( $id ) ) {
 			$this->processed_menu_items[ intval( $item['post_id'] ) ] = (int) $id;
+			$result[ $item['post_id'] ] = $id;
 		}
+
+		return $result;
 	}
 
 	/**
@@ -1015,7 +1028,6 @@ class WP_Import extends WP_Importer {
 	 * @return int|WP_Error Post ID on success, WP_Error otherwise
 	 */
 	private function process_attachment( $post, $url ) {
-		
 		if ( ! $this->fetch_attachments ) {
 			return new WP_Error( 'attachment_processing_error', esc_html__( 'Fetching attachments is not enabled', 'wpr-addons' ) );
 		}
@@ -1233,12 +1245,6 @@ class WP_Import extends WP_Importer {
 			}
 		}
 
-		// All other posts/terms are imported, retry menu items with missing associated object.
-		$missing_menu_items = $this->missing_menu_items;
-		foreach ( $missing_menu_items as $item ) {
-			$this->process_menu_item( $item );
-		}
-
 		// Find parents for menu item orphans.
 		foreach ( $this->menu_item_orphans as $child_id => $parent_id ) {
 			$local_child_id = 0;
@@ -1321,12 +1327,37 @@ class WP_Import extends WP_Importer {
 		return $key;
 	}
 
+	/**
+	 * @param $term
+	 * @return mixed
+	 */
+	private function handle_duplicated_nav_menu_term( $term ) {
+		$duplicate_slug = $term['slug'] . '-duplicate';
+		$duplicate_name = $term['term_name'] . ' duplicate';
+
+		while ( term_exists( $duplicate_slug, 'nav_menu' ) ) {
+			$duplicate_slug .= '-duplicate';
+			$duplicate_name .= ' duplicate';
+		}
+
+		$this->mapped_terms_slug[ $term['slug'] ] = $duplicate_slug;
+
+		$term['slug'] = $duplicate_slug;
+		$term['term_name'] = $duplicate_name;
+
+		return $term;
+	}
+
 	public function run() {
 		$this->import( $this->requested_file_path );
 
 		return $this->output;
 	}
 
+	/**
+	 * @param $file
+	 * @param $args
+	 */
 	public function __construct( $file, $args = [] ) {
 		$this->requested_file_path = $file;
 		$this->args = $args;
