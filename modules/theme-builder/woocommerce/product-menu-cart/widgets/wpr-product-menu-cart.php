@@ -77,7 +77,7 @@ class Wpr_Product_Menu_Cart extends Widget_Base {
 		);
 
 		$this->add_control(
-			'menu_cart_bg_color',
+			'menu_cart_border_color',
 			[
 				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
@@ -87,6 +87,27 @@ class Wpr_Product_Menu_Cart extends Widget_Base {
 				]
 			]
 		);
+        
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name' => 'title_typography',
+                'label' => __( 'Title Typography', 'my-plugin-domain' ),
+                'scheme' => Typography::TYPOGRAPHY_3,
+                'selector' => '{{WRAPPER}} .wpr-menu-cart-toggle-btn',
+                // 'fields_options' => [
+                //     'font_weight' => [
+                //         'default' => '500',
+                //     ],
+                //     'font_family' => [
+                //         'default' => 'Rubik',
+                //     ],
+                //     'font_size'   => [
+                //         'default' => '14px',
+                //     ],
+                // ],
+            ]
+        );
 
 		$this->add_control(
             'apply_changes',
