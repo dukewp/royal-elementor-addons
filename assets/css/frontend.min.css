@@ -11129,6 +11129,8 @@ body:not(.elementor-editor-active) .wpr-template-popup {
      display: -webkit-box;
      display: -ms-flexbox;
      display: flex;
+     list-style: none;
+     padding: 0;
 }
 
 .wpr-taxonomy-list li {
