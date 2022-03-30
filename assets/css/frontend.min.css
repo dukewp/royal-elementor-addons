@@ -1694,6 +1694,54 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 /*--------------------------------------------------------------
 == Single Product Elements
 --------------------------------------------------------------*/
+/* Product Menu Cart */
+.wpr-menu-cart-wrap {
+    position: relative;
+}
+
+.wpr-menu-cart{
+    position: absolute;
+    display: none;
+    top: 100%;
+    width: 600px;
+    z-index: 999;
+}
+
+.wpr-menu-cart-btn-icon i {
+    position: relative;
+}
+
+.wpr-menu-cart-icon-count {
+    position: absolute;
+    bottom: 100%;
+}
+
+.wpr-menu-cart-btn-icon i::before {
+    content: "\e8ea";
+}
+ 
+.woocommerce-mini-cart-item .remove {
+    position: relative;
+    display: inline-flex !important;
+    justify-content: center;
+    align-content: center;
+    vertical-align: middle;
+    text-indent: -9999px;
+}
+
+.woocommerce-mini-cart-item a.remove:before {
+    font-family: "Font Awesome 5 Free";
+    content: '\f00d';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    text-indent: 0;
+}
+
+.woocommerce-mini-cart-item .remove:hover {
+    background-color: transparent;
+    color: black;
+}
 
 /* Product Media */
 .wpr-product-media-wrap {
