@@ -1053,6 +1053,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'default' => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} button.button' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .download-file a.button' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-orders-table__cell a.button' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -1064,6 +1066,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} button.button' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .download-file a.button' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-orders-table__cell a.button' => 'background-color: {{VALUE}}',
 				]
 			]
 		);
