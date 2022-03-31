@@ -22,7 +22,7 @@ function wpr_settings_link( $links ) {
     array_push( $links, $settings_link );
 
     if ( !is_plugin_installed('wpr-addons-pro/wpr-addons-pro.php') ) {
-        $links[] = '<a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-wpplugindashboard-upgrade-pro#purchasepro" style="color:#93003c;font-weight:700" target="_blank">' . esc_html__('Go Pro', 'wpr-addons') . '</a>';
+        $links[] = '<a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-wpplugindashboard-upgrade-pro#purchasepro" style="color:#93003c;font-weight:700" target="_blank">' . esc_html__('Pro', 'wpr-addons') . '</a>';
     }
 
     return $links;
