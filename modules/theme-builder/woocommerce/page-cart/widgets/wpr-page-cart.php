@@ -376,6 +376,7 @@ class Wpr_Page_Cart extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}}.wpr-cart-horizontal .woocommerce-cart-form' => 'margin-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-cart-vertical .woocommerce-cart-form' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-cart-section-wrap .shop_table.cart' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -1152,7 +1153,7 @@ class Wpr_Page_Cart extends Widget_Base {
 			[
 				'name' => 'buttons_box_shadow',
 				'selector' => '{{WRAPPER}} .actions .button,
-				{{WRAPPER}} .coupon .button, {{WRAPPER}} .shipping-calculator-form .button',
+				{{WRAPPER}} .coupon .coupon-col-end button.button, {{WRAPPER}} .shipping-calculator-form .button',
 			]
 		);
 
@@ -1210,9 +1211,7 @@ class Wpr_Page_Cart extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'buttons_box_shadow_hr',
-				'selector' => '{{WRAPPER}} .actions .button:hover',
-				'{{WRAPPER}} .coupon .button:hover',
-				'{{WRAPPER}} .shipping-calculator-form .button:hover',
+				'selector' => '{{WRAPPER}} .actions .button:hover, {{WRAPPER}} .coupon .button:hover, {{WRAPPER}} .shipping-calculator-form .button:hover',
 			]
 		);
 
@@ -1258,9 +1257,7 @@ class Wpr_Page_Cart extends Widget_Base {
 			[
 				'name'     => 'buttons_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .actions .button',
-				'{{WRAPPER}} .coupon .button',
-				'{{WRAPPER}} .shipping-calculator-form .button'
+				'selector' => '{{WRAPPER}} .actions .button, {{WRAPPER}} .coupon .button, {{WRAPPER}} .shipping-calculator-form .button',
 			]
 		);
 
@@ -1722,9 +1719,7 @@ class Wpr_Page_Cart extends Widget_Base {
 			[
 				'name'     => 'checkout_button_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .actions .button',
-				'{{WRAPPER}} .coupon .button',
-				'{{WRAPPER}} .wc-proceed-to-checkout .checkout-button'
+				'selector' => '{{WRAPPER}} .wc-proceed-to-checkout .checkout-button'
 			]
 		);
 

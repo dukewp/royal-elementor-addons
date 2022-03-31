@@ -1760,10 +1760,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 
 	private function render_html_editor() {
 		$settings = $this->get_settings_for_display();
-		// Add .wpr-my-account-tab-dashboard as the default class when the editor loads.
-		// This class will be replaced with JS when tabs are switched.
 		?>
-		<div class="wpr-my-account-tab wpr-my-account-tab-dashboard">
+		<div class="wpr-my-account-tab">
 			<div class="woocommerce">
 			<?php
 				wc_get_template( 'myaccount/navigation.php' );
