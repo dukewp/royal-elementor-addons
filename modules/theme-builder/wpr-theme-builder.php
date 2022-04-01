@@ -19,7 +19,7 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 		return esc_html__( 'WPR Theme Builder', 'wpr-addons' );
 	}
 
-	protected function register_controls() {
+	protected function _register_controls() {
 		// Get Available Post Types
 		$post_types = Utilities::get_custom_types_of( 'post', false );
 
@@ -48,11 +48,10 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 		$template_type = get_post_meta( $id, '_wpr_template_type', true  );
 		$template_slug = get_post($id)->post_name;
 		$query = '';
-		$template_type = '-' . $template_type; // remove later
 
-		if ( 1 === strpos( $template_type, 'single' ) ) { // before change 0 === 
+		if ( 0 === strpos( $template_type, 'single' ) ) {
 			$conds = json_decode(get_option('wpr_single_conditions'));
-
+			
 			if ( $template_slug == Utilities::get_template_slug($conds, 'single/posts', $id) ) {
 				$query = 'post';
 			} elseif ( $template_slug == Utilities::get_template_slug($conds, 'single/pages', $id) ) {
@@ -67,18 +66,6 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 						$query = $post_type;
 					}
 				}
-			}
-		} elseif ( 1 < strpos( $template_type, 'single' ) ) {
-			$conds = json_decode(get_option('wpr_product_single_conditions'));
-
-			if ( $template_slug == Utilities::get_template_slug($conds, 'single/posts', $id) ) {
-				$query = 'product';
-			}
-		} elseif ( 1 === strpos( $template_type, 'product_archive' )) {
-			$conds = json_decode(get_option('wpr_product_archive_conditions'));
-
-			if ( $template_slug == Utilities::get_template_slug($conds, 'archive/posts', $id) ) {
-				$query = 'archive/products';
 			}
 		} else {
 			$conds = json_decode(get_option('wpr_archive_conditions'));
@@ -214,7 +201,7 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 		$this->end_controls_section();
 
 		// Default Document Settings
-		parent::register_controls();
+		parent::_register_controls();
 	}
 
 	public function get_tax_query_args( $tax, $terms ) {
@@ -366,8 +353,8 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 	// Add Post Class to Single Pages
 	public function get_container_attributes() {
 		$attributes = parent::get_container_attributes();
-		var_dump(is_singular());
-		if ( is_singular() /* Not 404 */ ) {
+
+		if ( is_singular() ) { // Not 404
 			$post_classes = get_post_class( '', get_the_ID() );
 			$attributes['class'] .= ' ' . implode( ' ', $post_classes );
 		}

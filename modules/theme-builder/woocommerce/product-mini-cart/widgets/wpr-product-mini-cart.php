@@ -1,5 +1,5 @@
 <?php
-namespace WprAddons\Modules\ThemeBuilder\Woocommerce\ProductMenuCart\Widgets;
+namespace WprAddons\Modules\ThemeBuilder\Woocommerce\ProductMiniCart\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
@@ -14,14 +14,14 @@ use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-class Wpr_Product_Menu_Cart extends Widget_Base {
+class Wpr_Product_Mini_Cart extends Widget_Base {
 	
 	public function get_name() {
-		return 'wpr-product-menu-cart';
+		return 'wpr-product-mini-cart';
 	}
 
 	public function get_title() {
-		return esc_html__( 'Product Menu Cart', 'wpr-addons' );
+		return esc_html__( 'Product Mini Cart', 'wpr-addons' );
 	}
 
 	public function get_icon() {
@@ -33,7 +33,7 @@ class Wpr_Product_Menu_Cart extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'qq', 'product-menu-cart', 'product', 'menu', 'cart' ];//tmp
+		return [ 'qq', 'product-ini-cart', 'product', 'mini', 'cart' ];//tmp
 	}
 
 	// public function get_script_depends() {
@@ -59,7 +59,7 @@ class Wpr_Product_Menu_Cart extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#FFF',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-menu-cart-toggle-btn' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-mini-cart-toggle-btn' => 'color: {{VALUE}}',
 				]
 			]
 		);
@@ -71,7 +71,7 @@ class Wpr_Product_Menu_Cart extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#a46497',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-menu-cart-toggle-btn' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-mini-cart-toggle-btn' => 'background-color: {{VALUE}}',
 				]
 			]
 		);
@@ -83,7 +83,7 @@ class Wpr_Product_Menu_Cart extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#a46497',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-menu-cart-toggle-btn' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-mini-cart-toggle-btn' => 'border-color: {{VALUE}}',
 				]
 			]
 		);
@@ -92,7 +92,7 @@ class Wpr_Product_Menu_Cart extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'mini_cart_btn_box_shadow',
-				'selector' => '{{WRAPPER}} .wpr-menu-cart-toggle-btn',
+				'selector' => '{{WRAPPER}} .wpr-mini-cart-toggle-btn',
 			]
 		);
         
@@ -102,7 +102,7 @@ class Wpr_Product_Menu_Cart extends Widget_Base {
                 'name' => 'title_typography',
                 'label' => __( 'Title Typography', 'my-plugin-domain' ),
                 'scheme' => Typography::TYPOGRAPHY_3,
-                'selector' => '{{WRAPPER}} .wpr-menu-cart-toggle-btn',
+                'selector' => '{{WRAPPER}} .wpr-mini-cart-toggle-btn',
                 // 'fields_options' => [
                 //     'font_weight' => [
                 //         'default' => '500',
@@ -130,7 +130,7 @@ class Wpr_Product_Menu_Cart extends Widget_Base {
 					'left' => 10,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-menu-cart-toggle-btn' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-mini-cart-toggle-btn' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
                 'separator' => 'before'
 			]
@@ -151,7 +151,7 @@ class Wpr_Product_Menu_Cart extends Widget_Base {
 				],
 				'default' => 'solid',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-menu-cart-toggle-btn' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .wpr-mini-cart-toggle-btn' => 'border-style: {{VALUE}};',
 				],
 				'separator' => 'before'
 			]
@@ -170,7 +170,7 @@ class Wpr_Product_Menu_Cart extends Widget_Base {
 					'left' => 1,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-menu-cart-toggle-btn' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-mini-cart-toggle-btn' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
 					'mini_cart_btn_border_type!' => 'none',
@@ -191,7 +191,7 @@ class Wpr_Product_Menu_Cart extends Widget_Base {
 					'left' => 2,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-menu-cart-toggle-btn' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-mini-cart-toggle-btn' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -223,7 +223,7 @@ class Wpr_Product_Menu_Cart extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#FFF',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-menu-cart' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-mini-cart' => 'background-color: {{VALUE}}',
 				]
 			]
 		);
@@ -235,7 +235,7 @@ class Wpr_Product_Menu_Cart extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#000',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-menu-cart' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-mini-cart' => 'border-color: {{VALUE}}',
 				]
 			]
 		);
@@ -244,7 +244,7 @@ class Wpr_Product_Menu_Cart extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'mini_cart_box_shadow',
-				'selector' => '{{WRAPPER}} .wpr-menu-cart',
+				'selector' => '{{WRAPPER}} .wpr-mini-cart',
                 'fields_options' => [
                     'box_shadow_type' =>
                         [ 
@@ -280,7 +280,7 @@ class Wpr_Product_Menu_Cart extends Widget_Base {
 					'size' => 10,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-menu-cart' => 'margin-top: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-mini-cart' => 'margin-top: {{SIZE}}{{UNIT}};',
                 ],
                 'separator' => 'before'
 			]
@@ -302,7 +302,7 @@ class Wpr_Product_Menu_Cart extends Widget_Base {
 					'size' => 300,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-menu-cart' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-mini-cart' => 'width: {{SIZE}}{{UNIT}};',
                 ]
 			]
 		);
@@ -320,7 +320,7 @@ class Wpr_Product_Menu_Cart extends Widget_Base {
 					'left' => 15,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-menu-cart' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-mini-cart' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
                 'separator' => 'before'
 			]
@@ -341,7 +341,7 @@ class Wpr_Product_Menu_Cart extends Widget_Base {
 				],
 				'default' => 'solid',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-menu-cart' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .wpr-mini-cart' => 'border-style: {{VALUE}};',
 				],
 				'separator' => 'before'
 			]
@@ -360,7 +360,7 @@ class Wpr_Product_Menu_Cart extends Widget_Base {
 					'left' => 1,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-menu-cart' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-mini-cart' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
 					'mini_cart_border_type!' => 'none',
@@ -381,7 +381,7 @@ class Wpr_Product_Menu_Cart extends Widget_Base {
 					'left' => 2,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-menu-cart' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-mini-cart' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -389,7 +389,7 @@ class Wpr_Product_Menu_Cart extends Widget_Base {
         $this->end_controls_section();
     } 
 
-	public function render_menu_cart_toggle() {
+	public function render_mini_cart_toggle() {
 
 		if ( null === WC()->cart ) {
 			return;
@@ -400,12 +400,12 @@ class Wpr_Product_Menu_Cart extends Widget_Base {
 		$counter_attr = 'data-counter="' . $product_count . '"';
 		?>
 
-		<div class="wpr-menu-cart-toggle-wrap">
-			<button id="wpr-menu-cart-toggle-btn" href="#" class="wpr-menu-cart-toggle-btn" aria-expanded="false">
-				<span class="wpr-menu-cart-btn-text"><?php echo $sub_total; ?></span>
-				<span class="wpr-menu-cart-btn-icon" <?php echo $counter_attr; ?>>
+		<div class="wpr-mini-cart-toggle-wrap">
+			<button id="wpr-mini-cart-toggle-btn" href="#" class="wpr-mini-cart-toggle-btn" aria-expanded="false">
+				<span class="wpr-mini-cart-btn-text"><?php echo $sub_total; ?></span>
+				<span class="wpr-mini-cart-btn-icon" <?php echo $counter_attr; ?>>
 					<i class="eicon">
-                        <sup class="wpr-menu-cart-icon-count"><?php echo $product_count ?></sup>
+                        <sup class="wpr-mini-cart-icon-count"><?php echo $product_count ?></sup>
                     </i>
 					<span class=""><?php esc_html_e( 'Cart', 'wpr-addons' ); ?></span>
 				</span>
@@ -414,7 +414,7 @@ class Wpr_Product_Menu_Cart extends Widget_Base {
 		<?php
 	}
 
-	public static function render_menu_cart() {
+	public static function render_mini_cart() {
 		if ( null === WC()->cart ) {
 			return;
 		}
@@ -422,7 +422,7 @@ class Wpr_Product_Menu_Cart extends Widget_Base {
 		$widget_cart_is_hidden = apply_filters( 'woocommerce_widget_cart_is_hidden', false );
 		$is_edit_mode = \Elementor\Plugin::$instance->editor->is_edit_mode();
 		?>
-		<div class="wpr-menu-cart">
+		<div class="wpr-mini-cart">
 			<?php if ( ! $widget_cart_is_hidden ) : ?>
 				<div class="">
 					<div class="" aria-hidden="true">
@@ -442,9 +442,9 @@ class Wpr_Product_Menu_Cart extends Widget_Base {
 	}
     
     protected function render() {
-        echo '<div class="wpr-menu-cart-wrap">';
-            $this->render_menu_cart_toggle();
-            $this->render_menu_cart();
+        echo '<div class="wpr-mini-cart-wrap">';
+            $this->render_mini_cart_toggle();
+            $this->render_mini_cart();
         echo '</div>';
     }    
 }        

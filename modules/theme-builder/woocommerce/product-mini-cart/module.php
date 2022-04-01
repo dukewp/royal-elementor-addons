@@ -1,5 +1,5 @@
 <?php
-namespace WprAddons\Modules\ThemeBuilder\Woocommerce\ProductMenuCart;
+namespace WprAddons\Modules\ThemeBuilder\Woocommerce\ProductMiniCart;
 
 use WprAddons\Base\Module_Base;
 
@@ -12,12 +12,12 @@ class Module extends Module_Base {
 	}
 	
 	public function get_name() {
-		return 'wpr-product-menu-cart';
+		return 'wpr-product-mini-cart';
 	}
 
 	public function get_widgets() {
 		return [
-			'Wpr_Product_Menu_Cart', // This should match the widget/element class.
+			'Wpr_Product_Mini_Cart', // This should match the widget/element class.
 		];
 	}
 	

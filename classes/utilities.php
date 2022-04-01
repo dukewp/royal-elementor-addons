@@ -110,7 +110,7 @@ class Utilities {
 			'product-additional-information',
 			'product-notice',
 			'product-upsell',
-			'product-menu-cart',
+			'product-mini-cart',
 			'page-cart',
 			'page-checkout',
 			'page-my-account',
