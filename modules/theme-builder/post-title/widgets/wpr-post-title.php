@@ -35,7 +35,7 @@ class Wpr_Post_Title extends Widget_Base {
 		return [ 'post', 'title' ];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Tab: Content ==============
 		// Section: General ----------

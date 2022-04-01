@@ -19,7 +19,7 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 		return esc_html__( 'WPR Theme Builder', 'wpr-addons' );
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		// Get Available Post Types
 		$post_types = Utilities::get_custom_types_of( 'post', false );
 
@@ -201,7 +201,7 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 		$this->end_controls_section();
 
 		// Default Document Settings
-		parent::_register_controls();
+		parent::register_controls();
 	}
 
 	public function get_tax_query_args( $tax, $terms ) {

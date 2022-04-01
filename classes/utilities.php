@@ -109,9 +109,12 @@ class Utilities {
 			'product-stock',
 			'product-additional-information',
 			'product-notice',
+			'product-upsell',
+			'product-mini-cart',
 			'page-cart',
 			'page-checkout',
-			'page-my-account'
+			'page-my-account',
+			'products-result-count'
 		];
 	}
 

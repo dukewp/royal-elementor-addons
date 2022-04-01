@@ -217,3 +217,20 @@ function royal_elementor_addons_activation_time() {//TODO: Try to locate this in
 }
 
 register_activation_hook( __FILE__, 'royal_elementor_addons_activation_time' );
+
+function add_cart_single_product_ajax() {
+	
+	add_action( 'wp_loaded', [ 'WC_Form_Handler', 'add_to_cart_action' ], 20 );
+
+	if ( is_callable( [ 'WC_AJAX', 'get_refreshed_fragments' ] ) ) {
+		WC_AJAX::get_refreshed_fragments();
+	}
+
+	die();
+
+}
+
+// add_action( 'wp_ajax_wpr_addons_add_cart_single_product', [ $this, 'add_cart_single_product_ajax' ] );
+// add_action( 'wp_ajax_nopriv_wpr_addons_add_cart_single_product', [ $this, 'add_cart_single_product_ajax' ] );
+add_action( 'wp_ajax_wpr_addons_add_cart_single_product', 'add_cart_single_product_ajax');
+add_action( 'wp_ajax_nopriv_wpr_addons_add_cart_single_product',  'add_cart_single_product_ajax');

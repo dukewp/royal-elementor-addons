@@ -35,7 +35,7 @@ class Wpr_Post_Comments extends Widget_Base {
 		return [ 'comments', 'post' ];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Tab: Content ==============
 		// Section: General ----------

@@ -44,7 +44,7 @@ class Wpr_Product_Media extends Widget_Base {
 		return [ 'wpr-lightgallery-css' ];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Tab: Content ==============
 		// Section: General ----------

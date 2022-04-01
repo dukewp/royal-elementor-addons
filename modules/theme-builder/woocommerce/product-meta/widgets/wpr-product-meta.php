@@ -31,7 +31,7 @@ class Wpr_Product_Meta extends Widget_Base {
 		return [ 'qq', 'product-meta', 'product', 'meta' ];//tmp
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Tab: Content ==============
 		// Section: General ----------

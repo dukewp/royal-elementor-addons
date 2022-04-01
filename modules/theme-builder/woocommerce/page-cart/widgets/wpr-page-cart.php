@@ -37,7 +37,7 @@ class Wpr_Page_Cart extends Widget_Base {
 		return [];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Tab: Content ==============
 		// Section: General ----------
@@ -376,6 +376,7 @@ class Wpr_Page_Cart extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}}.wpr-cart-horizontal .woocommerce-cart-form' => 'margin-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-cart-vertical .woocommerce-cart-form' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-cart-section-wrap .shop_table.cart' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -566,6 +567,7 @@ class Wpr_Page_Cart extends Widget_Base {
 					'left' => 10,
 				],
 				'selectors' => [
+					'{{WRAPPER}} .cart_totals' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .cart_totals h2' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} table.shop_table' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-cart-section' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -1151,7 +1153,7 @@ class Wpr_Page_Cart extends Widget_Base {
 			[
 				'name' => 'buttons_box_shadow',
 				'selector' => '{{WRAPPER}} .actions .button,
-				{{WRAPPER}} .coupon .button, {{WRAPPER}} .shipping-calculator-form .button',
+				{{WRAPPER}} .coupon .coupon-col-end button.button, {{WRAPPER}} .shipping-calculator-form .button',
 			]
 		);
 
@@ -1209,9 +1211,7 @@ class Wpr_Page_Cart extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'buttons_box_shadow_hr',
-				'selector' => '{{WRAPPER}} .actions .button:hover',
-				'{{WRAPPER}} .coupon .button:hover',
-				'{{WRAPPER}} .shipping-calculator-form .button:hover',
+				'selector' => '{{WRAPPER}} .actions .button:hover, {{WRAPPER}} .coupon .button:hover, {{WRAPPER}} .shipping-calculator-form .button:hover',
 			]
 		);
 
@@ -1257,9 +1257,7 @@ class Wpr_Page_Cart extends Widget_Base {
 			[
 				'name'     => 'buttons_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .actions .button',
-				'{{WRAPPER}} .coupon .button',
-				'{{WRAPPER}} .shipping-calculator-form .button'
+				'selector' => '{{WRAPPER}} .actions .button, {{WRAPPER}} .coupon .button, {{WRAPPER}} .shipping-calculator-form .button',
 			]
 		);
 
@@ -1721,9 +1719,7 @@ class Wpr_Page_Cart extends Widget_Base {
 			[
 				'name'     => 'checkout_button_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .actions .button',
-				'{{WRAPPER}} .coupon .button',
-				'{{WRAPPER}} .wc-proceed-to-checkout .checkout-button'
+				'selector' => '{{WRAPPER}} .wc-proceed-to-checkout .checkout-button'
 			]
 		);
 
@@ -1942,22 +1938,21 @@ class Wpr_Page_Cart extends Widget_Base {
         $settings = $this->get_settings_for_display();
 
 		$actions_array = ['woocommerce_before_cart', 'woocommerce_after_cart_table', 'woocommerce_before_cart_table', 'woocommerce_after_cart', 'woocommerce_cart_contents', 'woocommerce_after_cart_contents' ];
-
+		
 		add_filter( 'gettext', [ $this, 'filter_gettext' ], 20, 3 );
+		remove_action( 'woocommerce_cart_collaterals', 'woocommerce_cross_sell_display' );
 
 		foreach ($actions_array as $key => $value) {
 			add_action($value, [$this, $value]);
 		}
 
 		echo do_shortcode( '[woocommerce_cart]' );
-		
 
 		remove_filter( 'gettext', [ $this, 'filter_gettext' ], 20 );
 
 		foreach ($actions_array as $key => $value) {
 			remove_action($value, [$this, $value]);
 		}
-
 		remove_filter( 'woocommerce_coupons_enabled', [ $this, 'hide_coupon_field_on_cart' ] );
     }
 }

@@ -32,7 +32,7 @@ class Wpr_Product_SalesBadge extends Widget_Base {
 		return [ 'qq', 'product-sales-badge', 'product', 'sales-badge', 'sales', 'badge' ];//tmp
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		$this->start_controls_section(
 			'section_product_sales_badge_styles',

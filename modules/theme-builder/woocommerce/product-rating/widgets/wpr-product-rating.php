@@ -33,7 +33,7 @@ class Wpr_Product_Rating extends Widget_Base {
 		return [ 'qq', 'product-rating', 'product', 'rating' ];//tmp
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		$this->start_controls_section(
 			'section_product_rating',

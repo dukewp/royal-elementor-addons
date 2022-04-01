@@ -32,7 +32,7 @@ class Wpr_Product_Stock extends Widget_Base {
 		return [ 'qq', 'woocommerce', 'royal', 'product-stock', 'product', 'stock' ];//tmp
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		$this->start_controls_section(
 			'section_product_stock',

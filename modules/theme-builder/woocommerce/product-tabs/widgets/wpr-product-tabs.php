@@ -41,7 +41,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 		return [ 'wc-single-product' ];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		$this->start_controls_section(
 			'section_product_tabs_style',
