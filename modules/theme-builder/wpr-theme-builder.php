@@ -366,7 +366,7 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 	// Add Post Class to Single Pages
 	public function get_container_attributes() {
 		$attributes = parent::get_container_attributes();
-
+		var_dump(is_singular());
 		if ( is_singular() /* Not 404 */ ) {
 			$post_classes = get_post_class( '', get_the_ID() );
 			$attributes['class'] .= ' ' . implode( ' ', $post_classes );
