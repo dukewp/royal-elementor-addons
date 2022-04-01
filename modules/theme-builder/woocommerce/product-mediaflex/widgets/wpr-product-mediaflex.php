@@ -37,12 +37,9 @@ class Wpr_Product_Mediaflex extends Widget_Base {
 	}
 
 	public function get_script_depends() {
-		return [ 'flexslider', 'zoom', 'wc-single-product', 'photoswipe', 'photoswipe-ui-default'  ];
+		return [ 'flexslider', 'zoom', 'wc-single-product'  ];
 	}
-
-	public function get_style_depends() {
-		return [ 'photoswipe', 'photoswipe-default-skin' ];
-	}
+	
 	protected function register_controls() {
 
 		// Tab: Content ==============
