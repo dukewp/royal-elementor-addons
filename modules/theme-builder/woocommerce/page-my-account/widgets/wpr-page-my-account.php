@@ -38,7 +38,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 		return [];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Tab: Content ==============
 		// Section: Settings ---------
@@ -1053,6 +1053,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'default' => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} button.button' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .download-file a.button' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-orders-table__cell a.button' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -1064,6 +1066,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} button.button' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .download-file a.button' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-orders-table__cell a.button' => 'background-color: {{VALUE}}',
 				]
 			]
 		);
@@ -1760,10 +1764,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 
 	private function render_html_editor() {
 		$settings = $this->get_settings_for_display();
-		// Add .wpr-my-account-tab-dashboard as the default class when the editor loads.
-		// This class will be replaced with JS when tabs are switched.
 		?>
-		<div class="wpr-my-account-tab wpr-my-account-tab-dashboard">
+		<div class="wpr-my-account-tab">
 			<div class="woocommerce">
 			<?php
 				wc_get_template( 'myaccount/navigation.php' );

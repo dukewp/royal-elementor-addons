@@ -35,7 +35,7 @@ class Wpr_Post_Info extends Widget_Base {
 		return [ 'meta', 'info', 'date', 'time', 'author', 'categories', 'tags', 'comments' ];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Get Available Taxonomies
 		$post_taxonomies = Utilities::get_custom_types_of( 'tax', false );

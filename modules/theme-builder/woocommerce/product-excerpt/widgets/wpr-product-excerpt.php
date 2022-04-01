@@ -30,7 +30,7 @@ class Wpr_Product_Excerpt extends Widget_Base {
 		return [ 'qq', 'product-excerpt', 'product', 'excerpt' ];//tmp
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		// Tab: Content ==============
 		// Section: General ----------
