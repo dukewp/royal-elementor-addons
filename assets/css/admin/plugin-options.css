@@ -366,8 +366,7 @@
   line-height: 30px;
 }
 
-.wpr-header-templates-list li.wpr-active-conditions-template,
-.wpr-footer-templates-list li.wpr-active-conditions-template {
+.wpr-active-conditions-template {
   border-left: 5px solid #6A4BFF;
   background: #F6F7F7;
 }

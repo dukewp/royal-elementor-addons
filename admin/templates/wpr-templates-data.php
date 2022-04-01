@@ -12,6 +12,33 @@ class WPR_Templates_Data {
 		$is_mla_active = is_plugin_active('media-library-assistant/index.php') ? 'true' : 'false';
 
 		return [
+			'magazine-blog' => [
+				'v1' => [
+					'name' => 'Magazine Blog',
+					'pages' => 'home,about,services,projects,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'nature influencer travel blogger blog content tourism influencers creator tourism tourism travel forest slider generic multipurpose national-park nature-park sanctuary wilderness hitchhiking mountain river lakes outdoors',
+					'price' => $is_pro_active ? 'free' : 'free',
+				],
+			],
+			'travel-blog' => [
+				'v1' => [
+					'name' => 'Travel Blog',
+					'pages' => 'home,about,services,projects,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'nature influencer travel blogger blog content tourism influencers creator tourism tourism travel forest slider generic multipurpose national-park nature-park sanctuary wilderness hitchhiking mountain river lakes outdoors',
+					'price' => $is_pro_active ? 'free' : 'free',
+				],
+			],
+			'personal-blog' => [
+				'v1' => [
+					'name' => 'Personal Blog',
+					'pages' => 'home,about,services,projects,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'nature influencer travel blogger blog content tourism influencers creator tourism tourism travel forest slider generic multipurpose national-park nature-park sanctuary wilderness hitchhiking mountain river lakes outdoors',
+					'price' => $is_pro_active ? 'free' : 'free',
+				],
+			],
 			'food-blog' => [
 				'v1' => [
 					'name' => 'Food Blog',

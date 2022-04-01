@@ -1659,7 +1659,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 == Grid
 --------------------------------------------------------------*/
 .wpr-grid {
-    opacity: 0;
+    /*opacity: 0;*/
 }
 
 .wpr-grid-item {

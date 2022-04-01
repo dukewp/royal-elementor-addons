@@ -140,9 +140,13 @@ class WPR_Conditions_Manager {
         if ( is_null($template) ) {
             $all_archives = Utilities::get_template_slug( $conditions, 'archive/all_archives' );
 
-            if ( ! is_null($all_archives) && (class_exists( 'WooCommerce' ) && !is_shop()) ) {
-                if ( is_archive() || is_search() || Utilities::is_blog_archive() ) {
-                    $template = $all_archives;
+            if ( ! is_null($all_archives) ) {
+                if ( class_exists( 'WooCommerce' ) && is_shop() ) {
+                    $template = null;
+                } else {
+                    if ( is_archive() || is_search() || Utilities::is_blog_archive() ) {
+                        $template = $all_archives;
+                    }
                 }
             }
         }

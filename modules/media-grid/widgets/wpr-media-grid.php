@@ -7313,6 +7313,12 @@ class Wpr_Media_Grid extends Widget_Base {
 		// Get Posts
 		$posts = new \WP_Query( $this->get_main_query_args() );
 
+
+		// Loop: Start
+		if ( $posts->have_posts() ) :
+
+		$post_index = 0;
+
 		// Grid Settings
 		if ( 'slider' !== $settings['layout_select'] ) {
 			// Filters
@@ -7329,12 +7335,6 @@ class Wpr_Media_Grid extends Widget_Base {
 
 		// Grid Wrap
 		echo '<section class="wpr-grid wpr-media-grid elementor-clearfix" '. $render_attribute .'>';
-
-
-		// Loop: Start
-		if ( $posts->have_posts() ) :
-
-		$post_index = 0;
 
 		while ( $posts->have_posts() ) : $posts->the_post();
 
@@ -7383,14 +7383,6 @@ class Wpr_Media_Grid extends Widget_Base {
 		// reset
 		wp_reset_postdata();
 
-		// No Posts Found
-		else:
-
-			echo '<h2>'. $settings['query_not_found_text'] .'</h2>';
-
-		// Loop: End
-		endif;
-
 		// Grid Wrap
 		echo '</section>';
 
@@ -7407,6 +7399,14 @@ class Wpr_Media_Grid extends Widget_Base {
 
 		// Pagination
 		$this->render_grid_pagination( $settings );
+
+		// No Posts Found
+		else:
+
+			echo '<h2>'. $settings['query_not_found_text'] .'</h2>';
+
+		// Loop: End
+		endif;
 	}
 	
 }
