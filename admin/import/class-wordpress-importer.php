@@ -707,6 +707,7 @@ class WP_Import extends WP_Importer {
 				'menu_order' => $post['menu_order'],
 				'post_type' => $post['post_type'],
 				'post_password' => $post['post_password'],
+				'post_date' => $post['post_date'],
 			];
 
 			$original_post_id = $post['post_id'];
