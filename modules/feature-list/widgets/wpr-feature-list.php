@@ -316,6 +316,14 @@ class Wpr_Feature_List extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'feature_list_custom_styles',
+			[
+				'label' => esc_html__( 'Custom Styles', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+			]
+		);
+
+		$repeater->add_control(
 			'list_color',
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
