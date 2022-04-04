@@ -3,6 +3,7 @@ namespace WprAddons\Modules\FeatureList\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
+use Elementor\Utils;
 use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
@@ -114,13 +115,31 @@ class Wpr_Feature_List extends Widget_Base {
 		);
 
 		$this->add_control(
-			'feature_list_conector',
+			'feature_list_title_tag',
 			[
-				'label' => esc_html__( 'Show Conector', 'wpr-addons' ),
+				'label' => esc_html__( 'Title HTML Tag', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => 'H1',
+					'h2' => 'H2',
+					'h3' => 'H3',
+					'h4' => 'H4',
+					'h5' => 'H5',
+					'h6' => 'H6',
+				],
+				'default' => 'h2'
+			]
+		);
+
+		$this->add_control(
+			'feature_list_connector',
+			[
+				'label' => esc_html__( 'Show Connector', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'condition' => [
 					'list_alignment' => ['left', 'right'],
 				],
+				'prefix_class' => 'wpr-feature-list-connector-'
 			]
 		);
 
@@ -188,6 +207,17 @@ class Wpr_Feature_List extends Widget_Base {
 
 		$repeater = new \Elementor\Repeater();
 
+		$repeater->start_controls_tabs(
+			'list_tabs'
+		);
+
+		$repeater->start_controls_tab(
+			'content_tab',
+			[
+				'label' => __( 'Content', 'wpr-addons' ),
+			]
+		);
+
         $repeater->add_control(
             'feature_list_media_type',
             [
@@ -244,7 +274,24 @@ class Wpr_Feature_List extends Widget_Base {
 			'list_title', [
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => esc_html__( 'List Title' , 'wpr-addons' )
+				'default' => esc_html__( 'List Title' , 'wpr-addons' ),
+				'label_block' => true,
+			]
+		);
+
+		$repeater->add_control(
+			'list_title_url',
+			[
+				'label' => esc_html__( 'Link', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::URL,
+				'placeholder' => esc_html__( 'https://your-link.com', 'wpr-addons' ),
+				'default' => [
+					'url' => '',
+					'is_external' => true,
+					'nofollow' => true,
+					'custom_attributes' => '',
+				],
+				'label_block' => true,
 			]
 		);
 
@@ -259,6 +306,15 @@ class Wpr_Feature_List extends Widget_Base {
 			]
 		);
 
+		$repeater->end_controls_tab();
+
+		$repeater->start_controls_tab(
+			'styles_tab',
+			[
+				'label' => __( 'Style', 'wpr-addons' ),
+			]
+		);
+
 		$repeater->add_control(
 			'list_color',
 			[
@@ -270,6 +326,10 @@ class Wpr_Feature_List extends Widget_Base {
 			]
 		);
 
+		$repeater->end_controls_tab();
+
+		$repeater->end_controls_tabs();
+
 		$this->add_control(
 			'list',
 			[
@@ -280,14 +340,38 @@ class Wpr_Feature_List extends Widget_Base {
 					[
 						'list_title' => esc_html__( 'Title #1', 'wpr-addons' ),
 						'list_content' => esc_html__( 'Item content. Click the edit button to change this text.', 'wpr-addons' ),
+						'list_icon' => [
+							'value' => 'far fa-flag',
+							'library' => 'solid'
+						],
+						'list_image' =>[
+							'url' => Utils::get_placeholder_image_src(),	
+							'id' => '',						
+						],
 					],
 					[
 						'list_title' => esc_html__( 'Title #2', 'wpr-addons' ),
 						'list_content' => esc_html__( 'Item content. Click the edit button to change this text.', 'wpr-addons' ),
+						'list_icon' => [
+							'value' => 'far fa-flag',
+							'library' => 'solid'
+						],
+						'list_image' =>[
+							'url' => Utils::get_placeholder_image_src(),	
+							'id' => '',						
+						],
 					],
 					[
 						'list_title' => esc_html__( 'Title #3', 'wpr-addons' ),
 						'list_content' => esc_html__( 'Item content. Click the edit button to change this text.', 'wpr-addons' ),
+						'list_icon' => [
+							'value' => 'far fa-flag',
+							'library' => 'solid'
+						],
+						'list_image' =>[
+							'url' => Utils::get_placeholder_image_src(),	
+							'id' => '',						
+						],
 					],
 				],
 				'title_field' => '{{{ list_title }}}',
@@ -307,13 +391,38 @@ class Wpr_Feature_List extends Widget_Base {
 		);
 
 		$this->add_control(
-			'feature_list_icon_bg_color',
+			'feature_list_icon_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#000',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-feature-list-icon-inner-wrap i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-feature-list-icon-inner-wrap svg' => 'fill: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'feature_list_icon_wrapper_bg_color',
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
+				'default' => '#6A65FF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-feature-list-icon-inner-wrap' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'feature_list_icon_wrapper_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#6A65FF',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-feature-list-icon-inner-wrap' => 'border-color: {{VALUE}}',
 				],
 			]
 		);
@@ -353,29 +462,11 @@ class Wpr_Feature_List extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 50,
+					'size' => 70,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-feature-list-icon-inner-wrap' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}}'
 				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'feature_list_icon_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-feature-list-icon-inner-wrap' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				]
 			]
 		);
 
@@ -393,6 +484,66 @@ class Wpr_Feature_List extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-feature-list-icon-wrap' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
+			]
+		);
+
+		$this->add_control(
+			'feature_list_icon_wrapper_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-feature-list-icon-inner-wrap' => 'border-style: {{VALUE}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'feature_list_icon_wrapper_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-feature-list-icon-inner-wrap' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'feature_list_icon_wrapper_border_type!' => 'none',
+				]
+			]
+		);
+
+		$this->add_control(
+			'feature_list_icon_wrapper_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				// 'default' => [
+				// 	'top' => 1,
+				// 	'right' => 1,
+				// 	'bottom' => 1,
+				// 	'left' => 1,
+				// ],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-feature-list-icon-inner-wrap' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				]
 			]
 		);
@@ -447,6 +598,7 @@ class Wpr_Feature_List extends Widget_Base {
 				'default' => '#000',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-feature-list-title' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-feature-list-title a.wpr-feature-list-url' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -457,6 +609,25 @@ class Wpr_Feature_List extends Widget_Base {
 				'name'     => 'feature_list_title',
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-feature-list-title'
+			]
+		);
+
+		$this->add_responsive_control(
+			'feature_list_title_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-feature-list-title' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before'
 			]
 		);
 
@@ -493,6 +664,94 @@ class Wpr_Feature_List extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'feature_list_description_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-feature-list-description' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->end_controls_section();
+
+		// Tab: STYLE ==============
+		// Section: Connector ----------
+		$this->start_controls_section(
+			'section_feature_list_connector_styles',
+			[
+				'label' => esc_html__( 'Connector', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'feature_list_connector' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control(
+			'feature_list_connector_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'default' => '#000',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-feature-list-icon-wrap::before' => 'border-color: {{VALUE}}'
+				],
+			]
+		);
+
+        $this->add_control(
+            'feature_list_connector_border_type',
+            [
+                'label'       => esc_html__( 'Connector Styles', 'wpr-addons' ),
+                'type'        => Controls_Manager::SELECT,
+                'default'     => 'solid',
+                'label_block' => false,
+                'options'     => [
+                    'solid'  => esc_html__( 'Solid', 'wpr-addons' ),
+                    'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+                    'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+                ],
+                'selectors'   => [
+                    '{{WRAPPER}} .wpr-feature-list-icon-wrap::before' => 'border-style: {{VALUE}};',
+                ],
+				'separator' => 'before'
+            ]
+        );
+
+		$this->add_control(
+			'feature_list_connector_width',
+			[
+				'label' => esc_html__( 'Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 15,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-feature-list-icon-wrap::before' => 'border-width: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
 		$this->end_controls_section();
     }
 
@@ -500,9 +759,11 @@ class Wpr_Feature_List extends Widget_Base {
         $settings = $this->get_settings_for_display();
 
         if ( $settings['list'] ) {
+			$count_items = 0;
 			echo '<div class="wpr-feature-list-wrap">';
                 echo '<ul class="wpr-feature-list">';
                     foreach (  $settings['list'] as $item ) {
+						$this->add_link_attributes( 'list_title_url' . $count_items, $item['list_title_url'] );
                         echo '<li class="wpr-feature-list-item">';
 							echo '<div class="wpr-feature-list-icon-wrap">';
 								echo '<div class="wpr-feature-list-icon-inner-wrap">';
@@ -515,10 +776,15 @@ class Wpr_Feature_List extends Widget_Base {
 								echo '</div>';
                             echo '</div>';
                             echo '<div class="wpr-feature-list-content-wrap">';
-                                echo '<h2 class="elementor-repeater-item-' . esc_attr( $item['_id'] ) . ' wpr-feature-list-title">' . $item['list_title'] . '</h2>';
+								if ( empty($item['list_title_url']) ) {
+									echo '<'. $settings['feature_list_title_tag'] .' class="elementor-repeater-item-' . esc_attr( $item['_id'] ) . ' wpr-feature-list-title">' . $item['list_title'] . '</'. $settings['feature_list_title_tag'] .'>';
+								} else {
+									echo '<'. $settings['feature_list_title_tag'] .' class="elementor-repeater-item-' . esc_attr( $item['_id'] ) . ' wpr-feature-list-title"><a class="wpr-feature-list-url" '. $this->get_render_attribute_string( 'list_title_url' . $count_items ) .'>' . $item['list_title'] . '</a></'. $settings['feature_list_title_tag'] .'>';
+								}
                                 echo '<p class="wpr-feature-list-description">' . $item['list_content'] . '</p>';
                             echo '</div>';
                         echo '</li>';
+						$count_items++;
                     }
                 echo '</ul>';
 			echo '</div>';
