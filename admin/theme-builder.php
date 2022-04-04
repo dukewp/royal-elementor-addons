@@ -108,7 +108,7 @@ function wpr_addons_theme_builder_page() {
         <div class="wpr-coming-soon">
             <div>
                 <h3>WooCommerce is Comming Soon!</h3>
-                <p><strong>WooCommerce Builder</strong> and <strong>Templates Kit</strong> (Premade Sites) will be available very soon. You will be able to style and modify any part of WooCommerce Pages with the most advanced options on the market. </p>
+                <p><strong>WooCommerce Builder</strong> and <strong>Templates Kit</strong> (Premade Sites) will be available very soon. You will be able to style and modify any part of WooCommerce Pages with the most advanced options available on the market. </p>
            </div>
            <img src="<?php echo WPR_ADDONS_ASSETS_URL .'img/woo-coming-soon.jpg' ?>" alt="">
         </div>
