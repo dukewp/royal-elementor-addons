@@ -114,6 +114,17 @@ class Wpr_Feature_List extends Widget_Base {
 		);
 
 		$this->add_control(
+			'feature_list_conector',
+			[
+				'label' => esc_html__( 'Show Conector', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'condition' => [
+					'list_alignment' => ['left', 'right'],
+				],
+			]
+		);
+
+		$this->add_control(
 			'list_item_spacing_v',
 			[
 				'label' => esc_html__( 'Vertical Spacing', 'wpr-addons' ),
@@ -233,8 +244,7 @@ class Wpr_Feature_List extends Widget_Base {
 			'list_title', [
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => esc_html__( 'List Title' , 'wpr-addons' ),
-				'label_block' => true,
+				'default' => esc_html__( 'List Title' , 'wpr-addons' )
 			]
 		);
 
@@ -303,7 +313,7 @@ class Wpr_Feature_List extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#FFF',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-feature-list-icon-wrap' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-feature-list-icon-inner-wrap' => 'background-color: {{VALUE}}',
 				],
 			]
 		);
@@ -346,7 +356,7 @@ class Wpr_Feature_List extends Widget_Base {
 					'size' => 50,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-feature-list-icon-wrap' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}}'
+					'{{WRAPPER}} .wpr-feature-list-icon-inner-wrap' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}}'
 				],
 			]
 		);
@@ -364,7 +374,7 @@ class Wpr_Feature_List extends Widget_Base {
 					'left' => 0,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-feature-list-icon-wrap' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-feature-list-icon-inner-wrap' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				]
 			]
 		);
@@ -494,13 +504,15 @@ class Wpr_Feature_List extends Widget_Base {
                 echo '<ul class="wpr-feature-list">';
                     foreach (  $settings['list'] as $item ) {
                         echo '<li class="wpr-feature-list-item">';
-                            echo '<div class="wpr-feature-list-icon-wrap">';
-								if ( 'icon' === $item['feature_list_media_type'] ) {
-									\Elementor\Icons_Manager::render_icon( $item['list_icon'], [ 'aria-hidden' => 'true' ] );
-								} else {
-									$src = \Elementor\Group_Control_Image_Size::get_attachment_image_src( $item['list_image']['id'], 'thumbnail', $settings );
-									echo '<img src="'. $src .'">';
-								}
+							echo '<div class="wpr-feature-list-icon-wrap">';
+								echo '<div class="wpr-feature-list-icon-inner-wrap">';
+									if ( 'icon' === $item['feature_list_media_type'] ) {
+										\Elementor\Icons_Manager::render_icon( $item['list_icon'], [ 'aria-hidden' => 'true' ] );
+									} else {
+										$src = \Elementor\Group_Control_Image_Size::get_attachment_image_src( $item['list_image']['id'], 'thumbnail', $settings );
+										echo '<img src="'. $src .'">';
+									}
+								echo '</div>';
                             echo '</div>';
                             echo '<div class="wpr-feature-list-content-wrap">';
                                 echo '<h2 class="elementor-repeater-item-' . esc_attr( $item['_id'] ) . ' wpr-feature-list-title">' . $item['list_title'] . '</h2>';
