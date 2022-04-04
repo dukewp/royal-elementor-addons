@@ -115,7 +115,7 @@ class Plugin {
 		require WPR_ADDONS_PATH . 'classes/rating-notice.php';
 		
 		// Theme Builder Notice
-		require WPR_ADDONS_PATH . 'classes/theme-builder-notice.php';
+		require WPR_ADDONS_PATH . 'classes/plugin-update-notice.php';
 
 		// Admin Files
 		if ( is_admin() ) {

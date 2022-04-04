@@ -301,9 +301,9 @@ function setup_wpr_templates( $kit ) {
     update_option( 'page_on_front', $page->ID );
 
     // Set Headers and Footers
-    update_option('wpr_header_conditions', '{"user-header-'. $kit .'":["global"]}');
+    update_option('wpr_header_conditions', '{"user-header-'. $kit .'-header":["global"]}');
     update_post_meta( Utilities::get_template_id('user-header-'. $kit), 'wpr_header_show_on_canvas', 'true' );
-    update_option('wpr_footer_conditions', '{"user-footer-'. $kit .'":["global"]}');
+    update_option('wpr_footer_conditions', '{"user-footer-'. $kit .'-footer":["global"]}');
     update_post_meta( Utilities::get_template_id('user-footer-'. $kit), 'wpr_footer_show_on_canvas', 'true' );
 
     // Theme Builder
@@ -311,7 +311,7 @@ function setup_wpr_templates( $kit ) {
     update_option('wpr_single_conditions', '{"user-single-'. $kit .'-404":["single/page_404"],"user-single-'. $kit .'-post":["single/posts/all"],"user-single-'. $kit .'-page":["single/pages/all"]}');
 
     // Set Popup
-    update_option('wpr_popup_conditions', '{"user-popup-'. $kit .'":["global"]}'); 
+    update_option('wpr_popup_conditions', '{"user-popup-'. $kit .'-popup":["global"]}'); 
 }
 
 /**
