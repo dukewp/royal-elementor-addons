@@ -11199,6 +11199,54 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     padding-left: 20px;
 }
 
+/*--------------------------------------------------------------
+  == Feature List
+  --------------------------------------------------------------*/
+
+  .wpr-feature-list-left .wpr-feature-list-item {
+    display: flex;
+  }
+  
+  .wpr-feature-list-center .wpr-feature-list-item {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .wpr-feature-list-center .wpr-feature-list-content-wrap {
+      text-align: center;
+  }
+  
+  .wpr-feature-list-right .wpr-feature-list-item {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+  
+  .wpr-feature-list-right .wpr-feature-list-content-wrap {
+    text-align: right;
+  }
+
+  .wpr-feature-list-circle .wpr-feature-list-icon-wrap {
+    border-radius: 50%;
+  }
+
+  .wpr-feature-list-rhombus .wpr-feature-list-icon-wrap {
+      transform: rotate(45deg);
+  }
+
+  .wpr-feature-list-rhombus .wpr-feature-list-icon-wrap i,
+  .wpr-feature-list-rhombus .wpr-feature-list-icon-wrap img {
+      transform: rotate(-45deg);
+  }
+
+  .wpr-feature-list-wrap .wpr-feature-list-icon-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+
+  .wpr-feature-list {
+      padding: 0;
+  }
 
 /*--------------------------------------------------------------
   == Section Extensions

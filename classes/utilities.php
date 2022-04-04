@@ -55,6 +55,7 @@ class Utilities {
 			'Site Logo' => ['logo', '', ''],
 			'Popup Trigger' => ['popup-trigger', '', ''],
 			'Taxonomy List' => ['taxonomy-list', '', ''],
+			'Feature List' => ['feature-list', '', ''],
 			// 'Random Image' => ['random-image', '', ''],
 		];
 	}
