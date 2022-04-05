@@ -2234,12 +2234,26 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     text-align: center;
 }
 
+.wpr-grid-pagination-center .wpr-grid-pagination {
+    display: flex;
+    justify-content: center;
+}
+
+/* //goback */
+.wpr-grid-pagination-justify .wpr-grid-pagination {
+    /* justify-content: space-between; */
+}
+
 .wpr-grid-pagination-left .wpr-grid-pagination {
     text-align: left;
+    display: flex;
+    justify-content: flex-start;
 }
 
 .wpr-grid-pagination-right .wpr-grid-pagination {
     text-align: right;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .wpr-grid-pagination-infinite-scroll {
