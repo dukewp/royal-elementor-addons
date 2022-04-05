@@ -349,6 +349,9 @@ class Wpr_Feature_List extends Widget_Base {
 					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-feature-list-icon-inner-wrap i' => 'color: {{VALUE}}',
 					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-feature-list-icon-inner-wrap svg' => 'fill: {{VALUE}}',
 				],
+				'condition' => [
+					'feature_list_custom_styles' => 'yes'
+				]
 			]
 		);
 
@@ -361,6 +364,9 @@ class Wpr_Feature_List extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-feature-list-icon-inner-wrap' => 'background-color: {{VALUE}}',
 				],
+				'condition' => [
+					'feature_list_custom_styles' => 'yes'
+				]
 			]
 		);
 
@@ -373,6 +379,9 @@ class Wpr_Feature_List extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-feature-list-icon-inner-wrap' => 'border-color: {{VALUE}}',
 				],
+				'condition' => [
+					'feature_list_custom_styles' => 'yes'
+				]
 			]
 		);
 
