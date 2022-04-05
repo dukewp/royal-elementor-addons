@@ -100,6 +100,7 @@ class Wpr_Feature_List extends Widget_Base {
                     'square'  => esc_html__( 'Square', 'wpr-addons' ),
                     'rhombus' => esc_html__( 'Rhombus', 'wpr-addons' ),
                 ],
+				'separator' => 'before',
 				'prefix_class' => 'wpr-feature-list-'
             ]
         );
@@ -107,7 +108,7 @@ class Wpr_Feature_List extends Widget_Base {
 		$this->add_group_control(
 			\Elementor\Group_Control_Image_Size::get_type(),
 			[
-				'name' => 'thumbnail', // Usage: `{name}_size` and `{name}_custom_dimension`, in this case `thumbnail_size` and `thumbnail_custom_dimension`.
+				'name' => 'thumbnail',
 				'exclude' => [ 'custom' ],
 				'include' => [],
 				'default' => 'large',
@@ -157,7 +158,7 @@ class Wpr_Feature_List extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 5,
+					'size' => 20,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-feature-list-item' => 'margin-bottom: {{SIZE}}{{UNIT}};',
@@ -324,12 +325,53 @@ class Wpr_Feature_List extends Widget_Base {
 		);
 
 		$repeater->add_control(
-			'list_color',
+			'feature_list_title_color_unique',
 			[
-				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'label' => esc_html__( 'Title Color', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} {{CURRENT_ITEM}}' => 'color: {{VALUE}}'
+					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-feature-list-title a.wpr-feature-list-url' => 'color: {{VALUE}}',
+					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-feature-list-title' => 'color: {{VALUE}}'
+				],
+				'condition' => [
+					'feature_list_custom_styles' => 'yes'
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'feature_list_icon_color_unique',
+			[
+				'label'  => esc_html__( 'Icon Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#000',
+				'selectors' => [
+					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-feature-list-icon-inner-wrap i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-feature-list-icon-inner-wrap svg' => 'fill: {{VALUE}}',
+				],
+			]
+		);
+
+		$repeater->add_control(
+			'feature_list_icon_wrapper_bg_color_unique',
+			[
+				'label'  => esc_html__( 'Icon Bg Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#6A65FF',
+				'selectors' => [
+					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-feature-list-icon-inner-wrap' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$repeater->add_control(
+			'feature_list_icon_wrapper_border_color_unique',
+			[
+				'label'  => esc_html__( 'Icon Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#6A65FF',
+				'selectors' => [
+					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-feature-list-icon-inner-wrap' => 'border-color: {{VALUE}}',
 				],
 			]
 		);
@@ -389,6 +431,67 @@ class Wpr_Feature_List extends Widget_Base {
 		$this->end_controls_section();
 
 		// Tab: STYLE ==============
+		// Section: Content ----------
+		$this->start_controls_section(
+			'section_feature_list_content_styles',
+			[
+				'label' => esc_html__( 'Content', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'feature_list_content_alignment',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'flex-start'    => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'flex-end' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					]
+				],
+				'prefix_class' => 'wpr-feature-list-align-',
+				'default' => 'center',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-feature-list-item' => 'align-items: {{VALUE}};',
+				],
+				'condition' => [
+					'list_alignment' => 'center', 
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'feature_list_content_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-feature-list-content-wrap' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->end_controls_section();
+
+		// Tab: STYLE ==============
 		// Section: Icon ----------
 		$this->start_controls_section(
 			'section_feature_list_icon_styles',
@@ -438,7 +541,7 @@ class Wpr_Feature_List extends Widget_Base {
 		$this->add_responsive_control(
 			'feature_list_icon_size',
 			[
-				'label' => esc_html__( 'Icon Size', 'wpr-addons' ),
+				'label' => esc_html__( 'Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -460,7 +563,7 @@ class Wpr_Feature_List extends Widget_Base {
 		$this->add_responsive_control(
 			'feature_list_icon_wrapper_size',
 			[
-				'label' => esc_html__( 'Icon Wrapper Size', 'wpr-addons' ),
+				'label' => esc_html__( 'Box Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -557,36 +660,6 @@ class Wpr_Feature_List extends Widget_Base {
 		);
 
         $this->end_controls_section();
-
-		// Tab: STYLE ==============
-		// Section: Content ----------
-		$this->start_controls_section(
-			'section_feature_list_content_styles',
-			[
-				'label' => esc_html__( 'Content', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-			]
-		);
-
-		$this->add_responsive_control(
-			'feature_list_content_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-feature-list-content-wrap' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				]
-			]
-		);
-
-		$this->end_controls_section();
 
 		// Tab: STYLE ==============
 		// Section: Title ----------
@@ -721,7 +794,7 @@ class Wpr_Feature_List extends Widget_Base {
         $this->add_control(
             'feature_list_connector_border_type',
             [
-                'label'       => esc_html__( 'Connector Styles', 'wpr-addons' ),
+                'label'       => esc_html__( 'Type', 'wpr-addons' ),
                 'type'        => Controls_Manager::SELECT,
                 'default'     => 'solid',
                 'label_block' => false,
@@ -754,7 +827,7 @@ class Wpr_Feature_List extends Widget_Base {
 					'size' => 1,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-feature-list-icon-wrap::before' => 'border-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-feature-list-icon-wrap::before' => 'border-width: {{SIZE}}{{UNIT}}; height: calc({{feature_list_icon_wrapper_size.SIZE}}px + {{list_item_spacing_v.SIZE}}px)',
 				],
 				'separator' => 'before',
 			]
@@ -772,7 +845,7 @@ class Wpr_Feature_List extends Widget_Base {
                 echo '<ul class="wpr-feature-list">';
                     foreach (  $settings['list'] as $item ) {
 						$this->add_link_attributes( 'list_title_url' . $count_items, $item['list_title_url'] );
-                        echo '<li class="wpr-feature-list-item">';
+                        echo '<li class="wpr-feature-list-item elementor-repeater-item-' . esc_attr( $item['_id'] ) .'">';
 							echo '<div class="wpr-feature-list-icon-wrap">';
 								echo '<div class="wpr-feature-list-icon-inner-wrap">';
 									if ( 'icon' === $item['feature_list_media_type'] ) {
@@ -785,9 +858,9 @@ class Wpr_Feature_List extends Widget_Base {
                             echo '</div>';
                             echo '<div class="wpr-feature-list-content-wrap">';
 								if ( empty($item['list_title_url']) ) {
-									echo '<'. $settings['feature_list_title_tag'] .' class="elementor-repeater-item-' . esc_attr( $item['_id'] ) . ' wpr-feature-list-title">' . $item['list_title'] . '</'. $settings['feature_list_title_tag'] .'>';
+									echo '<'. $settings['feature_list_title_tag'] .' class="wpr-feature-list-title">' . $item['list_title'] . '</'. $settings['feature_list_title_tag'] .'>';
 								} else {
-									echo '<'. $settings['feature_list_title_tag'] .' class="elementor-repeater-item-' . esc_attr( $item['_id'] ) . ' wpr-feature-list-title"><a class="wpr-feature-list-url" '. $this->get_render_attribute_string( 'list_title_url' . $count_items ) .'>' . $item['list_title'] . '</a></'. $settings['feature_list_title_tag'] .'>';
+									echo '<'. $settings['feature_list_title_tag'] .' class="wpr-feature-list-title"><a class="wpr-feature-list-url" '. $this->get_render_attribute_string( 'list_title_url' . $count_items ) .'>' . $item['list_title'] . '</a></'. $settings['feature_list_title_tag'] .'>';
 								}
                                 echo '<p class="wpr-feature-list-description">' . $item['list_content'] . '</p>';
                             echo '</div>';

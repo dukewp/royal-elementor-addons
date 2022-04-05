@@ -11228,6 +11228,16 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     text-align: right;
   }
 
+  .wpr-feature-list-align-flex-start .wpr-feature-list-title,
+  .wpr-feature-list-align-flex-start .wpr-feature-list-description {
+      text-align: left;
+  }
+
+  .wpr-feature-list-align-flex-end .wpr-feature-list-title,
+  .wpr-feature-list-align-flex-end .wpr-feature-list-description {
+      text-align: right;
+  }
+
   .wpr-feature-list-circle .wpr-feature-list-icon-inner-wrap {
     border-radius: 50%;
   }
@@ -11263,7 +11273,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     left: 50%;
     transform: translateX(-50%);
     width: 0;
-    height: 100px;
   }
 
   .wpr-feature-list-title,
