@@ -7,6 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class WprPluginUpdateNotice {
     public function __construct() {
+        delete_option('wpr_plugin_update_dismiss_notice');
         if ( current_user_can('administrator') ) {
             if ( !get_option('wpr_plugin_update_dismiss_notice') ) {
                 add_action( 'admin_init', [$this, 'render_notice'] );
