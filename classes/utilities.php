@@ -55,7 +55,7 @@ class Utilities {
 			'Site Logo' => ['logo', '', ''],
 			'Popup Trigger' => ['popup-trigger', '', ''],
 			'Taxonomy List' => ['taxonomy-list', '', ''],
-			// 'Random Image' => ['random-image', '', ''],
+			'Instagram Feed' => ['instagram-feed', '', ''],
 		];
 	}
 
