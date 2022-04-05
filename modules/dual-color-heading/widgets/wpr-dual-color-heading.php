@@ -56,7 +56,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base
 		$this->start_controls_section(
 			'section_content',
 			[
-				'label' => __('Content', 'wpr-addons'),
+				'label' => __('Settings', 'wpr-addons'),
 			]
 		);
 
@@ -92,7 +92,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base
 
 
 		$this->add_control(
-			'icon_1',
+			'feature_list_icon',
 			[
 				'label' => esc_html__('Select Icon', 'wpr-addons'),
 				'type' => Controls_Manager::ICONS,
@@ -328,9 +328,11 @@ class Wpr_Dual_Color_Heading extends Widget_Base
 
 	protected function render() {
 		$settings = $this->get_settings_for_display();
+
 		$this->add_inline_editing_attributes('title', 'none');
 		$this->add_inline_editing_attributes('description', 'basic');
 		$this->add_inline_editing_attributes('content', 'advanced');
+
         ?>
 			<div class="wpr-dual-heading-wrap">
 				<div class="wpr-dual-title-cont">
@@ -342,7 +344,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base
 				<div class="wpr-dual-heading-description" <?php echo $this->get_render_attribute_string('description'); ?>><?php echo wp_kses($settings['description'], []); ?></div>
 				<?php if ('yes' == $settings['show_icon']) { ?>
 					<div class="wpr-dual-heading-icon-wrap">
-						<?php \Elementor\Icons_Manager::render_icon($settings['icon_1'], ['aria-hidden' => 'true']); ?>
+						<?php \Elementor\Icons_Manager::render_icon($settings['feature_list_icon'], ['aria-hidden' => 'true']); ?>
 					</div>
 				<?php } ?>
 			</div>
