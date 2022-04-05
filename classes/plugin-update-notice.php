@@ -7,7 +7,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class WprPluginUpdateNotice {
     public function __construct() {
-        // delete_option( 'wpr_plugin_update_dismiss_notice' );
         if ( current_user_can('administrator') ) {
             if ( !get_option('wpr_plugin_update_dismiss_notice') ) {
                 add_action( 'admin_init', [$this, 'render_notice'] );
@@ -53,7 +52,7 @@ class WprPluginUpdateNotice {
         echo "
         <script>
         jQuery( document ).ready( function() {
-            jQuery(document).on( 'click', '.notice-dismiss', function() {
+            jQuery(document).on( 'click', '.wpr-plugin-update-notice .notice-dismiss', function() {
                 jQuery(document).find('.wpr-plugin-update-notice').slideUp();
                 jQuery.post({
                     url: ajaxurl,
