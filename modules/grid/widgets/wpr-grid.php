@@ -475,7 +475,9 @@ class Wpr_Grid extends Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'default' => 'load-more',
 				'options' => $options,
-				'separator' => 'after'
+				'separator' => 'after',
+				'render_type' => 'template',
+				'prefix_class' => 'wpr-grid-pag-type-'
 			]
 		);
 	}
@@ -7437,9 +7439,11 @@ class Wpr_Grid extends Widget_Base {
 					'size' => 10,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-pagination a' => 'margin-right: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}} .wpr-grid-pagination a' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-pagination a:not(:last-child)' => 'margin-right: {{SIZE}}{{UNIT}};', 
 					'{{WRAPPER}} .wpr-grid-pagination > div > span' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-grid-pagination span.wpr-disabled-arrow' => 'margin-right: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}} .wpr-grid-pagination span.wpr-disabled-arrow' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-pagination span.wpr-disabled-arrow:not(:last-child)' => 'margin-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-grid-pagination span.wpr-grid-current-page' => 'margin-right: {{SIZE}}{{UNIT}};',
 				],
 			]
