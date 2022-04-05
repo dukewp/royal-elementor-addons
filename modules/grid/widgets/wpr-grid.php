@@ -475,9 +475,7 @@ class Wpr_Grid extends Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'default' => 'load-more',
 				'options' => $options,
-				'separator' => 'after',
-				'render_type' => 'template',
-				'prefix_class' => 'wpr-grid-pag-type-'
+				'separator' => 'after'
 			]
 		);
 	}
