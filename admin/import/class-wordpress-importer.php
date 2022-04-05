@@ -971,7 +971,7 @@ class WP_Import extends WP_Importer {
 			return;
 		}
 
-		$_menu_item_menu_item_parent = $post_meta_key_value['menu_item_menu_item_parent'];
+		$_menu_item_menu_item_parent = $post_meta_key_value['_menu_item_menu_item_parent']; // Duke - fix "_menu_item_menu_item_parent" dash was added
 		if ( isset( $this->processed_menu_items[ intval( $_menu_item_menu_item_parent ) ] ) ) {
 			$_menu_item_menu_item_parent = $this->processed_menu_items[ intval( $_menu_item_menu_item_parent ) ];
 		} elseif ( $_menu_item_menu_item_parent ) {

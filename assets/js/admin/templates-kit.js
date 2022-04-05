@@ -94,10 +94,10 @@ jQuery(document).ready(function( $ ) {
 		installRequiredTheme: function( kitID ) {
 			var themeStatus = $('.wpr-templates-kit-grid').data('theme-status');
 
-			if ( 'ashe-active' === themeStatus ) {
+			if ( 'req-theme-active' === themeStatus ) {
 				WprTemplatesKit.requiredTheme = true;
 				return;
-			} else if ( 'ashe-inactive' === themeStatus ) {
+			} else if ( 'req-theme-inactive' === themeStatus ) {
 		        $.post(
 		            ajaxurl,
 		            {
@@ -110,7 +110,7 @@ jQuery(document).ready(function( $ ) {
 			}
 
 			wp.updates.installTheme({
-				slug: 'ashe',
+				slug: 'hello-elementor',
 				success: function() {
 			        $.post(
 			            ajaxurl,

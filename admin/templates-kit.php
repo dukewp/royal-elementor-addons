@@ -146,18 +146,18 @@ function get_theme_status() {
     $theme = wp_get_theme();
 
     // Theme installed and activate.
-    if ( 'Ashe' === $theme->name || 'Ashe' === $theme->parent_theme ) {
-        return 'ashe-active';
+    if ( 'Hello Elementor' === $theme->name || 'Hello Elementor' === $theme->parent_theme ) {
+        return 'req-theme-active';
     }
 
     // Theme installed but not activate.
     foreach ( (array) wp_get_themes() as $theme_dir => $theme ) {
-        if ( 'Ashe' === $theme->name || 'Ashe' === $theme->parent_theme ) {
-            return 'ashe-inactive';
+        if ( 'Hello Elementor' === $theme->name || 'Hello Elementor' === $theme->parent_theme ) {
+            return 'req-theme-inactive';
         }
     }
 
-    return 'ashe-not-installed';
+    return 'req-theme-not-installed';
 }
 
 /**
@@ -167,14 +167,16 @@ function wpr_activate_reuired_theme() {
 
     $theme = get_option('stylesheet');
 
-    if ( 'ashe' === $theme || 'bard' === $theme
-        || 'ashe-pro-premium' === $theme || 'bard-pro-premium' === $theme
+    // Maybe exclude ashe and bard here
+    // 'ashe' === $theme || 'bard' === $theme || 
+
+    if ( 'ashe-pro-premium' === $theme || 'bard-pro-premium' === $theme
         || 'vayne-pro-premium' === $theme || 'kayn-pro-premium' === $theme ) {
         return;
     }
 
-    // Activate Ashe Theme
-    switch_theme( 'ashe' );
+    // Activate Hello Elementor Theme
+    switch_theme( 'hello-elementor' );
 }
 
 /**
@@ -194,8 +196,8 @@ function wpr_install_reuired_plugins() {
     // Set Active Plugins
     update_option( 'active_plugins', $active_plugins );
 
-    // Activate Ashe Theme
-    switch_theme( 'ashe' );
+    // Activate Hello Elementor Theme
+    switch_theme( 'hello-elementor' );
 }
 
 /**

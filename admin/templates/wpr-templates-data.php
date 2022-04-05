@@ -12,6 +12,15 @@ class WPR_Templates_Data {
 		$is_mla_active = is_plugin_active('media-library-assistant/index.php') ? 'true' : 'false';
 
 		return [
+			'test' => [
+				'v1' => [
+					'name' => 'Test',
+					'pages' => 'home,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'test',
+					'price' => $is_pro_active ? 'free' : 'free',
+				],
+			],
 			'magazine-blog' => [
 				'v1' => [
 					'name' => 'Magazine Blog',
