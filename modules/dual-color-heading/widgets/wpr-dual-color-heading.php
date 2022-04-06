@@ -71,8 +71,8 @@ class Wpr_Dual_Color_Heading extends Widget_Base
 				'options' => [
 					'default'  => esc_html__('Default', 'wpr-addons'),
 					'icon-top'  => esc_html__('Icon on Top', 'wpr-addons'),
-					'icon-sub-text-top'  => esc_html__('Icon & sub-text on top', 'wpr-addons'),
-					'sub-text-top'  => esc_html__('Sub-text on top', 'wpr-addons'),
+					'icon-and-desc-top'  => esc_html__('Icon & Description on top', 'wpr-addons'),
+					'desc-top'  => esc_html__('Description on top', 'wpr-addons'),
 				],
 				'prefix_class' => 'wpr-dual-heading-',
 			]
@@ -165,37 +165,6 @@ class Wpr_Dual_Color_Heading extends Widget_Base
 			]
 		);
 
-		$this->add_responsive_control(
-			'feature_list_distance',
-			[
-				'label' => esc_html__( 'Distance', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'default' => [
-					'size' => 20,
-				],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'separator' => 'before',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-dual-heading-wrap div'  => 'margin-bottom: {{SIZE}}px;',
-				]
-			]
-		);
-
-		$this->add_control(
-			'hover_animation',
-			[
-				'label' => __('Hover Animation', 'wpr-addons'),
-				'type' => \Elementor\Controls_Manager::HOVER_ANIMATION,
-				'prefix_class' => 'elementor-animation-',
-				'separator' => 'before'
-			]
-		);
-
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -203,6 +172,15 @@ class Wpr_Dual_Color_Heading extends Widget_Base
 			[
 				'label' => esc_html__('Content', 'wpr-addons'),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'icon_style',
+			[
+				'label' => __('Icon', 'wpr-addons'),
+				'type' => \Elementor\Controls_Manager::HEADING,
+				'separator' => 'before'
 			]
 		);
 
@@ -237,8 +215,27 @@ class Wpr_Dual_Color_Heading extends Widget_Base
 				'selectors' => [
 					'{{WRAPPER}} .wpr-dual-heading-icon-wrap' => 'font-size: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-dual-heading-icon-wrap svg' => 'width: {{SIZE}}{{UNIT}};'
-				],
+				]
+			]
+		);
 
+		$this->add_responsive_control(
+			'feature_list_icon_distance',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 15,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-dual-heading-icon-wrap'  => 'margin-bottom: {{SIZE}}px;',
+				]
 			]
 		);
 
@@ -259,7 +256,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base
 				'default' => 'black',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-dual-title .first' => 'color: {{VALUE}}',
-				],
+				]
 			]
 		);
 
@@ -272,7 +269,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base
 				'default' => 'orange',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-dual-title .second' => 'color: {{VALUE}}',
-				],
+				]
 			]
 		);
 
@@ -283,6 +280,26 @@ class Wpr_Dual_Color_Heading extends Widget_Base
 				'label' => __('Typography', 'wpr-addons'),
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} h1.wpr-dual-title',
+			]
+		);
+
+		$this->add_responsive_control(
+			'feature_list_title_distance',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 15,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-dual-title-wrap'  => 'margin-bottom: {{SIZE}}px;',
+				]
 			]
 		);
 
@@ -323,6 +340,26 @@ class Wpr_Dual_Color_Heading extends Widget_Base
 			]
 		);
 
+		$this->add_responsive_control(
+			'feature_list_description_distance',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 15,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-dual-heading-description'  => 'margin-bottom: {{SIZE}}px;',
+				]
+			]
+		);
+
 		$this->end_controls_section();
 	}
 
@@ -335,10 +372,10 @@ class Wpr_Dual_Color_Heading extends Widget_Base
 
         ?>
 			<div class="wpr-dual-heading-wrap">
-				<div class="wpr-dual-title-cont">
+				<div class="wpr-dual-title-wrap">
 					<h1 class="wpr-dual-title">
-						<span class="first"><?php echo wp_kses($settings['title_first'], $settings['hover_animation'], []); ?></span>&nbsp;
-						<span class="second"><?php echo wp_kses($settings['title_second'], $settings['hover_animation'], []); ?></span>
+						<span class="first"><?php echo wp_kses($settings['title_first'], []); ?></span>&nbsp;
+						<span class="second"><?php echo wp_kses($settings['title_second'], []); ?></span>
 					</h1>
 				</div>
 				<div class="wpr-dual-heading-description" <?php echo $this->get_render_attribute_string('description'); ?>><?php echo wp_kses($settings['description'], []); ?></div>

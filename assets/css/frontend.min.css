@@ -11131,7 +11131,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 /*--------------------------------------------------------------
 == Dual Color Heading
 --------------------------------------------------------------*/
-.wpr-dual-heading-icon-sub-text-top .wpr-dual-heading-wrap {
+.wpr-dual-heading-icon-and-desc-top .wpr-dual-heading-wrap {
     display: flex;
     flex-direction: column-reverse;
 }
@@ -11145,12 +11145,12 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     order: -1;
 }
 
-.wpr-dual-heading-sub-text-top .wpr-dual-heading-wrap {
+.wpr-dual-heading-desc-top .wpr-dual-heading-wrap {
     display: flex;
     flex-direction: column;
 }
   
-.wpr-dual-heading-sub-text-top .wpr-dual-heading-description {
+.wpr-dual-heading-desc-top .wpr-dual-heading-description {
     order: -1;
 }
 
