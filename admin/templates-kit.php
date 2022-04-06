@@ -63,7 +63,7 @@ function wpr_addons_templates_kit_page() {
     </header>
 
     <div class="wpr-templates-kit-page-title">
-        <h1><?php _e('Royal Templates Kit', 'wpr-addons'); ?></h1>
+        <h1><?php _e('Royal Elementor Templates Kit', 'wpr-addons'); ?></h1>
         <p><?php _e('Import any Templates Kit with just a Single click', 'wpr-addons'); ?></p>
     </div>
 

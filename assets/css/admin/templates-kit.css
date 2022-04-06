@@ -23,8 +23,8 @@ img {
       -ms-flex-pack: justify;
           justify-content: space-between;
   background: #fff;
-  -webkit-box-shadow: 0 0 5px 0 rgba(0,0,0,0.1);
-          box-shadow: 0 0 5px 0 rgba(0,0,0,0.1);
+  -webkit-box-shadow: 0 0 7px 0 rgba(0,0,0,0.2);
+          box-shadow: 0 0 7px 0 rgba(0,0,0,0.2);
 }
 
 .wpr-templates-kit-logo {
@@ -270,10 +270,15 @@ img {
   left: 0;
   right: 0;
   z-index: 10;
-  padding: 20px;
+  padding: 25px 30px;
   background: #fff;
-  -webkit-box-shadow: 0 0 3px 0 rgba(0,0,0,0.1);
-          box-shadow: 0 0 3px 0 rgba(0,0,0,0.1);
+  -webkit-box-shadow: 0 0 7px 0 rgba(0,0,0,0.2);
+          box-shadow: 0 0 7px 0 rgba(0,0,0,0.2);
+}
+
+.action-buttons-wrap a,
+.action-buttons-wrap button {
+  padding: 5px 25px !important;
 }
 
 .wpr-templates-kit-single .preview-demo .dashicons {

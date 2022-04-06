@@ -7,6 +7,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class WprPluginUpdateNotice {
     public function __construct() {
+        // delete_option('wpr_plugin_update_dismiss_notice');
+
         if ( current_user_can('administrator') ) {
             if ( !get_option('wpr_plugin_update_dismiss_notice') ) {
                 add_action( 'admin_init', [$this, 'render_notice'] );
@@ -38,9 +40,18 @@ class WprPluginUpdateNotice {
                         </div>
                         <div>
                             <h3>Royal Elementor Theme Builder</h3>
-                            <p>Royal Elementor Theme Builder lets you customize every fundamental part of your WordPress site<br> without coding including your Header, Footer, Archives, Posts, Default Pages, 404 Pages, etc..<br>Please Note: WooCommerce Products and Product Archives comming soon!.</p>
                             <p>
-                                <a href="'. get_admin_url() .'admin.php?page=wpr-theme-builder" class="wpr-get-started-button button button-primary">Get Started <span class="dashicons dashicons-arrow-right-alt"></span></a>
+                                Royal Elementor Theme Builder lets you customize every fundamental part of your WordPress site<br> without coding including your Header, Footer, Archives, Posts, Default Pages, 404 Pages, etc..
+                                <br><strong>Please Note:</strong> WooCommerce Products and Product Archives Templates are comming soon!.
+                                <br><br><strong>New Theme Builder Template Kits:</strong>
+                                <a href="https://demosites.royal-elementor-addons.com/personal-blog-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Personal Blog</a>, 
+                                <a href="https://demosites.royal-elementor-addons.com/food-blog-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Food Blog</a>, 
+                                <a href="https://demosites.royal-elementor-addons.com/magazine-blog-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Magazine Blog</a>, 
+                                <a href="https://demosites.royal-elementor-addons.com/travel-blog-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Travel Blog</a>.
+                            </p>
+                            <p>
+                                <a href="'. get_admin_url() .'admin.php?page=wpr-templates-kit" class="wpr-get-started-button button button-primary">Go to Templates Library</span></a>
+                                <a href="'. get_admin_url() .'admin.php?page=wpr-theme-builder" class="wpr-get-started-button button button-secondary">Go to Theme Builder</span></a>
                             </p>
                         </div>
                         <div class="image-wrap"><img src="'. WPR_ADDONS_ASSETS_URL .'/img/theme-builder.png"></div>
