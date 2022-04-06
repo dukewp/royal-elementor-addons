@@ -11271,13 +11271,17 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     width: 0;
   } */
 
-  .wpr-feature-list-line {
+  .wpr-feature-list-item:not(:last-of-type) .wpr-feature-list-line {
     position: absolute;
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
     width: 0;
     height: 0;
+  }
+
+  .wpr-feature-list-item:last-of-type .wpr-feature-list-line {
+    display: none;
   }
 
   .wpr-feature-list-title,

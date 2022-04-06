@@ -725,7 +725,7 @@ class Wpr_Feature_List extends Widget_Base {
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'default' => '#000',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-feature-list-icon-wrap::before' => 'border-color: {{VALUE}}',
+					// '{{WRAPPER}} .wpr-feature-list-icon-wrap::before' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-feature-list-line' => 'border-color: {{VALUE}}'
 				],
 			]
@@ -744,8 +744,8 @@ class Wpr_Feature_List extends Widget_Base {
                     'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
                 ],
                 'selectors'   => [
-                    '{{WRAPPER}} .wpr-feature-list-icon-wrap::before' => 'border-style: {{VALUE}};',
-                    '{{WRAPPER}} .wpr-feature-list-line' => 'border-style: {{VALUE}};',
+                    // '{{WRAPPER}} .wpr-feature-list-icon-wrap::before' => 'border-style: {{VALUE}};',
+                    '{{WRAPPER}} .wpr-feature-list-line' => 'border-left-style: {{VALUE}};',
                 ],
 				'separator' => 'before'
             ]
@@ -768,8 +768,8 @@ class Wpr_Feature_List extends Widget_Base {
 					'size' => 1,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-feature-list-icon-wrap::before' => 'border-width: {{SIZE}}{{UNIT}}; height: calc({{feature_list_icon_wrapper_size.SIZE}}px + {{list_item_spacing_v.SIZE}}px + {{list_item_title_distance.SIZE}}px)',
-					'{{WRAPPER}} .wpr-feature-list-line' => 'border-width: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}} .wpr-feature-list-icon-wrap::before' => 'border-width: {{SIZE}}{{UNIT}}; height: calc({{feature_list_icon_wrapper_size.SIZE}}px + {{list_item_spacing_v.SIZE}}px + {{list_item_title_distance.SIZE}}px)',
+					'{{WRAPPER}} .wpr-feature-list-line' => 'border-left-width: {{SIZE}}{{UNIT}};',
 				]
 			]
 		);
