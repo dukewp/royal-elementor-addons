@@ -60,7 +60,7 @@ class Wpr_Feature_List extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'list_alignment',
+			'list_layout',
 			[
 				'label' => esc_html__( 'Layout', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
@@ -113,7 +113,7 @@ class Wpr_Feature_List extends Widget_Base {
 					'{{WRAPPER}} .wpr-feature-list-item' => 'align-items: {{VALUE}};',
 				],
 				'condition' => [
-					'list_alignment' => 'center', 
+					'list_layout' => 'center', 
 				]
 			]
 		);
@@ -166,11 +166,11 @@ class Wpr_Feature_List extends Widget_Base {
 			[
 				'label' => esc_html__( 'Show Line', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'condition' => [
-					'list_alignment' => ['left', 'right'],
-				],
 				'prefix_class' => 'wpr-feature-list-line-',
-				'separator' => 'before'
+				'separator' => 'before',
+				'condition' => [
+					'list_layout' => ['left', 'right']
+				]
 			]
 		);
 
@@ -193,7 +193,8 @@ class Wpr_Feature_List extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-feature-list-item' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
-				'separator' => 'before',
+				'render_type' => 'template',
+				'separator' => 'before'
 			]
 		);
 
@@ -218,7 +219,7 @@ class Wpr_Feature_List extends Widget_Base {
 					'{{WRAPPER}}.wpr-feature-list-right .wpr-feature-list-icon-wrap' => 'margin-left: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
-					'list_alignment!' => 'center'
+					'list_layout!' => 'center'
 				]
 			]
 		);
@@ -241,7 +242,8 @@ class Wpr_Feature_List extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-feature-list-title' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-				]
+				],
+				'render_type' => 'template'
 			]
 		);
 

@@ -11261,6 +11261,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     position: relative;
   }
 
+  .wpr-feature-list-center .wpr-feature-list-line {
+      display: none;
+  }
+
   /* .wpr-feature-list-line-yes.wpr-feature-list-left .wpr-feature-list-item:not(:last-of-type) .wpr-feature-list-icon-wrap::before,
   .wpr-feature-list-line-yes.wpr-feature-list-right .wpr-feature-list-item:not(:last-of-type) .wpr-feature-list-icon-wrap::before {
     content: '';
