@@ -71,13 +71,26 @@ class Wpr_Instagram_Feed extends Widget_Base {
             ]
 		);
 
+		// $this->add_control(
+		// 	'instagram_feed_client_access_token',
+		// 	[
+		// 		'label'       => __( 'Access Token', 'premium-addons-pro' ),
+		// 		'type'        => Controls_Manager::TEXTAREA,
+		// 		'dynamic'     => ['active' => true ],
+		// 		'default'     => get_option('wpr_instagram_access_token'),
+		// 		'description' => 'Get your access token from <a href="#" target="_blank">here</a>',
+		// 		'label_block' => true
+		// 	]
+		// );
+		
+
 		$this->add_control(
 			'instagram_feed_client_access_token',
 			[
 				'label'       => __( 'Access Token', 'premium-addons-pro' ),
 				'type'        => Controls_Manager::TEXTAREA,
 				'dynamic'     => ['active' => true ],
-				'default'     => get_option('wpr_instagram_access_token'),
+				'default'     => 'your access token',
 				'description' => 'Get your access token from <a href="#" target="_blank">here</a>',
 				'label_block' => true
 			]
