@@ -64,7 +64,7 @@ Comes with 40+ widgets for elementor. Creative and self-intuitive elementor widg
 
 **Elementor Extensions and Other Features**
 
-- [**Header Footer Builder**](https://royal-elementor-addons.com/?ref=rea-wpo-pp-details-tab#headerfooterbuilder)
+- [**Elementor Theme Builder**](https://royal-elementor-addons.com/?ref=rea-wpo-pp-details-tab#headerfooterbuilder) - Header Footer Builder, Post Archive template builder, Single Post template builder, Single Page tamplate builder, Search, category, tags, 404, author, data page template builder.
 - [**Popup Builder**](https://royal-elementor-addons.com/?ref=rea-wpo-pp-details-tab#popupbuilder) (Offer Sales Banners, Subscriptions Banners, GDPR Cookie Consent & Compliance Notice, Cookie Notice, Age Verification), 20+ Premade Popup Templates included in popup library
 - [**Parallax Scrolling**](https://royal-elementor-addons.com/elementor-parallax-background/?ref=rea-wpo-pp-details-tab) - Elementor Parallax effect extension
 - [**Parallax Multi-Layer Effect**](https://royal-elementor-addons.com/elementor-parallax-background/?ref=rea-wpo-pp-details-tab#multiparallax) - elementor extension
@@ -73,6 +73,13 @@ Comes with 40+ widgets for elementor. Creative and self-intuitive elementor widg
 and other custom branding related settings)
 - Sticky Section (Can be used for creating Sticky Header / Menu) - elementor extension
 - Custom CSS - Elementor free custom css , apply custom css to any section - elementor extension & other elementor enhancements coming soon.
+
+**Elementor Theme Builder Templates Kits**
+
+- [**Personal Blog**](https://demosites.royal-elementor-addons.com/personal-blog-v1/?ref=rea-wpo-pp-details-tab)
+- [**Blog Magazine**](https://demosites.royal-elementor-addons.com/magazine-blog-v1/?ref=rea-wpo-pp-details-tab)
+- [**Food Blog**](https://demosites.royal-elementor-addons.com/food-blog-v1/?ref=rea-wpo-pp-details-tab)
+- [**Blog Magazine**](https://demosites.royal-elementor-addons.com/travel-blog-v1/?ref=rea-wpo-pp-details-tab)
 
 **Elementor Templates Kits**
 
@@ -319,6 +326,15 @@ memory_limit 256M or more
 post_max_size 64M
 
 == Changelog ==
+
+= Royal Elementor Addons v1.3.38 - 2022-04-06 =
+* ADDED: Elementor Theme Builder. Customize every fundamental part of your WordPress site without coding including your Header, Footer, Archives, Posts, Default Pages, 404 Pages, etc...
+* ADDED: Elementor Theme Builder Widgets: Post Title, Post Media, Post Meta, Post Navigation, Post Comments, Post Author, Archive Page Title.
+* ADDED: Elementor Theme Builder Demos:
+ - [**Personal Blog**](https://demosites.royal-elementor-addons.com/personal-blog-v1/?ref=rea-wpo-pp-details-tab)
+- [**Blog Magazine**](https://demosites.royal-elementor-addons.com/magazine-blog-v1/?ref=rea-wpo-pp-details-tab)
+- [**Food Blog**](https://demosites.royal-elementor-addons.com/food-blog-v1/?ref=rea-wpo-pp-details-tab)
+- [**Blog Magazine**](https://demosites.royal-elementor-addons.com/travel-blog-v1/?ref=rea-wpo-pp-details-tab)
 
 = Royal Elementor Addons v1.3.37 - 2022-04-04 =
 * FIXED: Elementor Header, Elementor Footer, Elementor Popup import issue.

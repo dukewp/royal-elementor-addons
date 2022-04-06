@@ -168,10 +168,7 @@ function wpr_activate_reuired_theme() {
 
     $theme = get_option('stylesheet');
 
-    // Maybe exclude ashe and bard here
-    // 'ashe' === $theme || 'bard' === $theme || 
-
-    if ( 'ashe-pro-premium' === $theme || 'bard-pro-premium' === $theme
+    if ( 'ashe' === $theme || 'bard' === $theme || 'ashe-pro-premium' === $theme || 'bard-pro-premium' === $theme
         || 'vayne-pro-premium' === $theme || 'kayn-pro-premium' === $theme ) {
         return;
     }
