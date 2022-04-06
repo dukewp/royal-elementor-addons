@@ -2286,6 +2286,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    height: 100%;
 }
 
 @media screen and ( max-width: 767px) {
