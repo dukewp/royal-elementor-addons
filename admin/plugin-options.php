@@ -47,6 +47,7 @@ function wpr_register_addons_settings() {
     // Integrations
     register_setting( 'wpr-settings', 'wpr_google_map_api_key' );
     register_setting( 'wpr-settings', 'wpr_mailchimp_api_key' );
+    register_setting( 'wpr-settings', 'wpr_instagram_access_token' );
 
     // Lightbox
     register_setting( 'wpr-settings', 'wpr_lb_bg_color' );
@@ -78,7 +79,7 @@ function wpr_register_addons_settings() {
     register_setting('wpr-extension-settings', 'wpr-parallax-background');
     register_setting('wpr-extension-settings', 'wpr-parallax-multi-layer');
     register_setting('wpr-extension-settings', 'wpr-sticky-section');
-    // register_setting('wpr-extension-settings', 'wpr-reading-progress-bar');
+    register_setting('wpr-extension-settings', 'wpr-reading-progress-bar');
 
     // Element Toggle
     foreach ( Utilities::get_registered_modules() as $title => $data ) {
@@ -232,6 +233,16 @@ function wpr_addons_settings_page() {
                 </h4>
 
                 <input type="text" name="wpr_mailchimp_api_key" id="wpr_mailchimp_api_key" value="<?php echo esc_attr(get_option('wpr_mailchimp_api_key')); ?>">
+            </div>
+
+            <div class="wpr-setting">
+                <h4>
+                    <span><?php esc_html_e( 'Instagram Access Token', 'wpr-addons' ); ?></span>
+                    <br>
+                    <a href="#" target="_blank"><?php esc_html_e( 'How to get Instagram Access Token?', 'wpr-addons' ); ?></a>
+                </h4>
+
+                <input type="text" name="wpr_instagram_access_token" id="wpr_instagram_access_token" value="<?php echo esc_attr(get_option('wpr_instagram_access_token')); ?>">
             </div>
         </div>
 

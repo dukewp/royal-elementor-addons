@@ -105,7 +105,7 @@ class Plugin {
 
 		// Reading Progress Bar
 		if ( 'on' === get_option('wpr-reading-progress-bar', 'on') ) {
-			// require WPR_ADDONS_PATH . 'extensions/wpr-reading-progress-bar.php';
+			require WPR_ADDONS_PATH . 'extensions/wpr-reading-progress-bar.php';
 		}
 
 		// Custom CSS
@@ -360,6 +360,7 @@ class Plugin {
 			[
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
 				'nonce' => wp_create_nonce( 'wpr-addons-js' ),
+				'insta_access_token' => get_option('wpr_instagram_access_token')
 			]
 		);
 	}
@@ -455,6 +456,14 @@ class Plugin {
 			 null, 
 			 true
 		);
+
+		wp_register_script(
+			'wpr-instafeed',
+			WPR_ADDONS_URL . 'assets/js/lib/instafeed/instafeed' . $this->script_suffix() . '.js',
+			[],
+			null,
+			true
+		);
 	}
 
 	public function enqueue_panel_scripts() {
@@ -505,6 +514,14 @@ class Plugin {
 			WPR_ADDONS_URL . 'assets/js/library-editor' . $this->script_suffix() . '.js',
 			[ 'jquery' ],
 			Plugin::instance()->get_version(),
+			true
+		);
+
+		wp_register_script(
+			'wpr-instafeed',
+			WPR_ADDONS_URL . 'assets/js/lib/instafeed/instafeed' . $this->script_suffix() . '.js',
+			[],
+			null,
 			true
 		);
 	}
