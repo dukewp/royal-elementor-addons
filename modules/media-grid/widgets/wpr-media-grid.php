@@ -1932,7 +1932,7 @@ class Wpr_Media_Grid extends Widget_Base {
 		$this->start_controls_section(
 			'section_grid_filters',
 			[
-				'label' => esc_html__( 'Filters', 'wpr-addons' ),
+				'label' => 'Filters  <a href="#" onclick="window.open(\'https://www.youtube.com/watch?v=WR9N8TkrtQE\',\'_blank\').focus()">Video Tutorial <span class="dashicons dashicons-video-alt3"></span></a>',
 				'tab' => Controls_Manager::TAB_CONTENT,
 				'condition' => [
 					'layout_select!' => 'slider',
