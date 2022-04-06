@@ -34,12 +34,68 @@
 				'wpr-posts-timeline.default' : WprElements.widgetPostsTimeline,
 				'wpr-sharing-buttons.default' : WprElements.widgetSharingButtons,
 				'global': WprElements.widgetSection,
+
+				// Single
+				'wpr-post-media.default' : WprElements.widgetPostMedia,
 			};
 			
 			$.each( widgets, function( widget, callback ) {
 				window.elementorFrontend.hooks.addAction( 'frontend/element_ready/' + widget, callback );
 			});
 		},
+
+		widgetPostMedia: function( $scope ) {
+			var gallery = $scope.find( '.wpr-gallery-slider' ),
+				gallerySettings = gallery.attr( 'data-slick' );
+			
+			gallery.animate({ 'opacity' : '1' }, 1000 );//tmp
+
+			if ( '[]' !== gallerySettings ) {
+				gallery.slick({
+					appendDots : $scope.find( '.wpr-gallery-slider-dots' ),
+					customPaging : function ( slider, i ) {
+						var slideNumber = (i + 1),
+							totalSlides = slider.slideCount;
+
+						return '<span class="wpr-gallery-slider-dot"></span>';
+					}
+				});
+			}
+
+			// Lightbox
+			var lightboxSettings = $( '.wpr-featured-media-image' ).attr( 'data-lightbox' );
+
+			if ( typeof lightboxSettings !== typeof undefined && lightboxSettings !== false && ! WprElements.editorCheck() ) {
+				var MediaWrap = $scope.find( '.wpr-featured-media-wrap' );
+					lightboxSettings = JSON.parse( lightboxSettings );
+
+				// Init Lightbox
+				MediaWrap.lightGallery( lightboxSettings );
+
+				// Show/Hide Controls
+				MediaWrap.on( 'onAferAppendSlide.lg, onAfterSlide.lg', function( event, prevIndex, index ) {
+					var lightboxControls = $( '#lg-actual-size, #lg-zoom-in, #lg-zoom-out, #lg-download' ),
+						lightboxDownload = $( '#lg-download' ).attr( 'href' );
+
+					if ( $( '#lg-download' ).length ) {
+						if ( -1 === lightboxDownload.indexOf( 'wp-content' ) ) {
+							lightboxControls.addClass( 'wpr-hidden-element' );
+						} else {
+							lightboxControls.removeClass( 'wpr-hidden-element' );
+						}
+					}
+
+					// Autoplay Button
+					if ( '' === lightboxSettings.autoplay ) {
+						$( '.lg-autoplay-button' ).css({
+							 'width' : '0',
+							 'height' : '0',
+							 'overflow' : 'hidden'
+						});
+					}
+				});
+			}
+		}, // End widgetFeaturedMedia
 
 		widgetSection: function( $scope ) {
 
@@ -704,6 +760,12 @@
 						// Fix Lightbox
 						iGrid.data( 'lightGallery' ).destroy( true );
 						iGrid.lightGallery( settings.lightbox );
+
+						// Init Media Hover Link
+						mediaHoverLink();
+
+						// Init Post Sharing
+						postSharing();
 					});
 
 					pagination.find( '.wpr-load-more-btn' ).on( 'click', function() {
@@ -814,151 +876,6 @@
 				settings = JSON.parse( iGrid.attr( 'data-slick' ) );
 			}
 
-			// Media Hover Link
-			if ( 'yes' === iGrid.find( '.wpr-grid-media-wrap' ).attr( 'data-overlay-link' ) && ! WprElements.editorCheck() ) {
-				iGrid.find( '.wpr-grid-media-wrap' ).css('cursor', 'pointer');
-
-				iGrid.find( '.wpr-grid-media-wrap' ).on( 'click', function( event ) {
-					var targetClass = event.target.className;
-
-					if ( -1 !== targetClass.indexOf( 'inner-block' ) || -1 !== targetClass.indexOf( 'wpr-cv-inner' ) || 
-						 -1 !== targetClass.indexOf( 'wpr-grid-media-hover' ) ) {
-						event.preventDefault();
-
-						var itemUrl = $(this).find( '.wpr-grid-media-hover-bg' ).attr( 'data-url' ),
-							itemUrl = itemUrl.replace('#new_tab', '');
-
-						if ( '_blank' === iGrid.find( '.wpr-grid-item-title a' ).attr('target') ) {
-							window.open(itemUrl, '_blank').focus();
-						} else {
-							window.location.href = itemUrl;
-						}
-					}
-				});
-			}
-
-			// Sharing
-			if ( $scope.find( '.wpr-sharing-trigger' ).length ) {
-				var sharingTrigger = $scope.find( '.wpr-sharing-trigger' ),
-					sharingInner = $scope.find( '.wpr-post-sharing-inner' ),
-					sharingWidth = 5;
-
-				// Calculate Width
-				sharingInner.first().find( 'a' ).each(function() {
-					sharingWidth += $(this).outerWidth() + parseInt( $(this).css('margin-right'), 10 );
-				});
-
-				// Calculate Margin
-				var sharingMargin = parseInt( sharingInner.find( 'a' ).css('margin-right'), 10 );
-
-				// Set Positions
-				if ( 'left' === sharingTrigger.attr( 'data-direction') ) {
-					// Set Width
-					sharingInner.css( 'width', sharingWidth +'px' );
-
-					// Set Position
-					sharingInner.css( 'left', - ( sharingMargin + sharingWidth ) +'px' );
-				} else if ( 'right' === sharingTrigger.attr( 'data-direction') ) {
-					// Set Width
-					sharingInner.css( 'width', sharingWidth +'px' );
-
-					// Set Position
-					sharingInner.css( 'right', - ( sharingMargin + sharingWidth ) +'px' );
-				} else if ( 'top' === sharingTrigger.attr( 'data-direction') ) {
-					// Set Margins
-					sharingInner.find( 'a' ).css({
-						'margin-right' : '0',
-						'margin-top' : sharingMargin +'px'
-					});
-
-					// Set Position
-					sharingInner.css({
-						'top' : -sharingMargin +'px',
-						'left' : '50%',
-						'-webkit-transform' : 'translate(-50%, -100%)',
-						'transform' : 'translate(-50%, -100%)'
-					});
-				} else if ( 'right' === sharingTrigger.attr( 'data-direction') ) {
-					// Set Width
-					sharingInner.css( 'width', sharingWidth +'px' );
-
-					// Set Position
-					sharingInner.css({
-						'left' : sharingMargin +'px',
-						// 'bottom' : - ( sharingInner.outerHeight() + sharingTrigger.outerHeight() ) +'px',
-					});
-				} else if ( 'bottom' === sharingTrigger.attr( 'data-direction') ) {
-					// Set Margins
-					sharingInner.find( 'a' ).css({
-						'margin-right' : '0',
-						'margin-bottom' : sharingMargin +'px'
-					});
-
-					// Set Position
-					sharingInner.css({
-						'bottom' : -sharingMargin +'px',
-						'left' : '50%',
-						'-webkit-transform' : 'translate(-50%, 100%)',
-						'transform' : 'translate(-50%, 100%)'
-					});
-				}
-
-				if ( 'click' === sharingTrigger.attr( 'data-action' ) ) {
-					sharingTrigger.on( 'click', function() {
-						var sharingInner = $(this).next();
-
-						if ( 'hidden' === sharingInner.css( 'visibility' ) ) {
-							sharingInner.css( 'visibility', 'visible' );
-							sharingInner.find( 'a' ).css({
-								'opacity' : '1',
-								'top' : '0'
-							});
-
-							setTimeout( function() {
-								sharingInner.find( 'a' ).addClass( 'wpr-no-transition-delay' );
-							}, sharingInner.find( 'a' ).length * 100 );
-						} else {
-							sharingInner.find( 'a' ).removeClass( 'wpr-no-transition-delay' );
-
-							sharingInner.find( 'a' ).css({
-								'opacity' : '0',
-								'top' : '-5px'
-							});
-							setTimeout( function() {
-								sharingInner.css( 'visibility', 'hidden' );
-							}, sharingInner.find( 'a' ).length * 100 );
-						}
-					});
-				} else {
-					sharingTrigger.on( 'mouseenter', function() {
-						var sharingInner = $(this).next();
-
-						sharingInner.css( 'visibility', 'visible' );
-						sharingInner.find( 'a' ).css({
-							'opacity' : '1',
-							'top' : '0',
-						});
-						
-						setTimeout( function() {
-							sharingInner.find( 'a' ).addClass( 'wpr-no-transition-delay' );
-						}, sharingInner.find( 'a' ).length * 100 );
-					});
-					$scope.find( '.wpr-grid-item-sharing' ).on( 'mouseleave', function() {
-						var sharingInner = $(this).find( '.wpr-post-sharing-inner' );
-
-						sharingInner.find( 'a' ).removeClass( 'wpr-no-transition-delay' );
-
-						sharingInner.find( 'a' ).css({
-							'opacity' : '0',
-							'top' : '-5px'
-						});
-						setTimeout( function() {
-							sharingInner.css( 'visibility', 'hidden' );
-						}, sharingInner.find( 'a' ).length * 100 );
-					});
-				}
-			}
-
 			// Add To Cart AJAX
 			if ( iGrid.find( '.wpr-grid-item-add-to-cart' ).length ) {
 				var addCartIcon = iGrid.find( '.wpr-grid-item-add-to-cart' ).find( 'i' ),
@@ -982,6 +899,161 @@
 						}, 3500 );
 					}
 				});
+			}
+
+			// Init Post Sharing
+			postSharing();
+
+			// Post Sharing
+			function postSharing() {
+				if ( $scope.find( '.wpr-sharing-trigger' ).length ) {
+					var sharingTrigger = $scope.find( '.wpr-sharing-trigger' ),
+						sharingInner = $scope.find( '.wpr-post-sharing-inner' ),
+						sharingWidth = 5;
+
+					// Calculate Width
+					sharingInner.first().find( 'a' ).each(function() {
+						sharingWidth += $(this).outerWidth() + parseInt( $(this).css('margin-right'), 10 );
+					});
+
+					// Calculate Margin
+					var sharingMargin = parseInt( sharingInner.find( 'a' ).css('margin-right'), 10 );
+
+					// Set Positions
+					if ( 'left' === sharingTrigger.attr( 'data-direction') ) {
+						// Set Width
+						sharingInner.css( 'width', sharingWidth +'px' );
+
+						// Set Position
+						sharingInner.css( 'left', - ( sharingMargin + sharingWidth ) +'px' );
+					} else if ( 'right' === sharingTrigger.attr( 'data-direction') ) {
+						// Set Width
+						sharingInner.css( 'width', sharingWidth +'px' );
+
+						// Set Position
+						sharingInner.css( 'right', - ( sharingMargin + sharingWidth ) +'px' );
+					} else if ( 'top' === sharingTrigger.attr( 'data-direction') ) {
+						// Set Margins
+						sharingInner.find( 'a' ).css({
+							'margin-right' : '0',
+							'margin-top' : sharingMargin +'px'
+						});
+
+						// Set Position
+						sharingInner.css({
+							'top' : -sharingMargin +'px',
+							'left' : '50%',
+							'-webkit-transform' : 'translate(-50%, -100%)',
+							'transform' : 'translate(-50%, -100%)'
+						});
+					} else if ( 'right' === sharingTrigger.attr( 'data-direction') ) {
+						// Set Width
+						sharingInner.css( 'width', sharingWidth +'px' );
+
+						// Set Position
+						sharingInner.css({
+							'left' : sharingMargin +'px',
+							// 'bottom' : - ( sharingInner.outerHeight() + sharingTrigger.outerHeight() ) +'px',
+						});
+					} else if ( 'bottom' === sharingTrigger.attr( 'data-direction') ) {
+						// Set Margins
+						sharingInner.find( 'a' ).css({
+							'margin-right' : '0',
+							'margin-bottom' : sharingMargin +'px'
+						});
+
+						// Set Position
+						sharingInner.css({
+							'bottom' : -sharingMargin +'px',
+							'left' : '50%',
+							'-webkit-transform' : 'translate(-50%, 100%)',
+							'transform' : 'translate(-50%, 100%)'
+						});
+					}
+
+					if ( 'click' === sharingTrigger.attr( 'data-action' ) ) {
+						sharingTrigger.on( 'click', function() {
+							var sharingInner = $(this).next();
+
+							if ( 'hidden' === sharingInner.css( 'visibility' ) ) {
+								sharingInner.css( 'visibility', 'visible' );
+								sharingInner.find( 'a' ).css({
+									'opacity' : '1',
+									'top' : '0'
+								});
+
+								setTimeout( function() {
+									sharingInner.find( 'a' ).addClass( 'wpr-no-transition-delay' );
+								}, sharingInner.find( 'a' ).length * 100 );
+							} else {
+								sharingInner.find( 'a' ).removeClass( 'wpr-no-transition-delay' );
+
+								sharingInner.find( 'a' ).css({
+									'opacity' : '0',
+									'top' : '-5px'
+								});
+								setTimeout( function() {
+									sharingInner.css( 'visibility', 'hidden' );
+								}, sharingInner.find( 'a' ).length * 100 );
+							}
+						});
+					} else {
+						sharingTrigger.on( 'mouseenter', function() {
+							var sharingInner = $(this).next();
+
+							sharingInner.css( 'visibility', 'visible' );
+							sharingInner.find( 'a' ).css({
+								'opacity' : '1',
+								'top' : '0',
+							});
+							
+							setTimeout( function() {
+								sharingInner.find( 'a' ).addClass( 'wpr-no-transition-delay' );
+							}, sharingInner.find( 'a' ).length * 100 );
+						});
+						$scope.find( '.wpr-grid-item-sharing' ).on( 'mouseleave', function() {
+							var sharingInner = $(this).find( '.wpr-post-sharing-inner' );
+
+							sharingInner.find( 'a' ).removeClass( 'wpr-no-transition-delay' );
+
+							sharingInner.find( 'a' ).css({
+								'opacity' : '0',
+								'top' : '-5px'
+							});
+							setTimeout( function() {
+								sharingInner.css( 'visibility', 'hidden' );
+							}, sharingInner.find( 'a' ).length * 100 );
+						});
+					}
+				}				
+			}
+
+			// Init Media Hover Link
+			mediaHoverLink();
+
+			// Media Hover Link
+			function mediaHoverLink() {
+				if ( 'yes' === iGrid.find( '.wpr-grid-media-wrap' ).attr( 'data-overlay-link' ) && ! WprElements.editorCheck() ) {
+					iGrid.find( '.wpr-grid-media-wrap' ).css('cursor', 'pointer');
+
+					iGrid.find( '.wpr-grid-media-wrap' ).on( 'click', function( event ) {
+						var targetClass = event.target.className;
+
+						if ( -1 !== targetClass.indexOf( 'inner-block' ) || -1 !== targetClass.indexOf( 'wpr-cv-inner' ) || 
+							 -1 !== targetClass.indexOf( 'wpr-grid-media-hover' ) ) {
+							event.preventDefault();
+
+							var itemUrl = $(this).find( '.wpr-grid-media-hover-bg' ).attr( 'data-url' ),
+								itemUrl = itemUrl.replace('#new_tab', '');
+
+							if ( '_blank' === iGrid.find( '.wpr-grid-item-title a' ).attr('target') ) {
+								window.open(itemUrl, '_blank').focus();
+							} else {
+								window.location.href = itemUrl;
+							}
+						}
+					});
+				}				
 			}
 
 			// Init Lightbox
@@ -1445,7 +1517,7 @@
 						if ( '*' === $(this).attr( 'data-filter') ) {
 							$(this).find( 'sup' ).text( $scope.find( '.wpr-grid-filters' ).next().find('article').length );
 						} else {
-							$(this).find( 'sup' ).text( $( $(this).attr( 'data-filter' ) ).length );
+							$(this).find( 'sup' ).text( $scope.find( $(this).attr( 'data-filter' ) ).length );
 						}
 					});
 				}
@@ -3870,13 +3942,7 @@
 				e.preventDefault();
 				window.print();
 			});
-
-			$scope.find('.wpr-sharing-pinterest-p');
-			// shareLinkSettings.url = location.href;
-			// shareLinkSettings.title = elementorFrontend.config.post.title;
-			// shareLinkSettings.text = elementorFrontend.config.post.excerpt;
-			// shareLinkSettings.image = elementorFrontend.config.post.featuredImage;
-        },
+        }, // end widgetSharingButtons
 
 		// Editor Check
 		editorCheck: function() {

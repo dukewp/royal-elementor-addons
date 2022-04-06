@@ -58,6 +58,8 @@ class WPR_Templates_Library_Blocks {
 								'back-to-top',
 								'popup-trigger',
 								'lottie-animations',
+								'taxonomy-list',
+								'elementor-template',
 							];
 							
 							foreach ($modules as $title => $slug) {
@@ -90,6 +92,10 @@ class WPR_Templates_Library_Blocks {
 			foreach ($modules as $title => $data) :
 				$module_slug = $data[0];
 				$blocks = WPR_Templates_Data::get_available_blocks();
+
+				if ( !isset($blocks[$module_slug]) ) {
+					continue;
+				}
 
 				for ( $i=0; $i < count($blocks[$module_slug]); $i++ ) :
 

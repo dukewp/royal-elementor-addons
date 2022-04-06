@@ -798,7 +798,9 @@ input.wpr-user-template-title:focus {
 .wpr-button-lock {
   width: 220px;
   height: 50px;
-  order: 2;
+  -webkit-box-ordinal-group: 3;
+      -ms-flex-order: 2;
+          order: 2;
   margin-top: -50px;
   background: rgba(0,0,0,0.4);
   border-radius: 5px;
