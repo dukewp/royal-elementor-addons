@@ -75,15 +75,51 @@ class WprPluginUpdateNotice {
         jQuery( document ).ready( function() {
 
             if ( jQuery('#wpr-notice-confetti').length ) {
-                const canvas = document.getElementById('wpr-notice-confetti');
-                const jsConfetti = new JSConfetti({ canvas });
+                const wprConfetti = confetti.create( document.getElementById('wpr-notice-confetti'), {
+                    resize: true
+                });
 
-                setTimeout(function(){
-                    jsConfetti.addConfetti({
-                      confettiRadius: 2,
-                      confettiNumber: 800,
-                    });
-                }, 1000);
+                setTimeout( function () {
+                    wprConfetti( {
+                        particleCount: 150,
+                        origin: { x: 1, y: 2 },
+                        gravity: 0.3,
+                        spread: 50,
+                        ticks: 150,
+                        angle: 120,
+                        startVelocity: 60,
+                        colors: [
+                            '#0e6ef1',
+                            '#f5b800',
+                            '#ff344c',
+                            '#98e027',
+                            '#9900f1',
+                        ],
+                    } );
+                }, 500 );
+
+                setTimeout( function () {
+                    wprConfetti( {
+                        particleCount: 150,
+                        origin: { x: 0, y: 2 },
+                        gravity: 0.3,
+                        spread: 50,
+                        ticks: 200,
+                        angle: 60,
+                        startVelocity: 60,
+                        colors: [
+                            '#0e6ef1',
+                            '#f5b800',
+                            '#ff344c',
+                            '#98e027',
+                            '#9900f1',
+                        ],
+                    } );
+                    dispatch( {
+                        type: 'set',
+                        confettiDone: true,
+                    } );
+                }, 900 );
             }
 
             jQuery(document).on( 'click', '.wpr-plugin-update-notice .notice-dismiss', function() {
@@ -168,10 +204,10 @@ class WprPluginUpdateNotice {
 
             #wpr-notice-confetti {
               position: absolute;
-              top: 50px;
+              top: 0;
               left: 0;
-              width: 50%;
-              height: 200px;
+              width: 100%;
+              height: 100%;
               pointer-events: none;
             }
         </style>";
