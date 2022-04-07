@@ -165,7 +165,7 @@ function get_theme_status() {
 ** Install/Activate Required Theme
 */
 function wpr_activate_reuired_theme() {
-
+    // Get Current Theme
     $theme = get_option('stylesheet');
 
     if ( 'ashe' === $theme || 'bard' === $theme || 'ashe-pro-premium' === $theme || 'bard-pro-premium' === $theme
@@ -181,7 +181,7 @@ function wpr_activate_reuired_theme() {
 ** Install/Activate Required Plugins
 */
 function wpr_install_reuired_plugins() {
-    // Getcurrently active plugins
+    // Get currently active plugins
     $active_plugins = (array) get_option( 'active_plugins', array() );
 
     // Add Required Plugins
@@ -193,6 +193,14 @@ function wpr_install_reuired_plugins() {
 
     // Set Active Plugins
     update_option( 'active_plugins', $active_plugins );
+
+    // Get Current Theme
+    $theme = get_option('stylesheet');
+
+    if ( 'ashe' === $theme || 'bard' === $theme || 'ashe-pro-premium' === $theme || 'bard-pro-premium' === $theme
+        || 'vayne-pro-premium' === $theme || 'kayn-pro-premium' === $theme ) {
+        return;
+    }
 
     // Activate Hello Elementor Theme
     switch_theme( 'hello-elementor' );
