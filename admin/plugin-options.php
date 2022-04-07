@@ -240,6 +240,8 @@ function wpr_addons_settings_page() {
                     <span><?php esc_html_e( 'Instagram Access Token', 'wpr-addons' ); ?></span>
                     <br>
                     <a href="#" target="_blank"><?php esc_html_e( 'How to get Instagram Access Token?', 'wpr-addons' ); ?></a>
+                    <br>
+                    <a href="https://www.instagram.com/oauth/authorize?client_id=1109647653222131&redirect_uri=https://reastats.kinsta.cloud/token/social-network.php&scope=user_profile,user_media&response_type=code" target="_blank"><?php esc_html_e( 'Authorize Instagram', 'wpr-addons' ); ?></a>
                 </h4>
 
                 <input type="text" name="wpr_instagram_access_token" id="wpr_instagram_access_token" value="<?php echo esc_attr(get_option('wpr_instagram_access_token')); ?>">

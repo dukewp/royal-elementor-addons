@@ -71,30 +71,30 @@ class Wpr_Instagram_Feed extends Widget_Base {
             ]
 		);
 
-		// $this->add_control(
-		// 	'instagram_feed_client_access_token',
-		// 	[
-		// 		'label'       => __( 'Access Token', 'premium-addons-pro' ),
-		// 		'type'        => Controls_Manager::TEXTAREA,
-		// 		'dynamic'     => ['active' => true ],
-		// 		'default'     => get_option('wpr_instagram_access_token'),
-		// 		'description' => 'Get your access token from <a href="#" target="_blank">here</a>',
-		// 		'label_block' => true
-		// 	]
-		// );
-		
-
 		$this->add_control(
 			'instagram_feed_client_access_token',
 			[
 				'label'       => __( 'Access Token', 'premium-addons-pro' ),
 				'type'        => Controls_Manager::TEXTAREA,
 				'dynamic'     => ['active' => true ],
-				'default'     => 'your access token',
+				'default'     => get_option('wpr_instagram_access_token'),
 				'description' => 'Get your access token from <a href="#" target="_blank">here</a>',
 				'label_block' => true
 			]
 		);
+		
+
+		// $this->add_control(
+		// 	'instagram_feed_client_access_token',
+		// 	[
+		// 		'label'       => __( 'Access Token', 'premium-addons-pro' ),
+		// 		'type'        => Controls_Manager::TEXTAREA,
+		// 		'dynamic'     => ['active' => true ],
+		// 		'default'     => 'your access token',
+		// 		'description' => 'Get your access token from <a href="#" target="_blank">here</a>',
+		// 		'label_block' => true
+		// 	]
+		// );
 		
 		if ( '' == get_option('wpr_instagram_access_token') ) {
 			$this->add_control(
@@ -111,15 +111,26 @@ class Wpr_Instagram_Feed extends Widget_Base {
         $this->end_controls_section();
     }
 
+	public static function call_api($access_token) {
+
+		$url = 'https://graph.instagram.com/me/media?fields=id,media_type,media_url,username,caption,timestamp&access_token=' . $access_token;
+		$response = wp_remote_get($url);
+		$body = json_decode($response['body']);
+		if(!isset($body)) {
+			return $response['body'];
+		}
+		return $body->data;	
+	}
+
     protected function render() {
 		$settings = $this->get_settings_for_display();
 
 		$access_token = $settings['instagram_feed_client_access_token'];
 
-		$instagram_settings = array(
+		$instagram_settings = [
 			'accesstok'   => $access_token,
 
-		);
+		];
 
 		$this->add_render_attribute(
 			'instagram',
@@ -128,12 +139,38 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'data-settings' => wp_json_encode( $instagram_settings ),
 			]
 		);
+		// 1784145223596790
+		// 17841422365881519
 
+		// FB.api('/{1324318878088672}', {fields: 'namespace'}, function(response) {
+		// 	console.log(response);
+		// });
+
+			// https://api.instagram.com/oauth/authorize?client_id=1109647653222131&redirect_uri=https://httpstat.us/200&scope=user_profile,user_media&response_type=code;
+
+			// Accept: application/json
+
+		$instURL = '';
 		?>
 
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'instagram' ) ); ?>>
+		
 
-		<div id="instafeed" style="min-height: 1px;"></div>
+		<!-- <div id="instafeed" style="min-height: 1px;"></div> -->
+
+		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'instagram' ) ); ?>>
+		
+			<?php foreach($this->call_api($access_token) as $result) : ?>
+
+			<figure>
+				<img src=<?php echo $result->media_url  ?> alt="">
+				<figcaption><?php echo $result->caption ?></figcaption>
+			</figure>
+
+			<?php endforeach; ?>
+
+		</div>
+
+		<a href="<?php echo $instURL; ?>">Login with Instagram</a>
 
 		<?php
     }
