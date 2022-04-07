@@ -168,13 +168,11 @@ function wpr_activate_reuired_theme() {
     // Get Current Theme
     $theme = get_option('stylesheet');
 
-    if ( 'ashe' === $theme || 'bard' === $theme || 'ashe-pro-premium' === $theme || 'bard-pro-premium' === $theme
-        || 'vayne-pro-premium' === $theme || 'kayn-pro-premium' === $theme ) {
-        return;
-    }
-
     // Activate Hello Elementor Theme
-    switch_theme( 'hello-elementor' );
+    if ( 'ashe' !== $theme && 'bard' !== $theme && 'ashe-pro-premium' !== $theme && 'bard-pro-premium' !== $theme
+        && 'vayne-pro-premium' !== $theme && 'kayn-pro-premium' !== $theme ) {
+        switch_theme( 'hello-elementor' );
+    }
 }
 
 /**
@@ -197,13 +195,12 @@ function wpr_install_reuired_plugins() {
     // Get Current Theme
     $theme = get_option('stylesheet');
 
-    if ( 'ashe' === $theme || 'bard' === $theme || 'ashe-pro-premium' === $theme || 'bard-pro-premium' === $theme
-        || 'vayne-pro-premium' === $theme || 'kayn-pro-premium' === $theme ) {
-        return;
-    }
-
     // Activate Hello Elementor Theme
-    switch_theme( 'hello-elementor' );
+    if ( 'ashe' !== $theme && 'bard' !== $theme && 'ashe-pro-premium' !== $theme && 'bard-pro-premium' !== $theme
+        && 'vayne-pro-premium' !== $theme && 'kayn-pro-premium' !== $theme ) {
+        switch_theme( 'hello-elementor' );
+    }
+    
 }
 
 /**
