@@ -145,6 +145,12 @@ class WPR_Templates_Library_Blocks {
 		</div>
 
 		<?php
+
+		$current_screen = get_current_screen();
+
+		if ( !(isset($current_screen) && 'royal-addons_page_wpr-premade-blocks' === $current_screen->id) ) {
+			exit;
+		}
 	}
 
 }
