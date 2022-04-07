@@ -144,7 +144,7 @@ class WPR_Templates_Library_Blocks {
 			</div>
 		</div>
 
-		<?php exit();
+		<?php
 	}
 
 }

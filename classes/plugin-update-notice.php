@@ -12,18 +12,17 @@ class WprPluginUpdateNotice {
         if ( current_user_can('administrator') ) {
             if ( !get_option('wpr_plugin_update_dismiss_notice') ) {
                 add_action( 'admin_init', [$this, 'render_notice'] );
-
-                if ( is_admin() ) {
-                    add_action( 'admin_head', [$this, 'enqueue_scripts' ] );
-                }
             }
+        }
+
+        if ( is_admin() ) {
+            add_action( 'admin_head', [$this, 'enqueue_scripts' ] );
         }
 
         add_action( 'wp_ajax_wpr_plugin_update_dismiss_notice', [$this, 'wpr_plugin_update_dismiss_notice'] );
     }
 
     public function render_notice() {
-
         add_action( 'admin_notices', [$this, 'render_plugin_update_notice' ]);
     }
     
@@ -74,15 +73,18 @@ class WprPluginUpdateNotice {
         echo "
         <script>
         jQuery( document ).ready( function() {
-            const canvas = document.getElementById('wpr-notice-confetti');
-            const jsConfetti = new JSConfetti({ canvas });
 
-            setTimeout(function(){
-                jsConfetti.addConfetti({
-                  confettiRadius: 2,
-                  confettiNumber: 800,
-                });
-            }, 1000);
+            if ( jQuery('#wpr-notice-confetti').length ) {
+                const canvas = document.getElementById('wpr-notice-confetti');
+                const jsConfetti = new JSConfetti({ canvas });
+
+                setTimeout(function(){
+                    jsConfetti.addConfetti({
+                      confettiRadius: 2,
+                      confettiNumber: 800,
+                    });
+                }, 1000);
+            }
 
             jQuery(document).on( 'click', '.wpr-plugin-update-notice .notice-dismiss', function() {
                 jQuery(document).find('.wpr-plugin-update-notice').slideUp();
@@ -103,7 +105,7 @@ class WprPluginUpdateNotice {
                 align-items: center;
                 margin-top: 20px;
                 margin-bottom: 20px;
-                padding: 20px;
+                padding: 30px;
                 border: 0 !important;
                 box-shadow: 0 0 5px rgb(0 0 0 / 0.1);
 
@@ -121,7 +123,7 @@ class WprPluginUpdateNotice {
 
             .wpr-plugin-update-notice h3 {
                 font-size: 36px;
-                margin-top: 10px;
+                margin-top: 0;
                 margin-bottom: 35px;
             }
 
