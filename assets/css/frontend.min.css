@@ -11147,6 +11147,15 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     min-height: 1px;
 }
 
+/*--------------------------------------------------------------
+== Instagram Feed
+--------------------------------------------------------------*/
+.wpr-instagram-feed {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
 
 /*--------------------------------------------------------------
  == Taxonomy List

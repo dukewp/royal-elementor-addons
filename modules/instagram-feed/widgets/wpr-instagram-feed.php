@@ -43,6 +43,12 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		return [ 'wpr-instafeed' ];
 	}
 
+    public function get_custom_help_url() {
+    	if ( empty(get_option('wpr_wl_plugin_links')) )
+        // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-grid-help-btn';
+    		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
+    }
+
 	// public function get_style_depends() {
 	// 	return [ 'wpr-animations-css', 'wpr-link-animations-css', 'wpr-button-animations-css', 'wpr-loading-animations-css', 'wpr-lightgallery-css' ];
 	// }
@@ -70,31 +76,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'label_block' => true,
             ]
 		);
-
-		$this->add_control(
-			'instagram_feed_client_access_token',
-			[
-				'label'       => __( 'Access Token', 'premium-addons-pro' ),
-				'type'        => Controls_Manager::TEXTAREA,
-				'dynamic'     => ['active' => true ],
-				'default'     => get_option('wpr_instagram_access_token'),
-				'description' => 'Get your access token from <a href="#" target="_blank">here</a>',
-				'label_block' => true
-			]
-		);
-		
-
-		// $this->add_control(
-		// 	'instagram_feed_client_access_token',
-		// 	[
-		// 		'label'       => __( 'Access Token', 'premium-addons-pro' ),
-		// 		'type'        => Controls_Manager::TEXTAREA,
-		// 		'dynamic'     => ['active' => true ],
-		// 		'default'     => 'your access token',
-		// 		'description' => 'Get your access token from <a href="#" target="_blank">here</a>',
-		// 		'label_block' => true
-		// 	]
-		// );
 		
 		if ( '' == get_option('wpr_instagram_access_token') ) {
 			$this->add_control(
@@ -108,10 +89,324 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			);
 		}
 
+		$this->add_control(
+			'show_instagram_follow_button',
+			[
+				'label' => esc_html__( 'Follow Button', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'label_block' => false
+			]
+		);
+
+		$this->add_control(
+			'instagram_follow_text',
+			[
+				'label' => esc_html__( 'Follow Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => 'Follow on Instagram',
+				'condition' => [
+					'show_instagram_follow_button' => 'yes',
+				]
+			]
+		);
+
+		$this->add_control(
+			'instagram_follow_link',
+			[
+				'label' => esc_html__( 'Follow Link', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::URL,
+				'placeholder' => esc_html__( 'https://your-link.com', 'wpr-addons' ),
+				'default' => [
+					'url' => '',
+					'is_external' => true,
+					'nofollow' => true,
+					'custom_attributes' => '',
+				],
+				'label_block' => true,
+				'condition' => [
+					'show_instagram_follow_button' => 'yes',
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'columns',
+			[
+				'label' => esc_html__( 'Columns', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => '3',
+				'options' => [
+					'100%' => esc_html__( 'One', 'wpr-addons' ),
+					'50%' => esc_html__( 'Two', 'wpr-addons' ),
+					'33.3%' => esc_html__( 'Three', 'wpr-addons' ),
+					'25%' => esc_html__( 'Four', 'wpr-addons' ),
+					'20%' => esc_html__( 'Five', 'wpr-addons' ),
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-instagram-feed figure' => 'width: {{VALUE}}',
+					'{{WRAPPER}} .wpr-instagram-feed video' => 'width: {{VALUE}}'
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'distance_bottom',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 20,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-instagram-feed' => 'margin-bottom: {{SIZE}}px',
+				]
+			]
+		);
+
         $this->end_controls_section();
+
+		// Tab: Styles ===============
+		// Section: Feed -----------
+		$this->start_controls_section(
+			'section_style_feed',
+			[
+				'label' => esc_html__( 'Feed', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+        $this->end_controls_section();
+
+		// Tab: Styles ===============
+		// Section: Button -----------
+		$this->start_controls_section(
+			'section_style_button',
+			[
+				'label' => esc_html__( 'Button', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->start_controls_tabs( 'tabs_button_colors' );
+
+		$this->start_controls_tab(
+			'tab_button_normal_colors',
+			[
+				'label' => esc_html__( 'Normal', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'button_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-instagram-follow-btn' => 'color: {{VALUE}}'
+				],
+			]
+		);
+
+		$this->add_control(
+			'button_bg_color',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-instagram-follow-btn' => 'background-color: {{VALUE}}'
+				],
+			]
+		);
+
+		$this->add_control(
+			'button_border_color',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-instagram-follow-btn' => 'border-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'button_box_shadow',
+				'selector' => '{{WRAPPER}} .wpr-instagram-follow-btn',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_button_hover_colors',
+			[
+				'label' => esc_html__( 'Hover', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'button_hover_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-instagram-follow-btn:hover' => 'color: {{VALUE}}'
+				],
+			]
+		);
+
+		$this->add_control(
+			'button_bg_hover_color',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-instagram-follow-btn:hover' => 'background-color: {{VALUE}}'
+				],
+			]
+		);
+
+		$this->add_control(
+			'button_hover_border_color',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-instagram-follow-btn:hover' => 'border-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'button_hover_box_shadow',
+				'selector' => '{{WRAPPER}} .wpr-instagram-follow-btn:hover',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_control(
+			'button_typography_divider',
+			[
+				'type' => Controls_Manager::DIVIDER,
+				'style' => 'thick',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'button_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-instagram-follow-btn',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'button_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 10,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-instagram-follow-btn' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'button_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-instagram-follow-btn' => 'border-style: {{VALUE}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'button_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 2,
+					'right' => 2,
+					'bottom' => 2,
+					'left' => 2,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-instagram-follow-btn' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'button_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'button_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 2,
+					'right' => 2,
+					'bottom' => 2,
+					'left' => 2,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-instagram-follow-btn' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->end_controls_section(); // End Controls Section
     }
 
-	public static function call_api($access_token) {
+	public static function call_instagram_api($access_token) {
 
 		$url = 'https://graph.instagram.com/me/media?fields=id,media_type,media_url,username,caption,timestamp&access_token=' . $access_token;
 		$response = wp_remote_get($url);
@@ -122,55 +417,79 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		return $body->data;	
 	}
 
+	public function refresh_access_token($access_token) {
+		$url = 'https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token='.$access_token.'';
+		$response = wp_remote_get($url);
+		$body = json_decode($response['body']);
+		if(!isset($body)) {
+			var_dump($response['body']);
+			return $response['body'];
+		}
+		var_dump($body->data);
+		// update_option('wpr_instagram_access_token')
+		return $body->data;	
+	}
+
     protected function render() {
 		$settings = $this->get_settings_for_display();
 
-		$access_token = $settings['instagram_feed_client_access_token'];
+		$access_token = get_option('wpr_instagram_access_token');
 
 		$instagram_settings = [
-			'accesstok'   => $access_token,
-
+			'data-col' => 4
 		];
 
 		$this->add_render_attribute(
 			'instagram',
 			[
-				'class'         => 'wpr-instagram-feed-cont',
+				'class'         => 'wpr-instagram-feed',
 				'data-settings' => wp_json_encode( $instagram_settings ),
 			]
 		);
-		// 1784145223596790
-		// 17841422365881519
+		if ( ! empty( $settings['instagram_follow_link']['url'] ) ) {
+			$this->add_link_attributes( 'instagram_follow_link', $settings['instagram_follow_link'] );
+		}
 
-		// FB.api('/{1324318878088672}', {fields: 'namespace'}, function(response) {
-		// 	console.log(response);
-		// });
+		// var_dump($this->call_instagram_api($access_token));
 
-			// https://api.instagram.com/oauth/authorize?client_id=1109647653222131&redirect_uri=https://httpstat.us/200&scope=user_profile,user_media&response_type=code;
+		$token_expires_in = get_option('wpr_instagram_access_token_expires_in');
 
-			// Accept: application/json
+		$compare_date = strtotime('-'.get_option('wpr_instagram_access_token_expires_in').' seconds');
 
-		$instURL = '';
+		$token_generation_date = strtotime(get_option('wpr_instagram_access_token_generation_date'));
+
+
+		if ( $token_generation_date <= $compare_date  ) {
+			var_dump($compare_date);
+			// $this->refresh_access_token($access_token);
+		}
+
 		?>
 
-		
-
-		<!-- <div id="instafeed" style="min-height: 1px;"></div> -->
-
-		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'instagram' ) ); ?>>
-		
-			<?php foreach($this->call_api($access_token) as $result) : ?>
-
-			<figure>
-				<img src=<?php echo $result->media_url  ?> alt="">
-				<figcaption><?php echo $result->caption ?></figcaption>
-			</figure>
-
-			<?php endforeach; ?>
-
-		</div>
-
-		<a href="<?php echo $instURL; ?>">Login with Instagram</a>
+			<div class="wpr-instagram-feed-cont">
+				<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'instagram' ) ); ?>>
+				
+					<?php foreach($this->call_instagram_api($access_token) as $result) : ?>
+				
+					<?php if ( $result->media_type === 'IMAGE') : ?>
+					<figure>
+						<img src=<?php echo $result->media_url  ?> alt="">
+						<figcaption><?php echo $result->caption ?></figcaption>
+					</figure>
+					<?php else : ?>
+						<video controls>
+						<source src=<?php echo $result->media_url ?> type="video/mp4">
+						</video>
+					<?php endif; ?>
+					<?php endforeach; ?>
+				</div>
+				
+				<?php if ( 'yes' === $settings['show_instagram_follow_button'] ) : ?>
+					<div>
+						<a class="wpr-instagram-follow-btn" <?php echo $this->get_render_attribute_string( 'instagram_follow_link' ); ?>><?php echo $settings['instagram_follow_text'] ?></a>
+					</div>
+				<?php endif; ?>
+			</div>
 
 		<?php
     }
