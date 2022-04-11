@@ -57,7 +57,7 @@ class Wpr_AdvancedTable extends Widget_Base {
         return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-back-to-top-help-btn';
     }
 
-    public function _register_controls() {
+    public function register_controls() {
 
 		$this->start_controls_section(
 			'section_preview',
@@ -916,6 +916,30 @@ class Wpr_AdvancedTable extends Widget_Base {
 			]
 		);
 
+        $repeater->add_responsive_control(
+            'td_col_icon_size',
+            [
+                'label'      => esc_html__( 'Icon Size', 'wpr-addons' ),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => [
+                    'px', 'em', 'rem',
+				],
+                'range'      => [
+                    'px' => [
+                        'min' => 1,
+                        'max' => 100,
+					],
+				],
+                'selectors'  => [
+                    '{{WRAPPER}} i.wpr-search-input-icon' => 'font-size: {{SIZE}}{{UNIT}}',
+				],
+				'condition' => [
+					'td_icon' => 'yes',
+					'td_icon_type!'	=> ['none', 'image']
+				]
+			]
+        );
+
 		$repeater->add_control(
 			'td_icon_color',
 			[
@@ -1155,7 +1179,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 		$this->add_control(
 			'th_color',
 			[
-				'label'  => esc_html__( 'Text Color', 'wpr-addons' ),
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#fff',
 				'selectors' => [
@@ -1396,6 +1420,8 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} th' => 'text-align: {{VALUE}};',
 					'{{WRAPPER}} .wpr-th-inner-cont' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} .wpr-flex-column span' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} .wpr-flex-column-reverse span' => 'text-align: {{VALUE}};',
 				],
 			]
 		);
@@ -1619,6 +1645,45 @@ class Wpr_AdvancedTable extends Widget_Base {
                 ],
             ]
         );
+
+		$this->add_responsive_control(
+            'tbody_image_size',
+            [
+                'label'      => __('Image Size', 'wpr-addons'),
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'range'      => [
+                    'px' => [
+                        'min' => 1,
+                        'max' => 150,
+                    ],
+                ],
+                'default'    => [
+                    'size' => 50,
+                ],
+                'selectors'  => [
+                    '{{WRAPPER}} .wpr-data-table-th-img' => 'width: {{SIZE}}{{UNIT}}; height: auto;',
+                ],
+            ]
+        );
+		
+		$this->add_responsive_control(
+			'tbody_image_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 2,
+					'right' => 2,
+					'bottom' => 2,
+					'left' => 2,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-data-table-th-img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
 
 		$this->add_responsive_control(
 			'td_padding',
@@ -2834,7 +2899,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 					<tr class="wpr-table-head-row wpr-table-row">
 					<?php $i = 0; foreach ($settings['table_header'] as $item) { 
 					$this->add_render_attribute('th_class'.$i, [
-						'class' => ['wpr-table-th', 'elementor-repeater-item-'.$item['_id'], ($item['header_icon_position'] === 'top') ? 'wpr-flex-column' : (($item['header_icon_position'] === 'bottom') ? 'wpr-flex-column-reverse' : '')],
+						'class' => ['wpr-table-th', 'elementor-repeater-item-'.$item['_id'], ($item['header_icon_position'] === 'top') ? 'wpr-flex-column-reverse' : (($item['header_icon_position'] === 'bottom') ? 'wpr-flex-column' : '')],
 						'colspan' => $item['header_colspan'],
 						]); ?>
 						<th <?php echo $this->get_render_attribute_string('th_class'.$i); ?>>
@@ -2867,7 +2932,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 								]); ?>
 								
 							<td <?php echo $this->get_render_attribute_string('tbody_td_attributes'.$i.$j); ?>>
-								<div class="wpr-td-content-wrapper <?php echo ($table_td[$j]['icon_position'] === 'top') ? 'wpr-flex-column' : (($table_td[$j]['icon_position'] === 'bottom') ? 'wpr-flex-column-reverse' : '') ?>">
+								<div class="wpr-td-content-wrapper <?php echo ($table_td[$j]['icon_position'] === 'top') ? 'wpr-flex-column-reverse' : (($table_td[$j]['icon_position'] === 'bottom') ? 'wpr-flex-column' : '') ?>">
 									<?php $table_td[$j]['icon'] === 'yes' && ($table_td[$j]['icon_position'] === 'left' || $table_td[$j]['icon_position'] === 'top' || $table_td[$j]['icon_position'] === 'bottom') ? $this->render_td_icon_or_image($table_td, $j) : '' ?>
 									<a href="<?php echo esc_url($table_td[$j]['link']['url']) ?>" target="<?php echo $table_td[$j]['external'] ?>">
 										<span class="wpr-table-text"><?php echo $table_td[$j]['content']; ?></span>
@@ -2885,7 +2950,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 		</div>
     	<?php }
 			if ( 'yes' == $settings['enable_custom_pagination'] ) {
-					$this->render_custom_pagination($settings, null);
+				$this->render_custom_pagination($settings, null);
 			}
 		}
   	}

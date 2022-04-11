@@ -11329,15 +11329,11 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-flex-column { 
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 .wpr-flex-column-reverse { 
   display: flex;
   flex-direction: column-reverse;
-  justify-content: center;
-  align-items: center;
 }
 
 .wpr-advanced-table th {
