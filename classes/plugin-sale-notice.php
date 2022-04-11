@@ -12,6 +12,7 @@ class WprPluginSaleNotice {
         $this->past_date = strtotime( '-2 days' );
         $this->install_date = get_option('royal_elementor_addons_activation_time');
 
+                    add_action( 'admin_init', [$this, 'render_notice'] );
         if ( current_user_can('administrator') ) {
             if ( !get_option('wpr_plugin_sale_dismiss_notice') ) {
                     add_action( 'admin_init', [$this, 'render_notice'] );
@@ -63,11 +64,13 @@ class WprPluginSaleNotice {
                                 </li>
                             </ul>
                             <p>
-                                Hurry up! Upgrade within the <strong>next 24 hours</strong> and get a <strong>40% Discount</strong>.
+                                Hurry up! Upgrade within the <strong>next 24 hours</strong> and get a 
+                                <strong>40% Discount</strong>.<br><br>
+                                Use Promo Code: &nbsp;&nbsp;&nbsp;<strong style="border: 1px dashed #C3C4C7;padding: 2px 10px;">REAFLASH40</strong>
                             </p>
                             <br>
                             <div>
-                                <a href="#" target="_blank" class="wpr-upgrade-to-pro-button button button-secondary">Upgrade to Pro <span class="dashicons dashicons-arrow-right-alt"></span></a>
+                                <a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-salebanner-upgrade-pro#purchasepro" target="_blank" class="wpr-upgrade-to-pro-button button button-secondary">Upgrade to Pro <span class="dashicons dashicons-arrow-right-alt"></span></a>
                             </div>
                         </div>
                         <div class="image-wrap"><img src="'. WPR_ADDONS_ASSETS_URL .'/img/sale-banner.png"></div>
