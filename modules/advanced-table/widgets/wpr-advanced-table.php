@@ -317,18 +317,18 @@ class Wpr_AdvancedTable extends Widget_Base {
 			]
 		);
 
-        // $this->add_control(
-        //     'table_export_csv_button',
-        //     [
-        //         'label' => __('Export table as CSV file', 'wpr-addons'),
-        //         'type'  => Controls_Manager::BUTTON,
-        //         'text'  => __('Export', 'wpr-addons'),
-        //         'event' => 'my-table-export',
-		// 		'condition' => [
-		// 			'enable_table_export' => 'yes'
-		// 		]
-        //     ]
-        // );
+        $this->add_control(
+            'table_export_csv_button',
+            [
+                'label' => __('Export table as CSV file', 'wpr-addons'),
+                'type'  => Controls_Manager::BUTTON,
+                'text'  => __('Export', 'wpr-addons'),
+                'event' => 'my-table-export',
+				'condition' => [
+					'enable_table_export' => 'yes'
+				]
+            ]
+        );
 
 		$this->end_controls_section();
 
