@@ -2899,17 +2899,25 @@ class Wpr_AdvancedTable extends Widget_Base {
 				<thead>
 					<tr class="wpr-table-head-row wpr-table-row">
 					<?php $i = 0; foreach ($settings['table_header'] as $item) { 
-					$this->add_render_attribute('th_class'.$i, [
-						'class' => ['wpr-table-th', 'elementor-repeater-item-'.$item['_id'], ($item['header_icon_position'] === 'top') ? 'wpr-flex-column-reverse' : (($item['header_icon_position'] === 'bottom') ? 'wpr-flex-column' : '')],
-						'colspan' => $item['header_colspan'],
+
+						$this->add_render_attribute('th_class'.$i, [
+							'class' => ['wpr-table-th', 'elementor-repeater-item-'.$item['_id']],
+							'colspan' => $item['header_colspan'],
+						]); 
+						
+						$this->add_render_attribute('th_inner_class'.$i, [
+							'class' => [($item['header_icon_position'] === 'top') ? 'wpr-flex-column-reverse' : (($item['header_icon_position'] === 'bottom') ? 'wpr-flex-column' : '')],
 						]); ?>
+
 						<th <?php echo $this->get_render_attribute_string('th_class'.$i); ?>>
-							<?php $item['header_icon'] === 'yes'  && $item['header_icon_position'] == 'left' ? $this->render_th_icon_or_image($item, $i) : '' ?>
-							<span class="wpr-table-text"><?php echo $item['table_th']; ?></span>
-							<?php $item['header_icon'] === 'yes' && $item['header_icon_position'] == 'right' ? $this->render_th_icon_or_image($item, $i) : '' ?>
-							<?php echo $sorting_icon; ?>
-							<?php $item['header_icon'] === 'yes' && ($item['header_icon_position'] == 'top' || $item['header_icon_position'] == 'bottom')? $this->render_th_icon_or_image($item, $i) : '' ?>
-							<?php echo $sorting_icon; ?>
+							<div <?php echo $this->get_render_attribute_string('th_inner_class'.$i); ?>>
+								<?php $item['header_icon'] === 'yes'  && $item['header_icon_position'] == 'left' ? $this->render_th_icon_or_image($item, $i) : '' ?>
+								<span class="wpr-table-text"><?php echo $item['table_th']; ?></span>
+								<?php $item['header_icon'] === 'yes' && $item['header_icon_position'] == 'right' ? $this->render_th_icon_or_image($item, $i) : '' ?>
+								<?php echo $sorting_icon; ?>
+								<?php $item['header_icon'] === 'yes' && ($item['header_icon_position'] == 'top' || $item['header_icon_position'] == 'bottom')? $this->render_th_icon_or_image($item, $i) : '' ?>
+								<?php echo $sorting_icon; ?>
+							</div>
 						</th>
 						<?php $i++; } ?>
 					</tr>
