@@ -213,7 +213,7 @@ if ( did_action( 'elementor/loaded' ) ) {
 function royal_elementor_addons_activation_time() {//TODO: Try to locate this in rating-notice.php later if possible
 	if ( false === get_option( 'royal_elementor_addons_activation_time' ) ) {
 		add_option( 'royal_elementor_addons_activation_time', strtotime('now') );
-	}
+	} 
 }
 
 // Delete Plugin Update Notice

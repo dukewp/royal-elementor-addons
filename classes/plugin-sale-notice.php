@@ -8,11 +8,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WprPluginSaleNotice {
     public function __construct() {
         // delete_option('wpr_plugin_sale_dismiss_notice');
+        
+        $this->past_date = strtotime( '-2 days' );
+        $this->install_date = get_option('royal_elementor_addons_activation_time');
+        var_dump($this->past_date, $this->install_date);
 
         if ( current_user_can('administrator') ) {
             if ( !get_option('wpr_plugin_sale_dismiss_notice') ) {
-                add_action( 'admin_init', [$this, 'render_notice'] );
-            }
+                    add_action( 'admin_init', [$this, 'render_notice'] );
+                }
         }
 
         if ( is_admin() ) {
@@ -23,7 +27,9 @@ class WprPluginSaleNotice {
     }
 
     public function render_notice() {
-        add_action( 'admin_notices', [$this, 'render_plugin_sale_notice' ]);
+        if ( $this->past_date >= $this->install_date ) {
+            add_action( 'admin_notices', [$this, 'render_plugin_sale_notice' ]);
+        }
     }
     
     public function wpr_plugin_sale_dismiss_notice() {
