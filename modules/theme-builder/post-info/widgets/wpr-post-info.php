@@ -642,6 +642,25 @@ class Wpr_Post_Info extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'post_info_avatar_border_radius',
+			[
+				'label' => esc_html__( 'Avatar Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .avatar' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				],
+				'separator' => 'before'
+			]
+		);
+
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
