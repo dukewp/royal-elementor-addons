@@ -37,7 +37,7 @@ class Wpr_Countdown extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'evergreen countdown timer' ];
+		return [ 'royal', 'evergreen countdown timer' ];
 	}
 
     public function get_custom_help_url() {
@@ -407,6 +407,12 @@ class Wpr_Countdown extends Widget_Base {
 		wp_reset_postdata();
 
 		$this->end_controls_section(); // End Controls Section
+
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'countdown', [
+			'Evergreen Timer - User Specific Timer',
+			'An evergreen countdown timer is used to display the amount of time a particular user has to avail the offer. This is a great way to create a feeling of scarcity, urgency and exclusivity',
+		] );
 
 		// Section: General ----------
 		$this->start_controls_section(

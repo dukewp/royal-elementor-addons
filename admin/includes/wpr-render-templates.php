@@ -60,15 +60,15 @@ class WPR_Render_Templates {
 		// Other Themes
 		} else {
 			add_action( 'get_header', [ $this, 'replace_header' ] );
+			add_action( 'elementor/page_templates/canvas/before_content', [ $this, 'add_canvas_header' ] );
+
 			add_action( 'get_footer', [ $this, 'replace_footer' ] );
+			add_action( 'elementor/page_templates/canvas/after_content', [ $this, 'add_canvas_footer' ], 9 );
 		}
 
-		add_action( 'elementor/page_templates/canvas/before_content', [ $this, 'add_canvas_header' ] );
-
-		add_action( 'elementor/page_templates/canvas/after_content', [ $this, 'add_canvas_footer' ], 9 );
-
-		// Canvas Page Content
-		// add_action( 'elementor/page_templates/canvas/wpr_content', [ $this, 'canvas_page_content_display' ], 1 );
+		// Theme Builder
+		add_filter( 'template_include', [ $this, 'convert_to_canvas' ], 12 ); // 12 after WP Pages and WooCommerce.
+		add_action( 'elementor/page_templates/canvas/wpr_print_content', [ $this, 'canvas_page_content_display' ] );
 
 		// Scripts and Styles
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
@@ -79,10 +79,13 @@ class WPR_Render_Templates {
     ** Check if a Template has Conditions
     */
 	public function is_template_available( $type ) {
-    	$conditions = json_decode( get_option('wpr_'. $type .'_conditions', '[]'), true );
-    	$template = WPR_Conditions_Manager::header_footer_display_conditions( $conditions );
-
-    	return (!empty( $conditions ) && !is_null($template)) ? true : false;
+    	if ( 'content' === $type ) {
+			return !is_null(WPR_Conditions_Manager::canvas_page_content_display_conditions()) ? true : false;
+    	} else {
+    		$conditions = json_decode( get_option('wpr_'. $type .'_conditions', '[]'), true );
+    		$template = WPR_Conditions_Manager::header_footer_display_conditions( $conditions );
+    		return (!empty( $conditions ) && !is_null($template)) ? true : false;
+    	}
 	}
 
     /**
@@ -155,32 +158,31 @@ class WPR_Render_Templates {
 		}
     }
 
+    public function convert_to_canvas( $template ) {
+    	$is_theme_builder_edit = \Elementor\Plugin::$instance->preview->is_preview_mode() && Utilities::is_theme_builder_template() ? true : false;
+    	$_wp_page_template = get_post_meta(get_the_ID(), '_wp_page_template', true);
+
+    	if ( $this->is_template_available('content') || $is_theme_builder_edit ) {
+    		if ( (is_page() || is_single()) && 'elementor_canvas' === $_wp_page_template && !$is_theme_builder_edit ) {
+    			return $template;
+    		} else {
+    			return WPR_ADDONS_PATH . 'admin/templates/wpr-canvas.php';
+    		}
+    	} else {
+    		return $template;
+    	}
+    }
+
 	/**
 	** Theme Builder Content Display
 	*/
-	// public function canvas_page_content_display() {//TODO: Change and Adapt this function (maybe move to conditions manager)
-	// 	// Get Conditions
-	// 	$archives = json_decode( get_option( 'wpr_archive_conditions' ), true );
-	// 	$archives = is_null( $archives ) ? [] : $archives;
-	// 	$singles  = json_decode( get_option( 'wpr_single_conditions' ), true );
-	// 	$singles  = is_null( $singles ) ? [] : $singles;
+	public function canvas_page_content_display() {
+		// Get Template
+		$template = WPR_Conditions_Manager::canvas_page_content_display_conditions();
 
-	// 	// Reset
-	// 	$template = '';
-
-	// 	// Archive Pages (includes search)
-	// 	if ( ! is_null( $this->archive_templates_conditions( $archives ) ) ) {
-	// 		$template = $this->archive_templates_conditions( $archives );
-	// 	}
-
- //    	// Single Pages
-	// 	if ( ! is_null( $this->single_templates_conditions( $singles, false ) ) ) {
-	// 		$template = $this->single_templates_conditions( $singles, false );
-	// 	}
-
-	// 	// Display Template
-	// 	Utilities::render_elementor_template( $template );
-	// }
+		// Display Template
+		Utilities::render_elementor_template( $template );
+	}
 
 	/**
 	 * Enqueue styles and scripts.
@@ -220,6 +222,19 @@ class WPR_Render_Templates {
 				$footer_css_file = new \Elementor\Core\Files\CSS\Post( $footer_template_id );
 			} elseif ( class_exists( '\Elementor\Post_CSS_File' ) ) {
 				$footer_css_file = new \Elementor\Post_CSS_File( $footer_template_id );
+			}
+
+			$footer_css_file->enqueue();
+		}
+
+		// Load Canvas Content Template CSS File
+		$canvas_template_id = Utilities::get_template_id(WPR_Conditions_Manager::canvas_page_content_display_conditions());
+
+		if ( false !== $canvas_template_id ) {
+			if ( class_exists( '\Elementor\Core\Files\CSS\Post' ) ) {
+				$footer_css_file = new \Elementor\Core\Files\CSS\Post( $canvas_template_id );
+			} elseif ( class_exists( '\Elementor\Post_CSS_File' ) ) {
+				$footer_css_file = new \Elementor\Post_CSS_File( $canvas_template_id );
 			}
 
 			$footer_css_file->enqueue();

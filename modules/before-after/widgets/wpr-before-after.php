@@ -33,7 +33,7 @@ class Wpr_Before_After extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'image compare', 'image comparison', 'before after image' ];
+		return [ 'royal', 'image compare', 'image comparison', 'before after image' ];
 	}
 
 	public function get_script_depends() {
@@ -527,6 +527,14 @@ class Wpr_Before_After extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'before-after', [
+			'Vertical Image Comparison',
+			'Move Images on Mouse Move (Hover)',
+			'Set Default Divider Position (% After Image to show)',
+			'Show Labels on Image Hover',
+		] );
 
 		// Styles ====================
 		// Section: Labels -----------

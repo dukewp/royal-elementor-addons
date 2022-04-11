@@ -34,11 +34,11 @@ class Wpr_Content_Ticker extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return [ 'wpr-widgets'];
+		return Utilities::show_theme_buider_widget_on('archive') ? [ 'wpr-theme-builder-widgets' ] : [ 'wpr-widgets'];
 	}
 
 	public function get_keywords() {
-		return [ 'content ticker', 'news ticker', 'post ticker' ];
+		return [ 'royal', 'blog', 'content ticker', 'news ticker', 'post ticker', 'posts ticker' ];
 	}
 
 	public function get_script_depends() {
@@ -1008,6 +1008,14 @@ class Wpr_Content_Ticker extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'content-ticker', [
+			'Add Custom Ticker Items (Instead of loading Dynamically)',
+			'Marquee Animation - a Smooth Animation with Direction option',
+			'Slider Animation options - Typing, Fade & Vertical Slide',
+			'Heading Icon Type - Animated Circle',
+		] );
+		
 		// Styles
 		// Section: Heading ----------
 		$this->start_controls_section(
@@ -1446,6 +1454,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 				'default' => '#555555',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-ticker-title a' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-ticker-title:after' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -1466,6 +1475,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-ticker-title:hover a' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-ticker-title:after' => 'color: {{VALUE}};',
 				],
 			]
 		);

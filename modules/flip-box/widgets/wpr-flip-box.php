@@ -37,7 +37,7 @@ class Wpr_Flip_Box extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'hover box', 'banner box', 'animated banner' ];
+		return [ 'royal', 'hover box', 'banner box', 'animated banner' ];
 	}
 
 	public function get_style_depends() {
@@ -489,6 +489,12 @@ class Wpr_Flip_Box extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'flip-box', [
+			'Flip on Button Click',
+			'Advanced Flipping Animations',
+		] );
+		
 		// Styles
 		// Section: Front ------------
 		$this->start_controls_section(

@@ -32,7 +32,7 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'social sharing', 'sharing buttons', ];
+		return [ 'royal', 'social sharing', 'sharing buttons', ];
 	}
 
     public function get_custom_help_url() {
@@ -72,27 +72,6 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 	}
 
 	public function add_control_sharing_show_label() {}
-
-	public function add_section_styles_sharing_styles() {
-		$this->start_controls_section(
-			'section_styles_sharing_styles',
-			[
-				'label' => esc_html__( 'Styles', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-			]
-		);
-
-		$this->add_control(
-			'sharing_icon_bg_tr',
-			[
-				'label' => esc_html__( 'Icon Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
-			]
-		);
-
-		$this->end_controls_section(); // End Controls Section
-	}
 
 	public function add_control_sharing_icon_border_radius() {}
 
@@ -163,6 +142,18 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 			]
 		);
 
+		if ( Utilities::is_new_free_user() ) {
+			$this->add_control(
+				'sharing_repeater_pro_notice',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => 'More than 4 Buttons are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-sharing-buttons-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+					'content_classes' => 'wpr-pro-notice',
+				]
+			);
+		}
+
 		$this->end_controls_section(); // End Controls Section
 
 		// Tab: Content ==============
@@ -186,6 +177,16 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'sharing-buttons', [
+			'Add Unlimited Social Icons',
+			'Custom Social Media Label',
+			'Layout Columns 1,2,3,4,5,6',
+			'Only Labels - Show/Hide Icon',
+			'Only Icons - Show/Hide Label',
+			'Advanced Styling options',
+		] );
+		
 		// Tab: Styles ==============
 		// Section: Layout ----------
 		$this->start_controls_section(
@@ -419,7 +420,248 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 
 		// Tab: Styles ==============
 		// Section: Styles ----------
-		$this->add_section_styles_sharing_styles();
+		$this->start_controls_section(
+			'section_styles_sharing_styles',
+			[
+				'label' => esc_html__( 'Styles', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'sharing_custom_colors',
+			[
+				'label' => esc_html__( 'Use Custom Colors', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'separator' => 'after'
+			]
+		);
+
+		$this->add_control(
+			'sharing_icon_bg_tr',
+			[
+				'label' => esc_html__( 'Icon Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'condition' => [
+					'sharing_custom_colors' => '',
+				]
+			]
+		);
+
+		$this->add_control(
+			'sharing_label_bg',
+			[
+				'label' => esc_html__( 'Label Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'condition' => [
+					'sharing_show_label' => 'yes',
+					'sharing_custom_colors' => '',
+				]
+			]
+		);
+
+		$this->add_control(
+			'sharing_label_bg_tr',
+			[
+				'label' => esc_html__( 'Label Background Transparency', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'selectors_dictionary' => [
+					'' => '1',
+					'yes' => '0.92'
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-label' => 'opacity: {{VALUE}};',
+				],
+				'condition' => [
+					'sharing_show_label' => 'yes',
+					'sharing_custom_colors' => '',
+					'sharing_label_bg' => 'yes',
+				]
+			]
+		);
+
+		$this->start_controls_tabs(
+			'tabs_sharing_custom_colors', [
+				'condition' => [
+					'sharing_custom_colors' => 'yes',
+				]
+			]
+		);
+
+		$this->start_controls_tab(
+			'tab_sharing_custom_normal',
+			[
+				'label' => esc_html__( 'Normal', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'sharing_icon_color',
+			[
+				'label'  => esc_html__( 'Icon Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-icon i' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'sharing_icon_bg_color',
+			[
+				'label'  => esc_html__( 'Icon Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#4A45D2',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-icon i' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'sharing_label_color',
+			[
+				'label'  => esc_html__( 'Label Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-label' => 'color: {{VALUE}}',
+				],
+				'condition' => [
+					'sharing_show_label' => 'yes',
+				]
+			]
+		);
+
+		$this->add_control(
+			'sharing_label_bg_color',
+			[
+				'label'  => esc_html__( 'Label Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-label' => 'background-color: {{VALUE}}',
+				],
+				'condition' => [
+					'sharing_show_label' => 'yes',
+				]
+			]
+		);
+
+		$this->add_control(
+			'sharing_label_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-icon' => 'border-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_sharing_custom_hover',
+			[
+				'label' => esc_html__( 'Hover', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'sharing_icon_color_hr',
+			[
+				'label'  => esc_html__( 'Icon Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-icon:hover i' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'sharing_icon_bg_color_hr',
+			[
+				'label'  => esc_html__( 'Icon Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-icon:hover i' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'sharing_label_color_hr',
+			[
+				'label'  => esc_html__( 'Label Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-icon:hover .wpr-sharing-label' => 'color: {{VALUE}}',
+				],
+				'condition' => [
+					'sharing_show_label' => 'yes',
+				]
+			]
+		);
+
+		$this->add_control(
+			'sharing_label_bg_color_hr',
+			[
+				'label'  => esc_html__( 'Label Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#4A45D2',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-icon:hover .wpr-sharing-label' => 'background-color: {{VALUE}}',
+				],
+				'condition' => [
+					'sharing_show_label' => 'yes',
+				]
+			]
+		);
+
+		$this->add_control(
+			'sharing_label_border_color_hr',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-icon:hover' => 'border-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_control(
+			'sharing_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.1,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-icon' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-icon i' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-icon span' => 'transition-duration: {{VALUE}}s',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->end_controls_section(); // End Controls Section
 
 	}
 
@@ -441,7 +683,12 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 
 		echo '<div class="wpr-sharing-buttons elementor-grid'. esc_attr($class) .'">';
 		
+		$count = 0;
 		foreach( $settings['sharing_buttons'] as $button ) {
+			if ( Utilities::is_new_free_user() && $count === 4 ) {
+				break;
+			}
+
 			$sharing_icon = str_replace( 'fab ', '', $button['sharing_icon'] );
 			$sharing_icon = str_replace( 'fas ', '', $sharing_icon );
 			$sharing_icon = str_replace( 'fa-', '', $sharing_icon );
@@ -461,6 +708,8 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 			echo '<div class="elementor-grid-item">';
 				echo Utilities::get_post_sharing_icon( $args );
 			echo '</div>';
+
+			$count++;
 		}
 
 		echo '</div>';

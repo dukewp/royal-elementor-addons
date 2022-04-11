@@ -26,7 +26,7 @@ class WPR_Templates_Shortcode {
 
 		$edit_link = '<span class="wpr-template-edit-btn" data-permalink="'. get_permalink($attributes['id']) .'">Edit Template</span>';
 
-		return Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $attributes['id'] ) . $edit_link;
+		return Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $attributes['id'], true ) . $edit_link;
 	}
 
 	public function extend_shortcode( $section, $section_id, $args ) {

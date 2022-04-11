@@ -23,6 +23,7 @@ class Utilities {
 			'WooCommerce Grid' => ['woo-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-woo-grid'],
 			'Image Grid' => ['media-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-gallery-grid'],
 			'Magazine Grid' => ['magazine-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-magazine-grid'],
+			'Posts/Story Timeline' => ['posts-timeline', 'https://royal-elementor-addons.com/elementor-timeline-widget/', ''],
 			'Advanced Slider' => ['advanced-slider', 'https://royal-elementor-addons.com/elementor-advanced-slider-widget/', ''],
 			'Testimonial' => ['testimonial', 'https://royal-elementor-addons.com/elementor-testimonials-slider-widget/', ''],
 			'Nav Menu' => ['nav-menu', 'http://royal-elementor-addons.com/elementor-menu-widget/', ''],
@@ -48,14 +49,15 @@ class Utilities {
 			'Business Hours' => ['business-hours', 'https://royal-elementor-addons.com/elementor-business-hours-widget/', ''],
 			'Sharing Buttons' => ['sharing-buttons', 'https://royal-elementor-addons.com/elementor-social-sharing-buttons-widget/', ''],
 			'Search Form' => ['search', 'https://royal-elementor-addons.com/elementor-search-widget/', ''],
+			'Back to Top' => ['back-to-top', 'https://royal-elementor-addons.com/elementor-back-to-top-widget/', ''],
+			'Phone Call' => ['phone-call', 'https://royal-elementor-addons.com/elementor-phone-call-widget/', ''],
+			'Lottie Animations' => ['lottie-animations', 'https://royal-elementor-addons.com/elementor-lottie-animation-widget/?ref=rea-plugin-backend-elements-widget-prev', ''],
 			'Site Logo' => ['logo', '', ''],
-			'Back to Top' => ['back-to-top', '', ''],
-			'Phone Call' => ['phone-call', '', ''],
 			'Popup Trigger' => ['popup-trigger', '', ''],
-			'Lottie Animations' => ['lottie-animations', '', ''],
 			'Advanced Table' => ['advanced-table', '', ''],
+			'Taxonomy List' => ['taxonomy-list', '', ''],
+			'Template' => ['elementor-template', '', ''],
 			// 'Random Image' => ['random-image', '', ''],
-			// 'Author Box' => 'author-box',
 		];
 	}
 
@@ -72,6 +74,22 @@ class Utilities {
 			}
 		}
 		return $modules;
+	}
+
+	/**
+	** Get Theme Builder Modules
+	*/
+	public static function get_theme_builder_modules() {
+		return [
+			'post-title',
+			'post-media',
+			'post-content',
+			'post-info',
+			'post-navigation',
+			'post-comments',
+			'author-box',
+			'archive-title',
+		];
 	}
 
 	/**
@@ -234,6 +252,44 @@ class Utilities {
 
 
 	/**
+	** Get Royal Template Type
+	*/
+	public static function get_wpr_template_type( $id ) {
+		$post_meta = get_post_meta($id);
+		$template_type = isset($post_meta['_wpr_template_type'][0]) ? $post_meta['_wpr_template_type'][0] : false;
+
+        return $template_type;
+	}
+
+
+	/**
+	** Theme Builder Show Widgets on Spacific Pages
+	*/
+	public static function show_theme_buider_widget_on( $type ) {
+		global $post;
+		$display = false;
+
+		if ( Utilities::is_theme_builder_template() ) {
+			$template_type = Utilities::get_wpr_template_type(get_the_ID());
+
+			if ( $type === $template_type ) {
+				$display = true;
+			}
+
+			$conditions = json_decode(get_option('wpr_single_conditions'));
+			$front_page = Utilities::get_template_slug($conditions, 'single/front_page', get_the_ID());
+			$page_404 = Utilities::get_template_slug($conditions, 'single/page_404', get_the_ID());
+
+			if ( $post->post_name == $front_page || $post->post_name == $page_404 ) {
+				$display = false;
+			}
+		}
+
+		return $display;
+	}
+
+
+	/**
 	** Render Elementor Template
 	*/
 	public static function render_elementor_template( $slug ) {
@@ -250,6 +306,16 @@ class Utilities {
 
 
 	/**
+	** Theme Builder Template Check
+	*/
+	public static function is_theme_builder_template() {
+		$current_page = get_post(get_the_ID());
+
+		return strpos($current_page->post_name, 'user-archive') !== false || strpos($current_page->post_name, 'user-single') !== false;
+	}
+
+
+	/**
 	** Blog Archive Page Check
 	*/
 	public static function is_blog_archive() {
@@ -257,7 +323,7 @@ class Utilities {
 		$front_page = get_option( 'page_on_front' );
 		$posts_page = get_option( 'page_for_posts' );
 
-		if ( is_home() && '0' === $front_page && '0' === $posts_page || intval($posts_page) === get_queried_object_id() ) {
+		if ( is_home() && '0' === $front_page && '0' === $posts_page || (intval($posts_page) === get_queried_object_id() && !is_404()) ) {
 			$result = true;
 		}
 
@@ -277,7 +343,8 @@ class Utilities {
 			$sharing_url = 'https://www.linkedin.com/shareArticle?mini=true&url='. $args['url'] .'&title='. $args['title'] .'&summary='. $args['text'] .'&source='. $args['url'];
 			$network_title = esc_html__( 'LinkedIn', 'wpr-addons' );
 		} elseif ( 'pinterest-p' === $args['network'] ) {
-			$sharing_url = 'https://www.pinterest.com/pin/find/?url='. $args['url'];
+			// $sharing_url = 'https://www.pinterest.com/pin/find/?url='. $args['url'];
+			$sharing_url = 'https://www.pinterest.com/pin/create/button/?url=' . $args['url'] . '&media=' . $args['image'];
 			$network_title = esc_html__( 'Pinterest', 'wpr-addons' );
 		} elseif ( 'reddit' === $args['network'] ) {
 			$sharing_url = 'https://reddit.com/submit?url='. $args['url'] .'&title='. $args['title'];
@@ -402,6 +469,9 @@ class Utilities {
 		foreach ( $data as $array ) {
 			$merged_meta_keys = array_unique( array_merge( $merged_meta_keys, $array ) );
 		}
+		
+		// Rekey
+		$merged_meta_keys = array_values($merged_meta_keys);
 
 		for ( $i = 0; $i < count( $merged_meta_keys ); $i++ ) {
 			$options[ $merged_meta_keys[$i] ] = $merged_meta_keys[$i];
@@ -672,26 +742,44 @@ class Utilities {
 	}
 
 	/**
-	** Get User IP
+	** Pro Features List Section
 	*/
-	public static function get_user_ip() {
-		$ipaddress = '';
-		if ( getenv( 'HTTP_CLIENT_IP' ) ) {
-			$ipaddress = getenv( 'HTTP_CLIENT_IP' );
-		} elseif ( getenv( 'HTTP_X_FORWARDED_FOR' ) ) {
-			$ipaddress = getenv( 'HTTP_X_FORWARDED_FOR' );
-		} elseif ( getenv( 'HTTP_X_FORWARDED' ) ) {
-			$ipaddress = getenv( 'HTTP_X_FORWARDED' );
-		} elseif ( getenv( 'HTTP_FORWARDED_FOR' ) ) {
-			$ipaddress = getenv( 'HTTP_FORWARDED_FOR' );
-		} elseif ( getenv( 'HTTP_FORWARDED' ) ) {
-			$ipaddress = getenv( 'HTTP_FORWARDED' );
-		} elseif ( getenv( 'REMOTE_ADDR' ) ) {
-			$ipaddress = getenv( 'REMOTE_ADDR' );
-		} else {
-			$ipaddress = 'UNKNOWN';
+	public static function pro_features_list_section( $module, $controls_manager, $widget, $features ) {
+		if ( wpr_fs()->can_use_premium_code() ) {
+			return;
 		}
-		return $ipaddress;
+
+		$module->start_controls_section(
+			'pro_features_section',
+			[
+				'label' => 'Pro Features <span class="dashicons dashicons-star-filled"></span>',
+			]
+		);
+
+		$list_html = '';
+
+		for ($i=0; $i < count($features); $i++) { 
+			$list_html .= '<li>'. $features[$i] .'</li>';
+		}
+
+		$module->add_control(
+			'pro_features_list',
+			[
+				'type' => $controls_manager,
+				'raw' => '<ul>'. $list_html .'</ul>
+						  <a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-pro-sec-'. $widget .'-upgrade-pro#purchasepro" target="_blank">Get Pro version</a>',
+				'content_classes' => 'wpr-pro-features-list',
+			]
+		);
+
+		$module->end_controls_section();
+	}
+
+	/**
+	** Check for New Free Users
+	*/
+	public static function is_new_free_user() {
+		return !wpr_fs()->can_use_premium_code() && (intval(get_option('royal_elementor_addons_activation_time')) > 1649247746);
 	}
 
 }

@@ -137,7 +137,7 @@ class WPR_Post_Likes {
 	/**
 	** Get Button
 	*/
-	public function get_button( $post_id = NULL, $settings ) {
+	public function get_button( $post_id, $settings ) {
 		$nonce = wp_create_nonce( 'wpr-post-likes-nonce' ); // Security
 		$like_count = get_post_meta( $post_id, '_post_like_count', true );
 		$like_count = ( isset( $like_count ) && is_numeric( $like_count ) ) ? $like_count : 0;

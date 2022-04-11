@@ -31,6 +31,17 @@ class Wpr_ReadingProgressBar {
         );
 
 		$element->add_control(
+            'wpr_rpb_apply_changes',
+            [
+                'type' => Controls_Manager::RAW_HTML,
+                'raw' => '<div style="text-align: center;"><button class="elementor-update-preview-button elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply Changes</button></div>',
+                'condition' => [
+                    'wpr_rpb_enable_globally' => 'yes'
+                ]
+            ]
+        );
+
+		$element->add_control(
 			'wpr_rpb_enable',
 			[
 				'label' => __( 'Enable Progress Bar', 'wpr-addons' ),
@@ -75,17 +86,6 @@ class Wpr_ReadingProgressBar {
 				],
 			]
 		);
-
-		$element->add_control(
-            'wpr_rpb_apply_changes',
-            [
-                'type' => Controls_Manager::RAW_HTML,
-                'raw' => '<div style="text-align: center;"><button class="elementor-update-preview-button elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply Changes</button></div>',
-                'condition' => [
-                    'wpr_rpb_enable_globally' => 'yes'
-                ]
-            ]
-        );
 
 		$element->add_control(
 			'wpr_height',

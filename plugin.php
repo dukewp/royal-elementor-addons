@@ -6,6 +6,7 @@ use Elementor\Controls_Manager;
 use WprAddons\Includes\Controls\WPR_Control_Animations;
 use WprAddons\Includes\Controls\WPR_Control_Animations_Alt;
 use WprAddons\Includes\Controls\WPR_Control_Button_Animations;
+use WprAddons\Includes\Controls\WPR_Control_Arrow_Icons;
 use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) {	exit; } // Exit if accessed directly
@@ -79,6 +80,7 @@ class Plugin {
 
 		// Custom Controls
 		require WPR_ADDONS_PATH . 'includes/controls/wpr-control-animations.php';
+		require WPR_ADDONS_PATH . 'includes/controls/wpr-control-icons.php';
 
 		// Templates Library
 		require WPR_ADDONS_PATH . 'admin/includes/wpr-templates-library.php';
@@ -110,12 +112,21 @@ class Plugin {
 		require WPR_ADDONS_PATH . 'extensions/wpr-custom-css.php';
 
 		// Rating Notice 
-		require WPR_ADDONS_PATH . 'classes/rating-notice.php';	
+		require WPR_ADDONS_PATH . 'classes/rating-notice.php';
+		
+		// Theme Builder Notice
+		require WPR_ADDONS_PATH . 'classes/plugin-update-notice.php';
 
 		// Admin Files
 		if ( is_admin() ) {
 			// Plugin Options
 			require WPR_ADDONS_PATH . 'admin/plugin-options.php';
+
+			// Premade Blocks
+			require WPR_ADDONS_PATH . 'admin/premade-blocks.php';
+
+			// Templates Kit
+			require WPR_ADDONS_PATH . 'admin/templates-kit.php';
 
 			// Theme Builder
 			require WPR_ADDONS_PATH . 'admin/theme-builder.php';
@@ -180,10 +191,16 @@ class Plugin {
 		$controls_manager->register_control( 'wpr-animations', new WPR_Control_Animations() );
 		$controls_manager->register_control( 'wpr-animations-alt', new WPR_Control_Animations_Alt() );
 		$controls_manager->register_control( 'wpr-button-animations', new WPR_Control_Button_Animations() );
+		$controls_manager->register_control( 'wpr-arrow-icons', new WPR_Control_Arrow_Icons() );
 
 	}
 
 	public function register_elementor_document_type( $documents_manager ) {
+		// Theme Builder
+		require WPR_ADDONS_PATH . 'modules/theme-builder/wpr-theme-builder.php';
+		$documents_manager->register_document_type( 'wpr-theme-builder', 'Wpr_Theme_Builder' );
+
+		// Popups
 		require WPR_ADDONS_PATH . 'modules/popup/wpr-popup.php';
 
         if ( wpr_fs()->can_use_premium_code() && defined('WPR_ADDONS_PRO_VERSION') ) {
@@ -238,6 +255,13 @@ class Plugin {
 			Plugin::instance()->get_version()
 		);
 
+		// Posts Timeline
+		wp_register_style( 
+			'wpr-aos-css', 
+			WPR_ADDONS_URL  . 'assets/css/lib/aos/aos' . $this->script_suffix() . '.css',
+			[]
+		);
+
 		wp_enqueue_style(
 			'wpr-addons-css',
 			WPR_ADDONS_URL . 'assets/css/frontend' . $this->script_suffix() . '.css',
@@ -253,12 +277,14 @@ class Plugin {
 			Plugin::instance()->get_version()
 		);
 
-		wp_enqueue_style(
-			'wpr-addons-library-frontend-css',
-			WPR_ADDONS_URL . 'assets/css/library-frontend' . $this->script_suffix() . '.css',
-			[],
-			Plugin::instance()->get_version()
-		);
+        if ( \Elementor\Plugin::$instance->preview->is_preview_mode() ) {
+			wp_enqueue_style(
+				'wpr-addons-library-frontend-css',
+				WPR_ADDONS_URL . 'assets/css/library-frontend' . $this->script_suffix() . '.css',
+				[],
+				Plugin::instance()->get_version()
+			);
+		}
 	}
 
 	public function enqueue_editor_styles() {
@@ -297,6 +323,13 @@ class Plugin {
 			[],
 			Plugin::instance()->get_version()
 		);
+
+		
+		wp_enqueue_style( 
+			'wpr-aos-css', 
+			WPR_ADDONS_URL  . 'assets/css/lib/aos/aos' . $this->script_suffix() . '.css',
+			[]
+		);
 	}
 
 	public function enqueue_scripts() {
@@ -320,7 +353,7 @@ class Plugin {
 			Plugin::instance()->get_version(),
 			true
 		);
-		
+
 		wp_localize_script(
 			'wpr-addons-js',
 			'WprConfig', // This is used in the js file to group all of your scripts together
@@ -332,6 +365,16 @@ class Plugin {
 	}
 
 	public function register_scripts() {
+
+		wp_register_script(
+			'wpr-infinite-scroll',
+			WPR_ADDONS_URL . 'assets/js/lib/infinite-scroll/infinite-scroll' . $this->script_suffix() . '.js',
+			[
+				'jquery',
+			],
+			'3.0.5',
+			true
+		);
 
 		wp_register_script(
 			'wpr-isotope',
@@ -399,7 +442,7 @@ class Plugin {
 
 		wp_register_script(
 			'wpr-lottie-animations',
-			WPR_ADDONS_URL . 'assets/js/lib/lottie/lottie.min.js',
+			WPR_ADDONS_URL . 'assets/js/lib/lottie/lottie'. $this->script_suffix() .'.js',
 			[],
 			'5.8.0',
 			true
@@ -408,7 +451,17 @@ class Plugin {
 		wp_register_script( 
 			'wpr-table-to-excel-js',
 			 WPR_ADDONS_URL  . 'assets/js/lib/tableToExcel/tableToExcel.js',
-			 [], null, true );
+			 [],
+			 null, 
+			 true 
+		);
+		wp_register_script(
+			'wpr-aos-js',
+			 WPR_ADDONS_URL  . 'assets/js/lib/aos/aos'. $this->script_suffix() .'.js',
+			 [], 
+			 null, 
+			 true
+		);
 	}
 
 	public function enqueue_panel_scripts() {
@@ -548,30 +601,46 @@ class Plugin {
 
 	public function elementor_init() {
 		$this->_modules_manager = new Manager();
+	}
 
+	public function register_widget_categories() {
 		// Add element category in panel
 		\Elementor\Plugin::instance()->elements_manager->add_category(
 			'wpr-widgets',
 			[
 				'title' => Utilities::get_plugin_name(true),
 				'icon' => 'font',
-			],
-			1
+			]
 		);
 
 		// Add Woo element category in panel
-		\Elementor\Plugin::instance()->elements_manager->add_category(
-			'wpr-woo-widgets',
-			[
-				'title' => sprintf(esc_html__( '%s WooCommerce', 'wpr-addons' ), Utilities::get_plugin_name()),
-				'icon' => 'font',
-			],
-			2
-		);
+		if ( Utilities::is_theme_builder_template() ) {
+			\Elementor\Plugin::instance()->elements_manager->add_category(
+				'wpr-theme-builder-widgets',
+				[
+					'title' => sprintf(esc_html__( '%s Theme Builder', 'wpr-addons' ), Utilities::get_plugin_name()),
+					'icon' => 'font',
+				]
+			);
+		}
+		
+
+		// Add Woo element category in panel
+		// \Elementor\Plugin::instance()->elements_manager->add_category(
+		// 	'wpr-woo-widgets',
+		// 	[
+		// 		'title' => sprintf(esc_html__( '%s WooCommerce', 'wpr-addons' ), Utilities::get_plugin_name()),
+		// 		'icon' => 'font',
+		// 	]
+		// );
 	}
 
 	protected function add_actions() {
+		// Register Widgets
 		add_action( 'elementor/init', [ $this, 'elementor_init' ] );
+
+		// Register Categories
+		add_action( 'elementor/elements/categories_registered', [ $this, 'register_widget_categories' ] );
 
 		// Register Ajax Hooks
 		$this->register_ajax_hooks();

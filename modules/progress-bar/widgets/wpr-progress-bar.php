@@ -37,7 +37,7 @@ class Wpr_Progress_Bar extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'progress bar', 'skill bar', 'skills bar', 'percentage bar', 'bar chart' ];
+		return [ 'royal', 'progress bar', 'skill bar', 'skills bar', 'percentage bar', 'bar chart' ];
 	}
 
 	public function get_script_depends() {
@@ -402,6 +402,13 @@ class Wpr_Progress_Bar extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'progress-bar', [
+			'Vertical Progress Bar',
+			'Stripe Animation option',
+			'Advanced Animation Timing options',
+		] );
+		
 		// Styles
 		// Section: General ----------
 		$this->start_controls_section(

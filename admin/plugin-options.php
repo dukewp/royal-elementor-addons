@@ -9,8 +9,8 @@ use WprAddons\Classes\Utilities;
 // Register Menus
 function wpr_addons_add_admin_menu() {
     $menu_icon = !empty(get_option('wpr_wl_plugin_logo')) ? 'dashicons-admin-generic' : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTciIGhlaWdodD0iNzUiIHZpZXdCb3g9IjAgMCA5NyA3NSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTAuMDM2NDA4NiAyMy4yODlDLTAuNTc1NDkgMTguNTIxIDYuNjg4NzMgMTYuMzY2NiA5LjU0OSAyMC40Njc4TDQyLjgzNjUgNjguMTk3MkM0NC45MTgxIDcxLjE4MiA0Mi40NDk0IDc1IDM4LjQzNzggNzVIMTEuMjc1NkM4LjY1NDc1IDc1IDYuNDUyNjQgNzMuMjg1NSA2LjE2MTcgNzEuMDE4NEwwLjAzNjQwODYgMjMuMjg5WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTk2Ljk2MzYgMjMuMjg5Qzk3LjU3NTUgMTguNTIxIDkwLjMxMTMgMTYuMzY2NiA4Ny40NTEgMjAuNDY3OEw1NC4xNjM1IDY4LjE5NzJDNTIuMDgxOCA3MS4xODIgNTQuNTUwNiA3NSA1OC41NjIyIDc1SDg1LjcyNDRDODguMzQ1MiA3NSA5MC41NDc0IDczLjI4NTUgOTAuODM4MyA3MS4wMTg0TDk2Ljk2MzYgMjMuMjg5WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTUzLjI0MTIgNC40ODUyN0M1My4yNDEyIC0wLjI3MDc2MSA0NS44NDg1IC0xLjc0ODAzIDQzLjQ2NTEgMi41MzE3NEw2LjY4OTkxIDY4LjU2NzdDNS4wMzM0OSA3MS41NDIxIDcuNTIyNzIgNzUgMTEuMzIwMyA3NUg0OC4wOTU1QzUwLjkzNzQgNzUgNTMuMjQxMiA3Mi45OTQ4IDUzLjI0MTIgNzAuNTIxMlY0LjQ4NTI3WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTQzLjc1ODggNC40ODUyN0M0My43NTg4IC0wLjI3MDc2MSA1MS4xNTE1IC0xLjc0ODAzIDUzLjUzNDkgMi41MzE3NEw5MC4zMTAxIDY4LjU2NzdDOTEuOTY2NSA3MS41NDIxIDg5LjQ3NzMgNzUgODUuNjc5NyA3NUg0OC45MDQ1QzQ2LjA2MjYgNzUgNDMuNzU4OCA3Mi45OTQ4IDQzLjc1ODggNzAuNTIxMlY0LjQ4NTI3WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg==';
-	add_menu_page( Utilities::get_plugin_name(), Utilities::get_plugin_name(), 'manage_options', 'wpr-addons', 'wpr_addons_settings_page', $menu_icon, '58.6' );
-	
+    add_menu_page( Utilities::get_plugin_name(), Utilities::get_plugin_name(), 'manage_options', 'wpr-addons', 'wpr_addons_settings_page', $menu_icon, '58.6' );
+    
     add_action( 'admin_init', 'wpr_register_addons_settings' );
     add_filter( 'plugin_action_links_royal-elementor-addons/wpr-addons.php', 'wpr_settings_link' );
 }
@@ -21,7 +21,25 @@ function wpr_settings_link( $links ) {
     $settings_link = '<a href="admin.php?page=wpr-addons">Settings</a>';
     array_push( $links, $settings_link );
 
+    if ( !is_plugin_installed('wpr-addons-pro/wpr-addons-pro.php') ) {
+        $links[] = '<a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-wpplugindashboard-upgrade-pro#purchasepro" style="color:#93003c;font-weight:700" target="_blank">' . esc_html__('Go Pro', 'wpr-addons') . '</a>';
+    }
+
     return $links;
+}
+
+function is_plugin_installed($file) {
+    $installed_plugins = [];
+
+    foreach( get_plugins() as $slug => $plugin_info ) {
+        array_push($installed_plugins, $slug);
+    }
+
+    if ( in_array($file, $installed_plugins) ) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 // Register Settings
@@ -71,7 +89,7 @@ function wpr_register_addons_settings() {
 }
 
 function wpr_addons_settings_page() {
-
+    
 ?>
 
 <div class="wrap wpr-settings-page-wrap">
@@ -100,8 +118,6 @@ function wpr_addons_settings_page() {
         $active_tab = isset( $_GET['tab'] ) ? esc_attr($_GET['tab']) : 'wpr_tab_settings';
     } elseif ( empty(get_option('wpr_wl_hide_white_label_tab')) ) {
         $active_tab = isset( $_GET['tab'] ) ? esc_attr($_GET['tab']) : 'wpr_tab_white_label';
-    } else {
-        $active_tab = isset( $_GET['tab'] ) ? esc_attr($_GET['tab']) : 'wpr_tab_my_templates';
     }
     
 
@@ -114,7 +130,7 @@ function wpr_addons_settings_page() {
     <div class="nav-tab-wrapper wpr-nav-tab-wrapper">
         <?php if ( empty(get_option('wpr_wl_hide_elements_tab')) ) : ?>
         <a href="?page=wpr-addons&tab=wpr_tab_elements" data-title="Elements" class="nav-tab <?php echo $active_tab == 'wpr_tab_elements' ? 'nav-tab-active' : ''; ?>">
-            <?php esc_html_e( 'Elements', 'wpr-addons' ); ?>
+            <?php esc_html_e( 'Widgets', 'wpr-addons' ); ?>
         </a>
         <?php endif; ?>
 
@@ -123,11 +139,7 @@ function wpr_addons_settings_page() {
             <?php esc_html_e( 'Extensions', 'wpr-addons' ); ?>
         </a>
         <?php endif; ?>
-
-        <a href="?page=wpr-addons&tab=wpr_tab_my_templates" data-title="My Templates" class="nav-tab <?php echo $active_tab == 'wpr_tab_my_templates' ? 'nav-tab-active' : ''; ?>">
-            <?php esc_html_e( 'My Templates', 'wpr-addons' ); ?>
-        </a>
-
+        
         <?php if ( empty(get_option('wpr_wl_hide_settings_tab')) ) : ?>
         <a href="?page=wpr-addons&tab=wpr_tab_settings" data-title="Settings" class="nav-tab <?php echo $active_tab == 'wpr_tab_settings' ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Settings', 'wpr-addons' ); ?>
@@ -153,11 +165,11 @@ function wpr_addons_settings_page() {
 
     <div class="wpr-elements-toggle">
         <div>
-            <h3><?php esc_html_e( 'Toggle all Elements', 'wpr-addons' ); ?></h3>
+            <h3><?php esc_html_e( 'Toggle all Widgets', 'wpr-addons' ); ?></h3>
             <input type="checkbox" name="wpr-element-toggle-all" id="wpr-element-toggle-all" <?php checked( get_option('wpr-element-toggle-all', 'on'), 'on', true ); ?>>
             <label for="wpr-element-toggle-all"></label>
         </div>
-        <p><?php esc_html_e( 'You can disable some elements for faster page speed.', 'wpr-addons' ); ?></p>
+        <p><?php esc_html_e( 'You can disable some widgets for faster page speed.', 'wpr-addons' ); ?></p>
     </div>
 
     <div class="wpr-elements">
@@ -184,16 +196,6 @@ function wpr_addons_settings_page() {
     </div>
 
     <?php submit_button( '', 'wpr-options-button' ); ?>
-
-    <?php elseif ( $active_tab == 'wpr_tab_my_templates' ) : ?>
-
-        <!-- Custom Template -->
-        <div class="wpr-user-template">
-            <span><?php esc_html_e( 'Create Template', 'wpr-addons' ); ?></span>
-            <span class="plus-icon">+</span>
-        </div>
-
-        <?php Wpr_Templates_Loop::render_elementor_saved_templates(); ?>
 
     <?php elseif ( $active_tab == 'wpr_tab_settings' ) : ?>
 
@@ -317,6 +319,21 @@ function wpr_addons_settings_page() {
                     echo '<h3>' . $option_title . '</h3>';
                     echo '<input type="checkbox" name="'. $option_name .'" id="'. $option_name .'" '. checked( get_option(''. $option_name .'', 'on'), 'on', false ) .'>';
                     echo '<label for="'. $option_name .'"></label>';
+
+                    if ( 'wpr-parallax-background' === $option_name ) {
+                        echo '<br><span>Tip: Edit any Section > Navigate to Style tab</span>';
+                        echo '<a href="https://www.youtube.com/watch?v=DcDeQ__lJbw" target="_blank">Watch Video Tutorial</a>';
+                    } else if ( 'wpr-parallax-multi-layer' === $option_name ) {
+                        echo '<br><span>Tip: Edit any Section > Navigate to Style tab</span>';
+                        echo '<a href="https://youtu.be/DcDeQ__lJbw?t=121" target="_blank">Watch Video Tutorial</a>';
+                    } else if ( 'wpr-particles' === $option_name ) {
+                        echo '<br><span>Tip: Edit any Section > Navigate to Style tab</span>';
+                        echo '<a href="https://www.youtube.com/watch?v=8OdnaoFSj94" target="_blank">Watch Video Tutorial</a>';
+                    } else if ( 'wpr-sticky-section' === $option_name ) {
+                        echo '<br><span>Tip: Edit any Section > Navigate to Advanced tab</span>';
+                        echo '<a href="https://www.youtube.com/watch?v=at0CPKtklF0&t=375s" target="_blank">Watch Video Tutorial</a>';
+                    }
+
                     // echo '<a href="https://royal-elementor-addons.com/elementor-particle-effects/?ref=rea-plugin-backend-extentions-prev">'. esc_html('View Extension Demo', 'wpr-addons') .'</a>';
                 echo '</div>';
             echo '</div>';
@@ -341,3 +358,46 @@ function wpr_addons_settings_page() {
 <?php
 
 } // End wpr_addons_settings_page()
+
+
+
+// Add Support Sub Menu item that will redirect to wp.org
+function wpr_addons_add_support_menu() {
+    add_submenu_page( 'wpr-addons', 'Support', 'Support', 'manage_options', 'wpr-support', 'wpr_addons_support_page', 99 );
+}
+add_action( 'admin_menu', 'wpr_addons_add_support_menu', 99 );
+
+function wpr_addons_support_page() {}
+
+function wpr_redirect_support_page() {
+    ?>
+    <script type="text/javascript">
+        jQuery(document).ready( function($) {
+            $( 'ul#adminmenu a[href*="page=wpr-support"]' ).attr('href', 'https://wordpress.org/support/plugin/royal-elementor-addons/').attr( 'target', '_blank' );
+        });
+    </script>
+    <?php
+}
+add_action( 'admin_head', 'wpr_redirect_support_page' );
+
+
+// Add Upgrade Sub Menu item that will redirect to royal-elementor-addons.com
+function wpr_addons_add_upgrade_menu() {
+    if ( defined('WPR_ADDONS_PRO_VERSION') ) return;
+    add_submenu_page( 'wpr-addons', 'Upgrade', 'Upgrade', 'manage_options', 'wpr-upgrade', 'wpr_addons_upgrade_page', 99 );
+}
+add_action( 'admin_menu', 'wpr_addons_add_upgrade_menu', 99 );
+
+function wpr_addons_upgrade_page() {}
+
+function wpr_redirect_upgrade_page() {
+    ?>
+    <script type="text/javascript">
+        jQuery(document).ready( function($) {
+            $( 'ul#adminmenu a[href*="page=wpr-upgrade"]' ).attr('href', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-menu-upgrade-pro#purchasepro').attr( 'target', '_blank' );
+            $( 'ul#adminmenu a[href*="#purchasepro"]' ).css('color', 'greenyellow');
+        });
+    </script>
+    <?php
+}
+add_action( 'admin_head', 'wpr_redirect_upgrade_page' );

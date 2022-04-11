@@ -37,7 +37,7 @@ class Wpr_Button extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'button' ];
+		return [ 'royal', 'button' ];
 	}
 	
 	public function get_style_depends() {
@@ -398,6 +398,13 @@ class Wpr_Button extends Widget_Base {
 
 		// Section: Tooltip ---------
 		$this->add_section_tooltip();
+
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'button', [
+			'Advanced Button Styles',
+			'Advanced Hover Animations - Change Text on Hover',
+			'Advanced Tooltip options',
+		] );
 
 		// Styles
 		// Section: Button -----------

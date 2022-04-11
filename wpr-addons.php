@@ -4,18 +4,18 @@
  * Description: The only plugin you need for Elementor page builder.
  * Plugin URI: https://royal-elementor-addons.com/
  * Author: WP Royal
- * Version: 1.3.24
+ * Version: 1.3.38
  * License: GPLv3
  * Author URI: https://royal-elementor-addons.com/
- * Elementor tested up to: 3.5
- * Elementor Pro tested up to: 3.4.2
+ * Elementor tested up to: 3.6.2
+ * Elementor Pro tested up to: 3.6.4
  *
  * Text Domain: wpr-addons
 */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-define( 'WPR_ADDONS_VERSION', '1.3.24' );
+define( 'WPR_ADDONS_VERSION', '1.3.38' );
 
 define( 'WPR_ADDONS__FILE__', __FILE__ );
 define( 'WPR_ADDONS_PLUGIN_BASE', plugin_basename( WPR_ADDONS__FILE__ ) );
@@ -56,13 +56,15 @@ if ( ! function_exists( 'wpr_fs' ) ) {
 	                'public_key'          => 'pk_a0b21b234a7c9581a555b9ee9f28a',
 	                'is_premium'          => false,
 	            	'has_premium_version' => true,
-	                'has_paid_plans'      => true,
+	                'has_paid_plans'      => false,
 	                'has_addons'          => false,
 	            	'has_affiliation'     => 'selected',
 	                'menu'                => array(
 	                    'slug'           => 'wpr-addons',
+	                    'first-path'     => 'admin.php?page=wpr-templates-kit',
 	                    'support'        => false,
 	                	'affiliation'    => true,
+	                    'pricing'        => false,
 	                ),
 	            ) );
 	        }
@@ -76,6 +78,18 @@ if ( ! function_exists( 'wpr_fs' ) ) {
 	    do_action( 'wpr_fs_loaded' );
 
 	    wpr_fs()->add_filter( 'show_deactivation_subscription_cancellation', '__return_false' );
+
+		function disable_contact_for_free_users( $is_visible, $menu_id ) {
+
+			if ( 'contact' != $menu_id ) {
+				return $is_visible;
+			}
+
+			return wpr_fs()->can_use_premium_code();
+		}
+
+		wpr_fs()->add_filter( 'is_submenu_visible', 'disable_contact_for_free_users', 10, 2 );
+
 	}
 }
 
@@ -202,4 +216,11 @@ function royal_elementor_addons_activation_time() {//TODO: Try to locate this in
 	}
 }
 
+// Delete Plugin Update Notice
+function royal_elementor_addons_deactivate() {
+	delete_option('wpr_plugin_update_dismiss_notice');
+}
+
 register_activation_hook( __FILE__, 'royal_elementor_addons_activation_time' );
+// hook already exists with template kits notice
+register_deactivation_hook( __FILE__, 'royal_elementor_addons_deactivate' );
