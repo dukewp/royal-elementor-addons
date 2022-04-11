@@ -11358,6 +11358,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     align-items: center;
 }
 
+.wpr-table-custom-pagination {
+    list-style-type: none;
+}
+
 .wpr-table-custom-pagination-list {
     cursor: pointer;
 }

@@ -252,29 +252,6 @@ class Wpr_AdvancedTable extends Widget_Base {
 			]
 		);
 
-		// $this->add_control(
-		// 	'pagination_nav_icons',
-		// 	[
-		// 		'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SELECT,
-		// 		'default' => 'svg-angle-1-left',
-		// 		'options' => Utilities::get_svg_icons_array( 'arrows', [
-		// 			'fas fa-angle-left' => esc_html__( 'Angle', 'wpr-addons' ),
-		// 			'fas fa-angle-double-left' => esc_html__( 'Angle Double', 'wpr-addons' ),
-		// 			'fas fa-arrow-left' => esc_html__( 'Arrow', 'wpr-addons' ),
-		// 			'fas fa-arrow-alt-circle-left' => esc_html__( 'Arrow Circle', 'wpr-addons' ),
-		// 			'far fa-arrow-alt-circle-left' => esc_html__( 'Arrow Circle Alt', 'wpr-addons' ),
-		// 			'fas fa-long-arrow-alt-left' => esc_html__( 'Long Arrow', 'wpr-addons' ),
-		// 			'fas fa-chevron-left' => esc_html__( 'Chevron', 'wpr-addons' ),
-		// 			'svg-icons' => esc_html__( 'SVG Icons -----', 'wpr-addons' ),
-		// 		] ),
-		// 		'condition' => [
-		// 			'enable_custom_pagination' => 'yes',
-		// 		],
-		// 		'separator' => 'after',
-		// 	]
-		// );
-
 		$this->add_responsive_control(
 			'pagination_nav_icons_left',
 			[
@@ -464,7 +441,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 		$repeater->add_responsive_control(
 			'header_icon',
 			[
-				'label' => __('Header Media', 'wpr-addons'),
+				'label' => __('Media', 'wpr-addons'),
 				'type' => \Elementor\Controls_Manager::SWITCHER,
 				'label_on' => __('Yes', 'wpr-addons'),
 				'label_off' => __('No', 'wpr-addons'),
@@ -474,36 +451,27 @@ class Wpr_AdvancedTable extends Widget_Base {
 			]
 		);
 
-        $repeater->add_control(
-            'header_icon_type',
-            [
-                'label'    => esc_html__('Header Media Type', 'wpr-addons'),
-                'type'    => Controls_Manager::CHOOSE,
-                'options'               => [
-                    'none'        => [
-                        'title'   => esc_html__('None', 'wpr-addons'),
-                        'icon'    => 'fa fa-ban',
-                    ],
-                    'icon'        => [
-                        'title'   => esc_html__('Icon', 'wpr-addons'),
-                        'icon'    => 'fa fa-star',
-                    ],
-                    'image'       => [
-                        'title'   => esc_html__('Image', 'wpr-addons'),
-                        'icon'    => 'eicon-image-bold',
-                    ],
-                ],
-                'default' => 'icon',
-                'condition' => [
-                    'header_icon' => 'yes'
-                ]
-            ]
-        );
+		$repeater->add_control(
+			'header_icon_type',
+			[
+				'label' => esc_html__('Media Type'),
+				'type' => Controls_Manager::SELECT,
+				'label_block' => false,
+				'default' => 'icon',
+				'options' => [
+					'icon' => __('Icon', 'wpr-addons'),
+					'image' => __('Image', 'wpr-addons'),
+				],
+				'condition' => [
+					'header_icon' => 'yes'
+				]
+			]
+		);
 
-		$repeater->add_responsive_control(
+		$repeater->add_control(
 			'header_icon_position',
 			[
-				'label' => esc_html__('Header Media Position'),
+				'label' => esc_html__('Media Position'),
 				'type' => Controls_Manager::SELECT,
 				'label_block' => false,
 				'default' => 'left',
@@ -519,7 +487,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 			]
 		);
 
-		$repeater->add_responsive_control(
+		$repeater->add_control(
 			'choose_header_col_icon',
 			[
 				'label' => esc_html__('Select Icon', 'wpr-addons'),
@@ -820,10 +788,10 @@ class Wpr_AdvancedTable extends Widget_Base {
             ]
         );
 
-		$repeater->add_responsive_control(
+		$repeater->add_control(
 			'td_icon_position',
 			[
-				'label' => esc_html__('Content Media Position'),
+				'label' => esc_html__('Media Position'),
 				'type' => Controls_Manager::SELECT,
 				'label_block' => false,
 				'default' => 'left',
@@ -839,7 +807,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 			]
 		);
 
-		$repeater->add_responsive_control(
+		$repeater->add_control(
 			'choose_td_icon',
 			[
 				'label' => esc_html__('Select Icon', 'wpr-addons'),
