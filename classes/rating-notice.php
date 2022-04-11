@@ -28,7 +28,7 @@ class WprRatingNotice {
         add_action( 'wp_ajax_wpr_rating_need_help', [$this, 'wpr_rating_need_help'] );
     }
 
-    public function check_plugin_install_time() {   
+    public function check_plugin_install_time() {
         $install_date = get_option('royal_elementor_addons_activation_time');
 
             add_action( 'admin_notices', [$this, 'render_rating_notice' ]);
