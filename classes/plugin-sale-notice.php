@@ -10,7 +10,7 @@ class WprPluginSaleNotice {
         // delete_option('wpr_plugin_sale_dismiss_notice');
         
         $this->past_date = strtotime( '-2 days' );
-        $this->install_date = get_option('royal_elementor_addons_activation_time');
+        $this->install_date = get_option('royal_elementor_addons_activation_time_for_sale');
 
                     add_action( 'admin_init', [$this, 'render_notice'] );
         if ( current_user_can('administrator') ) {
