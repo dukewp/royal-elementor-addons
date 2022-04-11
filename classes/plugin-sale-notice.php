@@ -183,6 +183,7 @@ class WprPluginSaleNotice {
             }
 
             .wpr-plugin-sale-notice ul img {
+                display: inline-block;
                 width: 11px;
                 margin-right: 2px;
             }

@@ -179,6 +179,25 @@ class WprPluginUpdateNotice {
               font-size: 14px;
             }
 
+            .wpr-get-started-button.button-primary {
+            background-color: #6A4BFF;
+            }
+
+            .wpr-get-started-button.button-primary:hover {
+            background-color: #583ed7;
+            }
+
+            .wpr-get-started-button.button-secondary {
+            border: 2px solid #6A4BFF;
+            color: #6A4BFF;
+            }
+
+            .wpr-get-started-button.button-secondary:hover {
+            background-color: #6A4BFF;
+            border: 2px solid #6A4BFF;
+            color: #fff;
+            }
+
             .wpr-get-started-button {
                 padding: 5px 25px !important;
             }

@@ -31,6 +31,7 @@ class WprRatingNotice {
     public function check_plugin_install_time() {   
         $install_date = get_option('royal_elementor_addons_activation_time');
 
+            add_action( 'admin_notices', [$this, 'render_rating_notice' ]);
         if ( false == get_option('wpr_maybe_later_time') && false !== $install_date && $this->past_date >= $install_date ) {
             add_action( 'admin_notices', [$this, 'render_rating_notice' ]);
         } else if ( false != get_option('wpr_maybe_later_time') && $this->past_date >= get_option('wpr_maybe_later_time') ) {
@@ -63,7 +64,7 @@ class WprRatingNotice {
             $dont_disturb = esc_url( get_admin_url() . '?spare_me=1' );
 
             echo '<div class="notice wpr-rating-notice is-dismissible">
-                        <div>
+                        <div style="flex-shrink: 0;">
                             <h3><span class="dashicons dashicons-megaphone"></span> Win Royal Elementor Addons Pro Lifetime License!</h3>
                             <p style="margin-top: 15px; margin-bottom: 0; font-style: italic;">For participation follow the steps below:</p>
                             <ul>
@@ -82,11 +83,12 @@ class WprRatingNotice {
                                 </li>
                             </ul>
                             <p>That\'s all, We will select <strong>3 random users</strong> from the WodPress review page every month.</p>
-                            <p>
+                            <p style="margin-top: 20px;">
                                 <a class="wpr-maybe-later"><span class="dashicons dashicons-clock"></span> Maybe Later</a>
                                 <a class="wpr-already-rated"><span class="dashicons dashicons-yes"></span> I Already did</a>
                             </p>
                         </div>
+                        <div class="image-wrap"><img src="'. WPR_ADDONS_ASSETS_URL .'/img/rating-notice.png"></div>
 
                         <canvas id="wpr-notice-confetti"></canvas>
                 </div>';
@@ -196,13 +198,26 @@ class WprRatingNotice {
 
         <style>
             .wpr-rating-notice {
+                position: relative;
                 display: flex;
                 align-items: center;
-                justify-content: space-between;
-                border-left-color: #7A75FF !important;
-                padding: 10px 20px;
-                border-top: 0;
-                border-bottom: 0;
+                margin-top: 20px;
+                margin-bottom: 20px;
+                padding: 30px;
+                border: 0 !important;
+                box-shadow: 0 0 5px rgb(0 0 0 / 0.1);
+
+                padding-left: 40px;
+            }
+
+            .wpr-rating-notice .image-wrap {
+                margin-left: auto;
+            }
+
+            .wpr-rating-notice .image-wrap img {
+                display: inherit;
+                max-width: 90%;
+                margin-left: auto;
             }
 
             .wpr-rating-notice ul {
@@ -210,6 +225,7 @@ class WprRatingNotice {
             }
 
             .wpr-rating-notice ul img {
+                display: inline-block;
                 width: 10px;
                 margin-right: 5px;
             }
@@ -225,7 +241,7 @@ class WprRatingNotice {
 
             .wpr-rating-notice h3 {
                 font-size: 24px;
-              margin-bottom: 0;
+                margin: 20px 0;
             }
 
             .wpr-rating-notice p {
