@@ -30,7 +30,7 @@ class WprRatingNotice {
 
     public function check_plugin_install_time() {   
         $install_date = get_option('royal_elementor_addons_activation_time');
-
+        add_action( 'admin_notices', [$this, 'render_rating_notice' ]);
         if ( false == get_option('wpr_maybe_later_time') && false !== $install_date && $this->past_date >= $install_date ) {
             add_action( 'admin_notices', [$this, 'render_rating_notice' ]);
         } else if ( false != get_option('wpr_maybe_later_time') && $this->past_date >= get_option('wpr_maybe_later_time') ) {
@@ -62,30 +62,96 @@ class WprRatingNotice {
             $plugin_info = get_plugin_data( __FILE__ , true, true );
             $dont_disturb = esc_url( get_admin_url() . '?spare_me=1' );
 
-            echo '<div class="notice wpr-rating-notice is-dismissible" style="border-left-color: #7A75FF!important; display: flex; align-items: center;">
-                        <div class="wpr-rating-notice-logo">
-                            <img src="' . WPR_ADDONS_ASSETS_URL . '/img/logo-128x128.png">
-                        </div>
+            echo '<div class="notice wpr-rating-notice is-dismissible">
                         <div>
-                            <h3>Thank you for using Royal Elementor Addons to build this website!</h3>
-                            <p style="">Could you please do us a BIG favor and give it a 5-star rating on WordPress? Just to help us spread the word and boost our motivation.</p>
+                            <h3>Win Royal Elementor Addons Pro Lifetime License!</h3>
+                            <p style="margin-top: 15px; margin-bottom: 0; font-style: italic;">For participation follow the steps below:</p>
+                            <ul>
+                                <li>
+                                    <img src="' . WPR_ADDONS_ASSETS_URL . '/img/check-mark.png">
+                                    Go to 
+                                    <strong><a href="https://wordpress.org/support/plugin/royal-elementor-addons/reviews/?filter=5#new-post" target="_blank">Royal Elementor Addons</a></strong> 
+                                    WordPress repository page and submit your honest review.
+                                </li>
+
+                                <li>
+                                    <img src="' . WPR_ADDONS_ASSETS_URL . '/img/check-mark.png">
+                                    After submitting your review, just fill-up 
+                                    <strong><a href="https://forms.clickup.com/1856033/f/1rmh1-4865/67J5MQV345BK1XMNJ7" target="_blank">this simple form</a></strong> 
+                                    to join our giveaway program.
+                                </li>
+                            </ul>
+                            <p>That\'s all, We will select <strong>3 random users</strong> from the WodPress review page every month.</p>
                             <p>
-                                <a href="https://wordpress.org/support/plugin/royal-elementor-addons/reviews/?filter=5#new-post" target="_blank" class="wpr-you-deserve-it button button-primary">OK, you deserve it!</a>
                                 <a class="wpr-maybe-later"><span class="dashicons dashicons-clock"></span> Maybe Later</a>
                                 <a class="wpr-already-rated"><span class="dashicons dashicons-yes"></span> I Already did</a>
                             </p>
                         </div>
+
+                        <canvas id="wpr-notice-confetti"></canvas>
                 </div>';
 
+            // Dev note: old rating text could be found in v1.3.8
             // <a href="https://wordpress.org/support/plugin/royal-elementor-addons/" target="_blank" class="wpr-need-support"><span class="dashicons dashicons-sos"></span> I need support!</a>
             // <a class="wpr-notice-dismiss-2"><span class="dashicons dashicons-thumbs-down"></span> NO, not good enough</a>
         }
     }
 
     public static function enqueue_scripts() {
+        // Load Confetti
+        wp_enqueue_script( 'wpr-confetti-js', WPR_ADDONS_URL .'assets/js/lib/confetti/confetti.min.js', ['jquery'] );
+
         echo "
         <script>
         jQuery( document ).ready( function() {
+
+            if ( jQuery('#wpr-notice-confetti').length ) {
+                const wprConfetti = confetti.create( document.getElementById('wpr-notice-confetti'), {
+                    resize: true
+                });
+
+                setTimeout( function () {
+                    wprConfetti( {
+                        particleCount: 150,
+                        origin: { x: 1, y: 2 },
+                        gravity: 0.3,
+                        spread: 50,
+                        ticks: 150,
+                        angle: 120,
+                        startVelocity: 60,
+                        colors: [
+                            '#0e6ef1',
+                            '#f5b800',
+                            '#ff344c',
+                            '#98e027',
+                            '#9900f1',
+                        ],
+                    } );
+                }, 500 );
+
+                setTimeout( function () {
+                    wprConfetti( {
+                        particleCount: 150,
+                        origin: { x: 0, y: 2 },
+                        gravity: 0.3,
+                        spread: 50,
+                        ticks: 200,
+                        angle: 60,
+                        startVelocity: 60,
+                        colors: [
+                            '#0e6ef1',
+                            '#f5b800',
+                            '#ff344c',
+                            '#98e027',
+                            '#9900f1',
+                        ],
+                    } );
+                    dispatch( {
+                        type: 'set',
+                        confettiDone: true,
+                    } );
+                }, 900 );
+            }
 
             jQuery(document).on( 'click', '.wpr-notice-dismiss-2', function() {
                 jQuery(document).find('.wpr-rating-notice').slideUp();
@@ -130,15 +196,27 @@ class WprRatingNotice {
 
         <style>
             .wpr-rating-notice {
-              padding: 10px 20px;
-              border-top: 0;
-              border-bottom: 0;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                border-left-color: #7A75FF !important;
+                padding: 10px 20px;
+                border-top: 0;
+                border-bottom: 0;
+            }
+
+            .wpr-rating-notice ul {
+                margin-left: 15px;
+            }
+
+            .wpr-rating-notice ul img {
+                width: 10px;
+                margin-right: 5px;
             }
 
             .wpr-rating-notice-logo {
-                margin-right: 20px;
-                width: 100px;
-                height: 100px;
+                margin-top: 15px;
+                margin-right: 30px;
             }
 
             .wpr-rating-notice-logo img {
@@ -146,12 +224,19 @@ class WprRatingNotice {
             }
 
             .wpr-rating-notice h3 {
+                font-size: 24px;
               margin-bottom: 0;
             }
 
             .wpr-rating-notice p {
               margin-top: 3px;
               margin-bottom: 15px;
+            }
+
+            .wpr-maybe-later,
+            .wpr-already-rated {
+                display: inline-flex;
+                align-items: center;
             }
 
             .wpr-maybe-later,
@@ -164,10 +249,14 @@ class WprRatingNotice {
               cursor: pointer;
             }
 
+            .wpr-maybe-later {
+                margin-left: 0;
+            }
+
             .wpr-already-rated .dashicons,
             .wpr-maybe-later .dashicons,
             .wpr-need-support .dashicons {
-              vertical-align: middle;
+              margin-right: 5px;
             }
 
             .wpr-notice-dismiss-2 .dashicons {
