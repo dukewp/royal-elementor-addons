@@ -418,23 +418,24 @@ class Wpr_AdvancedTable extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'header_colspan',
+			[
+				'label'			=> esc_html__( 'Col Span', 'wpr-addons'),
+				'type'			=> Controls_Manager::NUMBER,
+				'default' 		=> 1,
+				'min'     		=> 1,
+				'separator' => 'before'
+			]
+		);
+
+		$repeater->add_control(
 			'table_th', [
 				'label' => __( 'Title', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'default' => __( 'Table Title' , 'wpr-addons' ),
 				'dynamic'   => ['active' => true],
 				'label_block' => true,
-			]
-		);
-
-		$repeater->add_control(
-			'header_colspan',
-			[
-				'label'			=> esc_html__( 'Col Span', 'wpr-addons'),
-				'type'			=> Controls_Manager::NUMBER,
-				'description'	=> esc_html__( 'Default: 1 (optional).'),
-				'default' 		=> 1,
-				'min'     		=> 1,
+				'separator' => 'before'
 			]
 		);
 		
@@ -691,10 +692,10 @@ class Wpr_AdvancedTable extends Widget_Base {
 			[
 				'label'			=> esc_html__( 'Col Span', 'wpr-addons'),
 				'type'			=> Controls_Manager::NUMBER,
-				'description'	=> esc_html__( 'Default: 1 (optional).'),
 				'default' 		=> 1,
 				'min'     		=> 1,
 				'label_block'	=> true,
+				'separator' => 'before',
 				'condition' 	=> [
 					'table_content_row_type' => 'col'
 				]
@@ -706,7 +707,6 @@ class Wpr_AdvancedTable extends Widget_Base {
 			[
 				'label'			=> esc_html__( 'Row Span', 'wpr-addons'),
 				'type'			=> Controls_Manager::NUMBER,
-				'description'	=> esc_html__( 'Default: 1 (optional).'),
 				'default' 		=> 1,
 				'min'     		=> 1,
 				'label_block'	=> true,
@@ -717,11 +717,13 @@ class Wpr_AdvancedTable extends Widget_Base {
 		);
 
 		$repeater->add_control(
-			'table_td', [
-				'label' => __( 'Content', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::TEXTAREA,
+			'table_td', 
+			[
+				'label' => esc_html__( 'Content', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXTAREA,
 				'default' => __( 'Content' , 'wpr-addons' ),
-				'show_label' => false,
+				'show_label' => true,
+				'separator' => 'before',
 				'condition' => [
 					'table_content_row_type' => 'col',
 				]
@@ -749,7 +751,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 		$repeater->add_responsive_control(
 			'td_icon',
 			[
-				'label' => __('Content Media', 'wpr-addons'),
+				'label' => __('Media', 'wpr-addons'),
 				'type' => \Elementor\Controls_Manager::SWITCHER,
 				'label_on' => __('Yes', 'wpr-addons'),
 				'label_off' => __('No', 'wpr-addons'),
@@ -761,32 +763,22 @@ class Wpr_AdvancedTable extends Widget_Base {
 				]
 			]
 		);
-
-        $repeater->add_control(
-            'td_icon_type',
-            [
-                'label'    => esc_html__('Media Type', 'wpr-addons'),
-                'type'    => Controls_Manager::CHOOSE,
-                'options'               => [
-                    'none'        => [
-                        'title'   => esc_html__('None', 'wpr-addons'),
-                        'icon'    => 'fa fa-ban',
-                    ],
-                    'icon'        => [
-                        'title'   => esc_html__('Icon', 'wpr-addons'),
-                        'icon'    => 'fa fa-star',
-                    ],
-                    'image'       => [
-                        'title'   => esc_html__('Image', 'wpr-addons'),
-                        'icon'    => 'eicon-image-bold',
-                    ],
-                ],
-                'default' => 'icon',
-                'condition' => [
-                    'td_icon' => 'yes'
-                ]
-            ]
-        );
+		$repeater->add_control(
+			'td_icon_type',
+			[
+				'label' => esc_html__('Media Type'),
+				'type' => Controls_Manager::SELECT,
+				'label_block' => false,
+				'default' => 'icon',
+				'options' => [
+					'icon' => __('Icon', 'wpr-addons'),
+					'image' => __('Image', 'wpr-addons')
+				],
+				'condition' => [
+					'td_icon' => 'yes'
+				]
+			]
+		);
 
 		$repeater->add_control(
 			'td_icon_position',
@@ -957,80 +949,23 @@ class Wpr_AdvancedTable extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'table_width',
+		$this->add_control(
+			'all_border_color',
 			[
-				'label' => __( 'Table Width', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::SLIDER,
-				'size_units' => ['px', '%'],
-				'render_type' => 'template',
-				'range' => [
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
-					'px' => [
-						'min' => 0,
-						'max' => 2000
-					]
-				],
-				'devices' => [ 'desktop', 'tablet', 'mobile' ],
-				'default' => [
-					'size' => 100,
-					'unit' => '%'
-				],
-				'desktop_default' => [
-					'size' => 100,
-					'unit' => '%',
-				],
-				'tablet_default' => [
-					'size' => 100,
-					'unit' => '%',
-				],
-				'mobile_default' => [
-					'size' => 100,
-					'unit' => '%',
-				],
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#333333',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-table-container .wpr-advanced-table' => 'width: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-export-search-inner-cont' => 'width: {{SIZE}}{{UNIT}};',
-					// '{{WRAPPER}} .wpr-table-custom-pagination' => 'width: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-table-pagination-cont' => 'width: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-table-inner-container' => 'width: 100%;',
+					'{{WRAPPER}} th.wpr-table-th' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} th.wpr-table-th-pag' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} td.wpr-table-td' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} td.wpr-table-td-pag' => 'border-color: {{VALUE}}'
 				],
+				'condition' => [
+					'all_border_type!' => 'none',
+				]
 			]
 		);
-
-		$this->add_control(
-            'table_alignment',
-            [
-                'label'        => __('Alignment', 'wpr-addons'),
-                'type'         => Controls_Manager::CHOOSE,
-                'label_block'  => false,
-                'default'      => 'center',
-                'options'      => [
-                    'flex-start'   => [
-                        'title' => __('Left', 'wpr-addons'),
-                        'icon'  => 'eicon-h-align-left',
-                    ],
-                    'center' => [
-                        'title' => __('Center', 'wpr-addons'),
-                        'icon'  => 'eicon-h-align-center',
-                    ],
-                    'flex-end'  => [
-                        'title' => __('Right', 'wpr-addons'),
-                        'icon'  => 'eicon-h-align-right',
-                    ],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-container .wpr-table-inner-container' => 'display: flex; justify-content: {{VALUE}}',
-					'{{WRAPPER}} .wpr-table-container' => 'display: flex; justify-content: {{VALUE}}',
-					'{{WRAPPER}} .wpr-export-search-cont' => 'display: flex; justify-content: {{VALUE}}',
-					// '{{WRAPPER}} .wpr-table-pagination-cont' => 'display: flex; justify-content: {{VALUE}}',
-					'{{WRAPPER}} .wpr-table-pagination-outer-cont' => 'display: flex; justify-content: {{VALUE}}',
-				]
-            ]
-        );
 
 		$this->add_control(
 			'all_border_type',
@@ -1077,29 +1012,85 @@ class Wpr_AdvancedTable extends Widget_Base {
 				],
 				'condition' => [
 					'all_border_type!' => 'none',
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'table_width',
+			[
+				'label' => __( 'Table Width', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => ['px', '%'],
+				'render_type' => 'template',
+				'range' => [
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					],
+					'px' => [
+						'min' => 0,
+						'max' => 2000
+					]
 				],
+				'devices' => [ 'desktop', 'tablet', 'mobile' ],
+				'default' => [
+					'size' => 100,
+					'unit' => '%'
+				],
+				'desktop_default' => [
+					'size' => 100,
+					'unit' => '%',
+				],
+				'tablet_default' => [
+					'size' => 100,
+					'unit' => '%',
+				],
+				'mobile_default' => [
+					'size' => 100,
+					'unit' => '%',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-table-container .wpr-advanced-table' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-export-search-inner-cont' => 'width: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}} .wpr-table-custom-pagination' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-table-pagination-cont' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-table-inner-container' => 'width: 100%;',
+				],
+				'separator' => 'before'
 			]
 		);
 
 		$this->add_control(
-			'all_border_color',
-			[
-				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+            'table_alignment',
+            [
+                'label'        => __('Alignment', 'wpr-addons'),
+                'type'         => Controls_Manager::CHOOSE,
+                'label_block'  => false,
+                'default'      => 'center',
+                'options'      => [
+                    'flex-start'   => [
+                        'title' => __('Left', 'wpr-addons'),
+                        'icon'  => 'eicon-h-align-left',
+                    ],
+                    'center' => [
+                        'title' => __('Center', 'wpr-addons'),
+                        'icon'  => 'eicon-h-align-center',
+                    ],
+                    'flex-end'  => [
+                        'title' => __('Right', 'wpr-addons'),
+                        'icon'  => 'eicon-h-align-right',
+                    ],
+				],
 				'selectors' => [
-					'{{WRAPPER}} th.wpr-table-th' => 'border-color: {{VALUE}}',
-					'{{WRAPPER}} th.wpr-table-th-pag' => 'border-color: {{VALUE}}',
-					'{{WRAPPER}} td.wpr-table-td' => 'border-color: {{VALUE}}',
-					'{{WRAPPER}} td.wpr-table-td-pag' => 'border-color: {{VALUE}}',
-					// '{{WRAPPER}} li' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-table-container .wpr-table-inner-container' => 'display: flex; justify-content: {{VALUE}}',
+					'{{WRAPPER}} .wpr-table-container' => 'display: flex; justify-content: {{VALUE}}',
+					'{{WRAPPER}} .wpr-export-search-cont' => 'display: flex; justify-content: {{VALUE}}',
+					'{{WRAPPER}} .wpr-table-pagination-outer-cont' => 'display: flex; justify-content: {{VALUE}}'
 				],
-				'separator' => 'after',
-				'condition' => [
-					'all_border_type!' => 'none',
-				],
-			]
-		);
+				'separator' => 'before'
+            ]
+        );
 
 		$this->add_control(
 			'hover_transition',
@@ -2844,17 +2835,17 @@ class Wpr_AdvancedTable extends Widget_Base {
 					$last_key = end( $table_tr_keys );
 
 					$table_td[] = [
-						'row_id'		=> $table_tr[$last_key]['id'],
-						'type'			=> $content_row['table_content_row_type'],
-						'content'		=> $content_row['table_td'],
-						'colspan'		=> $content_row['table_content_row_colspan'],
-						'rowspan'		=> $content_row['table_content_row_rowspan'],
-						'link'   		=> $content_row['cell_link'],
+						'row_id' => $table_tr[$last_key]['id'],
+						'type' => $content_row['table_content_row_type'],
+						'content' => $content_row['table_td'],
+						'colspan' => $content_row['table_content_row_colspan'],
+						'rowspan' => $content_row['table_content_row_rowspan'],
+						'link' => $content_row['cell_link'],
 						'external' => $content_row['cell_link']['is_external'] == true ? '_blank' : '_self',
 						'icon_type' => $content_row['td_icon_type'],
-						'icon'			=> $content_row['td_icon'],
+						'icon' => $content_row['td_icon'],
 						'icon_position' => $content_row['td_icon_position'],
-						'icon_item' 	=> $content_row['choose_td_icon'],
+						'icon_item' => $content_row['choose_td_icon'],
 						'col_img' => $content_row['td_col_img'],
 						'class' => ['elementor-repeater-item-'.$content_row['_id'], 'wpr-table-td'],
 					];
