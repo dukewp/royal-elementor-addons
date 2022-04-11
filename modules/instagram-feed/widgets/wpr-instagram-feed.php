@@ -420,20 +420,17 @@ class Wpr_Instagram_Feed extends Widget_Base {
 	public function refresh_access_token($access_token) {
 		$url = 'https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token='.$access_token.'';
 		$response = wp_remote_get($url);
-		$body = json_decode($response['body']);
 		if(!isset($body)) {
-			var_dump($response['body']);
-			return $response['body'];
+			$body = json_decode($response['body']);
+			var_dump($body);
+			update_option('wpr_instagram_access_token', $body->access_token);
+			update_option('wpr_instagram_access_token_expires_in', $body->expires_in);
+			update_option('wpr_instagram_access_token_generation_date', date('Y-m-d'));
 		}
-		var_dump($body->data);
-		// update_option('wpr_instagram_access_token')
-		return $body->data;	
 	}
 
     protected function render() {
 		$settings = $this->get_settings_for_display();
-
-		$access_token = get_option('wpr_instagram_access_token');
 
 		$instagram_settings = [
 			'data-col' => 4
@@ -450,18 +447,17 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			$this->add_link_attributes( 'instagram_follow_link', $settings['instagram_follow_link'] );
 		}
 
-		// var_dump($this->call_instagram_api($access_token));
-
 		$token_expires_in = get_option('wpr_instagram_access_token_expires_in');
 
 		$compare_date = strtotime('-'.get_option('wpr_instagram_access_token_expires_in').' seconds');
 
 		$token_generation_date = strtotime(get_option('wpr_instagram_access_token_generation_date'));
 
+		$access_token = get_option('wpr_instagram_access_token');
 
 		if ( $token_generation_date <= $compare_date  ) {
-			var_dump($compare_date);
-			// $this->refresh_access_token($access_token);
+			var_dump('works');
+			$this->refresh_access_token($access_token);
 		}
 
 		?>
