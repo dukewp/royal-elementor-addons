@@ -931,7 +931,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 					],
 				],
                 'selectors'  => [
-                    '{{WRAPPER}} i.wpr-search-input-icon' => 'font-size: {{SIZE}}{{UNIT}}',
+                    '{{WRAPPER}} {{CURRENT_ITEM}} .wpr-td-content-wrapper i' => 'font-size: {{SIZE}}{{UNIT}}',
 				],
 				'condition' => [
 					'td_icon' => 'yes',
@@ -1784,6 +1784,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} td' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} .wpr-td-content-wrapper span' => 'text-align: {{VALUE}};',
 				],
 			]
 		);
@@ -2932,7 +2933,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 								]); ?>
 								
 							<td <?php echo $this->get_render_attribute_string('tbody_td_attributes'.$i.$j); ?>>
-								<div class="wpr-td-content-wrapper <?php echo ($table_td[$j]['icon_position'] === 'top') ? 'wpr-flex-column-reverse' : (($table_td[$j]['icon_position'] === 'bottom') ? 'wpr-flex-column' : '') ?>">
+								<div class="wpr-td-content-wrapper <?php echo ($table_td[$j]['icon_position'] === 'top') ? 'wpr-flex-column' : (($table_td[$j]['icon_position'] === 'bottom') ? 'wpr-flex-column-reverse' : '') ?>">
 									<?php $table_td[$j]['icon'] === 'yes' && ($table_td[$j]['icon_position'] === 'left' || $table_td[$j]['icon_position'] === 'top' || $table_td[$j]['icon_position'] === 'bottom') ? $this->render_td_icon_or_image($table_td, $j) : '' ?>
 									<a href="<?php echo esc_url($table_td[$j]['link']['url']) ?>" target="<?php echo $table_td[$j]['external'] ?>">
 										<span class="wpr-table-text"><?php echo $table_td[$j]['content']; ?></span>
