@@ -1,0 +1,1281 @@
+<?php
+namespace WprAddons\Modules\FlipCarousel\Widgets;
+
+use Elementor\Widget_Base;
+use Elementor\Controls_Manager;
+use Elementor\Core\Responsive\Responsive;
+use Elementor\Group_Control_Border;
+use Elementor\Group_Control_Box_Shadow;
+use Elementor\Group_Control_Text_Shadow;
+use Elementor\Group_Control_Background;
+use Elementor\Group_Control_Typography;
+use Elementor\Core\Schemes\Typography;
+use Elementor\Core\Schemes\Color;
+use Elementor\Repeater;
+use Elementor\Group_Control_Image_Size;
+use Elementor\Utils;
+use WprAddons\Classes\Utilities;
+
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+class Wpr_Flip_Carousel extends Widget_Base {
+	
+	public function get_name() {
+		return 'wpr-flip-carousel';
+	}
+
+	public function get_title() {
+		return esc_html__( 'Flip Carousel', 'wpr-addons' );
+	}
+
+	public function get_icon() {
+		return 'wpr-icon eicon-media-carousel';
+	}
+
+	public function get_categories() {
+		return [ 'wpr-widgets'];
+	}
+
+	public function get_keywords() {
+		return [ 'flip carousel', 'flip', 'carousel', 'flip slider' ];
+	}
+
+	public function get_script_depends() {
+		return [ 'wpr-flipster' ];
+	}
+
+	public function get_style_depends() {
+		return [ 'wpr-flipster-css' ];
+	}
+
+    public function get_custom_help_url() {
+    	if ( empty(get_option('wpr_wl_plugin_links')) )
+        return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-grid-help-btn';
+    }
+
+    protected function register_controls() {
+
+		$this->start_controls_section(
+			'section_flip_carousel',
+			[
+				'label' => esc_html__( 'Slides', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
+
+        $repeater = new Repeater();
+
+        $repeater->add_control(
+			'image',
+			[
+				'label' => __( 'Choose Image', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::MEDIA,
+				'default' => [
+					'url' => Utils::get_placeholder_image_src(),
+				],
+			]
+		);
+
+		$repeater->add_control(
+			'slide_text',
+			[
+				'label' => esc_html__( 'Image Caption', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => 'Image Caption',
+				'description' => 'Enable Image Caption from General Settings'
+				// 'condition' => [
+				// 	'enable_figcaption' => 'yes'
+				// ]
+			]
+		);
+		
+		$repeater->add_control(
+			'enable_slide_link',
+			[
+				'label' => __( 'Enable Slide Link', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'label_on' => __( 'Yes', 'wpr-addons' ),
+				'label_off' => __( 'No', 'wpr-addons' ),
+				'return_value' => 'yes',
+				'default' => 'yes',
+			]
+		);
+
+		$repeater->add_control(
+			'slide_link',
+			[
+				'label' => __( 'Link', 'plugin-domain' ),
+				'type' => \Elementor\Controls_Manager::URL,
+				'placeholder' => __( 'https://your-link.com', 'wpr-addons' ),
+				'show_external' => true,
+				'default' => [
+					'url' => '',
+					'is_external' => true,
+					// 'nofollow' => true,
+				],
+				'condition' => [
+					'enable_slide_link' => 'yes'
+				]
+			]
+		);
+        
+		$this->add_control(
+			'carousel_elements',
+			[
+				'label' => esc_html__( 'Carousel Elements', 'wpr-addons' ),
+				'type' => Controls_Manager::REPEATER,
+				'fields' => $repeater->get_controls(),
+				'default' => [
+					[
+						'element_select' => esc_html__('title'),
+					],
+					[
+						'element_select' => esc_html__('title'),
+					],
+					[
+						'element_select' => esc_html__('title'),
+					],
+				],
+			]
+		);
+
+        $this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_flip_carousel_settings',
+			[
+				'label' => esc_html__( 'Settings', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Image_Size::get_type(),
+			[
+				'name' => 'flip_carousel_image_size',
+				'default' => 'medium_large',
+				'exclude' => ['custom']
+			]
+		);
+
+		// $this->add_responsive_control(
+		// 	'flip_height',
+		// 	[
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'label' => esc_html__( 'Height', 'wpr-addons' ),
+		// 		'size_units' => [ 'px', 'vh' ],
+		// 		'range' => [
+		// 			'px' => [
+		// 				'min' => 20,
+		// 				'max' => 1500,
+		// 			],
+		// 			'vh' => [
+		// 				'min' => 20,
+		// 				'max' => 100,
+		// 			],
+		// 		],
+		// 		'default' => [
+		// 			'unit' => 'px',
+		// 			'size' => 500,
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-flip-carousel' => 'height: {{SIZE}}{{UNIT}};',
+		// 			'{{WRAPPER}} .wpr-flip-carousel ul.wpr-flip-items-wrapper li.wpr-flip-item' => 'height: {{SIZE}}{{UNIT}};',
+		// 		],
+		// 		'separator' => 'before',
+		// 	]
+		// );
+
+		$this->add_control(
+			'carousel_type',
+			[
+				'label' => esc_html__( 'Layout', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'coverflow',
+				'separator' => 'before',
+				'options' => [
+					'coverflow' => esc_html__( 'Cover Flow', 'wpr-addons' ),
+					'carousel' => esc_html__( 'Carousel', 'wpr-addons' ),
+					'flat' => esc_html__( 'Flat', 'wpr-addons' ),
+					'wheel' => esc_html__( 'Wheel', 'wpr-addons' ),
+				],
+			]
+		);
+
+		$this->add_control(
+			'starts_from_center',
+			[
+				'label' => __( 'Item Starts From Center', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'label_on' => __( 'Yes', 'wpr-addons' ),
+				'label_off' => __( 'No', 'wpr-addons' ),
+				'return_value' => 'yes',
+				'default' => 'yes',
+			]
+		);
+
+		$this->add_control(
+			'loop',
+			[
+				'label' => __( 'Loop', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'label_on' => __( 'Yes', 'wpr-addons' ),
+				'label_off' => __( 'No', 'wpr-addons' ),
+				'return_value' => 'yes',
+				'default' => 'yes',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'autoplay',
+			[
+				'label' => __( 'Autoplay', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'label_on' => __( 'Yes', 'wpr-addons' ),
+				'label_off' => __( 'No', 'wpr-addons' ),
+				'return_value' => 'yes',
+				'default' => 'yes',
+			]
+		);
+
+		$this->add_control(
+			'autoplay_milliseconds',
+			[
+				'label' => __( 'Autoplay Interval', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::NUMBER,
+				'min' => 500,
+				'default' => 3000,
+				'step' => 20,
+				'condition' => [
+					'autoplay' => 'yes'
+				]
+			]
+		);
+		
+		$this->add_control(
+			'pause_on_hover',
+			[
+				'label' => __( 'Pause on Hover', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'label_on' => __( 'Yes', 'wpr-addons' ),
+				'label_off' => __( 'No', 'wpr-addons' ),
+				'return_value' => 'yes',
+				'separator' => 'before',
+				'default' => 'yes',
+			]
+		);
+		
+		$this->add_control(
+			'play_on_click',
+			[
+				'label' => __( 'Slide on Click', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'label_on' => __( 'Yes', 'wpr-addons' ),
+				'label_off' => __( 'No', 'wpr-addons' ),
+				'return_value' => 'yes',
+				'default' => 'yes',
+			]
+		);
+		
+		$this->add_control(
+			'play_on_scroll',
+			[
+				'label' => __( 'Play on Scroll', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'label_on' => __( 'Yes', 'wpr-addons' ),
+				'label_off' => __( 'No', 'wpr-addons' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+			]
+		);
+		
+		$this->add_control(
+			'enable_figcaption',
+			[
+				'label' => __( 'Show Image Caption', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'label_on' => __( 'Yes', 'wpr-addons' ),
+				'label_off' => __( 'No', 'wpr-addons' ),
+				'return_value' => 'yes',
+				'default' => 'yes',
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'flipcaption_position',
+			[
+				'label' => esc_html__( 'Position', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'after',
+				'options' => [
+					'after' => esc_html__( 'After Image', 'wpr-addons' ),
+					'before' => esc_html__( 'Before Image', 'wpr-addons' ),
+				],
+				'condition' => [
+					'enable_figcaption' => 'yes'
+				]
+			]
+		);
+		
+		$this->add_control(
+			'pagination',
+			[
+				'label' => __( 'Show Pagination', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'label_on' => __( 'Yes', 'wpr-addons' ),
+				'label_off' => __( 'No', 'wpr-addons' ),
+				'return_value' => 'yes',
+				'separator' => 'before',
+				'default' => 'yes',
+			]
+		);
+		
+		$this->add_control(
+			'pagination_position',
+			[
+				'label' => esc_html__( 'Pagination Position', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'before',
+				'options' => [
+					'before' => esc_html__( 'Before Image', 'wpr-addons' ),
+					'after' => esc_html__( 'After Image', 'wpr-addons' ),
+				],
+				'condition' => [
+					'pagination' => 'yes'
+				]
+			]
+		);
+		
+		$this->add_control(
+			'enable_navigation',
+			[
+				'label' => __( 'Show Navigation', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'label_on' => __( 'Yes', 'wpr-addons' ),
+				'label_off' => __( 'No', 'wpr-addons' ),
+				'return_value' => 'yes',
+				'default' => 'yes',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'prev_next_navigation',
+			[
+				'label' => esc_html__( 'Navigation Arrows', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'default',
+				'options' => [
+					'default' => esc_html__( 'Default', 'wpr-addons' ),
+					'custom' => esc_html__( 'Custom', 'wpr-addons' ),
+				],
+				'condition' => [
+					'enable_navigation' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control(
+			'button_prev',
+			[
+				'label' => __( 'Prev Icon', 'text-domain' ),
+				'type' => \Elementor\Controls_Manager::ICONS,
+				'skin' => 'inline',
+				'default' => [
+					'value' => '',
+					'library' => 'solid',
+				],
+				'condition' => [
+					'prev_next_navigation' => 'custom'
+				]
+			]
+		);
+
+		$this->add_control(
+			'button_next',
+			[
+				'label' => __( 'Next Icon', 'text-domain' ),
+				'type' => \Elementor\Controls_Manager::ICONS,
+				'skin' => 'inline',
+				'default' => [
+					'value' => '',
+					'library' => 'solid',
+				],
+				'condition' => [
+					'prev_next_navigation' => 'custom'
+				]
+			]
+		);
+
+		$this->add_control(
+			'flip_carousel_nav_icon',
+			[
+				'label' => esc_html__( 'Navigation Icon', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'fas fa-angle-left',
+				'options' => Utilities::get_svg_icons_array( 'arrows', [
+					'fas fa-angle-left' => esc_html__( 'Angle', 'wpr-addons' ),
+					'fas fa-angle-double-left' => esc_html__( 'Angle Double', 'wpr-addons' ),
+					'fas fa-arrow-left' => esc_html__( 'Arrow', 'wpr-addons' ),
+					'fas fa-arrow-alt-circle-left' => esc_html__( 'Arrow Circle', 'wpr-addons' ),
+					'far fa-arrow-alt-circle-left' => esc_html__( 'Arrow Circle Alt', 'wpr-addons' ),
+					'fas fa-long-arrow-alt-left' => esc_html__( 'Long Arrow', 'wpr-addons' ),
+					'fas fa-chevron-left' => esc_html__( 'Chevron', 'wpr-addons' ),
+					'svg-icons' => esc_html__( 'SVG Icons -----', 'wpr-addons' ),
+				] ),
+				'condition' => [
+					'enable_navigation' => 'yes',
+					'prev_next_navigation' => 'custom'
+				],
+			]
+		);
+
+		$this->add_control(
+			'spacing',
+			[
+				'label' => __( 'Gutter', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::NUMBER,
+				'default' => -0.6,
+				'min' => -1,
+				'max' => 1,
+				'step' => 0.1,
+				'separator' => 'before',
+			]
+		);
+
+		// $this->add_control(
+		// 	'flip_items_transition_duration',
+		// 	[
+		// 		'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::NUMBER,
+		// 		'default' => 0.4,
+		// 		'min' => 0,
+		// 		'max' => 5,
+		// 		'step' => 0.1,
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .flipster--wheel .flipster__container' => '-webkit-transition: all {{VALUE}}s ease-in-out !important; transition: all {{VALUE}}s ease-in-out !important; -webkit-transition-timing-function: cubic-bezier(.56, .12, .12, .98); transition-timing-function: cubic-bezier(.56, .12, .12, .98)',
+		// 			'{{WRAPPER}} .flipster--wheel .flipster__item__content' => '-webkit-transition: all {{VALUE}}s ease-in-out !important; transition: all {{VALUE}}s ease-in-out !important; -webkit-transition-timing-function: cubic-bezier(.56, .12, .12, .98); transition-timing-function: cubic-bezier(.56, .12, .12, .98)',
+		// 		],
+		// 		'separator' => 'before',
+		// 	]
+		// );
+
+		$this->end_controls_section();
+		
+        $this->start_controls_section(
+			'flip_carousel_general_styles',
+			[
+				'label' => esc_html__( 'General', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		// $this->add_responsive_control(
+		// 	'slider_content_width',
+		// 	[
+		// 		'label' => esc_html__( 'Width', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'range' => [
+		// 			'%' => [
+		// 				'min' => 20,
+		// 				'max' => 100,
+		// 			],
+		// 			'px' => [
+		// 				'min' => 200,
+		// 				'max' => 1500,
+		// 			],
+		// 		],
+		// 		'size_units' => [ '%', 'px' ],
+		// 		'default' => [
+		// 			'unit' => 'px',
+		// 			'size' => 750,
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-flip-carousel ul li.flipster__item' => 'max-width: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}};',
+		// 		],
+		// 	]
+		// );
+
+		$this->end_controls_section();
+		
+        $this->start_controls_section(
+			'section_flip_carousel_navigation_styles',
+			[
+				'label' => esc_html__( 'Navigation', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->start_controls_tabs(
+			'style_tabs_navigation'
+		);
+
+		$this->start_controls_tab(
+			'navigation_style_normal_tab',
+			[
+				'label' => __( 'Normal', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'icon_color',
+			[
+				'label'  => esc_html__( 'Icon Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .flipster__button i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .flipster__button svg' => 'fill: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'stroke_color',
+			[
+				'label'  => esc_html__( 'Stroke Color (SVG)', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#0AA79A',
+				'selectors' => [
+					'{{WRAPPER}} .flipster__button svg' => 'stroke: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'icon_bg_color',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#000000',
+				'selectors' => [
+					'{{WRAPPER}} .flipster__button' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'box_shadow_navigation',
+				'label' => __( 'Box Shadow', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}} .flipster__button',
+			]
+		);
+
+		$this->add_control(
+			'navigation_transition',
+			[
+				'label' => esc_html__( 'Transition', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 1,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'separator' => 'before',
+				'selectors' => [
+					'{{WRAPPER}} .flipster__button' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
+					'{{WRAPPER}} .flipster__button i' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
+					'{{WRAPPER}} .flipster__button svg' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;'
+				],
+			]
+		);
+		
+		$this->add_responsive_control(
+			'icon_size',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Icon Size', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 200,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 20,
+				],			
+				'selectors' => [
+					'{{WRAPPER}} .flipster__button i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .flipster__button svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+				],
+				'render_type' => 'template',
+				'separator' => 'before',
+				'condition' => [
+					'prev_next_navigation' => ['default', 'custom']
+				],
+			]
+		);
+		
+		$this->add_responsive_control(
+			'icon_bg_size',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Box Size', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 150,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 35,
+				],			
+				'selectors' => [
+					'{{WRAPPER}} .flipster__button' => 'height: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}};',	
+				],
+				'condition' => [
+					'prev_next_navigation' => ['default', 'custom']
+				],
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name' => 'border',
+				'label' => __( 'Border', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}} .flipster__button',
+				'separator' => 'before'
+			]
+		);
+		
+		$this->add_control(
+			'navigation_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .flipster__button' => 'border-color: {{VALUE}}',
+				],
+				'condition' => [
+					'border' => 'none'
+				]
+			]
+		);
+		
+		$this->add_control(
+			'icon_border_radius',
+			[
+				'type' => Controls_Manager::DIMENSIONS,
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'size_units' => [ 'px', '%' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 150,
+					],
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					]
+				],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+					'unit' => 'px'
+				],			
+				'selectors' => [
+					'{{WRAPPER}} button.flipster__button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',	
+				],
+				'render_type' => 'template',
+				'condition' => [
+					'prev_next_navigation' => ['default', 'custom']
+				],
+			]
+		);
+		
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'navigation_style_hover_tab',
+			[
+				'label' => __( 'Hover', 'wpr-addons' ),
+			]
+		);
+		
+		$this->add_control(
+			'navigation_icon_color_hover',
+			[
+				'label'  => esc_html__( 'Icon Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .flipster__button:hover i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .flipster__button:hover svg' => 'fill: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'stroke_color_hover',
+			[
+				'label'  => esc_html__( 'Stroke Color (SVG)', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#000000',
+				'selectors' => [
+					'{{WRAPPER}} .flipster__button:hover svg' => 'stroke: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'navigation_bg_color_hover',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#0AA79A',
+				'selectors' => [
+					'{{WRAPPER}} .flipster__button:hover' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'box_shadow_navigation_hover',
+				'label' => __( 'Box Shadow', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}} .flipster__button:hover',
+			]
+		);
+		
+		$this->add_control(
+			'navigation_border_color_hover',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .flipster__button:hover' => 'border-color: {{VALUE}}',
+				],
+				'condition' => [
+					'border' => 'none'
+				]
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->end_controls_section();
+				
+        $this->start_controls_section(
+			'section_flip_carousel_pagination_styles',
+			[
+				'label' => esc_html__( 'Pagination', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->start_controls_tabs(
+			'style_tabs_pagination'
+		);
+
+		$this->start_controls_tab(
+			'pagination_style_normal_tab',
+			[
+				'label' => __( 'Normal', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'pagination_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#fff',
+				'selectors' => [
+					'{{WRAPPER}} .flipster__nav__item .flipster__nav__link' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'pagination_bg_color',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#0AA79A',
+				'selectors' => [
+					'{{WRAPPER}} .flipster__nav__item' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'content_typography',
+				'label' => __( 'Typography', 'wpr-addons' ),
+				'scheme' => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .flipster__nav__link',
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'box_shadow_pagination',
+				'label' => __( 'Box Shadow', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}} .flipster__nav__item',
+			]
+		);
+
+		$this->add_control(
+			'pagination_transition',
+			[
+				'label' => esc_html__( 'Transition', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 1,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'separator' => 'before',
+				'selectors' => [
+					'{{WRAPPER}} .flipster__nav__item .flipster__nav__link' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
+					'{{WRAPPER}} .flipster__nav__item' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
+					'{{WRAPPER}} .flipster__nav__item i' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
+					'{{WRAPPER}} .flipster__nav__item svg' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'pagination_margin',
+			[
+				'label' => esc_html__( 'Margin', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'separator' => 'before',
+				'default' => [
+					'top' => 10,
+					'right' => 2,
+					'bottom' => 10,
+					'left' => 2,
+				],
+				'size_units' => [ 'px', '%' ],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-flip-carousel .flipster__nav' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+		
+		$this->add_responsive_control(
+			'pagination_size',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Box Size', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 150,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 35,
+				],			
+				'selectors' => [
+					'{{WRAPPER}} .flipster__nav__item' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',	 //  line-height: {{SIZE}}{{UNIT}} !important;
+					'{{WRAPPER}} .flipster__nav__link::after' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+				],
+				'render_type' => 'template',
+				'separator' => 'before',
+				'condition' => [
+					'pagination' => ['yes']
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'pagination_gutter',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Horizontal Gutter', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 3,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-flip-carousel .flipster__nav__item' => 'margin: 0 {{SIZE}}{{UNIT}};',
+				],
+				// 'render_type' => 'template',
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name' => 'border_pagination',
+				'label' => __( 'Border', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}} .flipster__nav__item',
+				'separator' => 'before'
+			]
+		);
+		
+		$this->add_control(
+			'pagination_border_radius',
+			[
+				'type' => Controls_Manager::DIMENSIONS,
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'size_units' => [ 'px', '%' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 150,
+					],
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					]
+				],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+					'unit' => 'px'
+				],			
+				'selectors' => [
+					'{{WRAPPER}} .flipster__nav__item' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',	
+					'{{WRAPPER}} .flipster__nav__link::after' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',	
+				],
+				'condition' => [
+					'prev_next_navigation' => ['default', 'custom']
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+		
+		$this->start_controls_tab(
+			'pagination_style_hover_tab',
+			[
+				'label' => __( 'Hover', 'wpr-addons' ),
+			]
+		);
+		
+		$this->add_control(
+			'pagination_color_hover',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#ddd',
+				'selectors' => [
+					'{{WRAPPER}} .flipster__nav__item .flipster__nav__link:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .flipster__nav__item--current .flipster__nav__link' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'pagination_bg_color_hover',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#000000',
+				'render_type' => 'template',
+				'selectors' => [
+					'{{WRAPPER}} .flipster__nav__item:hover' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .flipster__nav__item--current' => 'background-color: {{VALUE}} !important',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'box_shadow_pagination_hover',
+				'label' => __( 'Box Shadow', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}} .flipster__nav__item:hover',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->end_controls_section();
+				
+        $this->start_controls_section(
+			'section_flip_carousel_caption_styles',
+			[
+				'label' => esc_html__( 'Caption', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->start_controls_tabs( 'caption_style_tabs' );
+
+		$this->start_controls_tab(
+			'caption_style_tabs_normal',
+			[
+				'label' => esc_html__( 'Normal', 'wpr-addons' ),
+			]
+		);
+			
+		$this->add_control(
+			'caption_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .flipcaption' => 'color: {{VALUE}}',
+				],
+			]
+		);
+			
+		$this->add_control(
+			'caption_background_color',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .flipcaption' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'content_typography_caption',
+				'label' => __( 'Typography', 'wpr-addons' ),
+				'scheme' => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .flipcaption',
+			]
+		);
+
+		$this->add_control(
+			'caption_transition',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.4,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'separator' => 'before',
+				'selectors' => [
+					'{{WRAPPER}} .flipcaption' => '-webkit-transition: all {{VALUE}}s ease !important; transition: all {{VALUE}}s ease !important;',
+				]
+			]
+		);
+
+		$this->end_controls_tab();
+		
+		$this->start_controls_tab(
+			'caption_style_tabs_hover',
+			[
+				'label' => esc_html__( 'Hover', 'wpr-addons' ),
+			]
+		);
+			
+		$this->add_control(
+			'caption_color_hover',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .flipcaption:hover' => 'color: {{VALUE}}',
+				],
+			]
+		);
+			
+		$this->add_control(
+			'caption_background_color_hover',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#0AA79A',
+				'selectors' => [
+					'{{WRAPPER}} .flipcaption:hover' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'content_typography_caption_hover',
+				'label' => __( 'Typography', 'wpr-addons' ),
+				'scheme' => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .flipcaption:hover',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_responsive_control(
+			'flipcaption_width',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Width', 'wpr-addons' ),
+				'size_units' => [ 'px', 'vw', '%' ],
+				'range' => [
+					'px' => [
+						'min' => 20,
+						'max' => 1500,
+					],
+					'vw' => [
+						'min' => 10,
+						'max' => 100,
+					],
+					'%' => [
+						'min' => 10,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => '%',
+					'size' => 100,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .flipcaption' => 'width: {{SIZE}}{{UNIT}}; margin: auto;',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'flipcaption_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'default' => [
+					'top' => 10,
+					'right' => 0,
+					'bottom' => 10,
+					'left' => 0,
+				],
+				'size_units' => [ 'px', '%' ],
+				'selectors' => [
+					'{{WRAPPER}} .flipcaption span' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				// 'separator' => 'after',
+			]
+		);
+
+		$this->add_responsive_control(
+			'flipcaption_alignment',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'label_block' => false,
+				'default' => 'center',
+				'separator' => 'before',
+				'options' => [
+					'left' => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+                'selectors' => [
+					'{{WRAPPER}} .flipcaption' => 'text-align: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->end_controls_section();
+    }
+
+	public function flip_carousel_attributes($settings) {
+		ob_start();
+		\Elementor\Icons_Manager::render_icon( $settings['button_prev'], [ 'aria-hidden' => 'true' ] );
+		$icon_prev = ob_get_clean();
+
+		ob_start();
+		\Elementor\Icons_Manager::render_icon( $settings['button_next'], [ 'aria-hidden' => 'true' ] );
+		$icon_next = ob_get_clean();
+
+		// $icon_prev = '<span class="wpr-slider-prev-arrow">'. \WprAddons\Classes\Utilities::get_wpr_icon( $settings['flip_carousel_nav_icon'], '' ) .'</span>';
+
+		// $icon_next = '<span class="wpr-slider-next-arrow">'. \WprAddons\Classes\Utilities::get_wpr_icon( $settings['flip_carousel_nav_icon'], '' ) .'</span>';
+
+		$attributes = [
+			'starts_from_center' => $settings['starts_from_center'],
+			'carousel_type' => $settings['carousel_type'],
+			'loop' => $settings['loop'],
+			'autoplay' => $settings['autoplay'],
+			'autoplay_milliseconds' => $settings['autoplay_milliseconds'],
+			'pause_on_hover' => $settings['pause_on_hover'],
+			'play_on_click' => $settings['play_on_click'],
+			'play_on_scroll' => $settings['play_on_scroll'],
+			'pagination_position' => $settings['pagination_position'],
+			'spacing' => $settings['spacing'],
+			'enable_navigation' => $settings['enable_navigation'],
+			'prev_next_navigation' => $settings['prev_next_navigation'],
+			'button_prev' => $icon_prev,
+			'button_next' => $icon_next,
+			// 'button_prev' => '<span class="wpr-slider-prev-arrow">'. $icon_prev .'</span>',
+			// 'button_next' => '<span class="wpr-slider-next-arrow">'. $icon_next .'</span>',
+			'pagination_bg_color_hover' => $settings['pagination_bg_color_hover']
+		];
+
+		return json_encode($attributes);
+	}
+
+    protected function render() {
+		$settings = $this->get_settings_for_display();
+		
+        if ( $settings['carousel_elements'] ) {
+            echo '<div class="wpr-flip-carousel" data-settings="'. esc_attr($this->flip_carousel_attributes($settings)) .'">';
+            echo '<ul class="wpr-flip-items-wrapper">';
+            foreach ( $settings['carousel_elements'] as $element ) {
+				// $flip_slide_image = Group_Control_Image_Size::get_attachment_image_src( $element['image']['id'], 'flip_carousel_image_size', $settings );
+				$flip_slide_image = Utils::get_placeholder_image_src() === $element['image']['url'] ? '<img src='. Utils::get_placeholder_image_src() .' />' : '<img src="'.  Group_Control_Image_Size::get_attachment_image_src( $element['image']['id'], 'flip_carousel_image_size', $settings ) .'" />';
+
+				$figcaption = 'yes' === $settings['enable_figcaption'] ? '<figcaption class="flipcaption"><span style="width: 100%;">'. $element['slide_text'] .'</span></figcaption>' : '';
+
+				$inner_figure = 'after' === $settings['flipcaption_position']
+						? ''. $flip_slide_image . $figcaption .''
+						: ''. $figcaption . $flip_slide_image .'';
+
+				$figure = 'yes' === $element['enable_slide_link']
+						? '<a href="'. ($element['slide_link']['url']) .'" target="_blank">' . $inner_figure . '</a>'
+						: $inner_figure;
+
+                echo '<li class="wpr-flip-item" data-flip-title="">';
+					echo '<figure>';
+						echo $figure;
+					echo '</figure>';
+				echo '</li>';
+            }
+            echo '</ul>';
+            echo '</div>';
+        }
+    }
+}
