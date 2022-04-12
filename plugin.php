@@ -265,6 +265,13 @@ class Plugin {
 			[]
 		);
 
+		wp_register_style(
+			'wpr-flipster-css',
+			WPR_ADDONS_URL . 'assets/css/lib/flipster/jquery.flipster' . $this->script_suffix() . '.css',
+			[],
+			Plugin::instance()->get_version()
+		);
+
 		wp_enqueue_style(
 			'wpr-addons-css',
 			WPR_ADDONS_URL . 'assets/css/frontend' . $this->script_suffix() . '.css',
@@ -332,6 +339,13 @@ class Plugin {
 			'wpr-aos-css', 
 			WPR_ADDONS_URL  . 'assets/css/lib/aos/aos' . $this->script_suffix() . '.css',
 			[]
+		);
+
+		wp_register_style(
+			'wpr-flipster-css',
+			WPR_ADDONS_URL . 'assets/css/lib/flipster/jquery.flipster' . $this->script_suffix() . '.css',
+			[],
+			Plugin::instance()->get_version()
 		);
 	}
 
@@ -457,6 +471,14 @@ class Plugin {
 			 [], 
 			 null, 
 			 true
+		);
+
+		wp_register_script(
+			'wpr-flipster',
+			WPR_ADDONS_URL . 'assets/js/lib/flipster/jquery.flipster' . $this->script_suffix() . '.js',
+			[],
+			'2.0',
+			true
 		);
 	}
 
