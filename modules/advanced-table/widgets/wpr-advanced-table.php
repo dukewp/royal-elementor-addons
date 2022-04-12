@@ -1022,13 +1022,13 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'step' => 0.1,
 				'separator' => 'before',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-table-th' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
-					'{{WRAPPER}} .wpr-table-th-pag' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
-					'{{WRAPPER}} .wpr-table-th i' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
-					'{{WRAPPER}} .wpr-table-td' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
-					'{{WRAPPER}} .wpr-table-td-pag' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
-					'{{WRAPPER}} .wpr-table-td i' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
-					'{{WRAPPER}} .wpr-table-text' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;'
+					'{{WRAPPER}} .wpr-table-th' => '-webkit-transition-duration:  {{VALUE}}s; transition-duration:  {{VALUE}}s; transition-property: background-color color font-size',
+					'{{WRAPPER}} .wpr-table-th-pag' => '-webkit-transition-duration:  {{VALUE}}s; transition-duration:  {{VALUE}}s; transition-property: background-color color font-size',
+					'{{WRAPPER}} .wpr-table-th i' => '-webkit-transition-duration:  {{VALUE}}s; transition-duration:  {{VALUE}}s; transition-property: background-color color font-size',
+					'{{WRAPPER}} .wpr-table-td' => '-webkit-transition-duration:  {{VALUE}}s; transition-duration:  {{VALUE}}s; transition-property: background-color color font-size',
+					'{{WRAPPER}} .wpr-table-td-pag' => '-webkit-transition-duration:  {{VALUE}}s; transition-duration:  {{VALUE}}s; transition-property: background-color color font-size',
+					'{{WRAPPER}} .wpr-table-td i' => '-webkit-transition-duration:  {{VALUE}}s; transition-duration:  {{VALUE}}s; transition-property: background-color color font-size',
+					'{{WRAPPER}} .wpr-table-text' => '-webkit-transition-duration:  {{VALUE}}s; transition-duration:  {{VALUE}}s; transition-property: background-color color font-size'
 				],
 				'separator' => 'before'
 			]
