@@ -312,8 +312,8 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'default' => 'after',
 				'options' => [
-					'after' => esc_html__( 'After Image', 'wpr-addons' ),
-					'before' => esc_html__( 'Before Image', 'wpr-addons' ),
+					'before' => esc_html__( 'Above Image', 'wpr-addons' ),
+					'after' => esc_html__( 'Below Image', 'wpr-addons' ),
 				],
 				'condition' => [
 					'enable_figcaption' => 'yes'
@@ -341,8 +341,8 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'default' => 'before',
 				'options' => [
-					'before' => esc_html__( 'Before Image', 'wpr-addons' ),
-					'after' => esc_html__( 'After Image', 'wpr-addons' ),
+					'before' => esc_html__( 'Above Image', 'wpr-addons' ),
+					'after' => esc_html__( 'Below Image', 'wpr-addons' ),
 				],
 				'condition' => [
 					'pagination' => 'yes'
