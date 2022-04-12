@@ -380,38 +380,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 		);
 
 		$this->add_control(
-			'button_prev',
-			[
-				'label' => __( 'Prev Icon', 'text-domain' ),
-				'type' => \Elementor\Controls_Manager::ICONS,
-				'skin' => 'inline',
-				'default' => [
-					'value' => '',
-					'library' => 'solid',
-				],
-				'condition' => [
-					'prev_next_navigation' => 'custom'
-				]
-			]
-		);
-
-		$this->add_control(
-			'button_next',
-			[
-				'label' => __( 'Next Icon', 'text-domain' ),
-				'type' => \Elementor\Controls_Manager::ICONS,
-				'skin' => 'inline',
-				'default' => [
-					'value' => '',
-					'library' => 'solid',
-				],
-				'condition' => [
-					'prev_next_navigation' => 'custom'
-				]
-			]
-		);
-
-		$this->add_control(
 			'flip_carousel_nav_icon',
 			[
 				'label' => esc_html__( 'Navigation Icon', 'wpr-addons' ),
@@ -1213,17 +1181,10 @@ class Wpr_Flip_Carousel extends Widget_Base {
     }
 
 	public function flip_carousel_attributes($settings) {
-		ob_start();
-		\Elementor\Icons_Manager::render_icon( $settings['button_prev'], [ 'aria-hidden' => 'true' ] );
-		$icon_prev = ob_get_clean();
 
-		ob_start();
-		\Elementor\Icons_Manager::render_icon( $settings['button_next'], [ 'aria-hidden' => 'true' ] );
-		$icon_next = ob_get_clean();
+		$icon_prev = '<span class="wpr-slider-prev-arrow">'. \WprAddons\Classes\Utilities::get_wpr_icon( $settings['flip_carousel_nav_icon'], '' ) .'</span>';
 
-		// $icon_prev = '<span class="wpr-slider-prev-arrow">'. \WprAddons\Classes\Utilities::get_wpr_icon( $settings['flip_carousel_nav_icon'], '' ) .'</span>';
-
-		// $icon_next = '<span class="wpr-slider-next-arrow">'. \WprAddons\Classes\Utilities::get_wpr_icon( $settings['flip_carousel_nav_icon'], '' ) .'</span>';
+		$icon_next = '<span class="wpr-slider-next-arrow">'. \WprAddons\Classes\Utilities::get_wpr_icon( $settings['flip_carousel_nav_icon'], '' ) .'</span>';
 
 		$attributes = [
 			'starts_from_center' => $settings['starts_from_center'],
