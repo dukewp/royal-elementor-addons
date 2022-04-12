@@ -383,22 +383,12 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			'flip_carousel_nav_icon',
 			[
 				'label' => esc_html__( 'Navigation Icon', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'fas fa-angle-left',
-				'options' => Utilities::get_svg_icons_array( 'arrows', [
-					'fas fa-angle-left' => esc_html__( 'Angle', 'wpr-addons' ),
-					'fas fa-angle-double-left' => esc_html__( 'Angle Double', 'wpr-addons' ),
-					'fas fa-arrow-left' => esc_html__( 'Arrow', 'wpr-addons' ),
-					'fas fa-arrow-alt-circle-left' => esc_html__( 'Arrow Circle', 'wpr-addons' ),
-					'far fa-arrow-alt-circle-left' => esc_html__( 'Arrow Circle Alt', 'wpr-addons' ),
-					'fas fa-long-arrow-alt-left' => esc_html__( 'Long Arrow', 'wpr-addons' ),
-					'fas fa-chevron-left' => esc_html__( 'Chevron', 'wpr-addons' ),
-					'svg-icons' => esc_html__( 'SVG Icons -----', 'wpr-addons' ),
-				] ),
+				'type' => 'wpr-arrow-icons',
+				'default' => 'fas fa-angle',
 				'condition' => [
 					'enable_navigation' => 'yes',
 					'prev_next_navigation' => 'custom'
-				],
+				]
 			]
 		);
 
