@@ -4,7 +4,7 @@
  * Description: The only plugin you need for Elementor page builder.
  * Plugin URI: https://royal-elementor-addons.com/
  * Author: WP Royal
- * Version: 1.3.38
+ * Version: 1.3.39
  * License: GPLv3
  * Author URI: https://royal-elementor-addons.com/
  * Elementor tested up to: 3.6.2
@@ -15,7 +15,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-define( 'WPR_ADDONS_VERSION', '1.3.38' );
+define( 'WPR_ADDONS_VERSION', '1.3.39' );
 
 define( 'WPR_ADDONS__FILE__', __FILE__ );
 define( 'WPR_ADDONS_PLUGIN_BASE', plugin_basename( WPR_ADDONS__FILE__ ) );
@@ -222,7 +222,7 @@ function royal_elementor_addons_activation_time() {//TODO: Try to locate this in
 
 // Delete Plugin Update Notice
 function royal_elementor_addons_deactivate() {
-	delete_option('wpr_plugin_update_dismiss_notice');
+
 }
 
 register_activation_hook( __FILE__, 'royal_elementor_addons_activation_time' );

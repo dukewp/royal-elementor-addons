@@ -1,7 +1,7 @@
-﻿=== Royal Elementor Addons (Header Footer Builder, Popups, Post Grid, Woocommerce Product Grid, Slider, Parallax Image, Free Elementor Widgets & Elementor Templates) ===
+=== Royal Elementor Addons (Header Footer Builder, Popups, Post Grid, Woocommerce Product Grid, Slider, Parallax Image, Free Elementor Widgets & Elementor Templates) ===
 Contributors: WP Royal, rubeushagrid13, cyberpinky, elementoraddonswpr
 Tags: elementor, elements, widgets for elementor, elementor addons, elementor widgets, elementor form, woocommerce elementor, page builder, elementor templates, wordpress page builder, best elementor addons, addons for elementor
-Stable tag: 1.3.38
+Stable tag: 1.3.39
 Requires at least: 5.0
 Tested up to: 5.9
 Requires PHP: 5.6
@@ -14,7 +14,7 @@ Elementor Post, Portfolio, Woocommerce Grid builder Widgets. Slider, Carousel, F
 
 **Royal Addons for Elementor** is the most versatile, intuitive, and easy to use [Elementor Page Builder](https://wordpress.org/plugins/elementor/) extension. Our goal is to provide you with the tools to make things happen, efficiently, and fast compare to other elementor plugins. Choosing us is not only a mindset, but it is also a requirement if you intend to gain an edge over your competitors when creating your website. The best part is that you can design anything **without having to touch a single line of code**.
 
-Comes with 40+ widgets for elementor. Creative and self-intuitive elementor widgets to take your WordPress website to the next level. **All widgets are Free** and the Pro Version offers even more advanced functionality.
+Comes with **50+ widgets, 25 Elementor Template KIT (Growing Each Week), Theme Builder, Popup Builder, Premade Widget Blocks & Extensions for Elementor.** Creative and self-intuitive elementor widgets to take your WordPress website to the next level. **All widgets are Free** and the Pro Version offers even more advanced functionality.
 
 *Free and Pro functionalities are mixed in the Widget Demos below.*
 
@@ -79,7 +79,7 @@ and other custom branding related settings)
 - [**Personal Blog**](https://demosites.royal-elementor-addons.com/personal-blog-v1/?ref=rea-wpo-pp-details-tab)
 - [**Blog Magazine**](https://demosites.royal-elementor-addons.com/magazine-blog-v1/?ref=rea-wpo-pp-details-tab)
 - [**Food Blog**](https://demosites.royal-elementor-addons.com/food-blog-v1/?ref=rea-wpo-pp-details-tab)
-- [**Blog Magazine**](https://demosites.royal-elementor-addons.com/travel-blog-v1/?ref=rea-wpo-pp-details-tab)
+- [**Travel Blog**](https://demosites.royal-elementor-addons.com/travel-blog-v1/?ref=rea-wpo-pp-details-tab)
 
 **Elementor Templates Kits**
 
@@ -326,6 +326,9 @@ memory_limit 256M or more
 post_max_size 64M
 
 == Changelog ==
+
+= Royal Elementor Addons v1.3.39 - 2022-12-04 =
+* FIXED: Elementor Theme Builder minor issues.
 
 = Royal Elementor Addons v1.3.38 - 2022-04-06 =
 * ADDED: Elementor Theme Builder. Customize every fundamental part of your WordPress site without coding including your Header, Footer, Archives, Posts, Default Pages, 404 Pages, etc...
