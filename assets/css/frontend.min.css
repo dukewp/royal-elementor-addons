@@ -11221,6 +11221,13 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 	display: none;
 }
 
+.wpr-flip-carousel-navigation {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
 
 /*--------------------------------------------------------------
  == Taxonomy List

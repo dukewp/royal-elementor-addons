@@ -425,42 +425,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 		$this->end_controls_section();
 		
         $this->start_controls_section(
-			'flip_carousel_general_styles',
-			[
-				'label' => esc_html__( 'General', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-			]
-		);
-
-		// $this->add_responsive_control(
-		// 	'slider_content_width',
-		// 	[
-		// 		'label' => esc_html__( 'Width', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'range' => [
-		// 			'%' => [
-		// 				'min' => 20,
-		// 				'max' => 100,
-		// 			],
-		// 			'px' => [
-		// 				'min' => 200,
-		// 				'max' => 1500,
-		// 			],
-		// 		],
-		// 		'size_units' => [ '%', 'px' ],
-		// 		'default' => [
-		// 			'unit' => 'px',
-		// 			'size' => 750,
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-flip-carousel ul li.flipster__item' => 'max-width: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}};',
-		// 		],
-		// 	]
-		// );
-
-		$this->end_controls_section();
-		
-        $this->start_controls_section(
 			'section_flip_carousel_navigation_styles',
 			[
 				'label' => esc_html__( 'Navigation', 'wpr-addons' ),
@@ -524,6 +488,80 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'selector' => '{{WRAPPER}} .flipster__button',
 			]
 		);
+		
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'navigation_style_hover_tab',
+			[
+				'label' => __( 'Hover', 'wpr-addons' ),
+			]
+		);
+		
+		$this->add_control(
+			'navigation_icon_color_hover',
+			[
+				'label'  => esc_html__( 'Icon Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .flipster__button:hover i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .flipster__button:hover svg' => 'fill: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'stroke_color_hover',
+			[
+				'label'  => esc_html__( 'Stroke Color (SVG)', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#000000',
+				'selectors' => [
+					'{{WRAPPER}} .flipster__button:hover svg' => 'stroke: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'navigation_bg_color_hover',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#0AA79A',
+				'selectors' => [
+					'{{WRAPPER}} .flipster__button:hover' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'box_shadow_navigation_hover',
+				'label' => __( 'Box Shadow', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}} .flipster__button:hover',
+			]
+		);
+		
+		$this->add_control(
+			'navigation_border_color_hover',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .flipster__button:hover' => 'border-color: {{VALUE}}',
+				],
+				'condition' => [
+					'border' => 'none'
+				]
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
 
 		$this->add_control(
 			'navigation_transition',
@@ -653,80 +691,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				],
 			]
 		);
-		
-		$this->end_controls_tab();
-
-		$this->start_controls_tab(
-			'navigation_style_hover_tab',
-			[
-				'label' => __( 'Hover', 'wpr-addons' ),
-			]
-		);
-		
-		$this->add_control(
-			'navigation_icon_color_hover',
-			[
-				'label'  => esc_html__( 'Icon Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '',
-				'selectors' => [
-					'{{WRAPPER}} .flipster__button:hover i' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .flipster__button:hover svg' => 'fill: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_control(
-			'stroke_color_hover',
-			[
-				'label'  => esc_html__( 'Stroke Color (SVG)', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#000000',
-				'selectors' => [
-					'{{WRAPPER}} .flipster__button:hover svg' => 'stroke: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_control(
-			'navigation_bg_color_hover',
-			[
-				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#0AA79A',
-				'selectors' => [
-					'{{WRAPPER}} .flipster__button:hover' => 'background-color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_group_control(
-			\Elementor\Group_Control_Box_Shadow::get_type(),
-			[
-				'name' => 'box_shadow_navigation_hover',
-				'label' => __( 'Box Shadow', 'wpr-addons' ),
-				'selector' => '{{WRAPPER}} .flipster__button:hover',
-			]
-		);
-		
-		$this->add_control(
-			'navigation_border_color_hover',
-			[
-				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '',
-				'selectors' => [
-					'{{WRAPPER}} .flipster__button:hover' => 'border-color: {{VALUE}}',
-				],
-				'condition' => [
-					'border' => 'none'
-				]
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->end_controls_tabs();
 
 		$this->end_controls_section();
 				
@@ -760,6 +724,18 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				],
 			]
 		);
+		
+		$this->add_control(
+			'pagination_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#ddd',
+				'selectors' => [
+					'{{WRAPPER}} .flipster__nav__item' => 'border-color: {{VALUE}}'
+				]
+			]
+		);
 
 		$this->add_control(
 			'pagination_bg_color',
@@ -772,6 +748,83 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				],
 			]
 		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'box_shadow_pagination',
+				'label' => __( 'Box Shadow', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}} .flipster__nav__item',
+			]
+		);
+
+		$this->end_controls_tab();
+		
+		$this->start_controls_tab(
+			'pagination_style_hover_tab',
+			[
+				'label' => __( 'Hover', 'wpr-addons' ),
+			]
+		);
+		
+		$this->add_control(
+			'pagination_color_hover',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#ddd',
+				'selectors' => [
+					'{{WRAPPER}} .flipster__nav__item .flipster__nav__link:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .flipster__nav__item--current .flipster__nav__link' => 'color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->add_control(
+			'pagination_border_color_hover',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#ddd',
+				'selectors' => [
+					'{{WRAPPER}} .flipster__nav__item:hover' => 'border-color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_control(
+			'pagination_bg_color_hover',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#000000',
+				'render_type' => 'template',
+				'selectors' => [
+					'{{WRAPPER}} .flipster__nav__item:hover' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .flipster__nav__item--current' => 'background-color: {{VALUE}} !important',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'box_shadow_pagination_hover',
+				'label' => __( 'Box Shadow', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}} .flipster__nav__item:hover',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_control(
+			'hr',
+			[
+				'type' => \Elementor\Controls_Manager::DIVIDER,
+			]
+		);
 		
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
@@ -780,15 +833,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'label' => __( 'Typography', 'wpr-addons' ),
 				'scheme' => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .flipster__nav__link',
-			]
-		);
-
-		$this->add_group_control(
-			\Elementor\Group_Control_Box_Shadow::get_type(),
-			[
-				'name' => 'box_shadow_pagination',
-				'label' => __( 'Box Shadow', 'wpr-addons' ),
-				'selector' => '{{WRAPPER}} .flipster__nav__item',
+				'separator' => 'before'
 			]
 		);
 
@@ -881,13 +926,56 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			]
 		);
 
-		$this->add_group_control(
-			\Elementor\Group_Control_Border::get_type(),
+		$this->add_control(
+			'border_pagination',
 			[
-				'name' => 'border_pagination',
-				'label' => __( 'Border', 'wpr-addons' ),
-				'selector' => '{{WRAPPER}} .flipster__nav__item',
-				'separator' => 'before'
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'solid',
+				'selectors' => [
+					'{{WRAPPER}} .flipster__nav__item' => 'border-style: {{VALUE}};',
+				],
+			]
+		);
+		 
+		$this->add_control(
+			'pagination_border_width',
+			[
+				'type' => Controls_Manager::DIMENSIONS,
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'size_units' => [ 'px', '%' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 150,
+					],
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					]
+				],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+					'unit' => 'px'
+				],			
+				'selectors' => [
+					'{{WRAPPER}} .flipster__nav__item' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',	
+					'{{WRAPPER}} .flipster__nav__link::after' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',	
+				],
+				'condition' => [
+					'pagination_border!' => 'none'
+				],
 			]
 		);
 		
@@ -923,55 +1011,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				],
 			]
 		);
-
-		$this->end_controls_tab();
-		
-		$this->start_controls_tab(
-			'pagination_style_hover_tab',
-			[
-				'label' => __( 'Hover', 'wpr-addons' ),
-			]
-		);
-		
-		$this->add_control(
-			'pagination_color_hover',
-			[
-				'label'  => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#ddd',
-				'selectors' => [
-					'{{WRAPPER}} .flipster__nav__item .flipster__nav__link:hover' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .flipster__nav__item--current .flipster__nav__link' => 'color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_control(
-			'pagination_bg_color_hover',
-			[
-				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#000000',
-				'render_type' => 'template',
-				'selectors' => [
-					'{{WRAPPER}} .flipster__nav__item:hover' => 'background-color: {{VALUE}}',
-					'{{WRAPPER}} .flipster__nav__item--current' => 'background-color: {{VALUE}} !important',
-				],
-			]
-		);
-
-		$this->add_group_control(
-			\Elementor\Group_Control_Box_Shadow::get_type(),
-			[
-				'name' => 'box_shadow_pagination_hover',
-				'label' => __( 'Box Shadow', 'wpr-addons' ),
-				'selector' => '{{WRAPPER}} .flipster__nav__item:hover',
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->end_controls_tabs();
 
 		$this->end_controls_section();
 				
@@ -1015,32 +1054,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				],
 			]
 		);
-		
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => 'content_typography_caption',
-				'label' => __( 'Typography', 'wpr-addons' ),
-				'scheme' => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .flipcaption',
-			]
-		);
-
-		$this->add_control(
-			'caption_transition',
-			[
-				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.4,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'separator' => 'before',
-				'selectors' => [
-					'{{WRAPPER}} .flipcaption' => '-webkit-transition: all {{VALUE}}s ease !important; transition: all {{VALUE}}s ease !important;',
-				]
-			]
-		);
 
 		$this->end_controls_tab();
 		
@@ -1074,20 +1087,43 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				],
 			]
 		);
-		
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => 'content_typography_caption_hover',
-				'label' => __( 'Typography', 'wpr-addons' ),
-				'scheme' => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .flipcaption:hover',
-			]
-		);
 
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
+
+		$this->add_control(
+			'hr_caption',
+			[
+				'type' => \Elementor\Controls_Manager::DIVIDER,
+			]
+		);
+		
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'content_typography_caption',
+				'label' => __( 'Typography', 'wpr-addons' ),
+				'scheme' => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .flipcaption',
+			]
+		);
+
+		$this->add_control(
+			'caption_transition',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.4,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'separator' => 'before',
+				'selectors' => [
+					'{{WRAPPER}} .flipcaption' => '-webkit-transition: all {{VALUE}}s ease !important; transition: all {{VALUE}}s ease !important;',
+				]
+			]
+		);
 
 		$this->add_responsive_control(
 			'flipcaption_width',
@@ -1172,9 +1208,9 @@ class Wpr_Flip_Carousel extends Widget_Base {
 
 	public function flip_carousel_attributes($settings) {
 
-		$icon_prev = '<span class="wpr-slider-prev-arrow">'. \WprAddons\Classes\Utilities::get_wpr_icon( $settings['flip_carousel_nav_icon'], '' ) .'</span>';
+		$icon_prev = '<span class="wpr-flip-carousel-navigation">'. Utilities::get_wpr_icon( $settings['flip_carousel_nav_icon'], 'left' ) .'</span>';
 
-		$icon_next = '<span class="wpr-slider-next-arrow">'. \WprAddons\Classes\Utilities::get_wpr_icon( $settings['flip_carousel_nav_icon'], '' ) .'</span>';
+		$icon_next = '<span class="wpr-flip-carousel-navigation">'. Utilities::get_wpr_icon( $settings['flip_carousel_nav_icon'], 'right' ) .'</span>';
 
 		$attributes = [
 			'starts_from_center' => $settings['starts_from_center'],
@@ -1191,8 +1227,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			'prev_next_navigation' => $settings['prev_next_navigation'],
 			'button_prev' => $icon_prev,
 			'button_next' => $icon_next,
-			// 'button_prev' => '<span class="wpr-slider-prev-arrow">'. $icon_prev .'</span>',
-			// 'button_next' => '<span class="wpr-slider-next-arrow">'. $icon_next .'</span>',
 			'pagination_bg_color_hover' => $settings['pagination_bg_color_hover']
 		];
 
