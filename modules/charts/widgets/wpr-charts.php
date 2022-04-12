@@ -1207,6 +1207,7 @@ class Wpr_Charts extends Widget_Base {
 				'min'                => 0,
 				'default'            => 600,
 				'frontend_available' => true,
+				'separator' => 'before'
 			]
 		);
 		
@@ -1226,6 +1227,7 @@ class Wpr_Charts extends Widget_Base {
 					'unit' => 'px',
 					'size' => 14,
 				],
+				'separator' => 'before'
 			]
 		);
 
@@ -1901,6 +1903,26 @@ class Wpr_Charts extends Widget_Base {
 					'unit' => 'px',
 					'size' => 14,
 				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_responsive_control(
+			'chart_tooltip_title_margin_bottom',
+			[
+				'label' => esc_html__( 'Title Spacing', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'size_units' => [ 'px' ],
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
 			]
 		);
 
@@ -1925,26 +1947,7 @@ class Wpr_Charts extends Widget_Base {
 						'icon' => 'eicon-text-align-right',
 					],
 				],
-				// 'separator' => 'before',
-			]
-		);
-
-		$this->add_responsive_control(
-			'chart_tooltip_title_margin_bottom',
-			[
-				'label' => esc_html__( 'Title Spacing', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 50,
-					],
-				],
-				'size_units' => [ 'px' ],
-				'default' => [
-					'unit' => 'px',
-					'size' => 10,
-				],
+				'separator' => 'before'
 			]
 		);
 
@@ -1990,13 +1993,33 @@ class Wpr_Charts extends Widget_Base {
 					'unit' => 'px',
 					'size' => 14,
 				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_responsive_control(
+			'chart_tooltip_item_spacing',
+			[
+				'label' => esc_html__( 'Item Spacing', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'size_units' => [ 'px' ],
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
 			]
 		);
 
 		$this->add_responsive_control(
 			'chart_tooltip_item_align',
 			[
-				'label' => esc_html__( 'Title Alignment', 'wpr-addons' ),
+				'label' => esc_html__( 'Item Alignment', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
 				'default' => 'center',
 				'label_block' => false,
@@ -2014,26 +2037,7 @@ class Wpr_Charts extends Widget_Base {
 						'icon' => 'eicon-text-align-right',
 					],
 				],
-				// 'separator' => 'before',
-			]
-		);
-
-		$this->add_responsive_control(
-			'chart_tooltip_item_spacing',
-			[
-				'label' => esc_html__( 'Title Spacing', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 50,
-					],
-				],
-				'size_units' => [ 'px' ],
-				'default' => [
-					'unit' => 'px',
-					'size' => 10,
-				],
+				'separator' => 'before'
 			]
 		);
 
@@ -2127,6 +2131,8 @@ class Wpr_Charts extends Widget_Base {
 		$data_charts_array = [];
 
 		if ( in_array($chart_type, array('bar', 'bar_horizontal', 'line', 'radar'))) {
+
+			var_dump($chart_type);
 			
 			if(!empty($charts_labels_data)):
 				$data_charts_array['labels'] = explode(',', trim($charts_labels_data));
