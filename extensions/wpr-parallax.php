@@ -105,12 +105,27 @@ class Wpr_Parallax_Scroll {
             Utilities::upgrade_pro_notice( $element, Controls_Manager::RAW_HTML, 'parallax-background', 'scroll_effect', ['pro-op','pro-sclo','pro-scrlo'] );
         }
 
-        $element->add_responsive_control(
+        $element->add_control(
             'bg_image',
             [
                 'label' => __( 'Choose Image', 'wpr-addons' ),
                 'type' => Controls_Manager::MEDIA,
-                'devices' => [ 'desktop', 'mobile' ],
+                // 'devices' => [ 'desktop', 'mobile' ],
+                'default' => [
+                    'url' => Utils::get_placeholder_image_src(),
+                ],
+                'render_type' => 'template',
+                'condition' => [
+                    'wpr_enable_jarallax' => 'yes'
+                ]
+            ]
+        );
+
+        $element->add_control(
+            'bg_image_mobile',
+            [
+                'label' => __( 'Choose Mobile Image', 'wpr-addons' ),
+                'type' => Controls_Manager::MEDIA,
                 'default' => [
                     'url' => Utils::get_placeholder_image_src(),
                 ],
