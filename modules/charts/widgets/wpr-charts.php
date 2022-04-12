@@ -97,7 +97,7 @@ class Wpr_Charts extends Widget_Base {
 		$this->add_control(
 			'data_csv_separator',
 			[
-				'label'       => __( 'Remote URL', 'wpr-addons' ),
+				'label'       => __( 'Separator', 'wpr-addons' ),
 				'type'        => Controls_Manager::TEXT,
 				'dynamic'     => array( 'active' => true ),
 				'default' => ',',
