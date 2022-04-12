@@ -144,6 +144,53 @@ class Wpr_AdvancedTable extends Widget_Base {
 		// );
 
 		$this->add_control(
+			'custom_cell_width',
+			[
+				'label' => __('Custom Cell Width', 'wpr-addons'),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'label_on' => __('Yes', 'wpr-addons'),
+				'label_off' => __('No', 'wpr-addons'),
+				'return_value' => 'yes',
+				'separator' => 'before'
+			]
+		);
+
+
+		$this->add_responsive_control(
+            'custom_cell_size',
+            [
+                'label'      => __('Width', 'wpr-addons'),
+                'type'       => Controls_Manager::SLIDER,
+                'range'      => [
+                    '%' => [
+                        'min' => 1,
+                        'max' => 100,
+                    ],
+                ],
+                'selectors'  => [
+                    '{{WRAPPER}} th:not(.wpr-table-th-pag)' => 'width: {{SIZE}}%;',
+                    '{{WRAPPER}} td:not(.wpr-table-td-pag)' => 'width: {{SIZE}}%;',
+                ],
+				'condition' => [
+					'custom_cell_width' => 'yes'
+				]
+            ]
+        );
+
+		$this->add_control(
+			'white_space_text',
+			[
+				'label' => __('Prevent Word Wrap', 'wpr-addons'),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'label_on' => __('Yes', 'wpr-addons'),
+				'label_off' => __('No', 'wpr-addons'),
+				'return_value' => 'yes',
+				'prefix_class' => 'wpr-table-text-nowrap-',
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
 			'enable_table_sorting',
 			[
 				'label' => __('Table Sorting', 'wpr-addons'),
@@ -960,17 +1007,59 @@ class Wpr_AdvancedTable extends Widget_Base {
 					'{{WRAPPER}} th.wpr-table-th-pag' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} td.wpr-table-td' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} td.wpr-table-td-pag' => 'border-color: {{VALUE}}'
-				],
-				'condition' => [
-					'all_border_type!' => 'none',
 				]
 			]
 		);
 
 		$this->add_control(
+			'hover_transition',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.3,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'separator' => 'before',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-table-th' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
+					'{{WRAPPER}} .wpr-table-th-pag' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
+					'{{WRAPPER}} .wpr-table-th i' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
+					'{{WRAPPER}} .wpr-table-td' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
+					'{{WRAPPER}} .wpr-table-td-pag' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
+					'{{WRAPPER}} .wpr-table-td i' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
+					'{{WRAPPER}} .wpr-table-text' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;'
+				],
+				'separator' => 'before'
+			]
+		);
+
+        $this->add_responsive_control(
+            'table_search_input_padding',
+            [
+                'label'      => esc_html__( 'Search & Export Padding', 'wpr-addons' ),
+                'type'       => Controls_Manager::DIMENSIONS,
+                'size_units' => [ 'px', 'em', '%' ],
+                'default'    => [
+                    'top'    => 10,
+                    'bottom' => 10,
+                    'left'   => 10,
+                    'right'  => 10,
+                    'unit'   => 'px'
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-table-live-search-cont input' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .wpr-table-export-button-cont button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .wpr-search-input-icon' => 'right: {{RIGHT}}{{UNIT}} !important',
+				],
+				'separator' => 'before'
+            ]
+        );
+
+		$this->add_control(
 			'all_border_type',
 			[
-				'label' => esc_html__('Global Border Type', 'wpr-addons' ),
+				'label' => esc_html__('Border', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'none' => esc_html__( 'None', 'wpr-addons' ),
@@ -985,9 +1074,9 @@ class Wpr_AdvancedTable extends Widget_Base {
 					'{{WRAPPER}} th.wpr-table-th' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} th.wpr-table-th-pag' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} td.wpr-table-td' => 'border-style: {{VALUE}};',
-					'{{WRAPPER}} td.wpr-table-td-pag' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} td.wpr-table-td-pag' => 'border-style: {{VALUE}};'
 				],
-				'separator' => 'before',
+				'separator' => 'before'
 			]
 		);
 
@@ -1013,6 +1102,31 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'condition' => [
 					'all_border_type!' => 'none',
 				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'header_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 0,
+					'unit' => 'px'
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 200,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} th:first-child' => 'border-top-left-radius: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} th:last-child' => 'border-top-right-radius: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} tr:last-child td:first-child' => 'border-bottom-left-radius: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} tr:last-child td:last-child' => 'border-bottom-right-radius: {{SIZE}}{{UNIT}};'
+				],
+				'separator' => 'before'
 			]
 		);
 
@@ -1083,7 +1197,7 @@ class Wpr_AdvancedTable extends Widget_Base {
                     ],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-table-container .wpr-table-inner-container' => 'display: flex; justify-content: {{VALUE}}',
+					'{{WRAPPER}} .wpr-table-container .wpr-table-inner-container' => 'justify-content: {{VALUE}}',
 					'{{WRAPPER}} .wpr-table-container' => 'display: flex; justify-content: {{VALUE}}',
 					'{{WRAPPER}} .wpr-export-search-cont' => 'display: flex; justify-content: {{VALUE}}',
 					'{{WRAPPER}} .wpr-table-pagination-outer-cont' => 'display: flex; justify-content: {{VALUE}}'
@@ -1091,28 +1205,6 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'separator' => 'before'
             ]
         );
-
-		$this->add_control(
-			'hover_transition',
-			[
-				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.3,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'separator' => 'before',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-th' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
-					'{{WRAPPER}} .wpr-table-th-pag' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
-					'{{WRAPPER}} .wpr-table-th i' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
-					'{{WRAPPER}} .wpr-table-td' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
-					'{{WRAPPER}} .wpr-table-td-pag' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
-					'{{WRAPPER}} .wpr-table-td i' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
-					'{{WRAPPER}} .wpr-table-text' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;'
-				],
-			]
-		);
 
 		$this->end_controls_section();
 
@@ -1208,32 +1300,6 @@ class Wpr_AdvancedTable extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'header_border_radius',
-			[
-				'label' => esc_html__( 'Header Border Radius', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'default' => [
-					'size' => 0,
-					'unit' => 'px'
-				],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 200,
-					],
-				],
-				'selectors' => [
-					// '{{WRAPPER}} th:first-child' => 'border-top-left-radius: {{SIZE}}{{UNIT}};',
-					// '{{WRAPPER}} th:last-child' => 'border-top-right-radius: {{SIZE}}{{UNIT}};',
-					// '{{WRAPPER}} tr:last-child td:first-child' => 'border-bottom-left-radius: {{SIZE}}{{UNIT}};',
-					// '{{WRAPPER}} tr:last-child td:last-child' => 'border-bottom-right-radius: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-table-inner-container table' => 'border-radius: {{SIZE}}{{UNIT}};'
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_responsive_control(
             'header_icon_size',
             [
                 'label'      => __('Icon Size', 'wpr-addons'),
@@ -1252,6 +1318,7 @@ class Wpr_AdvancedTable extends Widget_Base {
                     '{{WRAPPER}} .wpr-advanced-table thead i' => 'font-size: {{SIZE}}{{UNIT}};',
                     '{{WRAPPER}} .wpr-advanced-table thead svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}}',
                 ],
+				'separator' => 'before'
             ]
         );
 
@@ -1299,7 +1366,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 		);
 
         $this->add_responsive_control(
-            'header_img_space',
+            'header_image_space',
             [
                 'label'      => __('Image Margin', 'wpr-addons'),
                 'type'       => Controls_Manager::DIMENSIONS,
@@ -1376,11 +1443,13 @@ class Wpr_AdvancedTable extends Widget_Base {
 						'icon' => 'eicon-text-align-right',
 					],
 				],
+				'prefix_class' => 'wpr-table-align-items-',
 				'selectors' => [
-					'{{WRAPPER}} th' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} th:not(".wpr-table-th-pag")' => 'text-align: {{VALUE}};',
 					'{{WRAPPER}} .wpr-th-inner-cont' => 'text-align: {{VALUE}};',
 					'{{WRAPPER}} .wpr-flex-column span' => 'text-align: {{VALUE}};',
 					'{{WRAPPER}} .wpr-flex-column-reverse span' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} .wpr-table-th' => 'text-align: {{VALUE}};',
 				],
 			]
 		);
@@ -1573,13 +1642,19 @@ class Wpr_AdvancedTable extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'typograpphy_divider',
+			[
+				'type' => \Elementor\Controls_Manager::DIVIDER,
+			]
+		);
+
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'td_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} td',
-				'separator' => 'before'
+				'selector' => '{{WRAPPER}} td'
 			]
 		);
 
@@ -1629,7 +1704,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 		$this->add_responsive_control(
 			'tbody_image_border_radius',
 			[
-				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'label' => esc_html__( 'Image Border Radius', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
@@ -1742,8 +1817,9 @@ class Wpr_AdvancedTable extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} td' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} td:not(".wpr-table-td-pag")' => 'text-align: {{VALUE}};',
 					'{{WRAPPER}} .wpr-td-content-wrapper span' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} .wpr-table-td' => 'text-align: {{VALUE}};',
 				],
 			]
 		);
@@ -1805,6 +1881,13 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-table-export-button-cont .wpr-button' => 'border-color: {{VALUE}}',
 				],
+			]
+		);
+
+		$this->add_control(
+			'export_typograpphy_divider',
+			[
+				'type' => \Elementor\Controls_Manager::DIVIDER,
 			]
 		);
 
@@ -1870,6 +1953,8 @@ class Wpr_AdvancedTable extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-xls' => 'margin-right: {{SIZE}}{{UNIT}}; position: relative;',
+					'{{WRAPPER}} .wpr-table-export-button-cont' => 'margin-bottom: {{SIZE}}{{UNIT}}; position: relative;',
+					'{{WRAPPER}} .wpr-table-live-search-cont' => 'margin-bottom: {{SIZE}}{{UNIT}}; position: relative;',
 				]
 			]
 		);
@@ -2025,6 +2110,18 @@ class Wpr_AdvancedTable extends Widget_Base {
                     'type'      => Controls_Manager::COLOR,
                     'selectors' => [
                         '{{WRAPPER}} .wpr-table-live-search-cont input' => 'background-color: {{VALUE}};',
+                        // '{{WRAPPER}} .wpr-table-live-search-cont' => 'background-color: {{VALUE}};',
+                    ],
+                ]
+            );
+
+            $this->add_control(
+                'table_search_input_border_color',
+                [
+                    'label'     => esc_html__( 'Border Color', 'wpr-addons' ),
+                    'type'      => Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .wpr-table-live-search-cont input' => 'border-color: {{VALUE}};',
                         // '{{WRAPPER}} .wpr-table-live-search-cont' => 'background-color: {{VALUE}};',
                     ],
                 ]
@@ -2225,33 +2322,39 @@ class Wpr_AdvancedTable extends Widget_Base {
 			]
 		);
 
-        $this->add_responsive_control(
-            'table_search_input_padding',
-            [
-                'label'      => esc_html__( 'Padding', 'wpr-addons' ),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => [ 'px', 'em', '%' ],
-                'default'    => [
-                    'top'    => 10,
-                    'bottom' => 10,
-                    'left'   => 10,
-                    'right'  => 10,
-                    'unit'   => 'px'
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .wpr-table-live-search-cont input' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                    '{{WRAPPER}} .wpr-table-export-button-cont button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                    '{{WRAPPER}} .wpr-search-input-icon' => 'right: {{RIGHT}}{{UNIT}} !important',
-                ],
-            ]
-        );
-
-		$this->add_group_control(
-			Group_Control_Border::get_type(),
+		$this->add_control(
+			'table_search_input_border',
 			[
-				'name'        => 'table_search_input_border',
-				'label'       => esc_html__( 'Border', 'wpr-addons' ),
-				'selector'    => '{{WRAPPER}} .wpr-table-live-search-cont input',
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'separator' => 'before',
+				'default' => 'solid',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-table-live-search-cont input' => 'border-style: {{VALUE}};',
+				],
+			]
+		);
+
+        $this->add_responsive_control(
+			'table_search_input_border_width',
+			[
+				'label'      => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'selectors'  => [
+					'{{WRAPPER}} .wpr-table-live-search-cont input' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow: hidden;',
+				],
+				'condition' => [
+					'table_search_input_border!' => 'none'
+				]
 			]
         );
 
@@ -2334,7 +2437,10 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#ffffff',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-table-custom-pagination-inner-cont' => 'border-color: {{VALUE}}',
+					// '{{WRAPPER}} .wpr-table-custom-pagination-inner-cont' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-table-custom-pagination-prev' => 'border-left-color: {{VALUE}}; border-top-color: {{VALUE}}; border-bottom-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-table-custom-pagination-next' => 'border-right-color: {{VALUE}}; border-top-color: {{VALUE}}; border-bottom-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-table-custom-pagination-list-item' => 'border-top-color: {{VALUE}}; border-bottom-color: {{VALUE}};',
 				],
 			]
 		);
@@ -2425,7 +2531,10 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'separator' => 'before',
 				'default' => 'solid',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-table-custom-pagination-inner-cont' => 'border-style: {{VALUE}};',
+					// '{{WRAPPER}} .wpr-table-custom-pagination-inner-cont' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .wpr-table-custom-pagination-prev' => 'border-left-style: {{VALUE}}; border-top-style: {{VALUE}}; border-bottom-style: {{VALUE}};',
+					'{{WRAPPER}} .wpr-table-custom-pagination-next' => 'border-right-style: {{VALUE}}; border-top-style: {{VALUE}}; border-bottom-style: {{VALUE}};',
+					'{{WRAPPER}} .wpr-table-custom-pagination-list-item' => 'border-top-style: {{VALUE}}; border-bottom-style: {{VALUE}};',
 				],
 			]
 		);
@@ -2434,20 +2543,24 @@ class Wpr_AdvancedTable extends Widget_Base {
 			'pagination_border_width',
 			[
 				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', ],
-				'default' => [
-					'top' => 1,
-					'right' => 1,
-					'bottom' => 1,
-					'left' => 1,
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => [
+                    'px', '%'
+				],
+                'range'      => [
+                    'px' => [
+                        'min' => 1,
+                        'max' => 100,
+					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-table-custom-pagination-inner-cont' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-table-custom-pagination-prev' => 'border-left-width: {{SIZE}}{{UNIT}}; border-top-width: {{SIZE}}{{UNIT}}; border-bottom-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-table-custom-pagination-next' => 'border-right-width: {{SIZE}}{{UNIT}};  border-top-width: {{SIZE}}{{UNIT}}; border-bottom-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-table-custom-pagination-list-item' => 'border-top-width: {{SIZE}}{{UNIT}}; border-bottom-width: {{SIZE}}{{UNIT}};'
 				],
 				'condition' => [
-					'pagination_border_type!' => 'none',
-				],
+					'pagination_border_type!' => 'none'
+				]
 			]
 		);
 
@@ -2455,16 +2568,19 @@ class Wpr_AdvancedTable extends Widget_Base {
 			'pagination_border_radius',
 			[
 				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 2,
-					'right' => 2,
-					'bottom' => 2,
-					'left' => 2,
+                'type'       => Controls_Manager::SLIDER,
+                'size_units' => [
+                    'px', '%'
+				],
+                'range'      => [
+                    'px' => [
+                        'min' => 1,
+                        'max' => 100,
+					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-table-custom-pagination-inner-cont' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-table-custom-pagination-prev' => 'border-top-left-radius: {{SIZE}}{{UNIT}}; border-bottom-left-radius: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-table-custom-pagination-next' => 'border-top-right-radius: {{SIZE}}{{UNIT}}; border-bottom-right-radius: {{SIZE}}{{UNIT}};'
 				],
 			]
 		);
