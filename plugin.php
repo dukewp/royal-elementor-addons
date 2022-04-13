@@ -125,14 +125,14 @@ class Plugin {
 			// Plugin Options
 			require WPR_ADDONS_PATH . 'admin/plugin-options.php';
 
-			// Premade Blocks
-			require WPR_ADDONS_PATH . 'admin/premade-blocks.php';
-
 			// Templates Kit
 			require WPR_ADDONS_PATH . 'admin/templates-kit.php';
 
 			// Theme Builder
 			require WPR_ADDONS_PATH . 'admin/theme-builder.php';
+
+			// Premade Blocks
+			require WPR_ADDONS_PATH . 'admin/premade-blocks.php';
 
 			// Theme Builder
 			require WPR_ADDONS_PATH . 'admin/popups.php';

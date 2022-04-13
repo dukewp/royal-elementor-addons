@@ -99,9 +99,17 @@ function wpr_addons_settings_page() {
     <p><?php esc_html_e( 'The most powerful Elementor Addons in the universe.', 'wpr-addons' ); ?></p>
 
     <?php if ( empty(get_option('wpr_wl_plugin_links')) ) : ?>
-    <a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-plugin-prev-btn#widgets" target="_blank" class="button wpr-options-button">
-        <span><?php echo esc_html( 'View Plugin Demo', 'wpr-addons' ); ?></span>
-    </a>
+    <div class="wpr-preview-buttons">
+        <a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-plugin-prev-btn#widgets" target="_blank" class="button wpr-options-button">
+            <span><?php echo esc_html( 'View Plugin Demo', 'wpr-addons' ); ?></span>
+            <span class="dashicons dashicons-external"></span>
+        </a>
+
+        <a href="https://www.youtube.com/watch?v=rkYQfn3tUc0" class="wpr-use-widgets-tutorial wpr-options-button button" target="_blank">
+            <?php echo esc_html( 'How to use Widgets', 'wpr-addons' ); ?>
+            <span class="dashicons dashicons-video-alt3"></span>
+        </a>
+    </div>
     <?php endif; ?>
 </div>
 
