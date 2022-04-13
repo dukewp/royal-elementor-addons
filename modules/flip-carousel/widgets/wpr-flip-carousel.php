@@ -427,12 +427,12 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Icon Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '',
+				'default' => '#40CBB5',
 				'selectors' => [
 					'{{WRAPPER}} .flipster__button i' => 'color: {{VALUE}}',
 					'{{WRAPPER}}.wpr-flip-navigation-custom .flipster__button svg' => 'fill: {{VALUE}}',
 					'{{WRAPPER}}.wpr-flip-navigation-default .flipster__button svg' => 'stroke: {{VALUE}}'
-				],
+				]
 			]
 		);
 		
@@ -441,7 +441,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '',
+				'default' => '#40CBB5',
 				'selectors' => [
 					'{{WRAPPER}} .flipster__button' => 'border-color: {{VALUE}}',
 				]
@@ -1037,7 +1037,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '',
+				'default' => '#000',
 				'selectors' => [
 					'{{WRAPPER}} .flipcaption' => 'color: {{VALUE}}',
 				],
@@ -1049,7 +1049,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '',
+				'default' => '#FFF',
 				'selectors' => [
 					'{{WRAPPER}} .flipcaption' => 'background-color: {{VALUE}}',
 				],
