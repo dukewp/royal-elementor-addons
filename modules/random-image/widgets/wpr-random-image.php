@@ -44,7 +44,7 @@ class Wpr_Random_Image extends Widget_Base {
         return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-random-image-help-btn';
     }
 
-    protected function _register_controls() {
+    protected function register_controls() {
 		$this->start_controls_section(
 			'section_random_image',
 			[
@@ -77,6 +77,7 @@ class Wpr_Random_Image extends Widget_Base {
 			[
 				'label' => esc_html__( 'Caption', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
+				'separator' => 'before'
 			]
 		);
 
@@ -94,6 +95,13 @@ class Wpr_Random_Image extends Widget_Base {
 					'enable_image_caption' => 'yes'
 				],
 				'prefix_class' => 'wpr-random-image-'
+			]
+		);
+
+		$this->add_control(
+			'hr_image_align',
+			[
+				'type' => \Elementor\Controls_Manager::DIVIDER,
 			]
 		);
 		
