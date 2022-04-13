@@ -71,8 +71,8 @@ class Wpr_Dual_Color_Heading extends Widget_Base
 				'options' => [
 					'default'  => esc_html__('Default', 'wpr-addons'),
 					'icon-top'  => esc_html__('Icon on Top', 'wpr-addons'),
-					'icon-and-desc-top'  => esc_html__('Icon & Description on top', 'wpr-addons'),
-					'desc-top'  => esc_html__('Description on top', 'wpr-addons'),
+					'icon-and-desc-top'  => esc_html__('Icon & Desc on top', 'wpr-addons'),
+					'desc-top'  => esc_html__('Desc on top', 'wpr-addons'),
 				],
 				'prefix_class' => 'wpr-dual-heading-',
 			]
