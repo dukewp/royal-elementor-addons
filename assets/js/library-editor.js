@@ -55,7 +55,7 @@
 				'opacity' : '1',
 				'background-color' : '#333',
 				'box-shadow' : '1px 1px 3px 0 #000',
-			}).html( '<i class="fas fa-times"></i>');
+			}).html( '<i class="eicon-close"></i>');
 
 			$( '#wpr-template-editor-popup .dialog-close-button i' ).css({
 				'font-size' : '15px',
@@ -298,5 +298,22 @@
 	};
 
 	$( window ).on( 'elementor:init', WprTemplateEditor.init );
+    
+        // Dynamic Progress Bar for Elementor Editor
+    $(window).on('elementor:init', function () {
+        
+        elementor.settings.page.addChangeCallback( 'wpr_rpb_enable', function ( newValue ) {
+			console.log(newValue);
+            if('yes' == newValue ) {
+                let wrpbHtml = '<div class="wpr-progress-container"><div class="wpr-progress-bar wpr-mybar" id="wpr-mybar"></div></div>';
+                $( elementorFrontend.elements.$body ).append( wrpbHtml );
+            } else {
+                if ( $( elementorFrontend.elements.$body ).find( '.wpr-progress-container' ).length ) {
+                    $( elementorFrontend.elements.$body ).find( '.wpr-progress-container' ).remove();
+                }
+            }
+        });
+
+    });
 
 }( jQuery ) );

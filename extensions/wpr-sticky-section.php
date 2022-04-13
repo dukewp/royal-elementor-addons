@@ -37,6 +37,15 @@ class Wpr_Sticky_Section {
 				]
 			);
 
+			$element->add_control(
+				'wpr_sticky_apply_changes',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => '<div class="elementor-update-preview editor-wpr-preview-update"><span>Update changes to Preview</span><button class="elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply</button>',
+					'separator' => 'after'
+				]
+			);
+
 			$element->add_control (
 				'enable_sticky_section',
 				[
@@ -144,7 +153,7 @@ class Wpr_Sticky_Section {
                     'min' => -99,
 					'max' => 99999,
 					'step' => 1,
-                    'default' => 0,
+                    'default' => 10,
                     'selectors' => [
                         '{{WRAPPER}}' => 'z-index: {{VALUE}};',
                     ],

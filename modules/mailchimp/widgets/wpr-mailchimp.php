@@ -32,7 +32,7 @@ class Wpr_Mailchimp extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'subscribe', 'subscription form', 'email subscription', 'sing up form', 'singup form', 'newsletter', 'mailchimp' ];
+		return [ 'royal', 'subscribe', 'subscription form', 'email subscription', 'sing up form', 'singup form', 'newsletter', 'mailchimp' ];
 	}
 
     public function get_custom_help_url() {
@@ -249,6 +249,11 @@ class Wpr_Mailchimp extends Widget_Base {
 		$this->add_control_last_name_placeholder();
 
 		$this->end_controls_section(); // End Controls Section
+
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'mailchimp', [
+			'Add Extra Fields - Name & Last Name'
+		] );
 
 		// Styles ====================
 		// Section: Container --------

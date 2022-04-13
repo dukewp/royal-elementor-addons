@@ -277,8 +277,8 @@
 	color: red;
 }
 
-/* Help Button */
-#elementor-panel__editor__help__link[href^="https://royal-elementor-addons.com/contact/"] {
+/* Help Button - select with referrals - [href^="https://royal-elementor-addons.com/contact/"] */
+#elementor-panel__editor__help__link[href^="https://wordpress.org/support/plugin/royal-elementor-addons/"] {
 	display: inline-block;
 	padding: 12px 35px;
 	font-size: 13px;
@@ -294,22 +294,22 @@
 	transition: all 0.2s ease-in;
 }
 
-#elementor-panel__editor__help__link[href^="https://royal-elementor-addons.com/contact/"]:hover {
+#elementor-panel__editor__help__link[href^="https://wordpress.org/support/plugin/royal-elementor-addons/"]:hover {
 	color: #fff;
 	background: #6A4BFF;
 }
 
-#elementor-panel__editor__help__link[href^="https://royal-elementor-addons.com/contact/"] i {
+#elementor-panel__editor__help__link[href^="https://wordpress.org/support/plugin/royal-elementor-addons/"] i {
 	color: #fff;
 	font-size: 14px;
 	vertical-align: top;
 }
 
-#elementor-panel__editor__help__link[href^="https://royal-elementor-addons.com/contact/"]:hover i {
+#elementor-panel__editor__help__link[href^="https://wordpress.org/support/plugin/royal-elementor-addons/"]:hover i {
 	color: #fff;
 }
 
-#elementor-panel__editor__help__link[href^="https://royal-elementor-addons.com/contact/"]:hover i:before {
+#elementor-panel__editor__help__link[href^="https://wordpress.org/support/plugin/royal-elementor-addons/"]:hover i:before {
 	content: '\e942' !important;
 }
 
@@ -486,18 +486,21 @@
 	padding: 0;
 }
 
-.elementor-control-wpr_library_buttons .elementor-control-raw-html  {
+.elementor-control-wpr_library_buttons .elementor-control-raw-html {
+	padding: 0 10px 10px 10px;
+	border-bottom: 1px solid #efefef;
+}
+
+.elementor-control-wpr_library_buttons .elementor-control-raw-html div {
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
 	-webkit-box-pack: center;
 	    -ms-flex-pack: center;
 	        justify-content: center;
-	padding: 0 10px 20px 10px;
-	border-bottom: 1px solid #efefef;
 }
 
-.elementor-control-wpr_library_buttons a {
+.elementor-control-wpr_library_buttons .elementor-control-raw-html div a {
 	-webkit-box-flex: 1;
 	    -ms-flex-positive: 1;
 	        flex-grow: 1;
@@ -510,15 +513,23 @@
 	   text-overflow: ellipsis;
 	text-align: center;
 }
-.elementor-control-wpr_library_buttons a:first-child {
+.elementor-control-wpr_library_buttons .elementor-control-raw-html div a:first-child {
 	background-color: #1CB4E4;
 	color: #fff;
 	margin-right: 3px;
 }
-.elementor-control-wpr_library_buttons a:last-child {
+.elementor-control-wpr_library_buttons .elementor-control-raw-html div a:last-child {
 	margin-left: 3px;
 	background-color: #6A65FF;
 	color: #fff;
+}
+
+.elementor-control-wpr_library_buttons .elementor-control-raw-html > a {
+	display: block;
+	margin-top: 10px;
+	line-height: 20px;
+	color: #777;
+	border: none !important;
 }
 
 
@@ -549,8 +560,9 @@
 	border: none !important;
 }
 
-.elementor-control-slider_section_pro_notice {
+#elementor-controls .elementor-control-slider_section_pro_notice {
 	margin-top: -16px;
+	padding-bottom: 0 !important;
 }
 
 .elementor-control-layout_select_pro_notice + div,
@@ -615,7 +627,10 @@
 .elementor-control.elementor-control-popup_show_again_delay_pro_notice,
 .elementor-control.elementor-control-group_popup_settings_pro_notice,
 .elementor-control.elementor-control-which_particle_pro_notice,
-.elementor-control.elementor-control-paralax_repeater_pro_notice {
+.elementor-control.elementor-control-paralax_repeater_pro_notice,
+.elementor-control.elementor-control-opnepage_pro_notice,
+.elementor-control.elementor-control-timeline_repeater_pro_notice,
+.elementor-control.elementor-control-limit_grid_items_pro_notice {
 	padding-bottom: 0 !important;
 }
 
@@ -665,4 +680,82 @@
 .elementor-control-pagination_type_pro_notice .wpr-pro-notice {
 	border-top: none !important;
 	border-bottom: none !important;
+}
+
+.elementor-control-pro_features_section .elementor-section-toggle,
+.elementor-control-pro_features_section .elementor-section-title {
+  color: #f54;
+}
+
+.elementor-control-pro_features_section .elementor-section-title {
+  line-height: 20px;
+}
+.elementor-control-pro_features_section .elementor-section-title .dashicons {
+  line-height: 20px;
+  font-size: 13px;
+}
+
+.wpr-pro-features-list {
+  text-align: center;
+}
+
+.wpr-pro-features-list ul {
+  text-align: left;
+}
+
+.wpr-pro-features-list ul li {
+  position: relative;
+  line-height: 22px;
+  padding-left: 20px;
+}
+
+.wpr-pro-features-list ul li::before {
+  content: '.';
+  font-size: 38px;
+  position: absolute;
+  top: -11px;
+  left: 0;
+}
+
+.wpr-pro-features-list ul + a {
+  display: inline-block;
+  background-color: #f54;
+  color: #fff;
+  margin: 15px 15px 10px 0;
+  padding: 7px 12px;
+  border-radius: 3px;
+}
+
+.wpr-pro-features-list ul + a:hover {
+  color: #fff;
+}
+
+/* Video Tutorial Link */
+.elementor-control[class*="video_tutorial"] {
+  padding-top: 0 !important;
+  padding-bottom: 5px !important;
+}
+
+.elementor-control[class*="video_tutorial"] a {
+  line-height: 16px;
+  font-size: 12px;
+}
+
+.elementor-control[class*="video_tutorial"] a .dashicons {
+  font-size: 16px;
+}
+
+
+/*--------------------------------------------------------------
+== Elementor Search Notice
+--------------------------------------------------------------*/
+.wpr-elementor-search-notice {
+	background: #fff;
+	font-size: 13px;
+	padding: 20px;
+	line-height: 18px;
+	margin: 10px;
+	border-left: 3px solid #71d7f7;
+	-webkit-box-shadow: 0 1px 4px 0 rgb(0 0 0 / 7%);
+	box-shadow: 0 1px 4px 0 rgb(0 0 0 / 7%);
 }

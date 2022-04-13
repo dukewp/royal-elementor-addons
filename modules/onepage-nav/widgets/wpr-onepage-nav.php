@@ -37,7 +37,7 @@ class Wpr_OnepageNav extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'one page', 'onepage', 'navigation', 'one page scroll', 'scroll navigation', 'floating menu', 'sticky menu', 'page scroll' ];
+		return [ 'royal', 'one page', 'onepage', 'navigation', 'one page scroll', 'scroll navigation', 'floating menu', 'sticky menu', 'page scroll' ];
 	}
 
     public function get_custom_help_url() {
@@ -76,11 +76,11 @@ class Wpr_OnepageNav extends Widget_Base {
 		$this->start_controls_section(
 			'section_nav',
 			[
-				'label' => esc_html__( 'Navigation', 'wpr-addons' ),
+				'label' => 'Navigation  <a href="#" onclick="window.open(\'https://youtu.be/0hM4l2UKzXs\',\'_blank\').focus()">Video Tutorial <span class="dashicons dashicons-video-alt3"></span></a>',
 			]
 		);
 
-		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML, 'https://youtu.be/0hM4l2UKzXs' );
+		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
 		$repeater = new Repeater();
 
@@ -222,6 +222,15 @@ class Wpr_OnepageNav extends Widget_Base {
 		// Section: Settings ---------
 		$this->add_section_settings();
 
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'onepage-nav', [
+			'Highlight Active Nav Icon',
+			'Nav Icon Custom Color',
+			'Nav Icon Advanced Tooltip',
+			'Scrolling Animation Speed',
+			'Navigation Full-height (Sidebar) option',
+		] );
+		
 		// Styles ====================
 		// Section: Nav Wrap ---------
 		$this->start_controls_section(

@@ -32,7 +32,7 @@ class Wpr_Forms extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'cf7', 'contact form 7', 'caldera forms', 'ninja forms', 'wpforms', 'wp forms' ];
+		return [ 'royal', 'cf7', 'contact form 7', 'caldera forms', 'ninja forms', 'wpforms', 'wp forms' ];
 	}
 
     public function get_custom_help_url() {

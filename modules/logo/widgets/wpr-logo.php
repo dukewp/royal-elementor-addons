@@ -37,7 +37,7 @@ class Wpr_Logo extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'site logo', 'image' ];
+		return [ 'royal', 'site logo', 'image' ];
 	}
 
     public function get_custom_help_url() {
@@ -578,7 +578,7 @@ class Wpr_Logo extends Widget_Base {
 	$settings = $this->get_settings(); 
 
 	$image_src = esc_url( $settings['image']['url'] );  
-	$mobile_image_src = esc_url( $settings['mobile_image']['url'] ); 
+	$mobile_image_src = esc_url( $settings['mobile_image']['url'] );
 	
 	// Title
 	$title = '';

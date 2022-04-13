@@ -32,7 +32,7 @@ class Wpr_Google_Maps extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'google maps', 'location', 'gmap', 'cluster' ];
+		return [ 'royal', 'google maps', 'location', 'gmap', 'cluster' ];
 	}
 
 	public function get_script_depends() {

@@ -37,7 +37,7 @@ class Wpr_Price_List extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'pricing list', 'price list', 'price menu', 'pricing menu', 'food menu', 'restaurant menu' ];
+		return [ 'royal', 'pricing list', 'price list', 'price menu', 'pricing menu', 'food menu', 'restaurant menu' ];
 	}
 
     public function get_custom_help_url() {
@@ -173,6 +173,13 @@ class Wpr_Price_List extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'price-list', [
+			'Add Images to Menu Items',
+			'Add Custom Links to Menu Items',
+			'Advanced Layout Options',
+		] );
+		
 		// Styles
 		// Section: General ----------
 		$this->start_controls_section(

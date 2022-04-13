@@ -32,11 +32,11 @@ class Wpr_Grid extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return [ 'wpr-widgets'];
+		return Utilities::show_theme_buider_widget_on('archive') ? [ 'wpr-theme-builder-widgets' ] : [ 'wpr-widgets'];
 	}
 
 	public function get_keywords() {
-		return [ 'portfolio grid', 'post grid', 'post slider', 'post carousel', 'massonry grid', 'isotope', 'post gallery', 'filterable grid' ];
+		return [ 'royal', 'blog', 'portfolio grid', 'posts', 'post grid', 'posts grid', 'post slider', 'posts slider', 'post carousel', 'posts carousel', 'massonry grid', 'isotope', 'post gallery', 'posts gallery', 'filterable grid' ];
 	}
 
 	public function get_script_depends() {
@@ -54,15 +54,30 @@ class Wpr_Grid extends Widget_Base {
     }
 
 	public function add_option_query_source() {
-		$pro_query = [
-			'pro-rl' => 'Related Query (Pro)',
-			'pro-cr' => 'Current Query (Pro)',
-		];
+		$post_types = Utilities::get_custom_types_of( 'post', false );
+		$post_types['current'] = esc_html__( 'Current Query', 'wpr-addons' );
+		$post_types['pro-rl'] = esc_html__( 'Related Query (Pro)', 'wpr-addons' );
 		
-		return array_merge(Utilities::get_custom_types_of( 'post', false ), $pro_query);
+		return $post_types;
 	}
 
 	public function add_control_query_randomize() {}
+
+	public function add_control_query_slides_to_show() {
+		$this->add_control(
+			'query_slides_to_show',
+			[
+				'label' => esc_html__( 'Slides to Show', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 4,
+				'min' => 0,
+				'max' => 4,
+				'condition' => [
+					'layout_select' => 'slider',
+				],
+			]
+		);
+	}
 
 	public function add_control_layout_select() {
 		$this->add_control(
@@ -433,20 +448,33 @@ class Wpr_Grid extends Widget_Base {
 	public function add_control_filters_count_superscript() {}
 	
 	public function add_control_filters_count_brackets() {}
+	
+	public function add_control_filters_default_filter() {}
 
 	public function add_control_pagination_type() {
+		$options = [
+			'default' => esc_html__( 'Default', 'wpr-addons' ),
+			'numbered' => esc_html__( 'Numbered', 'wpr-addons' ),
+			'load-more' => esc_html__( 'Load More Button', 'wpr-addons' ),
+			'pro-is' => esc_html__( 'Infinite Scrolling (Pro)', 'wpr-addons' ),
+		];
+
+		if ( Utilities::is_new_free_user() ) {
+			$options = [
+				'default' => esc_html__( 'Default', 'wpr-addons' ),
+				'load-more' => esc_html__( 'Load More Button', 'wpr-addons' ),
+				'pro-nb' => esc_html__( 'Numbered (Pro)', 'wpr-addons' ),
+				'pro-is' => esc_html__( 'Infinite Scrolling (Pro)', 'wpr-addons' ),
+			];
+		}
+
 		$this->add_control(
 			'pagination_type',
 			[
 				'label' => esc_html__( 'Select Type', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'load-more',
-				'options' => [
-					'default' => esc_html__( 'Default', 'wpr-addons' ),
-					'numbered' => esc_html__( 'Numbered', 'wpr-addons' ),
-					'load-more' => esc_html__( 'Load More Button', 'wpr-addons' ),
-					'pro-is' => esc_html__( 'Infinite Scrolling (Pro)', 'wpr-addons' ),
-				],
+				'options' => $options,
 				'separator' => 'after'
 			]
 		);
@@ -563,7 +591,7 @@ class Wpr_Grid extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'query_source', ['pro-rl', 'pro-cr'] );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'query_source', ['pro-rl'] );
 
 		$this->add_control(
 			'query_selection',
@@ -673,6 +701,8 @@ class Wpr_Grid extends Widget_Base {
 			);
 		}
 
+		$qqq_condition = Utilities::is_new_free_user() ? [ 'query_source!' => 'current', 'layout_select!' => 'slider', ] : [ 'query_source!' => 'current' ];
+
 		$this->add_control(
 			'query_posts_per_page',
 			[
@@ -680,8 +710,27 @@ class Wpr_Grid extends Widget_Base {
 				'type' => Controls_Manager::NUMBER,
 				'default' => 9,
 				'min' => 0,
+				'condition' => $qqq_condition,
 			]
 		);
+
+		if ( Utilities::is_new_free_user() ) {
+
+			$this->add_control_query_slides_to_show();
+
+			$this->add_control(
+				'limit_slides_to_show_pro_notice',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => 'More than <strong>4 Slides</strong> are available<br>in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-grid-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+					'content_classes' => 'wpr-pro-notice',
+					'condition' => [
+						'layout_select' => 'slider',
+					]
+				]
+			);
+		}
 
 		$this->add_control(
 			'query_offset',
@@ -720,6 +769,30 @@ class Wpr_Grid extends Widget_Base {
 				'label_block' => false
 			]
 		);
+
+		$this->add_control(
+			'current_query_notice',
+			[
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => sprintf( __( 'To set <strong>Posts per Page</strong> for all Blog <strong>Archive Pages</strong>, navigate to <strong><a href="%s" target="_blank">Settings > Reading<a></strong>.', 'wpr-addons' ), admin_url( 'options-reading.php' ) ),
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				'condition' => [
+					'query_source' => 'current',
+				],
+			]
+		);
+
+		// if ( Utilities::is_new_free_user() && ! wpr_fs()->can_use_premium_code() ) {
+		// 	$this->add_control(
+		// 		'limit_grid_items_pro_notice',
+		// 		[
+		// 			'type' => Controls_Manager::RAW_HTML,
+		// 			'raw' => 'More than <strong>12 Items</strong> in total<br> are available in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-grid-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+		// 			// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+		// 			'content_classes' => 'wpr-pro-notice',
+		// 		]
+		// 	);
+		// }
 
 		$this->add_control(
 			'element_select_filter',
@@ -1884,7 +1957,7 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'overlay_width',
 			[
 				'label' => esc_html__( 'Overlay Width', 'wpr-addons' ),
@@ -2371,6 +2444,8 @@ class Wpr_Grid extends Widget_Base {
 
 		$this->add_control_filters_count_brackets();
 
+		$this->add_control_filters_default_filter();
+
 		$this->add_control_filters_icon();
 
 		$this->add_control_filters_icon_align();
@@ -2490,7 +2565,7 @@ class Wpr_Grid extends Widget_Base {
 		$this->add_control_pagination_type();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'pagination_type', ['pro-is'] );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'pagination_type', ['pro-is', 'pro-nb'] );
 
 		$this->add_control(
 			'pagination_older_text',
@@ -2767,6 +2842,34 @@ class Wpr_Grid extends Widget_Base {
 		);
 
 		$this->end_controls_section(); // End Controls Section
+
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'grid', [
+			'Grid Columns 1,2,3,4,5,6',
+			'Masonry Layout',
+			'List Layout Zig-zag',
+			'Posts Slider Columns (Carousel) 1,2,3,4,5,6',
+			'Related Posts Query, Current Page Query, Random Posts Query',
+			'Infinite Scrolling Pagination',
+			'Post Slider Autoplay options',
+			'Post Slider Advanced Navigation Positioning',
+			'Post Slider Advanced Pagination Positioning',
+			'Advanced Post Likes',
+			'Advanced Post Sharing',
+			'Custom Fields Support',
+			'Advanced Grid Loading Animations (Fade in & Slide Up)',
+			'Unlimited Grid Elements Positioning',
+			'Unlimited Image Overlay Animations',
+			'Image overlay GIF upload option',
+			'Image Overlay Blend Mode',
+			'Image Effects: Zoom, Grayscale, Blur',
+			'Lightbox Thumbnail Gallery, Lightbox Image Sharing Button',
+			'Grid Category Filter Deeplinking',
+			'Grid Category Filter Icons select',
+			'Grid Category Filter Count',
+			'Grid Item Even/Odd Background Color',
+			'Title, Category, Read More Advanced Link Hover Animations',
+		] );
 
 		// Styles ====================
 		// Section: Grid Item --------
@@ -3167,7 +3270,7 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'name'     => 'title_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-grid-item-title'
+				'selector' => '{{WRAPPER}} .wpr-grid-item-title a'
 			]
 		);
 
@@ -4235,6 +4338,24 @@ class Wpr_Grid extends Widget_Base {
 				'condition' => [
 					'author_border_type!' => 'none',
 				],
+			]
+		);
+
+		$this->add_control(
+			'author_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-item-author .inner-block a img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
 			]
 		);
 
@@ -7316,9 +7437,11 @@ class Wpr_Grid extends Widget_Base {
 					'size' => 10,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-pagination a' => 'margin-right: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}} .wpr-grid-pagination a' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-pagination a:not(:last-child)' => 'margin-right: {{SIZE}}{{UNIT}};', 
 					'{{WRAPPER}} .wpr-grid-pagination > div > span' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-grid-pagination span.wpr-disabled-arrow' => 'margin-right: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}} .wpr-grid-pagination span.wpr-disabled-arrow' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-pagination span.wpr-disabled-arrow:not(:last-child)' => 'margin-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-grid-pagination span.wpr-grid-current-page' => 'margin-right: {{SIZE}}{{UNIT}};',
 				],
 			]
@@ -7522,7 +7645,13 @@ class Wpr_Grid extends Widget_Base {
 			$paged = 1;
 		}
 
-		$offset = ( $paged - 1 ) * $settings['query_posts_per_page'] + $settings[ 'query_offset' ];
+		// Change Posts Per Page for Slider Layout
+		if ( 'slider' === $settings['layout_select'] && Utilities::is_new_free_user() ) {
+			$settings['query_posts_per_page'] = $settings['query_slides_to_show'];
+			$settings['query_posts_per_page'] = $settings['query_posts_per_page'] > 4 ? 4 : $settings['query_posts_per_page'];
+		}
+
+		$offset = ( $paged - 1 ) * intval($settings['query_posts_per_page']) + intval($settings[ 'query_offset' ]);
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$settings[ 'query_randomize' ] = '';
@@ -7556,19 +7685,20 @@ class Wpr_Grid extends Widget_Base {
 			$args = [
 				'post_type' => $settings[ 'query_source' ],
 				'post__in' => $post_ids,
+				'ignore_sticky_posts' => 1,
 				'posts_per_page' => $settings['query_posts_per_page'],
 				'orderby' => $settings[ 'query_randomize' ],
 				'paged' => $paged,
 			];
 		}
 
-		// Get Post Type
+		// Current
 		if ( 'current' === $settings[ 'query_source' ] ) {
 			global $wp_query;
 
 			$args = $wp_query->query_vars;
-			$args['posts_per_page'] = $settings['query_posts_per_page'];
 			$args['orderby'] = $settings['query_randomize'];
+			$args['offset'] = ( $paged - 1 ) * intval(get_option('posts_per_page')) + intval($settings[ 'query_offset' ]);
 		}
 
 		// Related
@@ -8231,6 +8361,7 @@ class Wpr_Grid extends Widget_Base {
 		$custom_filters = $settings[ 'query_taxonomy_'. $taxonomy ];
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {
+			$settings['filters_default_filter'] = '';
 			$settings['filters_icon_align'] = '';
 			$settings['filters_count'] = '';
 			$settings['filters_pointer'] = 'none';
@@ -8573,6 +8704,7 @@ class Wpr_Grid extends Widget_Base {
 			$settings['layout_select'] = 'pro-ms' == $settings['layout_select'] ? 'fitRows' : $settings['layout_select'];
 			$settings['filters_deeplinking'] = '';
 			$settings['filters_count'] = '';
+			$settings['filters_default_filter'] = '';
 
 			if ( 'pro-fd' == $settings['filters_animation'] || 'pro-fs' == $settings['filters_animation'] ) {
 				$settings['filters_animation'] = 'zoom';
@@ -8589,6 +8721,7 @@ class Wpr_Grid extends Widget_Base {
 			'animation_delay' => $settings['layout_animation_delay'],
 			'deeplinking' => $settings['filters_deeplinking'],
 			'filters_linkable' => $settings['filters_linkable'],
+			'filters_default_filter' => $settings['filters_default_filter'],
 			'filters_count' => $settings['filters_count'],
 			'filters_hide_empty' => $settings['filters_hide_empty'],
 			'filters_animation' => $settings['filters_animation'],
@@ -8701,6 +8834,9 @@ class Wpr_Grid extends Widget_Base {
 		// Get Posts
 		$posts = new \WP_Query( $this->get_main_query_args() );
 
+		// Loop: Start
+		if ( $posts->have_posts() ) :
+
 		// Grid Settings
 		if ( 'slider' !== $settings['layout_select'] ) {
 			// Filters
@@ -8717,9 +8853,6 @@ class Wpr_Grid extends Widget_Base {
 
 		// Grid Wrap
 		echo '<section class="wpr-grid elementor-clearfix" '. $render_attribute .'>';
-
-		// Loop: Start
-		if ( $posts->have_posts() ) :
 
 		while ( $posts->have_posts() ) : $posts->the_post();
 
@@ -8763,19 +8896,11 @@ class Wpr_Grid extends Widget_Base {
 
 		endwhile;
 
-		// reset
-		wp_reset_postdata();
-
-		// No Posts Found
-		else:
-
-			echo '<h2>'. $settings['query_not_found_text'] .'</h2>';
-
-		// Loop: End
-		endif;
-
 		// Grid Wrap
 		echo '</section>';
+
+		// reset
+		wp_reset_postdata();
 
 		if ( 'slider' === $settings['layout_select'] ) {
 			// Slider Navigation
@@ -8790,6 +8915,16 @@ class Wpr_Grid extends Widget_Base {
 
 		// Pagination
 		$this->render_grid_pagination( $settings );
+
+		// No Posts Found
+		else:
+
+			if ( 'dynamic' === $settings['query_selection'] ) {
+				echo '<h2>'. $settings['query_not_found_text'] .'</h2>';
+			}
+
+		// Loop: End
+		endif;
 	}
 	
 }

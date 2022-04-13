@@ -37,7 +37,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'shop grid', 'product grid', 'woocommerce', 'product slider', 'product carousel', 'isotope', 'massonry grid', 'filterable grid' ];
+		return [ 'royal', 'shop grid', 'product grid', 'woocommerce', 'product slider', 'product carousel', 'isotope', 'massonry grid', 'filterable grid' ];
 	}
 
 	public function get_script_depends() {
@@ -408,6 +408,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 	
 	public function add_control_filters_count_brackets() {}
 	
+	public function add_control_filters_default_filter() {}
+	
 	public function add_control_pagination_type() {
 		$this->add_control(
 			'pagination_type',
@@ -640,6 +642,18 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'label_block' => false
 			]
 		);
+
+		// if ( Utilities::is_new_free_user() && ! wpr_fs()->can_use_premium_code() ) {
+		// 	$this->add_control(
+		// 		'limit_grid_items_pro_notice',
+		// 		[
+		// 			'type' => Controls_Manager::RAW_HTML,
+		// 			'raw' => 'More than <strong>12 Items</strong> in total<br> are available in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-woo-grid-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+		// 			// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+		// 			'content_classes' => 'wpr-pro-notice',
+		// 		]
+		// 	);
+		// }
 
 		$this->add_control(
 			'post_meta_keys_filter',
@@ -1781,7 +1795,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'overlay_width',
 			[
 				'label' => esc_html__( 'Overlay Width', 'wpr-addons' ),
@@ -2271,6 +2285,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$this->add_control_filters_count_brackets();
 
+		$this->add_control_filters_default_filter();
+
 		$this->add_control_filters_icon();
 
 		$this->add_control_filters_icon_align();
@@ -2639,6 +2655,32 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'woo-grid', [
+			'Grid Columns 1,2,3,4,5,6',
+			'Masonry Layout',
+			'Products Slider Columns (Carousel) 1,2,3,4,5,6',
+			'Current Page Query, Random Products Query',
+			'Infinite Scrolling Pagination',
+			'Products Slider Autoplay options',
+			'Products Slider Advanced Navigation Positioning',
+			'Products Slider Advanced Pagination Positioning',
+			'Advanced Products Likes',
+			'Advanced Products Sharing',
+			'Advanced Grid Loading Animations (Fade in & Slide Up)',
+			'Unlimited Grid Elements Positioning',
+			'Unlimited Image Overlay Animations',
+			'Image overlay GIF upload option',
+			'Image Overlay Blend Mode',
+			'Image Effects: Zoom, Grayscale, Blur',
+			'Lightbox Thumbnail Gallery, Lightbox Image Sharing Button',
+			'Grid Category Filter Deeplinking',
+			'Grid Category Filter Icons select',
+			'Grid Category Filter Count',
+			'Grid Item Even/Odd Background Color',
+			'Title, Category, Read More Advanced Link Hover Animation',
+		] );
+		
 		// Styles ====================
 		// Section: Grid Item --------
 		$this->start_controls_section(
@@ -3038,7 +3080,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'name'     => 'title_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-grid-item-title'
+				'selector' => '{{WRAPPER}} .wpr-grid-item-title a'
 			]
 		);
 
@@ -7468,6 +7510,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$custom_filters = $settings[ 'query_taxonomy_'. $taxonomy ];
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {
+			$settings['filters_default_filter'] = '';
 			$settings['filters_icon_align'] = '';
 			$settings['filters_count'] = '';
 			$settings['filters_pointer'] = 'none';
@@ -7810,6 +7853,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			$settings['layout_select'] = 'pro-ms' == $settings['layout_select'] ? 'fitRows' : $settings['layout_select'];
 			$settings['filters_deeplinking'] = '';
 			$settings['filters_count'] = '';
+			$settings['filters_default_filter'] = '';
 
 			if ( 'pro-fd' == $settings['filters_animation'] || 'pro-fs' == $settings['filters_animation'] ) {
 				$settings['filters_animation'] = 'zoom';
@@ -7826,6 +7870,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'animation_delay' => $settings['layout_animation_delay'],
 			'deeplinking' => $settings['filters_deeplinking'],
 			'filters_linkable' => $settings['filters_linkable'],
+			'filters_default_filter' => $settings['filters_default_filter'],
 			'filters_count' => $settings['filters_count'],
 			'filters_hide_empty' => $settings['filters_hide_empty'],
 			'filters_animation' => $settings['filters_animation'],
@@ -7939,6 +7984,11 @@ class Wpr_Woo_Grid extends Widget_Base {
 		// Get Posts
 		$posts = new \WP_Query( $this->get_main_query_args() );
 
+		// Loop: Start
+		if ( $posts->have_posts() ) :
+
+		$post_index = 0;
+
 		// Grid Settings
 		if ( 'slider' !== $settings['layout_select'] ) {
 			// Filters
@@ -7956,11 +8006,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 		// Grid Wrap
 		echo '<section class="wpr-grid elementor-clearfix" '. $render_attribute .'>';
 
-
-		// Loop: Start
-		if ( $posts->have_posts() ) :
-
 		while ( $posts->have_posts() ) : $posts->the_post();
+
+			// $post_index++;
+			// if ( Utilities::is_new_free_user() && $post_index > 12 ) {
+			// 	return;
+			// }
 
 			// Post Class
 			$post_class = implode( ' ', get_post_class( 'wpr-grid-item elementor-clearfix', get_the_ID() ) );
@@ -8005,14 +8056,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 		// reset
 		wp_reset_postdata();
 
-		// No Posts Found
-		else:
-
-			echo '<h2>'. $settings['query_not_found_text'] .'</h2>';
-
-		// Loop: End
-		endif;
-
 		// Grid Wrap
 		echo '</section>';
 
@@ -8030,6 +8073,14 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		// Pagination
 		$this->render_grid_pagination( $settings );
+
+		// No Posts Found
+		else:
+
+			echo '<h2>'. $settings['query_not_found_text'] .'</h2>';
+
+		// Loop: End
+		endif;
 	}
 	
 }

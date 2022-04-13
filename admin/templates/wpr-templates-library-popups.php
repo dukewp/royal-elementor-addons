@@ -71,11 +71,11 @@ class WPR_Templates_Library_Popups {
 					$template_title = ucfirst($type) .' '. $template_slug;
 					$preview_type 	= $popups[$type][$template_slug]['type'];
 					$preview_url 	= $popups[$type][$template_slug]['url'];
-					$templte_class 	= ( strpos($template_slug, 'pro') && ! wpr_fs()->can_use_premium_code() ) ? ' wpr-tplib-pro-wrap' : '';
+					$template_class 	= ( strpos($template_slug, 'pro') && ! wpr_fs()->can_use_premium_code() ) ? ' wpr-tplib-pro-wrap' : '';
 
 			?>
 
-			<div class="wpr-tplib-template-wrap<?php echo esc_attr($templte_class); ?>">
+			<div class="wpr-tplib-template-wrap<?php echo esc_attr($template_class); ?>">
 				<div class="wpr-tplib-template" data-slug="<?php echo esc_attr($template_slug); ?>" data-filter="<?php echo esc_attr($type); ?>" data-preview-type="<?php echo esc_attr($preview_type); ?>" data-preview-url="<?php echo esc_attr($preview_url); ?>">
 					<div class="wpr-tplib-template-media">
 						<img src="<?php echo 'https://royal-elementor-addons.com/library/premade-styles/popups/'. $type .'/'. $template_slug .'.jpg'; ?>">

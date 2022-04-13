@@ -32,11 +32,11 @@ class Wpr_Search extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return [ 'wpr-widgets'];
+		return Utilities::show_theme_buider_widget_on('archive') ? [ 'wpr-theme-builder-widgets' ] : [ 'wpr-widgets'];
 	}
 
 	public function get_keywords() {
-		return [ 'search', 'search widget' ];
+		return [ 'royal', 'search', 'search widget' ];
 	}
 
     public function get_custom_help_url() {
@@ -194,6 +194,11 @@ class Wpr_Search extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'search', [
+			'Custom Search Query - Only Posts, Pages or Custom Post Types'
+		] );
 
 		// Styles
 		// Section: Input ------------
@@ -364,7 +369,7 @@ class Wpr_Search extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'input_align',
 			[
 				'label' => esc_html__( 'Alignment', 'wpr-addons' ),

@@ -1,20 +1,20 @@
-﻿=== Royal Elementor Addons (Header Footer Builder, Popups, Post Grid, Woocommerce Product Grid, Slider, Parallax Image & other Free Addons for Elementor) ===
+=== Royal Elementor Addons (Header Footer Builder, Popups, Post Grid, Woocommerce Product Grid, Slider, Parallax Image, Free Elementor Widgets & Elementor Templates) ===
 Contributors: WP Royal, rubeushagrid13, cyberpinky, elementoraddonswpr
-Tags: elementor, elements, widgets for elementor, elementor addons, elementor widget, elementor form, woocommerce elementor, page builder, builder, wordpress page builder
-Stable tag: 1.3.24
+Tags: elementor, elements, widgets for elementor, elementor addons, elementor widgets, elementor form, woocommerce elementor, page builder, elementor templates, wordpress page builder, best elementor addons, addons for elementor
+Stable tag: 1.3.39
 Requires at least: 5.0
-Tested up to: 5.8.2
+Tested up to: 5.9
 Requires PHP: 5.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Elementor Post, Portfolio, Woocommerce Grid builder Widgets. Slider, Carousel, Form, Testimonial, Gallery, Nav menu, Google Maps & other addons.
+Elementor Post, Portfolio, Woocommerce Grid builder Widgets. Slider, Carousel, Form, Testimonial, Gallery, Nav menu addons, Elementor widgets & Elementor templates. Just best elementor addons. Collection of unique addons for elementor.
 
 == Description ==
 
 **Royal Addons for Elementor** is the most versatile, intuitive, and easy to use [Elementor Page Builder](https://wordpress.org/plugins/elementor/) extension. Our goal is to provide you with the tools to make things happen, efficiently, and fast compare to other elementor plugins. Choosing us is not only a mindset, but it is also a requirement if you intend to gain an edge over your competitors when creating your website. The best part is that you can design anything **without having to touch a single line of code**.
 
-Comes with 40+ widgets for elementor. Creative and self-intuitive elementor widgets to take your WordPress website to the next level. **All widgets are Free** and the Pro Version offers even more advanced functionality.
+Comes with **50+ widgets, 25 Elementor Template KIT (Growing Each Week), Theme Builder, Popup Builder, Premade Widget Blocks & Extensions for Elementor.** Creative and self-intuitive elementor widgets to take your WordPress website to the next level. **All widgets are Free** and the Pro Version offers even more advanced functionality.
 
 *Free and Pro functionalities are mixed in the Widget Demos below.*
 
@@ -59,18 +59,53 @@ Comes with 40+ widgets for elementor. Creative and self-intuitive elementor widg
 - [**Site Logo**](https://royal-elementor-addons.com/)
 - [**Back to Top Button**](https://royal-elementor-addons.com/elementor-back-to-top-widget/?ref=rea-wpo-pp-details-tab)
 - [**Phone Call Button**](https://royal-elementor-addons.com/elementor-phone-call-widget/?ref=rea-wpo-pp-details-tab)
+- [**Lottie Animation**](https://royal-elementor-addons.com/elementor-lottie-animation-widget/?ref=rea-wpo-pp-details-tab)
+- [**Timeline Widget**](https://royal-elementor-addons.com/elementor-timeline-widget/?ref=rea-wpo-pp-details-tab)
 
 **Elementor Extensions and Other Features**
 
-- [**Header Footer Builder**](https://royal-elementor-addons.com/?ref=rea-wpo-pp-details-tab#headerfooterbuilder)
+- [**Elementor Theme Builder**](https://royal-elementor-addons.com/?ref=rea-wpo-pp-details-tab#headerfooterbuilder) - Header Footer Builder, Post Archive template builder, Single Post template builder, Single Page tamplate builder, Search, category, tags, 404, author, data page template builder.
 - [**Popup Builder**](https://royal-elementor-addons.com/?ref=rea-wpo-pp-details-tab#popupbuilder) (Offer Sales Banners, Subscriptions Banners, GDPR Cookie Consent & Compliance Notice, Cookie Notice, Age Verification), 20+ Premade Popup Templates included in popup library
-- [**Parallax Scrolling**](https://royal-elementor-addons.com/elementor-parallax-background/?ref=rea-wpo-pp-details-tab) - Parallax effect elementor extension
+- [**Parallax Scrolling**](https://royal-elementor-addons.com/elementor-parallax-background/?ref=rea-wpo-pp-details-tab) - Elementor Parallax effect extension
 - [**Parallax Multi-Layer Effect**](https://royal-elementor-addons.com/elementor-parallax-background/?ref=rea-wpo-pp-details-tab#multiparallax) - elementor extension
 - [**Elementor Particle Effect**](https://royal-elementor-addons.com/elementor-particle-effects/?ref=rea-wpo-pp-details-tab) - elementor extension
 - White Label Branding (Change Plugin Name, Description, Developer / Agency, Website URL, Menu Label
 and other custom branding related settings)
 - Sticky Section (Can be used for creating Sticky Header / Menu) - elementor extension
 - Custom CSS - Elementor free custom css , apply custom css to any section - elementor extension & other elementor enhancements coming soon.
+
+**Elementor Theme Builder Templates Kits**
+
+- [**Personal Blog**](https://demosites.royal-elementor-addons.com/personal-blog-v1/?ref=rea-wpo-pp-details-tab)
+- [**Blog Magazine**](https://demosites.royal-elementor-addons.com/magazine-blog-v1/?ref=rea-wpo-pp-details-tab)
+- [**Food Blog**](https://demosites.royal-elementor-addons.com/food-blog-v1/?ref=rea-wpo-pp-details-tab)
+- [**Travel Blog**](https://demosites.royal-elementor-addons.com/travel-blog-v1/?ref=rea-wpo-pp-details-tab)
+
+**Elementor Templates Kits**
+
+- [**Nature Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/nature-v1/?ref=rea-wpo-pp-details-tab)
+- [**Digital Agency Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/digitalagency-v1/?ref=rea-wpo-pp-details-tab)
+- [**Digital Agency Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/digitalagency-v2/?ref=rea-wpo-pp-details-tab)
+- [**It Technology 1 Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/ittech-v1/?ref=rea-wpo-pp-details-tab)
+- [**Construction Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/construction-v1/?ref=rea-wpo-pp-details-tab)
+- [**Architecture Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/architecture-v1/?ref=rea-wpo-pp-details-tab)
+- [**It Technology 2 Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/ittech-v2/?ref=rea-wpo-pp-details-tab)
+- [**Drone Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/drone-v1/?ref=rea-wpo-pp-details-tab)
+- [**Cybersecurity Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/cybersecurity-v1/?ref=rea-wpo-pp-details-tab)
+- [**Medical Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/medical-v1/?ref=rea-wpo-pp-details-tab)
+- [**Realestate Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/realestate-v1/?ref=rea-wpo-pp-details-tab)
+- [**Cryptocurrency Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/cryptocurrency-v1/?ref=rea-wpo-pp-details-tab)
+- [**Skincare Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/skincare-v1/?ref=rea-wpo-pp-details-tab)
+- [**Food Delivery Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/fooddelivery-v1/?ref=rea-wpo-pp-details-tab)
+- [**Wedding Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/wedding-v1/?ref=rea-wpo-pp-details-tab)
+- [**Restaurant Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/restaurant-v1/?ref=rea-wpo-pp-details-tab)
+- [**Portfolio Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/portfolio-v1/?ref=rea-wpo-pp-details-tab)
+- [**Pizza Restaurant Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/pizza-v1/?ref=rea-wpo-pp-details-tab)
+- [**Wine Bar Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/winebar-v1/?ref=rea-wpo-pp-details-tab)
+- [**Photographer Portfolio Elementor Templates Kit Dark**](https://demosites.royal-elementor-addons.com/photographer-v1/?ref=rea-wpo-pp-details-tab)
+- [**Photographer Portfolio Elementor Templates Kit Light**](https://demosites.royal-elementor-addons.com/photographer-v2/?ref=rea-wpo-pp-details-tab)
+- [**Lawyer Elementor Templates Kit Light**](https://demosites.royal-elementor-addons.com/lawyer-v1/?ref=rea-wpo-pp-details-tab)
+- [**Travel Blogger & Influencer Elementor Templates Kit Light**](https://demosites.royal-elementor-addons.com/travel-v1/?ref=rea-wpo-pp-details-tab)
 
 
 **Widgets Description:**
@@ -205,6 +240,35 @@ Royal Post Grid Elementor widget could be used as elementor post slider, element
 
 [Phone Call Button](https://royal-elementor-addons.com/elementor-phone-call-widget/?ref=rea-wpo-pp-details-tab) - A free Elementor Phone Call Button. Can be displayed on page bottom or anywhere in the page content as well.
 
+== 33. Elementor Lottie Animation ==
+
+[Elementor Lottie Animation](https://royal-elementor-addons.com/elementor-lottie-animation-widget/?ref=rea-wpo-pp-details-tab) Our Elementor Lottie animation widget for Elementor gives you the ability to easily add Elementor Lottie Animations to your Elementor pages. Comes with features like reverse Lottie animation, autoplay lottie animation, loop lottie animation, different render types of lottie animation SVG or Canvas, rotate or change lottie animation size, manipulate with lottie animation speed, trigger lottie animation on hover, on viewport or on scroll. Add a custom link on the elementor lottie animation and lots of other features. Use Css Filters Effects to completely change elementor Lottie animaiton visual. Ability to load Lotte animaiton from multiple sourses - Load with Custom link or Media library.
+
+== 34. Elementor Timeline Widget ==
+
+[Timeline Widget](https://royal-elementor-addons.com/elementor-timeline-widget/?ref=rea-wpo-pp-details-tab) - A free Elementor Timeline widget. Create your timeline chart using Elementor timeline grid widget and showcase your timeline roadmap horizontal (timeline slider), vertical (one sided) & zigzag styles. With our Elementor timeline widget, get advanced styles in timeline, content, background, border, positioning, etc. Can be used to create a Elementor history timeline, Elementor blog timeline, Elementor event timeline, Elementor story timeline, Elementor company timeline, Elementor post timeline, Elementor timeline slider, Elementor Timeline for Youtube Video Display. Widget Layout is mobile and tablet ready and can be used as a responsive timeline as well. You can display your Wordpress blog posts as timeline items or create your own custom elementor timeline items - video timeline supported as well. You don't need any other WordPress elementor timeline plugin because our widgets have all great timeline features in it which no other page builder timeline has - create a simple or advanced memory lane in minutes.
+
+== Elementor Template Kits in Details: ==
+
+[Nature Elementor Templates Kit](https://demosites.royal-elementor-addons.com/nature-v1/?ref=rea-wpo-pp-details-tab) - One of the Royal Addons elementor templates. Elementor Templates Kit can be installed via plugin backend and most of it's content builded with our elementor addons. Navigate to Royal elementor Addons WP menu dashboard > Templates Kits and search for Nature elementor template. Used advanced slider elementor widgets, testimonial elementor widgets, post timeline elementor widgets, menu elementor widgets, logo elementor widgets, back to top elementor widgets, button elementor widgets, promo box known as image effects elementor widgets, post grid elementor widgets, contact form elementor widgets, Header footer builder and Elemnetor pop up builder. All elementor page templates kits and royal elementor addons widgets are responsive ready. This Kit is only created with royal addons which is the one of the best elementor addons on the market.
+
+[Digital Agency Templates Kit](https://demosites.royal-elementor-addons.com/digitalagency-v1/?ref=rea-wpo-pp-details-tab) - This Kit is only created with royal addons which is the one of the best elementor addons on the market. One of the most popular Royal Addons elementor templates. Elementor Templates Kit can be installed via plugin backend and most of it's content builded with our elementor addons. Navigate to Royal elementor Addons WP menu dashboard > Templates Kits and search for Digital Agency elementor template. Used advanced text elementor widgets, flip box elementor widgets, content toggle elementor widgets, post timeline elementor widgets, menu elementor widgets, logo elementor widgets, back to top elementor widgets, button elementor widgets, post grid elementor widgets, contact form elementor widgets, Header footer builder and Elementor pop up builder, phone call elementor widgets, progress bar aka skill bar elementor widgets, team member elementor widgets, mailchimp elementor widgets, pricing table elementor widgets, google maps elementor widgets. All elementor page templates kits and royal elementor addons widgets are responsive ready.
+
+[It Technology 1 Templates Kit](https://demosites.royal-elementor-addons.com/ittech-v1/?ref=rea-wpo-pp-details-tab) - One of the most requested Royal Addons elementor templates. Elementor Templates Kit can be installed via plugin backend and most of it's content builded with our elementor addons. Navigate to Royal elementor Addons WP menu dashboard > Templates Kits and search for It Technology elementor template. Used advanced text elementor widgets, testimonial elementor widgets, pricing table elementor widgets, progress bar elementor widgets, team member elementor widgets, flip box elementor widgets, circle bar elementor widgets, testimonial elementor widgets, mailchimps subscription elementor widgets, lottie animation elementor widgets, contact form elementor widgets, google maps elementor widgets, menu elementor widgets, logo elementor widgets, back to top elementor widgets, phone call elementor widgets, Elementor pop up builder widgets. All elementor page templates kits and royal elementor addons widgets are responsive ready. This Kit is only created with royal addons which is the one of the best elementor addons on the market.
+
+[Construction Templates Kit](https://demosites.royal-elementor-addons.com/construction-v1/?ref=rea-wpo-pp-details-tab) - This Kit is only created with royal addons which is the one of the best elementor addons on the market. One of the Royal Addons elementor templates. Elementor Templates Kit can be installed via plugin backend and most of it's content builded with our elementor addons. Navigate to Royal elementor Addons WP menu dashboard > Templates Kits and search for Construction elementor template. Used advanced text elementor widgets, button elementor widgets, countdown elementor widgets, progress bar elementor widgets, post timeline elementor widgets, team member elementor widgets, post grid elementor widgets, circle bar elementor widgets, testimonial elementor widgets, flip box elementor widgets, gallery elementor widgets, mailchimp subscription elementor widgets, advanced slider elementor widgets, pricing table elementor widgets, pricing list elementor widgets, contact form elementor widgets, google maps elementor widgets, menu elementor widgets, logo elementor widgets, back to top elementor widgets, phone call elementor widgets, Elementor pop up builder widgets. All elementor page templates kits and royal elementor addons widgets are responsive ready.
+
+[Architecture Templates Kit](https://demosites.royal-elementor-addons.com/architecture-v1/?ref=rea-wpo-pp-details-tab) - This Kit is only created with royal addons which is the one of the best elementor addons on the market. One of the Royal Addons elementor templates. Elementor Templates Kit can be installed via plugin backend and most of it's content builded with our elementor addons. Navigate to Royal elementor Addons WP menu dashboard > Templates Kits and search for Architecture elementor template. Used advanced slider elementor widgets, advanced slider with ken burn effect, image hotspot elementor widgets, pricing table elementor widgets, content toggle elementor widgets, testimonial carousel elementor widgets, mailchimp subscription elementor widgets, social sharing elementor widgets, team member elementor widgets, open hours aka business elementor widgets, content ticker aka News Ticker elementor widgets, promo box elementor widgets, dual button elementor widgets, post grid elementor widgets, pricing table elementor widgets, countdown elementor widgets, advanced tabs elementor widgets,  contact form elementor widgets, google maps elementor widgets, menu elementor widgets, logo elementor widgets, back to top elementor widgets, phone call elementor widgets, Elementor pop up builder widgets. All elementor page templates kits and royal elementor addons widgets are responsive ready. 
+
+[It Technology 2 Templates Kit](https://demosites.royal-elementor-addons.com/ittech-v2/?ref=rea-wpo-pp-details-tab) - One of the Royal Addons elementor templates. Elementor Templates Kit can be installed via plugin backend and most of it's content builded with our elementor addons. Navigate to Royal elementor Addons WP menu dashboard > Templates Kits and search for It Technology elementor template. Used advanced advanced text elementor widgets, flip box elementor widgets, promo box elementor widgets, button elementor widgets, team member elementor widgets, content timeline elementor widgets, pricing table elementor widgets, post grid elementor widgets, testimonial elementor widgets, progress bar elementor widgets, content toggle elementor widgets, pricing table elementor widgets, contact form elementor widgets, google maps elementor widgets, menu elementor widgets, logo elementor widgets, back to top elementor widgets, phone call elementor widgets, pop up elementor widgets, Elementor pop up builder widgets. All elementor page templates kits and royal elementor addons widgets are responsive ready. This Kit is only created with royal addons which is the one of the best elementor addons on the market.
+
+[Drone Templates Kit](https://demosites.royal-elementor-addons.com/drone-v1/?ref=rea-wpo-pp-details-tab) - One of the Royal Addons elementor templates. Elementor Templates Kit can be installed via plugin backend and most of it's content builded with our elementor addons. Navigate to Royal elementor Addons WP menu dashboard > Templates Kits and search for drone elementor template. Used advanced text elementor widgets, button elementor widgets, image hotspot elementor widgets, blog post elementor widgets, promotional box elementor widgets, testimonial elementor widgets, team member elementor widgets, business hours elementor widgets, flip box elementor widgets, promo box elementor widgets, skill bar elementor widgets, content toggle elementor widgets, pricing table elementor widgets, countdown elementor widgets, gallery grid elementor widgets, post grid elementor widgets, advanced slider elementor widgets, contact form elementor widgets, google maps elementor widgets, menu elementor widgets, logo elementor widgets, back to top elementor widgets, phone call elementor widgets, pop up elementor widgets, Elementor pop up builder widgets. All elementor page templates kits and royal elementor addons widgets are responsive ready. This Kit is only created with royal addons which is the one of the best elementor addons on the market.
+
+[Cybersecurity Templates Kit](https://demosites.royal-elementor-addons.com/cybersecurity-v1/?ref=rea-wpo-pp-details-tab) - One of the Royal Addons elementor templates. Elementor Templates Kit can be installed via plugin backend and most of it's content builded with our elementor addons. Navigate to Royal elementor Addons WP menu dashboard > Templates Kits and search for drone elementor template. Used content ticker elementor widgets, advanced text elementor widgets, timeline elementor widgets, flip box elementor widgets, advanced slider elementor widgets, post grid elementor widgets, pricing table elementor widgets, advanced tabs elementor widgets, testimonial slider elementor widgets, team member elementor widgets, skill bar elementor widgets, team member elementor widgets, contact form elementor widgets, google maps elementor widgets, menu elementor widgets, logo elementor widgets, back to top elementor widgets, phone call elementor widgets, pop up elementor widgets, Elementor pop up builder widgets. All elementor page templates kits and royal elementor addons widgets are responsive ready. This Kit is only created with royal addons which is the one of the best elementor addons on the market.
+
+[Medical Templates Kit](https://demosites.royal-elementor-addons.com/medical-v1/?ref=rea-wpo-pp-details-tab) - One of the Royal Addons elementor templates. Elementor Templates Kit can be installed via plugin backend and most of it's content builded with our elementor addons. Navigate to Royal elementor Addons WP menu dashboard > Templates Kits and search for Medical elementor template. Advanced text elementor widgets, flip box elementor widgets, circle bar elementor widgets, team member elementor widgets, testimonial elementor widgets, timeline elementor widgets, blog post grid elementor widgets, pricing table elementor widgets, advanced slider elementor widgets, promo box elementor widgets, progress bar elementor widgets, contact form elementor widgets, google maps elementor widgets, menu elementor widgets, logo elementor widgets, back to top elementor widgets, phone call elementor widgets, pop up elementor widgets, Elementor pop up builder widgets. Elementor sticky header extention. All elementor page templates kits and royal elementor addons widgets are responsive ready. This Kit is only created with royal addons which is the one of the best elementor addons on the market.
+
+
 **And even more is coming very soon.** Widgets and other features will be added with each major update based on popular demand. We are relly trying to make this plugin on of the best and super addons for elementor. Currently we have most advanced Post grid widgets for elementor , advanced product grid widgets for elementor, advanced Gallery grid widgets for elementor, advanced Magazing grid widgets for elementor, advanced contact forms widgets for elementor, advanced one page navigation widgets for elementor, advanced Slider widgets for elementor, most advanced popup and popup related widgets for elementor, advanced header footer builder and we promise in the nearest feature we will add much more!
 
 
@@ -263,8 +327,62 @@ post_max_size 64M
 
 == Changelog ==
 
-= Royal Elementor Addons v1.3.24 - 2021-12-16 =
-* FIX: Advanced Slider not showing in Elementor Editor Panel.
+= Royal Elementor Addons v1.3.39 - 2022-12-04 =
+* FIXED: Elementor Theme Builder minor issues.
+
+= Royal Elementor Addons v1.3.38 - 2022-04-06 =
+* ADDED: Elementor Theme Builder. Customize every fundamental part of your WordPress site without coding including your Header, Footer, Archives, Posts, Default Pages, 404 Pages, etc...
+* ADDED: Elementor Theme Builder Widgets: Post Title, Post Media, Post Meta, Post Navigation, Post Comments, Post Author, Archive Page Title.
+* ADDED: Elementor Theme Builder Demos:
+ - [**Personal Blog**](https://demosites.royal-elementor-addons.com/personal-blog-v1/?ref=rea-wpo-pp-details-tab)
+- [**Blog Magazine**](https://demosites.royal-elementor-addons.com/magazine-blog-v1/?ref=rea-wpo-pp-details-tab)
+- [**Food Blog**](https://demosites.royal-elementor-addons.com/food-blog-v1/?ref=rea-wpo-pp-details-tab)
+- [**Blog Magazine**](https://demosites.royal-elementor-addons.com/travel-blog-v1/?ref=rea-wpo-pp-details-tab)
+
+= Royal Elementor Addons v1.3.37 - 2022-04-04 =
+* FIXED: Elementor Header, Elementor Footer, Elementor Popup import issue.
+
+= Royal Elementor Addons v1.3.36 - 2022-28-03 =
+* FIXED: Removed Reset CSS code which gives ability to adjust content better.
+
+= Royal Elementor Addons v1.3.34 - 2022-18-03 =
+* FIXED: Unordered and Ordered Lists spacing issue, also Headings size issue fixed in Royal Addons for Elementor.
+
+= Royal Elementor Addons v1.3.33 - 2022-4-03 =
+* ADDED: Travel Blogger & Influencer Elementor Template Kit.
+* ADDED: Freemius SDK update to 2.4.3.
+
+= Royal Elementor Addons v1.3.32 - 2022-24-02 =
+* ADDED: Digital Agency Elementor Template Kit.
+* ADDED: Video Tutorials to Particles Effects addon for Elementor and Sticky Section addon Elementor.
+
+= Royal Elementor Addons v1.3.30 - 2022-14-02 =
+* ADDED: Lawyer Elementor Template Kit.
+* ADDED: Elementor Timeline Widget Predefined Styles.
+* FIX: Minor but essential Bugs.
+
+= Royal Elementor Addons v1.3.29 - 2022-7-02 =
+* FIX: Elementor Sticky Header conflict with other Elementor Addons.
+* FIX: Minor but essential Bugs.
+
+= Royal Elementor Addons v1.3.28 - 2022-2-02 =
+* FIX: Minor Posts Timeline Bugs.
+
+= Royal Elementor Addons v1.3.27 - 2022-31-01 =
+* ADDED: Photographer Portfolio Elementor Template Kit Dark.
+* ADDED: Photographer Portfolio Elementor Template Kit Light.
+* ADDED: Wine Bar Elementor Template Kit.
+* ADDED: Elementor Timeline Widget.
+* FIX: Elementor Template kit causes daouble header issue on some popular themes.
+* FIX: Minor but essential Bugs.
+
+= Royal Elementor Addons v1.3.26 - 2022-21-01 =
+* ADDED: Pizza Restaurant Elementor Template.
+* ADDED: Royal Elementor Widget Pro Features List Section.
+* FIX: Minor but essential Bugs.
+
+= Royal Elementor Addons v1.3.25 - 2021-12-24 =
+* ADDED: Elementor Templates Kit Library (Elementor Starter Sites).
 * FIX: Minor but essential Bugs.
 
 = Royal Elementor Addons v1.3.23 - 2021-12-09 =

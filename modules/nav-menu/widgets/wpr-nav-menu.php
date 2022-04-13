@@ -34,7 +34,7 @@ class Wpr_Nav_Menu extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'nav menu', 'header', 'navigation menu', 'horizontal menu', 'horizontal navigation', 'vertical menu', 'vertical navigation', 'burger menu', 'hamburger menu', 'mobile menu', 'responsive menu' ];
+		return [ 'royal', 'nav menu', 'header', 'navigation menu', 'horizontal menu', 'horizontal navigation', 'vertical menu', 'vertical navigation', 'burger menu', 'hamburger menu', 'mobile menu', 'responsive menu' ];
 	}
 
 	public function get_style_depends() {
@@ -196,7 +196,7 @@ class Wpr_Nav_Menu extends Widget_Base {
 		$this->start_controls_section(
 			'section_menu',
 			[
-				'label' => esc_html__( 'Menu', 'wpr-addons' ),
+				'label' => 'Menu <a href="#" onclick="window.open(\'https://www.youtube.com/watch?v=at0CPKtklF0\',\'_blank\').focus()">Video Tutorial <span class="dashicons dashicons-video-alt3"></span></a>',
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -586,6 +586,17 @@ class Wpr_Nav_Menu extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'nav-menu', [
+			'Vertical Layout',
+			'Advanced Link Hover Effects: Slide, Grow, Drop',
+			'SubMenu Entrance Slide Effect',
+			'SubMenu Width option',
+			'Advanced Display Conditions',
+			'Mobile Menu Display Custom Conditions',
+			'Mobile Menu Button Custom Text option',
+		] );
+		
 		// Tab: Styles ===============
 		// Section: Menu Items -------
 		$this->start_controls_section(
@@ -700,8 +711,9 @@ class Wpr_Nav_Menu extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .menu-item-has-children .wpr-sub-icon' => 'font-size: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-pointer-background:not(.wpr-sub-icon-none) .wpr-nav-menu-horizontal .menu-item-has-children .wpr-pointer-item' => 'text-indent: -{{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-pointer-border:not(.wpr-sub-icon-none) .wpr-nav-menu-horizontal .menu-item-has-children .wpr-pointer-item' => 'text-indent: -{{SIZE}}{{UNIT}};',				],
+					'{{WRAPPER}}.wpr-pointer-background:not(.wpr-sub-icon-none) .wpr-nav-menu-horizontal .menu-item-has-children .wpr-pointer-item' => 'padding-right: calc({{SIZE}}px + {{menu_items_padding_hr.SIZE}}px);',
+					'{{WRAPPER}}.wpr-pointer-border:not(.wpr-sub-icon-none) .wpr-nav-menu-horizontal .menu-item-has-children .wpr-pointer-item' => 'padding-right: calc({{SIZE}}px + {{menu_items_padding_hr.SIZE}}px);',
+				],
 				'separator' => 'before'
 			]
 		);

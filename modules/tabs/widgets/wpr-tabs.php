@@ -39,7 +39,7 @@ class Wpr_Tabs extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'vertical tabs', 'horizontal tabs', 'accordion' ];
+		return [ 'royal', 'vertical tabs', 'horizontal tabs', 'accordion' ];
 	}
 
 	public function get_style_depends() {
@@ -527,6 +527,18 @@ class Wpr_Tabs extends Widget_Base {
 		// Section: Settings ---------
 		$this->add_section_settings();
 
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'tabs', [
+			'Add Unlimited Tabs',
+			'Tab Content Type - Elementor Template',
+			'Custom Tab Colors',
+			'Tab Label Align',
+			'Swich Tabs on Hover option',
+			'Set Active Tab by Default',
+			'Advanced Tab Content Animations',
+			'Tabs Autoplay option',
+		] );
+		
 		// Styles
 		// Section: Tabs ------------
 		$this->start_controls_section(
@@ -1464,10 +1476,14 @@ class Wpr_Tabs extends Widget_Base {
 
 				$tab_count = $index + 1;
 				$tab_setting_key = $this->get_repeater_setting_key( 'tab_control', 'tabs', $index );
-				$tab_image_src = Group_Control_Image_Size::get_attachment_image_src( $item['tab_image']['id'], 'tabs_image_size', $settings );
+				$tab_image_src = false;
+		
+				if ( isset($item['tab_image']['id']) ) {
+					$tab_image_src = Group_Control_Image_Size::get_attachment_image_src( $item['tab_image']['id'], 'tabs_image_size', $settings );
 
-				if ( ! $tab_image_src ) {
-					$tab_image_src = $item['tab_image']['url'];
+					if ( ! $tab_image_src ) {
+						$tab_image_src = $item['tab_image']['url'];
+					}
 				}
 
 				$this->add_render_attribute( $tab_setting_key, [

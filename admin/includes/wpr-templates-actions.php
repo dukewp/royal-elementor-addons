@@ -27,10 +27,7 @@ class WPR_Templates_Actions {
 		// Create Template
 		add_action( 'wp_ajax_wpr_create_template', [ $this, 'wpr_create_template' ] );
 
-		// Import Template
-		add_action( 'wp_ajax_wpr_import_template', [ $this, 'wpr_import_template' ] );
-
-		// Import Editor Template
+		// Import Library Template
 		add_action( 'wp_ajax_wpr_import_library_template', [ $this, 'wpr_import_library_template' ] );
 
 		// Reset Template
@@ -76,6 +73,16 @@ class WPR_Templates_Actions {
 			update_option( 'wpr_single_conditions', $this->sanitize_conditions($_POST['wpr_single_conditions']) );
 		}
 
+		// Product Archive
+		if ( isset($_POST['wpr_product_archive_conditions']) ) {
+			update_option( 'wpr_product_archive_conditions', $this->sanitize_conditions($_POST['wpr_product_archive_conditions']) );
+		}
+
+		// Product Single
+		if ( isset($_POST['wpr_product_single_conditions']) ) {
+			update_option( 'wpr_product_single_conditions', $this->sanitize_conditions($_POST['wpr_product_single_conditions']) );
+		}
+
 		// Popup
 		if ( isset($_POST['wpr_popup_conditions']) ) {
 			update_option( 'wpr_popup_conditions', $this->sanitize_conditions($_POST['wpr_popup_conditions']) );
@@ -107,7 +114,14 @@ class WPR_Templates_Actions {
 				if ( 'popup' === $_POST['user_template_type'] ) {
 					update_post_meta( $template_id, '_elementor_template_type', 'wpr-popups' );
 				} else {
-					update_post_meta( $template_id, '_elementor_template_type', 'wpr-theme-builder' );
+					if ( 'header' === $_POST['user_template_type'] ) {
+						update_post_meta( $template_id, '_elementor_template_type', 'wpr-theme-builder-header' );
+					} elseif ( 'footer' === $_POST['user_template_type'] ) {
+						update_post_meta( $template_id, '_elementor_template_type', 'wpr-theme-builder-footer' );
+					} else {
+						update_post_meta( $template_id, '_elementor_template_type', 'wpr-theme-builder' );
+					}
+
 					update_post_meta( $template_id, '_wpr_template_type', sanitize_text_field($_POST['user_template_type']) );
 				}
 			} else {
@@ -123,62 +137,7 @@ class WPR_Templates_Actions {
 	}
 
 	/**
-	** Import Template
-	*/
-	public function wpr_import_template() {
-
-		// Temp Define Importers
-	    if ( ! defined('WP_LOAD_IMPORTERS') ) {
-	        define('WP_LOAD_IMPORTERS', true);
-	    }
-
-	    // Load Importer API
-	    require_once ABSPATH . 'wp-admin/includes/import.php';
-
-	    // Include if Class Does NOT Exist 
-	    if ( ! class_exists( 'WP_Importer' ) ) {
-	        $class_wp_importer = ABSPATH . 'wp-admin/includes/class-wp-importer.php';
-	        if ( file_exists( $class_wp_importer ) ) {
-	            require $class_wp_importer;
-	        }
-	    }
-
-	    // Include if Class Does NOT Exist
-	    if ( ! class_exists( 'WP_Import' ) ) {
-	        $class_wp_importer = WPR_ADDONS_PATH .'admin/import/class-wordpress-importer.php';
-	        if ( file_exists( $class_wp_importer ) ) {
-	            require $class_wp_importer;
-	        }
-	    }
-
-	    if ( class_exists( 'WP_Import' ) ) {
-
-	        // Download Import File
-	        $local_file_path = $this->download_template( sanitize_file_name($_POST['wpr_template']) );
-
-	        // Prepare for Import
-	        $wp_import = new WP_Import();
-	        $wp_import->fetch_attachments = true;
-
-	        // No Limit for Execution
-	        set_time_limit(0);
-
-	        // Import
-	        ob_start();
-	            $wp_import->import( $local_file_path );
-	        ob_end_clean();
-
-	        // Delete Import File
-	        unlink( $local_file_path );
-
-	        // Send to JS
-			echo serialize( $wp_import );
-	    }
-
-	}
-
-	/**
-	** Import Template
+	** Import Library Template
 	*/
 	public function wpr_import_library_template() {
         $source = new WPR_Library_Source();
@@ -188,23 +147,6 @@ class WPR_Templates_Actions {
         ]);
         
         echo json_encode($data);
-	}
-
-	/**
-	** Download Template
-	*/
-	public function download_template( $file ) {
-		// Remote and Local Files
-        $remote_file_url = 'https://wp-royal.com/test/elementor/'. preg_replace('/-v[0-9]+/', '', $file) .'/'. $file .'.xml';
-        $local_file_path = WPR_ADDONS_PATH .'library/import/'. $file .'.xml';
-
-        // No Limit for Execution
-        set_time_limit(0);
-
-        // Copy File From Server
-        copy( $remote_file_url, $local_file_path );
-
-        return $local_file_path;
 	}
 
 	/**
@@ -220,28 +162,40 @@ class WPR_Templates_Actions {
 	*/
 	public function templates_library_scripts( $hook ) {
 
-		// Deny if NOT Plugin Page
-		if ( 'toplevel_page_wpr-addons' != $hook && !strpos($hook, 'wpr-theme-builder') && !strpos($hook, 'wpr-popups') ) {
-			return;
-		}
-
 		// Get Plugin Version
 		$version = Plugin::instance()->get_version();
 
-		// Color Picker
-		wp_enqueue_style( 'wp-color-picker' );
-	    wp_enqueue_script( 'wp-color-picker-alpha', WPR_ADDONS_URL .'assets/js/admin/wp-color-picker-alpha.min.js', ['jquery', 'wp-color-picker'], $version, true );
+		// Deny if NOT Plugin Page
+		if ( 'toplevel_page_wpr-addons' == $hook || strpos($hook, 'wpr-theme-builder') || strpos($hook, 'wpr-popups') ) {
 
-	    // Media Upload
-		if ( ! did_action( 'wp_enqueue_media' ) ) {
-			wp_enqueue_media();
+			// Color Picker
+			wp_enqueue_style( 'wp-color-picker' );
+		    wp_enqueue_script( 'wp-color-picker-alpha', WPR_ADDONS_URL .'assets/js/admin/wp-color-picker-alpha.min.js', ['jquery', 'wp-color-picker'], $version, true );
+
+		    // Media Upload
+			if ( ! did_action( 'wp_enqueue_media' ) ) {
+				wp_enqueue_media();
+			}
+
+			// enqueue CSS
+			wp_enqueue_style( 'wpr-plugin-options-css', WPR_ADDONS_URL .'assets/css/admin/plugin-options.css', [], $version );
+
+		    // enqueue JS
+		    wp_enqueue_script( 'wpr-plugin-options-js', WPR_ADDONS_URL .'assets/js/admin/plugin-options.js', ['jquery'], $version );
+
 		}
 
-		// enqueue CSS
-		wp_enqueue_style( 'wpr-plugin-options-css', WPR_ADDONS_URL .'assets/css/admin/plugin-options.css', [], $version );
+		if ( strpos($hook, 'wpr-templates-kit') ) {
+			wp_enqueue_style( 'wpr-templates-kit-css', WPR_ADDONS_URL .'assets/css/admin/templates-kit.css', [], $version );
+		    wp_enqueue_script( 'wpr-templates-kit-js', WPR_ADDONS_URL .'assets/js/admin/templates-kit.js', ['jquery', 'updates'], $version );
+		}
 
-	    // enqueue JS
-	    wp_enqueue_script( 'wpr-plugin-options-js', WPR_ADDONS_URL .'assets/js/admin/plugin-options.js', ['jquery'], $version );
+		if ( strpos($hook, 'wpr-premade-blocks') ) {
+			wp_enqueue_style( 'wpr-premade-blocks-css', WPR_ADDONS_URL .'assets/css/admin/premade-blocks.css', [], $version );
+
+		    wp_enqueue_script( 'wpr-macy-js', WPR_ADDONS_URL .'assets/js/lib/macy/macy.js', ['jquery'], $version );
+		    wp_enqueue_script( 'wpr-premade-blocks-js', WPR_ADDONS_URL .'assets/js/admin/premade-blocks.js', ['jquery'], $version );
+		}
 	}
 
 	/**
@@ -252,7 +206,7 @@ class WPR_Templates_Actions {
 		// Elementor Search Data
 		$ajax->register_ajax_action( 'wpr_elementor_search_data', function( $data ) {
 			// Freemius OptIn
-			if ( ! (wpr_fs()->is_registered() && wpr_fs()->is_tracking_allowed()) ) {
+			if ( ! (wpr_fs()->is_registered() && wpr_fs()->is_tracking_allowed() || wpr_fs()->is_pending_activation() )) {
 				return;
 			}
 
@@ -326,7 +280,7 @@ class WPR_Library_Source extends \Elementor\TemplateLibrary\Source_Base {
 		return wp_remote_retrieve_body( $response );
 	}
 
-	public function get_data( array $args ) {
+	public function get_data( array $args ) {//TODO: FIX - This function imports placeholder images in library
 		$data = $this->request_template_data( $args['template_id'] );
 
 		$data = json_decode( $data, true );

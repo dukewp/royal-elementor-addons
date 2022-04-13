@@ -14,6 +14,12 @@ jQuery(document).ready(function( $ ) {
 	var currentTab = $('.nav-tab-active').attr( 'data-title' );
 		currentTab = currentTab.trim().toLowerCase();
 
+	/*
+	** WooCommerce Comming Soon -------------------------
+	*/
+	if ( 'product archive' === currentTab || 'product single' === currentTab ) {
+		$('.wpr-user-template').after('<div class="wpr-button-lock"></div>');
+	}
 
 	/*
 	** Get Active Filter -------------------------
@@ -58,6 +64,7 @@ jQuery(document).ready(function( $ ) {
 	** Create User Template -------------------------
 	*/
 	function craeteUserTemplate() {
+		console.log(getActiveFilter)
 		// Get Template Library
 		var library = 'my-templates' === getActiveFilter() ? 'elementor_library' : 'wpr_templates';
 		// Get Template Title
@@ -149,45 +156,6 @@ jQuery(document).ready(function( $ ) {
 		}
 	});
 
-
-	/*
-	** Import Template -------------------------
-	*/
-	function importTemplate() {
-		$( '.wpr-import' ).on( 'click', function() {
-			// Buttons
-			var importButton = $(this),
-				editButton 	 = importButton.parent().find('.wpr-edit-template'),
-				resetButton  = importButton.parent().find('.wpr-delete-template');
-
-			$('.wrap').children('h1').text('Importing Template, Please be patient...');	
-			
-			// AJAX Data
-			var data = {
-				action: 'wpr_import_template',
-				wpr_template: $(this).attr('data-slug'),
-			};
-
-			// Update via AJAX
-			$.post(ajaxurl, data, function(response) {
-				$('.wrap').children('h1').text('Howdy Nick! Template has been successfully imported :)');
-
-				// Change Buttons
-				importButton.removeClass('wpr-import').addClass('wpr-template-conditions').text('Activate').unbind('click');
-				editButton.removeClass('hidden');
-				resetButton.removeClass('hidden');
-
-				// Open Conditions
-				changeTemplateConditions();
-
-				// Edit Template Link
-				response = response.split(';');
-				editButton.attr( 'href', 'post.php?post='+ response[30].replace('i:', '') +'&action=elementor' );
-			});		
-		});		
-	}
-
-	importTemplate();
 
 	/*
 	** Reset Template -------------------------
@@ -320,7 +288,9 @@ jQuery(document).ready(function( $ ) {
 			$('.wpr-conditions').last().find('input').hide();//tmp -maybe remove
 
 			// Show on Canvas
-			$('.wpr-canvas-condition').show();
+			if ( 'header' === currentTab || 'footer' === currentTab ) {
+				$('.wpr-canvas-condition').show();
+			}
 
 			// Run Functions
 			popupDeleteConditions();
@@ -393,6 +363,9 @@ jQuery(document).ready(function( $ ) {
 		// Conditions Wrap
 		var conditionsWrap = $( '.wpr-conditions' );
 
+		// Reset Canvas Option
+		$('.wpr-canvas-condition').hide();
+
 		// Show Conditions
 		if ( 'single' === currentTab ) {
 			conditionsWrap.find(singleS).show();
@@ -400,17 +373,15 @@ jQuery(document).ready(function( $ ) {
 			conditionsWrap.find(archiveS).show();
 		} else {
 			conditionsWrap.find(globalS).show();
+
+			// Show Canvas Option
+			if ( $('.wpr-conditions').length ) {
+				$('.wpr-canvas-condition').show();
+			}
 		}
 
 		// Add Current Filter Class
 		$('.wpr-conditions-wrap').addClass( $('.template-filters .active-filter').attr('data-class') );
-
-		// Show on Canvas
-		if ( $('.wpr-conditions').length ) {
-			$('.wpr-canvas-condition').show();
-		} else {
-			$('.wpr-canvas-condition').hide();
-		}
 
 		// Open Popup
 		conditionPupup.fadeIn();
@@ -587,9 +558,11 @@ jQuery(document).ready(function( $ ) {
 			var conditions = getConditions( template, $( '#wpr_'+ currentTab +'_conditions' ).val() );
 
 			// Don't save if not active
-			if ( !proActive && (('global' !== conditions[template][0] && 'undefined' !== typeof conditions[template][0]) || conditions[template].length > 1) ) {
-				alert('Please select "Entire Site" to continue! Mutiple and custom conditions are fully supported in the Pro version.');
-				return;
+			if ( 'header' === currentTab || 'footer' == currentTab ) {
+				if ( !proActive && (('global' !== conditions[template][0] && 'undefined' !== typeof conditions[template][0]) || conditions[template].length > 1) ) {
+					alert('Please select "Entire Site" to continue! Mutiple and custom conditions are fully supported in the Pro version.');
+					return;
+				}
 			}
 
 			// Set Conditions
@@ -635,11 +608,13 @@ jQuery(document).ready(function( $ ) {
 	** Highlight Templates with Active Conditions --------
 	*/
 	if ( $('body').hasClass('royal-addons_page_wpr-theme-builder') || $('body').hasClass('royal-addons_page_wpr-popups') ) {
-		var conditions = $( '#wpr_'+ currentTab +'_conditions' ).val(),
-			conditions = ('' === conditions || '[]' === conditions) ? {} : JSON.parse(conditions);
+		if ( 'my templates' !== currentTab ) {
+			var conditions = $( '#wpr_'+ currentTab +'_conditions' ).val(),
+				conditions = ('' === conditions || '[]' === conditions) ? {} : JSON.parse(conditions);
 
-		for ( var key in conditions ) {
-			$('.wpr-delete-template[data-slug="'+ key +'"]').closest('li').addClass('wpr-active-conditions-template');
+			for ( var key in conditions ) {
+				$('.wpr-delete-template[data-slug="'+ key +'"]').closest('li').addClass('wpr-active-conditions-template');
+			}
 		}
 	}
 

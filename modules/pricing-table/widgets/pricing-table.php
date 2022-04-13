@@ -35,7 +35,7 @@ class Pricing_Table extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'price table', 'pricing table', 'features table' ];
+		return [ 'royal', 'price table', 'pricing table', 'features table' ];
 	}
 
 	public function get_style_depends() {
@@ -87,7 +87,7 @@ class Pricing_Table extends Widget_Base {
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
-				'opnepage_pro_notice',
+				'pricing_table_pro_notice',
 				[
 					'type' => Controls_Manager::RAW_HTML,
 					'raw' => '<span style="color:#2a2a2a;">Feature Item Tooltip and Even/Odd Feature Item Background Color</span> options are available in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-pricing-table-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
@@ -822,6 +822,12 @@ class Pricing_Table extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'pricing-table', [
+			'List Item Advanced Tooltip',
+			'List Item Even/Odd Background Color',
+		] );
+		
 		// Styles
 		// Section: Heading ----------
 		$this->start_controls_section(

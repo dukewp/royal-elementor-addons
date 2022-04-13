@@ -28,8 +28,25 @@ class Wpr_Parallax_Scroll {
                 'label' =>  sprintf(esc_html__('Parallax - %s', 'wpr-addons'), Utilities::get_plugin_name()),
             ]
         );
+
+        $element->add_control(
+            'wpr_parallax',
+            [
+                'type' => Controls_Manager::RAW_HTML,
+                'raw' => '<div class="elementor-update-preview editor-wpr-preview-update"><span>Update changes to Preview</span><button class="elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply</button>',
+                'separator' => 'after'
+            ]
+        );
         
         if ( 'on' === get_option('wpr-parallax-background', 'on') ) {
+
+        $element->add_control(
+            'parallax_video_tutorial',
+            [
+                'raw' => '<br><a href="https://www.youtube.com/watch?v=DcDeQ__lJbw" target="_blank">Watch Video Tutorial <span class="dashicons dashicons-video-alt3"></span></a>',
+                'type' => Controls_Manager::RAW_HTML,
+            ]
+        );
 
         $element->add_control(
             'wpr_enable_jarallax',
@@ -103,20 +120,25 @@ class Wpr_Parallax_Scroll {
             ]
         );
 
+        } // end if ( 'on' === get_option('wpr-parallax-background', 'on') ) {
+
         $element->add_control(
-            'wpr_parallax',
+            'parallax_type_divider',
             [
-                'type' => Controls_Manager::RAW_HTML,
-                'raw' => '<div style="text-align: center;"><button class="elementor-update-preview-button elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply Changes</button></div>',
-                'condition' => [
-                    'wpr_enable_jarallax' => 'yes'
-                ]
+                'type' => Controls_Manager::DIVIDER,
+                'style' => 'thick',
             ]
         );
 
-        } // end if ( 'on' === get_option('wpr-parallax-background', 'on') ) {
-
         if ( 'on' === get_option('wpr-parallax-multi-layer', 'on') ) {
+
+        $element->add_control(
+            'parallax_multi_video_tutorial',
+            [
+                'raw' => '<a href="https://youtu.be/DcDeQ__lJbw?t=121" target="_blank">Watch Video Tutorial <span class="dashicons dashicons-video-alt3"></span></a>',
+                'type' => Controls_Manager::RAW_HTML,
+            ]
+        );
 
         $element->add_control(
             'wpr_enable_parallax_hover',
@@ -128,7 +150,6 @@ class Wpr_Parallax_Scroll {
                 'label_off' => __('No', 'wpr-addons'),
                 'return_value' => 'yes',
                 'render_type' => 'template',
-                'separator' => 'before',
                 'prefix_class' => 'wpr-parallax-'
             ]
         );
@@ -297,9 +318,12 @@ class Wpr_Parallax_Scroll {
                 'paralax_repeater_pro_notice',
                 [
                     'type' => Controls_Manager::RAW_HTML,
-                    // 'raw' => 'More than 2 Layers are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-parallax-multi-layer-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
-                    'raw' => 'More than 2 Layers are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+                    'raw' => 'More than 2 Layers are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-parallax-multi-layer-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+                    // 'raw' => 'More than 2 Layers are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
                     'content_classes' => 'wpr-pro-notice',
+                    'condition' => [
+                        'wpr_enable_parallax_hover' => 'yes'
+                    ]
                 ]
             );
         }

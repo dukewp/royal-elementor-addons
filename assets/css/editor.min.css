@@ -120,7 +120,8 @@
 .elementor-control-tax2_transition_duration,
 .elementor-control-filters_transition_duration,
 .elementor-control-pagination_older_text,
-.elementor-control-tooltip_position {
+.elementor-control-tooltip_position,
+.elementor-control-post_info_comments_text_1 {
 	padding-top: 15px !important;
 }
 
@@ -313,6 +314,10 @@
 	content: '\e942' !important;
 }
 
+.elementor-control-posts_slider_notice .elementor-control-raw-html {
+  font-style: normal !important;
+}
+
 
 /*--------------------------------------------------------------
 == Modal Popup Editor
@@ -482,7 +487,7 @@
 == Widget Preview and Library buttons
 --------------------------------------------------------------*/
 .elementor-control-wpr_library_buttons {
-	height: 80px;
+	height: 60px;
 	padding: 0;
 }
 
@@ -532,6 +537,35 @@
 	border: none !important;
 }
 
+.elementor-section-title > a {
+  top: 10px;
+  right: 20px;
+  position: absolute;
+  line-height: 20px;
+}
+
+.elementor-section-title > a:hover {
+  border-color: transparent;
+}
+
+/*--------------------------------------------------------------
+== Apply Changes Button
+--------------------------------------------------------------*/
+.editor-wpr-preview-update {
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.editor-wpr-preview-update button {
+  font-size: 13px;
+  padding: 5px 10px;
+}
+
 
 /*--------------------------------------------------------------
 == Free/Pro Options
@@ -560,8 +594,9 @@
 	border: none !important;
 }
 
-.elementor-control-slider_section_pro_notice {
+#elementor-controls .elementor-control-slider_section_pro_notice {
 	margin-top: -16px;
+	padding-bottom: 0 !important;
 }
 
 .elementor-control-layout_select_pro_notice + div,
@@ -627,7 +662,14 @@
 .elementor-control.elementor-control-group_popup_settings_pro_notice,
 .elementor-control.elementor-control-which_particle_pro_notice,
 .elementor-control.elementor-control-paralax_repeater_pro_notice,
-.elementor-control.elementor-control-opnepage_pro_notice {
+.elementor-control.elementor-control-opnepage_pro_notice,
+.elementor-control.elementor-control-timeline_repeater_pro_notice,
+.elementor-control.elementor-control-limit_grid_items_pro_notice,
+.elementor-control.elementor-control-post_nav_layout_pro_notice,
+.elementor-control.elementor-control-author_name_links_to_pro_notice,
+.elementor-control.elementor-control-author_title_links_to_pro_notice,
+.elementor-control.elementor-control-comments_form_layout_pro_notice,
+.elementor-control.elementor-control-sharing_repeater_pro_notice {
 	padding-bottom: 0 !important;
 }
 
@@ -663,13 +705,19 @@
 .elementor-control-sharing_columns_pro_notice .wpr-pro-notice,
 .elementor-control-popup_trigger_pro_notice .wpr-pro-notice,
 .elementor-control-popup_show_again_delay_pro_notice .wpr-pro-notice,
-.elementor-control-group_popup_settings_pro_notice .wpr-pro-notice {
+.elementor-control-group_popup_settings_pro_notice .wpr-pro-notice,
+.elementor-control-post_nav_layout_pro_notice .wpr-pro-notice,
+.elementor-control-author_name_links_to_pro_notice .wpr-pro-notice,
+.elementor-control-author_title_links_to_pro_notice .wpr-pro-notice,
+.elementor-control-comments_form_layout_pro_notice .wpr-pro-notice,
+.elementor-control-sharing_repeater_pro_notice .wpr-pro-notice {
 	border-bottom: none !important;
 }
 
 /* Both */
 .elementor-control.elementor-control-pagination_type_pro_notice,
-.elementor-control.elementor-control-tooltip_trigger_pro_notice {
+.elementor-control.elementor-control-tooltip_trigger_pro_notice,
+.elementor-control.elementor-control-post_info_select_pro_notice {
 	padding-top: 0 !important;
 	padding-bottom: 0 !important;
 }
@@ -677,6 +725,99 @@
 .elementor-control-pagination_type_pro_notice .wpr-pro-notice {
 	border-top: none !important;
 	border-bottom: none !important;
+}
+
+.elementor-control-pro_features_section .elementor-section-toggle,
+.elementor-control-pro_features_section .elementor-section-title {
+  color: #f54;
+}
+
+.elementor-control-pro_features_section .elementor-section-title {
+  line-height: 20px;
+}
+.elementor-control-pro_features_section .elementor-section-title .dashicons {
+  line-height: 20px;
+  font-size: 13px;
+}
+
+.wpr-pro-features-list {
+  text-align: center;
+}
+
+.wpr-pro-features-list ul {
+  text-align: left;
+}
+
+.wpr-pro-features-list ul li {
+  position: relative;
+  line-height: 22px;
+  padding-left: 20px;
+}
+
+.wpr-pro-features-list ul li::before {
+  content: '.';
+  font-size: 38px;
+  position: absolute;
+  top: -11px;
+  left: 0;
+}
+
+.wpr-pro-features-list ul + a {
+  display: inline-block;
+  background-color: #f54;
+  color: #fff;
+  margin: 15px 15px 10px 0;
+  padding: 7px 12px;
+  border-radius: 3px;
+}
+
+.wpr-pro-features-list ul + a:hover {
+  color: #fff;
+}
+
+/* Video Tutorial Link */
+.elementor-control[class*="video_tutorial"] {
+  padding-top: 0 !important;
+  padding-bottom: 5px !important;
+}
+
+.elementor-control[class*="video_tutorial"] a {
+  line-height: 16px;
+  font-size: 12px;
+}
+
+.elementor-control[class*="video_tutorial"] a .dashicons {
+  font-size: 16px;
+}
+
+
+/*--------------------------------------------------------------
+== Theme Builder Widgets
+--------------------------------------------------------------*/
+#elementor-panel-categories {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#elementor-panel-categories > div {
+  -webkit-box-ordinal-group: 3;
+      -ms-flex-order: 2;
+          order: 2;
+}
+
+#elementor-panel-category-wpr-theme-builder-widgets {
+  -webkit-box-ordinal-group: 2 !important;
+      -ms-flex-order: 1 !important;
+          order: 1 !important;
+}
+
+.elementor-editor-wpr-theme-builder #elementor-panel-footer-saver-preview {
+  display: none !important;
 }
 
 
@@ -692,4 +833,17 @@
 	border-left: 3px solid #71d7f7;
 	-webkit-box-shadow: 0 1px 4px 0 rgb(0 0 0 / 7%);
 	box-shadow: 0 1px 4px 0 rgb(0 0 0 / 7%);
+}
+
+
+/*--------------------------------------------------------------
+== Debug
+--------------------------------------------------------------*/
+pre.xdebug-var-dump {
+  position: absolute;
+  z-index: 999999;
+  background: #fff;
+  border: 2px solid #000;
+  padding: 20px;
+  left: 300px;
 }

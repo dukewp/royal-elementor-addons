@@ -1,7 +1,8 @@
 <?php
-namespace WprAddons\Modules\AuthorBox;
+namespace WprAddons\Modules\ThemeBuilder\ArchiveTitle;
 
 use WprAddons\Base\Module_Base;
+use WprAddons\Classes\Utilities;
 
 class Module extends Module_Base {
 
@@ -12,12 +13,12 @@ class Module extends Module_Base {
 	}
 	
 	public function get_name() {
-		return 'wpr-author-box';
+		return 'wpr-archive-title';
 	}
 
 	public function get_widgets() {
 		return [
-			'Wpr_Author_Box', // This should match the widget/element class.
+			'Wpr_Archive_Title', // This should match the widget/element class.
 		];
 	}
 	

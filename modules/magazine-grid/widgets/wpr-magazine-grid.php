@@ -33,11 +33,11 @@ class Wpr_Magazine_Grid extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return [ 'wpr-widgets'];
+		return Utilities::show_theme_buider_widget_on('archive') ? [ 'wpr-theme-builder-widgets' ] : [ 'wpr-widgets'];
 	}
 
 	public function get_keywords() {
-		return [ 'magazin grid', 'magazin slider', 'isotope', 'post tiles' ];
+		return [ 'royal', 'blog', 'magazin grid', 'magazin slider', 'isotope', 'post tiles', 'posts tiles' ];
 	}
 
 	public function get_script_depends() {
@@ -1179,6 +1179,9 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			]
 		);
 
+		// Upgrade to Pro Notice :TODO
+		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'magazine-grid', 'element_animation', ['pro-slrt','pro-slxrt','pro-slbt','pro-sllt','pro-sltp','pro-slxlt','pro-sktp','pro-skrt','pro-skbt','pro-sklt','pro-scup','pro-scdn','pro-rllt','pro-rlrt'] );
+
 		$repeater->add_control(
 			'element_animation_duration',
 			[
@@ -1227,6 +1230,9 @@ class Wpr_Magazine_Grid extends Widget_Base {
 				],
 			]
 		);
+
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'magazine-grid', 'element_animation_timing', ['pro-eio','pro-eiqd','pro-eicb','pro-eiqrt','pro-eiqnt','pro-eisn','pro-eiex','pro-eicr','pro-eibk','pro-eoqd','pro-eocb','pro-eoqrt','pro-eoqnt','pro-eosn','pro-eoex','pro-eocr','pro-eobk','pro-eioqd','pro-eiocb','pro-eioqrt','pro-eioqnt','pro-eiosn','pro-eioex','pro-eiocr','pro-eiobk',] );
 
 		$repeater->add_control(
 			'element_animation_size',
@@ -1418,6 +1424,9 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			]
 		);
 
+		// Upgrade to Pro Notice :TODO
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'magazine-grid', 'overlay_animation', ['pro-slrt','pro-slxrt','pro-slbt','pro-sllt','pro-sltp','pro-slxlt','pro-sktp','pro-skrt','pro-skbt','pro-sklt','pro-scup','pro-scdn','pro-rllt','pro-rlrt'] );
+
 		$this->add_control(
 			'overlay_animation_duration',
 			[
@@ -1467,6 +1476,9 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			]
 		);
 
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'magazine-grid', 'overlay_animation_timing', ['pro-eio','pro-eiqd','pro-eicb','pro-eiqrt','pro-eiqnt','pro-eisn','pro-eiex','pro-eicr','pro-eibk','pro-eoqd','pro-eocb','pro-eoqrt','pro-eoqnt','pro-eosn','pro-eoex','pro-eocr','pro-eobk','pro-eioqd','pro-eiocb','pro-eioqrt','pro-eioqnt','pro-eiosn','pro-eioex','pro-eiocr','pro-eiobk',] );
+
 		$this->add_control(
 			'overlay_animation_size',
 			[
@@ -1506,6 +1518,23 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'magazine-grid', [
+			'Random Posts Query',
+			'+6 Magazine Grid Layouts',
+			'Magazine Grid Slider',
+			'Magazine Grid Slider Autoplay options',
+			'Magazine Grid Slider Advanced Navigation Positioning',
+			'Magazine Grid Slider Advanced Pagination Positioning',
+			'Advanced Post Likes',
+			'Advanced Post Sharing',
+			'Custom Fields Support',
+			'Unlimited Grid Elements Positioning',
+			'Unlimited Image Overlay Animations',
+			'Image overlay GIF upload option',
+			'Title, Category, Read More Advanced Link Hover Animations',
+		] );
+		
 		// Styles ====================
 		// Section: Grid Media -------
 		$this->start_controls_section(
@@ -1826,7 +1855,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			[
 				'name'     => 'title_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-grid-item-title'
+				'selector' => '{{WRAPPER}} .wpr-grid-item-title a'
 			]
 		);
 
@@ -1846,13 +1875,13 @@ class Wpr_Magazine_Grid extends Widget_Base {
 					'size' => 38,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-mgzn-grid-1-2 article:nth-child(1) .wpr-grid-item-title' => 'font-size: {{SIZE}}px;',
-					'{{WRAPPER}} .wpr-mgzn-grid-1-3 article:nth-child(1) .wpr-grid-item-title' => 'font-size: {{SIZE}}px;',
-					'{{WRAPPER}} .wpr-mgzn-grid-1-4 article:nth-child(1) .wpr-grid-item-title' => 'font-size: {{SIZE}}px;',
-					'{{WRAPPER}} .wpr-mgzn-grid-1-1-2 article:nth-child(1) .wpr-grid-item-title' => 'font-size: {{SIZE}}px;',
-					'{{WRAPPER}} .wpr-mgzn-grid-2-1-2 article:nth-child(2) .wpr-grid-item-title' => 'font-size: {{SIZE}}px;',
-					'{{WRAPPER}} .wpr-mgzn-grid-1vh-3h article:nth-child(1) .wpr-grid-item-title' => 'font-size: {{SIZE}}px;',
-					'{{WRAPPER}} .wpr-mgzn-grid-1-1-1 article:nth-child(2) .wpr-grid-item-title' => 'font-size: {{SIZE}}px;',
+					'{{WRAPPER}} .wpr-mgzn-grid-1-2 article:nth-child(1) .wpr-grid-item-title a' => 'font-size: {{SIZE}}px;',
+					'{{WRAPPER}} .wpr-mgzn-grid-1-3 article:nth-child(1) .wpr-grid-item-title a' => 'font-size: {{SIZE}}px;',
+					'{{WRAPPER}} .wpr-mgzn-grid-1-4 article:nth-child(1) .wpr-grid-item-title a' => 'font-size: {{SIZE}}px;',
+					'{{WRAPPER}} .wpr-mgzn-grid-1-1-2 article:nth-child(1) .wpr-grid-item-title a' => 'font-size: {{SIZE}}px;',
+					'{{WRAPPER}} .wpr-mgzn-grid-2-1-2 article:nth-child(2) .wpr-grid-item-title a' => 'font-size: {{SIZE}}px;',
+					'{{WRAPPER}} .wpr-mgzn-grid-1vh-3h article:nth-child(1) .wpr-grid-item-title a' => 'font-size: {{SIZE}}px;',
+					'{{WRAPPER}} .wpr-mgzn-grid-1-1-1 article:nth-child(2) .wpr-grid-item-title a' => 'font-size: {{SIZE}}px;',
 				],
 				'condition' => [
 					'layout_select' => [ '1-2', '1-3', '1-4', '1-1-2', '2-1-2', '1vh-3h', '1-1-1' ]
@@ -2924,6 +2953,24 @@ class Wpr_Magazine_Grid extends Widget_Base {
 				'condition' => [
 					'author_border_type!' => 'none',
 				],
+			]
+		);
+
+		$this->add_control(
+			'author_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-item-author .inner-block a img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
 			]
 		);
 
@@ -5386,6 +5433,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$settings['slider_enable'] = '';
+			$settings['slider_effect'] = '';
 		}
 
 		// Slider Settings

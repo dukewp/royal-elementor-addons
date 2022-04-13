@@ -5,12 +5,280 @@ use WprAddons\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-/**
- * WPR_Templates_Actions setup
- *
- * @since 1.0
- */
 class WPR_Templates_Data {
+	public static function get_available_kits() {
+		$is_pro_active = wpr_fs()->can_use_premium_code() && defined('WPR_ADDONS_PRO_VERSION');
+		$is_cf7_active = is_plugin_active('contact-form-7/wp-contact-form-7.php') ? 'true' : 'false';
+		$is_mla_active = is_plugin_active('media-library-assistant/index.php') ? 'true' : 'false';
+
+		return [
+			'personal-blog' => [
+				'v1' => [
+					'name' => 'Personal Blog',
+					'pages' => 'home,home-v1,home-v2,home-v3,lifestyle,about,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'blog blogger posts personal blog lifestyle blogger theme builder grid slider news',
+					'theme-builder' => true,
+					'price' => $is_pro_active ? 'free' : 'free',
+				],
+			],
+			'food-blog' => [
+				'v1' => [
+					'name' => 'Food Blog',
+					'pages' => 'home,home-v1,home-v2,home-v3,category,about,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'food blog posts food blogger theme builder recipes cooking grid slider',
+					'theme-builder' => true,
+					'price' => $is_pro_active ? 'free' : 'pro',
+				],
+			],
+			'magazine-blog' => [
+				'v1' => [
+					'name' => 'Magazine Blog',
+					'pages' => 'home,home-v1,home-v2,category,about,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'blogger blog posts content news newspaper journal magazine business blog publishing theme builder sports grid slider',
+					'theme-builder' => true,
+					'price' => $is_pro_active ? 'free' : 'pro',
+				],
+			],
+			'travel-blog' => [
+				'v1' => [
+					'name' => 'Travel Blog',
+					'pages' => 'home,home-v1,home-v2,category,about,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'nature influencer travel blogger blog posts content tourism influencers creator travel forest slider generic multipurpose national-park nature-park sanctuary wilderness slider hitchhiking mountain river lakes outdoors theme builder traveler hiking grid',
+					'theme-builder' => true,
+					'price' => $is_pro_active ? 'free' : 'pro',
+				],
+			],
+			'nature' => [
+				'v1' => [
+					'name' => 'nature',
+					'pages' => 'home,about,services,projects,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'nature influencer travel blogger blog content slider tourism influencers creator travel forest slider generic multipurpose national-park nature-park sanctuary wilderness hitchhiking mountain river lakes outdoors',
+					'theme-builder' => false,
+					'price' => $is_pro_active ? 'free' : 'free',
+				],
+			],
+			'portfolio' => [
+				'v1' => [
+					'name' => 'Portfolio/CV',
+					'pages' => 'home,about,portfolio,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'portfolio personal cv designer ux artist artwork personal resume photographer grid',
+					'theme-builder' => false,
+					'price' => $is_pro_active ? 'free' : 'free',
+				],
+			],
+			'pizza' => [
+				'v1' => [
+					'name' => 'Pizza Restaurant',
+					'pages' => 'home,menu,about,offer,gallery,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'pizza italian restaurant food slider pasta fastfood fast food recipes cooking slider',
+					'theme-builder' => false,
+					'price' => $is_pro_active ? 'free' : 'pro',
+				],
+			],
+			'travel' => [
+				'v1' => [
+					'name' => 'Travel Blogger & Influencer',
+					'pages' => 'home,about,stories,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'nature influencer travel blogger blog content tourism influencers creator travel forest slider generic multipurpose national-park nature-park sanctuary wilderness hitchhiking mountain river lakes outdoors',
+					'theme-builder' => false,
+					'price' => $is_pro_active ? 'free' : 'pro',
+				],
+			],
+			'cybersecurity' => [
+				'v1' => [
+					'name' => 'Cybersecurity',
+					'pages' => 'home,about,services,pricing,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'cybersecurity data protection hacker security dark digital technology cybercrime computer windows technician',
+					'theme-builder' => false,
+					'price' => $is_pro_active ? 'free' : 'pro',
+				],
+			],
+			'photographer' => [
+				'v1' => [
+					'name' => 'Photographer Portfolio Dark',
+					'pages' => 'home,about,services,portfolio,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .', "media-library-assistant":'. $is_mla_active .'}',
+					'tags' => 'portfolio personal cv designer ux artist artwork personal resume camera fashion lens modelling photographer photography videography wedding shoot grid ',
+					'theme-builder' => false,
+					'price' => $is_pro_active ? 'free' : 'free',
+				],
+				'v2' => [
+					'name' => 'Photographer Portfolio Light',
+					'pages' => 'home,about,services,portfolio,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .', "media-library-assistant":'. $is_mla_active .'}',
+					'tags' => 'portfolio personal cv designer ux artist artwork personal resume camera fashion lens modelling photographer photography videography wedding shoot grid ',
+					'theme-builder' => false,
+					'price' => $is_pro_active ? 'free' : 'pro',
+				],
+			],
+			'cryptocurrency' => [
+				'v1' => [
+					'name' => 'Cryptocurrency',
+					'pages' => 'home,about,services,token,pricing,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'cryptocurrency bitcoin ethereum etherium blockchain protection nft coin corporate crypto dark startup token digital',
+					'theme-builder' => false,
+					'price' => $is_pro_active ? 'free' : 'pro',
+				],
+			],
+			'skincare' => [
+				'v1' => [
+					'name' => 'Skin Care',
+					'pages' => 'home,about,services,procedures,gallery,pricing,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'skincare skin care beauty clean face skin-beauty health wellness',
+					'theme-builder' => false,
+					'price' => $is_pro_active ? 'free' : 'pro',
+				],
+			],
+			'lawyer' => [
+				'v1' => [
+					'name' => 'Lawyer',
+					'pages' => 'home,practice,faq,reviews,attorney,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'lawyers criminal defence lawyer firm divorce lawyer family lawyer law legal firm ',
+					'theme-builder' => false,
+					'price' => $is_pro_active ? 'free' : 'free',
+				],
+			],
+			'medical' => [
+				'v1' => [
+					'name' => 'Medical',
+					'pages' => 'home,about,services,doctors,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'medical clinic dental health healthcare doctor therapist wellness treatment cure',
+					'theme-builder' => false,
+					'price' => $is_pro_active ? 'free' : 'pro',
+				],
+			],
+			'digitalagency' => [
+				'v1' => [
+					'name' => 'Digital Agency',
+					'pages' => 'home,about,services,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'digital agency company corporate digital services office agency web marketing',
+					'theme-builder' => false,
+					'price' => $is_pro_active ? 'free' : 'free',
+				],
+				'v2' => [
+					'name' => 'Digital Agency',
+					'pages' => 'home,about,services,pricing,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'digital agency company corporate digital services office agency web marketing slider',
+					'theme-builder' => false,
+					'price' => $is_pro_active ? 'free' : 'pro',
+				],
+			],
+			'drone' => [
+				'v1' => [
+					'name' => 'Drone Project',
+					'pages' => 'home,about,gallery,services,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'drone photography aerial photo ',
+					'theme-builder' => false,
+					'price' => $is_pro_active ? 'free' : 'pro',
+				],
+			],
+			'architecture' => [
+				'v1' => [
+					'name' => 'Architecture',
+					'pages' => 'home,about,portfolio,services,faq,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'architecture company slider interior design designer landscaping office zoning building slider',
+					'theme-builder' => false,
+					'price' => $is_pro_active ? 'free' : 'pro',
+				],
+			],
+			'fooddelivery' => [
+				'v1' => [
+					'name' => 'Food Delivery',
+					'pages' => 'home,services,blog,faq,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'fooddelivery fast food chain restaurant service hotel italian pasta pizza pizzeria burger recipes cooking',
+					'theme-builder' => false,
+					'price' => $is_pro_active ? 'free' : 'pro',
+				],
+			],
+			'construction' => [
+				'v1' => [
+					'name' => 'Construction',
+					'pages' => 'home,about,services,projects,pricing,contact,faq,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'construction architecture company interior office real estate',
+					'theme-builder' => false,
+					'price' => $is_pro_active ? 'free' : 'pro',
+				],
+			],
+			'ittech' => [
+				'v1' => [
+					'name' => 'IT Tech v1',
+					'pages' => 'home,about,services,pricing,faq,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'ittech advanced technology it technique computer windows technician digital',
+					'theme-builder' => false,
+					'price' => $is_pro_active ? 'free' : 'pro',
+				],
+				'v2' => [
+					'name' => 'IT Tech v2',
+					'pages' => 'home,about,services,pricing,faq,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'ittech advanced technology it technique computer windows technician digital',
+					'theme-builder' => false,
+					'price' => $is_pro_active ? 'free' : 'pro',
+				],
+			],
+			'realestate' => [
+				'v1' => [
+					'name' => 'Real Estate',
+					'pages' => 'home,properties,about,services,faq,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'real estate agency company construction property rentals estate sales developers',
+					'theme-builder' => false,
+					'price' => $is_pro_active ? 'free' : 'pro',
+				],
+			],
+			'restaurant' => [
+				'v1' => [
+					'name' => 'Restaurant',
+					'pages' => 'home,about,gallery,menu,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'restaurant fastfood slider hotel italian pizza pizzeria pasta dinner fast food wine recipe recipes cooking slider',
+					'theme-builder' => false,
+					'price' => $is_pro_active ? 'free' : 'pro',
+				],
+			],
+			'winebar' => [
+				'v1' => [
+					'name' => 'Wine Bar & Restaurant',
+					'pages' => 'home,story,wines,dishes,events,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'wine bar winery beer drink alcohol pub events dish wines italian restaurant food slider recipes cooking recipes slider',
+					'theme-builder' => false,
+					'price' => $is_pro_active ? 'free' : 'free',
+				],
+			],
+			'wedding' => [
+				'v1' => [
+					'name' => 'Wedding',
+					'pages' => 'home,about,services,blog,gallery,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'wedding party event slider invitation planner slider photography photographer',
+					'theme-builder' => false,
+					'price' => $is_pro_active ? 'free' : 'pro',
+				],
+			],
+		];
+	}
+
 	public static function get_available_blocks() {
 		return [
 			'grid' => [
@@ -64,6 +332,13 @@ class WPR_Templates_Data {
 				'v6-pro' => ['type' => 'iframe', 'url' => 'advanced-slider/v6/'],
 				'v7-pro' => ['type' => 'iframe', 'url' => 'advanced-slider/v7/'],
 				'v8-pro' => ['type' => 'iframe', 'url' => 'advanced-slider/v8/'],
+			],
+			'posts-timeline' => [
+				'v1' => ['type' => 'iframe', 'url' => 'timeline/v1/'],
+				'v2' => ['type' => 'iframe', 'url' => 'timeline/v2/'],
+				'v3' => ['type' => 'iframe', 'url' => 'timeline/v3/'],
+				'v4' => ['type' => 'iframe', 'url' => 'timeline/v4/'],
+				'v5' => ['type' => 'iframe', 'url' => 'timeline/v5/'],
 			],
 			'testimonial' => [
 				'v1' => ['type' => 'iframe', 'url' => 'testimonial-slider/v1/'],
@@ -236,6 +511,8 @@ class WPR_Templates_Data {
 			],
 			'phone-call' => [],
 			'back-to-top' => [],
+			'lottie-animations' => [],
+			'popup-trigger' => [],
 		];
 	}
 
