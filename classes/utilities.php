@@ -57,6 +57,7 @@ class Utilities {
 			'Taxonomy List' => ['taxonomy-list', '', ''],
 			'Template' => ['elementor-template', '', ''],
 			'Flip Image' => ['flip-carousel', '', ''],
+			'Feature List' => ['feature-list', '', ''],
 			// 'Random Image' => ['random-image', '', ''],
 		];
 	}

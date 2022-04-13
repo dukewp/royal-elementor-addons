@@ -11310,7 +11310,99 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     padding-left: 20px;
 }
 
+/*--------------------------------------------------------------
+  == Feature List
+  --------------------------------------------------------------*/
 
+  .wpr-feature-list-left .wpr-feature-list-item {
+    display: flex;
+    align-items: center;
+  }
+  
+  .wpr-feature-list-center .wpr-feature-list-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .wpr-feature-list-center .wpr-feature-list-content-wrap {
+      text-align: center;
+  }
+  
+  .wpr-feature-list-right .wpr-feature-list-item {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+  }
+  
+  .wpr-feature-list-right .wpr-feature-list-content-wrap {
+    text-align: right;
+  }
+
+  .wpr-feature-list-align-flex-start .wpr-feature-list-title,
+  .wpr-feature-list-align-flex-start .wpr-feature-list-description {
+      text-align: left;
+  }
+
+  .wpr-feature-list-align-flex-end .wpr-feature-list-title,
+  .wpr-feature-list-align-flex-end .wpr-feature-list-description {
+      text-align: right;
+  }
+
+  .wpr-feature-list-rhombus .wpr-feature-list-icon-inner-wrap {
+      transform: rotate(45deg);
+  }
+
+  .wpr-feature-list-rhombus .wpr-feature-list-icon-wrap i,
+  .wpr-feature-list-rhombus .wpr-feature-list-icon-wrap img {
+      transform: rotate(-45deg);
+  }
+
+  .wpr-feature-list-wrap .wpr-feature-list-icon-inner-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+
+  .wpr-feature-list {
+      padding: 0;
+  }
+  
+  .wpr-feature-list-line-yes .wpr-feature-list-icon-wrap {
+    position: relative;
+  }
+
+  .wpr-feature-list-center .wpr-feature-list-line {
+      display: none;
+  }
+
+  /* .wpr-feature-list-line-yes.wpr-feature-list-left .wpr-feature-list-item:not(:last-of-type) .wpr-feature-list-icon-wrap::before,
+  .wpr-feature-list-line-yes.wpr-feature-list-right .wpr-feature-list-item:not(:last-of-type) .wpr-feature-list-icon-wrap::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+  } */
+
+  .wpr-feature-list-item:not(:last-of-type) .wpr-feature-list-line {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+  }
+
+  .wpr-feature-list-item:last-of-type .wpr-feature-list-line {
+    display: none;
+  }
+
+  .wpr-feature-list-title,
+  .wpr-feature-list-description {
+      margin: 0;
+  }
 /*--------------------------------------------------------------
   == Section Extensions
   --------------------------------------------------------------*/
