@@ -191,7 +191,7 @@ class Wpr_Feature_List extends Widget_Base {
 					'size' => 20,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-feature-list-item' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-feature-list-item:not(:last-child)' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
 				'render_type' => 'template',
 				'separator' => 'before'
@@ -492,8 +492,47 @@ class Wpr_Feature_List extends Widget_Base {
 		$this->start_controls_section(
 			'section_feature_list_icon_styles',
 			[
-				'label' => esc_html__( 'Icon', 'wpr-addons' ),
+				'label' => esc_html__( 'Media', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'feature_list_image_heading',
+			[
+				'label' => esc_html__( 'Image', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'feature_list_image_size',
+			[
+				'label' => esc_html__( 'Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'%' => [
+						'min' => 5,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 25,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-feature-list-icon-wrap img' => 'width: {{SIZE}}{{UNIT}}; height: auto;',
+				]
+			]
+		);
+
+		$this->add_control(
+			'feature_list_icon_heading',
+			[
+				'label' => esc_html__( 'Icon', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::HEADING,
+				'separator' => 'before',
 			]
 		);
 
@@ -772,7 +811,8 @@ class Wpr_Feature_List extends Widget_Base {
 				'selectors' => [
 					// '{{WRAPPER}} .wpr-feature-list-icon-wrap::before' => 'border-width: {{SIZE}}{{UNIT}}; height: calc({{feature_list_icon_wrapper_size.SIZE}}px + {{list_item_spacing_v.SIZE}}px + {{list_item_title_distance.SIZE}}px)',
 					'{{WRAPPER}} .wpr-feature-list-line' => 'border-left-width: {{SIZE}}{{UNIT}};',
-				]
+				],
+				'separator' => 'before'
 			]
 		);
 
