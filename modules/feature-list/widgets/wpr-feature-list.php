@@ -247,6 +247,31 @@ class Wpr_Feature_List extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'list_item_media_distance',
+			[
+				'label' => esc_html__( 'Media Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-feature-list-icon-wrap' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'list_layout' => 'center'
+				] 
+			]
+		);
+
         $this->end_controls_section();
         
 		// Tab: Content ==============
