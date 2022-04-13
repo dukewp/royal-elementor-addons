@@ -11173,6 +11173,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
  ------------------------------------ */
 
  .wpr-flip-carousel {
+     min-height: 1px;
 	overflow: hidden !important;
 }
 
