@@ -49,10 +49,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
 
-	// public function get_style_depends() {
-	// 	return [ 'wpr-animations-css', 'wpr-link-animations-css', 'wpr-button-animations-css', 'wpr-loading-animations-css', 'wpr-lightgallery-css' ];
-	// }
-
 	protected function register_controls() {
 
 		// Tab: Content ==============
@@ -72,7 +68,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			'instagram_login',
 			[
 				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => '<form onsubmit="connectInstagramInit(this);" action="javascript:void(0); class="wpr-facebook-login elementor-button" data-type="reviews"><input type="submit" value="Log in with Facebook" class="" style="background-color: #3b5998; color: #fff;"></form>',
+				'raw'         => '<form onsubmit="connectInstagramInit(this);" action="javascript:void(0); class="wpr-facebook-login elementor-button" data-type="reviews"><input type="submit" value="Log in with Facebook" style="background-color: #3b5998; color: #fff;"></form>',
 				'label_block' => true,
             ]
 		);

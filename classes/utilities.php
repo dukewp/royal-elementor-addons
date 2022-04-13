@@ -56,6 +56,7 @@ class Utilities {
 			'Popup Trigger' => ['popup-trigger', '', ''],
 			'Taxonomy List' => ['taxonomy-list', '', ''],
 			'Instagram Feed' => ['instagram-feed', '', ''],
+			'Facebook Feed' => ['facebook-feed', '', ''],
 		];
 	}
 
