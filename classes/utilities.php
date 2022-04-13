@@ -58,6 +58,7 @@ class Utilities {
 			'Template' => ['elementor-template', '', ''],
 			'Flip Image' => ['flip-carousel', '', ''],
 			'Feature List' => ['feature-list', '', ''],
+			'Dual Color Heading' => ['dual-color-heading', '', ''],
 			// 'Random Image' => ['random-image', '', ''],
 		];
 	}

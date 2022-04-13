@@ -11231,6 +11231,35 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 	text-align: center;
 }
 
+/*--------------------------------------------------------------
+== Dual Color Heading
+--------------------------------------------------------------*/
+.wpr-dual-heading-icon-and-desc-top .wpr-dual-heading-wrap {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.wpr-dual-heading-icon-top .wpr-dual-heading-wrap {
+    display: flex;
+    flex-direction: column;
+}
+  
+.wpr-dual-heading-icon-top .wpr-dual-heading-icon-wrap {
+    order: -1;
+}
+
+.wpr-dual-heading-desc-top .wpr-dual-heading-wrap {
+    display: flex;
+    flex-direction: column;
+}
+  
+.wpr-dual-heading-desc-top .wpr-dual-heading-description {
+    order: -1;
+}
+
+.wpr-dual-title {
+    margin: 0;
+}
 
 /*--------------------------------------------------------------
  == Taxonomy List
