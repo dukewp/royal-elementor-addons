@@ -11172,8 +11172,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
  == Flip Carousel 
  ------------------------------------ */
 
- .wpr-flip-carousel {
-     min-height: 1px;
+.wpr-flip-carousel-wrapper {
+    min-height: 1px;
+}
+.wpr-flip-carousel {
 	overflow: hidden !important;
 }
 

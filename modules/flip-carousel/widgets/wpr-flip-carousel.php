@@ -160,33 +160,19 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			]
 		);
 
-		// $this->add_responsive_control(
-		// 	'flip_height',
-		// 	[
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'label' => esc_html__( 'Height', 'wpr-addons' ),
-		// 		'size_units' => [ 'px', 'vh' ],
-		// 		'range' => [
-		// 			'px' => [
-		// 				'min' => 20,
-		// 				'max' => 1500,
-		// 			],
-		// 			'vh' => [
-		// 				'min' => 20,
-		// 				'max' => 100,
-		// 			],
-		// 		],
-		// 		'default' => [
-		// 			'unit' => 'px',
-		// 			'size' => 500,
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-flip-carousel' => 'height: {{SIZE}}{{UNIT}};',
-		// 			'{{WRAPPER}} .wpr-flip-carousel ul.wpr-flip-items-wrapper li.wpr-flip-item' => 'height: {{SIZE}}{{UNIT}};',
-		// 		],
-		// 		'separator' => 'before',
-		// 	]
-		// );
+		$this->add_control(
+			'spacing',
+			[
+				'label' => __( 'Gutter', 'wpr-addons' ),
+				'description' => esc_html__('Change Image Size if gutter corrupts carousel layout', 'wpr-addons'),
+				'type' => \Elementor\Controls_Manager::NUMBER,
+				'default' => -0.6,
+				'min' => -1,
+				'max' => 1,
+				'step' => 0.1,
+				'separator' => 'before',
+			]
+		);
 
 		$this->add_control(
 			'carousel_type',
@@ -330,7 +316,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'label_off' => __( 'No', 'wpr-addons' ),
 				'return_value' => 'yes',
 				'separator' => 'before',
-				'default' => 'yes',
+				'default' => 'yes'
 			]
 		);
 		
@@ -339,11 +325,13 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'label' => esc_html__( 'Pagination Position', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => 'before',
+				'default' => 'after',
 				'options' => [
 					'before' => esc_html__( 'Above Image', 'wpr-addons' ),
-					'after' => esc_html__( 'Below Image', 'wpr-addons' ),
+					'after' => esc_html__( 'Below Image', 'wpr-addons' )
 				],
+				'render_type' => 'template',
+				'prefix_class' => 'wpr-flip-pagination-',
 				'condition' => [
 					'pagination' => 'yes'
 				]
@@ -368,10 +356,10 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'label' => esc_html__( 'Navigation Arrows', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => 'default',
+				'default' => 'custom',
 				'options' => [
-					'default' => esc_html__( 'Default', 'wpr-addons' ),
 					'custom' => esc_html__( 'Custom', 'wpr-addons' ),
+					'default' => esc_html__( 'Default', 'wpr-addons' ),
 				],
 				'prefix_class' => 'wpr-flip-navigation-',
 				'condition' => [
@@ -390,19 +378,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 					'enable_navigation' => 'yes',
 					'prev_next_navigation' => 'custom'
 				]
-			]
-		);
-
-		$this->add_control(
-			'spacing',
-			[
-				'label' => __( 'Gutter', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::NUMBER,
-				'default' => -0.6,
-				'min' => -1,
-				'max' => 1,
-				'step' => 0.1,
-				'separator' => 'before',
 			]
 		);
 
@@ -455,7 +430,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'default' => '',
 				'selectors' => [
 					'{{WRAPPER}} .flipster__button i' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .flipster__button svg' => 'fill: {{VALUE}}',
+					'{{WRAPPER}}.wpr-flip-navigation-custom .flipster__button svg' => 'fill: {{VALUE}}',
 					'{{WRAPPER}}.wpr-flip-navigation-default .flipster__button svg' => 'stroke: {{VALUE}}'
 				],
 			]
@@ -566,7 +541,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'step' => 0.1,
 				'separator' => 'before',
 				'selectors' => [
-					'{{WRAPPER}} .flipster__button' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
+					'{{WRAPPER}} .flipster__button' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
 					'{{WRAPPER}} .flipster__button i' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
 					'{{WRAPPER}} .flipster__button svg' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;'
 				],
@@ -593,11 +568,10 @@ class Wpr_Flip_Carousel extends Widget_Base {
 					'{{WRAPPER}} .flipster__button i' => 'font-size: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .flipster__button svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 				],
-				'render_type' => 'template',
 				'separator' => 'before',
 				'condition' => [
 					'prev_next_navigation' => ['default', 'custom']
-				],
+				]
 			]
 		);
 		
@@ -643,6 +617,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} button.flipster__button' => 'border-style: {{VALUE}};',
 				],
+				'separator' => 'before'
 			]
 		);
 		
@@ -704,10 +679,9 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} button.flipster__button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',	
 				],
-				'render_type' => 'template',
 				'condition' => [
 					'prev_next_navigation' => ['default', 'custom']
-				],
+				]
 			]
 		);
 
@@ -820,7 +794,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#000000',
-				'render_type' => 'template',
 				'selectors' => [
 					'{{WRAPPER}} .flipster__nav__item:hover' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .flipster__nav__item--current' => 'background-color: {{VALUE}} !important',
@@ -877,25 +850,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				],
 			]
 		);
-
-		$this->add_responsive_control(
-			'pagination_margin',
-			[
-				'label' => esc_html__( 'Margin', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'separator' => 'before',
-				'default' => [
-					'top' => 10,
-					'right' => 2,
-					'bottom' => 10,
-					'left' => 2,
-				],
-				'size_units' => [ 'px', '%' ],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-flip-carousel .flipster__nav' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
 		
 		$this->add_responsive_control(
 			'pagination_size',
@@ -914,14 +868,13 @@ class Wpr_Flip_Carousel extends Widget_Base {
 					'size' => 35,
 				],			
 				'selectors' => [
-					'{{WRAPPER}} .flipster__nav__item' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',	 //  line-height: {{SIZE}}{{UNIT}} !important;
+					'{{WRAPPER}} .flipster__nav__item' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .flipster__nav__link::after' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 				],
-				'render_type' => 'template',
 				'separator' => 'before',
 				'condition' => [
 					'pagination' => ['yes']
-				],
+				]
 			]
 		);
 
@@ -943,8 +896,30 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-flip-carousel .flipster__nav__item' => 'margin: 0 {{SIZE}}{{UNIT}};',
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'pagination_margin',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Vertical Gutter', 'wpr-addons' ),
+				'size_units' => [ 'px', '%' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					]
 				],
-				// 'render_type' => 'template',
+				'default' => [
+					'unit' => 'px',
+					'size' => 3,
+				],
+				'selectors' => [
+					'{{WRAPPER}}.wpr-flip-pagination-after .wpr-flip-carousel .flipster__nav' => 'margin-top: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-flip-pagination-before .wpr-flip-carousel .flipster__nav' => 'margin-bottom	: {{SIZE}}{{UNIT}};'
+				],
 			]
 		);
 
@@ -965,6 +940,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .flipster__nav__item' => 'border-style: {{VALUE}};',
 				],
+				'separator' => 'before'
 			]
 		);
 		 
@@ -1184,7 +1160,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .flipcaption span' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
-				// 'separator' => 'after',
+				'separator' => 'before'
 			]
 		);
 
@@ -1212,7 +1188,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				],
                 'selectors' => [
 					'{{WRAPPER}} .flipcaption' => 'text-align: {{VALUE}};',
-				],
+				]
 			]
 		);
 
@@ -1251,6 +1227,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 		
         if ( $settings['carousel_elements'] ) {
 			$i = 0;
+			echo '<div class="wpr-flip-carousel-wrapper">';
             echo '<div class="wpr-flip-carousel" data-settings="'. esc_attr($this->flip_carousel_attributes($settings)) .'">';
             echo '<ul class="wpr-flip-items-wrapper">';
             foreach ( $settings['carousel_elements'] as $element ) {
@@ -1279,6 +1256,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
             }
             echo '</ul>';
             echo '</div>';
+			echo '</div>';
         }
     }
 }
