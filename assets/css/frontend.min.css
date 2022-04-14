@@ -11171,7 +11171,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 /* ---------------------------------- 
  == Flip Carousel 
  ------------------------------------ */
-
 .wpr-flip-carousel-wrapper {
     min-height: 1px;
 }
@@ -11203,7 +11202,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 .wpr-flip-carousel ul li.flipster__item {
-	/* width: 50%; */
 	margin: auto;
 }
 

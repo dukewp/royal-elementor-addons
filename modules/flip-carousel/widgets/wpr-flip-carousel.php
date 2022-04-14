@@ -183,7 +183,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'options' => [
 					'coverflow' => esc_html__( 'Cover Flow', 'wpr-addons' ),
 					'carousel' => esc_html__( 'Carousel', 'wpr-addons' ),
-					'wheel' => esc_html__( 'Wheel', 'wpr-addons' )
+					'flat' => esc_html__( 'Flat', 'wpr-addons' )
 				],
 			]
 		);
@@ -264,29 +264,27 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			]
 		);
 		
-		$this->add_control(
+		$this->add_responsive_control(
 			'enable_navigation',
 			[
 				'label' => __( 'Show Navigation', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
 				'default' => 'yes',
+				'widescreen_default' => 'yes',
+				'laptop_default' => 'yes',
+				'tablet_extra_default' => 'yes',
+				'tablet_default' => 'yes',
+				'mobile_extra_default' => 'yes',
+				'mobile_default' => 'yes',
+				'return_value' => 'yes',
 				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'prev_next_navigation',
-			[
-				'label' => esc_html__( 'Navigation Arrows', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'custom',
-				'options' => [
-					'custom' => esc_html__( 'Custom', 'wpr-addons' )
+				'render_type' => 'template',
+				'selectors_dictionary' => [
+					'' => 'none',
+					'yes' => 'flex'
 				],
-				'prefix_class' => 'wpr-flip-navigation-',
-				'condition' => [
-					'enable_navigation' => 'yes'
+				'selectors' => [
+					'{{WRAPPER}} .flipster__button' => 'display:{{VALUE}} !important;',
 				]
 			]
 		);
@@ -296,11 +294,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'label' => esc_html__( 'Navigation Icon', 'wpr-addons' ),
 				'type' => 'wpr-arrow-icons',
-				'default' => 'fas fa-angle',
-				'condition' => [
-					'enable_navigation' => 'yes',
-					'prev_next_navigation' => 'custom'
-				]
+				'default' => 'fas fa-angle'
 			]
 		);
 		
@@ -366,10 +360,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			'section_flip_carousel_navigation_styles',
 			[
 				'label' => esc_html__( 'Navigation', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-				'condition' => [
-					'enable_navigation' => 'yes'
-				]
+				'tab' => Controls_Manager::TAB_STYLE
 			]
 		);
 
@@ -451,7 +442,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 					'{{WRAPPER}} .flipster__button:hover i' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .flipster__button:hover svg' => 'fill: {{VALUE}}',
 					'{{WRAPPER}}.wpr-flip-navigation-default .flipster__button:hover svg' => 'stroke: {{VALUE}}'
-				],
+				]
 			]
 		);
 		
@@ -530,10 +521,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 					'{{WRAPPER}} .flipster__button i' => 'font-size: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .flipster__button svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 				],
-				'separator' => 'before',
-				'condition' => [
-					'prev_next_navigation' => ['default', 'custom']
-				]
+				'separator' => 'before'
 			]
 		);
 		
@@ -555,10 +543,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				],			
 				'selectors' => [
 					'{{WRAPPER}} .flipster__button' => 'height: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}};',	
-				],
-				'condition' => [
-					'prev_next_navigation' => ['default', 'custom']
-				],
+				]
 			]
 		);
 
@@ -640,9 +625,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				],			
 				'selectors' => [
 					'{{WRAPPER}} button.flipster__button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',	
-				],
-				'condition' => [
-					'prev_next_navigation' => ['default', 'custom']
 				]
 			]
 		);
@@ -966,10 +948,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .flipster__nav__item' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',	
 					'{{WRAPPER}} .flipster__nav__link::after' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',	
-				],
-				'condition' => [
-					'prev_next_navigation' => ['default', 'custom']
-				],
+				]
 			]
 		);
 
@@ -1176,8 +1155,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			'play_on_scroll' => $settings['play_on_scroll'],
 			'pagination_position' => $settings['pagination_position'],
 			'spacing' => $settings['spacing'],
-			'enable_navigation' => $settings['enable_navigation'],
-			'prev_next_navigation' => $settings['prev_next_navigation'],
 			'button_prev' => $icon_prev,
 			'button_next' => $icon_next,
 			'pagination_bg_color_hover' => $settings['pagination_bg_color_hover']
