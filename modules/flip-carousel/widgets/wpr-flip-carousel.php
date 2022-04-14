@@ -158,6 +158,33 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'exclude' => ['custom']
 			]
 		);
+		
+		// $this->add_responsive_control(
+		// 	'image_cont_width',
+		// 	[
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'label' => esc_html__( 'Image Width', 'wpr-addons' ),
+		// 		'size_units' => [ 'px', '%' ],
+		// 		'range' => [
+		// 			'px' => [
+		// 				'min' => 0,
+		// 				'max' => 200,
+		// 			],
+		// 			'%' => [
+		// 				'min' => 10,
+		// 				'max' => 100,
+		// 			]
+		// 		],
+		// 		'default' => [
+		// 			'unit' => '%',
+		// 			'size' => 100,
+		// 		],			
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-flip-item' => 'width: {{SIZE}}{{UNIT}};'
+		// 		],
+		// 		'separator' => 'before'
+		// 	]
+		// );
 
 		$this->add_control(
 			'spacing',
@@ -237,6 +264,17 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			'pause_on_hover',
 			[
 				'label' => __( 'Pause on Hover', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'separator' => 'before',
+				'default' => 'yes',
+			]
+		);
+		
+		$this->add_control(
+			'play_on_touch',
+			[
+				'label' => __( 'Play on Touch', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'separator' => 'before',
@@ -1152,6 +1190,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			'autoplay_milliseconds' => $settings['autoplay_milliseconds'],
 			'pause_on_hover' => $settings['pause_on_hover'],
 			'play_on_click' => $settings['play_on_click'],
+			'play_on_touch' => $settings['play_on_touch'],
 			'play_on_scroll' => $settings['play_on_scroll'],
 			'pagination_position' => $settings['pagination_position'],
 			'spacing' => $settings['spacing'],
