@@ -170,7 +170,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'max' => 1,
 				'step' => 0.1,
 				'separator' => 'before',
-			]
+			] 
 		);
 
 		$this->add_control(
@@ -183,8 +183,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'options' => [
 					'coverflow' => esc_html__( 'Cover Flow', 'wpr-addons' ),
 					'carousel' => esc_html__( 'Carousel', 'wpr-addons' ),
-					'flat' => esc_html__( 'Flat', 'wpr-addons' ),
-					'wheel' => esc_html__( 'Wheel', 'wpr-addons' ),
+					'wheel' => esc_html__( 'Wheel', 'wpr-addons' )
 				],
 			]
 		);
@@ -283,8 +282,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'default' => 'custom',
 				'options' => [
-					'custom' => esc_html__( 'Custom', 'wpr-addons' ),
-					'default' => esc_html__( 'Default', 'wpr-addons' ),
+					'custom' => esc_html__( 'Custom', 'wpr-addons' )
 				],
 				'prefix_class' => 'wpr-flip-navigation-',
 				'condition' => [
@@ -307,7 +305,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 		);
 		
 		$this->add_control(
-			'pagination',
+			'show_pagination',
 			[
 				'label' => __( 'Show Pagination', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
@@ -330,7 +328,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'render_type' => 'template',
 				'prefix_class' => 'wpr-flip-pagination-',
 				'condition' => [
-					'pagination' => 'yes'
+					'show_pagination' => 'yes'
 				]
 			]
 		);
@@ -657,7 +655,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'label' => esc_html__( 'Pagination', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
-					'pagination' => 'yes'
+					'show_pagination' => 'yes'
 				]
 			]
 		);
@@ -837,7 +835,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				],
 				'separator' => 'before',
 				'condition' => [
-					'pagination' => ['yes']
+					'show_pagination' => 'yes'
 				]
 			]
 		);
@@ -882,7 +880,8 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}}.wpr-flip-pagination-after .wpr-flip-carousel .flipster__nav' => 'margin-top: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-flip-pagination-before .wpr-flip-carousel .flipster__nav' => 'margin-bottom	: {{SIZE}}{{UNIT}};'
+					'{{WRAPPER}}.wpr-flip-pagination-before .wpr-flip-carousel .flipster__nav' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .flipster__button' => 'top: calc(50% - {{SIZE}}{{UNIT}});'
 				],
 			]
 		);
@@ -1160,6 +1159,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
     }
 
 	public function flip_carousel_attributes($settings) {
+		
 
 		$icon_prev = '<span class="wpr-flip-carousel-navigation">'. Utilities::get_wpr_icon( $settings['flip_carousel_nav_icon'], 'left' ) .'</span>';
 

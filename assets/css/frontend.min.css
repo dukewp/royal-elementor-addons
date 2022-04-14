@@ -11175,6 +11175,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-flip-carousel-wrapper {
     min-height: 1px;
 }
+
 .wpr-flip-carousel {
 	overflow: hidden !important;
 }
@@ -11187,7 +11188,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 	-ms-transform: none;
 		transform: none;
 	-webkit-transform: none;
-  }
+}
   
 .wpr-flip-carousel .wpr-slider-next-arrow {
 	position: relative;
@@ -11195,11 +11196,19 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 	-webkit-transform: translateY(0) rotate(180deg);
 	-ms-transform: translateY(0) rotate(180deg);
 	    transform: translateY(0) rotate(180deg);
-  }
+}
+
+.wpr-flip-items-wrapper {
+    list-style-type: none;
+}
 
 .wpr-flip-carousel ul li.flipster__item {
 	/* width: 50%; */
 	margin: auto;
+}
+
+.wpr-flip-carousel .flipster__nav {
+    margin: 0;
 }
 
 .wpr-flip-carousel .flipster__button,
