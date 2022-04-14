@@ -76,26 +76,11 @@ class Wpr_Facebook_Feed extends Widget_Base {
 
     protected function render() {
 		$settings = $this->get_settings_for_display();
-        
-        // need authorization
-        // https://graph.facebook.com/v13.0/oauth/access_token?client_id=1184287221975469&redirect_uri=https://reastats.kinsta.cloud/token/social-network.php&client_secret=6b25829937b4859194b0b47ab43241d7&code=<AUTHORIZATION_CODE>
-
-        // needs page id
-        // https://graph.facebook.com/oauth/EAAQ1Glstia0BAETXWF5GktlwTHVAKQdEiNpo4XXZAk2Qh778YYFZCjCHV3hxvcmV2HplIxweUK5jfJPHNXpMY2VoUHoZBzFMqgOO8sTazrViC88e4Hej7F3kklWorWYE2fO0L0H8sBW3nu98pWDEpjU0WVJ9BelfT0PTm7Y0gvTVNfjLm0sLne6xBPtfX7Dcr6DFZCV4IAZDZD?client_id=1184287221975469&client_secret=6b25829937b4859194b0b47ab43241d7&grant_type=client_credentials
-
-        // retrieves metadata
-        // https://graph.facebook.com/me?
-        // metadata=1&access_token=EAAQ1Glstia0BAETXWF5GktlwTHVAKQdEiNpo4XXZAk2Qh778YYFZCjCHV3hxvcmV2HplIxweUK5jfJPHNXpMY2VoUHoZBzFMqgOO8sTazrViC88e4Hej7F3kklWorWYE2fO0L0H8sBW3nu98pWDEpjU0WVJ9BelfT0PTm7Y0gvTVNfjLm0sLne6xBPtfX7Dcr6DFZCV4IAZDZD
 
         echo '<div class="wpr-facebook-feed">';
-        // $response_profile = wp_remote_get('https://graph.facebook.com/me?fields=id,name,email,picture&access_token=EAAQ1Glstia0BAETXWF5GktlwTHVAKQdEiNpo4XXZAk2Qh778YYFZCjCHV3hxvcmV2HplIxweUK5jfJPHNXpMY2VoUHoZBzFMqgOO8sTazrViC88e4Hej7F3kklWorWYE2fO0L0H8sBW3nu98pWDEpjU0WVJ9BelfT0PTm7Y0gvTVNfjLm0sLne6xBPtfX7Dcr6DFZCV4IAZDZD');
-
-        // $response_photos = wp_remote_get("https://graph.facebook.com/v13.0/me/photos?access_token=EAAQ1Glstia0BAETXWF5GktlwTHVAKQdEiNpo4XXZAk2Qh778YYFZCjCHV3hxvcmV2HplIxweUK5jfJPHNXpMY2VoUHoZBzFMqgOO8sTazrViC88e4Hej7F3kklWorWYE2fO0L0H8sBW3nu98pWDEpjU0WVJ9BelfT0PTm7Y0gvTVNfjLm0sLne6xBPtfX7Dcr6DFZCV4IAZDZD");
         
         echo '<a target="_blank" class="wpr-login-to-facebook" href="https://www.facebook.com/v13.0/dialog/oauth?client_id=1184287221975469&redirect_uri=https://reastats.kinsta.cloud/token/social-network.php?state={st=state123abc,ds=123456789}&state={st=state123abc,ds=123456789}">Log In</a>';
         
-        // $response_body = json_decode(wp_remote_retrieve_body( $response_photos ));
-        // var_dump($response_body);
         echo '<div>';
 
     }
