@@ -158,33 +158,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'exclude' => ['custom']
 			]
 		);
-		
-		// $this->add_responsive_control(
-		// 	'image_cont_width',
-		// 	[
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'label' => esc_html__( 'Image Width', 'wpr-addons' ),
-		// 		'size_units' => [ 'px', '%' ],
-		// 		'range' => [
-		// 			'px' => [
-		// 				'min' => 0,
-		// 				'max' => 200,
-		// 			],
-		// 			'%' => [
-		// 				'min' => 10,
-		// 				'max' => 100,
-		// 			]
-		// 		],
-		// 		'default' => [
-		// 			'unit' => '%',
-		// 			'size' => 100,
-		// 		],			
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-flip-item' => 'width: {{SIZE}}{{UNIT}};'
-		// 		],
-		// 		'separator' => 'before'
-		// 	]
-		// );
 
 		$this->add_control(
 			'spacing',
@@ -316,7 +289,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'mobile_default' => 'yes',
 				'return_value' => 'yes',
 				'separator' => 'before',
-				'render_type' => 'template',
+				// 'render_type' => 'template',
 				'selectors_dictionary' => [
 					'' => 'none',
 					'yes' => 'flex'
@@ -357,7 +330,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 					'before' => esc_html__( 'Above Image', 'wpr-addons' ),
 					'after' => esc_html__( 'Below Image', 'wpr-addons' )
 				],
-				'render_type' => 'template',
+				// 'render_type' => 'template',
 				'prefix_class' => 'wpr-flip-pagination-',
 				'condition' => [
 					'show_pagination' => 'yes'
@@ -1215,9 +1188,18 @@ class Wpr_Flip_Carousel extends Widget_Base {
 					$this->add_link_attributes( 'slide_link'.$i, $element['slide_link'] );
 				}
 				// $flip_slide_image = Group_Control_Image_Size::get_attachment_image_src( $element['image']['id'], 'flip_carousel_image_size', $settings );
-				$flip_slide_image = Utils::get_placeholder_image_src() === $element['image']['url'] ? '<img src='. Utils::get_placeholder_image_src() .' />' : '<img src="'.  Group_Control_Image_Size::get_attachment_image_src( $element['image']['id'], 'flip_carousel_image_size', $settings ) .'" />';
 
-				$figcaption = 'yes' === $settings['enable_figcaption'] ? '<figcaption class="flipcaption"><span style="width: 100%;">'. $element['slide_text'] .'</span></figcaption>' : '';
+				if ( Utils::get_placeholder_image_src() === $element['image']['url'] ) {
+					$flip_slide_image = '<img src='. Utils::get_placeholder_image_src() .' />';
+				} else {
+					$flip_slide_image = '<img src="'.  Group_Control_Image_Size::get_attachment_image_src( $element['image']['id'], 'flip_carousel_image_size', $settings ) .'" />';
+				}
+
+				if ( 'yes' === $settings['enable_figcaption'] ) {
+					$figcaption = '<figcaption class="flipcaption"><span style="width: 100%;">'. $element['slide_text'] .'</span></figcaption>';
+				} else {
+					$figcaption = '';
+				}
 
 				$inner_figure = 'after' === $settings['flipcaption_position']
 						? ''. $flip_slide_image . $figcaption .''
