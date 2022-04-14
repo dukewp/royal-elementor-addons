@@ -97,8 +97,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'label' => __( 'Enable Slide Link', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_on' => __( 'Yes', 'wpr-addons' ),
-				'label_off' => __( 'No', 'wpr-addons' ),
 				'return_value' => 'yes',
 				'default' => 'yes',
 			]
@@ -196,8 +194,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'label' => __( 'Item Starts From Center', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_on' => __( 'Yes', 'wpr-addons' ),
-				'label_off' => __( 'No', 'wpr-addons' ),
 				'return_value' => 'yes',
 				'default' => 'yes',
 			]
@@ -208,8 +204,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'label' => __( 'Autoplay', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_on' => __( 'Yes', 'wpr-addons' ),
-				'label_off' => __( 'No', 'wpr-addons' ),
 				'return_value' => 'yes',
 				'default' => 'yes',
 				'separator' => 'before',
@@ -235,8 +229,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'label' => __( 'Loop', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_on' => __( 'Yes', 'wpr-addons' ),
-				'label_off' => __( 'No', 'wpr-addons' ),
 				'return_value' => 'yes',
 				'default' => 'yes',
 			]
@@ -247,8 +239,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'label' => __( 'Pause on Hover', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_on' => __( 'Yes', 'wpr-addons' ),
-				'label_off' => __( 'No', 'wpr-addons' ),
 				'return_value' => 'yes',
 				'separator' => 'before',
 				'default' => 'yes',
@@ -260,8 +250,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'label' => __( 'Slide on Click', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_on' => __( 'Yes', 'wpr-addons' ),
-				'label_off' => __( 'No', 'wpr-addons' ),
 				'return_value' => 'yes',
 				'default' => 'yes',
 			]
@@ -272,70 +260,8 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'label' => __( 'Play on Scroll', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_on' => __( 'Yes', 'wpr-addons' ),
-				'label_off' => __( 'No', 'wpr-addons' ),
 				'return_value' => 'yes',
 				'default' => 'no',
-			]
-		);
-		
-		$this->add_control(
-			'enable_figcaption',
-			[
-				'label' => __( 'Show Image Caption', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => __( 'Yes', 'wpr-addons' ),
-				'label_off' => __( 'No', 'wpr-addons' ),
-				'return_value' => 'yes',
-				'default' => 'yes',
-				'separator' => 'before'
-			]
-		);
-
-		$this->add_control(
-			'flipcaption_position',
-			[
-				'label' => esc_html__( 'Position', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'after',
-				'options' => [
-					'before' => esc_html__( 'Above Image', 'wpr-addons' ),
-					'after' => esc_html__( 'Below Image', 'wpr-addons' ),
-				],
-				'condition' => [
-					'enable_figcaption' => 'yes'
-				]
-			]
-		);
-		
-		$this->add_control(
-			'pagination',
-			[
-				'label' => __( 'Show Pagination', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => __( 'Yes', 'wpr-addons' ),
-				'label_off' => __( 'No', 'wpr-addons' ),
-				'return_value' => 'yes',
-				'separator' => 'before',
-				'default' => 'yes'
-			]
-		);
-		
-		$this->add_control(
-			'pagination_position',
-			[
-				'label' => esc_html__( 'Pagination Position', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'after',
-				'options' => [
-					'before' => esc_html__( 'Above Image', 'wpr-addons' ),
-					'after' => esc_html__( 'Below Image', 'wpr-addons' )
-				],
-				'render_type' => 'template',
-				'prefix_class' => 'wpr-flip-pagination-',
-				'condition' => [
-					'pagination' => 'yes'
-				]
 			]
 		);
 		
@@ -344,8 +270,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'label' => __( 'Show Navigation', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_on' => __( 'Yes', 'wpr-addons' ),
-				'label_off' => __( 'No', 'wpr-addons' ),
 				'return_value' => 'yes',
 				'default' => 'yes',
 				'separator' => 'before',
@@ -381,23 +305,62 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				]
 			]
 		);
+		
+		$this->add_control(
+			'pagination',
+			[
+				'label' => __( 'Show Pagination', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'separator' => 'before',
+				'default' => 'yes'
+			]
+		);
+		
+		$this->add_control(
+			'pagination_position',
+			[
+				'label' => esc_html__( 'Pagination Position', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'after',
+				'options' => [
+					'before' => esc_html__( 'Above Image', 'wpr-addons' ),
+					'after' => esc_html__( 'Below Image', 'wpr-addons' )
+				],
+				'render_type' => 'template',
+				'prefix_class' => 'wpr-flip-pagination-',
+				'condition' => [
+					'pagination' => 'yes'
+				]
+			]
+		);
+		
+		$this->add_control(
+			'enable_figcaption',
+			[
+				'label' => __( 'Show Image Caption', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'default' => 'yes',
+				'separator' => 'before'
+			]
+		);
 
-		// $this->add_control(
-		// 	'flip_items_transition_duration',
-		// 	[
-		// 		'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::NUMBER,
-		// 		'default' => 0.4,
-		// 		'min' => 0,
-		// 		'max' => 5,
-		// 		'step' => 0.1,
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .flipster--wheel .flipster__container' => '-webkit-transition: all {{VALUE}}s ease-in-out !important; transition: all {{VALUE}}s ease-in-out !important; -webkit-transition-timing-function: cubic-bezier(.56, .12, .12, .98); transition-timing-function: cubic-bezier(.56, .12, .12, .98)',
-		// 			'{{WRAPPER}} .flipster--wheel .flipster__item__content' => '-webkit-transition: all {{VALUE}}s ease-in-out !important; transition: all {{VALUE}}s ease-in-out !important; -webkit-transition-timing-function: cubic-bezier(.56, .12, .12, .98); transition-timing-function: cubic-bezier(.56, .12, .12, .98)',
-		// 		],
-		// 		'separator' => 'before',
-		// 	]
-		// );
+		$this->add_control(
+			'flipcaption_position',
+			[
+				'label' => esc_html__( 'Position', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'after',
+				'options' => [
+					'before' => esc_html__( 'Above Image', 'wpr-addons' ),
+					'after' => esc_html__( 'Below Image', 'wpr-addons' ),
+				],
+				'condition' => [
+					'enable_figcaption' => 'yes'
+				]
+			]
+		);
 
 		$this->end_controls_section();
 		
