@@ -72,7 +72,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			'image',
 			[
 				'label' => __( 'Choose Image', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::MEDIA,
+				'type' => Controls_Manager::MEDIA,
 				'default' => [
 					'url' => Utils::get_placeholder_image_src(),
 				],
@@ -96,7 +96,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			'enable_slide_link',
 			[
 				'label' => __( 'Enable Slide Link', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'type' => Controls_Manager::SWITCHER,
 				'label_on' => __( 'Yes', 'wpr-addons' ),
 				'label_off' => __( 'No', 'wpr-addons' ),
 				'return_value' => 'yes',
@@ -108,7 +108,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			'slide_link',
 			[
 				'label' => __( 'Link', 'plugin-domain' ),
-				'type' => \Elementor\Controls_Manager::URL,
+				'type' => Controls_Manager::URL,
 				'placeholder' => __( 'https://your-link.com', 'wpr-addons' ),
 				'show_external' => true,
 				'default' => [
@@ -193,7 +193,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'label' => __( 'Gutter', 'wpr-addons' ),
 				'description' => esc_html__('Change Image Size if gutter corrupts carousel layout', 'wpr-addons'),
-				'type' => \Elementor\Controls_Manager::NUMBER,
+				'type' => Controls_Manager::NUMBER,
 				'default' => -0.6,
 				'min' => -1,
 				'max' => 1,
@@ -222,7 +222,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			'starts_from_center',
 			[
 				'label' => __( 'Item Starts From Center', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'type' => Controls_Manager::SWITCHER,
 				'label_on' => __( 'Yes', 'wpr-addons' ),
 				'label_off' => __( 'No', 'wpr-addons' ),
 				'return_value' => 'yes',
@@ -234,7 +234,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			'autoplay',
 			[
 				'label' => __( 'Autoplay', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'type' => Controls_Manager::SWITCHER,
 				'label_on' => __( 'Yes', 'wpr-addons' ),
 				'label_off' => __( 'No', 'wpr-addons' ),
 				'return_value' => 'yes',
@@ -247,7 +247,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			'autoplay_milliseconds',
 			[
 				'label' => __( 'Autoplay Interval', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::NUMBER,
+				'type' => Controls_Manager::NUMBER,
 				'min' => 500,
 				'default' => 3000,
 				'step' => 20,
@@ -261,7 +261,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			'loop',
 			[
 				'label' => __( 'Loop', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'type' => Controls_Manager::SWITCHER,
 				'label_on' => __( 'Yes', 'wpr-addons' ),
 				'label_off' => __( 'No', 'wpr-addons' ),
 				'return_value' => 'yes',
@@ -273,7 +273,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			'pause_on_hover',
 			[
 				'label' => __( 'Pause on Hover', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'type' => Controls_Manager::SWITCHER,
 				'label_on' => __( 'Yes', 'wpr-addons' ),
 				'label_off' => __( 'No', 'wpr-addons' ),
 				'return_value' => 'yes',
@@ -286,7 +286,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			'play_on_click',
 			[
 				'label' => __( 'Slide on Click', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'type' => Controls_Manager::SWITCHER,
 				'label_on' => __( 'Yes', 'wpr-addons' ),
 				'label_off' => __( 'No', 'wpr-addons' ),
 				'return_value' => 'yes',
@@ -298,7 +298,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			'play_on_scroll',
 			[
 				'label' => __( 'Play on Scroll', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'type' => Controls_Manager::SWITCHER,
 				'label_on' => __( 'Yes', 'wpr-addons' ),
 				'label_off' => __( 'No', 'wpr-addons' ),
 				'return_value' => 'yes',
@@ -310,7 +310,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			'enable_figcaption',
 			[
 				'label' => __( 'Show Image Caption', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'type' => Controls_Manager::SWITCHER,
 				'label_on' => __( 'Yes', 'wpr-addons' ),
 				'label_off' => __( 'No', 'wpr-addons' ),
 				'return_value' => 'yes',
@@ -339,7 +339,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			'pagination',
 			[
 				'label' => __( 'Show Pagination', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'type' => Controls_Manager::SWITCHER,
 				'label_on' => __( 'Yes', 'wpr-addons' ),
 				'label_off' => __( 'No', 'wpr-addons' ),
 				'return_value' => 'yes',
@@ -370,7 +370,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			'enable_navigation',
 			[
 				'label' => __( 'Show Navigation', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'type' => Controls_Manager::SWITCHER,
 				'label_on' => __( 'Yes', 'wpr-addons' ),
 				'label_off' => __( 'No', 'wpr-addons' ),
 				'return_value' => 'yes',
@@ -845,7 +845,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 		$this->add_control(
 			'hr',
 			[
-				'type' => \Elementor\Controls_Manager::DIVIDER,
+				'type' => Controls_Manager::DIVIDER,
 			]
 		);
 		
@@ -1112,7 +1112,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 		$this->add_control(
 			'hr_caption',
 			[
-				'type' => \Elementor\Controls_Manager::DIVIDER,
+				'type' => Controls_Manager::DIVIDER,
 			]
 		);
 		
