@@ -50,7 +50,8 @@ class Wpr_Flip_Carousel extends Widget_Base {
 
     public function get_custom_help_url() {
     	if ( empty(get_option('wpr_wl_plugin_links')) )
-        return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-grid-help-btn';
+        // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-advanced-slider-help-btn';
+    		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
 
     protected function register_controls() {
@@ -84,7 +85,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'label' => esc_html__( 'Image Caption', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => 'Image Caption',
-				'description' => 'Enable Image Caption from General Settings'
+				'description' => 'Show/Hide Image Caption from Settings tab.'
 				// 'condition' => [
 				// 	'enable_figcaption' => 'yes'
 				// ]
@@ -230,19 +231,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 		);
 
 		$this->add_control(
-			'loop',
-			[
-				'label' => __( 'Loop', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
-				'label_on' => __( 'Yes', 'wpr-addons' ),
-				'label_off' => __( 'No', 'wpr-addons' ),
-				'return_value' => 'yes',
-				'default' => 'yes',
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
 			'autoplay',
 			[
 				'label' => __( 'Autoplay', 'wpr-addons' ),
@@ -251,6 +239,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'label_off' => __( 'No', 'wpr-addons' ),
 				'return_value' => 'yes',
 				'default' => 'yes',
+				'separator' => 'before',
 			]
 		);
 
@@ -265,6 +254,18 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'condition' => [
 					'autoplay' => 'yes'
 				]
+			]
+		);
+
+		$this->add_control(
+			'loop',
+			[
+				'label' => __( 'Loop', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'label_on' => __( 'Yes', 'wpr-addons' ),
+				'label_off' => __( 'No', 'wpr-addons' ),
+				'return_value' => 'yes',
+				'default' => 'yes',
 			]
 		);
 		
