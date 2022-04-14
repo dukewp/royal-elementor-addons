@@ -160,6 +160,33 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'slider_height',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Height', 'wpr-addons' ),
+				'size_units' => [ 'px', 'vh' ],
+				'range' => [
+					'px' => [
+						'min' => 20,
+						'max' => 1500,
+					],
+					'vh' => [
+						'min' => 20,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 500,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-flip-items-wrapper' => 'height: {{SIZE}}{{UNIT}};'
+				],
+				'separator' => 'before',
+			]
+		);
+
 		$this->add_control(
 			'spacing',
 			[
