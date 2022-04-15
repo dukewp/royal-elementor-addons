@@ -626,6 +626,7 @@ class Wpr_Feature_List extends Widget_Base {
 			[
 				'label' => esc_html__( 'Box Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
+				'render_type' => 'template',
 				'range' => [
 					'px' => [
 						'min' => 5,
@@ -638,7 +639,7 @@ class Wpr_Feature_List extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-feature-list-icon-inner-wrap' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}}'
-				],
+				]
 			]
 		);
 

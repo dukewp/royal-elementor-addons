@@ -60,6 +60,9 @@ class WPR_Templates_Library_Blocks {
 								'lottie-animations',
 								'taxonomy-list',
 								'elementor-template',
+								'flip-carousel',
+								'feature-list',
+								'dual-color-heading'
 							];
 							
 							foreach ($modules as $title => $slug) {
