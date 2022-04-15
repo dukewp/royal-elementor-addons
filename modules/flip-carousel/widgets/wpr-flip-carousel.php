@@ -54,6 +54,8 @@ class Wpr_Flip_Carousel extends Widget_Base {
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
 
+	public function add_controls_group_autoplay() {}
+
     protected function register_controls() {
 
 		$this->start_controls_section(
@@ -140,6 +142,18 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			]
 		);
 
+		if ( ! wpr_fs()->can_use_premium_code() ) {
+			$this->add_control(
+				'slider_repeater_pro_notice',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => 'More than 4 Slides are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-flip-carousel-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+					'content_classes' => 'wpr-pro-notice',
+				]
+			);
+		}
+
         $this->end_controls_section();
 
 		$this->start_controls_section(
@@ -197,30 +211,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'autoplay',
-			[
-				'label' => __( 'Autoplay', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'default' => 'yes',
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'autoplay_milliseconds',
-			[
-				'label' => __( 'Autoplay Interval', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'min' => 500,
-				'default' => 3000,
-				'step' => 20,
-				'condition' => [
-					'autoplay' => 'yes'
-				]
-			]
-		);
+		$this->add_controls_group_autoplay();
 
 		$this->add_control(
 			'loop',
@@ -1131,10 +1122,14 @@ class Wpr_Flip_Carousel extends Widget_Base {
 
 	public function flip_carousel_attributes($settings) {
 		
-
+		// Navigation
 		$icon_prev = '<span class="wpr-flip-carousel-navigation">'. Utilities::get_wpr_icon( $settings['flip_carousel_nav_icon'], 'left' ) .'</span>';
-
 		$icon_next = '<span class="wpr-flip-carousel-navigation">'. Utilities::get_wpr_icon( $settings['flip_carousel_nav_icon'], 'right' ) .'</span>';
+
+		if ( ! wpr_fs()->can_use_premium_code() ) {
+			$settings['autoplay'] = false;
+			$settings['autoplay_milliseconds'] = 0;
+		}
 
 		$attributes = [
 			'starts_from_center' => $settings['starts_from_center'],
@@ -1164,7 +1159,11 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			echo '<div class="wpr-flip-carousel-wrapper">';
             echo '<div class="wpr-flip-carousel" data-settings="'. esc_attr($this->flip_carousel_attributes($settings)) .'">';
             echo '<ul class="wpr-flip-items-wrapper">';
-            foreach ( $settings['carousel_elements'] as $element ) {
+            foreach ( $settings['carousel_elements'] as $key => $element ) {
+				if ( ! wpr_fs()->can_use_premium_code() && $key === 4 ) {
+					break;
+				}
+
 				if ( ! empty( $element['slide_link']['url'] ) ) {
 					$this->add_link_attributes( 'slide_link'.$i, $element['slide_link'] );
 				}
