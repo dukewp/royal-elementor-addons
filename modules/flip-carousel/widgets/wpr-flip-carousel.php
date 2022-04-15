@@ -162,14 +162,13 @@ class Wpr_Flip_Carousel extends Widget_Base {
 		$this->add_control(
 			'spacing',
 			[
-				'label' => __( 'Gutter', 'wpr-addons' ),
+				'label' => __( 'Slide Spacing', 'wpr-addons' ),
 				'description' => esc_html__('Change Image Size if gutter corrupts carousel layout', 'wpr-addons'),
 				'type' => Controls_Manager::NUMBER,
 				'default' => -0.6,
 				'min' => -1,
 				'max' => 1,
-				'step' => 0.1,
-				'separator' => 'before',
+				'step' => 0.1
 			] 
 		);
 
@@ -433,6 +432,23 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'selector' => '{{WRAPPER}} .flipster__button',
 			]
 		);
+
+		$this->add_control(
+			'navigation_transition',
+			[
+				'label' => esc_html__( 'Transition', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 1,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .flipster__button' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
+					'{{WRAPPER}} .flipster__button i' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
+					'{{WRAPPER}} .flipster__button svg' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;'
+				],
+			]
+		);
 		
 		$this->end_controls_tab();
 
@@ -493,24 +509,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
-
-		$this->add_control(
-			'navigation_transition',
-			[
-				'label' => esc_html__( 'Transition', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 1,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'separator' => 'before',
-				'selectors' => [
-					'{{WRAPPER}} .flipster__button' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
-					'{{WRAPPER}} .flipster__button i' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
-					'{{WRAPPER}} .flipster__button svg' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;'
-				],
-			]
-		);
 		
 		$this->add_responsive_control(
 			'icon_size',
@@ -708,6 +706,34 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'selector' => '{{WRAPPER}} .flipster__nav__item',
 			]
 		);
+		
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'pagination_content_typography',
+				'label' => __( 'Typography', 'wpr-addons' ),
+				'scheme' => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .flipster__nav__link'
+			]
+		);
+
+		$this->add_control(
+			'pagination_transition',
+			[
+				'label' => esc_html__( 'Transition', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 1,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .flipster__nav__item .flipster__nav__link' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
+					'{{WRAPPER}} .flipster__nav__item' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
+					'{{WRAPPER}} .flipster__nav__item i' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
+					'{{WRAPPER}} .flipster__nav__item svg' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
+				],
+			]
+		);
 
 		$this->end_controls_tab();
 		
@@ -768,43 +794,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
-
-		$this->add_control(
-			'hr',
-			[
-				'type' => Controls_Manager::DIVIDER,
-			]
-		);
-		
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => 'content_typography',
-				'label' => __( 'Typography', 'wpr-addons' ),
-				'scheme' => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .flipster__nav__link',
-				'separator' => 'before'
-			]
-		);
-
-		$this->add_control(
-			'pagination_transition',
-			[
-				'label' => esc_html__( 'Transition', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 1,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'separator' => 'before',
-				'selectors' => [
-					'{{WRAPPER}} .flipster__nav__item .flipster__nav__link' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
-					'{{WRAPPER}} .flipster__nav__item' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
-					'{{WRAPPER}} .flipster__nav__item i' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
-					'{{WRAPPER}} .flipster__nav__item svg' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
-				],
-			]
-		);
 		
 		$this->add_responsive_control(
 			'pagination_size',
@@ -863,8 +852,8 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'size_units' => [ 'px', '%' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
-						'max' => 100,
+						'min' => -50,
+						'max' => 50,
 					]
 				],
 				'default' => [
@@ -1008,6 +997,31 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				],
 			]
 		);
+		
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'content_typography_caption',
+				'label' => __( 'Typography', 'wpr-addons' ),
+				'scheme' => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .flipcaption',
+			]
+		);
+
+		$this->add_control(
+			'caption_transition',
+			[
+				'label' => esc_html__( 'Transition', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.4,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .flipcaption' => '-webkit-transition: all {{VALUE}}s ease !important; transition: all {{VALUE}}s ease !important;',
+				]
+			]
+		);
 
 		$this->end_controls_tab();
 		
@@ -1033,39 +1047,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
-
-		$this->add_control(
-			'hr_caption',
-			[
-				'type' => Controls_Manager::DIVIDER,
-			]
-		);
-		
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => 'content_typography_caption',
-				'label' => __( 'Typography', 'wpr-addons' ),
-				'scheme' => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .flipcaption',
-			]
-		);
-
-		$this->add_control(
-			'caption_transition',
-			[
-				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.4,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'separator' => 'before',
-				'selectors' => [
-					'{{WRAPPER}} .flipcaption' => '-webkit-transition: all {{VALUE}}s ease !important; transition: all {{VALUE}}s ease !important;',
-				]
-			]
-		);
 
 		$this->add_responsive_control(
 			'flipcaption_width',

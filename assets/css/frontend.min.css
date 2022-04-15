@@ -11191,6 +11191,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 	margin: auto;
 }
 
+.wpr-flip-carousel ul li.flipster__item img {
+    width: 100%;
+}
+
 .wpr-flip-carousel .flipster__nav {
     margin: 0;
 }
@@ -11220,6 +11224,12 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 	justify-content: center;
 	align-items: center;
 	text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+    .wpr-flip-carousel ul li.flipster__item {
+        width: 50%;
+    }
 }
 
 /*--------------------------------------------------------------
