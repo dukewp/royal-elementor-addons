@@ -77,7 +77,8 @@ and other custom branding related settings)
 **Elementor Theme Builder Templates Kits**
 
 - [**Personal Blog**](https://demosites.royal-elementor-addons.com/personal-blog-v1/?ref=rea-wpo-pp-details-tab)
-- [**Blog Magazine**](https://demosites.royal-elementor-addons.com/magazine-blog-v1/?ref=rea-wpo-pp-details-tab)
+- [**Blog Magazine v1**](https://demosites.royal-elementor-addons.com/magazine-blog-v1/?ref=rea-wpo-pp-details-tab)
+- [**Blog Magazine v2**](https://demosites.royal-elementor-addons.com/magazine-blog-v2/?ref=rea-wpo-pp-details-tab)
 - [**Food Blog**](https://demosites.royal-elementor-addons.com/food-blog-v1/?ref=rea-wpo-pp-details-tab)
 - [**Travel Blog**](https://demosites.royal-elementor-addons.com/travel-blog-v1/?ref=rea-wpo-pp-details-tab)
 
@@ -335,7 +336,8 @@ post_max_size 64M
 * ADDED: Elementor Theme Builder Widgets: Post Title, Post Media, Post Meta, Post Navigation, Post Comments, Post Author, Archive Page Title.
 * ADDED: Elementor Theme Builder Demos:
  - [**Personal Blog**](https://demosites.royal-elementor-addons.com/personal-blog-v1/?ref=rea-wpo-pp-details-tab)
-- [**Blog Magazine**](https://demosites.royal-elementor-addons.com/magazine-blog-v1/?ref=rea-wpo-pp-details-tab)
+- [**Blog Magazine v1**](https://demosites.royal-elementor-addons.com/magazine-blog-v1/?ref=rea-wpo-pp-details-tab)
+- [**Blog Magazine v2**](https://demosites.royal-elementor-addons.com/magazine-blog-v2/?ref=rea-wpo-pp-details-tab)
 - [**Food Blog**](https://demosites.royal-elementor-addons.com/food-blog-v1/?ref=rea-wpo-pp-details-tab)
 - [**Blog Magazine**](https://demosites.royal-elementor-addons.com/travel-blog-v1/?ref=rea-wpo-pp-details-tab)
 
