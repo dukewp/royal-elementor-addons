@@ -49,6 +49,14 @@ class WPR_Templates_Data {
 					'theme-builder' => true,
 					'price' => $is_pro_active ? 'free' : 'pro',
 				],
+				'v3' => [
+					'name' => 'Magazine Blog v3',
+					'pages' => 'home,home-v1,home-v2,category,about,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'blogger blog posts content news newspaper journal magazine business blog publishing theme builder sports grid slider',
+					'theme-builder' => true,
+					'price' => $is_pro_active ? 'free' : 'free',
+				],
 			],
 			'travel-blog' => [
 				'v1' => [
