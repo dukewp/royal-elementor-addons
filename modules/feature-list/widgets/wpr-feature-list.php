@@ -728,7 +728,7 @@ class Wpr_Feature_List extends Widget_Base {
 		);
 
 		$this->add_control(
-			'description_heading',
+			'title_heading',
 			[
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type'  => Controls_Manager::HEADING,
