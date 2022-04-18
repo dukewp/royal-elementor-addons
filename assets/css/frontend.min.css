@@ -11177,6 +11177,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 .wpr-flip-carousel {
 	overflow: hidden !important;
+    opacity: 0;
 }
 
 .wpr-flip-items-wrapper img {
