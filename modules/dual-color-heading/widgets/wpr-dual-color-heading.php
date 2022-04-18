@@ -60,7 +60,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 			[
 				'label' => esc_html__('Select Layout', 'wpr-addons'),
 				'type' => Controls_Manager::SELECT,
-				'default' => 'default',
+				'default' => 'icon-top',
 				'options' => [
 					'default'  => esc_html__('Default', 'wpr-addons'),
 					'icon-top'  => esc_html__('Icon Top', 'wpr-addons'),
@@ -131,7 +131,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 			[
 				'label'   => __('Secondary Heading', 'wpr-addons'),
 				'type'    => Controls_Manager::TEXT,
-				'default' => __('Heading Widget', 'wpr-addons'),
+				'default' => __('Heading', 'wpr-addons'),
 				'label_block' => true
 			]
 		);
@@ -182,7 +182,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				'skin' => 'inline',
 				'label_block' => false,
 				'default' => [
-					'value' => 'fas fa-star',
+					'value' => 'fas fa-rocket',
 					'library' => 'solid',
 				],
 				'condition' => [
@@ -222,7 +222,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 			[
 				'label' => __('Text Color', 'wpr-addons'),
 				'type' => Controls_Manager::COLOR,
-				'default' => 'black',
+				'default' => '#7B7B7B',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-dual-title .first' => 'color: {{VALUE}}',
 				]
@@ -234,7 +234,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 			[
 				'label' => __('Border Color', 'wpr-addons'),
 				'type' => Controls_Manager::COLOR,
-				'default' => 'black',
+				'default' => '#000',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-dual-title .first' => 'border-color: {{VALUE}}',
 				]
@@ -248,6 +248,23 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				'label' => __('Typography', 'wpr-addons'),
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-dual-title .first',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_weight' => [
+						'default' => '300',
+					],
+					'font_family' => [
+						'default' => 'Roboto',
+					],
+					'font_size'   => [
+						'default' => [
+							'size' => '32',
+							'unit' => 'px',
+						]
+					]
+				]
 			]
 		);
 
@@ -258,10 +275,10 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 10,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
+					'top' => '',
+					'right' => '',
+					'bottom' => '',
+					'left' => '',
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-dual-title .first' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -318,6 +335,12 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => '',
+					'right' => '',
+					'bottom' => '',
+					'left' => '',
+				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-dual-title .first' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				]
@@ -351,7 +374,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
-					'size' => 10,
+					'size' => 0,
 				],
 				'range' => [
 					'px' => [
@@ -396,7 +419,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 			[
 				'label' => __('Text Color', 'wpr-addons'),
 				'type' => Controls_Manager::COLOR,
-				'default' => 'orange',
+				'default' => '#9E5BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-dual-title .second' => 'color: {{VALUE}}',
 				]
@@ -408,7 +431,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 			[
 				'label' => __('Border Color', 'wpr-addons'),
 				'type' => Controls_Manager::COLOR,
-				'default' => 'black',
+				'default' => '#000',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-dual-title .second' => 'border-color: {{VALUE}}',
 				]
@@ -422,6 +445,23 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				'label' => __('Typography', 'wpr-addons'),
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-dual-title .second',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_weight' => [
+						'default' => '600',
+					],
+					'font_family' => [
+						'default' => 'Roboto',
+					],
+					'font_size'   => [
+						'default' => [
+							'size' => '32',
+							'unit' => 'px',
+						]
+					]
+				]
 			]
 		);
 
@@ -432,10 +472,10 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 10,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
+					'top' => '',
+					'right' => '',
+					'bottom' => '',
+					'left' => '',
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-dual-title .second' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -492,6 +532,12 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => '',
+					'right' => '',
+					'bottom' => '',
+					'left' => '',
+				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-dual-title .second' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				]
@@ -516,7 +562,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 			[
 				'label' => __('Color', 'wpr-addons'),
 				'type' => Controls_Manager::COLOR,
-				'default' => 'gray',
+				'default' => '#989898',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-dual-heading-description' => 'color: {{VALUE}}',
 				],
@@ -530,6 +576,23 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				'label' => __('Typography', 'wpr-addons'),
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-dual-heading-description',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_weight' => [
+						'default' => '400',
+					],
+					'font_family' => [
+						'default' => 'Roboto',
+					],
+					'font_size'   => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px',
+						]
+					]
+				]
 			]
 		);
 
@@ -580,7 +643,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 			[
 				'label' => __('Color', 'wpr-addons'),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-dual-heading-icon-wrap' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-dual-heading-icon-wrap svg' => 'fill: {{VALUE}}',
@@ -600,7 +663,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 					],
 				],
 				'default' => [
-					'size' => 20,
+					'size' => 35,
 					'unit' => 'px'
 				],
 				'selectors' => [
@@ -616,7 +679,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				'label' => esc_html__( 'Distance', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
-					'size' => 15,
+					'size' => 10,
 				],
 				'range' => [
 					'px' => [
