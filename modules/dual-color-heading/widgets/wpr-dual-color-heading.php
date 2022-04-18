@@ -98,7 +98,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 		);
 
 		$this->add_control(
-			'title_first',
+			'primary_heading',
 			[
 				'label'   => __('Primary Heading', 'wpr-addons'),
 				'type'    => Controls_Manager::TEXT,
@@ -109,7 +109,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 		);
 
 		$this->add_control(
-			'title_second',
+			'secondary_heading',
 			[
 				'label'   => __('Secondary Heading', 'wpr-addons'),
 				'type'    => Controls_Manager::TEXT,
@@ -176,19 +176,10 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 		$this->end_controls_section();
 
 		$this->start_controls_section(
-			'general_styles_title',
+			'primary_heading_styles',
 			[
-				'label' => esc_html__('Title', 'wpr-addons'),
+				'label' => esc_html__('Primary Heading', 'wpr-addons'),
 				'tab' => Controls_Manager::TAB_STYLE,
-			]
-		);
-
-		$this->add_control(
-			'primary_heading',
-			[
-				'label' => __('Primary Heading', 'wpr-addons'),
-				'type' => Controls_Manager::HEADING,
-				'separator' => 'before'
 			]
 		);
 		
@@ -198,6 +189,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				'name' => 'primary_heading_bg_color',
 				'label' => esc_html__( 'Background', 'wpr-addons' ),
 				'types' => [ 'classic', 'gradient' ],
+				'exclude' => ['image'],
 				'fields_options' => [
 					'color' => [
 						'default' => '#434900',
@@ -210,7 +202,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 		$this->add_control(
 			'primary_heading_color',
 			[
-				'label' => __('Color', 'wpr-addons'),
+				'label' => __('Text Color', 'wpr-addons'),
 				'type' => Controls_Manager::COLOR,
 				'default' => 'black',
 				'selectors' => [
@@ -255,7 +247,8 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-dual-title .first' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				]
+				],
+				'separator' => 'before'
 			]
 		);
 		
@@ -275,7 +268,8 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				'default' => 'none',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-dual-title .first' => 'border-style: {{VALUE}};'
-				]
+				],
+				'separator' => 'before'
 			]
 		);
 
@@ -317,13 +311,55 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				]
 			]
 		);
-		
-		$this->add_control(
-			'secondary_heading',
+
+		$this->add_responsive_control(
+			'feature_list_title_distance',
 			[
-				'label' => __('Secondary Heading', 'wpr-addons'),
-				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 15,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-dual-title-wrap'  => 'margin-bottom: {{SIZE}}px;',
+				],
 				'separator' => 'before'
+			]
+		);
+
+		$this->add_responsive_control(
+			'feature_list_title_gutter',
+			[
+				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 10,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 25,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-dual-title .first'  => 'margin-right: {{SIZE}}px;',
+				]
+			]
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'secondary_heading_styles',
+			[
+				'label' => esc_html__('Secondary Heading', 'wpr-addons'),
+				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
 		
@@ -333,6 +369,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				'name' => 'secondary_heading_bg_color',
 				'label' => esc_html__( 'Background', 'wpr-addons' ),
 				'types' => [ 'classic', 'gradient' ],
+				'exclude' => ['image'],
 				'fields_options' => [
 					'color' => [
 						'default' => '#434900',
@@ -345,7 +382,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 		$this->add_control(
 			'secondary_heading_color',
 			[
-				'label' => __('Color', 'wpr-addons'),
+				'label' => __('Text Color', 'wpr-addons'),
 				'type' => Controls_Manager::COLOR,
 				'default' => 'orange',
 				'selectors' => [
@@ -390,7 +427,8 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-dual-title .second' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				]
+				],
+				'separator' => 'before'
 			]
 		);
 		
@@ -410,7 +448,8 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				'default' => 'none',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-dual-title .second' => 'border-style: {{VALUE}};'
-				]
+				],
+				'separator' => 'before'
 			]
 		);
 
@@ -449,47 +488,6 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-dual-title .second' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				]
-			]
-		);
-
-		$this->add_responsive_control(
-			'feature_list_title_distance',
-			[
-				'label' => esc_html__( 'Distance', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'default' => [
-					'size' => 15,
-				],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-dual-title-wrap'  => 'margin-bottom: {{SIZE}}px;',
-				],
-				'separator' => 'before'
-			]
-		);
-
-		$this->add_responsive_control(
-			'feature_list_title_gutter',
-			[
-				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'default' => [
-					'size' => 10,
-				],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 25,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-dual-title .first'  => 'margin-right: {{SIZE}}px;',
 				]
 			]
 		);
@@ -634,8 +632,8 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 			<div class="wpr-dual-heading-wrap">
 				<div class="wpr-dual-title-wrap">
 					<h1 class="wpr-dual-title">
-						<span class="first"><?php echo wp_kses($settings['title_first'], []); ?></span>&nbsp;
-						<span class="second"><?php echo wp_kses($settings['title_second'], []); ?></span>
+						<span class="first"><?php echo wp_kses($settings['primary_heading'], []); ?></span>&nbsp;
+						<span class="second"><?php echo wp_kses($settings['secondary_heading'], []); ?></span>
 					</h1>
 				</div>
 				
