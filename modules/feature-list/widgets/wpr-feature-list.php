@@ -166,6 +166,7 @@ class Wpr_Feature_List extends Widget_Base {
 			[
 				'label' => esc_html__( 'Show Line', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
+				'render_type' => 'template',
 				'prefix_class' => 'wpr-feature-list-line-',
 				'separator' => 'before',
 				'condition' => [
@@ -523,36 +524,6 @@ class Wpr_Feature_List extends Widget_Base {
 		);
 
 		$this->add_control(
-			'feature_list_image_heading',
-			[
-				'label' => esc_html__( 'Image', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::HEADING,
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_responsive_control(
-			'feature_list_image_size',
-			[
-				'label' => esc_html__( 'Width', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'%' => [
-						'min' => 5,
-						'max' => 100,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 25,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-feature-list-icon-wrap img' => 'width: {{SIZE}}{{UNIT}}; height: auto;',
-				]
-			]
-		);
-
-		$this->add_control(
 			'feature_list_icon_heading',
 			[
 				'label' => esc_html__( 'Icon', 'wpr-addons' ),
@@ -616,8 +587,7 @@ class Wpr_Feature_List extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-feature-list-icon-wrap i' => 'font-size: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-feature-list-icon-wrap svg' => 'width: {{SIZE}}{{UNIT}}; height: auto;',
-				],
-				'separator' => 'before'
+				]
 			]
 		);
 
@@ -639,6 +609,36 @@ class Wpr_Feature_List extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-feature-list-icon-inner-wrap' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}}'
+				]
+			]
+		);
+
+		$this->add_control(
+			'feature_list_image_heading',
+			[
+				'label' => esc_html__( 'Image', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'feature_list_image_size',
+			[
+				'label' => esc_html__( 'Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'%' => [
+						'min' => 5,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 25,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-feature-list-icon-wrap img' => 'width: {{SIZE}}{{UNIT}}; height: auto;',
 				]
 			]
 		);
@@ -706,12 +706,21 @@ class Wpr_Feature_List extends Widget_Base {
         $this->end_controls_section();
 
 		// Tab: STYLE ==============
-		// Section: Title ----------
+		// Section: Title & Description ----------
 		$this->start_controls_section(
-			'section_feature_list_title_styles',
+			'section_feature_list_title_&_description_styles',
+			[
+				'label' => esc_html__( 'Title & Description', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'description_heading',
 			[
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'type'  => Controls_Manager::HEADING,
+				'separator' => 'before'
 			]
 		);
 
@@ -737,15 +746,12 @@ class Wpr_Feature_List extends Widget_Base {
 			]
 		);
 
-		$this->end_controls_section();
-
-		// Tab: STYLE ==============
-		// Section: Description ----------
-		$this->start_controls_section(
-			'section_feature_list_description_styles',
+		$this->add_control(
+			'description_heading',
 			[
 				'label' => esc_html__( 'Description', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'type'  => Controls_Manager::HEADING,
+				'separator' => 'before'
 			]
 		);
 
@@ -798,26 +804,6 @@ class Wpr_Feature_List extends Widget_Base {
 			]
 		);
 
-        $this->add_control(
-            'feature_list_line_border_type',
-            [
-                'label'       => esc_html__( 'Type', 'wpr-addons' ),
-                'type'        => Controls_Manager::SELECT,
-                'default'     => 'solid',
-                'label_block' => false,
-                'options'     => [
-                    'solid'  => esc_html__( 'Solid', 'wpr-addons' ),
-                    'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
-                    'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
-                ],
-                'selectors'   => [
-                    // '{{WRAPPER}} .wpr-feature-list-icon-wrap::before' => 'border-style: {{VALUE}};',
-                    '{{WRAPPER}} .wpr-feature-list-line' => 'border-left-style: {{VALUE}};',
-                ],
-				'separator' => 'before'
-            ]
-        );
-
 		$this->add_control(
 			'feature_list_line_width',
 			[
@@ -841,6 +827,25 @@ class Wpr_Feature_List extends Widget_Base {
 				'separator' => 'before'
 			]
 		);
+
+        $this->add_control(
+            'feature_list_line_border_type',
+            [
+                'label'       => esc_html__( 'Type', 'wpr-addons' ),
+                'type'        => Controls_Manager::SELECT,
+                'default'     => 'solid',
+                'label_block' => false,
+                'options'     => [
+                    'solid'  => esc_html__( 'Solid', 'wpr-addons' ),
+                    'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+                    'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+                ],
+                'selectors'   => [
+                    // '{{WRAPPER}} .wpr-feature-list-icon-wrap::before' => 'border-style: {{VALUE}};',
+                    '{{WRAPPER}} .wpr-feature-list-line' => 'border-left-style: {{VALUE}};',
+                ]
+            ]
+        );
 
 		$this->end_controls_section();
     }
