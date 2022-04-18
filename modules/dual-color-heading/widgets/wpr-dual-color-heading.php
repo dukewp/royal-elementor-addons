@@ -14,8 +14,6 @@ use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Typography;
 use Elementor\Core\Schemes\Typography;
-use Elementor\Repeater;
-use Elementor\Group_Control_Image_Size;
 use WprAddons\Classes\Utilities;
 
 
@@ -61,7 +59,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 			'content_style',
 			[
 				'label' => esc_html__('Select Layout', 'wpr-addons'),
-				'type' => \Elementor\Controls_Manager::SELECT,
+				'type' => Controls_Manager::SELECT,
 				'default' => 'default',
 				'options' => [
 					'default'  => esc_html__('Default', 'wpr-addons'),
@@ -77,7 +75,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 			'text_align',
 			[
 				'label' => __('Alignment', 'wpr-addons'),
-				'type' => \Elementor\Controls_Manager::CHOOSE,
+				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'left' => [
 						'title' => __('Left', 'wpr-addons'),
@@ -121,19 +119,10 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 		);
 
 		$this->add_control(
-			'description',
-			[
-				'label'   => __('Description', 'wpr-addons'),
-				'type'    => Controls_Manager::TEXTAREA,
-				'default' => __('Description text or Sub Heading', 'wpr-addons'),
-			]
-		);
-
-		$this->add_control(
-			'show_icon',
+			'show_description',
 			[
 				'label' => __('Show Icon', 'wpr-addons'),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'type' => Controls_Manager::SWITCHER,
 				'label_on' => __('Show', 'wpr-addons'),
 				'label_off' => __('Hide', 'wpr-addons'),
 				'return_value' => 'yes',
@@ -142,6 +131,30 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'description',
+			[
+				'label'   => __('Description', 'wpr-addons'),
+				'type'    => Controls_Manager::TEXTAREA,
+				'default' => __('Description text or Sub Heading', 'wpr-addons'),
+				'condition' => [
+					'show_description' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control(
+			'show_icon',
+			[
+				'label' => __('Show Icon', 'wpr-addons'),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => __('Show', 'wpr-addons'),
+				'label_off' => __('Hide', 'wpr-addons'),
+				'return_value' => 'yes',
+				'default' => 'yes',
+				'separator' => 'before'
+			]
+		);
 
 		$this->add_control(
 			'feature_list_icon',
@@ -163,10 +176,383 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 		$this->end_controls_section();
 
 		$this->start_controls_section(
-			'general_styles',
+			'general_styles_title',
 			[
-				'label' => esc_html__('Content', 'wpr-addons'),
-				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+				'label' => esc_html__('Title', 'wpr-addons'),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'primary_heading',
+			[
+				'label' => __('Primary Heading', 'wpr-addons'),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before'
+			]
+		);
+		
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
+			[
+				'name' => 'primary_heading_bg_color',
+				'label' => esc_html__( 'Background', 'wpr-addons' ),
+				'types' => [ 'classic', 'gradient' ],
+				'fields_options' => [
+					'color' => [
+						'default' => '#434900',
+					],
+				],
+				'selector' => '{{WRAPPER}} .wpr-dual-title .first'
+			]
+		);
+
+		$this->add_control(
+			'primary_heading_color',
+			[
+				'label' => __('Color', 'wpr-addons'),
+				'type' => Controls_Manager::COLOR,
+				'default' => 'black',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-dual-title .first' => 'color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'primary_heading_border_color',
+			[
+				'label' => __('Border Color', 'wpr-addons'),
+				'type' => Controls_Manager::COLOR,
+				'default' => 'black',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-dual-title .first' => 'border-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'primary_heading_typography',
+				'label' => __('Typography', 'wpr-addons'),
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} h1.wpr-dual-title .first',
+			]
+		);
+
+		$this->add_responsive_control(
+			'primary_heading_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 10,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-dual-title .first' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
+			]
+		);
+		
+		$this->add_control(
+			'primary_heading_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-dual-title .first' => 'border-style: {{VALUE}};'
+				]
+			]
+		);
+
+		$this->add_control(
+			'primary_heading_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-dual-title .first' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				],
+				'condition' => [
+					'primary_heading_border_type!' => 'none',
+				]
+			]
+		);
+
+		$this->add_control(
+			'primary_heading_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-dual-title .first' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
+			]
+		);
+		
+		$this->add_control(
+			'secondary_heading',
+			[
+				'label' => __('Secondary Heading', 'wpr-addons'),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before'
+			]
+		);
+		
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
+			[
+				'name' => 'secondary_heading_bg_color',
+				'label' => esc_html__( 'Background', 'wpr-addons' ),
+				'types' => [ 'classic', 'gradient' ],
+				'fields_options' => [
+					'color' => [
+						'default' => '#434900',
+					],
+				],
+				'selector' => '{{WRAPPER}} .wpr-dual-title .second'
+			]
+		);
+
+		$this->add_control(
+			'secondary_heading_color',
+			[
+				'label' => __('Color', 'wpr-addons'),
+				'type' => Controls_Manager::COLOR,
+				'default' => 'orange',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-dual-title .second' => 'color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'secondary_heading_border_color',
+			[
+				'label' => __('Border Color', 'wpr-addons'),
+				'type' => Controls_Manager::COLOR,
+				'default' => 'black',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-dual-title .second' => 'border-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'secondary_heading_typography',
+				'label' => __('Typography', 'wpr-addons'),
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} h1.wpr-dual-title .second',
+			]
+		);
+
+		$this->add_responsive_control(
+			'secondary_heading_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 10,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-dual-title .second' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
+			]
+		);
+		
+		$this->add_control(
+			'secondary_heading_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-dual-title .second' => 'border-style: {{VALUE}};'
+				]
+			]
+		);
+
+		$this->add_control(
+			'secondary_heading_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-dual-title .second' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				],
+				'condition' => [
+					'secondary_heading_border_type!' => 'none',
+				]
+			]
+		);
+
+		$this->add_control(
+			'secondary_heading_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-dual-title .second' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'feature_list_title_distance',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 15,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-dual-title-wrap'  => 'margin-bottom: {{SIZE}}px;',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_responsive_control(
+			'feature_list_title_gutter',
+			[
+				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 10,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 25,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-dual-title .first'  => 'margin-right: {{SIZE}}px;',
+				]
+			]
+		);
+
+		$this->end_controls_section();
+		
+		$this->start_controls_section(
+			'general_styles_description',
+			[
+				'label' => esc_html__('Description', 'wpr-addons'),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'description_color',
+			[
+				'label' => __('Color', 'wpr-addons'),
+				'type' => Controls_Manager::COLOR,
+				'default' => 'gray',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-dual-heading-description' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'description_typography',
+				'label' => __('Typography', 'wpr-addons'),
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-dual-heading-description',
+			]
+		);
+
+		$this->add_responsive_control(
+			'feature_list_description_distance',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 15,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-dual-heading-description'  => 'margin-bottom: {{SIZE}}px;',
+				]
+			]
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'general_styles_icon',
+			[
+				'label' => esc_html__('Icon', 'wpr-addons'),
+				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
 
@@ -174,7 +560,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 			'icon_style',
 			[
 				'label' => __('Icon', 'wpr-addons'),
-				'type' => \Elementor\Controls_Manager::HEADING,
+				'type' => Controls_Manager::HEADING,
 				'separator' => 'before'
 			]
 		);
@@ -196,7 +582,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 			'icon_size',
 			[
 				'label' => esc_html__('Size', 'wpr-addons'),
-				'type' => \Elementor\Controls_Manager::SLIDER,
+				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
 						'min' => 0,
@@ -234,127 +620,6 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'heading_style',
-			[
-				'label' => __('Title', 'wpr-addons'),
-				'type' => \Elementor\Controls_Manager::HEADING,
-				'separator' => 'before'
-			]
-		);
-
-		$this->add_control(
-			'first_text_color',
-			[
-				'label' => __('Primary Heading', 'wpr-addons'),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'default' => 'black',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-dual-title .first' => 'color: {{VALUE}}',
-				]
-			]
-		);
-
-
-		$this->add_control(
-			'second_text_color',
-			[
-				'label' => __('Secondary Heading', 'wpr-addons'),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'default' => 'orange',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-dual-title .second' => 'color: {{VALUE}}',
-				]
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => 'content_typography',
-				'label' => __('Typography', 'wpr-addons'),
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} h1.wpr-dual-title',
-			]
-		);
-
-		$this->add_responsive_control(
-			'feature_list_title_distance',
-			[
-				'label' => esc_html__( 'Distance', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'default' => [
-					'size' => 15,
-				],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-dual-title-wrap'  => 'margin-bottom: {{SIZE}}px;',
-				]
-			]
-		);
-
-		$this->add_control(
-			'hr',
-			[
-				'type' => \Elementor\Controls_Manager::DIVIDER,
-			]
-		);
-
-		$this->add_control(
-			'description_style',
-			[
-				'label' => __('Description', 'wpr-addons'),
-				'type' => \Elementor\Controls_Manager::HEADING,
-			]
-		);
-
-		$this->add_control(
-			'description_color',
-			[
-				'label' => __('Color', 'wpr-addons'),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'default' => 'gray',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-dual-heading-description' => 'color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_group_control(
-			\Elementor\Group_Control_Typography::get_type(),
-			[
-				'name' => 'description_typography',
-				'label' => __('Typography', 'wpr-addons'),
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-dual-heading-description',
-			]
-		);
-
-		$this->add_responsive_control(
-			'feature_list_description_distance',
-			[
-				'label' => esc_html__( 'Distance', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'default' => [
-					'size' => 15,
-				],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-dual-heading-description'  => 'margin-bottom: {{SIZE}}px;',
-				]
-			]
-		);
-
 		$this->end_controls_section();
 	}
 
@@ -373,12 +638,17 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 						<span class="second"><?php echo wp_kses($settings['title_second'], []); ?></span>
 					</h1>
 				</div>
-				<div class="wpr-dual-heading-description" <?php echo $this->get_render_attribute_string('description'); ?>><?php echo wp_kses($settings['description'], []); ?></div>
+				
+				<?php if ('yes' == $settings['show_description']) { ?>
+					<div class="wpr-dual-heading-description" <?php echo $this->get_render_attribute_string('description'); ?>><?php echo wp_kses($settings['description'], []); ?></div>
+				<?php } ?>
+
 				<?php if ('yes' == $settings['show_icon']) { ?>
 					<div class="wpr-dual-heading-icon-wrap">
 						<?php \Elementor\Icons_Manager::render_icon($settings['feature_list_icon'], ['aria-hidden' => 'true']); ?>
 					</div>
 				<?php } ?>
+
 			</div>
 		<?php
 	}
