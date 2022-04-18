@@ -172,7 +172,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'name' => 'flip_carousel_image_size',
 				'default' => 'medium_large',
-				'exclude' => ['custom']
+				// 'exclude' => ['custom']
 			]
 		);
 
@@ -268,7 +268,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 		);
 		
 		$this->add_responsive_control(
-			'enable_navigation',
+			'show_navigation',
 			[
 				'label' => __( 'Show Navigation', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
@@ -298,7 +298,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'type' => 'wpr-arrow-icons',
 				'default' => 'fas fa-angle',
 				'condition' => [
-					'enable_navigation' => 'yes'
+					'show_navigation' => 'yes'
 				]
 			]
 		);
@@ -324,7 +324,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 					'before' => esc_html__( 'Above Image', 'wpr-addons' ),
 					'after' => esc_html__( 'Below Image', 'wpr-addons' )
 				],
-				// 'render_type' => 'template',
+				'render_type' => 'template',
 				'prefix_class' => 'wpr-flip-pagination-',
 				'condition' => [
 					'show_pagination' => 'yes'
@@ -371,7 +371,10 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			'section_flip_carousel_navigation_styles',
 			[
 				'label' => esc_html__( 'Navigation', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_STYLE
+				'tab' => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'show_navigation' => 'yes'
+				]
 			]
 		);
 
@@ -394,8 +397,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'default' => '#FFF',
 				'selectors' => [
 					'{{WRAPPER}} .flipster__button i' => 'color: {{VALUE}}',
-					'{{WRAPPER}}.wpr-flip-navigation-custom .flipster__button svg' => 'fill: {{VALUE}}',
-					'{{WRAPPER}}.wpr-flip-navigation-default .flipster__button svg' => 'stroke: {{VALUE}}'
+					'{{WRAPPER}} .flipster__button svg' => 'fill: {{VALUE}}'
 				]
 			]
 		);
@@ -467,8 +469,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'default' => '',
 				'selectors' => [
 					'{{WRAPPER}} .flipster__button:hover i' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .flipster__button:hover svg' => 'fill: {{VALUE}}',
-					'{{WRAPPER}}.wpr-flip-navigation-default .flipster__button:hover svg' => 'stroke: {{VALUE}}'
+					'{{WRAPPER}} .flipster__button:hover svg' => 'fill: {{VALUE}}'
 				]
 			]
 		);
