@@ -11266,6 +11266,11 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     margin: 0;
 }
 
+.wpr-dual-title .first,
+.wpr-dual-title .second {
+    display: inline-block;
+}
+
 /*--------------------------------------------------------------
  == Taxonomy List
 --------------------------------------------------------------*/
