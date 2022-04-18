@@ -247,7 +247,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				'name' => 'primary_heading_typography',
 				'label' => __('Typography', 'wpr-addons'),
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} h1.wpr-dual-title .first',
+				'selector' => '{{WRAPPER}} .wpr-dual-title .first',
 			]
 		);
 
@@ -427,7 +427,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				'name' => 'secondary_heading_typography',
 				'label' => __('Typography', 'wpr-addons'),
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} h1.wpr-dual-title .second',
+				'selector' => '{{WRAPPER}} .wpr-dual-title .second',
 			]
 		);
 
