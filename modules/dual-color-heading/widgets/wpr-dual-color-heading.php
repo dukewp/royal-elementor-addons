@@ -651,7 +651,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'icon_size',
 			[
 				'label' => esc_html__('Size', 'wpr-addons'),

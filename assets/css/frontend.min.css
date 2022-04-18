@@ -11407,6 +11407,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
       display: flex;
       justify-content: center;
       align-items: center;
+      overflow: hidden;
   }
 
   .wpr-feature-list {
@@ -11415,6 +11416,11 @@ body:not(.elementor-editor-active) .wpr-template-popup {
   
   .wpr-feature-list-line-yes .wpr-feature-list-icon-wrap {
     position: relative;
+  }
+
+  .wpr-feature-list-icon-wrap img {
+      width: 100%;
+      max-width: 100%;
   }
 
   .wpr-feature-list-center .wpr-feature-list-line {

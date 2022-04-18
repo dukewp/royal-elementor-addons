@@ -81,6 +81,7 @@ class Wpr_Feature_List extends Widget_Base {
 					]
 				],
                 'prefix_class' => 'wpr-feature-list-',
+				'render_type' => 'template',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-feature-list-item' => 'display-flex; justify-content: {{VALUE}}',
 				],
@@ -108,6 +109,7 @@ class Wpr_Feature_List extends Widget_Base {
 					]
 				],
 				'prefix_class' => 'wpr-feature-list-align-',
+				'render_type' => 'template',
 				'default' => 'center',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-feature-list-item' => 'align-items: {{VALUE}};',
@@ -176,7 +178,7 @@ class Wpr_Feature_List extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'list_item_spacing_v',
 			[
 				'label' => esc_html__( 'Vertical Spacing', 'wpr-addons' ),
@@ -200,7 +202,7 @@ class Wpr_Feature_List extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'list_item_spacing_h',
 			[
 				'label' => esc_html__( 'Horizontal Spacing', 'wpr-addons' ),
@@ -226,7 +228,7 @@ class Wpr_Feature_List extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'list_item_title_distance',
 			[
 				'label' => esc_html__( 'Title Distance', 'wpr-addons' ),
@@ -637,26 +639,26 @@ class Wpr_Feature_List extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'feature_list_image_size',
-			[
-				'label' => esc_html__( 'Width', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'%' => [
-						'min' => 5,
-						'max' => 100,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 25,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-feature-list-icon-wrap img' => 'width: {{SIZE}}{{UNIT}}; height: auto;',
-				]
-			]
-		);
+		// $this->add_responsive_control(
+		// 	'feature_list_image_size',
+		// 	[
+		// 		'label' => esc_html__( 'Width', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'range' => [
+		// 			'%' => [
+		// 				'min' => 5,
+		// 				'max' => 100,
+		// 			],
+		// 		],
+		// 		'default' => [
+		// 			'unit' => '%',
+		// 			'size' => 25,
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-feature-list-icon-wrap img' => 'width: {{SIZE}}{{UNIT}}; height: auto;',
+		// 		]
+		// 	]
+		// );
 
 		$this->add_control(
 			'feature_list_icon_wrapper_border_type',
