@@ -541,15 +541,6 @@ class Wpr_Feature_List extends Widget_Base {
 		);
 
 		$this->add_control(
-			'feature_list_icon_heading',
-			[
-				'label' => esc_html__( 'Icon', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::HEADING,
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
 			'feature_list_icon_color',
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
@@ -589,7 +580,7 @@ class Wpr_Feature_List extends Widget_Base {
 		$this->add_responsive_control(
 			'feature_list_icon_size',
 			[
-				'label' => esc_html__( 'Size', 'wpr-addons' ),
+				'label' => esc_html__( 'Icon Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -629,36 +620,6 @@ class Wpr_Feature_List extends Widget_Base {
 				]
 			]
 		);
-
-		$this->add_control(
-			'feature_list_image_heading',
-			[
-				'label' => esc_html__( 'Image', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::HEADING,
-				'separator' => 'before',
-			]
-		);
-
-		// $this->add_responsive_control(
-		// 	'feature_list_image_size',
-		// 	[
-		// 		'label' => esc_html__( 'Width', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'range' => [
-		// 			'%' => [
-		// 				'min' => 5,
-		// 				'max' => 100,
-		// 			],
-		// 		],
-		// 		'default' => [
-		// 			'unit' => '%',
-		// 			'size' => 25,
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-feature-list-icon-wrap img' => 'width: {{SIZE}}{{UNIT}}; height: auto;',
-		// 		]
-		// 	]
-		// );
 
 		$this->add_control(
 			'feature_list_icon_wrapper_border_type',
