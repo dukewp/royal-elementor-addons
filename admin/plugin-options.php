@@ -188,8 +188,9 @@ function wpr_addons_settings_page() {
         $slug = $data[0];
         $url  = $data[1];
         $reff = '?ref=rea-plugin-backend-elements-widget-prev'. $data[2];
+        $class = 'new' === $data[3] ? ' wpr-new-element' : '';
 
-        echo '<div class="wpr-element">';
+        echo '<div class="wpr-element'. $class .'">';
             echo '<div class="wpr-element-info">';
                 echo '<h3>'. $title .'</h3>';
                 echo '<input type="checkbox" name="wpr-element-'. $slug .'" id="wpr-element-'. $slug .'" '. checked( get_option('wpr-element-'. $slug, 'on'), 'on', false ) .'>';
