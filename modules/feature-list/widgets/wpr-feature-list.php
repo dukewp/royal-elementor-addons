@@ -418,7 +418,7 @@ class Wpr_Feature_List extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Icon Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
+				'default' => '#ffffff',
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-feature-list-icon-inner-wrap i' => 'color: {{VALUE}}',
 					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-feature-list-icon-inner-wrap svg' => 'fill: {{VALUE}}',
@@ -471,39 +471,51 @@ class Wpr_Feature_List extends Widget_Base {
 				'fields' => $repeater->get_controls(),
 				'default' => [
 					[
-						'list_title' => esc_html__( 'Title #1', 'wpr-addons' ),
-						'list_content' => esc_html__( 'Item content. Click the edit button to change this text.', 'wpr-addons' ),
+						'list_title' => esc_html__( 'Feature List', 'wpr-addons' ),
+						'list_content' => esc_html__( 'Add multiple feature items, set different icons or images for each feature and also give custom links if needed.', 'wpr-addons' ),
 						'list_icon' => [
-							'value' => 'far fa-flag',
+							'value' => 'fas fa-rocket',
 							'library' => 'solid'
 						],
 						'list_image' =>[
 							'url' => Utils::get_placeholder_image_src(),	
-							'id' => '',						
+							'id' => '',
 						],
 					],
 					[
-						'list_title' => esc_html__( 'Title #2', 'wpr-addons' ),
-						'list_content' => esc_html__( 'Item content. Click the edit button to change this text.', 'wpr-addons' ),
+						'list_title' => esc_html__( 'Key Features', 'wpr-addons' ),
+						'list_content' => esc_html__( 'Choose your style from three different layouts and two unique icon background shapes.', 'wpr-addons' ),
 						'list_icon' => [
 							'value' => 'far fa-flag',
 							'library' => 'solid'
 						],
 						'list_image' =>[
 							'url' => Utils::get_placeholder_image_src(),	
-							'id' => '',						
+							'id' => '',
 						],
 					],
 					[
-						'list_title' => esc_html__( 'Title #3', 'wpr-addons' ),
-						'list_content' => esc_html__( 'Item content. Click the edit button to change this text.', 'wpr-addons' ),
+						'list_title' => esc_html__( 'Connector Line', 'wpr-addons' ),
+						'list_content' => esc_html__( 'Show a connector line between each icon, changes its color and style to fit your unique design. ', 'wpr-addons' ),
 						'list_icon' => [
-							'value' => 'far fa-flag',
+							'value' => 'fas fa-grip-lines-vertical',
 							'library' => 'solid'
 						],
 						'list_image' =>[
 							'url' => Utils::get_placeholder_image_src(),	
-							'id' => '',						
+							'id' => '',
+						],
+					],
+					[
+						'list_title' => esc_html__( 'Custom Styles', 'wpr-addons' ),
+						'list_content' => esc_html__( 'Easily customize every aspect of your list from widget styles but also you can give custom colors to each item as well.', 'wpr-addons' ),
+						'list_icon' => [
+							'value' => 'fas fa-paint-brush',
+							'library' => 'solid'
+						],
+						'list_image' =>[
+							'url' => Utils::get_placeholder_image_src(),	
+							'id' => '',
 						],
 					],
 				],
