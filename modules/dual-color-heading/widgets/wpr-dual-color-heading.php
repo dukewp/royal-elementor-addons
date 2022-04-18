@@ -19,12 +19,9 @@ use Elementor\Group_Control_Image_Size;
 use WprAddons\Classes\Utilities;
 
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-// Security Note: Blocks direct access to the plugin PHP files.
-defined('ABSPATH') || die();
-
-class Wpr_Dual_Color_Heading extends Widget_Base
-{
+class Wpr_Dual_Color_Heading extends Widget_Base {
 
 	public function get_name() {
 		return 'wpr-dual-color-heading';
@@ -60,23 +57,78 @@ class Wpr_Dual_Color_Heading extends Widget_Base
 			]
 		);
 
-		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
-
 		$this->add_control(
 			'content_style',
 			[
-				'label' => esc_html__('Content Style', 'wpr-addons'),
+				'label' => esc_html__('Select Layout', 'wpr-addons'),
 				'type' => \Elementor\Controls_Manager::SELECT,
 				'default' => 'default',
 				'options' => [
 					'default'  => esc_html__('Default', 'wpr-addons'),
-					'icon-top'  => esc_html__('Icon on Top', 'wpr-addons'),
-					'icon-and-desc-top'  => esc_html__('Icon & Desc on top', 'wpr-addons'),
-					'desc-top'  => esc_html__('Desc on top', 'wpr-addons'),
+					'icon-top'  => esc_html__('Icon Top', 'wpr-addons'),
+					'desc-top'  => esc_html__('Desccription Top', 'wpr-addons'),
+					'icon-and-desc-top'  => esc_html__('Heading Bottom', 'wpr-addons'),
 				],
 				'prefix_class' => 'wpr-dual-heading-',
 			]
 		);
+
+		$this->add_responsive_control(
+			'text_align',
+			[
+				'label' => __('Alignment', 'wpr-addons'),
+				'type' => \Elementor\Controls_Manager::CHOOSE,
+				'options' => [
+					'left' => [
+						'title' => __('Left', 'wpr-addons'),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => __('Center', 'wpr-addons'),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => __('Right', 'wpr-addons'),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				'default' => 'center',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-dual-heading-wrap' => 'text-align: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'title_first',
+			[
+				'label'   => __('Primary Heading', 'wpr-addons'),
+				'type'    => Controls_Manager::TEXT,
+				'default' => __('Dual Color', 'wpr-addons'),
+				'separator' => 'before',
+				'label_block' => true
+			]
+		);
+
+		$this->add_control(
+			'title_second',
+			[
+				'label'   => __('Secondary Heading', 'wpr-addons'),
+				'type'    => Controls_Manager::TEXT,
+				'default' => __('Heading Widget', 'wpr-addons'),
+				'label_block' => true
+			]
+		);
+
+		$this->add_control(
+			'description',
+			[
+				'label'   => __('Description', 'wpr-addons'),
+				'type'    => Controls_Manager::TEXTAREA,
+				'default' => __('Description text or Sub Heading', 'wpr-addons'),
+			]
+		);
+
 		$this->add_control(
 			'show_icon',
 			[
@@ -105,63 +157,6 @@ class Wpr_Dual_Color_Heading extends Widget_Base
 				'condition' => [
 					'show_icon' => 'yes'
 				]
-			]
-		);
-
-		$this->add_control(
-			'title_first',
-			[
-				'label'   => __('Title (first part)', 'wpr-addons'),
-				'type'    => Controls_Manager::TEXT,
-				'default' => __('ROYAL  ADDONS  IS', 'wpr-addons'),
-				'separator' => 'before',
-				'label_block' => true
-			]
-		);
-
-		$this->add_control(
-			'title_second',
-			[
-				'label'   => __('Title (second part)', 'wpr-addons'),
-				'type'    => Controls_Manager::TEXT,
-				'default' => __('THE  BEST  OF  ALL', 'wpr-addons'),
-				'label_block' => true
-			]
-		);
-
-		$this->add_control(
-			'description',
-			[
-				'label'   => __('Description', 'wpr-addons'),
-				'type'    => Controls_Manager::TEXTAREA,
-				'default' => __('Description', 'wpr-addons'),
-			]
-		);
-		$this->add_responsive_control(
-			'text_align',
-			[
-				'label' => __('Alignment', 'wpr-addons'),
-				'type' => \Elementor\Controls_Manager::CHOOSE,
-				'options' => [
-					'left' => [
-						'title' => __('Left', 'wpr-addons'),
-						'icon' => 'eicon-text-align-left',
-					],
-					'center' => [
-						'title' => __('Center', 'wpr-addons'),
-						'icon' => 'eicon-text-align-center',
-					],
-					'right' => [
-						'title' => __('Right', 'wpr-addons'),
-						'icon' => 'eicon-text-align-right',
-					],
-				],
-				'default' => 'center',
-				'separator' => 'before',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-dual-heading-wrap' => 'text-align: {{VALUE}}',
-				]
-				// 'toggle' => true,
 			]
 		);
 
@@ -251,7 +246,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base
 		$this->add_control(
 			'first_text_color',
 			[
-				'label' => __('First half', 'wpr-addons'),
+				'label' => __('Primary Heading', 'wpr-addons'),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'default' => 'black',
 				'selectors' => [
@@ -264,7 +259,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base
 		$this->add_control(
 			'second_text_color',
 			[
-				'label' => __('Second half', 'wpr-addons'),
+				'label' => __('Secondary Heading', 'wpr-addons'),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'default' => 'orange',
 				'selectors' => [
