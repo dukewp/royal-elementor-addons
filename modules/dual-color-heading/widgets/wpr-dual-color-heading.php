@@ -121,7 +121,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 		$this->add_control(
 			'show_description',
 			[
-				'label' => __('Show Icon', 'wpr-addons'),
+				'label' => __('Show Description', 'wpr-addons'),
 				'type' => Controls_Manager::SWITCHER,
 				'label_on' => __('Show', 'wpr-addons'),
 				'label_off' => __('Hide', 'wpr-addons'),
@@ -134,7 +134,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 		$this->add_control(
 			'description',
 			[
-				'label'   => __('Description', 'wpr-addons'),
+				'label'   => __('', 'wpr-addons'),
 				'type'    => Controls_Manager::TEXTAREA,
 				'default' => __('Description text or Sub Heading', 'wpr-addons'),
 				'condition' => [
@@ -499,6 +499,9 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 			[
 				'label' => esc_html__('Description', 'wpr-addons'),
 				'tab' => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'show_description' => 'yes'
+				]
 			]
 		);
 
@@ -551,6 +554,9 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 			[
 				'label' => esc_html__('Icon', 'wpr-addons'),
 				'tab' => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'show_icon' => 'yes'
+				]
 			]
 		);
 
@@ -632,8 +638,13 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 			<div class="wpr-dual-heading-wrap">
 				<div class="wpr-dual-title-wrap">
 					<h1 class="wpr-dual-title">
-						<span class="first"><?php echo wp_kses($settings['primary_heading'], []); ?></span>&nbsp;
+					<?php if (!empty($settings['primary_heading'])) : ?>
+						<span class="first"><?php echo wp_kses($settings['primary_heading'], []); ?></span>
+					<?php endif; ?>
+					
+					<?php if (!empty($settings['secondary_heading'])) : ?>
 						<span class="second"><?php echo wp_kses($settings['secondary_heading'], []); ?></span>
+					<?php endif; ?>
 					</h1>
 				</div>
 				
