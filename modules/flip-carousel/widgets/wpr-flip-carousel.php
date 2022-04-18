@@ -273,7 +273,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'label' => __( 'Show Navigation', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
+				'default' => '',
 				'widescreen_default' => 'yes',
 				'laptop_default' => 'yes',
 				'tablet_extra_default' => 'yes',
@@ -282,7 +282,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'mobile_default' => 'yes',
 				'return_value' => 'yes',
 				'separator' => 'before',
-				// 'render_type' => 'template',
 				'selectors_dictionary' => [
 					'' => 'none',
 					'yes' => 'flex'
@@ -298,7 +297,10 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'label' => esc_html__( 'Navigation Icon', 'wpr-addons' ),
 				'type' => 'wpr-arrow-icons',
-				'default' => 'fas fa-angle'
+				'default' => 'fas fa-angle',
+				'condition' => [
+					'enable_navigation' => 'yes'
+				]
 			]
 		);
 		
@@ -309,7 +311,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'separator' => 'before',
-				'default' => 'yes'
+				'default' => ''
 			]
 		);
 		
@@ -337,7 +339,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'label' => __( 'Show Image Caption', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
-				'default' => 'yes',
+				'default' => '',
 				'separator' => 'before'
 			]
 		);
@@ -477,7 +479,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#0AA79A',
+				'default' => '#423EC0',
 				'selectors' => [
 					'{{WRAPPER}} .flipster__button:hover' => 'background-color: {{VALUE}}',
 				],
@@ -714,6 +716,9 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .flipster__nav__link',
 				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
 					'font_weight' => [
 						'default' => '400',
 					],
@@ -721,7 +726,10 @@ class Wpr_Flip_Carousel extends Widget_Base {
 						'default' => 'Roboto',
 					],
 					'font_size'   => [
-						'default' => '14px',
+						'default' => [
+							'size' => '14',
+							'unit' => 'px',
+						]
 					]
 				]
 			]
@@ -759,7 +767,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#ddd',
+				'default' => '#DDDDDD',
 				'selectors' => [
 					'{{WRAPPER}} .flipster__nav__item .flipster__nav__link:hover' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .flipster__nav__item--current .flipster__nav__link' => 'color: {{VALUE}}',
@@ -772,7 +780,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000000',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .flipster__nav__item:hover' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .flipster__nav__item--current' => 'background-color: {{VALUE}} !important',
@@ -785,7 +793,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#ddd',
+				'default' => '#DDDDDD',
 				'selectors' => [
 					'{{WRAPPER}} .flipster__nav__item:hover' => 'border-color: {{VALUE}}'
 				]
@@ -891,7 +899,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
 					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
 				],
-				'default' => 'solid',
+				'default' => 'none',
 				'selectors' => [
 					'{{WRAPPER}} .flipster__nav__item' => 'border-style: {{VALUE}};',
 				],
@@ -916,10 +924,10 @@ class Wpr_Flip_Carousel extends Widget_Base {
 					]
 				],
 				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
 					'unit' => 'px'
 				],			
 				'selectors' => [
@@ -1015,6 +1023,26 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'label' => __( 'Typography', 'wpr-addons' ),
 				'scheme' => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .flipcaption',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_weight' => [
+						'default' => '400',
+					],
+					'font_family' => [
+						'default' => 'Roboto',
+					],
+					'font_style' => [
+						'default' => 'normal'
+					],
+					'font_size'   => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px',
+						]
+					]
+				]
 			]
 		);
 
