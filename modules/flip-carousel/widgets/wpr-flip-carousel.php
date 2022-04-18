@@ -1162,7 +1162,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 
     protected function render() {
 		$settings = $this->get_settings_for_display();
-		var_dump(WPR_ADDONS_ASSETS_URL . 'img/logo-slider-450x450.png');
 		
         if ( $settings['carousel_elements'] ) {
 			$i = 0;
@@ -1170,8 +1169,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
             echo '<div class="wpr-flip-carousel" data-settings="'. esc_attr($this->flip_carousel_attributes($settings)) .'">';
             echo '<ul class="wpr-flip-items-wrapper">';
             foreach ( $settings['carousel_elements'] as $key => $element ) {
-				var_dump($element['img']['id']);
-				var_dump($element['img']['url']);
 				if ( ! wpr_fs()->can_use_premium_code() && $key === 4 ) {
 					break;
 				}
@@ -1183,8 +1180,10 @@ class Wpr_Flip_Carousel extends Widget_Base {
 
 				if ( Utils::get_placeholder_image_src() === $element['image']['url'] ) {
 					$flip_slide_image = '<img src='. Utils::get_placeholder_image_src() .' />';
+				} if (WPR_ADDONS_ASSETS_URL . 'img/logo-slider-450x450.png' === $element['image']['url']) {
+					$flip_slide_image = '<img src="'. $element['image']['url'] .'" />';
 				} else {
-					$flip_slide_image = '<img src="'.  Group_Control_Image_Size::get_attachment_image_src( $element['image']['id'], 'flip_carousel_image_size', $settings ) .'" />';
+					$flip_slide_image = '<img src="'.  Group_Control_Image_Size::get_attachment_image_src( $element['image']['url'], 'flip_carousel_image_size', $settings ) .'" />';
 				}
 
 				if ( 'yes' === $settings['enable_figcaption'] ) {
