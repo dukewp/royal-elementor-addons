@@ -84,10 +84,12 @@ class Wpr_Facebook_Feed extends Widget_Base {
 		$filter_this = ['nature-v1 | cybersecurity-v1 | wedding-v1 | wedding-v1 | wedding-v1 | wedding-v1 | wedding-v1 | wedding-v1 | medical-v1'];
 
 		$cnt = count(array_filter($filter_this, function($element) {
-			return $element['your_key']=='foo';
+			return $element;
 		}));
 
-		var_dump($cnt);
+		$unique_arr = array_unique($filter_this);
+
+		var_dump($unique_arr);
         
         echo '<div>';
 
