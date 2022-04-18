@@ -300,10 +300,18 @@ function import_elementor_site_settings( $kit ) {
 */
 function setup_wpr_templates( $kit ) {
     
-    // Set Home Page
-    $page = get_page_by_path('home-'. $kit);
-    update_option( 'show_on_front', 'page' );
-    update_option( 'page_on_front', $page->ID );
+    // Set Home & Blog Pages
+    $home_page = get_page_by_path('home-'. $kit);
+    $blog_page = get_page_by_path('blog-'. $kit);
+
+    if ( $home_page ) {
+        update_option( 'show_on_front', 'page' );
+        update_option( 'page_on_front', $home_page->ID );
+        
+        if ( $blog_page ) {
+            update_option( 'page_for_posts', $blog_page->ID );
+        }
+    }
 
     // Set Headers and Footers
     update_option('wpr_header_conditions', '{"user-header-'. $kit .'-header":["global"]}');
