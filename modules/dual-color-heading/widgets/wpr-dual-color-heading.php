@@ -100,7 +100,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 		$this->add_control(
 			'dual_heading_tag',
 			[
-				'label' => esc_html__( 'Heading HTML Tag', 'wpr-addons' ),
+				'label' => esc_html__( 'HTML Tag', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'h1' => 'H1',
