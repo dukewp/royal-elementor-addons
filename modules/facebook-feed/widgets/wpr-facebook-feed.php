@@ -83,9 +83,11 @@ class Wpr_Facebook_Feed extends Widget_Base {
 
 		$filter_this = ['nature-v1 | cybersecurity-v1 | wedding-v1 | wedding-v1 | wedding-v1 | wedding-v1 | wedding-v1 | wedding-v1 | medical-v1'];
 
-		// $cnt = count(array_filter($filter_this, function($element) {
-		// 	return $element['your_key']=='foo';
-		// }));
+		$cnt = count(array_filter($filter_this, function($element) {
+			return $element['your_key']=='foo';
+		}));
+
+		var_dump($cnt);
         
         echo '<div>';
 
