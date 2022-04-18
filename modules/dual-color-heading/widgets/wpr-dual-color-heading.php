@@ -318,12 +318,6 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-dual-title .first' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				]
@@ -498,12 +492,6 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-dual-title .second' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				]
