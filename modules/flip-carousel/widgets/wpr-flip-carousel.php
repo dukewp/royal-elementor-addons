@@ -76,7 +76,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'label' => __( 'Choose Image', 'wpr-addons' ),
 				'type' => Controls_Manager::MEDIA,
 				'default' => [
-					'url' => Utils::get_placeholder_image_src(),
+					'url' => WPR_ADDONS_ASSETS_URL . 'img/logo-slider-450x450.png',
 				],
 			]
 		);
@@ -131,12 +131,15 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'default' => [
 					[
 						'element_select' => esc_html__('title'),
+						'image' => WPR_ADDONS_ASSETS_URL . 'img/logo-slider-450x450.png'
 					],
 					[
 						'element_select' => esc_html__('title'),
+						'image' => WPR_ADDONS_ASSETS_URL . 'img/logo-slider-450x450.png'
 					],
 					[
 						'element_select' => esc_html__('title'),
+						'image' => WPR_ADDONS_ASSETS_URL . 'img/logo-slider-450x450.png'
 					],
 				],
 			]
@@ -1153,6 +1156,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 
     protected function render() {
 		$settings = $this->get_settings_for_display();
+		var_dump(WPR_ADDONS_ASSETS_URL . 'img/logo-slider-450x450.png');
 		
         if ( $settings['carousel_elements'] ) {
 			$i = 0;
@@ -1160,6 +1164,8 @@ class Wpr_Flip_Carousel extends Widget_Base {
             echo '<div class="wpr-flip-carousel" data-settings="'. esc_attr($this->flip_carousel_attributes($settings)) .'">';
             echo '<ul class="wpr-flip-items-wrapper">';
             foreach ( $settings['carousel_elements'] as $key => $element ) {
+				var_dump($element['img']['id']);
+				var_dump($element['img']['url']);
 				if ( ! wpr_fs()->can_use_premium_code() && $key === 4 ) {
 					break;
 				}
