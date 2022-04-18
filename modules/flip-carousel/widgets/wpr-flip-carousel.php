@@ -357,6 +357,12 @@ class Wpr_Flip_Carousel extends Widget_Base {
 
 		$this->end_controls_section();
 		
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'flip-carousel', [
+			'Add Unlimited Slides',
+			'Slider Autoplay options',
+		] );
+
         $this->start_controls_section(
 			'section_flip_carousel_navigation_styles',
 			[
