@@ -655,7 +655,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
         ?>
 			<div class="wpr-dual-heading-wrap">
 				<div class="wpr-dual-title-wrap">
-					<h1 class="wpr-dual-title">
+					<<?php echo $settings['dual_heading_tag']?> class="wpr-dual-title">
 					<?php if (!empty($settings['primary_heading'])) : ?>
 						<span class="first"><?php echo wp_kses($settings['primary_heading'], []); ?></span>
 					<?php endif; ?>
@@ -663,7 +663,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 					<?php if (!empty($settings['secondary_heading'])) : ?>
 						<span class="second"><?php echo wp_kses($settings['secondary_heading'], []); ?></span>
 					<?php endif; ?>
-					</h1>
+					</<?php echo $settings['dual_heading_tag']?>>
 				</div>
 				
 				<?php if ('yes' == $settings['show_description']) { ?>
