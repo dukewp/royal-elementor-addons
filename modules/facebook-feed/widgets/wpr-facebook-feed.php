@@ -80,17 +80,16 @@ class Wpr_Facebook_Feed extends Widget_Base {
         echo '<div class="wpr-facebook-feed">';
         
         echo '<a target="_blank" class="wpr-login-to-facebook" href="https://www.facebook.com/v13.0/dialog/oauth?client_id=1184287221975469&redirect_uri=https://reastats.kinsta.cloud/token/social-network.php?state={st=state123abc,ds=123456789}&state={st=state123abc,ds=123456789}">Log In</a>';
+		?>
 
-		$filter_this = ['nature-v1 | cybersecurity-v1 | wedding-v1 | wedding-v1 | wedding-v1 | wedding-v1 | wedding-v1 | wedding-v1 | medical-v1'];
+			<div
+				class="fb-like"
+				data-share="true"
+				data-width="450"
+				data-show-faces="true">
+			</div>
 
-		$cnt = count(array_filter($filter_this, function($element) {
-			return $element;
-		}));
-
-		$unique_arr = array_unique($filter_this);
-
-		var_dump($unique_arr);
-        
+		<?php
         echo '<div>';
 
     }
