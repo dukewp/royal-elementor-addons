@@ -180,7 +180,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			'spacing',
 			[
 				'label' => __( 'Slide Spacing', 'wpr-addons' ),
-				'description' => esc_html__('Change Image Size if gutter corrupts carousel layout', 'wpr-addons'),
 				'type' => Controls_Manager::NUMBER,
 				'default' => -0.6,
 				'min' => -1,
