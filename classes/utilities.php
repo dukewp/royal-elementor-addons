@@ -33,9 +33,12 @@ class Utilities {
 			'Countdown' => ['countdown', 'https://royal-elementor-addons.com/elementor-countdown-widget/', '', ''],
 			'Progress Bar' => ['progress-bar', 'https://royal-elementor-addons.com/elementor-progress-bar-widget/', '', ''],
 			'Tabs' => ['tabs', 'https://royal-elementor-addons.com/elementor-tabs-widget/', '', ''],
+			'Dual Color Heading' => ['dual-color-heading', '', '', 'new'],
 			'Advanced Text' => ['advanced-text', 'https://royal-elementor-addons.com/elementor-advanced-text-widget/', '', ''],
+			'Flip Carousel' => ['flip-carousel', '', '', 'new'],
 			'Flip Box' => ['flip-box', 'https://royal-elementor-addons.com/elementor-flip-box-widget/', '', ''],
 			'Promo Box' => ['promo-box', 'https://royal-elementor-addons.com/elementor-promo-box-widget/', '', ''],
+			'Feature List' => ['feature-list', '', '', 'new'],
 			'Before After' => ['before-after', 'https://royal-elementor-addons.com/elementor-before-after-widget/', '', ''],
 			'Image Hotspots' => ['image-hotspots', 'https://royal-elementor-addons.com/elementor-image-hotspot-widget/', '', ''],
 			'Forms' => ['forms', 'https://royal-elementor-addons.com/elementor-forms-widget/', '', ''],
@@ -56,9 +59,6 @@ class Utilities {
 			'Popup Trigger' => ['popup-trigger', '', '', ''],
 			'Taxonomy List' => ['taxonomy-list', '', '', ''],
 			'Template' => ['elementor-template', '', '', ''],
-			'Flip Carousel' => ['flip-carousel', '', '', 'new'],
-			'Feature List' => ['feature-list', '', '', 'new'],
-			'Dual Color Heading' => ['dual-color-heading', '', '', 'new'],
 			// 'Random Image' => ['random-image', '', ''],
 		];
 	}
