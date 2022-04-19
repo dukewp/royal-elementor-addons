@@ -226,17 +226,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 		);
 		
 		$this->add_control(
-			'play_on_touch',
-			[
-				'label' => __( 'Slide on Touch', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'separator' => 'before',
-				'default' => 'yes',
-			]
-		);
-		
-		$this->add_control(
 			'play_on_click',
 			[
 				'label' => __( 'Slide on Click', 'wpr-addons' ),
@@ -276,7 +265,8 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .flipster__button' => 'display:{{VALUE}} !important;',
-				]
+				],
+				'render_type' => 'template',
 			]
 		);
 
@@ -1145,7 +1135,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			'autoplay_milliseconds' => $settings['autoplay_milliseconds'],
 			'pause_on_hover' => $settings['pause_on_hover'],
 			'play_on_click' => $settings['play_on_click'],
-			'play_on_touch' => $settings['play_on_touch'],
 			'play_on_scroll' => $settings['play_on_scroll'],
 			'pagination_position' => $settings['pagination_position'],
 			'spacing' => $settings['spacing'],

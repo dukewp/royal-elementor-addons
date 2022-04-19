@@ -73,7 +73,7 @@ class Wpr_Feature_List extends Widget_Base {
 					],
 					'center' => [
 						'title' => esc_html__( 'Center', 'wpr-addons' ),
-						'icon' => 'eicon-h-align-center',
+						'icon' => 'eicon-v-align-middle',
 					],
 					'right' => [
 						'title' => esc_html__( 'Right', 'wpr-addons' ),
@@ -360,7 +360,7 @@ class Wpr_Feature_List extends Widget_Base {
 		$repeater->add_control(
 			'list_title_url',
 			[
-				'label' => esc_html__( 'Link', 'wpr-addons' ),
+				'label' => esc_html__( 'Title Link', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::URL,
 				'placeholder' => esc_html__( 'https://your-link.com', 'wpr-addons' ),
 				'default' => [
@@ -585,7 +585,7 @@ class Wpr_Feature_List extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 5,
-						'max' => 200,
+						'max' => 100,
 					],
 				],
 				'default' => [
@@ -595,7 +595,8 @@ class Wpr_Feature_List extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-feature-list-icon-wrap i' => 'font-size: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-feature-list-icon-wrap svg' => 'width: {{SIZE}}{{UNIT}}; height: auto;',
-				]
+				],
+				'separator' => 'before',
 			]
 		);
 
@@ -719,7 +720,7 @@ class Wpr_Feature_List extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 1,
-						'max' => 15,
+						'max' => 10,
 					],
 				],
 				'default' => [

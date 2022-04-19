@@ -56,6 +56,24 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 		);
 
 		$this->add_control(
+			'dual_heading_tag',
+			[
+				'label' => esc_html__( 'HTML Tag', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => 'H1',
+					'h2' => 'H2',
+					'h3' => 'H3',
+					'h4' => 'H4',
+					'h5' => 'H5',
+					'h6' => 'H6',
+					'div' => 'Div'
+				],
+				'default' => 'h2'
+			]
+		);
+
+		$this->add_control(
 			'content_style',
 			[
 				'label' => esc_html__('Select Layout', 'wpr-addons'),
@@ -94,24 +112,6 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-dual-heading-wrap' => 'text-align: {{VALUE}}',
 				]
-			]
-		);
-
-		$this->add_control(
-			'dual_heading_tag',
-			[
-				'label' => esc_html__( 'HTML Tag', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'h1' => 'H1',
-					'h2' => 'H2',
-					'h3' => 'H3',
-					'h4' => 'H4',
-					'h5' => 'H5',
-					'h6' => 'H6',
-					'div' => 'Div'
-				],
-				'default' => 'h2'
 			]
 		);
 
@@ -630,15 +630,6 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 		);
 
 		$this->add_control(
-			'icon_style',
-			[
-				'label' => __('Icon', 'wpr-addons'),
-				'type' => Controls_Manager::HEADING,
-				'separator' => 'before'
-			]
-		);
-
-		$this->add_control(
 			'icon_color',
 			[
 				'label' => __('Color', 'wpr-addons'),
@@ -647,7 +638,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-dual-heading-icon-wrap' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-dual-heading-icon-wrap svg' => 'fill: {{VALUE}}',
-				],
+				]
 			]
 		);
 
@@ -669,7 +660,8 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-dual-heading-icon-wrap' => 'font-size: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-dual-heading-icon-wrap svg' => 'width: {{SIZE}}{{UNIT}};'
-				]
+				],
+				'separator' => 'before'
 			]
 		);
 
