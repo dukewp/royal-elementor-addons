@@ -77,8 +77,9 @@ and other custom branding related settings)
 **Elementor Theme Builder Templates Kits**
 
 - [**Personal Blog**](https://demosites.royal-elementor-addons.com/personal-blog-v1/?ref=rea-wpo-pp-details-tab)
-- [**Blog Magazine v1**](https://demosites.royal-elementor-addons.com/magazine-blog-v1/?ref=rea-wpo-pp-details-tab)
-- [**Blog Magazine v2**](https://demosites.royal-elementor-addons.com/magazine-blog-v2/?ref=rea-wpo-pp-details-tab)
+- [**Magazine Blog v1**](https://demosites.royal-elementor-addons.com/magazine-blog-v1/?ref=rea-wpo-pp-details-tab)
+- [**Magazine Blog v2**](https://demosites.royal-elementor-addons.com/magazine-blog-v2/?ref=rea-wpo-pp-details-tab)
+- [**Magazine Blog v3**](https://demosites.royal-elementor-addons.com/magazine-blog-v3/?ref=rea-wpo-pp-details-tab)
 - [**Food Blog**](https://demosites.royal-elementor-addons.com/food-blog-v1/?ref=rea-wpo-pp-details-tab)
 - [**Travel Blog**](https://demosites.royal-elementor-addons.com/travel-blog-v1/?ref=rea-wpo-pp-details-tab)
 
@@ -328,6 +329,13 @@ post_max_size 64M
 
 == Changelog ==
 
+= Royal Elementor Addons v1.3.40 - 2022-19-04 =
+* ADDED: Royal Elementor Theme Builder [**Magazine Blog v3**](https://demosites.royal-elementor-addons.com/magazine-blog-v3/?ref=rea-wpo-pp-details-tab) Free Templates Kit.
+* ADDED: Royal Elementor Theme Builder [**Video Tutorial**](https://www.youtube.com/watch?v=cwkhwO_rPuo).
+* ADDED: Elementor Flip Carousel widget.
+* ADDED: Elementor Features List widget.
+* ADDED: Elementor Dual Color Heading widget.
+
 = Royal Elementor Addons v1.3.39 - 2022-12-04 =
 * FIXED: Elementor Theme Builder minor issues.
 
@@ -335,11 +343,11 @@ post_max_size 64M
 * ADDED: Elementor Theme Builder. Customize every fundamental part of your WordPress site without coding including your Header, Footer, Archives, Posts, Default Pages, 404 Pages, etc...
 * ADDED: Elementor Theme Builder Widgets: Post Title, Post Media, Post Meta, Post Navigation, Post Comments, Post Author, Archive Page Title.
 * ADDED: Elementor Theme Builder Demos:
- - [**Personal Blog**](https://demosites.royal-elementor-addons.com/personal-blog-v1/?ref=rea-wpo-pp-details-tab)
-- [**Blog Magazine v1**](https://demosites.royal-elementor-addons.com/magazine-blog-v1/?ref=rea-wpo-pp-details-tab)
-- [**Blog Magazine v2**](https://demosites.royal-elementor-addons.com/magazine-blog-v2/?ref=rea-wpo-pp-details-tab)
+- [**Personal Blog**](https://demosites.royal-elementor-addons.com/personal-blog-v1/?ref=rea-wpo-pp-details-tab)
+- [**Magazine Blog v1**](https://demosites.royal-elementor-addons.com/magazine-blog-v1/?ref=rea-wpo-pp-details-tab)
+- [**Magazine Blog v2**](https://demosites.royal-elementor-addons.com/magazine-blog-v2/?ref=rea-wpo-pp-details-tab)
 - [**Food Blog**](https://demosites.royal-elementor-addons.com/food-blog-v1/?ref=rea-wpo-pp-details-tab)
-- [**Blog Magazine**](https://demosites.royal-elementor-addons.com/travel-blog-v1/?ref=rea-wpo-pp-details-tab)
+- [**Travel Blog**](https://demosites.royal-elementor-addons.com/travel-blog-v1/?ref=rea-wpo-pp-details-tab)
 
 = Royal Elementor Addons v1.3.37 - 2022-04-04 =
 * FIXED: Elementor Header, Elementor Footer, Elementor Popup import issue.
