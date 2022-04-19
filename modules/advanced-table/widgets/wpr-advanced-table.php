@@ -2914,11 +2914,25 @@ class Wpr_AdvancedTable extends Widget_Base {
 		
 		$x = 0;
 		
-		$sorting_icon = 'yes' === $settings['enable_table_sorting'] ? '<span class="wpr-sorting-icon"><i class="fas fa-sort"></i></span>' : ''; ?>
+		$sorting_icon = 'yes' === $settings['enable_table_sorting'] ? '<span class="wpr-sorting-icon"><i class="fas fa-sort"></i></span>' : ''; 
+		
+		$this->add_render_attribute(
+			'wpr_table_inner_container_attributes',
+			[
+				'class' => 'wpr-table-inner-container',
+				'data-table-columns' => !empty($settings['columns_number']) ? $settings['columns_number'] : '',
+				'data-table-sorting' => $settings['enable_table_sorting'],
+				'data-custom-pagination' => $settings['enable_custom_pagination'],
+				'data-row-pagination' => $settings['enable_row_pagination'],
+				'data-entry-info' => $settings['enable_entry_info'],
+				'data-rows-per-page' => isset($settings['table_items_per_page']) ? $settings['table_items_per_page'] : ''
+			]
+		);
 
+		?>
 		
 		<div class="wpr-table-container">
-		<div class="wpr-table-inner-container" data-table-columns="<?php echo !empty($settings['columns_number']) ? $settings['columns_number'] : '' ?>" data-table-sorting="<?php echo $settings['enable_table_sorting']; ?>" data-custom-pagination="<?php echo $settings['enable_custom_pagination'] ?>" data-row-pagination="<?php echo $settings['enable_row_pagination'] ?>" data-entry-info="<?php echo $settings['enable_entry_info'] ?>" data-rows-per-page="<?php echo isset($settings['table_items_per_page']) ? $settings['table_items_per_page'] : ''; ?>">
+		<div <?php echo $this->get_render_attribute_string( 'wpr_table_inner_container_attributes' ); ?>>
 
 		<?php if ( isset($settings['choose_csv_type']) && 'file' === $settings['choose_csv_type'] ) {
 
