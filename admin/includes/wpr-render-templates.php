@@ -33,7 +33,7 @@ class WPR_Render_Templates {
 	/**
 	** Constructor
 	*/
-	public function __construct() {
+	public function __construct( $only_hf = false ) {
 
 		// Elementor Frontend
 		self::$elementor_instance = \Elementor\Plugin::instance();
@@ -66,13 +66,14 @@ class WPR_Render_Templates {
 			add_action( 'elementor/page_templates/canvas/after_content', [ $this, 'add_canvas_footer' ], 9 );
 		}
 
-		// Theme Builder
-		add_filter( 'template_include', [ $this, 'convert_to_canvas' ], 12 ); // 12 after WP Pages and WooCommerce.
-		add_action( 'elementor/page_templates/canvas/wpr_print_content', [ $this, 'canvas_page_content_display' ] );
-
 		// Scripts and Styles
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 
+		// Theme Builder
+		if ( !$only_hf ) { // Prevent Loading in Header or Footer Templates
+			add_filter( 'template_include', [ $this, 'convert_to_canvas' ], 12 ); // 12 after WP Pages and WooCommerce.
+			add_action( 'elementor/page_templates/canvas/wpr_print_content', [ $this, 'canvas_page_content_display' ] );
+		}
 	}
 
     /**

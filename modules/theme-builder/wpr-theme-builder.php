@@ -44,51 +44,54 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 		$taxonomy_archives = $post_taxonomies;
 
 		$id = get_the_ID();
-		$template_type = get_post_meta( $id, '_wpr_template_type', true  );
-		$template_slug = get_post($id)->post_name;
 		$query = '';
 
-		if ( 0 === strpos( $template_type, 'single' ) ) {
-			$conds = json_decode(get_option('wpr_single_conditions'));
+		if ( false !== $id ) {
+			$template_type = get_post_meta( $id, '_wpr_template_type', true  );
+			$template_slug = get_post($id)->post_name;
 			
-			if ( $template_slug == Utilities::get_template_slug($conds, 'single/posts', $id) ) {
-				$query = 'post';
-			} elseif ( $template_slug == Utilities::get_template_slug($conds, 'single/pages', $id) ) {
-				$query = 'page';
-			} else {
-				foreach ($post_types as $post_type => $value) {
-					if ( 'post' === $post_type || 'page' === $post_type ) {
-						continue;
-					}
+			if ( 0 === strpos( $template_type, 'single' ) ) {
+				$conds = json_decode(get_option('wpr_single_conditions'));
+				
+				if ( $template_slug == Utilities::get_template_slug($conds, 'single/posts', $id) ) {
+					$query = 'post';
+				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'single/pages', $id) ) {
+					$query = 'page';
+				} else {
+					foreach ($post_types as $post_type => $value) {
+						if ( 'post' === $post_type || 'page' === $post_type ) {
+							continue;
+						}
 
-					if ( $template_slug == Utilities::get_template_slug($conds, 'single/'. $post_type, $id) ) {
-						$query = $post_type;
+						if ( $template_slug == Utilities::get_template_slug($conds, 'single/'. $post_type, $id) ) {
+							$query = $post_type;
+						}
 					}
 				}
-			}
-		} else {
-			$conds = json_decode(get_option('wpr_archive_conditions'));
-
-			if ( $template_slug == Utilities::get_template_slug($conds, 'archive/posts', $id) || $template_slug == Utilities::get_template_slug($conds, 'archive/all_archives', $id) ) {
-				$query = 'archive/posts';
-			} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/search', $id) ) {
-				$query = 'archive/search';
-			} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/author', $id) ) {
-				$query = 'archive/author';
-			} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/date', $id) ) {
-				$query = 'archive/date';
-			} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/categories', $id) ) {
-				$query = 'category';
-			} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/tags', $id) ) {
-				$query = 'post_tag';
 			} else {
-				foreach ($post_taxonomies as $tax => $value) {
-					if ( 'category' === $tax || 'tag' === $tax ) {
-						continue;
-					}
+				$conds = json_decode(get_option('wpr_archive_conditions'));
 
-					if ( $template_slug == Utilities::get_template_slug($conds, 'archive/'. $tax, $id) ) {
-						$query = $tax;
+				if ( $template_slug == Utilities::get_template_slug($conds, 'archive/posts', $id) || $template_slug == Utilities::get_template_slug($conds, 'archive/all_archives', $id) ) {
+					$query = 'archive/posts';
+				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/search', $id) ) {
+					$query = 'archive/search';
+				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/author', $id) ) {
+					$query = 'archive/author';
+				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/date', $id) ) {
+					$query = 'archive/date';
+				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/categories', $id) ) {
+					$query = 'category';
+				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/tags', $id) ) {
+					$query = 'post_tag';
+				} else {
+					foreach ($post_taxonomies as $tax => $value) {
+						if ( 'category' === $tax || 'tag' === $tax ) {
+							continue;
+						}
+
+						if ( $template_slug == Utilities::get_template_slug($conds, 'archive/'. $tax, $id) ) {
+							$query = $tax;
+						}
 					}
 				}
 			}

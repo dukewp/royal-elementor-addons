@@ -99,9 +99,17 @@ function wpr_addons_settings_page() {
     <p><?php esc_html_e( 'The most powerful Elementor Addons in the universe.', 'wpr-addons' ); ?></p>
 
     <?php if ( empty(get_option('wpr_wl_plugin_links')) ) : ?>
-    <a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-plugin-prev-btn#widgets" target="_blank" class="button wpr-options-button">
-        <span><?php echo esc_html( 'View Plugin Demo', 'wpr-addons' ); ?></span>
-    </a>
+    <div class="wpr-preview-buttons">
+        <a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-plugin-prev-btn#widgets" target="_blank" class="button wpr-options-button">
+            <span><?php echo esc_html( 'View Plugin Demo', 'wpr-addons' ); ?></span>
+            <span class="dashicons dashicons-external"></span>
+        </a>
+
+        <a href="https://www.youtube.com/watch?v=rkYQfn3tUc0" class="wpr-use-widgets-tutorial wpr-options-button button" target="_blank">
+            <?php echo esc_html( 'How to use Widgets', 'wpr-addons' ); ?>
+            <span class="dashicons dashicons-video-alt3"></span>
+        </a>
+    </div>
     <?php endif; ?>
 </div>
 
@@ -180,8 +188,9 @@ function wpr_addons_settings_page() {
         $slug = $data[0];
         $url  = $data[1];
         $reff = '?ref=rea-plugin-backend-elements-widget-prev'. $data[2];
+        $class = 'new' === $data[3] ? ' wpr-new-element' : '';
 
-        echo '<div class="wpr-element">';
+        echo '<div class="wpr-element'. $class .'">';
             echo '<div class="wpr-element-info">';
                 echo '<h3>'. $title .'</h3>';
                 echo '<input type="checkbox" name="wpr-element-'. $slug .'" id="wpr-element-'. $slug .'" '. checked( get_option('wpr-element-'. $slug, 'on'), 'on', false ) .'>';

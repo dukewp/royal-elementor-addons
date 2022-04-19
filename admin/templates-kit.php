@@ -147,13 +147,13 @@ function get_theme_status() {
     $theme = wp_get_theme();
 
     // Theme installed and activate.
-    if ( 'Hello Elementor' === $theme->name || 'Hello Elementor' === $theme->parent_theme ) {
+    if ( 'Royal Elementor Kit' === $theme->name || 'Royal Elementor Kit' === $theme->parent_theme ) {
         return 'req-theme-active';
     }
 
     // Theme installed but not activate.
     foreach ( (array) wp_get_themes() as $theme_dir => $theme ) {
-        if ( 'Hello Elementor' === $theme->name || 'Hello Elementor' === $theme->parent_theme ) {
+        if ( 'Royal Elementor Kit' === $theme->name || 'Royal Elementor Kit' === $theme->parent_theme ) {
             return 'req-theme-inactive';
         }
     }
@@ -168,10 +168,11 @@ function wpr_activate_reuired_theme() {
     // Get Current Theme
     $theme = get_option('stylesheet');
 
-    // Activate Hello Elementor Theme
+    // Activate Royal Elementor Kit Theme
     if ( 'ashe' !== $theme && 'bard' !== $theme && 'ashe-pro-premium' !== $theme && 'bard-pro-premium' !== $theme
         && 'vayne-pro-premium' !== $theme && 'kayn-pro-premium' !== $theme ) {
-        switch_theme( 'hello-elementor' );
+        switch_theme( 'royal-elementor-kit' );
+        set_transient( 'royal-elementor-kit_activation_notice', true );
     }
 }
 
@@ -195,10 +196,11 @@ function wpr_install_reuired_plugins() {
     // Get Current Theme
     $theme = get_option('stylesheet');
 
-    // Activate Hello Elementor Theme
+    // Activate Royal Elementor Kit Theme
     if ( 'ashe' !== $theme && 'bard' !== $theme && 'ashe-pro-premium' !== $theme && 'bard-pro-premium' !== $theme
         && 'vayne-pro-premium' !== $theme && 'kayn-pro-premium' !== $theme ) {
-        switch_theme( 'hello-elementor' );
+        switch_theme( 'royal-elementor-kit' );
+        set_transient( 'royal-elementor-kit_activation_notice', true );
     }
     
 }
@@ -300,12 +302,18 @@ function import_elementor_site_settings( $kit ) {
 */
 function setup_wpr_templates( $kit ) {
     
-    // Set Home Page
+    // Set Home & Blog Pages
     $home_page = get_page_by_path('home-'. $kit);
     $blog_page = get_page_by_path('blog-'. $kit);
-    update_option( 'show_on_front', 'page' );
-    update_option( 'page_on_front', $home_page->ID );
-    update_option( 'page_for_posts', $blog_page->ID );
+
+    if ( $home_page ) {
+        update_option( 'show_on_front', 'page' );
+        update_option( 'page_on_front', $home_page->ID );
+        
+        if ( $blog_page ) {
+            update_option( 'page_for_posts', $blog_page->ID );
+        }
+    }
 
     // Set Headers and Footers
     update_option('wpr_header_conditions', '{"user-header-'. $kit .'-header":["global"]}');

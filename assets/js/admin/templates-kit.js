@@ -110,7 +110,7 @@ jQuery(document).ready(function( $ ) {
 			}
 
 			wp.updates.installTheme({
-				slug: 'hello-elementor',
+				slug: 'royal-elementor-kit',
 				success: function() {
 			        $.post(
 			            ajaxurl,

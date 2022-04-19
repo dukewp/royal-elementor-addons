@@ -237,6 +237,19 @@ template {
     display: none;
 }
 
+/* TODO: Remove this when php part is done */
+.ast-separate-container .ast-article-post,
+.ast-separate-container .ast-article-single {
+    padding: 0;
+    border: none;
+    background-color: transparent;
+}
+
+.ast-separate-container .comment-respond {
+    padding: 0;
+    background-color: transparent;
+}
+
 
 /*--------------------------------------------------------------
 == General
@@ -339,6 +352,7 @@ template {
 .wpr-mobile-nav-menu,
 .wpr-mobile-nav-menu ul {
     padding: 0;
+    margin: 0;
     list-style: none;
     font-size: 0;
 }
@@ -1359,6 +1373,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 /* Post Info */
 .wpr-post-info {
     padding: 0;
+    margin: 0;
     list-style: none;
 }
 
@@ -1440,6 +1455,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 .wpr-comments-list ul.children {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 .wpr-comment-avatar {
@@ -11281,6 +11297,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
      display: flex;
      list-style: none;
      padding: 0;
+     margin: 0;
 }
 
 .wpr-taxonomy-list li {

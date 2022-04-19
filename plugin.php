@@ -125,17 +125,21 @@ class Plugin {
 			// Plugin Options
 			require WPR_ADDONS_PATH . 'admin/plugin-options.php';
 
-			// Premade Blocks
-			require WPR_ADDONS_PATH . 'admin/premade-blocks.php';
-
 			// Templates Kit
 			require WPR_ADDONS_PATH . 'admin/templates-kit.php';
 
 			// Theme Builder
 			require WPR_ADDONS_PATH . 'admin/theme-builder.php';
 
+			// Premade Blocks
+			require WPR_ADDONS_PATH . 'admin/premade-blocks.php';
+
 			// Theme Builder
 			require WPR_ADDONS_PATH . 'admin/popups.php';
+
+			// Hide Theme Notice
+			// TODO: Remove this and fix with Transients
+			add_action( 'admin_enqueue_scripts', [ $this, 'hide_theme_notice' ] );
 		}
 	}
 
@@ -347,6 +351,11 @@ class Plugin {
 			[],
 			Plugin::instance()->get_version()
 		);
+	}
+
+
+	public function hide_theme_notice() {
+		wp_enqueue_style( 'hide-theme-notice', WPR_ADDONS_URL .'assets/css/admin/wporg-theme-notice.css', [] );
 	}
 
 	public function enqueue_scripts() {
