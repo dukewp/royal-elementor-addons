@@ -22,9 +22,16 @@ function wpr_addons_theme_builder_page() {
     <p><?php esc_html_e( 'The most powerful Elementor Addons in the universe.', 'wpr-addons' ); ?></p>
 
     <!-- Custom Template -->
-    <div class="wpr-user-template">
-        <span><?php esc_html_e( 'Create Template', 'wpr-addons' ); ?></span>
-        <span class="plus-icon">+</span>
+    <div class="wpr-preview-buttons">
+        <div class="wpr-user-template">
+            <span><?php esc_html_e( 'Create Template', 'wpr-addons' ); ?></span>
+            <span class="plus-icon">+</span>
+        </div>
+
+        <a href="https://www.youtube.com/watch?v=cwkhwO_rPuo" class="wpr-options-button button" target="_blank" style="padding: 8px 22px;">
+            <?php echo esc_html( 'How to use Theme Builder', 'wpr-addons' ); ?>
+            <span class="dashicons dashicons-video-alt3"></span>
+        </a>
     </div>
 </div>
 

@@ -105,7 +105,7 @@ function wpr_addons_settings_page() {
             <span class="dashicons dashicons-external"></span>
         </a>
 
-        <a href="https://www.youtube.com/watch?v=rkYQfn3tUc0" class="wpr-use-widgets-tutorial wpr-options-button button" target="_blank">
+        <a href="https://www.youtube.com/watch?v=rkYQfn3tUc0" class="wpr-options-button button" target="_blank">
             <?php echo esc_html( 'How to use Widgets', 'wpr-addons' ); ?>
             <span class="dashicons dashicons-video-alt3"></span>
         </a>

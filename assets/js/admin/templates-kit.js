@@ -250,6 +250,8 @@ jQuery(document).ready(function( $ ) {
 					homeUrl = href.substring(0, index);
 
 				$('.wpr-import-kit-popup .progress-bar').animate({'width' : '100%'}, 500);
+				$('.wpr-import-kit-popup .content').children('p').remove();
+				$('.wpr-import-kit-popup .progress-wrap').before('<p>Navigate to <strong><a href="admin.php?page=wpr-theme-builder">Theme Builder</a></strong> page to edit your <strong>Header, Footer, Archive, Post, Default Page, 404 Page</strong> and other templates.</p>');
 				$('.wpr-import-kit-popup .progress-wrap strong').html('Step 4: Import Finished - <a href="'+ homeUrl +'" target="_blank">Visit Site</a>');
 				$('.wpr-import-kit-popup header h3').text('Import was Successfull!');
 				$('.wpr-import-kit-popup-wrap .close-btn').show();
