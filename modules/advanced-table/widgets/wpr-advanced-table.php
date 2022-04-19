@@ -203,34 +203,34 @@ class Wpr_AdvancedTable extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'enable_columns_control',
-			[
-				'label' => __('Columns', 'wpr-addons'),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
-				'label_on' => __('Yes', 'wpr-addons'),
-				'label_off' => __('No', 'wpr-addons'),
-				'return_value' => 'yes',
-				'default' => 'no',
-				'separator' => 'before'
-			]
-		);
+		// $this->add_control(
+		// 	'enable_columns_control',
+		// 	[
+		// 		'label' => __('Columns', 'wpr-addons'),
+		// 		'type' => \Elementor\Controls_Manager::SWITCHER,
+		// 		'label_on' => __('Yes', 'wpr-addons'),
+		// 		'label_off' => __('No', 'wpr-addons'),
+		// 		'return_value' => 'yes',
+		// 		'default' => 'no',
+		// 		'separator' => 'before'
+		// 	]
+		// );
 
-		$this->add_control(
-			'columns_number',
-			[
-				'label' => esc_html__( 'Quantity', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'min' => 1,
-				'max' => 100,
-				'render_type' => 'template',
-				'frontend_available' => true,
-				'default' => 10,
-				'condition' => [
-					'enable_columns_control' => 'yes'
-				]
-			]
-		);
+		// $this->add_control(
+		// 	'columns_number',
+		// 	[
+		// 		'label' => esc_html__( 'Quantity', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::NUMBER,
+		// 		'min' => 1,
+		// 		'max' => 100,
+		// 		'render_type' => 'template',
+		// 		'frontend_available' => true,
+		// 		'default' => 10,
+		// 		'condition' => [
+		// 			'enable_columns_control' => 'yes'
+		// 		]
+		// 	]
+		// );
 
 		$this->add_control(
 			'enable_table_live_search',
@@ -295,6 +295,19 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'default' => 10,
 				'condition' => [
 					'enable_custom_pagination' => 'yes'
+				]
+			]
+		);
+		
+
+		$this->add_control(
+			'pagination_nav_icons',
+			[
+				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
+				'type' => 'wpr-arrow-icons',
+				'default' => 'none',
+				'condition' => [
+					'enable_custom_pagination' => 'yes',
 				]
 			]
 		);
@@ -1130,81 +1143,81 @@ class Wpr_AdvancedTable extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'table_width',
-			[
-				'label' => __( 'Table Width', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::SLIDER,
-				'size_units' => ['px', '%'],
-				'render_type' => 'template',
-				'range' => [
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
-					'px' => [
-						'min' => 0,
-						'max' => 2000
-					]
-				],
-				'devices' => [ 'desktop', 'tablet', 'mobile' ],
-				'default' => [
-					'size' => 100,
-					'unit' => '%'
-				],
-				'desktop_default' => [
-					'size' => 100,
-					'unit' => '%',
-				],
-				'tablet_default' => [
-					'size' => 100,
-					'unit' => '%',
-				],
-				'mobile_default' => [
-					'size' => 100,
-					'unit' => '%',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-container .wpr-advanced-table' => 'width: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-export-search-inner-cont' => 'width: {{SIZE}}{{UNIT}};',
-					// '{{WRAPPER}} .wpr-table-custom-pagination' => 'width: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-table-pagination-cont' => 'width: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-table-inner-container' => 'width: 100%;',
-				],
-				'separator' => 'before'
-			]
-		);
+		// $this->add_responsive_control(
+		// 	'table_width',
+		// 	[
+		// 		'label' => __( 'Table Width', 'wpr-addons' ),
+		// 		'type' => \Elementor\Controls_Manager::SLIDER,
+		// 		'size_units' => ['px', '%'],
+		// 		'render_type' => 'template',
+		// 		'range' => [
+		// 			'%' => [
+		// 				'min' => 0,
+		// 				'max' => 100,
+		// 			],
+		// 			'px' => [
+		// 				'min' => 0,
+		// 				'max' => 2000
+		// 			]
+		// 		],
+		// 		'devices' => [ 'desktop', 'tablet', 'mobile' ],
+		// 		'default' => [
+		// 			'size' => 100,
+		// 			'unit' => '%'
+		// 		],
+		// 		'desktop_default' => [
+		// 			'size' => 100,
+		// 			'unit' => '%',
+		// 		],
+		// 		'tablet_default' => [
+		// 			'size' => 100,
+		// 			'unit' => '%',
+		// 		],
+		// 		'mobile_default' => [
+		// 			'size' => 100,
+		// 			'unit' => '%',
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-table-container .wpr-advanced-table' => 'width: {{SIZE}}{{UNIT}};',
+		// 			'{{WRAPPER}} .wpr-export-search-inner-cont' => 'width: {{SIZE}}{{UNIT}};',
+		// 			// '{{WRAPPER}} .wpr-table-custom-pagination' => 'width: {{SIZE}}{{UNIT}};',
+		// 			'{{WRAPPER}} .wpr-table-pagination-cont' => 'width: {{SIZE}}{{UNIT}};',
+		// 			'{{WRAPPER}} .wpr-table-inner-container' => 'width: 100%;',
+		// 		],
+		// 		'separator' => 'before'
+		// 	]
+		// );
 
-		$this->add_control(
-            'table_alignment',
-            [
-                'label'        => __('Alignment', 'wpr-addons'),
-                'type'         => Controls_Manager::CHOOSE,
-                'label_block'  => false,
-                'default'      => 'center',
-                'options'      => [
-                    'flex-start'   => [
-                        'title' => __('Left', 'wpr-addons'),
-                        'icon'  => 'eicon-h-align-left',
-                    ],
-                    'center' => [
-                        'title' => __('Center', 'wpr-addons'),
-                        'icon'  => 'eicon-h-align-center',
-                    ],
-                    'flex-end'  => [
-                        'title' => __('Right', 'wpr-addons'),
-                        'icon'  => 'eicon-h-align-right',
-                    ],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-container .wpr-table-inner-container' => 'justify-content: {{VALUE}}',
-					'{{WRAPPER}} .wpr-table-container' => 'display: flex; justify-content: {{VALUE}}',
-					'{{WRAPPER}} .wpr-export-search-cont' => 'display: flex; justify-content: {{VALUE}}',
-					'{{WRAPPER}} .wpr-table-pagination-outer-cont' => 'display: flex; justify-content: {{VALUE}}'
-				],
-				'separator' => 'before'
-            ]
-        );
+		// $this->add_control(
+        //     'table_alignment',
+        //     [
+        //         'label'        => __('Alignment', 'wpr-addons'),
+        //         'type'         => Controls_Manager::CHOOSE,
+        //         'label_block'  => false,
+        //         'default'      => 'center',
+        //         'options'      => [
+        //             'flex-start'   => [
+        //                 'title' => __('Left', 'wpr-addons'),
+        //                 'icon'  => 'eicon-h-align-left',
+        //             ],
+        //             'center' => [
+        //                 'title' => __('Center', 'wpr-addons'),
+        //                 'icon'  => 'eicon-h-align-center',
+        //             ],
+        //             'flex-end'  => [
+        //                 'title' => __('Right', 'wpr-addons'),
+        //                 'icon'  => 'eicon-h-align-right',
+        //             ],
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-table-container .wpr-table-inner-container' => 'justify-content: {{VALUE}}',
+		// 			'{{WRAPPER}} .wpr-table-container' => 'display: flex; justify-content: {{VALUE}}',
+		// 			'{{WRAPPER}} .wpr-export-search-cont' => 'display: flex; justify-content: {{VALUE}}',
+		// 			'{{WRAPPER}} .wpr-table-pagination-outer-cont' => 'display: flex; justify-content: {{VALUE}}'
+		// 		],
+		// 		'separator' => 'before'
+        //     ]
+        // );
 
 		$this->end_controls_section();
 
@@ -1491,9 +1504,11 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => 'gray',
 				'selectors' => [
-					'{{WRAPPER}} tr.wpr-odd td.wpr-table-text' => 'color: {{VALUE}}',
 					// '{{WRAPPER}} tr:nth-child(odd) td a' => 'color: {{VALUE}} !important',
-					'{{WRAPPER}} tr.wpr-odd td a' => 'color: {{VALUE}} !important',
+					// '{{WRAPPER}} tr.wpr-odd td.wpr-table-text' => 'color: {{VALUE}}',
+					// '{{WRAPPER}} tr.wpr-odd td a' => 'color: {{VALUE}} !important',
+					'{{WRAPPER}} tbody tr:nth-child(odd) td.wpr-table-text' => 'color: {{VALUE}}',
+					'{{WRAPPER}} tbody tr:nth-child(odd) td a' => 'color: {{VALUE}} !important',
 				],
 			]
 		);
@@ -1505,8 +1520,8 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#fff',
 				'selectors' => [
-					'{{WRAPPER}} tr.wpr-odd td' => 'background-color: {{VALUE}}', // TODO: decide tr or td
-					// '{{WRAPPER}} tr:nth-child(odd) td' => 'background-color: {{VALUE}}', // TODO: decide tr or td
+					// '{{WRAPPER}} tr.wpr-odd td' => 'background-color: {{VALUE}}', // TODO: decide tr or td
+					'{{WRAPPER}} tbody tr:nth-child(odd) td' => 'background-color: {{VALUE}}', // TODO: decide tr or td
 				],
 			]
 		);
@@ -1527,8 +1542,10 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#000',
 				'selectors' => [
-					'{{WRAPPER}} tr.wpr-even td a .wpr-table-text' => 'color: {{VALUE}} !important',
-					'{{WRAPPER}} tr.wpr-even td.wpr-table-text' => 'color: {{VALUE}}',
+					// '{{WRAPPER}} tr.wpr-even td a .wpr-table-text' => 'color: {{VALUE}} !important',
+					// '{{WRAPPER}} tr.wpr-even td.wpr-table-text' => 'color: {{VALUE}}',
+					'{{WRAPPER}} tbody tr:nth-child(even) td a .wpr-table-text' => 'color: {{VALUE}} !important',
+					'{{WRAPPER}} tbody tr:nth-child(even) td.wpr-table-text' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -1540,7 +1557,8 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#D7B2CE',
 				'selectors' => [
-					'{{WRAPPER}} tr.wpr-even td' => 'background-color: {{VALUE}};',
+					// '{{WRAPPER}} tr.wpr-even td' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} tbody tr:nth-child(even) td' => 'background-color: {{VALUE}};',
 				],
 			]
 		);
@@ -1570,9 +1588,12 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => 'gray',
 				'selectors' => [
-					'{{WRAPPER}} tr.wpr-odd td:hover a' => 'color: {{VALUE}} !important',
-					'{{WRAPPER}} tr.wpr-odd td:hover.wpr-table-text' => 'color: {{VALUE}} !important',
-					'{{WRAPPER}} tr.wpr-odd td:hover i' => 'color: {{VALUE}}',
+					// '{{WRAPPER}} tr.wpr-odd td:hover a' => 'color: {{VALUE}} !important',
+					// '{{WRAPPER}} tr.wpr-odd td:hover.wpr-table-text' => 'color: {{VALUE}} !important',
+					// '{{WRAPPER}} tr.wpr-odd td:hover i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} tbody tr:nth-child(odd) td:hover a' => 'color: {{VALUE}} !important',
+					'{{WRAPPER}} tbody tr:nth-child(odd) td:hover.wpr-table-text' => 'color: {{VALUE}} !important',
+					'{{WRAPPER}} tbody tr:nth-child(odd) td:hover i' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -1584,7 +1605,8 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#ddd',
 				'selectors' => [
-					'{{WRAPPER}} tr.wpr-odd:hover td' => 'background-color: {{VALUE}}; cursor: pointer;',
+					// '{{WRAPPER}} tr.wpr-odd:hover td' => 'background-color: {{VALUE}}; cursor: pointer;',
+					'{{WRAPPER}} tbody tr:nth-child(odd):hover td' => 'background-color: {{VALUE}}; cursor: pointer;',
 				],
 			]
 		);
@@ -1604,10 +1626,15 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#FFFFFF',
+				// 'selectors' => [
+				// 	'{{WRAPPER}} tr.wpr-even td:hover.wpr-table-text' => 'color: {{VALUE}}',
+				// 	'{{WRAPPER}} tr.wpr-even td:hover a .wpr-table-text' => 'color: {{VALUE}} !important',
+				// 	'{{WRAPPER}} tr.wpr-even td:hover i' => 'color: {{VALUE}}',
+				// ],
 				'selectors' => [
-					'{{WRAPPER}} tr.wpr-even td:hover.wpr-table-text' => 'color: {{VALUE}}',
-					'{{WRAPPER}} tr.wpr-even td:hover a .wpr-table-text' => 'color: {{VALUE}} !important',
-					'{{WRAPPER}} tr.wpr-even td:hover i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} tbody tr:nth-child(even) td:hover.wpr-table-text' => 'color: {{VALUE}}',
+					'{{WRAPPER}} tbody tr:nth-child(even) td:hover a .wpr-table-text' => 'color: {{VALUE}} !important',
+					'{{WRAPPER}} tbody tr:nth-child(even) td:hover i' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -1619,7 +1646,8 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#B280A6',
 				'selectors' => [
-					'{{WRAPPER}} tr.wpr-even:hover td' => 'background-color: {{VALUE}}; cursor: pointer;',
+					// '{{WRAPPER}} tr.wpr-even:hover td' => 'background-color: {{VALUE}}; cursor: pointer;',
+					'{{WRAPPER}} tbody tr:nth-child(even):hover td' => 'background-color: {{VALUE}}; cursor: pointer;',
 				],
 			]
 		);
@@ -1633,7 +1661,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Active Column Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#4A77A4',
+				'default' => '',
 				'separator' => 'before',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-active-td-bg-color' => 'background: {{VALUE}} !important; color: #FFFFFF !important;',
@@ -2401,7 +2429,8 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'default' => '#fff',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-table-custom-pagination-list' => 'color: {{VALUE}}'
+					'{{WRAPPER}} .wpr-table-custom-pagination-list' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-table-custom-pagination-list svg' => 'fill: {{VALUE}}'
 				],
 			]
 		);
@@ -2452,6 +2481,28 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-table-custom-pagination-list',
 				'render_type' => 'template'
+			]
+		);
+
+		$this->add_responsive_control(
+			'pagination_icon_size',
+			[
+				'label' => esc_html__( 'Icon Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 200
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 15
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-table-custom-pagination-list svg' => 'width: {{SIZE}}{{UNIT}}'
+				]
 			]
 		);
 
@@ -2787,6 +2838,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 		echo '</tbody></table>';
 		echo '</div>';
 		echo '</div>'; // <?php echo Utilities::get_wpr_icon( $settings['pagination_nav_icons_left'], '' ); 
+		//\Elementor\Icons_Manager::render_icon( $settings['pagination_nav_icons_left'], [ 'aria-hidden' => 'true' ] );
 
 		if ( 'yes' == $settings['enable_custom_pagination'] ) {
 			$this->render_custom_pagination($settings, $countRows);
@@ -2800,7 +2852,12 @@ class Wpr_AdvancedTable extends Widget_Base {
 		<div class="wpr-table-pagination-cont">
 		<ul class="wpr-table-custom-pagination">
 			<div class="wpr-table-custom-pagination-inner-cont">
-				<li class='wpr-table-custom-pagination-prev wpr-table-prev-next wpr-table-custom-pagination-list'><?php \Elementor\Icons_Manager::render_icon( $settings['pagination_nav_icons_left'], [ 'aria-hidden' => 'true' ] ); ?></i></li>
+				<li class='wpr-table-custom-pagination-prev wpr-table-prev-next wpr-table-custom-pagination-list'>
+					<?php 
+						// echo Utilities::get_wpr_icon( $settings['pagination_nav_icons'], 'left');
+						\Elementor\Icons_Manager::render_icon( $settings['pagination_nav_icons_left'], [ 'aria-hidden' => 'true' ] );
+					 ?>
+				</li>
 
 				<?php $total_rows = 0;
 					  $item_index = 0;
@@ -2920,7 +2977,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 			'wpr_table_inner_container_attributes',
 			[
 				'class' => 'wpr-table-inner-container',
-				'data-table-columns' => !empty($settings['columns_number']) ? $settings['columns_number'] : '',
+				// 'data-table-columns' => !empty($settings['columns_number']) ? $settings['columns_number'] : '',
 				'data-table-sorting' => $settings['enable_table_sorting'],
 				'data-custom-pagination' => $settings['enable_custom_pagination'],
 				'data-row-pagination' => $settings['enable_row_pagination'],
@@ -3030,13 +3087,17 @@ class Wpr_AdvancedTable extends Widget_Base {
 								]); ?>
 								
 							<td <?php echo $this->get_render_attribute_string('tbody_td_attributes'.$i.$j); ?>>
+
 								<div class="wpr-td-content-wrapper <?php echo ($table_td[$j]['icon_position'] === 'top') ? 'wpr-flex-column' : (($table_td[$j]['icon_position'] === 'bottom') ? 'wpr-flex-column-reverse' : '') ?>">
+
 									<?php $table_td[$j]['icon'] === 'yes' && ($table_td[$j]['icon_position'] === 'left' || $table_td[$j]['icon_position'] === 'top' || $table_td[$j]['icon_position'] === 'bottom') ? $this->render_td_icon_or_image($table_td, $j) : '' ?>
 									<a href="<?php echo esc_url($table_td[$j]['link']['url']) ?>" target="<?php echo $table_td[$j]['external'] ?>">
 										<span class="wpr-table-text"><?php echo $table_td[$j]['content']; ?></span>
 									</a>
 									<?php $table_td[$j]['icon'] === 'yes' && $table_td[$j]['icon_position'] === 'right' ? $this->render_td_icon_or_image($table_td, $j) : '' ?>
+
 								</div>
+
 							</td>
 							<?php }
 							} ?>
