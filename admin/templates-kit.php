@@ -169,11 +169,13 @@ function wpr_activate_reuired_theme() {
     $theme = get_option('stylesheet');
 
     // Activate Royal Elementor Kit Theme
-    if ( 'ashe' !== $theme && 'bard' !== $theme && 'ashe-pro-premium' !== $theme && 'bard-pro-premium' !== $theme
+    if ( 'ashe-pro-premium' !== $theme && 'bard-pro-premium' !== $theme
         && 'vayne-pro-premium' !== $theme && 'kayn-pro-premium' !== $theme ) {
         switch_theme( 'royal-elementor-kit' );
         set_transient( 'royal-elementor-kit_activation_notice', true );
     }
+
+    // TODO: maybe return back  - 'ashe' !== $theme && 'bard' !== $theme && 
 }
 
 /**
@@ -197,11 +199,13 @@ function wpr_install_reuired_plugins() {
     $theme = get_option('stylesheet');
 
     // Activate Royal Elementor Kit Theme
-    if ( 'ashe' !== $theme && 'bard' !== $theme && 'ashe-pro-premium' !== $theme && 'bard-pro-premium' !== $theme
+    if ( 'ashe-pro-premium' !== $theme && 'bard-pro-premium' !== $theme
         && 'vayne-pro-premium' !== $theme && 'kayn-pro-premium' !== $theme ) {
         switch_theme( 'royal-elementor-kit' );
         set_transient( 'royal-elementor-kit_activation_notice', true );
     }
+
+    // TODO: maybe return back  - 'ashe' !== $theme && 'bard' !== $theme && 
     
 }
 
