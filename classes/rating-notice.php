@@ -10,7 +10,7 @@ class WprRatingNotice {
 
     public function __construct() {
         global $pagenow;
-        $this->past_date = false == get_option('wpr_maybe_later_time') ? strtotime( '-14 days' ) : strtotime('-7 days');
+        $this->past_date = false == get_option('wpr_maybe_later_time') ? strtotime( '-14 seconds' ) : strtotime('-7 seconds');
 
         if ( current_user_can('administrator') ) {
             if ( empty(get_option('wpr_rating_dismiss_notice', false)) && empty(get_option('wpr_rating_already_rated', false)) ) {
@@ -32,6 +32,15 @@ class WprRatingNotice {
         $install_date = get_option('royal_elementor_addons_activation_time');
         
         if ( false == get_option('wpr_maybe_later_time') && false !== $install_date && $this->past_date >= $install_date ) {
+            
+        
+        var_dump(get_option('wpr_maybe_later_time'));
+        var_dump(get_option('wpr_rating_already_rated'));
+        var_dump(get_option('wpr_rating_dismiss_notice'));
+
+        var_dump($install_date);
+        var_dump($this->past_date > $install_date);
+        
             add_action( 'admin_notices', [$this, 'render_rating_notice' ]);
         } else if ( false != get_option('wpr_maybe_later_time') && $this->past_date >= get_option('wpr_maybe_later_time') ) {
             add_action( 'admin_notices', [$this, 'render_rating_notice' ]);
