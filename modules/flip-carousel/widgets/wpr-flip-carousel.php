@@ -226,20 +226,9 @@ class Wpr_Flip_Carousel extends Widget_Base {
 		);
 		
 		$this->add_control(
-			'pause_on_hover',
-			[
-				'label' => __( 'Pause on Hover', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'separator' => 'before',
-				'default' => 'yes',
-			]
-		);
-		
-		$this->add_control(
 			'play_on_touch',
 			[
-				'label' => __( 'Play on Touch', 'wpr-addons' ),
+				'label' => __( 'Slide on Touch', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'separator' => 'before',
@@ -1145,6 +1134,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$settings['autoplay'] = false;
 			$settings['autoplay_milliseconds'] = 0;
+			$settings['pause_on_hover'] = false;
 		}
 
 		$attributes = [
