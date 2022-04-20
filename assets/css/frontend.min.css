@@ -11380,6 +11380,12 @@ td.wpr-table-td-pag {
 
 .wpr-table-custom-pagination-inner-cont {
     display: flex;
+    align-items: stretch;
+}
+
+li.wpr-table-custom-pagination-list {
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
 

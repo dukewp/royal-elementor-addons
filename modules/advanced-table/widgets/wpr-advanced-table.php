@@ -78,6 +78,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 					'custom' => esc_html__( 'Custom', 'wpr-addons' ),
 					'csv' => esc_html__( 'CSV', 'wpr-addons' ),
 				],
+				'prefix_class' => 'wpr-advanced-table-type-'
 			]
 		);
 
@@ -309,43 +310,6 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'condition' => [
 					'enable_custom_pagination' => 'yes',
 				]
-			]
-		);
-
-		$this->add_responsive_control(
-			'pagination_nav_icons_left',
-			[
-				'label' => esc_html__('Icon (Left)', 'wpr-addons'),
-				'type' => Controls_Manager::ICONS,
-				'skin' => 'inline',
-				'label_block' => false,
-				'default' => [
-					'value' => 'fas fa-chevron-left',
-					'library' => 'solid',
-				],
-				'condition' => [
-					'enable_custom_pagination' => 'yes',
-				],
-
-			]
-		);
-		// );
-
-		$this->add_responsive_control(
-			'pagination_nav_icons_right',
-			[
-				'label' => esc_html__('Icon (Right)', 'wpr-addons'),
-				'type' => Controls_Manager::ICONS,
-				'skin' => 'inline',
-				'label_block' => false,
-				'default' => [
-					'value' => 'fas fa-chevron-right',
-					'library' => 'solid',
-				],
-				'condition' => [
-					'enable_custom_pagination' => 'yes',
-				],
-
 			]
 		);
 
@@ -2854,8 +2818,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 			<div class="wpr-table-custom-pagination-inner-cont">
 				<li class='wpr-table-custom-pagination-prev wpr-table-prev-next wpr-table-custom-pagination-list'>
 					<?php 
-						// echo Utilities::get_wpr_icon( $settings['pagination_nav_icons'], 'left');
-						\Elementor\Icons_Manager::render_icon( $settings['pagination_nav_icons_left'], [ 'aria-hidden' => 'true' ] );
+						echo Utilities::get_wpr_icon( $settings['pagination_nav_icons'], 'left');
 					 ?>
 				</li>
 
@@ -2881,7 +2844,9 @@ class Wpr_AdvancedTable extends Widget_Base {
 	
 					<?php } ?>
 					
-				<li class='wpr-table-custom-pagination-next wpr-table-prev-next wpr-table-custom-pagination-list wpr-table-prev-arrow wpr-table-arrow'><?php \Elementor\Icons_Manager::render_icon( $settings['pagination_nav_icons_right'], [ 'aria-hidden' => 'true' ] ); ?></li>
+				<li class='wpr-table-custom-pagination-next wpr-table-prev-next wpr-table-custom-pagination-list wpr-table-prev-arrow wpr-table-arrow'>
+					<?php echo Utilities::get_wpr_icon( $settings['pagination_nav_icons'], 'right'); ?>
+				</li>
 			</div>
 		</ul>
 		</div>
