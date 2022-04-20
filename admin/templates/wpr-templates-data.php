@@ -95,7 +95,7 @@ class WPR_Templates_Data {
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'pizza italian restaurant food slider pasta fastfood fast food recipes cooking slider',
 					'theme-builder' => false,
-					'price' => $is_pro_active ? 'free' : 'pro',
+					'price' => $is_pro_active ? 'free' : 'free',
 				],
 			],
 			'travel' => [
@@ -105,7 +105,7 @@ class WPR_Templates_Data {
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'nature influencer travel blogger blog content tourism influencers creator travel forest slider generic multipurpose national-park nature-park sanctuary wilderness hitchhiking mountain river lakes outdoors',
 					'theme-builder' => false,
-					'price' => $is_pro_active ? 'free' : 'pro',
+					'price' => $is_pro_active ? 'free' : 'free',
 				],
 			],
 			'cybersecurity' => [
@@ -115,7 +115,7 @@ class WPR_Templates_Data {
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'cybersecurity data protection hacker security dark digital technology cybercrime computer windows technician',
 					'theme-builder' => false,
-					'price' => $is_pro_active ? 'free' : 'pro',
+					'price' => $is_pro_active ? 'free' : 'free',
 				],
 			],
 			'photographer' => [
@@ -133,7 +133,7 @@ class WPR_Templates_Data {
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .', "media-library-assistant":'. $is_mla_active .'}',
 					'tags' => 'portfolio personal cv designer ux artist artwork personal resume camera fashion lens modelling photographer photography videography wedding shoot grid ',
 					'theme-builder' => false,
-					'price' => $is_pro_active ? 'free' : 'pro',
+					'price' => $is_pro_active ? 'free' : 'free',
 				],
 			],
 			'cryptocurrency' => [
@@ -143,7 +143,7 @@ class WPR_Templates_Data {
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'cryptocurrency bitcoin ethereum etherium blockchain protection nft coin corporate crypto dark startup token digital',
 					'theme-builder' => false,
-					'price' => $is_pro_active ? 'free' : 'pro',
+					'price' => $is_pro_active ? 'free' : 'free',
 				],
 			],
 			'skincare' => [
@@ -153,7 +153,7 @@ class WPR_Templates_Data {
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'skincare skin care beauty clean face skin-beauty health wellness',
 					'theme-builder' => false,
-					'price' => $is_pro_active ? 'free' : 'pro',
+					'price' => $is_pro_active ? 'free' : 'free',
 				],
 			],
 			'lawyer' => [
@@ -173,7 +173,7 @@ class WPR_Templates_Data {
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'medical clinic dental health healthcare doctor therapist wellness treatment cure',
 					'theme-builder' => false,
-					'price' => $is_pro_active ? 'free' : 'pro',
+					'price' => $is_pro_active ? 'free' : 'free',
 				],
 			],
 			'digitalagency' => [
@@ -191,7 +191,7 @@ class WPR_Templates_Data {
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'digital agency company corporate digital services office agency web marketing slider',
 					'theme-builder' => false,
-					'price' => $is_pro_active ? 'free' : 'pro',
+					'price' => $is_pro_active ? 'free' : 'free',
 				],
 			],
 			'drone' => [
@@ -201,7 +201,7 @@ class WPR_Templates_Data {
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'drone photography aerial photo ',
 					'theme-builder' => false,
-					'price' => $is_pro_active ? 'free' : 'pro',
+					'price' => $is_pro_active ? 'free' : 'free',
 				],
 			],
 			'architecture' => [
@@ -231,7 +231,7 @@ class WPR_Templates_Data {
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'construction architecture company interior office real estate',
 					'theme-builder' => false,
-					'price' => $is_pro_active ? 'free' : 'pro',
+					'price' => $is_pro_active ? 'free' : 'free',
 				],
 			],
 			'ittech' => [
@@ -241,7 +241,7 @@ class WPR_Templates_Data {
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'ittech advanced technology it technique computer windows technician digital',
 					'theme-builder' => false,
-					'price' => $is_pro_active ? 'free' : 'pro',
+					'price' => $is_pro_active ? 'free' : 'free',
 				],
 				'v2' => [
 					'name' => 'IT Tech v2',
@@ -249,7 +249,7 @@ class WPR_Templates_Data {
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'ittech advanced technology it technique computer windows technician digital',
 					'theme-builder' => false,
-					'price' => $is_pro_active ? 'free' : 'pro',
+					'price' => $is_pro_active ? 'free' : 'free',
 				],
 			],
 			'realestate' => [
@@ -269,7 +269,7 @@ class WPR_Templates_Data {
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'restaurant fastfood slider hotel italian pizza pizzeria pasta dinner fast food wine recipe recipes cooking slider',
 					'theme-builder' => false,
-					'price' => $is_pro_active ? 'free' : 'pro',
+					'price' => $is_pro_active ? 'free' : 'free',
 				],
 			],
 			'winebar' => [
@@ -289,7 +289,7 @@ class WPR_Templates_Data {
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'wedding party event slider invitation planner slider photography photographer',
 					'theme-builder' => false,
-					'price' => $is_pro_active ? 'free' : 'pro',
+					'price' => $is_pro_active ? 'free' : 'free',
 				],
 			],
 		];
