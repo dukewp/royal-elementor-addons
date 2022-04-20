@@ -313,7 +313,11 @@ class Utilities {
 	public static function is_theme_builder_template() {
 		$current_page = get_post(get_the_ID());
 
-		return strpos($current_page->post_name, 'user-archive') !== false || strpos($current_page->post_name, 'user-single') !== false;
+		if ( $current_page ) {
+			return strpos($current_page->post_name, 'user-archive') !== false || strpos($current_page->post_name, 'user-single') !== false;
+		} else {
+			return false;
+		}
 	}
 
 
