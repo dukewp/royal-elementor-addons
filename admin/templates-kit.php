@@ -70,23 +70,34 @@ function wpr_addons_templates_kit_page() {
     <div class="wpr-templates-kit-grid main-grid" data-theme-status="<?php echo get_theme_status(); ?>">
         <?php
             $kits = WPR_Templates_Data::get_available_kits();
+            $sorted_kits = [];
 
             foreach ($kits as $slug => $kit) {
                 foreach ($kit as $version => $data ) {
-                   $kit_id = $slug .'-'. $version;
-
-                    echo '<div class="grid-item" data-kit-id="'. $kit_id .'" data-tags="'. $data['tags'] .'" data-plugins="'. esc_attr($data['plugins']) .'" data-pages="'. $data['pages'] .'" data-price="'. $data['price'] .'">';
-                        echo '<div class="image-wrap">';
-                            echo '<img src="https://royal-elementor-addons.com/library/templates-kit/'. $kit_id .'/home.jpg">';
-                            echo '<div class="image-overlay"><span class="dashicons dashicons-search"></span></div>';
-                        echo '</div>';
-                        echo '<footer>';
-                            echo '<h3>'. $data['name'] .'</h3>';
-                            echo $data['theme-builder'] ? '<span>'. esc_html__( 'Theme Builder', 'wpr-addons' ).'</span>' : '';
-                        echo '</footer>';
-                    echo '</div>';
+                    $sorted_kits[$slug .'-'. $version] = $data;
                 }
             }
+
+            // Sort by Priority
+            uasort($sorted_kits, function ($item1, $item2) {
+                if ($item1['priority'] == $item2['priority']) return 0;
+                return $item1['priority'] < $item2['priority'] ? -1 : 1;
+            });
+
+            // Loop
+            foreach ($sorted_kits as $kit_id => $data) {
+                echo '<div class="grid-item" data-kit-id="'. $kit_id .'" data-tags="'. $data['tags'] .'" data-plugins="'. esc_attr($data['plugins']) .'" data-pages="'. $data['pages'] .'" data-price="'. $data['price'] .'">';
+                    echo '<div class="image-wrap">';
+                        echo '<img src="https://royal-elementor-addons.com/library/templates-kit/'. $kit_id .'/home.jpg">';
+                        echo '<div class="image-overlay"><span class="dashicons dashicons-search"></span></div>';
+                    echo '</div>';
+                    echo '<footer>';
+                        echo '<h3>'. $data['name'] .'</h3>';
+                        echo $data['theme-builder'] ? '<span>'. esc_html__( 'Theme Builder', 'wpr-addons' ).'</span>' : '';
+                    echo '</footer>';
+                echo '</div>';
+            }
+
         ?>
 
     </div>
