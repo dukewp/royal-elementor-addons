@@ -10,6 +10,7 @@ use Elementor\Core\Schemes\Color;
 use Elementor\Core\Schemes\Typography;
 use Elementor\Widget_Base;
 use WprAddons\Classes\Utilities;
+use WprAddons\Classes\Wpr_Walker_Nav_Menu;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -1640,6 +1641,7 @@ class Wpr_Nav_Menu extends Widget_Base {
 			'menu_class' => 'wpr-nav-menu',
 			'menu_id' => 'menu-' . $this->get_nav_menu_index() . '-' . $this->get_id(),
 			'container' => '',
+			'walker' => new Wpr_Walker_Nav_Menu(),
 			'fallback_cb' => '__return_empty_string',
 		];
 
