@@ -61,6 +61,9 @@ Comes with **50+ widgets, 25 Elementor Template KIT (Growing Each Week), Theme B
 - [**Phone Call Button**](https://royal-elementor-addons.com/elementor-phone-call-widget/?ref=rea-wpo-pp-details-tab)
 - [**Lottie Animation**](https://royal-elementor-addons.com/elementor-lottie-animation-widget/?ref=rea-wpo-pp-details-tab)
 - [**Timeline Widget**](https://royal-elementor-addons.com/elementor-timeline-widget/?ref=rea-wpo-pp-details-tab)
+-  **Flip Carousel**
+-  **Features List**
+-  **Dual Color Heading**
 
 **Elementor Extensions and Other Features**
 
