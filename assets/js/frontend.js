@@ -33,6 +33,8 @@
 				'wpr-lottie-animations.default': WprElements.widgetLottieAnimations,
 				'wpr-posts-timeline.default' : WprElements.widgetPostsTimeline,
 				'wpr-sharing-buttons.default' : WprElements.widgetSharingButtons,
+				'wpr-flip-carousel.default': WprElements.widgetFlipCarousel,
+				'wpr-feature-list.default' : WprElements.widgetFeatureList,
 				'global': WprElements.widgetSection,
 
 				// Single
@@ -792,7 +794,7 @@
 					sliderColumnsTablet = sliderClass.match(/columns--tablet\d/) ? sliderClass.match(/columns--tablet\d/).join().slice(-1) : 2,
 					sliderColumnsMobileExtra = sliderClass.match(/columns--mobile_extra\d/) ? sliderClass.match(/columns--mobile_extra\d/).join().slice(-1) : sliderColumnsTablet,
 					sliderColumnsMobile = sliderClass.match(/columns--mobile\d/) ? sliderClass.match(/columns--mobile\d/).join().slice(-1) : 1,
-					sliderSlidesToScroll = +(sliderClass.match(/wpr-grid-slides-to-scroll-\d/).join().slice(-1));
+					sliderSlidesToScroll = sliderClass.match(/wpr-grid-slides-to-scroll-\d/) ? +(sliderClass.match(/wpr-grid-slides-to-scroll-\d/).join().slice(-1)) : 1;
 
 				iGrid.slick({
 					appendDots : $scope.find( '.wpr-grid-slider-dots' ),
@@ -3948,6 +3950,53 @@
 				window.print();
 			});
         }, // end widgetSharingButtons
+
+		widgetFlipCarousel: function($scope) {
+			var flipsterSettings = JSON.parse($scope.find('.wpr-flip-carousel').attr('data-settings'));
+
+			$scope.find('.wpr-flip-carousel').css('opacity', 1);
+			
+			$scope.find('.wpr-flip-carousel').flipster({
+				itemContainer: 'ul',
+				itemSelector: 'li',
+				fadeIn: 400,
+				start: flipsterSettings.starts_from_center === 'yes' ? 'center' : 0,
+				style: flipsterSettings.carousel_type,
+				loop: flipsterSettings.loop === 'yes' ? true : false,
+				autoplay: flipsterSettings.autoplay === 'no' ? false : flipsterSettings.autoplay_milliseconds,
+				pauseOnHover: flipsterSettings.pause_on_hover === 'yes' ? true : false,
+				click: flipsterSettings.play_on_click === 'yes' ? true : false,
+				scrollwheel: flipsterSettings.play_on_scroll === 'yes' ? true : false,
+				touch: true,
+				nav: 'true' === flipsterSettings.pagination_position ? true : flipsterSettings.pagination_position ? flipsterSettings.pagination_position : false,
+				spacing: flipsterSettings.spacing,
+				buttons: 'custom',
+				buttonPrev: flipsterSettings.button_prev,
+				buttonNext: flipsterSettings.button_next
+			});
+			
+			var paginationButtons = $scope.find('.wpr-flip-carousel').find('.flipster__nav__item').find('.flipster__nav__link');
+			
+			paginationButtons.each(function() {
+				$(this).text(parseInt($(this).text()) + 1);
+			});
+		}, // end widgetFlipCarousel
+
+		widgetFeatureList: function($scope) {
+			$scope.find('.wpr-feature-list-item:not(:last-of-type)').find('.wpr-feature-list-icon-wrap').each(function(index) {
+				var offsetTop = $scope.find('.wpr-feature-list-item').eq(index + 1).find('.wpr-feature-list-icon-wrap').offset().top;
+				
+				$(this).find('.wpr-feature-list-line').height(offsetTop - $(this).offset().top + 'px');
+			});
+
+			$(window).resize(function() {
+				$scope.find('.wpr-feature-list-item:not(:last-of-type)').find('.wpr-feature-list-icon-wrap').each(function(index) {
+					var offsetTop = $scope.find('.wpr-feature-list-item').eq(index + 1).find('.wpr-feature-list-icon-wrap').offset().top;
+					
+					$(this).find('.wpr-feature-list-line').height(offsetTop - $(this).offset().top + 'px');
+				});
+			})
+		}, // end widgetFeatureList
 
 		// Editor Check
 		editorCheck: function() {

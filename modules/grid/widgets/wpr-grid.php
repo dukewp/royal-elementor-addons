@@ -3461,6 +3461,29 @@ class Wpr_Grid extends Widget_Base {
 		);
 
 		$this->add_control(
+			'content_width',
+			[
+				'label' => esc_html__( 'Content Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['%'],
+				'range' => [
+					'%' => [
+						'min' => 10,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => '%',
+					'size' => 100,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-item-content .inner-block' => 'width: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
 			'content_border_type',
 			[
 				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
@@ -3643,6 +3666,29 @@ class Wpr_Grid extends Widget_Base {
 					'{{WRAPPER}} .wpr-grid-item-excerpt .inner-block' => '{{VALUE}}',
 				],
 				'render_type' => 'template',
+			]
+		);
+
+		$this->add_control(
+			'excerpt_width',
+			[
+				'label' => esc_html__( 'Excerpt Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['%'],
+				'range' => [
+					'%' => [
+						'min' => 10,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => '%',
+					'size' => 100,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-item-excerpt .inner-block' => 'width: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
 			]
 		);
 
@@ -7649,6 +7695,10 @@ class Wpr_Grid extends Widget_Base {
 		if ( 'slider' === $settings['layout_select'] && Utilities::is_new_free_user() ) {
 			$settings['query_posts_per_page'] = $settings['query_slides_to_show'];
 			$settings['query_posts_per_page'] = $settings['query_posts_per_page'] > 4 ? 4 : $settings['query_posts_per_page'];
+		}
+
+		if ( 'slider' === $settings['layout_select'] ) {
+			$paged = 1;
 		}
 
 		$offset = ( $paged - 1 ) * intval($settings['query_posts_per_page']) + intval($settings[ 'query_offset' ]);
