@@ -345,7 +345,7 @@ class Plugin {
 			[]
 		);
 
-		wp_register_style(
+		wp_enqueue_style(
 			'wpr-flipster-css',
 			WPR_ADDONS_URL . 'assets/css/lib/flipster/jquery.flipster' . $this->script_suffix() . '.css',
 			[],

@@ -3870,7 +3870,7 @@
 						slidesPerView: 2,
 					  },
 					  // when window width is >= 640px
-					  740: { // 640
+					  769: { // 640
 						slidesPerView: slidestoshow,
 					  
 					  }

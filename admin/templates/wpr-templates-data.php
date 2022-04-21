@@ -40,19 +40,10 @@ class WPR_Templates_Data {
 					'tags' => 'food blog posts food blogger theme builder recipes cooking grid slider',
 					'theme-builder' => true,
 					'price' => $is_pro_active ? 'free' : 'pro',
-					'priority' => 5,
+					'priority' => 20,
 				],
 			],
 			'magazine-blog' => [
-				'v3' => [
-					'name' => 'Magazine Blog',
-					'pages' => 'home,category,about,contact,',
-					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
-					'tags' => 'blogger blog posts content news newspaper journal magazine business blog publishing theme builder sports grid slider',
-					'theme-builder' => true,
-					'price' => $is_pro_active ? 'free' : 'free',
-					'priority' => 100,
-				],
 				'v1' => [
 					'name' => 'Magazine Blog',
 					'pages' => 'home,home-v1,home-v2,category,about,contact,',
@@ -60,7 +51,7 @@ class WPR_Templates_Data {
 					'tags' => 'blogger blog posts content news newspaper journal magazine business blog publishing theme builder sports grid slider',
 					'theme-builder' => true,
 					'price' => $is_pro_active ? 'free' : 'pro',
-					'priority' => 100,
+					'priority' => 40,
 				],
 				'v2' => [
 					'name' => 'Magazine Blog',
@@ -69,7 +60,16 @@ class WPR_Templates_Data {
 					'tags' => 'blogger blog posts content news newspaper journal magazine business blog publishing theme builder sports grid slider',
 					'theme-builder' => true,
 					'price' => $is_pro_active ? 'free' : 'pro',
-					'priority' => 100,
+					'priority' => 50,
+				],
+				'v3' => [
+					'name' => 'Magazine Blog',
+					'pages' => 'home,category,about,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'blogger blog posts content news newspaper journal magazine business blog publishing theme builder sports grid slider',
+					'theme-builder' => true,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'priority' => 30,
 				],
 			],
 			'nature' => [
@@ -80,7 +80,7 @@ class WPR_Templates_Data {
 					'tags' => 'nature influencer travel blogger blog content slider tourism influencers creator travel forest slider generic multipurpose national-park nature-park sanctuary wilderness hitchhiking mountain river lakes outdoors',
 					'theme-builder' => false,
 					'price' => $is_pro_active ? 'free' : 'free',
-					'priority' => 100,
+					'priority' => 60,
 				],
 			],
 			'travel-blog' => [
@@ -91,7 +91,7 @@ class WPR_Templates_Data {
 					'tags' => 'nature influencer travel blogger blog posts content tourism influencers creator travel forest slider generic multipurpose national-park nature-park sanctuary wilderness slider hitchhiking mountain river lakes outdoors theme builder traveler hiking grid',
 					'theme-builder' => true,
 					'price' => $is_pro_active ? 'free' : 'pro',
-					'priority' => 100,
+					'priority' => 70,
 				],
 			],
 			'portfolio' => [
@@ -102,7 +102,7 @@ class WPR_Templates_Data {
 					'tags' => 'portfolio personal cv designer ux artist artwork personal resume photographer grid',
 					'theme-builder' => false,
 					'price' => $is_pro_active ? 'free' : 'free',
-					'priority' => 100,
+					'priority' => 80,
 				],
 			],
 			'pizza' => [
@@ -113,7 +113,7 @@ class WPR_Templates_Data {
 					'tags' => 'pizza italian restaurant food slider pasta fastfood fast food recipes cooking slider',
 					'theme-builder' => false,
 					'price' => $is_pro_active ? 'free' : 'free',
-					'priority' => 100,
+					'priority' => 90,
 				],
 			],
 			'travel' => [
@@ -135,7 +135,7 @@ class WPR_Templates_Data {
 					'tags' => 'cybersecurity data protection hacker security dark digital technology cybercrime computer windows technician',
 					'theme-builder' => false,
 					'price' => $is_pro_active ? 'free' : 'free',
-					'priority' => 100,
+					'priority' => 110,
 				],
 			],
 			'photographer' => [
@@ -146,7 +146,7 @@ class WPR_Templates_Data {
 					'tags' => 'portfolio personal cv designer ux artist artwork personal resume camera fashion lens modelling photographer photography videography wedding shoot grid ',
 					'theme-builder' => false,
 					'price' => $is_pro_active ? 'free' : 'free',
-					'priority' => 100,
+					'priority' => 120,
 				],
 				'v2' => [
 					'name' => 'Photographer Portfolio Light',
@@ -155,7 +155,7 @@ class WPR_Templates_Data {
 					'tags' => 'portfolio personal cv designer ux artist artwork personal resume camera fashion lens modelling photographer photography videography wedding shoot grid ',
 					'theme-builder' => false,
 					'price' => $is_pro_active ? 'free' : 'free',
-					'priority' => 100,
+					'priority' => 130,
 				],
 			],
 			'cryptocurrency' => [
@@ -166,7 +166,7 @@ class WPR_Templates_Data {
 					'tags' => 'cryptocurrency bitcoin ethereum etherium blockchain protection nft coin corporate crypto dark startup token digital',
 					'theme-builder' => false,
 					'price' => $is_pro_active ? 'free' : 'free',
-					'priority' => 100,
+					'priority' => 150,
 				],
 			],
 			'skincare' => [
@@ -177,7 +177,7 @@ class WPR_Templates_Data {
 					'tags' => 'skincare skin care beauty clean face skin-beauty health wellness',
 					'theme-builder' => false,
 					'price' => $is_pro_active ? 'free' : 'free',
-					'priority' => 100,
+					'priority' => 160,
 				],
 			],
 			'lawyer' => [
@@ -188,7 +188,7 @@ class WPR_Templates_Data {
 					'tags' => 'lawyers criminal defence lawyer firm divorce lawyer family lawyer law legal firm ',
 					'theme-builder' => false,
 					'price' => $is_pro_active ? 'free' : 'free',
-					'priority' => 100,
+					'priority' => 170,
 				],
 			],
 			'medical' => [
@@ -199,7 +199,7 @@ class WPR_Templates_Data {
 					'tags' => 'medical clinic dental health healthcare doctor therapist wellness treatment cure',
 					'theme-builder' => false,
 					'price' => $is_pro_active ? 'free' : 'free',
-					'priority' => 100,
+					'priority' => 180,
 				],
 			],
 			'digitalagency' => [
@@ -210,7 +210,7 @@ class WPR_Templates_Data {
 					'tags' => 'digital agency company corporate digital services office agency web marketing',
 					'theme-builder' => false,
 					'price' => $is_pro_active ? 'free' : 'free',
-					'priority' => 100,
+					'priority' => 190,
 				],
 				'v2' => [
 					'name' => 'Digital Agency',
@@ -219,7 +219,7 @@ class WPR_Templates_Data {
 					'tags' => 'digital agency company corporate digital services office agency web marketing slider',
 					'theme-builder' => false,
 					'price' => $is_pro_active ? 'free' : 'free',
-					'priority' => 100,
+					'priority' => 200,
 				],
 			],
 			'drone' => [
@@ -230,7 +230,7 @@ class WPR_Templates_Data {
 					'tags' => 'drone photography aerial photo ',
 					'theme-builder' => false,
 					'price' => $is_pro_active ? 'free' : 'free',
-					'priority' => 100,
+					'priority' => 210,
 				],
 			],
 			'architecture' => [
@@ -241,7 +241,7 @@ class WPR_Templates_Data {
 					'tags' => 'architecture company slider interior design designer landscaping office zoning building slider',
 					'theme-builder' => false,
 					'price' => $is_pro_active ? 'free' : 'pro',
-					'priority' => 100,
+					'priority' => 220,
 				],
 			],
 			'fooddelivery' => [
@@ -252,7 +252,7 @@ class WPR_Templates_Data {
 					'tags' => 'fooddelivery fast food chain restaurant service hotel italian pasta pizza pizzeria burger recipes cooking',
 					'theme-builder' => false,
 					'price' => $is_pro_active ? 'free' : 'pro',
-					'priority' => 100,
+					'priority' => 230,
 				],
 			],
 			'construction' => [
@@ -263,7 +263,7 @@ class WPR_Templates_Data {
 					'tags' => 'construction architecture company interior office real estate',
 					'theme-builder' => false,
 					'price' => $is_pro_active ? 'free' : 'free',
-					'priority' => 100,
+					'priority' => 240,
 				],
 			],
 			'ittech' => [
@@ -274,7 +274,7 @@ class WPR_Templates_Data {
 					'tags' => 'ittech advanced technology it technique computer windows technician digital',
 					'theme-builder' => false,
 					'price' => $is_pro_active ? 'free' : 'free',
-					'priority' => 100,
+					'priority' => 250,
 				],
 				'v2' => [
 					'name' => 'IT Tech v2',
@@ -283,7 +283,7 @@ class WPR_Templates_Data {
 					'tags' => 'ittech advanced technology it technique computer windows technician digital',
 					'theme-builder' => false,
 					'price' => $is_pro_active ? 'free' : 'free',
-					'priority' => 100,
+					'priority' => 260,
 				],
 			],
 			'realestate' => [
@@ -294,7 +294,7 @@ class WPR_Templates_Data {
 					'tags' => 'real estate agency company construction property rentals estate sales developers',
 					'theme-builder' => false,
 					'price' => $is_pro_active ? 'free' : 'pro',
-					'priority' => 100,
+					'priority' => 270,
 				],
 			],
 			'restaurant' => [
@@ -305,7 +305,7 @@ class WPR_Templates_Data {
 					'tags' => 'restaurant fastfood slider hotel italian pizza pizzeria pasta dinner fast food wine recipe recipes cooking slider',
 					'theme-builder' => false,
 					'price' => $is_pro_active ? 'free' : 'free',
-					'priority' => 100,
+					'priority' => 280,
 				],
 			],
 			'winebar' => [
@@ -316,7 +316,7 @@ class WPR_Templates_Data {
 					'tags' => 'wine bar winery beer drink alcohol pub events dish wines italian restaurant food slider recipes cooking recipes slider',
 					'theme-builder' => false,
 					'price' => $is_pro_active ? 'free' : 'free',
-					'priority' => 100,
+					'priority' => 290,
 				],
 			],
 			'wedding' => [
@@ -327,7 +327,7 @@ class WPR_Templates_Data {
 					'tags' => 'wedding party event slider invitation planner slider photography photographer',
 					'theme-builder' => false,
 					'price' => $is_pro_active ? 'free' : 'free',
-					'priority' => 100,
+					'priority' => 300,
 				],
 			],
 		];
