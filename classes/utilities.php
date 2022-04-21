@@ -57,6 +57,7 @@ class Utilities {
 			'Lottie Animations' => ['lottie-animations', 'https://royal-elementor-addons.com/elementor-lottie-animation-widget/', '', ''],
 			'Site Logo' => ['logo', '', '', ''],
 			'Popup Trigger' => ['popup-trigger', '', '', ''],
+			'Image Accordion' => ['image-accordion', '', '', ''],
 			'Taxonomy List' => ['taxonomy-list', '', '', ''],
 			'Template' => ['elementor-template', '', '', ''],
 			// 'Random Image' => ['random-image', '', ''],
