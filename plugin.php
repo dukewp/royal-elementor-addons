@@ -87,6 +87,7 @@ class Plugin {
 
 		// Post Likes
 		require WPR_ADDONS_PATH . 'classes/wpr-post-likes.php';
+		require WPR_ADDONS_PATH . 'classes/wpr-walker-nav-menu.php';
 
 		// Particles
 		if ( 'on' === get_option('wpr-particles-toggle', 'on') ) {//TODO: make this check automatic(loop through) for all extensions
@@ -345,7 +346,7 @@ class Plugin {
 			[]
 		);
 
-		wp_register_style(
+		wp_enqueue_style(
 			'wpr-flipster-css',
 			WPR_ADDONS_URL . 'assets/css/lib/flipster/jquery.flipster' . $this->script_suffix() . '.css',
 			[],
