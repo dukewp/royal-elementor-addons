@@ -11489,8 +11489,61 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     flex: 7;
 }
 
-.wpr-image-accordion-wrap .wpr-grid-media-hover-bg {
-    pointer-events: none;
+.wpr-image-accordion-wrap .wpr-img-accordion-media-hover-bg {
+    /* pointer-events: none; */
+    position: absolute;
+}
+
+.wpr-img-accordion-item-inner,
+.wpr-img-accordion-media-wrap {
+    position: relative;
+}
+
+.wpr-img-accordion-image-wrap {
+    overflow: hidden;
+}
+
+.wpr-img-accordion-image-wrap img {
+    display: block;
+    width: 100%;
+}
+
+.wpr-img-accordion-media-hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.wpr-img-accordion-media-hover-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+}
+
+.wpr-img-accordion-media-hover-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+}
+
+.wpr-img-accordion-media-hover-middle {
+    position: relative;
+    z-index: 2;
+}
+
+.wpr-img-accordion-sep-style-1 .inner-block>span {
+    display: inline-block;
+}
+
+.wpr-img-accordion-item-display-custom.wpr-img-accordion-sep-style-1 .inner-block>span {
+    width: 100%;
 }
 
 /*--------------------------------------------------------------
