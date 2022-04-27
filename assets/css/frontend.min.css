@@ -11457,6 +11457,42 @@ body:not(.elementor-editor-active) .wpr-template-popup {
   .wpr-feature-list-description {
       margin: 0;
   }
+
+  /*--------------------------------------------------------------
+  == Image Accordion
+  --------------------------------------------------------------*/
+
+.wpr-image-accordion-wrap h1 {
+    position: relative;
+    margin-bottom: 45px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 44px;
+    text-transform: uppercase;
+    color: #424242;
+}
+.wpr-image-accordion-wrap .wpr-image-accordion {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 70vh;
+}
+.wpr-image-accordion-wrap .wpr-image-accordion-item {
+    position: relative;
+    flex: 1;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: none;
+    transition: flex 0.8s ease;
+}
+.wpr-image-accordion-wrap .wpr-image-accordion-item:hover {
+    flex: 7;
+}
+
+.wpr-image-accordion-wrap .wpr-grid-media-hover-bg {
+    pointer-events: none;
+}
+
 /*--------------------------------------------------------------
   == Section Extensions
   --------------------------------------------------------------*/
