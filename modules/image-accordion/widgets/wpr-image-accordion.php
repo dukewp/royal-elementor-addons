@@ -477,19 +477,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 		);
 
 		$repeater->add_control(
-			'element_lightbox_overlay',
-			[
-				'label' => esc_html__( 'Media Overlay', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'separator' => 'after',
-				'condition' => [
-					'element_select' => [ 'lightbox' ],
-				],
-			]
-		);
-
-		$repeater->add_control(
 			'element_separator_style',
 			[
 				'label' => esc_html__( 'Select Styling', 'wpr-addons' ),
@@ -732,6 +719,9 @@ class Wpr_Image_Accordion extends Widget_Base {
 					],
 					[
 						'element_select' => 'separator',
+					],
+					[
+						'element_select' => 'lightbox',
 					],
 				],
 				'title_field' => '{{{ element_select.charAt(0).toUpperCase() + element_select.slice(1) }}}',
@@ -2004,7 +1994,9 @@ class Wpr_Image_Accordion extends Widget_Base {
 					}
 	
 					// Lightbox Icon
-					echo '<i class="'. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
+					if( '' != $settings['element_extra_icon'] ) {
+						echo '<i class="'. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
+					}
 	
 					// Text: After
 					if ( 'after' === $settings['element_extra_text_pos'] ) {
@@ -2059,7 +2051,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 			
 
 			$layout_settings_lightbox = [
-				'selector' => '.wpr-accordion-image-wrap',
+				// 'selector' => '.wpr-accordion-image-wrap',
 				'iframeMaxWidth' => '60%',
 				'hash' => false,
 				// 'autoplay' => $settings['lightbox_popup_autoplay'],

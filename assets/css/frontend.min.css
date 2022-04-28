@@ -11485,13 +11485,14 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     transition: flex 0.8s ease;
 }
 
-.wpr-image-accordion-wrap .wpr-img-accordion-media-hover-bg {
+.wpr-image-accordion-wrap .wpr-img-accordion-media-hover,
+.wpr-image-accordion-wrap .wpr-img-accordion-hover-bg {
     /* pointer-events: none; */
     position: absolute;
 }
 
 .wpr-img-accordion-item-inner,
-.wpr-img-accordion-media-wrap {
+.wpr-accordion-image-wrap {
     position: relative;
 }
 
