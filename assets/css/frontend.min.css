@@ -11472,7 +11472,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 .wpr-image-accordion-wrap .wpr-image-accordion {
     display: flex;
-    flex-direction: row;
     width: 100%;
     height: 70vh;
 }
@@ -11484,9 +11483,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     background-size: cover;
     background-repeat: none;
     transition: flex 0.8s ease;
-}
-.wpr-image-accordion-wrap .wpr-image-accordion-item:hover {
-    flex: 7;
 }
 
 .wpr-image-accordion-wrap .wpr-img-accordion-media-hover-bg {
@@ -11546,6 +11542,53 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     width: 100%;
 }
 
+.wpr-img-accordion-item-display-block {
+    clear: both;
+}
+
+.wpr-img-accordion-item-display-inline.wpr-img-accordion-item-align-left,
+.wpr-img-accordion-item-display-custom.wpr-img-accordion-item-align-left {
+    float: left;
+}
+
+.wpr-img-accordion-item-display-inline.wpr-img-accordion-item-align-right,
+.wpr-img-accordion-item-display-custom.wpr-img-accordion-item-align-right {
+    float: right;
+}
+
+.wpr-img-accordion-item-display-inline.wpr-img-accordion-item-align-center,
+.wpr-img-accordion-item-display-custom.wpr-img-accordion-item-align-center {
+    float: none;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.wpr-accordion-image-wrap {
+    position: absolute;
+    overflow: hidden;
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
+}
+
+.wpr-accordion-image-wrap img {
+    display: block;
+    width: 100%;
+}
+
+.wpr-img-accordion-item-lightbox .inner-block>span,
+.wpr-img-accordion-lightbox-overlay {
+    cursor: pointer;
+}
+
+.wpr-img-accordion-lightbox-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+}
 /*--------------------------------------------------------------
   == Section Extensions
   --------------------------------------------------------------*/
