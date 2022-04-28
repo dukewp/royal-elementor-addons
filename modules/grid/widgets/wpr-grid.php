@@ -3554,7 +3554,7 @@ class Wpr_Grid extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 30,
+					'top' => 0,
 					'right' => 0,
 					'bottom' => 0,
 					'left' => 0,
@@ -3763,7 +3763,7 @@ class Wpr_Grid extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 30,
+					'top' => 0,
 					'right' => 0,
 					'bottom' => 0,
 					'left' => 0,
