@@ -105,6 +105,16 @@ class WPR_Templates_Data {
 					'priority' => 80,
 				],
 			],
+			'nft-portfolio' => [
+				'v1' => [
+					'name' => 'NFT',
+					'pages' => 'home,about,blog,roadmap,team,nft,faq,comingsoon,',
+					'tags' => 'portfolio blockchain nft crypto collection minting listing metavers digital currency art',
+					'theme-builder' => false,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'priority' => 81,
+				],
+			],
 			'pizza' => [
 				'v1' => [
 					'name' => 'Pizza Restaurant',

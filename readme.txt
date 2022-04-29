@@ -1,7 +1,7 @@
 === Royal Elementor Addons (Header Footer Builder, Popups, Post Grid, Woocommerce Product Grid, Slider, Parallax Image, Free Elementor Widgets & Elementor Templates) ===
 Contributors: WP Royal, rubeushagrid13, cyberpinky, elementoraddonswpr
 Tags: elementor, elements, widgets for elementor, elementor addons, elementor widgets, elementor form, woocommerce elementor, page builder, elementor templates, wordpress page builder, best elementor addons, addons for elementor
-Stable tag: 1.3.41
+Stable tag: 1.3.42
 Requires at least: 5.0
 Tested up to: 5.9
 Requires PHP: 5.6
@@ -79,7 +79,8 @@ and other custom branding related settings)
 
 **Elementor Theme Builder Templates Kits**
 
-- [**Personal Blog**](https://demosites.royal-elementor-addons.com/personal-blog-v1/?ref=rea-wpo-pp-details-tab)
+- [**Personal Blog v1**](https://demosites.royal-elementor-addons.com/personal-blog-v1/?ref=rea-wpo-pp-details-tab)
+- [**Personal Blog v2**](https://demosites.royal-elementor-addons.com/personal-blog-v2/?ref=rea-wpo-pp-details-tab)
 - [**Magazine Blog v1**](https://demosites.royal-elementor-addons.com/magazine-blog-v1/?ref=rea-wpo-pp-details-tab)
 - [**Magazine Blog v2**](https://demosites.royal-elementor-addons.com/magazine-blog-v2/?ref=rea-wpo-pp-details-tab)
 - [**Magazine Blog v3**](https://demosites.royal-elementor-addons.com/magazine-blog-v3/?ref=rea-wpo-pp-details-tab)
@@ -111,6 +112,7 @@ and other custom branding related settings)
 - [**Photographer Portfolio Elementor Templates Kit Light**](https://demosites.royal-elementor-addons.com/photographer-v2/?ref=rea-wpo-pp-details-tab)
 - [**Lawyer Elementor Templates Kit Light**](https://demosites.royal-elementor-addons.com/lawyer-v1/?ref=rea-wpo-pp-details-tab)
 - [**Travel Blogger & Influencer Elementor Templates Kit Light**](https://demosites.royal-elementor-addons.com/travel-v1/?ref=rea-wpo-pp-details-tab)
+- [**NFT**](https://demosites.royal-elementor-addons.com/nft-portfolio-v1/?ref=rea-wpo-pp-details-tab)
 
 
 **Widgets Description:**
@@ -331,6 +333,9 @@ memory_limit 256M or more
 post_max_size 64M
 
 == Changelog ==
+
+= Royal Elementor Addons v1.3.42 - 2022-29-04 =
+* ADDED: Royal Elementor Theme Builder [**NFT Portfolio**](https://demosites.royal-elementor-addons.com/nft-portfolio-v1/?ref=rea-wpo-pp-details-tab) Templates Kit.
 
 = Royal Elementor Addons v1.3.40 - 2022-19-04 =
 * ADDED: Royal Elementor Theme Builder [**Magazine Blog v3**](https://demosites.royal-elementor-addons.com/magazine-blog-v3/?ref=rea-wpo-pp-details-tab) Free Templates Kit.
