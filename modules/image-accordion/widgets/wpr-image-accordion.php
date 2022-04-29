@@ -1804,21 +1804,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 						echo '</div></div></div>';
 					}
 				}
-			} else {
-				echo '<div class="wpr-img-accordion-item-'. $location .'-content elementor-clearfix">';
-					foreach ( $locations[$location] as $data ) {
-
-						// Get Class
-						$class  = 'wpr-img-accordion-item-'. $data['element_select'];
-						$class .= ' elementor-repeater-item-'. $data['_id'];
-						$class .= ' wpr-img-accordion-item-display-'. $data['element_display'];
-						$class .= ' wpr-img-accordion-item-align-'. $data['element_align_hr'];
-
-						// Element
-						$this->get_elements( $data['element_select'], $data, $class, $item );
-					}
-				echo '</div>';
-			}
+			} 
 
 		}
 	}
@@ -2051,7 +2037,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 			
 
 			$layout_settings_lightbox = [
-				// 'selector' => '.wpr-accordion-image-wrap',
+				'selector' => '.wpr-accordion-image-wrap',
 				'iframeMaxWidth' => '60%',
 				'hash' => false,
 				// 'autoplay' => $settings['lightbox_popup_autoplay'],

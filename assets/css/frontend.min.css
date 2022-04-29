@@ -11496,11 +11496,11 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     position: relative;
 }
 
-.wpr-img-accordion-image-wrap {
+.wpr-accordion-image-wrap {
     overflow: hidden;
 }
 
-.wpr-img-accordion-image-wrap img {
+.wpr-accordion-image-wrap img {
     display: block;
     width: 100%;
 }
@@ -11519,7 +11519,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 2;
+    z-index: 99;
 }
 
 .wpr-img-accordion-media-hover-bottom {
@@ -11527,7 +11527,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     bottom: 0;
     left: 0;
     width: 100%;
-    z-index: 2;
+    z-index: 99;
 }
 
 .wpr-img-accordion-media-hover-middle {
@@ -11567,7 +11567,8 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-accordion-image-wrap {
     position: absolute;
     overflow: hidden;
-    height: 100%;
+    max-height: 100%;
+    max-width: 100%;
     background-size: cover;
     background-position: center center;
 }
