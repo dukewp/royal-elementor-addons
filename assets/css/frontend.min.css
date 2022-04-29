@@ -11583,6 +11583,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     cursor: pointer;
 }
 
+.wpr-img-accordion-item-lightbox {
+    cursor: pointer;
+}
+
 .wpr-img-accordion-lightbox-overlay {
     position: absolute;
     top: 0;
@@ -11591,6 +11595,16 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     height: 100%;
     z-index: 999;
 }
+
+.wpr-img-accordion-item-button .inner-block a {
+    display: inline-block;
+}
+
+/* .wpr-img-accordion-item-title a,
+.wpr-img-accordion-item-description p {
+  white-space: nowrap;
+} */
+
 /*--------------------------------------------------------------
   == Section Extensions
   --------------------------------------------------------------*/
