@@ -541,6 +541,15 @@ class Plugin {
 			Plugin::instance()->get_version(),
 			true
 		);
+
+		wp_localize_script(
+			'wpr-addons-library-editor-js',
+			'WprLibraryEditor', // This is used in the js file to group all of your scripts together
+			[
+				'ajaxurl' => admin_url( 'admin-ajax.php' ),
+				'nonce' => wp_create_nonce( 'wpr-addons-library-editor-js' ),
+			]
+		);
 	}
 
 	public function enqueue_panel_styles() {
@@ -550,6 +559,7 @@ class Plugin {
 			[],
 			Plugin::instance()->get_version()
 		);
+		
 	}
 
 
@@ -695,8 +705,96 @@ class Plugin {
 		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'enqueue_inner_panel_scripts' ], 988 );
 		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'enqueue_panel_scripts' ], 988 );
 
+		// Image Accordion Create Template
+		add_action( 'elementor/editor/after_enqueue_styles', [ $this, 'load_live_editor_modal' ] );
+
+		add_action( 'wp_ajax_handle_live_editor', array( $this, 'handle_live_editor' ) );
+
+		add_action( 'wp_ajax_update_template_title', array( $this, 'update_template_title' ) );
+
 		// Lightbox Styles
 		add_action( 'wp_head', [ $this, 'lightbox_styles' ], 988 );
+	}
+
+	public function load_live_editor_modal() {
+		ob_start();
+		include_once WPR_ADDONS_PATH . 'admin/includes/temporary/live-editor-modal.php';
+		$output = ob_get_contents();
+		ob_end_clean();
+		echo $output;
+	}
+
+	public function handle_live_editor() {
+
+
+		if ( ! isset( $_POST['key'] ) ) {
+			wp_send_json_error();
+		}
+
+		$post_name  = 'pa-dynamic-temp-' . sanitize_text_field( wp_unslash( $_POST['key'] ) );
+		$post_title = '';
+		$args       = array(
+			'post_type'              => 'elementor_library',
+			'name'                   => $post_name,
+			'post_status'            => 'publish',
+			'update_post_term_cache' => false,
+			'update_post_meta_cache' => false,
+			'posts_per_page'         => 1,
+		);
+
+		$post = get_posts( $args );
+
+		if ( empty( $post ) ) { // create a new one.
+
+			$key        = sanitize_text_field( wp_unslash( $_POST['key'] ) );
+			$post_title = 'PA Template | #' . substr( md5( $key ), 0, 4 );
+
+			$params = array(
+				'post_content' => '',
+				'post_type'    => 'elementor_library',
+				'post_title'   => $post_title,
+				'post_name'    => $post_name,
+				'post_status'  => 'publish',
+				'meta_input'   => array(
+					'_elementor_edit_mode'     => 'builder',
+					'_elementor_template_type' => 'page',
+					'_wp_page_template'        => 'elementor_canvas',
+				),
+			);
+
+			$post_id = wp_insert_post( $params );
+
+		} else { // edit post.
+			$post_id    = $post[0]->ID;
+			$post_title = $post[0]->post_title;
+		}
+
+		$edit_url = get_admin_url() . '/post.php?post=' . $post_id . '&action=elementor';
+
+		$result = array(
+			'url'   => $edit_url,
+			'id'    => $post_id,
+			'title' => $post_title,
+		);
+
+		wp_send_json_success( $result );
+	}
+
+	public function update_template_title() {
+		// check_ajax_referer( 'pa-live-editor', 'security' );
+
+		if ( ! isset( $_POST['title'] ) || ! isset( $_POST['id'] ) ) {
+			wp_send_json_error();
+		}
+
+		$res = wp_update_post(
+			array(
+				'ID'         => sanitize_text_field( wp_unslash( $_POST['id'] ) ),
+				'post_title' => sanitize_text_field( wp_unslash( $_POST['title'] ) ),
+			)
+		);
+
+		wp_send_json_success( $res );
 	}
 
 	/**

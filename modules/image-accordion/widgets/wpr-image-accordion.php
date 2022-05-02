@@ -14,6 +14,7 @@ use Elementor\Core\Schemes\Color;
 use Elementor\Repeater;
 use Elementor\Group_Control_Image_Size;
 use WprAddons\Classes\Utilities;
+use Elementor\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -167,6 +168,54 @@ class Wpr_Image_Accordion extends Widget_Base {
 		);
 	}
 
+	public function get_elementor_page_list() { // frompremium
+
+		$pagelist = get_posts(
+			array(
+				'post_type' => 'elementor_library',
+				'showposts' => 999,
+			)
+		);
+
+		if ( ! empty( $pagelist ) && ! is_wp_error( $pagelist ) ) {
+
+			foreach ( $pagelist as $post ) {
+				$options[ $post->post_title ] = $post->post_title;
+			}
+
+			update_option( 'temp_count', $options );
+
+			return $options;
+		}
+	}
+	
+	public function get_template_content( $title, $id = false ) { // frompremium
+
+		$frontend = Plugin::$instance->frontend;
+
+		if ( ! $id ) {
+			$id = $this->get_id_by_title( $title );
+
+			$id = apply_filters( 'wpml_object_id', $id, 'elementor_library', true );
+		} else {
+			$id = $title;
+		}
+
+		$template_content = $frontend->get_builder_content_for_display( $id, true );
+
+		return $template_content;
+
+	}
+
+	public function get_id_by_title( $title ) { // frompremium
+
+		$template = get_page_by_title( $title, OBJECT, 'elementor_library' );
+
+		$template_id = isset( $template->ID ) ? $template->ID : $title;
+
+		return $template_id;
+	}
+
     public function register_controls() {
 
 		$this->start_controls_section(
@@ -178,6 +227,60 @@ class Wpr_Image_Accordion extends Widget_Base {
 		);
 
 		$repeater = new \Elementor\Repeater();
+		
+
+		$repeater->add_control(
+			'content_type',
+			array(
+				'label'     => __( 'Content Type', 'wpr-addons' ),
+				'type'      => Controls_Manager::SELECT,
+				'options'   => array(
+					'custom'   => __( 'Custom Content', 'wpr-addons' ),
+					'template' => __( 'Elementor Template', 'wpr-addons' ),
+				),
+				'default'   => 'custom',
+			)
+		);
+
+		$repeater->add_control(
+			'live_temp_content',
+			array(
+				'label'       => __( 'Template Title', 'wpr-addons' ),
+				'type'        => Controls_Manager::TEXT,
+				'classes'     => 'wpr-live-temp-title control-hidden',
+				'label_block' => true,
+				'condition' => [
+					'content_type' => 'template'
+				]
+			)
+		);
+
+		$repeater->add_control( // frompremium
+			'temp_content_live',
+			array(
+				'type'        => Controls_Manager::BUTTON,
+				'label_block' => true,
+				'button_type' => 'default papro-btn-block',
+				'text'        => __( 'Create / Edit Template', 'wpr-addons' ),
+				'event'       => 'createLiveTemp',
+				'condition' => [
+					'content_type' => 'template'
+				]
+			)
+		);
+
+		$repeater->add_control( // frompremium
+			'temp_content',
+			array(
+				'label'       => __( 'OR Select Existing Template', 'wpr-addons' ),
+				'type'        => Controls_Manager::SELECT2,
+				'options'     => $this->get_elementor_page_list(),
+				'label_block' => true,
+				'condition' => [
+					'content_type' => 'template'
+				]
+			)
+		);
 
 		$repeater->add_control(
 			'accordion_item_title', [
@@ -335,15 +438,25 @@ class Wpr_Image_Accordion extends Widget_Base {
 		);
 
 		$this->add_control(
+			'default_active',
+			[
+				'label'       => __( 'Hovered By Default Index', 'wpr-addons' ),
+				'type'        => Controls_Manager::NUMBER,
+				'description' => __( 'Set the index for the image to be hovered by default on page load, index starts from 1', 'wpr-addons' )
+			]
+		);
+
+		$this->add_control(
 			'accordion_interaction',
 			[
 				'label'         => esc_html__('Interaction', 'wpr-addons'),
 				'type'          => Controls_Manager::SELECT,
 				'options'       => [
-					'click' => esc_html__('Click', 'wpr-addons'),
 					'hover' => esc_html__('Hover', 'wpr-addons'),
+					'click' => esc_html__('Click', 'wpr-addons'),
 				],
-				'default'       => 'click',
+				'render_type' => 'template',
+				'default'       => 'hover',
 				'prefix_class'  => 'wpr-image-accordion-interaction-',
 			]
 		);
@@ -390,7 +503,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 					'unit' => 'px'
 				],
 				'selectors' => [
-					'{{WRAPPER}}.wpr-image-accordion-interaction-hover .wpr-image-accordion-wrap .wpr-image-accordion-item:hover' => 'flex: {{SIZE}};',
+					'{{WRAPPER}} .wpr-image-accordion-wrap .wpr-image-accordion-item.wpr-image-accordion-item-grow' => 'flex: {{SIZE}};',
 				]
 			]
 		);
@@ -1067,9 +1180,49 @@ class Wpr_Image_Accordion extends Widget_Base {
 		);
 
 		$this->add_control(
-			'lightbox_popup_thumbnails',
+			'lightbox_popup_captions',
 			[
-				'label' => esc_html__( 'Show Thumbnails', 'wpr-addons' ),
+				'label' => esc_html__( 'Show Captions', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'true',
+				'return_value' => 'true',
+			]
+		);
+		
+		$this->add_control(
+			'lightbox_popup_sharing',
+			[
+				'label' => esc_html__( 'Show Sharing Button', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'true',
+				'return_value' => 'true',
+			]
+		);
+
+		$this->add_control(
+			'lightbox_popup_zoom',
+			[
+				'label' => esc_html__( 'Show Zoom Button', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'true',
+				'return_value' => 'true',
+			]
+		);
+
+		$this->add_control(
+			'lightbox_popup_fullscreen',
+			[
+				'label' => esc_html__( 'Show Full Screen Button', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'true',
+				'return_value' => 'true',
+			]
+		);
+
+		$this->add_control(
+			'lightbox_popup_download',
+			[
+				'label' => esc_html__( 'Show Download Button', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'true',
 				'return_value' => 'true',
@@ -2614,7 +2767,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 				
 			
 				echo '<div style="opacity: 0;" class="wpr-accordion-image-wrap" data-src="'. $lightbox_source. '">';
-					echo '<img src="'. esc_url( $lightbox_source ) .'" alt="'. esc_attr( 'lg-image' ) .'" class="wpr-anim-timing-slow' .'">';
+					echo '<img src="'. esc_url( $lightbox_source ) .'" alt="'. esc_attr( $item['accordion_item_title'] ) .'">';
 				echo '</div>';
 	
 				// Lightbox Button
@@ -2680,28 +2833,25 @@ class Wpr_Image_Accordion extends Widget_Base {
 				
 			$this->item_bg_image_url = Group_Control_Image_Size::get_attachment_image_src( $item['accordion_item_bg_image']['id'], 'accordion_image_size', $settings );
 
-			
+			$layout['activeItem'] = [
+				'activeWidth' => $settings['accordion_active_item_style']['size'],
+				'defaultActive' => $settings['default_active'],
+				'interaction' => $settings['accordion_interaction']
+			];
 
-			$layout_settings_lightbox = [
+			$layout['lightbox'] = [
 				'selector' => '.wpr-accordion-image-wrap',
 				'iframeMaxWidth' => '60%',
 				'hash' => false,
-				// 'autoplay' => $settings['lightbox_popup_autoplay'],
-				// 'pause' => $settings['lightbox_popup_pause'] * 1000,
-				// 'progressBar' => $settings['lightbox_popup_progressbar'],
-				// 'counter' => $settings['lightbox_popup_counter'],
-				// 'controls' => $settings['lightbox_popup_arrows'],
-				// 'getCaptionFromTitleOrAlt' => $settings['lightbox_popup_captions'],
-				'thumbnail' => $settings['lightbox_popup_thumbnails'],
-				// 'showThumbByDefault' => $settings['lightbox_popup_thumbnails_default'],
-				// 'share' => $settings['lightbox_popup_sharing'],
-				// 'zoom' => $settings['lightbox_popup_zoom'],
-				// 'fullScreen' => $settings['lightbox_popup_fullscreen'],
-				// 'download' => $settings['lightbox_popup_download'],
+				'share' => $settings['lightbox_popup_sharing'],
+				'zoom' => $settings['lightbox_popup_zoom'],
+				'fullScreen' => $settings['lightbox_popup_fullscreen'],
+				'download' => $settings['lightbox_popup_download'],
+				'getCaptionFromTitleOrAlt' => $settings['lightbox_popup_captions']
 			];
 
 			$this->add_render_attribute( 'accordion-settings'.$key, [
-				'data-settings' => wp_json_encode( $layout_settings_lightbox ),
+				'data-settings' => wp_json_encode( $layout ),
 			] );
 
 			$render_attribute = $this->get_render_attribute_string( 'accordion-settings'.$key );
@@ -2709,12 +2859,21 @@ class Wpr_Image_Accordion extends Widget_Base {
 			?>
 				<div data-src=<?php echo $this->item_bg_image_url ?> style="background-image: url(<?php echo $this->item_bg_image_url ?>);"  class="wpr-image-accordion-item elementor-repeater-item-<?php echo $item['_id'] ?>">
 
-						<?php 
-						echo '<div class="wpr-img-accordion-media-hover wpr-animation-wrap"   data-src='. $this->item_bg_image_url .' '.$render_attribute.'>';
+
+				<?php if ( 'template' === $item['content_type'] ) : ?>
+					<?php
+					echo '<div class="wpr-img-accordion-media-hover wpr-animation-wrap"   data-src='. $this->item_bg_image_url .' '.$render_attribute.'>';
+						echo $this->render_media_overlay( $settings );
+						$temp_id = empty( $item['temp_content'] ) ? $item['live_temp_content'] : $item['temp_content'];
+						echo $this->get_template_content( $temp_id ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo '</div>';	
+					?>
+				<?php else : 
+					echo '<div class="wpr-img-accordion-media-hover wpr-animation-wrap"   data-src='. $this->item_bg_image_url .' '.$render_attribute.'>';
 							echo $this->render_media_overlay( $settings );
 							echo $this->get_elements_by_location( 'over', $settings, $item );
-						echo '</div>';
-						?>
+					echo '</div>';
+				endif ; ?>
 
 				</div>
 			<?php endforeach; ?>
