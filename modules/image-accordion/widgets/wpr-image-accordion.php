@@ -1246,6 +1246,14 @@ class Wpr_Image_Accordion extends Widget_Base {
 
 		$this->add_control_overlay_blend_mode();
 
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name'     => 'btn_box_shadow_1',
+				'selector' => '{{WRAPPER}} .wpr-image-accordion-item',
+			]
+		);
+
 		$this->add_control(
 			'overlay_radius',
 			[
