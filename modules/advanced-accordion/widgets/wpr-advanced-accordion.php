@@ -163,7 +163,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
     }
 
 
-	public function wpr_switcher_template( $id ) {
+	public function wpr_accordion_template( $id ) {
 		if ( empty( $id ) ) {
 		return '';
 		}
@@ -183,7 +183,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 					<?php if ('text' === $acc['accordion_content_type']) : ?>
                     	<p><?php echo $acc['accordion_content'] ?></p>
 					<?php else: 
-						echo $this->wpr_switcher_template( $acc['accordion_content_template'] );
+						echo $this->wpr_accordion_template( $acc['accordion_content_template'] );
 						// echo Widget_Area_Utils::parse( '', $this->get_id(), $acc['_id'], '', $i+1 );
 					endif; ?>
                     </div>
