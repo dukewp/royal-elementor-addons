@@ -75,7 +75,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 		}
 
 		// Tab: Content ==============
-		// Section: Query ------------
+		// Section: Content ------------
 		$this->start_controls_section(
 			'section_accordion_content',
 			[
@@ -160,6 +160,62 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 		);
 
         $this->end_controls_section();
+
+		// Tab: Content ==============
+		// Section: Content ------------
+		$this->start_controls_section(
+			'section_accordion_settings',
+			[
+				'label' => esc_html__( 'Settings', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$this->add_control(
+			'select_icon',
+			[
+				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
+				'type' => Controls_Manager::ICONS,
+				'skin' => 'inline',
+				'label_block' => false,
+				'default' => [
+					'value' => 'fas fa-plus',
+					'library' => 'fa-solid',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'select_icon',
+			[
+				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
+				'type' => Controls_Manager::ICONS,
+				'skin' => 'inline',
+				'label_block' => false,
+				'default' => [
+					'value' => 'fas fa-plus',
+					'library' => 'fa-solid',
+				],
+				'separator' => 'before',
+			]
+		);
+
+        $this->add_control(
+            'accordion_type',
+            [
+                'label'       => esc_html__('Accordion Type', 'wpr-addons'),
+                'type'        => Controls_Manager::SELECT,
+                'default'     => 'accordion',
+                'label_block' => false,
+                'options'     => [
+                    'accordion' => esc_html__('Accordion', 'wpr-addons'),
+                    'toggle'    => esc_html__('Toggle', 'wpr-addons'),
+                ],
+            ]
+        );
+
+		$this->end_controls_section();
     }
 
 
@@ -175,10 +231,22 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 
     protected function render() {
         $settings = $this->get_settings_for_display();
+
+		$this->add_render_attribute(
+			'accordion_attributes',
+			[
+				'class' => [ 'wpr-advanced-accordion' ],
+				'data-accordion-type' => $settings['accordion_type'],
+			]
+		);
+
         ?>
-            <div class="wpr-advanced-accordion">
+            <div <?php echo $this->get_render_attribute_string( 'accordion_attributes' ); ?>>
                 <?php foreach ($settings['advanced_accordion'] as $i=>$acc) : ?>
-                    <button class="accordion"><?php echo $acc['accordion_title'] ?></button>
+                    <button class="accordion">
+						<span><?php echo $acc['accordion_title'] ?></span>
+						<span><?php \Elementor\Icons_Manager::render_icon( $settings['select_icon'], [ 'aria-hidden' => 'true' ] ); ?></span>
+					</button>
                     <div class="panel">
 					<?php if ('text' === $acc['accordion_content_type']) : ?>
                     	<p><?php echo $acc['accordion_content'] ?></p>

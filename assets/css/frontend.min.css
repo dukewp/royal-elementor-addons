@@ -11463,6 +11463,9 @@ body:not(.elementor-editor-active) .wpr-template-popup {
   --------------------------------------------------------------*/
 
 .wpr-advanced-accordion .accordion {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-color: #eee;
     color: #444;
     cursor: pointer;
@@ -11481,24 +11484,12 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     position: relative;
 }
 
-/* .wpr-advanced-accordion .wpr-accordion-panel-active {
+.wpr-advanced-accordion .wpr-accordion-panel-active {
     display: block;
-} */
+}
   
 .wpr-advanced-accordion .active, .accordion:hover {
     background-color: #ccc;
-}
-  
-.wpr-advanced-accordion .accordion:after {
-    content: '\002B';
-    color: #777;
-    font-weight: bold;
-    float: right;
-    margin-left: 5px;
-}
-  
-.wpr-advanced-accordion .active:after {
-    content: "\2212";
 }
   
 .wpr-advanced-accordion .panel {
