@@ -1,6 +1,7 @@
 <?php
 namespace WprAddons\Modules\AdvancedAccordion\Widgets;
 
+use Elementor;
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Core\Responsive\Responsive;
@@ -55,6 +56,23 @@ class Wpr_Advanced_Accordion extends Widget_Base {
     }
 
     protected function register_controls() {
+		
+		$templates_select = [];
+
+		// Get All Templates
+		$templates = get_posts( [
+			'post_type'   => array( 'elementor_library' ),
+			'post_status' => array( 'publish' ),
+			'meta_key' 	  => '_elementor_template_type',
+			'meta_value'  => ['page', 'section'],
+			'numberposts' => -1
+		] );
+
+		if ( ! empty( $templates ) ) {
+			foreach ( $templates as $template ) {
+				$templates_select[$template->ID] = $template->post_title;
+			}
+		}
 
 		// Tab: Content ==============
 		// Section: Query ------------
@@ -78,7 +96,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'default' => 'text',
 				'options' => [
 					'text' => esc_html__( 'Text', 'wpr-addons' ),
-					'widgets' => esc_html__( 'Widget', 'wpr-addons' )
+					'template' => esc_html__( 'Widget', 'wpr-addons' )
 				],
 				'render_type' => 'template',
 			]
@@ -87,7 +105,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 		$repeater->add_control(
 			'accordion_title', [
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
+				'type' => Controls_Manager::TEXT,
 				'default' => esc_html__( 'Acc Item Title' , 'wpr-addons' ),
 				'label_block' => true,
 			]
@@ -96,12 +114,24 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 		$repeater->add_control(
 			'accordion_content', [
 				'label' => esc_html__( 'Content', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::TEXTAREA,
+				'type' => Controls_Manager::TEXTAREA,
 				'default' => esc_html__( 'Acc Item Content' , 'wpr-addons' ),
 				'show_label' => false,
                 'condition' => [
                     'accordion_content_type' => 'text'
                 ]
+			]
+		);
+
+		$repeater->add_control(
+			'accordion_content_template',
+			[
+				'label'	=> esc_html__( 'Select Template', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT2,
+				'options' => $templates_select,
+				'condition' => [
+					'accordion_content_type' => 'template',
+				],
 			]
 		);
 
@@ -132,6 +162,17 @@ class Wpr_Advanced_Accordion extends Widget_Base {
         $this->end_controls_section();
     }
 
+
+	public function wpr_switcher_template( $id ) {
+		if ( empty( $id ) ) {
+		return '';
+		}
+
+		$edit_link = '<span class="wpr-template-edit-btn" data-permalink="'. get_permalink( $id ) .'">Edit Template</span>';
+
+		return Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $id ) . $edit_link;
+	}
+
     protected function render() {
         $settings = $this->get_settings_for_display();
         ?>
@@ -139,10 +180,13 @@ class Wpr_Advanced_Accordion extends Widget_Base {
                 <?php foreach ($settings['advanced_accordion'] as $i=>$acc) : ?>
                     <button class="accordion"><?php echo $acc['accordion_title'] ?></button>
                     <div class="panel">
-                    <p><?php echo $acc['accordion_content'] ?></p>
+					<?php if ('text' === $acc['accordion_content_type']) : ?>
+                    	<p><?php echo $acc['accordion_content'] ?></p>
+					<?php else: 
+						echo $this->wpr_switcher_template( $acc['accordion_content_template'] );
+						// echo Widget_Area_Utils::parse( '', $this->get_id(), $acc['_id'], '', $i+1 );
+					endif; ?>
                     </div>
-                    
-                    <?php echo Widget_Area_Utils::parse( '', $this->get_id(), $acc['_id'], '', $i+1 ); ?>
                 <?php endforeach; ?>
             </div>
         <?php

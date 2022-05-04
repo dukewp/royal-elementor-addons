@@ -7682,6 +7682,11 @@ class Wpr_Grid extends Widget_Base {
 		$settings = $this->get_settings();
 		$author = ! empty( $settings[ 'query_author' ] ) ? implode( ',', $settings[ 'query_author' ] ) : '';
 
+		// if ( is_user_logged_in() ){
+		// 	$logged_in_user = wp_get_current_user();
+		// 	$author = '1' . ',' . $logged_in_user->ID;
+		// }
+
 		// Get Paged
 		if ( get_query_var( 'paged' ) ) {
 			$paged = get_query_var( 'paged' );

@@ -11478,6 +11478,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-advanced-accordion .panel {
     display: none;
     transition: all 1s ease-in-out;
+    position: relative;
 }
 
 /* .wpr-advanced-accordion .wpr-accordion-panel-active {
