@@ -549,6 +549,25 @@ class Plugin {
 		);
 	}
 
+	public function enqueue_scripts_editor() {
+		wp_enqueue_script(
+			'wpr-accordion-template-js',
+			WPR_ADDONS_URL . 'assets/js/temporary/accordion-template.js',
+			[
+				'jquery', 'elementor-frontend'
+			],
+			Plugin::instance()->get_version(),
+			true
+		);
+
+		wp_localize_script(
+			'wpr-accordion-template-js',
+			'WprAccordionTemplate', // This is used in the js file to group all of your scripts together
+			[
+				'resturl' => get_rest_url() . 'wproyal/v1/'
+			]
+		);
+	}
 
 	// Lightbox Styles
 	public function lightbox_styles() {
@@ -691,7 +710,8 @@ class Plugin {
 		add_action( 'elementor/editor/after_enqueue_styles', [ $this, 'enqueue_panel_styles' ], 988 );
 		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'enqueue_inner_panel_scripts' ], 988 );
 		add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'enqueue_panel_scripts' ], 988 );
-
+		
+        add_action( 'elementor/frontend/after_enqueue_scripts', [ $this, 'enqueue_scripts_editor' ], 22 );
 		// Lightbox Styles
 		add_action( 'wp_head', [ $this, 'lightbox_styles' ], 988 );
 	}

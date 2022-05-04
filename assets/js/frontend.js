@@ -35,6 +35,7 @@
 				'wpr-sharing-buttons.default' : WprElements.widgetSharingButtons,
 				'wpr-flip-carousel.default': WprElements.widgetFlipCarousel,
 				'wpr-feature-list.default' : WprElements.widgetFeatureList,
+				'wpr-advanced-accordion.default' : WprElements.widgetAdvancedAccordion,
 				'global': WprElements.widgetSection,
 
 				// Single
@@ -535,7 +536,7 @@
 				var section = $( $(this).find( 'a' ).attr( 'href' ) ),
 					scrollSpeed = parseInt( $(this).parent().attr( 'data-speed' ), 10 );
 
-				$( 'body' ).animate({ scrollTop: section.offset().top }, scrollSpeed );
+				$( 'html, body' ).animate({ scrollTop: section.offset().top }, scrollSpeed );
 
 				// Active Class
 				getSectionOffset( $(window).scrollTop() );
@@ -3997,6 +3998,10 @@
 				});
 			})
 		}, // end widgetFeatureList
+
+		widgetAdvancedAccordion: function($scope) {
+
+		}, // end widgetAdvancedAccordion
 
 		// Editor Check
 		editorCheck: function() {

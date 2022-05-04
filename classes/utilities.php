@@ -59,6 +59,7 @@ class Utilities {
 			'Popup Trigger' => ['popup-trigger', '', '', ''],
 			'Taxonomy List' => ['taxonomy-list', '', '', ''],
 			'Template' => ['elementor-template', '', '', ''],
+			'Advanced Accordion' => ['advanced-accordion', '', '', ''],
 			// 'Random Image' => ['random-image', '', ''],
 		];
 	}
