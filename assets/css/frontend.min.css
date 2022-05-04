@@ -11491,18 +11491,8 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     position: absolute;
 }
 
-.wpr-img-accordion-item-inner,
-.wpr-accordion-image-wrap {
+.wpr-img-accordion-item-inner {
     position: relative;
-}
-
-.wpr-accordion-image-wrap {
-    overflow: hidden;
-}
-
-.wpr-accordion-image-wrap img {
-    display: block;
-    width: 100%;
 }
 
 .wpr-img-accordion-media-hover {
@@ -11547,6 +11537,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     clear: both;
 }
 
+.wpr-img-accordion-item-separator.wpr-img-accordion-item-display-inline span {
+    width: 100% !important;
+}
+
 .wpr-img-accordion-item-display-inline.wpr-img-accordion-item-align-left,
 .wpr-img-accordion-item-display-custom.wpr-img-accordion-item-align-left {
     float: left;
@@ -11567,6 +11561,8 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-accordion-image-wrap {
     position: absolute;
     overflow: hidden;
+    height: 100%;
+    width: 100%;
     max-height: 100%;
     max-width: 100%;
     background-size: cover;
@@ -11574,8 +11570,8 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 .wpr-accordion-image-wrap img {
-    display: block;
-    width: 100%;
+    display: inline;
+    max-height: 100%;
 }
 
 .wpr-img-accordion-item-lightbox .inner-block>span,
@@ -11585,6 +11581,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 .wpr-img-accordion-item-lightbox {
     cursor: pointer;
+}
+
+.wpr-img-accordion-item-lightbox .inner-block {
+    position: relative;
 }
 
 .wpr-img-accordion-lightbox-overlay {

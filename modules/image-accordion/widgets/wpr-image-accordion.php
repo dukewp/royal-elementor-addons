@@ -1,6 +1,7 @@
 <?php
 namespace WprAddons\Modules\ImageAccordion\Widgets;
 
+use Elementor;
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Core\Responsive\Responsive;
@@ -13,6 +14,7 @@ use Elementor\Core\Schemes\Typography;
 use Elementor\Core\Schemes\Color;
 use Elementor\Repeater;
 use Elementor\Group_Control_Image_Size;
+use Elementor\Utils;
 use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -168,6 +170,24 @@ class Wpr_Image_Accordion extends Widget_Base {
 	}
 
     public function register_controls() {
+		
+		$templates_select = [];
+
+		// Get All Templates
+		$templates = get_posts( [
+			'post_type'   => array( 'elementor_library' ),
+			'post_status' => array( 'publish' ),
+			'meta_key' 	  => '_elementor_template_type',
+			'meta_value'  => ['page', 'section'],
+			'numberposts' => -1
+		] );
+
+		if ( ! empty( $templates ) ) {
+			foreach ( $templates as $template ) {
+				$templates_select[$template->ID] = $template->post_title;
+			}
+		}
+
 
 		$this->start_controls_section(
 			'section_accordion_items',
@@ -178,6 +198,32 @@ class Wpr_Image_Accordion extends Widget_Base {
 		);
 
 		$repeater = new \Elementor\Repeater();
+		
+		$repeater->add_control(
+			'content_type',
+			[
+				'label'     => __( 'Content Type', 'wpr-addons' ),
+				'type'      => Controls_Manager::SELECT,
+				'options'   => [
+					'custom'   => esc_html__( 'Custom Content', 'wpr-addons' ),
+					'template' => esc_html__( 'Template', 'wpr-addons' ),
+				],
+				'default'   => 'custom',
+			]
+		);
+
+		$repeater->add_control(
+			'temp_content',
+			[
+				'label'       => __( 'Select Template', 'wpr-addons' ),
+				'type'        => Controls_Manager::SELECT2,
+				'options'     => $templates_select,
+				'label_block' => true,
+				'condition' => [
+					'content_type' => 'template'
+				]
+			]
+		);
 
 		$repeater->add_control(
 			'accordion_item_title', [
@@ -221,6 +267,9 @@ class Wpr_Image_Accordion extends Widget_Base {
 			[
 				'label' => esc_html__( 'Image', 'wpr-addons' ),
 				'type' => Controls_Manager::MEDIA,
+				'default' => [
+					'url' => Utils::get_placeholder_image_src()
+				]
 			]
 		);
 
@@ -294,6 +343,10 @@ class Wpr_Image_Accordion extends Widget_Base {
 					[
 						
 						'accordion_item_title' => esc_html__( 'Item 1 Title', 'wpr-addons' ),
+						'accordion_item_bg_image' =>[
+							'url' => Utils::get_placeholder_image_src(),	
+							'id' => '',
+						],
 						// 'slider_item_sub_title' => esc_html__( 'Slide 1 Sub Title', 'wpr-addons' ),
 						// 'slider_item_description' => esc_html__( 'Slider 1 Description Text, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur laoreet cursus volutpat. Aliquam sit amet ligula et justo tincidunt laoreet non vitae lorem. ', 'wpr-addons' ),
 						// 'slider_item_btn_text_1' => esc_html__( 'Button 1', 'wpr-addons' ),
@@ -303,6 +356,10 @@ class Wpr_Image_Accordion extends Widget_Base {
 					[
 						
 						'accordion_item_title' => esc_html__( 'Item 2 Title', 'wpr-addons' ),
+						'accordion_item_bg_image' =>[
+							'url' => Utils::get_placeholder_image_src(),	
+							'id' => '',
+						],
 						// 'slider_item_sub_title' => esc_html__( 'Slide 2 Sub Title', 'wpr-addons' ),
 						// 'slider_item_description' => esc_html__( 'Slider 2 Description Text, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur laoreet cursus volutpat. Aliquam sit amet ligula et justo tincidunt laoreet non vitae lorem. ', 'wpr-addons' ),
 						// 'slider_item_btn_text_1' => esc_html__( 'Button 1', 'wpr-addons' ),
@@ -312,6 +369,10 @@ class Wpr_Image_Accordion extends Widget_Base {
 					[
 						
 						'accordion_item_title' => esc_html__( 'Item 3 Title', 'wpr-addons' ),
+						'accordion_item_bg_image' =>[
+							'url' => Utils::get_placeholder_image_src(),	
+							'id' => '',
+						],
 						// 'slider_item_sub_title' => esc_html__( 'Slide 3 Sub Title', 'wpr-addons' ),
 						// 'slider_item_description' => esc_html__( 'Slider 3 Description Text, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur laoreet cursus volutpat. Aliquam sit amet ligula et justo tincidunt laoreet non vitae lorem. ', 'wpr-addons' ),
 						// 'slider_item_btn_text_1' => esc_html__( 'Button 1', 'wpr-addons' ),
@@ -335,15 +396,25 @@ class Wpr_Image_Accordion extends Widget_Base {
 		);
 
 		$this->add_control(
+			'default_active',
+			[
+				'label'       => __( 'Hovered By Default Index', 'wpr-addons' ),
+				'type'        => Controls_Manager::NUMBER,
+				'description' => __( 'Set the index for the image to be hovered by default on page load, index starts from 1', 'wpr-addons' )
+			]
+		);
+
+		$this->add_control(
 			'accordion_interaction',
 			[
 				'label'         => esc_html__('Interaction', 'wpr-addons'),
 				'type'          => Controls_Manager::SELECT,
 				'options'       => [
-					'click' => esc_html__('Click', 'wpr-addons'),
 					'hover' => esc_html__('Hover', 'wpr-addons'),
+					'click' => esc_html__('Click', 'wpr-addons'),
 				],
-				'default'       => 'click',
+				'render_type' => 'template',
+				'default'       => 'hover',
 				'prefix_class'  => 'wpr-image-accordion-interaction-',
 			]
 		);
@@ -390,7 +461,8 @@ class Wpr_Image_Accordion extends Widget_Base {
 					'unit' => 'px'
 				],
 				'selectors' => [
-					'{{WRAPPER}}.wpr-image-accordion-interaction-hover .wpr-image-accordion-wrap .wpr-image-accordion-item:hover' => 'flex: {{SIZE}};',
+					// '{{WRAPPER}}.wpr-image-accordion-interaction-hover .wpr-image-accordion-wrap .wpr-image-accordion-item:hover' => 'flex: {{SIZE}};',
+					'{{WRAPPER}} .wpr-image-accordion-wrap .wpr-image-accordion-item.wpr-image-accordion-item-grow' => 'flex: {{SIZE}};',
 				]
 			]
 		);
@@ -650,6 +722,23 @@ class Wpr_Image_Accordion extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'element_lightbox_icon',
+			[
+				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
+				'type' => Controls_Manager::ICONS,
+				'skin' => 'inline',
+				'label_block' => false,
+				'default' => [
+					'value' => 'fas fa-search',
+					'library' => 'fa-solid',
+				],
+				'condition' => [
+					'element_select' => 'lightbox'
+				]
+			]
+		);
+
+		$repeater->add_control(
 			'element_extra_text_pos',
 			[
 				'label' => esc_html__( 'Extra Text Display', 'wpr-addons' ),
@@ -704,7 +793,8 @@ class Wpr_Image_Accordion extends Widget_Base {
 					'element_select!' => [
 						'title',
 						'separator',
-						'description'
+						'description',
+						'lightbox'
 					],
 				]
 			]
@@ -725,7 +815,8 @@ class Wpr_Image_Accordion extends Widget_Base {
 					'element_select!' => [
 						'title',
 						'separator',
-						'description'
+						'description',
+						'lightbox'
 					],
 					'element_extra_icon_pos!' => 'none'
 				]
@@ -745,7 +836,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 			[
 				'label' => esc_html__( 'Select Animation', 'wpr-addons' ),
 				'type' => 'wpr-animations',
-				'default' => 'none'
+				'default' => 'fade-in'
 			]
 		);
 
@@ -1067,9 +1158,49 @@ class Wpr_Image_Accordion extends Widget_Base {
 		);
 
 		$this->add_control(
-			'lightbox_popup_thumbnails',
+			'lightbox_popup_captions',
 			[
-				'label' => esc_html__( 'Show Thumbnails', 'wpr-addons' ),
+				'label' => esc_html__( 'Show Captions', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'true',
+				'return_value' => 'true',
+			]
+		);
+		
+		$this->add_control(
+			'lightbox_popup_sharing',
+			[
+				'label' => esc_html__( 'Show Sharing Button', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'true',
+				'return_value' => 'true',
+			]
+		);
+
+		$this->add_control(
+			'lightbox_popup_zoom',
+			[
+				'label' => esc_html__( 'Show Zoom Button', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'true',
+				'return_value' => 'true',
+			]
+		);
+
+		$this->add_control(
+			'lightbox_popup_fullscreen',
+			[
+				'label' => esc_html__( 'Show Full Screen Button', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'true',
+				'return_value' => 'true',
+			]
+		);
+
+		$this->add_control(
+			'lightbox_popup_download',
+			[
+				'label' => esc_html__( 'Show Download Button', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'true',
 				'return_value' => 'true',
@@ -1092,6 +1223,14 @@ class Wpr_Image_Accordion extends Widget_Base {
 		$this->add_control_overlay_color();
 
 		$this->add_control_overlay_blend_mode();
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name'     => 'btn_box_shadow_1',
+				'selector' => '{{WRAPPER}} .wpr-image-accordion-item',
+			]
+		);
 
 		$this->add_control(
 			'overlay_radius',
@@ -2614,7 +2753,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 				
 			
 				echo '<div style="opacity: 0;" class="wpr-accordion-image-wrap" data-src="'. $lightbox_source. '">';
-					echo '<img src="'. esc_url( $lightbox_source ) .'" alt="'. esc_attr( 'lg-image' ) .'" class="wpr-anim-timing-slow' .'">';
+					echo '<img src="'. esc_url( $lightbox_source ) .'" alt="'. esc_attr( $item['accordion_item_title'] ) .'">';
 				echo '</div>';
 	
 				// Lightbox Button
@@ -2626,8 +2765,8 @@ class Wpr_Image_Accordion extends Widget_Base {
 					}
 	
 					// Lightbox Icon
-					if( '' != $settings['element_extra_icon'] ) {
-						echo '<i class="'. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
+					if( '' != $settings['element_lightbox_icon'] ) {
+						echo '<i class="'. esc_attr( $settings['element_lightbox_icon']['value'] ) .'"></i>';
 					}
 	
 					// Text: After
@@ -2670,6 +2809,17 @@ class Wpr_Image_Accordion extends Widget_Base {
 
 	}
 
+	public function wpr_accordion_template( $id ) {
+		if ( empty( $id ) ) {
+			return '';
+		}
+
+		$edit_link = '<span class="wpr-template-edit-btn" data-permalink="'. get_permalink( $id ) .'">Edit Template</span>';
+
+		return Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $id ) . $edit_link;
+	}
+
+
     public function render() {
 		$settings = $this->get_settings_for_display();
 		?>
@@ -2678,30 +2828,27 @@ class Wpr_Image_Accordion extends Widget_Base {
 			<div class="wpr-image-accordion">
 			<?php foreach ( $settings['accordion_items'] as $key => $item ) :
 				
-			$this->item_bg_image_url = Group_Control_Image_Size::get_attachment_image_src( $item['accordion_item_bg_image']['id'], 'accordion_image_size', $settings );
+			$this->item_bg_image_url = !empty($item['accordion_item_bg_image']['id']) ? Group_Control_Image_Size::get_attachment_image_src( $item['accordion_item_bg_image']['id'], 'accordion_image_size', $settings ) : $item['accordion_item_bg_image']['url'];
 
-			
+			$layout['activeItem'] = [
+				'activeWidth' => $settings['accordion_active_item_style']['size'],
+				'defaultActive' => $settings['default_active'],
+				'interaction' => $settings['accordion_interaction']
+			];
 
-			$layout_settings_lightbox = [
+			$layout['lightbox'] = [
 				'selector' => '.wpr-accordion-image-wrap',
 				'iframeMaxWidth' => '60%',
 				'hash' => false,
-				// 'autoplay' => $settings['lightbox_popup_autoplay'],
-				// 'pause' => $settings['lightbox_popup_pause'] * 1000,
-				// 'progressBar' => $settings['lightbox_popup_progressbar'],
-				// 'counter' => $settings['lightbox_popup_counter'],
-				// 'controls' => $settings['lightbox_popup_arrows'],
-				// 'getCaptionFromTitleOrAlt' => $settings['lightbox_popup_captions'],
-				'thumbnail' => $settings['lightbox_popup_thumbnails'],
-				// 'showThumbByDefault' => $settings['lightbox_popup_thumbnails_default'],
-				// 'share' => $settings['lightbox_popup_sharing'],
-				// 'zoom' => $settings['lightbox_popup_zoom'],
-				// 'fullScreen' => $settings['lightbox_popup_fullscreen'],
-				// 'download' => $settings['lightbox_popup_download'],
+				'share' => $settings['lightbox_popup_sharing'],
+				'zoom' => $settings['lightbox_popup_zoom'],
+				'fullScreen' => $settings['lightbox_popup_fullscreen'],
+				'download' => $settings['lightbox_popup_download'],
+				'getCaptionFromTitleOrAlt' => $settings['lightbox_popup_captions']
 			];
 
 			$this->add_render_attribute( 'accordion-settings'.$key, [
-				'data-settings' => wp_json_encode( $layout_settings_lightbox ),
+				'data-settings' => wp_json_encode( $layout ),
 			] );
 
 			$render_attribute = $this->get_render_attribute_string( 'accordion-settings'.$key );
@@ -2712,7 +2859,11 @@ class Wpr_Image_Accordion extends Widget_Base {
 						<?php 
 						echo '<div class="wpr-img-accordion-media-hover wpr-animation-wrap"   data-src='. $this->item_bg_image_url .' '.$render_attribute.'>';
 							echo $this->render_media_overlay( $settings );
-							echo $this->get_elements_by_location( 'over', $settings, $item );
+							if ( 'template' === $item['content_type'] ) {
+								echo $this->wpr_accordion_template( $item['temp_content'] );
+							} else {
+								echo $this->get_elements_by_location( 'over', $settings, $item );
+							}
 						echo '</div>';
 						?>
 
