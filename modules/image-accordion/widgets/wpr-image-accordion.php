@@ -54,6 +54,27 @@ class Wpr_Image_Accordion extends Widget_Base {
         // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-grid-help-btn';
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
+	
+	public function add_control_image_effects() {
+		$this->add_control(
+			'image_effects',
+			[
+				'label' => esc_html__( 'Select Effect', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'zoom-in' => esc_html__( 'Zoom In (Pro)', 'wpr-addons' ),
+					'pro-zo' => esc_html__( 'Zoom Out (Pro)', 'wpr-addons' ),
+					'grayscale-in' => esc_html__( 'Grayscale In', 'wpr-addons' ),
+					'pro-go' => esc_html__( 'Grayscale Out (Pro)', 'wpr-addons' ),
+					'blur-in' => esc_html__( 'Blur In', 'wpr-addons' ),
+					'pro-bo' => esc_html__( 'Blur Out (Pro)', 'wpr-addons' ),
+					'slide' => esc_html__( 'Slide', 'wpr-addons' ),
+				],
+				'default' => 'none',
+			]
+		);
+	}
 
 	public function add_control_overlay_color() {
 		$this->add_group_control(
@@ -674,38 +695,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 		// $repeater->add_control( 'element_sharing_tooltip', $this->add_repeater_args_element_sharing_tooltip() );
 
 		$repeater->add_control(
-			'element_lightbox_pfa_select',
-			[
-				'label' => esc_html__( 'Post Format Audio', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'default',
-				'options' => [
-					'default' => esc_html__( 'Default', 'wpr-addons' ),
-					'meta' => esc_html__( 'Meta Value', 'wpr-addons' ),
-				],
-				'condition' => [
-					'element_select' => 'lightbox',
-				],
-			]
-		);
-
-		$repeater->add_control(
-			'element_lightbox_pfv_select',
-			[
-				'label' => esc_html__( 'Post Format Video', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'default',
-				'options' => [
-					'default' => esc_html__( 'Default', 'wpr-addons' ),
-					'meta' => esc_html__( 'Meta Value', 'wpr-addons' ),
-				],
-				'condition' => [
-					'element_select' => 'lightbox',
-				],
-			]
-		);
-
-		$repeater->add_control(
 			'element_separator_style',
 			[
 				'label' => esc_html__( 'Select Styling', 'wpr-addons' ),
@@ -1145,7 +1134,110 @@ class Wpr_Image_Accordion extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
-		
+		// Tab: Content ==============
+		// Section: Image Effects ----
+		$this->start_controls_section(
+			'section_image_effects',
+			[
+				'label' => esc_html__( 'Image Effects', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$this->add_control_image_effects();
+
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'image_effects', ['pro-zi', 'pro-zo', 'pro-go', 'pro-bo'] );
+
+		$this->add_control(
+			'image_effects_duration',
+			[
+				'label' => esc_html__( 'Animation Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.5,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-image-accordion-item' => 'transition-duration: {{VALUE}}s;'
+				],
+				'condition' => [
+					'image_effects!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'image_effects_delay',
+			[
+				'label' => esc_html__( 'Animation Delay', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-image-accordion-item:hover' => 'transition-delay: {{VALUE}}s;'
+				],
+				'condition' => [
+					'image_effects!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'image_effects_animation_timing',
+			[
+				'label' => esc_html__( 'Animation Timing', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => Utilities::wpr_animation_timings(),
+				'default' => 'ease-default',
+				'condition' => [
+					'image_effects!' => 'none',
+				],
+			]
+		);
+
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'image-accordion', 'image_effects_animation_timing', Utilities::wpr_animation_timing_pro_conditions());
+
+		$this->add_control(
+			'image_effects_size',
+			[
+				'label' => esc_html__( 'Animation Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'small' => esc_html__( 'Small', 'wpr-addons' ),
+					'medium' => esc_html__( 'Medium', 'wpr-addons' ),
+					'large' => esc_html__( 'Large', 'wpr-addons' ),
+				],
+				'default' => 'medium',
+				'condition' => [
+					'image_effects!' => ['none', 'slide'],
+				]
+			]
+		);
+
+		$this->add_control(
+			'image_effects_direction',
+			[
+				'label' => esc_html__( 'Animation Direction', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'top' => esc_html__( 'Top', 'wpr-addons' ),
+					'right' => esc_html__( 'Right', 'wpr-addons' ),
+					'bottom' => esc_html__( 'Bottom', 'wpr-addons' ),
+					'left' => esc_html__( 'Left', 'wpr-addons' ),
+				],
+				'default' => 'bottom',
+				'condition' => [
+					'image_effects!' => 'none',
+					'image_effects' => 'slide'
+				]
+			]
+		);
+
+		$this->end_controls_section(); // End Controls Section
 
 		// Tab: Content ==============
 		// Section: Lightbox Popup ---
@@ -2699,58 +2791,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
 				$lightbox_source = $this->item_bg_image_url;
-
-				// Audio Post Type
-				if ( 'audio' === get_post_format() ) {
-					// Load Meta Value
-					if ( 'meta' === $settings['element_lightbox_pfa_select'] ) {
-						$utilities = new Utilities();
-						$meta_value = get_post_meta( $item['_id'], $settings['element_lightbox_pfa_meta'], true );
-	
-						// URL
-						if ( false === strpos( $meta_value, '<iframe ' ) ) {
-							add_filter( 'oembed_result', [ $utilities, 'filter_oembed_results' ], 50, 3 );
-								$track_url = wp_oembed_get( $meta_value );
-							remove_filter( 'oembed_result', [ $utilities, 'filter_oembed_results' ], 50 );
-	
-						// Iframe
-						} else {
-							$track_url = Utilities::filter_oembed_results( $meta_value );
-						}
-	
-						$lightbox_source = $track_url;
-					}
-	
-				// Video Post Type
-				} elseif ( 'video' === get_post_format() ) {
-					// Load Meta Value
-					if ( 'meta' === $settings['element_lightbox_pfv_select'] ) {
-						$meta_value = get_post_meta( $post_id, $settings['element_lightbox_pfv_meta'], true );
-	
-						// URL
-						if ( false === strpos( $meta_value, '<iframe ' ) ) {
-							$video = \Elementor\Embed::get_video_properties( $meta_value );
-	
-						// Iframe
-						} else {
-							$video = \Elementor\Embed::get_video_properties( Utilities::filter_oembed_results($meta_value) );
-						}
-	
-						// Provider URL
-						if ( 'youtube' === $video['provider'] ) {
-							$video_url = '//www.youtube.com/embed/'. $video['video_id'] .'?feature=oembed&autoplay=1&controls=1';
-						} elseif ( 'vimeo' === $video['provider'] ) {
-							$video_url = 'https://player.vimeo.com/video/'. $video['video_id'] .'?autoplay=1#t=0';
-						}
-	
-						// Add Lightbox Attributes
-						if ( isset( $video_url ) ) {
-							$lightbox_source = $video_url;
-						}
-					}
-				}
-
-				
 			
 				echo '<div style="opacity: 0;" class="wpr-accordion-image-wrap" data-src="'. $lightbox_source. '">';
 					echo '<img src="'. esc_url( $lightbox_source ) .'" alt="'. esc_attr( $item['accordion_item_title'] ) .'">';
@@ -2819,6 +2859,31 @@ class Wpr_Image_Accordion extends Widget_Base {
 		return Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $id ) . $edit_link;
 	}
 
+	// Get Image Effect Class
+	public function get_image_effect_class( $settings ) {
+		$class = '';
+
+		if ( ! wpr_fs()->can_use_premium_code() ) {
+			if ( 'pro-zi' ==  $settings['image_effects'] || 'pro-zo' ==  $settings['image_effects'] || 'pro-go' ==  $settings['image_effects'] || 'pro-bo' ==  $settings['image_effects'] ) {
+				$settings['image_effects'] = 'none';
+			}
+		}
+
+		// Animation Class
+		if ( 'none' !== $settings['image_effects'] ) {
+			$class .= ' wpr-'. $settings['image_effects'];
+		}
+		
+		// Slide Effect
+		if ( 'slide' !== $settings['image_effects'] ) {
+			$class .= ' wpr-effect-size-'. $settings['image_effects_size'];
+		} else {
+			$class .= ' wpr-effect-dir-'. $settings['image_effects_direction'];
+		}
+
+		return $class;
+	}	
+
 
     public function render() {
 		$settings = $this->get_settings_for_display();
@@ -2854,20 +2919,18 @@ class Wpr_Image_Accordion extends Widget_Base {
 			$render_attribute = $this->get_render_attribute_string( 'accordion-settings'.$key );
 
 			?>
-				<div data-src=<?php echo $this->item_bg_image_url ?> style="background-image: url(<?php echo $this->item_bg_image_url ?>);"  class="wpr-image-accordion-item elementor-repeater-item-<?php echo $item['_id'] ?>">
-
-						<?php 
-						echo '<div class="wpr-img-accordion-media-hover wpr-animation-wrap"   data-src='. $this->item_bg_image_url .' '.$render_attribute.'>';
-							echo $this->render_media_overlay( $settings );
-							if ( 'template' === $item['content_type'] ) {
-								echo $this->wpr_accordion_template( $item['temp_content'] );
-							} else {
-								echo $this->get_elements_by_location( 'over', $settings, $item );
-							}
-						echo '</div>';
-						?>
-
-				</div>
+					<div data-src=<?php echo $this->item_bg_image_url ?> style="background-image: url(<?php echo $this->item_bg_image_url ?>);"  class="wpr-image-accordion-item elementor-repeater-item-<?php echo $item['_id'] ?>">
+					<?php
+							echo '<div class="wpr-img-accordion-media-hover wpr-animation-wrap"   data-src='. $this->item_bg_image_url .' '.$render_attribute.'>';
+								echo $this->render_media_overlay( $settings );
+								if ( 'template' === $item['content_type'] ) {
+									echo $this->wpr_accordion_template( $item['temp_content'] );
+								} else {
+									echo $this->get_elements_by_location( 'over', $settings, $item );
+								}
+							echo '</div>';
+							?>
+					</div>
 			<?php endforeach; ?>
 			</div>
 		</div>
