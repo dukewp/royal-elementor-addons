@@ -11478,13 +11478,20 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-image-accordion-wrap .wpr-image-accordion {
     display: flex;
     width: 100%;
-    height: 70vh;
 }
 
 .wpr-image-accordion-wrap .wpr-image-accordion-item {
     position: relative;
     flex: 1;
-    height: 100%;
+    overflow: hidden;
+}
+
+.wpr-image-accordion-wrap .wpr-image-accordion-item .wpr-accordion-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 100%;
+    min-width: 100%;
 }
 
 .wpr-image-accordion-wrap .wpr-img-accordion-media-hover,
@@ -11599,7 +11606,16 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 .wpr-img-accordion-item-button .inner-block a {
+    position: relative;
     display: inline-block;
+}
+
+.wpr-image-accordion .wpr-template-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    height: 100%;
 }
 
 /* .wpr-img-accordion-item-title a,

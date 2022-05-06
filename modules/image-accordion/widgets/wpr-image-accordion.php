@@ -64,11 +64,11 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'options' => [
 					'none' => esc_html__( 'None', 'wpr-addons' ),
 					'zoom-in' => esc_html__( 'Zoom In (Pro)', 'wpr-addons' ),
-					'pro-zo' => esc_html__( 'Zoom Out (Pro)', 'wpr-addons' ),
+					'zoom-out' => esc_html__( 'Zoom Out (Pro)', 'wpr-addons' ),
 					'grayscale-in' => esc_html__( 'Grayscale In', 'wpr-addons' ),
-					'pro-go' => esc_html__( 'Grayscale Out (Pro)', 'wpr-addons' ),
+					'grayscale-out' => esc_html__( 'Grayscale Out (Pro)', 'wpr-addons' ),
 					'blur-in' => esc_html__( 'Blur In', 'wpr-addons' ),
-					'pro-bo' => esc_html__( 'Blur Out (Pro)', 'wpr-addons' ),
+					'blur-out' => esc_html__( 'Blur Out (Pro)', 'wpr-addons' ),
 					'slide' => esc_html__( 'Slide', 'wpr-addons' ),
 				],
 				'default' => 'none',
@@ -189,6 +189,88 @@ class Wpr_Image_Accordion extends Widget_Base {
 			]
 		);
 	}
+	
+	public function add_control_title_pointer_color_hr() {
+		$this->add_control(
+			'title_pointer_color_hr',
+			[
+				'label'  => esc_html__( 'Hover Effect Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-img-accordion-item-title .wpr-pointer-item:before' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-img-accordion-item-title .wpr-pointer-item:after' => 'background-color: {{VALUE}}',
+				],
+				'separator' => 'after',
+			]
+		);
+	}
+	
+	public function add_control_title_pointer() {
+		$this->add_control(
+			'title_pointer',
+			[
+				'label' => esc_html__( 'Hover Effect', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'none',
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'underline' => esc_html__( 'Underline', 'wpr-addons' ),
+					'overline' => esc_html__( 'Overline', 'wpr-addons' ),
+				],
+			]
+		);
+	}
+	
+	public function add_control_title_pointer_height() {
+		$this->add_control(
+			'title_pointer_height',
+			[
+				'label' => esc_html__( 'Height', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 1,
+						'max' => 5,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 2,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-img-accordion-item-title .wpr-pointer-item:before' => 'height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-img-accordion-item-title .wpr-pointer-item:after' => 'height: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
+				'condition' => [
+					'title_pointer' => [ 'underline', 'overline' ],
+				],
+			]
+		);
+	}
+	
+	public function add_control_title_pointer_animation() {
+		$this->add_control(
+			'title_pointer_animation',
+			[
+				'label' => esc_html__( 'Hover Animation', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'slide',
+				'options' => [
+					'none' => 'None',
+					'fade' => 'Fade',
+					'slide' => 'Slide',
+					'grow' => 'Grow',
+					'drop' => 'Drop',
+				],
+				'condition' => [
+					'title_pointer' => [ 'underline', 'overline' ],
+				],
+			]
+		);
+	}
 
     public function register_controls() {
 		
@@ -218,70 +300,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 			]
 		);
 
-		$repeater = new \Elementor\Repeater();
-		
-		$repeater->add_control(
-			'content_type',
-			[
-				'label'     => __( 'Content Type', 'wpr-addons' ),
-				'type'      => Controls_Manager::SELECT,
-				'options'   => [
-					'custom'   => esc_html__( 'Custom Content', 'wpr-addons' ),
-					'template' => esc_html__( 'Template', 'wpr-addons' ),
-				],
-				'default'   => 'custom',
-			]
-		);
-
-		$repeater->add_control(
-			'temp_content',
-			[
-				'label'       => __( 'Select Template', 'wpr-addons' ),
-				'type'        => Controls_Manager::SELECT2,
-				'options'     => $templates_select,
-				'label_block' => true,
-				'condition' => [
-					'content_type' => 'template'
-				]
-			]
-		);
-
-		$repeater->add_control(
-			'accordion_item_title', [
-				'label' => esc_html__( 'Title', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => esc_html__( 'Item 1 Title' , 'wpr-addons' ),
-				'label_block' => true
-			]
-		);
-
-		$repeater->add_control(
-			'accordion_item_description', [
-				'label' => esc_html__( 'Description', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => esc_html__( 'Lorem ipsum dolos ave nita' , 'wpr-addons' ),
-				'label_block' => true
-			]
-		);
-
-		$repeater->add_control(
-			'element_button_text',
-			[
-				'label' => esc_html__( 'Button Text', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => 'Button',
-				'label_block' => true
-			]
-		);
-
-		$repeater->add_control(
-			'accordion_btn_url',
-			[
-				'label' => esc_html__( 'Button URL', 'wpr-addons' ),
-				'type' => Controls_Manager::URL,
-				'label_block' => true
-			]
-		);
+		$repeater = new Repeater();
 
 		$repeater->add_control(
 			'accordion_item_bg_image',
@@ -307,7 +326,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'default'     => 'auto',
 				'label_block' => true,
 				'selectors'   => [
-					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-image-accordion-item' => 'background-size: {{VALUE}}',
+					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-image-accordion-item .wpr-accordion-background' => 'background-size: {{VALUE}}',
 				]
 			]
 		);
@@ -331,7 +350,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'default'     => 'center center',
 				'label_block' => true,
 				'selectors'   => [
-					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-image-accordion-item' => 'background-position: {{VALUE}}',
+					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-image-accordion-item .wpr-accordion-background' => 'background-position: {{VALUE}}',
 				]
 			]
 		);
@@ -350,7 +369,273 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'default'     => 'repeat',
 				'label_block' => true,
 				'selectors'   => [
-					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-image-accordion-item' => 'background-repeat: {{VALUE}}',
+					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-image-accordion-item .wpr-accordion-background' => 'background-repeat: {{VALUE}}',
+				]
+			]
+		);
+		
+		$repeater->add_control(
+			'content_type',
+			[
+				'label'     => __( 'Content Type', 'wpr-addons' ),
+				'type'      => Controls_Manager::SELECT,
+				'options'   => [
+					'custom'   => esc_html__( 'Custom Content', 'wpr-addons' ),
+					'template' => esc_html__( 'Template', 'wpr-addons' ),
+				],
+				'default'   => 'custom',
+				'separator' => 'before'
+			]
+		);
+
+		$repeater->add_control(
+			'temp_content',
+			[
+				'label'       => __( 'Select Template', 'wpr-addons' ),
+				'type'        => Controls_Manager::SELECT2,
+				'options'     => $templates_select,
+				'label_block' => true,
+				'condition' => [
+					'content_type' => 'template'
+				]
+			]
+		);
+
+		$repeater->add_responsive_control(
+			'template_content_vr',
+			[
+				'label' => esc_html__( 'Vertical Align', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'label_block' => false,
+                'default' => 'center',
+				'options' => [
+					'flex-start' => [
+						'title' => esc_html__( 'Top', 'wpr-addons' ),
+						'icon' => 'eicon-v-align-top',
+					],
+					'center' => [
+						'title' => esc_html__( 'Middle', 'wpr-addons' ),
+						'icon' => 'eicon-v-align-middle',
+					],
+					'flex-end' => [
+						'title' => esc_html__( 'Bottom', 'wpr-addons' ),
+						'icon' => 'eicon-v-align-bottom',
+					],
+				],
+                'selectors' => [
+					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-template-wrap' => 'align-items: {{VALUE}}',
+				],
+				'condition' => [
+					'content_type' => 'template'
+				]
+			]
+		);
+
+		$repeater->add_responsive_control(
+			'template_content_hr',
+			[
+				'label' => esc_html__( 'Horizontal Align', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'label_block' => false,
+                'default' => 'center',
+				'options' => [
+					'left' => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-h-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-h-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-h-align-right',
+					],
+				],
+				'selectors_dictionary' => [
+					'left' => 'left: 0; right: auto;',
+					'center' => 'left: 50%; transform: translateX(-50%)',
+					'right' => 'right: 0; left: auto;',
+				],
+                'selectors' => [
+					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-template-wrap' => '{{VALUE}}',
+				],
+				'condition' => [
+					'content_type' => 'template'
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'element_animation',
+			[
+				'label' => esc_html__( 'Select Animation', 'wpr-addons' ),
+				'type' => 'wpr-animations',
+				'default' => 'fade-in',
+				'condition' => [
+					'content_type' => 'template'
+				]
+			]
+		);
+
+		// // Upgrade to Pro Notice :TODO
+		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'image-accordion', 'element_animation', ['pro-slrt','pro-slxrt','pro-slbt','pro-sllt','pro-sltp','pro-slxlt','pro-sktp','pro-skrt','pro-skbt','pro-sklt','pro-scup','pro-scdn','pro-rllt','pro-rlrt'] );
+
+		$repeater->add_control(
+			'element_animation_duration',
+			[
+				'label' => esc_html__( 'Animation Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.3,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-template-wrap' => 'transition-duration: {{VALUE}}s;'
+				],
+				'condition' => [
+					'content_type' => 'template',
+					'element_animation!' => 'none'
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'element_animation_delay',
+			[
+				'label' => esc_html__( 'Animation Delay', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-animation-wrap:hover {{CURRENT_ITEM}}.wpr-template-wrap' => 'transition-delay: {{VALUE}}s;'
+				],
+				'condition' => [
+					'content_type' => 'template',
+					'element_animation!' => 'none'
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'element_animation_timing',
+			[
+				'label' => esc_html__( 'Animation Timing', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => Utilities::wpr_animation_timings(),
+				'default' => 'ease-default',
+				'condition' => [
+					'content_type' => 'template',
+					'element_animation!' => 'none'
+				]
+			]
+		);
+
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'image-accordion', 'element_animation_timing', ['pro-eio','pro-eiqd','pro-eicb','pro-eiqrt','pro-eiqnt','pro-eisn','pro-eiex','pro-eicr','pro-eibk','pro-eoqd','pro-eocb','pro-eoqrt','pro-eoqnt','pro-eosn','pro-eoex','pro-eocr','pro-eobk','pro-eioqd','pro-eiocb','pro-eioqrt','pro-eioqnt','pro-eiosn','pro-eioex','pro-eiocr','pro-eiobk',] );
+
+		$repeater->add_control(
+			'element_animation_size',
+			[
+				'label' => esc_html__( 'Animation Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'small' => esc_html__( 'Small', 'wpr-addons' ),
+					'medium' => esc_html__( 'Medium', 'wpr-addons' ),
+					'large' => esc_html__( 'Large', 'wpr-addons' ),
+				],
+				'default' => 'large',
+				'condition' => [
+					'content_type' => 'template',
+					'element_animation!' => 'none'
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'element_animation_tr',
+			[
+				'label' => esc_html__( 'Animation Transparency', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'condition' => [
+					'content_type' => 'template',
+					'element_animation!' => 'none'
+				]
+			]
+		);
+
+		// $repeater->add_responsive_control(
+		// 	'element_show_on',
+		// 	[
+		// 		'label' => esc_html__( 'Show on this Device', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SWITCHER,
+		// 		'default' => 'yes',
+		// 		'widescreen_default' => 'yes',
+		// 		'laptop_default' => 'yes',
+		// 		'tablet_extra_default' => 'yes',
+		// 		'tablet_default' => 'yes',
+		// 		'mobile_extra_default' => 'yes',
+		// 		'mobile_default' => 'yes',
+		// 		'selectors_dictionary' => [
+		// 			'' => 'position: absolute; left: -99999999px;',
+		// 			'yes' => 'position: static; left: auto;'
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} {{CURRENT_ITEM}}' => '{{VALUE}}',
+		// 		],
+		// 		'render_type' => 'template',
+		// 	]
+		// );
+
+		$repeater->add_control(
+			'accordion_item_title', [
+				'label' => esc_html__( 'Title', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::TEXT,
+				'default' => esc_html__( 'Item 1 Title' , 'wpr-addons' ),
+				'label_block' => true,
+				'condition' => [
+					'content_type' => 'custom'
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'accordion_item_description', [
+				'label' => esc_html__( 'Description', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::TEXT,
+				'default' => esc_html__( 'Lorem ipsum dolos ave nita' , 'wpr-addons' ),
+				'label_block' => true,
+				'condition' => [
+					'content_type' => 'custom'
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'element_button_text',
+			[
+				'label' => esc_html__( 'Button Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => 'Button',
+				'label_block' => true,
+				'condition' => [
+					'content_type' => 'custom'
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'accordion_btn_url',
+			[
+				'label' => esc_html__( 'Button URL', 'wpr-addons' ),
+				'type' => Controls_Manager::URL,
+				'label_block' => true,
+				'condition' => [
+					'content_type' => 'custom'
 				]
 			]
 		);
@@ -367,12 +652,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 						'accordion_item_bg_image' =>[
 							'url' => Utils::get_placeholder_image_src(),	
 							'id' => '',
-						],
-						// 'slider_item_sub_title' => esc_html__( 'Slide 1 Sub Title', 'wpr-addons' ),
-						// 'slider_item_description' => esc_html__( 'Slider 1 Description Text, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur laoreet cursus volutpat. Aliquam sit amet ligula et justo tincidunt laoreet non vitae lorem. ', 'wpr-addons' ),
-						// 'slider_item_btn_text_1' => esc_html__( 'Button 1', 'wpr-addons' ),
-						// 'slider_item_btn_text_2' => esc_html__( 'Button 2', 'wpr-addons' ),
-						// 'slider_item_overlay_bg' => '#605BE59C',
+						]
 					],
 					[
 						
@@ -381,11 +661,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 							'url' => Utils::get_placeholder_image_src(),	
 							'id' => '',
 						],
-						// 'slider_item_sub_title' => esc_html__( 'Slide 2 Sub Title', 'wpr-addons' ),
-						// 'slider_item_description' => esc_html__( 'Slider 2 Description Text, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur laoreet cursus volutpat. Aliquam sit amet ligula et justo tincidunt laoreet non vitae lorem. ', 'wpr-addons' ),
-						// 'slider_item_btn_text_1' => esc_html__( 'Button 1', 'wpr-addons' ),
-						// 'slider_item_btn_text_2' => esc_html__( 'Button 2', 'wpr-addons' ),
-						// 'slider_item_overlay_bg' => '#AB47BCAB',
 					],
 					[
 						
@@ -394,11 +669,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 							'url' => Utils::get_placeholder_image_src(),	
 							'id' => '',
 						],
-						// 'slider_item_sub_title' => esc_html__( 'Slide 3 Sub Title', 'wpr-addons' ),
-						// 'slider_item_description' => esc_html__( 'Slider 3 Description Text, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur laoreet cursus volutpat. Aliquam sit amet ligula et justo tincidunt laoreet non vitae lorem. ', 'wpr-addons' ),
-						// 'slider_item_btn_text_1' => esc_html__( 'Button 1', 'wpr-addons' ),
-						// 'slider_item_btn_text_2' => esc_html__( 'Button 2', 'wpr-addons' ),
-						// 'slider_item_overlay_bg' => '#EF535094',
 					],
 				],
 				'title_field' => '{{{ accordion_item_title }}}',
@@ -419,7 +689,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 		$this->add_control(
 			'default_active',
 			[
-				'label'       => __( 'Hovered By Default Index', 'wpr-addons' ),
+				'label'       => __( 'Active By Default Index', 'wpr-addons' ),
 				'type'        => Controls_Manager::NUMBER,
 				'description' => __( 'Set the index for the image to be hovered by default on page load, index starts from 1', 'wpr-addons' )
 			]
@@ -464,8 +734,35 @@ class Wpr_Image_Accordion extends Widget_Base {
 				]
 			]
 		);
+
+		$this->add_responsive_control(
+			'accordion_height',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Accordion Height', 'wpr-addons' ),
+				'size_units' => [ 'px', 'vh' ],
+				'range' => [
+					'px' => [
+						'min' => 20,
+						'max' => 1500,
+					],
+					'vh' => [
+						'min' => 20,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 500,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-image-accordion' => 'height: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
 		
-		$this->add_control(
+		$this->add_responsive_control(
 			'accordion_active_item_style',
 			[
 				'label' => esc_html__( 'Active Width', 'wpr-addons' ),
@@ -498,8 +795,10 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'max' => 5,
 				'step' => 0.1,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-image-accordion-item' => 'transition-duration: {{VALUE}}s;'
-				]
+					'{{WRAPPER}} .wpr-image-accordion-item' => 'transition-duration: {{VALUE}}s;',
+					'{{WRAPPER}} .wpr-image-accordion-item .wpr-accordion-background' => 'transition-duration: {{VALUE}}s;'
+				],
+				'separator' => 'before'
 			]
 		);
 
@@ -1159,7 +1458,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'max' => 5,
 				'step' => 0.1,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-image-accordion-item' => 'transition-duration: {{VALUE}}s;'
+					'{{WRAPPER}} .wpr-image-accordion-item .wpr-accordion-background' => 'transition-duration: {{VALUE}}s;'
 				],
 				'condition' => [
 					'image_effects!' => 'none',
@@ -1177,7 +1476,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'max' => 5,
 				'step' => 0.1,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-image-accordion-item:hover' => 'transition-delay: {{VALUE}}s;'
+					'{{WRAPPER}} .wpr-image-accordion-item:hover>div' => 'transition-delay: {{VALUE}}s;'
 				],
 				'condition' => [
 					'image_effects!' => 'none',
@@ -1445,17 +1744,17 @@ class Wpr_Image_Accordion extends Widget_Base {
 			]
 		);
 
-		// $this->add_control_title_pointer_color_hr();
+		$this->add_control_title_pointer_color_hr();
 
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
 
-		// $this->add_control_title_pointer();
+		$this->add_control_title_pointer();
 
-		// $this->add_control_title_pointer_height();
+		$this->add_control_title_pointer_height();
 
-		// $this->add_control_title_pointer_animation();
+		$this->add_control_title_pointer_animation();
 
 		$this->add_control(
 			'title_transition_duration',
@@ -2715,10 +3014,8 @@ class Wpr_Image_Accordion extends Widget_Base {
 
 	// Render Post Title
 	public function render_repeater_title( $settings, $class, $item ) {
-		// $title_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['title_pointer'];
-		$title_pointer = 'none';
-		// $title_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['title_pointer_animation'];
-		$title_pointer_animation = 'fade';
+		$title_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['title_pointer'];
+		$title_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['title_pointer_animation'];
 
 		$class .= ' wpr-pointer-'. $title_pointer;
 		$class .= ' wpr-pointer-line-fx wpr-pointer-fx-'. $title_pointer_animation;
@@ -2913,22 +3210,28 @@ class Wpr_Image_Accordion extends Widget_Base {
 			];
 
 			$this->add_render_attribute( 'accordion-settings'.$key, [
+				'class' => ['wpr-img-accordion-media-hover', 'wpr-animation-wrap'],
 				'data-settings' => wp_json_encode( $layout ),
+				'data-src' => $this->item_bg_image_url
 			] );
 
 			$render_attribute = $this->get_render_attribute_string( 'accordion-settings'.$key );
 
 			?>
-					<div data-src=<?php echo $this->item_bg_image_url ?> style="background-image: url(<?php echo $this->item_bg_image_url ?>);"  class="wpr-image-accordion-item elementor-repeater-item-<?php echo $item['_id'] ?>">
-					<?php
-							echo '<div class="wpr-img-accordion-media-hover wpr-animation-wrap"   data-src='. $this->item_bg_image_url .' '.$render_attribute.'>';
-								echo $this->render_media_overlay( $settings );
-								if ( 'template' === $item['content_type'] ) {
-									echo $this->wpr_accordion_template( $item['temp_content'] );
-								} else {
-									echo $this->get_elements_by_location( 'over', $settings, $item );
-								}
-							echo '</div>';
+					<div data-src=<?php echo $this->item_bg_image_url ?>   class="wpr-image-accordion-item elementor-repeater-item-<?php echo $item['_id'] . $this->get_image_effect_class( $settings )?>">
+						<div class="wpr-accordion-background" style="background-image: url(<?php echo $this->item_bg_image_url ?>);">
+						</div>
+							<?php
+								echo '<div '.$render_attribute.'>';
+									echo $this->render_media_overlay( $settings );
+									if ( 'template' === $item['content_type'] ) {
+										echo '<div class="wpr-template-wrap elementor-repeater-item-'. $item['_id'] .' '. $this->get_animation_class( $item, 'element' ) .'">';
+											echo $this->wpr_accordion_template( $item['temp_content'] );
+										echo '</div>';
+									} else {
+										echo $this->get_elements_by_location( 'over', $settings, $item );
+									}
+								echo '</div>';
 							?>
 					</div>
 			<?php endforeach; ?>
