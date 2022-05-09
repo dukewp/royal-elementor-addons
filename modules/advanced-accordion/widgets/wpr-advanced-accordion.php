@@ -313,8 +313,11 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'min' => 0,
 				'max' => 5,
 				'step' => 0.1,
+				'separator' => 'before',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .wpr-toggle-icon i' => 'transition: all {{VALUE}}s ease-in-out;'
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-toggle-icon i' => 'transition: all {{VALUE}}s ease-in-out;',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-title-icon i' => 'transition: all {{VALUE}}s ease-in-out;',
+					'{{WRAPPER}} .wpr-accordion-item-title' => 'transition: all {{VALUE}}s ease-in-out;',
 				]
 			]
 		);
@@ -384,6 +387,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'name' => 'tab_bg_color',
 				'label' => esc_html__( 'Background', 'wpr-addons' ),
 				'types' => [ 'classic', 'gradient' ],
+				'exclude' => ['image'],
 				'fields_options' => [
 					'background' => [
 						'default' => 'classic',
@@ -469,6 +473,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'name' => 'tab_hover_bg_color',
 				'label' => esc_html__( 'Background', 'wpr-addons' ),
 				'types' => [ 'classic', 'gradient' ],
+				'exclude' => ['image'],
 				'fields_options' => [
 					'color' => [
 						'default' => '#7a7a7a',
@@ -551,6 +556,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'name' => 'tab_active_bg_color',
 				'label' => esc_html__( 'Background', 'wpr-addons' ),
 				'types' => [ 'classic', 'gradient' ],
+				'exclude' => ['image'],
 				'fields_options' => [
 					'color' => [
 						'default' => '#7a7a7a',
@@ -792,7 +798,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#7a7a7a',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .panel' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-advanced-accordion .panel .wpr-panel-content' => 'color: {{VALUE}};',
 				],
 				'separator' => 'before',
 			]
@@ -823,7 +829,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			[
 				'name' => 'content_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .panel',
+				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .panel .wpr-panel-content',
 			]
 		);
 
@@ -1009,7 +1015,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 
 						<div class="panel">
 							<?php if ('editor' === $acc['accordion_content_type']) : ?>
-								<p><?php echo $acc['accordion_content'] ?></p>
+								<div class="wpr-panel-content"><?php echo $acc['accordion_content'] ?></div>
 							<?php else: 
 								echo $this->wpr_accordion_template( $acc['accordion_content_template'] );
 							endif; ?>

@@ -11504,7 +11504,8 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     transition: max-height 0.2s ease-out;
 }
 
-.wpr-advanced-accordion .panel p {
+.wpr-advanced-accordion .panel p,
+.wpr-advanced-accordion .panel div {
     margin: 0;
 }
 
