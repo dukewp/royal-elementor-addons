@@ -83,6 +83,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'name' => 'overlay_color',
 				'label' => esc_html__( 'Background', 'wpr-addons' ),
 				'types' => [ 'classic', 'gradient' ],
+				'exclude' => ['image'],
 				'fields_options' => [
 					'color' => [
 						'default' => 'rgba(0, 0, 0, 0.25)',
