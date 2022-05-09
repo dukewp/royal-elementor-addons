@@ -319,11 +319,11 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'label'       => esc_html__( 'Size', 'wpr-addons' ),
 				'type'        => Controls_Manager::SELECT,
 				'options'     => [
-					'auto'    => esc_html__( 'Auto', 'wpr-addons' ),
-					'contain' => esc_html__( 'Contain', 'wpr-addons' ),
 					'cover'   => esc_html__( 'Cover', 'wpr-addons' ),
+					'contain' => esc_html__( 'Contain', 'wpr-addons' ),
+					'auto'    => esc_html__( 'Auto', 'wpr-addons' ),
 				],
-				'default'     => 'auto',
+				'default'     => 'cover',
 				'label_block' => true,
 				'selectors'   => [
 					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-image-accordion-item .wpr-accordion-background' => 'background-size: {{VALUE}}',
@@ -639,6 +639,16 @@ class Wpr_Image_Accordion extends Widget_Base {
 				]
 			]
 		);
+		
+		$repeater->add_control(
+			'wrapper_link',
+			[
+				'label' => esc_html__( 'Wrapper Link', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_block' => false,
+				'render_type' => 'template',
+			]
+		);
 
 		$this->add_control(
 			'accordion_items',
@@ -718,16 +728,18 @@ class Wpr_Image_Accordion extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'accordion_direction',
 			[
-				'label' => esc_html__( 'Select Element', 'wpr-addons' ),
+				'label' => esc_html__( 'Accordion Layout', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => 'title',
+				'render_type' => 'template',
+				'default' => 'row',
 				'options' => [
 					'row' => esc_html__('Horizontal', 'wpr-addons'),
 					'column' => esc_html__('Vertical', 'wpr-addons'),
 				],
+				'prefix_class' => 'wpr-image-accordion-',
 				'default' => 'row',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-image-accordion-wrap .wpr-image-accordion' => 'flex-direction: {{VALUE}};'
@@ -775,13 +787,73 @@ class Wpr_Image_Accordion extends Widget_Base {
 					],
 				],				
 				'default' => [
-					'size' => 7,
+					'size' => 4,
 					'unit' => 'px'
 				],
 				'selectors' => [
 					// '{{WRAPPER}}.wpr-image-accordion-interaction-hover .wpr-image-accordion-wrap .wpr-image-accordion-item:hover' => 'flex: {{SIZE}};',
 					'{{WRAPPER}} .wpr-image-accordion-wrap .wpr-image-accordion-item.wpr-image-accordion-item-grow' => 'flex: {{SIZE}};',
 				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'accordion_items_spacing',
+			[
+				'label' => esc_html__( 'Spacing', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'default' => [
+					'size' => 0,
+					'units' => 'px',
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100
+					]
+				],
+				'selectors' => [
+					'{{WRAPPER}}.wpr-image-accordion-row .wpr-image-accordion-item:not(:last-child)' => 'margin-right: {{SIZE}}px;',
+					'{{WRAPPER}}.wpr-image-accordion-column .wpr-image-accordion-item:not(:last-child)' => 'margin-bottom: {{SIZE}}px;'
+				]
+			]
+		);
+
+		$this->add_control(
+			'accordion_skew',
+			[
+				'label' => __( 'Skew Images', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'separator' => 'before',
+				'condition' => [
+					'accordion_direction' => 'row',
+				],
+			]
+		);
+
+		$this->add_control(
+			'accordion_skew_size',
+			[
+				'label' => esc_html__( 'Skew Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['deg'],
+				'range' => [
+					'deg' => [
+						'min' => 0,
+						'max' => 360,
+					],
+				],				
+				'default' => [
+					'unit' => 'deg',
+					'size' => 15,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-image-accordion-item' => 'transform: skewX({{SIZE}}deg) translateZ(0);',
+				],
+				'condition' => [
+					'accordion_skew' => 'yes',
+				],
 			]
 		);
 
@@ -936,20 +1008,24 @@ class Wpr_Image_Accordion extends Widget_Base {
 		$repeater->add_control(
 			'element_title_tag',
 			[
-				'label' => esc_html__( 'Title HTML Tag', 'wpr-addons' ),
+				'label' => esc_html__( 'Text HTML Tag', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'h1' => 'H1',
-					'h2' => 'H2',
-					'h3' => 'H3',
-					'h4' => 'H4',
-					'h5' => 'H5',
-					'h6' => 'H6',
+					'h1' => esc_html__( 'H1', 'wpr-addons' ),
+					'h2' => esc_html__( 'H2', 'wpr-addons' ),
+					'h3' => esc_html__( 'H3', 'wpr-addons' ),
+					'h4' => esc_html__( 'H4', 'wpr-addons' ),
+					'h5' => esc_html__( 'H5', 'wpr-addons' ),
+					'h6' => esc_html__( 'H6', 'wpr-addons' ),
+					'div' => esc_html__( 'div', 'wpr-addons' ),
+					'span' => esc_html__( 'span', 'wpr-addons' ),
+					'p' => esc_html__( 'p', 'wpr-addons' ),
 				],
 				'default' => 'h2',
 				'condition' => [
-					'element_select' => 'title',
-				]
+					'element_select' => 'title'
+				],
+				'separator' => 'before'
 			]
 		);
 
@@ -1943,29 +2019,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'label' => esc_html__( 'Drop Cap Typography', 'wpr-addons' ),
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-img-accordion-item-description.wpr-enable-dropcap p:first-child:first-letter'
-			]
-		);
-
-		$this->add_responsive_control(
-			'description_justify',
-			[
-				'label' => esc_html__( 'Justify Text', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => '',
-				'widescreen_default' => '',
-				'laptop_default' => '',
-				'tablet_extra_default' => '',
-				'tablet_default' => '',
-				'mobile_extra_default' => '',
-				'mobile_default' => '',
-				'selectors_dictionary' => [
-					'' => '',
-					'yes' => 'text-align: justify;'
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-img-accordion-item-description .inner-block' => '{{VALUE}}',
-				],
-				'render_type' => 'template',
 			]
 		);
 
@@ -3051,10 +3104,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 	public function render_repeater_button( $settings, $class, $item ) {
 		$button_animation = ! wpr_fs()->can_use_premium_code() ? 'wpr-button-none' : $this->get_settings_for_display()['button_animation'];
 
-		if ( ! empty( $item['accordion_btn_url']['url'] ) ) {
-			$this->add_link_attributes( 'accordion_btn_url'.$item['_id'], $item['accordion_btn_url'] );
-		}
-
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
 				echo '<a '. $this->get_render_attribute_string( 'accordion_btn_url'.$item['_id'] ) .' class="wpr-button-effect '. $button_animation .'">';
@@ -3195,7 +3244,9 @@ class Wpr_Image_Accordion extends Widget_Base {
 			$layout['activeItem'] = [
 				'activeWidth' => $settings['accordion_active_item_style']['size'],
 				'defaultActive' => $settings['default_active'],
-				'interaction' => $settings['accordion_interaction']
+				'interaction' => $settings['accordion_interaction'],
+				'overlayLink' => 'yes' === $item['wrapper_link'] ? $item['accordion_btn_url']['url'] : '',
+				'overlayLinkTarget' => $item['accordion_btn_url']['is_external'] === 'on' ? '_blank' : '_self'
 			];
 
 			$layout['lightbox'] = [
@@ -3217,10 +3268,15 @@ class Wpr_Image_Accordion extends Widget_Base {
 
 			$render_attribute = $this->get_render_attribute_string( 'accordion-settings'.$key );
 
+			if ( ! empty( $item['accordion_btn_url']['url'] ) ) {
+				$this->add_link_attributes( 'accordion_btn_url'.$item['_id'], $item['accordion_btn_url'] );
+			}
 			?>
-					<div data-src=<?php echo $this->item_bg_image_url ?>   class="wpr-image-accordion-item elementor-repeater-item-<?php echo $item['_id'] . $this->get_image_effect_class( $settings )?>">
-						<div class="wpr-accordion-background" style="background-image: url(<?php echo $this->item_bg_image_url ?>);">
-						</div>
+
+				<div data-src=<?php echo $this->item_bg_image_url ?>   class="wpr-image-accordion-item elementor-repeater-item-<?php echo $item['_id'] . $this->get_image_effect_class( $settings )?>">
+
+				<div class="wpr-accordion-background" style="background-image: url(<?php echo $this->item_bg_image_url ?>);"></div>
+
 							<?php
 								echo '<div '.$render_attribute.'>';
 									echo $this->render_media_overlay( $settings );
@@ -3233,7 +3289,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 									}
 								echo '</div>';
 							?>
-					</div>
+				</div>
 			<?php endforeach; ?>
 			</div>
 		</div>

@@ -11461,6 +11461,13 @@ body:not(.elementor-editor-active) .wpr-template-popup {
   /*--------------------------------------------------------------
   == Image Accordion
   --------------------------------------------------------------*/
+.wpr-img-accordion-wrapper-link-yes {
+    cursor: pointer;
+}
+
+.wpr-image-accordion-wrap {
+    overflow: hidden;
+}
 
 .wpr-image-accordion-wrap h1 {
     position: relative;
@@ -11470,10 +11477,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     text-transform: uppercase;
     color: #424242;
 }
-/* 
-.wpr-image-accordion-item {
-    overflow: hidden;
-} */
 
 .wpr-image-accordion-wrap .wpr-image-accordion {
     display: flex;
