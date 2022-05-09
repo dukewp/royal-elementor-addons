@@ -35,6 +35,7 @@
 				'wpr-sharing-buttons.default' : WprElements.widgetSharingButtons,
 				'wpr-flip-carousel.default': WprElements.widgetFlipCarousel,
 				'wpr-feature-list.default' : WprElements.widgetFeatureList,
+				'wpr-separator.default' : WprElements.widgetSeparator,
 				'global': WprElements.widgetSection,
 
 				// Single
@@ -3997,6 +3998,20 @@
 				});
 			})
 		}, // end widgetFeatureList
+
+		widgetSeparator: function($socpe) { // temporary
+
+			var lottieAnimations = $scope.find('.wpr-separator-animations'),
+				lottieJSON = JSON.parse(lottieAnimations.attr('data-settings'));
+
+			var animation = lottie.loadAnimation({
+			  container: lottieAnimations[0], // Required
+			  path: lottieAnimations.attr('data-json-url'), // Required
+			  renderer: lottieJSON.lottie_renderer, // Required
+			  loop: 'yes' === lottieJSON.loop ? true : false, // Optional
+			  autoplay: 'yes' === lottieJSON.autoplay ? true : false
+			});
+		}, // end widgetSeparator
 
 		// Editor Check
 		editorCheck: function() {

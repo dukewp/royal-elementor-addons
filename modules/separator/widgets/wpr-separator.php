@@ -166,7 +166,7 @@ class Wpr_Separator extends Widget_Base {
                 'section_line_style',
                 [
                     'label' => esc_html__( 'Line', 'wpr-addons' ),
-                    'tab' => Controls_Manager::TAB_STYLE,
+                    'tab' => Controls_Manager::TAB_STYLE
                 ]
         );
 
@@ -289,6 +289,45 @@ class Wpr_Separator extends Widget_Base {
                 ]
         );
 
+		$this->add_control(
+			'separator_text_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#000',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-separator-content p' => 'color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'pagination_content_typography',
+				'label' => __( 'Typography', 'wpr-addons' ),
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-separator-content p',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_weight' => [
+						'default' => '400',
+					],
+					'font_family' => [
+						'default' => 'Roboto',
+					],
+					'font_size'   => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px',
+						]
+					]
+				]
+			]
+		);
+
         $this->end_controls_section();
 
         // Tab: Style ==============
@@ -304,11 +343,128 @@ class Wpr_Separator extends Widget_Base {
                 ]
         );
 
+		$this->add_control(
+			'separator_image_br_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#000',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-separator-content img' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
 		$this->add_group_control(
 			Group_Control_Image_Size::get_type(),
 			[
 				'name' => 'separator_image_size',
 				'default' => 'full',
+			]
+		);
+		
+		$this->add_responsive_control(
+			'image_size',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Size', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 200,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 20,
+				],			
+				'selectors' => [
+					'{{WRAPPER}} .wpr-separator-content img' => 'width: {{SIZE}}{{UNIT}}; height: auto;',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'border',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-separator-content img' => 'border-style: {{VALUE}};',
+				],
+				'separator' => 'before'
+			]
+		);
+		
+		$this->add_control(
+			'img_border_width',
+			[
+				'type' => Controls_Manager::DIMENSIONS,
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'size_units' => [ 'px', '%' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 150,
+					],
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					]
+				],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+					'unit' => 'px'
+				],			
+				'selectors' => [
+					'{{WRAPPER}} .wpr-separator-content img' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',	
+				],
+				'condition' => [
+					'border!' => 'none'
+				]
+			]
+		);
+		
+		$this->add_control(
+			'img_border_radius',
+			[
+				'type' => Controls_Manager::DIMENSIONS,
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'size_units' => [ 'px', '%' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 150,
+					],
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					]
+				],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+					'unit' => 'px'
+				],			
+				'selectors' => [
+					'{{WRAPPER}} .wpr-separator-content img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',	
+				]
 			]
 		);
 
@@ -326,6 +482,43 @@ class Wpr_Separator extends Widget_Base {
                     ]
                 ]
         );
+
+		$this->add_control(
+			'separator_icon_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#000',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-separator-wrap i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-separator-wrap svg' => 'fill: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->add_responsive_control(
+			'icon_size',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Icon Size', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 200,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 20,
+				],			
+				'selectors' => [
+					'{{WRAPPER}} .wpr-separator-wrap i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-separator-wrap svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
 
         $this->end_controls_section();
     }
