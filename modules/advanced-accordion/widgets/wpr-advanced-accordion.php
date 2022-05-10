@@ -231,21 +231,6 @@ class Wpr_Advanced_Accordion extends Widget_Base {
             ]
         );
 
-        $this->add_control(
-            'change_icons_position',
-            [
-                'label'       => esc_html__('Icons Position', 'wpr-addons'),
-                'type'        => Controls_Manager::SELECT,
-                'default'     => 'default',
-                'label_block' => false,
-                'options'     => [
-                    'default' => esc_html__('Default', 'wpr-addons'),
-                    'reverse'    => esc_html__('Reverse', 'wpr-addons'),
-                ],
-				'separator' => 'before'
-            ]
-        );
-
 		$this->add_control(
 			'interaction_speed',
 			[
@@ -261,15 +246,151 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 						'min' => 0,
 						'max' => 3000,
 					],
+				]
+			]
+		);
+
+		$this->add_control(
+			'accordion_transition',
+			[
+				'label' => esc_html__( 'Transition', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.3,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'separator' => 'before',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-advanced-accordion button.accordion' => 'transition: all {{VALUE}}s ease-in-out;',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-title-text' => 'transition: all {{VALUE}}s ease-in-out;',
+				]
+			]
+		);
+
+		$this->end_controls_section();
+
+		// Tab: Content ==========
+		// Section: Icon ---------
+		$this->start_controls_section(
+			'section_icon_settings',
+			[
+				'label' => esc_html__( 'Icon', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+        $this->add_control(
+            'change_icons_position',
+            [
+                'label'       => esc_html__('Position', 'wpr-addons'),
+                'type'        => Controls_Manager::SELECT,
+                'default'     => 'default',
+                'label_block' => false,
+                'options'     => [
+                    'default' => esc_html__('Default', 'wpr-addons'),
+                    'reverse'    => esc_html__('Reverse', 'wpr-addons'),
+                ]
+            ]
+        );
+ 
+		$this->add_control(
+			'accordion_title_icon_box_style',
+			[
+				'label' => esc_html__( 'Box Style', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'no-box',
+				'options' => [
+					'no-box' => esc_html__( 'None', 'wpr-addons' ),
+					'side-box' => esc_html__( 'Side Box', 'wpr-addons' ),
+					'side-curve' => esc_html__( 'Side Curve', 'wpr-addons' )
 				],
-				'separator' => 'before'
+				'prefix_class' => 'wpr-advanced-accordion-icon-',
+				'render_type' => 'template'
+			]
+		);
+		
+		$this->add_control(
+			'accordion_title_icon_box_width',
+			[
+				'label' => esc_html__( 'Box Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'default' => [
+					'size' => 90,
+					'unit' => 'px'
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 360,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-acc-icon-box' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-acc-icon-box-after' => 'border-left: calc({{SIZE}}{{UNIT}}/);',
+				],
+				'condition' => [
+					'accordion_title_icon_box_style!' => 'none'
+				]
+			]
+		);
+		
+		$this->add_control(
+			'accordion_title_icon_after_box_width',
+			[
+				'label' => esc_html__( 'Triangle Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'default' => [
+					'size' => 30,
+					'unit' => 'px'
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-acc-icon-box-after' => 'border-left: {{SIZE}}{{UNIT}} solid {{icon_box_color.VALUE}};',
+					'{{WRAPPER}} .wpr-advanced-accordion .accordion:hover .wpr-acc-icon-box-after' => 'border-left: {{SIZE}}{{UNIT}} solid {{icon_box_hover_color.VALUE}};',
+					'{{WRAPPER}} .wpr-advanced-accordion .accordion.active .wpr-acc-icon-box-after' => 'border-left: {{SIZE}}{{UNIT}} solid {{icon_box_active_color.VALUE}};',
+				],
+				'condition' => [
+					'accordion_title_icon_box_style' => 'side-curve'
+				]
+			]
+		);
+		
+		$this->add_control(
+			'accordion_title_icon_after_box_height',
+			[
+				'label' => esc_html__( 'Icon Triangle Height', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'default' => [
+					'size' => 30,
+					'unit' => 'px'
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-acc-icon-box-after' => 'border-top: {{SIZE}}{{UNIT}} solid transparent; border-bottom: {{SIZE}}{{UNIT}} solid transparent;',
+				],
+				'condition' => [
+					'accordion_title_icon_box_style' => 'side-curve'
+				]
 			]
 		);
 
 		$this->add_control(
 			'toggle_icon',
 			[
-				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
+				'label' => esc_html__( 'Select Toggle Icon', 'wpr-addons' ),
 				'type' => Controls_Manager::ICONS,
 				'skin' => 'inline',
 				'label_block' => false,
@@ -305,7 +426,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 		);
 
 		$this->add_control(
-			'toggle_icon_transition',
+			'accordion_icon_transition',
 			[
 				'label' => esc_html__( 'Transition', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
@@ -317,14 +438,15 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .wpr-toggle-icon i' => 'transition: all {{VALUE}}s ease-in-out;',
 					'{{WRAPPER}} .wpr-advanced-accordion .wpr-title-icon i' => 'transition: all {{VALUE}}s ease-in-out;',
-					'{{WRAPPER}} .wpr-accordion-item-title' => 'transition: all {{VALUE}}s ease-in-out;',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-toggle-icon svg' => 'transition: all {{VALUE}}s ease-in-out;',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-title-icon svg' => 'transition: all {{VALUE}}s ease-in-out;',
 				]
 			]
 		);
 
 		$this->end_controls_section();
 
-		// Styles
+		// Tab: Styles ===============
 		// Section: Switcher ---------
 		$this->start_controls_section(
 			'section_style_switcher',
@@ -351,32 +473,6 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'default' => '#7a7a7a',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .accordion' => 'color: {{VALUE}}',
-				]
-			]
-		);
-
-		$this->add_control(
-			'tab_main_icon_color',
-			[
-				'label' => esc_html__( 'Main Icon Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#7a7a7a',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-toggle-icon i' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-toggle-icon svg' => 'fill: {{VALUE}}',
-				]
-			]
-		);
-
-		$this->add_control(
-			'tab_toggle_icon_color',
-			[
-				'label' => esc_html__( 'Toggle Icon Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#7a7a7a',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-title-icon i' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-title-icon svg' => 'fill: {{VALUE}}',
 				]
 			]
 		);
@@ -440,32 +536,6 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				]
 			]
 		);
-
-		$this->add_control(
-			'tab_main_hover_icon_color',
-			[
-				'label' => esc_html__( 'Main Icon Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#fff',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion:hover .wpr-toggle-icon i' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion:hover .wpr-toggle-icon svg' => 'fill: {{VALUE}}',
-				]
-			]
-		);
-
-		$this->add_control(
-			'tab_toggle_hover_icon_color',
-			[
-				'label' => esc_html__( 'Toggle Icon Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#fff',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion:hover .wpr-title-icon i' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion:hover .wpr-title-icon svg' => 'fill: {{VALUE}}',
-				]
-			]
-		);
 		
 		$this->add_group_control(
 			Group_Control_Background::get_type(),
@@ -520,32 +590,6 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'default' => '#fff',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .accordion.active' => 'color: {{VALUE}}',
-				]
-			]
-		);
-
-		$this->add_control(
-			'tab_main_active_icon_color',
-			[
-				'label' => esc_html__( 'Main Icon Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#fff',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion.active .wpr-toggle-icon i' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion.active .wpr-toggle-icon svg' => 'fill: {{VALUE}}',
-				]
-			]
-		);
-
-		$this->add_control(
-			'tab_toggle_active_icon_color',
-			[
-				'label' => esc_html__( 'Toggle Icon Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#fff',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion.active .wpr-title-icon i' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion.active .wpr-title-icon svg' => 'fill: {{VALUE}}',
 				]
 			]
 		);
@@ -608,53 +652,6 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'tab_main_icon_size',
-			[
-				'label' => esc_html__( 'Main Icon Size', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 15,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-title-icon i' => 'font-size: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-title-icon svg' => 'width: {{SIZE}}{{UNIT}};',
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_responsive_control(
-			'tab_toggle_icon_size',
-			[
-				'label' => esc_html__( 'Toggle Icon Size', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 15,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-toggle-icon i' => 'font-size: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-toggle-icon svg' => 'width: {{SIZE}}{{UNIT}};',
-				]
-			]
-		);
-
-		$this->add_responsive_control(
 			'tab_gutter',
 			[
 				'label' => esc_html__( 'Vertical Gutter', 'wpr-addons' ),
@@ -694,7 +691,9 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 					'size' => 6,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-accordion-item-title span:nth-child(2)' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-advanced-accordion-icon-no-box .wpr-acc-item-title .wpr-acc-title-text' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-advanced-accordion-icon-side-box .wpr-acc-item-title .wpr-acc-title-text' => 'margin-left: calc({{accordion_title_icon_box_width.SIZE}}{{accordion_title_icon_box_width.UNIT}} + {{SIZE}}{{UNIT}});',
+					'{{WRAPPER}}.wpr-advanced-accordion-icon-side-curve .wpr-acc-item-title .wpr-acc-title-text' => 'margin-left: calc({{accordion_title_icon_box_width.SIZE}}{{accordion_title_icon_box_width.UNIT}} + {{accordion_title_icon_after_box_width.SIZE}}{{accordion_title_icon_after_box_width.UNIT}} + {{SIZE}}{{UNIT}});',
 				],
 			]
 		);
@@ -945,8 +944,220 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 		);
 
 		$this->end_controls_section(); // End Controls Section
-    }
 
+		// Styles
+		// Section: Icon ----------
+		$this->start_controls_section(
+			'section_style_icon',
+			[
+				'label' => esc_html__( 'Icon', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE
+			]
+		);
+
+		$this->start_controls_tabs( 'tab_style_icon' );
+
+		$this->start_controls_tab(
+			'tab_icon_normal_style',
+			[
+				'label' => esc_html__( 'Normal', 'wpr-addons' )
+			]
+		);
+
+		$this->add_control(
+			'tab_main_icon_color',
+			[
+				'label' => esc_html__( 'Main Icon Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#7a7a7a',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-toggle-icon i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-toggle-icon svg' => 'fill: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'tab_toggle_icon_color',
+			[
+				'label' => esc_html__( 'Toggle Icon Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#7a7a7a',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-title-icon i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-title-icon svg' => 'fill: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'icon_box_color',
+			[
+				'label' => esc_html__( 'Icon Box Bg Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#bcd432',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-acc-icon-box' => 'background-color: {{VALUE}}',
+				],
+				'condition' => [
+					'accordion_title_icon_box_style!' => 'none'
+				]
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_icon_hover_style',
+			[
+				'label' => esc_html__( 'Hover', 'wpr-addons' )
+			]
+		);
+
+		$this->add_control(
+			'tab_main_hover_icon_color',
+			[
+				'label' => esc_html__( 'Main Icon Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#fff',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-advanced-accordion .accordion:hover .wpr-toggle-icon i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .accordion:hover .wpr-toggle-icon svg' => 'fill: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'tab_toggle_hover_icon_color',
+			[
+				'label' => esc_html__( 'Toggle Icon Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#fff',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-advanced-accordion .accordion:hover .wpr-title-icon i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .accordion:hover .wpr-title-icon svg' => 'fill: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'icon_box_hover_color',
+			[
+				'label' => esc_html__( 'Icon Box Bg Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#bcd432',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-advanced-accordion .accordion:hover .wpr-acc-icon-box' => 'background-color: {{VALUE}}',
+				],
+				'condition' => [
+					'accordion_title_icon_box_style!' => 'none'
+				]
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_icon_active_style',
+			[
+				'label' => esc_html__( 'Active', 'wpr-addons' )
+			]
+		);
+
+		$this->add_control(
+			'tab_main_active_icon_color',
+			[
+				'label' => esc_html__( 'Main Icon Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#fff',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-advanced-accordion .accordion.active .wpr-toggle-icon i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .accordion.active .wpr-toggle-icon svg' => 'fill: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'tab_toggle_active_icon_color',
+			[
+				'label' => esc_html__( 'Toggle Icon Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#fff',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-advanced-accordion .accordion.active .wpr-title-icon i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .accordion.active .wpr-title-icon svg' => 'fill: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'icon_box_active_color',
+			[
+				'label' => esc_html__( 'Icon Box Bg Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#bcd432',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-advanced-accordion .accordion.active .wpr-acc-icon-box' => 'background-color: {{VALUE}}',
+				],
+				'condition' => [
+					'accordion_title_icon_box_style!' => 'none'
+				]
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_responsive_control(
+			'tab_main_icon_size',
+			[
+				'label' => esc_html__( 'Main Icon Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 15,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-title-icon i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-title-icon svg' => 'width: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'tab_toggle_icon_size',
+			[
+				'label' => esc_html__( 'Toggle Icon Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 15,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-toggle-icon i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-toggle-icon svg' => 'width: {{SIZE}}{{UNIT}};',
+				]
+			]
+		);
+
+		$this->end_controls_section(); // End Controls Section 
+    }
 
 	public function wpr_accordion_template( $id ) {
 		if ( empty( $id ) ) {
@@ -1006,9 +1217,21 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 
 					<div class="wpr-accordion-item-wrap">
 						<button class="accordion">
-							<span class="wpr-accordion-item-title">
-								<?php $this->render_first_icon($settings, $acc); ?>
-								<span><?php echo $acc['accordion_title'] ?></span>
+							<span class="wpr-acc-item-title">
+								<?php if ('side-box' === $settings['accordion_title_icon_box_style']) : ?>
+									<div class="wpr-acc-icon-box">
+										<?php $this->render_first_icon($settings, $acc); ?>
+									</div>
+								<?php elseif ('side-curve' === $settings['accordion_title_icon_box_style']) : ?>
+									<div class="wpr-acc-icon-box">
+										<?php $this->render_first_icon($settings, $acc); ?>
+										<div class="wpr-acc-icon-box-after"></div>
+									</div>
+								<?php else :
+									$this->render_first_icon($settings, $acc); 
+								endif ; ?>
+
+								<span class="wpr-acc-title-text"><?php echo $acc['accordion_title'] ?></span>
 							</span>
 							<?php $this->render_second_icon($settings, $acc); ?>
 						</button>
