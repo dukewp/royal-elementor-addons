@@ -82,7 +82,7 @@ class Wpr_Separator extends Widget_Base {
 			[
 				'label' => esc_html__( 'Style of Lines', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => 1,
+				'default' => 'solid',
 				'options' => [
 					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
 					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
@@ -92,8 +92,7 @@ class Wpr_Separator extends Widget_Base {
 				],
                 'selectors' => [
                     '{{WRAPPER}} .wpr-separator-wrap hr' => 'border-top-style: {{VALUE}}'
-                ],
-				'separator' => 'before',
+                ]
 			]
 		);
         
@@ -158,6 +157,64 @@ class Wpr_Separator extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'enable_separator_link',
+			[
+				'label' => esc_html__( 'Enable Link', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'label_block' => false,
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'separator_link',
+			[
+				'label' => esc_html__( 'Link', 'wpr-addons' ),
+				'type' => Controls_Manager::URL,
+				'placeholder' => esc_html__( 'https://your-link.com', 'plugin-name' ),
+				'default' => [
+					'url' => '',
+					'is_external' => true,
+					'nofollow' => true,
+					'custom_attributes' => '',
+				],
+				'label_block' => true,
+				'condition' => [
+					'enable_separator_link' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control(
+			'pagination_align',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'left'    => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					]
+				],
+				'default' => 'center',
+				'separator' => 'before',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-separator-outer-wrap' => 'text-align: {{VALUE}};'
+				]
+			]
+		);
+
+
         $this->end_controls_section();
 
         // Tab: Style ==============
@@ -199,8 +256,8 @@ class Wpr_Separator extends Widget_Base {
 					'size' => 1,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .line-before hr' => 'border-top-width: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .line-after hr' => 'border-top-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .line-before hr' => 'border-top-width: {{SIZE}}{{UNIT}}; transform: translateY(50% - {{SIZE}}{{UNIT}});',
+					'{{WRAPPER}} .line-after hr' => 'border-top-width: {{SIZE}}{{UNIT}}; transform: translateY(50% - {{SIZE}}{{UNIT}});',
 				],
 			]
 		);
@@ -271,6 +328,9 @@ class Wpr_Separator extends Widget_Base {
 					'{{WRAPPER}} .line-before hr:not(:last-child)' => 'margin-bottom: {{SIZE}}{{UNIT}}',
 					'{{WRAPPER}} .line-after hr:not(:last-child)' => 'margin-bottom: {{SIZE}}{{UNIT}}',
 				],
+				'condition' => [
+					'number_of_lines!' => 1
+				]
 			]
 		);
 
@@ -360,6 +420,7 @@ class Wpr_Separator extends Widget_Base {
 			[
 				'name' => 'separator_image_size',
 				'default' => 'full',
+				'separator' => 'before'
 			]
 		);
 		
@@ -367,7 +428,7 @@ class Wpr_Separator extends Widget_Base {
 			'image_size',
 			[
 				'type' => Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Size', 'wpr-addons' ),
+				'label' => esc_html__( 'Width', 'wpr-addons' ),
 				'size_units' => [ 'px' ],
 				'range' => [
 					'px' => [
@@ -381,8 +442,7 @@ class Wpr_Separator extends Widget_Base {
 				],			
 				'selectors' => [
 					'{{WRAPPER}} .wpr-separator-content img' => 'width: {{SIZE}}{{UNIT}}; height: auto;',
-				],
-				'separator' => 'before'
+				]
 			]
 		);
 
@@ -397,7 +457,7 @@ class Wpr_Separator extends Widget_Base {
 					'double' => esc_html__( 'Double', 'wpr-addons' ),
 					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
 					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
-					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' )
 				],
 				'default' => 'none',
 				'selectors' => [
@@ -559,8 +619,14 @@ class Wpr_Separator extends Widget_Base {
         // Get Settings
         $settings = $this->get_settings_for_display();
         extract($settings);
-        ?>
-        
+
+		if ( 'yes' === $enable_separator_link ) : 
+		$this->add_link_attributes( 'separator_link', $separator_link );
+		echo '<a class="wpr-separator-outer-wrap" style="display: block;" '. $this->get_render_attribute_string( 'separator_link' ) .'>';
+		else :
+		echo '<div class="wpr-separator-outer-wrap">';
+		endif;
+		?>
         <div class="wpr-separator-wrap">
             <div class="line-before">
                 <?php for ($counter = 0; $counter < intval($number_of_lines); $counter++ ) : ?>
@@ -576,6 +642,12 @@ class Wpr_Separator extends Widget_Base {
                 <?php endfor; ?>
             </div>
         </div>
+
         <?php
+		if ( 'yes' === $enable_separator_link ) :
+		echo '</a>';
+		else:
+		echo '</div';
+		endif ;
     }
 }

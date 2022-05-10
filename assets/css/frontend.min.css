@@ -11459,18 +11459,13 @@ body:not(.elementor-editor-active) .wpr-template-popup {
   }
 
 /*--------------------------------------------------------------
-  == Feature List
+  == Separator
   --------------------------------------------------------------*/
 
   .wpr-separator-wrap {
-      display: flex;
+      display: inline-flex;
       justify-content: center;
       align-items: center;
-  }
-
-  .wpr-separator-wrap hr {
-      transform: translateY(50%);
-      width: 100px;
   }
 
   .wpr-separator-wrap p {
