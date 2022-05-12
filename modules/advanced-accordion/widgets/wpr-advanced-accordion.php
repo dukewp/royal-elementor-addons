@@ -365,7 +365,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 		$this->add_control(
 			'accordion_title_icon_after_box_height',
 			[
-				'label' => esc_html__( 'Icon Triangle Height', 'wpr-addons' ),
+				'label' => esc_html__( 'Triangle Height', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => ['px'],
 				'default' => [
