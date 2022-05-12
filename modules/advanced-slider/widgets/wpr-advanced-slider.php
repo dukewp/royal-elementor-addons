@@ -230,6 +230,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			[
 				'label' => esc_html__( 'Image', 'wpr-addons' ),
 				'type' => Controls_Manager::MEDIA,
+				'media_types' => ['image', 'video']
 			]
 		);
 
@@ -2565,6 +2566,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 		}
 		
 		foreach ( $settings['slider_items'] as $key => $item ) {
+
 			if ( ! wpr_fs()->can_use_premium_code() && $key === 4 ) {
 				break;
 			}
@@ -2682,6 +2684,12 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			
 				// Slider Background Image
 				$slider_html .= '<div class="wpr-slider-item-bg '. $ken_burn_class .'" style="background-image: url('. $item_bg_image_url .')"></div>';
+
+				if (strpos($item['slider_item_bg_image']['url'], 'mp4')) {
+					$slider_html .= '<video style="position: absolute; top: 0; left: 0; height: 100%; width: 100%;" controls>
+										<source src="'. $item['slider_item_bg_image']['url'] .'">
+									</video>';
+				}
 
 				$slider_amount = +$settings['slider_amount'];
 
