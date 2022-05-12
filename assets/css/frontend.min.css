@@ -11503,8 +11503,19 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     position: absolute;
 }
 
+.wpr-img-accordion-item {
+    text-align: center;
+}
+
 .wpr-img-accordion-item-inner {
     position: relative;
+    text-align: center;
+}
+
+.wpr-img-accordion-item-display-custom.wpr-img-accordion-item-align-center {
+    float: none;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .wpr-img-accordion-media-hover {

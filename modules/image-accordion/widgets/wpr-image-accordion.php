@@ -308,8 +308,9 @@ class Wpr_Image_Accordion extends Widget_Base {
 			[
 				'label' => esc_html__( 'Image', 'wpr-addons' ),
 				'type' => Controls_Manager::MEDIA,
+				'render_type' => 'template',
 				'default' => [
-					'url' => Utils::get_placeholder_image_src()
+					'url' => WPR_ADDONS_ASSETS_URL . 'img/logo-slider-450x450.png',
 				]
 			]
 		);
@@ -661,24 +662,21 @@ class Wpr_Image_Accordion extends Widget_Base {
 						
 						'accordion_item_title' => esc_html__( 'Item 1 Title', 'wpr-addons' ),
 						'accordion_item_bg_image' =>[
-							'url' => Utils::get_placeholder_image_src(),	
-							'id' => '',
+							'url' => Utils::get_placeholder_image_src(),
 						]
 					],
 					[
 						
 						'accordion_item_title' => esc_html__( 'Item 2 Title', 'wpr-addons' ),
 						'accordion_item_bg_image' =>[
-							'url' => Utils::get_placeholder_image_src(),	
-							'id' => '',
+							'url' => Utils::get_placeholder_image_src()
 						],
 					],
 					[
 						
 						'accordion_item_title' => esc_html__( 'Item 3 Title', 'wpr-addons' ),
 						'accordion_item_bg_image' =>[
-							'url' => Utils::get_placeholder_image_src(),	
-							'id' => '',
+							'url' => Utils::get_placeholder_image_src()
 						],
 					],
 				],
@@ -1000,6 +998,9 @@ class Wpr_Image_Accordion extends Widget_Base {
                 ],
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}}' => 'text-align: {{VALUE}}',
+					'{{WRAPPER}} .wpr-img-accordion-media-hover-middle' => 'text-align: {{VALUE}}',
+					'{{WRAPPER}} .wpr-img-accordion-media-hover-top' => 'text-align: {{VALUE}}',
+					'{{WRAPPER}} .wpr-img-accordion-media-hover-bottom' => 'text-align: {{VALUE}}',
 				],
 				'render_type' => 'template',
 				'separator' => 'after'
@@ -3239,8 +3240,14 @@ class Wpr_Image_Accordion extends Widget_Base {
 		<div class="wpr-image-accordion-wrap">
 			<div class="wpr-image-accordion">
 			<?php foreach ( $settings['accordion_items'] as $key => $item ) :
-				
-			$this->item_bg_image_url = !empty($item['accordion_item_bg_image']['id']) ? Group_Control_Image_Size::get_attachment_image_src( $item['accordion_item_bg_image']['id'], 'accordion_image_size', $settings ) : $item['accordion_item_bg_image']['url'];
+			
+			if ( !empty($item['accordion_item_bg_image']['id']) ) {
+				$this->item_bg_image_url = Group_Control_Image_Size::get_attachment_image_src( $item['accordion_item_bg_image']['id'], 'accordion_image_size', $settings );
+			} elseif ( !empty($item['accordion_item_bg_image']['url']) ) {
+				$this->item_bg_image_url = $item['accordion_item_bg_image']['url'];
+			} else {
+				$this->item_bg_image_url = WPR_ADDONS_ASSETS_URL . 'img/logo-slider-450x450.png';
+			}
 
 			$layout['activeItem'] = [
 				'activeWidth' => $settings['accordion_active_item_style']['size'],
