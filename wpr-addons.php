@@ -81,7 +81,7 @@ if ( ! function_exists( 'wpr_fs' ) ) {
 
 		function disable_contact_for_free_users( $is_visible, $menu_id ) {
 
-			if ( 'contact' != $menu_id ) {
+			if ( 'contact' !== $menu_id ) {
 				return $is_visible;
 			}
 
