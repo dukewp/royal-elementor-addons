@@ -776,7 +776,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 		$this->add_responsive_control(
 			'accordion_active_item_style',
 			[
-				'label' => esc_html__( 'Active Width', 'wpr-addons' ),
+				'label' => esc_html__( 'Grow (Active)', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => ['px'],
 				'range' => [
@@ -1026,8 +1026,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'default' => 'h2',
 				'condition' => [
 					'element_select' => 'title'
-				],
-				'separator' => 'before'
+				]
 			]
 		);
 
