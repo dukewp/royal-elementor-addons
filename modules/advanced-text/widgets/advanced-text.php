@@ -767,8 +767,8 @@ class Advanced_Text extends Widget_Base {
 			<span class="wpr-highlighted-text-inner"><?php echo esc_html( $settings['highlighted_text'] ); ?></span>
 
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 150" class="wpr-highlight-<?php echo esc_html( $settings['highlighted_shape'] ); ?>" preserveAspectRatio="none">
-				<?php foreach ( $svg_arr[$settings['highlighted_shape']] as $value ) : ?>	
-				<path d="<?php echo $value; ?>"></path>
+				<?php foreach ( $svg_arr[$settings['highlighted_shape']] as $value ) : ?>
+				<path d="<?php echo esc_attr($value); ?>"></path>
 				<?php endforeach; ?>
 			</svg>
 			<?php endif; ?>
@@ -854,13 +854,13 @@ class Advanced_Text extends Widget_Base {
 					$this->add_render_attribute( 'text_link', 'nofollow', '' );
 				}
 
-				echo '<a ' . $this->get_render_attribute_string( 'text_link' ) .'>' ;
+				echo '<a '. $this->get_render_attribute_string( 'text_link' ) .'>' ;
 			}
 
 			?>
 		
 			<?php if ( '' !== $settings['prefix_text'] ) : ?>
-				<span class="wpr-advanced-text-preffix"><?php echo $settings['prefix_text']; ?></span>
+				<span class="wpr-advanced-text-preffix"><?php echo esc_html($settings['prefix_text']); ?></span>
 			<?php endif;
 
 			if ( 'animated' === $settings['text_style'] ) {
@@ -872,7 +872,7 @@ class Advanced_Text extends Widget_Base {
 			}
 
 			if ( '' !== $settings['suffix_text'] ) : ?>
-				<span class="wpr-advanced-text-suffix"><?php echo $settings['suffix_text']; ?></span>
+				<span class="wpr-advanced-text-suffix"><?php echo esc_html($settings['suffix_text']); ?></span>
 			<?php endif;
 
 			if ( '' !== $settings['text_link']['url'] ) {

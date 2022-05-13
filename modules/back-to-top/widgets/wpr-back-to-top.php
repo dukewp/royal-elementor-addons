@@ -691,7 +691,7 @@ class Wpr_Back_To_Top extends Widget_Base {
 		}
 
 	if ( '' !== $settings['button_text'] && $settings['button_txt_show'] == 'yes' ) {
-		echo '<div class="wpr-stt-content">'.  $settings['button_text'] .'</div>';
+		echo '<div class="wpr-stt-content">'.  esc_html($settings['button_text']) .'</div>';
 	}
 			
 	echo '</div>';
