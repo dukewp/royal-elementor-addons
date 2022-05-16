@@ -1006,7 +1006,7 @@ class Wpr_Countdown extends Widget_Base {
 			$html .= '<span class="wpr-countdown-separator"><span></span><span></span></span>';
 		}
 
-		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo ''. $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	public function render_countdown_items( $settings ) {

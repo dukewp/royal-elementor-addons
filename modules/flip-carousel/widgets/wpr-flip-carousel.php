@@ -1189,7 +1189,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 
                 echo '<li class="wpr-flip-item" data-flip-title="">';
 					echo '<figure>';
-						echo $figure; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo ''. $figure; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo '</figure>';
 				echo '</li>';
 				$i++;

@@ -2872,7 +2872,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 		<div class="wpr-advanced-slider-wrap">
 			
 			<div <?php echo $this->get_render_attribute_string( 'advanced-slider-attribute' ); ?> data-slide-effect="<?php echo esc_attr($settings['slider_effect']); ?>">
-				<?php echo $slider_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				<?php echo ''. $slider_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</div>
 			<div class="wpr-slider-controls">
 				<div class="wpr-slider-dots"></div>

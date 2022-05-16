@@ -1429,7 +1429,7 @@ class Wpr_Tabs extends Widget_Base {
 			return '';
 		}
 
-		$edit_link = '<span class="wpr-template-edit-btn" data-permalink="'. get_permalink( $id ) .'">Edit Template</span>';
+		$edit_link = '<span class="wpr-template-edit-btn" data-permalink="'. esc_url(get_permalink( $id )) .'">Edit Template</span>';
 
 		return Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $id ) . $edit_link;
 	}
@@ -1499,7 +1499,7 @@ class Wpr_Tabs extends Widget_Base {
 				<div <?php echo $this->get_render_attribute_string( $tab_setting_key ); ?>>
 					
 					<?php if ( '' !== $item['tab_title'] ) : ?>
-					<div class="wpr-tab-title"><?php echo $item['tab_title']; ?></div>
+					<div class="wpr-tab-title"><?php echo esc_html($item['tab_title']); ?></div>
 					<?php endif; ?>
 
 					<?php if ( 'icon' === $item['tab_icon_type'] && '' !== $item['tab_icon']['value'] ) : ?>
@@ -1537,11 +1537,12 @@ class Wpr_Tabs extends Widget_Base {
 
 						if ( 'template' === $item['tab_content_type'] ) {
 
-							echo $this->wpr_tabs_template( $item['select_template'] );
+							// Render Elementor Template
+							echo ''. $this->wpr_tabs_template( $item['select_template'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 						} elseif( 'editor' === $item['tab_content_type'] ) {
 
-							echo $item['tab_content'];
+							echo wp_kses_post($item['tab_content']);
 
 						} elseif( 'acf' === $item['tab_content_type'] ) {
 

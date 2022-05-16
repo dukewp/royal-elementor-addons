@@ -1271,7 +1271,7 @@ class Wpr_Content_Toggle extends Widget_Base {
 					if ( 'template' === $settings['switcher_first_content_type'] ) {
 
 						// Render Elementor Template
-						echo $this->wpr_switcher_template( $settings['switcher_first_select_template'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo ''. $this->wpr_switcher_template( $settings['switcher_first_select_template'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 					} elseif( 'editor' === $settings['switcher_first_content_type'] ) {
 
@@ -1290,7 +1290,7 @@ class Wpr_Content_Toggle extends Widget_Base {
 					if ( 'template' === $settings['switcher_second_content_type'] ) {
 
 						// Render Elementor Template
-						echo $this->wpr_switcher_template( $settings['switcher_second_select_template'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo ''. $this->wpr_switcher_template( $settings['switcher_second_select_template'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 					} elseif( 'editor' === $settings['switcher_second_content_type'] ) {
 

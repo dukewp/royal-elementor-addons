@@ -1146,7 +1146,7 @@ class Wpr_Progress_Bar extends Widget_Base {
 
 					<?php $circle_stocke_bg = 'url( #wpr-prbar-circle-gradient-'. $this->get_id() .' )'; ?>
 						
-					<linearGradient id="wpr-prbar-circle-gradient-<?php echo $this->get_id(); ?>" gradientTransform="rotate(<?php echo $settings['circle_prline_grad_angle']['size']; ?> 0.5 0.5)" gradientUnits="objectBoundingBox"  x1="-0.5" y1="0.5" x2="1.5" y2="0.5">
+					<linearGradient id="wpr-prbar-circle-gradient-<?php echo esc_attr($this->get_id()); ?>" gradientTransform="rotate(<?php echo esc_html($settings['circle_prline_grad_angle']['size']); ?> 0.5 0.5)" gradientUnits="objectBoundingBox"  x1="-0.5" y1="0.5" x2="1.5" y2="0.5">
 						<stop offset="0%" stop-color="<?php echo esc_attr( $settings['circle_prline_bg_color_a'] ); ?>"></stop>
 						<stop offset="100%" stop-color="<?php echo esc_attr( $settings['circle_prline_bg_color_b'] ); ?>"></stop>
 					</linearGradient>
@@ -1167,7 +1167,7 @@ class Wpr_Progress_Bar extends Widget_Base {
 					stroke="<?php echo esc_attr( $circle_stocke_bg ); ?>"
 					fill="none"
 					stroke-width="<?php echo esc_attr( $circle_prline_width ); ?>"
-					style="stroke-dasharray: <?php echo $circle_perimeter; ?>; stroke-dashoffset: <?php echo $circle_perimeter; ?>;"
+					style="stroke-dasharray: <?php echo esc_attr($circle_perimeter); ?>; stroke-dashoffset: <?php echo esc_attr($circle_perimeter); ?>;"
 				/>
 
 			</svg>

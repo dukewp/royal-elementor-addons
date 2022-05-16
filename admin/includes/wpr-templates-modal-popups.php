@@ -147,7 +147,7 @@ class WPR_Templates_Modal_Popups {
 
 		    		// Elementor Template Content
 	    			echo '<div class="wpr-popup-container-inner">';
-						echo $get_elementor_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo ''. $get_elementor_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	    			echo '</div>';
 
 	    			echo '</div>';
