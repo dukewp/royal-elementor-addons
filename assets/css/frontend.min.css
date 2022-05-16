@@ -11461,6 +11461,13 @@ body:not(.elementor-editor-active) .wpr-template-popup {
   /*--------------------------------------------------------------
   == Image Accordion
   --------------------------------------------------------------*/
+
+.wpr-image-accordion * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 .wpr-img-accordion-wrapper-link-yes {
     cursor: pointer;
 }
@@ -11503,11 +11510,11 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     position: absolute;
 }
 
-.wpr-img-accordion-item {
+.wpr-image-accordion-item {
     text-align: center;
 }
 
-.wpr-img-accordion-item-inner {
+.wpr-image-accordion-item-inner {
     position: relative;
     text-align: center;
 }
@@ -11619,7 +11626,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     z-index: 999;
 }
 
-.wpr-img-accordion-item-button .inner-block a {
+.wpr-image-accordion-item .inner-block a {
     position: relative;
     display: inline-block;
 }
@@ -11631,11 +11638,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     display: flex;
     height: 100%;
 }
-
-/* .wpr-img-accordion-item-title a,
-.wpr-img-accordion-item-description p {
-  white-space: nowrap;
-} */
 
 /*--------------------------------------------------------------
   == Section Extensions

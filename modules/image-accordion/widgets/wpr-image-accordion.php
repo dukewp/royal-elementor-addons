@@ -997,10 +997,7 @@ class Wpr_Image_Accordion extends Widget_Base {
                     ]
                 ],
 				'selectors' => [
-					'{{WRAPPER}} {{CURRENT_ITEM}}' => 'text-align: {{VALUE}}',
-					'{{WRAPPER}} .wpr-img-accordion-media-hover-middle' => 'text-align: {{VALUE}}',
-					'{{WRAPPER}} .wpr-img-accordion-media-hover-top' => 'text-align: {{VALUE}}',
-					'{{WRAPPER}} .wpr-img-accordion-media-hover-bottom' => 'text-align: {{VALUE}}',
+					'{{WRAPPER}} {{CURRENT_ITEM}}' => 'text-align: {{VALUE}}'
 				],
 				'render_type' => 'template',
 				'separator' => 'after'
