@@ -15,7 +15,9 @@ use Elementor\Core\Breakpoints;
 use WprAddons\Classes\Utilities;
 
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Sticky_Section {
 

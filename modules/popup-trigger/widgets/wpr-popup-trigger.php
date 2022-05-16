@@ -11,7 +11,9 @@ use Elementor\Core\Schemes\Typography;
 use Elementor\Group_Control_Background;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Popup_Trigger extends Widget_Base {
 	

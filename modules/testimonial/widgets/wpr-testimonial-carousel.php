@@ -15,7 +15,9 @@ use WprAddons\Classes\Utilities;
 use Elementor\Utils;
 use Elementor\Icons;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Testimonial_Carousel extends Widget_Base {
 		

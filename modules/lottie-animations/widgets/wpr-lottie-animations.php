@@ -10,7 +10,9 @@ use Elementor\Core\Base\Document;
 use Elementor\Plugin;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Lottie_Animations extends Widget_Base {
 		

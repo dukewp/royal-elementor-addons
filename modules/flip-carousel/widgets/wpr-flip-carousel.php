@@ -16,7 +16,9 @@ use Elementor\Group_Control_Image_Size;
 use Elementor\Utils;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Flip_Carousel extends Widget_Base {
 	

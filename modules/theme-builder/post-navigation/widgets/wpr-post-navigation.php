@@ -13,7 +13,9 @@ use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Css_Filter;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Post_Navigation extends Widget_Base {
 	

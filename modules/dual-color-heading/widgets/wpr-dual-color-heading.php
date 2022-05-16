@@ -17,7 +17,9 @@ use Elementor\Core\Schemes\Typography;
 use WprAddons\Classes\Utilities;
 
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Dual_Color_Heading extends Widget_Base {
 

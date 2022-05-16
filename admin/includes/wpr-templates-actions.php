@@ -6,7 +6,9 @@ use Elementor\TemplateLibrary\Source_Base;
 use Elementor\Core\Common\Modules\Ajax\Module as Ajax;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 
 /**

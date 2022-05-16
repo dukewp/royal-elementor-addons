@@ -3,7 +3,9 @@ namespace WprAddons\Admin\Templates;
 
 use WprAddons\Plugin;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class WPR_Templates_Data {
 	public static function get_available_kits() {

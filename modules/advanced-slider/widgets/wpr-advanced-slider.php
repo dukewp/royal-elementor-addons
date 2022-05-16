@@ -17,7 +17,9 @@ use Elementor\Icons;
 use Elementor\Icons_Manager;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Advanced_Slider extends Widget_Base {
 		

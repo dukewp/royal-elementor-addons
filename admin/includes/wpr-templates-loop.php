@@ -2,7 +2,9 @@
 
 namespace WprAddons\Admin\Includes;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 use WprAddons\Classes\Utilities;
 

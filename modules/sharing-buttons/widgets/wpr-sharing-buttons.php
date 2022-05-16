@@ -11,7 +11,9 @@ use Elementor\Core\Schemes\Typography;
 use Elementor\Repeater;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Sharing_Buttons extends Widget_Base {
 	

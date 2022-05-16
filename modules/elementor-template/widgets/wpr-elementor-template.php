@@ -4,7 +4,9 @@ namespace WprAddons\Modules\ElementorTemplate\Widgets;
 use Elementor\Controls_Manager;
 use Elementor\Widget_Base;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Elementor_Template extends Widget_Base {
 		

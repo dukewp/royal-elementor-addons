@@ -11,7 +11,9 @@ use Elementor\Core\Schemes\Color;
 use Elementor\Group_Control_Image_Size;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Post_Media extends Widget_Base {
 	

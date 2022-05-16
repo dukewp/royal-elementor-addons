@@ -11,7 +11,9 @@ use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Border;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Post_Comments extends Widget_Base {
 	

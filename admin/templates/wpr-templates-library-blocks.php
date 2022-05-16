@@ -3,7 +3,9 @@ namespace WprAddons\Admin\Templates;
 use WprAddons\Classes\Utilities;
 use WprAddons\Admin\Templates\WPR_Templates_Data;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 /**
  * WPR_Templates_Library_Blocks setup

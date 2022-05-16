@@ -13,7 +13,9 @@
  * Text Domain: wpr-addons
 */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 define( 'WPR_ADDONS_VERSION', '1.3.42' );
 

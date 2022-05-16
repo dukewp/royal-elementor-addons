@@ -3,7 +3,9 @@
 use Elementor\Controls_Manager;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 	

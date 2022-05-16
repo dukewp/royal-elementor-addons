@@ -11,7 +11,9 @@ use Elementor\Core\Schemes\Color;
 use Elementor\Core\Schemes\Typography;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Forms extends Widget_Base {
 	
