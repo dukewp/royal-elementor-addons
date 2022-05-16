@@ -700,19 +700,19 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
         ?>
 			<div class="wpr-dual-heading-wrap">
 				<div class="wpr-dual-title-wrap">
-					<<?php echo $settings['dual_heading_tag']?> class="wpr-dual-title">
+					<<?php echo esc_attr($settings['dual_heading_tag']); ?> class="wpr-dual-title">
 					<?php if (!empty($settings['primary_heading'])) : ?>
-						<span class="first"><?php echo wp_kses($settings['primary_heading'], []); ?></span>
+						<span class="first"><?php echo esc_html($settings['primary_heading']); ?></span>
 					<?php endif; ?>
 					
 					<?php if (!empty($settings['secondary_heading'])) : ?>
-						<span class="second"><?php echo wp_kses($settings['secondary_heading'], []); ?></span>
+						<span class="second"><?php echo esc_html($settings['secondary_heading']); ?></span>
 					<?php endif; ?>
-					</<?php echo $settings['dual_heading_tag']?>>
+					</<?php echo esc_attr($settings['dual_heading_tag']); ?>>
 				</div>
 				
 				<?php if ('yes' == $settings['show_description']) { ?>
-					<div class="wpr-dual-heading-description" <?php echo $this->get_render_attribute_string('description'); ?>><?php echo wp_kses($settings['description'], []); ?></div>
+					<div class="wpr-dual-heading-description" <?php echo $this->get_render_attribute_string('description'); ?>><?php echo esc_html($settings['description']); ?></div>
 				<?php } ?>
 
 				<?php if ('yes' == $settings['show_icon']) { ?>
