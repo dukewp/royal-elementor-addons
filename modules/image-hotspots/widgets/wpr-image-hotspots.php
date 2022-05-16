@@ -956,13 +956,13 @@ class Wpr_Image_Hotspots extends Widget_Base {
 							<?php endif; ?>
 
 							<?php if ( '' !== $item['hotspot_icon']['value'] ) : ?>
-								<i class="<?php echo $item['hotspot_icon']['value']; ?>"></i>
+								<i class="<?php echo esc_attr($item['hotspot_icon']['value']); ?>"></i>
 							<?php endif; ?>
 
 						</<?php echo esc_attr( $hotspot_tag ); ?>>
 						
 						<?php if ( 'yes' === $item['hotspot_tooltip'] && '' !== $item['hotspot_tooltip_text'] ) : ?>
-							<div class="wpr-hotspot-tooltip"><?php echo $item['hotspot_tooltip_text']; ?></div>						
+							<div class="wpr-hotspot-tooltip"><?php echo esc_html($item['hotspot_tooltip_text']); ?></div>						
 						<?php endif; ?>	
 
 					</div>

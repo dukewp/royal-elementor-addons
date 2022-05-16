@@ -5170,7 +5170,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 						echo '<div class="wpr-story-info-vertical wpr-data-wrap '. $background_class .'"  data-aos="'. $this->animation .'" data-aos-left="'.$this->animation_loadmore_left .'" data-aos-right="'. $this->animation_loadmore_right .'" data-animation-offset="'. $settings['animation_offset'] .'" data-animation-duration="'. $settings['aos_animation_duration'] .'">';
 
-							echo $settings['content_layout'] === 'image-top' && !empty($this->image) || $settings['content_layout'] === 'image-top' && $content['repeater_youtube_video_url'] ? '<div class="wpr-animation-wrap wpr-timeline-media">' .$this->image : '';
+							echo ($settings['content_layout'] === 'image-top' && !empty($this->image)) || ($settings['content_layout'] === 'image-top' && $content['repeater_youtube_video_url']) ? '<div class="wpr-animation-wrap wpr-timeline-media">'. $this->image : '';
 
 							echo !empty($content['repeater_youtube_video_url']) && $settings['content_layout'] === 'image-top' ? '<div class="wpr-timeline-iframe-wrapper"> '. $this->youtube_url($content) .' </div>' : '';
 

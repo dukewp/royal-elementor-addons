@@ -1714,7 +1714,7 @@ class Wpr_Nav_Menu extends Widget_Base {
 
 		// Main Menu
 		echo '<nav class="wpr-nav-menu-container wpr-nav-menu-'. $settings['menu_layout'] .'" data-trigger="'. esc_attr($settings['menu_items_submenu_trigger']) .'">';
-			echo $menu_html;
+			echo ''. $menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '</nav>';
 
 		// Mobile Menu
@@ -1735,7 +1735,7 @@ class Wpr_Nav_Menu extends Widget_Base {
 			echo '</div>';
 
 			// Menu
-			echo $moible_menu_html;
+			echo ''. $moible_menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		echo '</nav>';
 	}
