@@ -50,7 +50,7 @@ function wpr_addons_popups_page() {
 
     <!-- Tabs -->
     <div class="nav-tab-wrapper wpr-nav-tab-wrapper">
-        <a href="?page=wpr-theme-builder&tab=wpr_tab_popups" data-title="popup" class="nav-tab <?php echo $active_tab == 'wpr_tab_popups' ? 'nav-tab-active' : ''; ?>">
+        <a href="?page=wpr-theme-builder&tab=wpr_tab_popups" data-title="popup" class="nav-tab <?php echo ($active_tab == 'wpr_tab_popups') ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Popups', 'wpr-addons' ); ?>
         </a>
     </div>

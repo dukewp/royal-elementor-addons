@@ -95,7 +95,7 @@ function wpr_addons_templates_kit_page() {
                     echo '</div>';
                     echo '<footer>';
                         echo '<h3>'. $data['name'] .'</h3>';
-                        echo $data['theme-builder'] ? '<span>'. esc_html__( 'Theme Builder', 'wpr-addons' ).'</span>' : '';
+                        echo esc_html($data['theme-builder']) ? '<span>'. esc_html__( 'Theme Builder', 'wpr-addons' ) .'</span>' : '';
                     echo '</footer>';
                 echo '</div>';
             }

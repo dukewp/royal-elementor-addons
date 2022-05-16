@@ -57,26 +57,26 @@ function wpr_addons_theme_builder_page() {
 
     <!-- Tabs -->
     <div class="nav-tab-wrapper wpr-nav-tab-wrapper">
-        <a href="?page=wpr-theme-builder&tab=wpr_tab_header" data-title="Header" class="nav-tab <?php echo $active_tab == 'wpr_tab_header' ? 'nav-tab-active' : ''; ?>">
+        <a href="?page=wpr-theme-builder&tab=wpr_tab_header" data-title="Header" class="nav-tab <?php echo ($active_tab == 'wpr_tab_header') ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Header', 'wpr-addons' ); ?>
         </a>
-        <a href="?page=wpr-theme-builder&tab=wpr_tab_footer" data-title="Footer" class="nav-tab <?php echo $active_tab == 'wpr_tab_footer' ? 'nav-tab-active' : ''; ?>">
+        <a href="?page=wpr-theme-builder&tab=wpr_tab_footer" data-title="Footer" class="nav-tab <?php echo ($active_tab == 'wpr_tab_footer') ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Footer', 'wpr-addons' ); ?>
         </a>
-        <a href="?page=wpr-theme-builder&tab=wpr_tab_archive" data-title="Archive" class="nav-tab <?php echo $active_tab == 'wpr_tab_archive' ? 'nav-tab-active' : ''; ?>">
+        <a href="?page=wpr-theme-builder&tab=wpr_tab_archive" data-title="Archive" class="nav-tab <?php echo ($active_tab == 'wpr_tab_archive') ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Archive', 'wpr-addons' ); ?>
         </a>
-        <a href="?page=wpr-theme-builder&tab=wpr_tab_single" data-title="Single" class="nav-tab <?php echo $active_tab == 'wpr_tab_single' ? 'nav-tab-active' : ''; ?>">
+        <a href="?page=wpr-theme-builder&tab=wpr_tab_single" data-title="Single" class="nav-tab <?php echo ($active_tab == 'wpr_tab_single') ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Single', 'wpr-addons' ); ?>
         </a>        
-        <a href="?page=wpr-theme-builder&tab=wpr_tab_my_templates" data-title="My Templates" class="nav-tab <?php echo $active_tab == 'wpr_tab_my_templates' ? 'nav-tab-active' : ''; ?>">
+        <a href="?page=wpr-theme-builder&tab=wpr_tab_my_templates" data-title="My Templates" class="nav-tab <?php echo ($active_tab == 'wpr_tab_my_templates') ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Saved Templates', 'wpr-addons' ); ?>
         </a>
 
-        <a href="?page=wpr-theme-builder&tab=wpr_tab_product_archive" data-title="Product Archive" class="nav-tab <?php echo $active_tab == 'wpr_tab_product_archive' ? 'nav-tab-active' : ''; ?>">
+        <a href="?page=wpr-theme-builder&tab=wpr_tab_product_archive" data-title="Product Archive" class="nav-tab <?php echo ($active_tab == 'wpr_tab_product_archive') ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Product Archive', 'wpr-addons' ); ?>
         </a>
-        <a href="?page=wpr-theme-builder&tab=wpr_tab_product_single" data-title="Product Single" class="nav-tab <?php echo $active_tab == 'wpr_tab_product_single' ? 'nav-tab-active' : ''; ?>">
+        <a href="?page=wpr-theme-builder&tab=wpr_tab_product_single" data-title="Product Single" class="nav-tab <?php echo ($active_tab == 'wpr_tab_product_single') ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Product Single', 'wpr-addons' ); ?>
         </a>
     </div>

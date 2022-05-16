@@ -139,19 +139,19 @@ function wpr_addons_settings_page() {
     <!-- Tabs -->
     <div class="nav-tab-wrapper wpr-nav-tab-wrapper">
         <?php if ( empty(get_option('wpr_wl_hide_elements_tab')) ) : ?>
-        <a href="?page=wpr-addons&tab=wpr_tab_elements" data-title="Elements" class="nav-tab <?php echo $active_tab == 'wpr_tab_elements' ? 'nav-tab-active' : ''; ?>">
+        <a href="?page=wpr-addons&tab=wpr_tab_elements" data-title="Elements" class="nav-tab <?php echo ($active_tab == 'wpr_tab_elements') ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Widgets', 'wpr-addons' ); ?>
         </a>
         <?php endif; ?>
 
         <?php if ( empty(get_option('wpr_wl_hide_extensions_tab')) ) : ?>
-        <a href="?page=wpr-addons&tab=wpr_tab_extensions" data-title="Extensions" class="nav-tab <?php echo $active_tab == 'wpr_tab_extensions' ? 'nav-tab-active' : ''; ?>">
+        <a href="?page=wpr-addons&tab=wpr_tab_extensions" data-title="Extensions" class="nav-tab <?php echo ($active_tab == 'wpr_tab_extensions') ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Extensions', 'wpr-addons' ); ?>
         </a>
         <?php endif; ?>
         
         <?php if ( empty(get_option('wpr_wl_hide_settings_tab')) ) : ?>
-        <a href="?page=wpr-addons&tab=wpr_tab_settings" data-title="Settings" class="nav-tab <?php echo $active_tab == 'wpr_tab_settings' ? 'nav-tab-active' : ''; ?>">
+        <a href="?page=wpr-addons&tab=wpr_tab_settings" data-title="Settings" class="nav-tab <?php echo ($active_tab == 'wpr_tab_settings') ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Settings', 'wpr-addons' ); ?>
         </a>
         <?php endif; ?>

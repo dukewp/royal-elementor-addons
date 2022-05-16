@@ -302,8 +302,8 @@ class Utilities {
 			return;
 		}
 
-    	// Render Template Content
-		echo $get_elementor_content;
+    	// Render Elementor Template Content
+		echo $get_elementor_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 

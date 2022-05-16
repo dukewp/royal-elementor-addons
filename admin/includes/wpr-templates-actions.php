@@ -134,7 +134,7 @@ class WPR_Templates_Actions {
 			update_post_meta( $template_id, '_wp_page_template', 'elementor_canvas' ); //tmp - maybe set for wpr_templates only
 
 			// Send ID to JS
-			echo $template_id;
+			echo esc_html($template_id);
 		}
 	}
 
