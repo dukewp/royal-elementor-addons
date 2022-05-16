@@ -92,7 +92,7 @@ class WPR_Control_Animations extends Base_Data_Control {
 					<?php foreach ( self::get_animations() as $animations_group_name => $animations_group ) : ?>
 						<optgroup label="<?php echo esc_attr($animations_group_name); ?>">
 							<?php foreach ( $animations_group as $animation_name => $animation_title ) : ?>
-								<option value="<?php echo esc_attr($animation_name); ?>"><?php echo esc_attr($animation_title); ?></option>
+								<option value="<?php echo esc_attr($animation_name); ?>"><?php echo esc_html($animation_title); ?></option>
 							<?php endforeach; ?>
 						</optgroup>
 					<?php endforeach; ?>
@@ -145,7 +145,7 @@ class WPR_Control_Animations_Alt extends WPR_Control_Animations {
 					<?php foreach ( $animations as $animations_group_name => $animations_group ) : ?>
 						<optgroup label="<?php echo esc_attr($animations_group_name); ?>">
 							<?php foreach ( $animations_group as $animation_name => $animation_title ) : ?>
-								<option value="<?php echo esc_attr($animation_name); ?>"><?php echo esc_attr($animation_name); ?></option>
+								<option value="<?php echo esc_attr($animation_name); ?>"><?php echo esc_html($animation_name); ?></option>
 							<?php endforeach; ?>
 						</optgroup>
 					<?php endforeach; ?>
@@ -284,7 +284,7 @@ class WPR_Control_Button_Animations extends Base_Data_Control {
 					<?php foreach ( self::get_animations() as $animations_group_name => $animations_group ) : ?>
 						<optgroup label="<?php echo esc_attr($animations_group_name); ?>">
 							<?php foreach ( $animations_group as $animation_name => $animation_title ) : ?>
-								<option value="<?php echo esc_attr($animation_name); ?>"><?php echo esc_attr($animation_title); ?></option>
+								<option value="<?php echo esc_attr($animation_name); ?>"><?php echo esc_html($animation_title); ?></option>
 							<?php endforeach; ?>
 						</optgroup>
 					<?php endforeach; ?>
