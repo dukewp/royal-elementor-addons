@@ -584,7 +584,7 @@ class Wpr_Logo extends Widget_Base {
 	$title = '';
 	if ( 'default' === $settings['title_type'] ) {
 		$title = get_bloginfo( 'name' );
-	} else if ( 'custom' === $settings['title_type'] ) {
+	} elseif ( 'custom' === $settings['title_type'] ) {
 		$title = $settings['custom_title'];
 	}
 
@@ -592,7 +592,7 @@ class Wpr_Logo extends Widget_Base {
 	$description = '';
 	if ( 'default' === $settings['description_type'] ) {
 		$description =  get_bloginfo( 'description' );
-	} else if ( 'custom' === $settings['description_type'] ) {
+	} elseif ( 'custom' === $settings['description_type'] ) {
 		$description = $settings['custom_description'];
 	}
 

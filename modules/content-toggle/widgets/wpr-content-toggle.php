@@ -1270,7 +1270,7 @@ class Wpr_Content_Toggle extends Widget_Base {
 
 						echo $this->wpr_switcher_template( $settings['switcher_first_select_template'] );
 
-					} else if( 'editor' === $settings['switcher_first_content_type'] ) {
+					} elseif( 'editor' === $settings['switcher_first_content_type'] ) {
 
 						echo $settings['switcher_first_content'];
 					}
@@ -1288,7 +1288,7 @@ class Wpr_Content_Toggle extends Widget_Base {
 
 						echo $this->wpr_switcher_template( $settings['switcher_second_select_template'] );
 
-					} else if( 'editor' === $settings['switcher_second_content_type'] ) {
+					} elseif( 'editor' === $settings['switcher_second_content_type'] ) {
 
 						echo $settings['switcher_second_content'];
 					}

@@ -121,13 +121,13 @@
                                     if ( $is_pending_affiliate ) {
                                         $message_text            = fs_text_inline( "Thank you for applying for our affiliate program, we'll review your details during the next 14 days and will get back to you with further information.", 'affiliate-application-thank-you', $slug );
                                         $message_container_class = 'updated';
-                                    } else if ( $affiliate->is_suspended() ) {
+                                    } elseif ( $affiliate->is_suspended() ) {
                                         $message_text            = fs_text_inline( 'Your affiliation account was temporarily suspended.', 'affiliate-account-suspended', $slug );
                                         $message_container_class = 'notice notice-warning';
-                                    } else if ( $affiliate->is_rejected() ) {
+                                    } elseif ( $affiliate->is_rejected() ) {
                                         $message_text            = fs_text_inline( "Thank you for applying for our affiliate program, unfortunately, we've decided at this point to reject your application. Please try again in 30 days.", 'affiliate-application-rejected', $slug );
                                         $message_container_class = 'error';
-                                    } else if ( $affiliate->is_blocked() ) {
+                                    } elseif ( $affiliate->is_blocked() ) {
                                         $message_text            = fs_text_inline( 'Due to violation of our affiliation terms, we decided to temporarily block your affiliation account. If you have any questions, please contact support.', 'affiliate-account-blocked', $slug );
                                         $message_container_class = 'error';
                                     }
@@ -305,7 +305,7 @@
                     if (0 === domain.length) {
                         showErrorMessage('<?php fs_esc_js_echo_inline( 'Domain is required.', 'domain-is-required', $slug ) ?>');
                         return;
-                    } else if ('freemius.com' === domain) {
+                    } elseif ('freemius.com' === domain) {
                         showErrorMessage('<?php fs_esc_js_echo_inline( 'Invalid domain', 'invalid-domain', $slug ) ?>' + ' [' + domain + '].');
                         return;
                     }
@@ -319,7 +319,7 @@
                                 extraDomain = $this.val().trim().toLowerCase();
                             if (0 === extraDomain.length || extraDomain === domain) {
                                 return true;
-                            } else if ('freemius.com' === extraDomain) {
+                            } elseif ('freemius.com' === extraDomain) {
                                 showErrorMessage('<?php fs_esc_js_echo_inline( 'Invalid domain', 'invalid-domain', $slug ) ?>' + ' [' + extraDomain + '].');
                                 hasError = true;
                                 return false;

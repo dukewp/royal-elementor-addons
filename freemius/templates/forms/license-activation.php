@@ -445,7 +445,7 @@ HTML;
                         $applyOnAllSites.attr( 'disabled', false );
                         enableDisableSitesSelection();
                         resetActivateLicenseCheckboxLabel();
-                    } else if ( ! $modal.hasClass( 'is-single-site-activation' ) ) {
+                    } elseif ( ! $modal.hasClass( 'is-single-site-activation' ) ) {
                         toggleActivationOnAllSites();
                     }
                 });

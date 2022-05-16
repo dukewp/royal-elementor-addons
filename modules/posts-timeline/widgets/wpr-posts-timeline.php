@@ -4888,7 +4888,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		// Get Paged
 		if ( get_query_var( 'paged' ) ) {
 			$paged = get_query_var( 'paged' );
-		} else if ( get_query_var( 'page' ) ) {
+		} elseif ( get_query_var( 'page' ) ) {
 			$paged = get_query_var( 'page' );
 		} else {
 			$paged = 1;
@@ -4965,14 +4965,14 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			if ( preg_match('/right/i', $settings['timeline_animation']) ) {
 				if ( 'wpr-left-aligned' === $this->content_alignment ) {
 					$this->animation = preg_match('/right/i', $settings['timeline_animation']) ? str_replace('right', 'left', $settings['timeline_animation']) : $settings['timeline_animation'];
-				} else if ( 'wpr-right-aligned' === $this->content_alignment  ) {
+				} elseif ( 'wpr-right-aligned' === $this->content_alignment  ) {
 					$this->animation = preg_match('/left/i', $settings['timeline_animation']) ? str_replace('left', 'right', $settings['timeline_animation']) : $settings['timeline_animation'];
 				}
 			}
 			if ( preg_match('/left/i', $settings['timeline_animation']) ) {
 				if ( 'wpr-left-aligned' === $this->content_alignment ) {
 					$this->animation = preg_match('/left/i', $settings['timeline_animation']) ? str_replace('left', 'right', $settings['timeline_animation']) : $settings['timeline_animation'];
-				} else if ( 'wpr-right-aligned' === $this->content_alignment  ) {
+				} elseif ( 'wpr-right-aligned' === $this->content_alignment  ) {
 					$this->animation = preg_match('/right/i', $settings['timeline_animation']) ? str_replace('right', 'left', $settings['timeline_animation']) : $settings['timeline_animation'];
 				}
 			}
@@ -4981,7 +4981,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		if ( preg_match('/right/i', $settings['timeline_animation']) ) {
 			$this->animation_loadmore_left = preg_match('/right/i', $settings['timeline_animation']) ? str_replace('right', 'left', $settings['timeline_animation']) : $settings['timeline_animation'];
 			$this->animation_loadmore_right = preg_match('/left/i', $settings['timeline_animation']) ? str_replace('left', 'right', $settings['timeline_animation']) : $settings['timeline_animation'];
-		} else if ( preg_match('/left/i', $settings['timeline_animation']) ) {
+		} elseif ( preg_match('/left/i', $settings['timeline_animation']) ) {
 			$this->animation_loadmore_left = preg_match('/left/i', $settings['timeline_animation']) ? str_replace('left', 'right', $settings['timeline_animation']) : $settings['timeline_animation'];
 			$this->animation_loadmore_right = preg_match('/right/i', $settings['timeline_animation']) ? str_replace('right', 'left', $settings['timeline_animation']) : $settings['timeline_animation'];
 		}
@@ -5032,9 +5032,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
             else{
                 $this->image= wp_get_attachment_image($content['repeater_image']['id'], $this->thumbnail_size, true);                
             }
-        } else if (isset($content['repeater_image']['url']) && $content['repeater_image']['url'] != "") {
+        } elseif (isset($content['repeater_image']['url']) && $content['repeater_image']['url'] != "") {
             $this->image = '<img src="'.$content['repeater_image']['url'].'">';
-        } else if ($content['repeater_timeline_item_icon'] != '') {
+        } elseif ($content['repeater_timeline_item_icon'] != '') {
             ob_start();
             \Elementor\Icons_Manager::render_icon( $content['repeater_timeline_item_icon'], [ 'aria-hidden' => 'true' ] );
             $icon_image = ob_get_clean();
@@ -5088,7 +5088,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
                     src="https://www.youtube.com/embed/' . $id . '" 
                     frameborder="0" allowfullscreen></iframe>';
                 }
-            } else if ( empty($story_settings['repeater_youtube_video_url']) ) {
+            } elseif ( empty($story_settings['repeater_youtube_video_url']) ) {
 				$media = '';
 			} else {
                 $media = __("Wrong URL","wpr-addons");
@@ -5106,7 +5106,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 		if ( $settings['timeline_layout'] == 'horizontal' ) {
 			$horizontal_class = 'wpr-horizontal-wrapper';
-		} else if ( $settings['timeline_layout'] == 'horizontal-bottom' ) {
+		} elseif ( $settings['timeline_layout'] == 'horizontal-bottom' ) {
 			$horizontal_class = 'wpr-horizontal-bottom-wrapper';
 		}
 
@@ -5540,13 +5540,13 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			if ( 'one-sided' === $layout ){
 				$this->timeline_layout = "wpr-one-sided-timeline";
 				$this->timeline_layout_wrapper = "wpr-one-sided-wrapper";
-			} else if ( 'centered' === $layout) {
+			} elseif ( 'centered' === $layout) {
 				$this->timeline_layout = 'wpr-both-sided-timeline';
 				$this->timeline_layout_wrapper = 'wpr-centered';
-			} else if ( 'one-sided-left' === $layout ) {
+			} elseif ( 'one-sided-left' === $layout ) {
 				$this->timeline_layout = "wpr-one-sided-timeline-left";
 				$this->timeline_layout_wrapper = "wpr-one-sided-wrapper-left";
-			} else if ( 'horizontal' === $layout ) {
+			} elseif ( 'horizontal' === $layout ) {
 				$this->timeline_layout = "wpr-horizontal-timeline";
 				$this->timeline_layout_wrapper = "wpr-horizontal-wrapper";
 			}
@@ -5559,7 +5559,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					$this->render_dynamic_horizontal_timeline ( $settings, $dir, $autoplay, $slidesHeight, $swiper_speed, $swiper_delay );
 
 
-			} else if ( 'custom' === $settings['timeline_content'] && ('horizontal' === $layout || 'horizontal-bottom' === $layout) ) {
+			} elseif ( 'custom' === $settings['timeline_content'] && ('horizontal' === $layout || 'horizontal-bottom' === $layout) ) {
 
 					$this->render_custom_horizontal_timeline( $settings, $autoplay, $dir, $data, $slidesHeight,  $swiper_speed, $swiper_delay );
 

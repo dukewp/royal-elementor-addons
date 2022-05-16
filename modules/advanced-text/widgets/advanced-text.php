@@ -865,9 +865,9 @@ class Advanced_Text extends Widget_Base {
 
 			if ( 'animated' === $settings['text_style'] ) {
 				$this->wpr_animated_text();
-			} else if ( 'highlighted' === $settings['text_style'] ) {
+			} elseif ( 'highlighted' === $settings['text_style'] ) {
 				$this->wpr_highlighted_text();
-			} else if ( 'clipped' === $settings['text_style'] ) {
+			} elseif ( 'clipped' === $settings['text_style'] ) {
 				$this->wpr_clipped_text();
 			}
 

@@ -1537,11 +1537,11 @@ class Wpr_Tabs extends Widget_Base {
 
 							echo $this->wpr_tabs_template( $item['select_template'] );
 
-						} else if( 'editor' === $item['tab_content_type'] ) {
+						} elseif( 'editor' === $item['tab_content_type'] ) {
 
 							echo $item['tab_content'];
 
-						} else if( 'acf' === $item['tab_content_type'] ) {
+						} elseif( 'acf' === $item['tab_content_type'] ) {
 
 							echo get_post_meta( get_the_ID(), $item['tab_custom_field'], true );
 						}

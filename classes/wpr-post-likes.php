@@ -289,9 +289,9 @@ class WPR_Post_Likes {
 
 		if ( $number >= 1000 && $number < 1000000 ) {
 			$formatted = number_format( $number/1000, $precision ).'K';
-		} else if ( $number >= 1000000 && $number < 1000000000 ) {
+		} elseif ( $number >= 1000000 && $number < 1000000000 ) {
 			$formatted = number_format( $number/1000000, $precision ).'M';
-		} else if ( $number >= 1000000000 ) {
+		} elseif ( $number >= 1000000000 ) {
 			$formatted = number_format( $number/1000000000, $precision ).'B';
 		} else {
 			$formatted = $number; // Number is less than 1000

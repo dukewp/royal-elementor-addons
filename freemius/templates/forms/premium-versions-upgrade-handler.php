@@ -154,7 +154,7 @@
                      * @author Leo Fajardo (@leorw)
                      */
                     return true;
-                } else if ( 1 === $modulesWithNonActiveLicense.length ) {
+                } elseif ( 1 === $modulesWithNonActiveLicense.length ) {
                     showModal( $modulesWithNonActiveLicense );
                 }
 
@@ -173,7 +173,7 @@
 
                         if ( toggle ) {
                             return ! $( this ).prop( 'checked' );
-                        } else if ( controlChecked ) {
+                        } elseif ( controlChecked ) {
                             return true;
                         }
 

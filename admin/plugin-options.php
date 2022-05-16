@@ -332,13 +332,13 @@ function wpr_addons_settings_page() {
                     if ( 'wpr-parallax-background' === $option_name ) {
                         echo '<br><span>Tip: Edit any Section > Navigate to Style tab</span>';
                         echo '<a href="https://www.youtube.com/watch?v=DcDeQ__lJbw" target="_blank">Watch Video Tutorial</a>';
-                    } else if ( 'wpr-parallax-multi-layer' === $option_name ) {
+                    } elseif ( 'wpr-parallax-multi-layer' === $option_name ) {
                         echo '<br><span>Tip: Edit any Section > Navigate to Style tab</span>';
                         echo '<a href="https://youtu.be/DcDeQ__lJbw?t=121" target="_blank">Watch Video Tutorial</a>';
-                    } else if ( 'wpr-particles' === $option_name ) {
+                    } elseif ( 'wpr-particles' === $option_name ) {
                         echo '<br><span>Tip: Edit any Section > Navigate to Style tab</span>';
                         echo '<a href="https://www.youtube.com/watch?v=8OdnaoFSj94" target="_blank">Watch Video Tutorial</a>';
-                    } else if ( 'wpr-sticky-section' === $option_name ) {
+                    } elseif ( 'wpr-sticky-section' === $option_name ) {
                         echo '<br><span>Tip: Edit any Section > Navigate to Advanced tab</span>';
                         echo '<a href="https://www.youtube.com/watch?v=at0CPKtklF0&t=375s" target="_blank">Watch Video Tutorial</a>';
                     }

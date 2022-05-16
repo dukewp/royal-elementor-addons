@@ -1292,9 +1292,9 @@ class Wpr_Progress_Bar extends Widget_Base {
 
 			if ( 'circle' === $settings['layout'] ) {
 				$this->render_progress_bar_circle( $prbar_counter_persent );
-			} else if ( 'hr-line' === $settings['layout'] ) {
+			} elseif ( 'hr-line' === $settings['layout'] ) {
 				$this->render_progress_bar_hr_line();
-			} else if ( 'vr-line' === $settings['layout'] ) {
+			} elseif ( 'vr-line' === $settings['layout'] ) {
 				$this->render_progress_bar_vr_line();
 			}
 
