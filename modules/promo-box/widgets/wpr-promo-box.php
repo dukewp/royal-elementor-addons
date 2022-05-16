@@ -1587,7 +1587,7 @@ class Wpr_Promo_Box extends Widget_Base {
 						<<?php echo esc_html($content_btn_element); ?> class="wpr-promo-box-btn" <?php echo $this->get_render_attribute_string( 'link_attribute' ); ?>>
 
 							<?php if ( '' !== $settings['content_btn_text'] ) : ?>
-							<span class="wpr-promo-box-btn-text"><?php echo $settings['content_btn_text']; ?></span>		
+							<span class="wpr-promo-box-btn-text"><?php echo esc_html($settings['content_btn_text']); ?></span>		
 							<?php endif; ?>
 
 							<?php if ( '' !== $settings['content_btn_icon']['value'] ) : ?>

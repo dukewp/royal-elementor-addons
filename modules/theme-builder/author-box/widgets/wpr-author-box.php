@@ -830,7 +830,7 @@ class Wpr_Author_Box extends Widget_Base {
 					if ( 'posts' === $settings['author_name_links_to'] || $author_name_has_website ) {
 						echo '<a href="'. esc_url( $author_name_link ) .'" target="'. esc_attr($author_name_target) .'">'. $avatar .'</a>';
 					} else {
-						echo $avatar;
+						echo wp_kses_post($avatar);
 					}
 				echo '</div>';
 			}
@@ -844,7 +844,7 @@ class Wpr_Author_Box extends Widget_Base {
 					if ( 'posts' === $settings['author_name_links_to'] || $author_name_has_website ) {
 						echo '<a href="'. esc_url( $author_name_link ) .'" target="'. esc_attr($author_name_target) .'">'. $name .'</a>';
 					} else {
-						echo $name;
+						echo esc_html($name);
 					}
 				echo '</'. $settings['author_name_tag'] .'>';
 			}
@@ -855,7 +855,7 @@ class Wpr_Author_Box extends Widget_Base {
 					if ( 'posts' === $settings['author_title_links_to'] || $author_title_has_website ) {
 						echo '<a href="'. esc_url( $author_title_link ) .'" target="'. esc_attr($author_title_target) .'">'. $title .'</a>';
 					} else {
-						echo $title;
+						echo esc_html($title);
 					}
 				echo '</'. $settings['author_title_tag'] .'>';
 			}

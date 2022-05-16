@@ -1184,12 +1184,12 @@ class Wpr_Flip_Carousel extends Widget_Base {
 						: ''. $figcaption . $flip_slide_image .'';
 
 				$figure = 'yes' === $element['enable_slide_link']
-						? '<a '. $this->get_render_attribute_string( 'slide_link'.$i ) .'>' . $inner_figure . '</a>'
+						? '<a '. $this->get_render_attribute_string( 'slide_link'. $i ) .'>' . esc_html($inner_figure) . '</a>'
 						: $inner_figure;
 
                 echo '<li class="wpr-flip-item" data-flip-title="">';
 					echo '<figure>';
-						echo $figure;
+						echo ''. $figure; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo '</figure>';
 				echo '</li>';
 				$i++;

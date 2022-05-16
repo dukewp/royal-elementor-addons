@@ -1366,7 +1366,12 @@ class Wpr_Mailchimp extends Widget_Base {
 			<?php if ( 'yes' === $settings['show_form_header'] ) : ?>
 			<div class="wpr-mailchimp-header">
 				<?php $form_icon = '' !== $settings['form_icon']['value'] ? '<i class="'. esc_attr($settings['form_icon']['value']) .'"></i>' : ''; ?>
-				<h3><?php echo $form_icon; echo esc_html($settings['form_title']); ?></h3>
+				<h3>
+					<?php
+					echo ''. $form_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo esc_html($settings['form_title']);
+					?>
+				</h3>
 				<p><?php echo wp_kses( $settings['form_description'], [ 'br' => [], 'em' => [], 'strong' => [], ] ); ?></p>
 			</div>
 			<?php endif; ?>

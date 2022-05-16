@@ -2732,7 +2732,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 					</div>
 					<?php endif; ?>
 
-					<p><?php echo $item['testimonial_content']; ?></p>
+					<p><?php echo wp_kses_post($item['testimonial_content']); ?></p>
 				</div>
 			<?php endif; ?>
 
@@ -2772,11 +2772,11 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 			<div class="wpr-testimonial-rating">
 			<?php for( $i = 1; $i <= $settings['testimonial_rating_scale']; $i++ ) : ?>
 				<?php if ( $i <= $rating_amount ) : ?>
-					<i class="wpr-rating-icon-full"><?php echo $rating_icon; ?></i>
+					<i class="wpr-rating-icon-full"><?php echo esc_html($rating_icon); ?></i>
 				<?php elseif ( $i === $round_rating + 1 && $rating_amount !== $round_rating ) : ?>
-					<i class="wpr-rating-icon-<?php echo ( $rating_amount - $round_rating ) * 10; ?>"><?php echo $rating_icon; ?></i>
+					<i class="wpr-rating-icon-<?php echo ( $rating_amount - $round_rating ) * 10; ?>"><?php echo esc_html($rating_icon); ?></i>
 				<?php else : ?>
-					<i class="wpr-rating-icon-empty"><?php echo $rating_icon; ?></i>
+					<i class="wpr-rating-icon-empty"><?php echo esc_html($rating_icon); ?></i>
 				<?php endif; ?>
 	     	<?php endfor; ?>
 

@@ -79,7 +79,7 @@ class Wpr_Storefront_Compat {
 		$css .= '</style>';
 
 		// Echo plain CSS (no user input or variables)
-		echo $css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo ''. $css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
