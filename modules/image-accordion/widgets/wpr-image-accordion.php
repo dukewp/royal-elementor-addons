@@ -3282,7 +3282,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 				<div class="wpr-accordion-background" style="background-image: url(<?php echo $this->item_bg_image_url ?>);"></div>
 
 							<?php
-								echo '<div '.$render_attribute.'>';
+								echo '<div '. $render_attribute .'>';
 									echo $this->render_media_overlay( $settings );
 									if ( 'template' === $item['content_type'] ) {
 										echo '<div class="wpr-template-wrap elementor-repeater-item-'. $item['_id'] .' '. $this->get_animation_class( $item, 'element' ) .'">';
