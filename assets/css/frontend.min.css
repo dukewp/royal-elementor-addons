@@ -11555,10 +11555,12 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     z-index: 2;
 }
 
-.wpr-img-accordion-sep-style-1 .inner-block>span {
+.wpr-img-accordion-sep-style-1 .inner-block>span,
+.wpr-img-accordion-sep-style-2 .inner-block>span {
     display: inline-block;
 }
 
+.wpr-img-accordion-item-display-custom.wpr-img-accordion-sep-style-2 .inner-block>span,
 .wpr-img-accordion-item-display-custom.wpr-img-accordion-sep-style-1 .inner-block>span {
     width: 100%;
 }
