@@ -1162,7 +1162,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				}
 
 				if ( ! empty( $element['slide_link']['url'] ) ) {
-					$this->add_link_attributes( 'slide_link'.$i, $element['slide_link'] );
+					$this->add_link_attributes( 'slide_link'. $i, $element['slide_link'] );
 				}
 
 				if ( Utils::get_placeholder_image_src() === $element['image']['url'] ) {

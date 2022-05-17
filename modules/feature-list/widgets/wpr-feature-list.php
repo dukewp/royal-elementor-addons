@@ -874,7 +874,7 @@ class Wpr_Feature_List extends Widget_Base {
 			echo '<div class="wpr-feature-list-wrap">';
                 echo '<ul class="wpr-feature-list">';
                     foreach (  $settings['list'] as $item ) {
-						$this->add_link_attributes( 'list_title_url' . $count_items, $item['list_title_url'] );
+						$this->add_link_attributes( 'list_title_url'. $count_items, $item['list_title_url'] );
                         echo '<li class="wpr-feature-list-item elementor-repeater-item-' . esc_attr( $item['_id'] ) .'">';
 							echo '<div class="wpr-feature-list-icon-wrap">';
 							echo '<span class="wpr-feature-list-line"></span>';
@@ -889,11 +889,11 @@ class Wpr_Feature_List extends Widget_Base {
                             echo '</div>';
                             echo '<div class="wpr-feature-list-content-wrap">';
 								if ( empty($item['list_title_url']) ) {
-									echo '<'. $settings['feature_list_title_tag'] .' class="wpr-feature-list-title">' . $item['list_title'] . '</'. $settings['feature_list_title_tag'] .'>';
+									echo '<'. $settings['feature_list_title_tag'] .' class="wpr-feature-list-title">'. $item['list_title'] .'</'. $settings['feature_list_title_tag'] .'>';
 								} else {
-									echo '<'. $settings['feature_list_title_tag'] .' class="wpr-feature-list-title"><a class="wpr-feature-list-url" '. $this->get_render_attribute_string( 'list_title_url' . $count_items ) .'>' . $item['list_title'] . '</a></'. $settings['feature_list_title_tag'] .'>';
+									echo '<'. $settings['feature_list_title_tag'] .' class="wpr-feature-list-title"><a class="wpr-feature-list-url" '. $this->get_render_attribute_string( 'list_title_url'. $count_items ) .'>'. $item['list_title'] .'</a></'. $settings['feature_list_title_tag'] .'>';
 								}
-                                echo '<p class="wpr-feature-list-description">' . $item['list_content'] . '</p>';
+                                echo '<p class="wpr-feature-list-description">'. $item['list_content'] .'</p>';
                             echo '</div>';
                         echo '</li>';
 						$count_items++;

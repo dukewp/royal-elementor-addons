@@ -368,8 +368,8 @@ class Wpr_Parallax_Scroll {
 
                     foreach (  $settings['hover_parallax'] as $key => $item ) {
                         if ( $key < 2 || wpr_fs()->can_use_premium_code() ) {
-                            echo '<div data-depth="'. $item['data_depth'] .'" style-top="'. $item['layer_position_vr']['size'] .'%" style-left="'. $item['layer_position_hr']['size'] .'%" class="wpr-parallax-ml-children elementor-repeater-item-' . $item['_id'] . '">';
-                                echo '<img src="' . $item['repeater_bg_image']['url'] . '">';
+                            echo '<div data-depth="'. $item['data_depth'] .'" style-top="'. $item['layer_position_vr']['size'] .'%" style-left="'. $item['layer_position_hr']['size'] .'%" class="wpr-parallax-ml-children elementor-repeater-item-'. $item['_id'] .'">';
+                                echo '<img src="'. $item['repeater_bg_image']['url'] .'">';
                             echo '</div>';
                         }
                     }

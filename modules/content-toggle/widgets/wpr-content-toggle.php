@@ -946,10 +946,10 @@ class Wpr_Content_Toggle extends Widget_Base {
 					'size' => 12,
 				],
 				'selectors' => [
-					'{{WRAPPER}}.wpr-switcher-icon-position-left'. $css_selector['control_container'] .' > .wpr-switcher-inner > .wpr-switcher-label ~ '.$css_selector['control_icon']  => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-switcher-icon-position-left'. $css_selector['control_list'] .' > .wpr-switcher-inner > .wpr-switcher-label ~ '.$css_selector['control_icon']  => 'margin-right: {{SIZE}}{{UNIT}};',
-						'{{WRAPPER}}.wpr-switcher-icon-position-right'. $css_selector['control_container'] .' > .wpr-switcher-inner > .wpr-switcher-label ~ '.$css_selector['control_icon']  => 'margin-left: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-switcher-icon-position-right'. $css_selector['control_list'] .' > .wpr-switcher-inner > .wpr-switcher-label ~ '.$css_selector['control_icon']  => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-switcher-icon-position-left'. $css_selector['control_container'] .' > .wpr-switcher-inner > .wpr-switcher-label ~ '. $css_selector['control_icon']  => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-switcher-icon-position-left'. $css_selector['control_list'] .' > .wpr-switcher-inner > .wpr-switcher-label ~ '. $css_selector['control_icon']  => 'margin-right: {{SIZE}}{{UNIT}};',
+						'{{WRAPPER}}.wpr-switcher-icon-position-right'. $css_selector['control_container'] .' > .wpr-switcher-inner > .wpr-switcher-label ~ '. $css_selector['control_icon']  => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-switcher-icon-position-right'. $css_selector['control_list'] .' > .wpr-switcher-inner > .wpr-switcher-label ~ '. $css_selector['control_icon']  => 'margin-left: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);

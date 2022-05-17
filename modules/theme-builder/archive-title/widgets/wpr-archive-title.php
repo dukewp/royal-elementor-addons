@@ -415,7 +415,7 @@ class Wpr_Archive_Title extends Widget_Base {
 
 			if ( '' !== $title ) {
 				echo '<'. $settings['post_title_tag'] .' class="wpr-archive-title">';
-					echo '<span>'. $settings['post_title_before_text'] .'</span>' . $title;
+					echo '<span>'. $settings['post_title_before_text'] .'</span>'. $title;
 				echo '</'. $settings['post_title_tag'] .'>';
 			}
 

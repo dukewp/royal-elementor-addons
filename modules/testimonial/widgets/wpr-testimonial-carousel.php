@@ -2672,25 +2672,25 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 			<?php
 			if ( ! empty( $item['testimonial_logo_image']['url'] ) ) {
 				
-				$this->add_render_attribute( 'logo_attribute' . $item_count, 'class', 'wpr-testimonial-logo-image elementor-clearfix' );
+				$this->add_render_attribute( 'logo_attribute'. $item_count, 'class', 'wpr-testimonial-logo-image elementor-clearfix' );
 
 				if ( ! empty( $item['testimonial_logo_url']['url'] ) ) {
 
 					$logo_element = 'a';
 
-					$this->add_render_attribute( 'logo_attribute' . $item_count, 'href', $item['testimonial_logo_url']['url'] );
+					$this->add_render_attribute( 'logo_attribute'. $item_count, 'href', $item['testimonial_logo_url']['url'] );
 
 					if ( $item['testimonial_logo_url']['is_external'] ) {
-						$this->add_render_attribute( 'logo_attribute' . $item_count, 'target', '_blank' );
+						$this->add_render_attribute( 'logo_attribute'. $item_count, 'target', '_blank' );
 					}
 
 					if ( $item['testimonial_logo_url']['nofollow'] ) {
-						$this->add_render_attribute( 'logo_attribute' . $item_count, 'nofollow', '' );
+						$this->add_render_attribute( 'logo_attribute'. $item_count, 'nofollow', '' );
 					}
 
 				}
 
-				echo '<'. esc_attr( $logo_element ) .' '. $this->get_render_attribute_string( 'logo_attribute' . $item_count ) .'>';
+				echo '<'. esc_attr( $logo_element ) .' '. $this->get_render_attribute_string( 'logo_attribute'. $item_count ) .'>';
 					echo '<img src="'. esc_url(  $item['testimonial_logo_image']['url'] ) .'" alt="'. esc_attr( $item['testimonial_author'] ) .'">';
 				echo '</'. esc_attr( $logo_element ) .'>';
 

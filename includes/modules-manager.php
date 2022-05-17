@@ -20,7 +20,7 @@ final class Manager {
 
 			$class_name = str_replace( '-', ' ', $module );
 			$class_name = str_replace( ' ', '', ucwords( $class_name ) );
-			$class_name = __NAMESPACE__ . '\\Modules\\' . $class_name . '\Module';
+			$class_name = __NAMESPACE__ .'\\Modules\\'. $class_name .'\Module';
 			
 			$class_name::instance();
 		}
@@ -31,7 +31,7 @@ final class Manager {
 		foreach ( $theme_builder_modules as $module ) {
 			$class_name = str_replace( '-', ' ', $module );
 			$class_name = str_replace( ' ', '', ucwords( $class_name ) );
-			$class_name = __NAMESPACE__ . '\\Modules\\ThemeBuilder\\' . $class_name . '\Module';
+			$class_name = __NAMESPACE__ .'\\Modules\\ThemeBuilder\\'. $class_name .'\Module';
 			
 			$class_name::instance();
 		}

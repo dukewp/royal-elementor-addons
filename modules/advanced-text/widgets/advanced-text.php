@@ -801,7 +801,7 @@ class Advanced_Text extends Widget_Base {
 		$anim_duration = implode( ',', $anim_duration );
 		
 		
-		$this->add_render_attribute( 'wpr-anim-text', 'class', 'wpr-anim-text wpr-anim-text-type-' . $settings['text_type'] );
+		$this->add_render_attribute( 'wpr-anim-text', 'class', 'wpr-anim-text wpr-anim-text-type-'. $settings['text_type'] );
 
 		$is_anim_letters = in_array( $settings['text_type'], [ 'typing', 'rotate-2', 'rotate-3', 'scale' ] );
 

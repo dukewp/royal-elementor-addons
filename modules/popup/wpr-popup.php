@@ -30,7 +30,7 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
 			return '.wpr-template-popup';
 		} else {
-			return '#wpr-popup-id-' . $this->get_main_id();
+			return '#wpr-popup-id-'. $this->get_main_id();
 		}
 	}
 

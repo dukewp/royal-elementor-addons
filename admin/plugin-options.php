@@ -327,7 +327,7 @@ function wpr_addons_settings_page() {
 
             echo '<div class="wpr-element">';
                 echo '<div class="wpr-element-info">';
-                    echo '<h3>' . $option_title . '</h3>';
+                    echo '<h3>'. $option_title .'</h3>';
                     echo '<input type="checkbox" name="'. $option_name .'" id="'. $option_name .'" '. checked( get_option(''. $option_name .'', 'on'), 'on', false ) .'>';
                     echo '<label for="'. $option_name .'"></label>';
 

@@ -2427,7 +2427,7 @@ class Wpr_Post_Comments extends Widget_Base {
 				$defaults['title_reply_after'] = '</h3>';
 
 				// Text Field
-				$defaults['comment_field']  = '<div class="wpr-comment-form-text">' . $text_label;
+				$defaults['comment_field']  = '<div class="wpr-comment-form-text">'. $text_label;
 				$defaults['comment_field'] .= '<textarea name="comment" placeholder="'. $text_ph .'" cols="45" rows="8" maxlength="65525"></textarea>';
 				$defaults['comment_field'] .= '</div>';
 

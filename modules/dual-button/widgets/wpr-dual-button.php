@@ -1067,7 +1067,7 @@ class Wpr_Dual_Button extends Widget_Base {
 		
 		<?php 	
 		
-		$this->add_render_attribute( 'button_a_attribute', 'class', 'wpr-button-a wpr-button-effect '.$settings['button_a_hover_animation'] );
+		$this->add_render_attribute( 'button_a_attribute', 'class', 'wpr-button-a wpr-button-effect '. $settings['button_a_hover_animation'] );
 			
 		if ( '' !== $settings['button_a_hover_animation_text'] ) {
 			$this->add_render_attribute( 'button_a_attribute', 'data-text', $settings['button_a_hover_animation_text'] );
@@ -1120,7 +1120,7 @@ class Wpr_Dual_Button extends Widget_Base {
 			
 		<?php 	
 		
-		$this->add_render_attribute( 'button_b_attribute', 'class', 'wpr-button-b wpr-button-effect '.$settings['button_b_hover_animation'] );
+		$this->add_render_attribute( 'button_b_attribute', 'class', 'wpr-button-b wpr-button-effect '. $settings['button_b_hover_animation'] );
 			
 		if ( '' !== $settings['button_b_hover_animation_text'] ) {
 			$this->add_render_attribute( 'button_b_attribute', 'data-text', $settings['button_b_hover_animation_text'] );

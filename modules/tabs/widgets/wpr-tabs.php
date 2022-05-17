@@ -505,12 +505,12 @@ class Wpr_Tabs extends Widget_Base {
 					'size' => 5,
 				],
 				'selectors' => [
-					'{{WRAPPER}}.wpr-tabs-icon-position-left '. $css_selector['control_list']. ' ' .$css_selector['control_icon'] => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-tabs-icon-position-right '. $css_selector['control_list']. ' ' .$css_selector['control_icon'] => 'margin-left: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-tabs-icon-position-center '. $css_selector['control_list']. ' ' .$css_selector['control_icon'] => 'margin-bottom: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-tabs-icon-position-left '. $css_selector['control_list']. ' ' .$css_selector['control_image'] => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-tabs-icon-position-right '. $css_selector['control_list']. ' ' .$css_selector['control_image'] => 'margin-left: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-tabs-icon-position-center '. $css_selector['control_list']. ' ' .$css_selector['control_image'] => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-tabs-icon-position-left '. $css_selector['control_list']. ' '. $css_selector['control_icon'] => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-tabs-icon-position-right '. $css_selector['control_list']. ' '. $css_selector['control_icon'] => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-tabs-icon-position-center '. $css_selector['control_list']. ' '. $css_selector['control_icon'] => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-tabs-icon-position-left '. $css_selector['control_list']. ' '. $css_selector['control_image'] => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-tabs-icon-position-right '. $css_selector['control_list']. ' '. $css_selector['control_image'] => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-tabs-icon-position-center '. $css_selector['control_list']. ' '. $css_selector['control_image'] => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -579,7 +579,7 @@ class Wpr_Tabs extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#7a7a7a',
 				'selectors' => [
-					'{{WRAPPER}} '. $css_selector['control_list']. ' ' .$css_selector['control_icon'] => 'color: {{VALUE}}',
+					'{{WRAPPER}} '. $css_selector['control_list'] .' '. $css_selector['control_icon'] => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -1489,7 +1489,7 @@ class Wpr_Tabs extends Widget_Base {
 				}
 
 				$this->add_render_attribute( $tab_setting_key, [
-					'id' => 'wpr-tab-' . $id_int . $tab_count,
+					'id' => 'wpr-tab-'. $id_int . $tab_count,
 					'class' => [ 'wpr-tab', 'elementor-repeater-item-'. $item['_id'] ],
 					'data-tab' => $tab_count,
 				] );
@@ -1524,7 +1524,7 @@ class Wpr_Tabs extends Widget_Base {
 
 				$tab_content_setting_key = $this->get_repeater_setting_key( 'tab_content', 'tabs', $index );
 				$this->add_render_attribute( $tab_content_setting_key, [
-					'id' => 'wpr-tab-content-' . $id_int . $tab_count,
+					'id' => 'wpr-tab-content-'. $id_int . $tab_count,
 					'class' => [ 'wpr-tab-content', 'elementor-repeater-item-'. $item['_id'] ],
 					'data-tab' => $tab_count,
 				] );

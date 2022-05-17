@@ -601,7 +601,7 @@ class Wpr_Logo extends Widget_Base {
 	// Image hover animation
 	$this->add_render_attribute( 'image_attr', 'class', 'wpr-logo-image' );
 	if ( $settings['hv_animation'] ) {
-		$this->add_render_attribute( 'image_attr', 'class', 'elementor-animation-' . $settings['hv_animation'] );
+		$this->add_render_attribute( 'image_attr', 'class', 'elementor-animation-'. $settings['hv_animation'] );
 	}
 
 	// Logo URL

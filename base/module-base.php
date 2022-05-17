@@ -75,7 +75,7 @@ abstract class Module_Base {
 		$widget_manager = \Elementor\Plugin::instance()->widgets_manager;
 
 		foreach ( $this->get_widgets() as $widget ) {
-			$class_name = $this->reflection->getNamespaceName() . '\Widgets\\' . $widget;
+			$class_name = $this->reflection->getNamespaceName() .'\Widgets\\'. $widget;
 			$widget_manager->register_widget_type( new $class_name() );
 		}
 	}

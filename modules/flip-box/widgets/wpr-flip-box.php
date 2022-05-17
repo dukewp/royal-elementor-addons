@@ -1925,7 +1925,7 @@ class Wpr_Flip_Box extends Widget_Base {
 						<h3 class="wpr-flip-box-title">
 							<?php
 							if ( 'title' === $settings['back_link_type'] || 'btn-title' === $settings['back_link_type']  ) {
-								echo '<a '.$this->get_render_attribute_string( 'link_attribute' ).'>';
+								echo '<a '. $this->get_render_attribute_string( 'link_attribute' ).'>';
 							}
 
 							echo esc_html($settings['back_title']);

@@ -1640,7 +1640,7 @@ class Wpr_Nav_Menu extends Widget_Base {
 			'echo' => false,
 			'menu' => $settings['menu_select'],
 			'menu_class' => 'wpr-nav-menu',
-			'menu_id' => 'menu-' . $this->get_nav_menu_index() . '-' . $this->get_id(),
+			'menu_id' => 'menu-'. $this->get_nav_menu_index() .'-'. $this->get_id(),
 			'container' => '',
 			'fallback_cb' => '__return_empty_string',
 		];
@@ -1694,7 +1694,7 @@ class Wpr_Nav_Menu extends Widget_Base {
 		$menu_html = wp_nav_menu( $args );
 
 		// Generate Mobile Menu HTML
-		$args['menu_id'] 	= 'mobile-menu-' . $this->get_nav_menu_index() . '-' . $this->get_id();
+		$args['menu_id'] 	= 'mobile-menu-'. $this->get_nav_menu_index() .'-'. $this->get_id();
 		$args['menu_class'] = 'wpr-mobile-nav-menu';
 		$moible_menu_html 	= wp_nav_menu( $args );
 

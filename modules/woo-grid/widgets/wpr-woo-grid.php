@@ -7232,7 +7232,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		// Get Button Class
 		$button_class = implode( ' ', array_filter( [
-			'product_type_' . $product->get_type(),
+			'product_type_'. $product->get_type(),
 			$product->is_purchasable() && $product->is_in_stock() ? 'add_to_cart_button' : '',
 			$product->supports( 'ajax_add_to_cart' ) ? 'ajax_add_to_cart' : '',
 		] ) );

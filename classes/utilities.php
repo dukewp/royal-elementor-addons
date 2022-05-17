@@ -350,7 +350,7 @@ class Utilities {
 			$network_title = esc_html__( 'LinkedIn', 'wpr-addons' );
 		} elseif ( 'pinterest-p' === $args['network'] ) {
 			// $sharing_url = 'https://www.pinterest.com/pin/find/?url='. $args['url'];
-			$sharing_url = 'https://www.pinterest.com/pin/create/button/?url=' . $args['url'] . '&media=' . $args['image'];
+			$sharing_url = 'https://www.pinterest.com/pin/create/button/?url='. $args['url'] .'&media='. $args['image'];
 			$network_title = esc_html__( 'Pinterest', 'wpr-addons' );
 		} elseif ( 'reddit' === $args['network'] ) {
 			$sharing_url = 'https://reddit.com/submit?url='. $args['url'] .'&title='. $args['title'];
@@ -628,7 +628,7 @@ class Utilities {
 			'method' => 'PUT',
 			'headers' => [
 				'Content-Type' => 'application/json',
-				'Authorization' => 'apikey ' . $api_key,
+				'Authorization' => 'apikey '. $api_key,
 			],
 			'body' => json_encode([
 				'email_address' => esc_html($fields[ 'wpr_mailchimp_email' ]),
@@ -675,7 +675,7 @@ class Utilities {
 			 
 			if ( ! empty( $body->lists ) ) {
 				foreach ( $body->lists as $list ) {
-					$mailchimp_list[$list->id] = $list->name .' (' . $list->stats->member_count . ')';
+					$mailchimp_list[$list->id] = $list->name .' ('. $list->stats->member_count .')';
 				}
 			}
 

@@ -1562,7 +1562,7 @@ class Wpr_Promo_Box extends Widget_Base {
 
 					echo '<'. $settings['content_title_tag'] .' '. $this->get_render_attribute_string( 'title_attribute' ) .'>';
 					if ( 'title' === $settings['content_link_type'] || 'btn-title' === $settings['content_link_type']  ) {
-						echo '<a '.$this->get_render_attribute_string( 'link_attribute' ).'>';
+						echo '<a '. $this->get_render_attribute_string( 'link_attribute' ).'>';
 					}
 
 					echo '<span>'. $settings['content_title'] .'</span>';

@@ -97,7 +97,7 @@ class WXR_Parser_Regex {
 
 				foreach ( $multiline_tags as $tag => $handler ) {
 					// Handle multi-line tags on a singular line.
-					if ( preg_match( '|<' . $tag . '>(.*?)</' . $tag . '>|is', $importline, $matches ) ) {
+					if ( preg_match( '|<'. $tag .'>(.*?)</'. $tag .'>|is', $importline, $matches ) ) {
 						$this->{$handler[0]}[] = call_user_func( $handler[1], $matches[1] );
 
 						continue;

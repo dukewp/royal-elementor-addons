@@ -141,7 +141,7 @@ function wpr_addons_fail_load() {
 			return;
 		}
 
-		$activation_url = wp_nonce_url( 'plugins.php?action=activate&amp;plugin=' . $plugin . '&amp;plugin_status=all&amp;paged=1&amp;s', 'activate-plugin_' . $plugin );
+		$activation_url = wp_nonce_url( 'plugins.php?action=activate&amp;plugin='. $plugin .'&amp;plugin_status=all&amp;paged=1&amp;s', 'activate-plugin_'. $plugin );
 
 		$message = '<p>' . esc_html__( 'Royal Elementor Addons is not working because you need to activate the Elementor plugin.', 'wpr-addons' ) . '</p>';
 		$message .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', $activation_url, esc_html__( 'Activate Elementor Now', 'wpr-addons' ) ) . '</p>';
@@ -156,7 +156,7 @@ function wpr_addons_fail_load() {
 		$message .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', $install_url, esc_html__( 'Install Elementor Now', 'wpr-addons' ) ) . '</p>';
 	}
 
-	echo '<div class="error"><p>' . $message . '</p></div>';
+	echo '<div class="error"><p>'. $message .'</p></div>';
 }
 
 function wpr_addons_fail_load_out_of_date() {
@@ -166,11 +166,11 @@ function wpr_addons_fail_load_out_of_date() {
 
 	$file_path = 'elementor/elementor.php';
 
-	$upgrade_link = wp_nonce_url( self_admin_url( 'update.php?action=upgrade-plugin&plugin=' ) . $file_path, 'upgrade-plugin_' . $file_path );
+	$upgrade_link = wp_nonce_url( self_admin_url( 'update.php?action=upgrade-plugin&plugin=' ) . $file_path, 'upgrade-plugin_'. $file_path );
 	$message = '<p>' . esc_html__( 'Royal Elementor Addons is not working because you are using an old version of Elementor.', 'wpr-addons' ) . '</p>';
 	$message .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', $upgrade_link, esc_html__( 'Update Elementor Now', 'wpr-addons' ) ) . '</p>';
 
-	echo '<div class="error">' . $message . '</div>';
+	echo '<div class="error">'. $message .'</div>';
 }
 
 if ( ! function_exists( '_is_elementor_installed' ) ) {
