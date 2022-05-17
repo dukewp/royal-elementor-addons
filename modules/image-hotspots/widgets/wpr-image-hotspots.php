@@ -921,7 +921,7 @@ class Wpr_Image_Hotspots extends Widget_Base {
 
 					$hotspot_tag = 'div';
 
-					$this->add_render_attribute( 'hotspot_item_attribute'. $item_count, 'class', 'wpr-hotspot-item elementor-repeater-item-'.esc_attr( $item['_id'] ) );
+					$this->add_render_attribute( 'hotspot_item_attribute'. $item_count, 'class', 'wpr-hotspot-item elementor-repeater-item-'. esc_attr($item['_id'] ));
 
 					if ( 'none' !== $settings['hotspot_animation'] ) {
 						$this->add_render_attribute( 'hotspot_item_attribute'. $item_count, 'class', 'wpr-hotspot-anim-'. $settings['hotspot_animation'] );

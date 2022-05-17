@@ -192,12 +192,12 @@ function wpr_addons_settings_page() {
         $reff = '?ref=rea-plugin-backend-elements-widget-prev'. $data[2];
         $class = 'new' === $data[3] ? ' wpr-new-element' : '';
 
-        echo '<div class="wpr-element'. $class .'">';
+        echo '<div class="wpr-element'. esc_attr($class) .'">';
             echo '<div class="wpr-element-info">';
-                echo '<h3>'. $title .'</h3>';
-                echo '<input type="checkbox" name="wpr-element-'. $slug .'" id="wpr-element-'. $slug .'" '. checked( get_option('wpr-element-'. $slug, 'on'), 'on', false ) .'>';
-                echo '<label for="wpr-element-'. $slug .'"></label>';
-                echo ( '' !== $url && empty(get_option('wpr_wl_plugin_links')) ) ? '<a href="'. $url . $reff .'" target="_blank">'. esc_html('View Widget Demo', 'wpr-addons') .'</a>' : '';
+                echo '<h3>'. esc_html($title) .'</h3>';
+                echo '<input type="checkbox" name="wpr-element-'. esc_attr($slug) .'" id="wpr-element-'. esc_attr($slug) .'" '. checked( get_option('wpr-element-'. $slug, 'on'), 'on', false ) .'>';
+                echo '<label for="wpr-element-'. esc_attr($slug) .'"></label>';
+                echo ( '' !== $url && empty(get_option('wpr_wl_plugin_links')) ) ? '<a href="'. esc_url($url . $reff) .'" target="_blank">'. esc_html('View Widget Demo', 'wpr-addons') .'</a>' : '';
             echo '</div>';
         echo '</div>';
     }
@@ -327,9 +327,9 @@ function wpr_addons_settings_page() {
 
             echo '<div class="wpr-element">';
                 echo '<div class="wpr-element-info">';
-                    echo '<h3>'. $option_title .'</h3>';
-                    echo '<input type="checkbox" name="'. $option_name .'" id="'. $option_name .'" '. checked( get_option(''. $option_name .'', 'on'), 'on', false ) .'>';
-                    echo '<label for="'. $option_name .'"></label>';
+                    echo '<h3>'. esc_html($option_title) .'</h3>';
+                    echo '<input type="checkbox" name="'. esc_attr($option_name) .'" id="'. esc_attr($option_name) .'" '. checked( get_option(''. $option_name .'', 'on'), 'on', false ) .'>';
+                    echo '<label for="'. esc_attr($option_name) .'"></label>';
 
                     if ( 'wpr-parallax-background' === $option_name ) {
                         echo '<br><span>Tip: Edit any Section > Navigate to Style tab</span>';

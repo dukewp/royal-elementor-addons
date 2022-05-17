@@ -133,7 +133,7 @@ class WPR_Templates_Modal_Popups {
 		}
 
 		if ( ! self::$elementor_instance->preview->is_preview_mode() ) {
-	    	echo '<div id="wpr-popup-id-'. esc_attr($template_id) .'" class="wpr-template-popup" '. $template_settings_attr .'>';
+	    	echo '<div id="wpr-popup-id-'. esc_attr($template_id) .'" class="wpr-template-popup" '. $template_settings_attr .'>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	    		echo '<div class="wpr-template-popup-inner">';
 
 		    		// Popup Overlay & Close Button

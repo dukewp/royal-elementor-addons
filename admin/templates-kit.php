@@ -88,13 +88,13 @@ function wpr_addons_templates_kit_page() {
 
             // Loop
             foreach ($sorted_kits as $kit_id => $data) {
-                echo '<div class="grid-item" data-kit-id="'. $kit_id .'" data-tags="'. $data['tags'] .'" data-plugins="'. esc_attr($data['plugins']) .'" data-pages="'. $data['pages'] .'" data-price="'. $data['price'] .'">';
+                echo '<div class="grid-item" data-kit-id="'. esc_attr($kit_id) .'" data-tags="'. esc_attr($data['tags']) .'" data-plugins="'. esc_attr($data['plugins']) .'" data-pages="'. esc_attr($data['pages']) .'" data-price="'. esc_attr($data['price']) .'">';
                     echo '<div class="image-wrap">';
-                        echo '<img src="https://royal-elementor-addons.com/library/templates-kit/'. $kit_id .'/home.jpg">';
+                        echo '<img src="'. esc_url('https://royal-elementor-addons.com/library/templates-kit/'. $kit_id .'/home.jpg') .'">';
                         echo '<div class="image-overlay"><span class="dashicons dashicons-search"></span></div>';
                     echo '</div>';
                     echo '<footer>';
-                        echo '<h3>'. $data['name'] .'</h3>';
+                        echo '<h3>'. esc_html($data['name']) .'</h3>';
                         echo esc_html($data['theme-builder']) ? '<span>'. esc_html__( 'Theme Builder', 'wpr-addons' ) .'</span>' : '';
                     echo '</footer>';
                 echo '</div>';
@@ -115,7 +115,8 @@ function wpr_addons_templates_kit_page() {
                     echo '<button class="import-kit button">'. __('Import Templates Kit', 'wpr-addons') .' <span class="dashicons dashicons-download"></span></button>';
                     echo '<a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-templates-upgrade-pro#purchasepro" class="get-access button" target="_blank">'. __('Get Access', 'wpr-addons') .' <span class="dashicons dashicons-external"></span></a>';
                 ?>
-                <button class="import-template button"><?php _e('Import <strong></strong> Template', 'wpr-addons'); ?></button>
+                <button class="import-template button"><?php printf( esc_html__( 'Import %s Template', 'wpr-addons' ), '<strong></strong>' ); ?></button>
+                
             </div>
         </footer>
     </div>
@@ -124,12 +125,12 @@ function wpr_addons_templates_kit_page() {
         <div class="overlay"></div>
         <div class="wpr-import-kit-popup">
             <header>
-                <h3><?php _e('Template Kit is being imported', 'wpr-addons'); ?><span>.</span></h3>
+                <h3><?php esc_html_e('Template Kit is being imported', 'wpr-addons'); ?><span>.</span></h3>
                 <span class="dashicons dashicons-no-alt close-btn"></span>
             </header>
             <div class="content">
-                <p><?php _e('The import process can take a few seconds depending on the size of the kit you are importing and speed of the connection.', 'wpr-addons'); ?></p>
-                <p><?php _e('Please do NOT close this browser window until import is completed.', 'wpr-addons'); ?></p>
+                <p><?php esc_html_e('The import process can take a few seconds depending on the size of the kit you are importing and speed of the connection.', 'wpr-addons'); ?></p>
+                <p><?php esc_html_e('Please do NOT close this browser window until import is completed.', 'wpr-addons'); ?></p>
 
                 <div class="progress-wrap">
                     <div class="progress-bar"></div>
@@ -140,10 +141,10 @@ function wpr_addons_templates_kit_page() {
     </div>
 
     <div class="wpr-templates-kit-not-found">
-        <img src="<?php echo WPR_ADDONS_ASSETS_URL .'img/not-found.png'; ?>">
-        <h1><?php _e('No Search Results Found.', 'wpr-addons'); ?></h1>
-        <p><?php _e('Cant find a Templates Kit you are looking for?', 'wpr-addons'); ?></p>
-        <a href="https://royal-elementor-addons.com/library/request-new-kit-red.html" target="_blank"><?php _e('Request Templates Kit.', 'wpr-addons'); ?></a>
+        <img src="<?php echo esc_url(WPR_ADDONS_ASSETS_URL .'img/not-found.png'); ?>">
+        <h1><?php esc_html_e('No Search Results Found.', 'wpr-addons'); ?></h1>
+        <p><?php esc_html_e('Cant find a Templates Kit you are looking for?', 'wpr-addons'); ?></p>
+        <a href="https://royal-elementor-addons.com/library/request-new-kit-red.html" target="_blank"><?php esc_html_e('Request Templates Kit.', 'wpr-addons'); ?></a>
     </div>
 
 </div>
@@ -262,7 +263,7 @@ function wpr_import_templates_kit() {
         unlink( $local_file_path );
 
         // Send to JS
-        echo serialize( $wp_import );
+        echo esc_html(serialize( $wp_import ));
     }
 
 }
@@ -368,7 +369,7 @@ function wpr_fix_elementor_images() {
             // Replace Demo with Current
             $site_url = get_site_url();
             $site_url = str_replace( '/', '\/', $site_url );
-            $demo_site_url = 'https://demosites.royal-elementor-addons.com/' . get_option('wpr-import-kit-id');
+            $demo_site_url = 'https://demosites.royal-elementor-addons.com/'. get_option('wpr-import-kit-id');
             $demo_site_url = str_replace( '/', '\/', $demo_site_url );
 
             // Elementor Data

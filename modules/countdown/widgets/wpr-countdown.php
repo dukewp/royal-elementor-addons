@@ -1048,7 +1048,7 @@ class Wpr_Countdown extends Widget_Base {
 		$settings = $this->get_settings();
 		
 		// Render
-		echo '<div class="'. esc_attr($this->get_countdown_class( $settings )) .'"'. $this->get_countdown_attributes( $settings ) .'>';
+		echo '<div class="'. esc_attr($this->get_countdown_class( $settings )) .'"'. $this->get_countdown_attributes( $settings ) .'>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			$this->render_countdown_items( $settings );
 		echo '</div>';
 

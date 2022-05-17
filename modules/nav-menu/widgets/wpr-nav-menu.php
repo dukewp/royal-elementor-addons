@@ -1663,7 +1663,7 @@ class Wpr_Nav_Menu extends Widget_Base {
 					}
 
 					// Add Sub Menu Icon
-					$output  ='<a href="'. esc_url($item->url) .'" class="'. esc_attr($item_class) .'">'. $item->title;
+					$output  ='<a href="'. esc_url($item->url) .'" class="'. esc_attr($item_class) .'">'. esc_html($item->title);
 					if ( $depth > 0 ) {
 						if ( 'inline' === $settings['menu_items_submenu_position'] ) {
 							$output .='<i class="wpr-sub-icon fas" aria-hidden="true"></i>';
@@ -1713,7 +1713,7 @@ class Wpr_Nav_Menu extends Widget_Base {
 		}
 
 		// Main Menu
-		echo '<nav class="wpr-nav-menu-container wpr-nav-menu-'. $settings['menu_layout'] .'" data-trigger="'. esc_attr($settings['menu_items_submenu_trigger']) .'">';
+		echo '<nav class="wpr-nav-menu-container wpr-nav-menu-'. esc_attr($settings['menu_layout']) .'" data-trigger="'. esc_attr($settings['menu_items_submenu_trigger']) .'">';
 			echo ''. $menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '</nav>';
 
@@ -1728,8 +1728,8 @@ class Wpr_Nav_Menu extends Widget_Base {
 						echo '<span class="wpr-mobile-toggle-line"></span>';
 						echo '<span class="wpr-mobile-toggle-line"></span>';
 					} else {
-						echo '<span class="wpr-mobile-toggle-text">'. $settings['toggle_btn_txt_1'] .'</span>';
-						echo '<span class="wpr-mobile-toggle-text">'. $settings['toggle_btn_txt_2'] .'</span>';
+						echo '<span class="wpr-mobile-toggle-text">'. esc_html($settings['toggle_btn_txt_1']) .'</span>';
+						echo '<span class="wpr-mobile-toggle-text">'. esc_html($settings['toggle_btn_txt_2']) .'</span>';
 					}
 				echo '</div>';
 			echo '</div>';

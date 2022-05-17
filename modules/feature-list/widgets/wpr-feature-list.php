@@ -883,17 +883,17 @@ class Wpr_Feature_List extends Widget_Base {
 										\Elementor\Icons_Manager::render_icon( $item['list_icon'], [ 'aria-hidden' => 'true' ] );
 									} else {
 										$src = \Elementor\Group_Control_Image_Size::get_attachment_image_src( $item['list_image']['id'], 'thumbnail', $settings );
-										echo '<img src="'. $src .'">';
+										echo '<img src="'. esc_url($src) .'">';
 									}
 								echo '</div>';
                             echo '</div>';
                             echo '<div class="wpr-feature-list-content-wrap">';
 								if ( empty($item['list_title_url']) ) {
-									echo '<'. $settings['feature_list_title_tag'] .' class="wpr-feature-list-title">'. $item['list_title'] .'</'. $settings['feature_list_title_tag'] .'>';
+									echo '<'. esc_attr($settings['feature_list_title_tag']) .' class="wpr-feature-list-title">'. esc_html($item['list_title']) .'</'. esc_attr($settings['feature_list_title_tag']) .'>';
 								} else {
-									echo '<'. $settings['feature_list_title_tag'] .' class="wpr-feature-list-title"><a class="wpr-feature-list-url" '. $this->get_render_attribute_string( 'list_title_url'. $count_items ) .'>'. $item['list_title'] .'</a></'. $settings['feature_list_title_tag'] .'>';
+									echo '<'. esc_attr($settings['feature_list_title_tag']) .' class="wpr-feature-list-title"><a class="wpr-feature-list-url" '. $this->get_render_attribute_string( 'list_title_url'. $count_items ) .'>'. esc_html($item['list_title']) .'</a></'. esc_attr($settings['feature_list_title_tag']) .'>';
 								}
-                                echo '<p class="wpr-feature-list-description">'. $item['list_content'] .'</p>';
+                                echo '<p class="wpr-feature-list-description">'. wp_kses_post($item['list_content']) .'</p>';
                             echo '</div>';
                         echo '</li>';
 						$count_items++;

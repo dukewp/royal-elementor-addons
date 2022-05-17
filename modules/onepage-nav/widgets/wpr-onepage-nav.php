@@ -711,9 +711,9 @@ class Wpr_OnepageNav extends Widget_Base {
 		
 		// Nav Items
 		foreach ( $settings['nav_items'] as $item ) {
-			echo '<div class="wpr-onepage-nav-item elementor-repeater-item-'. $item['_id'] .'">';
-				echo '<a href="#'. $item['nav_item_id'] .'">';
-					echo ( wpr_fs()->can_use_premium_code() && 'yes' === $settings['nav_item_show_tooltip'] ) ? '<span class="wpr-tooltip">'. $item['nav_item_tooltip'] .'</span>' : '';
+			echo '<div class="wpr-onepage-nav-item elementor-repeater-item-'. esc_attr($item['_id']) .'">';
+				echo '<a href="#'. esc_attr($item['nav_item_id']) .'">';
+					echo ( wpr_fs()->can_use_premium_code() && 'yes' === $settings['nav_item_show_tooltip'] ) ? '<span class="wpr-tooltip">'. esc_html($item['nav_item_tooltip']) .'</span>' : '';
 					\Elementor\Icons_Manager::render_icon( $item['nav_item_icon'] );
 				echo '</a>';
 			echo '</div>';

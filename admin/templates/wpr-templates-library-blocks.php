@@ -69,7 +69,7 @@ class WPR_Templates_Library_Blocks {
 							
 							foreach ($modules as $title => $slug) {
 								if ( ! in_array($slug[0], $exclude_widgets) ) {
-									echo '<li data-filter="'. $slug[0] .'">'. $title .'</li>';
+									echo '<li data-filter="'. esc_attr($slug[0]) .'">'. esc_html($title) .'</li>';
 								}
 							}
 
@@ -122,7 +122,7 @@ class WPR_Templates_Library_Blocks {
 				<div class="wpr-tplib-template-wrap<?php echo esc_attr($template_class); ?>">
 					<div class="wpr-tplib-template" data-slug="<?php echo esc_attr($template_slug); ?>" data-filter="<?php echo esc_attr($module_slug); ?>" data-sub-filter="<?php echo esc_attr($template_sub); ?>" data-preview-type="<?php echo esc_attr($preview_type); ?>" data-preview-url="<?php echo esc_attr($preview_url); ?>">
 						<div class="wpr-tplib-template-media">
-							<img src="<?php echo 'https://royal-elementor-addons.com/library/premade-styles/'. $module_slug .'/'.  $template_slug_for_image .'.jpg'; ?>">
+							<img src="<?php echo esc_url('https://royal-elementor-addons.com/library/premade-styles/'. $module_slug .'/'. $template_slug_for_image .'.jpg'); ?>">
 							<div class="wpr-tplib-template-media-overlay">
 								<i class="eicon-eye"></i>
 							</div>

@@ -96,7 +96,7 @@ class WPR_Templates_Loop {
 
 				// List
 				echo '<li>';
-					echo '<h3 class="wpr-title">'. $user_template->post_title .'</h3>';
+					echo '<h3 class="wpr-title">'. esc_html($user_template->post_title) .'</h3>';
 					
 					echo '<span class="wpr-action-buttons">';
 						echo '<a href="'. esc_url($edit_url) .'" class="wpr-edit-template button button-primary">'. esc_html__( 'Edit', 'wpr-addons' ) .'</a>';

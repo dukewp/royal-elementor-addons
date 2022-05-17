@@ -168,12 +168,12 @@ class WPR_Post_Likes {
 		}
 
 		// Button Attributes
-		$attributes  = 'href="'. admin_url( 'admin-ajax.php?action=wpr_likes_init&post_id='. $post_id .'&nonce='. $nonce ) .'"';
-		$attributes .= ' class="wpr-post-like-button'. $liked_class . $default_text_class .'"';
+		$attributes  = 'href="'. esc_url(admin_url( 'admin-ajax.php?action=wpr_likes_init&post_id='. $post_id .'&nonce='. $nonce )) .'"';
+		$attributes .= ' class="wpr-post-like-button'. esc_attr($liked_class . $default_text_class) .'"';
 		$attributes .= ' title="'. esc_attr($title) .'"';
 		$attributes .= ' data-nonce="'. esc_attr($nonce) .'"';
 		$attributes .= ' data-post-id="'. esc_attr($post_id) .'"';
-		$attributes .= ' data-ajax="'. admin_url( 'admin-ajax.php' ) .'"';
+		$attributes .= ' data-ajax="'. esc_url(admin_url( 'admin-ajax.php' )) .'"';
 		$attributes .= ' data-icon="'. esc_attr($icon_class) .'"';
 		$attributes .= ' data-text="'. esc_attr($button_text) .'"';
 
@@ -183,7 +183,7 @@ class WPR_Post_Likes {
 		$output .= $this->get_like_count( $like_count, $button_text );
 		$output .= '</a>';
 
-		return $output;
+		return $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -314,7 +314,7 @@ class WPR_Post_Likes {
 			$number = $like_text;
 		}
 
-		return '<span class="wpr-post-like-count">'. $number .'</span>';
+		return '<span class="wpr-post-like-count">'. esc_html($number) .'</span>';
 	}
 }
 

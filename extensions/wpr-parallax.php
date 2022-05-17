@@ -364,12 +364,12 @@ class Wpr_Parallax_Scroll {
             if ( $settings['wpr_enable_parallax_hover'] == 'yes' ) {
                  if ( $settings['hover_parallax'] ) {
 
-                    echo '<div class="wpr-parallax-multi-layer" scalar-speed="'. $settings['scalar_speed']['size'] .'" direction="'. $settings['invert_direction'] .'" style="overflow: hidden;">';
+                    echo '<div class="wpr-parallax-multi-layer" scalar-speed="'. esc_attr($settings['scalar_speed']['size']) .'" direction="'. esc_attr($settings['invert_direction']) .'" style="overflow: hidden;">';
 
                     foreach (  $settings['hover_parallax'] as $key => $item ) {
                         if ( $key < 2 || wpr_fs()->can_use_premium_code() ) {
-                            echo '<div data-depth="'. $item['data_depth'] .'" style-top="'. $item['layer_position_vr']['size'] .'%" style-left="'. $item['layer_position_hr']['size'] .'%" class="wpr-parallax-ml-children elementor-repeater-item-'. $item['_id'] .'">';
-                                echo '<img src="'. $item['repeater_bg_image']['url'] .'">';
+                            echo '<div data-depth="'. esc_attr($item['data_depth']) .'" style-top="'. esc_attr($item['layer_position_vr']['size']) .'%" style-left="'. esc_attr($item['layer_position_hr']['size']) .'%" class="wpr-parallax-ml-children elementor-repeater-item-'. esc_attr($item['_id']) .'">';
+                                echo '<img src="'. esc_url($item['repeater_bg_image']['url']) .'">';
                             echo '</div>';
                         }
                     }

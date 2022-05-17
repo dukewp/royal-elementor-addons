@@ -7874,14 +7874,14 @@ class Wpr_Grid extends Widget_Base {
 
 		if ( has_post_thumbnail() ) {
 			echo '<div class="wpr-grid-image-wrap" data-src="'. esc_url( $src ) .'">';
-				echo '<img src="'. esc_url( $src ) .'" alt="'. esc_attr( $alt ) .'" class="wpr-anim-timing-'. $settings[ 'image_effects_animation_timing'] .'">';
+				echo '<img src="'. esc_url( $src ) .'" alt="'. esc_attr( $alt ) .'" class="wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
 			echo '</div>';
 		}
 	}
 
 	// Render Media Overlay
 	public function render_media_overlay( $settings ) {
-		echo '<div class="wpr-grid-media-hover-bg '. $this->get_animation_class( $settings, 'overlay' ) .'" data-url="'. esc_url( get_the_permalink( get_the_ID() ) ) .'">';
+		echo '<div class="wpr-grid-media-hover-bg '. esc_attr($this->get_animation_class( $settings, 'overlay' )) .'" data-url="'. esc_url( get_the_permalink( get_the_ID() ) ) .'">';
 
 			if ( wpr_fs()->can_use_premium_code() ) {
 				if ( '' !== $settings['overlay_image']['url'] ) {
@@ -7900,13 +7900,13 @@ class Wpr_Grid extends Widget_Base {
 		$class .= ' wpr-pointer-'. $title_pointer;
 		$class .= ' wpr-pointer-line-fx wpr-pointer-fx-'. $title_pointer_animation;
 
-		echo '<'. $settings['element_title_tag'] .' class="'. esc_attr($class) .'">';
+		echo '<'. esc_attr($settings['element_title_tag']) .' class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
 				echo '<a href="'. esc_url( get_the_permalink() ) .'" class="wpr-pointer-item">';
 					echo wp_trim_words( get_the_title(), $settings['element_word_count'] );
 				echo '</a>';
 			echo '</div>';
-		echo '</'. $settings['element_title_tag'] .'>';
+		echo '</'. esc_attr($settings['element_title_tag']) .'>';
 	}
 
 	// Render Post Content
@@ -8067,7 +8067,7 @@ class Wpr_Grid extends Widget_Base {
 						echo '<i class="wpr-grid-extra-icon-left '. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
 					}
 
-					echo '<span>'. $text .'</span>';
+					echo '<span>'. esc_html($text) .'</span>';
 
 					// Icon: After
 					if ( 'after' === $settings['element_extra_icon_pos'] ) {
@@ -8204,7 +8204,7 @@ class Wpr_Grid extends Widget_Base {
 
 	// Render Post Element Separator
 	public function render_post_element_separator( $settings, $class ) {
-		echo '<div class="'. esc_attr($class) .' '. $settings['element_separator_style'] .'">';
+		echo '<div class="'. esc_attr($class .' '. $settings['element_separator_style']) .'">';
 			echo '<div class="inner-block"><span></span></div>';
 		echo '</div>';
 	}
@@ -8228,7 +8228,7 @@ class Wpr_Grid extends Widget_Base {
 			$class .= ' wpr-pointer-line-fx wpr-pointer-fx-'. $tax2_pointer_animation;
 		}
 
-		echo '<div class="'. esc_attr($class) .' '. $settings['element_tax_style'] .'">';
+		echo '<div class="'. esc_attr($class .' '. $settings['element_tax_style']) .'">';
 			echo '<div class="inner-block">';
 				// Text: Before
 				if ( 'before' === $settings['element_extra_text_pos'] ) {
@@ -8243,7 +8243,7 @@ class Wpr_Grid extends Widget_Base {
 				foreach ( $terms as $term ) {
 					echo '<a href="'. esc_url(get_term_link( $term->term_id )) .'" class="wpr-pointer-item">'. esc_html( $term->name );
 						if ( ++$count !== count( $terms ) ) {
-							echo '<span class="tax-sep">'. $settings['element_tax_sep'] .'</span>';
+							echo '<span class="tax-sep">'. esc_html($settings['element_tax_sep']) .'</span>';
 						}
 					echo '</a>';
 				}
@@ -8382,7 +8382,7 @@ class Wpr_Grid extends Widget_Base {
 					}
 				}
 			} else {
-				echo '<div class="wpr-grid-item-'. $location .'-content elementor-clearfix">';
+				echo '<div class="wpr-grid-item-'. esc_attr($location) .'-content elementor-clearfix">';
 					foreach ( $locations[$location] as $data ) {
 
 						// Get Class
@@ -8436,12 +8436,12 @@ class Wpr_Grid extends Widget_Base {
 		$pointer_class .= ' wpr-pointer-line-fx wpr-pointer-fx-'. $settings['filters_pointer_animation'];
 
 		// Filters List
-		echo '<ul class="wpr-grid-filters elementor-clearfix wpr-grid-filters-sep-'. $settings['filters_separator_align'] .'">';
+		echo '<ul class="wpr-grid-filters elementor-clearfix wpr-grid-filters-sep-'. esc_attr($settings['filters_separator_align']) .'">';
 
 		// All Filter
 		if ( 'yes' === $settings['filters_all'] && 'yes' !== $settings['filters_linkable'] ) {
 			echo '<li class="'. esc_attr($pointer_class) .'">';
-			echo '<span data-filter="*" class="wpr-active-filter wpr-pointer-item">'. $left_icon . $settings['filters_all_text'] . $right_icon . $post_count .'</span>'. $right_separator;
+			echo '<span data-filter="*" class="wpr-active-filter wpr-pointer-item">'. $left_icon . esc_html($settings['filters_all_text']) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo '</li>';
 		}
 
@@ -8458,9 +8458,9 @@ class Wpr_Grid extends Widget_Base {
 					$children = get_term_children( $filter->term_id, $taxonomy );
 					$data_role = ! empty($children) ? ' data-role="parent"' : '';
 
-					echo '<li'. $data_role .' class="'. esc_attr($pointer_class) .'">';
+					echo '<li'. $data_role .' class="'. esc_attr($pointer_class) .'">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						if ( 'yes' !== $settings['filters_linkable'] ) {
-							echo ''. $left_separator .'<span class="wpr-pointer-item" data-filter=".'. esc_url(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo ''. $left_separator .'<span class="wpr-pointer-item" data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						} else {
 							echo ''. $left_separator .'<a class="wpr-pointer-item" href="'. esc_url(get_term_link( $filter->term_id, $taxonomy )) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</a>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						}
@@ -8486,11 +8486,11 @@ class Wpr_Grid extends Widget_Base {
 					$data_role = ! empty($children) ? ' data-role="parent"' : '';
 					$hidden_class = $this->get_hidden_filter_class($filter->slug, $settings);
 
-					echo '<li'. $data_role .' class="'. esc_attr($pointer_class) . esc_attr($hidden_class) .'">';
+					echo '<li'. $data_role .' class="'. esc_attr($pointer_class) . esc_attr($hidden_class) .'">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						if ( 'yes' !== $settings['filters_linkable'] ) {
-							echo ''. $left_separator .'<span class="wpr-pointer-item" data-filter=".'. esc_url(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo ''. $left_separator .'<span class="wpr-pointer-item" data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						} else {
-							echo ''. $left_separator .'<a class="wpr-pointer-item" href="'. esc_url(get_term_link( $filter->term_id, $taxonomy )) .'" data-filter=".'. esc_url(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</a>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo ''. $left_separator .'<a class="wpr-pointer-item" href="'. esc_url(get_term_link( $filter->term_id, $taxonomy )) .'" data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</a>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						}
 					echo '</li>';
 
@@ -8508,10 +8508,10 @@ class Wpr_Grid extends Widget_Base {
 				$children = get_term_children( $parent_filter, $taxonomy );
 				$data_attr = 'post_tag' === $taxonomy ? 'tag-'. $parent->slug : $taxonomy .'-'. $parent->slug;
 
-				echo '<ul data-parent=".'. urldecode( $data_attr ) .'" class="wpr-sub-filters">';
+				echo '<ul data-parent=".'. esc_attr(urldecode( $data_attr )) .'" class="wpr-sub-filters">';
 
 				echo '<li data-role="back" class="'. esc_attr($pointer_class) .'">';
-					echo '<span class="wpr-back-filter" data-filter=".'. urldecode( $data_attr ) .'">';
+					echo '<span class="wpr-back-filter" data-filter=".'. esc_attr(urldecode( $data_attr )) .'">';
 						echo '<i class="fas fa-long-arrow-alt-left"></i>&nbsp;&nbsp;'. esc_html__( 'Back', 'wpr-addons' );
 					echo '</span>';
 				echo '</li>';
@@ -8521,7 +8521,7 @@ class Wpr_Grid extends Widget_Base {
 					$data_attr = 'post_tag' === $taxonomy ? 'tag-'. $sub_filter->slug : $taxonomy .'-'. $sub_filter->slug;
 
 					echo '<li data-role="sub" class="'. esc_attr($pointer_class) .'">';
-						echo ''. $left_separator .'<span class="wpr-pointer-item" data-filter=".'. esc_url(urldecode($data_attr)) .'">'. $left_icon . esc_html($sub_filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo ''. $left_separator .'<span class="wpr-pointer-item" data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($sub_filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo '</li>';
 				}
 
@@ -8569,7 +8569,7 @@ class Wpr_Grid extends Widget_Base {
 			$settings['pagination_type'] = 'pro-is' == $settings['pagination_type'] ? 'default' : $settings['pagination_type'];
 		}
 
-		echo '<div class="wpr-grid-pagination elementor-clearfix wpr-grid-pagination-'. $settings['pagination_type'] .'">';
+		echo '<div class="wpr-grid-pagination elementor-clearfix wpr-grid-pagination-'. esc_attr($settings['pagination_type']) .'">';
 
 		// Default
 		if ( 'default' === $settings['pagination_type'] ) {
@@ -8641,9 +8641,9 @@ class Wpr_Grid extends Widget_Base {
 			    for ( $i = 1; $i <= $pages; $i++ ) {
 			        if ( 1 !== $pages && ( ! ( $i >= $paged + $range + 1 || $i <= $paged - $range - 1 ) || $pages <= $showitems ) ) {
 						if ( $paged === $i ) {
-							echo '<span class="wpr-grid-current-page">'. $i .'</span>';
+							echo '<span class="wpr-grid-current-page">'. esc_html($i) .'</span>';
 						} else {
-							echo '<a href="'. esc_url(get_pagenum_link( $i, true )) .'">'. $i .'</a>';
+							echo '<a href="'. esc_url(get_pagenum_link( $i, true )) .'">'. esc_html($i) .'</a>';
 						}
 			        }
 			    }
@@ -8924,7 +8924,7 @@ class Wpr_Grid extends Widget_Base {
 			$this->get_elements_by_location( 'above', $settings, get_the_ID() );
 
 			// Media
-			echo '<div class="wpr-grid-media-wrap'. $this->get_image_effect_class( $settings ) .' " data-overlay-link="'. esc_attr( $settings['overlay_post_link'] ) .'">';
+			echo '<div class="wpr-grid-media-wrap'. esc_attr($this->get_image_effect_class( $settings )) .' " data-overlay-link="'. esc_attr( $settings['overlay_post_link'] ) .'">';
 				// Post Thumbnail
 				$this->render_post_thumbnail( $settings, get_the_ID() );
 
@@ -8957,8 +8957,8 @@ class Wpr_Grid extends Widget_Base {
 		if ( 'slider' === $settings['layout_select'] ) {
 			// Slider Navigation
 			echo '<div class="wpr-grid-slider-arrow-container">';
-				echo '<div class="wpr-grid-slider-prev-arrow wpr-grid-slider-arrow" id="wpr-grid-slider-prev-'. $this->get_id() .'">'. Utilities::get_wpr_icon( $settings['layout_slider_nav_icon'], '' ) .'</div>';
-				echo '<div class="wpr-grid-slider-next-arrow wpr-grid-slider-arrow" id="wpr-grid-slider-next-'. $this->get_id() .'">'. Utilities::get_wpr_icon( $settings['layout_slider_nav_icon'], '' ) .'</div>';
+				echo '<div class="wpr-grid-slider-prev-arrow wpr-grid-slider-arrow" id="wpr-grid-slider-prev-'. esc_attr($this->get_id()) .'">'. Utilities::get_wpr_icon( $settings['layout_slider_nav_icon'], '' ) .'</div>';
+				echo '<div class="wpr-grid-slider-next-arrow wpr-grid-slider-arrow" id="wpr-grid-slider-next-'. esc_attr($this->get_id()) .'">'. Utilities::get_wpr_icon( $settings['layout_slider_nav_icon'], '' ) .'</div>';
 			echo '</div>';
 
 			// Slider Dots
@@ -8972,7 +8972,7 @@ class Wpr_Grid extends Widget_Base {
 		else:
 
 			if ( 'dynamic' === $settings['query_selection'] ) {
-				echo '<h2>'. $settings['query_not_found_text'] .'</h2>';
+				echo '<h2>'. esc_html($settings['query_not_found_text']) .'</h2>';
 			}
 
 		// Loop: End

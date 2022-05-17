@@ -156,7 +156,7 @@ function wpr_addons_fail_load() {
 		$message .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', $install_url, esc_html__( 'Install Elementor Now', 'wpr-addons' ) ) . '</p>';
 	}
 
-	echo '<div class="error"><p>'. $message .'</p></div>';
+	echo '<div class="error"><p>'. wp_kses_post($message) .'</p></div>';
 }
 
 function wpr_addons_fail_load_out_of_date() {
@@ -170,7 +170,7 @@ function wpr_addons_fail_load_out_of_date() {
 	$message = '<p>' . esc_html__( 'Royal Elementor Addons is not working because you are using an old version of Elementor.', 'wpr-addons' ) . '</p>';
 	$message .= '<p>' . sprintf( '<a href="%s" class="button-primary">%s</a>', $upgrade_link, esc_html__( 'Update Elementor Now', 'wpr-addons' ) ) . '</p>';
 
-	echo '<div class="error">'. $message .'</div>';
+	echo '<div class="error">'. wp_kses_post($message) .'</div>';
 }
 
 if ( ! function_exists( '_is_elementor_installed' ) ) {

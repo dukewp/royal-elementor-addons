@@ -1266,7 +1266,7 @@ class Wpr_Content_Toggle extends Widget_Base {
 			
 			<div class="wpr-switcher-content" data-switcher="1">
 				<?php 
-				echo '<div class="wpr-switcher-content-inner wpr-anim-size-'. $settings['content_anim_size'] .' wpr-overlay-'. $settings['content_animation'] .'">';
+				echo '<div class="wpr-switcher-content-inner wpr-anim-size-'. esc_attr($settings['content_anim_size']) .' wpr-overlay-'. esc_attr($settings['content_animation']) .'">';
 
 					if ( 'template' === $settings['switcher_first_content_type'] ) {
 
@@ -1285,7 +1285,7 @@ class Wpr_Content_Toggle extends Widget_Base {
 
 			<div class="wpr-switcher-content" data-switcher="2">
 				<?php 
-				echo '<div class="wpr-switcher-content-inner wpr-anim-size-'. $settings['content_anim_size'] .' wpr-overlay-'. $settings['content_animation'] .'">';
+				echo '<div class="wpr-switcher-content-inner wpr-anim-size-'. esc_attr($settings['content_anim_size']) .' wpr-overlay-'. esc_attr($settings['content_animation']) .'">';
 
 					if ( 'template' === $settings['switcher_second_content_type'] ) {
 

@@ -1168,13 +1168,13 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				if ( Utils::get_placeholder_image_src() === $element['image']['url'] ) {
 					$flip_slide_image = '<img src='. Utils::get_placeholder_image_src() .' />';
 				} if (WPR_ADDONS_ASSETS_URL . 'img/logo-slider-450x450.png' === $element['image']['url']) {
-					$flip_slide_image = '<img src="'. $element['image']['url'] .'" />';
+					$flip_slide_image = '<img src="'. esc_url($element['image']['url']) .'" />';
 				} else {
 					$flip_slide_image = '<img src="'.  Group_Control_Image_Size::get_attachment_image_src( $element['image']['id'], 'flip_carousel_image_size', $settings ) .'" />';
 				}
 
 				if ( 'yes' === $settings['enable_figcaption'] ) {
-					$figcaption = '<figcaption class="flipcaption"><span style="width: 100%;">'. $element['slide_text'] .'</span></figcaption>';
+					$figcaption = '<figcaption class="flipcaption"><span style="width: 100%;">'. esc_html($element['slide_text']) .'</span></figcaption>';
 				} else {
 					$figcaption = '';
 				}

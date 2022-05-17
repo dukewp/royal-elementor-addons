@@ -517,18 +517,18 @@ class Wpr_Popup_Trigger extends Widget_Base {
 			$popup_show_delay = 10000000000000;
 		}
 
-		echo '<div class="wpr-popup-trigger-button" data-trigger="'. $settings['popup_trigger_type'] .'" data-show-delay="'. $popup_show_delay .'" data-redirect="'. $settings['popup_trigger_redirect'] .'" data-redirect-url="'. $settings['popup_trigger_redirect_url']['url'] .'">';
+		echo '<div class="wpr-popup-trigger-button" data-trigger="'. esc_attr($settings['popup_trigger_type']) .'" data-show-delay="'. esc_attr($popup_show_delay) .'" data-redirect="'. esc_attr($settings['popup_trigger_redirect']) .'" data-redirect-url="'. esc_url($settings['popup_trigger_redirect_url']['url']) .'">';
 
 			// Icon: Before
 			if ( 'before' === $settings['popup_trigger_extra_icon_pos'] && '' !== $settings['popup_trigger_extra_icon']['value'] ) {
-				echo '<span class="wpr-extra-icon-left">'. $icon_html .'</span>';
+				echo '<span class="wpr-extra-icon-left">'. $icon_html .'</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 
-			echo '<span>'. $settings['popup_trigger_text'] .'</span>';
+			echo '<span>'. esc_html($settings['popup_trigger_text']) .'</span>';
 
 			// Icon: After
 			if ( 'after' === $settings['popup_trigger_extra_icon_pos'] ) {
-				echo '<span class="wpr-extra-icon-right">'. $icon_html .'</span>';
+				echo '<span class="wpr-extra-icon-right">'. $icon_html .'</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 		echo '</div>';
 
