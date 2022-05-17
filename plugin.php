@@ -49,7 +49,7 @@ class Plugin {
 	 */
 	public function __clone() {
 		// Cloning instances of the class is forbidden
-		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'wpr-addons' ), '1.0' );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin huh?', 'wpr-addons' ), '1.0' );
 	}
 
 	/**
@@ -60,7 +60,7 @@ class Plugin {
 	 */
 	public function __wakeup() {
 		// Unserializing instances of the class is forbidden
-		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'wpr-addons' ), '1.0' );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin huh?', 'wpr-addons' ), '1.0' );
 	}
 
 	/**
@@ -554,48 +554,48 @@ class Plugin {
 	public function lightbox_styles() {
 	    echo '<style id="wpr_lightbox_styles">
 	            .lg-backdrop {
-	                background-color: '. get_option('wpr_lb_bg_color','rgba(0,0,0,0.6)') .' !important;
+	                background-color: '. esc_html(get_option('wpr_lb_bg_color','rgba(0,0,0,0.6)')) .' !important;
 	            }
 	            .lg-toolbar,
 	            .lg-dropdown {
-	                background-color: '. get_option('wpr_lb_toolbar_color','rgba(0,0,0,0.8)') .' !important;
+	                background-color: '. esc_html(get_option('wpr_lb_toolbar_color','rgba(0,0,0,0.8)')) .' !important;
 	            }
 				.lg-dropdown:after {
-					border-bottom-color: '. get_option('wpr_lb_toolbar_color','rgba(0,0,0,0.8)') .' !important;
+					border-bottom-color: '. esc_html(get_option('wpr_lb_toolbar_color','rgba(0,0,0,0.8)')) .' !important;
 				}
 	            .lg-sub-html {
-	                background-color: '. get_option('wpr_lb_caption_color','rgba(0,0,0,0.8)') .' !important;
+	                background-color: '. esc_html(get_option('wpr_lb_caption_color','rgba(0,0,0,0.8)')) .' !important;
 	            }
 	            .lg-thumb-outer,
 	            .lg-progress-bar {
-	                background-color: '. get_option('wpr_lb_gallery_color','#444444') .' !important;
+	                background-color: '. esc_html(get_option('wpr_lb_gallery_color','#444444')) .' !important;
 	            }
 	            .lg-progress {
-	                background-color: '. get_option('wpr_lb_pb_color','#a90707') .' !important;
+	                background-color: '. esc_html(get_option('wpr_lb_pb_color','#a90707')) .' !important;
 	            }
 	            .lg-icon {
-	            	color: '. get_option('wpr_lb_ui_color','#efefef') .' !important;
-	            	font-size: '. get_option('wpr_lb_icon_size',20) .'px !important;
+	            	color: '. esc_html(get_option('wpr_lb_ui_color','#efefef')) .' !important;
+	            	font-size: '. esc_html(get_option('wpr_lb_icon_size',20)) .'px !important;
 	            }
 	            .lg-icon.lg-toogle-thumb {
-	            	font-size: '. (get_option('wpr_lb_icon_size',20) + 4) .'px !important;
+	            	font-size: '. esc_html((get_option('wpr_lb_icon_size',20) + 4)) .'px !important;
 	            }
 	            .lg-icon:hover,
 	            .lg-dropdown-text:hover {
-	            	color: '. get_option('wpr_lb_ui_hr_color','#ffffff') .' !important;
+	            	color: '. esc_html(get_option('wpr_lb_ui_hr_color','#ffffff')) .' !important;
 	            }
 	            .lg-sub-html,
 	            .lg-dropdown-text {
-	            	color: '. get_option('wpr_lb_text_color','#efefef') .' !important;
-	            	font-size: '. get_option('wpr_lb_text_size',14) .'px !important;
+	            	color: '. esc_html(get_option('wpr_lb_text_color','#efefef')) .' !important;
+	            	font-size: '. esc_html(get_option('wpr_lb_text_size',14)) .'px !important;
 	            }
 	            #lg-counter {
-	            	color: '. get_option('wpr_lb_text_color','#efefef') .' !important;
-	            	font-size: '. get_option('wpr_lb_text_size',14) .'px !important;
+	            	color: '. esc_html(get_option('wpr_lb_text_color','#efefef')) .' !important;
+	            	font-size: '. esc_html(get_option('wpr_lb_text_size',14)) .'px !important;
 	            }
 	            .lg-prev,
 	            .lg-next {
-	            	font-size: '. get_option('wpr_lb_arrow_size',35) .'px !important;
+	            	font-size: '. esc_html(get_option('wpr_lb_arrow_size',35)) .'px !important;
 	            }
 
 	            /* Defaults */

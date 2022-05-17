@@ -2213,7 +2213,7 @@ class Wpr_Post_Comments extends Widget_Base {
 		$author_name = get_comment_author( $comment );
 
 		// Comment HTML
-		echo '<li id="comment-'. get_comment_ID() .'" class="'. esc_attr( $comment_class ) .'">';
+		echo '<li id="comment-'. esc_attr(get_comment_ID()) .'" class="'. esc_attr( $comment_class ) .'">';
 		echo '<article class="wpr-post-comment elementor-clearfix">';
 
 			// Comment Avatar
@@ -2237,7 +2237,7 @@ class Wpr_Post_Comments extends Widget_Base {
 				// Comment Metadata
 				echo '<div class="wpr-comment-metadata elementor-clearfix">';
 					// Date and Time
-					echo '<span>'. get_comment_date( '', $comment ) . esc_html__( ' at ', 'wpr-addons' ) . get_comment_time() .'</span>';
+					echo '<span>'. esc_html(get_comment_date( '', $comment )) . esc_html__( ' at ', 'wpr-addons' ) . esc_html(get_comment_time()) .'</span>';
 
 					// Edit Link
 					edit_comment_link( esc_html__( 'Edit', 'wpr-addons' ), ' | ', '' );
