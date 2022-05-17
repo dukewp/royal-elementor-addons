@@ -1533,7 +1533,7 @@ class Wpr_Tabs extends Widget_Base {
 
 				<div <?php echo $this->get_render_attribute_string( $tab_content_setting_key ); ?>>
 					<?php 
-					echo '<div class="wpr-tab-content-inner elementor-clearfix wpr-anim-size-'. $settings['content_anim_size'] .' wpr-overlay-'. $settings['content_animation'] .'">';
+					echo '<div class="wpr-tab-content-inner elementor-clearfix wpr-anim-size-'. esc_attr($settings['content_anim_size']) .' wpr-overlay-'. esc_attr($settings['content_animation']) .'">';
 
 						if ( 'template' === $item['tab_content_type'] ) {
 

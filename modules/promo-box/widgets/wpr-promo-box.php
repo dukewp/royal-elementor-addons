@@ -1560,25 +1560,25 @@ class Wpr_Promo_Box extends Widget_Base {
 
 				if ( '' !== $settings['content_title'] ) {
 
-					echo '<'. $settings['content_title_tag'] .' '. $this->get_render_attribute_string( 'title_attribute' ) .'>';
+					echo '<'. esc_attr($settings['content_title_tag']) .' '. $this->get_render_attribute_string( 'title_attribute' ) .'>';
 					if ( 'title' === $settings['content_link_type'] || 'btn-title' === $settings['content_link_type']  ) {
 						echo '<a '. $this->get_render_attribute_string( 'link_attribute' ).'>';
 					}
 
-					echo '<span>'. $settings['content_title'] .'</span>';
+					echo '<span>'. esc_html($settings['content_title']) .'</span>';
 				
 					if ( 'title' === $settings['content_link_type'] || 'btn-title' === $settings['content_link_type']  ) {
 						echo '</a>';
 					}
 
-					echo '</'. $settings['content_title_tag'] .'>';
+					echo '</'. esc_attr($settings['content_title_tag']) .'>';
 				}
 
 				?>
 
 				<?php if ( '' !== $settings['content_description'] ) : ?>
 					<div <?php echo $this->get_render_attribute_string( 'description_attribute' ); ?>>
-						<?php echo '<p>'. $settings['content_description'] .'</p>'; ?>	
+						<?php echo '<p>'. wp_kses_post($settings['content_description']) .'</p>'; ?>	
 					</div>						
 				<?php endif; ?>
 

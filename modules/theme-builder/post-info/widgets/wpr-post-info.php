@@ -1091,7 +1091,7 @@ class Wpr_Post_Info extends Widget_Base {
 			}
 
 			// Comments
-			echo '<span> '. $text .'</span>';
+			echo '<span> '. esc_html($text) .'</span>';
 
 			if ( 'yes' === $settings['post_info_link_wrap'] ) {
 				echo '</a>';
@@ -1139,7 +1139,7 @@ class Wpr_Post_Info extends Widget_Base {
 
 					// Separator
 					if ( ++$count !== count( $terms ) ) {
-						echo '<span class="tax-sep">'. $settings['post_info_tax_sep'] .'</span>';
+						echo '<span class="tax-sep">'. esc_html($settings['post_info_tax_sep']) .'</span>';
 					}
 				echo '</a>';
 			} else {
@@ -1149,7 +1149,7 @@ class Wpr_Post_Info extends Widget_Base {
 
 					// Separator
 					if ( ++$count !== count( $terms ) ) {
-						echo '<span class="tax-sep">'. $settings['post_info_tax_sep'] .'</span>';
+						echo '<span class="tax-sep">'. esc_html($settings['post_info_tax_sep']) .'</span>';
 					}
 				echo '</span>';
 			}
@@ -1180,10 +1180,10 @@ class Wpr_Post_Info extends Widget_Base {
 		// Get Settings
 		$settings = $this->get_settings();
 
-		echo '<ul class="wpr-post-info wpr-post-info-'. $settings['post_info_layout'] .'">';
+		echo '<ul class="wpr-post-info wpr-post-info-'. esc_attr($settings['post_info_layout']) .'">';
 
 		foreach( $settings['post_info_elements'] as $element_settings ) {
-			echo '<li class="wpr-post-info-'. $element_settings['post_info_select'] .'">';
+			echo '<li class="wpr-post-info-'. esc_attr($element_settings['post_info_select']) .'">';
 
 			switch ( $element_settings['post_info_select'] ) {
 				case 'date':

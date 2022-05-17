@@ -1144,7 +1144,7 @@ class Wpr_Progress_Bar extends Widget_Base {
 				
 				<?php if ( 'gradient' === $settings['circle_prline_bg_type'] ) : ?>
 
-					<?php $circle_stocke_bg = 'url( #wpr-prbar-circle-gradient-'. $this->get_id() .' )'; ?>
+					<?php $circle_stocke_bg = 'url( #wpr-prbar-circle-gradient-'. esc_attr($this->get_id()) .' )'; ?>
 						
 					<linearGradient id="wpr-prbar-circle-gradient-<?php echo esc_attr($this->get_id()); ?>" gradientTransform="rotate(<?php echo esc_html($settings['circle_prline_grad_angle']['size']); ?> 0.5 0.5)" gradientUnits="objectBoundingBox"  x1="-0.5" y1="0.5" x2="1.5" y2="0.5">
 						<stop offset="0%" stop-color="<?php echo esc_attr( $settings['circle_prline_bg_color_a'] ); ?>"></stop>

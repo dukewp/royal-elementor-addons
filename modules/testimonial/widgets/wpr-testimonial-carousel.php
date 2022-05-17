@@ -2875,8 +2875,12 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 			</div>
 
 			<div class="wpr-testimonial-arrow-container">
-				<div class="wpr-testimonial-prev-arrow wpr-testimonial-arrow" id="<?php echo 'wpr-testimonial-prev-'. $this->get_id(); ?>"><?php echo Utilities::get_wpr_icon( $settings['testimonial_nav_icon'], '' ); ?></div>
-				<div class="wpr-testimonial-next-arrow wpr-testimonial-arrow" id="<?php echo 'wpr-testimonial-next-'. $this->get_id(); ?>"><?php echo Utilities::get_wpr_icon( $settings['testimonial_nav_icon'], '' ); ?></div>
+				<div class="wpr-testimonial-prev-arrow wpr-testimonial-arrow" id="<?php echo 'wpr-testimonial-prev-'. esc_attr($this->get_id()); ?>">
+					<?php echo Utilities::get_wpr_icon( $settings['testimonial_nav_icon'], '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				</div>
+				<div class="wpr-testimonial-next-arrow wpr-testimonial-arrow" id="<?php echo 'wpr-testimonial-next-'. esc_attr($this->get_id()); ?>">
+					<?php echo Utilities::get_wpr_icon( $settings['testimonial_nav_icon'], '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				</div>
 			</div>
 		</div>
 

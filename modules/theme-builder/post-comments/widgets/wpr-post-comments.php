@@ -2318,7 +2318,7 @@ class Wpr_Post_Comments extends Widget_Base {
 
 				// Comments
 				if ( 'yes' === $settings['section_title'] ) {
-					echo '<h3> '. $text .'</h3>';
+					echo '<h3> '. esc_html($text) .'</h3>';
 				}
 
 				// Get Post Comments
@@ -2333,7 +2333,7 @@ class Wpr_Post_Comments extends Widget_Base {
 
 				// Comments Navigation
 				if ( get_comment_pages_count($get_comments) > 1 && get_option( 'page_comments' ) ) {
-					echo '<div class="wpr-comments-navigation wpr-comments-navigation-'. $settings['comments_navigation_align'] .'">';
+					echo '<div class="wpr-comments-navigation wpr-comments-navigation-'. esc_html($settings['comments_navigation_align']) .'">';
 						paginate_comments_links([
 							'base' => add_query_arg( 'cpage', '%#%' ),
 							'format' => '',
@@ -2375,13 +2375,13 @@ class Wpr_Post_Comments extends Widget_Base {
 				$fields = [
 					// name
 					'author' => '<div class="wpr-comment-form-fields"> <div class="wpr-comment-form-author">'. $author_label .
-					'<input type="text" name="author" placeholder="'. $author_ph .'"/></div>',
+					'<input type="text" name="author" placeholder="'. esc_attr($author_ph) .'"/></div>',
 					// Email
 					'email' => '<div class="wpr-comment-form-email">'. $email_label .
-					'<input type="text" name="email" placeholder="'. $email_ph .'"/></div>',
+					'<input type="text" name="email" placeholder="'. esc_attr($email_ph) .'"/></div>',
 					// Website
 					'url' => '<div class="wpr-comment-form-url">'. $url_label .
-					'<input type="text" name="url" placeholder="'. $url_ph .'"/></div></div>',
+					'<input type="text" name="url" placeholder="'. esc_url($url_ph) .'"/></div></div>',
 				];
 
 				// Remove Website Field
@@ -2414,7 +2414,7 @@ class Wpr_Post_Comments extends Widget_Base {
 
 				// Form
 				$defaults['id_form'] = 'wpr-comment-form';
-				$defaults['class_form'] = 'wpr-comment-form wpr-cf-'. $settings['comments_form_layout'];
+				$defaults['class_form'] = 'wpr-comment-form wpr-cf-'. esc_attr($settings['comments_form_layout']);
 
 				// No Website Filed Class
 				if ( '' === $settings['comment_form_website'] ) {
@@ -2428,7 +2428,7 @@ class Wpr_Post_Comments extends Widget_Base {
 
 				// Text Field
 				$defaults['comment_field']  = '<div class="wpr-comment-form-text">'. $text_label;
-				$defaults['comment_field'] .= '<textarea name="comment" placeholder="'. $text_ph .'" cols="45" rows="8" maxlength="65525"></textarea>';
+				$defaults['comment_field'] .= '<textarea name="comment" placeholder="'. esc_attr($text_ph) .'" cols="45" rows="8" maxlength="65525"></textarea>';
 				$defaults['comment_field'] .= '</div>';
 
 				// Submit Button

@@ -766,11 +766,11 @@ class Wpr_Post_Navigation extends Widget_Base {
 		if ( 'yes' === $settings['post_nav_image'] && 'yes' === $settings['post_nav_image_bg'] ) {
 			if ( 'fixed' !== $settings['post_nav_layout'] ) {
 				if ( ! empty($prev_post) ) {
-					$prev_post_bg = ' style="background-image: url('. $prev_image_url .')"';
+					$prev_post_bg = ' style="background-image: url('. esc_url($prev_image_url) .')"';
 				}
 
 				if ( ! empty($next_post) ) {
-					$next_post_bg = ' style="background-image: url('. $next_image_url .')"';
+					$next_post_bg = ' style="background-image: url('. esc_url($next_image_url) .')"';
 				}
 			}
 		}
@@ -790,11 +790,11 @@ class Wpr_Post_Navigation extends Widget_Base {
 				$wrapper_class .= ' wpr-post-nav-bg-images';
 			}
 
-			echo '<div class="wpr-post-navigation-wrap elementor-clearfix '. $wrapper_class .'">';
+			echo '<div class="wpr-post-navigation-wrap elementor-clearfix '. esc_attr($wrapper_class) .'">';
 		}
 
 		// Previous Post
-		echo '<div class="wpr-post-nav-prev '. $layout_class .'"'. $prev_post_bg .'>';
+		echo '<div class="wpr-post-nav-prev '. esc_attr($layout_class) .'"'. $prev_post_bg .'>';
 			if ( ! empty($prev_post) ) {
 				echo '<a href="'. esc_url( get_permalink($prev_post->ID) ) .'" class="elementor-clearfix">';
 					// Left Arrow
@@ -854,7 +854,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 		}
 
 		// Next Post
-		echo '<div class="wpr-post-nav-next '. $layout_class .'"'. $next_post_bg .'>';
+		echo '<div class="wpr-post-nav-next '. esc_attr($layout_class) .'"'. $next_post_bg .'>';
 			if ( ! empty($next_post) ) {
 				echo '<a href="'. esc_url( get_permalink($next_post->ID) ) .'" class="elementor-clearfix">';
 					// Label & Title

@@ -1719,7 +1719,7 @@ class Wpr_Team_Member extends Widget_Base {
 
 			echo '<div class="wpr-member-btn-wrap">';
 				echo '<a '. $this->get_render_attribute_string( 'btn_attribute' ) .'>';
-					echo '<span>'. $settings['member_btn_text'] .'</span>';
+					echo '<span>'. esc_html($settings['member_btn_text']) .'</span>';
 				echo '</a>';
 			echo '</div>';
 

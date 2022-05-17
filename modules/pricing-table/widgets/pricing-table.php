@@ -2531,10 +2531,10 @@ class Pricing_Table extends Widget_Base {
 
 					<?php
 						if ( 'none' !== $item['currency_symbol'] && 'custom' !== $item['currency_symbol'] && $settings['currency_hr_position'] === 'before' ) {
-							echo '<span class="wpr-pricing-table-currency">'. $this->get_currency_symbol($item['currency_symbol']) .'</span>';
+							echo '<span class="wpr-pricing-table-currency">'. esc_html($this->get_currency_symbol($item['currency_symbol'])) .'</span>';
 						} elseif ( 'custom' === $item['currency_symbol'] ) {
 							if ( ! empty( $item['currency'] ) && $settings['currency_hr_position'] === 'before' ) {
-								echo '<span class="wpr-pricing-table-currency">'. $item['currency'] .'</span>';
+								echo '<span class="wpr-pricing-table-currency">'. esc_html($item['currency']) .'</span>';
 							}
 						}
 					?>
@@ -2549,10 +2549,10 @@ class Pricing_Table extends Widget_Base {
 
 					<?php
 						if ( 'none' !== $item['currency_symbol'] && 'custom' !== $item['currency_symbol'] && $settings['currency_hr_position'] === 'after' ) {
-							echo '<span class="wpr-pricing-table-currency">'. $this->get_currency_symbol($item['currency_symbol']) .'</span>';
+							echo '<span class="wpr-pricing-table-currency">'. esc_html($this->get_currency_symbol($item['currency_symbol'])) .'</span>';
 						} elseif ( 'custom' === $item['currency_symbol'] ) {
 							if ( ! empty( $item['currency'] ) && $settings['currency_hr_position'] === 'after' ) {
-								echo '<span class="wpr-pricing-table-currency">'. $item['currency'] .'</span>';
+								echo '<span class="wpr-pricing-table-currency">'. esc_html($item['currency']) .'</span>';
 							}
 						}
 					?>
@@ -2616,9 +2616,9 @@ class Pricing_Table extends Widget_Base {
 
 		if ( $settings['badge_style'] !== 'none' && ! empty( $settings['badge_title'] ) ) :
 
-			$this->add_render_attribute( 'wpr-pricing-table-badge-attr', 'class', 'wpr-pricing-table-badge wpr-pricing-table-badge-'. $settings[ 'badge_style'] );
+			$this->add_render_attribute( 'wpr-pricing-table-badge-attr', 'class', 'wpr-pricing-table-badge wpr-pricing-table-badge-'. esc_attr($settings[ 'badge_style']) );
 			if ( ! empty( $settings['badge_hr_position'] ) ) :
-				$this->add_render_attribute( 'wpr-pricing-table-badge-attr', 'class', 'wpr-pricing-table-badge-'. $settings['badge_hr_position'] );
+				$this->add_render_attribute( 'wpr-pricing-table-badge-attr', 'class', 'wpr-pricing-table-badge-'. esc_attr($settings['badge_hr_position']) );
 			endif;
 			
 			?>

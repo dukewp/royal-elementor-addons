@@ -191,9 +191,9 @@ class Wpr_Post_Title extends Widget_Base {
 		// Get Settings
 		$settings = $this->get_settings();
 
-		echo '<'. $settings['post_title_tag'] .' class="wpr-post-title">';
+		echo '<'. esc_attr($settings['post_title_tag']) .' class="wpr-post-title">';
 			echo get_the_title();
-		echo '</'. $settings['post_title_tag'] .'>';
+		echo '</'. esc_attr($settings['post_title_tag']) .'>';
 
 	}
 	
