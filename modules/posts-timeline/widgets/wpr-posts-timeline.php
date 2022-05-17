@@ -5192,10 +5192,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 							echo !empty($content['repeater_youtube_video_url']) && $settings['content_layout'] === 'image-top' ? '<div class="wpr-timeline-iframe-wrapper"> '. $this->youtube_url($content) .' </div>' : '';
 
-								echo ($settings['show_overlay'] === 'yes' && !empty($this->image)) || ($settings['show_overlay'] === 'yes' && !empty($content['repeater_youtube_video_url'])) ? '<div class="wpr-timeline-story-overlay '. $this->animation_class .'">' : '';
+								echo ($settings['show_overlay'] === 'yes' && !empty($this->image)) || ($settings['show_overlay'] === 'yes' && !empty($content['repeater_youtube_video_url'])) ? '<div class="wpr-timeline-story-overlay '. esc_attr($this->animation_class) .'">' : '';
 
-									echo !empty($content['repeater_story_title']) && 'yes' === $settings['show_title'] && 'yes' === $settings['title_overlay'] ? '<p class="wpr-title-wrap"><a '. $this->get_render_attribute_string( 'repeater_title_link'. $this->item_url_count ) .' class="wpr-title">'. $content['repeater_story_title'] .'</a></p>' : '';
-									echo !empty($content['repeater_description']) && 'yes' === $settings['show_description'] && 'yes' === $settings['description_overlay'] ? '<div class="wpr-description">'. $content['repeater_description'] .'</div>' : '';
+									echo !empty($content['repeater_story_title']) && 'yes' === $settings['show_title'] && 'yes' === $settings['title_overlay'] ? '<p class="wpr-title-wrap"><a '. $this->get_render_attribute_string( 'repeater_title_link'. $this->item_url_count ) .' class="wpr-title">'. esc_html($content['repeater_story_title']) .'</a></p>' : '';
+									echo !empty($content['repeater_description']) && 'yes' === $settings['show_description'] && 'yes' === $settings['description_overlay'] ? '<div class="wpr-description">'. wp_kses_post($content['repeater_description']) .'</div>' : '';
 
 								echo ($settings['show_overlay'] === 'yes' && !empty($this->image)) || ($settings['show_overlay'] === 'yes' && !empty($content['repeater_youtube_video_url']))  ? '</div>' : '';
 
@@ -5204,9 +5204,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 							echo 'yes' !== $settings['title_overlay'] && 'yes' === $settings['show_title'] && !empty($content['repeater_story_title'])  || 'yes' !== $settings['description_overlay'] && 'yes' === $settings['show_description'] && !empty($content['repeater_description']) ?'<div class="wpr-timeline-content-wrapper">' : '';
 								echo  '<div class="wpr-content-wrapper">'; //remove
 
-								echo !empty($content['repeater_story_title']) && 'yes' === $settings['show_title'] && 'yes' !== $settings['title_overlay'] ? '<p class="wpr-title-wrap"><a '. $this->get_render_attribute_string( 'repeater_title_link'. $this->item_url_count ) .' class="wpr-title">'. $content['repeater_story_title'] .'</a></p>' : '';
+								echo !empty($content['repeater_story_title']) && 'yes' === $settings['show_title'] && 'yes' !== $settings['title_overlay'] ? '<p class="wpr-title-wrap"><a '. $this->get_render_attribute_string( 'repeater_title_link'. $this->item_url_count ) .' class="wpr-title">'. esc_html($content['repeater_story_title']) .'</a></p>' : '';
 
-								echo !empty($content['repeater_description']) && 'yes' === $settings['show_description'] && 'yes' !== $settings['description_overlay'] ? '<div class="wpr-description">'. $content['repeater_description'] .'</div>' : '';
+								echo !empty($content['repeater_description']) && 'yes' === $settings['show_description'] && 'yes' !== $settings['description_overlay'] ? '<div class="wpr-description">'. wp_kses_post($content['repeater_description']) .'</div>' : '';
 
 								echo '</div>'; //remove
 
@@ -5240,14 +5240,14 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				wp_reset_postdata();
 				
 				if(!$this->my_query->have_posts()) {
-					echo '<div> '. $settings['query_not_found_text'] .'</div>';
+					echo '<div> '. esc_html($settings['query_not_found_text']) .'</div>';
 				}
 
 				if ( $this->my_query->have_posts() ) { 
-					echo '<div class="wpr-wrapper wpr-vertical '. $this->timeline_layout_wrapper .'">';
-					echo '<div class="wpr-timeline-centered wpr-line '. $this->timeline_layout .'"  data-pagination="'. $this->pagination_type .'" data-max-pages="'. $this->pagination_max_pages .'" data-arrow-bgcolor="'. $arrow_bgcolor .'">';
+					echo '<div class="wpr-wrapper wpr-vertical '. esc_attr($this->timeline_layout_wrapper) .'">';
+					echo '<div class="wpr-timeline-centered wpr-line '. esc_attr($this->timeline_layout) .'"  data-pagination="'. esc_attr($this->pagination_type) .'" data-max-pages="'. esc_attr($this->pagination_max_pages) .'" data-arrow-bgcolor="'. esc_attr($arrow_bgcolor) .'">';
 					echo '<div class="wpr-middle-line"></div>';
-					echo 'yes' === $this->timeline_fill ? '<div class="wpr-timeline-fill" data-layout="'. $layout .'"></div>' : '';
+					echo 'yes' === $this->timeline_fill ? '<div class="wpr-timeline-fill" data-layout="'. esc_attr($layout) .'"></div>' : '';
 
 				while ( $this->my_query->have_posts() ) {
 					global $wp_query;
@@ -5262,10 +5262,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					$background_image = $settings['content_layout'] === 'background' ? get_the_post_thumbnail_url() : '';
 					$background_class = $settings['content_layout'] === 'background' ? 'story-with-background' : '';
 
-					echo '<article class="wpr-timeline-entry '. $this->content_alignment .'" data-counter="'. $countItem .'">';
+					echo '<article class="wpr-timeline-entry '. esc_attr($this->content_alignment) .'" data-counter="'. esc_attr($countItem) .'">';
                         
                         if ( 'yes' === $settings['show_extra_label'] ) {
-                            echo '<time class="wpr-extra-label" data-aos="'. $this->animation .'" data-aos-left="'. $this->animation_loadmore_left .'" data-aos-right="'. $this->animation_loadmore_right .'" data-animation-offset="'. $settings['animation_offset'] .'" data-animation-duration="'. $settings['aos_animation_duration'] .'">
+                            echo '<time class="wpr-extra-label" data-aos="'. esc_attr($this->animation) .'" data-aos-left="'. esc_attr($this->animation_loadmore_left) .'" data-aos-right="'. esc_attr($this->animation_loadmore_right) .'" data-animation-offset="'. esc_attr($settings['animation_offset']) .'" data-animation-duration="'. esc_attr($settings['aos_animation_duration']) .'">
                                 <span class="wpr-label">'. esc_html(get_the_date($settings['date_format'])) .'</span>
                             </time>';
                         }
@@ -5275,12 +5275,12 @@ class Wpr_Posts_Timeline extends Widget_Base {
 							echo '<div class="wpr-main-line-icon wpr-icon">';
 							\Elementor\Icons_Manager::render_icon( $settings['posts_icon'], [ 'aria-hidden' => 'true' ] );
 							echo '</div>';
-							echo '<div class="wpr-story-info-vertical wpr-data-wrap animated '. $background_class .'" data-aos="'. $this->animation.'" data-aos-left="'. $this->animation_loadmore_left .'" data-aos-right="'. $this->animation_loadmore_right .'" data-animation-offset="'. $settings['animation_offset'] .'" data-animation-duration="'. $settings['aos_animation_duration'] .'">';
+							echo '<div class="wpr-story-info-vertical wpr-data-wrap animated '. esc_attr($background_class) .'" data-aos="'. esc_attr($this->animation) .'" data-aos-left="'. esc_attr($this->animation_loadmore_left) .'" data-aos-right="'. esc_attr($this->animation_loadmore_right) .'" data-animation-offset="'. esc_attr($settings['animation_offset']) .'" data-animation-duration="'. esc_attr($settings['aos_animation_duration']) .'">';
 
-							echo 'image-top' === $settings['content_layout'] && !empty($this->src) || 'yes' === $settings['show_overlay']  && !empty($this->src) ? '<div class="wpr-animation-wrap wpr-timeline-media"><img class="wpr-thumbnail-image" src="'. $this->src .'">' : '';
+							echo 'image-top' === $settings['content_layout'] && !empty($this->src) || 'yes' === $settings['show_overlay']  && !empty($this->src) ? '<div class="wpr-animation-wrap wpr-timeline-media"><img class="wpr-thumbnail-image" src="'. esc_url($this->src) .'">' : '';
 
 							
-								echo ($settings['show_overlay'] === 'yes' && !empty(get_the_post_thumbnail_url())) ? '<div class="wpr-timeline-story-overlay '. $this->animation_class .'">' : '';
+								echo ($settings['show_overlay'] === 'yes' && !empty(get_the_post_thumbnail_url())) ? '<div class="wpr-timeline-story-overlay '. esc_attr($this->animation_class) .'">' : '';
 
 									echo  'yes' === $settings['show_title'] && 'yes' === $settings['title_overlay'] ? '<p class="wpr-title-wrap"><a class="wpr-title" href="'. esc_url(get_the_permalink()) .'">'. esc_html(get_the_title()) .'</a></p>' : '';
 
@@ -5290,7 +5290,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 									
 									echo !empty(get_the_content()) && 'yes' === $settings['show_description'] && 'yes' === $settings['description_overlay'] ? '<div class="wpr-description">'.wp_trim_words(get_the_content(), $settings['excerpt_count']).'</div>' : '';
 									
-									echo 'yes' === $this->show_readmore && 'yes' === $settings['readmore_overlay'] ? '<div class="wpr-read-more-wrap"><a class="wpr-read-more-button" href="'. esc_url(get_the_permalink()) .'">'. $settings['read_more_text'] .'</a></div>' : '';
+									echo 'yes' === $this->show_readmore && 'yes' === $settings['readmore_overlay'] ? '<div class="wpr-read-more-wrap"><a class="wpr-read-more-button" href="'. esc_url(get_the_permalink()) .'">'. esc_html($settings['read_more_text']) .'</a></div>' : '';
 
 								echo ($settings['show_overlay'] === 'yes' && !empty(get_the_post_thumbnail_url())) ? '</div>' : '';
 									
@@ -5306,12 +5306,12 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 									echo !empty(get_the_content()) && 'yes' === $settings['show_description']  && 'yes' !== $settings['description_overlay'] ? '<div class="wpr-description">'.wp_trim_words(get_the_content(), $settings['excerpt_count']).'</div>' : '';
 
-									echo 'yes' === $this->show_readmore && 'yes' !== $settings['readmore_overlay'] ? '<div class="wpr-read-more-wrap"><a class="wpr-read-more-button" href="'. esc_url(get_the_permalink()) .'">'. $settings['read_more_text'] .'</a></div>' : '';
+									echo 'yes' === $this->show_readmore && 'yes' !== $settings['readmore_overlay'] ? '<div class="wpr-read-more-wrap"><a class="wpr-read-more-button" href="'. esc_url(get_the_permalink()) .'">'. esc_html($settings['read_more_text']) .'</a></div>' : '';
 
 							echo 'yes' !== $settings['title_overlay'] && 'yes' === $settings['show_title'] || 'yes' !== $settings['description_overlay'] && 'yes' === $settings['show_description'] || 'yes' === $settings['show_date'] && 'yes' !== $settings['date_overlay'] || 'yes' === $this->show_readmore && 'yes' !== $settings['readmore_overlay']  ? '</div>' : '';		
 
 								echo ($settings['content_layout'] === 'image-bottom' && !empty($this->src)) ? '<div class="wpr-animation-wrap wpr-timeline-media">
-								<img class="wpr-thumbnail-image" src="'. $this->src .'">
+								<img class="wpr-thumbnail-image" src="'. esc_url($this->src) .'">
 								</div>' : '';
 
 							echo '</div>';
@@ -5336,9 +5336,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$this->horizontal_timeline_classes($settings);
 
 		echo '<div class="wpr-timeline-outer-container">';
-		echo '<div class="wpr-wrapper swiper-container '. $this->horizontal_inner_class .'" dir="'. $dir .'" data-slidestoshow = "'.esc_attr($this->slidesToShow).'" data-autoplay="'.esc_attr($autoplay).'" data-swiper-speed="'. esc_attr($swiper_speed) .'" data-swiper-delay="'. esc_attr($swiper_delay) .'" data-swiper-space-between="'. esc_attr($settings['story_info_gutter']) .'">';
+		echo '<div class="wpr-wrapper swiper-container '. esc_attr($this->horizontal_inner_class) .'" dir="'. esc_attr($dir) .'" data-slidestoshow = "'. esc_attr($this->slidesToShow) .'" data-autoplay="'. esc_attr($autoplay) .'" data-swiper-speed="'. esc_attr($swiper_speed) .'" data-swiper-delay="'. esc_attr($swiper_delay) .'" data-swiper-space-between="'. esc_attr($settings['story_info_gutter']) .'">';
 
-		echo '<div class="swiper-wrapper '. $this->horizontal_timeline_class .'">';
+		echo '<div class="swiper-wrapper '. esc_attr($this->horizontal_timeline_class) .'">';
 			if ( is_array($data) ) {
 					foreach( $data as $index => $content ) {
 						if ( ! wpr_fs()->can_use_premium_code() && $index === 4 ) {
@@ -5355,19 +5355,19 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 						$this->render_image_or_icon($content);
 
-						echo '<div class="swiper-slide '. $this->swiper_class .' '.esc_attr($slidesHeight).' elementor-repeater-item-'. $content['_id'] .'">';
+						echo '<div class="swiper-slide '. esc_attr($this->swiper_class) .' '. esc_attr($slidesHeight) .' elementor-repeater-item-'. esc_attr($content['_id']) .'">';
 
 							if ( 'yes' === $content['repeater_show_extra_label'] ) {
 								echo !empty($this->story_date_label) || !empty($this->story_extra_label) ? '<div class="wpr-extra-label" >' : '';
-								  echo !empty($this->story_date_label) ? '<span '. $this->get_render_attribute_string( $this->date_label_key ) .' >'. $this->story_date_label .'</span>' : ''; 
-								  echo !empty($this->story_extra_label) ? '<span '. $this->get_render_attribute_string( $this->extra_label_key ) .' >'. $this->story_extra_label .'</span>' : '';
+								  echo !empty($this->story_date_label) ? '<span '. $this->get_render_attribute_string( $this->date_label_key ) .' >'. esc_html($this->story_date_label) .'</span>' : ''; 
+								  echo !empty($this->story_extra_label) ? '<span '. $this->get_render_attribute_string( $this->extra_label_key ) .' >'. esc_html($this->story_extra_label) .'</span>' : '';
 								echo !empty($this->story_date_label) || !empty($this->story_extra_label) ? '</div>' : '';
 							}
 
 							echo '<div class="wpr-main-line-icon wpr-icon">';
 							\Elementor\Icons_Manager::render_icon( $content['repeater_story_icon'], [ 'aria-hidden' => 'true' ] );
 							echo'</div>'; 
-							echo '<div class="wpr-story-info '. $this->background_class .'">';
+							echo '<div class="wpr-story-info '. esc_attr($this->background_class) .'">';
 
 								echo !empty($this->image) && 'image-top' === $settings['content_layout'] || !empty($content['repeater_youtube_video_url']) && 'image-top' === $settings['content_layout'] ? '<div class="wpr-animation-wrap wpr-timeline-media">' : '';
 
@@ -5375,12 +5375,12 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 									echo !empty( $content['repeater_youtube_video_url'] ) && $settings['content_layout'] == 'image-top' ? '<div class="wpr-timeline-iframe-wrapper">  '. $this->youtube_url($content) .' </div>' : ''; 
 
-									echo 'yes' === $settings['show_overlay'] && !empty($this->image) || $settings['show_overlay'] === 'yes' && !empty($content['repeater_youtube_video_url']) ? '<div class="wpr-timeline-story-overlay '. $this->animation_class .'">' : '';
+									echo 'yes' === $settings['show_overlay'] && !empty($this->image) || $settings['show_overlay'] === 'yes' && !empty($content['repeater_youtube_video_url']) ? '<div class="wpr-timeline-story-overlay '. esc_attr($this->animation_class) .'">' : '';
 
 										echo !empty($this->timeline_story_title) && 'yes' === $settings['show_title'] && 'yes' === $settings['title_overlay'] ? '<p class="wpr-title-wrap"><a  '.
-										$this->get_render_attribute_string( 'repeater_title_link'. $this->item_url_count ) . $this->get_render_attribute_string( $this->title_key ) .'>'. $this->timeline_story_title .'</a></p>' : '';
+										$this->get_render_attribute_string( 'repeater_title_link'. $this->item_url_count ) . $this->get_render_attribute_string( $this->title_key ) .'>'. esc_html($this->timeline_story_title) .'</a></p>' : '';
 
-										echo !empty($this->timeline_description) && 'yes' === $settings['show_description'] && 'yes' === $settings['description_overlay'] ? '<div '. $this->get_render_attribute_string( $this->description_key ) .'>'. $this->timeline_description .'</div>' : '';
+										echo !empty($this->timeline_description) && 'yes' === $settings['show_description'] && 'yes' === $settings['description_overlay'] ? '<div '. $this->get_render_attribute_string( $this->description_key ) .'>'. wp_kses_post($this->timeline_description) .'</div>' : '';
 
 									echo 'yes' === $settings['show_overlay'] && !empty($this->image) || $settings['show_overlay'] === 'yes' && !empty($content['repeater_youtube_video_url']) ? '</div>' : '';
 								
@@ -5388,9 +5388,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 									
 								echo 'yes' !== $settings['title_overlay'] && 'yes' === $settings['show_title'] && !empty($content['repeater_story_title'])  || 'yes' !== $settings['description_overlay'] && 'yes' === $settings['show_description'] && !empty($content['repeater_description']) ? '<div class="wpr-timeline-content-wrapper">' : '';
 
-									echo !empty($this->timeline_story_title) && 'yes' === $settings['show_title'] && 'yes' !== $settings['title_overlay'] ? '<p class="wpr-title-wrap"><a '. $this->get_render_attribute_string( $this->title_key ) . $this->get_render_attribute_string( 'repeater_title_link'. $this->item_url_count ) .'>'. $this->timeline_story_title .'</a></p>' : '';
+									echo !empty($this->timeline_story_title) && 'yes' === $settings['show_title'] && 'yes' !== $settings['title_overlay'] ? '<p class="wpr-title-wrap"><a '. $this->get_render_attribute_string( $this->title_key ) . $this->get_render_attribute_string( 'repeater_title_link'. $this->item_url_count ) .'>'. esc_html($this->timeline_story_title) .'</a></p>' : '';
 
-									echo !empty($this->timeline_description ) && 'yes' === $settings['show_description'] && 'yes' !== $settings['description_overlay'] ?'<div '. $this->get_render_attribute_string( $this->description_key ) .'>'. $this->timeline_description .'</div>' : ''; 
+									echo !empty($this->timeline_description ) && 'yes' === $settings['show_description'] && 'yes' !== $settings['description_overlay'] ?'<div '. $this->get_render_attribute_string( $this->description_key ) .'>'. wp_kses_post($this->timeline_description) .'</div>' : ''; 
 
 									echo !empty( $content['repeater_youtube_video_url'] ) && $settings['content_layout'] !== 'image-top' ? '<div class="wpr-timeline-iframe-wrapper">  '. $this->youtube_url($content) .' </div>' : '';
 
@@ -5400,11 +5400,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 							echo '</div>';
 						echo '</div>';
 							
-						// if ( $settings['repeater_show_year_label'] == 'yes' ) {
-						// 	echo '<span class="wpr-year-wrap">
-						// 	<span class="wpr-year-label wpr-year">'. $content['repeater_year'] .'</span>
-						// 	</span>';
-						// }
 						$this->item_url_count++;
 					}
 				} 
@@ -5420,14 +5415,14 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$this->horizontal_timeline_classes($settings);
 	
 		if(!$this->my_query->have_posts()) {
-			echo '<div> '. $settings['query_not_found_text'] .'</div>';
+			echo '<div> '. esc_html($settings['query_not_found_text']) .'</div>';
 		}
 	
 		if( $this->my_query->have_posts() ) { 
 		
 		echo '<div class="wpr-timeline-outer-container">';
-				echo '<div class="wpr-wrapper swiper-container '. $this->horizontal_inner_class .'" dir="'. $dir .'" data-slidestoshow = "'.esc_attr($this->slidesToShow).'" data-autoplay="'.esc_attr($autoplay).'" data-swiper-speed="'. esc_attr($swiper_speed) .'" data-swiper-delay="'. esc_attr($swiper_delay) .'" data-swiper-space-between="'. $settings['story_info_gutter'] .'">
-					<div class="'. $this->horizontal_timeline_class .' swiper-wrapper">';
+				echo '<div class="wpr-wrapper swiper-container '. esc_attr($this->horizontal_inner_class) .'" dir="'. esc_attr($dir) .'" data-slidestoshow = "'. esc_attr($this->slidesToShow) .'" data-autoplay="'. esc_attr($autoplay) .'" data-swiper-speed="'. esc_attr($swiper_speed) .'" data-swiper-delay="'. esc_attr($swiper_delay) .'" data-swiper-space-between="'. esc_attr($settings['story_info_gutter']) .'">
+					<div class="'. esc_attr($this->horizontal_timeline_class) .' swiper-wrapper">';
 					while( $this->my_query->have_posts() ) {
 						$this->my_query->the_post();
 
@@ -5439,14 +5434,14 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						$background_image = $settings['content_layout'] === 'background' ? get_the_post_thumbnail_url() : '';
 						$background_class = $settings['content_layout'] === 'background' ? 'story-with-background' : '';
 						
-					echo '<div class="swiper-slide  '. $this->swiper_class .'  '. esc_attr($slidesHeight) .'">';
+					echo '<div class="swiper-slide  '. esc_attr($this->swiper_class) .'  '. esc_attr($slidesHeight) .'">';
 						// TODO: apply animation class to other layouts as well
-						echo '<div class="wpr-story-info '. $background_class .'">';
+						echo '<div class="wpr-story-info '. esc_attr($background_class) .'">';
 						echo ($settings['content_layout'] === 'image-top' && !empty($this->src)) || ($settings['show_overlay'] === 'yes' && !empty($this->src)) ? '<div class="wpr-animation-wrap wpr-timeline-media">' : '';
 
-						echo ($settings['content_layout'] === 'image-top' && !empty($this->src)) ? '<img class="wpr-thumbnail-image" src="'. $this->src .'">' : '';
+						echo ($settings['content_layout'] === 'image-top' && !empty($this->src)) ? '<img class="wpr-thumbnail-image" src="'. esc_url($this->src) .'">' : '';
 	
-						echo ($settings['show_overlay'] === 'yes' && !empty(get_the_post_thumbnail_url())) ? '<div class="wpr-timeline-story-overlay '. $this->animation_class .'">' : '';
+						echo ($settings['show_overlay'] === 'yes' && !empty(get_the_post_thumbnail_url())) ? '<div class="wpr-timeline-story-overlay '. esc_attr($this->animation_class) .'">' : '';
 	
 							echo 'yes' === $settings['show_title'] && 'yes' === $settings['title_overlay'] ? '<p class="wpr-title-wrap" ><a class="wpr-title" href="'. esc_url(get_the_permalink()) .'">'. esc_html(get_the_title()) .'</a></p>' : '';
 	
@@ -5456,7 +5451,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 	
 							echo !empty(get_the_content()) && 'yes' === $settings['show_description'] && 'yes' === $settings['description_overlay'] ? '<div class="wpr-description">'.wp_trim_words(get_the_content(), $settings['excerpt_count']).'</div>' : '';
 							
-							echo 'yes' === $this->show_readmore && 'yes' === $settings['readmore_overlay'] ? '<div class="wpr-read-more-wrap"><a class="wpr-read-more-button" href="'. esc_url(get_the_permalink()) .'">'. $settings['read_more_text'] .'</a></div>' : '';
+							echo 'yes' === $this->show_readmore && 'yes' === $settings['readmore_overlay'] ? '<div class="wpr-read-more-wrap"><a class="wpr-read-more-button" href="'. esc_url(get_the_permalink()) .'">'. esc_html($settings['read_more_text']) .'</a></div>' : '';
 	
 						echo ($settings['show_overlay'] === 'yes' && !empty(get_the_post_thumbnail_url())) ? '</div>' : '';
 						echo ($settings['content_layout'] === 'image-top' && !empty($this->src)) || ($settings['show_overlay'] === 'yes' && !empty($this->src)) ? '</div>' : '';
@@ -5470,12 +5465,12 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		
 							echo !empty(get_the_content()) && 'yes' === $settings['show_description'] && 'yes' !== $settings['description_overlay'] ? '<div class="wpr-description">'.wp_trim_words(get_the_content(), $settings['excerpt_count']).'</div>' : '';
 		
-							echo 'yes' === $this->show_readmore && 'yes' !== $settings['readmore_overlay'] ? '<div class="wpr-read-more-wrap"><a class="wpr-read-more-button" href="'. esc_url(get_the_permalink()) .'">'. $settings['read_more_text'] .'</a></div>' : '';
+							echo 'yes' === $this->show_readmore && 'yes' !== $settings['readmore_overlay'] ? '<div class="wpr-read-more-wrap"><a class="wpr-read-more-button" href="'. esc_url(get_the_permalink()) .'">'. esc_html($settings['read_more_text']) .'</a></div>' : '';
 
 						echo 'yes' !== $settings['title_overlay'] && 'yes' === $settings['show_title'] || 'yes' !== $settings['description_overlay'] && 'yes' === $settings['show_description'] || 'yes' === $settings['show_date'] && 'yes' !== $settings['date_overlay'] || 'yes' === $this->show_readmore && 'yes' !== $settings['readmore_overlay'] ? '</div>' : '';
 	
 						echo ($settings['content_layout'] === 'image-bottom' && !empty($this->src)) ? '<div class="wpr-animation-wrap wpr-timeline-media">
-						 <img class="wpr-thumbnail-image" src="'. $this->src .'">
+						 <img class="wpr-thumbnail-image" src="'. esc_url($this->src) .'">
 						</div>' : '';
 
 						echo '</div>';
