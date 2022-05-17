@@ -2771,6 +2771,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 				$oddEven = $countRows % 2 == 0 ? 'wpr-even' : 'wpr-odd';
 				echo '<tr class="wpr-table-row  '. esc_attr($oddEven) .'">';
 				foreach ($csvcontents as $column) {
+					// var_dump($column);
 					echo '<td class="wpr-table-td wpr-table-text">'. $column .'</td>';
 				}
 				echo '</tr>';
@@ -2847,7 +2848,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'alt'	=> esc_attr(get_post_meta($item['header_col_img']['id'], '_wp_attachment_image_alt', true))
 			]);
 
-			$header_icon = '<img'.' '.$this->get_render_attribute_string('wpr_table_th_img'. $i) . '>';
+			$header_icon = '<img'.' '. $this->get_render_attribute_string('wpr_table_th_img'. $i) . '>';
 		}
 
 		echo $header_icon;
@@ -2861,17 +2862,17 @@ class Wpr_AdvancedTable extends Widget_Base {
 
 	public function render_td_icon_or_image($table_td, $j) {
 		if( $table_td[$j]['icon'] === 'yes' && $table_td[$j]['icon_type'] == 'icon' ) {
-			$tbody_icon = '<span style="display: inline-block; vertical-align: middle;">' . $this->render_td_icon($table_td, $j) . '</span>';
+			$tbody_icon = '<span style="display: inline-block; vertical-align: middle;">'. $this->render_td_icon($table_td, $j) . '</span>';
 		}
 
 		if( $table_td[$j]['icon'] == 'yes' && $table_td[$j]['icon_type'] == 'image' ) { 
-            $this->add_render_attribute('wpr_table_td_img'. $j, [
+            $this->add_render_attribute('wpr_table_td_img'. esc_attr($j), [
                 'src'	=> esc_url( $table_td[$j]['col_img']['url'] ),
                 'class'	=> 'wpr-data-table-th-img',
                 'alt'	=> esc_attr(get_post_meta($table_td[$j]['col_img']['id'], '_wp_attachment_image_alt', true))
             ]);
 
-			$tbody_icon = '<img' . ' ' . $this->get_render_attribute_string('wpr_table_td_img'. $j) . '>';
+			$tbody_icon = '<img' . ' ' . $this->get_render_attribute_string('wpr_table_td_img'. esc_attr($j)) . '>';
 		}
 
 		echo $tbody_icon;
@@ -2936,9 +2937,9 @@ class Wpr_AdvancedTable extends Widget_Base {
 
 			echo $this->render_csv_data($settings['table_upload_csv']['url'], $settings['enable_custom_pagination'], $sorting_icon, $settings);
 
-		} else if ( isset($settings['choose_csv_type']) && 'url' === $settings['choose_csv_type']) {
+		} elseif ( isset($settings['choose_csv_type']) && 'url' === $settings['choose_csv_type']) {
 
-			echo $this->render_csv_data($settings['table_insert_url']['url'], $settings['enable_custom_pagination'], $sorting_icon, $settings);
+			echo $this->render_csv_data(esc_url($settings['table_insert_url']['url']), esc_attr($settings['enable_custom_pagination']), $sorting_icon, $settings);
 
 		} else {
 
@@ -2953,7 +2954,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 					$table_tr[] = [
 						'id' => $row_id,
 						'type' => $content_row['table_content_row_type'],
-						'class' => ['wpr-table-body-row', 'wpr-table-row', 'elementor-repeater-item-'. $content_row['_id'], $oddEven]
+						'class' => ['wpr-table-body-row', 'wpr-table-row', 'elementor-repeater-item-'. esc_attr($content_row['_id']), esc_attr($oddEven)]
 					];
 				}
 
@@ -2975,7 +2976,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 						'icon_position' => $content_row['td_icon_position'],
 						'icon_item' => $content_row['choose_td_icon'],
 						'col_img' => $content_row['td_col_img'],
-						'class' => ['elementor-repeater-item-'. $content_row['_id'], 'wpr-table-td'],
+						'class' => ['elementor-repeater-item-'. esc_attr($content_row['_id']), 'wpr-table-td'],
 					];
 				}
 			} ?>
@@ -2987,19 +2988,19 @@ class Wpr_AdvancedTable extends Widget_Base {
 					<tr class="wpr-table-head-row wpr-table-row">
 					<?php $i = 0; foreach ($settings['table_header'] as $item) { 
 
-						$this->add_render_attribute('th_class'. $i, [
-							'class' => ['wpr-table-th', 'elementor-repeater-item-'. $item['_id']],
+						$this->add_render_attribute('th_class'. esc_attr($i), [
+							'class' => ['wpr-table-th', 'elementor-repeater-item-'. esc_attr($item['_id'])],
 							'colspan' => $item['header_colspan'],
 						]); 
 						
-						$this->add_render_attribute('th_inner_class'. $i, [
+						$this->add_render_attribute('th_inner_class'. esc_attr($i), [
 							'class' => [($item['header_icon_position'] === 'top') ? 'wpr-flex-column-reverse' : (($item['header_icon_position'] === 'bottom') ? 'wpr-flex-column' : '')],
 						]); ?>
 
-						<th <?php echo $this->get_render_attribute_string('th_class'. $i); ?>>
-							<div <?php echo $this->get_render_attribute_string('th_inner_class'. $i); ?>>
+						<th <?php echo $this->get_render_attribute_string('th_class'. esc_attr($i)); ?>>
+							<div <?php echo $this->get_render_attribute_string('th_inner_class'. esc_attr($i)); ?>>
 								<?php $item['header_icon'] === 'yes'  && $item['header_icon_position'] == 'left' ? $this->render_th_icon_or_image($item, $i) : '' ?>
-								<span class="wpr-table-text"><?php echo $item['table_th']; ?></span>
+								<span class="wpr-table-text"><?php echo esc_html($item['table_th']); ?></span>
 								<?php $item['header_icon'] === 'yes' && $item['header_icon_position'] == 'right' ? $this->render_th_icon_or_image($item, $i) : '' ?>
 								<?php echo $sorting_icon; ?>
 								<?php $item['header_icon'] === 'yes' && ($item['header_icon_position'] == 'top' || $item['header_icon_position'] == 'bottom')? $this->render_th_icon_or_image($item, $i) : '' ?>
@@ -3013,21 +3014,21 @@ class Wpr_AdvancedTable extends Widget_Base {
 				<tbody>
 				<?php for( $i = 0 + $x; $i < count( $table_tr ) + $x; $i++ ) :
 
-						$this->add_render_attribute('table_row_attributes'. $i, [
+						$this->add_render_attribute('table_row_attributes'. esc_attr($i), [
 							'class' => $table_tr[$i]['class'],
 						]);
 
 						?>
-					<tr <?php echo $this->get_render_attribute_string('table_row_attributes'. $i) ?>>
+					<tr <?php echo $this->get_render_attribute_string('table_row_attributes'. esc_attr($i)) ?>>
 					<?php for( $j = 0; $j < count( $table_td ); $j++ ) {
 							if( $table_tr[$i]['id'] == $table_td[$j]['row_id'] ) {
-								$this->add_render_attribute('tbody_td_attributes'. $i . $j, [
+								$this->add_render_attribute('tbody_td_attributes'. esc_attr($i . $j), [
 								'colspan' => $table_td[$j]['colspan'] > 1 ? $table_td[$j]['colspan'] : '',
 								'rowspan' => $table_td[$j]['rowspan'] > 1 ? $table_td[$j]['rowspan'] : '',
 								'class' => $table_td[$j]['class']
 								]); ?>
 								
-							<td <?php echo $this->get_render_attribute_string('tbody_td_attributes'. $i . $j); ?>>
+							<td <?php echo $this->get_render_attribute_string('tbody_td_attributes'. esc_attr($i . $j)); ?>>
 
 								<div class="wpr-td-content-wrapper <?php echo esc_attr(('top' === $table_td[$j]['icon_position']) ? 'wpr-flex-column' : (('bottom' === $table_td[$j]['icon_position']) ? 'wpr-flex-column-reverse' : '')) ?>">
 
