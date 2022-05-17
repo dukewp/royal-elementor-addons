@@ -6932,8 +6932,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 		add_filter( 'the_password_form', function () {
 			$output  = '<form action="'. esc_url(home_url( 'wp-login.php?action=postpass' )) .'" method="post">';
 			$output .= '<i class="fas fa-lock"></i>';
-			$output .= '<p>'. get_the_title() .'</p>';
-			$output .= '<input type="password" name="post_password" id="post-'. get_the_id() .'" placeholder="'. esc_html__( 'Type and hit Enter...', 'wpr-addons' ) .'">';
+			$output .= '<p>'. esc_html(get_the_title()) .'</p>';
+			$output .= '<input type="password" name="post_password" id="post-'. esc_attr(get_the_id()) .'" placeholder="'. esc_html__( 'Type and hit Enter...', 'wpr-addons' ) .'">';
 			$output .= '</form>';
 
 			return $output;
@@ -7030,9 +7030,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 				// Taxonomies
 				foreach ( $terms as $term ) {
-					echo '<a href="'. get_term_link( $term->term_id ) .'" class="wpr-pointer-item">'. esc_html( $term->name );
+					echo '<a href="'. esc_url(get_term_link( $term->term_id )) .'" class="wpr-pointer-item">'. esc_html( $term->name );
 						if ( ++$count !== count( $terms ) ) {
-							echo '<span class="tax-sep">'. $settings['element_tax_sep'] .'</span>';
+							echo '<span class="tax-sep">'. esc_html($settings['element_tax_sep']) .'</span>';
 						}
 					echo '</a>';
 				}
@@ -7074,7 +7074,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 				// Taxonomies
 				foreach ( $terms as $term ) {
-					echo '<a href="'. get_term_link( $term->term_id ) .'" class="wpr-pointer-item">'. esc_html( $term->name );
+					echo '<a href="'. esc_url(get_term_link( $term->term_id )) .'" class="wpr-pointer-item">'. esc_html( $term->name );
 						if ( ++$count !== count( $terms ) ) {
 							echo '<span class="tax-sep">'. $settings['element_tax_sep'] .'</span>';
 						}
@@ -7673,7 +7673,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		// Default
 		if ( 'default' === $settings['pagination_type'] ) {
 			if ( $paged < $pages ) {
-				echo '<a href="'. get_pagenum_link( $paged + 1, true ) .'" class="wpr-prev-post-link">';
+				echo '<a href="'. esc_url(get_pagenum_link( $paged + 1, true )) .'" class="wpr-prev-post-link">';
 					echo Utilities::get_wpr_icon( $settings['pagination_on_icon'], 'left' );
 					echo esc_html($settings['pagination_older_text']);
 				echo '</a>';
@@ -7685,7 +7685,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			}
 
 			if ( $paged > 1 ) {
-				echo '<a href="'. get_pagenum_link( $paged - 1, true ) .'" class="wpr-next-post-link">';
+				echo '<a href="'. esc_url(get_pagenum_link( $paged - 1, true )) .'" class="wpr-next-post-link">';
 					echo esc_html($settings['pagination_newer_text']);
 					echo Utilities::get_wpr_icon( $settings['pagination_on_icon'], 'right' );
 				echo '</a>';
@@ -7708,7 +7708,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 				    if ( 'yes' === $settings['pagination_first_last'] ) {
 				    	if ( $paged >= 2 ) {
-					    	echo '<a href="'. get_pagenum_link( 1, true ) .'" class="wpr-first-page">';
+					    	echo '<a href="'. esc_url(get_pagenum_link( 1, true )) .'" class="wpr-first-page">';
 					    		echo Utilities::get_wpr_icon( $settings['pagination_fl_icon'], 'left' );
 					    		echo '<span>'. esc_html($settings['pagination_first_text']) .'</span>';
 					    	echo '</a>';
@@ -7722,7 +7722,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 				    if ( 'yes' === $settings['pagination_prev_next'] ) {
 				    	if ( $paged > 1 ) {
-					    	echo '<a href="'. get_pagenum_link( $paged - 1, true ) .'" class="wpr-prev-page">';
+					    	echo '<a href="'. esc_url(get_pagenum_link( $paged - 1, true )) .'" class="wpr-prev-page">';
 					    		echo Utilities::get_wpr_icon( $settings['pagination_pn_icon'], 'left' );
 					    		echo '<span>'. esc_html($settings['pagination_prev_text']) .'</span>';
 					    	echo '</a>';
@@ -7742,7 +7742,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 						if ( $paged === $i ) {
 							echo '<span class="wpr-grid-current-page">'. $i .'</span>';
 						} else {
-							echo '<a href="'. get_pagenum_link( $i, true ) .'">'. $i .'</a>';
+							echo '<a href="'. esc_url(get_pagenum_link( $i, true )) .'">'. $i .'</a>';
 						}
 			        }
 			    }
@@ -7752,7 +7752,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 				    if ( 'yes' === $settings['pagination_prev_next'] ) {
 				    	if ( $paged < $pages ) {
-					    	echo '<a href="'. get_pagenum_link( $paged + 1, true ) .'" class="wpr-next-page">';
+					    	echo '<a href="'. esc_url(get_pagenum_link( $paged + 1, true )) .'" class="wpr-next-page">';
 					    		echo '<span>'. esc_html($settings['pagination_next_text']) .'</span>';
 					    		echo Utilities::get_wpr_icon( $settings['pagination_pn_icon'], 'right' );
 					    	echo '</a>';
@@ -7766,7 +7766,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 				    if ( 'yes' === $settings['pagination_first_last'] ) {
 				    	if ( $paged <= $pages - 1 ) {
-					    	echo '<a href="'. get_pagenum_link( $pages, true ) .'" class="wpr-last-page">';
+					    	echo '<a href="'. esc_url(get_pagenum_link( $pages, true )) .'" class="wpr-last-page">';
 					    		echo '<span>'. esc_html($settings['pagination_last_text']) .'</span>';
 					    		echo Utilities::get_wpr_icon( $settings['pagination_fl_icon'], 'right' );
 					    	echo '</a>';
@@ -7784,7 +7784,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		// Load More / Infinite Scroll
 		} else {
-			echo '<a href="'. get_pagenum_link( $paged + 1, true ) .'" class="wpr-load-more-btn">';
+			echo '<a href="'. esc_url(get_pagenum_link( $paged + 1, true )) .'" class="wpr-load-more-btn">';
 				echo esc_html($settings['pagination_load_more_text']);
 			echo '</a>';
 

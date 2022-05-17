@@ -4876,8 +4876,8 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		add_filter( 'the_password_form', function () {
 			$output  = '<form action="'. esc_url(home_url( 'wp-login.php?action=postpass' )) .'" method="post">';
 			$output .= '<i class="fas fa-lock"></i>';
-			$output .= '<p>'. get_the_title() .'</p>';
-			$output .= '<input type="password" name="post_password" id="post-'. get_the_id() .'" placeholder="'. esc_html__( 'Type and hit Enter...', 'wpr-addons' ) .'">';
+			$output .= '<p>'. esc_html(get_the_title()) .'</p>';
+			$output .= '<input type="password" name="post_password" id="post-'. esc_attr(get_the_id()) .'" placeholder="'. esc_html__( 'Type and hit Enter...', 'wpr-addons' ) .'">';
 			$output .= '</form>';
 
 			return $output;
@@ -5048,7 +5048,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 						echo get_avatar( $author_id, $settings['element_avatar_size'] );
 					}
 
-					echo '<span>'. get_the_author_meta( 'display_name', $author_id ) .'</span>';
+					echo '<span>'. esc_html(get_the_author_meta( 'display_name', $author_id )) .'</span>';
 
 				// Icon: After
 				if ( 'after' === $settings['element_extra_icon_pos'] ) {
@@ -5184,7 +5184,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 				// Taxonomies
 				foreach ( $terms as $term ) {
-					echo '<a href="'. get_term_link( $term->term_id ) .'" class="wpr-pointer-item">'. esc_html( $term->name );
+					echo '<a href="'. esc_url(get_term_link( $term->term_id )) .'" class="wpr-pointer-item">'. esc_html( $term->name );
 						if ( ++$count !== count( $terms ) ) {
 							echo '<span class="tax-sep">'. $settings['element_tax_sep'] .'</span>';
 						}

@@ -744,7 +744,7 @@ class Utilities {
 			$module->add_control(
 	            'wpr_library_buttons',
 	            [
-					'raw' => '<div><a href="#" target="_blank" data-theme="'. get_template() .'">'. esc_html__( 'Widget Preview', 'wpr-addons' ) .'</a> <a href="#">'. esc_html__( 'Predefined Styles', 'wpr-addons' ) .'</a></div>'. $tutorial_link,
+					'raw' => '<div><a href="#" target="_blank" data-theme="'. esc_attr(get_template()) .'">'. esc_html__( 'Widget Preview', 'wpr-addons' ) .'</a> <a href="#">'. esc_html__( 'Predefined Styles', 'wpr-addons' ) .'</a></div>'. $tutorial_link,
 					'type' => $controls_manager,
 				]
 	        );

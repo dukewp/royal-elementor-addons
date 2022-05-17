@@ -55,8 +55,8 @@ class WprPluginUpdateNotice {
                             </p>
                             <br>
                             <div>
-                                <a href="'. get_admin_url() .'admin.php?page=wpr-templates-kit" class="wpr-get-started-button button button-primary">Go to Templates Library</a>
-                                <a href="'. get_admin_url() .'admin.php?page=wpr-theme-builder" class="wpr-get-started-button button button-secondary">Go to Theme Builder</a>
+                                <a href="'. esc_url(get_admin_url()) .'admin.php?page=wpr-templates-kit" class="wpr-get-started-button button button-primary">Go to Templates Library</a>
+                                <a href="'. esc_url(get_admin_url()) .'admin.php?page=wpr-theme-builder" class="wpr-get-started-button button button-secondary">Go to Theme Builder</a>
                             </div>
                         </div>
                         <div class="image-wrap"><img src="'. WPR_ADDONS_ASSETS_URL .'/img/theme-builder.png"></div>

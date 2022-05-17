@@ -1066,7 +1066,7 @@ class Wpr_Post_Info extends Widget_Base {
 		// Extra Icon & Text 
 		$this->render_extra_icon_text( $settings );
 		
-		echo '<span>'. get_the_time( '' ) .'</span>';
+		echo '<span>'. esc_html(get_the_time( '' )) .'</span>';
 	}
 
 	// Post Comments
@@ -1115,7 +1115,7 @@ class Wpr_Post_Info extends Widget_Base {
 				echo get_avatar( $author_id, $settings['post_info_avatar_size'] );
 			}
 
-			echo '<span>'. get_the_author_meta( 'display_name', $author_id ) .'</span>';
+			echo '<span>'. esc_html(get_the_author_meta( 'display_name', $author_id )) .'</span>';
 
 		if ( 'yes' === $settings['post_info_link_wrap'] ) {
 			echo '</a>';
@@ -1133,7 +1133,7 @@ class Wpr_Post_Info extends Widget_Base {
 		// Taxonomies
 		foreach ( $terms as $term ) {
 			if ( 'yes' === $settings['post_info_link_wrap'] ) {
-				echo '<a href="'. get_term_link( $term->term_id ) .'">';
+				echo '<a href="'. esc_url(get_term_link( $term->term_id )) .'">';
 					// Term Name
 					echo esc_html( $term->name );
 
