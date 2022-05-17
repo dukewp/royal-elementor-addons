@@ -106,6 +106,19 @@ class Wpr_Post_Info extends Widget_Base {
 		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'post-info', 'post_info_select', ['pro-cf'] );
 
 		$repeater->add_control(
+			'post_info_modified_time',
+			[
+				'label' => esc_html__( 'Show Modified Time', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => '',
+				'return_value' => 'yes',
+				'condition' => [
+					'post_info_select' => [ 'time', 'date' ],
+				]
+			]
+		);
+
+		$repeater->add_control(
 			'post_info_comments_text_1',
 			[
 				'label' => esc_html__( 'No Comments', 'wpr-addons' ),
@@ -1050,8 +1063,13 @@ class Wpr_Post_Info extends Widget_Base {
 			echo '<a href="'. esc_url( get_day_link( get_post_time( 'Y' ), get_post_time( 'm' ), get_post_time( 'j' ) ) ) .'">';
 		}
 
-		// Date
-		echo '<span>'. apply_filters( 'the_date', get_the_date( '' ), get_option( 'date_format' ), '', '' ) .'</span>';
+		// Modified Time
+		if ( 'yes' === $settings['post_info_modified_time']) {
+			echo get_the_modified_time(get_option( 'date_format'));
+		} else {
+			// Date
+			echo '<span>'. apply_filters( 'the_date', get_the_date( '' ), get_option( 'date_format' ), '', '' ) .'</span>';
+		}
 
 		// Wrap with Link
 		if ( 'yes' === $settings['post_info_link_wrap'] ) {
@@ -1063,8 +1081,12 @@ class Wpr_Post_Info extends Widget_Base {
 	public function render_post_info_time( $settings ) {
 		// Extra Icon & Text 
 		$this->render_extra_icon_text( $settings );
-		
-		echo '<span>'. get_the_time( '' ) .'</span>';
+
+		if ( 'yes' === $settings['post_info_modified_time']) {
+			echo get_the_modified_time();
+		} else {
+			echo '<span>'. get_the_time( '' ) .'</span>';
+		}
 	}
 
 	// Post Comments
