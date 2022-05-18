@@ -33,22 +33,22 @@ function wpr_addons_templates_kit_page() {
 
     <header>
         <div class="wpr-templates-kit-logo">
-            <div><img src="<?php echo !empty(get_option('wpr_wl_plugin_logo')) ? esc_url(wp_get_attachment_image_src(get_option('wpr_wl_plugin_logo'), 'full')[0]) : WPR_ADDONS_ASSETS_URL .'img/logo-40x40.png'; ?>"></div>
-            <div class="back-btn"><?php _e('<span class="dashicons dashicons-arrow-left-alt2"></span> Back to Library', 'wpr-addons'); ?></div>
+            <div><img src="<?php echo !empty(get_option('wpr_wl_plugin_logo')) ? esc_url(wp_get_attachment_image_src(get_option('wpr_wl_plugin_logo'), 'full')[0]) : esc_url(WPR_ADDONS_ASSETS_URL .'img/logo-40x40.png'); ?>"></div>
+            <div class="back-btn"><?php printf( esc_html__('%s Back to Library', 'wpr-addons'), '<span class="dashicons dashicons-arrow-left-alt2"></span>'); ?></div>
         </div>
 
         <div class="wpr-templates-kit-search">
-            <input type="text" autocomplete="off" placeholder="<?php _e('Search Templates Kit...', 'wpr-addons'); ?>">
+            <input type="text" autocomplete="off" placeholder="<?php esc_html_e('Search Templates Kit...', 'wpr-addons'); ?>">
             <span class="dashicons dashicons-search"></span>
         </div>
 
         <div class="wpr-templates-kit-price-filter">
-            <span data-price="mixed"><?php _e('Price: Mixed', 'wpr-addons'); ?></span>
+            <span data-price="mixed"><?php esc_html_e('Price: Mixed', 'wpr-addons'); ?></span>
             <span class="dashicons dashicons-arrow-down-alt2"></span>
             <ul>
-                <li><?php _e('Mixed', 'wpr-addons'); ?></li>
-                <li><?php _e('Free', 'wpr-addons'); ?></li>
-                <li><?php _e('Premium', 'wpr-addons'); ?></li>
+                <li><?php esc_html_e('Mixed', 'wpr-addons'); ?></li>
+                <li><?php esc_html_e('Free', 'wpr-addons'); ?></li>
+                <li><?php esc_html_e('Premium', 'wpr-addons'); ?></li>
             </ul>
         </div>
 
@@ -65,11 +65,11 @@ function wpr_addons_templates_kit_page() {
     </header>
 
     <div class="wpr-templates-kit-page-title">
-        <h1><?php _e('Royal Elementor Templates Kit', 'wpr-addons'); ?></h1>
-        <p><?php _e('Import any Templates Kit with just a Single click', 'wpr-addons'); ?></p>
+        <h1><?php esc_html_e('Royal Elementor Templates Kit', 'wpr-addons'); ?></h1>
+        <p><?php esc_html_e('Import any Templates Kit with just a Single click', 'wpr-addons'); ?></p>
     </div>
 
-    <div class="wpr-templates-kit-grid main-grid" data-theme-status="<?php echo get_theme_status(); ?>">
+    <div class="wpr-templates-kit-grid main-grid" data-theme-status="<?php echo esc_attr(get_theme_status()); ?>">
         <?php
             $kits = WPR_Templates_Data::get_available_kits();
             $sorted_kits = [];
@@ -108,12 +108,12 @@ function wpr_addons_templates_kit_page() {
         <div class="wpr-templates-kit-grid single-grid"></div>
 
         <footer class="action-buttons-wrap">
-            <a href="https://royal-elementor-addons.com/" class="preview-demo button" target="_blank"><?php _e('Preview Demo', 'wpr-addons'); ?> <span class="dashicons dashicons-external"></span></a>
+            <a href="https://royal-elementor-addons.com/" class="preview-demo button" target="_blank"><?php esc_html_e('Preview Demo', 'wpr-addons'); ?> <span class="dashicons dashicons-external"></span></a>
 
             <div class="import-template-buttons">
                 <?php
-                    echo '<button class="import-kit button">'. __('Import Templates Kit', 'wpr-addons') .' <span class="dashicons dashicons-download"></span></button>';
-                    echo '<a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-templates-upgrade-pro#purchasepro" class="get-access button" target="_blank">'. __('Get Access', 'wpr-addons') .' <span class="dashicons dashicons-external"></span></a>';
+                    echo '<button class="import-kit button">'. esc_html__('Import Templates Kit', 'wpr-addons') .' <span class="dashicons dashicons-download"></span></button>';
+                    echo '<a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-templates-upgrade-pro#purchasepro" class="get-access button" target="_blank">'. esc_html__('Get Access', 'wpr-addons') .' <span class="dashicons dashicons-external"></span></a>';
                 ?>
                 <button class="import-template button"><?php printf( esc_html__( 'Import %s Template', 'wpr-addons' ), '<strong></strong>' ); ?></button>
                 

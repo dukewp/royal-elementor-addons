@@ -85,7 +85,7 @@ class Wpr_Elementor_Template extends Widget_Base {
 
 		if ( '' !== $settings['select_template'] ) {
 			$edit_link = '<span class="wpr-template-edit-btn" data-permalink="'. esc_url(get_permalink($settings['select_template'])) .'">Edit Template</span>';
-			echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $settings['select_template'], true ) . $edit_link;
+			echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $settings['select_template'], true ) . $edit_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 }

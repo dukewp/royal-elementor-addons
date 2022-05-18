@@ -129,9 +129,9 @@ class WPR_Templates_Library_Blocks {
 						</div>
 						<div class="wpr-tplib-template-footer elementor-clearfix">
 							<?php if ( !defined('WPR_ADDONS_PRO_VERSION') && ! wpr_fs()->can_use_premium_code() ) : ?>
-								<h3><?php echo strpos($template_slug, 'pro') ? str_replace('-pro', ' Pro', $template_title) : str_replace('-zzz', ' Pro', $template_title); ?></h3>
+								<h3><?php echo strpos($template_slug, 'pro') ? esc_html(str_replace('-pro', ' Pro', $template_title)) : esc_html(str_replace('-zzz', ' Pro', $template_title)); ?></h3>
 							<?php else : ?>
-								<h3><?php echo strpos($template_slug, 'pro') ? str_replace('-pro', '', $template_title) : str_replace('-zzz', '', $template_title); ?></h3>
+								<h3><?php echo strpos($template_slug, 'pro') ? esc_html(str_replace('-pro', '', $template_title)) : esc_html(str_replace('-zzz', '', $template_title)); ?></h3>
 							<?php endif; ?>
 
 							<?php if ( ( strpos($template_slug, 'pro') && !wpr_fs()->can_use_premium_code() ) || ( strpos($template_slug, 'zzz') ) && !wpr_fs()->can_use_premium_code() ) : ?>

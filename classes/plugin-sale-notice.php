@@ -40,25 +40,25 @@ class WprPluginSaleNotice {
         if ( is_admin() ) {
             echo '<div class="notice wpr-plugin-sale-notice is-dismissible">
                         <div class="wpr-plugin-sale-notice-logo">
-                            <img src="'. WPR_ADDONS_ASSETS_URL .'/img/logo-128x128.png">
+                            <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/logo-128x128.png">
                         </div>
                         <div>
                             <h3><span>Flash Sale</span><br> Royal Elementor Addons Pro</h3>
                             <ul>
                                 <li>
-                                    <img src="' . WPR_ADDONS_ASSETS_URL . '/img/check-mark.png">
+                                    <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/check-mark.png">
                                     Advanced Theme Builder
                                 </li>
                                 <li>
-                                    <img src="' . WPR_ADDONS_ASSETS_URL . '/img/check-mark.png">
+                                    <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/check-mark.png">
                                     20+ Designer Made Templates Kit
                                 </li>
                                 <li>
-                                    <img src="' . WPR_ADDONS_ASSETS_URL . '/img/check-mark.png">
+                                    <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/check-mark.png">
                                     35+ Advanced Elementor Widgets
                                 </li>
                                 <li>
-                                    <img src="' . WPR_ADDONS_ASSETS_URL . '/img/check-mark.png">
+                                    <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/check-mark.png">
                                     Advanced Popup Builder
                                 </li>
                             </ul>
@@ -72,7 +72,7 @@ class WprPluginSaleNotice {
                                 <a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-salebanner-upgrade-pro#purchasepro" target="_blank" class="wpr-upgrade-to-pro-button button button-secondary">Upgrade to Pro <span class="dashicons dashicons-arrow-right-alt"></span></a>
                             </div>
                         </div>
-                        <div class="image-wrap"><img src="'. WPR_ADDONS_ASSETS_URL .'/img/sale-banner.png"></div>
+                        <div class="image-wrap"><img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/sale-banner.png"></div>
                         <canvas id="wpr-notice-confetti"></canvas>
                 </div>';
         }

@@ -7860,7 +7860,7 @@ class Wpr_Grid extends Widget_Base {
 
 			echo '<div class="wpr-cv-outer">';
 				echo '<div class="wpr-cv-inner">';
-					echo get_the_password_form();
+					echo get_the_password_form(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo '</div>';
 			echo '</div>';
 		echo '</div>';
@@ -7903,7 +7903,7 @@ class Wpr_Grid extends Widget_Base {
 		echo '<'. esc_attr($settings['element_title_tag']) .' class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
 				echo '<a href="'. esc_url( get_the_permalink() ) .'" class="wpr-pointer-item">';
-					echo wp_trim_words( get_the_title(), $settings['element_word_count'] );
+					echo esc_html(wp_trim_words( get_the_title(), $settings['element_word_count'] ));
 				echo '</a>';
 			echo '</div>';
 		echo '</'. esc_attr($settings['element_title_tag']) .'>';
@@ -8957,8 +8957,8 @@ class Wpr_Grid extends Widget_Base {
 		if ( 'slider' === $settings['layout_select'] ) {
 			// Slider Navigation
 			echo '<div class="wpr-grid-slider-arrow-container">';
-				echo '<div class="wpr-grid-slider-prev-arrow wpr-grid-slider-arrow" id="wpr-grid-slider-prev-'. esc_attr($this->get_id()) .'">'. Utilities::get_wpr_icon( $settings['layout_slider_nav_icon'], '' ) .'</div>';
-				echo '<div class="wpr-grid-slider-next-arrow wpr-grid-slider-arrow" id="wpr-grid-slider-next-'. esc_attr($this->get_id()) .'">'. Utilities::get_wpr_icon( $settings['layout_slider_nav_icon'], '' ) .'</div>';
+				echo '<div class="wpr-grid-slider-prev-arrow wpr-grid-slider-arrow" id="wpr-grid-slider-prev-'. esc_attr($this->get_id()) .'">'. Utilities::get_wpr_icon( $settings['layout_slider_nav_icon'], '' ) .'</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo '<div class="wpr-grid-slider-next-arrow wpr-grid-slider-arrow" id="wpr-grid-slider-next-'. esc_attr($this->get_id()) .'">'. Utilities::get_wpr_icon( $settings['layout_slider_nav_icon'], '' ) .'</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo '</div>';
 
 			// Slider Dots

@@ -20,7 +20,7 @@ function wpr_addons_theme_builder_page() {
 <div class="wrap wpr-settings-page-wrap">
 
 <div class="wpr-settings-page-header">
-    <h1><?php echo Utilities::get_plugin_name(true); ?></h1>
+    <h1><?php echo esc_html(Utilities::get_plugin_name(true)); ?></h1>
     <p><?php esc_html_e( 'The most powerful Elementor Addons in the universe.', 'wpr-addons' ); ?></p>
 
     <!-- Custom Template -->
@@ -119,7 +119,7 @@ function wpr_addons_theme_builder_page() {
                 <h3>WooCommerce is Comming Soon!</h3>
                 <p><strong>WooCommerce Builder</strong> and <strong>Templates Kit</strong> (Premade Sites) will be available very soon. You will be able to style and modify any part of WooCommerce Pages with the most advanced options available on the market. </p>
            </div>
-           <img src="<?php echo WPR_ADDONS_ASSETS_URL .'img/woo-coming-soon.jpg' ?>" alt="">
+           <img src="<?php echo esc_url(WPR_ADDONS_ASSETS_URL .'img/woo-coming-soon.jpg'); ?>" alt="">
         </div>
     <?php endif; ?>
 
