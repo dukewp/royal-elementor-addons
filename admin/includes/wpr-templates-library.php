@@ -61,7 +61,9 @@ class WPR_Templates_Library {
 	*/
 	public function redirect_to_options_page() {
 		if ( get_current_screen()->post_type == 'wpr_templates' && isset($_GET['action']) && $_GET['action'] == 'edit' ) {
-			if ( 'wpr-popups' === Utilities::get_elementor_template_type($_GET['post']) ) {
+			$elementor_template_type = isset($_GET['post']) ? sanitize_text_field(wp_unslash($_GET['post'])) : '';
+
+			if ( 'wpr-popups' === Utilities::get_elementor_template_type( $elementor_template_type ) ) {
 				wp_redirect('admin.php?page=wpr-popups');
 			} else {
 				wp_redirect('admin.php?page=wpr-theme-builder');
