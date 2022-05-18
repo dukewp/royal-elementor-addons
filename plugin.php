@@ -104,9 +104,9 @@ class Plugin {
 		}
 
 		// Reading Progress Bar
-		if ( 'on' === get_option('wpr-reading-progress-bar', 'on') ) {
-			// require WPR_ADDONS_PATH . 'extensions/wpr-reading-progress-bar.php';
-		}
+		// if ( 'on' === get_option('wpr-reading-progress-bar', 'on') ) {
+		// 	require WPR_ADDONS_PATH . 'extensions/wpr-reading-progress-bar.php';
+		// }
 
 		// Custom CSS
 		require WPR_ADDONS_PATH . 'extensions/wpr-custom-css.php';
@@ -441,7 +441,7 @@ class Plugin {
 
 		wp_register_script(
 			'wpr-google-maps',
-			'https://maps.googleapis.com/maps/api/js?key='. get_option('wpr_google_map_api_key'),
+			'https://maps.googleapis.com/maps/api/js?key='. esc_url(get_option('wpr_google_map_api_key')),
 			[],
 			'',
 			true
@@ -527,7 +527,7 @@ class Plugin {
 			'wpr-addons-library-frontend-js',
 			'white_label',
 			[
-				'logo_url' => !empty(get_option('wpr_wl_plugin_logo')) ? wp_get_attachment_image_src(get_option('wpr_wl_plugin_logo'), 'full')[0] : WPR_ADDONS_ASSETS_URL .'img/logo-40x40.png'
+				'logo_url' => !empty(get_option('wpr_wl_plugin_logo')) ? esc_url(wp_get_attachment_image_src(get_option('wpr_wl_plugin_logo'), 'full')[0]) : WPR_ADDONS_ASSETS_URL .'img/logo-40x40.png'
 			]
 		);
 

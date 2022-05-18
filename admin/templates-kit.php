@@ -33,7 +33,7 @@ function wpr_addons_templates_kit_page() {
 
     <header>
         <div class="wpr-templates-kit-logo">
-            <div><img src="<?php echo !empty(get_option('wpr_wl_plugin_logo')) ? wp_get_attachment_image_src(get_option('wpr_wl_plugin_logo'), 'full')[0] : WPR_ADDONS_ASSETS_URL .'img/logo-40x40.png'; ?>"></div>
+            <div><img src="<?php echo !empty(get_option('wpr_wl_plugin_logo')) ? esc_url(wp_get_attachment_image_src(get_option('wpr_wl_plugin_logo'), 'full')[0]) : WPR_ADDONS_ASSETS_URL .'img/logo-40x40.png'; ?>"></div>
             <div class="back-btn"><?php _e('<span class="dashicons dashicons-arrow-left-alt2"></span> Back to Library', 'wpr-addons'); ?></div>
         </div>
 
@@ -209,7 +209,7 @@ function wpr_install_reuired_plugins() {
     }
 
     // Set Active Plugins
-    update_option( 'active_plugins', $active_plugins );
+    update_option( 'active_plugins', $active_plugins ); 
 
     // Get Current Theme
     $theme = get_option('stylesheet');
@@ -321,6 +321,7 @@ function import_elementor_site_settings( $kit ) {
 ** Setup WPR Templates
 */
 function setup_wpr_templates( $kit ) {
+    $kit = isset($kit) ? sanitize_text_field(wp_unslash($kit)) : '';
     
     // Set Home & Blog Pages
     $home_page = get_page_by_path('home-'. $kit);
@@ -432,7 +433,7 @@ function fix_contact_form_7() {
 ** Final Settings Setup
 */
 function wpr_final_settings_setup() {
-    $kit = get_option('wpr-import-kit-id');
+    $kit = !empty(get_option('wpr-import-kit-id')) ? esc_html(get_option('wpr-import-kit-id')) : '';
 
     // Elementor Site Settings
     import_elementor_site_settings($kit);

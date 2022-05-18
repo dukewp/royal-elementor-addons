@@ -214,11 +214,11 @@ if ( did_action( 'elementor/loaded' ) ) {
 // Set Plugin Activation Time
 function royal_elementor_addons_activation_time() {//TODO: Try to locate this in rating-notice.php later if possible
 	if ( false === get_option( 'royal_elementor_addons_activation_time' ) ) {
-		add_option( 'royal_elementor_addons_activation_time', strtotime('now') );
+		add_option( 'royal_elementor_addons_activation_time', absint(intval(strtotime('now'))) );
 	}
 
 	if ( false === get_option( 'royal_elementor_addons_activation_time_for_sale' ) ) {
-		add_option( 'royal_elementor_addons_activation_time_for_sale', strtotime('now') );
+		add_option( 'royal_elementor_addons_activation_time_for_sale', absint(intval(strtotime('now'))) );
 	} 
 }
 

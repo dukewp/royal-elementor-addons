@@ -91,7 +91,7 @@ function wpr_register_addons_settings() {
 }
 
 function wpr_addons_settings_page() {
-    
+
 ?>
 
 <div class="wrap wpr-settings-page-wrap">
