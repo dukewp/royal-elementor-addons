@@ -35,7 +35,7 @@ function wpr_addons_popups_page() {
     <?php
 
     // Active Tab
-    $active_tab = isset( $_GET['tab'] ) ? esc_attr($_GET['tab']) : 'wpr_tab_popups';
+    $active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'wpr_tab_popups';
 
     ?>
 

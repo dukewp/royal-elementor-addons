@@ -121,13 +121,13 @@ function wpr_addons_settings_page() {
 
     // Active Tab
     if ( empty(get_option('wpr_wl_hide_elements_tab')) ) {
-        $active_tab = isset( $_GET['tab'] ) ? esc_attr($_GET['tab']) : 'wpr_tab_elements';
+        $active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'wpr_tab_elements';
     } elseif ( empty(get_option('wpr_wl_hide_extensions_tab')) ) {
-        $active_tab = isset( $_GET['tab'] ) ? esc_attr($_GET['tab']) : 'wpr_tab_extensions';
+        $active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'wpr_tab_extensions';
     } elseif ( empty(get_option('wpr_wl_hide_settings_tab')) ) {
-        $active_tab = isset( $_GET['tab'] ) ? esc_attr($_GET['tab']) : 'wpr_tab_settings';
+        $active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'wpr_tab_settings';
     } elseif ( empty(get_option('wpr_wl_hide_white_label_tab')) ) {
-        $active_tab = isset( $_GET['tab'] ) ? esc_attr($_GET['tab']) : 'wpr_tab_white_label';
+        $active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'wpr_tab_white_label';
     }
     
 
