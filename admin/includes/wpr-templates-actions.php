@@ -153,9 +153,10 @@ class WPR_Templates_Actions {
 	*/
 	public function wpr_import_library_template() {
         $source = new WPR_Library_Source();
+		$slug = isset($_POST['slug']) ? sanitize_text_field(wp_unslash($_POST['slug'])): '';
 
         $data = $source->get_data([
-        	'template_id' => $_POST['slug']
+        	'template_id' => $slug
         ]);
         
         echo json_encode($data);
@@ -165,7 +166,10 @@ class WPR_Templates_Actions {
 	** Reset Template
 	*/
 	public function wpr_delete_template() {
-		$post = get_page_by_path( sanitize_text_field($_POST['template_slug']), OBJECT, sanitize_text_field($_POST['template_library']) );
+		$template_slug = isset($_POST['template_slug']) ? sanitize_text_field(wp_unslash($_POST['template_slug'])): '';
+		$template_library = isset($_POST['template_library']) ? sanitize_text_field(wp_unslash($_POST['template_library'])): '';
+
+		$post = get_page_by_path( $template_slug, OBJECT, $template_library );
 		wp_delete_post( $post->ID, true );
 	}
 
