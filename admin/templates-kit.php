@@ -200,10 +200,12 @@ function wpr_install_reuired_plugins() {
     $active_plugins = (array) get_option( 'active_plugins', array() );
 
     // Add Required Plugins
-    if ( 'contact-form-7' == $_POST['plugin'] ) {
-        array_push( $active_plugins, 'contact-form-7/wp-contact-form-7.php' );
-    } elseif ( 'media-library-assistant' == $_POST['plugin'] ) {
-        array_push( $active_plugins, 'media-library-assistant/index.php' );
+    if ( isset($_POST['plugin']) ) {
+        if ( 'contact-form-7' == $_POST['plugin'] ) {
+            array_push( $active_plugins, 'contact-form-7/wp-contact-form-7.php' );
+        } elseif ( 'media-library-assistant' == $_POST['plugin'] ) {
+            array_push( $active_plugins, 'media-library-assistant/index.php' );
+        }
     }
 
     // Set Active Plugins
@@ -242,8 +244,8 @@ function wpr_import_templates_kit() {
     }
 
     if ( class_exists( 'WP_Import' ) ) {
-        $kit = sanitize_file_name($_POST['wpr_templates_kit']);
-        $file = sanitize_file_name($_POST['wpr_templates_kit_single']);
+        $kit = isset($_POST['wpr_templates_kit']) ? sanitize_file_name(wp_unslash($_POST['wpr_templates_kit'])) : '';
+        $file = isset($_POST['wpr_templates_kit_single']) ? sanitize_file_name(wp_unslash($_POST['wpr_templates_kit_single'])) : '';
 
         // Tmp
         update_option( 'wpr-import-kit-id', $kit );
@@ -531,9 +533,11 @@ function wpr_search_query_results() {
         return;
     }
 
+    $search_query = isset($_POST['search_query']) ? sanitize_text_field(wp_unslash($_POST['search_query'])) : '';
+
     wp_remote_post( 'http://reastats.kinsta.cloud/wp-json/templates-kit-search/data', [
         'body' => [
-            'search_query' => $_POST['search_query']
+            'search_query' => $search_query
         ]
     ] );
 }

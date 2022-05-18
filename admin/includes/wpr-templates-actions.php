@@ -47,71 +47,81 @@ class WPR_Templates_Actions {
 	** Save Template Conditions
 	*/
 	public function wpr_save_template_conditions() {
+		$template = isset($_POST['template']) ? sanitize_text_field(wp_unslash($_POST['template'])): false;
+
 		// Header
 		if ( isset($_POST['wpr_header_conditions']) ) {
-			update_option( 'wpr_header_conditions', $this->sanitize_conditions($_POST['wpr_header_conditions']) );
+			update_option( 'wpr_header_conditions', $this->sanitize_conditions($_POST['wpr_header_conditions']) );  // phpcs:ignore
 
-			if ( isset($_POST['wpr_header_show_on_canvas']) ) {
-				update_post_meta( Utilities::get_template_id($_POST['template']), 'wpr_header_show_on_canvas', $_POST['wpr_header_show_on_canvas'] );
+			$wpr_header_show_on_canvas = isset($_POST['wpr_header_show_on_canvas']) ? sanitize_text_field(wp_unslash($_POST['wpr_header_show_on_canvas'])): false;
+			if ( $wpr_header_show_on_canvas && $template ) {
+				update_post_meta( Utilities::get_template_id($template), 'wpr_header_show_on_canvas', $wpr_header_show_on_canvas );
 			}
 		}
 
 		// Footer
 		if ( isset($_POST['wpr_footer_conditions']) ) {
-			update_option( 'wpr_footer_conditions', $this->sanitize_conditions($_POST['wpr_footer_conditions']) );
+			update_option( 'wpr_footer_conditions', $this->sanitize_conditions($_POST['wpr_footer_conditions']) );  // phpcs:ignore
 
-			if ( isset($_POST['wpr_footer_show_on_canvas']) ) {
-				update_post_meta( Utilities::get_template_id($_POST['template']), 'wpr_footer_show_on_canvas', $_POST['wpr_footer_show_on_canvas'] );
+			$wpr_footer_show_on_canvas = isset($_POST['wpr_footer_show_on_canvas']) ? sanitize_text_field(wp_unslash($_POST['wpr_footer_show_on_canvas'])): false;
+			if ( $wpr_footer_show_on_canvas && $template ) {
+				update_post_meta( Utilities::get_template_id($template), 'wpr_footer_show_on_canvas', $wpr_footer_show_on_canvas );
 			}
 		}
 
 		// Archive
 		if ( isset($_POST['wpr_archive_conditions']) ) {
-			update_option( 'wpr_archive_conditions', $this->sanitize_conditions($_POST['wpr_archive_conditions']) );
+			update_option( 'wpr_archive_conditions', $this->sanitize_conditions($_POST['wpr_archive_conditions']) );  // phpcs:ignore
 		}
 
 		// Single
 		if ( isset($_POST['wpr_single_conditions']) ) {
-			update_option( 'wpr_single_conditions', $this->sanitize_conditions($_POST['wpr_single_conditions']) );
+			update_option( 'wpr_single_conditions', $this->sanitize_conditions($_POST['wpr_single_conditions']) );  // phpcs:ignore
 		}
 
 		// Product Archive
 		if ( isset($_POST['wpr_product_archive_conditions']) ) {
-			update_option( 'wpr_product_archive_conditions', $this->sanitize_conditions($_POST['wpr_product_archive_conditions']) );
+			update_option( 'wpr_product_archive_conditions', $this->sanitize_conditions($_POST['wpr_product_archive_conditions']) );  // phpcs:ignore
 		}
 
 		// Product Single
 		if ( isset($_POST['wpr_product_single_conditions']) ) {
-			update_option( 'wpr_product_single_conditions', $this->sanitize_conditions($_POST['wpr_product_single_conditions']) );
+			update_option( 'wpr_product_single_conditions', $this->sanitize_conditions($_POST['wpr_product_single_conditions']) );  // phpcs:ignore
 		}
 
 		// Popup
 		if ( isset($_POST['wpr_popup_conditions']) ) {
-			update_option( 'wpr_popup_conditions', $this->sanitize_conditions($_POST['wpr_popup_conditions']) );
+			update_option( 'wpr_popup_conditions', $this->sanitize_conditions($_POST['wpr_popup_conditions']) );  // phpcs:ignore
 		}
 	}
 
 	public function sanitize_conditions( $data ) {
-		return stripslashes( json_encode( array_filter( json_decode(stripcslashes($data), true) ) ) );
+		return wp_unslash( json_encode( array_filter( json_decode(stripcslashes($data), true) ) ) );
 	}
 
 	/**
 	** Create Template
 	*/
 	public function wpr_create_template() {
-		if ( isset($_POST['user_template_title']) ) {
+		$user_template_type = isset($_POST['user_template_type']) ? sanitize_text_field(wp_unslash($_POST['user_template_type'])): false;
+		$user_template_library = isset($_POST['user_template_library']) ? sanitize_text_field(wp_unslash($_POST['user_template_library'])): false;
+		$user_template_title = isset($_POST['user_template_title']) ? sanitize_text_field(wp_unslash($_POST['user_template_title'])): false;
+		$user_template_slug = isset($_POST['user_template_slug']) ? sanitize_text_field(wp_unslash($_POST['user_template_slug'])): false;
+
+		if ( $user_template_title ) {
 			// Create
 			$template_id = wp_insert_post(array (
-				'post_type' 	=> sanitize_text_field($_POST['user_template_library']),
-				'post_title' 	=> sanitize_text_field($_POST['user_template_title']),
-				'post_name' 	=> sanitize_text_field($_POST['user_template_slug']),
+				'post_type' 	=> $user_template_library,
+				'post_title' 	=> $user_template_title,
+				'post_name' 	=> $user_template_slug,
 				'post_content' 	=> '',
 				'post_status' 	=> 'publish'
 			));
 
 			// Set Types
 			if ( 'wpr_templates' === $_POST['user_template_library'] ) {
-				wp_set_object_terms( $template_id, [sanitize_text_field($_POST['user_template_type']), 'user'], 'wpr_template_type' );
+
+				wp_set_object_terms( $template_id, [$user_template_type, 'user'], 'wpr_template_type' );
 
 				if ( 'popup' === $_POST['user_template_type'] ) {
 					update_post_meta( $template_id, '_elementor_template_type', 'wpr-popups' );
@@ -124,7 +134,7 @@ class WPR_Templates_Actions {
 						update_post_meta( $template_id, '_elementor_template_type', 'wpr-theme-builder' );
 					}
 
-					update_post_meta( $template_id, '_wpr_template_type', sanitize_text_field($_POST['user_template_type']) );
+					update_post_meta( $template_id, '_wpr_template_type', $user_template_type );
 				}
 			} else {
 				update_post_meta( $template_id, '_elementor_template_type', 'page' );

@@ -605,23 +605,24 @@ class Utilities {
 	*/
 	public static function ajax_mailchimp_subscribe() {
 		// API Key
-        $api_key = sanitize_text_field($_POST['apiKey']);
+        $api_key = isset($_POST['apiKey']) ? sanitize_key($_POST['apiKey']) : '';
         $api_key_sufix = explode( '-', $api_key )[1];
 
         // List ID
-        $list_id = sanitize_text_field($_POST['listId']);
+        $list_id = isset($_POST['listId']) ? sanitize_text_field(wp_unslash($_POST['listId'])) : '';
 
-        // Get Available Fileds
-        wp_parse_str( $_POST['fields'], $fields );
+        // Get Available Fileds (PHPCS - fields are sanitized later on input)
+		$available_fields = isset($_POST['fields']) ? $_POST['fields'] : []; // phpcs:ignore
+        wp_parse_str( $available_fields, $fields );
 
         // Merge Additional Fields
         $merge_fields = array(
-            'FNAME' => ! empty( esc_html($fields['wpr_mailchimp_firstname']) ) ? esc_html($fields['wpr_mailchimp_firstname']) : '',
-            'LNAME' => ! empty( esc_html($fields['wpr_mailchimp_lastname']) ) ? esc_html($fields['wpr_mailchimp_lastname']) : '',
+            'FNAME' => !empty( $fields['wpr_mailchimp_firstname'] ) ? sanitize_text_field($fields['wpr_mailchimp_firstname']) : '',
+            'LNAME' => !empty( $fields['wpr_mailchimp_lastname'] ) ? sanitize_text_field($fields['wpr_mailchimp_lastname']) : '',
         );
 
         // API URL
-        $api_url = 'https://'. $api_key_sufix .'.api.mailchimp.com/3.0/lists/'. $list_id .'/members/'. md5(strtolower(esc_html($fields['wpr_mailchimp_email'])));
+        $api_url = 'https://'. $api_key_sufix .'.api.mailchimp.com/3.0/lists/'. $list_id .'/members/'. md5(strtolower(sanitize_text_field($fields['wpr_mailchimp_email'])));
 
         // API Args
         $api_args = [
@@ -631,7 +632,7 @@ class Utilities {
 				'Authorization' => 'apikey '. $api_key,
 			],
 			'body' => json_encode([
-				'email_address' => esc_html($fields[ 'wpr_mailchimp_email' ]),
+				'email_address' => sanitize_text_field($fields[ 'wpr_mailchimp_email' ]),
 				'status' => 'subscribed',
 				'merge_fields' => $merge_fields,
 			]),
