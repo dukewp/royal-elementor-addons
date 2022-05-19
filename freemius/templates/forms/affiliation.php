@@ -305,7 +305,7 @@
                     if (0 === domain.length) {
                         showErrorMessage('<?php fs_esc_js_echo_inline( 'Domain is required.', 'domain-is-required', $slug ) ?>');
                         return;
-                    } elseif ('freemius.com' === domain) {
+                    } else if ('freemius.com' === domain) {
                         showErrorMessage('<?php fs_esc_js_echo_inline( 'Invalid domain', 'invalid-domain', $slug ) ?>' + ' [' + domain + '].');
                         return;
                     }
@@ -319,7 +319,7 @@
                                 extraDomain = $this.val().trim().toLowerCase();
                             if (0 === extraDomain.length || extraDomain === domain) {
                                 return true;
-                            } elseif ('freemius.com' === extraDomain) {
+                            } else if ('freemius.com' === extraDomain) {
                                 showErrorMessage('<?php fs_esc_js_echo_inline( 'Invalid domain', 'invalid-domain', $slug ) ?>' + ' [' + extraDomain + '].');
                                 hasError = true;
                                 return false;

@@ -332,7 +332,7 @@ HTML;
 						window.location.href = redirectLink;
 					}
 				});
-			} elseif (_this.hasClass('button-deactivate')) {
+			} else if (_this.hasClass('button-deactivate')) {
 				// Change the Deactivate button's text and show the reasons panel.
 				_parent.find('.button-deactivate').addClass('allow-deactivate');
 

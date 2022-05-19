@@ -772,7 +772,7 @@
                             $marketingOptin.addClass( 'error' ).show();
                             resetLoadingMode();
                             return false;
-                        } elseif ( null == isMarketingAllowed ) {
+                        } else if ( null == isMarketingAllowed ) {
                             isMarketingAllowed = isMarketingAllowedByLicense[ licenseKey ];
                         }
 
@@ -807,7 +807,7 @@
 
 							if ( ! requireLicenseKey) {
                                 site.action = $this.find('.action.selected').data('action-type');
-                            } elseif ( isNetworkDelegating ) {
+                            } else if ( isNetworkDelegating ) {
 							    site.action = 'delegate';
                             }
 

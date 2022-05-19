@@ -204,13 +204,13 @@
 									var value = data[i];
 									addData(name + '[]', value);
 								}
-							} elseif (typeof data === 'object') {
+							} else if (typeof data === 'object') {
 								for (var key in data) {
 									if (data.hasOwnProperty(key)) {
 										addData(name + '[' + key + ']', data[key]);
 									}
 								}
-							} elseif (data != null) {
+							} else if (data != null) {
 								form.append($('<input>').attr({
 									type : 'hidden',
 									name : String(name),

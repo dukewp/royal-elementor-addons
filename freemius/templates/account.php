@@ -998,7 +998,7 @@
                     $subscriptionCancellationModal.find( '.fs-modal-panel' ).find( 'ul.subscription-actions, .fs-price-increase-warning' ).remove();
                     $subscriptionCancellationModal.find( '.fs-modal-panel > p' ).text( <?php echo json_encode( $cancel_trial_confirm_text ) ?> );
                     $subscriptionCancellationModal.trigger( 'showModal' );
-                } elseif (confirm('<?php fs_esc_attr_echo_inline( 'Deactivating your license will block all premium features, but will enable activating the license on another site. Are you sure you want to proceed?', 'deactivate-license-confirm', $slug ) ?>')) {
+                } else if (confirm('<?php fs_esc_attr_echo_inline( 'Deactivating your license will block all premium features, but will enable activating the license on another site. Are you sure you want to proceed?', 'deactivate-license-confirm', $slug ) ?>')) {
                     var $this = $(this);
 
                     if ( 0 !== $subscriptionCancellationModal.length ) {

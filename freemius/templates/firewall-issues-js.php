@@ -53,7 +53,7 @@
 				if ( 1 == response ) {
 					// Refresh page on success.
 					location.reload();
-				} elseif ( 'http' === response.substr( 0, 4 ) ) {
+				} else if ( 'http' === response.substr( 0, 4 ) ) {
 					// Ping actually worked, redirect.
 					window.location = response;
 				}
