@@ -104,12 +104,12 @@ var_dump(absint($testip));
     <?php if ( empty(get_option('wpr_wl_plugin_links')) ) : ?>
     <div class="wpr-preview-buttons">
         <a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-plugin-prev-btn#widgets" target="_blank" class="button wpr-options-button">
-            <span><?php echo esc_html( 'View Plugin Demo', 'wpr-addons' ); ?></span>
+            <span><?php echo esc_html__( 'View Plugin Demo', 'wpr-addons' ); ?></span>
             <span class="dashicons dashicons-external"></span>
         </a>
 
         <a href="https://www.youtube.com/watch?v=rkYQfn3tUc0" class="wpr-options-button button" target="_blank">
-            <?php echo esc_html( 'How to use Widgets', 'wpr-addons' ); ?>
+            <?php echo esc_html__( 'How to use Widgets', 'wpr-addons' ); ?>
             <span class="dashicons dashicons-video-alt3"></span>
         </a>
     </div>
@@ -198,7 +198,7 @@ var_dump(absint($testip));
                 echo '<h3>'. esc_html($title) .'</h3>';
                 echo '<input type="checkbox" name="wpr-element-'. esc_attr($slug) .'" id="wpr-element-'. esc_attr($slug) .'" '. checked( get_option('wpr-element-'. $slug, 'on'), 'on', false ) .'>';
                 echo '<label for="wpr-element-'. esc_attr($slug) .'"></label>';
-                echo ( '' !== $url && empty(get_option('wpr_wl_plugin_links')) ) ? '<a href="'. esc_url($url . $reff) .'" target="_blank">'. esc_html('View Widget Demo', 'wpr-addons') .'</a>' : '';
+                echo ( '' !== $url && empty(get_option('wpr_wl_plugin_links')) ) ? '<a href="'. esc_url($url . $reff) .'" target="_blank">'. esc_html__('View Widget Demo', 'wpr-addons') .'</a>' : '';
             echo '</div>';
         echo '</div>';
     }
