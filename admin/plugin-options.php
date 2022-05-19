@@ -91,8 +91,7 @@ function wpr_register_addons_settings() {
 }
 
 function wpr_addons_settings_page() {
-$testip = '192.168.1.100';
-var_dump(absint($testip));
+
 ?>
 
 <div class="wrap wpr-settings-page-wrap">
