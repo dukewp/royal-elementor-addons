@@ -25,7 +25,7 @@ class WPR_Post_Likes {
 	*/
 	public function wpr_likes_init() {
 		// Security
-		$nonce = isset( $_REQUEST['nonce'] ) ? sanitize_text_field( $_REQUEST['nonce'] ) : 0;
+		$nonce = isset( $_REQUEST['nonce'] ) ? sanitize_text_field( wp_unslash($_REQUEST['nonce']) ) : 0;
 
 		if ( ! wp_verify_nonce( $nonce, 'wpr-post-likes-nonce' ) ) {
 			exit( esc_html__( 'Not permitted', 'wpr-addons' ) );
@@ -35,7 +35,7 @@ class WPR_Post_Likes {
 		$js_disabled = ( isset( $_REQUEST['disabled'] ) && $_REQUEST['disabled'] == true ) ? true : false;
 
 		// Base variables
-		$post_id = ( isset( $_REQUEST['post_id'] ) && is_numeric( $_REQUEST['post_id'] ) ) ? esc_html($_REQUEST['post_id']) : '';
+		$post_id = ( isset( $_REQUEST['post_id'] ) && is_numeric( $_REQUEST['post_id'] ) ) ? absint($_REQUEST['post_id']) : '';
 
 		$post_users = NULL;
 		$like_count = 0;
