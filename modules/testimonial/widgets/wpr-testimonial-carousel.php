@@ -2774,7 +2774,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 				<?php if ( $i <= $rating_amount ) : ?>
 					<i class="wpr-rating-icon-full"><?php echo esc_html($rating_icon); ?></i>
 				<?php elseif ( $i === $round_rating + 1 && $rating_amount !== $round_rating ) : ?>
-					<i class="wpr-rating-icon-<?php echo ( $rating_amount - $round_rating ) * 10; ?>"><?php echo esc_html($rating_icon); ?></i>
+					<i class="wpr-rating-icon-<?php echo esc_attr(( $rating_amount - $round_rating ) * 10); ?>"><?php echo esc_html($rating_icon); ?></i>
 				<?php else : ?>
 					<i class="wpr-rating-icon-empty"><?php echo esc_html($rating_icon); ?></i>
 				<?php endif; ?>

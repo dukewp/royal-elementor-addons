@@ -709,9 +709,9 @@ class Wpr_Post_Navigation extends Widget_Base {
 
 		if ( 'yes' === $settings['post_nav_arrows'] && $location === $settings['post_nav_arrows_loc'] ) {
 			if (  false !== strpos( $settings['post_nav_arrow_icon'], 'svg-' ) ) {
-				echo  '<div class="wpr-posts-navigation-svg-wrapper">' . Utilities::get_wpr_icon( $settings['post_nav_arrow_icon'], $dir ) . '</div>';
+				echo  '<div class="wpr-posts-navigation-svg-wrapper">' . Utilities::get_wpr_icon( $settings['post_nav_arrow_icon'], $dir ) . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			} else {
-				echo  Utilities::get_wpr_icon( $settings['post_nav_arrow_icon'], $dir );
+				echo  Utilities::get_wpr_icon( $settings['post_nav_arrow_icon'], $dir ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 		}
 	}
@@ -794,7 +794,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 		}
 
 		// Previous Post
-		echo '<div class="wpr-post-nav-prev '. esc_attr($layout_class) .'"'. $prev_post_bg .'>';
+		echo '<div class="wpr-post-nav-prev '. esc_attr($layout_class) .'"'. $prev_post_bg .'>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			if ( ! empty($prev_post) ) {
 				echo '<a href="'. esc_url( get_permalink($prev_post->ID) ) .'" class="elementor-clearfix">';
 					// Left Arrow
@@ -854,7 +854,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 		}
 
 		// Next Post
-		echo '<div class="wpr-post-nav-next '. esc_attr($layout_class) .'"'. $next_post_bg .'>';
+		echo '<div class="wpr-post-nav-next '. esc_attr($layout_class) .'"'. $next_post_bg .'>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			if ( ! empty($next_post) ) {
 				echo '<a href="'. esc_url( get_permalink($next_post->ID) ) .'" class="elementor-clearfix">';
 					// Label & Title

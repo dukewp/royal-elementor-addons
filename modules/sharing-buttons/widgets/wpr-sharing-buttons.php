@@ -708,7 +708,7 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 			];
 
 			echo '<div class="elementor-grid-item">';
-				echo Utilities::get_post_sharing_icon( $args );
+				echo Utilities::get_post_sharing_icon( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo '</div>';
 
 			$count++;

@@ -1053,7 +1053,7 @@ class Wpr_Post_Info extends Widget_Base {
 		}
 
 		// Date
-		echo '<span>'. apply_filters( 'the_date', get_the_date( '' ), get_option( 'date_format' ), '', '' ) .'</span>';
+		echo '<span>'. esc_html(apply_filters( 'the_date', get_the_date( '' ), get_option( 'date_format' ), '', '' )) .'</span>';
 
 		// Wrap with Link
 		if ( 'yes' === $settings['post_info_link_wrap'] ) {

@@ -2466,7 +2466,7 @@ class Pricing_Table extends Widget_Base {
 
 			if ( $item['type_select'] === 'feature' ) : ?>
 
-			<section class="elementor-repeater-item-<?php echo esc_attr($item['_id']); ?> wpr-pricing-table-item wpr-pricing-table-<?php echo esc_attr( $item['type_select'] ) . $rep_item_class; ?>">
+			<section class="elementor-repeater-item-<?php echo esc_attr($item['_id']); ?> wpr-pricing-table-item wpr-pricing-table-<?php echo esc_attr( $item['type_select'] . $rep_item_class ); ?>">
 				<div class="wpr-pricing-table-feature-inner">
 					<?php if ( '' !== $item['select_icon']['value'] ) : ?>
 						<i class="wpr-pricing-table-feature-icon <?php echo esc_attr( $item['select_icon']['value'] ); ?>"></i>
@@ -2493,7 +2493,7 @@ class Pricing_Table extends Widget_Base {
 
 			<?php else : ?>
 
-			<div class="elementor-repeater-item-<?php echo esc_html($item['_id']); ?> wpr-pricing-table-item wpr-pricing-table-<?php echo esc_attr( $item['type_select'] ) . $rep_item_class; ?>">		
+			<div class="elementor-repeater-item-<?php echo esc_html($item['_id']); ?> wpr-pricing-table-item wpr-pricing-table-<?php echo esc_attr( $item['type_select'] . $rep_item_class ); ?>">		
 			
 			<?php if ( $item['type_select'] === 'heading' ) : ?>
 

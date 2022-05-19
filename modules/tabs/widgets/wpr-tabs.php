@@ -1546,7 +1546,7 @@ class Wpr_Tabs extends Widget_Base {
 
 						} elseif( 'acf' === $item['tab_content_type'] ) {
 
-							echo get_post_meta( get_the_ID(), $item['tab_custom_field'], true );
+							echo wp_kses_post(get_post_meta( get_the_ID(), $item['tab_custom_field'], true ));
 						}
 
 					echo '</div>';
