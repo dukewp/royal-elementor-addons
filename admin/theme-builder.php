@@ -31,7 +31,7 @@ function wpr_addons_theme_builder_page() {
         </div>
 
         <a href="https://www.youtube.com/watch?v=cwkhwO_rPuo" class="wpr-options-button button" target="_blank" style="padding: 8px 22px;">
-            <?php echo esc_html( 'How to use Theme Builder', 'wpr-addons' ); ?>
+            <?php echo esc_html__( 'How to use Theme Builder', 'wpr-addons' ); ?>
             <span class="dashicons dashicons-video-alt3"></span>
         </a>
     </div>
