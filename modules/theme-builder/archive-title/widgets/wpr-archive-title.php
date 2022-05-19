@@ -415,7 +415,7 @@ class Wpr_Archive_Title extends Widget_Base {
 
 			if ( '' !== $title ) {
 				echo '<'. esc_attr($settings['post_title_tag']) .' class="wpr-archive-title">';
-					echo '<span>'. esc_html($settings['post_title_before_text']) .'</span>'. esc_html($title);
+					echo '<span>'. wp_kses_post($settings['post_title_before_text']) .'</span>'. esc_html($title);
 				echo '</'. esc_attr($settings['post_title_tag']) .'>';
 			}
 
