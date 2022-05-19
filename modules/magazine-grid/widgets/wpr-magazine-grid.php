@@ -4887,7 +4887,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 			echo '<div class="wpr-cv-outer">';
 				echo '<div class="wpr-cv-inner">';
-					echo get_the_password_form();
+					echo get_the_password_form(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo '</div>';
 			echo '</div>';
 		echo '</div>';
@@ -4928,7 +4928,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		echo '<'. esc_html($settings['element_title_tag']) .' class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
 				echo '<a href="'. esc_url( get_the_permalink() ) .'" class="wpr-pointer-item">';
-					echo wp_trim_words( get_the_title(), $settings['element_word_count'] );
+					echo esc_html(wp_trim_words( get_the_title(), $settings['element_word_count'] ));
 				echo '</a>';
 			echo '</div>';
 		echo '</'. esc_html($settings['element_title_tag']) .'>';
@@ -4945,7 +4945,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo get_the_content();
+				echo wp_kses_post(get_the_content());
 			echo '</div>';
 		echo '</div>';
 	}
@@ -4961,7 +4961,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo '<p>'. wp_trim_words( get_the_excerpt(), $settings['element_word_count'] ) .'</p>';
+				echo '<p>'. esc_html(wp_trim_words( get_the_excerpt(), $settings['element_word_count'] )) .'</p>';
 			echo '</div>';
 		echo '</div>';
 	}
@@ -4981,7 +4981,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 				}
 
 				// Date
-				echo apply_filters( 'the_date', get_the_date( '' ), get_option( 'date_format' ), '', '' );
+				echo esc_html(apply_filters( 'the_date', get_the_date( '' ), get_option( 'date_format' ), '', '' ));
 
 				// Icon: After
 				if ( 'after' === $settings['element_extra_icon_pos'] ) {
@@ -5011,7 +5011,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 				}
 
 				// Time
-				echo get_the_time( '' );
+				echo esc_html(get_the_time( '' ));
 
 				// Icon: After
 				if ( 'after' === $settings['element_extra_icon_pos'] ) {
@@ -5300,7 +5300,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 						echo '<div class="wpr-cv-container"><div class="wpr-cv-outer"><div class="wpr-cv-inner">';
 					}
 
-					echo '<div class="wpr-grid-media-hover-'. $align .' elementor-clearfix">';
+					echo '<div class="wpr-grid-media-hover-'. esc_attr($align) .' elementor-clearfix">';
 						foreach ( $elements as $data ) {
 							
 							// Get Class
@@ -5445,7 +5445,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		}
 
 		// Grid/Slider Wrap
-		echo '<div class="wpr-magazine-grid-wrap" '. $render_attribute .'  data-slide-effect="'. esc_attr($settings['slider_effect']) .'">';
+		echo '<div class="wpr-magazine-grid-wrap" '. $render_attribute .' data-slide-effect="'. esc_attr($settings['slider_effect']) .'">';
 
 		// Slider
 		if ( 'yes' === $settings['slider_enable'] ) {

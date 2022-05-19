@@ -7920,7 +7920,7 @@ class Wpr_Grid extends Widget_Base {
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo get_the_content();
+				echo wp_kses_post(get_the_content());
 			echo '</div>';
 		echo '</div>';
 	}
@@ -7936,7 +7936,7 @@ class Wpr_Grid extends Widget_Base {
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo '<p>'. wp_trim_words( get_the_excerpt(), $settings['element_word_count'] ) .'</p>';
+				echo '<p>'. esc_html(wp_trim_words( get_the_excerpt(), $settings['element_word_count'] )) .'</p>';
 			echo '</div>';
 		echo '</div>';
 	}
@@ -7956,7 +7956,7 @@ class Wpr_Grid extends Widget_Base {
 				}
 
 				// Date
-				echo apply_filters( 'the_date', get_the_date( '' ), get_option( 'date_format' ), '', '' );
+				echo esc_html(apply_filters( 'the_date', get_the_date( '' ), get_option( 'date_format' ), '', '' ));
 
 				// Icon: After
 				if ( 'after' === $settings['element_extra_icon_pos'] ) {
@@ -7986,7 +7986,7 @@ class Wpr_Grid extends Widget_Base {
 				}
 
 				// Time
-				echo get_the_time( '' );
+				echo esc_html(get_the_time(''));
 
 				// Icon: After
 				if ( 'after' === $settings['element_extra_icon_pos'] ) {
@@ -8091,7 +8091,7 @@ class Wpr_Grid extends Widget_Base {
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo '<a href="'. esc_url( get_the_permalink() ) .'" class="wpr-button-effect '. $read_more_animation .'">';
+				echo '<a href="'. esc_url( get_the_permalink() ) .'" class="wpr-button-effect '. esc_attr($read_more_animation) .'">';
 
 				// Icon: Before
 				if ( 'before' === $settings['element_extra_icon_pos'] ) {
@@ -8362,7 +8362,7 @@ class Wpr_Grid extends Widget_Base {
 						echo '<div class="wpr-cv-container"><div class="wpr-cv-outer"><div class="wpr-cv-inner">';
 					}
 
-					echo '<div class="wpr-grid-media-hover-'. $align .' elementor-clearfix">';
+					echo '<div class="wpr-grid-media-hover-'. esc_attr($align) .' elementor-clearfix">';
 						foreach ( $elements as $data ) {
 							
 							// Get Class
@@ -8575,12 +8575,12 @@ class Wpr_Grid extends Widget_Base {
 		if ( 'default' === $settings['pagination_type'] ) {
 			if ( $paged < $pages ) {
 				echo '<a href="'. esc_url(get_pagenum_link( $paged + 1, true )) .'" class="wpr-prev-post-link">';
-					echo Utilities::get_wpr_icon( $settings['pagination_on_icon'], 'left' );
+					echo Utilities::get_wpr_icon( $settings['pagination_on_icon'], 'left' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo esc_html($settings['pagination_older_text']);
 				echo '</a>';
 			} elseif ( 'yes' === $settings['pagination_disabled_arrows'] ) {
 				echo '<span class="wpr-prev-post-link wpr-disabled-arrow">';
-					echo Utilities::get_wpr_icon( $settings['pagination_on_icon'], 'left' );
+					echo Utilities::get_wpr_icon( $settings['pagination_on_icon'], 'left' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo esc_html($settings['pagination_older_text']);
 				echo '</span>';
 			}
@@ -8588,12 +8588,12 @@ class Wpr_Grid extends Widget_Base {
 			if ( $paged > 1 ) {
 				echo '<a href="'. esc_url(get_pagenum_link( $paged - 1, true )) .'" class="wpr-next-post-link">';
 					echo esc_html($settings['pagination_newer_text']);
-					echo Utilities::get_wpr_icon( $settings['pagination_on_icon'], 'right' );
+					echo Utilities::get_wpr_icon( $settings['pagination_on_icon'], 'right' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo '</a>';
 			} elseif ( 'yes' === $settings['pagination_disabled_arrows'] ) {
 				echo '<span class="wpr-next-post-link wpr-disabled-arrow">';
 					echo esc_html($settings['pagination_newer_text']);
-					echo Utilities::get_wpr_icon( $settings['pagination_on_icon'], 'right' );
+					echo Utilities::get_wpr_icon( $settings['pagination_on_icon'], 'right' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo '</span>';
 			}
 
@@ -8610,12 +8610,12 @@ class Wpr_Grid extends Widget_Base {
 				    if ( 'yes' === $settings['pagination_first_last'] ) {
 				    	if ( $paged >= 2 ) {
 					    	echo '<a href="'. esc_url(get_pagenum_link( 1, true )) .'" class="wpr-first-page">';
-					    		echo Utilities::get_wpr_icon( $settings['pagination_fl_icon'], 'left' );
+					    		echo Utilities::get_wpr_icon( $settings['pagination_fl_icon'], 'left' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					    		echo '<span>'. esc_html($settings['pagination_first_text']) .'</span>';
 					    	echo '</a>';
 				    	} elseif ( 'yes' === $settings['pagination_disabled_arrows'] ) {
 					    	echo '<span class="wpr-first-page wpr-disabled-arrow">';
-					    		echo Utilities::get_wpr_icon( $settings['pagination_fl_icon'], 'left' );
+					    		echo Utilities::get_wpr_icon( $settings['pagination_fl_icon'], 'left' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					    		echo '<span>'. esc_html($settings['pagination_first_text']) .'</span>';
 					    	echo '</span>';
 				    	}
@@ -8624,12 +8624,12 @@ class Wpr_Grid extends Widget_Base {
 				    if ( 'yes' === $settings['pagination_prev_next'] ) {
 				    	if ( $paged > 1 ) {
 					    	echo '<a href="'. esc_url(get_pagenum_link( $paged - 1, true )) .'" class="wpr-prev-page">';
-					    		echo Utilities::get_wpr_icon( $settings['pagination_pn_icon'], 'left' );
+					    		echo Utilities::get_wpr_icon( $settings['pagination_pn_icon'], 'left' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					    		echo '<span>'. esc_html($settings['pagination_prev_text']) .'</span>';
 					    	echo '</a>';
 				    	} elseif ( 'yes' === $settings['pagination_disabled_arrows'] ) {
 					    	echo '<span class="wpr-prev-page wpr-disabled-arrow">';
-					    		echo Utilities::get_wpr_icon( $settings['pagination_pn_icon'], 'left' );
+					    		echo Utilities::get_wpr_icon( $settings['pagination_pn_icon'], 'left' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					    		echo '<span>'. esc_html($settings['pagination_prev_text']) .'</span>';
 					    	echo '</span>';
 				    	}
@@ -8655,12 +8655,12 @@ class Wpr_Grid extends Widget_Base {
 				    	if ( $paged < $pages ) {
 					    	echo '<a href="'. esc_url(get_pagenum_link( $paged + 1, true )) .'" class="wpr-next-page">';
 					    		echo '<span>'. esc_html($settings['pagination_next_text']) .'</span>';
-					    		echo Utilities::get_wpr_icon( $settings['pagination_pn_icon'], 'right' );
+					    		echo Utilities::get_wpr_icon( $settings['pagination_pn_icon'], 'right' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					    	echo '</a>';
 				    	} elseif ( 'yes' === $settings['pagination_disabled_arrows'] ) {
 					    	echo '<span class="wpr-next-page wpr-disabled-arrow">';
 					    		echo '<span>'. esc_html($settings['pagination_next_text']) .'</span>';
-					    		echo Utilities::get_wpr_icon( $settings['pagination_pn_icon'], 'right' );
+					    		echo Utilities::get_wpr_icon( $settings['pagination_pn_icon'], 'right' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					    	echo '</span>';
 				    	}
 				    }
@@ -8669,12 +8669,12 @@ class Wpr_Grid extends Widget_Base {
 				    	if ( $paged <= $pages - 1 ) {
 					    	echo '<a href="'. esc_url(get_pagenum_link( $pages, true )) .'" class="wpr-last-page">';
 					    		echo '<span>'. esc_html($settings['pagination_last_text']) .'</span>';
-					    		echo Utilities::get_wpr_icon( $settings['pagination_fl_icon'], 'right' );
+					    		echo Utilities::get_wpr_icon( $settings['pagination_fl_icon'], 'right' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					    	echo '</a>';
 				    	} elseif ( 'yes' === $settings['pagination_disabled_arrows'] ) {
 					    	echo '<span class="wpr-last-page wpr-disabled-arrow">';
 					    		echo '<span>'. esc_html($settings['pagination_last_text']) .'</span>';
-					    		echo Utilities::get_wpr_icon( $settings['pagination_fl_icon'], 'right' );
+					    		echo Utilities::get_wpr_icon( $settings['pagination_fl_icon'], 'right' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					    	echo '</span>';
 				    	}
 				    }
@@ -8744,7 +8744,7 @@ class Wpr_Grid extends Widget_Base {
 				}
 			echo '</div>';
 
-			echo '<p class="wpr-pagination-finish">'. $settings['pagination_finish_text'] .'</p>';
+			echo '<p class="wpr-pagination-finish">'. esc_html($settings['pagination_finish_text']) .'</p>';
 		}
 
 		echo '</div>';

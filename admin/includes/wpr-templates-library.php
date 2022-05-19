@@ -74,7 +74,7 @@ class WPR_Templates_Library {
 	public function register_templates_library_cpt() {
 
 		$args = array(
-			'label'				  => esc_html( 'Royal Templates', 'wpr-addons' ),
+			'label'				  => esc_html__( 'Royal Templates', 'wpr-addons' ),
 			'public'              => true,
 			'rewrite'             => false,
 			'show_ui'             => true,
