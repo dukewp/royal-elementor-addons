@@ -5068,12 +5068,12 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			<div class="wpr-swiper-pagination"></div>
 			<!-- Add Arrows -->
 			<div class="wpr-button-prev wpr-timeline-prev-arrow wpr-timeline-prev-'. esc_attr($this->get_id()) .'">
-				'. \WprAddons\Classes\Utilities::get_wpr_icon( $settings['swiper_nav_icon'], '' ) .' // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				'. \WprAddons\Classes\Utilities::get_wpr_icon( $settings['swiper_nav_icon'], '' ) .'
 			</div>
 			<div class="wpr-button-next wpr-timeline-next-arrow wpr-timeline-next-'. esc_attr($this->get_id()) .'">
-				'. \WprAddons\Classes\Utilities::get_wpr_icon( $settings['swiper_nav_icon'], '' ) .' // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				'. \WprAddons\Classes\Utilities::get_wpr_icon( $settings['swiper_nav_icon'], '' ) .'
 			</div>
-		</div>';
+		</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	public function render_pagination($settings, $paged) {}
