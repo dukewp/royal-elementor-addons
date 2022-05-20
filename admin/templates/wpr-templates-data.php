@@ -78,7 +78,7 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,services,projects,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'nature influencer travel blogger blog content slider tourism influencers creator travel forest slider generic multipurpose national-park nature-park sanctuary wilderness hitchhiking mountain river lakes outdoors',
-					'theme-builder' => false,
+					'theme-builder' => true,
 					'price' => $is_pro_active ? 'free' : 'free',
 					'priority' => 60,
 				],
