@@ -262,7 +262,6 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'separator' => 'before',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion button.accordion' => 'transition: all {{VALUE}}s ease-in-out;',
-					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-title-text' => 'transition: all {{VALUE}}s ease-in-out;',
 				]
 			]
 		);
