@@ -384,7 +384,6 @@
 					if ( ! currentItem.hasClass( 'wpr-sub-open' ) ) {
 						e.preventDefault();
 						subMenuAnimation( childrenSub, true );
-
 					} else {
 						subMenuAnimation( childrenSub, false );
 					}
