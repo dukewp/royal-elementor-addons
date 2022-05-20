@@ -570,29 +570,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 			]
 		);
 
-		// $repeater->add_responsive_control(
-		// 	'element_show_on',
-		// 	[
-		// 		'label' => esc_html__( 'Show on this Device', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SWITCHER,
-		// 		'default' => 'yes',
-		// 		'widescreen_default' => 'yes',
-		// 		'laptop_default' => 'yes',
-		// 		'tablet_extra_default' => 'yes',
-		// 		'tablet_default' => 'yes',
-		// 		'mobile_extra_default' => 'yes',
-		// 		'mobile_default' => 'yes',
-		// 		'selectors_dictionary' => [
-		// 			'' => 'position: absolute; left: -99999999px;',
-		// 			'yes' => 'position: static; left: auto;'
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} {{CURRENT_ITEM}}' => '{{VALUE}}',
-		// 		],
-		// 		'render_type' => 'template',
-		// 	]
-		// );
-
 		$repeater->add_control(
 			'accordion_item_title', [
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
@@ -608,7 +585,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 		$repeater->add_control(
 			'accordion_item_description', [
 				'label' => esc_html__( 'Description', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
+				'type' => \Elementor\Controls_Manager::TEXTAREA,
 				'default' => esc_html__( 'Lorem ipsum dolos ave nita' , 'wpr-addons' ),
 				'label_block' => true,
 				'condition' => [
