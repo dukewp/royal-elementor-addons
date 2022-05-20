@@ -322,7 +322,13 @@ function import_elementor_site_settings( $kit ) {
 */
 function setup_wpr_templates( $kit ) {
     $kit = isset($kit) ? sanitize_text_field(wp_unslash($kit)) : '';
-    
+
+    // Check if kit has Theme Builder templates
+    $kit_name = substr($kit, 0, strripos($kit, '-v'));
+    $kit_version = substr($kit, (strripos($kit, '-v') + 1), strlen($kit));
+    $get_available_kits = WPR_Templates_Data::get_available_kits();
+    $has_theme_builder = $get_available_kits[$kit_name][$kit_version]['theme-builder'];
+
     // Set Home & Blog Pages
     $home_page = get_page_by_path('home-'. $kit);
     $blog_page = get_page_by_path('blog-'. $kit);
@@ -343,8 +349,10 @@ function setup_wpr_templates( $kit ) {
     update_post_meta( Utilities::get_template_id('user-footer-'. $kit), 'wpr_footer_show_on_canvas', 'true' );
 
     // Theme Builder
-    update_option('wpr_archive_conditions', '{"user-archive-'. $kit .'-blog":["archive/posts"],"user-archive-'. $kit .'-author":["archive/author"],"user-archive-'. $kit .'-date":["archive/date"],"user-archive-'. $kit .'-category-tag":["archive/categories/all","archive/tags/all"],"user-archive-'. $kit .'-search":["archive/search"]}');
-    update_option('wpr_single_conditions', '{"user-single-'. $kit .'-404":["single/page_404"],"user-single-'. $kit .'-post":["single/posts/all"],"user-single-'. $kit .'-page":["single/pages/all"]}');
+    if ( $has_theme_builder ) {
+        update_option('wpr_archive_conditions', '{"user-archive-'. $kit .'-blog":["archive/posts"],"user-archive-'. $kit .'-author":["archive/author"],"user-archive-'. $kit .'-date":["archive/date"],"user-archive-'. $kit .'-category-tag":["archive/categories/all","archive/tags/all"],"user-archive-'. $kit .'-search":["archive/search"]}');
+        update_option('wpr_single_conditions', '{"user-single-'. $kit .'-404":["single/page_404"],"user-single-'. $kit .'-post":["single/posts/all"],"user-single-'. $kit .'-page":["single/pages/all"]}');
+    }
 
     // Set Popup
     update_option('wpr_popup_conditions', '{"user-popup-'. $kit .'-popup":["global"]}'); 
