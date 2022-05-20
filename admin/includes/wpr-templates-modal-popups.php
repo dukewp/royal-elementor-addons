@@ -4,7 +4,9 @@ namespace WprAddons\Admin\Includes;
 use WprAddons\Plugin;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 /**
  * WPR_Templates_Modal_Popups setup
@@ -122,10 +124,8 @@ class WPR_Templates_Modal_Popups {
 		// Encode Settings
 		$get_encoded_settings = ! empty( $get_settings ) ? wp_json_encode( $get_settings ) : '[]';
 
-		// Template Attributes
-		$template_id_attr = 'id="wpr-popup-id-'. $template_id .'"';
-		$template_class_attr = 'class="wpr-template-popup"';
-		$template_settings_attr = "data-settings='". $get_encoded_settings ."'";
+		// Template Settings Attribute
+		$template_settings_attr = "data-settings='". esc_attr($get_encoded_settings) ."'";
 
 		// Return if NOT available for current user
 		if ( ! WPR_Templates_Modal_Popups::check_available_user_roles( $get_settings['popup_show_for_roles'] ) ) {
@@ -133,7 +133,7 @@ class WPR_Templates_Modal_Popups {
 		}
 
 		if ( ! self::$elementor_instance->preview->is_preview_mode() ) {
-	    	echo '<div '. $template_id_attr .' '. $template_class_attr .' '. $template_settings_attr .'>';
+	    	echo '<div id="wpr-popup-id-'. esc_attr($template_id) .'" class="wpr-template-popup" '. $template_settings_attr .'>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	    		echo '<div class="wpr-template-popup-inner">';
 
 		    		// Popup Overlay & Close Button
@@ -145,9 +145,9 @@ class WPR_Templates_Modal_Popups {
 		    		// Close Button
 	    			echo '<div class="wpr-popup-close-btn"><i class="eicon-close"></i></div>';
 
-		    		// Template Content
+		    		// Elementor Template Content
 	    			echo '<div class="wpr-popup-container-inner">';
-						echo $get_elementor_content;
+						echo ''. $get_elementor_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	    			echo '</div>';
 
 	    			echo '</div>';

@@ -16,7 +16,6 @@ class Wpr_ReadingProgressBar {
     public final function __construct() {
 		// Register controls on Post/Page Settings
 		add_action( 'elementor/documents/register_controls', [ $this, 'register_controls' ], 10, 3 );
-		add_action( 'elementor/editor/after_save', [ $this, 'save_global_values' ], 10, 2 );
         add_action( 'wp_footer', [ $this, 'html_to_footer' ] );
 	}
     
@@ -171,28 +170,12 @@ class Wpr_ReadingProgressBar {
         
 	}
 
-	public function save_global_values( $post_id, $editor_data ) {
-		$document = \Elementor\Plugin::$instance->documents->get( $post_id, false );
-		$settings = $document->get_settings();
-        // $page_settings = get_post_meta( get_the_ID(), '_elementor_page_settings', true );
-		update_option('wpr_progress_bar_global_options', [
-			'wpr_rpb_enable' => $settings['wpr_rpb_enable'],
-			'wpr_rpb_enable_globally_option' => $settings['wpr_rpb_enable_globally'],
-			'wpr_rpb_display_option' => $settings['wpr_rpb_display_on'],
-			'wpr_height' => $settings['wpr_height'],
-			'wpr_background_color' => $settings['wpr_background_color'],
-			'wpr_fill_color' => $settings['wpr_fill_color'],
-			'wpr_progress_bar_position' => $settings['progress_bar_position'],
-		]);
-
-	}
-
 	public function html_to_footer() {
     	$settings = get_option('wpr_progress_bar_global_options');
 		$rpb_position = 'top' === $settings['wpr_progress_bar_position'] ? 'top: 0px; bottom: auto;' : 'bottom: 0px; top: auto;';
-		$rpb_background_color = 'background-color: ' . $settings['wpr_background_color'] . ' !important;';
-		$rpb_fill_color = 'background-color: ' . $settings['wpr_fill_color'] . '!important;';
-		$rpb_height = 'height: '.$settings['wpr_height']['size'] . $settings['wpr_height']['unit'].';';
+		$rpb_background_color = 'background-color: '. $settings['wpr_background_color'] .' !important;';
+		$rpb_fill_color = 'background-color: '. $settings['wpr_fill_color'] .'!important;';
+		$rpb_height = 'height: '. $settings['wpr_height']['size'] . $settings['wpr_height']['unit'] .';';
 
     	if ( !empty($settings) && 'yes' === $settings['wpr_rpb_enable'] ) {
     		if ( 'yes' === $settings['wpr_rpb_enable_globally_option']  ) {
@@ -200,7 +183,7 @@ class Wpr_ReadingProgressBar {
     				return;
     			}
 				
-    			echo '<div style="'. $rpb_position . $rpb_background_color .'" class="wpr-reading-progress-bar-container"><div style="'.$rpb_fill_color . $rpb_height .'" class="wpr-reading-progress-bar wpr-mybar" id="wpr-mybar"></div></div>';
+    			echo '<div style="'. esc_attr($rpb_position . $rpb_background_color) .'" class="wpr-reading-progress-bar-container"><div style="'. esc_attr($rpb_fill_color . $rpb_height) .'" class="wpr-reading-progress-bar wpr-mybar" id="wpr-mybar"></div></div>';
 			} else {
 				echo '<div class="wpr-reading-progress-bar-container"><div class="wpr-reading-progress-bar wpr-mybar" id="wpr-mybar"></div></div>';
 			}

@@ -12,7 +12,9 @@ use Elementor\Group_Control_Box_Shadow;
 use Elementor\Utils;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Before_After extends Widget_Base {
 	
@@ -742,22 +744,22 @@ class Wpr_Before_After extends Widget_Base {
 			// Divider
 			echo '<div class="wpr-ba-divider">';
 				echo '<div class="wpr-ba-divider-icons">';
-					echo '<i class="fa '. $settings['divider_icon'] .'-'. $icon_dir_first .'"></i>';
-					echo '<i class="fa '. $settings['divider_icon'] .'-'. $icon_dir_second .'"></i>';
+					echo '<i class="fa '. esc_attr($settings['divider_icon'] .'-'. $icon_dir_first) .'"></i>';
+					echo '<i class="fa '. esc_attr($settings['divider_icon'] .'-'. $icon_dir_second) .'"></i>';
 				echo '</div>';
 			echo '</div>';
 
 			// Label 1
 			if ( '' !== $settings['label_image_1'] ) {
 				echo '<div class="wpr-ba-label wpr-ba-label-1">';
-					echo '<div>'. $settings['label_image_1'] .'</div>';
+					echo '<div>'. esc_html($settings['label_image_1']) .'</div>';
 				echo '</div>';
 			}
 
 			// Label 2
 			if ( '' !== $settings['label_image_2'] ) {
 				echo '<div class="wpr-ba-label wpr-ba-label-2">';
-					echo '<div>'. $settings['label_image_2'] .'</div>';
+					echo '<div>'. esc_html($settings['label_image_2']) .'</div>';
 				echo '</div>';
 			}
 

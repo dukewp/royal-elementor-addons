@@ -17,7 +17,9 @@ use Elementor\Icons;
 use Elementor\Icons_Manager;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Advanced_Slider extends Widget_Base {
 		
@@ -2548,7 +2550,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			return '';
 		}
 
-		$edit_link = '<span class="wpr-template-edit-btn" data-permalink="'. get_permalink( $id ) .'">Edit Template</span>';
+		$edit_link = '<span class="wpr-template-edit-btn" data-permalink="'. esc_url(get_permalink( $id )) .'">Edit Template</span>';
 
 		return Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $id ) . $edit_link;
 	}
@@ -2580,14 +2582,14 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			// Load Template
 			if ( 'template' === $item['slider_content_type'] ) {
 
-				$slider_html .= '<div class="wpr-slider-item elementor-repeater-item-'. $item['_id'] .'">';
+				$slider_html .= '<div class="wpr-slider-item elementor-repeater-item-'. esc_attr($item['_id']) .'">';
 			
 					$slider_html .= $this->load_slider_template( $item['slider_select_template'] );
 
 				$slider_html .= '</div>';
 
 			// Or Build Custom
-			} else if( 'custom' === $item['slider_content_type'] ) {
+			} elseif( 'custom' === $item['slider_content_type'] ) {
 				if ( ! wpr_fs()->can_use_premium_code() ) {
 					$item['slider_item_link_type'] = 'none';
 				}
@@ -2623,16 +2625,16 @@ class Wpr_Advanced_Slider extends Widget_Base {
 
 				// Slider Ken Burns Effect
 				if ( $item['slider_item_bg_kenburns'] === 'yes' ) {
-					$ken_burn_class = ' wpr-ken-burns-' . $item['slider_item_bg_zoom'];
+					$ken_burn_class = ' wpr-ken-burns-'. $item['slider_item_bg_zoom'];
 				}
 
-				$this->add_render_attribute( 'slider_item' . $item_count, 'class', 'wpr-slider-item elementor-repeater-item-'. $item['_id'] );
+				$this->add_render_attribute( 'slider_item'. $item_count, 'class', 'wpr-slider-item elementor-repeater-item-'. $item['_id'] );
 
 				if ( strpos( $item_type, 'video' ) !== false && ! empty( $item_video_src ) ) {
 
-					$this->add_render_attribute( 'slider_item' . $item_count, 'class', 'wpr-slider-video-item' );
+					$this->add_render_attribute( 'slider_item'. $item_count, 'class', 'wpr-slider-video-item' );
 
-					$this->add_render_attribute( 'slider_item' . $item_count, 'data-video-autoplay', $item['slider_item_video_autoplay'] );
+					$this->add_render_attribute( 'slider_item'. $item_count, 'data-video-autoplay', $item['slider_item_video_autoplay'] );
 
 					if ( $item_type === 'video-youtube' ) {
 
@@ -2644,7 +2646,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 						}
 
 						if ( $item['slider_item_video_loop'] === 'yes' ) {
-							$item_video_src .= '&loop=1&playlist='.$item_video_id[1];
+							$item_video_src .= '&loop=1&playlist='. $item_video_id[1];
 						} else {
 							if ( ! empty( $item_video_start ) ) {
 								$item_video_src .= '&start='. $item_video_start;
@@ -2655,7 +2657,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 							}
 						}
 
-					} else if ( $item_type === 'video-vimeo' ) {
+					} elseif ( $item_type === 'video-vimeo' ) {
 		          
 		                $item_video_src = str_replace( 'vimeo.com', 'player.vimeo.com/video', $item_video_src );
 
@@ -2667,21 +2669,21 @@ class Wpr_Advanced_Slider extends Widget_Base {
 
 						if ( $item['slider_item_video_loop'] === 'yes' ) {
 							$item_video_src .= '&loop=1';
-						} else if ( ! empty( $item_video_start ) ) {
+						} elseif ( ! empty( $item_video_start ) ) {
 							$item_video_src .= '&#t='. gmdate( 'H', $item_video_start ) .'h'. gmdate( 'i', $item_video_start ) .'m'. gmdate( 's', $item_video_start ) .'s';
 						}
 
 					}
 
-					$this->add_render_attribute( 'slider_item' . $item_count, 'data-video-src', $item_video_src );
+					$this->add_render_attribute( 'slider_item'. $item_count, 'data-video-src', $item_video_src );
 				}
 
-				$slider_item_attribute = $this->get_render_attribute_string( 'slider_item' . $item_count );
+				$slider_item_attribute = $this->get_render_attribute_string( 'slider_item'. $item_count );
 
-				$slider_html .= '<div '.$slider_item_attribute.'>';
+				$slider_html .= '<div '. $slider_item_attribute .'>';
 			
 				// Slider Background Image
-				$slider_html .= '<div class="wpr-slider-item-bg '. $ken_burn_class .'" style="background-image: url('. $item_bg_image_url .')"></div>';
+				$slider_html .= '<div class="wpr-slider-item-bg '. esc_attr($ken_burn_class) .'" style="background-image: url('. esc_url($item_bg_image_url) .')"></div>';
 
 				$slider_amount = +$settings['slider_amount'];
 
@@ -2696,42 +2698,40 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				} 
 
 				// Slider Content Attributes
-				$this->add_render_attribute( 'slider_container' . $item_count, 'class', 'wpr-cv-container' );	
-				$this->add_render_attribute( 'slider_outer' . $item_count, 'class', 'wpr-cv-outer' );	
+				$this->add_render_attribute( 'slider_container'. $item_count, 'class', 'wpr-cv-container' );	
+				$this->add_render_attribute( 'slider_outer'. $item_count, 'class', 'wpr-cv-outer' );	
 
 				if ( $settings['slider_content_animation'] !== 'none' ) {
 					if ( $slider_amount === 1 ) {
-						$this->add_render_attribute( 'slider_container' . $item_count, 'class', 'wpr-slider-animation' );
-						$this->add_render_attribute( 'slider_outer' . $item_count, 'class', 'wpr-anim-transparency wpr-anim-size-'. $settings['slider_content_anim_size'] .' wpr-overlay-'. $settings['slider_content_animation'] );
-					} else if ( !empty( $item_bg_image_url ) && $item['slider_item_video_autoplay'] !== 'yes' ) {
-						$this->add_render_attribute( 'slider_container' . $item_count, 'class', 'wpr-slider-animation wpr-animation-wrap' );
-						$this->add_render_attribute( 'slider_outer' . $item_count, 'class', 'wpr-anim-transparency wpr-anim-size-'. $settings['slider_content_anim_size'] .' wpr-overlay-'. $settings['slider_content_animation'] );
+						$this->add_render_attribute( 'slider_container'. $item_count, 'class', 'wpr-slider-animation' );
+						$this->add_render_attribute( 'slider_outer'. $item_count, 'class', 'wpr-anim-transparency wpr-anim-size-'. $settings['slider_content_anim_size'] .' wpr-overlay-'. $settings['slider_content_animation'] );
+					} elseif ( !empty( $item_bg_image_url ) && $item['slider_item_video_autoplay'] !== 'yes' ) {
+						$this->add_render_attribute( 'slider_container'. $item_count, 'class', 'wpr-slider-animation wpr-animation-wrap' );
+						$this->add_render_attribute( 'slider_outer'. $item_count, 'class', 'wpr-anim-transparency wpr-anim-size-'. $settings['slider_content_anim_size'] .' wpr-overlay-'. $settings['slider_content_animation'] );
 					}
 				}
 
 				// Slider Content
-				$slider_html .= '<div '. $this->get_render_attribute_string( 'slider_container' . $item_count ) .'>';
+				$slider_html .= '<div '. $this->get_render_attribute_string( 'slider_container'. $item_count ) .'>';
 
 					// Slider Link Type
 					if ( ! empty( $item_url ) && $item_type === 'custom' ) {
 
-						$this->add_render_attribute( 'slider_item_url' . $item_count, 'href', $item_url );
+						$this->add_render_attribute( 'slider_item_url'. $item_count, 'href', $item_url );
 
 						if ( $item['slider_item_bg_image_url']['is_external'] ) {
-							$this->add_render_attribute( 'slider_item_url' . $item_count, 'target', '_blank' );
+							$this->add_render_attribute( 'slider_item_url'. $item_count, 'target', '_blank' );
 						}
 
 						if ( $item['slider_item_bg_image_url']['nofollow'] ) {
-							$this->add_render_attribute( 'slider_item_url' . $item_count, 'nofollow', '' );
+							$this->add_render_attribute( 'slider_item_url'. $item_count, 'nofollow', '' );
 						}
 
-						$item_url_attribute = $this->get_render_attribute_string( 'slider_item_url' . $item_count );
-
-						$slider_html .= '<a class="wpr-slider-item-url" '. $item_url_attribute .'></a>';
+						$slider_html .= '<a class="wpr-slider-item-url" '. $this->get_render_attribute_string( 'slider_item_url'. $item_count ) .'></a>';
 
 					}
 
-					$slider_html .= '<div '. $this->get_render_attribute_string( 'slider_outer' . $item_count ) .'>';
+					$slider_html .= '<div '. $this->get_render_attribute_string( 'slider_outer'. $item_count ) .'>';
 						$slider_html .= '<div class="wpr-cv-inner">';
 							
 							// Slider Overlay
@@ -2750,21 +2750,21 @@ class Wpr_Advanced_Slider extends Widget_Base {
 								//  Slider Title
 								if ( $settings['slider_title'] === 'yes' && ! empty( $item['slider_item_title'] ) ) {
 								$slider_html .= '<div class="wpr-slider-title">';
-									$slider_html .= '<h2>'. $item['slider_item_title'] .'</h2>';
+									$slider_html .= '<h2>'. wp_kses_post($item['slider_item_title']) .'</h2>';
 								$slider_html .= '</div>';
 								}	
 								
 								// Slider Sub Title
 								if ( $settings['slider_sub_title'] === 'yes' && ! empty( $item['slider_item_sub_title'] ) ) {
 								$slider_html .= '<div class="wpr-slider-sub-title">';
-									$slider_html .= '<h3>'. $item['slider_item_sub_title'] .'</h3>';
+									$slider_html .= '<h3>'. wp_kses_post($item['slider_item_sub_title']) .'</h3>';
 								$slider_html .= '</div>';
 								}							
 
 								// Slider Description
 								if ( $settings['slider_description'] === 'yes' && ! empty( $item['slider_item_description'] ) ) {
 								$slider_html .= '<div class="wpr-slider-description">';	
-									$slider_html .= '<p>'. $item['slider_item_description'] .'</p>';
+									$slider_html .= '<p>'. wp_kses_post($item['slider_item_description']) .'</p>';
 								$slider_html .= '</div>';
 								}
 								
@@ -2773,17 +2773,17 @@ class Wpr_Advanced_Slider extends Widget_Base {
 									
 									$btn_element_1 = 'a';
 
-									$this->add_render_attribute( 'primary_btn_url' . $item_count, 'href', $btn_url_1 );
+									$this->add_render_attribute( 'primary_btn_url'. $item_count, 'href', $btn_url_1 );
 
 									if ( $item['slider_item_btn_url_1']['is_external'] ) {
-										$this->add_render_attribute( 'primary_btn_url' . $item_count, 'target', '_blank' );
+										$this->add_render_attribute( 'primary_btn_url'. $item_count, 'target', '_blank' );
 									}
 
 									if ( $item['slider_item_btn_url_1']['nofollow'] ) {
-										$this->add_render_attribute( 'primary_btn_url' . $item_count, 'nofollow', '' );
+										$this->add_render_attribute( 'primary_btn_url'. $item_count, 'nofollow', '' );
 									}
 
-									$btn_attribute_1 = $this->get_render_attribute_string( 'primary_btn_url' . $item_count );
+									$btn_attribute_1 = $this->get_render_attribute_string( 'primary_btn_url'. $item_count );
 								}
 				
 								// Slider Button Secondary
@@ -2791,17 +2791,17 @@ class Wpr_Advanced_Slider extends Widget_Base {
 									
 									$btn_element_2 = 'a';
 
-									$this->add_render_attribute( 'secondary_btn_url' . $item_count, 'href', $btn_url_2 );
+									$this->add_render_attribute( 'secondary_btn_url'. $item_count, 'href', $btn_url_2 );
 
 									if ( $item['slider_item_btn_url_2']['is_external'] ) {
-										$this->add_render_attribute( 'secondary_btn_url' . $item_count, 'target', '_blank' );
+										$this->add_render_attribute( 'secondary_btn_url'. $item_count, 'target', '_blank' );
 									}
 
 									if ( $item['slider_item_btn_url_2']['nofollow'] ) {
-										$this->add_render_attribute( 'secondary_btn_url' . $item_count, 'nofollow', '' );
+										$this->add_render_attribute( 'secondary_btn_url'. $item_count, 'nofollow', '' );
 									}
 
-									$btn_attribute_2 = $this->get_render_attribute_string( 'secondary_btn_url' . $item_count );
+									$btn_attribute_2 = $this->get_render_attribute_string( 'secondary_btn_url'. $item_count );
 								}
 
 								$slider_html .= '<div class="wpr-slider-btns">';
@@ -2811,7 +2811,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 								}
 
 								if ( $item['slider_item_btn_2'] === 'yes' && ! empty( $icon_html_2 ) ) {
-									$slider_html .= '<'. $btn_element_2 .' class="wpr-slider-secondary-btn" '. $btn_attribute_2 .'>' . $icon_html_2 .'</'. $btn_element_2 .'>';
+									$slider_html .= '<'. $btn_element_2 .' class="wpr-slider-secondary-btn" '. $btn_attribute_2 .'>'. $icon_html_2 .'</'. $btn_element_2 .'>';
 								}
 					
 								$slider_html .= '</div>';
@@ -2870,15 +2870,19 @@ class Wpr_Advanced_Slider extends Widget_Base {
 		<div class="wpr-advanced-slider-wrap">
 			
 			<div <?php echo $this->get_render_attribute_string( 'advanced-slider-attribute' ); ?> data-slide-effect="<?php echo esc_attr($settings['slider_effect']); ?>">
-				<?php echo $slider_html; ?>
+				<?php echo ''. $slider_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</div>
 			<div class="wpr-slider-controls">
 				<div class="wpr-slider-dots"></div>
 			</div>
 
 			<div class="wpr-slider-arrow-container">
-				<div class="wpr-slider-prev-arrow wpr-slider-arrow" id="<?php echo 'wpr-slider-prev-'. $this->get_id(); ?>"><?php echo Utilities::get_wpr_icon( $settings['slider_nav_icon'], '' ); ?></div>
-				<div class="wpr-slider-next-arrow wpr-slider-arrow" id="<?php echo 'wpr-slider-next-'. $this->get_id(); ?>"><?php echo Utilities::get_wpr_icon( $settings['slider_nav_icon'], '' ); ?></div>
+				<div class="wpr-slider-prev-arrow wpr-slider-arrow" id="<?php echo 'wpr-slider-prev-'. esc_attr($this->get_id()); ?>">
+					<?php echo Utilities::get_wpr_icon( $settings['slider_nav_icon'], '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				</div>
+				<div class="wpr-slider-next-arrow wpr-slider-arrow" id="<?php echo 'wpr-slider-next-'. esc_attr($this->get_id()); ?>">
+					<?php echo Utilities::get_wpr_icon( $settings['slider_nav_icon'], '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				</div>
 			</div>
 			
 			<?php $this->render_pro_element_slider_scroll_btn(); ?>

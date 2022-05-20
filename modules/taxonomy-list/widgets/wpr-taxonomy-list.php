@@ -11,7 +11,9 @@ use Elementor\Core\Schemes\Typography;
 use Elementor\Group_Control_Image_Size;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Taxonomy_List extends Widget_Base {
 	
@@ -472,7 +474,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 		ob_start();
 		\Elementor\Icons_Manager::render_icon( $settings['tax_list_icon'], [ 'aria-hidden' => 'true' ] );
 		$icon = ob_get_clean();
-		$icon_wrapper = !empty($settings['tax_list_icon']) ? '<span>' . $icon . '</span>' : '';
+		$icon_wrapper = !empty($settings['tax_list_icon']) ? '<span>'. $icon .'</span>' : '';
 
         // Get Taxonomies
 		$terms = get_terms([
@@ -487,8 +489,8 @@ class Wpr_Taxonomy_List extends Widget_Base {
         	
             echo '<li'. $sub_class .'>';
 	            echo '<a href="'. esc_url(get_term_link($term->term_id)) .'">';
-					echo '<span  class="wpr-tax-wrap">' . $icon_wrapper . '<span>' . $term->name . '</span>' .'</span>';
-		            echo $settings['show_tax_count'] ? '<span><span class="wpr-term-count">&nbsp;(' . $term->count . ')</span></span>' : '';
+					echo '<span class="wpr-tax-wrap">'. $icon_wrapper .'<span>'. esc_html($term->name) .'</span></span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		            echo ($settings['show_tax_count']) ? '<span><span class="wpr-term-count">&nbsp;('. esc_html($term->count) .')</span></span>' : '';
 	            echo '</a>';
             echo '</li>';
         }

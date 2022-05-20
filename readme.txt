@@ -112,8 +112,9 @@ and other custom branding related settings)
 - [**Photographer Portfolio Elementor Templates Kit Light**](https://demosites.royal-elementor-addons.com/photographer-v2/?ref=rea-wpo-pp-details-tab)
 - [**Lawyer Elementor Templates Kit Light**](https://demosites.royal-elementor-addons.com/lawyer-v1/?ref=rea-wpo-pp-details-tab)
 - [**Travel Blogger & Influencer Elementor Templates Kit Light**](https://demosites.royal-elementor-addons.com/travel-v1/?ref=rea-wpo-pp-details-tab)
-- [**NFT**](https://demosites.royal-elementor-addons.com/nft-portfolio-v1/?ref=rea-wpo-pp-details-tab)
-
+- [**NFT Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/nft-portfolio-v1/?ref=rea-wpo-pp-details-tab)
+- [**Car Wash Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/carwash-v1/?ref=rea-wpo-pp-details-tab)
+- [**Pet Care Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/pet-care-v1/?ref=rea-wpo-pp-details-tab)
 
 **Widgets Description:**
 

@@ -3,7 +3,9 @@ namespace WprAddons\Admin\Includes;
 
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 /**
  * WPR_Render_Templates setup
@@ -48,13 +50,13 @@ class WPR_Render_Templates {
 		if ( 'astra' === $this->current_theme ) {
 			require_once(__DIR__ . '/../templates/views/astra/class-astra-compat.php');
 
-		} else if ( 'generatepress' === $this->current_theme ) {
+		} elseif ( 'generatepress' === $this->current_theme ) {
 			require_once(__DIR__ . '/../templates/views/generatepress/class-generatepress-compat.php');
 
-		} else if ( 'oceanwp' === $this->current_theme ) {
+		} elseif ( 'oceanwp' === $this->current_theme ) {
 			require_once(__DIR__ . '/../templates/views/oceanwp/class-oceanwp-compat.php');
 
-		} else if ( 'storefront' === $this->current_theme ) {
+		} elseif ( 'storefront' === $this->current_theme ) {
 			require_once(__DIR__ . '/../templates/views/storefront/class-storefront-compat.php');
 		
 		// Other Themes

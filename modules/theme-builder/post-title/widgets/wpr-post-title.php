@@ -11,7 +11,9 @@ use Elementor\Core\Schemes\Typography;
 use Elementor\Core\Schemes\Color;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Post_Title extends Widget_Base {
 	
@@ -189,9 +191,9 @@ class Wpr_Post_Title extends Widget_Base {
 		// Get Settings
 		$settings = $this->get_settings();
 
-		echo '<'. $settings['post_title_tag'] .' class="wpr-post-title">';
-			echo get_the_title();
-		echo '</'. $settings['post_title_tag'] .'>';
+		echo '<'. esc_attr($settings['post_title_tag']) .' class="wpr-post-title">';
+			echo esc_html(get_the_title());
+		echo '</'. esc_attr($settings['post_title_tag']) .'>';
 
 	}
 	

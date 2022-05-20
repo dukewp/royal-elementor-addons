@@ -16,7 +16,9 @@ use Elementor\Utils;
 use Elementor\Icons;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Image_Hotspots extends Widget_Base {
 		
@@ -919,48 +921,48 @@ class Wpr_Image_Hotspots extends Widget_Base {
 
 					$hotspot_tag = 'div';
 
-					$this->add_render_attribute( 'hotspot_item_attribute' . $item_count, 'class', 'wpr-hotspot-item elementor-repeater-item-'.esc_attr( $item['_id'] ) );
+					$this->add_render_attribute( 'hotspot_item_attribute'. $item_count, 'class', 'wpr-hotspot-item elementor-repeater-item-'. esc_attr($item['_id'] ));
 
 					if ( 'none' !== $settings['hotspot_animation'] ) {
-						$this->add_render_attribute( 'hotspot_item_attribute' . $item_count, 'class', 'wpr-hotspot-anim-'. $settings['hotspot_animation'] );
+						$this->add_render_attribute( 'hotspot_item_attribute'. $item_count, 'class', 'wpr-hotspot-anim-'. $settings['hotspot_animation'] );
 					}
 
-					$this->add_render_attribute( 'hotspot_content_attribute' . $item_count, 'class', 'wpr-hotspot-content' );
+					$this->add_render_attribute( 'hotspot_content_attribute'. $item_count, 'class', 'wpr-hotspot-content' );
 
 					if ( '' !== $item['hotspot_link']['url'] ) {
 
 						$hotspot_tag = 'a';
 
-						$this->add_render_attribute( 'hotspot_content_attribute' . $item_count, 'href', $item['hotspot_link']['url'] );
+						$this->add_render_attribute( 'hotspot_content_attribute'. $item_count, 'href', $item['hotspot_link']['url'] );
 
 						if ( $item['hotspot_link']['is_external'] ) {
-							$this->add_render_attribute( 'hotspot_content_attribute' . $item_count, 'target', '_blank' );
+							$this->add_render_attribute( 'hotspot_content_attribute'. $item_count, 'target', '_blank' );
 						}
 
 						if ( $item['hotspot_link']['nofollow'] ) {
-							$this->add_render_attribute( 'hotspot_content_attribute' . $item_count, 'nofollow', '' );
+							$this->add_render_attribute( 'hotspot_content_attribute'. $item_count, 'nofollow', '' );
 						}
 
 					}
 
 					?>
 
-					<div <?php echo $this->get_render_attribute_string( 'hotspot_item_attribute' . $item_count ); ?>>
+					<div <?php echo $this->get_render_attribute_string( 'hotspot_item_attribute'. $item_count ); ?>>
 
-						<<?php echo esc_attr( $hotspot_tag ); ?> <?php echo $this->get_render_attribute_string( 'hotspot_content_attribute' . $item_count ); ?>>
+						<<?php echo esc_attr( $hotspot_tag ); ?> <?php echo $this->get_render_attribute_string( 'hotspot_content_attribute'. $item_count ); ?>>
 							
 							<?php if ( '' !== $item['hotspot_text'] ) : ?>
 								<span class="wpr-hotspot-text"><?php echo esc_html( $item['hotspot_text'] ); ?></span>
 							<?php endif; ?>
 
 							<?php if ( '' !== $item['hotspot_icon']['value'] ) : ?>
-								<i class="<?php echo $item['hotspot_icon']['value']; ?>"></i>
+								<i class="<?php echo esc_attr($item['hotspot_icon']['value']); ?>"></i>
 							<?php endif; ?>
 
 						</<?php echo esc_attr( $hotspot_tag ); ?>>
 						
 						<?php if ( 'yes' === $item['hotspot_tooltip'] && '' !== $item['hotspot_tooltip_text'] ) : ?>
-							<div class="wpr-hotspot-tooltip"><?php echo $item['hotspot_tooltip_text']; ?></div>						
+							<div class="wpr-hotspot-tooltip"><?php echo esc_html($item['hotspot_tooltip_text']); ?></div>						
 						<?php endif; ?>	
 
 					</div>

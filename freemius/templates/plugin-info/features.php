@@ -78,7 +78,7 @@
 									if ( 1 == $pricing->licenses ) {
 										if ( $pricing->has_annual() ) {
 											echo "\${$pricing->annual_price} / " . fs_esc_html_x_inline( 'year', 'as annual period', 'year', $plugin->slug );
-										} else if ( $pricing->has_monthly() ) {
+										} elseif ( $pricing->has_monthly() ) {
 											echo "\${$pricing->monthly_price} / " . fs_esc_html_x_inline( 'mo', 'as monthly period', 'mo', $plugin->slug );
 										} else {
 											echo "\${$pricing->lifetime_price}";

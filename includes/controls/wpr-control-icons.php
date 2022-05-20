@@ -39,14 +39,14 @@ class WPR_Control_Arrow_Icons extends Base_Data_Control {
 		$control_uid = $this->get_control_uid();
 		?>
 		<div class="elementor-control-field">
-			<label for="<?php echo $control_uid; ?>" class="elementor-control-title">{{{ data.label }}}</label>
+			<label for="<?php echo esc_attr($control_uid); ?>" class="elementor-control-title">{{{ data.label }}}</label>
 			<div class="elementor-control-input-wrapper">
-				<select id="<?php echo $control_uid; ?>" data-setting="{{ data.name }}">
+				<select id="<?php echo esc_attr($control_uid); ?>" data-setting="{{ data.name }}">
 					<option value="none"><?php echo esc_html__( 'None', 'wpr-addons' ); ?></option>
 					<?php foreach ( self::get_arrow_icons() as $arrow_icons_group_name => $arrow_icons_group ) : ?>
-						<optgroup label="<?php echo $arrow_icons_group_name; ?>">
+						<optgroup label="<?php echo esc_attr($arrow_icons_group_name); ?>">
 							<?php foreach ( $arrow_icons_group as $arrow_icon_name => $arrow_icon_title ) : ?>
-								<option value="<?php echo $arrow_icon_name; ?>"><?php echo $arrow_icon_title; ?></option>
+								<option value="<?php echo esc_attr($arrow_icon_name); ?>"><?php echo esc_html($arrow_icon_title); ?></option>
 							<?php endforeach; ?>
 						</optgroup>
 					<?php endforeach; ?>

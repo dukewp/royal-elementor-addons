@@ -1,6 +1,8 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 use WprAddons\Admin\Includes\WPR_Render_Templates;
 use WprAddons\Admin\Includes\WPR_Templates_Shortcode;
@@ -59,7 +61,9 @@ class WPR_Templates_Library {
 	*/
 	public function redirect_to_options_page() {
 		if ( get_current_screen()->post_type == 'wpr_templates' && isset($_GET['action']) && $_GET['action'] == 'edit' ) {
-			if ( 'wpr-popups' === Utilities::get_elementor_template_type($_GET['post']) ) {
+			$elementor_template_type = isset($_GET['post']) ? sanitize_text_field(wp_unslash($_GET['post'])) : '';
+
+			if ( 'wpr-popups' === Utilities::get_elementor_template_type( $elementor_template_type ) ) {
 				wp_redirect('admin.php?page=wpr-popups');
 			} else {
 				wp_redirect('admin.php?page=wpr-theme-builder');
@@ -70,7 +74,7 @@ class WPR_Templates_Library {
 	public function register_templates_library_cpt() {
 
 		$args = array(
-			'label'				  => esc_html( 'Royal Templates', 'wpr-addons' ),
+			'label'				  => esc_html__( 'Royal Templates', 'wpr-addons' ),
 			'public'              => true,
 			'rewrite'             => false,
 			'show_ui'             => true,
@@ -119,7 +123,7 @@ class WPR_Templates_Library {
 		
 		if ( ! $cpt_support ) {
 		    update_option( 'elementor_cpt_support', ['post', 'page', 'wpr_templates'] );
-		} else if ( ! in_array( 'wpr_templates', $cpt_support ) ) {
+		} elseif ( ! in_array( 'wpr_templates', $cpt_support ) ) {
 		    $cpt_support[] = 'wpr_templates';
 		    update_option( 'elementor_cpt_support', $cpt_support );
 		}

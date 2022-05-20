@@ -16,7 +16,9 @@ use Elementor\Utils;
 use Elementor\Icons;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Countdown extends Widget_Base {
 		
@@ -982,9 +984,9 @@ class Wpr_Countdown extends Widget_Base {
 		return json_encode( $actions );
 	}
 
-	public function get_countdown_item( $settings, $item ) {
+	public function render_countdown_item( $settings, $item ) {
 		$html = '<div class="wpr-countdown-item">';
-			$html .= '<span class="wpr-countdown-number wpr-countdown-'. $item .'" data-item="'. esc_attr($item) .'"></span>';
+			$html .= '<span class="wpr-countdown-number wpr-countdown-'. esc_attr($item) .'" data-item="'. esc_attr($item) .'"></span>';
 
 			if ( 'yes' === $settings['show_labels'] ) {
 				if ( 'seconds' !== $item ) {
@@ -993,9 +995,9 @@ class Wpr_Countdown extends Widget_Base {
 						'plural' => $settings['labels_'. $item .'_plural']
 					];
 
-					$html .= '<span class="wpr-countdown-label" data-text="'. esc_attr(json_encode( $labels )) .'">'. $settings['labels_'. $item .'_plural'] .'</span>';
+					$html .= '<span class="wpr-countdown-label" data-text="'. esc_attr(json_encode( $labels )) .'">'. esc_html($settings['labels_'. $item .'_plural']) .'</span>';
 				} else {
-					$html .= '<span class="wpr-countdown-label">'. $settings['labels_'. $item .'_plural'] .'</span>';
+					$html .= '<span class="wpr-countdown-label">'. esc_html($settings['labels_'. $item .'_plural']) .'</span>';
 				}
 			}
 		$html .= '</div>';
@@ -1004,28 +1006,28 @@ class Wpr_Countdown extends Widget_Base {
 			$html .= '<span class="wpr-countdown-separator"><span></span><span></span></span>';
 		}
 
-		return $html;
+		echo ''. $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	public function render_countdown_items( $settings ) {
 		// Days
 		if ( $settings['show_days'] ) {
-			echo $this->get_countdown_item( $settings, 'days' );
+			$this->render_countdown_item( $settings, 'days' );
 		}
 
 		// Hours
 		if ( $settings['show_hours'] ) {
-			echo $this->get_countdown_item( $settings, 'hours' );
+			$this->render_countdown_item( $settings, 'hours' );
 		}
 
 		// Minutes
 		if ( $settings['show_minutes'] ) {
-			echo $this->get_countdown_item( $settings, 'minutes' );
+			$this->render_countdown_item( $settings, 'minutes' );
 		}
 
 		// Seconds
 		if ( $settings['show_seconds'] ) {
-			echo $this->get_countdown_item( $settings, 'seconds' );
+			$this->render_countdown_item( $settings, 'seconds' );
 		}
 	}
 
@@ -1036,7 +1038,8 @@ class Wpr_Countdown extends Widget_Base {
 
 		if ( ! empty( $settings['timer_actions'] ) && ! in_array( 'redirect', $settings['timer_actions'] ) ) {
 			if ( in_array( 'load-template', $settings['timer_actions'] ) ) {
-				echo \Elementor\Plugin::instance()->frontend->get_builder_content( $settings['load_template'], false );
+				// Load Elementor Template
+				echo \Elementor\Plugin::instance()->frontend->get_builder_content( $settings['load_template'], false ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 		}
 	}
@@ -1046,7 +1049,7 @@ class Wpr_Countdown extends Widget_Base {
 		$settings = $this->get_settings();
 		
 		// Render
-		echo '<div class="'. esc_attr($this->get_countdown_class( $settings )) .'"'. $this->get_countdown_attributes( $settings ) .'>';
+		echo '<div class="'. esc_attr($this->get_countdown_class( $settings )) .'"'. $this->get_countdown_attributes( $settings ) .'>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			$this->render_countdown_items( $settings );
 		echo '</div>';
 

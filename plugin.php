@@ -49,7 +49,7 @@ class Plugin {
 	 */
 	public function __clone() {
 		// Cloning instances of the class is forbidden
-		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'wpr-addons' ), '1.0' );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin huh?', 'wpr-addons' ), '1.0' );
 	}
 
 	/**
@@ -60,7 +60,7 @@ class Plugin {
 	 */
 	public function __wakeup() {
 		// Unserializing instances of the class is forbidden
-		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'wpr-addons' ), '1.0' );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin huh?', 'wpr-addons' ), '1.0' );
 	}
 
 	/**
@@ -104,9 +104,9 @@ class Plugin {
 		}
 
 		// Reading Progress Bar
-		if ( 'on' === get_option('wpr-reading-progress-bar', 'on') ) {
-			// require WPR_ADDONS_PATH . 'extensions/wpr-reading-progress-bar.php';
-		}
+		// if ( 'on' === get_option('wpr-reading-progress-bar', 'on') ) {
+		// 	require WPR_ADDONS_PATH . 'extensions/wpr-reading-progress-bar.php';
+		// }
 
 		// Custom CSS
 		require WPR_ADDONS_PATH . 'extensions/wpr-custom-css.php';
@@ -219,42 +219,42 @@ class Plugin {
 
 		wp_register_style(
 			'wpr-animations-css',
-			WPR_ADDONS_URL . 'assets/css/lib/animations/wpr-animations' . $this->script_suffix() . '.css',
+			WPR_ADDONS_URL . 'assets/css/lib/animations/wpr-animations'. $this->script_suffix() .'.css',
 			[],
 			Plugin::instance()->get_version()
 		);
 
 		wp_register_style(
 			'wpr-link-animations-css',
-			WPR_ADDONS_URL . 'assets/css/lib/animations/wpr-link-animations' . $this->script_suffix() . '.css',
+			WPR_ADDONS_URL . 'assets/css/lib/animations/wpr-link-animations'. $this->script_suffix() .'.css',
 			[],
 			Plugin::instance()->get_version()
 		);
 
 		wp_register_style(
 			'wpr-loading-animations-css',
-			WPR_ADDONS_URL . 'assets/css/lib/animations/loading-animations' . $this->script_suffix() . '.css',
+			WPR_ADDONS_URL . 'assets/css/lib/animations/loading-animations'. $this->script_suffix() .'.css',
 			[],
 			Plugin::instance()->get_version()
 		);
 
 		wp_register_style(
 			'wpr-button-animations-css',
-			WPR_ADDONS_URL . 'assets/css/lib/animations/button-animations' . $this->script_suffix() . '.css',
+			WPR_ADDONS_URL . 'assets/css/lib/animations/button-animations'. $this->script_suffix() .'.css',
 			[],
 			Plugin::instance()->get_version()
 		);
 
 		wp_enqueue_style(
 			'wpr-text-animations-css',
-			WPR_ADDONS_URL . 'assets/css/lib/animations/text-animations' . $this->script_suffix() . '.css',
+			WPR_ADDONS_URL . 'assets/css/lib/animations/text-animations'. $this->script_suffix() .'.css',
 			[],
 			Plugin::instance()->get_version()
 		);
 
 		wp_register_style(
 			'wpr-lightgallery-css',
-			WPR_ADDONS_URL . 'assets/css/lib/lightgallery/lightgallery' . $this->script_suffix() . '.css',
+			WPR_ADDONS_URL . 'assets/css/lib/lightgallery/lightgallery'. $this->script_suffix() .'.css',
 			[],
 			Plugin::instance()->get_version()
 		);
@@ -262,20 +262,20 @@ class Plugin {
 		// Posts Timeline
 		wp_register_style( 
 			'wpr-aos-css', 
-			WPR_ADDONS_URL  . 'assets/css/lib/aos/aos' . $this->script_suffix() . '.css',
+			WPR_ADDONS_URL  . 'assets/css/lib/aos/aos'. $this->script_suffix() .'.css',
 			[]
 		);
 
 		wp_register_style(
 			'wpr-flipster-css',
-			WPR_ADDONS_URL . 'assets/css/lib/flipster/jquery.flipster' . $this->script_suffix() . '.css',
+			WPR_ADDONS_URL . 'assets/css/lib/flipster/jquery.flipster'. $this->script_suffix() .'.css',
 			[],
 			Plugin::instance()->get_version()
 		);
 
 		wp_enqueue_style(
 			'wpr-addons-css',
-			WPR_ADDONS_URL . 'assets/css/frontend' . $this->script_suffix() . '.css',
+			WPR_ADDONS_URL . 'assets/css/frontend'. $this->script_suffix() .'.css',
 			[],
 			Plugin::instance()->get_version()
 		);
@@ -283,7 +283,7 @@ class Plugin {
         // Load FontAwesome - TODO: Check if necessary (maybe elementor is already loading this)
         wp_enqueue_style(
 			'font-awesome-5-all',
-			ELEMENTOR_ASSETS_URL . 'lib/font-awesome/css/all' . $this->script_suffix() . '.css',
+			ELEMENTOR_ASSETS_URL . 'lib/font-awesome/css/all'. $this->script_suffix() .'.css',
 			false,
 			Plugin::instance()->get_version()
 		);
@@ -291,7 +291,7 @@ class Plugin {
         if ( \Elementor\Plugin::$instance->preview->is_preview_mode() ) {
 			wp_enqueue_style(
 				'wpr-addons-library-frontend-css',
-				WPR_ADDONS_URL . 'assets/css/library-frontend' . $this->script_suffix() . '.css',
+				WPR_ADDONS_URL . 'assets/css/library-frontend'. $this->script_suffix() .'.css',
 				[],
 				Plugin::instance()->get_version()
 			);
@@ -302,35 +302,35 @@ class Plugin {
 
 		wp_enqueue_style(
 			'wpr-animations-css',
-			WPR_ADDONS_URL . 'assets/css/lib/animations/wpr-animations' . $this->script_suffix() . '.css',
+			WPR_ADDONS_URL . 'assets/css/lib/animations/wpr-animations'. $this->script_suffix() .'.css',
 			[],
 			Plugin::instance()->get_version()
 		);
 
 		wp_enqueue_style(
 			'wpr-animations-link-css',
-			WPR_ADDONS_URL . 'assets/css/lib/animations/wpr-link-animations' . $this->script_suffix() . '.css',
+			WPR_ADDONS_URL . 'assets/css/lib/animations/wpr-link-animations'. $this->script_suffix() .'.css',
 			[],
 			Plugin::instance()->get_version()
 		);
 
 		wp_enqueue_style(
 			'wpr-loading-animations-css',
-			WPR_ADDONS_URL . 'assets/css/lib/animations/loading-animations' . $this->script_suffix() . '.css',
+			WPR_ADDONS_URL . 'assets/css/lib/animations/loading-animations'. $this->script_suffix() .'.css',
 			[],
 			Plugin::instance()->get_version()
 		);
 
 		wp_enqueue_style(
 			'wpr-button-animations-css',
-			WPR_ADDONS_URL . 'assets/css/lib/animations/button-animations' . $this->script_suffix() . '.css',
+			WPR_ADDONS_URL . 'assets/css/lib/animations/button-animations'. $this->script_suffix() .'.css',
 			[],
 			Plugin::instance()->get_version()
 		);
 
 		wp_enqueue_style(
 			'wpr-text-animations-css',
-			WPR_ADDONS_URL . 'assets/css/lib/animations/text-animations' . $this->script_suffix() . '.css',
+			WPR_ADDONS_URL . 'assets/css/lib/animations/text-animations'. $this->script_suffix() .'.css',
 			[],
 			Plugin::instance()->get_version()
 		);
@@ -338,13 +338,13 @@ class Plugin {
 		
 		wp_enqueue_style( 
 			'wpr-aos-css', 
-			WPR_ADDONS_URL  . 'assets/css/lib/aos/aos' . $this->script_suffix() . '.css',
+			WPR_ADDONS_URL  . 'assets/css/lib/aos/aos'. $this->script_suffix() .'.css',
 			[]
 		);
 
 		wp_enqueue_style(
 			'wpr-flipster-css',
-			WPR_ADDONS_URL . 'assets/css/lib/flipster/jquery.flipster' . $this->script_suffix() . '.css',
+			WPR_ADDONS_URL . 'assets/css/lib/flipster/jquery.flipster'. $this->script_suffix() .'.css',
 			[],
 			Plugin::instance()->get_version()
 		);
@@ -359,7 +359,7 @@ class Plugin {
 
 		wp_enqueue_script(
 			'wpr-addons-js',
-			WPR_ADDONS_URL . 'assets/js/frontend' . $this->script_suffix() . '.js',
+			WPR_ADDONS_URL . 'assets/js/frontend'. $this->script_suffix() .'.js',
 			[
 				'jquery',
 			],
@@ -369,7 +369,7 @@ class Plugin {
 
 		wp_enqueue_script(
 			'wpr-modal-popups-js',
-			WPR_ADDONS_URL . 'assets/js/modal-popups' . $this->script_suffix() . '.js',
+			WPR_ADDONS_URL . 'assets/js/modal-popups'. $this->script_suffix() .'.js',
 			[
 				'jquery',
 			],
@@ -391,7 +391,7 @@ class Plugin {
 
 		wp_register_script(
 			'wpr-infinite-scroll',
-			WPR_ADDONS_URL . 'assets/js/lib/infinite-scroll/infinite-scroll' . $this->script_suffix() . '.js',
+			WPR_ADDONS_URL . 'assets/js/lib/infinite-scroll/infinite-scroll'. $this->script_suffix() .'.js',
 			[
 				'jquery',
 			],
@@ -401,7 +401,7 @@ class Plugin {
 
 		wp_register_script(
 			'wpr-isotope',
-			WPR_ADDONS_URL . 'assets/js/lib/isotope/isotope' . $this->script_suffix() . '.js',
+			WPR_ADDONS_URL . 'assets/js/lib/isotope/isotope'. $this->script_suffix() .'.js',
 			[
 				'jquery',
 			],
@@ -411,7 +411,7 @@ class Plugin {
 
 		wp_register_script(
 			'wpr-slick',
-			WPR_ADDONS_URL . 'assets/js/lib/slick/slick' . $this->script_suffix() . '.js',
+			WPR_ADDONS_URL . 'assets/js/lib/slick/slick'. $this->script_suffix() .'.js',
 			[
 				'jquery',
 			],
@@ -421,7 +421,7 @@ class Plugin {
 
 		wp_register_script(
 			'wpr-lightgallery',
-			WPR_ADDONS_URL . 'assets/js/lib/lightgallery/lightgallery' . $this->script_suffix() . '.js',
+			WPR_ADDONS_URL . 'assets/js/lib/lightgallery/lightgallery'. $this->script_suffix() .'.js',
 			[
 				'jquery',
 			],
@@ -431,7 +431,7 @@ class Plugin {
 
 		wp_register_script(
 			'wpr-marquee',
-			WPR_ADDONS_URL . 'assets/js/lib/marquee/marquee' . $this->script_suffix() . '.js',
+			WPR_ADDONS_URL . 'assets/js/lib/marquee/marquee'. $this->script_suffix() .'.js',
 			[
 				'jquery',
 			],
@@ -441,7 +441,7 @@ class Plugin {
 
 		wp_register_script(
 			'wpr-google-maps',
-			'https://maps.googleapis.com/maps/api/js?key='. get_option('wpr_google_map_api_key'),
+			'https://maps.googleapis.com/maps/api/js?key='. esc_url(get_option('wpr_google_map_api_key')),
 			[],
 			'',
 			true
@@ -449,7 +449,7 @@ class Plugin {
 
 		wp_register_script(
 			'wpr-google-maps-clusters',
-			WPR_ADDONS_URL . 'assets/js/lib/gmap/markerclusterer' . $this->script_suffix() . '.js',
+			WPR_ADDONS_URL . 'assets/js/lib/gmap/markerclusterer'. $this->script_suffix() .'.js',
 			[],
 			'1.0.3',
 			true
@@ -457,7 +457,7 @@ class Plugin {
 
 		wp_register_script(
 			'jquery-event-move',
-			WPR_ADDONS_URL . 'assets/js/lib/jquery-event-move/jquery.event.move' . $this->script_suffix() . '.js',
+			WPR_ADDONS_URL . 'assets/js/lib/jquery-event-move/jquery.event.move'. $this->script_suffix() .'.js',
 			[],
 			'2.0',
 			true
@@ -481,7 +481,7 @@ class Plugin {
 
 		wp_register_script(
 			'wpr-flipster',
-			WPR_ADDONS_URL . 'assets/js/lib/flipster/jquery.flipster' . $this->script_suffix() . '.js',
+			WPR_ADDONS_URL . 'assets/js/lib/flipster/jquery.flipster'. $this->script_suffix() .'.js',
 			[],
 			'2.0',
 			true
@@ -492,7 +492,7 @@ class Plugin {
 
 		wp_enqueue_script(
 			'wpr-addons-editor-js',
-			WPR_ADDONS_URL . 'assets/js/editor' . $this->script_suffix() . '.js',
+			WPR_ADDONS_URL . 'assets/js/editor'. $this->script_suffix() .'.js',
 			[ 'jquery' ],
 			Plugin::instance()->get_version(),
 			true
@@ -517,7 +517,7 @@ class Plugin {
 
 		wp_enqueue_script(
 			'wpr-addons-library-frontend-js',
-			WPR_ADDONS_URL . 'assets/js/library-frontend' . $this->script_suffix() . '.js',
+			WPR_ADDONS_URL . 'assets/js/library-frontend'. $this->script_suffix() .'.js',
 			[ 'jquery', 'wpr-macy-js' ],
 			Plugin::instance()->get_version(),
 			true
@@ -527,13 +527,13 @@ class Plugin {
 			'wpr-addons-library-frontend-js',
 			'white_label',
 			[
-				'logo_url' => !empty(get_option('wpr_wl_plugin_logo')) ? wp_get_attachment_image_src(get_option('wpr_wl_plugin_logo'), 'full')[0] : WPR_ADDONS_ASSETS_URL .'img/logo-40x40.png'
+				'logo_url' => !empty(get_option('wpr_wl_plugin_logo')) ? esc_url(wp_get_attachment_image_src(get_option('wpr_wl_plugin_logo'), 'full')[0]) : WPR_ADDONS_ASSETS_URL .'img/logo-40x40.png'
 			]
 		);
 
 		wp_enqueue_script(
 			'wpr-addons-library-editor-js',
-			WPR_ADDONS_URL . 'assets/js/library-editor' . $this->script_suffix() . '.js',
+			WPR_ADDONS_URL . 'assets/js/library-editor'. $this->script_suffix() .'.js',
 			[ 'jquery' ],
 			Plugin::instance()->get_version(),
 			true
@@ -543,7 +543,7 @@ class Plugin {
 	public function enqueue_panel_styles() {
 		wp_enqueue_style(
 			'wpr-addons-library-editor-css',
-			WPR_ADDONS_URL . 'assets/css/editor' . $this->script_suffix() . '.css',
+			WPR_ADDONS_URL . 'assets/css/editor'. $this->script_suffix() .'.css',
 			[],
 			Plugin::instance()->get_version()
 		);
@@ -554,48 +554,48 @@ class Plugin {
 	public function lightbox_styles() {
 	    echo '<style id="wpr_lightbox_styles">
 	            .lg-backdrop {
-	                background-color: '. get_option('wpr_lb_bg_color','rgba(0,0,0,0.6)') .' !important;
+	                background-color: '. esc_html(get_option('wpr_lb_bg_color','rgba(0,0,0,0.6)')) .' !important;
 	            }
 	            .lg-toolbar,
 	            .lg-dropdown {
-	                background-color: '. get_option('wpr_lb_toolbar_color','rgba(0,0,0,0.8)') .' !important;
+	                background-color: '. esc_html(get_option('wpr_lb_toolbar_color','rgba(0,0,0,0.8)')) .' !important;
 	            }
 				.lg-dropdown:after {
-					border-bottom-color: '. get_option('wpr_lb_toolbar_color','rgba(0,0,0,0.8)') .' !important;
+					border-bottom-color: '. esc_html(get_option('wpr_lb_toolbar_color','rgba(0,0,0,0.8)')) .' !important;
 				}
 	            .lg-sub-html {
-	                background-color: '. get_option('wpr_lb_caption_color','rgba(0,0,0,0.8)') .' !important;
+	                background-color: '. esc_html(get_option('wpr_lb_caption_color','rgba(0,0,0,0.8)')) .' !important;
 	            }
 	            .lg-thumb-outer,
 	            .lg-progress-bar {
-	                background-color: '. get_option('wpr_lb_gallery_color','#444444') .' !important;
+	                background-color: '. esc_html(get_option('wpr_lb_gallery_color','#444444')) .' !important;
 	            }
 	            .lg-progress {
-	                background-color: '. get_option('wpr_lb_pb_color','#a90707') .' !important;
+	                background-color: '. esc_html(get_option('wpr_lb_pb_color','#a90707')) .' !important;
 	            }
 	            .lg-icon {
-	            	color: '. get_option('wpr_lb_ui_color','#efefef') .' !important;
-	            	font-size: '. get_option('wpr_lb_icon_size',20) .'px !important;
+	            	color: '. esc_html(get_option('wpr_lb_ui_color','#efefef')) .' !important;
+	            	font-size: '. esc_html(get_option('wpr_lb_icon_size',20)) .'px !important;
 	            }
 	            .lg-icon.lg-toogle-thumb {
-	            	font-size: '. (get_option('wpr_lb_icon_size',20) + 4) .'px !important;
+	            	font-size: '. esc_html((get_option('wpr_lb_icon_size',20) + 4)) .'px !important;
 	            }
 	            .lg-icon:hover,
 	            .lg-dropdown-text:hover {
-	            	color: '. get_option('wpr_lb_ui_hr_color','#ffffff') .' !important;
+	            	color: '. esc_html(get_option('wpr_lb_ui_hr_color','#ffffff')) .' !important;
 	            }
 	            .lg-sub-html,
 	            .lg-dropdown-text {
-	            	color: '. get_option('wpr_lb_text_color','#efefef') .' !important;
-	            	font-size: '. get_option('wpr_lb_text_size',14) .'px !important;
+	            	color: '. esc_html(get_option('wpr_lb_text_color','#efefef')) .' !important;
+	            	font-size: '. esc_html(get_option('wpr_lb_text_size',14)) .'px !important;
 	            }
 	            #lg-counter {
-	            	color: '. get_option('wpr_lb_text_color','#efefef') .' !important;
-	            	font-size: '. get_option('wpr_lb_text_size',14) .'px !important;
+	            	color: '. esc_html(get_option('wpr_lb_text_color','#efefef')) .' !important;
+	            	font-size: '. esc_html(get_option('wpr_lb_text_size',14)) .'px !important;
 	            }
 	            .lg-prev,
 	            .lg-next {
-	            	font-size: '. get_option('wpr_lb_arrow_size',35) .'px !important;
+	            	font-size: '. esc_html(get_option('wpr_lb_arrow_size',35)) .'px !important;
 	            }
 
 	            /* Defaults */

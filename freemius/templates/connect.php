@@ -81,7 +81,7 @@
 
 		if ( ! $is_premium_code ) {
 			$show_close_button = true;
-		} else if ( $is_premium_only ) {
+		} elseif ( $is_premium_only ) {
 			$previous_theme_activation_url = $fs->get_previous_theme_activation_url();
 			$show_close_button             = ( ! empty( $previous_theme_activation_url ) );
 		}
@@ -174,7 +174,7 @@
 							'<b>' . $current_user->user_email . '</b>',
 							fs_text_inline( 'complete the install', 'complete-the-install', $slug )
 						) );
-					} else if ( $require_license_key ) {
+					} elseif ( $require_license_key ) {
 						$button_label = $is_network_upgrade_mode ?
                             fs_text_inline( 'Activate License', 'agree-activate-license', $slug ) :
                             fs_text_inline( 'Agree & Activate License', 'agree-activate-license', $slug );

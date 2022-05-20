@@ -11,7 +11,9 @@ use Elementor\Core\Schemes\Color;
 use Elementor\Group_Control_Image_Size;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Post_Media extends Widget_Base {
 	
@@ -1525,7 +1527,7 @@ class Wpr_Post_Media extends Widget_Base {
 		
 		// Render Image
 		if ( has_post_thumbnail() ) {
-			echo '<div class="wpr-featured-media-image" data-src="'. esc_url( $src ) .'"'. $lightbox .'>';
+			echo '<div class="wpr-featured-media-image" data-src="'. esc_url( $src ) .'">';
 				if ( 'yes' === $show_caption && '' !== $caption ) {
 					echo '<div class="wpr-featured-media-caption">';
 						echo '<span>'. esc_html( $caption ) .'</span>';
@@ -1576,7 +1578,7 @@ class Wpr_Post_Media extends Widget_Base {
 				$track_url .= str_replace( '#', 'color=', $settings['audio_interface_color'] );
 			}
 
-			echo '<iframe height="'. $audio_height .'" src="'. esc_url( $track_url ) .'" allow="autoplay"></iframe>';
+			echo '<iframe height="'. esc_attr($audio_height) .'" src="'. esc_url( $track_url ) .'" allow="autoplay"></iframe>';
 		}
 	}
 

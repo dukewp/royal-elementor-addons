@@ -1,6 +1,8 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 use WprAddons\Admin\Includes\WPR_Templates_Loop;
 use WprAddonsPro\Admin\Wpr_White_Label;
@@ -89,24 +91,24 @@ function wpr_register_addons_settings() {
 }
 
 function wpr_addons_settings_page() {
-    
+
 ?>
 
 <div class="wrap wpr-settings-page-wrap">
 
 <div class="wpr-settings-page-header">
-    <h1><?php echo Utilities::get_plugin_name(true); ?></h1>
+    <h1><?php echo esc_html(Utilities::get_plugin_name(true)); ?></h1>
     <p><?php esc_html_e( 'The most powerful Elementor Addons in the universe.', 'wpr-addons' ); ?></p>
 
     <?php if ( empty(get_option('wpr_wl_plugin_links')) ) : ?>
     <div class="wpr-preview-buttons">
         <a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-plugin-prev-btn#widgets" target="_blank" class="button wpr-options-button">
-            <span><?php echo esc_html( 'View Plugin Demo', 'wpr-addons' ); ?></span>
+            <span><?php echo esc_html__( 'View Plugin Demo', 'wpr-addons' ); ?></span>
             <span class="dashicons dashicons-external"></span>
         </a>
 
         <a href="https://www.youtube.com/watch?v=rkYQfn3tUc0" class="wpr-options-button button" target="_blank">
-            <?php echo esc_html( 'How to use Widgets', 'wpr-addons' ); ?>
+            <?php echo esc_html__( 'How to use Widgets', 'wpr-addons' ); ?>
             <span class="dashicons dashicons-video-alt3"></span>
         </a>
     </div>
@@ -119,13 +121,13 @@ function wpr_addons_settings_page() {
 
     // Active Tab
     if ( empty(get_option('wpr_wl_hide_elements_tab')) ) {
-        $active_tab = isset( $_GET['tab'] ) ? esc_attr($_GET['tab']) : 'wpr_tab_elements';
+        $active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'wpr_tab_elements';
     } elseif ( empty(get_option('wpr_wl_hide_extensions_tab')) ) {
-        $active_tab = isset( $_GET['tab'] ) ? esc_attr($_GET['tab']) : 'wpr_tab_extensions';
+        $active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'wpr_tab_extensions';
     } elseif ( empty(get_option('wpr_wl_hide_settings_tab')) ) {
-        $active_tab = isset( $_GET['tab'] ) ? esc_attr($_GET['tab']) : 'wpr_tab_settings';
+        $active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'wpr_tab_settings';
     } elseif ( empty(get_option('wpr_wl_hide_white_label_tab')) ) {
-        $active_tab = isset( $_GET['tab'] ) ? esc_attr($_GET['tab']) : 'wpr_tab_white_label';
+        $active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'wpr_tab_white_label';
     }
     
 
@@ -137,19 +139,19 @@ function wpr_addons_settings_page() {
     <!-- Tabs -->
     <div class="nav-tab-wrapper wpr-nav-tab-wrapper">
         <?php if ( empty(get_option('wpr_wl_hide_elements_tab')) ) : ?>
-        <a href="?page=wpr-addons&tab=wpr_tab_elements" data-title="Elements" class="nav-tab <?php echo $active_tab == 'wpr_tab_elements' ? 'nav-tab-active' : ''; ?>">
+        <a href="?page=wpr-addons&tab=wpr_tab_elements" data-title="Elements" class="nav-tab <?php echo ($active_tab == 'wpr_tab_elements') ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Widgets', 'wpr-addons' ); ?>
         </a>
         <?php endif; ?>
 
         <?php if ( empty(get_option('wpr_wl_hide_extensions_tab')) ) : ?>
-        <a href="?page=wpr-addons&tab=wpr_tab_extensions" data-title="Extensions" class="nav-tab <?php echo $active_tab == 'wpr_tab_extensions' ? 'nav-tab-active' : ''; ?>">
+        <a href="?page=wpr-addons&tab=wpr_tab_extensions" data-title="Extensions" class="nav-tab <?php echo ($active_tab == 'wpr_tab_extensions') ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Extensions', 'wpr-addons' ); ?>
         </a>
         <?php endif; ?>
         
         <?php if ( empty(get_option('wpr_wl_hide_settings_tab')) ) : ?>
-        <a href="?page=wpr-addons&tab=wpr_tab_settings" data-title="Settings" class="nav-tab <?php echo $active_tab == 'wpr_tab_settings' ? 'nav-tab-active' : ''; ?>">
+        <a href="?page=wpr-addons&tab=wpr_tab_settings" data-title="Settings" class="nav-tab <?php echo ($active_tab == 'wpr_tab_settings') ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Settings', 'wpr-addons' ); ?>
         </a>
         <?php endif; ?>
@@ -190,12 +192,12 @@ function wpr_addons_settings_page() {
         $reff = '?ref=rea-plugin-backend-elements-widget-prev'. $data[2];
         $class = 'new' === $data[3] ? ' wpr-new-element' : '';
 
-        echo '<div class="wpr-element'. $class .'">';
+        echo '<div class="wpr-element'. esc_attr($class) .'">';
             echo '<div class="wpr-element-info">';
-                echo '<h3>'. $title .'</h3>';
-                echo '<input type="checkbox" name="wpr-element-'. $slug .'" id="wpr-element-'. $slug .'" '. checked( get_option('wpr-element-'. $slug, 'on'), 'on', false ) .'>';
-                echo '<label for="wpr-element-'. $slug .'"></label>';
-                echo ( '' !== $url && empty(get_option('wpr_wl_plugin_links')) ) ? '<a href="'. $url . $reff .'" target="_blank">'. esc_html('View Widget Demo', 'wpr-addons') .'</a>' : '';
+                echo '<h3>'. esc_html($title) .'</h3>';
+                echo '<input type="checkbox" name="wpr-element-'. esc_attr($slug) .'" id="wpr-element-'. esc_attr($slug) .'" '. checked( get_option('wpr-element-'. $slug, 'on'), 'on', false ) .'>';
+                echo '<label for="wpr-element-'. esc_attr($slug) .'"></label>';
+                echo ( '' !== $url && empty(get_option('wpr_wl_plugin_links')) ) ? '<a href="'. esc_url($url . $reff) .'" target="_blank">'. esc_html__('View Widget Demo', 'wpr-addons') .'</a>' : '';
             echo '</div>';
         echo '</div>';
     }
@@ -325,20 +327,20 @@ function wpr_addons_settings_page() {
 
             echo '<div class="wpr-element">';
                 echo '<div class="wpr-element-info">';
-                    echo '<h3>' . $option_title . '</h3>';
-                    echo '<input type="checkbox" name="'. $option_name .'" id="'. $option_name .'" '. checked( get_option(''. $option_name .'', 'on'), 'on', false ) .'>';
-                    echo '<label for="'. $option_name .'"></label>';
+                    echo '<h3>'. esc_html($option_title) .'</h3>';
+                    echo '<input type="checkbox" name="'. esc_attr($option_name) .'" id="'. esc_attr($option_name) .'" '. checked( get_option(''. $option_name .'', 'on'), 'on', false ) .'>';
+                    echo '<label for="'. esc_attr($option_name) .'"></label>';
 
                     if ( 'wpr-parallax-background' === $option_name ) {
                         echo '<br><span>Tip: Edit any Section > Navigate to Style tab</span>';
                         echo '<a href="https://www.youtube.com/watch?v=DcDeQ__lJbw" target="_blank">Watch Video Tutorial</a>';
-                    } else if ( 'wpr-parallax-multi-layer' === $option_name ) {
+                    } elseif ( 'wpr-parallax-multi-layer' === $option_name ) {
                         echo '<br><span>Tip: Edit any Section > Navigate to Style tab</span>';
                         echo '<a href="https://youtu.be/DcDeQ__lJbw?t=121" target="_blank">Watch Video Tutorial</a>';
-                    } else if ( 'wpr-particles' === $option_name ) {
+                    } elseif ( 'wpr-particles' === $option_name ) {
                         echo '<br><span>Tip: Edit any Section > Navigate to Style tab</span>';
                         echo '<a href="https://www.youtube.com/watch?v=8OdnaoFSj94" target="_blank">Watch Video Tutorial</a>';
-                    } else if ( 'wpr-sticky-section' === $option_name ) {
+                    } elseif ( 'wpr-sticky-section' === $option_name ) {
                         echo '<br><span>Tip: Edit any Section > Navigate to Advanced tab</span>';
                         echo '<a href="https://www.youtube.com/watch?v=at0CPKtklF0&t=375s" target="_blank">Watch Video Tutorial</a>';
                     }

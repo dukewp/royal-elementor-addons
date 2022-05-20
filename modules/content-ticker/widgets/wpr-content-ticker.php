@@ -17,7 +17,9 @@ use Elementor\Icons;
 use Elementor\Utils;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Content_Ticker extends Widget_Base {
 		

@@ -11,7 +11,9 @@ use Elementor\Core\Schemes\Typography;
 use Elementor\Core\Schemes\Color;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Archive_Title extends Widget_Base {
 	
@@ -412,20 +414,20 @@ class Wpr_Archive_Title extends Widget_Base {
 			$description = isset($tax->description) ? $tax->description : '';
 
 			if ( '' !== $title ) {
-				echo '<'. $settings['post_title_tag'] .' class="wpr-archive-title">';
-					echo '<span>'. $settings['post_title_before_text'] .'</span>' . $title;
-				echo '</'. $settings['post_title_tag'] .'>';
+				echo '<'. esc_attr($settings['post_title_tag']) .' class="wpr-archive-title">';
+					echo '<span>'. wp_kses_post($settings['post_title_before_text']) .'</span>'. esc_html($title);
+				echo '</'. esc_attr($settings['post_title_tag']) .'>';
 			}
 
 			if ( wpr_fs()->can_use_premium_code() ) {
 				if ( '' !== $description && '' !== $settings['archive_description'] ) {
-					echo '<p class="wpr-archive-description">'. $description .'</p>';
+					echo '<p class="wpr-archive-description">'. wp_kses_post($description) .'</p>';
 				}
 			}
 		} elseif ( is_search() ) {
-			echo '<'. $settings['post_title_tag'] .' class="wpr-archive-title">';
-				echo '<span>'. $settings['post_title_before_text'] .'</span>' . get_search_query();
-			echo '</'. $settings['post_title_tag'] .'>';	
+			echo '<'. esc_attr($settings['post_title_tag']) .' class="wpr-archive-title">';
+				echo '<span>'. esc_html($settings['post_title_before_text']) .'</span>'. esc_html(get_search_query());
+			echo '</'. esc_attr($settings['post_title_tag']) .'>';	
 		}
 
 	}

@@ -16,7 +16,9 @@ use Elementor\Utils;
 use Elementor\Icons;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Logo extends Widget_Base {
 		
@@ -584,7 +586,7 @@ class Wpr_Logo extends Widget_Base {
 	$title = '';
 	if ( 'default' === $settings['title_type'] ) {
 		$title = get_bloginfo( 'name' );
-	} else if ( 'custom' === $settings['title_type'] ) {
+	} elseif ( 'custom' === $settings['title_type'] ) {
 		$title = $settings['custom_title'];
 	}
 
@@ -592,14 +594,14 @@ class Wpr_Logo extends Widget_Base {
 	$description = '';
 	if ( 'default' === $settings['description_type'] ) {
 		$description =  get_bloginfo( 'description' );
-	} else if ( 'custom' === $settings['description_type'] ) {
+	} elseif ( 'custom' === $settings['description_type'] ) {
 		$description = $settings['custom_description'];
 	}
 
 	// Image hover animation
 	$this->add_render_attribute( 'image_attr', 'class', 'wpr-logo-image' );
 	if ( $settings['hv_animation'] ) {
-		$this->add_render_attribute( 'image_attr', 'class', 'elementor-animation-' . $settings['hv_animation'] );
+		$this->add_render_attribute( 'image_attr', 'class', 'elementor-animation-'. $settings['hv_animation'] );
 	}
 
 	// Logo URL
@@ -608,7 +610,7 @@ class Wpr_Logo extends Widget_Base {
 	
 	if ( 'default' === $settings['url_type'] ) {
 		$this->add_render_attribute( 'url_attr', 'href',  home_url( '/' ) );
-	} else if ( 'custom' === $settings['url_type'] ) {
+	} elseif ( 'custom' === $settings['url_type'] ) {
 
 		if ( $settings['custom_url']['is_external'] ) {
 			$this->add_render_attribute( 'url_attr', 'target', '_blank' );
@@ -628,14 +630,14 @@ class Wpr_Logo extends Widget_Base {
 		<?php if ( !empty( $image_src ) ) : ?>
 		<picture <?php echo $this->get_render_attribute_string( 'image_attr' ); ?>>
 			<?php if ( ! empty( $mobile_image_src ) ) : ?>
-			<source media="(max-width: 767px)" srcset="<?php echo $mobile_image_src; ?>">	
+			<source media="(max-width: 767px)" srcset="<?php echo esc_attr( $mobile_image_src ); ?>">	
 			<?php endif; ?>
 
 			<?php if ( ! empty( $settings['retina_image']['url'] ) ) : ?>
 			<source srcset="<?php echo esc_attr( $image_src ); ?> 1x, <?php echo esc_attr( $settings['retina_image']['url'] ); ?> 2x">	
 			<?php endif; ?>
 			
-			<img src="<?php echo $image_src; ?>" alt="<?php echo esc_attr( $title ); ?>">
+			<img src="<?php echo esc_url($image_src); ?>" alt="<?php echo esc_attr( $title ); ?>">
 
 			<?php if ( $this->logo_is_linked() ) : ?>
 				<a <?php echo $this->get_render_attribute_string( 'url_attr' ); ?>></a>
@@ -643,7 +645,7 @@ class Wpr_Logo extends Widget_Base {
 		</picture>
 		<?php endif; ?>
 
-		<?php if ( ! empty( $title ) || ! empty( $description ) ) : ?>		
+		<?php if ( ! empty( $title ) || ! empty( $description ) ) : ?>
 		<div class="wpr-logo-text">
 			<?php if ( ! empty( $title ) ) : ?>
 				<?php if ( is_home() || is_front_page() ) : ?>

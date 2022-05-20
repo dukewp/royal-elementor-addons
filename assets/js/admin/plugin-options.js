@@ -64,7 +64,6 @@ jQuery(document).ready(function( $ ) {
 	** Create User Template -------------------------
 	*/
 	function craeteUserTemplate() {
-		console.log(getActiveFilter)
 		// Get Template Library
 		var library = 'my-templates' === getActiveFilter() ? 'elementor_library' : 'wpr_templates';
 		// Get Template Title

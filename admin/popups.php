@@ -1,6 +1,8 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 use WprAddons\Admin\Includes\WPR_Templates_Loop;
 use WprAddons\Classes\Utilities;
@@ -18,7 +20,7 @@ function wpr_addons_popups_page() {
 <div class="wrap wpr-settings-page-wrap">
 
 <div class="wpr-settings-page-header">
-    <h1><?php echo Utilities::get_plugin_name(true); ?></h1>
+    <h1><?php echo esc_html(Utilities::get_plugin_name(true)); ?></h1>
     <p><?php esc_html_e( 'The most powerful Elementor Addons in the universe.', 'wpr-addons' ); ?></p>
 
     <!-- Custom Template -->
@@ -33,7 +35,7 @@ function wpr_addons_popups_page() {
     <?php
 
     // Active Tab
-    $active_tab = isset( $_GET['tab'] ) ? esc_attr($_GET['tab']) : 'wpr_tab_popups';
+    $active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'wpr_tab_popups';
 
     ?>
 
@@ -48,7 +50,7 @@ function wpr_addons_popups_page() {
 
     <!-- Tabs -->
     <div class="nav-tab-wrapper wpr-nav-tab-wrapper">
-        <a href="?page=wpr-theme-builder&tab=wpr_tab_popups" data-title="popup" class="nav-tab <?php echo $active_tab == 'wpr_tab_popups' ? 'nav-tab-active' : ''; ?>">
+        <a href="?page=wpr-theme-builder&tab=wpr_tab_popups" data-title="popup" class="nav-tab <?php echo ($active_tab == 'wpr_tab_popups') ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Popups', 'wpr-addons' ); ?>
         </a>
     </div>

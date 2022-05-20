@@ -94,7 +94,7 @@
             if ( is_multisite() ) {
                 if ( true === $network_level_or_blog_id ) {
                     $key .= ':ms';
-                } else if ( is_numeric( $network_level_or_blog_id ) && $network_level_or_blog_id > 0 ) {
+                } elseif ( is_numeric( $network_level_or_blog_id ) && $network_level_or_blog_id > 0 ) {
                     $key .= ":{$network_level_or_blog_id}";
                 } else {
                     $network_level_or_blog_id = get_current_blog_id();

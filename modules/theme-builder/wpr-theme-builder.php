@@ -3,7 +3,9 @@
 use Elementor\Controls_Manager;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 	
@@ -316,9 +318,9 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 		$plugin = Plugin::elementor();
 
 		if ( $plugin->preview->is_preview_mode( $this->get_main_id() ) ) {
-			echo $plugin->preview->builder_wrapper( '' );
+			echo ''. $plugin->preview->builder_wrapper( '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		} else {
-			echo $this->get_content();
+			echo ''. $this->get_content(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 

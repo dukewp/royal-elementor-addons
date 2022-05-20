@@ -1,6 +1,8 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 use WprAddons\Admin\Templates\WPR_Templates_Data;
 use WprAddons\Admin\Templates\WPR_Templates_Library_Blocks;
@@ -23,7 +25,7 @@ function wpr_addons_premade_blocks_page() {
 <div class="wpr-premade-blocks-page">
 
     <div class="wpr-settings-page-header">
-        <h1><?php echo Utilities::get_plugin_name(true); ?></h1>
+        <h1><?php echo esc_html(Utilities::get_plugin_name(true)); ?></h1>
         <p><?php esc_html_e( 'The most powerful Elementor Addons in the universe.', 'wpr-addons' ); ?></p>
     </div>
 

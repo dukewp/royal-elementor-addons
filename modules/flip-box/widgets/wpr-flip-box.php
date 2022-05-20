@@ -16,7 +16,9 @@ use Elementor\Icons;
 use Elementor\Utils;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Flip_Box extends Widget_Base {
 		
@@ -1873,18 +1875,18 @@ class Wpr_Flip_Box extends Widget_Base {
 					<?php endif; ?>
 					
 					<?php if ( '' !== $settings['front_title'] ) : ?>
-						<h3 class="wpr-flip-box-title"><?php echo $settings['front_title']; ?></h3>
+						<h3 class="wpr-flip-box-title"><?php echo wp_kses_post($settings['front_title']); ?></h3>
 					<?php endif; ?>
 
 					<?php if ( '' !== $settings['front_description'] ) : ?>
-						<div class="wpr-flip-box-description"><?php echo $settings['front_description']; ?></div>						
+						<div class="wpr-flip-box-description"><?php echo wp_kses_post($settings['front_description']); ?></div>						
 					<?php endif; ?>	
 
 					<?php if ( 'btn' === $settings['front_trigger'] ) : ?>
 						<div class="wpr-flip-box-btn-wrap">
 							<div class="wpr-flip-box-btn">
 								<?php if ( '' !== $settings['front_btn_text'] ) : ?>
-								<span class="wpr-flip-box-btn-text"><?php echo $settings['front_btn_text']; ?></span>		
+								<span class="wpr-flip-box-btn-text"><?php echo esc_html($settings['front_btn_text']); ?></span>		
 								<?php endif; ?>
 
 								<?php if ( '' !== $settings['front_btn_icon']['value'] ) : ?>
@@ -1923,10 +1925,10 @@ class Wpr_Flip_Box extends Widget_Base {
 						<h3 class="wpr-flip-box-title">
 							<?php
 							if ( 'title' === $settings['back_link_type'] || 'btn-title' === $settings['back_link_type']  ) {
-								echo '<a '.$this->get_render_attribute_string( 'link_attribute' ).'>';
+								echo '<a '. $this->get_render_attribute_string( 'link_attribute' ).'>';
 							}
 
-							echo $settings['back_title'];
+							echo wp_kses_post($settings['back_title']);
 						
 							if ( 'title' === $settings['back_link_type'] || 'btn-title' === $settings['back_link_type']  ) {
 								echo '</a>';
@@ -1936,7 +1938,7 @@ class Wpr_Flip_Box extends Widget_Base {
 					<?php endif; ?>
 
 					<?php if ( '' !== $settings['back_description'] ) : ?>
-						<div class="wpr-flip-box-description"><?php echo $settings['back_description']; ?></div>						
+						<div class="wpr-flip-box-description"><?php echo wp_kses_post($settings['back_description']); ?></div>						
 					<?php endif; ?>	
 
 					<?php if ( 'btn' === $settings['back_link_type'] || 'btn-title' === $settings['back_link_type'] ) : ?>
@@ -1945,7 +1947,7 @@ class Wpr_Flip_Box extends Widget_Base {
 							<?php echo '<'. esc_html($back_btn_element) .' class="wpr-flip-box-btn" '. $this->get_render_attribute_string( 'link_attribute' ) .'>'; ?>
 
 								<?php if ( '' !== $settings['back_btn_text'] ) : ?>
-								<span class="wpr-flip-box-btn-text"><?php echo $settings['back_btn_text']; ?></span>		
+								<span class="wpr-flip-box-btn-text"><?php echo esc_html($settings['back_btn_text']); ?></span>		
 								<?php endif; ?>
 
 								<?php if ( '' !== $settings['back_btn_icon']['value'] ) : ?>

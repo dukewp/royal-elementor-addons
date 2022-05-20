@@ -11,7 +11,9 @@ use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Border;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Post_Comments extends Widget_Base {
 	
@@ -2211,7 +2213,7 @@ class Wpr_Post_Comments extends Widget_Base {
 		$author_name = get_comment_author( $comment );
 
 		// Comment HTML
-		echo '<li id="comment-'. get_comment_ID() .'" class="'. esc_attr( $comment_class ) .'">';
+		echo '<li id="comment-'. esc_attr(get_comment_ID()) .'" class="'. esc_attr( $comment_class ) .'">';
 		echo '<article class="wpr-post-comment elementor-clearfix">';
 
 			// Comment Avatar
@@ -2235,7 +2237,7 @@ class Wpr_Post_Comments extends Widget_Base {
 				// Comment Metadata
 				echo '<div class="wpr-comment-metadata elementor-clearfix">';
 					// Date and Time
-					echo '<span>'. get_comment_date( '', $comment ) . esc_html__( ' at ', 'wpr-addons' ) . get_comment_time() .'</span>';
+					echo '<span>'. esc_html(get_comment_date( '', $comment )) . esc_html__( ' at ', 'wpr-addons' ) . esc_html(get_comment_time()) .'</span>';
 
 					// Edit Link
 					edit_comment_link( esc_html__( 'Edit', 'wpr-addons' ), ' | ', '' );
@@ -2316,7 +2318,7 @@ class Wpr_Post_Comments extends Widget_Base {
 
 				// Comments
 				if ( 'yes' === $settings['section_title'] ) {
-					echo '<h3> '. $text .'</h3>';
+					echo '<h3> '. esc_html($text) .'</h3>';
 				}
 
 				// Get Post Comments
@@ -2331,7 +2333,7 @@ class Wpr_Post_Comments extends Widget_Base {
 
 				// Comments Navigation
 				if ( get_comment_pages_count($get_comments) > 1 && get_option( 'page_comments' ) ) {
-					echo '<div class="wpr-comments-navigation wpr-comments-navigation-'. $settings['comments_navigation_align'] .'">';
+					echo '<div class="wpr-comments-navigation wpr-comments-navigation-'. esc_html($settings['comments_navigation_align']) .'">';
 						paginate_comments_links([
 							'base' => add_query_arg( 'cpage', '%#%' ),
 							'format' => '',
@@ -2373,13 +2375,13 @@ class Wpr_Post_Comments extends Widget_Base {
 				$fields = [
 					// name
 					'author' => '<div class="wpr-comment-form-fields"> <div class="wpr-comment-form-author">'. $author_label .
-					'<input type="text" name="author" placeholder="'. $author_ph .'"/></div>',
+					'<input type="text" name="author" placeholder="'. esc_attr($author_ph) .'"/></div>',
 					// Email
 					'email' => '<div class="wpr-comment-form-email">'. $email_label .
-					'<input type="text" name="email" placeholder="'. $email_ph .'"/></div>',
+					'<input type="text" name="email" placeholder="'. esc_attr($email_ph) .'"/></div>',
 					// Website
 					'url' => '<div class="wpr-comment-form-url">'. $url_label .
-					'<input type="text" name="url" placeholder="'. $url_ph .'"/></div></div>',
+					'<input type="text" name="url" placeholder="'. esc_url($url_ph) .'"/></div></div>',
 				];
 
 				// Remove Website Field
@@ -2412,7 +2414,7 @@ class Wpr_Post_Comments extends Widget_Base {
 
 				// Form
 				$defaults['id_form'] = 'wpr-comment-form';
-				$defaults['class_form'] = 'wpr-comment-form wpr-cf-'. $settings['comments_form_layout'];
+				$defaults['class_form'] = 'wpr-comment-form wpr-cf-'. esc_attr($settings['comments_form_layout']);
 
 				// No Website Filed Class
 				if ( '' === $settings['comment_form_website'] ) {
@@ -2425,8 +2427,8 @@ class Wpr_Post_Comments extends Widget_Base {
 				$defaults['title_reply_after'] = '</h3>';
 
 				// Text Field
-				$defaults['comment_field']  = '<div class="wpr-comment-form-text">' . $text_label;
-				$defaults['comment_field'] .= '<textarea name="comment" placeholder="'. $text_ph .'" cols="45" rows="8" maxlength="65525"></textarea>';
+				$defaults['comment_field']  = '<div class="wpr-comment-form-text">'. $text_label;
+				$defaults['comment_field'] .= '<textarea name="comment" placeholder="'. esc_attr($text_ph) .'" cols="45" rows="8" maxlength="65525"></textarea>';
 				$defaults['comment_field'] .= '</div>';
 
 				// Submit Button

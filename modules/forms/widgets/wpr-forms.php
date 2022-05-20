@@ -11,7 +11,9 @@ use Elementor\Core\Schemes\Color;
 use Elementor\Core\Schemes\Typography;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Forms extends Widget_Base {
 	
@@ -2405,7 +2407,7 @@ class Wpr_Forms extends Widget_Base {
 	}
 
 	public function render_wpforms_template( $settings ) {
-		echo wpforms_display( $settings['wpforms_templates'], $settings['show_form_title'], $settings['show_form_description'] );
+		echo wpforms_display( $settings['wpforms_templates'], $settings['show_form_title'], $settings['show_form_description'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	public function render_ninja_forms_template( $settings ) {

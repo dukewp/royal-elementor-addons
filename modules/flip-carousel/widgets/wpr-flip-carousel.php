@@ -16,7 +16,9 @@ use Elementor\Group_Control_Image_Size;
 use Elementor\Utils;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Flip_Carousel extends Widget_Base {
 	
@@ -1160,19 +1162,19 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				}
 
 				if ( ! empty( $element['slide_link']['url'] ) ) {
-					$this->add_link_attributes( 'slide_link'.$i, $element['slide_link'] );
+					$this->add_link_attributes( 'slide_link'. $i, $element['slide_link'] );
 				}
 
 				if ( Utils::get_placeholder_image_src() === $element['image']['url'] ) {
 					$flip_slide_image = '<img src='. Utils::get_placeholder_image_src() .' />';
 				} if (WPR_ADDONS_ASSETS_URL . 'img/logo-slider-450x450.png' === $element['image']['url']) {
-					$flip_slide_image = '<img src="'. $element['image']['url'] .'" />';
+					$flip_slide_image = '<img src="'. esc_url($element['image']['url']) .'" />';
 				} else {
 					$flip_slide_image = '<img src="'.  Group_Control_Image_Size::get_attachment_image_src( $element['image']['id'], 'flip_carousel_image_size', $settings ) .'" />';
 				}
 
 				if ( 'yes' === $settings['enable_figcaption'] ) {
-					$figcaption = '<figcaption class="flipcaption"><span style="width: 100%;">'. $element['slide_text'] .'</span></figcaption>';
+					$figcaption = '<figcaption class="flipcaption"><span style="width: 100%;">'. esc_html($element['slide_text']) .'</span></figcaption>';
 				} else {
 					$figcaption = '';
 				}
@@ -1182,12 +1184,12 @@ class Wpr_Flip_Carousel extends Widget_Base {
 						: ''. $figcaption . $flip_slide_image .'';
 
 				$figure = 'yes' === $element['enable_slide_link']
-						? '<a '. $this->get_render_attribute_string( 'slide_link'.$i ) .'>' . $inner_figure . '</a>'
+						? '<a '. $this->get_render_attribute_string( 'slide_link'. $i ) .'>' . esc_html($inner_figure) . '</a>'
 						: $inner_figure;
 
                 echo '<li class="wpr-flip-item" data-flip-title="">';
 					echo '<figure>';
-						echo $figure;
+						echo ''. $figure; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo '</figure>';
 				echo '</li>';
 				$i++;

@@ -154,7 +154,7 @@
             if ( $show_plan_row ) {
                 if ( is_null( $all_installs_plan_id ) ) {
                     $all_installs_plan_id = $install->plan_id;
-                } else if ( $all_installs_plan_id != $install->plan_id ) {
+                } elseif ( $all_installs_plan_id != $install->plan_id ) {
                     $show_plan_row = false;
                 }
             }

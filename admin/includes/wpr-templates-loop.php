@@ -2,7 +2,9 @@
 
 namespace WprAddons\Admin\Includes;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 use WprAddons\Classes\Utilities;
 
@@ -94,7 +96,7 @@ class WPR_Templates_Loop {
 
 				// List
 				echo '<li>';
-					echo '<h3 class="wpr-title">'. $user_template->post_title .'</h3>';
+					echo '<h3 class="wpr-title">'. esc_html($user_template->post_title) .'</h3>';
 					
 					echo '<span class="wpr-action-buttons">';
 						echo '<a href="'. esc_url($edit_url) .'" class="wpr-edit-template button button-primary">'. esc_html__( 'Edit', 'wpr-addons' ) .'</a>';
@@ -114,6 +116,9 @@ class WPR_Templates_Loop {
 	** Render Conditions Popup
 	*/
 	public static function render_conditions_popup( $canvas = false ) {
+
+		// Active Tab
+		$active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
 		
 	?>
 
@@ -140,7 +145,7 @@ class WPR_Templates_Loop {
                     </select>
                     <!-- Archive -->
                     <select name="archives_condition_select" class="archives-condition-select">
-                    	<?php if ( 'wpr_tab_product_archive' !== $_GET['tab'] ) : ?>
+                    	<?php if ( 'wpr_tab_product_archive' !== $active_tab ) : ?>
 	                        <option value="all_archives"><?php esc_html_e( 'All Archives', 'wpr-addons' ); ?></option>
 	                        <option value="posts"><?php esc_html_e( 'Posts Archive', 'wpr-addons' ); ?></option>
 	                        <option value="author"><?php esc_html_e( 'Author Archive', 'wpr-addons' ); ?></option>
@@ -151,7 +156,7 @@ class WPR_Templates_Loop {
 	                        <?php // Custom Taxonomies
 	                            $custom_taxonomies = Utilities::get_custom_types_of( 'tax', true );
 	                            foreach ($custom_taxonomies as $key => $value) {
-                            		if ( 'wpr_tab_header' !== $_GET['tab'] && 'wpr_tab_footer' !== $_GET['tab'] && ('product_cat' === $key || 'product_tag' === $key) ) {
+                            		if ( 'wpr_tab_header' !== $active_tab && 'wpr_tab_footer' !== $active_tab && ('product_cat' === $key || 'product_tag' === $key) ) {
                             			continue;
                             		} elseif ( 'product_cat' === $key ) {
 	                                    echo '<option value="products">'. esc_html__( 'Products Archive', 'wpr-addons' ) .'</option>';
@@ -169,7 +174,7 @@ class WPR_Templates_Loop {
                     </select>
                     <!-- Single -->
                     <select name="singles_condition_select" class="singles-condition-select">
-                    	<?php if ( 'wpr_tab_product_single' !== $_GET['tab'] ) : ?>
+                    	<?php if ( 'wpr_tab_product_single' !== $active_tab ) : ?>
 	                        <option value="front_page"><?php esc_html_e( 'Front Page', 'wpr-addons' ); ?></option>
 	                        <option value="page_404"><?php esc_html_e( '404 Page', 'wpr-addons' ); ?></option>
 	                        <option value="pages" class="custom-ids"><?php esc_html_e( 'Pages', 'wpr-addons' ); ?></option>
@@ -177,7 +182,7 @@ class WPR_Templates_Loop {
 	                        <?php // Custom Post Types
 	                            $custom_taxonomies = Utilities::get_custom_types_of( 'post', true );
 	                            foreach ($custom_taxonomies as $key => $value) {
-                            		if ( 'wpr_tab_header' !== $_GET['tab'] && 'wpr_tab_footer' !== $_GET['tab'] && 'product' === $key ) {
+                            		if ( 'wpr_tab_header' !== $active_tab && 'wpr_tab_footer' !== $active_tab && 'product' === $key ) {
                             			continue;
                             		}
 
@@ -204,8 +209,8 @@ class WPR_Templates_Loop {
                     <!-- Archive -->
                     <select name="archives_condition_select" class="archives-condition-select">
 
-                    	<?php if ( 'wpr_tab_product_archive' !== $_GET['tab'] ) : ?>
-                    		<?php if ( 'wpr_tab_archive' === $_GET['tab'] ) : ?>
+                    	<?php if ( 'wpr_tab_product_archive' !== $active_tab ) : ?>
+                    		<?php if ( 'wpr_tab_archive' === $active_tab ) : ?>
 		                        <option value="all_archives"><?php esc_html_e( 'All Archives', 'wpr-addons' ); ?></option>
 		                        <option value="posts"><?php esc_html_e( 'Posts Archive', 'wpr-addons' ); ?></option>
 		                        <option value="author"><?php esc_html_e( 'Author Archive', 'wpr-addons' ); ?></option>
@@ -224,7 +229,7 @@ class WPR_Templates_Loop {
 		                        <?php // Custom Taxonomies
 		                            $custom_taxonomies = Utilities::get_custom_types_of( 'tax', true );
 		                            foreach ($custom_taxonomies as $key => $value) {
-	                            		if ( 'wpr_tab_header' !== $_GET['tab'] && 'wpr_tab_footer' !== $_GET['tab'] && ('product_cat' === $key || 'product_tag' === $key) ) {
+	                            		if ( 'wpr_tab_header' !== $active_tab && 'wpr_tab_footer' !== $active_tab && ('product_cat' === $key || 'product_tag' === $key) ) {
 	                            			continue;
 	                            		} elseif ( 'product_cat' === $key ) {
 		                                    echo '<option value="products">'. esc_html__( 'Products Archive (Pro)', 'wpr-addons' ) .'</option>';
@@ -243,8 +248,8 @@ class WPR_Templates_Loop {
                     </select>
                     <!-- Single -->
                     <select name="singles_condition_select" class="singles-condition-select">
-                    	<?php if ( 'wpr_tab_product_single' !== $_GET['tab'] ) : ?>
-                    		<?php if ( 'wpr_tab_single' === $_GET['tab'] ) : ?>
+                    	<?php if ( 'wpr_tab_product_single' !== $active_tab ) : ?>
+                    		<?php if ( 'wpr_tab_single' === $active_tab ) : ?>
 		                        <option value="front_page"><?php esc_html_e( 'Front Page', 'wpr-addons' ); ?></option>
 		                        <option value="page_404"><?php esc_html_e( '404 Page', 'wpr-addons' ); ?></option>
 		                        <option value="pages" class="custom-ids"><?php esc_html_e( 'Pages', 'wpr-addons' ); ?></option>
@@ -257,7 +262,7 @@ class WPR_Templates_Loop {
 		                        <?php // Custom Post Types
 		                            $custom_taxonomies = Utilities::get_custom_types_of( 'post', true );
 		                            foreach ($custom_taxonomies as $key => $value) {
-	                            		if ( 'wpr_tab_header' !== $_GET['tab'] && 'wpr_tab_footer' !== $_GET['tab'] && 'product' === $key ) {
+	                            		if ( 'wpr_tab_header' !== $active_tab && 'wpr_tab_footer' !== $active_tab && 'product' === $key ) {
 	                            			continue;
 	                            		}
 

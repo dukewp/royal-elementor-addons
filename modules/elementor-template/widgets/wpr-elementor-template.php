@@ -4,7 +4,9 @@ namespace WprAddons\Modules\ElementorTemplate\Widgets;
 use Elementor\Controls_Manager;
 use Elementor\Widget_Base;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Elementor_Template extends Widget_Base {
 		
@@ -82,8 +84,8 @@ class Wpr_Elementor_Template extends Widget_Base {
 		$settings = $this->get_settings();
 
 		if ( '' !== $settings['select_template'] ) {
-			$edit_link = '<span class="wpr-template-edit-btn" data-permalink="'. get_permalink($settings['select_template']) .'">Edit Template</span>';
-			echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $settings['select_template'], true ) . $edit_link;
+			$edit_link = '<span class="wpr-template-edit-btn" data-permalink="'. esc_url(get_permalink($settings['select_template'])) .'">Edit Template</span>';
+			echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $settings['select_template'], true ) . $edit_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 }

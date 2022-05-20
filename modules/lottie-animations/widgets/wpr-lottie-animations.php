@@ -10,7 +10,9 @@ use Elementor\Core\Base\Document;
 use Elementor\Plugin;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Lottie_Animations extends Widget_Base {
 		
@@ -494,11 +496,11 @@ class Wpr_Lottie_Animations extends Widget_Base {
 		}
 
 		$lottie_animation = 'yes' === $settings['link_switcher']
-				? '<a href="'. $lottie_link .'"><div class="wpr-lottie-animations" data-settings="'. esc_attr($this->lottie_attributes($settings)) .'" data-json-url="'. $lottie_json .'"></div></a>'
-				: '<div class="wpr-lottie-animations" data-settings="'. esc_attr($this->lottie_attributes($settings)) .'" data-json-url="'. $lottie_json .'"></div>';
+				? '<a href="'. esc_url($lottie_link) .'"><div class="wpr-lottie-animations" data-settings="'. esc_attr($this->lottie_attributes($settings)) .'" data-json-url="'. esc_url($lottie_json) .'"></div></a>'
+				: '<div class="wpr-lottie-animations" data-settings="'. esc_attr($this->lottie_attributes($settings)) .'" data-json-url="'. esc_url($lottie_json) .'"></div>';
 
 		echo '<div class="wpr-lottie-animations-wrapper">';
-			echo $lottie_animation;
+			echo ''. $lottie_animation; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '</div>';
 	}
 }

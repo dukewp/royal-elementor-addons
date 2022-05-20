@@ -16,7 +16,9 @@ use Elementor\Utils;
 use Elementor\Icons;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Business_Hours extends Widget_Base {
 		
@@ -574,15 +576,15 @@ class Wpr_Business_Hours extends Widget_Base {
 
 				if (   '' !== $item['day'] || '' !== $item['time'] ) : 
 
-				$this->add_render_attribute( 'hours_item_attribute' . $item_count, 'class', 'wpr-business-hours-item elementor-repeater-item-'.esc_attr( $item['_id'] ) );
+				$this->add_render_attribute( 'hours_item_attribute'. $item_count, 'class', 'wpr-business-hours-item elementor-repeater-item-'.esc_attr( $item['_id'] ) );
 
 				if ( 'yes' === $item['closed'] ) {
-					$this->add_render_attribute( 'hours_item_attribute' . $item_count, 'class', 'wpr-business-hours-item-closed' );
+					$this->add_render_attribute( 'hours_item_attribute'. $item_count, 'class', 'wpr-business-hours-item-closed' );
 				}
 
 				?>
 				
-				<div <?php echo $this->get_render_attribute_string( 'hours_item_attribute' . $item_count ); ?>>
+				<div <?php echo $this->get_render_attribute_string( 'hours_item_attribute'. $item_count ); ?>>
 
 					<?php if ( '' !== $item['day'] ) : ?>	
 					<span class="wpr-business-day">

@@ -16,7 +16,9 @@ use Elementor\Utils;
 use Elementor\Icons;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Team_Member extends Widget_Base {
 		
@@ -1717,7 +1719,7 @@ class Wpr_Team_Member extends Widget_Base {
 
 			echo '<div class="wpr-member-btn-wrap">';
 				echo '<a '. $this->get_render_attribute_string( 'btn_attribute' ) .'>';
-					echo '<span>'. $settings['member_btn_text'] .'</span>';
+					echo '<span>'. esc_html($settings['member_btn_text']) .'</span>';
 				echo '</a>';
 			echo '</div>';
 
@@ -1747,7 +1749,7 @@ class Wpr_Team_Member extends Widget_Base {
 			<?php
 				if ( '' !== $settings['member_name'] && 'below' === $settings['member_name_location'] ) {
 					echo '<'. esc_attr( $settings['member_name_tag'] ) .' class="wpr-member-name">';
-						echo esc_html( $settings['member_name'] );
+						echo wp_kses_post( $settings['member_name'] );
 					echo '</'. esc_attr( $settings['member_name_tag'] ) .'>';
 				}
 			?>

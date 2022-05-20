@@ -16,7 +16,9 @@ use Elementor\Group_Control_Image_Size;
 use WprAddons\Classes\Utilities;
 use WprAddons\Classes\WPR_Post_Likes;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Magazine_Grid extends Widget_Base {
 	
@@ -4721,7 +4723,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		// Get Paged
 		if ( get_query_var( 'paged' ) ) {
 			$paged = get_query_var( 'paged' );
-		} else if ( get_query_var( 'page' ) ) {
+		} elseif ( get_query_var( 'page' ) ) {
 			$paged = get_query_var( 'page' );
 		} else {
 			$paged = 1;
@@ -4874,8 +4876,8 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		add_filter( 'the_password_form', function () {
 			$output  = '<form action="'. esc_url(home_url( 'wp-login.php?action=postpass' )) .'" method="post">';
 			$output .= '<i class="fas fa-lock"></i>';
-			$output .= '<p>'. get_the_title() .'</p>';
-			$output .= '<input type="password" name="post_password" id="post-'. get_the_id() .'" placeholder="'. esc_html__( 'Type and hit Enter...', 'wpr-addons' ) .'">';
+			$output .= '<p>'. esc_html(get_the_title()) .'</p>';
+			$output .= '<input type="password" name="post_password" id="post-'. esc_attr(get_the_id()) .'" placeholder="'. esc_html__( 'Type and hit Enter...', 'wpr-addons' ) .'">';
 			$output .= '</form>';
 
 			return $output;
@@ -4885,7 +4887,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 			echo '<div class="wpr-cv-outer">';
 				echo '<div class="wpr-cv-inner">';
-					echo get_the_password_form();
+					echo get_the_password_form(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo '</div>';
 			echo '</div>';
 		echo '</div>';
@@ -4904,7 +4906,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 	// Render Media Overlay
 	public function render_media_overlay( $settings ) {
-		echo '<div class="wpr-grid-media-hover-bg '. $this->get_animation_class( $settings, 'overlay' ) .'" data-url="'. esc_url( get_the_permalink( get_the_ID() ) ) .'">';
+		echo '<div class="wpr-grid-media-hover-bg '. esc_attr($this->get_animation_class( $settings, 'overlay' )) .'" data-url="'. esc_url( get_the_permalink( get_the_ID() ) ) .'">';
 
 			if ( wpr_fs()->can_use_premium_code() ) {
 				if ( '' !== $settings['overlay_image']['url'] ) {
@@ -4923,13 +4925,13 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		$class .= ' wpr-pointer-'. $title_pointer;
 		$class .= ' wpr-pointer-line-fx wpr-pointer-fx-'. $title_pointer_animation;
 
-		echo '<'. $settings['element_title_tag'] .' class="'. esc_attr($class) .'">';
+		echo '<'. esc_html($settings['element_title_tag']) .' class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
 				echo '<a href="'. esc_url( get_the_permalink() ) .'" class="wpr-pointer-item">';
-					echo wp_trim_words( get_the_title(), $settings['element_word_count'] );
+					echo esc_html(wp_trim_words( get_the_title(), $settings['element_word_count'] ));
 				echo '</a>';
 			echo '</div>';
-		echo '</'. $settings['element_title_tag'] .'>';
+		echo '</'. esc_html($settings['element_title_tag']) .'>';
 	}
 
 	// Render Post Content
@@ -4943,7 +4945,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo get_the_content();
+				echo wp_kses_post(get_the_content());
 			echo '</div>';
 		echo '</div>';
 	}
@@ -4959,7 +4961,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo '<p>'. wp_trim_words( get_the_excerpt(), $settings['element_word_count'] ) .'</p>';
+				echo '<p>'. esc_html(wp_trim_words( get_the_excerpt(), $settings['element_word_count'] )) .'</p>';
 			echo '</div>';
 		echo '</div>';
 	}
@@ -4979,7 +4981,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 				}
 
 				// Date
-				echo apply_filters( 'the_date', get_the_date( '' ), get_option( 'date_format' ), '', '' );
+				echo esc_html(apply_filters( 'the_date', get_the_date( '' ), get_option( 'date_format' ), '', '' ));
 
 				// Icon: After
 				if ( 'after' === $settings['element_extra_icon_pos'] ) {
@@ -5009,7 +5011,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 				}
 
 				// Time
-				echo get_the_time( '' );
+				echo esc_html(get_the_time( '' ));
 
 				// Icon: After
 				if ( 'after' === $settings['element_extra_icon_pos'] ) {
@@ -5046,7 +5048,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 						echo get_avatar( $author_id, $settings['element_avatar_size'] );
 					}
 
-					echo '<span>'. get_the_author_meta( 'display_name', $author_id ) .'</span>';
+					echo '<span>'. esc_html(get_the_author_meta( 'display_name', $author_id )) .'</span>';
 
 				// Icon: After
 				if ( 'after' === $settings['element_extra_icon_pos'] ) {
@@ -5090,7 +5092,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 						echo '<i class="wpr-grid-extra-icon-left '. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
 					}
 
-					echo '<span>'. $text .'</span>';
+					echo '<span>'. esc_html($text) .'</span>';
 
 					// Icon: After
 					if ( 'after' === $settings['element_extra_icon_pos'] ) {
@@ -5114,7 +5116,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo '<a href="'. esc_url( get_the_permalink() ) .'" class="wpr-button-effect '. $read_more_animation .'">';
+				echo '<a href="'. esc_url( get_the_permalink() ) .'" class="wpr-button-effect '. esc_attr($read_more_animation) .'">';
 
 				// Icon: Before
 				if ( 'before' === $settings['element_extra_icon_pos'] ) {
@@ -5145,7 +5147,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 	// Render Post Element Separator
 	public function render_post_element_separator( $settings, $class ) {
-		echo '<div class="'. esc_attr($class) .' '. $settings['element_separator_style'] .'">';
+		echo '<div class="'. esc_attr($class .' '. $settings['element_separator_style']) .'">';
 			echo '<div class="inner-block"><span></span></div>';
 		echo '</div>';
 	}
@@ -5169,7 +5171,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			$class .= ' wpr-pointer-line-fx wpr-pointer-fx-'. $tax2_pointer_animation;
 		}
 
-		echo '<div class="'. esc_attr($class) .' '. $settings['element_tax_style'] .'">';
+		echo '<div class="'. esc_attr($class .' '. $settings['element_tax_style']) .'">';
 			echo '<div class="inner-block">';
 				// Text: Before
 				if ( 'before' === $settings['element_extra_text_pos'] ) {
@@ -5182,9 +5184,9 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 				// Taxonomies
 				foreach ( $terms as $term ) {
-					echo '<a href="'. get_term_link( $term->term_id ) .'" class="wpr-pointer-item">'. esc_html( $term->name );
+					echo '<a href="'. esc_url(get_term_link( $term->term_id )) .'" class="wpr-pointer-item">'. esc_html( $term->name );
 						if ( ++$count !== count( $terms ) ) {
-							echo '<span class="tax-sep">'. $settings['element_tax_sep'] .'</span>';
+							echo '<span class="tax-sep">'. esc_html($settings['element_tax_sep']) .'</span>';
 						}
 					echo '</a>';
 				}
@@ -5298,7 +5300,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 						echo '<div class="wpr-cv-container"><div class="wpr-cv-outer"><div class="wpr-cv-inner">';
 					}
 
-					echo '<div class="wpr-grid-media-hover-'. $align .' elementor-clearfix">';
+					echo '<div class="wpr-grid-media-hover-'. esc_attr($align) .' elementor-clearfix">';
 						foreach ( $elements as $data ) {
 							
 							// Get Class
@@ -5318,7 +5320,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 					}
 				}
 			} else {
-				echo '<div class="wpr-grid-item-'. $location .'-content elementor-clearfix">';
+				echo '<div class="wpr-grid-item-'. esc_attr($location) .'-content elementor-clearfix">';
 					foreach ( $locations[$location] as $data ) {
 
 						// Get Class
@@ -5370,7 +5372,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			}
 		}
 
-		echo '<section class="wpr-magazine-grid wpr-mgzn-grid-'. $settings['layout_select'] .' wpr-mgzn-grid-rows-'. $settings['layout_rows_number'] .'">';
+		echo '<section class="wpr-magazine-grid wpr-mgzn-grid-'. esc_attr($settings['layout_select']) .' wpr-mgzn-grid-rows-'. esc_attr($settings['layout_rows_number']) .'">';
 
 		// Loop: Start
 		if ( $posts->have_posts() ) :
@@ -5417,7 +5419,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		// No Posts Found
 		else:
 
-			echo '<h2>'. $settings['query_not_found_text'] .'</h2>';
+			echo '<h2>'. esc_html($settings['query_not_found_text']) .'</h2>';
 
 		// Loop: End
 		endif;
@@ -5443,7 +5445,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		}
 
 		// Grid/Slider Wrap
-		echo '<div class="wpr-magazine-grid-wrap" '. $render_attribute .'  data-slide-effect="'. esc_attr($settings['slider_effect']) .'">';
+		echo '<div class="wpr-magazine-grid-wrap" '. $render_attribute .' data-slide-effect="'. esc_attr($settings['slider_effect']) .'">';
 
 		// Slider
 		if ( 'yes' === $settings['slider_enable'] ) {
@@ -5465,8 +5467,8 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		// Slider Navigation
 		if ( 'yes' === $settings['slider_enable'] ) {
 			echo '<div class="wpr-grid-slider-arrow-container">';
-				echo '<div class="wpr-grid-slider-prev-arrow wpr-grid-slider-arrow" id="wpr-grid-slider-prev-'. $this->get_id() .'">'. Utilities::get_wpr_icon( $settings['slider_nav_icon'], '' ) .'</div>';
-				echo '<div class="wpr-grid-slider-next-arrow wpr-grid-slider-arrow" id="wpr-grid-slider-next-'. $this->get_id() .'">'. Utilities::get_wpr_icon( $settings['slider_nav_icon'], '' ) .'</div>';
+				echo '<div class="wpr-grid-slider-prev-arrow wpr-grid-slider-arrow" id="wpr-grid-slider-prev-'. esc_html($this->get_id()) .'">'. Utilities::get_wpr_icon( $settings['slider_nav_icon'], '' ) .'</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo '<div class="wpr-grid-slider-next-arrow wpr-grid-slider-arrow" id="wpr-grid-slider-next-'. esc_html($this->get_id()) .'">'. Utilities::get_wpr_icon( $settings['slider_nav_icon'], '' ) .'</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo '</div>';
 		}
 
