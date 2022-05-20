@@ -2512,11 +2512,11 @@ class Pricing_Table extends Widget_Base {
 					<?php if ( ! empty( $item['heading_title'] ) || ! empty( $item['heading_sub_title'] ) ) : ?>
 						<div class="wpr-pricing-table-title-wrap">
 							<?php if ( ! empty( $item['heading_title'] ) ) : ?>	
-								<h3 class="wpr-pricing-table-title"><?php echo esc_html($item['heading_title']); ?></h3>
+								<h3 class="wpr-pricing-table-title"><?php echo wp_kses_post($item['heading_title']); ?></h3>
 							<?php endif; ?>
 
 							<?php if ( ! empty( $item['heading_sub_title'] ) ) : ?>	
-								<span class="wpr-pricing-table-sub-title"><?php echo esc_html($item['heading_sub_title']); ?></span>
+								<span class="wpr-pricing-table-sub-title"><?php echo wp_kses_post($item['heading_sub_title']); ?></span>
 							<?php endif; ?>
 						</div>
 					<?php endif; ?>

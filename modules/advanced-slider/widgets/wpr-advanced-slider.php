@@ -2750,14 +2750,14 @@ class Wpr_Advanced_Slider extends Widget_Base {
 								//  Slider Title
 								if ( $settings['slider_title'] === 'yes' && ! empty( $item['slider_item_title'] ) ) {
 								$slider_html .= '<div class="wpr-slider-title">';
-									$slider_html .= '<h2>'. esc_html($item['slider_item_title']) .'</h2>';
+									$slider_html .= '<h2>'. wp_kses_post($item['slider_item_title']) .'</h2>';
 								$slider_html .= '</div>';
 								}	
 								
 								// Slider Sub Title
 								if ( $settings['slider_sub_title'] === 'yes' && ! empty( $item['slider_item_sub_title'] ) ) {
 								$slider_html .= '<div class="wpr-slider-sub-title">';
-									$slider_html .= '<h3>'. esc_html($item['slider_item_sub_title']) .'</h3>';
+									$slider_html .= '<h3>'. wp_kses_post($item['slider_item_sub_title']) .'</h3>';
 								$slider_html .= '</div>';
 								}							
 

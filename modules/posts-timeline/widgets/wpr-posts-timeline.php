@@ -5010,7 +5010,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			$this->timeline_description = $content['repeater_description'];
 			$this->story_date_label = esc_html($content['repeater_date_label']);
 			$this->story_extra_label = esc_html($content['repeater_extra_label']);
-			$this->timeline_story_title = esc_html($content['repeater_story_title']);
+			$this->timeline_story_title = wp_kses_post($content['repeater_story_title']);
 			$this->thumbnail_size = $content['wpr_thumbnail_size'];
 			$this->thumbnail_custom_dimension = $content['wpr_thumbnail_custom_dimension'];
 		              

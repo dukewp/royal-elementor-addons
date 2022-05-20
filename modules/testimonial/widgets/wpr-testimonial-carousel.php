@@ -2662,11 +2662,11 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 		
 		<div class="wpr-testimonial-meta-content-wrap">
 			<?php if ( ! empty( $item['testimonial_author'] ) ) : ?>
-				<div class="wpr-testimonial-name"><?php echo esc_html( $item['testimonial_author'] ); ?></div>
+				<div class="wpr-testimonial-name"><?php echo wp_kses_post( $item['testimonial_author'] ); ?></div>
 			<?php endif; ?>
 
 			<?php if ( ! empty( $item['testimonial_job'] ) ) : ?>
-				<div class="wpr-testimonial-job"><?php echo esc_html( $item['testimonial_job'] ); ?></div>
+				<div class="wpr-testimonial-job"><?php echo wp_kses_post( $item['testimonial_job'] ); ?></div>
 			<?php endif; ?>
 
 			<?php
@@ -2717,7 +2717,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 			<?php endif; ?>
 
 			<?php if ( ! empty( $item['testimonial_title'] ) ) : ?>
-				<div class="wpr-testimonial-title"><?php echo esc_html( $item['testimonial_title'] ); ?></div>
+				<div class="wpr-testimonial-title"><?php echo wp_kses_post( $item['testimonial_title'] ); ?></div>
 			<?php endif; ?>
 
 			<?php if ( $settings['rating_position'] === 'top' ) : ?>

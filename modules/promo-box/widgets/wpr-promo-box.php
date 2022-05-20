@@ -1565,7 +1565,7 @@ class Wpr_Promo_Box extends Widget_Base {
 						echo '<a '. $this->get_render_attribute_string( 'link_attribute' ).'>';
 					}
 
-					echo '<span>'. esc_html($settings['content_title']) .'</span>';
+					echo '<span>'. wp_kses_post($settings['content_title']) .'</span>';
 				
 					if ( 'title' === $settings['content_link_type'] || 'btn-title' === $settings['content_link_type']  ) {
 						echo '</a>';

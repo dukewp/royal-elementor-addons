@@ -853,9 +853,9 @@ class Wpr_Author_Box extends Widget_Base {
 			if ( '' !== $title && 'yes' === $settings['author_title'] ) {
 				echo '<'. esc_attr($settings['author_title_tag']) .' class="wpr-author-box-title">';
 					if ( 'posts' === $settings['author_title_links_to'] || $author_title_has_website ) {
-						echo '<a href="'. esc_url( $author_title_link ) .'" target="'. esc_attr($author_title_target) .'">'. esc_html($title) .'</a>';
+						echo '<a href="'. esc_url( $author_title_link ) .'" target="'. esc_attr($author_title_target) .'">'. wp_kses_post($title) .'</a>';
 					} else {
-						echo esc_html($title);
+						echo wp_kses_post($title);
 					}
 				echo '</'. esc_attr($settings['author_title_tag']) .'>';
 			}

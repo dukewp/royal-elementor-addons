@@ -1875,7 +1875,7 @@ class Wpr_Flip_Box extends Widget_Base {
 					<?php endif; ?>
 					
 					<?php if ( '' !== $settings['front_title'] ) : ?>
-						<h3 class="wpr-flip-box-title"><?php echo esc_html($settings['front_title']); ?></h3>
+						<h3 class="wpr-flip-box-title"><?php echo wp_kses_post($settings['front_title']); ?></h3>
 					<?php endif; ?>
 
 					<?php if ( '' !== $settings['front_description'] ) : ?>
@@ -1928,7 +1928,7 @@ class Wpr_Flip_Box extends Widget_Base {
 								echo '<a '. $this->get_render_attribute_string( 'link_attribute' ).'>';
 							}
 
-							echo esc_html($settings['back_title']);
+							echo wp_kses_post($settings['back_title']);
 						
 							if ( 'title' === $settings['back_link_type'] || 'btn-title' === $settings['back_link_type']  ) {
 								echo '</a>';

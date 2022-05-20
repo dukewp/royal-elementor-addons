@@ -1749,7 +1749,7 @@ class Wpr_Team_Member extends Widget_Base {
 			<?php
 				if ( '' !== $settings['member_name'] && 'below' === $settings['member_name_location'] ) {
 					echo '<'. esc_attr( $settings['member_name_tag'] ) .' class="wpr-member-name">';
-						echo esc_html( $settings['member_name'] );
+						echo wp_kses_post( $settings['member_name'] );
 					echo '</'. esc_attr( $settings['member_name_tag'] ) .'>';
 				}
 			?>
