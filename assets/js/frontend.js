@@ -383,9 +383,11 @@
 
 					if ( ! currentItem.hasClass( 'wpr-sub-open' ) ) {
 						e.preventDefault();
+						currentItem.addClass('wpr-sub-open');
 						subMenuAnimation( childrenSub, true );
 
 					} else {
+						currentItem.removeClass('wpr-sub-open');
 						subMenuAnimation( childrenSub, false );
 					}
 				});
