@@ -3,9 +3,7 @@ namespace WprAddons\Admin\Templates;
 
 use WprAddons\Plugin;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class WPR_Templates_Data {
 	public static function get_available_kits() {
@@ -111,6 +109,7 @@ class WPR_Templates_Data {
 				'v1' => [
 					'name' => 'NFT',
 					'pages' => 'home,about,blog,roadmap,team,nft,faq,comingsoon,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'portfolio blockchain nft crypto collection minting listing metavers digital currency art',
 					'theme-builder' => false,
 					'price' => $is_pro_active ? 'free' : 'free',
@@ -126,6 +125,17 @@ class WPR_Templates_Data {
 					'theme-builder' => false,
 					'price' => $is_pro_active ? 'free' : 'free',
 					'priority' => 90,
+				],
+			],
+			'pet-care' => [
+				'v1' => [
+					'name' => 'Pet Care',
+					'pages' => 'home,about,services,reviews,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'pet care dog care grooming pet minding pet sitting pet training pet walking cat animal dogs dog training',
+					'theme-builder' => false,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'priority' => 91,
 				],
 			],
 			'travel' => [
@@ -148,6 +158,17 @@ class WPR_Templates_Data {
 					'theme-builder' => false,
 					'price' => $is_pro_active ? 'free' : 'free',
 					'priority' => 110,
+				],
+			],
+			'charity' => [
+				'v1' => [
+					'name' => 'Charity',
+					'pages' => 'home,home-v1,contact,whatwedo,whoweare,partners,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'charity donate church foundation giving non-profit organization kids charity help children save life donation fundrising ngo fundraising corona fundraising nonprofit non profit',
+					'theme-builder' => false,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'priority' => 111,
 				],
 			],
 			'photographer' => [
@@ -296,6 +317,17 @@ class WPR_Templates_Data {
 					'theme-builder' => false,
 					'price' => $is_pro_active ? 'free' : 'free',
 					'priority' => 260,
+				],
+			],
+			'carwash' => [
+				'v1' => [
+					'name' => 'Carwash',
+					'pages' => 'home,about,services,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'vehicle car wash cleaning painting service maintenance care bike motorcycle detailing',
+					'theme-builder' => false,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'priority' => 252,
 				],
 			],
 			'realestate' => [

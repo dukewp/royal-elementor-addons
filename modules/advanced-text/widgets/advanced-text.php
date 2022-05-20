@@ -862,7 +862,7 @@ class Advanced_Text extends Widget_Base {
 			?>
 		
 			<?php if ( '' !== $settings['prefix_text'] ) : ?>
-				<span class="wpr-advanced-text-preffix"><?php echo esc_html($settings['prefix_text']); ?></span>
+				<span class="wpr-advanced-text-preffix"><?php echo wp_kses_post($settings['prefix_text']); ?></span>
 			<?php endif;
 
 			if ( 'animated' === $settings['text_style'] ) {
@@ -874,7 +874,7 @@ class Advanced_Text extends Widget_Base {
 			}
 
 			if ( '' !== $settings['suffix_text'] ) : ?>
-				<span class="wpr-advanced-text-suffix"><?php echo esc_html($settings['suffix_text']); ?></span>
+				<span class="wpr-advanced-text-suffix"><?php echo wp_kses_post($settings['suffix_text']); ?></span>
 			<?php endif;
 
 			if ( '' !== $settings['text_link']['url'] ) {
