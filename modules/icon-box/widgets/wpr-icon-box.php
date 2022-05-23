@@ -416,93 +416,115 @@ class Wpr_Icon_Box extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
-        // Tab: Content ==============
-        // Section: Badge ----------
-        $this->start_controls_section(
-			'section_style_badge',
+		// Tab: STYLE ==============
+		// Section: Title & Description ----------
+		$this->start_controls_section(
+			'section_feature_list_title_&_description_styles',
 			[
-				'label' => esc_html__( 'Badge', 'wpr-addons' ),
+				'label' => esc_html__( 'Title & Description', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
-				'condition' => [
-					'badge_style!' => 'none',
-				],
 			]
 		);
 
 		$this->add_control(
-			'badge_text_color',
+			'title_heading',
 			[
+				'label' => esc_html__( 'Title', 'wpr-addons' ),
+				'type'  => Controls_Manager::HEADING,
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'feature_list_title_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'label' => esc_html__( 'Color', 'wpr-addons' ),
-				'default' => '#ffffff',
+				'default' => '#000',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-icon-box-badge-inner' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-icon-box-title' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-icon-box-title a.wpr-icon-box-url' => 'color: {{VALUE}}',
 				],
-			]
-		);
-
-		$this->add_control(
-			'badge_bg_color',
-			[
-				'type' => Controls_Manager::COLOR,
-				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
-				'default' => '#e83d17',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-icon-box-badge-inner' => 'background-color: {{VALUE}};',
-					'{{WRAPPER}} .wpr-icon-box-badge-flag:before' => ' border-top-color: {{VALUE}};',
-				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Box_Shadow::get_type(),
-			[
-				'name' => 'badge_box_shadow',
-				'selector' => '{{WRAPPER}} .wpr-icon-box-badge-inner'
-			]
-		);
-
-		$this->add_control(
-			'badge_box_shadow_divider',
-			[
-				'type' => Controls_Manager::DIVIDER,
-				'style' => 'thick',
 			]
 		);
 
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'badge_typography',
-				'label' => esc_html__( 'Typography', 'wpr-addons' ),
+				'name'     => 'feature_list_title',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-icon-box-badge-inner'
+				'selector' => '{{WRAPPER}} .wpr-icon-box-title',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_weight' => [
+						'default' => '500',
+					],
+					'font_family' => [
+						'default' => 'Roboto',
+					],
+					'font_size'   => [
+						'default' => [
+							'size' => '20',
+							'unit' => 'px',
+						]
+					]
+				]
 			]
 		);
 
-		$this->add_responsive_control(
-			'badge_padding',
+		$this->add_control(
+			'description_heading',
 			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'default' => [
-					'top' => 0,
-					'right' => 10,
-					'bottom' => 0,
-					'left' => 10,
-				],
-				'size_units' => [ 'px', ],
-				'selectors' => [
-				'{{WRAPPER}} .wpr-icon-box-badge .wpr-icon-box-badge-inner' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before',
+				'label' => esc_html__( 'Description', 'wpr-addons' ),
+				'type'  => Controls_Manager::HEADING,
+				'separator' => 'before'
 			]
 		);
 
-		$this->end_controls_section(); // End Controls Section
+		$this->add_control(
+			'feature_list_description_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#6E6B6B',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-icon-box-description' => 'color: {{VALUE}}',
+				],
+			]
+		);
 
-		// Styles
-		// Section: Button ------
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'feature_list_description',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-icon-box-description',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_weight' => [
+						'default' => '400',
+					],
+					'font_family' => [
+						'default' => 'Roboto',
+					],
+					'font_size'   => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px',
+						]
+					]
+				]
+			]
+		);
+
+		$this->end_controls_section();
+
+        // Tab: Style ==============
+        // Section: Button ----------
 		$this->start_controls_section(
 			'section_style_button',
 			[
@@ -736,6 +758,91 @@ class Wpr_Icon_Box extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-icon-box-btn' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->end_controls_section(); // End Controls Section
+
+        // Tab: Style ==============
+        // Section: Badge ----------
+        $this->start_controls_section(
+			'section_style_badge',
+			[
+				'label' => esc_html__( 'Badge', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'badge_style!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'badge_text_color',
+			[
+				'type' => Controls_Manager::COLOR,
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'default' => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-icon-box-badge-inner' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'badge_bg_color',
+			[
+				'type' => Controls_Manager::COLOR,
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'default' => '#e83d17',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-icon-box-badge-inner' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-icon-box-badge-flag:before' => ' border-top-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'badge_box_shadow',
+				'selector' => '{{WRAPPER}} .wpr-icon-box-badge-inner'
+			]
+		);
+
+		$this->add_control(
+			'badge_box_shadow_divider',
+			[
+				'type' => Controls_Manager::DIVIDER,
+				'style' => 'thick',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'badge_typography',
+				'label' => esc_html__( 'Typography', 'wpr-addons' ),
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-icon-box-badge-inner'
+			]
+		);
+
+		$this->add_responsive_control(
+			'badge_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'default' => [
+					'top' => 0,
+					'right' => 10,
+					'bottom' => 0,
+					'left' => 10,
+				],
+				'size_units' => [ 'px', ],
+				'selectors' => [
+				'{{WRAPPER}} .wpr-icon-box-badge .wpr-icon-box-badge-inner' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
