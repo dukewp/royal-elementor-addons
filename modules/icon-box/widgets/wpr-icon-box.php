@@ -89,6 +89,19 @@ class Wpr_Icon_Box extends Widget_Base {
 			]
 		);
 
+		$this->add_group_control(
+			\Elementor\Group_Control_Image_Size::get_type(),
+			[
+				'name' => 'thumbnail',
+				'exclude' => [ 'custom' ],
+				'include' => [],
+				'default' => 'large',
+                'condition' => [
+                    'icon_box_media_type' => 'image'
+                ]
+			]
+		);
+
 		$this->add_control(
 			'icon_box_image',
 			[
@@ -236,7 +249,7 @@ class Wpr_Icon_Box extends Widget_Base {
 				'label' => esc_html__( 'Vertical Align', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
 				'label_block' => false,
-				'default' => 'left',
+				'default' => 'flex-start',
 				'options' => [
 					'flex-start' => [
 						'title' => esc_html__( 'Left', 'wpr-addons' ),
@@ -285,8 +298,7 @@ class Wpr_Icon_Box extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-icon-box-content-wrap' => 'text-align: {{VALUE}}',
 					'{{WRAPPER}}.wpr-icon-box-center .wpr-icon-box-media-wrap' => 'width: 100%; text-align: {{VALUE}}',
-				],
-				'separator' => 'before',
+				]
 			]
 		);
 
@@ -441,9 +453,165 @@ class Wpr_Icon_Box extends Widget_Base {
 		$this->end_controls_section(); // End Controls Section
 
 		// Tab: STYLE ==============
+		// Section: Icon ----------
+		$this->start_controls_section(
+			'section_icon_box_icon_styles',
+			[
+				'label' => esc_html__( 'Media', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'icon_box_icon_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFF',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-icon-box-icon-inner-wrap i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-icon-box-icon-inner-wrap svg' => 'fill: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'icon_box_icon_wrapper_bg_color',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#6A65FF',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-icon-box-icon-inner-wrap' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'icon_box_icon_wrapper_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-icon-box-icon-inner-wrap' => 'border-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'icon_box_icon_size',
+			[
+				'label' => esc_html__( 'Icon Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 5,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 25,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-icon-box-media-wrap i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-icon-box-media-wrap svg' => 'width: {{SIZE}}{{UNIT}}; height: auto;',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'icon_box_icon_wrapper_size',
+			[
+				'label' => esc_html__( 'Box Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 5,
+						'max' => 200,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 75,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-icon-box-icon-inner-wrap' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}}'
+                ],
+                'condition' => [
+                    'icon_box_media_type' => 'icon'
+                ]
+			]
+		);
+
+		$this->add_control(
+			'icon_box_icon_wrapper_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-icon-box-icon-inner-wrap' => 'border-style: {{VALUE}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'icon_box_icon_wrapper_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-icon-box-icon-inner-wrap' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'icon_box_icon_wrapper_border_type!' => 'none',
+				]
+			]
+		);
+
+		$this->add_control(
+			'icon_box_icon_wrapper_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 5,
+					'right' => 5,
+					'bottom' => 5,
+					'left' => 5,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-icon-box-icon-inner-wrap' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
+			]
+		);
+
+        $this->end_controls_section();
+
+		// Tab: STYLE ==============
 		// Section: Title & Description ----------
 		$this->start_controls_section(
-			'section_feature_list_title_&_description_styles',
+			'section_icon_box_title_&_description_styles',
 			[
 				'label' => esc_html__( 'Title & Description', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
@@ -460,7 +628,7 @@ class Wpr_Icon_Box extends Widget_Base {
 		);
 
 		$this->add_control(
-			'feature_list_title_color',
+			'icon_box_title_color',
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
@@ -475,7 +643,7 @@ class Wpr_Icon_Box extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name'     => 'feature_list_title',
+				'name'     => 'icon_box_title',
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-icon-box-title',
 				'fields_options' => [
@@ -508,7 +676,7 @@ class Wpr_Icon_Box extends Widget_Base {
 		);
 
 		$this->add_control(
-			'feature_list_description_color',
+			'icon_box_description_color',
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
@@ -522,7 +690,7 @@ class Wpr_Icon_Box extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name'     => 'feature_list_description',
+				'name'     => 'icon_box_description',
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-icon-box-description',
 				'fields_options' => [
@@ -904,50 +1072,56 @@ class Wpr_Icon_Box extends Widget_Base {
 		// }
 
             echo '<div class="wpr-icon-box-wrap">';
-                    echo '<div class="wpr-icon-box">';
-                        echo '<div class="wpr-icon-box-media-wrap">';
-                            echo '<div class="wpr-icon-box-icon-inner-wrap">';
-                                if ( 'icon' === $settings['icon_box_media_type'] ) {
-                                    \Elementor\Icons_Manager::render_icon( $settings['icon_box_icon'], [ 'aria-hidden' => 'true' ] );
-                                } else {
-                                    $src = \Elementor\Group_Control_Image_Size::get_attachment_image_src( $settings['icon_box_image']['id'], 'thumbnail', $settings );
-                                    echo '<img src="'. $src .'">';
-                                }
-                            echo '</div>';
-                        echo '</div>';
-                        echo '<div class="wpr-icon-box-content-wrap">';
-                            if (!empty($settings['icon_box_title'])) {
-                                if ( empty($settings['icon_box_title_url']) ) {
-                                    echo '<'. esc_html($settings['icon_box_title_tag']) .' class="wpr-icon-box-title">' . wp_kses_post($settings['icon_box_title']) . '</'. esc_html($settings['icon_box_title_tag']) .'>';
-                                } else {
-                                    echo '<'. esc_html($settings['icon_box_title_tag']) .' class="wpr-icon-box-title"><a class="wpr-icon-box-url" '. $this->get_render_attribute_string( 'icon_box_url' ) .'>' . $settings['icon_box_title'] . '</a></'. esc_html($settings['icon_box_title_tag']) .'>';
-                                }
+                echo '<div class="wpr-icon-box">';
+
+                    echo '<div class="wpr-icon-box-media-wrap">';
+                        echo '<div class="wpr-icon-box-icon-inner-wrap">';
+
+                            if ( 'icon' === $settings['icon_box_media_type'] ) {
+                                \Elementor\Icons_Manager::render_icon( $settings['icon_box_icon'], [ 'aria-hidden' => 'true' ] );
+                            } else {
+                                $src = \Elementor\Group_Control_Image_Size::get_attachment_image_src( $settings['icon_box_image']['id'], 'thumbnail', $settings );
+                                echo '<img src="'. $src .'">';
                             }
 
-                            if (!empty($settings['icon_box_content'])) {
-                                echo '<p class="wpr-icon-box-description">' . wp_kses_post($settings['icon_box_content']) . '</p>';
-                            }
-
-                            if ( 'btn' === $settings['icon_box_link_type'] ) :
-                                echo '<div '. $this->get_render_attribute_string( 'btn_attribute' ) . '>';
-                                    echo '<a class="wpr-icon-box-btn"'. $this->get_render_attribute_string( 'icon_box_url' ) .'>';
-            
-                                        if ( '' !== $settings['icon_box_btn_text'] ) :
-                                        echo '<span class="wpr-icon-box-btn-text">'. $settings['icon_box_btn_text'] .'</span>';		
-                                        endif;
-            
-                                        if ( '' !== $settings['icon_box_btn_icon']['value'] ) :
-                                        echo '<span class="wpr-icon-box-btn-icon">';
-                                            echo '<i class="'. esc_attr( $settings['icon_box_btn_icon']['value'] ) .'"></i>';
-                                        echo '</span>';
-                                        endif;
-                                    echo '</a>';
-                                echo '</div>';
-                            endif;
                         echo '</div>';
                     echo '</div>';
-                    
-			$this->render_element_badge();
+
+                    echo '<div class="wpr-icon-box-content-wrap">';
+
+                        if (!empty($settings['icon_box_title'])) {
+                            if ( empty($settings['icon_box_title_url']) ) {
+                                echo '<'. esc_html($settings['icon_box_title_tag']) .' class="wpr-icon-box-title">' . wp_kses_post($settings['icon_box_title']) . '</'. esc_html($settings['icon_box_title_tag']) .'>';
+                            } else {
+                                echo '<'. esc_html($settings['icon_box_title_tag']) .' class="wpr-icon-box-title"><a class="wpr-icon-box-url" '. $this->get_render_attribute_string( 'icon_box_url' ) .'>' . $settings['icon_box_title'] . '</a></'. esc_html($settings['icon_box_title_tag']) .'>';
+                            }
+                        }
+
+                        if (!empty($settings['icon_box_content'])) {
+                            echo '<p class="wpr-icon-box-description">' . wp_kses_post($settings['icon_box_content']) . '</p>';
+                        }
+
+                        if ( 'btn' === $settings['icon_box_link_type'] ) :
+                            echo '<div '. $this->get_render_attribute_string( 'btn_attribute' ) . '>';
+                                echo '<a class="wpr-icon-box-btn"'. $this->get_render_attribute_string( 'icon_box_url' ) .'>';
+        
+                                    if ( '' !== $settings['icon_box_btn_text'] ) :
+                                    echo '<span class="wpr-icon-box-btn-text">'. $settings['icon_box_btn_text'] .'</span>';		
+                                    endif;
+        
+                                    if ( '' !== $settings['icon_box_btn_icon']['value'] ) :
+                                    echo '<span class="wpr-icon-box-btn-icon">';
+                                        echo '<i class="'. esc_attr( $settings['icon_box_btn_icon']['value'] ) .'"></i>';
+                                    echo '</span>';
+                                    endif;
+                                echo '</a>';
+                            echo '</div>';
+                        endif;
+                        
+                    echo '</div>';
+                echo '</div>';
+                
+                $this->render_element_badge();
             echo '</div>';
     }
 }

@@ -11489,6 +11489,18 @@ display: none;
     flex-direction: row-reverse;
 }
 
+.wpr-icon-box .wpr-icon-box-icon-inner-wrap {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.wpr-icon-box-icon-inner-wrap  {
+    width: 100%;
+    max-width: 100%;
+}
+
 .wpr-icon-box-content-wrap {
     width: 100%;
 }
