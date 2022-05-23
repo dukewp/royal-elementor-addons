@@ -47,22 +47,22 @@
 		},
 
 		widgetPostMedia: function( $scope ) {
-			var gallery = $scope.find( '.wpr-gallery-slider' ),
-				gallerySettings = gallery.attr( 'data-slick' );
+			// var gallery = $scope.find( '.wpr-gallery-slider' ),
+			// 	gallerySettings = gallery.attr( 'data-slick' );
 			
-			gallery.animate({ 'opacity' : '1' }, 1000 );//tmp
+			// gallery.animate({ 'opacity' : '1' }, 1000 );//tmp
 
-			if ( '[]' !== gallerySettings ) {
-				gallery.slick({
-					appendDots : $scope.find( '.wpr-gallery-slider-dots' ),
-					customPaging : function ( slider, i ) {
-						var slideNumber = (i + 1),
-							totalSlides = slider.slideCount;
+			// if ( '[]' !== gallerySettings ) {
+			// 	gallery.slick({
+			// 		appendDots : $scope.find( '.wpr-gallery-slider-dots' ),
+			// 		customPaging : function ( slider, i ) {
+			// 			var slideNumber = (i + 1),
+			// 				totalSlides = slider.slideCount;
 
-						return '<span class="wpr-gallery-slider-dot"></span>';
-					}
-				});
-			}
+			// 			return '<span class="wpr-gallery-slider-dot"></span>';
+			// 		}
+			// 	});
+			// }
 
 			// Lightbox
 			var lightboxSettings = $( '.wpr-featured-media-image' ).attr( 'data-lightbox' );

@@ -564,28 +564,7 @@ class Utilities {
 	*/
 	public static function get_wpr_icon( $icon, $dir ) {
 		if ( false !== strpos( $icon, 'svg-' ) ) {
-			$kses_defaults = wp_kses_allowed_html( 'post' );
-
-			$svg_args = [
-				'svg' => [
-					'class' => true,
-					'aria-hidden' => true,
-					'aria-labelledby' => true,
-					'role' => true,
-					'xmlns' => true,
-					'width' => true,
-					'height' => true,
-					'viewbox' => true,
-				],
-				'g' => [ 'fill' => true ],
-				'polygon'=> ['class' => true, 'points' => true],
-				'title' => [ 'title' => true ],
-				'path' => [ 'd' => true, 'fill' => true,  ],
-			];
-			
-			$allowed_tags = array_merge( $kses_defaults, $svg_args );
-
-			return wp_kses( Utilities::get_svg_icon( $icon, $dir ), $allowed_tags );
+			return Utilities::get_svg_icon( $icon, $dir );
 
 		} elseif ( false !== strpos( $icon, 'fa-' ) ) {
 			$dir = '' !== $dir ? '-'. $dir : '';

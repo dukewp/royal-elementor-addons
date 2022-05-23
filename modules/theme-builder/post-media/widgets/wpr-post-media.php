@@ -1640,35 +1640,38 @@ class Wpr_Post_Media extends Widget_Base {
 
 		echo '<div class="wpr-featured-media-wrap" data-caption="'. esc_attr( $post_format ) .'">';
 
-			switch ( $post_format ) {
-				case 'audio':
-					if ( 'meta' === $settings['featured_media_pfa_select'] ) {
-						$this->render_post_audio_video( $settings, 'audio' );
-					} else {
-						$this->render_post_thumbnail( $settings, $thumb_id );
-					}
-					break;
+			// Disable Post Formats for some time
+			// switch ( $post_format ) {
+			// 	case 'audio':
+			// 		if ( 'meta' === $settings['featured_media_pfa_select'] ) {
+			// 			$this->render_post_audio_video( $settings, 'audio' );
+			// 		} else {
+			// 			$this->render_post_thumbnail( $settings, $thumb_id );
+			// 		}
+			// 		break;
 
-				case 'video':
-					if ( 'meta' === $settings['featured_media_pfv_select'] ) {
-						$this->render_post_audio_video( $settings, 'video' );
-					} else {
-						$this->render_post_thumbnail( $settings, $thumb_id );
-					}
-					break;
+			// 	case 'video':
+			// 		if ( 'meta' === $settings['featured_media_pfv_select'] ) {
+			// 			$this->render_post_audio_video( $settings, 'video' );
+			// 		} else {
+			// 			$this->render_post_thumbnail( $settings, $thumb_id );
+			// 		}
+			// 		break;
 
-				case 'gallery':
-					if ( 'meta' === $settings['featured_media_pfg_select'] ) {
-						$this->render_post_gallery( $settings );
-					} else {
-						$this->render_post_thumbnail( $settings, $thumb_id );
-					}
-					break;
+			// 	case 'gallery':
+			// 		if ( 'meta' === $settings['featured_media_pfg_select'] ) {
+			// 			$this->render_post_gallery( $settings );
+			// 		} else {
+			// 			$this->render_post_thumbnail( $settings, $thumb_id );
+			// 		}
+			// 		break;
 				
-				default:
-					$this->render_post_thumbnail( $settings, $thumb_id );
-					break;
-			}
+			// 	default:
+			// 		$this->render_post_thumbnail( $settings, $thumb_id );
+			// 		break;
+			// }
+
+			$this->render_post_thumbnail( $settings, $thumb_id );
 
 		echo '</div>';
 
