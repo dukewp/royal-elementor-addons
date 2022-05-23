@@ -290,6 +290,30 @@ class Wpr_Icon_Box extends Widget_Base {
 			]
 		);
 
+        $this->add_responsive_control(
+			'icon_box_icon_distance',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 80,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}}.wpr-icon-box-left .wpr-icon-box-media-wrap' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-icon-box-right .wpr-icon-box-media-wrap' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-icon-box-center .wpr-icon-box-media-wrap' => 'margin-bottom: {{SIZE}}{{UNIT}};'
+				]
+			]
+		);
+
         $this->end_controls_section();
 
         // Tab: Content ==============
