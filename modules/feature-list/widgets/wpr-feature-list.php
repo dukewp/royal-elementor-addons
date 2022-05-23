@@ -83,7 +83,7 @@ class Wpr_Feature_List extends Widget_Base {
                 'prefix_class' => 'wpr-feature-list-',
 				'render_type' => 'template',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-feature-list-item' => 'display-flex; justify-content: {{VALUE}}',
+					'{{WRAPPER}} .wpr-feature-list-item' => 'justify-content: {{VALUE}}',
 				],
 				'separator' => 'before',
 			]
