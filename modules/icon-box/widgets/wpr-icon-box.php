@@ -1,5 +1,5 @@
 <?php
-namespace WprAddons\Modules\Grid\Widgets;
+namespace WprAddons\Modules\IconBox\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
@@ -17,34 +17,26 @@ use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-class Wpr_Grid extends Widget_Base {
+class Wpr_Icon_Box extends Widget_Base {
 
     public function get_name() {
-        return 'wpr-grid';
+        return 'wpr-icon-box';
     }
 
     public function get_title() {
-        return esc_html__( 'Post Grid/Slider/Carousel', 'wpr-addons' );
+        return esc_html__( 'Icon Box', 'wpr-addons' );
     }
 
     public function get_icon() {
-        return 'wpr-icon eicon-gallery-grid';
+        return 'wpr-icon eicon-icon-box';
     }
 
     public function get_categories() {
-        return Utilities::show_theme_buider_widget_on('archive') ? [ 'wpr-theme-builder-widgets' ] : [ 'wpr-widgets'];
+        return [ 'wpr-widgets'];
     }
 
     public function get_keywords() {
-        return [ 'royal', 'blog', 'portfolio grid', 'posts', 'post grid', 'posts grid', 'post slider', 'posts slider', 'post carousel', 'posts carousel', 'massonry grid', 'isotope', 'post gallery', 'posts gallery', 'filterable grid' ];
-    }
-
-    public function get_script_depends() {
-        return [ 'wpr-isotope', 'wpr-slick', 'wpr-lightgallery' ];
-    }
-
-    public function get_style_depends() {
-        return [ 'wpr-animations-css', 'wpr-link-animations-css', 'wpr-button-animations-css', 'wpr-loading-animations-css', 'wpr-lightgallery-css' ];
+        return [ 'royal', 'icon box' ];
     }
 
     public function get_custom_help_url() {
@@ -56,11 +48,11 @@ class Wpr_Grid extends Widget_Base {
     protected function register_controls() {
 
         // Tab: Content ==============
-        // Section: Query ------------
+        // Section: General ------------
         $this->start_controls_section(
-            'section_grid_query',
+            'section_general_settings',
             [
-                'label' => esc_html__( 'Query', 'wpr-addons' ),
+                'label' => esc_html__( 'General', 'wpr-addons' ),
                 'tab' => Controls_Manager::TAB_CONTENT,
             ]
         );
