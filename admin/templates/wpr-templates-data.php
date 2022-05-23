@@ -83,6 +83,17 @@ class WPR_Templates_Data {
 					'priority' => 60,
 				],
 			],
+			'digital-marketing-agency' => [
+				'v1' => [
+					'name' => 'Digital Marketing Agency',
+					'pages' => 'home,seo,branding,marketing,social,blog,about,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'digital agency company corporate digital services office agency web digital marketing seo social media branding',
+					'theme-builder' => true,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'priority' => 49,
+				],
+			],
 			'travel-blog' => [
 				'v1' => [
 					'name' => 'Travel Blog',
@@ -91,7 +102,7 @@ class WPR_Templates_Data {
 					'tags' => 'nature influencer travel blogger blog posts content tourism influencers creator travel forest slider generic multipurpose national-park nature-park sanctuary wilderness slider hitchhiking mountain river lakes outdoors theme builder traveler hiking grid',
 					'theme-builder' => true,
 					'price' => $is_pro_active ? 'free' : 'pro',
-					'priority' => 70,
+					'priority' => 71,
 				],
 			],
 			'portfolio' => [
