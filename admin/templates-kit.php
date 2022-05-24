@@ -208,6 +208,18 @@ function wpr_install_reuired_plugins() {
         }
     } 
 
+    // Deactivate Extra Import Plugins
+    $ashe_extra_key = array_search('ashe-extra/ashe-extra.php', $active_plugins);
+    $bard_extra_key = array_search('bard-extra/bard-extra.php', $active_plugins);
+
+    if ( false !== $ashe_extra_key && array_key_exists($ashe_extra_key, $active_plugins) ) {
+        unset($active_plugins[$ashe_extra_key]);
+    }
+
+    if ( false !== $bard_extra_key && array_key_exists($bard_extra_key, $active_plugins) ) {
+        unset($active_plugins[$bard_extra_key]);
+    }
+
     // Set Active Plugins
     update_option( 'active_plugins', $active_plugins ); 
 
@@ -222,15 +234,7 @@ function wpr_install_reuired_plugins() {
     }
 
     // TODO: maybe return back  - 'ashe' !== $theme && 'bard' !== $theme && 
-
-    // Deactivate Extra Import Plugins
-    if ( class_exists( 'Ashextra_Options' ) ) {
-        deactivate_plugins( 'ashe-extra/ashe-extra.php' );
-    }
-
-    if ( class_exists( 'Bardxtra_Options' ) ) {
-        deactivate_plugins( 'bard-extra/bard-extra.php' );
-    }       
+      
 }
 
 /**
