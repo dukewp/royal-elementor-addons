@@ -206,10 +206,16 @@ function wpr_install_reuired_plugins() {
         } elseif ( 'media-library-assistant' == $_POST['plugin'] ) {
             array_push( $active_plugins, 'media-library-assistant/index.php' );
         }
-    } 
+    }
+
+    function filter_plugins($var) {
+        return $var != 'contact-form-7/wp-contact-form-7.php';
+    }
+
+    $active_plugins = array_filter($active_plugins, 'filter_plugins');
 
     // Set Active Plugins
-    update_option( 'active_plugins', $active_plugins ); 
+    update_option( 'active_plugins', array_values($active_plugins) ); 
 
     // Get Current Theme
     $theme = get_option('stylesheet');
