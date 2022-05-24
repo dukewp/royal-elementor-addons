@@ -200,19 +200,6 @@ class Wpr_Icon_Box extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'icon_box_btn_icon',
-			[
-				'label' => esc_html__( 'Button Icon', 'wpr-addons' ),
-				'type' => Controls_Manager::ICONS,
-				'skin' => 'inline',
-				'label_block' => false,
-				'condition' => [
-					'icon_box_link_type' => ['btn'],
-				],
-			]
-		);
-
 		$this->add_responsive_control(
 			'icon_box_alignment',
 			[
@@ -417,7 +404,7 @@ class Wpr_Icon_Box extends Widget_Base {
 			[
 				'name' => 'watermark_thumbnail',
 				'include' => [],
-				'default' => 'large',
+				'default' => 'thumbnail',
                 'condition' => [
                     'watermark' => 'image'
                 ]
@@ -445,7 +432,7 @@ class Wpr_Icon_Box extends Widget_Base {
 				'label' => esc_html__( 'Vertical Align', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
 				'label_block' => false,
-				'default' => 'flex-start',
+				'default' => 'right',
 				'options' => [
 					'left' => [
 						'title' => esc_html__( 'Left', 'wpr-addons' ),
@@ -703,16 +690,22 @@ class Wpr_Icon_Box extends Widget_Base {
 				'label' => esc_html__( 'Normal', 'wpr-addons' ),
 			]
 		);
-
-		$this->add_control(
-			'icon_box_background_color',
+		
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
 			[
-				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#605BE5',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-icon-box' => 'background-color: {{VALUE}}',
+				'name' => 'icon_box_background_color',
+				'label' => esc_html__( 'Background', 'wpr-addons' ),
+				'types' => [ 'classic', 'gradient' ],
+				'fields_options' => [
+					'background' => [
+						'default' => 'classic',
+					],
+					'color' => [
+						'default' => '#605BE5',
+					],
 				],
+				'selector' => '{{WRAPPER}} .wpr-icon-box'
 			]
 		);
 
@@ -796,16 +789,22 @@ class Wpr_Icon_Box extends Widget_Base {
 				'label' => esc_html__( 'Hover', 'wpr-addons' ),
 			]
 		);
-
-		$this->add_control(
-			'icon_box_background_color_hover',
+		
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
 			[
-				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-icon-box:hover' => 'background-color: {{VALUE}}',
+				'name' => 'icon_box_background_color_hover',
+				'label' => esc_html__( 'Background', 'wpr-addons' ),
+				'types' => [ 'classic', 'gradient' ],
+				'fields_options' => [
+					'background' => [
+						'default' => 'classic',
+					],
+					'color' => [
+						'default' => '#000',
+					],
 				],
+				'selector' => '{{WRAPPER}} .wpr-icon-box:hover'
 			]
 		);
 
@@ -894,7 +893,7 @@ class Wpr_Icon_Box extends Widget_Base {
 				'default' => [
 					'top' => 5,
 					'right' => 5,
-					'bottom' => 5,
+					'bottom' => 25,
 					'left' => 5,
 				],
 				'selectors' => [
@@ -909,11 +908,12 @@ class Wpr_Icon_Box extends Widget_Base {
 			[
 				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
-				'default' => 0.2,
+				'default' => 0.6,
 				'min' => 0,
 				'max' => 5,
 				'step' => 0.1,
 				'selectors' => [
+					'{{WRAPPER}} .wpr-icon-box-wrap' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s',
 					'{{WRAPPER}} .wpr-icon-box' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s',
 					'{{WRAPPER}} .wpr-icon-box-url' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s',
 					'{{WRAPPER}} .wpr-icon-box-title' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s',
@@ -1962,12 +1962,7 @@ class Wpr_Icon_Box extends Widget_Base {
                                     if ( '' !== $settings['icon_box_btn_text'] ) :
                                     echo '<span class="wpr-icon-box-btn-text">'. $settings['icon_box_btn_text'] .'</span>';		
                                     endif;
-        
-                                    if ( '' !== $settings['icon_box_btn_icon']['value'] ) :
-                                    echo '<span class="wpr-icon-box-btn-icon">';
-                                        echo '<i class="'. esc_attr( $settings['icon_box_btn_icon']['value'] ) .'"></i>';
-                                    echo '</span>';
-                                    endif;
+
                                 echo '</a>';
                             echo '</div>';
                         endif;
