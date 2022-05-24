@@ -92,6 +92,12 @@ function wpr_register_addons_settings() {
 
 function wpr_addons_settings_page() {
 
+    $active_plugins = (array) get_option( 'active_plugins', array() );
+
+    var_dump($active_plugins);
+    
+
+    var_dump($active_plugins);
 ?>
 
 <div class="wrap wpr-settings-page-wrap">

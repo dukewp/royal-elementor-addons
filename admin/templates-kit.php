@@ -206,7 +206,7 @@ function wpr_install_reuired_plugins() {
         } elseif ( 'media-library-assistant' == $_POST['plugin'] ) {
             array_push( $active_plugins, 'media-library-assistant/index.php' );
         }
-    }
+    } 
 
     // Set Active Plugins
     update_option( 'active_plugins', $active_plugins ); 
@@ -222,7 +222,15 @@ function wpr_install_reuired_plugins() {
     }
 
     // TODO: maybe return back  - 'ashe' !== $theme && 'bard' !== $theme && 
-    
+
+    // Deactivate Extra Import Plugins
+    if ( class_exists( 'Ashextra_Options' ) ) {
+        deactivate_plugins( 'ashe-extra/ashe-extra.php' );
+    }
+
+    if ( class_exists( 'Bardxtra_Options' ) ) {
+        deactivate_plugins( 'bard-extra/bard-extra.php' );
+    }       
 }
 
 /**
@@ -300,19 +308,21 @@ function import_elementor_site_settings( $kit ) {
     // $randomNum = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 7);
 
     // Get Remote File
-    $site_settings = @file_get_contents('https://royal-elementor-addons.com/library/templates-kit/'. $kit .'/site-settings.json');
-
+    $site_settings = @file_get_contents('https://royal-elementor-addons.com/library/templates-kit/'. $kit .'1/site-settings.json');
+    
     if ( false !== $site_settings ) {
         $site_settings = json_decode($site_settings, true);
 
         if ( ! empty($site_settings['settings']) ) {
             $default_kit = \Elementor\Plugin::$instance->documents->get_doc_for_frontend( get_option( 'elementor_active_kit' ) );
 
-            $kit_settings = $default_kit->get_settings();
-            $new_settings = $site_settings['settings'];
-            $settings = array_merge($kit_settings, $new_settings);
+            if ( false !== $default_kit ) {
+                $kit_settings = $default_kit->get_settings();
+                $new_settings = $site_settings['settings'];
+                $settings = array_merge($kit_settings, $new_settings);
 
-            $default_kit->save( [ 'settings' => $settings ] );
+                $default_kit->save( [ 'settings' => $settings ] );
+            }
         }
     }
 }
@@ -386,7 +396,7 @@ function wpr_fix_elementor_images() {
             // Elementor Data
             $data = get_post_meta( get_the_ID(), '_elementor_data', true );
 
-            if ( ! empty( $data ) ) {
+            if ( !empty($data) && is_string($data) ) {
                 $data = preg_replace('/\\\{1}\/sites\\\{1}\/\d+/', '', $data);
                 $data = str_replace( $demo_site_url, $site_url, $data );
                 $data = json_decode( $data, true );
@@ -398,7 +408,7 @@ function wpr_fix_elementor_images() {
             $page_settings = get_post_meta( get_the_ID(), '_elementor_page_settings', true );
             $page_settings = json_encode($page_settings);
 
-            if ( ! empty( $page_settings ) ) {
+            if ( !empty($page_settings) ) {
                 $page_settings = preg_replace('/\\\{1}\/sites\\\{1}\/\d+/', '', $page_settings);
                 $page_settings = str_replace( $demo_site_url, $site_url, $page_settings );
                 $page_settings = json_decode( $page_settings, true );
