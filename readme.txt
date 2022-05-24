@@ -1,4 +1,4 @@
-=== Royal Elementor Addons (Header Footer Builder, Popups, Post Grid, Woocommerce Product Grid, Slider, Parallax Image, Free Elementor Widgets & Elementor Templates) ===
+﻿=== Royal Elementor Addons (Header Footer Builder, Popups, Post Grid, Woocommerce Product Grid, Slider, Parallax Image, Free Elementor Widgets & Elementor Templates) ===
 Contributors: WP Royal, rubeushagrid13, cyberpinky, elementoraddonswpr
 Tags: elementor, elements, widgets for elementor, elementor addons, elementor widgets, elementor form, woocommerce elementor, page builder, elementor templates, wordpress page builder, best elementor addons, addons for elementor
 Stable tag: 1.3.42
@@ -115,6 +115,7 @@ and other custom branding related settings)
 - [**NFT Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/nft-portfolio-v1/?ref=rea-wpo-pp-details-tab)
 - [**Car Wash Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/carwash-v1/?ref=rea-wpo-pp-details-tab)
 - [**Pet Care Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/pet-care-v1/?ref=rea-wpo-pp-details-tab)
+- [**Digital Marketing Agency Templates Kit**](https://demosites.royal-elementor-addons.com/digital-marketing-agency-v1/)
 
 **Widgets Description:**
 
