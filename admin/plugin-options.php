@@ -96,9 +96,12 @@ function wpr_addons_settings_page() {
 
     var_dump($active_plugins);
     
-
-    var_dump($active_plugins);
-?>
+    function filter_plugins($var) {
+        return $var != 'contact-form-7/wp-contact-form-7.php' && $var != 'fakerpress/fakerpress.php';
+    }
+  
+    var_dump(array_filter($active_plugins, 'filter_plugins'));
+    ?>
 
 <div class="wrap wpr-settings-page-wrap">
 
