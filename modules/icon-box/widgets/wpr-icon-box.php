@@ -328,6 +328,179 @@ class Wpr_Icon_Box extends Widget_Base {
 
         $this->end_controls_section();
 
+		// Tab: Content ==============
+		// Section: Media Overlay ----
+		$this->start_controls_section(
+			'section_image_overlay',
+			[
+				'label' => esc_html__( 'Media Overlay', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$this->add_responsive_control(
+			'overlay_width',
+			[
+				'label' => esc_html__( 'Overlay Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ '%', 'px' ],
+				'default' => [
+					'unit' => '%',
+					'size' => 100,
+				],
+				'range' => [
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					],
+					'px' => [
+						'min' => 0,
+						'max' => 500,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-icon-box-media-hover-bg' => 'width: {{SIZE}}{{UNIT}};top:calc((100% - {{overlay_hegiht.SIZE}}{{overlay_hegiht.UNIT}})/2);left:calc((100% - {{SIZE}}{{UNIT}})/2);',
+					'{{WRAPPER}} .wpr-icon-box-media-hover-bg[class*="-top"]' => 'top:calc((100% - {{overlay_hegiht.SIZE}}{{overlay_hegiht.UNIT}})/2);left:calc((100% - {{SIZE}}{{UNIT}})/2);',
+					'{{WRAPPER}} .wpr-icon-box-media-hover-bg[class*="-bottom"]' => 'bottom:calc((100% - {{overlay_hegiht.SIZE}}{{overlay_hegiht.UNIT}})/2);left:calc((100% - {{SIZE}}{{UNIT}})/2);',
+					'{{WRAPPER}} .wpr-icon-box-media-hover-bg[class*="-right"]' => 'top:calc((100% - {{overlay_hegiht.SIZE}}{{overlay_hegiht.UNIT}})/2);right:calc((100% - {{SIZE}}{{UNIT}})/2);',
+					'{{WRAPPER}} .wpr-icon-box-media-hover-bg[class*="-left"]' => 'top:calc((100% - {{overlay_hegiht.SIZE}}{{overlay_hegiht.UNIT}})/2);left:calc((100% - {{SIZE}}{{UNIT}})/2);',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'overlay_hegiht',
+			[
+				'label' => esc_html__( 'Overlay Hegiht', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ '%', 'px' ],
+				'default' => [
+					'unit' => '%',
+					'size' => 100,
+				],
+				'range' => [
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					],
+					'px' => [
+						'min' => 0,
+						'max' => 500,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-icon-box-media-hover-bg' => 'height: {{SIZE}}{{UNIT}};top:calc((100% - {{SIZE}}{{UNIT}})/2);left:calc((100% - {{overlay_width.SIZE}}{{overlay_width.UNIT}})/2);',
+					'{{WRAPPER}} .wpr-icon-box-media-hover-bg[class*="-top"]' => 'top:calc((100% - {{SIZE}}{{UNIT}})/2);left:calc((100% - {{overlay_width.SIZE}}{{overlay_width.UNIT}})/2);',
+					'{{WRAPPER}} .wpr-icon-box-media-hover-bg[class*="-bottom"]' => 'bottom:calc((100% - {{SIZE}}{{UNIT}})/2);left:calc((100% - {{overlay_width.SIZE}}{{overlay_width.UNIT}})/2);',
+					'{{WRAPPER}} .wpr-icon-box-media-hover-bg[class*="-right"]' => 'top:calc((100% - {{SIZE}}{{UNIT}})/2);right:calc((100% - {{overlay_width.SIZE}}{{overlay_width.UNIT}})/2);',
+					'{{WRAPPER}} .wpr-icon-box-media-hover-bg[class*="-left"]' => 'top:calc((100% - {{SIZE}}{{UNIT}})/2);left:calc((100% - {{overlay_width.SIZE}}{{overlay_width.UNIT}})/2);',
+				],
+				'separator' => 'after',
+			]
+		);
+
+		$this->add_control(
+			'overlay_animation',
+			[
+				'label' => esc_html__( 'Select Animation', 'wpr-addons' ),
+				'type' => 'wpr-animations-alt',
+				'default' => 'fade-in',
+			]
+		);
+
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'icon-box', 'overlay_animation', ['pro-slrt','pro-slxrt','pro-slbt','pro-sllt','pro-sltp','pro-slxlt','pro-sktp','pro-skrt','pro-skbt','pro-sklt','pro-scup','pro-scdn','pro-rllt','pro-rlrt'] );
+
+		$this->add_control(
+			'overlay_animation_duration',
+			[
+				'label' => esc_html__( 'Animation Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.3,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-icon-box-media-hover-bg' => 'transition-duration: {{VALUE}}s;'
+				],
+				'condition' => [
+					'overlay_animation!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'overlay_animation_delay',
+			[
+				'label' => esc_html__( 'Animation Delay', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-animation-wrap:hover .wpr-icon-box-media-hover-bg' => 'transition-delay: {{VALUE}}s;'
+				],
+				'condition' => [
+					'overlay_animation!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'overlay_animation_timing',
+			[
+				'label' => esc_html__( 'Animation Timing', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => Utilities::wpr_animation_timings(),
+				'default' => 'ease-default',
+				'condition' => [
+					'overlay_animation!' => 'none',
+				],
+			]
+		);
+
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'icon-box', 'overlay_animation_timing', Utilities::wpr_animation_timing_pro_conditions());
+
+		$this->add_control(
+			'overlay_animation_size',
+			[
+				'label' => esc_html__( 'Animation Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'small' => esc_html__( 'Small', 'wpr-addons' ),
+					'medium' => esc_html__( 'Medium', 'wpr-addons' ),
+					'large' => esc_html__( 'Large', 'wpr-addons' ),
+				],
+				'default' => 'large',
+				'condition' => [
+					'overlay_animation!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'overlay_animation_tr',
+			[
+				'label' => esc_html__( 'Animation Transparency', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'condition' => [
+					'overlay_animation!' => 'none',
+				],
+			]
+		);
+
+		// $this->add_control_overlay_animation_divider();
+
+		// $this->add_control_overlay_image();
+
+		// $this->add_control_overlay_image_width();
+
+		$this->end_controls_section(); // End Controls Section
+
         // Tab: Content ==============
         // Section: Badge ----------
         $this->start_controls_section(
@@ -607,6 +780,137 @@ class Wpr_Icon_Box extends Widget_Base {
 		);
 
         $this->end_controls_section();
+
+		// Styles ====================
+		// Section: Media Overlay ----
+		$this->start_controls_section(
+			'section_style_overlay',
+			[
+				'label' => esc_html__( 'Media Overlay', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'show_label' => false,
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
+			[
+				'name' => 'overlay_color',
+				'label' => esc_html__( 'Background', 'wpr-addons' ),
+				'types' => [ 'classic', 'gradient' ],
+				'fields_options' => [
+					'color' => [
+						'default' => 'rgba(0, 0, 0, 0.25)',
+					],
+				],
+				'selector' => '{{WRAPPER}} .wpr-icon-box-media-hover-bg'
+			]
+		);
+
+		$this->add_control(
+			'overlay_blend_mode',
+			[
+				'label' => esc_html__( 'Blend Mode', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'normal',
+				'options' => [
+					'normal' => esc_html__( 'Normal', 'wpr-addons' ),
+					'multiply' => esc_html__( 'Multiply', 'wpr-addons' ),
+					'screen' => esc_html__( 'Screen', 'wpr-addons' ),
+					'overlay' => esc_html__( 'Overlay', 'wpr-addons' ),
+					'darken' => esc_html__( 'Darken', 'wpr-addons' ),
+					'lighten' => esc_html__( 'Lighten', 'wpr-addons' ),
+					'color-dodge' => esc_html__( 'Color-dodge', 'wpr-addons' ),
+					'color-burn' => esc_html__( 'Color-burn', 'wpr-addons' ),
+					'hard-light' => esc_html__( 'Hard-light', 'wpr-addons' ),
+					'soft-light' => esc_html__( 'Soft-light', 'wpr-addons' ),
+					'difference' => esc_html__( 'Difference', 'wpr-addons' ),
+					'exclusion' => esc_html__( 'Exclusion', 'wpr-addons' ),
+					'hue' => esc_html__( 'Hue', 'wpr-addons' ),
+					'saturation' => esc_html__( 'Saturation', 'wpr-addons' ),
+					'color' => esc_html__( 'Color', 'wpr-addons' ),
+					'luminosity' => esc_html__( 'luminosity', 'wpr-addons' ),
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-icon-box-media-hover-bg' => 'mix-blend-mode: {{VALUE}}',
+				],
+				'separator' => 'after',
+			]
+		);
+
+		$this->add_control(
+			'overlay_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-icon-box-hover-bg' => 'border-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'overlay_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-icon-box-hover-bg' => 'border-style: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'overlay_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-icon-box-hover-bg' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'overlay_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'overlay_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-icon-box-media-hover-bg' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->end_controls_section();
 
 		// Tab: STYLE ==============
 		// Section: Title & Description ----------
@@ -1059,6 +1363,37 @@ class Wpr_Icon_Box extends Widget_Base {
 		<?php endif;
 	}
 
+	// Get Animation Class
+	public function get_animation_class( $data, $object ) {
+		$class = '';
+
+		// Animation Class
+		if ( 'none' !== $data[ $object .'_animation'] ) {
+			$class .= ' wpr-'. $object .'-'. $data[ $object .'_animation'];
+			$class .= ' wpr-anim-size-'. $data[ $object .'_animation_size'];
+			$class .= ' wpr-anim-timing-'. $data[ $object .'_animation_timing'];
+
+			if ( 'yes' === $data[ $object .'_animation_tr'] ) {
+				$class .= ' wpr-anim-transparency';
+			}
+		}
+
+		return $class;
+	}
+
+	// Render Media Overlay
+	public function render_media_overlay( $settings ) {
+		echo '<div class="wpr-icon-box-media-hover-bg '. $this->get_animation_class( $settings, 'overlay' ) .'" data-url="'. esc_url($settings['icon_box_title_url']['url']) .'">';
+
+			// if ( wpr_fs()->can_use_premium_code() ) {
+			// 	if ( '' !== $settings['overlay_image']['url'] ) {
+			// 		echo '<img src="'. esc_url( $settings['overlay_image']['url'] ) .'">';
+			// 	}
+			// }
+
+		echo '</div>';
+	}
+
     protected function render() {
         // Get Settings
         $settings = $this->get_settings_for_display();
@@ -1119,8 +1454,14 @@ class Wpr_Icon_Box extends Widget_Base {
                         endif;
                         
                     echo '</div>';
-                echo '</div>';
+					
                 
+				// Media Hover
+				echo '<div class="wpr-icon-box-media-hover wpr-animation-wrap">';
+					$this->render_media_overlay($settings);
+                echo '</div>';
+
+			echo '</div>';
                 $this->render_element_badge();
             echo '</div>';
     }
