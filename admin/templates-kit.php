@@ -1,5 +1,5 @@
 <?php
-
+header('Access-Control-Allow-Origin: *');
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -202,29 +202,33 @@ function wpr_install_reuired_plugins() {
     // Add Required Plugins
     if ( isset($_POST['plugin']) ) {
         if ( 'contact-form-7' == $_POST['plugin'] ) {
-            array_push( $active_plugins, 'contact-form-7/wp-contact-form-7.php' );
+            if (!is_plugin_active('contact-form-7/wp-contact-form-7.php')) {
+                array_push( $active_plugins, 'contact-form-7/wp-contact-form-7.php' );
+            }
         } elseif ( 'media-library-assistant' == $_POST['plugin'] ) {
-            array_push( $active_plugins, 'media-library-assistant/index.php' );
+            if (!is_plugin_active('media-library-assistant/index.php')) {
+                array_push( $active_plugins, 'media-library-assistant/index.php' );
+            }
         }
     }
 
-    function filter_plugins($var) {
-        return $var != 'contact-form-7/wp-contact-form-7.php';
-    }
+    // function filter_plugins($var) {
+    //     return $var != 'contact-form-7/wp-contact-form-7.php';
+    // }
 
-    $active_plugins = array_filter($active_plugins, 'filter_plugins');
+    // $active_plugins = array_values(array_filter($active_plugins, 'filter_plugins'));
 
     // Deactivate Extra Import Plugins
     $ashe_extra_key = array_search('ashe-extra/ashe-extra.php', $active_plugins);
-    $bard_extra_key = array_search('bard-extra/bard-extra.php', $active_plugins);
+    // $bard_extra_key = array_search('bard-extra/bard-extra.php', $active_plugins);
 
     if ( false !== $ashe_extra_key && array_key_exists($ashe_extra_key, $active_plugins) ) {
         unset($active_plugins[$ashe_extra_key]);
     }
 
-    if ( false !== $bard_extra_key && array_key_exists($bard_extra_key, $active_plugins) ) {
-        unset($active_plugins[$bard_extra_key]);
-    }
+    // if ( false !== $bard_extra_key && array_key_exists($bard_extra_key, $active_plugins) ) {
+    //     unset($active_plugins[$bard_extra_key]);
+    // }
 
     // Set Active Plugins
     update_option( 'active_plugins', array_values($active_plugins) ); 
