@@ -11468,10 +11468,23 @@ display: none;
     box-sizing: border-box;
 }
 
+.wpr-icon-box-link {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 40;
+}
+
+.wpr-icon-box {
+    overflow: hidden;
+}
+
 .wpr-icon-box-wrap,
 .wpr-icon-box {
     position: relative;
-    overflow: hidden;
 }
 
 .wpr-icon-box-left .wpr-icon-box {
@@ -11505,6 +11518,11 @@ display: none;
 
 .wpr-icon-box-content-wrap {
     width: 100%;
+}
+
+.wpr-icon-box-title {
+    position: relative;
+    z-index: 99;
 }
 
 .wpr-icon-box-btn {

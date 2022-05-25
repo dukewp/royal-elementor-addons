@@ -38,6 +38,10 @@ class Wpr_Icon_Box extends Widget_Base {
         return [ 'royal', 'icon box' ];
     }
 
+	public function get_style_depends() {
+		return [ 'wpr-animations-css' ];
+	}
+
     public function get_custom_help_url() {
         if ( empty(get_option('wpr_wl_plugin_links')) )
         // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-grid-help-btn';
@@ -145,22 +149,6 @@ class Wpr_Icon_Box extends Widget_Base {
 		);
 
 		$this->add_control(
-			'icon_box_title_url',
-			[
-				'label' => esc_html__( 'Title Link', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::URL,
-				'placeholder' => esc_html__( 'https://your-link.com', 'wpr-addons' ),
-				'default' => [
-					'url' => '',
-					'is_external' => true,
-					'nofollow' => true,
-					'custom_attributes' => '',
-				],
-				'label_block' => true,
-			]
-		);
-
-		$this->add_control(
 			'icon_box_content',
 			[
 				'label' => esc_html__( 'Content', 'wpr-addons' ),
@@ -184,6 +172,25 @@ class Wpr_Icon_Box extends Widget_Base {
 				],
 				'default' => 'btn',
 				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'icon_box_title_url',
+			[
+				'label' => esc_html__( 'Content Link', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::URL,
+				'placeholder' => esc_html__( 'https://your-link.com', 'wpr-addons' ),
+				'default' => [
+					'url' => '',
+					'is_external' => true,
+					'nofollow' => true,
+					'custom_attributes' => '',
+				],
+				'label_block' => true,
+				'condition' => [
+					'icon_box_link_type!' => 'none'
+				]
 			]
 		);
 
@@ -721,6 +728,14 @@ class Wpr_Icon_Box extends Widget_Base {
 			]
 		);
 
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'icon_box_shadow',
+				'selector' => '{{WRAPPER}} .wpr-icon-box-wrap',
+			]
+		);
+
 		$this->add_control(
 			'icon_box_border_type',
 			[
@@ -777,6 +792,7 @@ class Wpr_Icon_Box extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-icon-box' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-icon-box-wrap' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				]
 			]
 		);
@@ -817,6 +833,14 @@ class Wpr_Icon_Box extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-icon-box:hover' => 'border-color: {{VALUE}}',
 				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'icon_box_shadow_hover',
+				'selector' => '{{WRAPPER}} .wpr-icon-box-wrap:hover',
 			]
 		);
 
@@ -1928,6 +1952,10 @@ class Wpr_Icon_Box extends Widget_Base {
             echo '<div class="wpr-icon-box-wrap">';
                 echo '<div class="wpr-icon-box wpr-animation-wrap">';
 
+				if ( 'box' === $settings['icon_box_link_type'] ) :
+					echo '<a class="wpr-icon-box-link"'. $this->get_render_attribute_string( 'icon_box_url' ) .'></a>';	
+				endif;
+
                     echo '<div class="wpr-icon-box-media-wrap">';
                         echo '<div class="wpr-icon-box-icon-inner-wrap">';
 
@@ -1944,7 +1972,7 @@ class Wpr_Icon_Box extends Widget_Base {
                     echo '<div class="wpr-icon-box-content-wrap">';
 
                         if (!empty($settings['icon_box_title'])) {
-                            if ( empty($settings['icon_box_title_url']) ) {
+                            if ( 'title' !== $settings['icon_box_link_type'] ) {
                                 echo '<'. esc_html($settings['icon_box_title_tag']) .' class="wpr-icon-box-title">' . wp_kses_post($settings['icon_box_title']) . '</'. esc_html($settings['icon_box_title_tag']) .'>';
                             } else {
                                 echo '<'. esc_html($settings['icon_box_title_tag']) .' class="wpr-icon-box-title"><a class="wpr-icon-box-url" '. $this->get_render_attribute_string( 'icon_box_url' ) .'>' . $settings['icon_box_title'] . '</a></'. esc_html($settings['icon_box_title_tag']) .'>';
@@ -1984,7 +2012,7 @@ class Wpr_Icon_Box extends Widget_Base {
 					}
 
 					$this->render_element_badge();
-			echo '</div>';
+				echo '</div>';
             echo '</div>';
     }
 }
