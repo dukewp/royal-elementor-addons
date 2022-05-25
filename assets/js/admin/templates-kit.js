@@ -133,6 +133,7 @@ jQuery(document).ready(function( $ ) {
 			// Install Plugins
 			if ( WprTemplatesKit.requiredPlugins ) {
 				if ( 'contact-form-7' in WprTemplatesKit.requiredPlugins && false === WprTemplatesKit.requiredPlugins['contact-form-7'] ) {
+					console.log('this function works here ---------------');
 					WprTemplatesKit.installPluginViaAjax('contact-form-7');
 				}
 				

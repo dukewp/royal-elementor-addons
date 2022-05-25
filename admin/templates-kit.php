@@ -179,6 +179,15 @@ function get_theme_status() {
 ** Install/Activate Required Theme
 */
 function wpr_activate_reuired_theme() {
+    $active_plugins = (array) get_option( 'active_plugins', array() );
+
+    function filter_plugins($var) {
+        return $var != 'ashe-extra/ashe-extra.php';
+    }
+
+    $active_plugins = array_values(array_filter($active_plugins, 'filter_plugins'));
+    update_option( 'active_plugins', $active_plugins); 
+    
     // Get Current Theme
     $theme = get_option('stylesheet');
 
@@ -212,26 +221,20 @@ function wpr_install_reuired_plugins() {
         }
     }
 
-    // function filter_plugins($var) {
-    //     return $var != 'contact-form-7/wp-contact-form-7.php';
-    // }
-
-    // $active_plugins = array_values(array_filter($active_plugins, 'filter_plugins'));
-
     // Deactivate Extra Import Plugins
-    $ashe_extra_key = array_search('ashe-extra/ashe-extra.php', $active_plugins);
+    // $ashe_extra_key = array_search('ashe-extra/ashe-extra.php', $active_plugins);
     // $bard_extra_key = array_search('bard-extra/bard-extra.php', $active_plugins);
 
-    if ( false !== $ashe_extra_key && array_key_exists($ashe_extra_key, $active_plugins) ) {
-        unset($active_plugins[$ashe_extra_key]);
-    }
+    // if ( false !== $ashe_extra_key && array_key_exists($ashe_extra_key, $active_plugins) ) {
+    //     unset($active_plugins[$ashe_extra_key]);
+    // }
 
     // if ( false !== $bard_extra_key && array_key_exists($bard_extra_key, $active_plugins) ) {
     //     unset($active_plugins[$bard_extra_key]);
     // }
 
     // Set Active Plugins
-    update_option( 'active_plugins', array_values($active_plugins) ); 
+    update_option( 'active_plugins', $active_plugins); 
 
     // Get Current Theme
     $theme = get_option('stylesheet');
