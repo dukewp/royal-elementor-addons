@@ -189,7 +189,30 @@ function wpr_activate_reuired_theme() {
         set_transient( 'royal-elementor-kit_activation_notice', true );
     }
 
-    // TODO: maybe return back  - 'ashe' !== $theme && 'bard' !== $theme && 
+    // TODO: maybe return back  - 'ashe' !== $theme && 'bard' !== $theme &&
+
+    // Get currently active plugins
+    $active_plugins = (array) get_option( 'active_plugins', array() );
+
+    // Deactivate Extra Import Plugins
+    $astra_sites_key = array_search('astra-sites/astra-sites.php', $active_plugins);
+    $ashe_extra_key = array_search('ashe-extra/ashe-extra.php', $active_plugins);
+    $bard_extra_key = array_search('bard-extra/bard-extra.php', $active_plugins);
+
+    if ( false !== $astra_sites_key && array_key_exists($astra_sites_key, $active_plugins) ) {
+        unset($active_plugins[$astra_sites_key]);
+    }
+
+    if ( false !== $ashe_extra_key && array_key_exists($ashe_extra_key, $active_plugins) ) {
+        unset($active_plugins[$ashe_extra_key]);
+    }
+
+    if ( false !== $bard_extra_key && array_key_exists($bard_extra_key, $active_plugins) ) {
+        unset($active_plugins[$bard_extra_key]);
+    }
+
+    // Set Active Plugins
+    update_option( 'active_plugins', array_values($active_plugins) ); 
 }
 
 /**
@@ -202,11 +225,17 @@ function wpr_install_reuired_plugins() {
     // Add Required Plugins
     if ( isset($_POST['plugin']) ) {
         if ( 'contact-form-7' == $_POST['plugin'] ) {
-            array_push( $active_plugins, 'contact-form-7/wp-contact-form-7.php' );
+            if ( !is_plugin_active( 'contact-form-7/wp-contact-form-7.php' ) ) {
+                array_push( $active_plugins, 'contact-form-7/wp-contact-form-7.php' );
+            }
         } elseif ( 'media-library-assistant' == $_POST['plugin'] ) {
-            array_push( $active_plugins, 'media-library-assistant/index.php' );
+            if ( !is_plugin_active( 'media-library-assistant/index.php' ) ) {
+                array_push( $active_plugins, 'media-library-assistant/index.php' );
+            }
         }
-    } 
+    }
+
+    $active_plugins = array_values($active_plugins);
 
     // Deactivate Extra Import Plugins
     $ashe_extra_key = array_search('ashe-extra/ashe-extra.php', $active_plugins);
@@ -221,7 +250,7 @@ function wpr_install_reuired_plugins() {
     }
 
     // Set Active Plugins
-    update_option( 'active_plugins', $active_plugins ); 
+    update_option( 'active_plugins', array_values($active_plugins) ); 
 
     // Get Current Theme
     $theme = get_option('stylesheet');
@@ -354,6 +383,8 @@ function setup_wpr_templates( $kit ) {
         if ( $blog_page ) {
             update_option( 'page_for_posts', $blog_page->ID );
         }
+    } else {
+        update_option( 'show_on_front', 'posts' );
     }
 
     // Set Headers and Footers
