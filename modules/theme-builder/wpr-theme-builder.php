@@ -358,7 +358,7 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 			$post_classes = get_post_class( '', get_the_ID() );
 			$attributes['class'] .= ' ' . implode( ' ', $post_classes );
 		}
-
+ 
 		return $attributes;
 	}
 }
