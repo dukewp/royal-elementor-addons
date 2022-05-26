@@ -95,6 +95,34 @@ class Utilities {
 	}
 
 	/**
+	** Get WooCommerce Builder Modules
+	*/
+	public static function get_woocommerce_builder_modules() {
+		return [
+			'product-title',
+			'product-media',
+			'product-mediaflex',
+			'product-price',
+			'product-add-to-cart',
+			'product-Breadcrumbs',
+			'product-tabs',
+			'product-excerpt',
+			'product-rating',
+			'product-meta',
+			'product-sales-badge',
+			'product-stock',
+			'product-additional-information',
+			'product-notice',
+			'product-upsell',
+			'product-mini-cart',
+			'page-cart',
+			'page-checkout',
+			'page-my-account',
+			'products-result-count'
+		];
+	}
+
+	/**
 	** Get Available Custom Post Types or Taxonomies
 	*/
 	public static function get_custom_types_of( $query, $exclude_defaults = true ) {
@@ -314,7 +342,7 @@ class Utilities {
 		$current_page = get_post(get_the_ID());
 
 		if ( $current_page ) {
-			return strpos($current_page->post_name, 'user-archive') !== false || strpos($current_page->post_name, 'user-single') !== false;
+			return strpos($current_page->post_name, 'user-archive') !== false || strpos($current_page->post_name, 'user-single') !== false || strpos($current_page->post_name, 'user-product') !== false;
 		} else {
 			return false;
 		}

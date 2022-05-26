@@ -1476,7 +1476,7 @@ class Wpr_Forms extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 100,
-						'max' => 1000,
+						'max' => 500,
 					],
 				],				
 				'default' => [

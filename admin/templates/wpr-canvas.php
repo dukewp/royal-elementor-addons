@@ -9,6 +9,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 \Elementor\Plugin::$instance->frontend->add_body_class( 'elementor-template-canvas' );
 
+$is_preview_mode = \Elementor\Plugin::$instance->preview->is_preview_mode();
+$woocommerce_class =  $is_preview_mode && class_exists( 'WooCommerce' ) ? 'woocommerce woocommerce-page' : '';
+
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
@@ -24,7 +27,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	Utils::print_unescaped_internal_string( Utils::get_meta_viewport( 'canvas' ) );
 	?>
 </head>
-<body <?php body_class(); ?>>
+
+<body <?php body_class($woocommerce_class); ?>>
 	<?php
 	Elementor\Modules\PageTemplates\Module::body_open();
 	/**

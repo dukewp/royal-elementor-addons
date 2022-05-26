@@ -38,6 +38,7 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 
 		$default_archives = [
 			'archive/posts' => esc_html__( 'Posts Archive', 'wpr-addons' ),
+			'archive/products' => esc_html__( 'Products Archive', 'wpr-addons' ),
 			'archive/author' => esc_html__( 'Author Archive', 'wpr-addons' ),
 			'archive/date' => esc_html__( 'Date Archive', 'wpr-addons' ),
 			'archive/search' => esc_html__( 'Search Results', 'wpr-addons' ),
@@ -97,7 +98,7 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 					}
 				}
 			}
-		}
+		} 
 
 		$this->add_control(
 			'preview_source',
@@ -358,11 +359,11 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 	public function get_container_attributes() {
 		$attributes = parent::get_container_attributes();
 
-		if ( is_singular() /* Not 404 */ ) {
+		if ( is_singular() ) { // Not 404
 			$post_classes = get_post_class( '', get_the_ID() );
 			$attributes['class'] .= ' ' . implode( ' ', $post_classes );
 		}
-
+ 
 		return $attributes;
 	}
 }
