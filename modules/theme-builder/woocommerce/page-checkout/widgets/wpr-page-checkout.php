@@ -62,6 +62,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 			[
 				'label' => esc_html__( 'Layout', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
+				'render_type' => 'template',
 				'default' => 'vertical',
 				'prefix_class' => 'wpr-checkout-',
 				'options' => [
@@ -1061,7 +1062,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 			wp_set_current_user( 0 );
 		}
 
-		add_action( 'woocommerce_checkout_before_customer_details', [ $this, 'woocommerce_checkout_before_order_review_heading' ], 95 );
+		add_action( 'woocommerce_checkout_before_customer_details', [ $this, 'woocommerce_checkout_before_customer_details' ], 95 );
 
 		add_action( 'woocommerce_checkout_before_order_review_heading', [ $this, 'woocommerce_checkout_before_order_review_heading' ], 95 );
 
@@ -1071,7 +1072,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 
         echo do_shortcode( '[woocommerce_checkout]' );
 
-		remove_action( 'woocommerce_checkout_before_customer_details', [ $this, 'woocommerce_checkout_before_order_review_heading' ], 95 );
+		remove_action( 'woocommerce_checkout_before_customer_details', [ $this, 'woocommerce_checkout_before_customer_details' ], 95 );
 
 		remove_action( 'woocommerce_checkout_before_order_review_heading', [ $this, 'woocommerce_checkout_before_order_review_heading' ], 95 );
 

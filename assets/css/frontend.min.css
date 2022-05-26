@@ -2349,6 +2349,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
   flex-direction: column;
 }
 
+/* check why doesn't apply or rendered as different classes */
 .wpr-checkout-horizontal .wpr-customer-details-wrapper {
   display: flex;
 }
