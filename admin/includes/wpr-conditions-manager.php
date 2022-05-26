@@ -57,35 +57,32 @@ class WPR_Conditions_Manager {
         $template = NULL;
 
 		// Get Conditions
-		$archives = json_decode( get_option( 'wpr_archive_conditions' ), true );
-		$singles  = json_decode( get_option( 'wpr_single_conditions' ), true );
-
-        if ( empty($archives) && empty($singles) ) {
-            return NULL;
-        }
+		if ( class_exists( 'WooCommerce' ) && is_woocommerce() ) {
+			$archives = json_decode( get_option( 'wpr_product_archive_conditions' ), true );
+			$singles  = json_decode( get_option( 'wpr_product_single_conditions' ), true );
+		} else {
+			$archives = json_decode( get_option( 'wpr_archive_conditions' ), true );
+			$singles  = json_decode( get_option( 'wpr_single_conditions' ), true );
+		}
 
         // Custom
         if ( wpr_fs()->can_use_premium_code() && defined('WPR_ADDONS_PRO_VERSION') ) {
 
-			// Archive Pages (includes search)
-			if ( !is_null( \WprAddonsPro\Classes\Pro_Modules::archive_templates_conditions( $archives ) ) ) {
-				$template = \WprAddonsPro\Classes\Pro_Modules::archive_templates_conditions( $archives );
-			}
+	        if ( !empty($archives) || !empty($singles) ) {
 
-	    	// Single Pages
-			if ( !is_null( \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $singles ) ) ) {
-				$template = \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $singles );
-			}
-        } else {
-            // Archive Pages (includes search)
-            if ( !is_null( WPR_Conditions_Manager::archive_templates_conditions_free($archives) ) ) {
-                $template = WPR_Conditions_Manager::archive_templates_conditions_free($archives);
-            }
+				// Archive Pages (includes search)
+				if ( !is_null( \WprAddonsPro\Classes\Pro_Modules::archive_templates_conditions( $archives ) ) ) {
+					$template = \WprAddonsPro\Classes\Pro_Modules::archive_templates_conditions( $archives );
+				}
 
-            // Single Pages
-            if ( !is_null( WPR_Conditions_Manager::single_templates_conditions_free($singles) ) ) {
-                $template = WPR_Conditions_Manager::single_templates_conditions_free($singles);
-            }
+		    	// Single Pages
+				if ( !is_null( \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $singles ) ) ) {
+					$template = \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $singles );
+				}
+
+	        }
+        } else {//TODO: Set kinda "ALL" for default (free version)
+        	// $template = Utilities::get_template_slug( $conditions, 'global' );
         }
 
 	    return $template;
