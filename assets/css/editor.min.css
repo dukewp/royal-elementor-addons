@@ -811,7 +811,8 @@
           order: 2;
 }
 
-#elementor-panel-category-wpr-theme-builder-widgets {
+#elementor-panel-category-wpr-theme-builder-widgets,
+#elementor-panel-category-wpr-woocommerce-builder-widgets {
   -webkit-box-ordinal-group: 2 !important;
       -ms-flex-order: 1 !important;
           order: 1 !important;

@@ -649,14 +649,16 @@ class Plugin {
 		}
 		
 
-		// Add Woo element category in panel
-		// \Elementor\Plugin::instance()->elements_manager->add_category(
-		// 	'wpr-woo-widgets',
-		// 	[
-		// 		'title' => sprintf(esc_html__( '%s WooCommerce', 'wpr-addons' ), Utilities::get_plugin_name()),
-		// 		'icon' => 'font',
-		// 	]
-		// );
+		// Add Woocommerce Builder category in panel
+		if ( Utilities::is_theme_builder_template() ) {
+			\Elementor\Plugin::instance()->elements_manager->add_category(
+				'wpr-woocommerce-builder-widgets',
+				[
+					'title' => sprintf(esc_html__( '%s Woocommerce Builder', 'wpr-addons' ), Utilities::get_plugin_name()),
+					'icon' => 'font',
+				]
+			);
+		}
 	}
 
 	protected function add_actions() {
