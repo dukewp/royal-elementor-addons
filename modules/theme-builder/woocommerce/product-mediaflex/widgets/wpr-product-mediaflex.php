@@ -48,18 +48,19 @@ class Wpr_Product_Mediaflex extends Widget_Base {
 		// Tab: Content ==============
 		// Section: General ----------
 		$this->start_controls_section(
-			'section_product_image',
+			'section_product_general',
 			[
 				'label' => esc_html__( 'General', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
 
-		$this->add_group_control(
-			Group_Control_Image_Size::get_type(),
+		$this->add_control(
+			'section_product_reload_preview',
 			[
-				'name' => 'product_media_image_crop',
-				'default' => 'full',
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => '<div class="elementor-update-preview editor-wpr-preview-update"><span>Update changes to Preview</span><button class="elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply</button>',
+				'separator' => 'after'
 			]
 		);
 
