@@ -131,6 +131,9 @@ class WPR_Conditions_Manager {
                 // Tag
                 } elseif ( is_tag() ) {
                     $template = Utilities::get_template_slug( $conditions, 'archive/tags', $term_id );
+				// Products
+                } elseif ( class_exists( 'WooCommerce' ) && is_shop() ) {
+                    $template = Utilities::get_template_slug( $conditions, 'archive/products' );
                 }
 
             // Search Page
