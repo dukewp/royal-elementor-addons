@@ -45,7 +45,7 @@ jQuery(document).ready(function( $ ) {
 					return false;
 				}
 
-				var val = $(this).val();
+				var val = $(this).val().toLowerCase();
 
 				if (searchTimeout != null) {
 					clearTimeout(searchTimeout);
