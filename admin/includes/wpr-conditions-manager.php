@@ -57,8 +57,13 @@ class WPR_Conditions_Manager {
         $template = NULL;
 
 		// Get Conditions
-		$archives = json_decode( get_option( 'wpr_archive_conditions' ), true );
-		$singles  = json_decode( get_option( 'wpr_single_conditions' ), true );
+		if ( class_exists( 'WooCommerce' ) && is_woocommerce() ) {
+			$archives = json_decode( get_option( 'wpr_product_archive_conditions' ), true );
+			$singles  = json_decode( get_option( 'wpr_product_single_conditions' ), true );
+		} else {
+			$archives = json_decode( get_option( 'wpr_archive_conditions' ), true );
+			$singles  = json_decode( get_option( 'wpr_single_conditions' ), true );
+		}
 
         if ( empty($archives) && empty($singles) ) {
             return NULL;
