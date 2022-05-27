@@ -360,7 +360,13 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 		$attributes = parent::get_container_attributes();
 
 		if ( is_singular() ) { // Not 404
+			$template_type = get_post_meta(get_the_ID(), '_wpr_template_type', true);
 			$post_classes = get_post_class( '', get_the_ID() );
+
+			if ( 'product_single' === $template_type ) {
+				array_push($post_classes, 'product');
+			}
+
 			$attributes['class'] .= ' ' . implode( ' ', $post_classes );
 		}
  

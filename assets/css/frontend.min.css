@@ -1719,6 +1719,9 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 .wpr-product-thumb-nav {
     display: flex;
+    padding: 0;
+    margin: 0;
+    list-style: none;
 }
 
 .wpr-product-thumb-nav li {
