@@ -176,6 +176,8 @@ class WPR_Conditions_Manager {
                 // Blog Posts
                 if ( 'post' == $post_type ) {
                     $template = Utilities::get_template_slug( $conditions, 'single/posts', $post_id );
+                } elseif ( 'product' == $post_type ) {
+                    $template = Utilities::get_template_slug( $conditions, 'single/product', $post_id );
                 }
             } else {
                 // Front page
