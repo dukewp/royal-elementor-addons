@@ -753,7 +753,7 @@ class Wpr_Product_Mediaflex extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-media-wrap .flex-control-nav' => 'max-width: {{SIZE}}{{UNIT}};',
 				],
-				'render_type' => 'template'
+				// 'render_type' => 'template'
 			]
 		);
 
@@ -1519,7 +1519,23 @@ class Wpr_Product_Mediaflex extends Widget_Base {
 		// '.  $this->get_render_attribute_string( 'thumbnails_attributes' ) .'
 
 		// Output
-		echo '<div class="wpr-product-media-wrap">';
+
+		// Slider Arrows
+		if ( 'yes' === $settings['gallery_slider_nav'] && 'none' !== $settings['gallery_slider_nav_icon']) {
+			// echo '<div class="wpr-gallery-slider-arrows-wrap">';
+			// 	echo '<div class="wpr-gallery-slider-prev-arrow wpr-gallery-slider-arrow">'. Utilities::get_wpr_icon( $settings['gallery_slider_nav_icon'], 'left' ) .'</div>';
+			// 	echo '<div class="wpr-gallery-slider-next-arrow wpr-gallery-slider-arrow">'. Utilities::get_wpr_icon( $settings['gallery_slider_nav_icon'], 'right' ) .'</div>';
+			// echo '</div>';
+
+			$slider_icons = ['<div class="wpr-gallery-slider-arrows-wrap"><div class="wpr-gallery-slider-prev-arrow wpr-gallery-slider-arrow">'. Utilities::get_wpr_icon( $settings['gallery_slider_nav_icon'], 'left' ) .'</div><div class="wpr-gallery-slider-next-arrow wpr-gallery-slider-arrow">'. Utilities::get_wpr_icon( $settings['gallery_slider_nav_icon'], 'right' ) .'</div></div>'];
+
+			$this->add_render_attribute('slider_attributes', [
+					'data-slider-arrows' => $slider_icons
+				]
+			);
+		}
+
+		echo '<div class="wpr-product-media-wrap"'. $this->get_render_attribute_string('slider_attributes') .'>';
 
 		// Sales Badge
 		if ( $product->is_on_sale() && 'yes' === $settings['product_media_sales_badge'] ) {
@@ -1535,21 +1551,6 @@ class Wpr_Product_Mediaflex extends Widget_Base {
 				\Elementor\Icons_Manager::render_icon( $settings['choose_lightbox_extra_icon'], [ 'aria-hidden' => 'true' ] );
 			echo '</div>';
 
-		}
-
-		// Slider Arrows
-		if ( 'yes' === $settings['gallery_slider_nav'] && 'none' !== $settings['gallery_slider_nav_icon']) {
-			echo '<div class="wpr-gallery-slider-arrows-wrap">';
-				echo '<div class="wpr-gallery-slider-prev-arrow wpr-gallery-slider-arrow">'. Utilities::get_wpr_icon( $settings['gallery_slider_nav_icon'], 'left' ) .'</div>';
-				echo '<div class="wpr-gallery-slider-next-arrow wpr-gallery-slider-arrow">'. Utilities::get_wpr_icon( $settings['gallery_slider_nav_icon'], 'right' ) .'</div>';
-			echo '</div>';
-
-			// $slider_icons = ['<div class="wpr-gallery-slider-arrows-wrap"><div class="wpr-gallery-slider-prev-arrow wpr-gallery-slider-arrow">'. Utilities::get_wpr_icon( $settings['gallery_slider_nav_icon'], 'left' ) .'</div><div class="wpr-gallery-slider-next-arrow wpr-gallery-slider-arrow">'. Utilities::get_wpr_icon( $settings['gallery_slider_nav_icon'], 'right' ) .'</div></div>'];
-
-			// $this->add_render_attribute('slider_attributes', [
-			// 		// 'data-slider-arrows' => $slider_icons
-			// 	]
-			// );
 		}
 		
 		// // Thumbnail Slider Arrows

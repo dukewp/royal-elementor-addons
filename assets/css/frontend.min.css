@@ -1817,11 +1817,15 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     margin-bottom: 0;
 }
 
+[data-elementor-type="wpr-theme-builder"].product-type-simple .wpr-gallery-slider-arrows-wrap {
+    display: none;
+}
+
 [data-elementor-type="wpr-theme-builder"] ul.flex-direction-nav {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 0;
+    top: 90%;
+    /* transform: translateY(-50%); */
+    z-index: -9;
     display: flex;
     justify-content: space-between;
     align-items: center;

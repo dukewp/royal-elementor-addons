@@ -138,6 +138,10 @@ class Plugin {
 			// TODO: Remove this and fix with Transients
 			add_action( 'admin_enqueue_scripts', [ $this, 'hide_theme_notice' ] );
 		}
+
+		if ( class_exists('woocommerce') ) {
+			require WPR_ADDONS_PATH . 'modules\theme-builder\woocommerce\woocommerce-config.php';
+		}
 	}
 
 	public function autoload( $class ) {
