@@ -92,25 +92,10 @@ class Wpr_Product_Mediaflex extends Widget_Base {
 		// Tab: Image Gallery ========
 		// Section: General ----------
 		$this->start_controls_section(
-			'wpr__section_product_media_gallery',
+			'section_product_media_gallery',
 			[
 				'label' => esc_html__( 'Image Gallery', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
-			]
-		);
-
-		$this->add_control(
-			'gallery_display_as',
-			[
-				'label' => esc_html__( 'Display As', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'slider' => esc_html__( 'Slideshow Gallery', 'wpr-addons' ),
-					'stacked' => esc_html__( 'Stacked Gallery', 'wpr-addons' ),
-				],
-				'default' => 'slider',
-				'prefix_class' => 'wpr-gallery-type-',
-				'render_type' => 'template'
 			]
 		);
 
@@ -133,10 +118,7 @@ class Wpr_Product_Mediaflex extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-media-wrap .flex-viewport' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
-				'separator' => 'before',
-				'condition' => [
-					'gallery_display_as' => 'stacked'
-				]
+				'separator' => 'before'
 			]
 		);
 
@@ -161,9 +143,6 @@ class Wpr_Product_Mediaflex extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-gallery-slider-arrow' => 'display:{{VALUE}} !important;',
-				],
-				'condition' => [
-					'gallery_display_as' => 'slider'
 				]
 			]
 		);
@@ -176,8 +155,7 @@ class Wpr_Product_Mediaflex extends Widget_Base {
 				'return_value' => 'fade',
 				'prefix_class' => 'wpr-gallery-slider-nav-',
 				'condition' => [
-					'gallery_slider_nav' => 'yes',
-					'gallery_display_as' => 'slider'
+					'gallery_slider_nav' => 'yes'
 				]
 			]
 		);
@@ -189,7 +167,6 @@ class Wpr_Product_Mediaflex extends Widget_Base {
 				'type' => 'wpr-arrow-icons',
 				'default' => 'fas fa-angle',
 				'condition' => [
-					'gallery_display_as' => 'slider',
 					'gallery_slider_nav' => 'yes',
 				],
 			]
@@ -237,138 +214,7 @@ class Wpr_Product_Mediaflex extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'lightbox_popup_autoplay',
-			[
-				'label' => esc_html__( 'Autoplay Slides', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'true',
-				'return_value' => 'true',
-			]
-		);
-
-		$this->add_control(
-			'lightbox_popup_progressbar',
-			[
-				'label' => esc_html__( 'Show Progress Bar', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'true',
-				'return_value' => 'true',
-				'condition' => [
-					'lightbox_popup_autoplay' => 'true'
-				]
-			]
-		);
-
-		$this->add_control(
-			'lightbox_popup_pause',
-			[
-				'label' => esc_html__( 'Autoplay Speed', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 5,
-				'min' => 1,
-				'max' => 10,
-				'step' => 1,
-				'condition' => [
-					'lightbox_popup_autoplay' => 'true',
-				],
-			]
-		);
-
-		$this->add_control(
-			'lightbox_popup_counter',
-			[
-				'label' => esc_html__( 'Show Counter', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'true',
-				'return_value' => 'true',
-			]
-		);
-
-		$this->add_control(
-			'lightbox_popup_arrows',
-			[
-				'label' => esc_html__( 'Show Arrows', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'true',
-				'return_value' => 'true',
-			]
-		);
-
-		$this->add_control(
-			'lightbox_popup_captions',
-			[
-				'label' => esc_html__( 'Show Captions', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'true',
-				'return_value' => 'true',
-			]
-		);
-
-		$this->add_control(
-			'lightbox_popup_thumbnails',
-			[
-				'label' => esc_html__( 'Show Thumbnails', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'true',
-				'return_value' => 'true',
-			]
-		);
-
-		$this->add_control(
-			'lightbox_popup_thumbnails_default',
-			[
-				'label' => esc_html__( 'Show Thumbs by Default', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'true',
-				'return_value' => 'true',
-				'condition' => [
-					'lightbox_popup_thumbnails' => 'true'
-				]
-			]
-		);
-
-		$this->add_control(
-			'lightbox_popup_sharing',
-			[
-				'label' => esc_html__( 'Show Sharing Button', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'true',
-				'return_value' => 'true',
-			]
-		);
-
-		$this->add_control(
-			'lightbox_popup_zoom',
-			[
-				'label' => esc_html__( 'Show Zoom Button', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'true',
-				'return_value' => 'true',
-			]
-		);
-
-		$this->add_control(
-			'lightbox_popup_fullscreen',
-			[
-				'label' => esc_html__( 'Show Full Screen Button', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'true',
-				'return_value' => 'true',
-			]
-		);
-
-		$this->add_control(
-			'lightbox_popup_download',
-			[
-				'label' => esc_html__( 'Show Download Button', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'true',
-				'return_value' => 'true',
-			]
-		);
-
-		$this->end_controls_section(); // End Controls Section
+		$this->end_controls_section();
 
 		$this->start_controls_section(
 			'section_style_lightbox_icon',
@@ -574,7 +420,7 @@ class Wpr_Product_Mediaflex extends Widget_Base {
 		// Styles ====================
 		// Section: Navigation -------
 		$this->start_controls_section(
-			'wpr__section_style_gallery_arrows_nav',
+			'section_style_gallery_arrows_nav',
 			[
 				'label' => esc_html__( 'Main Image Arrows', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
@@ -829,7 +675,7 @@ class Wpr_Product_Mediaflex extends Widget_Base {
 		// Styles ====================
 		// Section: Navigation -------
 		$this->start_controls_section(
-			'wpr__section_style_gallery_thumb_nav',
+			'section_style_gallery_thumb_nav',
 			[
 				'label' => esc_html__( 'Gallery Thumbnails', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
@@ -934,7 +780,7 @@ class Wpr_Product_Mediaflex extends Widget_Base {
 		$this->end_controls_section(); // End Controls Section
 
 		// $this->start_controls_section(
-		// 	'wpr__section_style_thumbnail_arrows_nav',
+		// 	'section_style_thumbnail_arrows_nav',
 		// 	[
 		// 		'label' => esc_html__( 'Gallery Thumbnails Arrows', 'wpr-addons' ),
 		// 		'tab' => Controls_Manager::TAB_STYLE,
