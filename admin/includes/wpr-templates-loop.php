@@ -297,6 +297,13 @@ class WPR_Templates_Loop {
             </div>
             <?php endif; ?>
 
+			<?php if ( 'wpr_tab_product_archive' === $active_tab ) : ?>
+				<div class="wpr-woo-ppp-condition">
+					<span><?php esc_html_e( 'How many Products do you want to show per page?', 'wpr-addons' ); ?></span>
+					<input type="text" name="wpr-woo-products-per-page" id="wpr-woo-products-per-page">
+				</div>
+			<?php endif; ?>
+
             <?php
 
 

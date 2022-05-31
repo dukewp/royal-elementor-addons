@@ -643,6 +643,18 @@ input.wpr-condition-input-ids,
   margin-right: 20px;
 }
 
+.wpr-woo-ppp-condition {
+  margin-top: 20px;
+}
+
+#wpr-woo-products-per-page {
+  width: 40px;
+  border: 1px solid #e8e8e8;
+  text-align: center;
+  box-shadow: none !important;
+  margin-left: 10px;
+}
+
 .wpr-delete-template-conditions {
   margin-left: auto;
   position: absolute;
