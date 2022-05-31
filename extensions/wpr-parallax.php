@@ -347,7 +347,6 @@ class Wpr_Parallax_Scroll {
             if ( 'yes' === $settings['wpr_enable_jarallax'] ) { 
                 $element->add_render_attribute( '_wrapper', [
                     'class' => 'wpr-jarallax',
-                    'id' => 'wpr-test-parallax',
                     'speed-data' => $settings['speed'],
                     'bg-image' => $settings['bg_image']['url'],
                     'scroll-effect' => $settings['scroll_effect'],
