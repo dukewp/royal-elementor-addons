@@ -100,10 +100,10 @@ class Wpr_Product_Mediaflex extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'product_media_vertical_gutter',
+			'product_media_vertical_distance',
 			[
 				'type' => Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Vertical Gutter', 'wpr-addons' ),
+				'label' => esc_html__( 'Vertical Distance', 'wpr-addons' ),
 				'size_units' => [ 'px' ],
 				'range' => [
 					'px' => [
@@ -169,6 +169,51 @@ class Wpr_Product_Mediaflex extends Widget_Base {
 				'condition' => [
 					'gallery_slider_nav' => 'yes',
 				],
+			]
+		);
+
+		$this->add_control(
+			'gallery_slider_thumb_nav_heading',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Gallery Thumbnails', 'wpr-addons' ),
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'gallery_slider_thumbs',
+			[
+				'label' => esc_html__( 'Show Thumbnail Images', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'tablet_default' => 'yes',
+				'mobile_default' => 'yes',
+				'selectors_dictionary' => [
+					'' => 'none',
+					'yes' => 'grid'
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-media-wrap .flex-control-nav' => 'display: {{VALUE}};',
+				]
+			]
+		);
+
+		$this->add_control(
+			'gallery_slider_thumb_cols',
+			[
+				'label' => esc_html__( 'Thumbnails to Show', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'min' => 2,
+				'default' => 4,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-media-wrap .flex-control-thumbs' => 'grid-template-columns: repeat({{VALUE}}, auto);',
+				],
+				'condition' => [
+					// 'gallery_display_as' => 'slider',
+					'gallery_slider_thumbs' => 'yes'
+				],
+
 			]
 		);
 
@@ -713,10 +758,10 @@ class Wpr_Product_Mediaflex extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'gallery_thumb_nav_top_distance',
+			'gallery_thumb_nav_gutter_hr',
 			[
 				'type' => Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Top Distance', 'wpr-addons' ),
+				'label' => esc_html__( 'Horizontal Gutter', 'wpr-addons' ),
 				'size_units' => [ 'px' ],
 				'range' => [
 					'px' => [
@@ -729,16 +774,17 @@ class Wpr_Product_Mediaflex extends Widget_Base {
 					'size' => 1,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-media-wrap .flex-control-nav' => 'margin-top: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-product-media-wrap .flex-control-nav' => 'grid-column-gap: {{SIZE}}{{UNIT}} !important;'
 				],
+				// 'render_type' => 'template'
 			]
 		);
 
 		$this->add_responsive_control(
-			'gallery_thumb_nav_gutter',
+			'gallery_thumb_nav_gutter_vr',
 			[
 				'type' => Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
+				'label' => esc_html__( 'Vertical Gutter', 'wpr-addons' ),
 				'size_units' => [ 'px' ],
 				'range' => [
 					'px' => [
@@ -751,9 +797,8 @@ class Wpr_Product_Mediaflex extends Widget_Base {
 					'size' => 1,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-media-wrap li' => 'margin-right: {{SIZE}}{{UNIT}} !important;'
+					'{{WRAPPER}} .wpr-product-media-wrap .flex-control-nav' => 'grid-row-gap: {{SIZE}}{{UNIT}};',
 				],
-				// 'render_type' => 'template'
 			]
 		);
 
@@ -1498,6 +1543,13 @@ class Wpr_Product_Mediaflex extends Widget_Base {
 				echo '<div class="wpr-gallery-slider-prev-arrow wpr-gallery-slider-arrow">'. Utilities::get_wpr_icon( $settings['gallery_slider_nav_icon'], 'left' ) .'</div>';
 				echo '<div class="wpr-gallery-slider-next-arrow wpr-gallery-slider-arrow">'. Utilities::get_wpr_icon( $settings['gallery_slider_nav_icon'], 'right' ) .'</div>';
 			echo '</div>';
+
+			// $slider_icons = ['<div class="wpr-gallery-slider-arrows-wrap"><div class="wpr-gallery-slider-prev-arrow wpr-gallery-slider-arrow">'. Utilities::get_wpr_icon( $settings['gallery_slider_nav_icon'], 'left' ) .'</div><div class="wpr-gallery-slider-next-arrow wpr-gallery-slider-arrow">'. Utilities::get_wpr_icon( $settings['gallery_slider_nav_icon'], 'right' ) .'</div></div>'];
+
+			// $this->add_render_attribute('slider_attributes', [
+			// 		// 'data-slider-arrows' => $slider_icons
+			// 	]
+			// );
 		}
 		
 		// // Thumbnail Slider Arrows
