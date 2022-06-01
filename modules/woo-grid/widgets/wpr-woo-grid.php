@@ -70,7 +70,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'onsale' => esc_html__( 'On Sale', 'wpr-addons' ),
 					'upsell' => esc_html__( 'Up-sell', 'wpr-addons' ),
 					'cross-sell' => esc_html__( 'Cross-sell', 'wpr-addons' ),
-					'pro-cr' => esc_html__( 'Current Query (Pro)', 'wpr-addons' ),
+					'current' => esc_html__( 'Current Query', 'wpr-addons' ),
 				],
 			]
 		);
