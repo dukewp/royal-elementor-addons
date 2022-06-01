@@ -68,6 +68,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'manual' => esc_html__( 'Manual', 'wpr-addons' ),
 					'featured' => esc_html__( 'Featured', 'wpr-addons' ),
 					'onsale' => esc_html__( 'On Sale', 'wpr-addons' ),
+					'upsell' => esc_html__( 'Up-sell', 'wpr-addons' ),
+					'cross-sell' => esc_html__( 'Cross-sell', 'wpr-addons' ),
 					'pro-cr' => esc_html__( 'Current Query (Pro)', 'wpr-addons' ),
 				],
 			]
@@ -90,7 +92,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'pro-rn' => esc_html__( 'Random (Pro)', 'wpr-addons' ),
 				],
 				'condition' => [
-					'query_selection' => [ 'dynamic', 'onsale', 'featured' ],
+					'query_selection' => [ 'dynamic', 'onsale', 'featured', 'upsell', 'cross-sell' ],
 				],
 			]
 		);
@@ -567,7 +569,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'label_block' => true,
 				'options' => Utilities::get_posts_by_post_type( 'product' ),
 				'condition' => [
-					'query_selection!' => [ 'manual', 'onsale', 'current' ],
+					'query_selection!' => [ 'manual', 'onsale', 'current', 'upsell', 'cross-sell' ],
 				],
 			]
 		);
@@ -6779,6 +6781,83 @@ class Wpr_Woo_Grid extends Widget_Base {
 		if ( 'onsale' === $settings['query_selection'] ) {
 			$args['post__in'] = wc_get_product_ids_on_sale();
 		}
+		
+		if ( 'upsell' === $settings['query_selection'] ) {
+			// Get Product
+			$product = wc_get_product();
+	
+			if ( ! $product ) {
+				return;
+			}
+	
+			$meta_query = WC()->query->get_meta_query();
+	
+			$this->my_upsells = $product->get_upsell_ids();
+			
+			if (!empty($this->my_upsells)) {
+				$args = array(
+					'post_type' => 'product',
+					'post__not_in' => $settings[ 'query_exclude_products' ],
+					'ignore_sticky_posts' => 1,
+					'no_found_rows' => 1,
+					'posts_per_page' => $settings['query_posts_per_page'],
+					'orderby' => 'post__in',
+					'order' => 'asc',
+					'paged' => $paged,
+					'post__in' => $this->my_upsells,
+					'meta_query' => $meta_query
+				);
+			} else {
+				$args['post_type'] = ['none'];
+			}
+		}
+
+		if ( 'cross-sell' === $settings['query_selection'] ) {
+			// Get Product
+			$this->crossell_ids = [];
+			
+			if(is_cart()) {
+				$items = WC()->cart->get_cart();
+	
+				foreach($items as $item => $values) {
+					$product = $values['data'];
+					$cross_sell_products = $product->get_cross_sell_ids();
+					foreach($cross_sell_products as $cs_product) {
+						array_push($this->crossell_ids, $cs_product);
+					}
+				  }
+			}
+
+			if (is_single()) {
+				$product = wc_get_product();
+		
+				if ( ! $product ) {
+					return;
+				}
+
+				$this->crossell_ids = $product->get_cross_sell_ids();
+			}
+	
+			$meta_query = WC()->query->get_meta_query();
+			
+			if (!empty($this->crossell_ids)) {
+				$args = array(
+					'post_type' => 'product',
+					'post__not_in' => $settings[ 'query_exclude_products' ],
+					'tax_query' => $this->get_tax_query_args(),
+					'ignore_sticky_posts' => 1,
+					'no_found_rows' => 1,
+					'posts_per_page' => $settings['query_posts_per_page'],
+					'orderby' => 'post__in',
+					'order' => 'asc',
+					'paged' => $paged,
+					'post__in' => $this->crossell_ids,
+					'meta_query' => $meta_query
+				);
+			} else {
+				$args['post_type'] = 'none';
+			}
+		}
 
 		// Order By
 		if ( 'sales' === $settings['query_orderby'] ) {
@@ -7659,6 +7738,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 		if ( 'yes' !== $settings['layout_pagination'] || 1 === $this->get_max_num_pages( $settings ) || 'slider' === $settings['layout_select'] ) {
 			return;
 		}
+		
+		if ( (isset($this->my_upsells) && (count($this->my_upsells) <= $settings['query_posts_per_page'])) || (isset($this->crossell_ids) && (count($this->crossell_ids) <= $settings['query_posts_per_page'])) ) {
+			return;
+		}
 
 		global $paged;
 		$pages = $this->get_max_num_pages( $settings );
@@ -7993,8 +8076,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		// Grid Settings
 		if ( 'slider' !== $settings['layout_select'] ) {
-			// Filters
-			$this->render_grid_filters( $settings );
+			if ( 'upsell' !== $settings['query_selection'] && 'cross-sell' !== $settings['query_selection'] ) {
+				// Filters
+				$this->render_grid_filters( $settings );
+			}
 
 			$this->add_grid_settings( $settings );
 			$render_attribute = $this->get_render_attribute_string( 'grid-settings' );
