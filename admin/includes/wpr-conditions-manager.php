@@ -133,7 +133,13 @@ class WPR_Conditions_Manager {
                     $template = Utilities::get_template_slug( $conditions, 'archive/tags', $term_id );
 				// Products
                 } elseif ( class_exists( 'WooCommerce' ) && is_shop() ) {
-                    $template = Utilities::get_template_slug( $conditions, 'archive/products' );
+                    $template = Utilities::get_template_slug( $conditions, 'product_archive/products' );
+                // Product Categories
+                } elseif ( class_exists( 'WooCommerce' ) && is_product_category() ) {
+                    $template = Utilities::get_template_slug( $conditions, 'product_archive/product_cat' );
+                // Product Tags
+                } elseif ( class_exists( 'WooCommerce' ) && is_product_tag() ) {
+                    $template = Utilities::get_template_slug( $conditions, 'product_archive/product_tag' );
                 }
 
             // Search Page
@@ -185,7 +191,7 @@ class WPR_Conditions_Manager {
                 if ( 'post' == $post_type ) {
                     $template = Utilities::get_template_slug( $conditions, 'single/posts', $post_id );
                 } elseif ( 'product' == $post_type ) {
-                    $template = Utilities::get_template_slug( $conditions, 'single/product', $post_id );
+                    $template = Utilities::get_template_slug( $conditions, 'product_single/product', $post_id );
                 }
             } else {
                 // Front page
