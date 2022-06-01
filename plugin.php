@@ -139,8 +139,8 @@ class Plugin {
 			add_action( 'admin_enqueue_scripts', [ $this, 'hide_theme_notice' ] );
 		}
 
-		if ( class_exists( 'WooCommerce' ) ) {
-			require WPR_ADDONS_PATH . 'modules/theme-builder/woocommerce/woocommerce-config.php';
+		if ( class_exists('WooCommerce') ) {
+			require WPR_ADDONS_PATH . 'woocommerce/woocommerce-config.php';
 		}
 	}
 
