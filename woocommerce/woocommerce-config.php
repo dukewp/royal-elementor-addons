@@ -19,7 +19,7 @@ class WPR_WooCommerce_Config {
 		// add_filter( 'loop_shop_per_page', [$this, 'new_loop_shop_per_page'], 20 );
 
 		// Rewrite WC Default Templates
-		add_filter( 'wc_get_template', [ $this, 'rewrite_default_wc_templates' ], 10, 3 );
+		// add_filter( 'wc_get_template', [ $this, 'rewrite_default_wc_templates' ], 10, 3 );
 	}
 
 	public function add_cart_single_product_ajax() {
@@ -61,4 +61,4 @@ class WPR_WooCommerce_Config {
 
 }
 
-// new WPR_WooCommerce_Config();
+new WPR_WooCommerce_Config();
