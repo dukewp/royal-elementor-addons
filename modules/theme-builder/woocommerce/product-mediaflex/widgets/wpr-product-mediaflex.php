@@ -43,6 +43,7 @@ class Wpr_Product_Mediaflex extends Widget_Base {
 	public function get_style_depends() {
 		return [ 'woocommerce_prettyPhoto_css', 'photoswipe', 'photoswipe-default-skin' ];
 	}
+	
 	protected function register_controls() {
 
 		// Tab: Content ==============
@@ -1555,14 +1556,13 @@ class Wpr_Product_Mediaflex extends Widget_Base {
 
         wc_get_template('single-product/product-image.php');
 		echo '</div>';
-
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
 			?>
-			<!-- <script>
+			<script>
 				jQuery( '.woocommerce-product-gallery' ).each( function () {
 					jQuery( this ).wc_product_gallery();
 				} );
-			</script> -->
+			</script>
 			<?php
 		}
 	}
