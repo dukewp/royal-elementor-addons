@@ -57,15 +57,6 @@ class Wpr_Product_Mediaflex extends Widget_Base {
 		);
 
 		$this->add_control(
-			'section_product_reload_preview',
-			[
-				'type' => Controls_Manager::RAW_HTML,
-				'raw' => '<div class="elementor-update-preview editor-wpr-preview-update"><span>Update changes to Preview</span><button class="elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply</button>',
-				'separator' => 'after'
-			]
-		);
-
-		$this->add_control(
 			'product_media_sales_badge',
 			[
 				'label' => esc_html__( 'Show Sale Badge', 'wpr-addons' ),

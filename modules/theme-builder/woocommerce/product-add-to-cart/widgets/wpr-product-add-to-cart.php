@@ -53,14 +53,6 @@ class Wpr_Product_AddToCart extends Widget_Base {
 		);
 
 		$this->add_control(
-            'apply_changes',
-            [
-                'type' => Controls_Manager::RAW_HTML,
-                'raw' => '<div style="text-align: center;"><button class="elementor-update-preview-button elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply Changes</button></div>',
-            ]
-        );
-
-		$this->add_control(
 			'ajax_add_to_cart',
 			[
 				'label' => esc_html__( 'AJAX add to cart', 'wpr-addons' ),
