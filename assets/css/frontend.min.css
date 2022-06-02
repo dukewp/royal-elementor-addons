@@ -2534,6 +2534,17 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     margin: 0;
 }
 
+.elementor-widget-wpr-my-account .woocommerce-MyAccount-navigation ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.elementor-widget-wpr-my-account .woocommerce-MyAccount-content fieldset {
+    border: none;
+    padding: 0;
+}
+
 .wpr-my-account-tabs-horizontal nav.woocommerce-MyAccount-navigation,
 .wpr-my-account-tabs-horizontal .woocommerce-MyAccount-content {
     float: none;
