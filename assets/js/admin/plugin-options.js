@@ -566,9 +566,6 @@ jQuery(document).ready(function( $ ) {
 				}
 			}
 
-			console.log(currentTab)
-			console.log(conditions)
-
 			// Set Conditions
 			$('#wpr_'+ currentTab +'_conditions').val( JSON.stringify(conditions) );
 

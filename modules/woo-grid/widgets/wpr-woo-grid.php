@@ -35,7 +35,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return [ 'wpr-widgets'];
+		return Utilities::show_theme_buider_widget_on('product_archive') ? [ 'wpr-woocommerce-builder-widgets' ] : ['wpr-widgets'];
 	}
 
 	public function get_keywords() {

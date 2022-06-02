@@ -247,7 +247,9 @@ class Utilities {
 
 		// Find a Custom Condition
 		foreach( $data as $id => $conditions ) {
+
 			if ( in_array( $page .'/'. $post_id, $conditions) ) {
+
 				$template = $id;
 			} elseif ( in_array( $page .'/all', $conditions) ) {
 				$template = $id;
