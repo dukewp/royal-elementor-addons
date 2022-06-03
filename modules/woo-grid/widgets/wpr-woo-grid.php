@@ -6938,6 +6938,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 			}
 		}
 
+		// $args['orderby'] = get_query_var('orderby');
+		// $args['order'] = get_query_var('order');
+
 		return $args;
 	}
 
@@ -8069,6 +8072,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 		// Get Posts
 		$posts = new \WP_Query( $this->get_main_query_args() );
 
+		// var_dump($posts);
+
 		// Loop: Start
 		if ( $posts->have_posts() ) :
 
@@ -8116,7 +8121,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			$this->get_elements_by_location( 'above', $settings, get_the_ID() );
 
 			// Media
-			echo '<div class="wpr-grid-media-wrap'. esc_attr($this->get_image_effect_class( $settings )) .' " data-overlay-link="'. esc_url( $settings['overlay_post_link'] ) .'">';
+			echo '<div class="wpr-grid-media-wrap'. esc_attr($this->get_image_effect_class( $settings )) .' " data-overlay-link="'. esc_attr( $settings['overlay_post_link'] ) .'">';
 				// Post Thumbnail
 				$this->render_product_thumbnail( $settings, get_the_ID() );
 
@@ -8139,6 +8144,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 			echo '</article>'; // End .wpr-grid-item
 
 		endwhile;
+
+		var_dump(get_query_var('orderby'));
+		var_dump(get_query_var('order'));
 
 		// reset
 		wp_reset_postdata();
