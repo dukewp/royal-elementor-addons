@@ -6859,6 +6859,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 			}
 		}
 
+		// var_dump($settings['query_orderby']);
+		// $settings['query_orderby'] = get_query_var('orderby');
+		// var_dump($settings['query_orderby'], 'query-orderby');
+
 		// Order By
 		if ( 'sales' === $settings['query_orderby'] ) {
 			$args['meta_key'] = 'total_sales';
@@ -6912,34 +6916,39 @@ class Wpr_Woo_Grid extends Widget_Base {
 		}
 
 		// Sorting
-		if ( isset( $_GET['orderby'] ) ) {
-			if ( 'popularity' === $_GET['orderby'] ) {
-				$args['meta_key'] = 'total_sales';
-				$args['orderby']  = 'meta_value_num';
-			} elseif ( 'rating' === $_GET['orderby'] ) {
-				$args['meta_key'] = '_wc_average_rating';
-				$args['order'] = 'DESC';
-				$args['orderby']  = 'meta_value_num';
-			} elseif ( 'price' === $_GET['orderby'] ) {
-				$args['meta_key'] = '_price';
-				$args['order'] = 'ASC';
-				$args['orderby']  = 'meta_value_num';
-			} elseif ( 'price-desc' === $_GET['orderby'] ) {
-				$args['meta_key'] = '_price';
-				$args['order'] = 'DESC';
-				$args['orderby']  = 'meta_value_num';
-			} elseif ( 'random' === $_GET['orderby'] ) {
-				$args['orderby']  = 'rand';
-			} elseif ( 'date' === $_GET['orderby'] ) {
-				$args['orderby']  = 'date';
-			} else {
-				$args['order'] = 'ASC';
-				$args['orderby']  = 'menu_order';
-			}
-		}
-
-		// $args['orderby'] = get_query_var('orderby');
-		// $args['order'] = get_query_var('order');
+		// if ( isset( $_GET['orderby'] ) ) {
+		// 	// var_dump($settings['query_orderby']);
+		// 	// var_dump(get_query_var('orderby'));
+		// 	if ( 'popularity' === $_GET['orderby'] ) {
+		// 		$args['meta_key'] = 'total_sales';
+		// 		$args['orderby']  = 'meta_value_num';
+		// 	} elseif ( 'rating' === $_GET['orderby'] ) {
+		// 		$args['meta_key'] = '_wc_average_rating';
+		// 		$args['order'] = 'DESC';
+		// 		$args['orderby']  = 'meta_value_num';
+		// 	} elseif ( 'price' === $_GET['orderby'] ) {
+		// 		$args['meta_key'] = '_price';
+		// 		$args['order'] = 'ASC';
+		// 		$args['orderby']  = 'meta_value_num';
+		// 	} elseif ( 'price-desc' === $_GET['orderby'] ) {
+		// 		$args['meta_key'] = '_price';
+		// 		$args['order'] = 'DESC';
+		// 		$args['orderby']  = 'meta_value_num';
+		// 	} elseif ( 'random' === $_GET['orderby'] ) {
+		// 		$args['orderby']  = 'rand';
+		// 	} elseif ( 'date' === $_GET['orderby'] ) {
+		// 		$args['orderby']  = 'date';
+		// 	} else if ( 'title' === $_GET['orderby'] ){
+		// 		$args['orderby']  = 'title';
+		// 		$args['order'] = 'ASC';
+		// 	} else if ( 'title-desc' === $_GET['orderby'] ) {
+		// 		$args['orderby']  = 'title';
+		// 		$args['order'] = 'DESC';
+		// 	} else {
+		// 		$args['order'] = 'ASC';
+		// 		$args['orderby']  = 'menu_order';
+		// 	}
+		// }
 
 		return $args;
 	}
@@ -7794,7 +7803,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 				    if ( 'yes' === $settings['pagination_first_last'] ) {
 				    	if ( $paged >= 2 ) {
-					    	echo '<a href="'. esc_url(get_pagenum_link( 1, true )) .'" class="wpr-first-page">';
+					    	echo '<a href="'. esc_url(substr(get_pagenum_link( $paged + 1, true ), 0, strpos(get_pagenum_link( $paged + 1, true ), '?orderby'))) .'" class="wpr-first-page">';
 					    		echo Utilities::get_wpr_icon( $settings['pagination_fl_icon'], 'left' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					    		echo '<span>'. esc_html($settings['pagination_first_text']) .'</span>';
 					    	echo '</a>';
@@ -7828,6 +7837,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 						if ( $paged === $i ) {
 							echo '<span class="wpr-grid-current-page">'. esc_html($i) .'</span>';
 						} else {
+							var_dump(get_pagenum_link( $i, true ), substr(get_pagenum_link( $i, true ), 0, strpos(get_pagenum_link( $i, true ), '?orderby')));
 							echo '<a href="'. esc_url(get_pagenum_link( $i, true )) .'">'. esc_html($i) .'</a>';
 						}
 			        }
@@ -8070,8 +8080,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 		// Get Settings
 		$settings = $this->get_settings();
 		// Get Posts
+		var_dump($this->get_main_query_args());
 		$posts = new \WP_Query( $this->get_main_query_args() );
-
 		// var_dump($posts);
 
 		// Loop: Start
@@ -8145,8 +8155,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		endwhile;
 
-		var_dump(get_query_var('orderby'));
-		var_dump(get_query_var('order'));
+		// var_dump(get_query_var('orderby'));
+		// var_dump(get_query_var('order'));
 
 		// reset
 		wp_reset_postdata();

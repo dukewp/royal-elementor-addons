@@ -79,15 +79,12 @@ class Wpr_Products_Result_Count extends Widget_Base {
 		];
 		
 		$orderby = get_query_var('orderby');
-		var_dump($orderby);
-		// set_query_var('orderby', 'price');
-		// set_query_var('order', 'desc');
 
         echo '<div class="wpr-products-result-count">';
 		    echo woocommerce_result_count();
         echo '</div>'; ?>
 
-		<div class="wpr-filter-orderby">
+		<div class="wpr-filter-orderby-wrap">
 			<form action="#" method="get"
 				class="wpr-filter wpr-filter-orderby-<?php echo esc_html__($settings['wpr_orderby_type'], 'wpr-addons') ?>">
 				<?php if('dropdown' === $settings['wpr_orderby_type']) : ?>
@@ -114,5 +111,6 @@ class Wpr_Products_Result_Count extends Widget_Base {
 			</form>
 		</div>
 
-   <?php }
+   <?php 
+    } 
 } 
