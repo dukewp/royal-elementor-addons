@@ -6917,9 +6917,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		// Sorting
 		if ( isset( $_GET['orderby'] ) ) {
+			var_dump($_GET['orderby']);
 			// var_dump($settings['query_orderby']);
 			// var_dump(get_query_var('orderby'));
-			// var_dump($_GET['orderby']);
 			if ( 'popularity' === $_GET['orderby'] ) {
 				$args['meta_key'] = 'total_sales';
 				$args['orderby']  = 'meta_value_num';
@@ -7838,7 +7838,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 						if ( $paged === $i ) {
 							echo '<span class="wpr-grid-current-page">'. esc_html($i) .'</span>';
 						} else {
-							var_dump(get_pagenum_link( $i, true ), substr(get_pagenum_link( $i, true ), 0, strpos(get_pagenum_link( $i, true ), '?orderby')));
+							// var_dump(get_pagenum_link( $i, true ), substr(get_pagenum_link( $i, true ), 0, strpos(get_pagenum_link( $i, true ), '?orderby')));
 							echo '<a href="'. esc_url(get_pagenum_link( $i, true )) .'">'. esc_html($i) .'</a>';
 						}
 			        }
@@ -8155,9 +8155,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 			echo '</article>'; // End .wpr-grid-item
 
 		endwhile;
-
-		// var_dump(get_query_var('orderby'));
-		// var_dump(get_query_var('order'));
 
 		// reset
 		wp_reset_postdata();
