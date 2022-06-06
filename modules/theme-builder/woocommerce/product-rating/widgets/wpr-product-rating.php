@@ -83,7 +83,8 @@ class Wpr_Product_Rating extends Widget_Base {
 				'default'      => 'left',
                 'selectors' => [
                     '{{WRAPPER}}.wpr-product-rating-block .wpr-woo-rating' => 'text-align: {{VALUE}};',
-                    '{{WRAPPER}}.wpr-product-rating-block .woocommerce-review-link' => 'text-align: {{VALUE}};'
+                    '{{WRAPPER}}.wpr-product-rating-block .woocommerce-review-link' => 'text-align: {{VALUE}};',
+                    '{{WRAPPER}}.wpr-product-rating-flex .wpr-product-rating' => 'justify-content: {{VALUE}};'
                 ],
 				'separator'    => 'after',
 			]

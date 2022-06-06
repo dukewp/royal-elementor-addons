@@ -8145,9 +8145,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		endwhile;
 
-		var_dump(get_query_var('orderby'));
-		var_dump(get_query_var('order'));
-
 		// reset
 		wp_reset_postdata();
 

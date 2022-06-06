@@ -2354,7 +2354,12 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 }
 
 .wpr-product-add-to-cart .reset_variations {
-    display: inline-block;
+    display: none;
+}
+
+.wpr-variations-layout-column .variations tr th,
+.wpr-variations-layout-column .variations tr td {
+    width: 100%;
 }
 
 /* Sales Badge */
