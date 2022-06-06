@@ -6916,39 +6916,40 @@ class Wpr_Woo_Grid extends Widget_Base {
 		}
 
 		// Sorting
-		// if ( isset( $_GET['orderby'] ) ) {
-		// 	// var_dump($settings['query_orderby']);
-		// 	// var_dump(get_query_var('orderby'));
-		// 	if ( 'popularity' === $_GET['orderby'] ) {
-		// 		$args['meta_key'] = 'total_sales';
-		// 		$args['orderby']  = 'meta_value_num';
-		// 	} elseif ( 'rating' === $_GET['orderby'] ) {
-		// 		$args['meta_key'] = '_wc_average_rating';
-		// 		$args['order'] = 'DESC';
-		// 		$args['orderby']  = 'meta_value_num';
-		// 	} elseif ( 'price' === $_GET['orderby'] ) {
-		// 		$args['meta_key'] = '_price';
-		// 		$args['order'] = 'ASC';
-		// 		$args['orderby']  = 'meta_value_num';
-		// 	} elseif ( 'price-desc' === $_GET['orderby'] ) {
-		// 		$args['meta_key'] = '_price';
-		// 		$args['order'] = 'DESC';
-		// 		$args['orderby']  = 'meta_value_num';
-		// 	} elseif ( 'random' === $_GET['orderby'] ) {
-		// 		$args['orderby']  = 'rand';
-		// 	} elseif ( 'date' === $_GET['orderby'] ) {
-		// 		$args['orderby']  = 'date';
-		// 	} else if ( 'title' === $_GET['orderby'] ){
-		// 		$args['orderby']  = 'title';
-		// 		$args['order'] = 'ASC';
-		// 	} else if ( 'title-desc' === $_GET['orderby'] ) {
-		// 		$args['orderby']  = 'title';
-		// 		$args['order'] = 'DESC';
-		// 	} else {
-		// 		$args['order'] = 'ASC';
-		// 		$args['orderby']  = 'menu_order';
-		// 	}
-		// }
+		if ( isset( $_GET['orderby'] ) ) {
+			// var_dump($settings['query_orderby']);
+			// var_dump(get_query_var('orderby'));
+			// var_dump($_GET['orderby']);
+			if ( 'popularity' === $_GET['orderby'] ) {
+				$args['meta_key'] = 'total_sales';
+				$args['orderby']  = 'meta_value_num';
+			} elseif ( 'rating' === $_GET['orderby'] ) {
+				$args['meta_key'] = '_wc_average_rating';
+				$args['order'] = 'DESC';
+				$args['orderby']  = 'meta_value_num';
+			} elseif ( 'price' === $_GET['orderby'] ) {
+				$args['meta_key'] = '_price';
+				$args['order'] = 'ASC';
+				$args['orderby']  = 'meta_value_num';
+			} elseif ( 'price-desc' === $_GET['orderby'] ) {
+				$args['meta_key'] = '_price';
+				$args['order'] = 'DESC';
+				$args['orderby']  = 'meta_value_num';
+			} elseif ( 'random' === $_GET['orderby'] ) {
+				$args['orderby']  = 'rand';
+			} elseif ( 'date' === $_GET['orderby'] ) {
+				$args['orderby']  = 'date';
+			} else if ( 'title' === $_GET['orderby'] ){
+				$args['orderby']  = 'title';
+				$args['order'] = 'ASC';
+			} else if ( 'title-desc' === $_GET['orderby'] ) {
+				$args['orderby']  = 'title';
+				$args['order'] = 'DESC';
+			} else {
+				$args['order'] = 'ASC';
+				$args['orderby']  = 'menu_order';
+			}
+		}
 
 		return $args;
 	}
@@ -8080,7 +8081,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		// Get Settings
 		$settings = $this->get_settings();
 		// Get Posts
-		var_dump($this->get_main_query_args());
+		// var_dump($this->get_main_query_args());
 		$posts = new \WP_Query( $this->get_main_query_args() );
 		// var_dump($posts);
 

@@ -85,8 +85,7 @@ class Wpr_Products_Result_Count extends Widget_Base {
         echo '</div>'; ?>
 
 		<div class="wpr-filter-orderby-wrap">
-			<form action="#" method="get"
-				class="wpr-filter wpr-filter-orderby-<?php echo esc_html__($settings['wpr_orderby_type'], 'wpr-addons') ?>">
+			<form action="#" method="get" class="wpr-filter wpr-filter-orderby-<?php echo esc_html__($settings['wpr_orderby_type'], 'wpr-addons') ?>">
 				<?php if('dropdown' === $settings['wpr_orderby_type']) : ?>
 					<!-- DROPDOWN STYLE -->
 					<i class="wpr-filter-orderby-icon eicon-angle-right"></i>
