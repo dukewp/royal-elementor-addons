@@ -78,7 +78,8 @@ class Wpr_Products_Result_Count extends Widget_Base {
 			'title-desc' => esc_html__('Sort by title: z to a', 'wpr-addons'),
 		];
 		
-		$orderby = get_query_var('orderby');
+		// $orderby = get_query_var('orderby');
+		$orderby = $_GET['orderby'];
 
         echo '<div class="wpr-products-result-count">';
 		    echo woocommerce_result_count();

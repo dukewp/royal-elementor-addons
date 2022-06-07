@@ -6917,7 +6917,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		// Sorting
 		if ( isset( $_GET['orderby'] ) ) {
-			var_dump($_GET['orderby']);
+			// var_dump($_GET['orderby']);
 			// var_dump($settings['query_orderby']);
 			// var_dump(get_query_var('orderby'));
 			if ( 'popularity' === $_GET['orderby'] ) {
