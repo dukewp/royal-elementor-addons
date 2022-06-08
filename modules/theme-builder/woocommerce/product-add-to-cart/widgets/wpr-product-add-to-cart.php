@@ -427,8 +427,10 @@ class Wpr_Product_AddToCart extends Widget_Base {
 					'size' => 10,
 				],
 				'selectors' => [
-					'{{WRAPPER}}.wpr-buttons-layout-row .wpr-product-add-to-cart .wpr-quantity-wrapper' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-buttons-layout-column .wpr-product-add-to-cart .wpr-quantity-wrapper' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'.product-type-simple {{WRAPPER}}.wpr-buttons-layout-row .wpr-product-add-to-cart .wpr-quantity-wrapper' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'.product-type-simple {{WRAPPER}}.wpr-buttons-layout-column .wpr-product-add-to-cart .wpr-quantity-wrapper' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'.product-type-variable {{WRAPPER}}.wpr-buttons-layout-row .wpr-product-add-to-cart .wpr-quantity-wrapper' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'.product-type-variable {{WRAPPER}}.wpr-buttons-layout-column .wpr-product-add-to-cart .wpr-quantity-wrapper' => 'margin-bottom: {{SIZE}}{{UNIT}};'
 				],
 			]
 		);

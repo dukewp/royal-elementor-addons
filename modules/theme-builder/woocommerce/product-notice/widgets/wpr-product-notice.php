@@ -469,7 +469,7 @@ class Wpr_Product_Notice extends Widget_Base {
                     <a href="http://localhost/royal-wp/cart/" tabindex="1" class="button wc-forward">View cart</a> “V-Neck T-Shirt” has been added to your cart.
                 </div>
             </div>
-            <div class="woocommerce-notices-wrapper">
+            <!-- <div class="woocommerce-notices-wrapper">
                 <div class="woocommerce-Message woocommerce-Message--info woocommerce-info">
                     <a class="woocommerce-Button button" href="http://localhost/royal-wp/shop/"> Browse products</a> No downloads available yet.
                 </div>
@@ -480,7 +480,7 @@ class Wpr_Product_Notice extends Widget_Base {
 			            <strong>First name</strong> is a required field.
                     </li>
                 </ul>
-            </div>
+            </div> -->
         <?php } else {
             echo '<div class="wpr-addons-checkout-notice">';
                  // echo is_single() ? wc_print_notices() : '';

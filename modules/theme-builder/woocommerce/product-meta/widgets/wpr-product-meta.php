@@ -138,6 +138,40 @@ class Wpr_Product_Meta extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'product_meta_value',
+			[
+				'label'     => esc_html__('Value', 'wpr-addons'),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'meta_value_color',
+			[
+				'label'     => esc_html__('Value Color', 'wpr-addons'),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => '#a0a0a0',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-meta .product_meta :is(.sku, .posted_in a, .tagged_as a)' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'meta_value_link_hover_color',
+			[
+				'label'     => esc_html__('Link Hover Color', 'wpr-addons'),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => '#101010',
+				'separator' => 'after',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-meta .product_meta :is(.posted_in a, .tagged_as a):hover' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
@@ -176,39 +210,6 @@ class Wpr_Product_Meta extends Widget_Base {
 							'unit' => 'px',
 						],
 					],
-				],
-			]
-		);
-
-		$this->add_control(
-			'product_meta_value',
-			[
-				'label'     => esc_html__('Value', 'wpr-addons'),
-				'type'      => Controls_Manager::HEADING,
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'meta_value_color',
-			[
-				'label'     => esc_html__('Value Color', 'wpr-addons'),
-				'type'      => Controls_Manager::COLOR,
-				'default'   => '#a0a0a0',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-product-meta .product_meta :is(.sku, .posted_in a, .tagged_as a)' => 'color: {{VALUE}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'meta_value_link_hover_color',
-			[
-				'label'     => esc_html__('Link Hover Color', 'wpr-addons'),
-				'type'      => Controls_Manager::COLOR,
-				'default'   => '#101010',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-product-meta .product_meta :is(.posted_in a, .tagged_as a):hover' => 'color: {{VALUE}};',
 				],
 			]
 		);
