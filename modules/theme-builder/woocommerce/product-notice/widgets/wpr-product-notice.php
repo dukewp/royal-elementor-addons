@@ -463,29 +463,30 @@ class Wpr_Product_Notice extends Widget_Base {
     }
 
     protected function render() {
-        if (\Elementor\Plugin::$instance->editor->is_edit_mode() || \Elementor\Plugin::$instance->preview->is_preview_mode()) { ?>
-            <div class="woocommerce-notices-wrapper">
-                <div class="woocommerce-message" role="alert">
-                    <a href="http://localhost/royal-wp/cart/" tabindex="1" class="button wc-forward">View cart</a> “V-Neck T-Shirt” has been added to your cart.
-                </div>
-            </div>
-            <!-- <div class="woocommerce-notices-wrapper">
-                <div class="woocommerce-Message woocommerce-Message--info woocommerce-info">
-                    <a class="woocommerce-Button button" href="http://localhost/royal-wp/shop/"> Browse products</a> No downloads available yet.
-                </div>
-            </div>
-            <div class="woocommerce-notices-wrapper">
-                <ul class="woocommerce-error" role="alert">
-			        <li data-id="account_first_name">
-			            <strong>First name</strong> is a required field.
-                    </li>
-                </ul>
-            </div> -->
-        <?php } else {
-            echo '<div class="wpr-addons-checkout-notice">';
-                 // echo is_single() ? wc_print_notices() : '';
-                 echo is_single() ? woocommerce_output_all_notices() : '';
-             echo '</div>';
-        }
+		
+		echo '<div class="wpr-checkout-notice">';
+			if (\Elementor\Plugin::$instance->editor->is_edit_mode() || \Elementor\Plugin::$instance->preview->is_preview_mode()) { ?>
+				<div class="woocommerce-notices-wrapper">
+					<div class="woocommerce-message" role="alert">
+						<a href="http://localhost/royal-wp/cart/" tabindex="1" class="button wc-forward">View cart</a> “V-Neck T-Shirt” has been added to your cart.
+					</div>
+				</div>
+				<!-- <div class="woocommerce-notices-wrapper">
+					<div class="woocommerce-Message woocommerce-Message--info woocommerce-info">
+						<a class="woocommerce-Button button" href="http://localhost/royal-wp/shop/"> Browse products</a> No downloads available yet.
+					</div>
+				</div>
+				<div class="woocommerce-notices-wrapper">
+					<ul class="woocommerce-error" role="alert">
+						<li data-id="account_first_name">
+							<strong>First name</strong> is a required field.
+						</li>
+					</ul>
+				</div> -->
+			<?php } else {
+				// echo is_single() ? wc_print_notices() : '';
+				echo is_single() ? woocommerce_output_all_notices() : '';
+			}
+		echo '</div>';
     }
 }
