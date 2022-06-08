@@ -8094,7 +8094,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			$this->add_slider_settings( $settings );
 			$render_attribute = $this->get_render_attribute_string( 'slider-settings' );
 		}
-
+var_dump(WC()->query->get_meta_query());
 		// Grid Wrap
 		echo '<section class="wpr-grid elementor-clearfix" '. $render_attribute .'>';
 

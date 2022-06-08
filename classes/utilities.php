@@ -113,6 +113,7 @@ class Utilities {
 			'product-additional-information',
 			'product-notice',
 			'product-mini-cart',
+			'product-filters',
 			'products-result-count',
 			'page-cart',
 			'page-checkout',
