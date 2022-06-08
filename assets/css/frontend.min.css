@@ -2227,11 +2227,21 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     position: relative;
 }
 
+/* Product Notices */
+.wpr-checkout-notice .woocommerce-message {
+    margin: 0;
+}
+
 /* Add To Cart */
 .wpr-product-add-to-cart * {
  margin: 0;
  padding: 0;
  box-sizing: border-box;
+}
+
+.woocommerce div.product .wpr-product-add-to-cart form.cart,
+.woocommerce div.product .wpr-product-add-to-cart form.cart .variations {
+    margin: 0;
 }
 
 .woocommerce div.product .wpr-product-add-to-cart form.cart div.quantity {

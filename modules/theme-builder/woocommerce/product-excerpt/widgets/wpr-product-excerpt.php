@@ -59,7 +59,7 @@ class Wpr_Product_Excerpt extends Widget_Base {
 			array(
 				'name'           => 'excerpt_typography',
 				'label'          => esc_html__('Typography', 'wpr-addons'),
-				'selector'       => '{{WRAPPER}} .wpr-product-excerpt p',
+				'selector'       => '{{WRAPPER}} .wpr-product-excerpt p, {{WRAPPER}} .wpr-product-excerpt li, {{WRAPPER}} .wpr-product-excerpt a',
 				'exclude'        => ['text_decoration'],
 				'fields_options' => [
 					'typography'     => [

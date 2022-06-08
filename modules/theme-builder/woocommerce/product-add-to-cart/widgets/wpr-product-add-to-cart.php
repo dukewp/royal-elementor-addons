@@ -85,7 +85,8 @@ class Wpr_Product_AddToCart extends Widget_Base {
                     '{{WRAPPER}} .wpr-product-add-to-cart .cart' => '{{VALUE}};'
                 ],
 				'default' => 'column',
-				'label_block' => false,
+				'separator' => 'before',
+				'label_block' => false
 			]
 		);
 
@@ -114,14 +115,14 @@ class Wpr_Product_AddToCart extends Widget_Base {
                     '{{WRAPPER}} .variations tr' => '{{VALUE}};',
                 ],
 				'default' => 'column',
-				'label_block' => false,
+				'label_block' => false
 			]
 		);
 
         $this->add_responsive_control(
             'add_to_cart_alignment',
             [
-                'label'     => esc_html__('Horizontal Align', 'wpr-addons'),
+                'label'     => esc_html__('Text Align', 'wpr-addons'),
                 'type'      => Controls_Manager::CHOOSE,
                 'options'   => [
                     'left'   => [
@@ -137,19 +138,46 @@ class Wpr_Product_AddToCart extends Widget_Base {
                         'icon'  => 'eicon-text-align-right',
                     ],
                 ],
-                'prefix_class' => 'wpr-product-adc-align-',
                 'default'   => 'left',
                 'selectors' => [
                     '{{WRAPPER}} .wpr-product-add-to-cart .cart' => 'text-align: {{VALUE}}',
                     '{{WRAPPER}} .single_variation_wrap' => 'text-align: {{VALUE}}',
                 ],
+				'separator' => 'before'
+            ]
+        );
+
+        $this->add_responsive_control(
+            'add_to_cart_button_alignment',
+            [
+                'label'     => esc_html__('Button Horizontal Align', 'wpr-addons'),
+                'type'      => Controls_Manager::CHOOSE,
+                'options'   => [
+                    'left'   => [
+                        'title' => esc_html__('Left', 'wpr-addons'),
+                        'icon'  => 'eicon-h-align-left',
+                    ],
+                    'center' => [
+                        'title' => esc_html__('Center', 'wpr-addons'),
+                        'icon'  => 'eicon-h-align-center',
+                    ],
+                    'right'  => [
+                        'title' => esc_html__('Right', 'wpr-addons'),
+                        'icon'  => 'eicon-h-align-right',
+                    ],
+                ],
+                'prefix_class' => 'wpr-product-adc-align-',
+                'default'   => 'left',
+				'condition' => [
+					'add_to_cart_layout' => 'column'
+				]
             ]
         );
 
         $this->add_responsive_control(
             'add_to_cart_buttons_vr',
             [
-                'label'     => esc_html__('Vertical Align', 'wpr-addons'),
+                'label'     => esc_html__('Button Vertical Align', 'wpr-addons'),
                 'type'      => Controls_Manager::CHOOSE,
                 'options'   => [
                     'end'   => [
@@ -181,7 +209,6 @@ class Wpr_Product_AddToCart extends Widget_Base {
 			[
 				'label' => esc_html__( 'Button Display', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => 'vertical',
 				'options' => [
 					'row' => esc_html__( 'Inline', 'wpr-addons' ),
 					'column' => esc_html__( 'Separate', 'wpr-addons' ),
@@ -193,9 +220,10 @@ class Wpr_Product_AddToCart extends Widget_Base {
 				],
                 'selectors' => [
                     '{{WRAPPER}}.elementor-widget-wpr-product-add-to-cart .woocommerce-variation-add-to-cart' => '{{VALUE}};',
-                    '{{WRAPPER}} .wpr-product-add-to-cart .wpr-simple-quantity-and-button-wrap' => 'display: flex; {{VALUE}};'
+                    '{{WRAPPER}} .wpr-product-add-to-cart .wpr-simple-qty-wrap' => 'display: flex; {{VALUE}};'
                 ],
 				'default' => 'column',
+				'separator' => 'before'
 			]
 		);
 
@@ -427,10 +455,10 @@ class Wpr_Product_AddToCart extends Widget_Base {
 					'size' => 10,
 				],
 				'selectors' => [
-					'.product-type-simple {{WRAPPER}}.wpr-buttons-layout-row .wpr-product-add-to-cart .wpr-quantity-wrapper' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'.product-type-simple {{WRAPPER}}.wpr-buttons-layout-column .wpr-product-add-to-cart .wpr-quantity-wrapper' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-					'.product-type-variable {{WRAPPER}}.wpr-buttons-layout-row .wpr-product-add-to-cart .wpr-quantity-wrapper' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'.product-type-variable {{WRAPPER}}.wpr-buttons-layout-column .wpr-product-add-to-cart .wpr-quantity-wrapper' => 'margin-bottom: {{SIZE}}{{UNIT}};'
+					'{{WRAPPER}}.wpr-buttons-layout-row .wpr-product-add-to-cart .wpr-simple-qty-wrap .wpr-quantity-wrapper' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-buttons-layout-column .wpr-product-add-to-cart .wpr-simple-qty-wrap .wpr-quantity-wrapper' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-buttons-layout-row .wpr-product-add-to-cart .variations_button .wpr-quantity-wrapper' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-buttons-layout-column .wpr-product-add-to-cart .variations_button .wpr-quantity-wrapper' => 'margin-bottom: {{SIZE}}{{UNIT}};'
 				],
 			]
 		);
@@ -1021,8 +1049,8 @@ class Wpr_Product_AddToCart extends Widget_Base {
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#888888',
 				'selectors' => [
-					'{{WRAPPER}} .variations th' => 'border-color: {{VALUE}};',
-					'{{WRAPPER}} .variations td' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} form.cart .variations th' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} form.cart .variations td' => 'border-color: {{VALUE}};',
 				],
 			]
 		);
@@ -1150,8 +1178,8 @@ class Wpr_Product_AddToCart extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}}.wpr-add-to-cart-layout-row table' => 'margin-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-add-to-cart-layout-column table' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-add-to-cart-layout-row table.variations' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-add-to-cart-layout-column table.variations' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-add-to-cart-layout-row .wpr-product-add-to-cart form.cart .variations' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-add-to-cart-layout-column .wpr-product-add-to-cart form.cart .variations' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -1171,8 +1199,8 @@ class Wpr_Product_AddToCart extends Widget_Base {
 				],
 				'default' => 'none',
 				'selectors' => [
-					'{{WRAPPER}} .variations td' => 'border-style: {{VALUE}};',
-					'{{WRAPPER}} .variations th' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} form.cart .variations td' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} form.cart .variations th' => 'border-style: {{VALUE}};',
 				],
 				'separator' => 'before',
 			]
@@ -1191,8 +1219,8 @@ class Wpr_Product_AddToCart extends Widget_Base {
 					'left' => 1,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .variations td' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .variations th' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+					'{{WRAPPER}} form.cart .variations td' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} form.cart .variations th' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 				'condition' => [
 					'variations_table_border_type!' => 'none',
@@ -1845,7 +1873,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 	}
 
 	public function change_clear_text() {
-	   echo '<a class="reset_variations" href="#">' . esc_html__( 'Clear Woocommerce', 'woocommerce' ) . '</a>';
+	   echo '<a class="reset_variations" href="#">' . esc_html__( 'Clear', 'woocommerce' ) . '</a>';
 	}
  
 	function custom_wc_add_to_cart_message( $message, $product_id ) { 
@@ -1884,7 +1912,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 
 		add_action('woocommerce_before_add_to_cart_quantity', function () use ($btn_arg, $product) {
 			if ($product->is_type('simple')) {
-				echo '<div class="wpr-simple-quantity-and-button-wrap">';
+				echo '<div class="wpr-simple-qty-wrap">';
 			}
 			echo '<div class="wpr-quantity-wrapper">';
 

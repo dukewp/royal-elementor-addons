@@ -194,7 +194,7 @@ class Wpr_Product_Media extends Widget_Base {
 		$this->add_control(
 			'gallery_slider_thumb_cols',
 			[
-				'label' => esc_html__( 'Thumbnails to Show', 'wpr-addons' ),
+				'label' => esc_html__( 'Thumbnails Per Row', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
 				'min' => 2,
 				'default' => 4,
@@ -529,6 +529,7 @@ class Wpr_Product_Media extends Widget_Base {
 				'default' => '#ffffff',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-gallery-slider-arrow:hover' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-gallery-slider-arrow:hover svg' => 'fill: {{VALUE}};'
 				],
 			]
 		);
@@ -791,26 +792,6 @@ class Wpr_Product_Media extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-media-wrap .flex-control-nav' => 'grid-row-gap: {{SIZE}}{{UNIT}};',
 				],
-			]
-		);
-
-		$this->add_control(
-			'gallery_thumb_nav_border_radius',
-			[
-				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-					'unit' => '%',
-				],
-				'size_units' => [ 'px', '%' ],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-product-thumb-nav li' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before',
 			]
 		);
 
