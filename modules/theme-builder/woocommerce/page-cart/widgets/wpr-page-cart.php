@@ -607,7 +607,6 @@ class Wpr_Page_Cart extends Widget_Base {
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} table.cart th' => 'background-color: {{VALUE}}',
-					'{{WRAPPER}} table.shop_table th' => 'background-color: {{VALUE}}',
 				],
 			]
 		);
@@ -1359,6 +1358,17 @@ class Wpr_Page_Cart extends Widget_Base {
 				'default' => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} .cart_totals th' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'cart_totals_table_heading_bg_color',
+			[
+				'label'     => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} table.shop_table th' => 'background-color: {{VALUE}}'
 				],
 			]
 		);
