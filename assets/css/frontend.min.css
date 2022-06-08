@@ -3421,6 +3421,43 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     font-size: 13px;
 }
 
+/* Locate It Later */
+.wpr-sort-and-results-wrap {
+    align-items: center;
+    justify-content: space-between;
+}
+
+.wpr-products-result-count .woocommerce-result-count {
+    margin: 0;
+}
+
+.wpr-sort-heading {
+    /* flex: 1; */
+    width: 100%;
+    /* flex-basis: 100%; */
+}
+
+.wpr-sort-and-results-wrap .wpr-filter .orderby::-ms-expend {
+    display: none;
+}
+
+.wpr-orderby-wrap {
+    position: relative;
+}
+
+.wpr-sort-and-results-wrap .wpr-filter .orderby {
+    /* for Firefox */
+    -moz-appearance: none;
+    /* for Chrome */
+    -webkit-appearance: none;
+}
+
+.wpr-sort-and-results-wrap .wpr-orderby-icon {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+}
 
 /* Defaults */
 .elementor-widget-wpr-grid .wpr-grid-media-hover-bg,
