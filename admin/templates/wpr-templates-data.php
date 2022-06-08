@@ -20,7 +20,7 @@ class WPR_Templates_Data {
 					'tags' => 'blog blogger posts personal blog lifestyle blogger theme builder grid slider news',
 					'theme-builder' => true,
 					'price' => $is_pro_active ? 'free' : 'free',
-					'priority' => 1,
+					'priority' => 2,
 				],
 				'v2' => [
 					'name' => 'Personal Blog',
@@ -89,6 +89,28 @@ class WPR_Templates_Data {
 					'pages' => 'home,seo,branding,marketing,social,blog,about,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'digital agency company corporate digital services office agency web digital marketing seo social media branding',
+					'theme-builder' => true,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'priority' => 1,
+				],
+			],
+			'digital-agency-dark' => [
+				'v1' => [
+					'name' => 'Digital Agency Dark',
+					'pages' => 'home,about,services,team,portfolio,blog,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .', "media-library-assistant":'. $is_mla_active .'}',
+					'tags' => 'digital agency company corporate digital services office agency web digital marketing seo social media branding dark black',
+					'theme-builder' => true,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'priority' => 92,
+				],
+			],
+			'one-page' => [
+				'v1' => [
+					'name' => 'One Page - Digital Marketing Agency',
+					'pages' => 'home,blog,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .', "media-library-assistant":'. $is_mla_active .'}',
+					'tags' => 'digital agency company corporate digital services office agency web digital marketing seo social media branding one page onepage one pages parallax single page',
 					'theme-builder' => true,
 					'price' => $is_pro_active ? 'free' : 'free',
 					'priority' => 49,

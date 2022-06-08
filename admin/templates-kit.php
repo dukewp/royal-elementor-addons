@@ -189,30 +189,7 @@ function wpr_activate_reuired_theme() {
         set_transient( 'royal-elementor-kit_activation_notice', true );
     }
 
-    // TODO: maybe return back  - 'ashe' !== $theme && 'bard' !== $theme &&
-
-    // Get currently active plugins
-    $active_plugins = (array) get_option( 'active_plugins', array() );
-
-    // Deactivate Extra Import Plugins
-    $astra_sites_key = array_search('astra-sites/astra-sites.php', $active_plugins);
-    $ashe_extra_key = array_search('ashe-extra/ashe-extra.php', $active_plugins);
-    $bard_extra_key = array_search('bard-extra/bard-extra.php', $active_plugins);
-
-    if ( false !== $astra_sites_key && array_key_exists($astra_sites_key, $active_plugins) ) {
-        unset($active_plugins[$astra_sites_key]);
-    }
-
-    if ( false !== $ashe_extra_key && array_key_exists($ashe_extra_key, $active_plugins) ) {
-        unset($active_plugins[$ashe_extra_key]);
-    }
-
-    if ( false !== $bard_extra_key && array_key_exists($bard_extra_key, $active_plugins) ) {
-        unset($active_plugins[$bard_extra_key]);
-    }
-
-    // Set Active Plugins
-    update_option( 'active_plugins', array_values($active_plugins) ); 
+    // TODO: maybe return back  - 'ashe' !== $theme && 'bard' !== $theme && 
 }
 
 /**
@@ -225,32 +202,14 @@ function wpr_install_reuired_plugins() {
     // Add Required Plugins
     if ( isset($_POST['plugin']) ) {
         if ( 'contact-form-7' == $_POST['plugin'] ) {
-            if ( !is_plugin_active( 'contact-form-7/wp-contact-form-7.php' ) ) {
-                array_push( $active_plugins, 'contact-form-7/wp-contact-form-7.php' );
-            }
+            array_push( $active_plugins, 'contact-form-7/wp-contact-form-7.php' );
         } elseif ( 'media-library-assistant' == $_POST['plugin'] ) {
-            if ( !is_plugin_active( 'media-library-assistant/index.php' ) ) {
-                array_push( $active_plugins, 'media-library-assistant/index.php' );
-            }
+            array_push( $active_plugins, 'media-library-assistant/index.php' );
         }
     }
 
-    $active_plugins = array_values($active_plugins);
-
-    // Deactivate Extra Import Plugins
-    $ashe_extra_key = array_search('ashe-extra/ashe-extra.php', $active_plugins);
-    $bard_extra_key = array_search('bard-extra/bard-extra.php', $active_plugins);
-
-    if ( false !== $ashe_extra_key && array_key_exists($ashe_extra_key, $active_plugins) ) {
-        unset($active_plugins[$ashe_extra_key]);
-    }
-
-    if ( false !== $bard_extra_key && array_key_exists($bard_extra_key, $active_plugins) ) {
-        unset($active_plugins[$bard_extra_key]);
-    }
-
     // Set Active Plugins
-    update_option( 'active_plugins', array_values($active_plugins) ); 
+    update_option( 'active_plugins', $active_plugins ); 
 
     // Get Current Theme
     $theme = get_option('stylesheet');
@@ -263,7 +222,7 @@ function wpr_install_reuired_plugins() {
     }
 
     // TODO: maybe return back  - 'ashe' !== $theme && 'bard' !== $theme && 
-      
+    
 }
 
 /**
@@ -341,21 +300,19 @@ function import_elementor_site_settings( $kit ) {
     // $randomNum = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 7);
 
     // Get Remote File
-    $site_settings = @file_get_contents('https://royal-elementor-addons.com/library/templates-kit/'. $kit .'1/site-settings.json');
-    
+    $site_settings = @file_get_contents('https://royal-elementor-addons.com/library/templates-kit/'. $kit .'/site-settings.json');
+
     if ( false !== $site_settings ) {
         $site_settings = json_decode($site_settings, true);
 
         if ( ! empty($site_settings['settings']) ) {
             $default_kit = \Elementor\Plugin::$instance->documents->get_doc_for_frontend( get_option( 'elementor_active_kit' ) );
 
-            if ( false !== $default_kit ) {
-                $kit_settings = $default_kit->get_settings();
-                $new_settings = $site_settings['settings'];
-                $settings = array_merge($kit_settings, $new_settings);
+            $kit_settings = $default_kit->get_settings();
+            $new_settings = $site_settings['settings'];
+            $settings = array_merge($kit_settings, $new_settings);
 
-                $default_kit->save( [ 'settings' => $settings ] );
-            }
+            $default_kit->save( [ 'settings' => $settings ] );
         }
     }
 }
@@ -383,8 +340,6 @@ function setup_wpr_templates( $kit ) {
         if ( $blog_page ) {
             update_option( 'page_for_posts', $blog_page->ID );
         }
-    } else {
-        update_option( 'show_on_front', 'posts' );
     }
 
     // Set Headers and Footers
@@ -431,7 +386,7 @@ function wpr_fix_elementor_images() {
             // Elementor Data
             $data = get_post_meta( get_the_ID(), '_elementor_data', true );
 
-            if ( !empty($data) && is_string($data) ) {
+            if ( ! empty( $data ) ) {
                 $data = preg_replace('/\\\{1}\/sites\\\{1}\/\d+/', '', $data);
                 $data = str_replace( $demo_site_url, $site_url, $data );
                 $data = json_decode( $data, true );
@@ -443,7 +398,7 @@ function wpr_fix_elementor_images() {
             $page_settings = get_post_meta( get_the_ID(), '_elementor_page_settings', true );
             $page_settings = json_encode($page_settings);
 
-            if ( !empty($page_settings) ) {
+            if ( ! empty( $page_settings ) ) {
                 $page_settings = preg_replace('/\\\{1}\/sites\\\{1}\/\d+/', '', $page_settings);
                 $page_settings = str_replace( $demo_site_url, $site_url, $page_settings );
                 $page_settings = json_decode( $page_settings, true );

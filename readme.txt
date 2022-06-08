@@ -1,9 +1,9 @@
 ﻿=== Royal Elementor Addons (Header Footer Builder, Popups, Post Grid, Woocommerce Product Grid, Slider, Parallax Image, Free Elementor Widgets & Elementor Templates) ===
 Contributors: WP Royal, rubeushagrid13, cyberpinky, elementoraddonswpr
 Tags: elementor, elements, widgets for elementor, elementor addons, elementor widgets, elementor form, woocommerce elementor, page builder, elementor templates, wordpress page builder, best elementor addons, addons for elementor
-Stable tag: 1.3.42
+Stable tag: 1.3.44
 Requires at least: 5.0
-Tested up to: 5.9
+Tested up to: 6.0
 Requires PHP: 5.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -61,9 +61,9 @@ Comes with **50+ widgets, 25 Elementor Template KIT (Growing Each Week), Theme B
 - [**Phone Call Button**](https://royal-elementor-addons.com/elementor-phone-call-widget/?ref=rea-wpo-pp-details-tab)
 - [**Lottie Animation**](https://royal-elementor-addons.com/elementor-lottie-animation-widget/?ref=rea-wpo-pp-details-tab)
 - [**Timeline Widget**](https://royal-elementor-addons.com/elementor-timeline-widget/?ref=rea-wpo-pp-details-tab)
--  **Flip Carousel**
--  **Features List**
--  **Dual Color Heading**
+- [**Flip Carousel**](https://royal-elementor-addons.com/elementor-flip-carousel-widget/?ref=rea-wpo-pp-details-tab)
+- [**Features List**](https://royal-elementor-addons.com/elementor-feature-list-widget/?ref=rea-wpo-pp-details-tab)
+- [**Dual Color Heading**](https://royal-elementor-addons.com/elementor-dual-color-heading-widget/?ref=rea-wpo-pp-details-tab)
 
 **Elementor Extensions and Other Features**
 
@@ -115,7 +115,15 @@ and other custom branding related settings)
 - [**NFT Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/nft-portfolio-v1/?ref=rea-wpo-pp-details-tab)
 - [**Car Wash Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/carwash-v1/?ref=rea-wpo-pp-details-tab)
 - [**Pet Care Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/pet-care-v1/?ref=rea-wpo-pp-details-tab)
-- [**Digital Marketing Agency Templates Kit**](https://demosites.royal-elementor-addons.com/digital-marketing-agency-v1/)
+- [**Digital Marketing Agency Templates Kit**](https://demosites.royal-elementor-addons.com/digital-marketing-agency-v1/?ref=rea-wpo-pp-details-tab)
+- [**One Page Digital Marketing Agency Templates Kit**](https://demosites.royal-elementor-addons.com/one-page-v1/blog-one-page-v1/?ref=rea-wpo-pp-details-tab)
+
+**How to Import Template Kit:**
+
+Navigate to plugin **Menu > Templates Kit > Select Kit you want to import > Click on the import Template Kit** button.
+Demo Data will be installed from [https://royal-elementor-addons.com/](https://royal-elementor-addons.com/).
+What's imported: Posts, pages, images in the media library, menu items, some basic settings like which page will be set as homepage, premade headers, and premade footers, popups if demo includes it.
+If you already have posts, pages, or any other data in your WordPress none of them will be deleted.
 
 **Widgets Description:**
 
@@ -335,6 +343,19 @@ memory_limit 256M or more
 post_max_size 64M
 
 == Changelog ==
+
+= Royal Elementor Addons v1.3.44 - 2022-06-03 =
+* ADDED: Royal Elementor Theme Builder [**Dark Digital Agency**](https://demosites.royal-elementor-addons.com/digital-agency-dark-v1/?ref=rea-wpo-pp-details-tab) Templates Kit.
+
+= Royal Elementor Addons v1.3.43 - 2022-31-05 =
+* NEWS: We are working hard to finish **Woocommerce integration in the theme builder**. We hope the first demo will be available in around **30-40** days.
+* ADDED: Royal Elementor Theme Builder [**Digital Marketing Agency**](https://demosites.royal-elementor-addons.com/digital-marketing-agency-v1/?ref=rea-wpo-pp-details-tab) Templates Kit.
+* ADDED: Royal Elementor Theme Builder [**One page - Digital Marketing Agency**](https://demosites.royal-elementor-addons.com/one-page-v1/?ref=rea-wpo-pp-details-tab) Templates Kit.
+* ADDED: Royal Elementor Theme Builder [**Pet Care**](https://demosites.royal-elementor-addons.com/pet-care-v1/?ref=rea-wpo-pp-details-tab) Templates Kit.
+* ADDED: Royal Elementor Theme Builder [**NFT Portfolio**](https://demosites.royal-elementor-addons.com/nft-portfolio-v1/?ref=rea-wpo-pp-details-tab) Templates Kit.
+* ADDED: Royal Elementor Theme Builder [**Car Wash**](https://demosites.royal-elementor-addons.com/carwash-v1/?ref=rea-wpo-pp-details-tab) Templates Kit.
+* FIXED: Many small bugs.
+
 
 = Royal Elementor Addons v1.3.42 - 2022-29-04 =
 * ADDED: Royal Elementor Theme Builder [**NFT Portfolio**](https://demosites.royal-elementor-addons.com/nft-portfolio-v1/?ref=rea-wpo-pp-details-tab) Templates Kit.
