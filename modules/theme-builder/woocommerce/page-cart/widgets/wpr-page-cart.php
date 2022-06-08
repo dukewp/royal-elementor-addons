@@ -1368,7 +1368,7 @@ class Wpr_Page_Cart extends Widget_Base {
 				'label'     => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} table.shop_table th' => 'background-color: {{VALUE}}'
+					'{{WRAPPER}} .cart_totals th' => 'background-color: {{VALUE}}'
 				],
 			]
 		);
