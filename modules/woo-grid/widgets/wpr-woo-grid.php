@@ -8498,7 +8498,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 		// No Posts Found
 		else:
 
-			echo '<h2>'. esc_html($settings['query_not_found_text']) .'</h2>';
+			if ('upsell' !== $settings['query_selection'] && 'cross-sell' !== $settings['query_selection']) {
+				echo '<h2>'. esc_html($settings['query_not_found_text']) .'</h2>';
+			}
 
 		// Loop: End
 		endif;
