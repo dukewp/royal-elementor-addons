@@ -529,6 +529,71 @@ class Wpr_Woo_Grid extends Widget_Base {
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'query_orderby', ['pro-rn'] );
 
+		$this->add_control(
+			'cross_sell_heading',
+			[
+				'label' => esc_html__( 'Heading', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => 'You may be interested in...',
+				'condition' => [
+					'query_selection' => [ 'cross-sell'],
+				]
+			]
+		);
+
+		$this->add_control(
+			'upsell_heading',
+			[
+				'label' => esc_html__( 'Heading', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => 'You may also like...',
+				'condition' => [
+					'query_selection' => [ 'upsell'],
+				]
+			]
+		);
+
+		$this->add_control(
+			'upsell_heading_tag',
+			[
+				'label' => esc_html__( 'Title HTML Tag', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => 'H1',
+					'h2' => 'H2',
+					'h3' => 'H3',
+					'h4' => 'H4',
+					'h5' => 'H5',
+					'h6' => 'H6',
+				],
+				'default' => 'h2',
+				'condition' => [
+					'query_selection' => [ 'upsell'],
+				]
+			]
+		);
+
+		$this->add_control(
+			'cross_sell_heading_tag',
+			[
+				'label' => esc_html__( 'Title HTML Tag', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => 'H1',
+					'h2' => 'H2',
+					'h3' => 'H3',
+					'h4' => 'H4',
+					'h5' => 'H5',
+					'h6' => 'H6',
+				],
+				'default' => 'h2',
+				'condition' => [
+					'query_selection' => [ 'cross-sell'],
+				]
+			]
+		);
+
+
 		// Categories
 		$this->add_control(
 			'query_taxonomy_product_cat',
@@ -7852,7 +7917,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'title-desc' => esc_html__('Sort by title: z to a', 'wpr-addons'),
 		];
 		
-		$orderby = $_GET['orderby'];
+		$orderby = isset($_GET['orderby']) ? $_GET['orderby'] : '';
 
 		if ( $settings['show_sort_heading'] === 'yes' ) {
 			echo '<div class="wpr-sort-heading">';
@@ -8403,6 +8468,16 @@ class Wpr_Woo_Grid extends Widget_Base {
 		if ( $posts->have_posts() ) :
 
 		$post_index = 0;
+
+		if ( 'upsell' === $settings['query_selection'] ) {
+			echo '<div class="wpr-upsell-heading">';
+				echo '<'. $settings['upsell_heading_tag'] .'>'. esc_html( $settings['upsell_heading'] ) .'</'. $settings['upsell_heading_tag'] .'>';
+			echo '</div>';
+		} elseif ('cross-sell' === $settings['query_selection'] ) {
+			echo '<div class="wpr-cross-sell-heading">';
+				echo '<'. $settings['cross_sell_heading_tag'] .'>'. esc_html( $settings['cross_sell_heading'] ) .'</'. $settings['cross_sell_heading_tag'] .'>';
+			echo '</div>';
+		}
 
 		// Grid Settings
 		if ( 'slider' !== $settings['layout_select'] ) {

@@ -140,6 +140,28 @@ class Wpr_Page_Cart extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'totals_container_width',
+			[
+				'label' => esc_html__( 'Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					]
+				],
+				'size_units' => [ '%' ],
+				'default' => [
+					'unit' => '%',
+					'size' => 80,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-cart-wrapper .cart-collaterals' => 'width: {{SIZE}}{{UNIT}}; margin-left: calc(100% - {{SIZE}}{{UNIT}});',
+				]
+			]
+		);
+
 		$this->add_control(
 			'checkout_heading',
 			[
@@ -513,7 +535,8 @@ class Wpr_Page_Cart extends Widget_Base {
 				'default' => 'solid',
 				'selectors' => [
 					'{{WRAPPER}} table th' => 'border-style: {{VALUE}};',
-					'{{WRAPPER}} table td' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .cart_totals table td' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-cart-form table tr:not(:last-child) td' => 'border-style: {{VALUE}};',
 				]
 			]
 		);
@@ -525,7 +548,8 @@ class Wpr_Page_Cart extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} table th' => 'border-color: {{VALUE}}',
-					'{{WRAPPER}} table td' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .cart_totals table td' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-cart-form table tr:not(:last-child) td' => 'border-color: {{VALUE}}',
 				],
 				'condition' => [
 					'cart_tables_border_type!' => 'none',
@@ -547,7 +571,8 @@ class Wpr_Page_Cart extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} table th' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} table td' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .cart_totals table td' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-cart-form table tr:not(:last-child) td' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
 					'cart_tables_border_type!' => 'none',
@@ -1394,6 +1419,16 @@ class Wpr_Page_Cart extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'cart_totals_table_description_bg_color',
+			[
+				'label'     => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .cart_totals table.shop_table td' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
 
 		$this->start_controls_tabs( 'cart_totals_styles' );
 
@@ -1526,6 +1561,7 @@ class Wpr_Page_Cart extends Widget_Base {
 				'default' => 'none',
 				'selectors' => [
 					'{{WRAPPER}} .shipping-calculator-button' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .cart_totals table.shop_table' => 'border-style: {{VALUE}};'
 				],
 				'separator' => 'before',
 			]
@@ -1545,6 +1581,7 @@ class Wpr_Page_Cart extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .shipping-calculator-button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .cart_totals table.shop_table' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 				'condition' => [
 					'cart_totals_border_type!' => 'none',
@@ -1566,6 +1603,7 @@ class Wpr_Page_Cart extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .shipping-calculator-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .cart_totals table.shop_table' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 				'separator' => 'before',
 			]
@@ -1948,7 +1986,14 @@ class Wpr_Page_Cart extends Widget_Base {
     protected function render() {
         $settings = $this->get_settings_for_display();
 
-		$actions_array = ['woocommerce_before_cart', 'woocommerce_after_cart_table', 'woocommerce_before_cart_table', 'woocommerce_after_cart', 'woocommerce_cart_contents', 'woocommerce_after_cart_contents' ];
+		$actions_array = [
+			'woocommerce_before_cart',
+			'woocommerce_after_cart_table',
+			'woocommerce_before_cart_table',
+			'woocommerce_after_cart',
+			'woocommerce_cart_contents',
+			'woocommerce_after_cart_contents'
+		];
 		
 		add_filter( 'gettext', [ $this, 'filter_gettext' ], 20, 3 );
 		remove_action( 'woocommerce_cart_collaterals', 'woocommerce_cross_sell_display' );
@@ -1964,6 +2009,6 @@ class Wpr_Page_Cart extends Widget_Base {
 		foreach ($actions_array as $key => $value) {
 			remove_action($value, [$this, $value]);
 		}
-		remove_filter( 'woocommerce_coupons_enabled', [ $this, 'hide_coupon_field_on_cart' ] );
+		// remove_filter( 'woocommerce_coupons_enabled', [ $this, 'hide_coupon_field_on_cart' ] );
     }
 }

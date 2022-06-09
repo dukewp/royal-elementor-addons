@@ -2396,6 +2396,11 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     display: flex;
 }
 
+.wpr-cart-wrapper table th,
+.wpr-cart-wrapper table td {
+    border: 0;
+}
+
 .wpr-cart-wrapper form .form-row {
     margin: 0;
 }
