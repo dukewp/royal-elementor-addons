@@ -40,112 +40,100 @@ class Wpr_Product_Filters extends Widget_Base {
 
 		// Tab: Content ==============
 		// Section: General ----------
-		$this->start_controls_section(
-			'section_product_title',
-			[
-				'label' => esc_html__( 'General', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_CONTENT,
-			]
-		);
-
-		$this->add_control(
-			'product_title_tag',
-			[
-				'label' => esc_html__( 'Title HTML Tag', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'h1' => 'H1',
-					'h2' => 'H2',
-					'h3' => 'H3',
-					'h4' => 'H4',
-					'h5' => 'H5',
-					'h6' => 'H6',
-				],
-				'default' => 'h1',
-			]
-		);
-
-		$this->add_responsive_control(
-            'product_title_align',
+        $this->start_controls_section(
+            'section_content',
             [
-                'label' => esc_html__( 'Alignment', 'wpr-addons' ),
-                'type' => Controls_Manager::CHOOSE,
-                'default' => 'center',
-                'label_block' => false,
-                'options' => [
-					'left'    => [
-						'title' => __( 'Left', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-left',
-					],
-					'center' => [
-						'title' => __( 'Center', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-center',
-					],
-					'right' => [
-						'title' => __( 'Right', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-right',
-					],
-                ],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-product-title' => 'text-align: {{VALUE}}',
-				],
-				'separator' => 'before'
+                'label' => esc_html__( 'Filter', 'wpr-addons' ),
             ]
         );
 
-		$this->end_controls_section(); // End Controls Section
-
-		// Styles ====================
-		// Section: Title ------------
-		$this->start_controls_section(
-			'section_style_title',
-			[
-				'label' => esc_html__( 'Title', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-				'show_label' => false,
-			]
-		);
-
+        $filter_by = [
+            'search_form' => esc_html__( 'Search Form', 'wpr-addons' ),
+            'price_by' => esc_html__( 'Price', 'wpr-addons' ),
+            'sort_by' => esc_html__( 'Sort By', 'wpr-addons' ),
+            'order_by' => esc_html__( 'Order By', 'wpr-addons' )
+        ];
+            
 		$this->add_control(
-			'title_color',
+			'filter_type',
 			[
-				'label'  => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-product-title' => 'color: {{VALUE}}',
-				],
+				'label' => esc_html__( 'Filter Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT2,
+				'options' => $filter_by + Utilities::get_woo_taxonomies(),
+				'separator' => 'before',
+				'label_block' => true,
+				'default' => 'search_form',
 			]
 		);
 
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'title_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-product-title'
-			]
-		);
+        $this->end_controls_section();
 
-		$this->add_group_control(
-			Group_Control_Text_Shadow::get_type(),
-			[
-				'name' => 'title_shadow',
-				'selector' => '{{WRAPPER}} .wpr-product-title',
-				'separator' => 'after',
-			]
-		);
+	}
 
-		$this->add_group_control(
-			Group_Control_Text_Stroke::get_type(),
-			[
-				'name' => 'text_stroke',
-				'selector' => '{{WRAPPER}} .wpr-product-title',
-			]
-		);
+	public function get_shop_url() {
+		global $wp;
 
-		$this->end_controls_section();
+        if ( '' == get_option('permalink_structure' ) ) {
+            $url = remove_query_arg(array('page', 'paged'), add_query_arg($wp->query_string, '', home_url($wp->request)));
+        } else {
+            $url = preg_replace('%\/page/[0-9]+%', '', home_url(trailingslashit($wp->request)));
+        }
 
+		return $url;
+	}
+
+	public function get_attribute_data( $filter, $attribute, $shop_url ) {
+		// Remove Prefix
+        if ( 0 === strpos($filter, 'pa_') ) {
+            $filter = 'filter_' . wc_attribute_taxonomy_slug( $filter );
+        }
+
+		// Get Selected Filters 
+		$selected_filters = isset( $_GET[ $filter ] ) ? explode( ',', wc_clean( wp_unslash( $_GET[ $filter ] ) ) ) : [];
+        $is_filter_active  = in_array( $attribute->slug, $selected_filters, true );
+
+		// Get Attribute Link
+		$selected_filters = array_map( 'sanitize_title', $selected_filters );
+		if ( ! in_array( $attribute->slug, $selected_filters, true ) ) {
+			$selected_filters[] = $attribute->slug;
+		}
+        $url = remove_query_arg( $filter, $shop_url );
+
+		// Remove Already Selected Filters
+		foreach ( $selected_filters as $key => $value ) {
+            if ( $is_filter_active && $value === $attribute->slug ) {
+                unset( $selected_filters[ $key ] );
+            }
+        }
+
+		// Add New Filters
+        if ( ! empty( $selected_filters ) ) {
+            asort( $selected_filters );
+			$url = add_query_arg( $filter, implode( ',', $selected_filters ), $url );
+		}
+
+		return [
+			'url' => $url,
+			'class' => $is_filter_active ? 'wpr-active-product-filter' : ''
+		];
+	}
+
+	public function render_product_attributes( $settings ) {
+		$attributes = get_terms( $settings['filter_type'] );
+
+		echo '<ul>';
+
+		foreach ( $attributes as $attribute ) {
+			$attr_data = $this->get_attribute_data( $settings['filter_type'], $attribute, $this->get_shop_url() );
+
+			echo '<li>';
+				echo '<a href="'. esc_url($attr_data['url']) .'" class="'. esc_attr($attr_data['class']) .'">'. esc_html($attribute->name);
+					echo '<span> ('. esc_html($attribute->count) .')</span>';
+				echo '</a>';
+			echo '</li>';
+		}
+		
+		echo '<ul>';
 	}
 
 	protected function render() {
@@ -159,6 +147,16 @@ class Wpr_Product_Filters extends Widget_Base {
 			return;
 		}
 
+		echo '<div class="wpr-product-filters">';
+
+		if ( false ) {
+
+		// Attributes
+		} else {
+			$this->render_product_attributes($settings);
+		}
+
+		echo '</div>';
 	}
 	
 }
