@@ -502,7 +502,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'name' => 'tab_typography_active',
 				'label' => esc_html__( 'Typography', 'wpr-addons' ),
-				'selector' => '{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li a.active',
+				'selector' => '{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li.active a',
 				'separator' => 'before'
 			]
 		);

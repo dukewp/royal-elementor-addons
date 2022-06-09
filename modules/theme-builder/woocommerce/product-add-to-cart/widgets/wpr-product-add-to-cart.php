@@ -1297,78 +1297,6 @@ class Wpr_Product_AddToCart extends Widget_Base {
 			]
 		);
 
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'add_to_cart_variation_select',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .variations select, {{WRAPPER}} .variations option'
-			]
-		);
-
-		$this->add_control(
-			'variations_select_border_type',
-			[
-				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'none' => esc_html__( 'None', 'wpr-addons' ),
-					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
-					'double' => esc_html__( 'Double', 'wpr-addons' ),
-					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
-					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
-					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
-				],
-				'default' => 'none',
-				'selectors' => [
-					'{{WRAPPER}} .variations select' => 'border-style: {{VALUE}};',
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'variations_select_border_width',
-			[
-				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 1,
-					'right' => 1,
-					'bottom' => 1,
-					'left' => 1,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .variations select' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'condition' => [
-					'variations_select_border_type!' => 'none',
-				],
-			]
-		);
-
-		$this->add_control(
-			'variations_select_border_radius',
-			[
-				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .variations select' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'condition' => [
-					'variations_select_border_type!' => 'none',
-				],
-			]
-		);
-
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
@@ -1471,6 +1399,134 @@ class Wpr_Product_AddToCart extends Widget_Base {
 		$this->end_controls_tab();
 		
 		$this->end_controls_tabs();
+
+		// $this->start_controls_tabs( 'options_styles_tabs' );
+
+		// $this->start_controls_tab(
+		// 	'option_styles',
+		// 	[
+		// 		'label' => esc_html__( 'Normal', 'wpr-addons' ),
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'add_to_cart_options',
+		// 	[
+		// 		'label'     => esc_html__('Options', 'wpr-addons'),
+		// 		'type'      => Controls_Manager::HEADING,
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'add_to_cart_variation_dropdown_options_bg_color',
+		// 	[
+		// 		'label'     => esc_html__('Background Color', 'wpr-addons'),
+		// 		'type'      => Controls_Manager::COLOR,
+		// 		'alpha'     => false,
+		// 		'default'   => '#101010',
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .variations select option' => 'background-color: {{VALUE}};',
+		// 		]
+		// 	]
+		// );
+
+		// $this->end_controls_tab();
+
+		// $this->start_controls_tab(
+		// 	'options_styles_hover',
+		// 	[
+		// 		'label' => esc_html__( 'Hover', 'wpr-addons' ),
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'add_to_cart_variation_dropdown_options_bg_color_hover',
+		// 	[
+		// 		'label'     => esc_html__('Background Color', 'wpr-addons'),
+		// 		'type'      => Controls_Manager::COLOR,
+		// 		'alpha'     => false,
+		// 		'default'   => '#101010',
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .variations select option:hover' => 'background-color: {{VALUE}} !important;',
+		// 		]
+		// 	]
+		// );
+
+		// $this->end_controls_tab();
+
+		// $this->end_controls_tabs();
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'add_to_cart_variation_select',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .variations select, {{WRAPPER}} .variations option'
+			]
+		);
+
+		$this->add_control(
+			'variations_select_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}} .variations select' => 'border-style: {{VALUE}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'variations_select_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .variations select' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'variations_select_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'variations_select_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .variations select' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'variations_select_border_type!' => 'none',
+				],
+			]
+		);
 
 		$this->add_responsive_control(
 			'variation_select_padding',

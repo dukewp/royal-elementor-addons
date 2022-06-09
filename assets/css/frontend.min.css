@@ -1898,6 +1898,14 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 }
 
 /* Product Tabs */
+.wpr-product-tabs p {
+    margin: 0;
+}
+
+.wpr-product-tabs .woocommerce-noreviews {
+    margin-bottom: 10px;
+}
+
 .woocommerce div.product .wpr-product-tabs .woocommerce-tabs ul.tabs,
 .woocommerce div.product .wpr-product-tabs .woocommerce-tabs ul.tabs li {
   overflow: visible;
@@ -2015,6 +2023,10 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     flex-grow: 1;
     -ms-flex-preferred-size: 0;
     flex-basis: 0;
+}
+
+.woocommerce div.product .wpr-product-tabs .woocommerce-tabs .panel {
+    margin: 0;
 }
 
 .elementor-widget-wpr-product-tabs .woocommerce-Tabs-panel {
@@ -2416,6 +2428,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 .elementor-widget[class*="elementor-widget-wpr-"] table.shop_table .wc-item-meta li {
     display: inline-flex;
+    margin-right: 10px;
 }
 
 .elementor-widget[class*="elementor-widget-wpr-"] .variation-Size,
@@ -2529,6 +2542,10 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 .wpr-checkout-vertical .col2-set .col-2 {
     float: none;
     width: 100%;
+}
+
+.elementor-widget-wpr-page-checkout ul {
+    padding: 0;
 }
 
 .elementor-widget-wpr-page-checkout .select2-container--focus span,
@@ -3427,7 +3444,8 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 }
 
 /* Locate It Later */
-.wpr-sort-and-results-wrap {
+.wpr-grid-sorting-inner-wrap {
+    display: flex;
     align-items: center;
     justify-content: space-between;
 }
@@ -3436,28 +3454,32 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     margin: 0;
 }
 
-.wpr-sort-heading {
+.wpr-grid-sort-heading {
     /* flex: 1; */
     width: 100%;
     /* flex-basis: 100%; */
 }
 
-.wpr-sort-and-results-wrap .wpr-filter .orderby::-ms-expend {
+.wpr-grid-sort-heading * {
+    margin: 0;
+}
+
+.wpr-grid-sorting-inner-wrap form .orderby::-ms-expend {
     display: none;
 }
 
-.wpr-orderby-wrap {
+.wpr-grid-orderby span {
     position: relative;
 }
 
-.wpr-sort-and-results-wrap .wpr-filter .orderby {
+.wpr-grid-sorting-inner-wrap form .orderby {
     /* for Firefox */
     -moz-appearance: none;
     /* for Chrome */
     -webkit-appearance: none;
 }
 
-.wpr-sort-and-results-wrap .wpr-orderby-icon {
+.wpr-grid-sorting-inner-wrap .wpr-orderby-icon {
     position: absolute;
     top: 50%;
     right: 5px;
