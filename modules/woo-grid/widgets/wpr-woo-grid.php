@@ -68,7 +68,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'manual' => esc_html__( 'Manual', 'wpr-addons' ),
 					'featured' => esc_html__( 'Featured', 'wpr-addons' ),
 					'onsale' => esc_html__( 'On Sale', 'wpr-addons' ),
-					'upsell' => esc_html__( 'Up-sell', 'wpr-addons' ),
+					'upsell' => esc_html__( 'Upsell', 'wpr-addons' ),
 					'cross-sell' => esc_html__( 'Cross-sell', 'wpr-addons' ),
 					'current' => esc_html__( 'Current Query', 'wpr-addons' ),
 				],
@@ -529,71 +529,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'query_orderby', ['pro-rn'] );
 
-		$this->add_control(
-			'cross_sell_heading',
-			[
-				'label' => esc_html__( 'Heading', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => 'You may be interested in...',
-				'condition' => [
-					'query_selection' => [ 'cross-sell'],
-				]
-			]
-		);
-
-		$this->add_control(
-			'upsell_heading',
-			[
-				'label' => esc_html__( 'Heading', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => 'You may also like...',
-				'condition' => [
-					'query_selection' => [ 'upsell'],
-				]
-			]
-		);
-
-		$this->add_control(
-			'upsell_heading_tag',
-			[
-				'label' => esc_html__( 'Title HTML Tag', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'h1' => 'H1',
-					'h2' => 'H2',
-					'h3' => 'H3',
-					'h4' => 'H4',
-					'h5' => 'H5',
-					'h6' => 'H6',
-				],
-				'default' => 'h2',
-				'condition' => [
-					'query_selection' => [ 'upsell'],
-				]
-			]
-		);
-
-		$this->add_control(
-			'cross_sell_heading_tag',
-			[
-				'label' => esc_html__( 'Title HTML Tag', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'h1' => 'H1',
-					'h2' => 'H2',
-					'h3' => 'H3',
-					'h4' => 'H4',
-					'h5' => 'H5',
-					'h6' => 'H6',
-				],
-				'default' => 'h2',
-				'condition' => [
-					'query_selection' => [ 'cross-sell'],
-				]
-			]
-		);
-
-
 		// Categories
 		$this->add_control(
 			'query_taxonomy_product_cat',
@@ -896,93 +831,16 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'none',
-					'yes' => 'flex'
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-sort-and-results-wrap' => 'display: {{VALUE}};',
-				],
-				'render_type' => 'template',
-				'separator' => 'before',
-				'condition' => [
-					'layout_select!' => 'slider',
-				]
-			]
-		);
-
-		$this->add_responsive_control(
-			'show_sort_heading',
-			[
-				'label' => esc_html__( 'Show Sort Heading', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
-				'widescreen_default' => 'yes',
-				'laptop_default' => 'yes',
-				'tablet_extra_default' => 'yes',
-				'tablet_default' => 'yes',
-				'mobile_extra_default' => 'yes',
-				'mobile_default' => 'yes',
-				'selectors_dictionary' => [
-					'' => 'none',
 					'yes' => 'block'
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-sort-and-results-wrap .wpr-sort-heading' => 'display: {{VALUE}};',
+					'{{WRAPPER}} .wpr-grid-sorting-wrap' => 'display: {{VALUE}};',
 				],
 				'render_type' => 'template',
 				'separator' => 'before',
 				'condition' => [
 					'layout_select!' => 'slider',
-					'sort_and_results_count' => 'yes'
 				]
-			]
-		);
-
-		$this->add_control(
-			'orderby_type',
-			[
-				'label'   => esc_html__('Sorting Type', 'wpr-addons'),
-				'type'    => Controls_Manager::SELECT,
-				'options' => [
-					'dropdown' => esc_html__('Dropdown', 'wpr-addons'),
-					'list'     => esc_html__('List', 'wpr-addons'),
-				],
-				'default' => 'dropdown',
-				'condition' => [
-					'sort_and_results_count' => 'yes'
-				]
-			]
-		);
-
-		$this->add_control(
-			'sort_heading_tag',
-			[
-				'label' => esc_html__( 'Title HTML Tag', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'h1' => 'H1',
-					'h2' => 'H2',
-					'h3' => 'H3',
-					'h4' => 'H4',
-					'h5' => 'H5',
-					'h6' => 'H6',
-				],
-				'default' => 'h2',
-				'condition' => [
-					'show_sort_heading' => 'yes',
-				]
-			]
-		);
-
-		$this->add_control(
-			'sort_heading',
-			[
-				'label' => esc_html__( 'Heading', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => 'Shop',
-				'condition' => [
-					'show_sort_heading' => 'yes',
-				],
-				'separator' => 'after'
 			]
 		);
 
@@ -2368,6 +2226,136 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::RAW_HTML,
 				'separator' => 'before',
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+			]
+		);
+
+		$this->end_controls_section(); // End Controls Section
+
+		// Tab: Content ==============
+		// Section: Linked Products ----------
+		$this->start_controls_section(
+			'section_grid_linked_products',
+			[
+				'label' => esc_html__( 'Linked Products', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+				'condition' => [
+					'query_selection' => ['upsell', 'cross-sell'],
+					'layout_select!' => 'slider'
+				]
+			]
+		);
+
+		$this->add_control(
+			'cross_sell_heading',
+			[
+				'label' => esc_html__( 'Heading', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => 'You may be interested in...',
+				'condition' => [
+					'query_selection' => [ 'cross-sell'],
+				]
+			]
+		);
+
+		$this->add_control(
+			'upsell_heading',
+			[
+				'label' => esc_html__( 'Heading', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => 'You may also like...',
+				'condition' => [
+					'query_selection' => [ 'upsell'],
+				]
+			]
+		);
+
+		$this->add_control(
+			'upsell_heading_tag',
+			[
+				'label' => esc_html__( 'Title HTML Tag', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => 'H1',
+					'h2' => 'H2',
+					'h3' => 'H3',
+					'h4' => 'H4',
+					'h5' => 'H5',
+					'h6' => 'H6',
+				],
+				'default' => 'h2',
+				'condition' => [
+					'query_selection' => [ 'upsell'],
+				]
+			]
+		);
+
+		$this->add_control(
+			'cross_sell_heading_tag',
+			[
+				'label' => esc_html__( 'Title HTML Tag', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => 'H1',
+					'h2' => 'H2',
+					'h3' => 'H3',
+					'h4' => 'H4',
+					'h5' => 'H5',
+					'h6' => 'H6',
+				],
+				'default' => 'h2',
+				'condition' => [
+					'query_selection' => [ 'cross-sell'],
+				]
+			]
+		);
+
+		$this->end_controls_section(); 
+
+		// Tab: Content ==============
+		// Section: Sorting ----------
+		$this->start_controls_section(
+			'section_grid_sorting',
+			[
+				'label' => esc_html__( 'Sorting', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+				'condition' => [
+					'query_selection!' => ['upsell', 'cross-sell'],
+					'layout_select!' => 'slider',
+					'sort_and_results_count' => 'yes'
+				],
+			]
+		);
+
+		$this->add_control(
+			'sort_heading_tag',
+			[
+				'label' => esc_html__( 'Title HTML Tag', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => 'H1',
+					'h2' => 'H2',
+					'h3' => 'H3',
+					'h4' => 'H4',
+					'h5' => 'H5',
+					'h6' => 'H6',
+				],
+				'default' => 'h2',
+				'condition' => [
+					'sort_heading!' => '',
+				]
+			]
+		);
+
+		$this->add_control(
+			'sort_heading',
+			[
+				'label' => esc_html__( 'Heading', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => 'Shop',
+				'condition' => [
+					'sort_heading!' => '',
+				],
+				'separator' => 'after'
 			]
 		);
 
@@ -6055,7 +6043,88 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$this->end_controls_section(); // End Controls Section
 
 		// Styles ====================
-		// Section: Filters ----------
+		// Section: Linked Products ------------
+		$this->start_controls_section(
+			'section_style_linked_products',
+			[
+				'label' => esc_html__( 'Linked Products', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'show_label' => false,
+				'condition' => [
+					'query_selection' => ['upsell', 'cross-sell'],
+					'layout_select!' => 'slider'
+				]
+			]
+		);
+
+		$this->add_control(
+			'linked_products_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-upsell-heading' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-cross-sell-heading' => 'color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'linked_products',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-upsell-heading *, {{WRAPPER}} .wpr-cross-sell-heading *'
+			]
+		);
+
+		$this->add_responsive_control(
+			'linked_products_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 3,
+					'right' => 15,
+					'bottom' => 3,
+					'left' => 15,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-upsell-heading' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-cross-sell-heading' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'linked_products_distance_from_grid',
+			[
+				'label' => esc_html__( 'Distance From Grid', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 25,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-upsell-heading' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-cross-sell-heading' => 'margin-bottom: {{SIZE}}{{UNIT}};'
+				]
+				// 'separator' => 'before'
+			]
+		);
+
+		$this->end_controls_section(); // End Controls Section
+
+		// Styles ====================
+		// Section: sorting ----------
 		$this->start_controls_section(
 			'section_style_sort_and_results',
 			[
@@ -6063,6 +6132,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 				'condition' => [
+					'query_selection!' => ['upsell', 'cross-sell'],
 					'layout_select!' => 'slider',
 					'sort_and_results_count' => 'yes'
 				]
@@ -6075,7 +6145,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-sort-and-results-wrap' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-sorting-wrap' => 'background-color: {{VALUE}}',
 				]
 			]
 		);
@@ -6093,7 +6163,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'left' => 15,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-sort-and-results-wrap' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+					'{{WRAPPER}} .wpr-grid-sorting-wrap' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				]
 			]
 		);
@@ -6115,9 +6185,40 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'size' => 25,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-sort-and-results-wrap' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-				],
+					'{{WRAPPER}} .wpr-grid-sorting-wrap' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				]
+				// 'separator' => 'before'
+			]
+		);
+
+		// Results
+		$this->add_control(
+			'sort_title_style_heading',
+			[
+				'label' => esc_html__( 'Results', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
 				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'sort_title_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#7A7A7A',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-sort-heading *' => 'color: {{VALUE}}'
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'sort_title',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-grid-sort-heading *'
 			]
 		);
 
@@ -6138,7 +6239,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#7A7A7A',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-sort-and-results-wrap .woocommerce-result-count' => 'color: {{VALUE}}'
+					'{{WRAPPER}} .wpr-grid-sorting-inner-wrap .woocommerce-result-count' => 'color: {{VALUE}}'
 				],
 			]
 		);
@@ -6148,7 +6249,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'name'     => 'results',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-sort-and-results-wrap .woocommerce-result-count'
+				'selector' => '{{WRAPPER}} .wpr-grid-sorting-inner-wrap .woocommerce-result-count'
 			]
 		);
 
@@ -6169,7 +6270,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#7A7A7A',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-sort-and-results-wrap .wpr-filter .orderby' => 'color: {{VALUE}}'
+					'{{WRAPPER}} .wpr-grid-sorting-inner-wrap form .orderby' => 'color: {{VALUE}}'
 				],
 			]
 		);
@@ -6181,7 +6282,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#FFF',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-sort-and-results-wrap .wpr-filter .orderby' => 'background-color: {{VALUE}}'
+					'{{WRAPPER}} .wpr-grid-sorting-inner-wrap form .orderby' => 'background-color: {{VALUE}}'
 				],
 			]
 		);
@@ -6191,7 +6292,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'name'     => 'sorting',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-sort-and-results-wrap .wpr-filter .orderby'
+				'selector' => '{{WRAPPER}} .wpr-grid-sorting-inner-wrap form .orderby'
 			]
 		);
 
@@ -7919,13 +8020,15 @@ class Wpr_Woo_Grid extends Widget_Base {
 		
 		$orderby = isset($_GET['orderby']) ? $_GET['orderby'] : '';
 
-		if ( $settings['show_sort_heading'] === 'yes' ) {
-			echo '<div class="wpr-sort-heading">';
+		echo '<div class="wpr-grid-sorting-wrap">';
+
+		if ( '' !== $settings['sort_heading'] ) {
+			echo '<div class="wpr-grid-sort-heading">';
 				echo '<'. $settings['sort_heading_tag'] .'>'. esc_html( $settings['sort_heading'] ) .'</'. $settings['sort_heading_tag'] .'>';
 			echo '</div>';
 		}
 
-		echo '<div class="wpr-sort-and-results-wrap">';
+		echo '<div class="wpr-grid-sorting-inner-wrap">';
 
 			echo '<div class="wpr-products-result-count">';
 				if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) { 
@@ -7937,36 +8040,23 @@ class Wpr_Woo_Grid extends Widget_Base {
 			
 			?>
 
-			<div class="wpr-filter-orderby-wrap">
-				<form action="#" method="get" class="wpr-filter wpr-filter-orderby-<?php echo esc_html__($settings['orderby_type'], 'wpr-addons') ?>">
-					<?php if('dropdown' === $settings['orderby_type']) : ?>
-						<!-- DROPDOWN STYLE -->
-						<span class="wpr-orderby-wrap">
+			<div class="wpr-grid-orderby">
+				<form action="#" method="get">
+					<!-- DROPDOWN STYLE -->
+					<span>
 						<i class="wpr-orderby-icon fas fa-angle-down"></i>
 						<select name="orderby" class="orderby" aria-label="<?php echo esc_attr__('Shop order', 'wpr-addons'); ?>">
 							<?php foreach($catalog_orderby_options as $id => $name) : ?>
 								<option value="<?php echo esc_attr($id); ?>" <?php selected($orderby, $id); ?>><?php echo esc_html($name); ?></option>
 							<?php endforeach; ?>
 						</select>
-						</span>
-					<?php else : ?>
-						<!-- LIST SELECT STYLE -->
-						<?php foreach($catalog_orderby_options as $id => $name) : ?>
-							<div class="orderby-input-group">
-								<input name="orderby" class="orderby" type="radio"
-									id="orderby-<?php echo esc_attr($id); ?>"
-									aria-label="<?php echo esc_attr__('Shop order', 'wpr-addons'); ?>"
-									<?php checked($orderby, $id); ?>
-									value="<?php echo esc_attr($id); ?>"/>
-								<label for="orderby-<?php echo esc_attr($id); ?>"><?php echo esc_html($name); ?></label>
-							</div>
-						<?php endforeach; ?>
-					<?php endif; ?>
+					</span>
 				</form>
 			</div>
 
 			<?php
 
+		echo '</div>';
 		echo '</div>';
 	}
 
@@ -8469,11 +8559,11 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$post_index = 0;
 
-		if ( 'upsell' === $settings['query_selection'] ) {
+		if ( 'upsell' === $settings['query_selection'] && '' !== $settings['upsell_heading'] ) {
 			echo '<div class="wpr-upsell-heading">';
 				echo '<'. $settings['upsell_heading_tag'] .'>'. esc_html( $settings['upsell_heading'] ) .'</'. $settings['upsell_heading_tag'] .'>';
 			echo '</div>';
-		} elseif ('cross-sell' === $settings['query_selection'] ) {
+		} elseif ('cross-sell' === $settings['query_selection'] && '' !== $settings['cross_sell_heading'] ) {
 			echo '<div class="wpr-cross-sell-heading">';
 				echo '<'. $settings['cross_sell_heading_tag'] .'>'. esc_html( $settings['cross_sell_heading'] ) .'</'. $settings['cross_sell_heading_tag'] .'>';
 			echo '</div>';
