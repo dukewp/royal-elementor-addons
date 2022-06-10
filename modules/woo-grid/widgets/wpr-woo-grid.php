@@ -8005,7 +8005,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 	}
 
 	// Render Sort & Results
-	public function render_sort_and_results_count( $settings ) {
+	public function render_grid_sorting( $settings ) {
 
 		$catalog_orderby_options = [
 			'menu_order' => esc_html__('Default sorting', 'wpr-addons'),
@@ -8542,13 +8542,13 @@ class Wpr_Woo_Grid extends Widget_Base {
 	}
 
 	protected function render() {
+		// Get Settings
+		$settings = $this->get_settings();
+
 		if ( ! class_exists( 'WooCommerce' ) ) {
 			echo '<h2>'. esc_html__( 'WooCommerce is NOT active!', 'wpr-addons' ) .'</h2>';
 			return;
 		}
-
-		// Get Settings
-		$settings = $this->get_settings();
 		// Get Posts
 		// var_dump($this->get_main_query_args());
 		$posts = new \WP_Query( $this->get_main_query_args() );
@@ -8574,7 +8574,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			
 			if ( 'upsell' !== $settings['query_selection'] && 'cross-sell' !== $settings['query_selection'] ) {
 				// Sort & Results
-				$this->render_sort_and_results_count( $settings );
+				$this->render_grid_sorting( $settings );
 
 				// Filters
 				$this->render_grid_filters( $settings );
