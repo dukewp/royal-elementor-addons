@@ -2109,12 +2109,12 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     background-color: black;
 }
 
-.elementor-widget-wpr-product-tabs .comment_container img {
+.elementor-widget-wpr-product-tabs #reviews #comments ol.commentlist li img.avatar {
     float: left;
     position: absolute;
     top: 0;
     left: 0;
-    padding: 3px;
+    padding: 0;
     width: 32px;
     height: auto;
     background: #ebe9eb;
