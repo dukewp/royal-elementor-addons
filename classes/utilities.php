@@ -121,6 +121,7 @@ class Utilities {
 		];
 	}
 
+
 	/**
 	** Get Available Custom Post Types or Taxonomies
 	*/
@@ -147,6 +148,23 @@ class Utilities {
 		}
 
 		return $custom_type_list;
+	}
+
+	
+	/**
+	** Get Available WooCommerce Taxonomies
+	*/
+	public static function get_woo_taxonomies() {
+		$taxonomy_list = [];
+
+		foreach ( get_object_taxonomies( 'product' ) as $taxonomy_data ) {
+			$taxonomy = get_taxonomy( $taxonomy_data );
+			if( $taxonomy->show_ui ) {
+				$taxonomy_list[ $taxonomy_data ] = $taxonomy->label;
+			}
+		}
+
+		return $taxonomy_list;
 	}
 
 
