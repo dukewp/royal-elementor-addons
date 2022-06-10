@@ -1661,7 +1661,7 @@ class Wpr_Nav_Menu extends Widget_Base {
 					if ( $depth > 0 ) {
 						$item_class = 'wpr-sub-menu-item';
 
-						if ( in_array( 'current-menu-item', $item->classes ) ) {
+						if ( in_array( 'current-menu-item', $item->classes ) || in_array( 'current-menu-ancestor', $item->classes ) ) {
 							$item_class .= ' wpr-active-menu-item';
 						}
 					}
