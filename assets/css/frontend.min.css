@@ -2051,8 +2051,11 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 }
 
 .elementor-widget-wpr-product-tabs .wpr-product-tabs table,
-.elementor-widget-wpr-product-tabs .wpr-product-tabs tr:last-child th,
-.elementor-widget-wpr-product-tabs .wpr-product-tabs tr:last-child td {
+.elementor-widget-wpr-product-tabs .wpr-product-tabs tr th,
+.elementor-widget-wpr-product-tabs .wpr-product-tabs tr td,
+.wpr-product-additional-information table.shop_attributes,
+.wpr-product-additional-information table.shop_attributes td,
+.wpr-product-additional-information table.shop_attributes th {
   border: none;
 }
 

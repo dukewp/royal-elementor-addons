@@ -1017,6 +1017,8 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'size' => 1,
 				],
 				'selectors' => [
+					'{{WRAPPER}} .wpr-product-tabs table tr td' => 'border-left-width: {{SIZE}}px; border-left-style: solid;',
+					'{{WRAPPER}} .wpr-product-tabs table tr th' => 'border-right-width: {{SIZE}}px; border-right-style: solid;',
 					'{{WRAPPER}} .wpr-product-tabs table tr:not(:last-child) td' => 'border-bottom-width: {{SIZE}}px; border-bottom-style: solid;',
 					'{{WRAPPER}} .wpr-product-tabs table tr:not(:last-child) th' => 'border-bottom-width: {{SIZE}}px; border-bottom-style: solid;',
 					'{{WRAPPER}}.wpr-add-info-borders-yes .wpr-product-tabs table td' => 'border-width: {{SIZE}}px; border-style: solid;',
