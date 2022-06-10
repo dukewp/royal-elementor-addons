@@ -2434,6 +2434,10 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     border-radius: 0;
 }
 
+.wpr-cart-wrapper table.shop_table td {
+    border: none;
+}
+
 .elementor-widget[class*="elementor-widget-wpr-"] table.shop_table .variation {
     display: flex;
 }

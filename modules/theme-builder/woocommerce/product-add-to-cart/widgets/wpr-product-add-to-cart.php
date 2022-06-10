@@ -1102,7 +1102,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 			[
 				'name'     => 'add_to_cart_variation_names',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .variations th.label'
+				'selector' => '{{WRAPPER}} .variations th.label label'
 			]
 		);
 
@@ -1120,7 +1120,8 @@ class Wpr_Product_AddToCart extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .variations th.label' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				]
+				],
+				'separator' => 'before'
 			]
 		);
 
