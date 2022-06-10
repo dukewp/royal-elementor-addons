@@ -1009,6 +1009,25 @@ class Wpr_Product_AddToCart extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'grouped_product_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 10,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-add-to-cart form.cart .group_table td' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
 		$this->end_controls_section();
 
 		// Styles ====================
