@@ -2043,6 +2043,10 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     margin-bottom: 0;
 }
 
+.wpr-product-additional-information table.shop_attributes {
+    margin-bottom: 0;
+}
+
 .wpr-product-additional-information table td,
 .wpr-product-additional-information table th,
 .elementor-widget-wpr-product-tabs table td,
