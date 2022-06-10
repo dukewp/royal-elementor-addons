@@ -2246,30 +2246,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 		);
 
 		$this->add_control(
-			'cross_sell_heading',
-			[
-				'label' => esc_html__( 'Heading', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => 'You may be interested in...',
-				'condition' => [
-					'query_selection' => [ 'cross-sell'],
-				]
-			]
-		);
-
-		$this->add_control(
-			'upsell_heading',
-			[
-				'label' => esc_html__( 'Heading', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => 'You may also like...',
-				'condition' => [
-					'query_selection' => [ 'upsell'],
-				]
-			]
-		);
-
-		$this->add_control(
 			'upsell_heading_tag',
 			[
 				'label' => esc_html__( 'Title HTML Tag', 'wpr-addons' ),
@@ -2309,6 +2285,30 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'cross_sell_heading',
+			[
+				'label' => esc_html__( 'Heading', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => 'You may be interested in...',
+				'condition' => [
+					'query_selection' => [ 'cross-sell'],
+				]
+			]
+		);
+
+		$this->add_control(
+			'upsell_heading',
+			[
+				'label' => esc_html__( 'Heading', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => 'You may also like...',
+				'condition' => [
+					'query_selection' => [ 'upsell'],
+				]
+			]
+		);
+
 		$this->end_controls_section(); 
 
 		// Tab: Content ==============
@@ -2339,10 +2339,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'h5' => 'H5',
 					'h6' => 'H6',
 				],
-				'default' => 'h2',
-				'condition' => [
-					'sort_heading!' => '',
-				]
+				'default' => 'h2'
 			]
 		);
 
