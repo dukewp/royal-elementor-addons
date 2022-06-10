@@ -3122,6 +3122,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 .wpr-sub-filters {
     display: none;
+    padding: 0;
 }
 
 
