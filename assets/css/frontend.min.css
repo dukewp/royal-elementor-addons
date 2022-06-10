@@ -1902,6 +1902,11 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     margin: 0;
 }
 
+.wpr-product-tabs ol,
+.wpr-product-tabs ul {
+    padding: 0;
+}
+
 .wpr-product-tabs .woocommerce-noreviews {
     margin-bottom: 10px;
 }
