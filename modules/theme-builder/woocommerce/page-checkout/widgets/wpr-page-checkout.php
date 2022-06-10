@@ -97,6 +97,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} .col-1' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .col-2' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-checkout-order-review-table-inner' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-order-details' => 'background-color: {{VALUE}}',
 				],
 			]
 		);
@@ -202,6 +203,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} .col-1' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .col-2' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-checkout-order-review-table-inner' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-order-details' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -762,6 +764,37 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} #payment .payment_box' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} #payment .payment_box::before' => 'border-bottom-color: {{VALUE}}',
 				],
+			]
+		);
+
+		$this->add_control(
+			'order_received_heading',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Order Received', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'order_received_texts_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#333333',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-order p' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-order address' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-order-overview li' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'order_received_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .woocommerce-order p, {{WRAPPER}} .woocommerce-order address',
 			]
 		);
 
