@@ -2285,6 +2285,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'default' => 'h2',
 				'condition' => [
 					'query_selection' => [ 'upsell'],
+					'upsell_heading!' => ''
 				]
 			]
 		);
@@ -2305,6 +2306,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'default' => 'h2',
 				'condition' => [
 					'query_selection' => [ 'cross-sell'],
+					'cross_sell_heading!' => ''
 				]
 			]
 		);
@@ -2327,6 +2329,15 @@ class Wpr_Woo_Grid extends Widget_Base {
 		);
 
 		$this->add_control(
+			'sort_heading',
+			[
+				'label' => esc_html__( 'Heading', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => 'Shop'
+			]
+		);
+
+		$this->add_control(
 			'sort_heading_tag',
 			[
 				'label' => esc_html__( 'Title HTML Tag', 'wpr-addons' ),
@@ -2340,22 +2351,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'h6' => 'H6',
 				],
 				'default' => 'h2',
-				'condition' => [
-					'sort_heading!' => '',
-				]
-			]
-		);
-
-		$this->add_control(
-			'sort_heading',
-			[
-				'label' => esc_html__( 'Heading', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => 'Shop',
-				'condition' => [
-					'sort_heading!' => '',
-				],
-				'separator' => 'after'
+				'sort_heading!' => ''
 			]
 		);
 
@@ -6195,7 +6191,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$this->add_control(
 			'sort_title_style_heading',
 			[
-				'label' => esc_html__( 'Results', 'wpr-addons' ),
+				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before'
 			]
@@ -8273,7 +8269,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 				    if ( 'yes' === $settings['pagination_first_last'] ) {
 				    	if ( $paged >= 2 ) {
-					    	echo '<a href="'. esc_url(substr(get_pagenum_link( $paged + 1, true ), 0, strpos(get_pagenum_link( $paged + 1, true ), '?orderby'))) .'" class="wpr-first-page">';
+					    	echo '<a href="'. esc_url(get_pagenum_link( $paged + 1, true )) .'" class="wpr-first-page">';
+					    	// echo '<a href="'. esc_url(substr(get_pagenum_link( $paged + 1, true ), 0, strpos(get_pagenum_link( $paged + 1, true ), '?orderby'))) .'" class="wpr-first-page">';
 					    		echo Utilities::get_wpr_icon( $settings['pagination_fl_icon'], 'left' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					    		echo '<span>'. esc_html($settings['pagination_first_text']) .'</span>';
 					    	echo '</a>';

@@ -50,6 +50,8 @@ class Wpr_Product_Excerpt extends Widget_Base {
 				'default'   => '#444444',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-excerpt p' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-product-excerpt li' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-product-excerpt a' => 'color: {{VALUE}};'
 				],
 			]
 		);
