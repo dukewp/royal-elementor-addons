@@ -48,9 +48,7 @@ class Wpr_Product_Excerpt extends Widget_Base {
 				'label'     => esc_html__('Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#444444',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-product-excerpt p' => 'color: {{VALUE}};',
-				],
+				'selector'       => '{{WRAPPER}} .wpr-product-excerpt p, {{WRAPPER}} .wpr-product-excerpt li, {{WRAPPER}} .wpr-product-excerpt a',
 			]
 		);
 

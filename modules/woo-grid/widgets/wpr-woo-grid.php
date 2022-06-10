@@ -2354,8 +2354,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'default' => 'Shop',
 				'condition' => [
 					'sort_heading!' => '',
-				],
-				'separator' => 'after'
+				]
 			]
 		);
 
