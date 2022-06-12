@@ -238,6 +238,42 @@ class Wpr_Page_Checkout extends Widget_Base {
         $this->end_controls_section();
 
 		// Tab: Style ==============
+		// Section: Headings ----------
+		$this->start_controls_section(
+			'section_checkout_titles',
+			[
+				'label' => esc_html__( 'Titles', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'headings_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#000',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-billing-fields h3' => 'color: {{VALUE}}',
+					'{{WRAPPER}} #ship-to-different-address' => 'color: {{VALUE}}',
+					'{{WRAPPER}} #order_review_heading' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-order-details__title' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-column__title' => 'color: {{VALUE}}'
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'headings_typography',
+				'selector' => '{{WRAPPER}} .woocommerce-billing-fields h3, {{WRAPPER}} #ship-to-different-address, {{WRAPPER}} #order_review_heading, {{WRAPPER}} .woocommerce-order-details__title, {{WRAPPER}} .woocommerce-column__title',
+			]
+		);
+
+		$this->end_controls_section();
+
+		// Tab: Style ==============
 		// Section: Forms ----------
 		$this->start_controls_section(
 			'section_checkout_forms',
@@ -794,7 +830,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 			[
 				'name'     => 'order_received_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .woocommerce-order p, {{WRAPPER}} .woocommerce-order address',
+				'selector' => '{{WRAPPER}} .woocommerce-order p, {{WRAPPER}} .woocommerce-order address, {{WRAPPER}} .woocommerce-order-overview li',
 			]
 		);
 
