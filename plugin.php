@@ -116,6 +116,7 @@ class Plugin {
 		
 		// Plugin Sale Notice
 		// require WPR_ADDONS_PATH . 'classes/plugin-sale-notice.php';
+		require WPR_ADDONS_PATH . 'classes/global-colors.php';
 
 		// Admin Files
 		if ( is_admin() ) {
