@@ -2576,6 +2576,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 .elementor-widget-wpr-page-checkout table.shop_table {
     margin: 0;
+    border-collapse: collapse;
 }
 
 .elementor-widget-wpr-page-checkout form .form-row {

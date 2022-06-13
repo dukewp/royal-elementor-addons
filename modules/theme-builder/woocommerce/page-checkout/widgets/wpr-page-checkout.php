@@ -812,6 +812,18 @@ class Wpr_Page_Checkout extends Widget_Base {
 		);
 
 		$this->add_control(
+			'payment_methods_separator_color',
+			[
+				'label'  => esc_html__( 'Separator Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#333333',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-checkout #payment ul.payment_methods' => 'border-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
 			'place_order_payment_methods_inputs',
 			[
 				'type' => Controls_Manager::HEADING,
@@ -886,6 +898,15 @@ class Wpr_Page_Checkout extends Widget_Base {
 			]
 		);
 
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'tooltip_texts',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .payment_box p',
+			]
+		);
+
 		$this->add_control(
 			'order_received_heading',
 			[
@@ -914,7 +935,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 			[
 				'name'     => 'order_received_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .woocommerce-order p, {{WRAPPER}} .woocommerce-order address, {{WRAPPER}} .woocommerce-order-overview li, {{WRAPPER}} .wc_payment_method label, {{WRAPPER}} .payment_box p, {{WRAPPER}} .place-order *',
+				'selector' => '{{WRAPPER}} .woocommerce-order p, {{WRAPPER}} .woocommerce-order address, {{WRAPPER}} .woocommerce-order-overview li, {{WRAPPER}} .wc_payment_method label, {{WRAPPER}} .place-order *',
 			]
 		);
 
