@@ -1212,6 +1212,34 @@ class Wpr_Page_My_Account extends Widget_Base {
 		);
 
 		$this->add_control(
+			'form_sub_labels_title',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Sub-Labels', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'form_sub_labels_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#000',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-form-row em' => 'color: {{VALUE}}'
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'form_sub_labels_typography',
+				'selector' => '{{WRAPPER}} .woocommerce-form-row em',
+			]
+		);
+
+		$this->add_control(
 			'form_inputs_title',
 			[
 				'type' => Controls_Manager::HEADING,
