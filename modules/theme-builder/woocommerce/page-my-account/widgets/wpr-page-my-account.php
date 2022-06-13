@@ -826,6 +826,15 @@ class Wpr_Page_My_Account extends Widget_Base {
 			]
 		);
 
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'addresses_titles',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .woocommerce-Address-title h3',
+			]
+		);
+
 		$this->add_responsive_control(
 			'my_account_addresses_padding',
 			[

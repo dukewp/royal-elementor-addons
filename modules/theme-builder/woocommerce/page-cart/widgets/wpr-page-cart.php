@@ -1410,6 +1410,36 @@ class Wpr_Page_Cart extends Widget_Base {
 		);
 
 		$this->add_control(
+			'cart_totals_title',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Title', 'wpr-addons' ),
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'cart_totals_title_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#333333',
+				'selectors' => [
+					'{{WRAPPER}} .cart_totals h2' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'cart_totals_title',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .cart_totals h2',
+			]
+		);
+
+		$this->add_control(
 			'cart_totals_table_heading',
 			[
 				'type' => Controls_Manager::HEADING,
@@ -1576,7 +1606,7 @@ class Wpr_Page_Cart extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name'     => 'cart_totals_headings',
+				'name'     => 'cart_totals_texts',
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .cart_totals th, {{WRAPPER}} .cart_totals td, {{WRAPPER}} .shipping-calculator-button',
 			]
