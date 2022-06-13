@@ -1830,7 +1830,7 @@ class Wpr_Page_Cart extends Widget_Base {
 					'{{WRAPPER}} .wc-proceed-to-checkout .checkout-button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
-					'buttons_border_type!' => 'none',
+					'checkout_button_border_type!' => 'none',
 				],
 			]
 		);
