@@ -109,7 +109,9 @@ class Wpr_Product_Filters extends Widget_Base {
 		// Add New Filters
         if ( ! empty( $selected_filters ) ) {
             asort( $selected_filters );
+            $url = add_query_arg( 'wprfilters', '', $url );
 			$url = add_query_arg( $filter, implode( ',', $selected_filters ), $url );
+            $url = str_replace( '%2C', ',', $url );
 		}
 
 		return [

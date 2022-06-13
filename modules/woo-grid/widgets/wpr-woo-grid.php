@@ -7203,7 +7203,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 	
 			$this->my_upsells = $product->get_upsell_ids();
 			
-			if (!empty($this->my_upsells)) {
+			if ( !empty($this->my_upsells) ) {
 				$args = array(
 					'post_type' => 'product',
 					'post__not_in' => $settings[ 'query_exclude_products' ],
@@ -7225,7 +7225,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			// Get Product
 			$this->crossell_ids = [];
 			
-			if(is_cart()) {
+			if( is_cart() ) {
 				$items = WC()->cart->get_cart();
 	
 				foreach($items as $item => $values) {
@@ -7237,7 +7237,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				  }
 			}
 
-			if (is_single()) {
+			if ( is_single() ) {
 				$product = wc_get_product();
 		
 				if ( ! $product ) {
@@ -7249,7 +7249,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 	
 			$meta_query = WC()->query->get_meta_query();
 			
-			if (!empty($this->crossell_ids)) {
+			if ( !empty($this->crossell_ids) ) {
 				$args = array(
 					'post_type' => 'product',
 					'post__not_in' => $settings[ 'query_exclude_products' ],
@@ -7272,7 +7272,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		// $settings['query_orderby'] = get_query_var('orderby');
 		// var_dump($settings['query_orderby'], 'query-orderby');
 
-		// Order By
+		// Default Order By
 		if ( 'sales' === $settings['query_orderby'] ) {
 			$args['meta_key'] = 'total_sales';
 			$args['orderby']  = 'meta_value_num';
@@ -7365,18 +7365,53 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 	// Taxonomy Query Args
 	public function get_tax_query_args() {
-		$settings = $this->get_settings();
-		$tax_query = [];
+		// Filters Query
+		if ( isset($_GET['wprfilters']) ) {
+            $params = [];
+            $selected_filters = [];
+            parse_str( $_SERVER['QUERY_STRING' ], $params );
 
-		foreach ( get_object_taxonomies( 'product' ) as $tax ) {
-			if ( ! empty($settings[ 'query_taxonomy_'. $tax ]) ) {
-				array_push( $tax_query, [
-					'taxonomy' => $tax,
-					'field' => 'id',
-					'terms' => $settings[ 'query_taxonomy_'. $tax ]
-				] );
+            foreach ( $params as $key => $querie ) {
+                $selected_filters[$key] = $_GET[$key];
+            }
+
+			$woo_taxonomies = get_object_taxonomies( 'product' );
+
+			var_dump($woo_taxonomies);
+			var_dump($selected_filters);
+
+			$tax_query = [];
+
+		// Grid Query
+		} else {
+			$settings = $this->get_settings();
+			$tax_query = [];
+
+			foreach ( get_object_taxonomies( 'product' ) as $tax ) {
+				if ( ! empty($settings[ 'query_taxonomy_'. $tax ]) ) {
+					array_push( $tax_query, [
+						'taxonomy' => $tax,
+						'field' => 'id',
+						'terms' => $settings[ 'query_taxonomy_'. $tax ]
+					] );
+				}
 			}
 		}
+
+		// $queries =[];
+		// $new_queries = [];
+		// parse_str( $_SERVER['QUERY_STRING' ], $queries );
+		// var_dump($queries);
+		// foreach ( $queries as $key => $querie ) {
+		// 	$new_queries[] = $key;
+		// }
+
+		// return [
+		// 	'taxonomy' => 'pa_color',
+		// 	'field' => 'slug',
+		// 	'terms' => explode( ',', $_GET['filter_color'] ),
+		// ];
+		// var_dump($_SERVER['QUERY_STRING' ]);
 
 		return $tax_query;
 	}
