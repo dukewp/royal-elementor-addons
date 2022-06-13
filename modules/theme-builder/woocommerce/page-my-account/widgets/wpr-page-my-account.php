@@ -1060,8 +1060,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'default' => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} button.button' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .download-file a.button' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .woocommerce-orders-table__cell a.button' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button' => 'color: {{VALUE}}'
 				],
 			]
 		);
@@ -1073,8 +1073,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} button.button' => 'background-color: {{VALUE}}',
-					'{{WRAPPER}} .download-file a.button' => 'background-color: {{VALUE}}',
-					'{{WRAPPER}} .woocommerce-orders-table__cell a.button' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button' => 'background-color: {{VALUE}}'
 				]
 			]
 		);
@@ -1087,6 +1087,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} button.button' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button' => 'border-color: {{VALUE}}'
 				],
 			]
 		);
@@ -1095,7 +1097,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'account_details_button_box_shadow',
-				'selector' => '{{WRAPPER}} button.button',
+				'selector' => '{{WRAPPER}} button.button, {{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button, {{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button',
 			]
 		);
 
@@ -1116,6 +1118,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'default' => '#FFF',
 				'selectors' => [
 					'{{WRAPPER}} button.button:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button:hover' => 'color: {{VALUE}}'
 				],
 			]
 		);
@@ -1127,6 +1131,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} button.button:hover' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button:hover' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button:hover' => 'background-color: {{VALUE}}'
 				]
 			]
 		);
@@ -1139,6 +1145,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} button.button:hover' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button:hover' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button:hover' => 'border-color: {{VALUE}}'
 				]
 			]
 		);
@@ -1147,7 +1155,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'account_details_button_box_shadow_hr',
-				'selector' => '{{WRAPPER}} button.button:hover',
+				'selector' => '{{WRAPPER}} button.button:hover, {{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button:hover, {{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button:hover',
 			]
 		);
 
@@ -1174,6 +1182,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'step' => 0.1,
 				'selectors' => [
 					'{{WRAPPER}} button.button' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button' => 'transition-duration: {{VALUE}}s'
 				],
 			]
 		);
@@ -1191,7 +1201,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'name'     => 'account_details_button_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} button.button',
+				'selector' => '{{WRAPPER}} button.button, {{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button, {{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button',
 			]
 		);
 
@@ -1211,6 +1221,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'default' => 'none',
 				'selectors' => [
 					'{{WRAPPER}} button.button' => 'border-style: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button' => 'border-style: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button' => 'border-style: {{VALUE}}'
 				],
 				'separator' => 'before',
 			]
@@ -1230,6 +1242,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} button.button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 				'condition' => [
 					'account_details_button_border_type!' => 'none',
@@ -1251,6 +1265,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} button.button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				]
 			]
 		);
@@ -1269,6 +1285,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} button.button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 				'separator' => 'before'
 			]
@@ -1288,6 +1306,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} button.button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 			]
 		);
@@ -1315,6 +1335,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				],
                 'selectors' => [
 					'{{WRAPPER}} .edit-account>p:last-child' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-pagination' => 'text-align: {{VALUE}};'
 				],
 			]
 		); // TODO: determine location and selectors

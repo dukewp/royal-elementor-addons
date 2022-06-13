@@ -74,6 +74,35 @@ class Wpr_Page_Checkout extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'checkout_first_column_width',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'size_units' => [ 'px', '%' ],
+				'range' => [
+					'px' => [
+						'min' => 100,
+						'max' => 2000,
+					],
+					'%' => [
+						'min' => 50,
+						'max' => 100,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 800,
+				],			
+				'selectors' => [
+					'{{WRAPPER}}.wpr-checkout-horizontal .wpr-checkout-order-review-table' => 'width: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'checkout_layout' => 'horizontal'
+				]
+			]
+		);
+
         $this->end_controls_section();
 
 		// Tab: Style ==============
@@ -374,7 +403,6 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'selector' => '{{WRAPPER}} .input-text, {{WRAPPER}} .select2-container',
 			]
 		);
-
 		$this->end_controls_tab();
 
 		$this->start_controls_tab( 'forms_fields_focus_styles', 
@@ -407,6 +435,23 @@ class Wpr_Page_Checkout extends Widget_Base {
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
+
+		$this->add_control(
+			'forms_fields_typography_divider',
+			[
+				'type' => Controls_Manager::DIVIDER,
+				'style' => 'thick',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'forms_fields_typography',
+				'label'    => esc_html__( 'Typography', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}} .col2-set .input-text, {{WRAPPER}} .col2-set .input-text::placeholder, {{WRAPPER}} .form-row .input-text, {{WRAPPER}} .form-row .input-text::placeholder, {{WRAPPER}} .col2-set select, {{WRAPPER}} .col2-set .select2-container',
+			]
+		);
 
 		$this->add_control(
 			'form_fields_border_type',
@@ -489,6 +534,29 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .input-text' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .select2-container' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_responsive_control(
+			'form_row_distance',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],			
+				'selectors' => [
+					'{{WRAPPER}} .form-row' => 'margin-top: {{SIZE}}{{UNIT}} !important;',
 				],
 			]
 		);
@@ -653,6 +721,21 @@ class Wpr_Page_Checkout extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'checkout_table_border_color',
+			[
+				'label'     => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} table.woocommerce-orders-table th' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} table.shop_table thead th' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} table.shop_table tfoot th' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} table.shop_table td' => 'border-color: {{VALUE}}'
+				],
+				'separator' => 'before'
+			]
+		);
+
 		$this->add_responsive_control(
 			'checkout_table_description_alignment',
 			[
@@ -749,7 +832,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'payment_methods_inputs_distance',
+			'payment_methods_inputs_distance_hr',
 			[
 				'type' => Controls_Manager::SLIDER,
 				'label' => esc_html__( 'Distance', 'wpr-addons' ),
@@ -822,6 +905,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} .woocommerce-order address' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-order-overview li' => 'color: {{VALUE}}',
 				],
+				'separator' => 'after'
 			]
 		);
 
@@ -830,7 +914,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 			[
 				'name'     => 'order_received_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .woocommerce-order p, {{WRAPPER}} .woocommerce-order address, {{WRAPPER}} .woocommerce-order-overview li',
+				'selector' => '{{WRAPPER}} .woocommerce-order p, {{WRAPPER}} .woocommerce-order address, {{WRAPPER}} .woocommerce-order-overview li, {{WRAPPER}} .wc_payment_method label, {{WRAPPER}} .payment_box p, {{WRAPPER}} .place-order *',
 			]
 		);
 

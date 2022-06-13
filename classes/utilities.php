@@ -118,7 +118,7 @@ class Utilities {
 			'page-cart',
 			'page-checkout',
 			'page-my-account',
-			'woo-category-grid'
+			// 'woo-category-grid'
 		];
 	}
 

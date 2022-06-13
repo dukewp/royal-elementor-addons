@@ -715,6 +715,7 @@ class Wpr_Page_Cart extends Widget_Base {
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} table.cart td.product-name' => 'color: {{VALUE}}',
+					'{{WRAPPER}} table.cart td.product-name a' => 'color: {{VALUE}}'
 				],
 				'separator' => 'after'
 			]
@@ -1354,6 +1355,28 @@ class Wpr_Page_Cart extends Widget_Base {
 		);
 
 		$this->add_control(
+			'button_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 5,
+					'right' => 10,
+					'bottom' => 5,
+					'left' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .actions .button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .coupon-col-end .button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .shipping-calculator-form .button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wc-proceed-to-checkout .checkout-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
 			'button_margin',
 			[
 				'label' => esc_html__( 'Margin', 'wpr-addons' ),
@@ -1369,8 +1392,7 @@ class Wpr_Page_Cart extends Widget_Base {
 					'{{WRAPPER}} .actions .button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .shipping-calculator-form .button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wc-proceed-to-checkout .checkout-button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
-				],
-				'separator' => 'before'
+				]
 			]
 		);
 
@@ -1548,6 +1570,15 @@ class Wpr_Page_Cart extends Widget_Base {
 			[
 				'type' => Controls_Manager::DIVIDER,
 				'style' => 'thick',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'cart_totals_headings',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .cart_totals th, {{WRAPPER}} .cart_totals td, {{WRAPPER}} .shipping-calculator-button',
 			]
 		);
 
