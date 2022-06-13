@@ -114,6 +114,10 @@ class Wpr_Product_Filters extends Widget_Base {
             $url = str_replace( '%2C', ',', $url );
 		}
 
+		if ( !isset( $_GET[ $filter ] ) ) {
+			var_dump($filter);
+		}
+
 		return [
 			'url' => $url,
 			'class' => $is_filter_active ? 'wpr-active-product-filter' : ''
