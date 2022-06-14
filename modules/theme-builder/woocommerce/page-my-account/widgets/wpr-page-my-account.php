@@ -956,7 +956,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_my_account_button',
 			[
-				'label' => esc_html__( 'Buttons', 'wpr-addons' ),
+				'label' => esc_html__( 'Table Buttons', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 			]
