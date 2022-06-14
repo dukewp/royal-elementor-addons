@@ -1585,6 +1585,33 @@ class Wpr_Product_AddToCart extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'variation_select_width',
+			[
+				'label' => esc_html__( 'Options Table Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 100,
+						'max' => 500,
+					],
+					'%' => [
+						'min' => 10,
+						'max' => 100,
+					]
+				],
+				'default' => [
+					'unit' => '%',
+					'size' => 100,
+				],
+				'selectors' => [
+					'{{WRAPPER}} form.cart .variations select' => 'width: {{SIZE}}{{UNIT}};'
+				],
+				'separator' => 'before'
+			]
+		);
+
 		$this->end_controls_section(); // variations select section
 
 		$this->start_controls_section(

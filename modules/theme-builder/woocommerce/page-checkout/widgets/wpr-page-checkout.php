@@ -142,6 +142,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} .col-1' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} .col-2' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-checkout-order-review-table-inner' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-order-details' => 'border-color: {{VALUE}}',
 				],
 			]
 		);
@@ -165,6 +166,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} .col-1' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} .col-2' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} .wpr-checkout-order-review-table-inner' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-order-details' => 'border-style: {{VALUE}}',
 				],
 				'separator' => 'before',
 			]
@@ -187,6 +189,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} .col-1' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .col-2' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-checkout-order-review-table-inner' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-order-details' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
 					'checkout_general_border_type!' => 'none',
@@ -211,6 +214,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} .col-1' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .col-2' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-checkout-order-review-table-inner' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-order-details' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -260,7 +264,8 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}}.wpr-checkout-vertical .col-1' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-checkout-vertical .col-2' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-checkout-vertical .wpr-checkout-order-review-table-inner' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-				],
+					'{{WRAPPER}} .woocommerce-order-details' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				]
 			]
 		);
 
