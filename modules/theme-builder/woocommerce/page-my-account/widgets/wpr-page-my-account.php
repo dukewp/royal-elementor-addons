@@ -1974,6 +1974,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'default' => 'solid',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-message' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-Message' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} .woocommerce-info' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} .woocommerce-error' => 'border-style: {{VALUE}};'
 				],
