@@ -2614,6 +2614,10 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     border: none !important;
 }
 
+/* .wpr-my-account-tabs-vertical .wpr-my-account-tab div.woocommerce {
+    display: flex;
+} */
+
 .wpr-my-account-tabs-horizontal nav.woocommerce-MyAccount-navigation,
 .wpr-my-account-tabs-horizontal .woocommerce-MyAccount-content {
     float: none;

@@ -78,11 +78,11 @@ class Wpr_Page_Checkout extends Widget_Base {
 			'checkout_first_column_width',
 			[
 				'type' => Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'label' => esc_html__( 'Width', 'wpr-addons' ),
 				'size_units' => [ 'px', '%' ],
 				'range' => [
 					'px' => [
-						'min' => 100,
+						'min' => 300,
 						'max' => 2000,
 					],
 					'%' => [
@@ -828,6 +828,15 @@ class Wpr_Page_Checkout extends Widget_Base {
 			]
 		);
 
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'order_received_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .woocommerce-order p, {{WRAPPER}} .woocommerce-order address, {{WRAPPER}} .wc_payment_method label, {{WRAPPER}} .place-order *',
+			]
+		);
+
 		$this->add_control(
 			'place_order_payment_methods_inputs',
 			[
@@ -930,17 +939,24 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} .woocommerce-order p' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-order address' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-order-overview li' => 'color: {{VALUE}}',
-				],
-				'separator' => 'after'
+				]
+			]
+		);
+
+		$this->add_control(
+			'order_received_heading',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Order Overview Typography', 'wpr-addons' ),
 			]
 		);
 
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name'     => 'order_received_typography',
+				'name'     => 'thankyou_order_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .woocommerce-order p, {{WRAPPER}} .woocommerce-order address, {{WRAPPER}} .woocommerce-order-overview li, {{WRAPPER}} .wc_payment_method label, {{WRAPPER}} .place-order *',
+				'selector' => '{{WRAPPER}} .woocommerce-thankyou-order-details *',
 			]
 		);
 
