@@ -1264,7 +1264,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text::placeholder' => 'color: {{VALUE}};'
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text::placeholder' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .select2-selection__rendered' => 'color: {{VALUE}} !important;'
 				]
 			]
 		);
@@ -1276,7 +1277,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'border-color: {{VALUE}};',
-					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'border-color: {{VALUE}};'
+					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .select2-selection__rendered' => 'border-color: {{VALUE}} !important;',
 				]
 			]
 		);
@@ -1289,7 +1291,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'default' => '#F3F3F3',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'background-color: {{VALUE}};',
-					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'background-color: {{VALUE}};'
+					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .select2-selection__rendered' => 'background-color: {{VALUE}} !important;'
 				]
 			]
 		);
@@ -1299,7 +1302,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'name' => 'forms_fields_normal_box_shadow',
 				'label' => esc_html__( 'Box Shadow', 'wpr-addons' ),
-				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text, {{WRAPPER}} .woocommerce-form-login .input-text',
+				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text, {{WRAPPER}} .woocommerce-form-login .input-text, {{WRAPPER}} .woocommerce-MyAccount-content-wrapper .select2-selection__rendered',
 			]
 		);
 
@@ -1318,7 +1321,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text:focus' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .woocommerce-form-login .input-text:focus' => 'color: {{VALUE}};'
+					'{{WRAPPER}} .woocommerce-form-login .input-text:focus' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .select2-selection__rendered:focus' => 'color: {{VALUE}};'
 				],
 			]
 		);
@@ -1329,13 +1333,30 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'name' => 'forms_fields_focus_box_shadow',
 				'label' => esc_html__( 'Box Shadow', 'wpr-addons' ),
-				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text:focus, {{WRAPPER}} select:focus, {{WRAPPER}} .woocommerce-form-login .input-text:focus',
+				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text:focus, {{WRAPPER}} select:focus, {{WRAPPER}} .woocommerce-form-login .input-text:focus, {{WRAPPER}} .woocommerce-MyAccount-content-wrapper .select2-selection__rendered:focus',
 			]
 		);
 
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
+
+		$this->add_control(
+			'form_fields_typo_divider',
+			[
+				'type' => Controls_Manager::DIVIDER,
+				'style' => 'thick',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'form_fields_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text, {{WRAPPER}} .woocommerce-form-login .input-text, {{WRAPPER}} .woocommerce-MyAccount-content-wrapper .select2-selection__rendered'
+			]
+		);
 
 		$this->add_control(
 			'form_fields_border_type',
@@ -1354,6 +1375,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .select2-selection__rendered' => 'border-style: {{VALUE}};',
 				],
 				'separator' => 'before',
 			]
@@ -1374,6 +1396,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .select2-selection__rendered' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
 					'form_fields_border_type!' => 'none',
@@ -1396,6 +1419,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .select2-selection__rendered' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 			]
 		);
@@ -1415,8 +1439,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .selection span' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
-					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .selection' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .select2-selection__rendered' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
 				],
 			]
 		);
