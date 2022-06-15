@@ -469,7 +469,8 @@ class Wpr_Page_Cart extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-cart-section' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} .cart_totals' => 'border-style: {{VALUE}};',
-					'{{WRAPPER}} .wpr-cart-section-wrap table.shop_table' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .wpr-cart-section-wrap table.shop_table td:not(:last-child)' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .wpr-cart-section-wrap table.shop_table th' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} .wpr-cart-section-table-wrap' => 'border-style: {{VALUE}};'
 				]
 			]
@@ -541,8 +542,8 @@ class Wpr_Page_Cart extends Widget_Base {
 				],
 				'default' => 'solid',
 				'selectors' => [
-					'{{WRAPPER}} table th' => 'border-style: {{VALUE}};',
-					'{{WRAPPER}} .cart_totals table td' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} table th' => 'border-style: {{VALUE}} !important;',
+					'{{WRAPPER}} .cart_totals table td' => 'border-style: {{VALUE}} !important;',
 					'{{WRAPPER}} .woocommerce-cart-form table tr:not(:last-child) td' => 'border-style: {{VALUE}};'
 				]
 			]
@@ -555,8 +556,8 @@ class Wpr_Page_Cart extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#E8E8E8',
 				'selectors' => [
-					'{{WRAPPER}} table th' => 'border-color: {{VALUE}}',
-					'{{WRAPPER}} .cart_totals table td' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} table th' => 'border-color: {{VALUE}} !important',
+					'{{WRAPPER}} .cart_totals table td' => 'border-color: {{VALUE}} !important',
 					'{{WRAPPER}} .woocommerce-cart-form table tr:not(:last-child) td' => 'border-color: {{VALUE}}'
 				],
 				'condition' => [
@@ -578,8 +579,8 @@ class Wpr_Page_Cart extends Widget_Base {
 					'left' => 0,
 				],
 				'selectors' => [
-					'{{WRAPPER}} table th' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .cart_totals table td' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} table th' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+					'{{WRAPPER}} .cart_totals table td' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
 					'{{WRAPPER}} .woocommerce-cart-form table tr:not(:last-child) td' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
@@ -1728,7 +1729,6 @@ class Wpr_Page_Cart extends Widget_Base {
 				'default' => 'solid',
 				'selectors' => [
 					'{{WRAPPER}} .shipping-calculator-button' => 'border-style: {{VALUE}};',
-					'{{WRAPPER}} .cart_totals table.shop_table' => 'border-style: {{VALUE}};'
 				],
 				'separator' => 'before',
 			]
@@ -1748,7 +1748,6 @@ class Wpr_Page_Cart extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .shipping-calculator-button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .cart_totals table.shop_table' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 				'condition' => [
 					'cart_totals_border_type!' => 'none',
@@ -1770,7 +1769,6 @@ class Wpr_Page_Cart extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .shipping-calculator-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .cart_totals table.shop_table' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				]
 			]
 		);

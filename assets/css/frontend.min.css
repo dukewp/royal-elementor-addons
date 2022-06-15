@@ -2420,6 +2420,11 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     display: flex;
 }
 
+.wpr-cart-section-table-wrap table.shop_table,
+.cart_totals table.shop_table {
+    border: none;
+}
+
 .wpr-cart-wrapper table.shop_table,
 .woocommerce-cart .cart-collaterals .cart_totals table {
     border-collapse: collapse;

@@ -1337,7 +1337,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .place-order button:hover' => 'color: {{VALUE}}',
 				],
@@ -1349,6 +1349,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .place-order button:hover' => 'background-color: {{VALUE}}',
 				]
@@ -1360,7 +1361,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605BE5',
+				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .place-order button:hover' => 'border-color: {{VALUE}}',
 				]
@@ -1392,7 +1393,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 			[
 				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
-				'default' => 0.1,
+				'default' => 0.3,
 				'min' => 0,
 				'max' => 5,
 				'step' => 0.1,
@@ -1417,6 +1418,17 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .actions .button, 
 				{{WRAPPER}} .place-order button, {{WRAPPER}} .coupon .button',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '15',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -1433,7 +1445,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
 					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
 				],
-				'default' => 'none',
+				'default' => 'solid',
 				'selectors' => [
 					'{{WRAPPER}} .place-order button' => 'border-style: {{VALUE}}',
 				],
@@ -1448,10 +1460,10 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 2,
-					'right' => 2,
-					'bottom' => 2,
-					'left' => 2,
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .place-order button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -1469,10 +1481,10 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 10,
-					'right' => 15,
-					'bottom' => 10,
-					'left' => 15,
+					'top' => 12,
+					'right' => 25,
+					'bottom' => 12,
+					'left' => 25,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .place-order button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -1505,10 +1517,10 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 2,
-					'right' => 2,
-					'bottom' => 2,
-					'left' => 2,
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .place-order button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
