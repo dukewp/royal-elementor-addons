@@ -67,8 +67,9 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Align', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
-				'default' => 'center',
+				'default' => 'left',
 				'label_block' => false,
+				'default' => 'left',
 				'options' => [
 					'left' => [
 						'title' => esc_html__( 'Left', 'wpr-addons' ),
@@ -192,6 +193,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link a' => 'color: {{VALUE}}',
 				],
@@ -214,7 +216,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
+				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link a' => 'border-color: {{VALUE}}',
 				],
@@ -227,6 +229,17 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'name' => 'tab_typography',
 				'label' => esc_html__( 'Typography', 'wpr-addons' ),
 				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-navigation-link a',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '15',
+							'unit' => 'px',
+						]
+					]
+				]
 			]
 		);
 
@@ -235,14 +248,14 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
-				'default' => 0.1,
+				'default' => 0.5,
 				'min' => 0,
 				'max' => 5,
 				'step' => 0.1,
 				'frontend_available' => true,
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link a' => '-webkit-transition-duration: {{VALUE}}s;transition-duration: {{VALUE}}s',
-				],
+					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link a' => '-webkit-transition-duration: {{VALUE}}s;transition-duration: {{VALUE}}s'
+				]
 			]
 		);
 
@@ -336,7 +349,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'default' => [
 					'top' => 0,
 					'right' => 0,
-					'bottom' => 0,
+					'bottom' => 6,
 					'left' => 0,
 				],
 				'selectors' => [
@@ -359,7 +372,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 200,
+					'size' => 250,
 				],
 				'selectors' => [
 					'{{WRAPPER}}.wpr-my-account-tabs-vertical .woocommerce-MyAccount-navigation' => 'width: {{SIZE}}px'
@@ -382,9 +395,10 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link:hover a' => 'color: {{VALUE}}',
-				],
+					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link:hover a' => 'color: {{VALUE}}'
+				]
 			]
 		);
 
@@ -393,10 +407,11 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
 				'alpha' => true,
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link:hover a' => 'border-bottom-color: {{VALUE}}',
-				],
+					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link:hover a' => 'border-bottom-color: {{VALUE}}'
+				]
 			]
 		);
 
@@ -405,7 +420,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#e5e5e5',
+				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link:hover a' => 'border-color: {{VALUE}}',
 				],
@@ -418,6 +433,17 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'name' => 'tab_typography_hover',
 				'label' => esc_html__( 'Typography', 'wpr-addons' ),
 				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-navigation-link:hover a',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '15',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -435,9 +461,10 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link.is-active a' => 'color: {{VALUE}}',
-				],
+					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link.is-active a' => 'color: {{VALUE}}'
+				]
 			]
 		);
 
@@ -446,7 +473,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
+				'default' => '#FFFFFF',
 				'alpha' => true,
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link.is-active a' => 'background-color: {{VALUE}}',
@@ -459,7 +486,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#e5e5e5',
+				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link.is-active a' => 'border-color: {{VALUE}}',
 				],
@@ -472,7 +499,17 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'name' => 'tab_typography_active',
 				'label' => esc_html__( 'Typography', 'wpr-addons' ),
 				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-navigation-link.is-active a',
-				'separator' => 'before'
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '16',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -497,7 +534,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
+				'default' => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper' => 'color: {{VALUE}}',
 				]
@@ -509,7 +546,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Link Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#c36',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper a' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-form-login .woocommerce-LostPassword a' => 'color: {{VALUE}}'
@@ -522,7 +559,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Link Hover Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper a:hover' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-form-login .woocommerce-LostPassword a:hover' => 'color: {{VALUE}}'
@@ -535,7 +572,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
+				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper' => 'border-color: {{VALUE}}',
 				],
@@ -547,7 +584,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper' => 'background-color: {{VALUE}}',
 				]
@@ -559,7 +596,18 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'name'     => 'tab_content_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content-wrapper'
+				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content-wrapper',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px'
+						]
+					]
+				]
 			]
 		);
 
@@ -577,7 +625,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 5,
+					'size' => 12,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper>p:first-of-type' => 'margin-bottom: {{SIZE}}px'
@@ -653,10 +701,10 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 5,
-					'right' => 5,
-					'bottom' => 5,
-					'left' => 5,
+					'top' => 15,
+					'right' => 15,
+					'bottom' => 15,
+					'left' => 15,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
@@ -688,8 +736,9 @@ class Wpr_Page_My_Account extends Widget_Base {
 		$this->add_control(
 			'my_account_table_heading_color',
 			[
-				'label'     => esc_html__( 'Color', 'wpr-addons' ),
-				'type'      => Controls_Manager::COLOR,
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} table.woocommerce-orders-table th' => 'color: {{VALUE}}',
 					'{{WRAPPER}} table.shop_table thead th' => 'color: {{VALUE}}',
@@ -703,6 +752,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label'     => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type'      => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} table.woocommerce-orders-table th' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} table.shop_table thead th' => 'background-color: {{VALUE}}',
@@ -717,6 +767,17 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'name'     => 'my_account_table_heading_typography',
 				'label'    => esc_html__( 'Typography', 'wpr-addons' ),
 				'selector' => '{{WRAPPER}} table.woocommerce-orders-table th, {{WRAPPER}} table.shop_table thead th, {{WRAPPER}} table.shop_table tfoot th',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px'
+						]
+					]
+				]
 			]
 		);
 
@@ -727,10 +788,10 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 5,
-					'right' => 5,
-					'bottom' => 5,
-					'left' => 5,
+					'top' => 8,
+					'right' => 8,
+					'bottom' => 8,
+					'left' => 8,
 				],
 				'selectors' => [
 					'{{WRAPPER}} table.woocommerce-orders-table th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -745,6 +806,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
+				'default' => 'center',
 				'options' => [
 					'start' => [
 						'title' => esc_html__( 'Start', 'wpr-addons' ),
@@ -763,7 +825,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 					'{{WRAPPER}} table.woocommerce-orders-table th' => 'text-align: {{VALUE}};',
 					'{{WRAPPER}} table.shop_table thead th' => 'text-align: {{VALUE}};',
 					'{{WRAPPER}} table.shop_table tfoot th' => 'text-align: {{VALUE}};'
-				] //TODO: doesnt work
+				]
 			]
 		);
 
@@ -780,6 +842,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label'     => esc_html__( 'Color', 'wpr-addons' ),
 				'type'      => Controls_Manager::COLOR,
+				'default' => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} table.shop_table td' => 'color: {{VALUE}}',
 					'{{WRAPPER}} table.shop_table td a' => 'color: {{VALUE}}',
@@ -792,6 +855,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label'     => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type'      => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} table.shop_table td' => 'background-color: {{VALUE}}',
 				],
@@ -804,6 +868,17 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'name'     => 'my_account_table_description_typography',
 				'label'    => esc_html__( 'Typography', 'wpr-addons' ),
 				'selector' => '{{WRAPPER}} table.shop_table td',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '13',
+							'unit' => 'px'
+						]
+					]
+				]
 			]
 		);
 
@@ -830,6 +905,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
+				'default' => 'center',
 				'options' => [
 					'start' => [
 						'title' => esc_html__( 'Start', 'wpr-addons' ),
@@ -868,9 +944,9 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'default' => 'solid',
 				'selectors' => [
 					'{{WRAPPER}} table.shop_table th' => 'border-style: {{VALUE}};',
-					'{{WRAPPER}} table.shop_table td' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} table.shop_table td' => 'border-style: {{VALUE}};'
 				],
-				'separator' => 'before',
+				'separator' => 'before'
 			]
 		);
 
@@ -879,11 +955,11 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
+				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} table.shop_table th' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} table.shop_table td' => 'border-color: {{VALUE}}'
-				],
+				]
 			]
 		);
 
@@ -904,8 +980,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 					'{{WRAPPER}} table.shop_table td' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
-					'my_account_table_border!' => 'none',
-				],
+					'my_account_table_border!' => 'none'
+				]
 			]
 		);
 
@@ -927,6 +1003,17 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'name'     => 'addresses_titles',
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .woocommerce-Address-title h3',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '18',
+							'unit' => 'px',
+						]
+					]
+				]
 			]
 		);
 
@@ -937,10 +1024,10 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 5,
-					'right' => 5,
-					'bottom' => 5,
-					'left' => 5,
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0
 				],
 				'selectors' => [
 					'{{WRAPPER}} address' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
@@ -976,11 +1063,11 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button' => 'color: {{VALUE}}'
-				],
+				]
 			]
 		);
 
@@ -989,6 +1076,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button' => 'background-color: {{VALUE}}'
@@ -1031,11 +1119,11 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button:hover' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button:hover' => 'color: {{VALUE}}'
-				],
+				]
 			]
 		);
 
@@ -1044,6 +1132,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button:hover' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button:hover' => 'background-color: {{VALUE}}'
@@ -1056,7 +1145,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605BE5',
+				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button:hover' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button:hover' => 'border-color: {{VALUE}}'
@@ -1089,7 +1178,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
-				'default' => 0.1,
+				'default' => 0.3,
 				'min' => 0,
 				'max' => 5,
 				'step' => 0.1,
@@ -1114,6 +1203,17 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'name'     => 'my_account_button_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button, {{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -1146,10 +1246,10 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 2,
-					'right' => 2,
-					'bottom' => 2,
-					'left' => 2,
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -1271,7 +1371,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
+				'default' => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper label' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-form-login label' => 'color: {{VALUE}}'
@@ -1284,6 +1384,17 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'name' => 'form_labels_typography',
 				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content-wrapper label, {{WRAPPER}} .woocommerce-form-login label',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -1294,10 +1405,10 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 5,
+					'top' => 0,
 					'right' => 5,
 					'bottom' => 5,
-					'left' => 5,
+					'left' => 0,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper label' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -1319,7 +1430,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
+				'default' => '#D8D8D8',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-form-row em' => 'color: {{VALUE}}'
 				],
@@ -1331,6 +1442,17 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'name' => 'form_sub_labels_typography',
 				'selector' => '{{WRAPPER}} .woocommerce-form-row em',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '12',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -1356,6 +1478,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'color: {{VALUE}};',
@@ -1370,10 +1493,11 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'border-color: {{VALUE}};',
 					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'border-color: {{VALUE}};',
-					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .select2-selection__rendered' => 'border-color: {{VALUE}} !important;',
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .select2-selection__rendered' => 'border-color: {{VALUE}} !important;'
 				]
 			]
 		);
@@ -1383,7 +1507,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#F3F3F3',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'background-color: {{VALUE}};',
 					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'background-color: {{VALUE}};',
@@ -1414,6 +1538,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text:focus' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .woocommerce-form-login .input-text:focus' => 'color: {{VALUE}};',
@@ -1449,7 +1574,18 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'name'     => 'form_fields_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text, {{WRAPPER}} .woocommerce-form-login .input-text, {{WRAPPER}} .woocommerce-MyAccount-content-wrapper .select2-selection__rendered'
+				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text, {{WRAPPER}} .woocommerce-form-login .input-text, {{WRAPPER}} .woocommerce-MyAccount-content-wrapper .select2-selection__rendered',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px'
+						]
+					]
+				]
 			]
 		);
 
@@ -1506,10 +1642,10 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 2,
-					'right' => 2,
-					'bottom' => 2,
-					'left' => 2,
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -1553,7 +1689,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 5,
+					'size' => 25
 				],
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper fieldset' => 'margin-top: {{SIZE}}{{UNIT}};',
@@ -1589,7 +1725,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} button.button' => 'color: {{VALUE}}'
 				],
@@ -1601,6 +1737,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} button.button' => 'background-color: {{VALUE}}'
 				]
@@ -1641,7 +1778,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} button.button:hover' => 'color: {{VALUE}}'
 				],
@@ -1653,6 +1790,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#342ECB',
 				'selectors' => [
 					'{{WRAPPER}} button.button:hover' => 'background-color: {{VALUE}}'
 				]
@@ -1664,7 +1802,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605BE5',
+				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} button.button:hover' => 'border-color: {{VALUE}}'
 				]
@@ -1696,7 +1834,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
-				'default' => 0.1,
+				'default' => 0.5,
 				'min' => 0,
 				'max' => 5,
 				'step' => 0.1,
@@ -1720,6 +1858,17 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'name'     => 'account_forms_button_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} button.button',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '15',
+							'unit' => 'px'
+						]
+					]
+				]
 			]
 		);
 
@@ -1751,10 +1900,10 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 2,
-					'right' => 2,
-					'bottom' => 2,
-					'left' => 2,
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
 				],
 				'selectors' => [
 					'{{WRAPPER}} button.button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
@@ -1790,10 +1939,10 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 10,
-					'right' => 15,
-					'bottom' => 10,
-					'left' => 15,
+					'top' => 12,
+					'right' => 25,
+					'bottom' => 12,
+					'left' => 25,
 				],
 				'selectors' => [
 					'{{WRAPPER}} button.button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
@@ -1809,7 +1958,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 0,
+					'top' => 10,
 					'right' => 0,
 					'bottom' => 0,
 					'left' => 0,
@@ -1862,7 +2011,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-message' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-info' => 'color: {{VALUE}}',
@@ -1876,7 +2025,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#F7F6F7',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-message' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-info' => 'background-color: {{VALUE}}',
@@ -1903,7 +2052,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Info Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#1e85be',
+				'default' => '#30B5FF',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-info' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-info::before' => 'color: {{VALUE}}',
@@ -1916,7 +2065,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Error Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#b81c23',
+				'default' => '#FF19FD',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-error' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-error::before' => 'color: {{VALUE}}',
@@ -1930,6 +2079,17 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'name' => 'notice_typography',
 				'label' => esc_html__( 'Typography', 'wpr-addons' ),
 				'selector' => '{{WRAPPER}} .woocommerce-message, {{WRAPPER}} .woocommerce-info, {{WRAPPER}} .woocommerce-error',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -1947,7 +2107,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 15,
+					'size' => 18,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-message::before' => 'font-size: {{SIZE}}px;',
@@ -1971,7 +2131,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
 					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
 				],
-				'default' => 'solid',
+				'default' => 'none',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-message' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} .woocommerce-Message' => 'border-style: {{VALUE}};',
@@ -1989,10 +2149,10 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 3,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-message' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -2030,10 +2190,10 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 20,
-					'right' => 20,
-					'bottom' => 20,
-					'left' => 20,
+					'top' => 13,
+					'right' => 25,
+					'bottom' => 13,
+					'left' => 25,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-message' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} calc({{LEFT}}{{UNIT}} + {{notice_icon_size.SIZE}}px + 20px);',
@@ -2072,7 +2232,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#ffffff',
+				'default' => '#696969',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content a.button' => 'color: {{VALUE}}',
 				],
@@ -2084,7 +2244,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#919191',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content a.button' => 'background-color: {{VALUE}}',
 				],
@@ -2116,7 +2276,18 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'name' => 'btn_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content a.button'
+				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content a.button',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '15',
+							'unit' => 'px'
+						]
+					]
+				]
 			]
 		);
 
@@ -2125,7 +2296,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
-				'default' => 0.1,
+				'default' => 0.5,
 				'min' => 0,
 				'max' => 5,
 				'step' => 0.1,
@@ -2149,7 +2320,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFFFFF',
+				'default' => '#696969',
 				'selectors' => [
 					'{{WRAPPER}}  .woocommerce-MyAccount-content a.button:hover' => 'color: {{VALUE}}',
 				],
@@ -2161,7 +2332,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#919191',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content a.button:hover' => 'background-color: {{VALUE}}',
 				],
@@ -2173,6 +2344,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content a.button:hover' => 'border-color: {{VALUE}}',
 				]
@@ -2240,10 +2412,10 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 2,
-					'right' => 2,
-					'bottom' => 2,
-					'left' => 2,
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content a.button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -2258,9 +2430,9 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 12,
+					'top' => 10,
 					'right' => 30,
-					'bottom' => 12,
+					'bottom' => 10,
 					'left' => 30,
 				],
 				'selectors' => [

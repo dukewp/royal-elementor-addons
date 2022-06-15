@@ -620,7 +620,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-message' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-info' => 'color: {{VALUE}}',
@@ -630,16 +630,44 @@ class Wpr_Page_Checkout extends Widget_Base {
 		);
 
 		$this->add_control(
+			'notice_link_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-message a' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-info a' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-error a' => 'color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_control(
+			'notice_link_hover_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-message a:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-info a:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-error a:hover' => 'color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_control(
 			'notice_bg_color',
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#F7F6F7',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-message' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-info' => 'background-color: {{VALUE}}',
-					'{{WRAPPER}} .woocommerce-error' => 'background-color: {{VALUE}}',
-				],
+					'{{WRAPPER}} .woocommerce-error' => 'background-color: {{VALUE}}'
+				]
 			]
 		);
 
@@ -648,7 +676,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 			[
 				'label' => esc_html__( 'Success Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#8fae1b',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-message' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-message::before' => 'color: {{VALUE}}',
@@ -661,7 +689,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 			[
 				'label' => esc_html__( 'Info Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#1e85be',
+				'default' => '#30B5FF',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-info' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-info::before' => 'color: {{VALUE}}',
@@ -674,7 +702,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 			[
 				'label' => esc_html__( 'Error Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#b81c23',
+				'default' => '#FF19FD',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-error' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-error::before' => 'color: {{VALUE}}',
@@ -688,6 +716,17 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'name' => 'notice_typography',
 				'label' => esc_html__( 'Typography', 'wpr-addons' ),
 				'selector' => '{{WRAPPER}} .woocommerce-message, {{WRAPPER}} .woocommerce-info, {{WRAPPER}} .woocommerce-error',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px'
+						]
+					]
+				]
 			]
 		);
 
@@ -705,7 +744,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 15,
+					'size' => 18,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-message::before' => 'font-size: {{SIZE}}px;',
@@ -729,7 +768,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
 					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
 				],
-				'default' => 'solid',
+				'default' => 'none',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-message' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} .woocommerce-Message' => 'border-style: {{VALUE}};',
@@ -747,10 +786,10 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 3,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1
 				],
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-message' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -759,7 +798,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} .woocommerce-error' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 				'condition' => [
-					'notice_border_type!' => 'none',
+					'notice_border_type!' => 'none'
 				]
 			]
 		);
@@ -792,10 +831,10 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 20,
-					'right' => 20,
-					'bottom' => 20,
-					'left' => 20,
+					'top' => 13,
+					'right' => 25,
+					'bottom' => 13,
+					'left' => 25,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-message' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} calc({{LEFT}}{{UNIT}} + {{notice_icon_size.SIZE}}px + 20px);',
