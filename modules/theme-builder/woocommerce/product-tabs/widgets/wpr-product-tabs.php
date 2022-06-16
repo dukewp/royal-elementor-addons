@@ -464,7 +464,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 					],
 					'font_size' => [
 						'default' => [
-							'size' => '18',
+							'size' => '14',
 							'unit' => 'px',
 						],
 					]
