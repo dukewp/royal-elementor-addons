@@ -153,7 +153,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 					// '{{WRAPPER}}.wpr-my-account-tabs-vertical .woocommerce-MyAccount-content' => 'width: calc(70% - {{SIZE}}px);'
 					'{{WRAPPER}}.wpr-my-account-tabs-horizontal .woocommerce-MyAccount-content' => 'margin-top: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-my-account-tabs-vertical .woocommerce-MyAccount-content' => 'margin-left: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-my-account-tabs-vertical .woocommerce-MyAccount-content' => 'width: calc(100% - {{tab_width.SIZE}}px - {{SIZE}}px);'
+					'{{WRAPPER}}.wpr-my-account-tabs-vertical .woocommerce-MyAccount-content' => 'width: calc(100% - {{tab_width.SIZE}}px - {{SIZE}}px);',
+					'[data-elementor-device-mode="mobile"] {{WRAPPER}}.wpr-my-account-tabs-vertical .woocommerce-MyAccount-content' => 'width: calc(100%  - {{tab_width_mobile.SIZE}}px - {{SIZE}}px);'
 				],
 				'separator' => 'before',
 			]
@@ -2601,6 +2602,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 
     protected function render() {
 		$is_editor = \Elementor\Plugin::$instance->editor->is_edit_mode();
+		$settings = $this->get_settings_for_display();
 
 		// Simulate a logged out user so that all WooCommerce sections will render in the Editor
 		if ( $is_editor ) {

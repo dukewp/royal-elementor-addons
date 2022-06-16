@@ -947,7 +947,9 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'default'   => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-tabs table td p' => 'color: {{VALUE}};',
-				],
+					'{{WRAPPER}} .wpr-product-tabs table td a' => 'color: {{VALUE}};' ,
+					'{{WRAPPER}} .wpr-product-tabs table td' => 'color: {{VALUE}};' 
+				]
 			]
 		);
 

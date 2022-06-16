@@ -2597,6 +2597,15 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     display: block;
 }
 
+@media screen and (max-width: 670px) {
+    .wpr-checkout-horizontal .wpr-customer-details-wrapper {
+        flex-direction: column;
+    }
+
+    .wpr-checkout-horizontal .wpr-customer-details-wrapper .wpr-checkout-order-review-table {
+       max-width: 100%;
+    }
+}
 /*--------------------------------------------------------------
  == My Account
 --------------------------------------------------------------*/
@@ -2651,6 +2660,16 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 .elementor-widget-wpr-my-account .wpr-my-account-tab .woocommerce-form-login__rememberme {
     display: block;
+}
+
+@media screen and (max-width: 768px) {
+    .woocommerce-account .wpr-my-account-tabs-vertical .woocommerce-MyAccount-navigation {
+        float: left;
+    }
+
+    .woocommerce-account .wpr-my-account-tabs-vertical .woocommerce-MyAccount-content {
+        float: right;
+    }
 }
 
 /*--------------------------------------------------------------

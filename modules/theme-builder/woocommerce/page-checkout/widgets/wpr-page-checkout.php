@@ -301,7 +301,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'headings_typography',
-				'selector' => '{{WRAPPER}} .woocommerce-billing-fields h3, {{WRAPPER}} #ship-to-different-address, {{WRAPPER}} #order_review_heading, {{WRAPPER}} .woocommerce-order-details__title, {{WRAPPER}} .woocommerce-column__title',
+				'selector' => '{{WRAPPER}} .woocommerce-billing-fields h3, {{WRAPPER}} #ship-to-different-address, {{WRAPPER}} #order_review_heading, {{WRAPPER}} .woocommerce-order-details__title, {{WRAPPER}} .woocommerce-column__title, {{WRAPPER}} .woocommerce-additional-fields h3',
 				'fields_options' => [
 					'typography' => [
 						'default' => 'custom',
@@ -355,7 +355,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'form_labels_typography',
-				'selector' => '{{WRAPPER}} .col2-set label',
+				'selector' => '{{WRAPPER}} .col2-set label, {{WRAPPER}} .order_comments',
 				'fields_options' => [
 					'typography' => [
 						'default' => 'custom',
