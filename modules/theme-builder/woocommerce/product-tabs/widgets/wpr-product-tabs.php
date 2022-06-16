@@ -2228,7 +2228,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				],				
 				'default' => [
 					'unit' => 'px',
-					'size' => 2s,
+					'size' => 2,
 				],
 				'selectors' => [
 					'{{WRAPPER}} #respond .comment-form .form-submit input#submit' => 'margin-top: {{SIZE}}{{UNIT}};',
