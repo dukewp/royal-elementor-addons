@@ -2666,6 +2666,16 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     display: block;
 }
 
+@media screen and (max-width: 867px) {
+    .woocommerce-account .wpr-my-account-tabs-vertical .woocommerce-MyAccount-navigation {
+        float: left;
+    }
+
+    .woocommerce-account .wpr-my-account-tabs-vertical .woocommerce-MyAccount-content {
+        float: right;
+    }
+}
+
 @media screen and (max-width: 767px) {
     .wpr-my-account-tabs-horizontal .woocommerce-MyAccount-navigation ul {
         flex-direction: column;
