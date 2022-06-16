@@ -119,7 +119,7 @@ class Wpr_Product_Rating extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
+				'default' => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} a.woocommerce-review-link' => 'color: {{VALUE}};',
 				],
@@ -131,7 +131,7 @@ class Wpr_Product_Rating extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color Hover', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
+				'default' => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} a.woocommerce-review-link:hover' => 'color: {{VALUE}};',
 				],
@@ -143,7 +143,18 @@ class Wpr_Product_Rating extends Widget_Base {
 			[
 				'name'     => 'product_rating_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-product-rating .woocommerce-review-link'
+				'selector' => '{{WRAPPER}} .wpr-product-rating .woocommerce-review-link',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '13',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -176,7 +187,7 @@ class Wpr_Product_Rating extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 22,
+					'size' => 20,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-woo-rating i' => 'font-size: {{SIZE}}{{UNIT}};',
@@ -199,7 +210,7 @@ class Wpr_Product_Rating extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 0,
+					'size' => 2,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-woo-rating i' => 'margin-right: {{SIZE}}{{UNIT}};',
@@ -222,7 +233,7 @@ class Wpr_Product_Rating extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 0,
+					'size' => 8,
 				],
 				'selectors' => [
 					'{{WRAPPER}}.wpr-product-rating-flex .wpr-product-rating a.woocommerce-review-link' => 'margin-left: {{SIZE}}{{UNIT}};',

@@ -70,7 +70,7 @@ class Wpr_Product_Stock extends Widget_Base {
 			[
 				'label'     => esc_html__('Icon Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#169543',
+				'default'   => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-stock .in-stock i' => 'color: {{VALUE}};',
 				],
@@ -82,7 +82,7 @@ class Wpr_Product_Stock extends Widget_Base {
 			[
 				'label'     => esc_html__('Text Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#000',
+				'default'   => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-stock .in-stock' => 'color: {{VALUE}};',
 				],
@@ -117,7 +117,7 @@ class Wpr_Product_Stock extends Widget_Base {
 			[
 				'label'     => esc_html__('Icon Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#d9534f',
+				'default'   => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-stock .out-of-stock i' => 'color: {{VALUE}};',
 				],
@@ -129,7 +129,7 @@ class Wpr_Product_Stock extends Widget_Base {
 			[
 				'label'     => esc_html__('Text Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#000',
+				'default'   => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-stock .out-of-stock' => 'color: {{VALUE}};',
 				],
@@ -164,7 +164,7 @@ class Wpr_Product_Stock extends Widget_Base {
 			[
 				'label'     => esc_html__('Icon Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#ee9800',
+				'default'   => '#FF4F40',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-stock .available-on-backorder i' => 'color: {{VALUE}};',
 				],
@@ -176,7 +176,7 @@ class Wpr_Product_Stock extends Widget_Base {
 			[
 				'label'     => esc_html__('Text Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#000',
+				'default'   => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-stock .available-on-backorder' => 'color: {{VALUE}};',
 				],
@@ -248,33 +248,13 @@ class Wpr_Product_Stock extends Widget_Base {
 					'font_family'    => [
 						'default' => '',
 					],
-					'font_weight'    => [
-						'default' => '500',
-					],
 					'font_size'      => [
 						'label'      => esc_html__('Font Size (px)', 'wpr-addons'),
 						'default' => [
-							'size' => '14',
+							'size' => '13',
 							'unit' => 'px'
 						],
 						'size_units' => ['px'],
-					],
-					'text_transform' => [
-						'default' => 'uppercase',
-					],
-					'line_height'    => [
-						'label'      => esc_html__('Line Height (px)', 'wpr-addons'),
-						'default'    => [
-							'size' => '17',
-							'unit' => 'px',
-						],
-						'size_units' => ['px'],
-						'tablet_default' => [
-							'unit' => 'px',
-						],
-						'mobile_default' => [
-							'unit' => 'px',
-						],
 					],
 				],
             ]

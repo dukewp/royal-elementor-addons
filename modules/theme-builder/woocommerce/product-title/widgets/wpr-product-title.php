@@ -70,7 +70,7 @@ class Wpr_Product_Title extends Widget_Base {
             [
                 'label' => esc_html__( 'Alignment', 'wpr-addons' ),
                 'type' => Controls_Manager::CHOOSE,
-                'default' => 'center',
+                'default' => 'left',
                 'label_block' => false,
                 'options' => [
 					'left'    => [
@@ -111,7 +111,7 @@ class Wpr_Product_Title extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#222222',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-title' => 'color: {{VALUE}}',
 				],
@@ -123,7 +123,23 @@ class Wpr_Product_Title extends Widget_Base {
 			[
 				'name'     => 'title_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-product-title'
+				'selector' => '{{WRAPPER}} .wpr-product-title',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '35',
+							'unit' => 'px',
+						],
+					],
+					'letter_spacing' => [
+						'default' => [
+							'size' => '1.1'
+						]
+					],
+				]
 			]
 		);
 
