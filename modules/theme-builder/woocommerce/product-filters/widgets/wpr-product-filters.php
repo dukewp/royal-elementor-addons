@@ -90,7 +90,7 @@ class Wpr_Product_Filters extends Widget_Base {
 
 		// Get Selected Filters 
 		$selected_filters = isset( $_GET[ $filter ] ) ? explode( ',', wc_clean( wp_unslash( $_GET[ $filter ] ) ) ) : [];
-        $is_filter_active  = in_array( $attribute->slug, $selected_filters, true );
+        $is_filter_active = in_array( $attribute->slug, $selected_filters, true );
 
 		// Get Attribute Link
 		$selected_filters = array_map( 'sanitize_title', $selected_filters );
@@ -114,9 +114,12 @@ class Wpr_Product_Filters extends Widget_Base {
             $url = str_replace( '%2C', ',', $url );
 		}
 
-		if ( !isset( $_GET[ $filter ] ) ) {
-			var_dump($filter);
-		}
+		
+		// $qv = $_SERVER['QUERY_STRING' ];
+		// var_dump(parse_str($qv, $params));
+
+		// $url = add_query_arg( $filter, implode( ',', $selected_filters ), $url );
+
 
 		return [
 			'url' => $url,
