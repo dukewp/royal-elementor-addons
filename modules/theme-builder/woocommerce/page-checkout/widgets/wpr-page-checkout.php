@@ -259,6 +259,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				],			
 				'selectors' => [
 					'{{WRAPPER}}.wpr-checkout-horizontal .woocommerce-checkout .col2-set' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'[data-elementor-device-mode="mobile"] {{WRAPPER}}.wpr-checkout-horizontal .woocommerce-checkout .col2-set' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-checkout-horizontal .col-1' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-checkout-horizontal .wpr-checkout-order-review-table-inner' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-checkout-vertical .col-1' => 'margin-bottom: {{SIZE}}{{UNIT}};',
