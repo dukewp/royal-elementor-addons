@@ -7365,27 +7365,27 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 	// Taxonomy Query Args
 	public function get_tax_query_args() {
+		$tax_query = [];
+
 		// Filters Query
 		if ( isset($_GET['wprfilters']) ) {
-            $params = [];
-            $selected_filters = [];
-            parse_str( $_SERVER['QUERY_STRING' ], $params );
+			$selected_filters = WC()->query->get_layered_nav_chosen_attributes();
 
-            foreach ( $params as $key => $querie ) {
-                $selected_filters[$key] = $_GET[$key];
-            }
-
-			$woo_taxonomies = get_object_taxonomies( 'product' );
-
-			var_dump($woo_taxonomies);
-			var_dump($selected_filters);
-
-			$tax_query = [];
+			if ( !empty($selected_filters) ) {
+				foreach ( $selected_filters as $taxonomy => $data ) {
+					array_push($tax_query, [
+						'taxonomy' => $taxonomy,
+						'field' => 'slug',
+						'terms' => $data['terms'],
+						'operator' => 'and' === $data['query_type'] ? 'AND' : 'IN',
+						'include_children' => false,
+					]);
+				}
+			}
 
 		// Grid Query
 		} else {
 			$settings = $this->get_settings();
-			$tax_query = [];
 
 			foreach ( get_object_taxonomies( 'product' ) as $tax ) {
 				if ( ! empty($settings[ 'query_taxonomy_'. $tax ]) ) {

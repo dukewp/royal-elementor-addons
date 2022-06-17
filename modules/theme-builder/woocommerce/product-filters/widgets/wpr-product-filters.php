@@ -78,7 +78,21 @@ class Wpr_Product_Filters extends Widget_Base {
         } else {
             $url = preg_replace('%\/page/[0-9]+%', '', home_url(trailingslashit($wp->request)));
         }
+		$url = add_query_arg( 'wprfilters', '', $url );
 
+		// All current filters.
+		if ( $_chosen_attributes = WC()->query->get_layered_nav_chosen_attributes() ) { // phpcs:ignore Squiz.PHP.DisallowMultipleAssignments.FoundInControlStructure, WordPress.CodeAnalysis.AssignmentInCondition.Found
+			foreach ( $_chosen_attributes as $name => $data ) {
+				$filter_name = wc_attribute_taxonomy_slug( $name );
+				if ( ! empty( $data['terms'] ) ) {
+					$url = add_query_arg( 'filter_' . $filter_name, implode( ',', $data['terms'] ), $url );
+				}
+				if ( 'or' === $data['query_type'] ) {
+					$url = add_query_arg( 'query_type_' . $filter_name, 'or', $url );
+				}
+			}
+		}
+		
 		return $url;
 	}
 
@@ -109,13 +123,8 @@ class Wpr_Product_Filters extends Widget_Base {
 		// Add New Filters
         if ( ! empty( $selected_filters ) ) {
             asort( $selected_filters );
-            $url = add_query_arg( 'wprfilters', '', $url );
 			$url = add_query_arg( $filter, implode( ',', $selected_filters ), $url );
             $url = str_replace( '%2C', ',', $url );
-		}
-
-		if ( !isset( $_GET[ $filter ] ) ) {
-			var_dump($filter);
 		}
 
 		return [
