@@ -72,6 +72,7 @@ class Wpr_Product_Media extends Widget_Base {
 				'type' => Controls_Manager::SWITCHER,
 				'render_type' => 'template',
 				'return_value' => 'yes',
+				'default' => 'yes',
 				'prefix_class' => 'wpr-gallery-lightbox-',
 				'selectors' => [
 					'{{WRAPPER}}.wpr-gallery-lightbox-yes .wpr-product-media-wrap .woocommerce-product-gallery__trigger' => 'display: block !important;'
@@ -105,7 +106,7 @@ class Wpr_Product_Media extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 10,
+					'size' => 12,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-media-wrap .flex-viewport' => 'margin-bottom: {{SIZE}}{{UNIT}};',
@@ -157,7 +158,7 @@ class Wpr_Product_Media extends Widget_Base {
 			[
 				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
 				'type' => 'wpr-arrow-icons',
-				'default' => 'fas fa-angle',
+				'default' => 'svg-angle-1-left',
 				'condition' => [
 					'gallery_slider_nav' => 'yes',
 				],
@@ -481,7 +482,7 @@ class Wpr_Product_Media extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => 'rgba(255,255,255,0.8)',
+				'default' => '#FFFFFFCC',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-gallery-slider-arrow' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-gallery-slider-arrow svg' => 'fill: {{VALUE}};',
@@ -505,7 +506,7 @@ class Wpr_Product_Media extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => 'rgba(255,255,255,0.8)',
+				'default' => '#FFFFFFCC',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-gallery-slider-arrow' => 'border-color: {{VALUE}};',
 				],
@@ -526,7 +527,7 @@ class Wpr_Product_Media extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#ffffff',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-gallery-slider-arrow:hover' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-gallery-slider-arrow:hover svg' => 'fill: {{VALUE}};'
@@ -565,7 +566,7 @@ class Wpr_Product_Media extends Widget_Base {
 			[
 				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
-				'default' => 0.1,
+				'default' => 0.5,
 				'min' => 0,
 				'max' => 5,
 				'step' => 0.1,
@@ -590,7 +591,7 @@ class Wpr_Product_Media extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 25,
+					'size' => 15,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-gallery-slider-arrow' => 'font-size: {{SIZE}}{{UNIT}};',
@@ -614,7 +615,7 @@ class Wpr_Product_Media extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 50,
+					'size' => 31,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-gallery-slider-arrow' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
@@ -642,7 +643,7 @@ class Wpr_Product_Media extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 0,
+					'size' => 4,
 				],
 				'separator' => 'after',
 				'selectors' => [
@@ -683,7 +684,7 @@ class Wpr_Product_Media extends Widget_Base {
 				'default' => [
 					'top' => 2,
 					'right' => 2,
-					'bottom' => 0,
+					'bottom' => 2,
 					'left' => 2,
 				],
 				'selectors' => [
@@ -741,7 +742,7 @@ class Wpr_Product_Media extends Widget_Base {
 				],
 				'default' => [
 					'unit' => '%',
-					'size' => 80,
+					'size' => 100,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-media-wrap .flex-control-nav' => 'max-width: {{SIZE}}{{UNIT}};',
@@ -764,7 +765,7 @@ class Wpr_Product_Media extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 1,
+					'size' => 10,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-media-wrap .flex-control-nav' => 'grid-column-gap: {{SIZE}}{{UNIT}} !important;'
@@ -787,7 +788,7 @@ class Wpr_Product_Media extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 1,
+					'size' => 0,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-media-wrap .flex-control-nav' => 'grid-row-gap: {{SIZE}}{{UNIT}};',
@@ -1062,7 +1063,7 @@ class Wpr_Product_Media extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-media-caption span' => 'color: {{VALUE}}',
 				],
@@ -1074,7 +1075,7 @@ class Wpr_Product_Media extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#ffffff',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-media-caption span' => 'background-color: {{VALUE}}',
 				],
@@ -1103,7 +1104,7 @@ class Wpr_Product_Media extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name'     => 'image_caption_typography',
+				'name' => 'image_caption_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-product-media-caption span'
 			]
@@ -1114,7 +1115,7 @@ class Wpr_Product_Media extends Widget_Base {
 			[
 				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
-				'default' => 0.1,
+				'default' => 0.5,
 				'min' => 0,
 				'max' => 5,
 				'step' => 0.1,
@@ -1132,10 +1133,10 @@ class Wpr_Product_Media extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
+					'top' => 10,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-media-caption span' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -1309,9 +1310,10 @@ class Wpr_Product_Media extends Widget_Base {
 			[
 				'label'     => esc_html__( 'Color', 'wpr-addons' ),
 				'type'      => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-sales-badge span' => 'color: {{VALUE}}',
-				],
+					'{{WRAPPER}} .wpr-product-sales-badge span' => 'color: {{VALUE}}'
+				]
 			]
 		);
 
@@ -1320,6 +1322,7 @@ class Wpr_Product_Media extends Widget_Base {
 			[
 				'label'     => esc_html__( 'Background color', 'wpr-addons' ),
 				'type'      => Controls_Manager::COLOR,
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-sales-badge span' => 'background-color: {{VALUE}}',
 				],
@@ -1331,7 +1334,7 @@ class Wpr_Product_Media extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-sales-badge span' => 'border-color: {{VALUE}}',
 				],

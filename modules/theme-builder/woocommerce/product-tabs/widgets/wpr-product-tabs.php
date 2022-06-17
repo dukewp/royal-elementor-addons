@@ -120,7 +120,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'label' => esc_html__( 'Vertical Align', 'wpr-addons' ),
                 'type' => Controls_Manager::CHOOSE,
                 'label_block' => false,
-                'default' => 'top',
+                'default' => 'middle',
                 'options' => [
                     'top' => [
 						'title' => esc_html__( 'Top', 'wpr-addons' ),
@@ -197,7 +197,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 70,
+					'size' => 90,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wc-tabs li' => 'min-width: {{SIZE}}px;',
@@ -228,7 +228,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
+				'default' => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li a' => 'color: {{VALUE}}',
 				],
@@ -240,6 +240,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
 				'alpha' => true,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li a' => 'background-color: {{VALUE}}',
@@ -252,7 +253,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					// '{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li a' => 'border-color: {{VALUE}}',
@@ -267,6 +268,17 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'name' => 'tab_typography',
 				'label' => esc_html__( 'Typography', 'wpr-addons' ),
 				'selector' => '{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li a',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -275,7 +287,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
-				'default' => 0.1,
+				'default' => 0.5,
 				'min' => 0,
 				'max' => 5,
 				'step' => 0.1,
@@ -403,6 +415,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li:hover a' => 'color: {{VALUE}}',
 				],
@@ -414,6 +427,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
 				'alpha' => true,
 				'selectors' => [
 					// '{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel, {{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li:hover' => 'background-color: {{VALUE}}',
@@ -428,7 +442,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#e5e5e5',
+				'default' => '#E8E8E8',
 				'selectors' => [
 					// '{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel' => 'border-color: {{VALUE}}',
 					// '{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li.active' => 'border-color: {{VALUE}} {{VALUE}} {{active_tab_bg_color.VALUE}} {{VALUE}}',
@@ -444,6 +458,17 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'name' => 'tab_typography_hover',
 				'label' => esc_html__( 'Typography', 'wpr-addons' ),
 				'selector' => '{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li a:hover',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -461,6 +486,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li.active a' => 'color: {{VALUE}}',
 				],
@@ -472,7 +498,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
+				'default' => '#FFFFFF',
 				'alpha' => true,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li.active a' => 'background-color: {{VALUE}}',
@@ -487,7 +513,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#e5e5e5',
+				'default' => '#E8E8E8',
 				'selectors' => [
 					// '{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel' => 'border-color: {{VALUE}}',
 					// '{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li.active' => 'border-color: {{VALUE}} {{VALUE}} {{active_tab_bg_color.VALUE}} {{VALUE}}',
@@ -503,7 +529,18 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'name' => 'tab_typography_active',
 				'label' => esc_html__( 'Typography', 'wpr-addons' ),
 				'selector' => '{{WRAPPER}} .wpr-product-tabs .woocommerce-tabs ul.tabs li.active a',
-				'separator' => 'before'
+				'separator' => 'before',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -526,6 +563,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-Tabs-panel' => 'color: {{VALUE}}',
 				],
@@ -537,7 +575,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
+				'default' => '#FFFFFF',
 				'alpha' => true,
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel' => 'background-color: {{VALUE}}',
@@ -566,6 +604,17 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'name' => 'content_typography',
 				'label' => esc_html__( 'Typography', 'wpr-addons' ),
 				'selector' => '{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -601,6 +650,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-Tabs-panel h2' => 'color: {{VALUE}}',
 				],
@@ -616,6 +666,17 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'name' => 'content_heading_typography',
 				'label' => esc_html__( 'Typography', 'wpr-addons' ),
 				'selector' => '{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel h2',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px',
+						],
+					]
+				],
 				'condition' => [
 					'show_tab_content_titles' => 'yes'
 				]
@@ -654,10 +715,10 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 10,
-					'right' => 10,
-					'bottom' => 10,
-					'left' => 10,
+					'top' => 35,
+					'right' => 35,
+					'bottom' => 35,
+					'left' => 35,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};', // li or a ?
@@ -743,7 +804,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label'     => esc_html__('Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#888888',
+				'default'   => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-tabs table th' => 'color: {{VALUE}};',
 				],
@@ -755,7 +816,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label'     => esc_html__('Background Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#f8f8f8',
+				'default'   => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-tabs table th' => 'background-color: {{VALUE}};',
 				],
@@ -767,6 +828,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label'     => esc_html__('Even Background Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
+				'default'   => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-tabs table tr:nth-child(even) th' => 'background-color: {{VALUE}};',
 				],
@@ -788,20 +850,14 @@ class Wpr_Product_Tabs extends Widget_Base {
 						'label'      => esc_html__('Font Size (px)', 'wpr-addons'),
 						'size_units' => ['px'],
 						'default'    => [
-							'size' => '16',
+							'size' => '14',
 							'unit' => 'px',
 						],
-					],
-					'font_weight'    => [
-						'default' => '400',
-					],
-					'text_transform' => [
-						'default' => 'none',
 					],
 					'line_height'     => [
 						'label'      => esc_html__('Line Height (px)', 'wpr-addons'),
 						'default' => [
-							'size' => '19',
+							'size' => '14',
 							'unit' => 'px',
 						],
 						'size_units' => ['px'],
@@ -825,6 +881,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
+				'default' => 'left',
 				'options' => [
 					'left' => [
 						'title' => esc_html__( 'Left', 'wpr-addons' ),
@@ -865,7 +922,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				],
 				'default'    => [
 					'unit' => '%',
-					'size' => 25,
+					'size' => 21,
 				],
 				'selectors'  => [
 					'{{WRAPPER}} .wpr-product-tabs table th' => 'width: {{SIZE}}{{UNIT}};',
@@ -887,10 +944,12 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label'     => esc_html__('Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#101010',
+				'default'   => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-tabs table td p' => 'color: {{VALUE}};',
-				],
+					'{{WRAPPER}} .wpr-product-tabs table td a' => 'color: {{VALUE}};' ,
+					'{{WRAPPER}} .wpr-product-tabs table td' => 'color: {{VALUE}};' 
+				]
 			]
 		);
 
@@ -899,7 +958,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label'     => esc_html__('Background Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#fdfdfd',
+				'default'   => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-tabs table td' => 'background-color: {{VALUE}};',
 				],
@@ -932,34 +991,10 @@ class Wpr_Product_Tabs extends Widget_Base {
 						'label'      => esc_html__('Font Size (px)', 'wpr-addons'),
 						'size_units' => ['px'],
 						'default'    => [
-							'size' => '16',
+							'size' => '14',
 							'unit' => 'px',
 						],
-					],
-					'font_weight'    => [
-						'default' => '400',
-					],
-					'text_transform' => [
-						'default' => 'none',
-					],
-					'line_height'     => [
-						'label'      => esc_html__('Line Height (px)', 'wpr-addons'),
-						'default' => [
-							'size' => '19',
-							'unit' => 'px',
-						],
-						'size_units' => ['px'],
-						'tablet_default' => [
-							'unit' => 'px',
-						],
-						'mobile_default' => [
-							'unit' => 'px',
-						],
-					],
-					'letter_spacing' => [
-						'label'      => esc_html__('Letter Spacing (px)', 'wpr-addons'),
-						'size_units' => ['px'],
-					],
+					]
 				],
 			]
 		);
@@ -991,7 +1026,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label'     => esc_html__('Divider (Border) Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#f2f2f2',
+				'default'   => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-tabs table td' => 'border-color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-product-tabs table th' => 'border-color: {{VALUE}};',
@@ -1055,7 +1090,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Author Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
+				'default' => '#222222',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-review__author' => 'color: {{VALUE}};',
 				],
@@ -1067,7 +1102,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Date Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#767676',
+				'default' => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-review__published-date' => 'color: {{VALUE}};',
 				],
@@ -1091,7 +1126,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Rating Unmarked Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#767676',
+				'default' => '#D2CDCD',
 				'selectors' => [
 					'{{WRAPPER}}.elementor-widget-wpr-product-tabs .star-rating::before' => 'color: {{VALUE}};',
 				],
@@ -1103,7 +1138,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Description Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
+				'default' => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .description p' => 'color: {{VALUE}};',
 				],
@@ -1115,7 +1150,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ), 
 				'type' => Controls_Manager::COLOR,
-				'default' => '#fcfcfc',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .comment-text' => 'background-color: {{VALUE}};',
 				],
@@ -1127,7 +1162,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#e8e8e8',
+				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} #reviews #comments ol.commentlist li .comment-text' => 'border-color: {{VALUE}};',
 				],
@@ -1155,7 +1190,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
 					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
 				],
-				'default' => 'solid',
+				'default' => 'none',
 				'selectors' => [
 					'{{WRAPPER}} #reviews #comments ol.commentlist li .comment-text' => 'border-style: {{VALUE}};',
 				],
@@ -1238,7 +1273,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				],				
 				'default' => [
 					'unit' => 'px',
-					'size' => 10,
+					'size' => 30,
 				],
 				'selectors' => [
 					'{{WRAPPER}} #reviews #comments ol.commentlist li .comment-text' => 'margin-bottom: {{SIZE}}{{UNIT}};',
@@ -1260,7 +1295,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				],				
 				'default' => [
 					'unit' => 'px',
-					'size' => 10,
+					'size' => 18,
 				],
 				'selectors' => [
 					// '{{WRAPPER}}.elementor-widget-wpr-product-tabs .star-rating span::before' => 'font-size: {{VALUE}}px;',
@@ -1292,7 +1327,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 35,
+					'size' => 50,
 				],
 				'selectors' => [
 					'{{WRAPPER}} #reviews #comments ol.commentlist li img.avatar' => 'width: {{SIZE}}px; height: auto;',
@@ -1314,7 +1349,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 3,
+					'size' => 20,
 				],
 				'selectors' => [
 					'{{WRAPPER}}.elementor-widget-wpr-product-tabs #reviews #comments ol.commentlist li .comment-text' => 'margin-left: calc({{SIZE}}px + {{avatar_size.SIZE}}px);'
@@ -1328,7 +1363,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
+				'default' => '#E8E8E8',
 				'selectors' => [
 					// '{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} #reviews #comments ol.commentlist li img.avatar' => 'border-color: {{VALUE}}',
@@ -1349,7 +1384,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
 					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
 				],
-				'default' => 'solid',
+				'default' => 'none',
 				'selectors' => [
 					'{{WRAPPER}} #reviews #comments ol.commentlist li img.avatar' => 'border-style: {{VALUE}};',
 				],
@@ -1363,10 +1398,10 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 2,
-					'right' => 2,
-					'bottom' => 2,
-					'left' => 2,
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
 				],
 				'selectors' => [
 					'{{WRAPPER}} #reviews #comments ol.commentlist li img.avatar' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -1384,10 +1419,10 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
+					'top' => 50,
+					'right' => 50,
+					'bottom' => 50,
+					'left' => 50,
 				],
 				'selectors' => [
 					'{{WRAPPER}} #reviews #comments ol.commentlist li img.avatar' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -1420,7 +1455,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
+				'default' => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .comment-notes' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .comment-form-rating label' => 'color: {{VALUE}};',
@@ -1436,7 +1471,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Required Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
+				'default' => '#F92B2B',
 				'selectors' => [
 					'{{WRAPPER}} .required' => 'color: {{VALUE}};',
 				],
@@ -1449,6 +1484,17 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'name' => 'field_label_title_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel label',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -1492,7 +1538,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Icon Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFD726',
+				'default' => '#C1C1C1',
 				'selectors' => [
 					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars.selected a.active:before' => 'color: {{VALUE}};',
 					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars:hover a:before' => 'color: {{VALUE}};',
@@ -1517,7 +1563,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 22,
+					'size' => 18,
 				],
 				'selectors' => [
 					'{{WRAPPER}}.elementor-widget-wpr-product-tabs p.stars a::before' => 'font-size: {{SIZE}}{{UNIT}};',
@@ -1539,7 +1585,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 0,
+					'size' => 5,
 				],
 				'selectors' => [
 					'{{WRAPPER}} p.stars a' => 'margin-right: {{SIZE}}{{UNIT}};',
@@ -1569,7 +1615,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#474747',
+				'default' => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .comment-form-comment textarea' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .comment-form-author input' => 'color: {{VALUE}};',
@@ -1599,7 +1645,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#e8e8e8',
+				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .comment-form-comment textarea' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} .comment-form-author input' => 'border-color: {{VALUE}}',
@@ -1623,6 +1669,17 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'name' => 'input_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .comment-form-comment textarea, {{WRAPPER}} .comment-form-author input, {{WRAPPER}} .comment-form-email input',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -1631,7 +1688,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
-				'default' => 0.1,
+				'default' => 0.5,
 				'min' => 0,
 				'max' => 5,
 				'step' => 0.1,
@@ -1685,7 +1742,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#e8e8e8',
+				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .comment-form-comment textarea:focus' => 'border-color: {{VALUE}};',
 					'{{WRAPPER}} .comment-form-author input:focus' => 'border-color: {{VALUE}};',
@@ -1700,6 +1757,22 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'name' => 'input_box_shadow_fc',
 				'selector' => '{{WRAPPER}} .comment-form-comment textarea:focus, {{WRAPPER}} .comment-form-author input:focus, {{WRAPPER}} .comment-form-email input:focus',
 				'separator' => 'after',
+				'fields_options' => [
+                    'box_shadow_type' =>
+                        [ 
+                            'default' =>'yes' 
+                        ],
+                    'box_shadow' => [
+                        'default' =>
+                            [
+                                'horizontal' => 0,
+                                'vertical' => 0,
+                                'blur' => 10,
+                                'spread' => 0,
+                                'color' => 'rgba(0,0,0,0.5)'
+                            ]
+                    ]
+				]
 			]
 		);
 
@@ -1760,10 +1833,10 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 2,
-					'right' => 2,
-					'bottom' => 2,
-					'left' => 2,
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .comment-form-comment textarea' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -1780,10 +1853,10 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 0,
-					'right' => 15,
-					'bottom' => 0,
-					'left' => 15,
+					'top' => 10,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .comment-form-comment textarea' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -1808,7 +1881,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				],				
 				'default' => [
 					'unit' => 'px',
-					'size' => 50,
+					'size' => 42,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .comment-form-author input' => 'height: {{SIZE}}{{UNIT}} !important;',
@@ -1853,7 +1926,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				],				
 				'default' => [
 					'unit' => 'px',
-					'size' => 10,
+					'size' => 15,
 				],
 				'selectors' => [
 					'{{WRAPPER}} #review_form #respond p:not(.form-submit)' => 'margin-bottom: {{SIZE}}{{UNIT}};',
@@ -1879,6 +1952,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
+				'default' => 'left',
 				'options' => [
 					'left' => [
 						'title' => esc_html__( 'Left', 'wpr-addons' ),
@@ -1900,8 +1974,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'prefix_class' => 'wpr-forms-submit-',
 				'selectors' => [
 					'{{WRAPPER}} .form-submit' => 'text-align: {{VALUE}}',
-				],
-				'default' => 'left',
+				]
 			]
 		);
 
@@ -1923,25 +1996,25 @@ class Wpr_Product_Tabs extends Widget_Base {
 		);
 
 		$this->add_control(
-			'submit_btn_bg_color',
+			'submit_btn_color',
 			[
-				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#919191',
+				'default' => '#FFFFFF',
 				'selectors' => [
-					'{{WRAPPER}} #respond .comment-form .form-submit input#submit' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} #respond .comment-form .form-submit input#submit' => 'color: {{VALUE}}',
 				],
 			]
 		);
 
 		$this->add_control(
-			'submit_btn_color',
+			'submit_btn_bg_color',
 			[
-				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#ffffff',
+				'default' => '#605BE5',
 				'selectors' => [
-					'{{WRAPPER}} #respond .comment-form .form-submit input#submit' => 'color: {{VALUE}}',
+					'{{WRAPPER}} #respond .comment-form .form-submit input#submit' => 'background-color: {{VALUE}}',
 				],
 			]
 		);
@@ -1971,7 +2044,24 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'name' => 'submit_btn_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} #respond .comment-form .form-submit input#submit'
+				'selector' => '{{WRAPPER}} #respond .comment-form .form-submit input#submit',
+				'typography' => [
+					'default' => 'custom',
+				],
+				'font_weight' => [
+					'default' => '400',
+				],
+				'font_size' => [
+					'default' => [
+						'size' => '14',
+						'unit' => 'px',
+					],
+				],
+				'letter_spacing' => [
+					'default' => [
+						'size' => '0.2'
+					]
+				],
 			]
 		);
 
@@ -1980,7 +2070,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
-				'default' => 0.1,
+				'default' => 0.5,
 				'min' => 0,
 				'max' => 5,
 				'step' => 0.1,
@@ -2016,7 +2106,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#919191',
+				'default' => '#1F18E3',
 				'selectors' => [
 					'{{WRAPPER}} #respond .comment-form .form-submit input#submit:hover' => 'background-color: {{VALUE}}',
 				],
@@ -2028,6 +2118,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} #respond .comment-form .form-submit input#submit:hover' => 'border-color: {{VALUE}}',
 				]
@@ -2095,10 +2186,10 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 2,
-					'right' => 2,
-					'bottom' => 2,
-					'left' => 2,
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
 				],
 				'selectors' => [
 					'{{WRAPPER}} #respond .comment-form .form-submit input#submit' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -2114,9 +2205,9 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'size_units' => [ 'px' ],
 				'default' => [
 					'top' => 12,
-					'right' => 30,
+					'right' => 40,
 					'bottom' => 12,
-					'left' => 30,
+					'left' => 40,
 				],
 				'selectors' => [
 					'{{WRAPPER}} #respond .comment-form .form-submit input#submit' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -2139,7 +2230,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				],				
 				'default' => [
 					'unit' => 'px',
-					'size' => 3,
+					'size' => 2,
 				],
 				'selectors' => [
 					'{{WRAPPER}} #respond .comment-form .form-submit input#submit' => 'margin-top: {{SIZE}}{{UNIT}};',

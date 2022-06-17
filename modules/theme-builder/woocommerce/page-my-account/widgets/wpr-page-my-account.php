@@ -67,8 +67,9 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Align', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
-				'default' => 'center',
+				'default' => 'left',
 				'label_block' => false,
+				'default' => 'left',
 				'options' => [
 					'left' => [
 						'title' => esc_html__( 'Left', 'wpr-addons' ),
@@ -130,7 +131,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'tabs_spacing',
 			[
 				'label' => esc_html__( 'Distance', 'wpr-addons' ),
@@ -152,7 +153,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 					// '{{WRAPPER}}.wpr-my-account-tabs-vertical .woocommerce-MyAccount-content' => 'width: calc(70% - {{SIZE}}px);'
 					'{{WRAPPER}}.wpr-my-account-tabs-horizontal .woocommerce-MyAccount-content' => 'margin-top: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-my-account-tabs-vertical .woocommerce-MyAccount-content' => 'margin-left: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-my-account-tabs-vertical .woocommerce-MyAccount-content' => 'width: calc(70% - {{SIZE}}px);'
+					'{{WRAPPER}}.wpr-my-account-tabs-vertical .woocommerce-MyAccount-content' => 'width: calc(100% - {{tab_width.SIZE}}px - {{SIZE}}px);',
+					'[data-elementor-device-mode="mobile"] {{WRAPPER}}.wpr-my-account-tabs-vertical .woocommerce-MyAccount-content' => 'width: calc(100%  - {{tab_width_mobile.SIZE}}px - {{SIZE}}px);'
 				],
 				'separator' => 'before',
 			]
@@ -192,6 +194,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link a' => 'color: {{VALUE}}',
 				],
@@ -214,7 +217,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
+				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link a' => 'border-color: {{VALUE}}',
 				],
@@ -227,6 +230,17 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'name' => 'tab_typography',
 				'label' => esc_html__( 'Typography', 'wpr-addons' ),
 				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-navigation-link a',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '15',
+							'unit' => 'px',
+						]
+					]
+				]
 			]
 		);
 
@@ -235,14 +249,14 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
-				'default' => 0.1,
+				'default' => 0.5,
 				'min' => 0,
 				'max' => 5,
 				'step' => 0.1,
 				'frontend_available' => true,
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link a' => '-webkit-transition-duration: {{VALUE}}s;transition-duration: {{VALUE}}s',
-				],
+					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link a' => '-webkit-transition-duration: {{VALUE}}s;transition-duration: {{VALUE}}s'
+				]
 			]
 		);
 
@@ -336,12 +350,35 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'default' => [
 					'top' => 0,
 					'right' => 0,
-					'bottom' => 0,
+					'bottom' => 6,
 					'left' => 0,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link a' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'tab_width',
+			[
+				'label' => esc_html__( 'Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 100,
+						'max' => 500,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 250,
+				],
+				'selectors' => [
+					'{{WRAPPER}}.wpr-my-account-tabs-vertical .woocommerce-MyAccount-navigation' => 'width: {{SIZE}}px'
+				],
+				'separator' => 'before',
 			]
 		);
 
@@ -359,9 +396,10 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link:hover a' => 'color: {{VALUE}}',
-				],
+					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link:hover a' => 'color: {{VALUE}}'
+				]
 			]
 		);
 
@@ -370,10 +408,11 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
 				'alpha' => true,
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link:hover a' => 'border-bottom-color: {{VALUE}}',
-				],
+					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link:hover a' => 'border-bottom-color: {{VALUE}}'
+				]
 			]
 		);
 
@@ -382,7 +421,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#e5e5e5',
+				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link:hover a' => 'border-color: {{VALUE}}',
 				],
@@ -395,6 +434,17 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'name' => 'tab_typography_hover',
 				'label' => esc_html__( 'Typography', 'wpr-addons' ),
 				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-navigation-link:hover a',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '15',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -412,9 +462,10 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link.is-active a' => 'color: {{VALUE}}',
-				],
+					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link.is-active a' => 'color: {{VALUE}}'
+				]
 			]
 		);
 
@@ -423,7 +474,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
+				'default' => '#FFFFFF',
 				'alpha' => true,
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link.is-active a' => 'background-color: {{VALUE}}',
@@ -436,7 +487,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#e5e5e5',
+				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-navigation-link.is-active a' => 'border-color: {{VALUE}}',
 				],
@@ -449,7 +500,17 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'name' => 'tab_typography_active',
 				'label' => esc_html__( 'Typography', 'wpr-addons' ),
 				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-navigation-link.is-active a',
-				'separator' => 'before'
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '16',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -474,7 +535,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
+				'default' => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper' => 'color: {{VALUE}}',
 				]
@@ -486,7 +547,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Link Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#c36',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper a' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-form-login .woocommerce-LostPassword a' => 'color: {{VALUE}}'
@@ -499,7 +560,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Link Hover Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper a:hover' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-form-login .woocommerce-LostPassword a:hover' => 'color: {{VALUE}}'
@@ -508,11 +569,23 @@ class Wpr_Page_My_Account extends Widget_Base {
 		);
 
 		$this->add_control(
+			'tab_content_border_color',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper' => 'border-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
 			'tab_content_bg_color',
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper' => 'background-color: {{VALUE}}',
 				]
@@ -524,7 +597,18 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'name'     => 'tab_content_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content-wrapper'
+				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content-wrapper',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px'
+						]
+					]
+				]
 			]
 		);
 
@@ -542,12 +626,72 @@ class Wpr_Page_My_Account extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 5,
+					'size' => 12,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper>p:first-of-type' => 'margin-bottom: {{SIZE}}px'
 				],
 				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'tab_content_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'solid',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper' => 'border-style: {{VALUE}};'
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'tab_content_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				],
+				'condition' => [
+					'my_account_table_border!' => 'none',
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'tab_content_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				],
 			]
 		);
 
@@ -558,10 +702,10 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 5,
-					'right' => 5,
-					'bottom' => 5,
-					'left' => 5,
+					'top' => 15,
+					'right' => 15,
+					'bottom' => 15,
+					'left' => 15,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
@@ -593,8 +737,9 @@ class Wpr_Page_My_Account extends Widget_Base {
 		$this->add_control(
 			'my_account_table_heading_color',
 			[
-				'label'     => esc_html__( 'Color', 'wpr-addons' ),
-				'type'      => Controls_Manager::COLOR,
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} table.woocommerce-orders-table th' => 'color: {{VALUE}}',
 					'{{WRAPPER}} table.shop_table thead th' => 'color: {{VALUE}}',
@@ -608,6 +753,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label'     => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type'      => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} table.woocommerce-orders-table th' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} table.shop_table thead th' => 'background-color: {{VALUE}}',
@@ -622,6 +768,17 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'name'     => 'my_account_table_heading_typography',
 				'label'    => esc_html__( 'Typography', 'wpr-addons' ),
 				'selector' => '{{WRAPPER}} table.woocommerce-orders-table th, {{WRAPPER}} table.shop_table thead th, {{WRAPPER}} table.shop_table tfoot th',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px'
+						]
+					]
+				]
 			]
 		);
 
@@ -632,10 +789,10 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 5,
-					'right' => 5,
-					'bottom' => 5,
-					'left' => 5,
+					'top' => 8,
+					'right' => 8,
+					'bottom' => 8,
+					'left' => 8,
 				],
 				'selectors' => [
 					'{{WRAPPER}} table.woocommerce-orders-table th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -650,6 +807,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
+				'default' => 'center',
 				'options' => [
 					'start' => [
 						'title' => esc_html__( 'Start', 'wpr-addons' ),
@@ -668,7 +826,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 					'{{WRAPPER}} table.woocommerce-orders-table th' => 'text-align: {{VALUE}};',
 					'{{WRAPPER}} table.shop_table thead th' => 'text-align: {{VALUE}};',
 					'{{WRAPPER}} table.shop_table tfoot th' => 'text-align: {{VALUE}};'
-				] //TODO: doesnt work
+				]
 			]
 		);
 
@@ -685,6 +843,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label'     => esc_html__( 'Color', 'wpr-addons' ),
 				'type'      => Controls_Manager::COLOR,
+				'default' => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} table.shop_table td' => 'color: {{VALUE}}',
 					'{{WRAPPER}} table.shop_table td a' => 'color: {{VALUE}}',
@@ -697,6 +856,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label'     => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type'      => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} table.shop_table td' => 'background-color: {{VALUE}}',
 				],
@@ -709,6 +869,17 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'name'     => 'my_account_table_description_typography',
 				'label'    => esc_html__( 'Typography', 'wpr-addons' ),
 				'selector' => '{{WRAPPER}} table.shop_table td',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '13',
+							'unit' => 'px'
+						]
+					]
+				]
 			]
 		);
 
@@ -735,6 +906,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
+				'default' => 'center',
 				'options' => [
 					'start' => [
 						'title' => esc_html__( 'Start', 'wpr-addons' ),
@@ -757,197 +929,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 			]
 		);
 
-		$this->end_controls_section();
-
-		// Tab: Style ==============
-		// Section: Addresses ---------
-		$this->start_controls_section(
-			'my_account_addresses_styles',
-			[
-				'label' => __( 'Addresses', 'wpr-addons' ),
-				'tab'   => Controls_Manager::TAB_STYLE,
-			]
-		);
-
-		$this->add_responsive_control(
-			'my_account_addresses_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 5,
-					'right' => 5,
-					'bottom' => 5,
-					'left' => 5,
-				],
-				'selectors' => [
-					'{{WRAPPER}} address' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
-					// '{{WRAPPER}} .woocommerce-Address' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
-				]
-			]
-		);
-
-		$this->end_controls_section();
-
-		// Tab: Style ==============
-		// Section: Forms ---------
-		$this->start_controls_section(
-			'section_account_forms',
-			[
-				'label' => esc_html__( 'Forms', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-			]
-		);
-
 		$this->add_control(
-			'form_labels_title',
-			[
-				'type' => Controls_Manager::HEADING,
-				'label' => esc_html__( 'Labels', 'wpr-addons' ),
-			]
-		);
-
-		$this->add_control(
-			'form_labels_color',
-			[
-				'label' => esc_html__( 'Text Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
-				'selectors' => [
-					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper label' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .woocommerce-form-login label' => 'color: {{VALUE}}'
-				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => 'form_labels_typography',
-				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content-wrapper label, {{WRAPPER}} .woocommerce-form-login label',
-			]
-		);
-
-		$this->add_responsive_control(
-			'my_accoun_form_labels_margin',
-			[
-				'label' => esc_html__( 'Margin', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 5,
-					'right' => 5,
-					'bottom' => 5,
-					'left' => 5,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper label' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .woocommerce-form-login label' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
-				]
-			]
-		);
-
-		$this->add_control(
-			'form_inputs_title',
-			[
-				'type' => Controls_Manager::HEADING,
-				'label' => esc_html__( 'Inputs', 'wpr-addons' ),
-			]
-		);
-
-		$this->start_controls_tabs( 'forms_fields_styles' );
-
-		$this->start_controls_tab( 
-            'forms_fields_normal_styles',
-            [ 
-                'label' => esc_html__( 'Normal', 'wpr-addons' ) 
-            ] 
-        );
-
-		$this->add_control(
-			'forms_fields_normal_color',
-			[
-				'label' => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text::placeholder' => 'color: {{VALUE}};'
-				]
-			]
-		);
-
-		$this->add_control(
-			'forms_fields_normal_border_color',
-			[
-				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'border-color: {{VALUE}};',
-					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'border-color: {{VALUE}};'
-				]
-			]
-		);
-
-		$this->add_control(
-			'forms_fields_normal_bg_color',
-			[
-				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#F3F3F3',
-				'selectors' => [
-					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'background-color: {{VALUE}};',
-					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'background-color: {{VALUE}};'
-				]
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Box_Shadow::get_type(),
-			[
-				'name' => 'forms_fields_normal_box_shadow',
-				'label' => esc_html__( 'Box Shadow', 'wpr-addons' ),
-				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text, {{WRAPPER}} .woocommerce-form-login .input-text',
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->start_controls_tab( 'forms_fields_focus_styles', 
-			[ 
-				'label' => esc_html__( 'Focus', 'wpr-addons' )
-			] 
-		);
-
-		$this->add_control(
-			'forms_fields_focus_color',
-			[
-				'label' => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text:focus' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .woocommerce-form-login .input-text:focus' => 'color: {{VALUE}};'
-				],
-			]
-		);
-		
-
-		$this->add_group_control(
-			Group_Control_Box_Shadow::get_type(),
-			[
-				'name' => 'forms_fields_focus_box_shadow',
-				'label' => esc_html__( 'Box Shadow', 'wpr-addons' ),
-				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text:focus, {{WRAPPER}} select:focus, {{WRAPPER}} .woocommerce-form-login .input-text:focus',
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->end_controls_tabs();
-
-		$this->add_control(
-			'form_fields_border_type',
+			'my_account_table_border',
 			[
 				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
@@ -961,15 +944,28 @@ class Wpr_Page_My_Account extends Widget_Base {
 				],
 				'default' => 'solid',
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'border-style: {{VALUE}};',
-					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} table.shop_table th' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} table.shop_table td' => 'border-style: {{VALUE}};'
 				],
-				'separator' => 'before',
+				'separator' => 'before'
 			]
 		);
 
 		$this->add_control(
-			'form_fields_border_width',
+			'my_account_table_border_color',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} table.shop_table th' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} table.shop_table td' => 'border-color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_control(
+			'my_account_table_border_width',
 			[
 				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
@@ -981,52 +977,63 @@ class Wpr_Page_My_Account extends Widget_Base {
 					'left' => 1,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} table.shop_table th' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} table.shop_table td' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
-					'form_fields_border_type!' => 'none',
-				],
+					'my_account_table_border!' => 'none'
+				]
 			]
 		);
 
-		$this->add_control(
-			'form_fields_border_radius',
+		$this->end_controls_section();
+
+		// Tab: Style ==============
+		// Section: Addresses ---------
+		$this->start_controls_section(
+			'my_account_addresses_styles',
 			[
-				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 2,
-					'right' => 2,
-					'bottom' => 2,
-					'left' => 2,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
+				'label' => __( 'Addresses', 'wpr-addons' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
 
-		$this->add_control(
-			'form_fields_padding',
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'addresses_titles',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .woocommerce-Address-title h3',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '18',
+							'unit' => 'px',
+						]
+					]
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'my_account_addresses_padding',
 			[
 				'label' => esc_html__( 'Padding', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
+				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 10,
-					'right' => 10,
-					'bottom' => 10,
-					'left' => 10,
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0
 				],
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .selection span' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
-					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .selection' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
-				],
+					'{{WRAPPER}} address' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+					// '{{WRAPPER}} .woocommerce-Address' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				]
 			]
 		);
 
@@ -1035,58 +1042,58 @@ class Wpr_Page_My_Account extends Widget_Base {
 		// Tab: Style ==============
 		// Section: Button ---------
 		$this->start_controls_section(
-			'section_style_account_details_button',
+			'section_style_my_account_button',
 			[
-				'label' => esc_html__( 'Button', 'wpr-addons' ),
+				'label' => esc_html__( 'Table Buttons', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 			]
 		);
 
-		$this->start_controls_tabs( 'account_details_button_styles' );
+		$this->start_controls_tabs( 'my_account_button_styles' );
 
 		$this->start_controls_tab(
-			'account_details_button_normal',
+			'my_account_button_normal',
 			[
 				'label' => esc_html__( 'Normal', 'wpr-addons' ),
 			]
 		);
 
 		$this->add_control(
-			'account_details_button_color',
+			'my_account_button_color',
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#FFFFFF',
 				'selectors' => [
-					'{{WRAPPER}} button.button' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .download-file a.button' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .woocommerce-orders-table__cell a.button' => 'color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_control(
-			'account_details_button_bg_color',
-			[
-				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} button.button' => 'background-color: {{VALUE}}',
-					'{{WRAPPER}} .download-file a.button' => 'background-color: {{VALUE}}',
-					'{{WRAPPER}} .woocommerce-orders-table__cell a.button' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button' => 'color: {{VALUE}}'
 				]
 			]
 		);
 
 		$this->add_control(
-			'account_details_button_border_color',
+			'my_account_button_bg_color',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button' => 'background-color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_control(
+			'my_account_button_border_color',
 			[
 				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#E8E8E8',
 				'selectors' => [
-					'{{WRAPPER}} button.button' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button' => 'border-color: {{VALUE}}'
 				],
 			]
 		);
@@ -1094,51 +1101,55 @@ class Wpr_Page_My_Account extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
 			[
-				'name' => 'account_details_button_box_shadow',
-				'selector' => '{{WRAPPER}} button.button',
+				'name' => 'my_account_button_box_shadow',
+				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button, {{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button',
 			]
 		);
 
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
-			'account_details_button_hover',
+			'my_account_button_hover',
 			[
 				'label' => esc_html__( 'Hover', 'wpr-addons' ),
 			]
 		);
 
 		$this->add_control(
-			'account_details_button_color_hr',
+			'my_account_button_color_hr',
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
+				'default' => '#FFFFFF',
 				'selectors' => [
-					'{{WRAPPER}} button.button:hover' => 'color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_control(
-			'account_details_button_bg_color_hr',
-			[
-				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} button.button:hover' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button:hover' => 'color: {{VALUE}}'
 				]
 			]
 		);
 
 		$this->add_control(
-			'account_details_button_border_color_hr',
+			'my_account_button_bg_color_hr',
 			[
-				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#605BE5',
 				'selectors' => [
-					'{{WRAPPER}} button.button:hover' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button:hover' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button:hover' => 'background-color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_control(
+			'my_account_button_border_color_hr',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button:hover' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button:hover' => 'border-color: {{VALUE}}'
 				]
 			]
 		);
@@ -1146,8 +1157,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
 			[
-				'name' => 'account_details_button_box_shadow_hr',
-				'selector' => '{{WRAPPER}} button.button:hover',
+				'name' => 'my_account_button_box_shadow_hr',
+				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button:hover, {{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button:hover',
 			]
 		);
 
@@ -1156,7 +1167,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 		$this->end_controls_tabs();
 
 		$this->add_control(
-			'account_details_button_divider',
+			'my_account_button_divider',
 			[
 				'type' => Controls_Manager::DIVIDER,
 				'style' => 'thick',
@@ -1164,22 +1175,23 @@ class Wpr_Page_My_Account extends Widget_Base {
 		);
 
 		$this->add_control(
-			'account_details_button_transition_duration',
+			'my_account_button_transition_duration',
 			[
 				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
-				'default' => 0.1,
+				'default' => 0.3,
 				'min' => 0,
 				'max' => 5,
 				'step' => 0.1,
 				'selectors' => [
-					'{{WRAPPER}} button.button' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button' => 'transition-duration: {{VALUE}}s'
 				],
 			]
 		);
 
 		$this->add_control(
-			'account_details_button_typo_divider',
+			'my_account_button_typo_divider',
 			[
 				'type' => Controls_Manager::DIVIDER,
 				'style' => 'thick',
@@ -1189,14 +1201,25 @@ class Wpr_Page_My_Account extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name'     => 'account_details_button_typography',
+				'name'     => 'my_account_button_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} button.button',
+				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button, {{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
 		$this->add_control(
-			'account_details_button_border_type',
+			'my_account_button_border_type',
 			[
 				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
@@ -1210,35 +1233,37 @@ class Wpr_Page_My_Account extends Widget_Base {
 				],
 				'default' => 'none',
 				'selectors' => [
-					'{{WRAPPER}} button.button' => 'border-style: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button' => 'border-style: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button' => 'border-style: {{VALUE}}'
 				],
 				'separator' => 'before',
 			]
 		);
 
 		$this->add_control(
-			'account_details_button_border_width',
+			'my_account_button_border_width',
 			[
 				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 2,
-					'right' => 2,
-					'bottom' => 2,
-					'left' => 2,
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
 				],
 				'selectors' => [
-					'{{WRAPPER}} button.button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 				'condition' => [
-					'account_details_button_border_type!' => 'none',
+					'my_account_button_border_type!' => 'none',
 				],
 			]
 		);
 
 		$this->add_control(
-			'account_details_button_radius',
+			'my_account_button_radius',
 			[
 				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
@@ -1250,13 +1275,14 @@ class Wpr_Page_My_Account extends Widget_Base {
 					'left' => 2,
 				],
 				'selectors' => [
-					'{{WRAPPER}} button.button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				]
 			]
 		);
 
 		$this->add_responsive_control(
-			'account_details_button_padding',
+			'my_account_button_padding',
 			[
 				'label' => esc_html__( 'Padding', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
@@ -1268,14 +1294,15 @@ class Wpr_Page_My_Account extends Widget_Base {
 					'left' => 15,
 				],
 				'selectors' => [
-					'{{WRAPPER}} button.button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 				'separator' => 'before'
 			]
 		);
 
 		$this->add_responsive_control(
-			'account_details_button_margin',
+			'my_account_button_margin',
 			[
 				'label' => esc_html__( 'Margin', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
@@ -1287,7 +1314,8 @@ class Wpr_Page_My_Account extends Widget_Base {
 					'left' => 0,
 				],
 				'selectors' => [
-					'{{WRAPPER}} button.button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .download-file a.button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content .woocommerce-orders-table__cell a.button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 			]
 		);
@@ -1314,7 +1342,657 @@ class Wpr_Page_My_Account extends Widget_Base {
 					],
 				],
                 'selectors' => [
-					'{{WRAPPER}} .edit-account>p:last-child' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-pagination' => 'text-align: {{VALUE}};'
+				],
+			]
+		); // TODO: determine location and selectors
+
+		$this->end_controls_section();
+
+		// Tab: Style ==============
+		// Section: Forms ---------
+		$this->start_controls_section(
+			'section_account_forms',
+			[
+				'label' => esc_html__( 'Forms', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'form_labels_title',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Labels', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'form_labels_color',
+			[
+				'label' => esc_html__( 'Text Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#787878',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper label' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-form-login label' => 'color: {{VALUE}}'
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'form_labels_typography',
+				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content-wrapper label, {{WRAPPER}} .woocommerce-form-login label',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px',
+						],
+					]
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'my_account_form_labels_margin',
+			[
+				'label' => esc_html__( 'Margin', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 5,
+					'bottom' => 5,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper label' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-form-login label' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				]
+			]
+		);
+
+		$this->add_control(
+			'form_sub_labels_title',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Sub-Labels', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'form_sub_labels_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#D8D8D8',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-form-row em' => 'color: {{VALUE}}'
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'form_sub_labels_typography',
+				'selector' => '{{WRAPPER}} .woocommerce-form-row em',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '12',
+							'unit' => 'px',
+						],
+					]
+				]
+			]
+		);
+
+		$this->add_control(
+			'form_inputs_title',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Inputs', 'wpr-addons' ),
+			]
+		);
+
+		$this->start_controls_tabs( 'forms_fields_styles' );
+
+		$this->start_controls_tab( 
+            'forms_fields_normal_styles',
+            [ 
+                'label' => esc_html__( 'Normal', 'wpr-addons' ) 
+            ] 
+        );
+
+		$this->add_control(
+			'forms_fields_normal_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#787878',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text::placeholder' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .select2-selection__rendered' => 'color: {{VALUE}} !important;'
+				]
+			]
+		);
+
+		$this->add_control(
+			'forms_fields_normal_border_color',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .select2-selection__rendered' => 'border-color: {{VALUE}} !important;'
+				]
+			]
+		);
+
+		$this->add_control(
+			'forms_fields_normal_bg_color',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .select2-selection__rendered' => 'background-color: {{VALUE}} !important;'
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'forms_fields_normal_box_shadow',
+				'label' => esc_html__( 'Box Shadow', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text, {{WRAPPER}} .woocommerce-form-login .input-text, {{WRAPPER}} .woocommerce-MyAccount-content-wrapper .select2-selection__rendered',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab( 'forms_fields_focus_styles', 
+			[ 
+				'label' => esc_html__( 'Focus', 'wpr-addons' )
+			] 
+		);
+
+		$this->add_control(
+			'forms_fields_focus_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#787878',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text:focus' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-form-login .input-text:focus' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .select2-selection__rendered:focus' => 'color: {{VALUE}};'
+				],
+			]
+		);
+		
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'forms_fields_focus_box_shadow',
+				'label' => esc_html__( 'Box Shadow', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text:focus, {{WRAPPER}} select:focus, {{WRAPPER}} .woocommerce-form-login .input-text:focus, {{WRAPPER}} .woocommerce-MyAccount-content-wrapper .select2-selection__rendered:focus',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_control(
+			'form_fields_typo_divider',
+			[
+				'type' => Controls_Manager::DIVIDER,
+				'style' => 'thick',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'form_fields_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text, {{WRAPPER}} .woocommerce-form-login .input-text, {{WRAPPER}} .woocommerce-MyAccount-content-wrapper .select2-selection__rendered',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px'
+						]
+					]
+				]
+			]
+		);
+
+		$this->add_control(
+			'form_fields_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'solid',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .select2-selection__rendered' => 'border-style: {{VALUE}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'form_fields_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .select2-selection__rendered' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'form_fields_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'form_fields_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .select2-selection__rendered' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				],
+			]
+		);
+
+		$this->add_control(
+			'form_fields_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 10,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .input-text' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-form-login .input-text' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper .select2-selection__rendered' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+				],
+			]
+		);
+
+		$this->add_control(
+			'fieldset_distance',
+			[
+				'label' => esc_html__( 'Change Password Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 70,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 25
+				],
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-MyAccount-content-wrapper fieldset' => 'margin-top: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->end_controls_section();
+
+		// Tab: Style ==============
+		// Section: Button ---------
+		$this->start_controls_section(
+			'section_style_account_forms_button',
+			[
+				'label' => esc_html__( 'Form Buttons', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'show_label' => false,
+			]
+		);
+
+		$this->start_controls_tabs( 'account_forms_button_styles' );
+
+		$this->start_controls_tab(
+			'account_forms_button_normal',
+			[
+				'label' => esc_html__( 'Normal', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'account_forms_button_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
+				'selectors' => [
+					'{{WRAPPER}} button.button' => 'color: {{VALUE}}'
+				],
+			]
+		);
+
+		$this->add_control(
+			'account_forms_button_bg_color',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}} button.button' => 'background-color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_control(
+			'account_forms_button_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} button.button' => 'border-color: {{VALUE}}'
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'account_forms_button_box_shadow',
+				'selector' => '{{WRAPPER}} button.button',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'account_forms_button_hover',
+			[
+				'label' => esc_html__( 'Hover', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'account_forms_button_color_hr',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
+				'selectors' => [
+					'{{WRAPPER}} button.button:hover' => 'color: {{VALUE}}'
+				],
+			]
+		);
+
+		$this->add_control(
+			'account_forms_button_bg_color_hr',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#342ECB',
+				'selectors' => [
+					'{{WRAPPER}} button.button:hover' => 'background-color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_control(
+			'account_forms_button_border_color_hr',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} button.button:hover' => 'border-color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'account_forms_button_box_shadow_hr',
+				'selector' => '{{WRAPPER}} button.button:hover',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_control(
+			'account_forms_button_divider',
+			[
+				'type' => Controls_Manager::DIVIDER,
+				'style' => 'thick',
+			]
+		);
+
+		$this->add_control(
+			'account_forms_button_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.5,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} button.button' => 'transition-duration: {{VALUE}}s'
+				],
+			]
+		);
+
+		$this->add_control(
+			'account_forms_button_typo_divider',
+			[
+				'type' => Controls_Manager::DIVIDER,
+				'style' => 'thick',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'account_forms_button_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} button.button',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '15',
+							'unit' => 'px'
+						]
+					]
+				]
+			]
+		);
+
+		$this->add_control(
+			'account_forms_button_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}} button.button' => 'border-style: {{VALUE}}'
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'account_forms_button_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} button.button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				],
+				'condition' => [
+					'account_forms_button_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'account_forms_button_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 2,
+					'right' => 2,
+					'bottom' => 2,
+					'left' => 2,
+				],
+				'selectors' => [
+					'{{WRAPPER}} button.button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'account_forms_button_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 12,
+					'right' => 25,
+					'bottom' => 12,
+					'left' => 25,
+				],
+				'selectors' => [
+					'{{WRAPPER}} button.button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_responsive_control(
+			'account_forms_button_margin',
+			[
+				'label' => esc_html__( 'Margin', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 10,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} button.button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'forms_button_align',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'label_block' => false,
+				'default' => 'center',
+				'options' => [
+					'left' => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+                'selectors' => [
+					'{{WRAPPER}} .edit-account>p:last-child' => 'text-align: {{VALUE}};'
 				],
 			]
 		); // TODO: determine location and selectors
@@ -1334,7 +2012,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-message' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-info' => 'color: {{VALUE}}',
@@ -1348,7 +2026,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#F7F6F7',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-message' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-info' => 'background-color: {{VALUE}}',
@@ -1375,7 +2053,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Info Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#1e85be',
+				'default' => '#30B5FF',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-info' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-info::before' => 'color: {{VALUE}}',
@@ -1388,7 +2066,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Error Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#b81c23',
+				'default' => '#FF19FD',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-error' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-error::before' => 'color: {{VALUE}}',
@@ -1402,6 +2080,17 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'name' => 'notice_typography',
 				'label' => esc_html__( 'Typography', 'wpr-addons' ),
 				'selector' => '{{WRAPPER}} .woocommerce-message, {{WRAPPER}} .woocommerce-info, {{WRAPPER}} .woocommerce-error',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -1419,7 +2108,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 15,
+					'size' => 18,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-message::before' => 'font-size: {{SIZE}}px;',
@@ -1443,9 +2132,10 @@ class Wpr_Page_My_Account extends Widget_Base {
 					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
 					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
 				],
-				'default' => 'solid',
+				'default' => 'none',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-message' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .woocommerce-Message' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} .woocommerce-info' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} .woocommerce-error' => 'border-style: {{VALUE}};'
 				],
@@ -1460,13 +2150,14 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 3,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-message' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-Message' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 				'condition' => [
 					'notice_border_type!' => 'none',
@@ -1488,6 +2179,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-message' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-Message' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				]
 			]
 		);
@@ -1499,10 +2191,10 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 20,
-					'right' => 20,
-					'bottom' => 20,
-					'left' => 20,
+					'top' => 13,
+					'right' => 25,
+					'bottom' => 13,
+					'left' => 25,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-message' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} calc({{LEFT}}{{UNIT}} + {{notice_icon_size.SIZE}}px + 20px);',
@@ -1541,7 +2233,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#ffffff',
+				'default' => '#696969',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content a.button' => 'color: {{VALUE}}',
 				],
@@ -1553,7 +2245,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#919191',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content a.button' => 'background-color: {{VALUE}}',
 				],
@@ -1585,7 +2277,18 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'name' => 'btn_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content a.button'
+				'selector' => '{{WRAPPER}} .woocommerce-MyAccount-content a.button',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '15',
+							'unit' => 'px'
+						]
+					]
+				]
 			]
 		);
 
@@ -1594,7 +2297,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
-				'default' => 0.1,
+				'default' => 0.5,
 				'min' => 0,
 				'max' => 5,
 				'step' => 0.1,
@@ -1618,7 +2321,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFFFFF',
+				'default' => '#696969',
 				'selectors' => [
 					'{{WRAPPER}}  .woocommerce-MyAccount-content a.button:hover' => 'color: {{VALUE}}',
 				],
@@ -1630,7 +2333,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#919191',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content a.button:hover' => 'background-color: {{VALUE}}',
 				],
@@ -1642,6 +2345,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content a.button:hover' => 'border-color: {{VALUE}}',
 				]
@@ -1709,10 +2413,10 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 2,
-					'right' => 2,
-					'bottom' => 2,
-					'left' => 2,
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-MyAccount-content a.button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -1727,9 +2431,9 @@ class Wpr_Page_My_Account extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 12,
+					'top' => 10,
 					'right' => 30,
-					'bottom' => 12,
+					'bottom' => 10,
 					'left' => 30,
 				],
 				'selectors' => [
@@ -1898,6 +2602,7 @@ class Wpr_Page_My_Account extends Widget_Base {
 
     protected function render() {
 		$is_editor = \Elementor\Plugin::$instance->editor->is_edit_mode();
+		$settings = $this->get_settings_for_display();
 
 		// Simulate a logged out user so that all WooCommerce sections will render in the Editor
 		if ( $is_editor ) {

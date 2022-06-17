@@ -47,7 +47,7 @@ class Wpr_Product_Excerpt extends Widget_Base {
 			[
 				'label'     => esc_html__('Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#444444',
+				'default'   => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-excerpt p' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-product-excerpt li' => 'color: {{VALUE}};',
@@ -67,28 +67,14 @@ class Wpr_Product_Excerpt extends Widget_Base {
 					'typography'     => [
 						'default' => 'custom',
 					],
-					'font_weight'    => [
-						'default' => '400',
-					],
 					'font_size'      => [
 						'default'    => [
-							'size' => '17',
+							'size' => '14',
 							'unit' => 'px'
 						],
 						'label'      => 'Font size (px)',
 						'size_units' => ['px'],
 					],
-					'line_height'    => [
-						'default'    => [
-							'size' => '22',
-							'unit' => 'px'
-						],
-						'label'      => 'Line-height (px)',
-						'size_units' => ['px']
-					],
-					'letter_spacing' => [
-						'responsive' => false,
-					]
 				],
 			)
 		);
@@ -98,6 +84,7 @@ class Wpr_Product_Excerpt extends Widget_Base {
 			[
 				'label'     => esc_html__('Align', 'wpr-addons'),
 				'type'      => Controls_Manager::CHOOSE,
+				'default' => 'left',
 				'options'   => [
 					'left'   => [
 						'title' => esc_html__('Left', ''),

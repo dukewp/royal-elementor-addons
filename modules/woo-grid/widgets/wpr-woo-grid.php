@@ -4805,6 +4805,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-item-add-to-cart .inner-block a.wpr-button-none:hover' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-item-add-to-cart .inner-block a.added_to_cart:hover' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-grid-item-add-to-cart .inner-block a:before' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-grid-item-add-to-cart .inner-block a:after' => 'background-color: {{VALUE}}',
 				]

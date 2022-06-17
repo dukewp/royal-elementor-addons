@@ -70,7 +70,7 @@ class Wpr_Product_Breadcrumbs extends Widget_Base {
             [
                 'label' => esc_html__( 'Alignment', 'wpr-addons' ),
                 'type' => Controls_Manager::CHOOSE,
-                'default' => 'center',
+                'default' => 'left',
                 'label_block' => false,
                 'options' => [
 					'left'    => [
@@ -111,7 +111,7 @@ class Wpr_Product_Breadcrumbs extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-breadcrumbs' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-product-breadcrumbs a' => 'color: {{VALUE}}',
@@ -124,7 +124,7 @@ class Wpr_Product_Breadcrumbs extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Hover Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-breadcrumbs a:hover' => 'color: {{VALUE}}',
 				],
@@ -136,7 +136,18 @@ class Wpr_Product_Breadcrumbs extends Widget_Base {
 			[
 				'name'     => 'breadcrumb_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-product-breadcrumbs'
+				'selector' => '{{WRAPPER}} .wpr-product-breadcrumbs',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '13',
+							'unit' => 'px'
+						]
+					]
+				]
 			]
 		);
 

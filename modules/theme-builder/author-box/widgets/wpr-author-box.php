@@ -427,14 +427,14 @@ class Wpr_Author_Box extends Widget_Base {
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-author-box-name',
 				'fields_options' => [
-					'typography'      => [
+					'typography' => [
 						'default' => 'custom',
 					],
-					'font_weight'    => [
+					'font_weight' => [
 						'default' => '500',
 					],
-					'font_size'      => [
-						'default'    => [
+					'font_size' => [
+						'default' => [
 							'size' => '18',
 							'unit' => 'px',
 						],

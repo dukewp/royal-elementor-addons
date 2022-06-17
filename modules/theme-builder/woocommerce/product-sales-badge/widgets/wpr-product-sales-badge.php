@@ -54,8 +54,9 @@ class Wpr_Product_SalesBadge extends Widget_Base {
 		$this->add_responsive_control(
 			'sales_badge_alignment',
 			[
-				'label'     => esc_html__( 'Alignment', 'wpr-addons' ),
-				'type'      => Controls_Manager::CHOOSE,
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'default' => 'left',
 				'options' => [
 					'left' => [
 						'title' => esc_html__( 'Left', 'wpr-addons' ),
@@ -73,7 +74,7 @@ class Wpr_Product_SalesBadge extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-sales-badge' => 'text-align: {{VALUE}};',
 				],
-				'separator' => 'after',
+				'separator' => 'after'
 			]
 		);
 
@@ -82,6 +83,7 @@ class Wpr_Product_SalesBadge extends Widget_Base {
 			[
 				'label'     => esc_html__( 'Color', 'wpr-addons' ),
 				'type'      => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-sales-badge span' => 'color: {{VALUE}}',
 				],
@@ -93,6 +95,7 @@ class Wpr_Product_SalesBadge extends Widget_Base {
 			[
 				'label'     => esc_html__( 'Background color', 'wpr-addons' ),
 				'type'      => Controls_Manager::COLOR,
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-sales-badge span' => 'background-color: {{VALUE}}',
 				],
@@ -104,7 +107,7 @@ class Wpr_Product_SalesBadge extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-sales-badge span' => 'border-color: {{VALUE}}',
 				],
@@ -116,6 +119,20 @@ class Wpr_Product_SalesBadge extends Widget_Base {
 			[
 				'name'     => 'sales_badge_typography',
 				'selector' => '{{WRAPPER}} .wpr-product-sales-badge span',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '16',
+							'unit' => 'px',
+						],
+					],
+					'text_transform' => [
+						'default' => 'uppercase',
+					],
+				]
 			]
 		);
 
@@ -134,10 +151,10 @@ class Wpr_Product_SalesBadge extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 5,
-					'right' => 10,
-					'bottom' => 5,
-					'left' => 10,
+					'top' => 3,
+					'right' => 20,
+					'bottom' => 3,
+					'left' => 20,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-sales-badge span' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -159,7 +176,7 @@ class Wpr_Product_SalesBadge extends Widget_Base {
 					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
 					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
 				],
-				'default' => 'solid',
+				'default' => 'none',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-sales-badge span' => 'border-style: {{VALUE}};',
 				],

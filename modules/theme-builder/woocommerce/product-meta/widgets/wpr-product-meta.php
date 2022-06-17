@@ -108,7 +108,7 @@ class Wpr_Product_Meta extends Widget_Base {
 				],				
 				'default' => [
 					'unit' => 'px',
-					'size' => 10,
+					'size' => 7,
 				],
 				'selectors' => [
 					'{{WRAPPER}}.wpr-product-meta-column .product_meta span:not(:last-child)' => 'margin-bottom: {{SIZE}}{{UNIT}};',
@@ -131,7 +131,7 @@ class Wpr_Product_Meta extends Widget_Base {
 			[
 				'label'     => esc_html__('Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#101010',
+				'default'   => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-meta .product_meta :is(.sku_wrapper, .posted_in, .tagged_as)' => 'color: {{VALUE}};',
 				],
@@ -152,7 +152,7 @@ class Wpr_Product_Meta extends Widget_Base {
 			[
 				'label'     => esc_html__('Value Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#a0a0a0',
+				'default'   => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-meta .product_meta :is(.sku, .posted_in a, .tagged_as a)' => 'color: {{VALUE}};',
 				],
@@ -164,7 +164,7 @@ class Wpr_Product_Meta extends Widget_Base {
 			[
 				'label'     => esc_html__('Link Hover Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#101010',
+				'default'   => '#605BE5',
 				'separator' => 'after',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-meta .product_meta :is(.posted_in a, .tagged_as a):hover' => 'color: {{VALUE}};',
@@ -186,7 +186,7 @@ class Wpr_Product_Meta extends Widget_Base {
 						'label'      => esc_html__('Font Size (px)', 'wpr-addons'),
 						'size_units' => ['px'],
 						'default'    => [
-							'size' => '14',
+							'size' => '13',
 							'unit' => 'px',
 						],
 					],

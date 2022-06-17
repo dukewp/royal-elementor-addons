@@ -66,7 +66,7 @@ class Wpr_Product_Price extends Widget_Base {
             [
                 'label' => esc_html__( 'Alignment', 'wpr-addons' ),
                 'type' => Controls_Manager::CHOOSE,
-                'default' => 'center',
+                'default' => 'left',
                 'label_block' => false,
                 'options' => [
 					'left'    => [
@@ -107,7 +107,7 @@ class Wpr_Product_Price extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Normal Price Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-price' => 'color: {{VALUE}}',
 				],
@@ -119,7 +119,18 @@ class Wpr_Product_Price extends Widget_Base {
 			[
 				'name'     => 'price_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-product-price'
+				'selector' => '{{WRAPPER}} .wpr-product-price',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '25',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -128,7 +139,7 @@ class Wpr_Product_Price extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Sale Price Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#A3A3A3',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-price del' => 'color: {{VALUE}}',
 				],
@@ -141,7 +152,18 @@ class Wpr_Product_Price extends Widget_Base {
 			[
 				'name'     => 'price_sale_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-product-price del'
+				'selector' => '{{WRAPPER}} .wpr-product-price del',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '18',
+							'unit' => 'px',
+						],
+					],
+				]
 			]
 		);
 
