@@ -195,10 +195,10 @@ class Plugin {
 	public function register_custom_controls() {
 
 		$controls_manager = \Elementor\Plugin::$instance->controls_manager;
-		$controls_manager->register_control( 'wpr-animations', new WPR_Control_Animations() );
-		$controls_manager->register_control( 'wpr-animations-alt', new WPR_Control_Animations_Alt() );
-		$controls_manager->register_control( 'wpr-button-animations', new WPR_Control_Button_Animations() );
-		$controls_manager->register_control( 'wpr-arrow-icons', new WPR_Control_Arrow_Icons() );
+		$controls_manager->register( new WPR_Control_Animations() );
+		$controls_manager->register( new WPR_Control_Animations_Alt() );
+		$controls_manager->register( new WPR_Control_Button_Animations() );
+		$controls_manager->register( new WPR_Control_Arrow_Icons() );
 
 	}
 
