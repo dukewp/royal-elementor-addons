@@ -1553,6 +1553,22 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		);
 		
 		$this->add_control(
+			'show_images',
+			[
+				'label' => esc_html__( 'Show Images', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'default' => 'no',
+				'label_block' => false,
+				'separator' => 'before',
+				'render_type' => 'template',
+				'condition' => [
+					'content_layout' => ['image-top', 'image-bottom']
+				],
+			]
+		);
+		
+		$this->add_control(
 			'show_overlay',
 			[
 				'label' => esc_html__( 'Show Image Overlay', 'wpr-addons' ),
@@ -1563,7 +1579,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'separator' => 'before',
 				'render_type' => 'template',
 				'condition' => [
-					'content_layout' => 'image-top'
+					'content_layout' => 'image-top',
+					'show_images' => 'yes'
 				],
 			]
 		);
@@ -1613,6 +1630,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'render_type' => 'template',
 				'condition' => [
 					'show_overlay' => 'yes',
+					'show_images' => 'yes',
 					'content_layout' => 'image-top',
 					'show_title' => 'yes'
 				]
@@ -1646,6 +1664,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				// 'render_type' => 'template',
 				'condition' => [
 					'show_overlay' => 'yes',
+					'show_images' => 'yes',
 					'content_layout' => 'image-top',
 					'timeline_content' => 'dynamic',
 					'show_date' => 'yes'
@@ -1679,6 +1698,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'label_block' => false,
 				'condition' => [
 					'show_overlay' => 'yes',
+					'show_images' => 'yes',
 					'content_layout' => 'image-top',
 					'show_description' => 'yes'
 				]
@@ -1741,6 +1761,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'render_type' => 'template',
 				'condition' => [
 					'show_overlay' => 'yes',
+					'show_images' => 'yes',
 					'show_readmore' => 'yes',
 					'content_layout' => 'image-top',
 					'timeline_content' => ['dynamic']
@@ -1838,7 +1859,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
 				'condition' => [
 					'content_layout' => 'image-top',
-					'show_overlay' => 'yes'
+					'show_overlay' => 'yes',
+					'show_images' => 'yes'
 				]
 			]
 		);
@@ -1930,6 +1952,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 				'condition' => [
 					'show_overlay' => 'yes',
+					'show_images' => 'yes',
 					'content_layout' => 'image-top'
 				]
 			]
@@ -1962,6 +1985,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 				'condition' => [
 					'show_overlay' => 'yes',
+					'show_images' => 'yes',
 					'content_layout' => 'image-top'
 				]
 			]
@@ -2862,7 +2886,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'content_layout' => 'image-top',
-					'show_overlay' => 'yes'
+					'show_overlay' => 'yes',
+					'show_images' => 'yes'
 				],
 			]
 		);
@@ -2926,6 +2951,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 				'condition' =>[
 					'show_overlay' => 'yes',
+					'show_images' => 'yes',
 					'content_layout' => 'image-top',
 				],
 			]
