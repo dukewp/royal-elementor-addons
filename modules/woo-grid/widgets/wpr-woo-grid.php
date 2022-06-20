@@ -6118,6 +6118,34 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'linked_products_alignment',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'left'    => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					]
+				],
+				'default' => 'left',
+				'separator' => 'before',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-upsell-heading *' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} .wpr-cross-sell-heading *' => 'text-align: {{VALUE}};'
+				]
+			]
+		);
+
 		$this->end_controls_section(); // End Controls Section
 
 		// Styles ====================
@@ -6267,7 +6295,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#7A7A7A',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-sorting-inner-wrap form .orderby' => 'color: {{VALUE}}'
+					'{{WRAPPER}} .wpr-grid-sorting-inner-wrap form .orderby' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-sorting-inner-wrap form .wpr-orderby-icon' => 'color: {{VALUE}}'
 				],
 			]
 		);
@@ -6290,6 +6319,131 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'name'     => 'sorting',
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-sorting-inner-wrap form .orderby'
+			]
+		);
+
+		$this->add_responsive_control(
+			'sorting_icon_size',
+			[
+				'label' => esc_html__( 'Icon Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 5,
+						'max' => 50,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 12,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-sorting-inner-wrap form .wpr-orderby-icon' => 'font-size: {{SIZE}}{{UNIT}};',
+				],
+				// 'separator' => 'before'
+			]
+		);
+
+		$this->add_responsive_control(
+			'sorting_select_width',
+			[
+				'label' => esc_html__( 'Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 150,
+						'max' => 400,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 250,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-sorting-inner-wrap form .orderby' => 'width: {{SIZE}}{{UNIT}};',
+				],
+				// 'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'sorting_select_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 5,
+					'right' => 15,
+					'bottom' => 5,
+					'left' => 15,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-sorting-inner-wrap form .orderby' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-sorting-inner-wrap .wpr-orderby-icon' => 'right: {{LEFT}}{{UNIT}};'
+				]
+			]
+		);
+
+		$this->add_control(
+			'sorting_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'solid',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-sorting-inner-wrap form .orderby' => 'border-style: {{VALUE}};',
+				],
+				// 'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'sorting_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-sorting-inner-wrap form .orderby' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'sorting_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'sorting_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-sorting-inner-wrap form .orderby' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
 			]
 		);
 
@@ -8041,13 +8195,13 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$catalog_orderby_options = [
 			'menu_order' => esc_html__('Default sorting', 'wpr-addons'),
-			'popularity' => esc_html__('Sort by popularity', 'wpr-addons'),
-			'rating'     => esc_html__('Sort by average rating', 'wpr-addons'),
-			'date'       => esc_html__('Sort by latest', 'wpr-addons'),
-			'price'      => esc_html__('Sort by price: low to high', 'wpr-addons'),
-			'price-desc' => esc_html__('Sort by price: high to low', 'wpr-addons'),
-			'title'      => esc_html__('Sort by title: a to z', 'wpr-addons'),
-			'title-desc' => esc_html__('Sort by title: z to a', 'wpr-addons'),
+			'popularity' => esc_html__('Popularity', 'wpr-addons'),
+			'rating'     => esc_html__('Average rating', 'wpr-addons'),
+			'date'       => esc_html__('Latest', 'wpr-addons'),
+			'price'      => esc_html__('Price: low to high', 'wpr-addons'),
+			'price-desc' => esc_html__('Price: high to low', 'wpr-addons'),
+			'title'      => esc_html__('Title: a to z', 'wpr-addons'),
+			'title-desc' => esc_html__('Title: z to a', 'wpr-addons'),
 		];
 		
 		$orderby = isset($_GET['orderby']) ? $_GET['orderby'] : '';

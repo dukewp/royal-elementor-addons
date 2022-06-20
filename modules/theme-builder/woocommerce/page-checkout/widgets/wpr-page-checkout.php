@@ -633,7 +633,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 		$this->add_control(
 			'notice_link_color',
 			[
-				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'label' => esc_html__( 'Link Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#FFFFFF',
 				'selectors' => [
@@ -647,7 +647,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 		$this->add_control(
 			'notice_link_hover_color',
 			[
-				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'label' => esc_html__( 'Link Hover Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#FFFFFF',
 				'selectors' => [
