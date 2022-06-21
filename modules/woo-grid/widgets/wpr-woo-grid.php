@@ -7399,21 +7399,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 			}
 		}
 
-		// $queries =[];
-		// $new_queries = [];
-		// parse_str( $_SERVER['QUERY_STRING' ], $queries );
-		// var_dump($queries);
-		// foreach ( $queries as $key => $querie ) {
-		// 	$new_queries[] = $key;
-		// }
-
-		// return [
-		// 	'taxonomy' => 'pa_color',
-		// 	'field' => 'slug',
-		// 	'terms' => explode( ',', $_GET['filter_color'] ),
-		// ];
-		// var_dump($_SERVER['QUERY_STRING' ]);
-
 		return $tax_query;
 	}
 
