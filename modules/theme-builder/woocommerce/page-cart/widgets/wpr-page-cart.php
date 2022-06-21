@@ -993,7 +993,12 @@ class Wpr_Page_Cart extends Widget_Base {
 
 		$this->start_controls_tabs( 'forms_fields_styles' );
 
-		$this->start_controls_tab( 'forms_fields_normal_styles', [ 'label' => esc_html__( 'Normal', 'wpr-addons' ) ] );
+		$this->start_controls_tab( 
+			'forms_fields_normal_styles', 
+			[ 
+				'label' => esc_html__( 'Normal', 'wpr-addons' ) 
+			] 
+		);
 
 		$this->add_control(
 			'forms_fields_normal_color',
@@ -1051,7 +1056,8 @@ class Wpr_Page_Cart extends Widget_Base {
 
 		$this->end_controls_tab();
 
-		$this->start_controls_tab( 'forms_fields_focus_styles', 
+		$this->start_controls_tab( 
+			'forms_fields_focus_styles', 
 			[ 
 				'label' => esc_html__( 'Focus', 'wpr-addons' )
 			] 
