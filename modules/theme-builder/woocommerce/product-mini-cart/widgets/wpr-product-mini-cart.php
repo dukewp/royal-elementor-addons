@@ -412,7 +412,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 		// 		'default' => '#605BE5',
 		// 		'selectors' => [
 		// 			'{{WRAPPER}} .quantity' => 'color: {{VALUE}}',
-		// 			'{{WRAPPER}} .woocommerce-Price-amount' => 'color: {{VALUE}}'
+		// 			'{{WRAPPER}} .quantity .woocommerce-Price-amount' => 'color: {{VALUE}}'
 		// 		]
 		// 	]
 		// );
