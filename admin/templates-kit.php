@@ -67,6 +67,12 @@ function wpr_addons_templates_kit_page() {
     <div class="wpr-templates-kit-page-title">
         <h1><?php esc_html_e('Royal Elementor Templates Kit', 'wpr-addons'); ?></h1>
         <p><?php esc_html_e('Import any Templates Kit with just a Single click', 'wpr-addons'); ?></p>
+        <p>
+            <a href="https://www.youtube.com/watch?v=kl2xBoWW81o" class="wpr-options-button button" target="_blank">
+                <?php esc_html_e('Video Tutorial', 'wpr-addons'); ?>
+                <span class="dashicons dashicons-video-alt3"></span>
+            </a>
+        </p>
     </div>
 
     <div class="wpr-templates-kit-grid main-grid" data-theme-status="<?php echo esc_attr(get_theme_status()); ?>">

@@ -158,6 +158,28 @@ img {
   color: #555;
 }
 
+.button.wpr-options-button {
+  padding: 3px 18px;
+  border: 0;
+  color: #fff;
+  background: #6A4BFF;
+  -webkit-box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+          box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+  font-size: 14px;
+}
+
+.button.wpr-options-button:hover,
+.button.wpr-options-button:focus {
+  color: #fff;
+  background: #6A4BFF;
+  border: none;
+}
+
+.button.wpr-options-button .dashicons {
+  font-size: 16px;
+  line-height: 32px;
+}
+
 .wpr-templates-kit-grid {
   display: -ms-grid;
   display: grid;
