@@ -7325,6 +7325,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$args = [
 			'post_type' => 'product',
 			'tax_query' => $this->get_tax_query_args(),
+			'meta_query' => $this->get_meta_query_args(),
 			'post__not_in' => $settings[ 'query_exclude_products' ],
 			'posts_per_page' => $settings['query_posts_per_page'],
 			'orderby' => 'date',
@@ -7555,6 +7556,26 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		return $tax_query;
 	}
+
+	// Meta Query Args
+	public function get_meta_query_args(){
+        $meta_query = WC()->query->get_meta_query();
+
+		// Price Filter Args
+        if ( isset( $_GET['min_price'] ) || isset( $_GET['max_price'] ) ) {
+            $meta_query = array_merge( ['relation' => 'AND'], $meta_query );
+            $meta_query[] = [
+                [
+                    'key' => '_price',
+                    'value' => [ $_GET['min_price'], $_GET['max_price'] ],
+                    'compare' => 'BETWEEN',
+                    'type' => 'NUMERIC'
+                ],
+            ];
+        }
+
+		return $meta_query;
+    }
 
 	// Get Animation Class
 	public function get_animation_class( $data, $object ) {

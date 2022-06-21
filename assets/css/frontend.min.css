@@ -2693,6 +2693,52 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 }
 
 /*--------------------------------------------------------------
+== Product Filters
+--------------------------------------------------------------*/
+.wpr-product-filter-attrs {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  
+  .wpr-active-product-filter {
+    color: red;
+  }
+  
+  /* Price Slider */
+  .wpr-product-filter-price-slider {
+    background: lightgray;
+    height: 4px;
+  }
+  .wpr-product-filter-price-slider .ui-slider-range {
+    position: absolute;
+    display: block;
+    height: 4px;
+    background: #000;
+    /* outline aris focusze mosashorebeli */
+  }
+  
+  .wpr-product-filter-price-slider .ui-slider-handle {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: red;
+    border-radius: 100%;
+    margin-top: -7.5px;
+    cursor: ew-resize;
+  }
+  
+  .wpr-product-filter-price-amount{
+    margin-top: 20px;
+    display: flex;
+  }
+  
+  .wpr-product-filter-price-label {
+    margin-left: auto;
+  }
+
+  
+/*--------------------------------------------------------------
 == Grid
 --------------------------------------------------------------*/
 .wpr-grid {
