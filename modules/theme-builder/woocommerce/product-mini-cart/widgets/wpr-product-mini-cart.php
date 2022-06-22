@@ -135,6 +135,76 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'mini_cart_separators',
+			[
+				'label'     => esc_html__('Separator', 'wpr-addons'),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'separator_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#222222',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-mini-cart-item' => 'border-bottom-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-mini-cart__total'	=> 'border-bottom-color: {{VALUE}}'
+				],
+			]
+		);
+
+		$this->add_control(
+			'separator_style',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-mini-cart-item' => 'border-bottom-style: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-mini-cart__total'	=> 'border-bottom-style: {{VALUE}}'
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_responsive_control(
+			'separator_width',
+			[
+				'label' => esc_html__( 'Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 1,
+						'max' => 5
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 1,
+				],
+				'selectors'    => [
+					'{{WRAPPER}} .woocommerce-mini-cart-item' => 'border-bottom-width: {{SIZE}}{{UNIT}}',
+					'{{WRAPPER}} .woocommerce-mini-cart__total'	=> 'border-bottom-width: {{SIZE}}{{UNIT}}'
+				],
+				'condition' => [
+					'separator_style!' => 'none'
+				]
+			]
+		);
+
 		$this->end_controls_section();
 
 		// Tab: Styles ==============
@@ -381,9 +451,18 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 		);
 
 		$this->add_control(
+			'mini_cart_product_title',
+			[
+				'label'     => esc_html__('Title', 'wpr-addons'),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
 			'mini_cart_title_color',
 			[
-				'label'  => esc_html__( 'TItle Color', 'wpr-addons' ),
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#605BE5',
 				'selectors' => [
@@ -395,7 +474,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 		$this->add_control(
 			'mini_cart_title_color_hover',
 			[
-				'label'  => esc_html__( 'TItle Hover Color', 'wpr-addons' ),
+				'label'  => esc_html__( 'Hover Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#787878',
 				'selectors' => [
@@ -404,18 +483,101 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 			]
 		);
 
-		// $this->add_control(
-		// 	'mini_cart_quantity_color',
-		// 	[
-		// 		'label'  => esc_html__( 'Quantity & Price Color', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::COLOR,
-		// 		'default' => '#605BE5',
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .quantity' => 'color: {{VALUE}}',
-		// 			'{{WRAPPER}} .quantity .woocommerce-Price-amount' => 'color: {{VALUE}}'
-		// 		]
-		// 	]
-		// );
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'mini_cart_title_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .woocommerce-mini-cart-item a',
+			]
+		);
+
+		$this->add_control(
+			'mini_cart_product_quantity',
+			[
+				'label'     => esc_html__('Quantity & Price ', 'wpr-addons'),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'mini_cart_quantity_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#222222',
+				'selectors' => [
+					'{{WRAPPER}} .quantity' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .quantity .woocommerce-Price-amount' => 'color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'mini_cart_quantity_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .quantity, {{WRAPPER}} .quantity .woocommerce-Price-amount',
+			]
+		);
+
+		$this->add_control(
+			'mini_cart_subtotal',
+			[
+				'label'     => esc_html__('Subtotal', 'wpr-addons'),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'mini_cart_subtotal_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#222222',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-mini-cart .woocommerce-mini-cart__total' => 'color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'mini_cart_subtotal_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-mini-cart .woocommerce-mini-cart__total',
+			]
+		);
+
+		$this->add_responsive_control(
+			'subtotal_align',
+			[
+				'label'     => esc_html__('Alignment', 'wpr-addons'),
+				'type'      => Controls_Manager::CHOOSE,
+				'default' => 'center',
+				'options'   => [
+					'left'   => [
+						'title' => esc_html__('Left', 'wpr-addons'),
+						'icon'  => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__('Center', 'wpr-addons'),
+						'icon'  => 'eicon-text-align-center',
+					],
+					'right'  => [
+						'title' => esc_html__('Right', 'wpr-addons'),
+						'icon'  => 'eicon-text-align-right',
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-mini-cart .woocommerce-mini-cart__total' => 'text-align: {{VALUE}}',
+				]
+			]
+		);
 
 		$this->add_control(
 			'mini_cart_bg_color',
@@ -425,7 +587,8 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 				'default' => '#FFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-mini-cart' => 'background-color: {{VALUE}}',
-				]
+				],
+				'separator' => 'before'
 			]
 		);
 

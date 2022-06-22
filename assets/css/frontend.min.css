@@ -1770,6 +1770,12 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     margin: 0;
 }
 
+.wpr-mini-cart .woocommerce-mini-cart__total {
+    text-align: center;
+    padding: 10px;
+    margin: 0;
+}
+
 /* Product Media */
 .wpr-product-media-wrap {
     position: relative;
