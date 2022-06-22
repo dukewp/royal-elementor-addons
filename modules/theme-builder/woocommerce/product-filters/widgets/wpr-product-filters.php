@@ -104,6 +104,18 @@ class Wpr_Product_Filters extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'enable_hierarchy',
+			[
+				'label' => esc_html__( 'Enable Hierarchy', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'condition' => [
+					'filter_type' => [ 'product_cat', 'product_tag' ],
+				]
+			]
+		);
+
         $this->end_controls_section();
 
 	}
@@ -129,12 +141,24 @@ class Wpr_Product_Filters extends Widget_Base {
 			$url = add_query_arg( 'max_price', wc_clean( wp_unslash( $_GET['max_price'] ) ), $url );
 		}
 
+		// Search
 		if ( isset( $_GET['psearch'] ) ) {
 			$url = add_query_arg( 'psearch', wp_unslash( $_GET['psearch'] ), $url );
 		}
 
+		// Rating
 		if ( isset( $_GET['filter_rating'] ) ) {
 			$url = add_query_arg( 'filter_rating', wp_unslash( $_GET['filter_rating'] ), $url );
+		}
+
+		// Categories
+		if ( isset( $_GET['filter_product_cat'] ) ) {
+			$url = add_query_arg( 'filter_product_cat', wp_unslash( $_GET['filter_product_cat'] ), $url );
+		}
+
+		// Tags
+		if ( isset( $_GET['filter_product_tag'] ) ) {
+			$url = add_query_arg( 'filter_product_tag', wp_unslash( $_GET['filter_product_tag'] ), $url );
 		}
 
 		// All current filters.
@@ -165,7 +189,7 @@ class Wpr_Product_Filters extends Widget_Base {
         ];
     }
 
-	public function get_attribute_data( $filter, $attribute, $shop_url ) {
+	public function get_taxonomy_data( $filter, $attribute, $shop_url ) {
 		// Remove Prefix
         if ( 0 === strpos($filter, 'pa_') ) {
             $filter = 'filter_' . wc_attribute_taxonomy_slug( $filter );
@@ -207,22 +231,60 @@ class Wpr_Product_Filters extends Widget_Base {
 		];
 	}
 
-	public function render_product_attributes_filter( $settings ) {
-		$attributes = get_terms( $settings['filter_type'] );
+	public function render_product_Taxonomies_filter( $settings ) {
+		$filter_type = $settings['filter_type'];
 
-		echo '<ul class="wpr-product-filter-attrs">';
+		// Hierarchical
+		if ( 'yes' === $settings['enable_hierarchy'] ) {
+			$taxonomies = get_terms( $filter_type, [ 'parent' => 0, 'child_of' => 0 ] );
+	
+			echo '<ul class="wpr-product-filter-tax-wrap">';
+	
+			foreach ( $taxonomies as $taxonomy ) {
+				$tax_data = $this->get_taxonomy_data( $filter_type, $taxonomy, $this->get_shop_url() );
+	
+				echo '<li>';
+					echo '<a href="'. esc_url($tax_data['url']) .'" class="'. esc_attr($tax_data['class']) .'">'. esc_html($taxonomy->name);
+						echo '<span> ('. esc_html($taxonomy->count) .')</span>';
+					echo '</a>';
 
-		foreach ( $attributes as $attribute ) {
-			$attr_data = $this->get_attribute_data( $settings['filter_type'], $attribute, $this->get_shop_url() );
+					// Children
+					$children = get_terms( $filter_type, [ 'parent' => $taxonomy->term_id ] );
+					if ( !empty( $children ) ) {
+						foreach ( $children as $key => $child ) {
+							$child_tax_data = $this->get_taxonomy_data( $filter_type, $child, $this->get_shop_url() );
 
-			echo '<li>';
-				echo '<a href="'. esc_url($attr_data['url']) .'" class="'. esc_attr($attr_data['class']) .'">'. esc_html($attribute->name);
-					echo '<span> ('. esc_html($attribute->count) .')</span>';
-				echo '</a>';
-			echo '</li>';
+							echo '<li class="wpr-product-filter-tax-child">';
+								echo '<a href="'. esc_url($child_tax_data['url']) .'" class="'. esc_attr($child_tax_data['class']) .'">'. esc_html($child->name);
+									echo '<span> ('. esc_html($child->count) .')</span>';
+								echo '</a>';
+							echo '</li>';
+						}
+					}
+				echo '</li>';
+			}
+			
+			echo '<ul>';
+
+		// Non Hierarchical
+		} else {
+			$taxonomies = get_terms( $filter_type );
+	
+			echo '<ul class="wpr-product-filter-tax-wrap">';
+	
+			foreach ( $taxonomies as $taxonomy ) {
+				$tax_data = $this->get_taxonomy_data( $filter_type, $taxonomy, $this->get_shop_url() );
+	
+				echo '<li>';
+					echo '<a href="'. esc_url($tax_data['url']) .'" class="'. esc_attr($tax_data['class']) .'">'. esc_html($taxonomy->name);
+						echo '<span> ('. esc_html($taxonomy->count) .')</span>';
+					echo '</a>';
+				echo '</li>';
+			}
+			
+			echo '<ul>';
+
 		}
-		
-		echo '<ul>';
 	}
 
 	public function render_product_price_slider_filter() {
@@ -300,6 +362,7 @@ class Wpr_Product_Filters extends Widget_Base {
 	}
 
 	public function render_product_rating_filter( $settings ) {
+		$product = wc_get_product();
 		$filter_rating = isset( $_GET['filter_rating'] ) ? array_filter( array_map( 'absint', explode( ',', wp_unslash( $_GET['filter_rating'] ) ) ) ) : array(); // WPCS: input var ok, CSRF ok, sanitization ok.
 
 		$wrapper_class = 'wpr-product-filter-rating';
@@ -325,25 +388,27 @@ class Wpr_Product_Filters extends Widget_Base {
 			$url = $this->get_shop_url();
 
 			if ( in_array( $rating, $filter_rating, true ) ) {
-				$link_ratings = implode( ',', array_diff( $filter_rating, array( $rating ) ) );
+				$rating_url = implode( ',', array_diff( $filter_rating, array( $rating ) ) );
 			} else {
-				$link_ratings = implode( ',', array_merge( $filter_rating, array( $rating ) ) );
+				$rating_url = implode( ',', array_merge( $filter_rating, array( $rating ) ) );
 			}
 
 			$class = in_array( $rating, $filter_rating, true ) ? 'wpr-active-product-filter wpr-woo-rating' : 'wpr-woo-rating';
-			$url = $link_ratings ? add_query_arg( 'filter_rating', $link_ratings, $url ) : remove_query_arg( 'filter_rating' );
+			$url = $rating_url ? add_query_arg( 'filter_rating', $rating_url, $url ) : remove_query_arg( 'filter_rating' );
 
 			echo '<li class="'. esc_attr($class) .'">';
 				echo '<a href="'. esc_url( $url ) .'">';
+					echo '<span>';
+						for ( $i = 1; $i <= 5; $i++ ) {
+							if ( $i <= $rating ) {
+								echo '<i class="wpr-rating-icon-full">'. esc_html($rating_icon) .'</i>';
+							} else {
+								echo '<i class="wpr-rating-icon-empty">'. esc_html($rating_icon) .'</i>';
+							}
+						}
+					echo '</span>';
 
-				for ( $i = 1; $i <= 5; $i++ ) {
-					if ( $i <= $rating ) {
-						echo '<i class="wpr-rating-icon-full">'. esc_html($rating_icon) .'</i>';
-					} else {
-						echo '<i class="wpr-rating-icon-empty">'. esc_html($rating_icon) .'</i>';
-					}
-				 }
-
+					echo '<span> ('. esc_html($product->get_rating_count($rating)) .')</span>';
 				 echo '</a>';
 			echo '</li>';
 		}
@@ -376,9 +441,9 @@ class Wpr_Product_Filters extends Widget_Base {
 		} elseif ( 'price' === $settings['filter_type'] ) {
 			$this->render_product_price_slider_filter();
 
-		// Attributes
+		// Taxonomies
 		} else {
-			$this->render_product_attributes_filter($settings);
+			$this->render_product_Taxonomies_filter($settings);
 		}
 
 		echo '</div>';

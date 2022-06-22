@@ -2806,14 +2806,20 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 }
 
 /* Filter: Attributes */
-.wpr-product-filter-attrs {
+.wpr-product-filter-tax-wrap {
     padding: 0;
     margin: 0;
     list-style: none;
 }
 
-.wpr-product-filter-attrs .wpr-active-product-filter {
+.wpr-product-filter-tax-wrap .wpr-active-product-filter {
     color: red;
+}
+
+.wpr-product-filter-tax-child a:before {
+    content: '-';
+    margin-left: 7px;
+    margin-right: 3px;
 }
   
 /* Filter: Price */
