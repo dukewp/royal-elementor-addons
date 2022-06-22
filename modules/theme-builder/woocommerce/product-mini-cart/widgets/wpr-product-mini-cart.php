@@ -113,22 +113,77 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 		);
 
 		$this->add_control(
-			'icon',
+			'toggle_text',
 			[
-				'label' => esc_html__( 'Icon', 'elementor-pro' ),
+				'label' => esc_html__( 'Toggle Text', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'separator' => 'before',
 				'options' => [
-					'none' => esc_html__( 'None', 'elementor-pro' ),
-					'cart-light' => esc_html__( 'Cart Light', 'elementor-pro' ),
-					'cart-medium' => esc_html__( 'Cart Medium', 'elementor-pro' ),
-					'cart-solid' => esc_html__( 'Cart Solid', 'elementor-pro' ),
-					'basket-light' => esc_html__( 'Basket Light', 'elementor-pro' ),
-					'basket-medium' => esc_html__( 'Basket Medium', 'elementor-pro' ),
-					'basket-solid' => esc_html__( 'Basket Solid', 'elementor-pro' ),
-					'bag-light' => esc_html__( 'Bag Light', 'elementor-pro' ),
-					'bag-medium' => esc_html__( 'Bag Medium', 'elementor-pro' ),
-					'bag-solid' => esc_html__( 'Bag Solid', 'elementor-pro' )
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'price' => esc_html__( 'Price', 'wpr-addons' ),
+					'title' => esc_html__( 'Title', 'wpr-addons' )
+				],
+				'default' => 'none'
+			]
+		);
+
+		$this->add_control(
+			'toggle_title',
+			[
+				'label' => esc_html__( 'Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
+				'placeholder' => esc_html__( 'Cart', 'wpr-addons' ),
+				'default' => esc_html__( 'Cart', 'wpr-addons' ),
+				'condition' => [
+					'toggle_text' => 'title'
+				]
+			]
+		);
+
+		$this->add_control(
+			'toggle_text_distance',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 25,
+					],
+				],
+				'default' => [
+					'size' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-mini-cart-btn-text' => 'margin-right: {{SIZE}}{{UNIT}};',
+                ],
+				'condition' => [
+					'toggle_text!' => 'none'
+				]
+			]
+		);
+
+		$this->add_control(
+			'icon',
+			[
+				'label' => esc_html__( 'Icon', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'separator' => 'before',
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'cart-light' => esc_html__( 'Cart Light', 'wpr-addons' ),
+					'cart-medium' => esc_html__( 'Cart Medium', 'wpr-addons' ),
+					'cart-solid' => esc_html__( 'Cart Solid', 'wpr-addons' ),
+					'basket-light' => esc_html__( 'Basket Light', 'wpr-addons' ),
+					'basket-medium' => esc_html__( 'Basket Medium', 'wpr-addons' ),
+					'basket-solid' => esc_html__( 'Basket Solid', 'wpr-addons' ),
+					'bag-light' => esc_html__( 'Bag Light', 'wpr-addons' ),
+					'bag-medium' => esc_html__( 'Bag Medium', 'wpr-addons' ),
+					'bag-solid' => esc_html__( 'Bag Solid', 'wpr-addons' )
 				],
 				'default' => 'cart-light',
 				'prefix_class' => 'wpr-toggle-icon-',
@@ -174,8 +229,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-mini-cart-item' => 'border-bottom-style: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-mini-cart__total'	=> 'border-bottom-style: {{VALUE}}'
-				],
-				'separator' => 'before'
+				]
 			]
 		);
 
@@ -358,6 +412,49 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-mini-cart-toggle-btn' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
+			]
+		);
+
+		$this->add_control(
+			'toggle_btn_cart_icon',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Icon', 'wpr-addons' ),
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'toggle_btn_icon_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFF',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-mini-cart-btn-icon' => 'color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'toggle_btn_icon_size',
+			[
+				'label' => esc_html__( 'Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 5,
+						'max' => 50,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 16,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-mini-cart-btn-icon' => 'font-size: {{SIZE}}{{UNIT}};',
+				]
 			]
 		);
 
@@ -628,7 +725,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 			]
         );
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'mini_cart_distance',
 			[
 				'label' => esc_html__( 'Distance', 'wpr-addons' ),
@@ -650,7 +747,28 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
+			'mini_cart_height',
+			[
+				'label' => esc_html__( 'Items Height', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 150,
+						'max' => 1500,
+					],
+				],
+				'default' => [
+					'size' => 300,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-mini-cart' => 'height: {{SIZE}}{{UNIT}}; overflow-y: scroll;',
+                ]
+			]
+		);
+
+		$this->add_responsive_control(
 			'mini_cart_width',
 			[
 				'label' => esc_html__( 'Width', 'wpr-addons' ),
@@ -1167,7 +1285,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 		$this->end_controls_section();
     } 
 
-	public function render_mini_cart_toggle() {
+	public function render_mini_cart_toggle($settings) {
 
 		if ( null === WC()->cart ) {
 			return;
@@ -1180,7 +1298,17 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 
 		<span class="wpr-mini-cart-toggle-wrap">
 			<button id="wpr-mini-cart-toggle-btn" href="#" class="wpr-mini-cart-toggle-btn" aria-expanded="false">
-				<span class="wpr-mini-cart-btn-text"><?php echo $sub_total; ?></span>
+				<?php if ( 'none' !== $settings['toggle_text']) : ?>
+				<span class="wpr-mini-cart-btn-text">
+					<?php
+						if ( 'price' == $settings['toggle_text'] ) {
+							echo $sub_total; 
+						} else {
+							esc_html_e( $settings['toggle_title'], 'wpr-addons' );
+						}
+					?>
+				</span>
+				<?php endif; ?>
 				<span class="wpr-mini-cart-btn-icon" <?php echo $counter_attr; ?>>
 					<i class="eicon">
                         <span class="wpr-mini-cart-icon-count"><span><?php echo $product_count ?></span></span>
@@ -1219,9 +1347,10 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 	}
     
     protected function render() {
-        echo '<div class="wpr-mini-cart-wrap">';
+		$settings = $this->get_settings_for_display();
+        echo '<div class="wpr-mini-cart-wrap woocommerce">';
 			echo '<span class="wpr-mini-cart-inner">';
-				$this->render_mini_cart_toggle();
+				$this->render_mini_cart_toggle($settings);
 				$this->render_mini_cart();
 			echo '</span>';
         echo '</div>';
