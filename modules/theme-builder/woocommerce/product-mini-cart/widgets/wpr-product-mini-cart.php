@@ -748,27 +748,6 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'mini_cart_height',
-			[
-				'label' => esc_html__( 'Items Height', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 150,
-						'max' => 1500,
-					],
-				],
-				'default' => [
-					'size' => 300,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .woocommerce-mini-cart' => 'height: {{SIZE}}{{UNIT}}; overflow-y: scroll;',
-                ]
-			]
-		);
-
-		$this->add_responsive_control(
 			'mini_cart_width',
 			[
 				'label' => esc_html__( 'Width', 'wpr-addons' ),
@@ -869,6 +848,62 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 		);
 
         $this->end_controls_section();
+
+		// Tab: Styles ==============
+		// Section: Mini Cart Items ----------
+		$this->start_controls_section(
+			'section_mini_cart_items',
+			[
+				'label' => esc_html__( 'Mini Cart Items', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_responsive_control(
+			'mini_cart_height',
+			[
+				'label' => esc_html__( 'List Height', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 150,
+						'max' => 1500,
+					],
+				],
+				'default' => [
+					'size' => 300,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-mini-cart' => 'height: {{SIZE}}{{UNIT}}; overflow-y: scroll;',
+                ]
+			]
+		);
+
+		$this->add_control(
+			'scrollbar_thumb_color',
+			[
+				'label' => esc_html__( 'Scrollbar Color', 'wpr-addons' ),
+				'default' => '#222222',
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-mini-cart::-webkit-scrollbar-thumb' => 'border-right-color: {{VALUE}};',
+				]
+			]
+		);
+
+		// $this->add_control(
+		// 	'scrollbar_track_color',
+		// 	[
+		// 		'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::COLOR,
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .woocommerce-mini-cart::-webkit-scrollbar-track' => 'background-color: {{VALUE}};',
+		// 		]
+		// 	]
+		// );
+
+		$this->end_controls_section();
 
 		// Tab: Styles ==============
 		// Section: Remove Icon ----------

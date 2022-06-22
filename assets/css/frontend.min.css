@@ -1737,16 +1737,13 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 }
 
 .woocommerce-mini-cart::-webkit-scrollbar {
-    width: 5px;
-    margin-left: 5px;
-}
-   
-.woocommerce-mini-cart::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    width: 9px;
+    background-color: transparent;
 }
 
 .woocommerce-mini-cart::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
+    border-left: 6px solid transparent;
+    border-right: 3px solid;
 }
 
 .wpr-mini-cart-wrap .woocommerce-mini-cart-item {
