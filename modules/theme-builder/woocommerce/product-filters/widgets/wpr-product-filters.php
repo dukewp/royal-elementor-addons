@@ -48,6 +48,7 @@ class Wpr_Product_Filters extends Widget_Base {
         );
 
         $filter_by = [
+            'active' => esc_html__( 'Active', 'wpr-addons' ),
             'search' => esc_html__( 'Search', 'wpr-addons' ),
             'price' => esc_html__( 'Price', 'wpr-addons' ),
             'rating' => esc_html__( 'Rating', 'wpr-addons' ),
@@ -127,7 +128,7 @@ class Wpr_Product_Filters extends Widget_Base {
 				],
 				'default' => 'and',
 				'condition' => [
-					'filter_type!' => ['search', 'price', 'rating', 'product_cat', 'product_tag'],
+					'filter_type!' => ['active', 'search', 'price', 'rating', 'product_cat', 'product_tag'],
 				],
 			]
 		);
@@ -187,11 +188,14 @@ class Wpr_Product_Filters extends Widget_Base {
 				if ( ! empty( $data['terms'] ) ) {
 					$url = add_query_arg( 'filter_' . $filter_name, implode( ',', $data['terms'] ), $url );
 				}
-				if ( 'or' === $settings['tax_query_type'] ) {
+				if ( 'or' === $settings['tax_query_type'] || isset($_GET['query_type_' . $filter_name]) ) {
 					$url = add_query_arg( 'query_type_' . $filter_name, 'or', $url );
 				}
 			}
 		}
+
+		// Fix URL
+		// $url = str_replace( '%2C', ',', $url );
 		
 		return $url;
 	}
@@ -381,7 +385,7 @@ class Wpr_Product_Filters extends Widget_Base {
 	}
 
 	public function render_product_rating_filter( $settings ) {
-		$product = wc_get_product();
+		// $product = wc_get_product();
 		$filter_rating = isset( $_GET['filter_rating'] ) ? array_filter( array_map( 'absint', explode( ',', wp_unslash( $_GET['filter_rating'] ) ) ) ) : array(); // WPCS: input var ok, CSRF ok, sanitization ok.
 
 		$wrapper_class = 'wpr-product-filter-rating';
