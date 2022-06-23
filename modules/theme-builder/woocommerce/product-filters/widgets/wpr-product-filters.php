@@ -231,7 +231,7 @@ class Wpr_Product_Filters extends Widget_Base {
 		];
 	}
 
-	public function render_product_Taxonomies_filter( $settings ) {
+	public function render_product_taxonomies_filter( $settings ) {
 		$filter_type = $settings['filter_type'];
 
 		// Hierarchical
@@ -427,6 +427,8 @@ class Wpr_Product_Filters extends Widget_Base {
 			return;
 		}
 
+		// var_dump('');
+
 		echo '<div class="wpr-product-filters">';
 
 		// Search
@@ -443,7 +445,7 @@ class Wpr_Product_Filters extends Widget_Base {
 
 		// Taxonomies
 		} else {
-			$this->render_product_Taxonomies_filter($settings);
+			$this->render_product_taxonomies_filter($settings);
 		}
 
 		echo '</div>';
