@@ -48,6 +48,7 @@ class Wpr_Product_Filters extends Widget_Base {
         );
 
         $filter_by = [
+            'active' => esc_html__( 'Active', 'wpr-addons' ),
             'search' => esc_html__( 'Search', 'wpr-addons' ),
             'price' => esc_html__( 'Price', 'wpr-addons' ),
             'rating' => esc_html__( 'Rating', 'wpr-addons' ),
@@ -116,11 +117,30 @@ class Wpr_Product_Filters extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'tax_query_type',
+			[
+				'label' => esc_html__( 'Relation', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'and' => 'AND',
+					'or' => 'OR',
+				],
+				'default' => 'and',
+				'condition' => [
+					'filter_type!' => ['active', 'search', 'price', 'rating', 'product_cat', 'product_tag'],
+				],
+			]
+		);
+
         $this->end_controls_section();
 
 	}
 
 	public function get_shop_url() {
+		// Get Settings
+		$settings = $this->get_settings();
+
 		global $wp;
 
         if ( '' == get_option('permalink_structure' ) ) {
@@ -168,11 +188,14 @@ class Wpr_Product_Filters extends Widget_Base {
 				if ( ! empty( $data['terms'] ) ) {
 					$url = add_query_arg( 'filter_' . $filter_name, implode( ',', $data['terms'] ), $url );
 				}
-				if ( 'or' === $data['query_type'] ) {
+				if ( 'or' === $settings['tax_query_type'] || isset($_GET['query_type_' . $filter_name]) ) {
 					$url = add_query_arg( 'query_type_' . $filter_name, 'or', $url );
 				}
 			}
 		}
+
+		// Fix URL
+		// $url = str_replace( '%2C', ',', $url );
 		
 		return $url;
 	}
@@ -231,7 +254,7 @@ class Wpr_Product_Filters extends Widget_Base {
 		];
 	}
 
-	public function render_product_Taxonomies_filter( $settings ) {
+	public function render_product_taxonomies_filter( $settings ) {
 		$filter_type = $settings['filter_type'];
 
 		// Hierarchical
@@ -362,7 +385,7 @@ class Wpr_Product_Filters extends Widget_Base {
 	}
 
 	public function render_product_rating_filter( $settings ) {
-		$product = wc_get_product();
+		// $product = wc_get_product();
 		$filter_rating = isset( $_GET['filter_rating'] ) ? array_filter( array_map( 'absint', explode( ',', wp_unslash( $_GET['filter_rating'] ) ) ) ) : array(); // WPCS: input var ok, CSRF ok, sanitization ok.
 
 		$wrapper_class = 'wpr-product-filter-rating';
@@ -408,7 +431,7 @@ class Wpr_Product_Filters extends Widget_Base {
 						}
 					echo '</span>';
 
-					echo '<span> ('. esc_html($product->get_rating_count($rating)) .')</span>';
+					// echo '<span> ('. esc_html($product->get_rating_count($rating)) .')</span>';
 				 echo '</a>';
 			echo '</li>';
 		}
@@ -420,12 +443,7 @@ class Wpr_Product_Filters extends Widget_Base {
 		// Get Settings
 		$settings = $this->get_settings();
 
-		// Get Product
-		$product = wc_get_product();
-
-		if ( ! $product ) {
-			return;
-		}
+		// var_dump('');
 
 		echo '<div class="wpr-product-filters">';
 
@@ -443,7 +461,7 @@ class Wpr_Product_Filters extends Widget_Base {
 
 		// Taxonomies
 		} else {
-			$this->render_product_Taxonomies_filter($settings);
+			$this->render_product_taxonomies_filter($settings);
 		}
 
 		echo '</div>';
