@@ -2504,7 +2504,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 }
 
 /* Rating */
-.wpr-woo-rating i:before {
+.wpr-product-rating .wpr-woo-rating i:before {
     content: '\002605' !important;
 }
 
@@ -2791,30 +2791,60 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 /*--------------------------------------------------------------
 == Product Filters
 --------------------------------------------------------------*/
-.wpr-product-filter-attrs {
+/* Filter: Rating */
+.wpr-product-filter-rating {
     padding: 0;
     margin: 0;
     list-style: none;
-  }
-  
-  .wpr-active-product-filter {
+}
+
+.wpr-product-filter-rating .wpr-rating-icon-full {
+    color: orange;
+}
+
+.wpr-product-filter-rating .wpr-rating-icon-empty {
+    color: lightgray;
+}
+
+.wpr-product-filter-rating.wpr-woo-rating-style-2 i:before {
+    content: '\002605';
+}
+
+.wpr-product-filter-rating .wpr-active-product-filter .wpr-rating-icon-full {
+    color: red
+}
+
+/* Filter: Attributes */
+.wpr-product-filter-tax-wrap {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.wpr-product-filter-tax-wrap .wpr-active-product-filter {
     color: red;
-  }
+}
+
+.wpr-product-filter-tax-child a:before {
+    content: '-';
+    margin-left: 7px;
+    margin-right: 3px;
+}
   
-  /* Price Slider */
-  .wpr-product-filter-price-slider {
+/* Filter: Price */
+.wpr-product-filter-price-slider {
     background: lightgray;
     height: 4px;
-  }
-  .wpr-product-filter-price-slider .ui-slider-range {
+}
+.wpr-product-filter-price-slider .ui-slider-range {
     position: absolute;
     display: block;
     height: 4px;
     background: #000;
     /* outline aris focusze mosashorebeli */
-  }
-  
-  .wpr-product-filter-price-slider .ui-slider-handle {
+}
+
+.wpr-product-filter-price-slider .ui-slider-handle {
     position: absolute;
     width: 15px;
     height: 15px;
@@ -2822,16 +2852,16 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     border-radius: 100%;
     margin-top: -7.5px;
     cursor: ew-resize;
-  }
-  
-  .wpr-product-filter-price-amount{
+}
+
+.wpr-product-filter-price-amount {
     margin-top: 20px;
     display: flex;
-  }
-  
-  .wpr-product-filter-price-label {
+}
+
+.wpr-product-filter-price-label {
     margin-left: auto;
-  }
+}
 
   
 /*--------------------------------------------------------------

@@ -7424,10 +7424,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 			}
 		}
 
-		// var_dump($settings['query_orderby']);
-		// $settings['query_orderby'] = get_query_var('orderby');
-		// var_dump($settings['query_orderby'], 'query-orderby');
-
 		// Default Order By
 		if ( 'sales' === $settings['query_orderby'] ) {
 			$args['meta_key'] = 'total_sales';
@@ -7482,9 +7478,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		// Sorting
 		if ( isset( $_GET['orderby'] ) ) {
-			// var_dump($_GET['orderby']);
-			// var_dump($settings['query_orderby']);
-			// var_dump(get_query_var('orderby'));
 			if ( 'popularity' === $_GET['orderby'] ) {
 				$args['meta_key'] = 'total_sales';
 				$args['orderby']  = 'meta_value_num';
@@ -7516,6 +7509,11 @@ class Wpr_Woo_Grid extends Widget_Base {
 			}
 		}
 
+		// Search
+		if ( isset( $_GET['psearch'] ) ) {
+			$args['s'] = $_GET['psearch'];
+		}
+
 		return $args;
 	}
 
@@ -7539,6 +7537,27 @@ class Wpr_Woo_Grid extends Widget_Base {
 				}
 			}
 
+			// Product Categories
+			if ( isset($_GET['filter_product_cat']) ) {
+				array_push($tax_query, [
+					'taxonomy' => 'product_cat',
+					'field' => 'slug',
+					'terms' => explode( ',', $_GET['filter_product_cat'] ),
+					'operator' => 'IN',
+					'include_children' => true, // test this needed or not for hierarchy
+				]);
+			}
+
+			// Product Tags
+			if ( isset($_GET['filter_product_tag']) ) {
+				array_push($tax_query, [
+					'taxonomy' => 'product_tag',
+					'field' => 'slug',
+					'terms' => explode( ',', $_GET['filter_product_tag'] ),
+					'operator' => 'IN',
+					'include_children' => true, // test this needed or not for hierarchy
+				]);
+			}
 		// Grid Query
 		} else {
 			$settings = $this->get_settings();
@@ -7551,6 +7570,29 @@ class Wpr_Woo_Grid extends Widget_Base {
 						'terms' => $settings[ 'query_taxonomy_'. $tax ]
 					] );
 				}
+			}
+		}
+
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended
+		// Filter by rating.
+		if ( isset( $_GET['filter_rating'] ) ) {
+
+			$product_visibility_terms  = wc_get_product_visibility_term_ids();
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			$filter_rating = array_filter( array_map( 'absint', explode( ',', wp_unslash( $_GET['filter_rating'] ) ) ) );
+			$rating_terms  = array();
+			for ( $i = 1; $i <= 5; $i ++ ) {
+				if ( in_array( $i, $filter_rating, true ) && isset( $product_visibility_terms[ 'rated-' . $i ] ) ) {
+					$rating_terms[] = $product_visibility_terms[ 'rated-' . $i ];
+				}
+			}
+			if ( ! empty( $rating_terms ) ) {
+				$tax_query[] = array(
+					'taxonomy'      => 'product_visibility',
+					'field'         => 'term_taxonomy_id',
+					'terms'         => $rating_terms,
+					'operator'      => 'IN',
+				);
 			}
 		}
 
