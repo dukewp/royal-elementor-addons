@@ -2831,6 +2831,11 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     list-style: none;
 }
 
+.wpr-product-filter-rating a {
+    display: flex;
+    justify-content: space-between;
+}
+
 .wpr-product-filter-rating .wpr-rating-icon-full {
     color: orange;
 }
