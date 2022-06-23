@@ -116,11 +116,30 @@ class Wpr_Product_Filters extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'tax_query_type',
+			[
+				'label' => esc_html__( 'Relation', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'and' => 'AND',
+					'or' => 'OR',
+				],
+				'default' => 'and',
+				'condition' => [
+					'filter_type!' => ['search', 'price', 'rating', 'product_cat', 'product_tag'],
+				],
+			]
+		);
+
         $this->end_controls_section();
 
 	}
 
 	public function get_shop_url() {
+		// Get Settings
+		$settings = $this->get_settings();
+
 		global $wp;
 
         if ( '' == get_option('permalink_structure' ) ) {
@@ -168,7 +187,7 @@ class Wpr_Product_Filters extends Widget_Base {
 				if ( ! empty( $data['terms'] ) ) {
 					$url = add_query_arg( 'filter_' . $filter_name, implode( ',', $data['terms'] ), $url );
 				}
-				if ( 'or' === $data['query_type'] ) {
+				if ( 'or' === $settings['tax_query_type'] ) {
 					$url = add_query_arg( 'query_type_' . $filter_name, 'or', $url );
 				}
 			}
