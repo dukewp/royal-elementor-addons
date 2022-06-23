@@ -1665,7 +1665,16 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 == Single Product Elements
 --------------------------------------------------------------*/
 
+/* Product Title */
+.wpr-product-title {
+    margin: 0;
+}
+
 /* Product Mini Cart */
+.wpr-mini-cart .woocommerce-mini-cart__empty-message {
+    text-align: center;
+    margin: 0;
+}
 
 .wpr-mini-cart-inner {
     position: relative;

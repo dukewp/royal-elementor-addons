@@ -13,6 +13,30 @@ class WPR_WooCommerce_Config {
 
 		// Rewrite WC Default Templates
 		add_filter( 'wc_get_template', [ $this, 'rewrite_default_wc_templates' ], 10, 3 );
+
+		add_filter( 'woocommerce_add_to_cart_fragments', [$this, 'wc_refresh_mini_cart_count']);
+	}
+
+	function wc_refresh_mini_cart_count($fragments) {
+		ob_start();
+		$items_count = WC()->cart->get_cart_contents_count();
+		?>
+		<span class="wpr-mini-cart-icon-count"><?php echo $items_count ? $items_count : '&nbsp;'; ?></span>
+		<?php
+		$fragments['.wpr-mini-cart-icon-count'] = ob_get_clean();
+
+		ob_start();
+		$sub_total = WC()->cart->get_cart_subtotal();
+		?>
+				<span class="wpr-mini-cart-btn-price">
+					<?php
+							echo $sub_total; 
+					?>
+				</span>
+		<?php
+		$fragments['.wpr-mini-cart-btn-price'] = ob_get_clean();
+
+		return $fragments;
 	}
 
 	public function add_cart_single_product_ajax() {
