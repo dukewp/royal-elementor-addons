@@ -408,7 +408,7 @@ class Wpr_Product_Filters extends Widget_Base {
 						}
 					echo '</span>';
 
-					echo '<span> ('. esc_html($product->get_rating_count($rating)) .')</span>';
+					// echo '<span> ('. esc_html($product->get_rating_count($rating)) .')</span>';
 				 echo '</a>';
 			echo '</li>';
 		}
@@ -419,13 +419,6 @@ class Wpr_Product_Filters extends Widget_Base {
 	protected function render() {
 		// Get Settings
 		$settings = $this->get_settings();
-
-		// Get Product
-		$product = wc_get_product();
-
-		if ( ! $product ) {
-			return;
-		}
 
 		// var_dump('');
 
