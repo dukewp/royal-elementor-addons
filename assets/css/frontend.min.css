@@ -1784,6 +1784,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     display: block;
     min-width: 100%;
     height: auto;
+    margin-left: 0 !important;
 }
 
 .wpr-mini-cart-remove {

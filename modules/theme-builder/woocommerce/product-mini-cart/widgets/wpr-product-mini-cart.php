@@ -862,7 +862,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'mini_cart_height',
+			'mini_cart_list_height',
 			[
 				'label' => esc_html__( 'List Height', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
@@ -878,6 +878,28 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .woocommerce-mini-cart' => 'max-height: {{SIZE}}{{UNIT}}; overflow-y: scroll;',
+                ]
+			]
+		);
+
+		$this->add_responsive_control(
+			'mini_cart_list_distance',
+			[
+				'label' => esc_html__( 'List Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 25,
+					],
+				],
+				'default' => [
+					'size' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .woocommerce-mini-cart-item' => 'margin-bottom: {{SIZE}}{{UNIT}}; padding-bottom: {{SIZE}}{{UNIT}}; padding-top: 0;',
+					'{{WRAPPER}} .woocommerce-mini-cart-item:last-child' => 'margin-bottom: 0;',
                 ]
 			]
 		);
