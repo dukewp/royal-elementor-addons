@@ -2835,6 +2835,11 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     list-style: none;
 }
 
+.wpr-product-filter-rating a {
+    display: flex;
+    justify-content: space-between;
+}
+
 .wpr-product-filter-rating .wpr-rating-icon-full {
     color: orange;
 }
@@ -2862,10 +2867,36 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     color: red;
 }
 
-.wpr-product-filter-tax-child a:before {
-    content: '-';
-    margin-left: 7px;
-    margin-right: 3px;
+.wpr-product-filter-tax-wrap li a {
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    margin-bottom: 20px;
+}
+
+.wpr-product-filter-tax-wrap li a span:last-child {
+    margin-left: auto;
+}
+
+.wpr-product-filter-tax-wrap li a span:first-child {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 15px;
+    height: 15px;
+    background: lightgray;
+    margin-right: 5px;
+}
+
+.wpr-active-product-filter span:first-child:before {
+    content: "\f00c";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 10px;
+}
+
+.wpr-product-filter-tax-child a {
+    margin-left: 10px;
 }
   
 /* Filter: Price */

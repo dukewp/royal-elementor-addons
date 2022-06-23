@@ -41,9 +41,9 @@ class Wpr_Product_Filters extends Widget_Base {
 		// Tab: Content ==============
 		// Section: General ----------
         $this->start_controls_section(
-            'section_content',
+            'section_product_filter',
             [
-                'label' => esc_html__( 'Filter', 'wpr-addons' ),
+                'label' => esc_html__( 'General', 'wpr-addons' ),
             ]
         );
 
@@ -61,7 +61,6 @@ class Wpr_Product_Filters extends Widget_Base {
 				'type' => Controls_Manager::SELECT2,
 				'options' => $filter_by + Utilities::get_woo_taxonomies(),
 				'separator' => 'before',
-				'label_block' => true,
 				'default' => 'search_form',
 			]
 		);
@@ -110,6 +109,7 @@ class Wpr_Product_Filters extends Widget_Base {
 			[
 				'label' => esc_html__( 'Enable Hierarchy', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
 				'return_value' => 'yes',
 				'condition' => [
 					'filter_type' => [ 'product_cat', 'product_tag' ],
@@ -123,8 +123,8 @@ class Wpr_Product_Filters extends Widget_Base {
 				'label' => esc_html__( 'Relation', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'and' => 'AND',
-					'or' => 'OR',
+					'and' => esc_html__( 'AND', 'wpr-addons' ),
+					'or' => esc_html__( 'OR', 'wpr-addons' ),
 				],
 				'default' => 'and',
 				'condition' => [
@@ -133,13 +133,108 @@ class Wpr_Product_Filters extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'show_count_brackets',
+			[
+				'label' => esc_html__( 'Show Count Brackets', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'condition' => [
+					'filter_type!' => ['active', 'search', 'price'],
+				]
+			]
+		);
+
+		$this->add_control(
+			'brackets_type',
+			[
+				'label' => esc_html__( 'Bracket Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'round' => esc_html__( 'Round', 'wpr-addons' ),
+					'square' => esc_html__( 'Square', 'wpr-addons' ),
+				],
+				'default' => 'round',
+				'condition' => [
+					'show_count_brackets' => 'yes',
+					'filter_type!' => ['active', 'search', 'price'],
+				],
+			]
+		);
+
         $this->end_controls_section();
+
+		// Tab: Content ==============
+		// Section: Title ------------
+		$this->start_controls_section(
+			'section_product_filter_title',
+			[
+				'label' => esc_html__( 'Title', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$this->add_control(
+			'filter_title_text',
+			[
+				'label' => esc_html__( 'Title Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => 'Product Filter',
+			]
+		);
+
+		$this->add_control(
+			'filter_title_tag',
+			[
+				'label' => esc_html__( 'Title HTML Tag', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => 'H1',
+					'h2' => 'H2',
+					'h3' => 'H3',
+					'h4' => 'H4',
+					'h5' => 'H5',
+					'h6' => 'H6',
+				],
+				'default' => 'h3',
+			]
+		);
+
+		$this->add_responsive_control(
+            'filter_title_align',
+            [
+                'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+                'type' => Controls_Manager::CHOOSE,
+                'default' => 'left',
+                'label_block' => false,
+                'options' => [
+					'left'    => [
+						'title' => __( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => __( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => __( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					],
+                ],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-title' => 'text-align: {{VALUE}}',
+				],
+				'separator' => 'before'
+            ]
+        );
+
+		$this->end_controls_section(); // End Controls Section
 
 	}
 
-	public function get_shop_url() {
-		// Get Settings
-		$settings = $this->get_settings();
+	public function get_shop_url( $settings ) {
 
 		global $wp;
 
@@ -254,6 +349,18 @@ class Wpr_Product_Filters extends Widget_Base {
 		];
 	}
 
+	public function get_filter_count( $count, $settings ) {
+		if ( 'yes' === $settings['show_count_brackets'] ) {
+			if ( 'round' === $settings['brackets_type'] ) {
+				return '<span> ('. esc_html($count) .')</span>';
+			} elseif ( 'square' === $settings['brackets_type'] ) {
+				return '<span> ['. esc_html($count) .']</span>';
+			} else {
+				return '<span> '. esc_html($count) .'</span>';
+			}
+		}
+	}
+
 	public function render_product_taxonomies_filter( $settings ) {
 		$filter_type = $settings['filter_type'];
 
@@ -264,22 +371,26 @@ class Wpr_Product_Filters extends Widget_Base {
 			echo '<ul class="wpr-product-filter-tax-wrap">';
 	
 			foreach ( $taxonomies as $taxonomy ) {
-				$tax_data = $this->get_taxonomy_data( $filter_type, $taxonomy, $this->get_shop_url() );
+				$tax_data = $this->get_taxonomy_data( $filter_type, $taxonomy, $this->get_shop_url($settings) );
 	
 				echo '<li>';
-					echo '<a href="'. esc_url($tax_data['url']) .'" class="'. esc_attr($tax_data['class']) .'">'. esc_html($taxonomy->name);
-						echo '<span> ('. esc_html($taxonomy->count) .')</span>';
+					echo '<a href="'. esc_url($tax_data['url']) .'" class="'. esc_attr($tax_data['class']) .'">';
+						echo '<span></span>';
+						echo '<span>'. esc_html($taxonomy->name) .'</span>';
+						echo $this->get_filter_count($taxonomy->count, $settings);
 					echo '</a>';
 
 					// Children
 					$children = get_terms( $filter_type, [ 'parent' => $taxonomy->term_id ] );
 					if ( !empty( $children ) ) {
 						foreach ( $children as $key => $child ) {
-							$child_tax_data = $this->get_taxonomy_data( $filter_type, $child, $this->get_shop_url() );
+							$child_tax_data = $this->get_taxonomy_data( $filter_type, $child, $this->get_shop_url($settings) );
 
 							echo '<li class="wpr-product-filter-tax-child">';
-								echo '<a href="'. esc_url($child_tax_data['url']) .'" class="'. esc_attr($child_tax_data['class']) .'">'. esc_html($child->name);
-									echo '<span> ('. esc_html($child->count) .')</span>';
+								echo '<a href="'. esc_url($child_tax_data['url']) .'" class="'. esc_attr($child_tax_data['class']) .'">';
+									echo '<span></span>';
+									echo '<span>'. esc_html($child->name) .'</span>';
+									echo $this->get_filter_count($child->count, $settings);
 								echo '</a>';
 							echo '</li>';
 						}
@@ -296,11 +407,13 @@ class Wpr_Product_Filters extends Widget_Base {
 			echo '<ul class="wpr-product-filter-tax-wrap">';
 	
 			foreach ( $taxonomies as $taxonomy ) {
-				$tax_data = $this->get_taxonomy_data( $filter_type, $taxonomy, $this->get_shop_url() );
+				$tax_data = $this->get_taxonomy_data( $filter_type, $taxonomy, $this->get_shop_url($settings) );
 	
 				echo '<li>';
-					echo '<a href="'. esc_url($tax_data['url']) .'" class="'. esc_attr($tax_data['class']) .'">'. esc_html($taxonomy->name);
-						echo '<span> ('. esc_html($taxonomy->count) .')</span>';
+					echo '<a href="'. esc_url($tax_data['url']) .'" class="'. esc_attr($tax_data['class']) .'">';
+						echo '<span></span>';
+						echo '<span>'. esc_html($taxonomy->name) .'</span>';
+						echo $this->get_filter_count($taxonomy->count, $settings);
 					echo '</a>';
 				echo '</li>';
 			}
@@ -310,7 +423,7 @@ class Wpr_Product_Filters extends Widget_Base {
 		}
 	}
 
-	public function render_product_price_slider_filter() {
+	public function render_product_price_slider_filter( $settings ) {
 		wp_enqueue_script( 'wc-price-slider' );
 			
 		// Round values to nearest 10 by default.
@@ -345,7 +458,7 @@ class Wpr_Product_Filters extends Widget_Base {
 		$current_min_price = isset( $_GET['min_price'] ) ? floor( floatval( wp_unslash( $_GET['min_price'] ) ) / $step ) * $step : $min_price; // WPCS: input var ok, CSRF ok.
 		$current_max_price = isset( $_GET['max_price'] ) ? ceil( floatval( wp_unslash( $_GET['max_price'] ) ) / $step ) * $step : $max_price; // WPCS: input var ok, CSRF ok.
 
-		$form_action = $this->get_shop_url();
+		$form_action = $this->get_shop_url($settings);
 
 		?>
 
@@ -368,8 +481,8 @@ class Wpr_Product_Filters extends Widget_Base {
 		<?php
 	}
 	
-	public function render_product_search_filter() {
-		$form_action = $this->get_shop_url();
+	public function render_product_search_filter( $settings ) {
+		$form_action = $this->get_shop_url($settings);
 		$search_value = isset($_GET['psearch']) ? $_GET['psearch'] : '';
 
 		?>
@@ -385,7 +498,6 @@ class Wpr_Product_Filters extends Widget_Base {
 	}
 
 	public function render_product_rating_filter( $settings ) {
-		// $product = wc_get_product();
 		$filter_rating = isset( $_GET['filter_rating'] ) ? array_filter( array_map( 'absint', explode( ',', wp_unslash( $_GET['filter_rating'] ) ) ) ) : array(); // WPCS: input var ok, CSRF ok, sanitization ok.
 
 		$wrapper_class = 'wpr-product-filter-rating';
@@ -408,7 +520,7 @@ class Wpr_Product_Filters extends Widget_Base {
 		echo '<ul class="'. esc_attr($wrapper_class) .'">';
 
 		for ( $rating = 5; $rating >= 1; $rating-- ) {
-			$url = $this->get_shop_url();
+			$url = $this->get_shop_url($settings);
 
 			if ( in_array( $rating, $filter_rating, true ) ) {
 				$rating_url = implode( ',', array_diff( $filter_rating, array( $rating ) ) );
@@ -431,7 +543,7 @@ class Wpr_Product_Filters extends Widget_Base {
 						}
 					echo '</span>';
 
-					// echo '<span> ('. esc_html($product->get_rating_count($rating)) .')</span>';
+					echo $this->get_filter_count(3, $settings); // tmp sample number
 				 echo '</a>';
 			echo '</li>';
 		}
@@ -439,17 +551,24 @@ class Wpr_Product_Filters extends Widget_Base {
 		echo '</ul>';
 	}
 
+	public function render_filter_title( $settings ) {
+		echo '<'. $settings['filter_title_tag'] .' class="wpr-product-filter-title">';
+			echo esc_html($settings['filter_title_text']);
+		echo '</'. $settings['filter_title_tag'] .'>';
+	}
+
 	protected function render() {
 		// Get Settings
 		$settings = $this->get_settings();
 
-		// var_dump('');
-
 		echo '<div class="wpr-product-filters">';
+
+		// Title
+		$this->render_filter_title($settings);
 
 		// Search
 		if ( 'search' === $settings['filter_type'] ) {
-			$this->render_product_search_filter();
+			$this->render_product_search_filter($settings);
 
 		// Rating
 		} elseif ( 'rating' === $settings['filter_type'] ) {
@@ -457,7 +576,7 @@ class Wpr_Product_Filters extends Widget_Base {
 
 		// Price
 		} elseif ( 'price' === $settings['filter_type'] ) {
-			$this->render_product_price_slider_filter();
+			$this->render_product_price_slider_filter($settings);
 
 		// Taxonomies
 		} else {
