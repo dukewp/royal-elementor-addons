@@ -1700,6 +1700,10 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     border-radius: 50%;
 }
 
+.wpr-mini-cart-icon-count-hidden {
+    display: none !important;
+}
+
 .wpr-mini-cart-toggle-btn {
     display: inline-flex;
     align-items: center;
