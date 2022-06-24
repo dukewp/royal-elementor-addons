@@ -2829,6 +2829,14 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 == Product Filters
 --------------------------------------------------------------*/
 /* Filter: Rating */
+.wpr-product-filter-title {
+    margin: 0;
+}
+
+.wpr-product-filters .wpr-search-form-input-wrap { 
+    display: flex;
+}
+
 .wpr-product-filter-rating {
     padding: 0;
     margin: 0;
@@ -2874,7 +2882,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     margin-bottom: 20px;
 }
 
-.wpr-product-filter-tax-wrap li a span:last-child {
+.wpr-product-filter-tax-wrap li a span:last-child:not(.wpr-product-filter-tax-name) {
     margin-left: auto;
 }
 
@@ -2882,17 +2890,12 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 15px;
-    height: 15px;
-    background: lightgray;
-    margin-right: 5px;
 }
 
-.wpr-active-product-filter span:first-child:before {
+.wpr-active-product-filter:not(.wpr-woo-rating) span:first-child:before {
     content: "\f00c";
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
-    font-size: 10px;
 }
 
 .wpr-product-filter-tax-child a {
@@ -2900,25 +2903,15 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 }
   
 /* Filter: Price */
-.wpr-product-filter-price-slider {
-    background: lightgray;
-    height: 4px;
-}
 .wpr-product-filter-price-slider .ui-slider-range {
     position: absolute;
     display: block;
-    height: 4px;
-    background: #000;
     /* outline aris focusze mosashorebeli */
 }
 
 .wpr-product-filter-price-slider .ui-slider-handle {
     position: absolute;
-    width: 15px;
-    height: 15px;
-    background: red;
     border-radius: 100%;
-    margin-top: -7.5px;
     cursor: ew-resize;
 }
 
