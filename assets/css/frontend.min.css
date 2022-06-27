@@ -1688,6 +1688,22 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     z-index: 999;
 }
 
+.wpr-mini-cart-sidebar .wpr-shopping-cart-wrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100%;
+    z-index: 999;
+    background: rgba(0, 0, 0, 0.25);
+}
+
+.wpr-mini-cart-sidebar .widget_shopping_cart_content {
+    position: absolute;
+    top: 0;
+    width: 30%;
+}
+
 .wpr-mini-cart-btn-icon i {
     position: relative;
 }

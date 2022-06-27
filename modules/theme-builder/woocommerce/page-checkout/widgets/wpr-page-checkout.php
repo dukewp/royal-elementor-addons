@@ -1053,6 +1053,75 @@ class Wpr_Page_Checkout extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'place_order_table_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'solid',
+				'selectors' => [
+					'{{WRAPPER}} table.woocommerce-orders-table th' => 'border-style: {{VALUE}}',
+					'{{WRAPPER}} table.shop_table thead th' => 'border-style: {{VALUE}}',
+					'{{WRAPPER}} table.shop_table tfoot th' => 'border-style: {{VALUE}}',
+					'{{WRAPPER}} table.shop_table td' => 'border-style: {{VALUE}}'
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'place_order_table_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} table.woocommerce-orders-table th' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} table.shop_table thead th' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} table.shop_table tfoot th' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} table.shop_table td' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				],
+				'condition' => [
+					'place_order_table_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'place_order_table_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} table thead tr:first-of-type th:first-of-type' => 'border-top-left-radius: {{TOP}}{{UNIT}} !important;',
+					'{{WRAPPER}} table thead tr:first-of-type th:last-of-type' => 'border-top-right-radius: {{RIGHT}}{{UNIT}} !important;',
+					'{{WRAPPER}} table tfoot tr:last-of-type th:first-of-type' => 'border-bottom-left-radius: {{LEFT}}{{UNIT}} !important;',
+					'{{WRAPPER}} table tfoot tr:last-of-type td:last-of-type' => 'border-bottom-right-radius: {{BOTTOM}}{{UNIT}} !important;'
+				]
+			]
+		);
+
 		$this->add_responsive_control(
 			'checkout_table_description_alignment',
 			[
@@ -1514,12 +1583,31 @@ class Wpr_Page_Checkout extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'place_order_button_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .place-order button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
+			]
+		);
+
 		$this->add_responsive_control(
 			'place_order_button_padding',
 			[
 				'label' => esc_html__( 'Padding', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
+				'separator' => 'before',
 				'default' => [
 					'top' => 12,
 					'right' => 25,
@@ -1547,25 +1635,6 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .place-order button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
-			]
-		);
-
-		$this->add_control(
-			'place_order_button_radius',
-			[
-				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .place-order button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before',
 			]
 		);
 
