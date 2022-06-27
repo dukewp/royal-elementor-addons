@@ -2843,7 +2843,11 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     list-style: none;
 }
 
-.wpr-product-filter-rating a {
+.wpr-product-filter-label-left .wpr-product-filter-rating a {
+    display: flex;
+}
+
+.wpr-product-filter-label-right .wpr-product-filter-rating a {
     display: flex;
     justify-content: space-between;
 }
@@ -2879,10 +2883,13 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     display: flex;
     align-items: center;
     line-height: 1;
-    margin-bottom: 20px;
 }
 
 .wpr-product-filter-tax-wrap li a span:last-child:not(.wpr-product-filter-tax-name) {
+    margin-left: 4px;
+}
+
+.wpr-product-filter-label-right .wpr-product-filter-tax-wrap li a span:last-child:not(.wpr-product-filter-tax-name) {
     margin-left: auto;
 }
 
@@ -2911,8 +2918,15 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 .wpr-product-filter-price-slider .ui-slider-handle {
     position: absolute;
-    border-radius: 100%;
     cursor: ew-resize;
+}
+
+.wpr-product-filter-slide-handlers-round .wpr-product-filter-price-slider .ui-slider-handle {
+    border-radius: 100%;
+}
+
+.wpr-product-filter-slide-handlers-square .wpr-product-filter-price-slider .ui-slider-handle {
+    border-radius: 0;
 }
 
 .wpr-product-filter-price-amount {

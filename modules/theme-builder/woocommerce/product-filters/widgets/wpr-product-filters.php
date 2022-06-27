@@ -67,6 +67,41 @@ class Wpr_Product_Filters extends Widget_Base {
 		);
 
 		$this->add_control(
+			'slider_handlers_style',
+			[
+				'label' => esc_html__( 'Handlers', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'round' => esc_html__( 'Round', 'wpr-addons' ),
+					'square' => esc_html__( 'Square', 'wpr-addons' ),
+				],
+				'prefix_class' => 'wpr-product-filter-slide-handlers-',
+				'default' => 'round',
+				'condition' => [
+					'filter_type' => 'price'
+				]
+			]
+		);
+ 
+		$this->add_control(
+			'filter_list_type',
+			[
+				'label' => esc_html__( 'Count', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'left' => esc_html__( 'Left', 'wpr-addons' ),
+					'right' => esc_html__( 'Right', 'wpr-addons' ),
+				],
+				'prefix_class' => 'wpr-product-filter-label-',
+				'separator' => 'before',
+				'default' => 'right',
+				'condition' => [
+					'filter_type!' => ['active', 'search', 'price']
+				]
+			]
+		);
+
+		$this->add_control(
 			'rating_style',
 			[
 				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
@@ -98,7 +133,7 @@ class Wpr_Product_Filters extends Widget_Base {
 						'icon' => 'far fa-star',
 					],
 				],
-				'default' => 'outline',
+				'default' => 'solid',
 				'condition' => [
 					'filter_type' => 'rating',
 				],
@@ -157,7 +192,7 @@ class Wpr_Product_Filters extends Widget_Base {
 					'round' => esc_html__( 'Round', 'wpr-addons' ),
 					'square' => esc_html__( 'Square', 'wpr-addons' ),
 				],
-				'default' => 'round',
+				'default' => 'none',
 				'condition' => [
 					'show_count_brackets' => 'yes',
 					'filter_type!' => ['active', 'search', 'price'],
@@ -261,7 +296,7 @@ class Wpr_Product_Filters extends Widget_Base {
 			[
 				'label' => esc_html__( 'Button', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
+				'default' => '',
 				'separator' => 'before',
 			]
 		);
@@ -362,7 +397,7 @@ class Wpr_Product_Filters extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#7A7A7A',
+				'default' => '#222222',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-filter-title' => 'color: {{VALUE}};',
 				],
@@ -375,6 +410,20 @@ class Wpr_Product_Filters extends Widget_Base {
 				'name' => 'title_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-product-filter-title',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'font_weight' => [
+						'default' => 'bold'
+					],
+					'font_size'      => [
+						'default'    => [
+							'size' => '16',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -392,7 +441,7 @@ class Wpr_Product_Filters extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 15,
+					'size' => 18,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-filter-title' => 'margin-bottom: {{SIZE}}{{UNIT}};',
@@ -438,7 +487,7 @@ class Wpr_Product_Filters extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-search-form-input' => 'color: {{VALUE}};',
 				],
@@ -462,7 +511,7 @@ class Wpr_Product_Filters extends Widget_Base {
 			[
 				'label' => esc_html__( 'Placeholder Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#9e9e9e',
+				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-search-form-input::-webkit-input-placeholder' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-search-form-input:-ms-input-placeholder' => 'color: {{VALUE}};',
@@ -507,7 +556,7 @@ class Wpr_Product_Filters extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-search-form-input:focus' => 'color: {{VALUE}};',
 				],
@@ -531,7 +580,7 @@ class Wpr_Product_Filters extends Widget_Base {
 			[
 				'label' => esc_html__( 'Placeholder Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#9e9e9e',
+				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}}.wpr-search-form-input-focus .wpr-search-form-input::-webkit-input-placeholder' => 'color: {{VALUE}};',
 					'{{WRAPPER}}.wpr-search-form-input-focus .wpr-search-form-input:-ms-input-placeholder' => 'color: {{VALUE}};',
@@ -580,6 +629,17 @@ class Wpr_Product_Filters extends Widget_Base {
 				'name' => 'input_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-search-form-input',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'font_size'      => [
+						'default'    => [
+							'size' => '14',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -655,10 +715,10 @@ class Wpr_Product_Filters extends Widget_Base {
 				'label' => esc_html__( 'Padding', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'default' => [
-					'top' => 15,
-					'right' => 15,
-					'bottom' => 15,
-					'left' => 15,
+					'top' => 10,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
 				],
 				'size_units' => [ 'px', ],
 				'selectors' => [
@@ -807,7 +867,7 @@ class Wpr_Product_Filters extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 125,
+					'size' => 50,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-search-form-submit' => 'min-width: {{SIZE}}{{UNIT}};',
@@ -904,6 +964,17 @@ class Wpr_Product_Filters extends Widget_Base {
 				'label' => esc_html__( 'Typography', 'wpr-addons' ),
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-search-form-submit',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'font_size'      => [
+						'default'    => [
+							'size' => '14',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -973,7 +1044,7 @@ class Wpr_Product_Filters extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#787878',
+				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-filter-price-slider' => 'background: {{VALUE}};',
 				],
@@ -985,7 +1056,7 @@ class Wpr_Product_Filters extends Widget_Base {
 			[
 				'label' => esc_html__( 'Range Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#222222',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-filter-price-slider .ui-slider-range' => 'background: {{VALUE}};',
 				],
@@ -1018,7 +1089,7 @@ class Wpr_Product_Filters extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 4,
+					'size' => 3,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-filter-price-slider' => 'height: {{SIZE}}{{UNIT}};',
@@ -1042,7 +1113,7 @@ class Wpr_Product_Filters extends Widget_Base {
 			[
 				'type' => Controls_Manager::COLOR,
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
-				'default' => '#222222',
+				'default' => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-filter-price-label' => 'color: {{VALUE}};',
 				],
@@ -1082,7 +1153,7 @@ class Wpr_Product_Filters extends Widget_Base {
 			[
 				'type' => Controls_Manager::COLOR,
 				'label' => esc_html__( 'Text Color', 'wpr-addons' ),
-				'default' => '#ffffff',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-filter-price-amount .button' => 'color: {{VALUE}};',
 				],
@@ -1094,7 +1165,7 @@ class Wpr_Product_Filters extends Widget_Base {
 			[
 				'type' => Controls_Manager::COLOR,
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
-				'default' => '#605BE5',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-filter-price-amount .button' => 'background-color: {{VALUE}};',
 				],
@@ -1136,7 +1207,7 @@ class Wpr_Product_Filters extends Widget_Base {
 			[
 				'type' => Controls_Manager::COLOR,
 				'label' => esc_html__( 'Text Color', 'wpr-addons' ),
-				'default' => '#ffffff',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-filter-price-amount .button:hover' => 'color: {{VALUE}};',
 				],
@@ -1193,7 +1264,7 @@ class Wpr_Product_Filters extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 125,
+					'size' => 60,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-filter-price-amount .button' => 'min-width: {{SIZE}}{{UNIT}};',
@@ -1216,56 +1287,11 @@ class Wpr_Product_Filters extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 50,
+					'size' => 40,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-filter-price-amount .button' => 'height: {{SIZE}}{{UNIT}};',
 				]
-			]
-		);
-
-		$this->add_control(
-			'price_btn_gutter',
-			[
-				'type' => Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
-				'size_units' => [ 'px' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-					]
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 10,
-				],
-				'selectors' => [
-					'{{WRAPPER}}.wpr-search-form-style-outer.wpr-search-form-position-right .wpr-search-form-submit' => 'margin-left: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-search-form-style-outer.wpr-search-form-position-left .wpr-search-form-submit' => 'margin-right: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'price_btn_position',
-			[
-				'label' => esc_html__( 'Position', 'wpr-addons' ),
-				'type' => Controls_Manager::CHOOSE,
-				'label_block' => false,
-				'default' => 'right',
-				'options' => [
-					'left' => [
-						'title' => esc_html__( 'Left', 'wpr-addons' ),
-						'icon' => 'eicon-h-align-left',
-					],
-					'right' => [
-						'title' => esc_html__( 'Right', 'wpr-addons' ),
-						'icon' => 'eicon-h-align-right',
-					],
-				],
-				'prefix_class' => 'wpr-search-form-position-',
-				'separator' => 'before',
 			]
 		);
 
@@ -1284,6 +1310,17 @@ class Wpr_Product_Filters extends Widget_Base {
 				'label' => esc_html__( 'Typography', 'wpr-addons' ),
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-product-filter-price-amount .button',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'font_size'      => [
+						'default'    => [
+							'size' => '16',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -1293,14 +1330,14 @@ class Wpr_Product_Filters extends Widget_Base {
 				'label' => esc_html__( 'Border Size', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
 				],
 				'size_units' => [ 'px', ],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-filter-price-amount .button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-product-filter-price-amount .button' => 'border-style: solid; border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -1366,7 +1403,7 @@ class Wpr_Product_Filters extends Widget_Base {
 			[
 				'label' => esc_html__( 'Unmarked Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#D2CDCD',
+				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-woo-rating i' => 'color: {{VALUE}};',
 				],
@@ -1378,7 +1415,7 @@ class Wpr_Product_Filters extends Widget_Base {
 			[
 				'label' => esc_html__( 'Score Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605be5',
+				'default' => '#787878C2',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-woo-rating span' => 'color: {{VALUE}};',
 				],
@@ -1399,7 +1436,7 @@ class Wpr_Product_Filters extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#D71215',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-woo-rating:hover i:before' => 'color: {{VALUE}};',
 				],
@@ -1411,7 +1448,7 @@ class Wpr_Product_Filters extends Widget_Base {
 			[
 				'label' => esc_html__( 'Unmarked Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#D71215',
+				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-woo-rating:hover i' => 'color: {{VALUE}};',
 				],
@@ -1423,7 +1460,7 @@ class Wpr_Product_Filters extends Widget_Base {
 			[
 				'label' => esc_html__( 'Score Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#D71215',
+				'default' => '#787878C2',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-woo-rating span:hover' => 'color: {{VALUE}};',
 				],
@@ -1444,7 +1481,7 @@ class Wpr_Product_Filters extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#D71215',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-active-product-filter.wpr-woo-rating i:before' => 'color: {{VALUE}};',
 				],
@@ -1456,7 +1493,7 @@ class Wpr_Product_Filters extends Widget_Base {
 			[
 				'label' => esc_html__( 'Unmarked Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#D71215',
+				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-active-product-filter.wpr-woo-rating i' => 'color: {{VALUE}};',
 				],
@@ -1468,7 +1505,7 @@ class Wpr_Product_Filters extends Widget_Base {
 			[
 				'label' => esc_html__( 'Score Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#D71215',
+				'default' => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-active-product-filter.wpr-woo-rating span' => 'color: {{VALUE}};',
 				],
@@ -1587,7 +1624,7 @@ class Wpr_Product_Filters extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605BE5',
+				'default' => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-filter-tax-wrap a' => 'color: {{VALUE}}',
 				],
@@ -1599,7 +1636,7 @@ class Wpr_Product_Filters extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-                'default' => '#00000000',
+                'default' => '#FFFFFF00',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-filter-tax-wrap a' => 'background-color: {{VALUE}}',
 				]
@@ -1667,6 +1704,7 @@ class Wpr_Product_Filters extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-filter-tax-wrap a:hover' => 'color: {{VALUE}}',
 				],
@@ -1705,9 +1743,9 @@ class Wpr_Product_Filters extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 5,
+					'top' => 0,
 					'right' => 0,
-					'bottom' => 5,
+					'bottom' => 0,
 					'left' => 0,
 				],
 				'selectors' => [
@@ -1720,17 +1758,21 @@ class Wpr_Product_Filters extends Widget_Base {
 		$this->add_responsive_control(
 			'tax_margin',
 			[
-				'label' => esc_html__( 'Margin', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
 				'default' => [
-					'top' => 5,
-					'right' => 8,
-					'bottom' => 0,
-					'left' => 0,
+					'unit' => 'px',
+					'size' => 20,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-filter-tax-wrap li' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-product-filter-tax-wrap li:not(:last-child)' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -1748,7 +1790,7 @@ class Wpr_Product_Filters extends Widget_Base {
 					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
 					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
 				],
-				'default' => 'solid',
+				'default' => 'none',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-filter-tax-wrap a' => 'border-style: {{VALUE}};',
 				],
@@ -1809,7 +1851,7 @@ class Wpr_Product_Filters extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 10,
+					'size' => 15,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-filter-tax-child a' => 'margin-left: {{SIZE}}{{UNIT}};',
@@ -1835,9 +1877,62 @@ class Wpr_Product_Filters extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#d3d3d3',
+				'default' => '#ECECEC',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-filter-tax-wrap li a span:first-child' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'tax_checkbox_border_color',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#ECECEC',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-filter-tax-wrap li a span:first-child' => 'border-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'tax_checkbox_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'solid',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-filter-tax-wrap li a span:first-child' => 'border-style: {{VALUE}};',
+				]
+			]
+		);
+
+		$this->add_control(
+			'tax_checkbox_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-filter-tax-wrap a span:first-child' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'tax_checkbox_border_type!' => 'none',
 				],
 			]
 		);
@@ -1856,7 +1951,7 @@ class Wpr_Product_Filters extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 10,
+					'size' => 12,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-active-product-filter:not(.wpr-woo-rating) span:first-child:before' => 'font-size: {{SIZE}}{{UNIT}};',
@@ -1900,7 +1995,7 @@ class Wpr_Product_Filters extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 5,
+					'size' => 7,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-filter-tax-wrap li a span:first-child' => 'margin-right: {{SIZE}}{{UNIT}};',
