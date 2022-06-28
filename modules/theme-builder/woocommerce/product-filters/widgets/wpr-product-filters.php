@@ -722,30 +722,6 @@ class Wpr_Product_Filters extends Widget_Base {
 			]
 		);
 
-		// $this->add_control(
-		// 	'active_list_distance',
-		// 	[
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'label' => esc_html__( 'List Ditance', 'wpr-addons' ),
-		// 		'size_units' => [ 'px' ],
-		// 		'range' => [
-		// 			'px' => [
-		// 				'min' => 0,
-		// 				'max' => 25,
-		// 			]
-		// 		],
-		// 		'default' => [
-		// 			'unit' => 'px',
-		// 			'size' => 5,
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}}.wpr-active-filters-horizontal li.chosen:not(:last-child)' => 'margin-right: {{SIZE}}{{UNIT}};',
-		// 			'{{WRAPPER}}.wpr-active-filters-vertical li.chosen:not(:last-child)' => 'margin-bottom: {{SIZE}}{{UNIT}};'
-		// 		],
-		// 		'separator' => 'before'
-		// 	]
-		// );
-
 		$this->add_control(
 			'active_list_icon_distance',
 			[
