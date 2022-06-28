@@ -1688,6 +1688,10 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     z-index: 999;
 }
 
+.blockOverlay {
+    display: none !important;
+}
+
 .wpr-mini-cart-sidebar .wpr-shopping-cart-wrap {
     position: fixed;
     top: 0;
@@ -2954,7 +2958,10 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     margin-left: auto;
 }
 
-  
+.wpr-product-filters .wpr-product-filter-price-amount button.button {
+    font-weight: 400;
+}
+
 /*--------------------------------------------------------------
 == Grid
 --------------------------------------------------------------*/

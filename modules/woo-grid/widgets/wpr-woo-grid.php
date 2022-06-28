@@ -6302,6 +6302,18 @@ class Wpr_Woo_Grid extends Widget_Base {
 		);
 
 		$this->add_control(
+			'sorting_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#7A7A7A',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-sorting-inner-wrap form .orderby' => 'border-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
 			'sorting_bg_color',
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
