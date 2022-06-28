@@ -8797,9 +8797,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			return;
 		}
 		// Get Posts
-		// var_dump($this->get_main_query_args());
 		$posts = new \WP_Query( $this->get_main_query_args() );
-		// var_dump($posts);
 
 		// Loop: Start
 		if ( $posts->have_posts() ) :

@@ -2451,7 +2451,10 @@ class Wpr_Product_Filters extends Widget_Base {
 
 	public function render_product_taxonomies_filter( $settings ) {
 		$filter_type = $settings['filter_type'];
-
+		
+		$filter_query = new \WP_Query( $this->get_main_query_args() );
+	
+		
 		// Hierarchical
 		if ( 'yes' === $settings['enable_hierarchy'] ) {
 			$taxonomies = get_terms( $filter_type, [ 'parent' => 0, 'child_of' => 0 ] );
@@ -2770,6 +2773,80 @@ class Wpr_Product_Filters extends Widget_Base {
 				echo esc_html($settings['filter_title_text']);
 			echo '</'. $settings['filter_title_tag'] .'>';
 		}
+	}
+
+	public function get_tax_query_args() {
+		$tax_query = [];
+
+		// Filters Query
+		if ( isset($_GET['wprfilters']) ) {
+			$selected_filters = WC()->query->get_layered_nav_chosen_attributes();
+
+			if ( !empty($selected_filters) ) {
+				foreach ( $selected_filters as $taxonomy => $data ) {
+					array_push($tax_query, [
+						'taxonomy' => $taxonomy,
+						'field' => 'slug',
+						'terms' => $data['terms'],
+						'operator' => 'and' === $data['query_type'] ? 'AND' : 'IN',
+						'include_children' => false,
+					]);
+				}
+			}
+
+			// Product Categories
+			if ( isset($_GET['filter_product_cat']) ) {
+				array_push($tax_query, [
+					'taxonomy' => 'product_cat',
+					'field' => 'slug',
+					'terms' => explode( ',', $_GET['filter_product_cat'] ),
+					'operator' => 'IN',
+					'include_children' => true, // test this needed or not for hierarchy
+				]);
+			}
+
+			// Product Tags
+			if ( isset($_GET['filter_product_tag']) ) {
+				array_push($tax_query, [
+					'taxonomy' => 'product_tag',
+					'field' => 'slug',
+					'terms' => explode( ',', $_GET['filter_product_tag'] ),
+					'operator' => 'IN',
+					'include_children' => true, // test this needed or not for hierarchy
+				]);
+			}
+		}
+
+		return $tax_query;
+	}
+
+	public function get_meta_query_args(){
+        $meta_query = WC()->query->get_meta_query();
+
+		// Price Filter Args
+        if ( isset( $_GET['min_price'] ) || isset( $_GET['max_price'] ) ) {
+            $meta_query = array_merge( ['relation' => 'AND'], $meta_query );
+            $meta_query[] = [
+                [
+                    'key' => '_price',
+                    'value' => [ $_GET['min_price'], $_GET['max_price'] ],
+                    'compare' => 'BETWEEN',
+                    'type' => 'NUMERIC'
+                ],
+            ];
+        }
+
+		return $meta_query;
+    }
+
+	public function get_main_query_args() {
+		$args = [
+			'post_type' => 'product',
+			'tax_query' => $this->get_tax_query_args(),
+			'meta_query' => $this->get_meta_query_args(),
+		];
+
+		return $args;
 	}
 
 	protected function render() {
