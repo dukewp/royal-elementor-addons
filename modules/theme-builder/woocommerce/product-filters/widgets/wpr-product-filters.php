@@ -72,11 +72,11 @@ class Wpr_Product_Filters extends Widget_Base {
 				'label' => esc_html__( 'Handlers', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'round' => esc_html__( 'Round', 'wpr-addons' ),
 					'square' => esc_html__( 'Square', 'wpr-addons' ),
+					'round' => esc_html__( 'Round', 'wpr-addons' ),
 				],
 				'prefix_class' => 'wpr-product-filter-slide-handlers-',
-				'default' => 'round',
+				'default' => 'square',
 				'condition' => [
 					'filter_type' => 'price'
 				]

@@ -1688,7 +1688,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     z-index: 999;
 }
 
-.blockOverlay {
+.wpr-mini-cart .blockOverlay {
     display: none !important;
 }
 
@@ -2954,6 +2954,8 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 .wpr-product-filter-slide-handlers-square .wpr-product-filter-price-slider .ui-slider-handle {
     border-radius: 0;
+    border: none !important;
+    outline: none !important;
 }
 
 .wpr-product-filter-price-amount {
