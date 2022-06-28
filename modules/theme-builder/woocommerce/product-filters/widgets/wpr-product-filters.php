@@ -217,7 +217,7 @@ class Wpr_Product_Filters extends Widget_Base {
 			[
 				'label' => esc_html__( 'Title Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => 'Product Filter',
+				'default' => 'Product Filter'
 			]
 		);
 
