@@ -2394,7 +2394,7 @@ class Wpr_Product_Filters extends Widget_Base {
 
 		if ( 0 < count( $_chosen_attributes ) || 0 < $min_price || 0 < $max_price || ! empty( $filter_rating ) ) {
 			
-		echo '<ul>';
+		echo '<ul class="wpr-product-active-filters">';
 
 		// Attributes.
 		if ( ! empty( $_chosen_attributes ) ) {
