@@ -2597,17 +2597,6 @@ class Wpr_Product_Filters extends Widget_Base {
 		$form_action = $this->get_shop_url($settings);
 		$search_value = isset($_GET['psearch']) ? $_GET['psearch'] : '';
 
-		// $this->add_render_attribute(
-		// 	'input', [
-		// 		'placeholder' => $settings['search_placeholder'],
-		// 		'class' => 'wpr-search-form-input',
-		// 		'type' => 'search',
-		// 		'name' => 'psearch',
-		// 		'title' => esc_html__( 'Search', 'wpr-addons' ),
-		// 		'value' => get_search_query(),
-		// 	]
-		// );
-
 		?>
 
 		<form method="get" class="wpr-search-form" action="<?php echo esc_url( $form_action ); ?>">
@@ -2641,7 +2630,7 @@ class Wpr_Product_Filters extends Widget_Base {
 	}
 
 	public function render_product_rating_filter( $settings ) {
-		$filter_rating = isset( $_GET['filter_rating'] ) ? array_filter( array_map( 'absint', explode( ',', wp_unslash( $_GET['filter_rating'] ) ) ) ) : array(); // WPCS: input var ok, CSRF ok, sanitization ok.
+		$filter_rating = isset( $_GET['filter_rating'] ) ? array_filter( array_map( 'absint', explode( ',', wp_unslash( $_GET['filter_rating'] ) ) ) ) : []; // WPCS: input var ok, CSRF ok, sanitization ok.
 
 		$wrapper_class = 'wpr-product-filter-rating';
 		$rating_icon = '&#xE934;';
@@ -2693,22 +2682,16 @@ class Wpr_Product_Filters extends Widget_Base {
 		echo '</ul>';
 	}
 
-	public function render_filter_title( $settings ) {
-		if ( '' !== $settings['filter_title_text'] ) {
-			echo '<'. $settings['filter_title_tag'] .' class="wpr-product-filter-title">';
-				echo esc_html($settings['filter_title_text']);
-			echo '</'. $settings['filter_title_tag'] .'>';
-		}
-	}
-
 	public function render_product_active_filters( $settings ) {
+		$product_cats = isset( $_GET['filter_product_cat'] ) ? explode( ',', wc_clean( wp_unslash( $_GET['filter_product_cat'] ) ) ) : [];
+		$product_tags = isset( $_GET['filter_product_tag'] ) ? explode( ',', wc_clean( wp_unslash( $_GET['filter_product_tag'] ) ) ) : [];
 		$_chosen_attributes = WC()->query->get_layered_nav_chosen_attributes();
 		$min_price = isset( $_GET['min_price'] ) ? wc_clean( wp_unslash( $_GET['min_price'] ) ) : 0; // WPCS: input var ok, CSRF ok.
 		$max_price = isset( $_GET['max_price'] ) ? wc_clean( wp_unslash( $_GET['max_price'] ) ) : 0; // WPCS: input var ok, CSRF ok.
-		$filter_rating = isset( $_GET['filter_rating'] ) ? array_filter( array_map( 'absint', explode( ',', wp_unslash( $_GET['filter_rating'] ) ) ) ) : array(); // WPCS: sanitization ok, input var ok, CSRF ok.
+		$filter_rating = isset( $_GET['filter_rating'] ) ? array_filter( array_map( 'absint', explode( ',', wp_unslash( $_GET['filter_rating'] ) ) ) ) : []; // WPCS: sanitization ok, input var ok, CSRF ok.
 		$shop_url = $this->get_shop_url($settings);
 
-		if ( 0 < count( $_chosen_attributes ) || 0 < $min_price || 0 < $max_price || ! empty( $filter_rating ) ) {
+		if ( 0 < count( $_chosen_attributes ) || !empty($product_cats) || !empty($product_tags) || 0 < $min_price || 0 < $max_price || !empty( $filter_rating ) ) {
 			
 		echo '<div class="wpr-product-filters">';
 			// Widget Title
@@ -2716,8 +2699,44 @@ class Wpr_Product_Filters extends Widget_Base {
 
 			echo '<ul class="wpr-product-active-filters">';
 
+			// Categories
+			if ( !empty($product_cats) ) {
+
+				for ( $i=0; $i < count($product_cats); $i++ ) {
+					$term = get_term_by( 'slug', $product_cats[$i], 'product_cat' );
+					if ( ! $term ) {
+						continue;
+					}
+
+					$url = remove_query_arg( 'filter_product_cat', $shop_url );
+					$product_cats_url = $product_cats;
+					unset($product_cats_url[$i]);
+					$url = add_query_arg( 'filter_product_cat', implode( ',', $product_cats_url ), $shop_url );
+
+					echo '<li><a rel="nofollow" " href="'. esc_url( $url ) .'">'. esc_html( $term->name ) .'</a></li>';
+				}
+			}
+
+			// Tags
+			if ( !empty($product_tags) ) {
+
+				for ( $i=0; $i < count($product_tags); $i++ ) {
+					$term = get_term_by( 'slug', $product_tags[$i], 'product_tag' );
+					if ( ! $term ) {
+						continue;
+					}
+
+					$url = remove_query_arg( 'filter_product_tag', $shop_url );
+					$product_tags_url = $product_tags;
+					unset($product_tags_url[$i]);
+					$url = add_query_arg( 'filter_product_tag', implode( ',', $product_tags_url ), $shop_url );
+
+					echo '<li><a rel="nofollow" " href="'. esc_url( $url ) .'">'. esc_html( $term->name ) .'</a></li>';
+				}
+			}
+
 			// Attributes.
-			if ( ! empty( $_chosen_attributes ) ) {
+			if ( !empty( $_chosen_attributes ) ) {
 				foreach ( $_chosen_attributes as $taxonomy => $data ) {
 					foreach ( $data['terms'] as $term_slug ) {
 						$term = get_term_by( 'slug', $term_slug, $taxonomy );
@@ -2726,11 +2745,11 @@ class Wpr_Product_Filters extends Widget_Base {
 						}
 
 						$filter_name    = 'filter_' . wc_attribute_taxonomy_slug( $taxonomy );
-						$current_filter = isset( $_GET[ $filter_name ] ) ? explode( ',', wc_clean( wp_unslash( $_GET[ $filter_name ] ) ) ) : array(); // WPCS: input var ok, CSRF ok.
+						$current_filter = isset( $_GET[ $filter_name ] ) ? explode( ',', wc_clean( wp_unslash( $_GET[ $filter_name ] ) ) ) : []; // WPCS: input var ok, CSRF ok.
 						$current_filter = array_map( 'sanitize_title', $current_filter );
 						$new_filter     = array_diff( $current_filter, array( $term_slug ) );
 
-						$url = remove_query_arg( array( 'add-to-cart', $filter_name ), $shop_url );
+						$url = $shop_url;
 
 						if ( count( $new_filter ) > 0 ) {
 							$url = add_query_arg( $filter_name, implode( ',', $new_filter ), $url );
@@ -2766,6 +2785,14 @@ class Wpr_Product_Filters extends Widget_Base {
 			echo '</ul>';
 		echo '</div>';
 
+		}
+	}
+
+	public function render_filter_title( $settings ) {
+		if ( '' !== $settings['filter_title_text'] ) {
+			echo '<'. $settings['filter_title_tag'] .' class="wpr-product-filter-title">';
+				echo esc_html($settings['filter_title_text']);
+			echo '</'. $settings['filter_title_tag'] .'>';
 		}
 	}
 
