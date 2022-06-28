@@ -498,7 +498,7 @@ class Wpr_Product_Filters extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#787878',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-active-filters li.chosen a' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-product-active-filters li a' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -510,7 +510,7 @@ class Wpr_Product_Filters extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#FFFFFF',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-active-filters li.chosen a' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-product-active-filters li a' => 'background-color: {{VALUE}};',
 				],
 			]
 		);
@@ -522,7 +522,7 @@ class Wpr_Product_Filters extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#FFFFFF',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-active-filters li.chosen a' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-product-active-filters li a' => 'border-color: {{VALUE}};',
 				],
 			]
 		);
@@ -543,7 +543,7 @@ class Wpr_Product_Filters extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#605BE5',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-active-filters li.chosen a:hover' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-product-active-filters li a:hover' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -555,7 +555,7 @@ class Wpr_Product_Filters extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#FFFFFF',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-active-filters li.chosen a:hover' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-product-active-filters li a:hover' => 'background-color: {{VALUE}};',
 				],
 			]
 		);
@@ -567,7 +567,7 @@ class Wpr_Product_Filters extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#FFFFFF',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-active-filters li.chosen a:hover' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-product-active-filters li a:hover' => 'border-color: {{VALUE}};',
 				],
 			]
 		);
@@ -583,7 +583,7 @@ class Wpr_Product_Filters extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#FF4F40',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-active-filters li.chosen a::before' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-product-active-filters li a::before' => 'color: {{VALUE}};',
 				],
 				'separator' => 'before'
 			]
@@ -599,7 +599,7 @@ class Wpr_Product_Filters extends Widget_Base {
 				'max' => 5,
 				'step' => 0.1,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-active-filters li.chosen a' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-product-active-filters li a' => 'transition-duration: {{VALUE}}s',
 				]
 			]
 		);
@@ -609,7 +609,7 @@ class Wpr_Product_Filters extends Widget_Base {
 			[
 				'name' => 'active_list_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-product-active-filters li.chosen a, {{WRAPPER}} .wpr-product-active-filters li.chosen a::before',
+				'selector' => '{{WRAPPER}} .wpr-product-active-filters li a, {{WRAPPER}} .wpr-product-active-filters li a::before',
 				'fields_options' => [
 					'typography'      => [
 						'default' => 'custom',
@@ -639,7 +639,7 @@ class Wpr_Product_Filters extends Widget_Base {
 				],
 				'default' => 'none',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-active-filters li.chosen a' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .wpr-product-active-filters li a' => 'border-style: {{VALUE}};',
 				],
 				'separator' => 'before',
 			]
@@ -658,7 +658,7 @@ class Wpr_Product_Filters extends Widget_Base {
 					'left' => 0,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-active-filters li.chosen a' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-product-active-filters li a' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
 					'active_list_border_type!' => 'none',
@@ -679,7 +679,7 @@ class Wpr_Product_Filters extends Widget_Base {
 					'left' => 0,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-active-filters li.chosen a' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-product-active-filters li a' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				]
 			]
 		);
@@ -697,8 +697,8 @@ class Wpr_Product_Filters extends Widget_Base {
 					'left' => 0,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-active-filters li.chosen' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-product-active-filters li.chosen a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-product-active-filters li' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-product-active-filters li a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -717,34 +717,10 @@ class Wpr_Product_Filters extends Widget_Base {
 					'left' => 0,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-active-filters li.chosen' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-product-active-filters li' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				]
 			]
 		);
-
-		// $this->add_control(
-		// 	'active_list_distance',
-		// 	[
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'label' => esc_html__( 'List Ditance', 'wpr-addons' ),
-		// 		'size_units' => [ 'px' ],
-		// 		'range' => [
-		// 			'px' => [
-		// 				'min' => 0,
-		// 				'max' => 25,
-		// 			]
-		// 		],
-		// 		'default' => [
-		// 			'unit' => 'px',
-		// 			'size' => 5,
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}}.wpr-active-filters-horizontal li.chosen:not(:last-child)' => 'margin-right: {{SIZE}}{{UNIT}};',
-		// 			'{{WRAPPER}}.wpr-active-filters-vertical li.chosen:not(:last-child)' => 'margin-bottom: {{SIZE}}{{UNIT}};'
-		// 		],
-		// 		'separator' => 'before'
-		// 	]
-		// );
 
 		$this->add_control(
 			'active_list_icon_distance',
@@ -763,7 +739,7 @@ class Wpr_Product_Filters extends Widget_Base {
 					'size' => 5,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-active-filters li.chosen a::before' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-product-active-filters li a::before' => 'margin-right: {{SIZE}}{{UNIT}};',
 				],
 				// 		'separator' => 'before'
 			]
