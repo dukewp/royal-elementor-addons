@@ -67,6 +67,23 @@ class Wpr_Product_Filters extends Widget_Base {
 		);
 
 		$this->add_control(
+			'active_filter_layout',
+			[
+				'label' => esc_html__( 'Handlers', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'vertical' => esc_html__( 'Vertical', 'wpr-addons' ),
+					'horizontal' => esc_html__( 'Horizontal', 'wpr-addons' ),
+				],
+				'prefix_class' => 'wpr-active-filters-',
+				'default' => 'vertical',
+				'condition' => [
+					'filter_type' => 'active'
+				]
+			]
+		);
+
+		$this->add_control(
 			'slider_handlers_style',
 			[
 				'label' => esc_html__( 'Handlers', 'wpr-addons' ),
@@ -447,6 +464,308 @@ class Wpr_Product_Filters extends Widget_Base {
 					'{{WRAPPER}} .wpr-product-filter-title' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
+			]
+		);
+
+		$this->end_controls_section();
+
+		// Styles
+		// Section: Active ------------
+		$this->start_controls_section(
+			'section_style_active',
+			[
+				'label' => esc_html__( 'Active', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'filter_type' => 'active'
+				]
+			]
+		);
+
+		$this->start_controls_tabs( 'tabs_active_list_colors' );
+
+		$this->start_controls_tab(
+			'tab_active_list_normal_colors',
+			[
+				'label' => esc_html__( 'Normal', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'active_list_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#787878',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-active-filters li.chosen a' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'active_list_bg_color',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-active-filters li.chosen a' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'active_list_border_color',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-active-filters li.chosen a' => 'border-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_active_list_hover_colors',
+			[
+				'label' => esc_html__( 'Hover', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'active_list_color_hover',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-active-filters li.chosen a:hover' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'active_list_bg_color_hover',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-active-filters li.chosen a:hover' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'active_list_border_color_hover',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-active-filters li.chosen a:hover' => 'border-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_control(
+			'active_list_icon_color',
+			[
+				'label' => esc_html__( 'Icon Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FF4F40',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-active-filters li.chosen a::before' => 'color: {{VALUE}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'active_list_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.5,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-active-filters li.chosen a' => 'transition-duration: {{VALUE}}s',
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'active_list_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-product-active-filters li.chosen a, {{WRAPPER}} .wpr-product-active-filters li.chosen a::before',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'font_size'      => [
+						'default'    => [
+							'size' => '14',
+							'unit' => 'px',
+						],
+					]
+				]
+			]
+		);
+
+		$this->add_control(
+			'active_list_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-active-filters li.chosen a' => 'border-style: {{VALUE}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'active_list_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 1,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-active-filters li.chosen a' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'active_list_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'active_list_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-active-filters li.chosen a' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'active_list_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-active-filters li.chosen' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-product-active-filters li.chosen a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'active_list_margin',
+			[
+				'label' => esc_html__( 'Margin', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 5,
+					'right' => 8,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-active-filters li.chosen' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
+			]
+		);
+
+		// $this->add_control(
+		// 	'active_list_distance',
+		// 	[
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'label' => esc_html__( 'List Ditance', 'wpr-addons' ),
+		// 		'size_units' => [ 'px' ],
+		// 		'range' => [
+		// 			'px' => [
+		// 				'min' => 0,
+		// 				'max' => 25,
+		// 			]
+		// 		],
+		// 		'default' => [
+		// 			'unit' => 'px',
+		// 			'size' => 5,
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}}.wpr-active-filters-horizontal li.chosen:not(:last-child)' => 'margin-right: {{SIZE}}{{UNIT}};',
+		// 			'{{WRAPPER}}.wpr-active-filters-vertical li.chosen:not(:last-child)' => 'margin-bottom: {{SIZE}}{{UNIT}};'
+		// 		],
+		// 		'separator' => 'before'
+		// 	]
+		// );
+
+		$this->add_control(
+			'active_list_icon_distance',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Icon Ditance', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 15,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 5,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-active-filters li.chosen a::before' => 'margin-right: {{SIZE}}{{UNIT}};',
+				],
+				// 		'separator' => 'before'
 			]
 		);
 
@@ -1585,7 +1904,6 @@ class Wpr_Product_Filters extends Widget_Base {
 			]
 		);
 
-
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
@@ -1736,47 +2054,6 @@ class Wpr_Product_Filters extends Widget_Base {
 
 		$this->end_controls_tabs();
 
-		$this->add_responsive_control(
-			'tax_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-product-filter-tax-wrap a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_responsive_control(
-			'tax_margin',
-			[
-				'label' => esc_html__( 'Distance', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 50,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 20,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-product-filter-tax-wrap li:not(:last-child)' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
 		$this->add_control(
 			'tax_border_type',
 			[
@@ -1834,6 +2111,47 @@ class Wpr_Product_Filters extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-filter-tax-wrap a' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'tax_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-filter-tax-wrap a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'tax_margin',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 20,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-filter-tax-wrap li:not(:last-child)' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				],
 			]
 		);
 
