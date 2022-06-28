@@ -69,7 +69,7 @@ class Wpr_Product_Filters extends Widget_Base {
 		$this->add_control(
 			'active_filter_layout',
 			[
-				'label' => esc_html__( 'Handlers', 'wpr-addons' ),
+				'label' => esc_html__( 'Layout', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'vertical' => esc_html__( 'Vertical', 'wpr-addons' ),
@@ -527,6 +527,18 @@ class Wpr_Product_Filters extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'active_list_icon_color',
+			[
+				'label' => esc_html__( 'Icon Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FF4F40',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-active-filters li a::before' => 'color: {{VALUE}};',
+				]
+			]
+		);
+
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
@@ -577,19 +589,6 @@ class Wpr_Product_Filters extends Widget_Base {
 		$this->end_controls_tabs();
 
 		$this->add_control(
-			'active_list_icon_color',
-			[
-				'label' => esc_html__( 'Icon Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#FF4F40',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-product-active-filters li a::before' => 'color: {{VALUE}};',
-				],
-				'separator' => 'before'
-			]
-		);
-
-		$this->add_control(
 			'active_list_transition_duration',
 			[
 				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
@@ -600,7 +599,8 @@ class Wpr_Product_Filters extends Widget_Base {
 				'step' => 0.1,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-active-filters li a' => 'transition-duration: {{VALUE}}s',
-				]
+				],
+				'separator' => 'before'
 			]
 		);
 
