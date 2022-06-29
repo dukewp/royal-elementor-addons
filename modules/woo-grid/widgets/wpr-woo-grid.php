@@ -8321,14 +8321,14 @@ class Wpr_Woo_Grid extends Widget_Base {
 	public function render_grid_sorting( $settings ) {
 
 		$catalog_orderby_options = [
-			'menu_order' => esc_html__('Default sorting', 'wpr-addons'),
-			'popularity' => esc_html__('Popularity', 'wpr-addons'),
-			'rating'     => esc_html__('Average rating', 'wpr-addons'),
+			'menu_order' => esc_html__('Default Sorting', 'wpr-addons'),
 			'date'       => esc_html__('Latest', 'wpr-addons'),
-			'price'      => esc_html__('Price: low to high', 'wpr-addons'),
-			'price-desc' => esc_html__('Price: high to low', 'wpr-addons'),
-			'title'      => esc_html__('Title: a to z', 'wpr-addons'),
-			'title-desc' => esc_html__('Title: z to a', 'wpr-addons'),
+			'popularity' => esc_html__('Popularity', 'wpr-addons'),
+			'rating'     => esc_html__('Average Rating', 'wpr-addons'),
+			'price'      => esc_html__('Price: Low to High', 'wpr-addons'),
+			'price-desc' => esc_html__('Price: High to Low', 'wpr-addons'),
+			'title'      => esc_html__('Title: A to Z', 'wpr-addons'),
+			'title-desc' => esc_html__('Title: Z to A', 'wpr-addons'),
 		];
 		
 		$orderby = isset($_GET['orderby']) ? $_GET['orderby'] : '';
@@ -8376,8 +8376,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			?>
 
 			<div class="wpr-grid-orderby">
-				<form action="#" method="get">
-					<!-- DROPDOWN STYLE -->
+				<form action="<?php echo Utilities::get_shop_url([]); ?>" method="get">			
 					<span>
 						<i class="wpr-orderby-icon fas fa-angle-down"></i>
 						<select name="orderby" class="orderby" aria-label="<?php echo esc_attr__('Shop order', 'wpr-addons'); ?>">
@@ -8386,6 +8385,50 @@ class Wpr_Woo_Grid extends Widget_Base {
 							<?php endforeach; ?>
 						</select>
 					</span>
+
+					<?php // Product Filters
+					
+					if ( isset( $_GET['psearch'] ) ) {
+						echo '<input type="hidden" name="psearch" value="'. esc_attr($_GET['psearch']) .'"/>';
+					}
+					
+					if ( isset( $_GET['filter_rating'] ) ) {
+						echo '<input type="hidden" name="filter_rating" value="'. esc_attr($_GET['filter_rating']) .'"/>';
+					}
+					
+					if ( isset( $_GET['filter_product_cat'] ) ) {
+						echo '<input type="hidden" name="filter_product_cat" value="'. esc_attr($_GET['filter_product_cat']) .'"/>';
+					}
+					
+					if ( isset( $_GET['filter_product_tag'] ) ) {
+						echo '<input type="hidden" name="filter_product_tag" value="'. esc_attr($_GET['filter_product_tag']) .'"/>';
+					}
+					
+					if ( isset( $_GET['min_price'] ) ) {
+						echo '<input type="hidden" name="min_price" value="'. esc_attr($_GET['min_price']) .'"/>';
+					}
+					
+					if ( isset( $_GET['max_price'] ) ) {
+						echo '<input type="hidden" name="max_price" value="'. esc_attr($_GET['max_price']) .'"/>';
+					}
+
+					if ( $_chosen_attributes = WC()->query->get_layered_nav_chosen_attributes() ) {
+						foreach ( $_chosen_attributes as $name => $data ) {
+							$filter_name = wc_attribute_taxonomy_slug( $name );
+							reset($_chosen_attributes);
+							if ( $name === key($_chosen_attributes) ) {
+								echo '<input type="hidden" name="wprfilters" value="sort"/>';
+							}
+							
+							if ( isset($_GET['query_type_' . $filter_name]) ) {
+								echo '<input type="hidden" name="query_type_'. esc_attr($filter_name) .'" value="or"/>';
+							}
+
+							echo '<input type="hidden" name="filter_'. esc_attr($filter_name) .'" value="'. esc_attr($_GET['filter_'. $filter_name]) .'"/>';
+						}
+					}
+					
+					?>
 				</form>
 			</div>
 
