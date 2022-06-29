@@ -2355,6 +2355,29 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'sort_select_position',
+			[
+				'label' => esc_html__( 'Sort Select Position', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'label_block' => false,
+				'default' => 'below',
+				'options' => [
+					'above' => [
+						'title' => esc_html__( 'Above', 'wpr-addons' ),
+						'icon' => 'eicon-v-align-top',
+					],
+					'below' => [
+						'title' => esc_html__( 'Below', 'wpr-addons' ),
+						'icon' => 'eicon-v-align-bottom',
+					]
+				],
+				'render_type' => 'template',
+				'prefix_class' => 'wpr-sort-select-position-',
+				'sort_heading!' => ''
+			]
+		);
+
 		$this->end_controls_section(); // End Controls Section
 
 		// Tab: Content ==============
@@ -6182,10 +6205,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 3,
-					'right' => 15,
-					'bottom' => 3,
-					'left' => 15,
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-sorting-wrap' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -6231,7 +6254,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#7A7A7A',
+				'default' => '#222222',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-sort-heading *' => 'color: {{VALUE}}'
 				],
@@ -6243,7 +6266,40 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'name'     => 'sort_title',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-grid-sort-heading *'
+				'selector' => '{{WRAPPER}} .wpr-grid-sort-heading *',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					// 'font_size'      => [
+					// 	'default'    => [
+					// 		'size' => '14',
+					// 		'unit' => 'px',
+					// 	],
+					// ]
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'sort_and_results_title_distance_from_grid',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-sort-heading' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				]
 			]
 		);
 
@@ -6262,7 +6318,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#7A7A7A',
+				'default' => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-sorting-inner-wrap .woocommerce-result-count' => 'color: {{VALUE}}'
 				],
@@ -6274,7 +6330,18 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'name'     => 'results',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-grid-sorting-inner-wrap .woocommerce-result-count'
+				'selector' => '{{WRAPPER}} .wpr-grid-sorting-inner-wrap .woocommerce-result-count',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					// 'font_size'      => [
+					// 	'default'    => [
+					// 		'size' => '14',
+					// 		'unit' => 'px',
+					// 	],
+					// ]
+				]
 			]
 		);
 
@@ -6293,10 +6360,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#7A7A7A',
+				'default' => '#787878',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-sorting-inner-wrap form .orderby' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-grid-sorting-inner-wrap form .wpr-orderby-icon' => 'color: {{VALUE}}'
+					'{{WRAPPER}} .wpr-grid-sorting-wrap form .orderby' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-sorting-wrap form .wpr-orderby-icon' => 'color: {{VALUE}}'
 				],
 			]
 		);
@@ -6306,9 +6373,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#7A7A7A',
+				'default' => '#E8E8E8',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-sorting-inner-wrap form .orderby' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-sorting-wrap form .orderby' => 'border-color: {{VALUE}}',
 				],
 			]
 		);
@@ -6320,7 +6387,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#FFF',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-sorting-inner-wrap form .orderby' => 'background-color: {{VALUE}}'
+					'{{WRAPPER}} .wpr-grid-sorting-wrap form .orderby' => 'background-color: {{VALUE}}'
 				],
 			]
 		);
@@ -6330,7 +6397,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'name'     => 'sorting',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-grid-sorting-inner-wrap form .orderby'
+				'selector' => '{{WRAPPER}} .wpr-grid-sorting-wrap form .orderby'
 			]
 		);
 
@@ -6351,7 +6418,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'size' => 12,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-sorting-inner-wrap form .wpr-orderby-icon' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-sorting-wrap form .wpr-orderby-icon' => 'font-size: {{SIZE}}{{UNIT}};',
 				],
 				// 'separator' => 'before'
 			]
@@ -6371,10 +6438,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 				],				
 				'default' => [
 					'unit' => 'px',
-					'size' => 250,
+					'size' => 200,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-sorting-inner-wrap form .orderby' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-sorting-wrap form .orderby' => 'width: {{SIZE}}{{UNIT}};',
 				],
 				// 'separator' => 'before'
 			]
@@ -6393,8 +6460,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'left' => 15,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-sorting-inner-wrap form .orderby' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-grid-sorting-inner-wrap .wpr-orderby-icon' => 'right: {{LEFT}}{{UNIT}};'
+					'{{WRAPPER}} .wpr-grid-sorting-wrap form .orderby' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-sorting-wrap .wpr-orderby-icon' => 'right: {{LEFT}}{{UNIT}};'
 				]
 			]
 		);
@@ -6414,7 +6481,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				],
 				'default' => 'solid',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-sorting-inner-wrap form .orderby' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .wpr-grid-sorting-wrap form .orderby' => 'border-style: {{VALUE}};',
 				],
 				// 'separator' => 'before',
 			]
@@ -6433,7 +6500,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'left' => 1,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-sorting-inner-wrap form .orderby' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-sorting-wrap form .orderby' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
 					'sorting_border_type!' => 'none',
@@ -6454,7 +6521,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'left' => 1,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-sorting-inner-wrap form .orderby' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-sorting-wrap form .orderby' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				]
 			]
 		);
@@ -8271,6 +8338,27 @@ class Wpr_Woo_Grid extends Widget_Base {
 		if ( '' !== $settings['sort_heading'] ) {
 			echo '<div class="wpr-grid-sort-heading">';
 				echo '<'. $settings['sort_heading_tag'] .'>'. esc_html( $settings['sort_heading'] ) .'</'. $settings['sort_heading_tag'] .'>';
+			
+				if ( 'above' === $settings['sort_select_position'] ) {
+				?>
+	
+				<div class="wpr-grid-orderby">
+					<form action="#" method="get">
+						<!-- DROPDOWN STYLE -->
+						<span>
+							<i class="wpr-orderby-icon fas fa-angle-down"></i>
+							<select name="orderby" class="orderby" aria-label="<?php echo esc_attr__('Shop order', 'wpr-addons'); ?>">
+								<?php foreach($catalog_orderby_options as $id => $name) : ?>
+									<option value="<?php echo esc_attr($id); ?>" <?php selected($orderby, $id); ?>><?php echo esc_html($name); ?></option>
+								<?php endforeach; ?>
+							</select>
+						</span>
+					</form>
+				</div>
+	
+				<?php
+				}
+
 			echo '</div>';
 		}
 
@@ -8284,6 +8372,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				}
 			echo '</div>';
 			
+			if ( 'below' === $settings['sort_select_position'] ) {
 			?>
 
 			<div class="wpr-grid-orderby">
@@ -8301,6 +8390,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			</div>
 
 			<?php
+			}
 
 		echo '</div>';
 		echo '</div>';
