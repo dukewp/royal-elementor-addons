@@ -47,7 +47,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 		$this->start_controls_section(
 			'section_mini_cart_general',
 			[
-				'label' => esc_html__( 'Toggle Button', 'wpr-addons' ),
+				'label' => esc_html__( 'General', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -92,6 +92,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 				'label' => esc_html__( 'Cart Alignment', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
 				'default' => 'right',
+				'render_type' => 'template',
 				'options' => [
 					'left' => [
 						'title' => esc_html__( 'Start', 'wpr-addons' ),
@@ -102,6 +103,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 						'icon' => 'eicon-h-align-right',
 					]
 				],
+				'prefix_class' => 'wpr-mini-cart-align-',
 				'selectors_dictionary' => [
 					'left' => 'left: 0;',
 					'right' => 'right: 0;'
@@ -119,6 +121,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 				'label' => esc_html__( 'Cart Style', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'separator' => 'before',
+				'render_type' => 'template',
 				'options' => [
 					'dropdown' => esc_html__( 'Dropdown', 'wpr-addons' ),
 					'sidebar' => esc_html__( 'Sidebar', 'wpr-addons' )
@@ -204,6 +207,57 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 				],
 				'default' => 'cart-medium',
 				'prefix_class' => 'wpr-toggle-icon-',
+			]
+		);
+
+		$this->add_control(
+			'mini_cart_close_btn',
+			[
+				'label'     => esc_html__('Close Button', 'wpr-addons'),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before',
+				'condition' => [
+					'mini_cart_style' => 'sidebar'
+				]
+			]
+		);
+
+		$this->add_control(
+			'show_mini_cart_close_btn',
+			[
+				'label' => esc_html__( 'Show', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'prefix_class' => 'wpr-close-btn-',
+				'condition' => [
+					'mini_cart_style' => 'sidebar'
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'mini_cart_close_btn_align',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'default' => 'right',
+				'options' => [
+					'left' => [
+						'title' => esc_html__( 'Start', 'wpr-addons' ),
+						'icon' => 'eicon-h-align-left',
+					],
+					'right' => [
+						'title' => esc_html__( 'End', 'wpr-addons' ),
+						'icon' => 'eicon-h-align-right',
+					]
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-close-cart' => 'text-align: {{VALUE}}',
+				],
+				'condition' => [
+					'mini_cart_style' => 'sidebar',
+					'show_mini_cart_close_btn' => 'yes'
+				]
 			]
 		);
 
@@ -565,6 +619,85 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 		);
 
 		$this->add_control(
+			'mini_cart_close_btn_styles',
+			[
+				'label'     => esc_html__('Close Button', 'wpr-addons'),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before',
+				'condition' => [
+					'mini_cart_style' => 'sidebar',
+					'show_mini_cart_close_btn' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control(
+			'mini_cart_close_btn_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#777777',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-close-cart span:before' => 'color: {{VALUE}}',
+				],
+				'condition' => [
+					'mini_cart_style' => 'sidebar',
+					'show_mini_cart_close_btn' => 'yes'
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'mini_cart_close_btn_size',
+			[
+				'label' => esc_html__( 'Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'size' => 25,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-close-cart span:before' => 'font-size: {{SIZE}}{{UNIT}};',
+                ],
+				'condition' => [
+					'mini_cart_style' => 'sidebar',
+					'show_mini_cart_close_btn' => 'yes'
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'mini_cart_close_btn_distance',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 30,
+					],
+				],
+				'default' => [
+					'size' => 5,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-close-cart' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+                ],
+				'condition' => [
+					'mini_cart_style' => 'sidebar',
+					'show_mini_cart_close_btn' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control(
 			'mini_cart_product_title',
 			[
 				'label'     => esc_html__('Title', 'wpr-addons'),
@@ -741,6 +874,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 				'default' => '#FFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-mini-cart' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-mini-cart-sidebar .widget_shopping_cart_content' => 'background-color: {{VALUE}}'
 				],
 				'separator' => 'before'
 			]
@@ -754,6 +888,21 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-mini-cart' => 'border-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'mini_cart_overlay_color',
+			[
+				'label'  => esc_html__( 'Overlay Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#070707C4',
+				'selectors' => [
+					'{{WRAPPER}}.wpr-mini-cart-sidebar .wpr-shopping-cart-wrap ' => 'background: {{VALUE}}'
+				],
+				'condition' => [
+					'mini_cart_style' => 'sidebar'
 				]
 			]
 		);
@@ -809,18 +958,24 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 			[
 				'label' => esc_html__( 'Width', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
+				'size_units' => ['px', '%'],
 				'range' => [
 					'px' => [
 						'min' => 150,
 						'max' => 1500,
 					],
+					'%' => [
+						'min' => 10,
+						'max' => 100,
+					],
 				],
 				'default' => [
+					'unit' => 'px',
 					'size' => 375,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-mini-cart' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-mini-cart-dropdown .wpr-mini-cart' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-mini-cart-sidebar .widget_shopping_cart_content' => 'width: {{SIZE}}{{UNIT}};'
                 ]
 			]
 		);
@@ -839,6 +994,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-mini-cart' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-mini-cart-sidebar .widget_shopping_cart_content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
                 'separator' => 'before'
 			]
@@ -907,11 +1063,11 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
         $this->end_controls_section();
 
 		// Tab: Styles ==============
-		// Section: Mini Cart Items ----------
+		// Section: Mini Cart List ----------
 		$this->start_controls_section(
 			'section_mini_cart_items',
 			[
-				'label' => esc_html__( 'Mini Cart Items', 'wpr-addons' ),
+				'label' => esc_html__( 'Mini Cart List', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -1565,6 +1721,12 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 		<?php
 	}
 
+	public function render_close_cart_icon () {
+		echo '<div class="wpr-close-cart">';
+			echo '<span></span>';
+		echo '</div>';
+	}
+
 	public static function render_mini_cart() {
 		if ( null === WC()->cart ) {
 			return;
@@ -1578,11 +1740,8 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 				<div class="">
 					<div class="" aria-hidden="true">
 						<div class="wpr-shopping-cart-wrap" aria-hidden="true">
-							<div class=""></div>
 							<div class="widget_shopping_cart_content">
-								<?php 
-									woocommerce_mini_cart();
-								if ( $is_edit_mode ) {} ?>
+								<?php woocommerce_mini_cart(); ?>
 							</div>
 						</div>
 					</div>
@@ -1594,6 +1753,8 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
     
     protected function render() {
 		$settings = $this->get_settings_for_display();
+
+		add_action('woocommerce_before_mini_cart', [$this, 'render_close_cart_icon']);
 
         echo '<div class="wpr-mini-cart-wrap woocommerce">';
 			echo '<span class="wpr-mini-cart-inner">';
