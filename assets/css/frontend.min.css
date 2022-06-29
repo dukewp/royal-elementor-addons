@@ -1703,7 +1703,6 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 .wpr-close-cart span::before {
     font-family: "Font Awesome 5 Free";
     content: '\f00d';
-    color: black;
     font-weight: 600;
     cursor: pointer;
 }
@@ -1923,6 +1922,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     top: 50%;
     transform: translateY(-50%);
     text-indent: 0;
+    font-weight: 600 !important;
 }
 
 .wpr-mini-cart-wrap .woocommerce-mini-cart-item .remove:hover {
@@ -2646,6 +2646,15 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     width: 100%;
 }
 
+/* External/Afiiliate button */
+.woocommerce-grouped-product-list-item a.button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    font-weight: 400;
+}
+
 /* Sales Badge */
 .wpr-product-sales-badge span {
     display: inline-block;
@@ -2796,6 +2805,41 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 /*--------------------------------------------------------------
  == Checkout Page
 --------------------------------------------------------------*/
+.wpr-checkout-order-review-table #order_review table {
+  border: none !important;
+}
+
+.wpr-checkout-order-review-table #order_review thead th:first-child {
+  border-left-style: none !important;
+  border-top-style: none !Important;
+}
+
+.wpr-checkout-order-review-table #order_review thead th:last-child {
+  border-right-style: none !important;
+  border-top-style: none !Important;
+}
+
+.wpr-checkout-order-review-table #order_review tbody td:first-child {
+  border-left-style: none !important;
+}
+
+.wpr-checkout-order-review-table #order_review tbody td:last-child {
+  border-right-style: none !important;
+}
+
+.wpr-checkout-order-review-table #order_review tfoot tr th:first-child {
+  border-left-style: none !important;
+}
+
+.wpr-checkout-order-review-table #order_review tfoot tr td:last-child {
+  border-right-style: none !important;
+}
+
+.wpr-checkout-order-review-table #order_review tfoot tr:last-child td,
+.wpr-checkout-order-review-table #order_review tfoot tr:last-child th {
+  border-bottom-style: none !important;
+}
+
 .wpr-checkout-horizontal .woocommerce-checkout .col2-set {
   display: flex;
   flex-direction: column;
