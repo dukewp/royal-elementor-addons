@@ -122,6 +122,77 @@ class Utilities {
 		];
 	}
 
+	/**
+	** Get Shop Page URL
+	*/
+	public static function get_shop_url( $settings ) {
+		global $wp;
+
+        if ( '' == get_option('permalink_structure' ) ) {
+            $url = remove_query_arg(array('page', 'paged'), add_query_arg($wp->query_string, '', home_url($wp->request)));
+        } else {
+            $url = preg_replace('%\/page/[0-9]+%', '', home_url(trailingslashit($wp->request)));
+        }
+
+		// WPR Filters
+		$url = add_query_arg( 'wprfilters', '', $url );
+
+		// Min/Max.
+		if ( isset( $_GET['min_price'] ) ) {
+			$url = add_query_arg( 'min_price', wc_clean( wp_unslash( $_GET['min_price'] ) ), $url );
+		}
+
+		if ( isset( $_GET['max_price'] ) ) {
+			$url = add_query_arg( 'max_price', wc_clean( wp_unslash( $_GET['max_price'] ) ), $url );
+		}
+
+		// Search
+		if ( isset( $_GET['psearch'] ) ) {
+			$url = add_query_arg( 'psearch', wp_unslash( $_GET['psearch'] ), $url );
+		}
+
+		// Rating
+		if ( isset( $_GET['filter_rating'] ) ) {
+			$url = add_query_arg( 'filter_rating', wp_unslash( $_GET['filter_rating'] ), $url );
+		}
+
+		// Categories
+		if ( isset( $_GET['filter_product_cat'] ) ) {
+			$url = add_query_arg( 'filter_product_cat', wp_unslash( $_GET['filter_product_cat'] ), $url );
+		}
+
+		// Tags
+		if ( isset( $_GET['filter_product_tag'] ) ) {
+			$url = add_query_arg( 'filter_product_tag', wp_unslash( $_GET['filter_product_tag'] ), $url );
+		}
+
+		// All current filters.
+		if ( $_chosen_attributes = WC()->query->get_layered_nav_chosen_attributes() ) { // phpcs:ignore Squiz.PHP.DisallowMultipleAssignments.FoundInControlStructure, WordPress.CodeAnalysis.AssignmentInCondition.Found
+			foreach ( $_chosen_attributes as $name => $data ) {
+				$filter_name = wc_attribute_taxonomy_slug( $name );
+				if ( ! empty( $data['terms'] ) ) {
+					$url = add_query_arg( 'filter_' . $filter_name, implode( ',', $data['terms'] ), $url );
+				}
+
+				if ( !empty($settings) ) {
+					if ( 'or' === $settings['tax_query_type'] || isset($_GET['query_type_' . $filter_name]) ) {
+						$url = add_query_arg( 'query_type_' . $filter_name, 'or', $url );
+					}
+				}
+			}
+		}
+
+		// Sorting
+		if ( isset( $_GET['orderby'] ) ) {
+			$url = add_query_arg( 'orderby', wp_unslash( $_GET['orderby'] ), $url );
+		}
+
+		// Fix URL
+		// $url = str_replace( '%2C', ',', $url );
+		
+		return $url;
+	}
+
 
 	/**
 	** Get Available Custom Post Types or Taxonomies

@@ -2301,67 +2301,6 @@ class Wpr_Product_Filters extends Widget_Base {
 
 	}
 
-	public function get_shop_url( $settings ) {
-
-		global $wp;
-
-        if ( '' == get_option('permalink_structure' ) ) {
-            $url = remove_query_arg(array('page', 'paged'), add_query_arg($wp->query_string, '', home_url($wp->request)));
-        } else {
-            $url = preg_replace('%\/page/[0-9]+%', '', home_url(trailingslashit($wp->request)));
-        }
-
-		// WPR Filters
-		$url = add_query_arg( 'wprfilters', '', $url );
-
-		// Min/Max.
-		if ( isset( $_GET['min_price'] ) ) {
-			$url = add_query_arg( 'min_price', wc_clean( wp_unslash( $_GET['min_price'] ) ), $url );
-		}
-
-		if ( isset( $_GET['max_price'] ) ) {
-			$url = add_query_arg( 'max_price', wc_clean( wp_unslash( $_GET['max_price'] ) ), $url );
-		}
-
-		// Search
-		if ( isset( $_GET['psearch'] ) ) {
-			$url = add_query_arg( 'psearch', wp_unslash( $_GET['psearch'] ), $url );
-		}
-
-		// Rating
-		if ( isset( $_GET['filter_rating'] ) ) {
-			$url = add_query_arg( 'filter_rating', wp_unslash( $_GET['filter_rating'] ), $url );
-		}
-
-		// Categories
-		if ( isset( $_GET['filter_product_cat'] ) ) {
-			$url = add_query_arg( 'filter_product_cat', wp_unslash( $_GET['filter_product_cat'] ), $url );
-		}
-
-		// Tags
-		if ( isset( $_GET['filter_product_tag'] ) ) {
-			$url = add_query_arg( 'filter_product_tag', wp_unslash( $_GET['filter_product_tag'] ), $url );
-		}
-
-		// All current filters.
-		if ( $_chosen_attributes = WC()->query->get_layered_nav_chosen_attributes() ) { // phpcs:ignore Squiz.PHP.DisallowMultipleAssignments.FoundInControlStructure, WordPress.CodeAnalysis.AssignmentInCondition.Found
-			foreach ( $_chosen_attributes as $name => $data ) {
-				$filter_name = wc_attribute_taxonomy_slug( $name );
-				if ( ! empty( $data['terms'] ) ) {
-					$url = add_query_arg( 'filter_' . $filter_name, implode( ',', $data['terms'] ), $url );
-				}
-				if ( 'or' === $settings['tax_query_type'] || isset($_GET['query_type_' . $filter_name]) ) {
-					$url = add_query_arg( 'query_type_' . $filter_name, 'or', $url );
-				}
-			}
-		}
-
-		// Fix URL
-		// $url = str_replace( '%2C', ',', $url );
-		
-		return $url;
-	}
-
 	public function get_price_range_from_wpdb() {
         global $wpdb;
         $min_query = "SELECT MIN( CAST( meta_value as UNSIGNED ) ) FROM {$wpdb->postmeta} WHERE meta_key = '_price'";
@@ -2470,7 +2409,7 @@ class Wpr_Product_Filters extends Widget_Base {
 			echo '<ul class="wpr-product-filter-tax-wrap">';
 	
 			foreach ( $taxonomies as $taxonomy ) {
-				$tax_data = $this->get_taxonomy_data( $filter_type, $taxonomy, $this->get_shop_url($settings) );
+				$tax_data = $this->get_taxonomy_data( $filter_type, $taxonomy, Utilities::get_shop_url($settings) );
 	
 				echo '<li>';
 					echo '<a href="'. esc_url($tax_data['url']) .'" class="'. esc_attr($tax_data['class']) .'">';
@@ -2483,7 +2422,7 @@ class Wpr_Product_Filters extends Widget_Base {
 					$children = get_terms( $filter_type, [ 'parent' => $taxonomy->term_id ] );
 					if ( !empty( $children ) ) {
 						foreach ( $children as $key => $child ) {
-							$child_tax_data = $this->get_taxonomy_data( $filter_type, $child, $this->get_shop_url($settings) );
+							$child_tax_data = $this->get_taxonomy_data( $filter_type, $child, Utilities::get_shop_url($settings) );
 
 							echo '<li class="wpr-product-filter-tax-child">';
 								echo '<a href="'. esc_url($child_tax_data['url']) .'" class="'. esc_attr($child_tax_data['class']) .'">';
@@ -2506,7 +2445,7 @@ class Wpr_Product_Filters extends Widget_Base {
 			echo '<ul class="wpr-product-filter-tax-wrap">';
 	
 			foreach ( $taxonomies as $taxonomy ) {
-				$tax_data = $this->get_taxonomy_data( $filter_type, $taxonomy, $this->get_shop_url($settings) );
+				$tax_data = $this->get_taxonomy_data( $filter_type, $taxonomy, Utilities::get_shop_url($settings) );
 	
 				echo '<li>';
 					echo '<a href="'. esc_url($tax_data['url']) .'" class="'. esc_attr($tax_data['class']) .'">';
@@ -2557,7 +2496,7 @@ class Wpr_Product_Filters extends Widget_Base {
 		$current_min_price = isset( $_GET['min_price'] ) ? floor( floatval( wp_unslash( $_GET['min_price'] ) ) / $step ) * $step : $min_price; // WPCS: input var ok, CSRF ok.
 		$current_max_price = isset( $_GET['max_price'] ) ? ceil( floatval( wp_unslash( $_GET['max_price'] ) ) / $step ) * $step : $max_price; // WPCS: input var ok, CSRF ok.
 
-		$form_action = $this->get_shop_url($settings);
+		$form_action = Utilities::get_shop_url($settings);
 
 		?>
 
@@ -2581,7 +2520,7 @@ class Wpr_Product_Filters extends Widget_Base {
 	}
 	
 	public function render_product_search_filter( $settings ) {
-		$form_action = $this->get_shop_url($settings);
+		$form_action = Utilities::get_shop_url($settings);
 		$search_value = isset($_GET['psearch']) ? $_GET['psearch'] : '';
 
 		?>
@@ -2639,7 +2578,7 @@ class Wpr_Product_Filters extends Widget_Base {
 		echo '<ul class="'. esc_attr($wrapper_class) .'">';
 
 		for ( $rating = 5; $rating >= 1; $rating-- ) {
-			$url = $this->get_shop_url($settings);
+			$url = Utilities::get_shop_url($settings);
 
 			if ( in_array( $rating, $filter_rating, true ) ) {
 				$rating_url = implode( ',', array_diff( $filter_rating, array( $rating ) ) );
@@ -2676,7 +2615,7 @@ class Wpr_Product_Filters extends Widget_Base {
 		$min_price = isset( $_GET['min_price'] ) ? wc_clean( wp_unslash( $_GET['min_price'] ) ) : 0; // WPCS: input var ok, CSRF ok.
 		$max_price = isset( $_GET['max_price'] ) ? wc_clean( wp_unslash( $_GET['max_price'] ) ) : 0; // WPCS: input var ok, CSRF ok.
 		$filter_rating = isset( $_GET['filter_rating'] ) ? array_filter( array_map( 'absint', explode( ',', wp_unslash( $_GET['filter_rating'] ) ) ) ) : []; // WPCS: sanitization ok, input var ok, CSRF ok.
-		$shop_url = $this->get_shop_url($settings);
+		$shop_url = Utilities::get_shop_url($settings);
 
 		if ( 0 < count( $_chosen_attributes ) || !empty($product_cats) || !empty($product_tags) || 0 < $min_price || 0 < $max_price || !empty( $filter_rating ) ) {
 			
