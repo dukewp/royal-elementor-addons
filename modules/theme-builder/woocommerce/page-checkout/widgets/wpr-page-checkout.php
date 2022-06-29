@@ -1047,7 +1047,8 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} table.woocommerce-orders-table th' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} table.shop_table thead th' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} table.shop_table tfoot th' => 'border-color: {{VALUE}}',
-					'{{WRAPPER}} table.shop_table td' => 'border-color: {{VALUE}}'
+					'{{WRAPPER}} table.shop_table td' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} #order_review' => 'border-color: {{VALUE}}'
 				],
 				'separator' => 'before'
 			]
@@ -1071,7 +1072,8 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} table.woocommerce-orders-table th' => 'border-style: {{VALUE}}',
 					'{{WRAPPER}} table.shop_table thead th' => 'border-style: {{VALUE}}',
 					'{{WRAPPER}} table.shop_table tfoot th' => 'border-style: {{VALUE}}',
-					'{{WRAPPER}} table.shop_table td' => 'border-style: {{VALUE}}'
+					'{{WRAPPER}} table.shop_table td' => 'border-style: {{VALUE}}',
+					'{{WRAPPER}} #order_review' => 'border-style: {{VALUE}}; overflow: hidden;'
 				],
 				'separator' => 'before',
 			]
@@ -1093,7 +1095,8 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} table.woocommerce-orders-table th' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} table.shop_table thead th' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} table.shop_table tfoot th' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} table.shop_table td' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+					'{{WRAPPER}} table.shop_table td' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} #order_review' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 				'condition' => [
 					'place_order_table_border_type!' => 'none',
@@ -1117,7 +1120,8 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} table thead tr:first-of-type th:first-of-type' => 'border-top-left-radius: {{TOP}}{{UNIT}} !important;',
 					'{{WRAPPER}} table thead tr:first-of-type th:last-of-type' => 'border-top-right-radius: {{RIGHT}}{{UNIT}} !important;',
 					'{{WRAPPER}} table tfoot tr:last-of-type th:first-of-type' => 'border-bottom-left-radius: {{LEFT}}{{UNIT}} !important;',
-					'{{WRAPPER}} table tfoot tr:last-of-type td:last-of-type' => 'border-bottom-right-radius: {{BOTTOM}}{{UNIT}} !important;'
+					'{{WRAPPER}} table tfoot tr:last-of-type td:last-of-type' => 'border-bottom-right-radius: {{BOTTOM}}{{UNIT}} !important;',
+					'{{WRAPPER}} #order_review' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				]
 			]
 		);
