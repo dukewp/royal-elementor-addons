@@ -2452,7 +2452,15 @@ class Wpr_Product_Filters extends Widget_Base {
 	public function render_product_taxonomies_filter( $settings ) {
 		$filter_type = $settings['filter_type'];
 		
-		$filter_query = new \WP_Query( $this->get_main_query_args() );
+		// $filter_query = new \WP_Query( $this->get_main_query_args() );
+		// $filtered_terms = [];
+		
+		// while ( $filter_query->have_posts() ) {
+		// 	$filter_query->the_post();
+		// 	$color = wc_get_product_terms( get_the_ID(), 'pa_color' );
+		// 	// $count = $color[0]->count;
+		// 	var_dump($color); 
+		// }
 	
 		
 		// Hierarchical
@@ -2732,6 +2740,8 @@ class Wpr_Product_Filters extends Widget_Base {
 
 						if ( count( $new_filter ) > 0 ) {
 							$url = add_query_arg( $filter_name, implode( ',', $new_filter ), $url );
+						} else {
+							$url = remove_query_arg( $filter_name, $shop_url );
 						}
 
 						echo '<li><a rel="nofollow" " href="'. esc_url( $url ) .'">'. esc_html( $term->name ) .'</a></li>';
