@@ -7551,6 +7551,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 			global $wp_query;
 
 			$args = $wp_query->query_vars;
+			$args['tax_query'] = $this->get_tax_query_args();
+			$args['meta_query'] = $this->get_meta_query_args();
 			$args['posts_per_page'] = $settings['query_posts_per_page'];
 			$args['orderby'] = $settings['query_randomize'];
 		}
