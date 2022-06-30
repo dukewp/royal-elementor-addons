@@ -9,7 +9,7 @@ class WPR_WooCommerce_Config {
 		// add_filter( 'woocommerce_single_product_zoom_enabled', '__return_false' );
 
 		// Change number of products that are displayed per page (shop page)
-		// add_filter( 'loop_shop_per_page', [$this, 'new_loop_shop_per_page'], 20 );
+		add_filter( 'loop_shop_per_page', [$this, 'shop_products_per_page'], 20 );
 
 		// Rewrite WC Default Templates
 		add_filter( 'wc_get_template', [ $this, 'rewrite_default_wc_templates' ], 10, 3 );
@@ -54,7 +54,7 @@ class WPR_WooCommerce_Config {
 		return $options;
 	}
 	
-	public function new_loop_shop_per_page( $cols ) {
+	public function shop_products_per_page( $cols ) {
 	  return get_option('wpr_woo_shop_ppp', 9);
 	}
 
