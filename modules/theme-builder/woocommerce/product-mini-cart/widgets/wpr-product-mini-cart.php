@@ -757,6 +757,48 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 		);
 
 		$this->add_control(
+			'mini_cart_product_attributes',
+			[
+				'label'     => esc_html__('Attributes', 'wpr-addons'),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'mini_cart_attributes_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#777777',
+				'selectors' => [
+					'{{WRAPPER}} dl.variation dt' => 'color: {{VALUE}}',
+					'{{WRAPPER}} dl.variation dd' => 'color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'mini_cart_attributes_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} dl.variation',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '12',
+							'unit' => 'px',
+						],
+					]
+				]
+			]
+		);
+
+		$this->add_control(
 			'mini_cart_product_quantity',
 			[
 				'label'     => esc_html__('Quantity & Price ', 'wpr-addons'),
