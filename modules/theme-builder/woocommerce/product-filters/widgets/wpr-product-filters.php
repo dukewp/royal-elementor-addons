@@ -36,10 +36,6 @@ class Wpr_Product_Filters extends Widget_Base {
 		return [ 'qq', 'product-filters', 'product', 'filters' ];//tmp
 	}
 
-	public function get_script_depends() {
-		return [ 'accounting', 'wc-jquery-ui-touchpunch', 'wc-price-slider' ];
-	}
-
 	protected function register_controls() {
 
 		// Tab: Content ==============
@@ -2570,7 +2566,20 @@ class Wpr_Product_Filters extends Widget_Base {
 			</div>
 		</form>
 		
+		<?php if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) : ?>
+		<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				'use strict';
+				$('.wpr-product-filter-price-slider').slider({
+					range: true,
+					min: 0,
+					max: 100,
+					values: [30, 90]
+				});
+			});
+			</script>
 		<?php
+		endif;
 	}
 	
 	public function render_product_search_filter( $settings ) {
