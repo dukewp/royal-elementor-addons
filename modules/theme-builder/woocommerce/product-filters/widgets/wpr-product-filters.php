@@ -36,6 +36,9 @@ class Wpr_Product_Filters extends Widget_Base {
 		return [ 'qq', 'product-filters', 'product', 'filters' ];//tmp
 	}
 
+	public function get_script_depends() {
+		return [ 'accounting', 'wc-jquery-ui-touchpunch', 'wc-price-slider' ];
+	}
 
 	protected function register_controls() {
 
@@ -45,6 +48,14 @@ class Wpr_Product_Filters extends Widget_Base {
             'section_product_filter',
             [
                 'label' => esc_html__( 'General', 'wpr-addons' ),
+            ]
+        );
+
+		$this->add_control(
+            'apply_changes',
+            [
+                'type' => Controls_Manager::RAW_HTML,
+                'raw' => '<div style="text-align: center;"><button class="elementor-update-preview-button elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply Changes</button></div>',
             ]
         );
 
@@ -99,6 +110,45 @@ class Wpr_Product_Filters extends Widget_Base {
 				]
 			]
 		);
+
+		$this->add_responsive_control(
+			'slider_price_filter_btn_align',
+			[
+				'label' => esc_html__( 'Button Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'default' => 'left',
+				'render_type' => 'template',
+				'options' => [
+					'left' => [
+						'title' => esc_html__( 'Start', 'wpr-addons' ),
+						'icon' => 'eicon-h-align-left',
+					],
+					'right' => [
+						'title' => esc_html__( 'End', 'wpr-addons' ),
+						'icon' => 'eicon-h-align-right',
+					]
+				],
+				'prefix_class' => 'wpr-product-filter-price-btn-',
+				'condition' => [
+					'filter_type' => 'price'
+				]
+			]
+		);
+
+        $this->add_control(
+            'slider_step',
+            [
+                'label' => __( 'Slider Step', 'wpr-addons' ),
+                'type' => Controls_Manager::NUMBER,
+                'min' => 0,
+                'step' => 0.1,
+                'default' => 1,
+                'render_type' => 'template',
+				'condition' => [
+					'filter_type' => 'price'
+				]
+            ]
+        );
  
 		$this->add_control(
 			'filter_list_type',
@@ -2465,7 +2515,7 @@ class Wpr_Product_Filters extends Widget_Base {
 		wp_enqueue_script( 'wc-price-slider' );
 			
 		// Round values to nearest 10 by default.
-		$step = 1;
+		$step = $settings['slider_step'];
 
 		// Find min and max price in current result set.
 		$prices = $this->get_price_range_from_wpdb();
@@ -2484,6 +2534,8 @@ class Wpr_Product_Filters extends Widget_Base {
 			}
 		}
 
+		// $min_price = floor( $min_price / $step ) * $step;
+		// $max_price = ceil( $max_price / $step ) * $step;
 		$min_price = floor( $min_price / $step ) * $step;
 		$max_price = ceil( $max_price / $step ) * $step;
 
@@ -2493,8 +2545,10 @@ class Wpr_Product_Filters extends Widget_Base {
 		}
 
 		// Get Current Prices
-		$current_min_price = isset( $_GET['min_price'] ) ? floor( floatval( wp_unslash( $_GET['min_price'] ) ) / $step ) * $step : $min_price; // WPCS: input var ok, CSRF ok.
-		$current_max_price = isset( $_GET['max_price'] ) ? ceil( floatval( wp_unslash( $_GET['max_price'] ) ) / $step ) * $step : $max_price; // WPCS: input var ok, CSRF ok.
+		// $current_min_price = isset( $_GET['min_price'] ) ? floor( floatval( wp_unslash( $_GET['min_price'] ) ) / $step ) * $step : $min_price; // WPCS: input var ok, CSRF ok.
+		// $current_max_price = isset( $_GET['max_price'] ) ? ceil( floatval( wp_unslash( $_GET['max_price'] ) ) / $step ) * $step : $max_price; // WPCS: input var ok, CSRF ok.
+		$current_min_price = isset( $_GET['min_price'] ) ? floatval( wp_unslash( $_GET['min_price'] ) / $step ) * $step : $min_price; // WPCS: input var ok, CSRF ok.
+		$current_max_price = isset( $_GET['max_price'] ) ? floatval( wp_unslash( $_GET['max_price'] ) / $step ) * $step : $max_price; // WPCS: input var ok, CSRF ok.
 
 		$form_action = Utilities::get_shop_url($settings);
 

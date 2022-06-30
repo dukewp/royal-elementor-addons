@@ -235,6 +235,22 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'close_cart_heading',
+			[
+				'label' => esc_html__( 'Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
+				'placeholder' => esc_html__( 'Shopping Cart', 'wpr-addons' ),
+				'default' => esc_html__( 'Shopping Cart', 'wpr-addons' ),
+				'condition' => [
+					'toggle_text' => 'title'
+				]
+			]
+		);
+
 		$this->add_responsive_control(
 			'mini_cart_close_btn_align',
 			[
@@ -1769,7 +1785,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 		echo '</div>';
 	}
 
-	public static function render_mini_cart() {
+	public static function render_mini_cart($settings) {
 		if ( null === WC()->cart ) {
 			return;
 		}
@@ -1796,12 +1812,12 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
     protected function render() {
 		$settings = $this->get_settings_for_display();
 
-		add_action('woocommerce_before_mini_cart', [$this, 'render_close_cart_icon']);
+		// add_action('woocommerce_before_mini_cart', [$this, 'render_close_cart_icon']);
 
         echo '<div class="wpr-mini-cart-wrap woocommerce">';
 			echo '<span class="wpr-mini-cart-inner">';
 				$this->render_mini_cart_toggle($settings);
-				$this->render_mini_cart();
+				$this->render_mini_cart($settings);
 			echo '</span>';
         echo '</div>';
     }    
