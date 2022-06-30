@@ -238,7 +238,18 @@ class Utilities {
 			}
 		}
 
-		return $template;
+		// tmp remove after 2 months
+		$templates_loop = new \WP_Query([
+			'post_type' => 'wpr_templates',
+			'name' => $template,
+			'posts_per_page' => 1,
+		]);
+		
+		if ( ! $templates_loop->have_posts() ) {
+			return null;
+		} else {
+			return $template;
+		}
 	}
 
 

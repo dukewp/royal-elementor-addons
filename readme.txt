@@ -14,11 +14,12 @@ Elementor Post, Portfolio, Woocommerce Grid builder Widgets. Slider, Carousel, F
 
 **Royal Addons for Elementor** is the most versatile, intuitive, and easy to use [Elementor Page Builder](https://wordpress.org/plugins/elementor/) extension. Our goal is to provide you with the tools to make things happen, efficiently, and fast compare to other elementor plugins. Choosing us is not only a mindset, but it is also a requirement if you intend to gain an edge over your competitors when creating your website. The best part is that you can design anything **without having to touch a single line of code**.
 
-Comes with **50+ widgets, 25 Elementor Template KIT (Growing Each Week), Theme Builder, Popup Builder, Premade Widget Blocks & Extensions for Elementor.** Creative and self-intuitive elementor widgets to take your WordPress website to the next level. **All widgets are Free** and the Pro Version offers even more advanced functionality.
+Comes with **50+ widgets, 35+ Elementor Template KIT (Growing Each Week), Theme Builder, Popup Builder, Premade Widget Blocks & Extensions for Elementor.** Creative and self-intuitive elementor widgets to take your WordPress website to the next level. **All widgets are Free** and the Pro Version offers even more advanced functionality.
 
 *Free and Pro functionalities are mixed in the Widget Demos below.*
 
 [**Plugin Demo Page**](https://royal-elementor-addons.com/?ref=rea-wpo-pp-details-tab#widgets)
+[**Elementor Templates Demo Page**](https://demosites.royal-elementor-addons.com/elementor-templates/?ref=rea-wpo-pp-details-tab#widgets)
 
 **Widget List:**
 
