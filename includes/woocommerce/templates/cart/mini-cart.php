@@ -87,7 +87,9 @@ do_action( 'woocommerce_before_mini_cart' ); ?>
 		do_action( 'woocommerce_mini_cart_contents' );
 		?>
 	</ul>
+
 	<div class="wpr-mini-cart-separator"></div>
+
 	<p class="woocommerce-mini-cart__total total">
 		<?php
 		/**

@@ -1237,7 +1237,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 			[
 				'label'     => esc_html__('Background Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
-				'default'   => '#656EFFA6',
+				'default'   => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .variations tr td' => 'background-color: {{VALUE}};',
 				],
@@ -1457,7 +1457,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 				'label'     => esc_html__('Color', 'wpr-addons'),
 				'type'      => Controls_Manager::COLOR,
 				'alpha'     => false,
-				'default'   => '#FFF',
+				'default'   => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .variations select:focus' => 'color: {{VALUE}};',
 				],
@@ -2031,7 +2031,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
 					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
 				],
-				'default' => 'solid',
+				'default' => 'none',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-add-to-cart .reset_variations' => 'border-style: {{VALUE}};',
 				],
