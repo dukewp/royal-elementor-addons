@@ -597,6 +597,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::NUMBER,
 				'default' => 9,
 				'min' => 0,
+				'condition' => [
+					'query_selection!' => 'current',
+				],
 			]
 		);
 
@@ -644,6 +647,18 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'label_block' => false
+			]
+		);
+
+		$this->add_control(
+			'current_query_notice',
+			[
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => sprintf( __( 'To set <strong>Posts per Page</strong> for all <strong>Shop Pages</strong>, navigate to <strong><a href="%s" target="_blank">Royal Addons > Settings<a></strong>.', 'wpr-addons' ), admin_url( '?page=wpr-addons&tab=wpr_tab_settings' ) ),
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				'condition' => [
+					'query_selection' => 'current',
+				],
 			]
 		);
 
@@ -7550,10 +7565,19 @@ class Wpr_Woo_Grid extends Widget_Base {
 		if ( 'current' === $settings[ 'query_selection' ] && true !== \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
 			global $wp_query;
 
+			// Products Per Page
+			if ( is_product_category() ) {
+				$posts_per_page = intval(get_option('wpr_woo_shop_cat_ppp', 9));
+			} elseif ( is_product_tag() ) {
+				$posts_per_page = intval(get_option('wpr_woo_shop_tag_ppp', 9));
+			} else {
+				$posts_per_page = intval(get_option('wpr_woo_shop_ppp', 9));
+			}
+
 			$args = $wp_query->query_vars;
 			$args['tax_query'] = $this->get_tax_query_args();
 			$args['meta_query'] = $this->get_meta_query_args();
-			$args['posts_per_page'] = $settings['query_posts_per_page'];
+			$args['posts_per_page'] = $posts_per_page;
 			$args['orderby'] = $settings['query_randomize'];
 		}
 
