@@ -226,16 +226,6 @@ class Wpr_Product_Media extends Widget_Base {
 		);
 
 		$this->add_control(
-			'lightbox_extra_icon',
-			[
-				'label' => esc_html__( 'Lightbox Icon', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'true',
-				'return_value' => 'true',
-			]
-		);
-
-		$this->add_control(
 			'choose_lightbox_extra_icon',
 			[
 				'label' => __( 'Icon', 'wpr-addons' ),
@@ -245,9 +235,6 @@ class Wpr_Product_Media extends Widget_Base {
 				'default' => [
 					'value' => 'fas fa-search',
 					'library' => 'solid',
-				],
-				'condition' => [
-					'lightbox_extra_icon' => 'true',
 				]
 			]
 		);
@@ -1261,7 +1248,7 @@ class Wpr_Product_Media extends Widget_Base {
 		}
 
 		// Lightbox Icon
-		if ( 'yes' === $settings['product_media_lightbox'] && true == $settings['lightbox_extra_icon'] && '' !== $settings['choose_lightbox_extra_icon'] ) {
+		if ( 'yes' === $settings['product_media_lightbox'] && '' !== $settings['choose_lightbox_extra_icon'] ) {
 			
 			echo '<div class="wpr-product-media-lightbox">';
 				\Elementor\Icons_Manager::render_icon( $settings['choose_lightbox_extra_icon'], [ 'aria-hidden' => 'true' ] );

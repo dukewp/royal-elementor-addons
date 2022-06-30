@@ -557,20 +557,17 @@ class Plugin {
 	// Lightbox Styles
 	public function lightbox_styles() {
 	    echo '<style id="wpr_lightbox_styles">
-	            .lg-backdrop,
-				.pswp__bg {
+	            .lg-backdrop {
 	                background-color: '. esc_html(get_option('wpr_lb_bg_color','rgba(0,0,0,0.6)')) .' !important;
 	            }
 	            .lg-toolbar,
-	            .lg-dropdown,
-				.pswp__top-bar {
+	            .lg-dropdown {
 	                background-color: '. esc_html(get_option('wpr_lb_toolbar_color','rgba(0,0,0,0.8)')) .' !important;
 	            }
 				.lg-dropdown:after {
 					border-bottom-color: '. esc_html(get_option('wpr_lb_toolbar_color','rgba(0,0,0,0.8)')) .' !important;
 				}
-	            .lg-sub-html,
-				.pswp__caption {
+	            .lg-sub-html {
 	                background-color: '. esc_html(get_option('wpr_lb_caption_color','rgba(0,0,0,0.8)')) .' !important;
 	            }
 	            .lg-thumb-outer,
@@ -580,9 +577,7 @@ class Plugin {
 	            .lg-progress {
 	                background-color: '. esc_html(get_option('wpr_lb_pb_color','#a90707')) .' !important;
 	            }
-	            .lg-icon,
-				.pswp__button,
-				.pswp__button:before {
+	            .lg-icon {
 	            	color: '. esc_html(get_option('wpr_lb_ui_color','#efefef')) .' !important;
 	            	font-size: '. esc_html(get_option('wpr_lb_icon_size',20)) .'px !important;
 	            }
@@ -594,9 +589,7 @@ class Plugin {
 	            	color: '. esc_html(get_option('wpr_lb_ui_hr_color','#ffffff')) .' !important;
 	            }
 	            .lg-sub-html,
-	            .lg-dropdown-text,
-				.pswp__caption__center,
-				.pswp__counter {
+	            .lg-dropdown-text {
 	            	color: '. esc_html(get_option('wpr_lb_text_color','#efefef')) .' !important;
 	            	font-size: '. esc_html(get_option('wpr_lb_text_size',14)) .'px !important;
 	            }

@@ -115,6 +115,30 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'mini_cart_subtotal_alignment',
+			[
+				'label' => esc_html__( 'Subtotal & Buttons', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'default' => 'bottom',
+				'render_type' => 'template',
+				'options' => [
+					'bottom' => [
+						'title' => esc_html__( 'Bottom', 'wpr-addons' ),
+						'icon' => 'eicon-v-align-bottom',
+					],
+					'auto' => [
+						'title' => esc_html__( 'Auto', 'wpr-addons' ),
+						'icon' => 'eicon-v-align-top',
+					]
+				],
+				'prefix_class' => 'wpr-subtotal-align-',
+				'condition' => [
+					'mini_cart_style' => 'sidebar'
+				]
+			]
+		);
+
 		$this->add_control(
 			'mini_cart_style',
 			[
@@ -676,7 +700,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 					],
 				],
 				'default' => [
-					'size' => 25,
+					'size' => 23,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-close-cart span:before' => 'font-size: {{SIZE}}{{UNIT}};',
@@ -701,7 +725,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 					],
 				],
 				'default' => [
-					'size' => 5,
+					'size' => 15,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-close-cart' => 'margin-bottom: {{SIZE}}{{UNIT}};',
