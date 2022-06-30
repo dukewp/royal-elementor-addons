@@ -46,6 +46,11 @@ function is_plugin_installed($file) {
 
 // Register Settings
 function wpr_register_addons_settings() {
+    // WooCommerce
+    register_setting( 'wpr-settings', 'wpr_woo_shop_ppp' );
+    register_setting( 'wpr-settings', 'wpr_woo_shop_cat_ppp' );
+    register_setting( 'wpr-settings', 'wpr_woo_shop_tag_ppp' );
+
     // Integrations
     register_setting( 'wpr-settings', 'wpr_google_map_api_key' );
     register_setting( 'wpr-settings', 'wpr_mailchimp_api_key' );
@@ -221,6 +226,37 @@ function wpr_addons_settings_page() {
         <div class="wpr-settings">
 
         <?php submit_button( '', 'wpr-options-button' ); ?>
+
+        <div class="wpr-settings-group">
+            <h3 class="wpr-settings-group-title"><?php esc_html_e( 'WooCommerce', 'wpr-addons' ); ?></h3>
+
+            <div class="wpr-setting">
+                <h4>
+                    <span><?php esc_html_e( 'Shop Page: Products Per Page', 'wpr-addons' ); ?></span>
+                    <br>
+                </h4>
+
+                <input type="text" name="wpr_woo_shop_ppp" id="wpr_woo_shop_ppp" value="<?php echo esc_attr(get_option('wpr_woo_shop_ppp', 9)); ?>">
+            </div>
+
+            <div class="wpr-setting">
+                <h4>
+                    <span><?php esc_html_e( 'Product Category: Products Per Page', 'wpr-addons' ); ?></span>
+                    <br>
+                </h4>
+
+                <input type="text" name="wpr_woo_shop_cat_ppp" id="wpr_woo_shop_cat_ppp" value="<?php echo esc_attr(get_option('wpr_woo_shop_cat_ppp', 9)); ?>">
+            </div>
+
+            <div class="wpr-setting">
+                <h4>
+                    <span><?php esc_html_e( 'Product Tag: Products Per Page', 'wpr-addons' ); ?></span>
+                    <br>
+                </h4>
+
+                <input type="text" name="wpr_woo_shop_tag_ppp" id="wpr_woo_shop_tag_ppp" value="<?php echo esc_attr(get_option('wpr_woo_shop_tag_ppp', 9)); ?>">
+            </div>
+        </div>
 
         <div class="wpr-settings-group">
             <h3 class="wpr-settings-group-title"><?php esc_html_e( 'Integrations', 'wpr-addons' ); ?></h3>

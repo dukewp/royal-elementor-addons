@@ -9,7 +9,7 @@ class WPR_WooCommerce_Config {
 		// add_filter( 'woocommerce_single_product_zoom_enabled', '__return_false' );
 
 		// Change number of products that are displayed per page (shop page)
-		// add_filter( 'loop_shop_per_page', [$this, 'new_loop_shop_per_page'], 20 );
+		add_filter( 'loop_shop_per_page', [$this, 'shop_products_per_page'], 20 );
 
 		// Rewrite WC Default Templates
 		add_filter( 'wc_get_template', [ $this, 'rewrite_default_wc_templates' ], 10, 3 );
@@ -54,22 +54,19 @@ class WPR_WooCommerce_Config {
 		return $options;
 	}
 	
-	public function new_loop_shop_per_page( $cols ) {
-	  // $cols contains the current number of products per page based on the value stored on Options –> Reading
-	  // Return the number of products you wanna show per page.
-	  $cols = 4;
-	  return $cols;
+	public function shop_products_per_page( $cols ) {
+	  return get_option('wpr_woo_shop_ppp', 9);
 	}
 
 	public function rewrite_default_wc_templates( $located, $template_name ) {
 		// Cart template
 		if ( $template_name === 'cart/cart.php' ) {
-			$located = WPR_ADDONS_PATH .'woocommerce/templates/cart/cart.php';
+			$located = WPR_ADDONS_PATH .'includes/woocommerce/templates/cart/cart.php';
 		}
 
 		// Mini-cart template
 		if ( $template_name === 'cart/mini-cart.php') {
-			$located = WPR_ADDONS_PATH .'woocommerce/templates/cart/mini-cart.php';
+			$located = WPR_ADDONS_PATH .'includes/woocommerce/templates/cart/mini-cart.php';
 		}
 
 		// if ( $template_name === 'cart/cart-empty.php' ) {

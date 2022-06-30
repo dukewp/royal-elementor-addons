@@ -140,7 +140,7 @@ class Plugin {
 		}
 
 		if ( class_exists('WooCommerce') ) {
-			require WPR_ADDONS_PATH . 'woocommerce/woocommerce-config.php';
+			require WPR_ADDONS_PATH . 'includes/woocommerce/woocommerce-config.php';
 		}
 	}
 
