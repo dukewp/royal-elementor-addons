@@ -10,6 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 \Elementor\Plugin::$instance->frontend->add_body_class( 'elementor-template-canvas' );
 
 $is_preview_mode = \Elementor\Plugin::$instance->preview->is_preview_mode();
+// $woocommerce_class = $is_preview_mode && class_exists( 'WooCommerce' ) ? 'woocommerce woocommerce-page woocommerce-shop canvas-test' : '';
 $woocommerce_class =  $is_preview_mode && class_exists( 'WooCommerce' ) ? 'woocommerce woocommerce-page' : '';
 
 ?>

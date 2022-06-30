@@ -22,7 +22,11 @@ defined( 'ABSPATH' ) || exit;
 do_action( 'woocommerce_before_mini_cart' ); ?>
 
 <?php if ( ! WC()->cart->is_empty() ) : ?>
-
+	
+	<div class="wpr-close-cart">
+		<span></span>
+	</div>
+	
 	<ul class="wpr-woocommerce-mini-cart woocommerce-mini-cart cart_list product_list_widget <?php echo esc_attr( $args['list_class'] ); ?>">
 		<?php
 		do_action( 'woocommerce_before_mini_cart_contents' );
@@ -83,7 +87,7 @@ do_action( 'woocommerce_before_mini_cart' ); ?>
 		do_action( 'woocommerce_mini_cart_contents' );
 		?>
 	</ul>
-
+	<div class="wpr-mini-cart-separator"></div>
 	<p class="woocommerce-mini-cart__total total">
 		<?php
 		/**
