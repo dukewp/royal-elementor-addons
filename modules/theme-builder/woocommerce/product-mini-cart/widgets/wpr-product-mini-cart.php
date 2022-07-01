@@ -167,9 +167,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 				],
 				'prefix_class' => 'wpr-mini-cart-',
 				'condition' => [
-					'condition' => [
 						'mini_cart_style' => 'dropdown'
-					]
 				]
 			]
 		);
