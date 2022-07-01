@@ -65,7 +65,7 @@ class WPR_WooCommerce_Config {
 		}
 
 		// Mini-cart template
-		if ( $template_name === 'cart/mini-cmini-cartrt.php') {
+		if ( $template_name === 'cart/mini-cart.php') {
 			$located = WPR_ADDONS_PATH .'includes/woocommerce/templates/cart/mini-cart.php';
 		}
 
