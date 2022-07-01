@@ -182,9 +182,6 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
                 'step' => 10,
                 'default' => 600,
                 'render_type' => 'template',
-				'condition' => [
-					'mini_cart_style' => 'dropdown'
-				]
             ]
         );
 
