@@ -2544,11 +2544,13 @@ class Wpr_Product_Filters extends Widget_Base {
 
 		$form_action = Utilities::get_shop_url($settings);
 
+		$is_editor =  \Elementor\Plugin::$instance->editor->is_edit_mode();
+
 		?>
 
 		<form method="get" action="<?php echo esc_url( $form_action ); ?>">
 			<div class="wpr-product-filter-price price_slider_wrapper">
-				<div class="wpr-product-filter-price-slider price_slider" style="display:none;"></div>
+				<div class="wpr-product-filter-price-slider price_slider" style=<?php echo $is_editor ? 'display: none;' : '' ?>></div>
 				<div class="wpr-product-filter-price-amount price_slider_amount" data-step="<?php echo esc_attr( $step ); ?>">
 					<input type="text" id="min_price" name="min_price" value="<?php echo esc_attr( $current_min_price ); ?>" data-min="<?php echo esc_attr( $min_price ); ?>" placeholder="<?php echo esc_attr__( 'Min price', 'wpr-addons' ); ?>" />
 					<input type="text" id="max_price" name="max_price" value="<?php echo esc_attr( $current_max_price ); ?>" data-max="<?php echo esc_attr( $max_price ); ?>" placeholder="<?php echo esc_attr__( 'Max price', 'wpr-addons' ); ?>" />
@@ -2562,18 +2564,9 @@ class Wpr_Product_Filters extends Widget_Base {
 			</div>
 		</form>
 		
-		<?php if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) : ?>
+		<?php if ( $is_editor ) : ?>
 		<script type="text/javascript">
-			jQuery(document).ready(function($) {
-				'use strict';
-				$('.wpr-product-filter-price-slider').slider({
-					range: true,
-					min: 0,
-					max: 100,
-					values: [30, 90]
-				});
-			});
-			</script>
+		</script>
 		<?php
 		endif;
 	}
@@ -2863,8 +2856,28 @@ class Wpr_Product_Filters extends Widget_Base {
 
 		// Active Filters
 		if ( 'active' === $settings['filter_type'] ) {
-			$this->render_product_active_filters($settings);
-		
+			if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) { ?>
+				<div class="wpr-product-filters">
+					<h3 class="wpr-product-filter-title">Product Filter</h3>
+					<ul class="wpr-product-active-filters">
+						<li>
+							<a rel="nofollow" href="#">Uncategorized</a>
+						</li>
+						<li>
+							<a rel="nofollow" href="#">Blue</a>
+						</li>
+						<li>
+							<a rel="nofollow" href="#">Large</a>
+						</li>
+						<li class="chosen">
+							<a rel="nofollow" aria-label="Remove filter" href="http://localhost/royal-wp/shop/?wprfilters&amp;filter_product_cat=uncategorized&amp;filter_color=blue&amp;filter_size=large">Rated 5 out of 5</a>
+						</li>
+					</ul>
+				</div>
+			<?php } else {
+				$this->render_product_active_filters($settings);
+			}
+
 		// Other Filters
 		} else {
 			echo '<div class="wpr-product-filters">';
@@ -2882,7 +2895,31 @@ class Wpr_Product_Filters extends Widget_Base {
 	
 			// Price
 			} elseif ( 'price' === $settings['filter_type'] ) {
-				$this->render_product_price_slider_filter($settings);
+				if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) { ?>
+				<!-- <div class="wpr-product-filters"><h3 class="wpr-product-filter-title">Filter By Price</h3> -->
+					<!-- <form method="get" action="http://localhost/royal-wp/shop/?wprfilters"> -->
+						<div class="wpr-product-filter-price price_slider_wrapper">
+							<div class="wpr-product-filter-price-slider price_slider ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content">
+								<div class="ui-slider-range ui-corner-all ui-widget-header" style="left: 30%; width: 60%;"></div>
+								<span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 30%;"></span>
+								<span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 90%;"></span>
+							</div>
+							<div class="wpr-product-filter-price-amount price_slider_amount" data-step="2.1">
+								<input type="text" id="min_price" name="min_price" value="0" data-min="0" placeholder="Min price" style="display: none;">
+								<input type="text" id="max_price" name="max_price" value="90.3" data-max="90.3" placeholder="Max price" style="display: none;">
+								<button type="submit" class="button">Filter</button>
+								<div class="wpr-product-filter-price-label price_label">
+									Price: <span class="from">$0</span> — <span class="to">$90</span>
+								</div>
+								<input type="hidden" name="wprfilters" value="">				
+							</div>
+						</div>
+					<!-- </form> -->
+				</div>
+				<?php } else {
+
+					$this->render_product_price_slider_filter($settings);
+				}
 	
 			// Taxonomies
 			} else {
