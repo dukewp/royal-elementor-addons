@@ -1692,6 +1692,10 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     display: none !important;
 }
 
+.wpr-before-remove-from-mini-cart {
+    opacity: 0.6;
+}
+
 .wpr-close-cart {
     display: none;
 }
