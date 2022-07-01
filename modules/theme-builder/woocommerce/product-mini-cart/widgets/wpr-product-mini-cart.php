@@ -160,6 +160,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 			[
 				'label' => esc_html__( 'Entrance Animation', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
+                'render_type' => 'template',
 				'default' => 'fade',
 				'options' => [
 					'fade' => esc_html__( 'Fade', 'wpr-addons' ),
@@ -1877,7 +1878,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 
 		// add_action('woocommerce_before_mini_cart', [$this, 'render_close_cart_icon']);
 
-        echo '<div class="wpr-mini-cart-wrap woocommerce"' . $this->get_render_attribute_string( 'wrapper' ) . '>';
+        echo '<div class="wpr-mini-cart-wrap woocommerce"' . $this->get_render_attribute_string( 'mini_cart_attributes' ) . '>';
 			echo '<span class="wpr-mini-cart-inner">';
 				$this->render_mini_cart_toggle($settings);
 				$this->render_mini_cart($settings);
