@@ -1700,6 +1700,16 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     display: block;
 }
 
+.wpr-mini-cart-sidebar.wpr-sidebar-heading-yes.wpr-close-btn-yes .wpr-close-cart {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wpr-mini-cart-sidebar.wpr-sidebar-heading-yes.wpr-close-btn-yes .wpr-close-cart h2 {
+    margin: 0;
+}
+
 .wpr-close-cart span::before {
     font-family: "Font Awesome 5 Free";
     content: '\f00d';

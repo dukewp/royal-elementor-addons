@@ -20,12 +20,15 @@
 defined( 'ABSPATH' ) || exit;
 
 do_action( 'woocommerce_before_mini_cart' ); ?>
+	
+<div class="wpr-close-cart">
+	<?php if ( isset($args['close_cart_heading'] ) && '' !== $args['close_cart_heading'] ) : ?>
+		<h2><?php echo wp_kses_post($args['close_cart_heading']) ?></h2>
+	<?php endif ; ?>
+	<span></span>
+</div>
 
 <?php if ( ! WC()->cart->is_empty() ) : ?>
-	
-	<div class="wpr-close-cart">
-		<span></span>
-	</div>
 	
 	<ul class="wpr-woocommerce-mini-cart woocommerce-mini-cart cart_list product_list_widget <?php echo esc_attr( $args['list_class'] ); ?>">
 		<?php

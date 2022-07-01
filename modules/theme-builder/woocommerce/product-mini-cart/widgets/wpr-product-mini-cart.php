@@ -153,7 +153,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 				'prefix_class' => 'wpr-mini-cart-',
 				'default' => 'dropdown'
 			]
-		);
+		); 
 
 		$this->add_control(
 			'mini_cart_entrance',
@@ -290,6 +290,20 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 		);
 
 		$this->add_control(
+			'show_close_cart_heading',
+			[
+				'label' => esc_html__( 'Sidebar Heading', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'prefix_class' => 'wpr-sidebar-heading-',
+				'condition' => [
+					'mini_cart_style' => 'sidebar',
+					'show_mini_cart_close_btn' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control(
 			'close_cart_heading',
 			[
 				'label' => esc_html__( 'Text', 'wpr-addons' ),
@@ -300,7 +314,9 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 				'placeholder' => esc_html__( 'Shopping Cart', 'wpr-addons' ),
 				'default' => esc_html__( 'Shopping Cart', 'wpr-addons' ),
 				'condition' => [
-					'toggle_text' => 'title'
+					'mini_cart_style' => 'sidebar',
+					'show_mini_cart_close_btn' => 'yes',
+					'show_close_cart_heading' => 'yes'
 				]
 			]
 		);
@@ -326,7 +342,39 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 				],
 				'condition' => [
 					'mini_cart_style' => 'sidebar',
-					'show_mini_cart_close_btn' => 'yes'
+					'show_mini_cart_close_btn' => 'yes',
+					'show_close_cart_heading!' => 'yes'
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'mini_cart_heading_align',
+			[
+				'label' => esc_html__( 'Title Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'default' => 'right',
+				'options' => [
+					'left' => [
+						'title' => esc_html__( 'Start', 'wpr-addons' ),
+						'icon' => 'eicon-h-align-left',
+					],
+					'right' => [
+						'title' => esc_html__( 'End', 'wpr-addons' ),
+						'icon' => 'eicon-h-align-right',
+					]
+				],
+				'selectors_dictionary' => [
+					'left' => '',
+					'right' => 'flex-direction: row-reverse;'
+				],
+				'selectors' => [
+					'{{WRAPPER}}.wpr-sidebar-heading-yes .wpr-close-cart' => '{{VALUE}}',
+				],
+				'condition' => [
+					'mini_cart_style' => 'sidebar',
+					'show_mini_cart_close_btn' => 'yes',
+					'show_close_cart_heading' => 'yes'
 				]
 			]
 		);
@@ -764,6 +812,62 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 					'mini_cart_style' => 'sidebar',
 					'show_mini_cart_close_btn' => 'yes'
 				]
+			]
+		);
+
+		$this->add_control(
+			'mini_cart_sidebar_heading',
+			[
+				'label'     => esc_html__('Heading', 'wpr-addons'),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before',
+				'condition' => [
+					'mini_cart_style' => 'sidebar',
+					'show_mini_cart_close_btn' => 'yes',
+					'show_close_cart_heading' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control(
+			'mini_cart_sidebar_heading_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#222222',
+				'selectors' => [
+					'{{WRAPPER}}.wpr-sidebar-heading-yes .wpr-close-cart h2' => 'color: {{VALUE}}',
+				],
+				'condition' => [
+					'mini_cart_style' => 'sidebar',
+					'show_mini_cart_close_btn' => 'yes',
+					'show_close_cart_heading' => 'yes'
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'mini_cart_sidebar_heading_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}}.wpr-sidebar-heading-yes .wpr-close-cart h2',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '',
+							'unit' => 'px',
+						],
+					]
+					],
+					'condition' => [
+						'mini_cart_style' => 'sidebar',
+						'show_mini_cart_close_btn' => 'yes',
+						'show_close_cart_heading' => 'yes'
+					]
 			]
 		);
 
@@ -1844,6 +1948,8 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 			return;
 		}
 
+		$close_cart_heading = isset($settings['close_cart_heading']) ? $settings['close_cart_heading'] : 'Shopping Cart';
+
 		$widget_cart_is_hidden = apply_filters( 'woocommerce_widget_cart_is_hidden', false );
 		$is_edit_mode = \Elementor\Plugin::$instance->editor->is_edit_mode();
 		?>
@@ -1853,7 +1959,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 					<div class="" aria-hidden="true">
 						<div class="wpr-shopping-cart-wrap" aria-hidden="true">
 							<div class="widget_shopping_cart_content">
-								<?php woocommerce_mini_cart(); ?>
+								<?php woocommerce_mini_cart(['close_cart_heading' => $close_cart_heading]); ?>
 							</div>
 						</div>
 					</div>
