@@ -858,7 +858,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 					],
 					'font_size' => [
 						'default' => [
-							'size' => '',
+							'size' => '18',
 							'unit' => 'px',
 						],
 					]
