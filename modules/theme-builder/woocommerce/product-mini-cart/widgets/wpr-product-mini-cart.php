@@ -156,6 +156,40 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 		);
 
 		$this->add_control(
+			'mini_cart_entrance',
+			[
+				'label' => esc_html__( 'Entrance Animation', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'fade',
+				'options' => [
+					'fade' => esc_html__( 'Fade', 'wpr-addons' ),
+					'slide' => esc_html__( 'Slide', 'wpr-addons' ),
+				],
+				'prefix_class' => 'wpr-mini-cart-',
+				'condition' => [
+					'condition' => [
+						'mini_cart_style' => 'dropdown'
+					]
+				]
+			]
+		);
+
+        $this->add_control(
+            'mini_cart_entrance_speed',
+            [
+                'label' => __( 'Entrance Speed', 'wpr-addons' ),
+                'type' => Controls_Manager::NUMBER,
+                'min' => 0,
+                'step' => 10,
+                'default' => 600,
+                'render_type' => 'template',
+				'condition' => [
+					'mini_cart_style' => 'dropdown'
+				]
+            ]
+        );
+
+		$this->add_control(
 			'toggle_text',
 			[
 				'label' => esc_html__( 'Toggle Text', 'wpr-addons' ),
@@ -1836,9 +1870,16 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
     protected function render() {
 		$settings = $this->get_settings_for_display();
 
+		$this->add_render_attribute(
+			'mini_cart_attributes',
+			[
+				'data-animation' => $settings['mini_cart_entrance_speed']
+			]
+		);
+
 		// add_action('woocommerce_before_mini_cart', [$this, 'render_close_cart_icon']);
 
-        echo '<div class="wpr-mini-cart-wrap woocommerce">';
+        echo '<div class="wpr-mini-cart-wrap woocommerce"' . $this->get_render_attribute_string( 'wrapper' ) . '>';
 			echo '<span class="wpr-mini-cart-inner">';
 				$this->render_mini_cart_toggle($settings);
 				$this->render_mini_cart($settings);
