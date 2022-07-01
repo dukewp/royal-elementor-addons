@@ -137,7 +137,7 @@ class Wpr_Product_Filters extends Widget_Base {
                 'label' => __( 'Slider Step', 'wpr-addons' ),
                 'type' => Controls_Manager::NUMBER,
                 'min' => 0,
-                'step' => 0.1,
+                'step' => 1,
                 'default' => 1,
                 'render_type' => 'template',
 				'condition' => [
@@ -2530,8 +2530,6 @@ class Wpr_Product_Filters extends Widget_Base {
 			}
 		}
 
-		// $min_price = floor( $min_price / $step ) * $step;
-		// $max_price = ceil( $max_price / $step ) * $step;
 		$min_price = floor( $min_price / $step ) * $step;
 		$max_price = ceil( $max_price / $step ) * $step;
 
@@ -2541,10 +2539,8 @@ class Wpr_Product_Filters extends Widget_Base {
 		}
 
 		// Get Current Prices
-		// $current_min_price = isset( $_GET['min_price'] ) ? floor( floatval( wp_unslash( $_GET['min_price'] ) ) / $step ) * $step : $min_price; // WPCS: input var ok, CSRF ok.
-		// $current_max_price = isset( $_GET['max_price'] ) ? ceil( floatval( wp_unslash( $_GET['max_price'] ) ) / $step ) * $step : $max_price; // WPCS: input var ok, CSRF ok.
-		$current_min_price = isset( $_GET['min_price'] ) ? floatval( wp_unslash( $_GET['min_price'] ) / $step ) * $step : $min_price; // WPCS: input var ok, CSRF ok.
-		$current_max_price = isset( $_GET['max_price'] ) ? floatval( wp_unslash( $_GET['max_price'] ) / $step ) * $step : $max_price; // WPCS: input var ok, CSRF ok.
+		$current_min_price = isset( $_GET['min_price'] ) ? floor( floatval( wp_unslash( $_GET['min_price'] ) ) / $step ) * $step : $min_price; // WPCS: input var ok, CSRF ok.
+		$current_max_price = isset( $_GET['max_price'] ) ? ceil( floatval( wp_unslash( $_GET['max_price'] ) ) / $step ) * $step : $max_price; // WPCS: input var ok, CSRF ok.
 
 		$form_action = Utilities::get_shop_url($settings);
 

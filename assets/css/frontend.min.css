@@ -1726,17 +1726,19 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     position: absolute;
     top: 0;
     transition: all 1s ease;
+    height: 100%;
+}
+
+.wpr-subtotal-align-bottom.wpr-mini-cart-sidebar .widget_shopping_cart_content {
     display: flex;
     flex-direction: column;
-    height: 100%;
 }
 
 .wpr-mini-cart-dropdown .wpr-mini-cart-separator {
     display: none;
 }
 
-.wpr-mini-cart-separator {
-    /* align-self: stretch; */
+.wpr-subtotal-align-bottom .wpr-mini-cart-separator {
     flex: 1;
 }
 
