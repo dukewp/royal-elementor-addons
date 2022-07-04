@@ -60,6 +60,83 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
             ]
         );
 
+		$this->add_control(
+			'icon',
+			[
+				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'separator' => 'before',
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'cart-light' => esc_html__( 'Cart Light', 'wpr-addons' ),
+					'cart-medium' => esc_html__( 'Cart Medium', 'wpr-addons' ),
+					'cart-solid' => esc_html__( 'Cart Solid', 'wpr-addons' ),
+					'basket-light' => esc_html__( 'Basket Light', 'wpr-addons' ),
+					'basket-medium' => esc_html__( 'Basket Medium', 'wpr-addons' ),
+					'basket-solid' => esc_html__( 'Basket Solid', 'wpr-addons' ),
+					'bag-light' => esc_html__( 'Bag Light', 'wpr-addons' ),
+					'bag-medium' => esc_html__( 'Bag Medium', 'wpr-addons' ),
+					'bag-solid' => esc_html__( 'Bag Solid', 'wpr-addons' )
+				],
+				'default' => 'cart-medium',
+				'prefix_class' => 'wpr-toggle-icon-',
+			]
+		);
+
+		$this->add_control(
+			'toggle_text',
+			[
+				'label' => esc_html__( 'Toggle Text', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'price' => esc_html__( 'Total price', 'wpr-addons' ),
+					'title' => esc_html__( 'Extra Text', 'wpr-addons' )
+				],
+				'default' => 'price',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'toggle_title',
+			[
+				'label' => esc_html__( 'Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'placeholder' => esc_html__( 'Cart', 'wpr-addons' ),
+				'default' => esc_html__( 'Cart', 'wpr-addons' ),
+				'condition' => [
+					'toggle_text' => 'title'
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'toggle_text_distance',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 25,
+					],
+				],
+				'default' => [
+					'size' => 5,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-mini-cart-btn-text' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-mini-cart-btn-price' => 'margin-right: {{SIZE}}{{UNIT}};'
+                ],
+				'separator' => 'after',
+				'condition' => [
+					'toggle_text!' => 'none'
+				]
+			]
+		);
+
 		$this->add_responsive_control(
 			'mini_cart_button_alignment',
 			[
@@ -115,30 +192,6 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'mini_cart_subtotal_alignment',
-			[
-				'label' => esc_html__( 'Subtotal & Buttons', 'wpr-addons' ),
-				'type' => Controls_Manager::CHOOSE,
-				'default' => 'bottom',
-				'render_type' => 'template',
-				'options' => [
-					'bottom' => [
-						'title' => esc_html__( 'Bottom', 'wpr-addons' ),
-						'icon' => 'eicon-v-align-bottom',
-					],
-					'auto' => [
-						'title' => esc_html__( 'Auto', 'wpr-addons' ),
-						'icon' => 'eicon-v-align-top',
-					]
-				],
-				'prefix_class' => 'wpr-subtotal-align-',
-				'condition' => [
-					'mini_cart_style' => 'sidebar'
-				]
-			]
-		);
-
 		$this->add_control(
 			'mini_cart_style',
 			[
@@ -185,196 +238,26 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
             ]
         );
 
-		$this->add_control(
-			'toggle_text',
-			[
-				'label' => esc_html__( 'Toggle Text', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'separator' => 'before',
-				'options' => [
-					'none' => esc_html__( 'None', 'wpr-addons' ),
-					'price' => esc_html__( 'Total price', 'wpr-addons' ),
-					'title' => esc_html__( 'Title', 'wpr-addons' )
-				],
-				'default' => 'price'
-			]
-		);
-
-		$this->add_control(
-			'toggle_title',
-			[
-				'label' => esc_html__( 'Text', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'placeholder' => esc_html__( 'Cart', 'wpr-addons' ),
-				'default' => esc_html__( 'Cart', 'wpr-addons' ),
-				'condition' => [
-					'toggle_text' => 'title'
-				]
-			]
-		);
-
 		$this->add_responsive_control(
-			'toggle_text_distance',
+			'mini_cart_subtotal_alignment',
 			[
-				'label' => esc_html__( 'Distance', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 25,
-					],
-				],
-				'default' => [
-					'size' => 5,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-mini-cart-btn-text' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-mini-cart-btn-price' => 'margin-right: {{SIZE}}{{UNIT}};'
-                ],
-				'condition' => [
-					'toggle_text!' => 'none'
-				]
-			]
-		);
-
-		$this->add_control(
-			'icon',
-			[
-				'label' => esc_html__( 'Icon', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'separator' => 'before',
-				'options' => [
-					'none' => esc_html__( 'None', 'wpr-addons' ),
-					'cart-light' => esc_html__( 'Cart Light', 'wpr-addons' ),
-					'cart-medium' => esc_html__( 'Cart Medium', 'wpr-addons' ),
-					'cart-solid' => esc_html__( 'Cart Solid', 'wpr-addons' ),
-					'basket-light' => esc_html__( 'Basket Light', 'wpr-addons' ),
-					'basket-medium' => esc_html__( 'Basket Medium', 'wpr-addons' ),
-					'basket-solid' => esc_html__( 'Basket Solid', 'wpr-addons' ),
-					'bag-light' => esc_html__( 'Bag Light', 'wpr-addons' ),
-					'bag-medium' => esc_html__( 'Bag Medium', 'wpr-addons' ),
-					'bag-solid' => esc_html__( 'Bag Solid', 'wpr-addons' )
-				],
-				'default' => 'cart-medium',
-				'prefix_class' => 'wpr-toggle-icon-',
-			]
-		);
-
-		$this->add_control(
-			'mini_cart_close_btn',
-			[
-				'label'     => esc_html__('Close Button', 'wpr-addons'),
-				'type'      => Controls_Manager::HEADING,
-				'separator' => 'before',
-				'condition' => [
-					'mini_cart_style' => 'sidebar'
-				]
-			]
-		);
-
-		$this->add_control(
-			'show_mini_cart_close_btn',
-			[
-				'label' => esc_html__( 'Show', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
-				'return_value' => 'yes',
-				'prefix_class' => 'wpr-close-btn-',
-				'condition' => [
-					'mini_cart_style' => 'sidebar'
-				]
-			]
-		);
-
-		$this->add_control(
-			'show_close_cart_heading',
-			[
-				'label' => esc_html__( 'Sidebar Heading', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
-				'return_value' => 'yes',
+				'label' => esc_html__( 'Subtotal & Buttons', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'default' => 'bottom',
 				'render_type' => 'template',
-				'prefix_class' => 'wpr-sidebar-heading-',
-				'condition' => [
-					'mini_cart_style' => 'sidebar',
-					'show_mini_cart_close_btn' => 'yes'
-				]
-			]
-		);
-
-		$this->add_control(
-			'close_cart_heading',
-			[
-				'label' => esc_html__( 'Text', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'dynamic' => [
-					'active' => true,
-				],
-				'placeholder' => esc_html__( 'Shopping Cart', 'wpr-addons' ),
-				'default' => esc_html__( 'Shopping Cart', 'wpr-addons' ),
-				'condition' => [
-					'mini_cart_style' => 'sidebar',
-					'show_mini_cart_close_btn' => 'yes',
-					'show_close_cart_heading' => 'yes'
-				]
-			]
-		);
-
-		$this->add_responsive_control(
-			'mini_cart_close_btn_align',
-			[
-				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
-				'type' => Controls_Manager::CHOOSE,
-				'default' => 'right',
 				'options' => [
-					'left' => [
-						'title' => esc_html__( 'Start', 'wpr-addons' ),
-						'icon' => 'eicon-h-align-left',
+					'bottom' => [
+						'title' => esc_html__( 'Bottom', 'wpr-addons' ),
+						'icon' => 'eicon-v-align-bottom',
 					],
-					'right' => [
-						'title' => esc_html__( 'End', 'wpr-addons' ),
-						'icon' => 'eicon-h-align-right',
+					'auto' => [
+						'title' => esc_html__( 'Auto', 'wpr-addons' ),
+						'icon' => 'eicon-v-align-top',
 					]
 				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-close-cart' => 'text-align: {{VALUE}}',
-				],
+				'prefix_class' => 'wpr-subtotal-align-',
 				'condition' => [
-					'mini_cart_style' => 'sidebar',
-					'show_mini_cart_close_btn' => 'yes',
-					'show_close_cart_heading!' => 'yes'
-				]
-			]
-		);
-
-		$this->add_responsive_control(
-			'mini_cart_heading_align',
-			[
-				'label' => esc_html__( 'Title Alignment', 'wpr-addons' ),
-				'type' => Controls_Manager::CHOOSE,
-				'default' => 'right',
-				'options' => [
-					'left' => [
-						'title' => esc_html__( 'Start', 'wpr-addons' ),
-						'icon' => 'eicon-h-align-left',
-					],
-					'right' => [
-						'title' => esc_html__( 'End', 'wpr-addons' ),
-						'icon' => 'eicon-h-align-right',
-					]
-				],
-				'selectors_dictionary' => [
-					'left' => '',
-					'right' => 'flex-direction: row-reverse;'
-				],
-				'selectors' => [
-					'{{WRAPPER}}.wpr-sidebar-heading-yes .wpr-close-cart' => '{{VALUE}}',
-				],
-				'condition' => [
-					'mini_cart_style' => 'sidebar',
-					'show_mini_cart_close_btn' => 'yes',
-					'show_close_cart_heading' => 'yes'
+					'mini_cart_style' => 'sidebar'
 				]
 			]
 		);
@@ -444,6 +327,121 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 				],
 				'condition' => [
 					'separator_style!' => 'none'
+				]
+			]
+		);
+
+		$this->add_control(
+			'mini_cart_close_btn',
+			[
+				'label'     => esc_html__('Close Button', 'wpr-addons'),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before',
+				'condition' => [
+					'mini_cart_style' => 'sidebar'
+				]
+			]
+		);
+
+		$this->add_control(
+			'show_mini_cart_close_btn',
+			[
+				'label' => esc_html__( 'Show', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'prefix_class' => 'wpr-close-btn-',
+				'condition' => [
+					'mini_cart_style' => 'sidebar'
+				]
+			]
+		);
+
+		$this->add_control(
+			'show_close_cart_heading',
+			[
+				'label' => esc_html__( 'Sidebar Heading', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'render_type' => 'template',
+				'prefix_class' => 'wpr-sidebar-heading-',
+				'condition' => [
+					'mini_cart_style' => 'sidebar',
+					'show_mini_cart_close_btn' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control(
+			'close_cart_heading',
+			[
+				'label' => esc_html__( 'Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'placeholder' => esc_html__( 'Shopping Cart', 'wpr-addons' ),
+				'default' => esc_html__( 'Shopping Cart', 'wpr-addons' ),
+				'condition' => [
+					'mini_cart_style' => 'sidebar',
+					'show_mini_cart_close_btn' => 'yes',
+					'show_close_cart_heading' => 'yes'
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'mini_cart_close_btn_align',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'default' => 'right',
+				'options' => [
+					'left' => [
+						'title' => esc_html__( 'Start', 'wpr-addons' ),
+						'icon' => 'eicon-h-align-left',
+					],
+					'right' => [
+						'title' => esc_html__( 'End', 'wpr-addons' ),
+						'icon' => 'eicon-h-align-right',
+					]
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-close-cart' => 'text-align: {{VALUE}}',
+				],
+				'condition' => [
+					'mini_cart_style' => 'sidebar',
+					'show_mini_cart_close_btn' => 'yes',
+					'show_close_cart_heading!' => 'yes'
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'mini_cart_heading_align',
+			[
+				'label' => esc_html__( 'Title Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'default' => 'right',
+				'options' => [
+					'left' => [
+						'title' => esc_html__( 'Start', 'wpr-addons' ),
+						'icon' => 'eicon-h-align-left',
+					],
+					'right' => [
+						'title' => esc_html__( 'End', 'wpr-addons' ),
+						'icon' => 'eicon-h-align-right',
+					]
+				],
+				'selectors_dictionary' => [
+					'left' => '',
+					'right' => 'flex-direction: row-reverse;'
+				],
+				'selectors' => [
+					'{{WRAPPER}}.wpr-sidebar-heading-yes .wpr-close-cart' => '{{VALUE}}',
+				],
+				'condition' => [
+					'mini_cart_style' => 'sidebar',
+					'show_mini_cart_close_btn' => 'yes',
+					'show_close_cart_heading' => 'yes'
 				]
 			]
 		);
