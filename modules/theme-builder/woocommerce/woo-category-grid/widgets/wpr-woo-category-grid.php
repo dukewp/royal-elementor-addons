@@ -859,7 +859,7 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 		$this->add_responsive_control(
 			'query_hide_empty',
 			[
-				'label' => esc_html__( 'Navigation', 'wpr-addons' ),
+				'label' => esc_html__( 'Hide Empty', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes'
 			]
@@ -1015,54 +1015,6 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'sort_and_results_count',
-			[
-				'label' => esc_html__( 'Show Sorting', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
-				'widescreen_default' => 'yes',
-				'laptop_default' => 'yes',
-				'tablet_extra_default' => 'yes',
-				'tablet_default' => 'yes',
-				'mobile_extra_default' => 'yes',
-				'mobile_default' => 'yes',
-				'selectors_dictionary' => [
-					'' => 'none',
-					'yes' => 'block'
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-sorting-wrap' => 'display: {{VALUE}};',
-				],
-				'render_type' => 'template',
-				'separator' => 'before'
-			]
-		);
-
-		$this->add_responsive_control(
-			'layout_filters',
-			[
-				'label' => esc_html__( 'Show Filters', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
-				'widescreen_default' => 'yes',
-				'laptop_default' => 'yes',
-				'tablet_extra_default' => 'yes',
-				'tablet_default' => 'yes',
-				'mobile_extra_default' => 'yes',
-				'mobile_default' => 'yes',
-				'selectors_dictionary' => [
-					'' => 'none',
-					'yes' => 'block'
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-filters' => 'display:{{VALUE}};',
-				],
-				'render_type' => 'template',
-				// 'separator' => 'before'
-			]
-		);
-
 		$this->add_control_layout_animation();
 
 		// Upgrade to Pro Notice
@@ -1177,6 +1129,19 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 				],
 				'condition' => [
 					'element_display' => 'custom',
+				],
+			]
+		);
+
+		$repeater->add_control(
+			'element_show_brackets',
+			[
+				'label' => esc_html__( 'Show Brackets', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'condition' => [
+					'element_select' => 'count'
 				],
 			]
 		);
@@ -1359,7 +1324,8 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 				'default' => 'none',
 				'condition' => [
 					'element_select' => [
-						'title'
+						'title',
+						'count'
 					],
 				]
 			]
@@ -1373,7 +1339,8 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 				'default' => '',
 				'condition' => [
 					'element_select' => [
-						'title'
+						'title',
+						'count'
 					],
 					'element_extra_text_pos!' => 'none'
 				]
@@ -2201,7 +2168,7 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#9C9C9C',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-item .inner-block span[class*="wpr-grid-extra-text"]' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-item-title .inner-block span[class*="wpr-grid-extra-text"]' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -2681,6 +2648,18 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 		$this->end_controls_tabs();
 
 		$this->add_control(
+			'count_extra_text_color',
+			[
+				'label'  => esc_html__( 'Extra Text Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#9C9C9C',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-item .wpr-grid-item-count .inner-block span[class*="wpr-grid-extra-text"]' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
 			'count_transition_duration',
 			[
 				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
@@ -2793,6 +2772,31 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 					'{{WRAPPER}} .wpr-grid-item-count .inner-block' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'render_type' => 'template',
+			]
+		);
+
+		$this->add_control(
+			'count_text_spacing',
+			[
+				'label' => esc_html__( 'Extra Text Spacing', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 25,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-item-count .wpr-grid-extra-text-left' => 'padding-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-item-count .wpr-grid-extra-text-right' => 'padding-left: {{SIZE}}{{UNIT}};',
+				],
+				'render_type' => 'template',
+				'separator' => 'before',
 			]
 		);
 
@@ -3095,7 +3099,7 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 	}
 	
 	// Render Post Categories
-	public function render_product_title( $settings, $class, $term ) {
+	public function render_category_title( $settings, $class, $term ) {
 
 		// Pointer Class
 		$categories_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['title_pointer'];
@@ -3133,7 +3137,7 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 	}
 
 	// // Render Category/Tag Title
-	// public function render_product_title( $settings, $class, $term ) {
+	// public function render_category_title( $settings, $class, $term ) {
 	// 	$title_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['title_pointer'];
 	// 	$title_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['title_pointer_animation'];
 
@@ -3150,27 +3154,42 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 	// }
 
 	// Render Post Element Separator
-	public function render_product_element_separator( $settings, $class ) {
+	public function render_category_element_separator( $settings, $class ) {
 		echo '<div class="'. esc_attr($class .' '. $settings['element_separator_style']) .'">';
 			echo '<div class="inner-block"><span></span></div>';
 		echo '</div>';
 	}
 
 	// Render Post Title
-	public function render_product_count( $settings, $class, $term ) {
+	public function render_category_count( $settings, $class, $term ) {
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
+				// Text: Before
+				if ( 'before' === $settings['element_extra_text_pos'] ) {
+					echo '<span class="wpr-grid-extra-text-left">'. esc_html( $settings['element_extra_text'] ) .'</span>';
+				}
+
 				echo '<a href="'. esc_url(get_term_link( $term->term_id )) .'" class="wpr-pointer-item">';
-					echo '('. $term->count .')';
+					if ( 'yes' === $settings['element_show_brackets'] ) {
+						echo '('. $term->count .')';
+					} else {
+						echo $term->count;
+					}
 				echo '</a>';
+
+				
+				// Text: Before
+				if ( 'after' === $settings['element_extra_text_pos'] ) {
+					echo '<span class="wpr-grid-extra-text-left">'. esc_html( $settings['element_extra_text'] ) .'</span>';
+				}
 			echo '</div>';
 		echo '</div>';
 
 	}
 
 	// Render Post Excerpt
-	public function render_product_description( $settings, $class, $term ) {
+	public function render_category_description( $settings, $class, $term ) {
 		if ( '' === $term->description  ) {
 			return;
 		}
@@ -3190,19 +3209,19 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 
 		switch ( $type ) {
 			case 'title':
-				$this->render_product_title( $settings, $class, $term );
+				$this->render_category_title( $settings, $class, $term );
 				break;
 
 			case 'separator':
-				$this->render_product_element_separator( $settings, $class );
+				$this->render_category_element_separator( $settings, $class );
 				break;
 
 			case 'count':
-				$this->render_product_count( $settings, $class, $term );
+				$this->render_category_count( $settings, $class, $term );
 				break;
 
 			case 'description':
-				$this->render_product_description( $settings, $class, $term );
+				$this->render_category_description( $settings, $class, $term );
 				break;
 		}
 	}
@@ -3281,7 +3300,7 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 	}
 
 	// Render Post Thumbnail
-	public function render_product_thumbnail( $settings, $id ) {
+	public function render_category_thumbnail( $settings, $id ) {
 		$src = get_term_meta($id, 'thumbnail_id', true);
 		$src = Group_Control_Image_Size::get_attachment_image_src( $src, 'layout_image_crop', $settings );
 		$alt = '' === wp_get_attachment_caption( $id ) ? get_the_title() : wp_get_attachment_caption( $id );
@@ -3393,7 +3412,7 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 			// Media
 			echo '<div class="wpr-grid-media-wrap'. esc_attr($this->get_image_effect_class( $settings )) .' " data-overlay-link="'. esc_attr( $settings['overlay_post_link'] ) .'">';
 				// Post Thumbnail
-				$this->render_product_thumbnail( $settings, $term->term_id );
+				$this->render_category_thumbnail( $settings, $term->term_id );
 
 				// Media Hover
 				echo '<div class="wpr-grid-media-hover wpr-animation-wrap">';

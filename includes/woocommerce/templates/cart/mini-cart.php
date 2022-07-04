@@ -19,10 +19,12 @@
 
 defined( 'ABSPATH' ) || exit;
 
-do_action( 'woocommerce_before_mini_cart' ); ?>
+do_action( 'woocommerce_before_mini_cart' );
+?>
+
 	
 <div class="wpr-close-cart">
-	<?php if ( isset($args['close_cart_heading'] ) && '' !== $args['close_cart_heading'] ) : ?>
+	<?php if ( 'yes' === $args['show_close_cart_heading'] && isset($args['close_cart_heading'] ) && '' !== $args['close_cart_heading'] ) : ?>
 		<h2><?php echo wp_kses_post($args['close_cart_heading']) ?></h2>
 	<?php endif ; ?>
 	<span></span>

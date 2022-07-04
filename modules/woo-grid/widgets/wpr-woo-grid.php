@@ -250,7 +250,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'price' => esc_html__( 'Price', 'wpr-addons' ),
 			'rating' => esc_html__( 'Rating', 'wpr-addons' ),
 			'add-to-cart' => esc_html__( 'Add to Cart', 'wpr-addons' ),
-			'added-to-cart-popup' => esc_html__( 'Added to Cart Popup', 'wpr-addons' ),
 			'lightbox' => esc_html__( 'Lightbox', 'wpr-addons' ),
 			'separator' => esc_html__( 'Separator', 'wpr-addons' ),
 			'pro-lk' => esc_html__( 'Likes (Pro)', 'wpr-addons' ),
@@ -1598,6 +1597,54 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'separator' => 'after',
 				'condition' => [
 					'element_select' => 'add-to-cart',
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'element_show_added_tc_popup',
+			[
+				'label' => esc_html__( 'Added To Cart Popup', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'condition' => [
+					'element_select' => 'add-to-cart',
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'element_added_to_cart_fade_out_in',
+			[
+				'label' => esc_html__( 'Fade Out In', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 5,
+				'min' => 0,
+				'max' => 15,
+				'condition' => [
+					'element_select' => 'add-to-cart',
+					'element_show_added_tc_popup' => 'yes'
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'element_added_to_cart_animation_duration',
+			[
+				'label' => esc_html__( 'Animation Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 1,
+				'min' => 0,
+				'max' => 15,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-added-to-cart-popup' => 'animation-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-added-to-cart-popup-hide' => 'animation-duration: {{VALUE}}s'
+				],
+				'condition' => [
+					'element_select' => 'add-to-cart',
+					'element_show_added_tc_popup' => 'yes'
 				]
 			]
 		);
@@ -4943,6 +4990,368 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$this->end_controls_section();
 
+		// Styles ====================
+		// Section: Added to Cart Popup ------
+		$this->start_controls_section(
+			'section_style_added_to_cart_popup',
+			[
+				'label' => esc_html__( 'Added to Cart Popup', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'show_label' => false,
+			]
+		);
+
+		// Added To Cart Text
+		$this->add_control(
+			'added_to_cart_popup_wrapper',
+			[
+				'label' => esc_html__( 'Wrapper', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'added_to_cart_popup_bg_color',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-added-to-cart-popup' => 'background-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'added_to_cart_popup_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-added-to-cart-popup' => 'border-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'added_to_cart_popup',
+				'selector' => '{{WRAPPER}} .wpr-added-to-cart-popup',
+			]
+		);
+
+		$this->add_responsive_control(
+			'added_to_cart_popup_position',
+			[
+				'label' => esc_html__( 'Position', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'default' => 'top',
+				'options' => [
+					'top' => [
+						'title' => esc_html__( 'Top', 'wpr-addons' ),
+						'icon' => 'eicon-v-align-top',
+					],
+					'bottom' => [
+						'title' => esc_html__( 'Bottom', 'wpr-addons' ),
+						'icon' => 'eicon-v-align-bottom',
+					]
+				],
+				'prefix_class' => 'wpr-atc-popup-',
+			]
+		);
+
+		// Added To Cart Text
+		$this->add_control(
+			'added_to_cart_popup_title_heading',
+			[
+				'label' => esc_html__( 'Text', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'added_to_cart_popup_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-added-tc-title p:first-child' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'added_to_cart_popup_texts',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-added-tc-title p:first-child'
+			]
+		);
+
+		$this->add_control(
+			'added_to_cart_text_alignment',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'left'    => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					]
+				],
+				'default' => 'left',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-added-tc-title p:first-child' => 'text-align: {{VALUE}};',
+				]
+			]
+		);
+
+		// Results
+		$this->add_control(
+			'added_to_cart_popup_link_heading',
+			[
+				'label' => esc_html__( 'Link', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'added_to_cart_popup_link_hover_color',
+			[
+				'label'  => esc_html__( 'Link Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#222222',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-added-tc-title a' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'added_to_cart_popup_link_color',
+			[
+				'label'  => esc_html__( 'Link Hover Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-added-tc-title a:hover' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'added_to_cart_popup_link',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-added-tc-title a'
+			]
+		);
+
+		$this->add_control(
+			'added_to_cart_link_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.1,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-added-tc-title a' => 'transition-duration: {{VALUE}}s',
+				]
+			]
+		);
+
+		$this->add_control(
+			'added_to_cart_link_alignment',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'left'    => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					]
+				],
+				'default' => 'left',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-added-tc-title p:last-child' => 'text-align: {{VALUE}};',
+				]
+			]
+		);
+
+		$this->add_control(
+			'added_to_cart_popup_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-added-to-cart-popup' => 'border-style: {{VALUE}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'added_to_cart_popup_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-added-to-cart-popup' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'added_to_cart_popup_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'added_to_cart_popup_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-added-to-cart-popup' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					// '{{WRAPPER}} .wpr-added-tc-popup-img' => 'border-top-left-radius: {{TOP}}{{UNIT}}; border-bottom-left-radius: {{LEFT}}{{UNIT}};',
+					// '{{WRAPPER}} .wpr-added-tc-popup-img img' => 'border-top-left-radius: {{TOP}}{{UNIT}}; border-bottom-left-radius: {{LEFT}}{{UNIT}}',
+					// '{{WRAPPER}} .wpr-added-tc-title' => 'border-top-right-radius: {{RIGHT}}{{UNIT}}; border-bottom-right-radius: {{BOTTOM}}{{UNIT}}'
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'added_to_cart_popup_text_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-added-tc-title' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'added_to_cart_popup_margin',
+			[
+				'label' => esc_html__( 'Margin', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-added-to-cart-popup' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'added_to_cart_popup_width',
+			[
+				'label' => esc_html__( 'Popup Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 1500,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 500,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-added-to-cart-popup' => 'width: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_responsive_control(
+			'added_to_cart_popup_img_size',
+			[
+				'label' => esc_html__( 'Img Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['%'],
+				'range' => [
+					'%' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],				
+				'default' => [
+					'unit' => '%',
+					'size' => 20,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-added-to-cart-popup .wpr-added-tc-popup-img' => 'width: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->end_controls_section();
+
 		// Styles =======================
 		// Section: Likes ---------------
 		$this->add_section_style_likes();
@@ -7625,6 +8034,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'aria-label="'. esc_attr($product->add_to_cart_description()) .'"',
 			'data-product_id="'. esc_attr($product->get_id()) .'"',
 			'data-product_sku="'. esc_attr($product->get_sku()) .'"',
+			'data-atc-popup="'. $settings['element_show_added_tc_popup']  .'"',
+			'data-atc-fade-out-in="'. $settings['element_added_to_cart_fade_out_in']  .'"',
+			'data-atc-animation-time="'. $settings['element_added_to_cart_animation_duration']  .'"'
 		];
 
 		$button_HTML = '';
@@ -7669,11 +8081,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 			echo '</div>';
 		echo '</div>';
 	}
-
-	// Render Added To Cart Popup
-	public function render_product_added_to_cart_popup( $settings, $class ) {
-	}
-
 	// Render Rating
 	public function render_product_rating( $settings, $class ) {
 
@@ -7805,10 +8212,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 			case 'add-to-cart':
 				$this->render_product_add_to_cart( $settings, $class );
-				break;
-
-			case 'added-to-cart-popup':
-				$this->render_product_added_to_cart_popup( $settings, $class );
 				break;
 		}
 

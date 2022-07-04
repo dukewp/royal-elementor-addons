@@ -61,6 +61,15 @@ class Wpr_Product_AddToCart extends Widget_Base {
 		);
 
 		$this->add_control(
+			'add_to_cart_manage_stock',
+			[
+				'label' => esc_html__( 'Manage Stock', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'prefix_class' => 'wpr-adc-manage-stock-'
+			]
+		);
+
+		$this->add_control(
 			'add_to_cart_layout',
 			[
 				'label' => esc_html__( 'Select Layout', 'wpr-addons' ),
