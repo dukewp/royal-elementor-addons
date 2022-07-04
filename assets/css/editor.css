@@ -630,7 +630,8 @@
 .elementor-control.elementor-control-paralax_repeater_pro_notice,
 .elementor-control.elementor-control-opnepage_pro_notice,
 .elementor-control.elementor-control-timeline_repeater_pro_notice,
-.elementor-control.elementor-control-limit_grid_items_pro_notice {
+.elementor-control.elementor-control-limit_grid_items_pro_notice,
+.elementor-control.elementor-control-mini_cart_style_pro_notice {
 	padding-bottom: 0 !important;
 }
 
@@ -666,7 +667,8 @@
 .elementor-control-sharing_columns_pro_notice .wpr-pro-notice,
 .elementor-control-popup_trigger_pro_notice .wpr-pro-notice,
 .elementor-control-popup_show_again_delay_pro_notice .wpr-pro-notice,
-.elementor-control-group_popup_settings_pro_notice .wpr-pro-notice {
+.elementor-control-group_popup_settings_pro_notice .wpr-pro-notice,
+.elementor-control-mini_cart_style_pro_notice .wpr-pro-notice {
 	border-bottom: none !important;
 }
 
