@@ -66,11 +66,11 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'options' => [
 					'dynamic' => esc_html__( 'Dynamic', 'wpr-addons' ),
 					'manual' => esc_html__( 'Manual', 'wpr-addons' ),
-					'featured' => esc_html__( 'Featured', 'wpr-addons' ),
-					'onsale' => esc_html__( 'On Sale', 'wpr-addons' ),
-					'upsell' => esc_html__( 'Upsell', 'wpr-addons' ),
-					'cross-sell' => esc_html__( 'Cross-sell', 'wpr-addons' ),
 					'current' => esc_html__( 'Current Query', 'wpr-addons' ),
+					'pro-fr' => esc_html__( 'Featured (Pro)', 'wpr-addons' ),
+					'pro-os' => esc_html__( 'On Sale (Pro)', 'wpr-addons' ),
+					'pro-us' => esc_html__( 'Upsell (Pro)', 'wpr-addons' ),
+					'pro-cs' => esc_html__( 'Cross-sell (Pro)', 'wpr-addons' ),
 				],
 			]
 		);
@@ -529,7 +529,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$this->add_control_query_selection();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'query_selection', ['pro-cr'] );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'query_selection', ['pro-fr','pro-os','pro-us','pro-cs'] );
 
 		$this->add_control_query_orderby();
 
@@ -1106,6 +1106,55 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'layout_slider_amount' => 1,
 					'layout_select' => 'slider',
 				],
+			]
+		);
+
+		$this->end_controls_section(); // End Controls Section
+
+		// Tab: Content ==============
+		// Section: Upsell / Cross-sell Title
+		$this->start_controls_section(
+			'section_grid_linked_products',
+			[
+				'label' => esc_html__( 'Upsell / Cross-sell Title', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+				'condition' => [
+					'query_selection' => ['upsell', 'cross-sell'],
+					'layout_select!' => 'slider'
+				]
+			]
+		);
+
+		$this->add_control(
+			'grid_linked_products_heading',
+			[
+				'label' => esc_html__( 'Heading', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => 'You may be interested in...',
+				'condition' => [
+					'query_selection' => ['upsell', 'cross-sell'],
+				]
+			]
+		);
+
+		$this->add_control(
+			'grid_linked_products_heading_tag',
+			[
+				'label' => esc_html__( 'Title HTML Tag', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => 'H1',
+					'h2' => 'H2',
+					'h3' => 'H3',
+					'h4' => 'H4',
+					'h5' => 'H5',
+					'h6' => 'H6',
+				],
+				'default' => 'h2',
+				'condition' => [
+					'query_selection' => ['upsell'],
+					'upsell_heading!' => ''
+				]
 			]
 		);
 
@@ -2239,89 +2288,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
-		// Tab: Content ==============
-		// Section: Linked Products ----------
-		$this->start_controls_section(
-			'section_grid_linked_products',
-			[
-				'label' => esc_html__( 'Linked Products', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_CONTENT,
-				'condition' => [
-					'query_selection' => ['upsell', 'cross-sell'],
-					'layout_select!' => 'slider'
-				]
-			]
-		);
-
-		$this->add_control(
-			'cross_sell_heading',
-			[
-				'label' => esc_html__( 'Heading', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => 'You may be interested in...',
-				'condition' => [
-					'query_selection' => [ 'cross-sell'],
-				]
-			]
-		);
-
-		$this->add_control(
-			'upsell_heading',
-			[
-				'label' => esc_html__( 'Heading', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => 'You may also like...',
-				'condition' => [
-					'query_selection' => [ 'upsell'],
-				]
-			]
-		);
-
-		$this->add_control(
-			'upsell_heading_tag',
-			[
-				'label' => esc_html__( 'Title HTML Tag', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'h1' => 'H1',
-					'h2' => 'H2',
-					'h3' => 'H3',
-					'h4' => 'H4',
-					'h5' => 'H5',
-					'h6' => 'H6',
-				],
-				'default' => 'h2',
-				'condition' => [
-					'query_selection' => [ 'upsell'],
-					'upsell_heading!' => ''
-				]
-			]
-		);
-
-		$this->add_control(
-			'cross_sell_heading_tag',
-			[
-				'label' => esc_html__( 'Title HTML Tag', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'h1' => 'H1',
-					'h2' => 'H2',
-					'h3' => 'H3',
-					'h4' => 'H4',
-					'h5' => 'H5',
-					'h6' => 'H6',
-				],
-				'default' => 'h2',
-				'condition' => [
-					'query_selection' => [ 'cross-sell'],
-					'cross_sell_heading!' => ''
-				]
-			]
-		);
-
 		$this->add_section_grid_sorting();
-
-		$this->end_controls_section(); // End Controls Section
 
 		// Tab: Content ==============
 		// Section: Filters ----------
@@ -6006,11 +5973,11 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$this->end_controls_section(); // End Controls Section
 
 		// Styles ====================
-		// Section: Linked Products ------------
+		// Section: Upsell / Cross-sell Title
 		$this->start_controls_section(
 			'section_style_linked_products',
 			[
-				'label' => esc_html__( 'Linked Products', 'wpr-addons' ),
+				'label' => esc_html__( 'Upsell / Cross-sell Title', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 				'condition' => [
@@ -6026,8 +5993,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-upsell-heading' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-cross-sell-heading' => 'color: {{VALUE}}'
+					'{{WRAPPER}} .wpr-grid-linked-products-heading' => 'color: {{VALUE}}',
 				]
 			]
 		);
@@ -6037,7 +6003,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'name'     => 'linked_products',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-upsell-heading *, {{WRAPPER}} .wpr-cross-sell-heading *'
+				'selector' => '{{WRAPPER}} .wpr-grid-linked-products-heading *'
 			]
 		);
 
@@ -6054,8 +6020,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'left' => 15,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-upsell-heading' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-cross-sell-heading' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+					'{{WRAPPER}} .wpr-grid-linked-products-heading' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				]
 			]
 		);
@@ -6077,8 +6042,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'size' => 25,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-upsell-heading' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-cross-sell-heading' => 'margin-bottom: {{SIZE}}{{UNIT}};'
+					'{{WRAPPER}} .wpr-grid-linked-products-heading' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				]
 				// 'separator' => 'before'
 			]
@@ -6106,8 +6070,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'default' => 'left',
 				'separator' => 'before',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-upsell-heading *' => 'text-align: {{VALUE}};',
-					'{{WRAPPER}} .wpr-cross-sell-heading *' => 'text-align: {{VALUE}};'
+					'{{WRAPPER}} .wpr-grid-linked-products-heading *' => 'text-align: {{VALUE}};',
 				]
 			]
 		);
@@ -8435,6 +8398,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 			echo '</div>';
 		}
 
+		if ( ('upsell' === $settings['query_selection'] && '' !== $settings['upsell_heading']) || ('cross-sell' === $settings['query_selection'] && '' !== $settings['cross_sell_heading']) ) {
+			echo '<div class="wpr-grid-linked-products-heading">';
+				echo '<'. $settings['grid_linked_products_heading_tag'] .'>'. esc_html( $settings['grid_linked_products_heading'] ) .'</'. $settings['grid_linked_products_heading_tag'] .'>';
+			echo '</div>';
+		}
+		
 		// Grid Settings
 		if ( 'slider' !== $settings['layout_select'] ) {
 			
