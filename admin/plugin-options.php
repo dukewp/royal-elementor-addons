@@ -230,33 +230,63 @@ function wpr_addons_settings_page() {
         <div class="wpr-settings-group">
             <h3 class="wpr-settings-group-title"><?php esc_html_e( 'WooCommerce', 'wpr-addons' ); ?></h3>
 
-            <div class="wpr-setting">
-                <h4>
-                    <span><?php esc_html_e( 'Shop Page: Products Per Page', 'wpr-addons' ); ?></span>
-                    <br>
-                </h4>
-
-                <input type="text" name="wpr_woo_shop_ppp" id="wpr_woo_shop_ppp" value="<?php echo esc_attr(get_option('wpr_woo_shop_ppp', 9)); ?>">
+            <?php if ( !wpr_fs()->can_use_premium_code() ) : ?>
+                <a href="#" class="wpr-settings-pro-overlay" target="_blank">
+                    <span class="dashicons dashicons-lock"></span>
+                    <span><?php esc_html_e( 'Upgrade to Pro', 'wpr-addons' ); ?></span>
+                </a>
+                <div class="wpr-setting">
+                    <h4>
+                        <span><?php esc_html_e( 'Shop Page: Products Per Page', 'wpr-addons' ); ?></span>
+                        <br>
+                    </h4>
+                    <input type="text" value="9">
+                </div>
+                <div class="wpr-setting">
+                    <h4>
+                        <span><?php esc_html_e( 'Product Category: Products Per Page', 'wpr-addons' ); ?></span>
+                        <br>
+                    </h4>
+                    <input type="text" value="9">
+                </div>
+                <div class="wpr-setting">
+                    <h4>
+                        <span><?php esc_html_e( 'Product Tag: Products Per Page', 'wpr-addons' ); ?></span>
+                        <br>
+                    </h4>
+                    <input type="text" value="9">
+                </div>
             </div>
 
-            <div class="wpr-setting">
-                <h4>
-                    <span><?php esc_html_e( 'Product Category: Products Per Page', 'wpr-addons' ); ?></span>
-                    <br>
-                </h4>
+            <?php else: ?>
+                <div class="wpr-setting">
+                    <h4>
+                        <span><?php esc_html_e( 'Shop Page: Products Per Page', 'wpr-addons' ); ?></span>
+                        <br>
+                    </h4>
 
-                <input type="text" name="wpr_woo_shop_cat_ppp" id="wpr_woo_shop_cat_ppp" value="<?php echo esc_attr(get_option('wpr_woo_shop_cat_ppp', 9)); ?>">
+                    <input type="text" name="wpr_woo_shop_ppp" id="wpr_woo_shop_ppp" value="<?php echo esc_attr(get_option('wpr_woo_shop_ppp', 9)); ?>">
+                </div>
+
+                <div class="wpr-setting">
+                    <h4>
+                        <span><?php esc_html_e( 'Product Category: Products Per Page', 'wpr-addons' ); ?></span>
+                        <br>
+                    </h4>
+
+                    <input type="text" name="wpr_woo_shop_cat_ppp" id="wpr_woo_shop_cat_ppp" value="<?php echo esc_attr(get_option('wpr_woo_shop_cat_ppp', 9)); ?>">
+                </div>
+
+                <div class="wpr-setting">
+                    <h4>
+                        <span><?php esc_html_e( 'Product Tag: Products Per Page', 'wpr-addons' ); ?></span>
+                        <br>
+                    </h4>
+
+                    <input type="text" name="wpr_woo_shop_tag_ppp" id="wpr_woo_shop_tag_ppp" value="<?php echo esc_attr(get_option('wpr_woo_shop_tag_ppp', 9)); ?>">
+                </div>
             </div>
-
-            <div class="wpr-setting">
-                <h4>
-                    <span><?php esc_html_e( 'Product Tag: Products Per Page', 'wpr-addons' ); ?></span>
-                    <br>
-                </h4>
-
-                <input type="text" name="wpr_woo_shop_tag_ppp" id="wpr_woo_shop_tag_ppp" value="<?php echo esc_attr(get_option('wpr_woo_shop_tag_ppp', 9)); ?>">
-            </div>
-        </div>
+            <?php endif; ?>
 
         <div class="wpr-settings-group">
             <h3 class="wpr-settings-group-title"><?php esc_html_e( 'Integrations', 'wpr-addons' ); ?></h3>
