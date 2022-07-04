@@ -90,7 +90,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'none' => esc_html__( 'None', 'wpr-addons' ),
-					'price' => esc_html__( 'Total price', 'wpr-addons' ),
+					'price' => esc_html__( 'Total Price', 'wpr-addons' ),
 					'title' => esc_html__( 'Extra Text', 'wpr-addons' )
 				],
 				'default' => 'price',
