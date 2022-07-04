@@ -375,7 +375,7 @@ class Wpr_Flip_Box extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 20,
-						'max' => 500,
+						'max' => 1000,
 					],
 					'vh' => [
 						'min' => 20,
