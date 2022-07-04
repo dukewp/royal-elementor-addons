@@ -8388,16 +8388,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$post_index = 0;
 
-		if ( 'upsell' === $settings['query_selection'] && '' !== $settings['upsell_heading'] ) {
-			echo '<div class="wpr-upsell-heading">';
-				echo '<'. $settings['upsell_heading_tag'] .'>'. esc_html( $settings['upsell_heading'] ) .'</'. $settings['upsell_heading_tag'] .'>';
-			echo '</div>';
-		} elseif ('cross-sell' === $settings['query_selection'] && '' !== $settings['cross_sell_heading'] ) {
-			echo '<div class="wpr-cross-sell-heading">';
-				echo '<'. $settings['cross_sell_heading_tag'] .'>'. esc_html( $settings['cross_sell_heading'] ) .'</'. $settings['cross_sell_heading_tag'] .'>';
-			echo '</div>';
-		}
-
 		if ( ('upsell' === $settings['query_selection'] && '' !== $settings['upsell_heading']) || ('cross-sell' === $settings['query_selection'] && '' !== $settings['cross_sell_heading']) ) {
 			echo '<div class="wpr-grid-linked-products-heading">';
 				echo '<'. $settings['grid_linked_products_heading_tag'] .'>'. esc_html( $settings['grid_linked_products_heading'] ) .'</'. $settings['grid_linked_products_heading_tag'] .'>';
