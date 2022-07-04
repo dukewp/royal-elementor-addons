@@ -8030,7 +8030,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$attributes = [
 			'rel="nofollow"',
-			'class="'. esc_attr($button_class) .' wpr-button-effect '. esc_attr($add_to_cart_animation) .'"',
+			'class="'. esc_attr($button_class) .' wpr-button-effect '. esc_attr($add_to_cart_animation) .' '. (!$product->is_in_stock() && 'simple' === $product->get_type() ? 'wpr-atc-not-clickable' : '').'"',
 			'aria-label="'. esc_attr($product->add_to_cart_description()) .'"',
 			'data-product_id="'. esc_attr($product->get_id()) .'"',
 			'data-product_sku="'. esc_attr($product->get_sku()) .'"',
@@ -8072,16 +8072,14 @@ class Wpr_Woo_Grid extends Widget_Base {
 			$button_HTML .= '<i class="wpr-grid-extra-icon-right '. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
 		}
 
-		if ( $product->is_in_stock() ) {
-			echo '<div class="'. esc_attr($class) .'">';
-				echo '<div class="inner-block">';
-	
-				// Button HTML
-				echo '<a '. implode( ' ', $attributes ) .'><span>'. $button_HTML .'</span></a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	
-				echo '</div>';
+		echo '<div class="'. esc_attr($class) .'">';
+			echo '<div class="inner-block">';
+
+			// Button HTML
+			echo '<a '. implode( ' ', $attributes ) .'><span>'. $button_HTML .'</span></a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
 			echo '</div>';
-		}
+		echo '</div>';
 	}
 	// Render Rating
 	public function render_product_rating( $settings, $class ) {
