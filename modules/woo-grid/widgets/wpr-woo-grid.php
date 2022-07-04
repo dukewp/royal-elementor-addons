@@ -8391,11 +8391,15 @@ class Wpr_Woo_Grid extends Widget_Base {
 		echo '<div class="wpr-grid-sorting-inner-wrap">';
 
 			echo '<div class="wpr-products-result-count">';
-				if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) { 
-					echo '<p class="woocommerce-result-count">Showing x-y of z results</p>';
-				} else {
-					echo woocommerce_result_count();
-				}
+				if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) { ?>
+					<div class="wpr-products-result-count">
+						<p class="woocommerce-result-count"></p>
+					</div>
+				<?php } else { ?>
+					<div class="wpr-products-result-count">
+						<p class="woocommerce-result-count"></p>
+					</div>
+				<?php }
 			echo '</div>';
 			
 			if ( 'below' === $settings['sort_select_position'] ) {
@@ -8994,10 +8998,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 		}
 
 		// Grid Wrap
-		echo '<section class="wpr-grid elementor-clearfix" '. $render_attribute .'>';
+		echo '<section class="wpr-grid elementor-clearfix" '. $render_attribute .' data-found-posts = '. $posts->found_posts .'>';
+
 
 		while ( $posts->have_posts() ) : $posts->the_post();
-
 			// $post_index++;
 			// if ( Utilities::is_new_free_user() && $post_index > 12 ) {
 			// 	return;
