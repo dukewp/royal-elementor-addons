@@ -244,6 +244,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'price' => esc_html__( 'Price', 'wpr-addons' ),
 			'rating' => esc_html__( 'Rating', 'wpr-addons' ),
 			'add-to-cart' => esc_html__( 'Add to Cart', 'wpr-addons' ),
+			'added-to-cart-popup' => esc_html__( 'Added to Cart Popup', 'wpr-addons' ),
 			'lightbox' => esc_html__( 'Lightbox', 'wpr-addons' ),
 			'separator' => esc_html__( 'Separator', 'wpr-addons' ),
 			'pro-lk' => esc_html__( 'Likes (Pro)', 'wpr-addons' ),
@@ -8134,6 +8135,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 		echo '</div>';
 	}
 
+	// Render Added To Cart Popup
+	public function render_product_added_to_cart_popup( $settings, $class ) {
+	}
+
 	// Render Rating
 	public function render_product_rating( $settings, $class ) {
 
@@ -8265,6 +8270,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 			case 'add-to-cart':
 				$this->render_product_add_to_cart( $settings, $class );
+				break;
+
+			case 'added-to-cart-popup':
+				$this->render_product_added_to_cart_popup( $settings, $class );
 				break;
 		}
 
