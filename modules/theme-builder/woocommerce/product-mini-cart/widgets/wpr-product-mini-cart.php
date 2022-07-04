@@ -205,9 +205,6 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
-				'dynamic' => [
-					'active' => true,
-				],
 				'placeholder' => esc_html__( 'Cart', 'wpr-addons' ),
 				'default' => esc_html__( 'Cart', 'wpr-addons' ),
 				'condition' => [
