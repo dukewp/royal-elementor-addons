@@ -3719,6 +3719,13 @@ dl.variation dd {
     margin: 0 !important;
 }
 
+/* Not Clickable */
+
+.wpr-atc-not-clickable {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
 /* Added To Cart Popup */
 
 @keyframes added-tc-popup-animation {
