@@ -287,7 +287,7 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'none' => esc_html__( 'None', 'wpr-addons' ),
-					'pro-zi' => esc_html__( 'Zoom In (Pro)', 'wpr-addons' ),
+					'zoom-in' => esc_html__( 'Zoom In (Pro)', 'wpr-addons' ),
 					'pro-zo' => esc_html__( 'Zoom Out (Pro)', 'wpr-addons' ),
 					'grayscale-in' => esc_html__( 'Grayscale In', 'wpr-addons' ),
 					'pro-go' => esc_html__( 'Grayscale Out (Pro)', 'wpr-addons' ),
@@ -295,7 +295,7 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 					'pro-bo' => esc_html__( 'Blur Out (Pro)', 'wpr-addons' ),
 					'slide' => esc_html__( 'Slide', 'wpr-addons' ),
 				],
-				'default' => 'none',
+				'default' => 'zoom-in',
 			]
 		);
 	}
@@ -349,6 +349,9 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 				'label' => esc_html__( 'Background', 'wpr-addons' ),
 				'types' => [ 'classic', 'gradient' ],
 				'fields_options' => [
+					'background' => [
+						'default' => 'classic',
+					],
 					'color' => [
 						'default' => 'rgba(0, 0, 0, 0.25)',
 					],
@@ -1230,7 +1233,7 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 					'h5' => 'H5',
 					'h6' => 'H6',
 				],
-				'default' => 'h2',
+				'default' => 'h3',
 				'condition' => [
 					'element_select' => 'title',
 				]
@@ -1532,19 +1535,22 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 				'default' => [
 					[
 						'element_select' => 'title',
-						'element_display' => 'inline'
+						'element_display' => 'inline',
+						'element_location' => 'over',
+						'element_align_hr' => 'center',
+						'element_align_vr' => 'middle'
 					],
 					[
 						'element_select' => 'count',
-						'element_display' => 'inline',
-						'element_align_hr' => 'right'
-					],
-					[
-						'element_select' => 'separator',
+						'element_display' => 'block',
+						'element_location' => 'over',
+						'element_align_hr' => 'center',
+						'element_align_vr' => 'middle',
+						'element_animation' => 'slide-bottom' 
 					],
 					[
 						'element_select' => 'description',
-					],
+					]
 				],
 				'title_field' => '{{{ element_select.charAt(0).toUpperCase() + element_select.slice(1) }}}',
 			]
@@ -2130,7 +2136,7 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-item-title .inner-block a' => 'color: {{VALUE}}',
 				],
@@ -2200,7 +2206,7 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#54595f',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-item-title .inner-block a:hover' => 'color: {{VALUE}}',
 				],
@@ -2265,7 +2271,21 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 			[
 				'name'     => 'title_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-grid-item-title'
+				'selector' => '{{WRAPPER}} .wpr-grid-item-title',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_weight' => [
+						'default' => '700',
+					],
+					'font_size'   => [
+						'default' => [
+							'size' => '',
+							'unit' => 'px',
+						]
+					]
+				]
 			]
 		);
 
@@ -2418,7 +2438,7 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#666666',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-item-description .inner-block' => 'color: {{VALUE}}',
 				],
@@ -2454,7 +2474,18 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 			[
 				'name'     => 'description_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-grid-item-description'
+				'selector' => '{{WRAPPER}} .wpr-grid-item-description',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size'   => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px',
+						]
+					]
+				]
 			]
 		);
 
@@ -2591,7 +2622,7 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605BE5',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-item-count .inner-block a' => 'color: {{VALUE}}',
 				],
@@ -2603,7 +2634,7 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
+				'default' => '#FFFFFF00',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-item-count .inner-block a' => 'background-color: {{VALUE}}',
 				],
@@ -2624,7 +2655,7 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#54595f',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-item-count .inner-block a:hover' => 'color: {{VALUE}}',
 				],
@@ -2636,7 +2667,7 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
+				'default' => '#FFFFFF00',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-item-count .inner-block a:hover' => 'background-color: {{VALUE}}',
 				],
@@ -2688,7 +2719,18 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 			[
 				'name'     => 'count_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-grid-item-count a'
+				'selector' => '{{WRAPPER}} .wpr-grid-item-count a',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size'   => [
+						'default' => [
+							'size' => '15',
+							'unit' => 'px',
+						]
+					]
+				]
 			]
 		);
 
@@ -2743,10 +2785,10 @@ class Wpr_Woo_Category_Grid extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
+					'top' => 2,
+					'right' => 2,
+					'bottom' => 2,
+					'left' => 2,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-item-count .inner-block a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
