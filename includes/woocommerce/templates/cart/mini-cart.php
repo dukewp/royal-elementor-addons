@@ -24,7 +24,7 @@ do_action( 'woocommerce_before_mini_cart' );
 
 	
 <div class="wpr-close-cart">
-	<?php if ( 'yes' === $args['show_close_cart_heading'] && isset($args['close_cart_heading'] ) && '' !== $args['close_cart_heading'] ) : ?>
+	<?php if ( 'yes' === $args['show_close_cart_heading'] && isset($args['close_cart_heading'] ) && '' !== $args['close_cart_heading'] ) :  var_dump('condition works');?>
 		<h2><?php echo wp_kses_post($args['close_cart_heading']) ?></h2>
 	<?php endif ; ?>
 	<span></span>
@@ -32,7 +32,7 @@ do_action( 'woocommerce_before_mini_cart' );
 
 <?php if ( ! WC()->cart->is_empty() ) : ?>
 	
-	<ul class="wpr-woocommerce-mini-cart woocommerce-mini-cart cart_list product_list_widget <?php echo esc_attr( $args['list_class'] ); ?>">
+	<ul class="wpr-woo-mini-cart woocommerce-mini-cart cart_list product_list_widget <?php echo esc_attr( $args['list_class'] ); ?>">
 		<?php
 		do_action( 'woocommerce_before_mini_cart_contents' );
 
