@@ -41,6 +41,16 @@
 	position: relative !important;
 }
 
+.elementor-element--promotion .wpr-icon:after {
+	top: 22px;
+	right: -1px;
+	opacity: 0.7;
+}
+
+#elementor-element--promotion__dialog .dialog-button {
+	text-align: center;
+}
+
 .elementor-control-type-section[class*="elementor-control-wpr_section_"]:after {
     content: 'R';
     display: block;

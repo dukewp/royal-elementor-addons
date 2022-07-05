@@ -652,7 +652,6 @@ class Plugin {
 			);
 		}
 		
-
 		// Add Woocommerce Builder category in panel
 		if ( Utilities::is_theme_builder_template() ) {
 			\Elementor\Plugin::instance()->elements_manager->add_category(
@@ -663,7 +662,43 @@ class Plugin {
 				]
 			);
 		}
+		
+		// Add Premium Widtgets category in panel
+		\Elementor\Plugin::instance()->elements_manager->add_category(
+			'wpr-premium-widgets',
+			[
+				'title' => sprintf(esc_html__( '%s Premium Widgets', 'wpr-addons' ), Utilities::get_plugin_name()),
+				'icon' => 'font',
+			]
+		);
 	}
+
+    public function promote_premium_widgets($config) {
+		if ( ! wpr_fs()->can_use_premium_code() ) {
+			$config['promotionWidgets'] = [
+				[
+					'name' => 'wpr-woo-category-grid',
+					'title' => __('Woo Category Grid', 'wpr-addons'),
+					'icon' => 'wpr-icon eicon-gallery-grid',
+					'categories' => '["wpr-premium-widgets"]',
+				],
+				[
+					'name' => 'wpr-my-account',
+					'title' => __('My Account', 'wpr-addons'),
+					'icon' => 'wpr-icon eicon-my-account',
+					'categories' => '["wpr-premium-widgets"]',
+				],
+				[
+					'name' => 'wpr-product-filters',
+					'title' => __('Product Filters', 'wpr-addons'),
+					'icon' => 'wpr-icon eicon-filter',
+					'categories' => '["wpr-premium-widgets"]',
+				],
+			];
+		}
+
+        return $config;
+    }
 
 	protected function add_actions() {
 		// Register Widgets
@@ -700,6 +735,9 @@ class Plugin {
 
 		// Lightbox Styles
 		add_action( 'wp_head', [ $this, 'lightbox_styles' ], 988 );
+
+		// Promote Premium Widgets
+        add_filter('elementor/editor/localize_settings', [$this, 'promote_premium_widgets']);
 	}
 
 	/**

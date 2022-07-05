@@ -9,9 +9,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class Manager {
 
 	public function __construct() {
-    	$modules = Utilities::get_available_modules();
+    	$modules = Utilities::get_available_modules( Utilities::get_registered_modules() );
 
-    	if ( empty(Utilities::get_available_modules()) && false === get_option('wpr-element-toggle-all') ) {
+    	if ( empty(Utilities::get_available_modules( Utilities::get_registered_modules() )) && false === get_option('wpr-element-toggle-all') ) {
     		$modules = Utilities::get_registered_modules();
     	}
 
@@ -26,9 +26,15 @@ final class Manager {
 		}
 
 		// Theme Builder Modules
-		$theme_builder_modules = Utilities::get_theme_builder_modules();
+		$theme_builder_modules = Utilities::get_available_modules( Utilities::get_theme_builder_modules() );
 
-		foreach ( $theme_builder_modules as $module ) {
+    	if ( empty(Utilities::get_available_modules( Utilities::get_theme_builder_modules() )) && false === get_option('wpr-element-toggle-all') ) {
+    		$theme_builder_modules = Utilities::get_theme_builder_modules();
+    	}
+
+		foreach ( $theme_builder_modules as $data ) {
+			$module = $data[0];
+
 			$class_name = str_replace( '-', ' ', $module );
 			$class_name = str_replace( ' ', '', ucwords( $class_name ) );
 			$class_name = __NAMESPACE__ .'\\Modules\\ThemeBuilder\\'. $class_name .'\Module';
@@ -38,9 +44,16 @@ final class Manager {
 
 		// Woocommerce Builder Modules
 		if ( class_exists( 'woocommerce' ) ) {
-			$woocommerce_builder_modules = Utilities::get_woocommerce_builder_modules();
+			$woocommerce_builder_modules = Utilities::get_available_modules( Utilities::get_woocommerce_builder_modules() );
+	
+			if ( empty(Utilities::get_available_modules( Utilities::get_woocommerce_builder_modules() )) && false === get_option('wpr-element-toggle-all') ) {
+				$woocommerce_builder_modules = Utilities::get_woocommerce_builder_modules();
+			}
+	
 
-			foreach ( $woocommerce_builder_modules as $module ) {
+			foreach ( $woocommerce_builder_modules as $data ) {
+				$module = $data[0];
+
 				$class_name = str_replace( '-', ' ', $module );
 				$class_name = str_replace( ' ', '', ucwords( $class_name ) );
 				$class_name = __NAMESPACE__ . '\\Modules\\ThemeBuilder\\Woocommerce\\' . $class_name . '\Module';

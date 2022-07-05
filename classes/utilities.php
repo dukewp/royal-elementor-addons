@@ -66,15 +66,14 @@ class Utilities {
 	/**
 	** Get Enabled Modules
 	*/
-	public static function get_available_modules() {
-		$modules = Utilities::get_registered_modules();
-
+	public static function get_available_modules( $modules ) {
 		foreach ( $modules as $title => $data ) {
 			$slug = $data[0];
 			if ( 'on' !== get_option('wpr-element-'. $slug, 'on') ) {
 				unset($modules[$title]);
 			}
 		}
+
 		return $modules;
 	}
 
@@ -83,14 +82,14 @@ class Utilities {
 	*/
 	public static function get_theme_builder_modules() {
 		return [
-			'post-title',
-			'post-media',
-			'post-content',
-			'post-info',
-			'post-navigation',
-			'post-comments',
-			'author-box',
-			'archive-title',
+			'Post Title' => ['post-title', '', '', ''],
+			'Post Media' => ['post-media', '', '', ''],
+			'Post Content' => ['post-content', '', '', ''],
+			'Post Info' => ['post-info', '', '', ''],
+			'Post Navigation' => ['post-navigation', '', '', ''],
+			'Post Comments' => ['post-comments', '', '', ''],
+			'Author Box' => ['author-box', '', '', ''],
+			'Archive Title' => ['archive-title', '', '', ''],
 		];
 	}
 
@@ -99,26 +98,23 @@ class Utilities {
 	*/
 	public static function get_woocommerce_builder_modules() {
 		return [
-			'product-title',
-			'product-media',
-			'product-price',
-			'product-add-to-cart',
-			'product-Breadcrumbs',
-			'product-tabs',
-			'product-excerpt',
-			'product-rating',
-			'product-meta',
-			'product-sales-badge',
-			'product-stock',
-			'product-additional-information',
-			'product-notice',
-			'product-mini-cart',
-			'product-filters',
-			'products-result-count',
-			'page-cart',
-			'page-checkout',
-			'page-my-account',
-			'woo-category-grid'
+			'Product Title' => ['product-title', '', '', ''],
+			'Product Media' => ['product-media', '', '', ''],
+			'Product Price' => ['product-price', '', '', ''],
+			'Product Add to Cart' => ['product-add-to-cart', '', '', ''],
+			'Product Breadcrumbs' => ['product-Breadcrumbs', '', '', ''],
+			'Product Tabs' => ['product-tabs', '', '', ''],
+			'Product Excerpt' => ['product-excerpt', '', '', ''],
+			'Product Rating' => ['product-rating', '', '', ''],
+			'Product Meta' => ['product-meta', '', '', ''],
+			'Product Sales Badge' => ['product-sales-badge', '', '', ''],
+			'Product Stock' => ['product-stock', '', '', ''],
+			'Product Additional Info' => ['product-additional-information', '', '', ''],
+			'Product Notice' => ['product-notice', '', '', ''],
+			'Product Mini Cart' => ['product-mini-cart', '', '', ''],
+			'Product Results Count' => ['products-result-count', '', '', ''],
+			'Page: Cart' => ['page-cart', '', '', ''],
+			'Page: Checkout ' => ['page-checkout', '', '', ''],
 		];
 	}
 
