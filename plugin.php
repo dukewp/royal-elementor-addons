@@ -675,24 +675,26 @@ class Plugin {
 
     public function promote_premium_widgets($config) {
 		if ( ! wpr_fs()->can_use_premium_code() ) {
+			$category = Utilities::is_theme_builder_template() ? 'wpr-woocommerce-builder-widgets' : 'wpr-premium-widgets';
+			
 			$config['promotionWidgets'] = [
 				[
 					'name' => 'wpr-woo-category-grid',
 					'title' => __('Woo Category Grid', 'wpr-addons'),
 					'icon' => 'wpr-icon eicon-gallery-grid',
-					'categories' => '["wpr-premium-widgets"]',
+					'categories' => '["'. $category .'"]',
 				],
 				[
 					'name' => 'wpr-my-account',
 					'title' => __('My Account', 'wpr-addons'),
 					'icon' => 'wpr-icon eicon-my-account',
-					'categories' => '["wpr-premium-widgets"]',
+					'categories' => '["'. $category .'"]',
 				],
 				[
 					'name' => 'wpr-product-filters',
 					'title' => __('Product Filters', 'wpr-addons'),
 					'icon' => 'wpr-icon eicon-filter',
-					'categories' => '["wpr-premium-widgets"]',
+					'categories' => '["'. $category .'"]',
 				],
 			];
 		}
