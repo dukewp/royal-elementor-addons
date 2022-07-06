@@ -24,9 +24,7 @@ do_action( 'woocommerce_before_mini_cart' );
 
 	
 <div class="wpr-close-cart">
-	<?php if ( 'yes' === $args['show_close_cart_heading'] && isset($args['close_cart_heading'] ) && '' !== $args['close_cart_heading'] ) :  var_dump('condition works');?>
-		<h2><?php echo wp_kses_post($args['close_cart_heading']) ?></h2>
-	<?php endif ; ?>
+	<h2></h2>
 	<span></span>
 </div>
 

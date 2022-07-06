@@ -490,6 +490,7 @@ class Plugin {
 			'2.0',
 			true
 		);
+		// wp_register_script( 'wpr-perfect-scroll-js', WPR_ADDONS_URL .'assets/js/lib/perfect-scrollbar/perfect-scrollbar.min.js', [ 'jquery' ], '0.4.9' );
 	}
 
 	public function enqueue_panel_scripts() {
