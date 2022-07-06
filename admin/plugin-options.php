@@ -253,20 +253,21 @@ function wpr_addons_settings_page() {
     <div class="wpr-elements">
     <?php
         $woocommerce_builder_modules = Utilities::get_woocommerce_builder_modules();
-        $premium_woocommerce_builder_modules = [
-			'Product Filters Pro' => 'product-filters-pro',
-			'Page My Account Pro' => 'page-my-account-pro',
-			'Woo Category Grid Pro' => 'woo-category-grid-pro',
+        $premium_woo_modules = [
+			'Product Filters' => ['product-filters-pro', '#', '', 'pro'],
+			'Page My Account' => ['page-my-account-pro', '#', '', 'pro'],
+			'Woo Category Grid' => ['woo-category-grid-pro', '#', '', 'pro'],
         ];
-        $woocommerce_builder_modules + $premium_woocommerce_builder_modules;
 
-        foreach ( $woocommerce_builder_modules as $title => $data ) {
+        foreach ( array_merge($woocommerce_builder_modules, $premium_woo_modules) as $title => $data ) {
             $slug = $data[0];
             $url  = $data[1];
             $reff = '?ref=rea-plugin-backend-elements-widget-prev'. $data[2];
             $class = 'new' === $data[3] ? ' wpr-new-element' : '';
+            $class = 'pro' === $data[3] ? ' wpr-pro-element' : '';
 
             echo '<div class="wpr-element'. esc_attr($class) .'">';
+                echo '<a href="'. esc_url($url . $reff) .'" target="_blank"></a>';
                 echo '<div class="wpr-element-info">';
                     echo '<h3>'. esc_html($title) .'</h3>';
                     echo '<input type="checkbox" name="wpr-element-'. esc_attr($slug) .'" id="wpr-element-'. esc_attr($slug) .'" '. checked( get_option('wpr-element-'. $slug, 'on'), 'on', false ) .'>';

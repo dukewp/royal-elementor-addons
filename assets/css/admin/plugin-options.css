@@ -318,6 +318,31 @@
   letter-spacing: 1px;
 }
 
+.wpr-pro-element:before {
+  content: 'PRO';
+  position: absolute;
+  top: -10px;
+  left: 28px;
+  z-index: 10;
+  padding: 1px 7px;
+  color: #fff;
+  background-color: #f44;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.wpr-pro-element > a {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.1);
+}
 
 /*--------------------------------------------------------------
 == My Templates
