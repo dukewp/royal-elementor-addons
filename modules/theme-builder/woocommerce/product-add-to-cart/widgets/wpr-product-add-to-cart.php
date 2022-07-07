@@ -272,8 +272,8 @@ class Wpr_Product_AddToCart extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}}.wpr-add-to-cart-layout-row table' => 'margin-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-add-to-cart-layout-column table' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-add-to-cart-layout-row .wpr-product-add-to-cart form.cart .variations' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-add-to-cart-layout-column .wpr-product-add-to-cart form.cart .variations' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-add-to-cart-layout-row .wpr-product-add-to-cart form.cart .woocommerce-variation-add-to-cart' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-add-to-cart-layout-column .wpr-product-add-to-cart form.cart .woocommerce-variation-add-to-cart' => 'margin-top: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before'
 			]
@@ -1667,7 +1667,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 		$this->add_responsive_control(
 			'variation_select_width',
 			[
-				'label' => esc_html__( 'Options Table Distance', 'wpr-addons' ),
+				'label' => esc_html__( 'Select Width', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => ['px'],
 				'range' => [
