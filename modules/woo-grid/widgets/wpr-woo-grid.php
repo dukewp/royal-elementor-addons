@@ -8064,7 +8064,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			array_push( $attributes, 'href="'. esc_url( get_permalink() ) .'"' );
 		} else {
 			array_push( $attributes, 'href="'. esc_url( $product->get_product_url() ) .'"' );
-			$button_HTML .= get_post_meta( get_the_ID(), '_button_text', true );
+			$button_HTML .= get_post_meta( get_the_ID(), '_button_text', true ) ? get_post_meta( get_the_ID(), '_button_text', true ) : 'Buy Product';
 		}
 
 		// Icon: After
