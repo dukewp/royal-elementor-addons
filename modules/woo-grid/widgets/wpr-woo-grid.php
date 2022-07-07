@@ -1615,6 +1615,25 @@ class Wpr_Woo_Grid extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'element_added_to_cart_animation',
+			[
+				'label' => esc_html__( 'Entrance Animation', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'default' => 'Default',
+					'slide-left' => 'Slide Left',
+					'scale-up' => 'Scale',
+					'skew' => 'Skew',
+				],
+				'default' => 'default',
+				'condition' => [
+					'element_select' => 'add-to-cart',
+					'element_show_added_tc_popup' => 'yes'
+				]
+			]
+		);
+
+		$repeater->add_control(
 			'element_added_to_cart_fade_out_in',
 			[
 				'label' => esc_html__( 'Fade Out In', 'wpr-addons' ),
@@ -1634,7 +1653,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Animation Duration', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
-				'default' => 1,
+				'default' => 0.5,
 				'min' => 0,
 				'max' => 15,
 				'step' => 0.1,
@@ -5016,7 +5035,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605BE5',
+				'default' => '#FCFCFC',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-added-to-cart-popup' => 'background-color: {{VALUE}}',
 				]
@@ -5028,7 +5047,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605BE5',
+				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-added-to-cart-popup' => 'border-color: {{VALUE}}',
 				]
@@ -5048,7 +5067,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Position', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
-				'default' => 'top',
+				'default' => 'bottom',
 				'options' => [
 					'top' => [
 						'title' => esc_html__( 'Top', 'wpr-addons' ),
@@ -5078,7 +5097,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFFFFF',
+				'default' => '#222222',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-added-tc-title p:first-child' => 'color: {{VALUE}}',
 				],
@@ -5090,7 +5109,18 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'name'     => 'added_to_cart_popup_texts',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-added-tc-title p:first-child'
+				'selector' => '{{WRAPPER}} .wpr-added-tc-title p:first-child',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '',
+							'unit' => 'px'
+						]
+					]
+				]
 			]
 		);
 
@@ -5135,7 +5165,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Link Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#222222',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-added-tc-title a' => 'color: {{VALUE}}',
 				],
@@ -5147,7 +5177,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Link Hover Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFFFFF',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-added-tc-title a:hover' => 'color: {{VALUE}}',
 				],
@@ -5159,7 +5189,18 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'name'     => 'added_to_cart_popup_link',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-added-tc-title a'
+				'selector' => '{{WRAPPER}} .wpr-added-tc-title a',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px'
+						]
+					]
+				]
 			]
 		);
 
@@ -5217,7 +5258,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
 					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
 				],
-				'default' => 'none',
+				'default' => 'solid',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-added-to-cart-popup' => 'border-style: {{VALUE}};',
 				],
@@ -5274,10 +5315,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
+					'top' => 10,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-added-tc-title' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -5293,10 +5334,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
+					'top' => 10,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-added-to-cart-popup' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -5318,7 +5359,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				],				
 				'default' => [
 					'unit' => 'px',
-					'size' => 500,
+					'size' => 350,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-added-to-cart-popup' => 'width: {{SIZE}}{{UNIT}};',
@@ -5341,7 +5382,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				],				
 				'default' => [
 					'unit' => '%',
-					'size' => 20,
+					'size' => 30,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-added-to-cart-popup .wpr-added-tc-popup-img' => 'width: {{SIZE}}{{UNIT}};',
@@ -8035,6 +8076,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'data-product_id="'. esc_attr($product->get_id()) .'"',
 			'data-product_sku="'. esc_attr($product->get_sku()) .'"',
 			'data-atc-popup="'. $settings['element_show_added_tc_popup']  .'"',
+			'data-atc-animation="'. $settings['element_added_to_cart_animation']  .'"',
 			'data-atc-fade-out-in="'. $settings['element_added_to_cart_fade_out_in']  .'"',
 			'data-atc-animation-time="'. $settings['element_added_to_cart_animation_duration']  .'"'
 		];

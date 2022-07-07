@@ -112,7 +112,6 @@ class Utilities {
 			'Product Additional Info' => ['product-additional-information', '', '', ''],
 			'Product Notice' => ['product-notice', '', '', ''],
 			'Product Mini Cart' => ['product-mini-cart', '', '', ''],
-			'Product Results Count' => ['products-result-count', '', '', ''],
 			'Page: Cart' => ['page-cart', '', '', ''],
 			'Page: Checkout ' => ['page-checkout', '', '', ''],
 		];

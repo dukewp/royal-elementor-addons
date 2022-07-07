@@ -2239,11 +2239,108 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     to {opacity: 0;  transform: translateY(50%)}
 }
 
+@keyframes added-tc-popup-animation-hide-bottom {
+    from {opacity: 1; transform: translateY(0)}
+    to {opacity: 0;  transform: translateY(50%)}
+}
+
+@keyframes added-tc-popup-animation-slide-in-left {
+    from {opacity: 0; transform: translateX(100%)}
+    to {opacity: 1;  transform: translateX(0)}
+}
+
+@keyframes added-tc-popup-animation-slide-out-left {
+    from {opacity: 1; transform: translateX(0)}
+    to {opacity: 0;  transform: translateX(100%)}
+}
+
+@keyframes added-tc-popup-animation-scale-up {
+    from {opacity: 0; transform: scale(0)}
+    to {opacity: 1;  transform: scale(1)}
+}
+
+@keyframes added-tc-popup-animation-scale-down {
+    from {opacity: 1; transform: scale(1)}
+    to {opacity: 0;  transform: scale(0)}
+}
+
+@keyframes added-tc-popup-animation-skew {
+    from {opacity: 0; transform: perspective(600px) rotateX(-90deg)}
+    to {opacity: 1;  transform: perspective(600px) rotateX(0deg)}
+}
+
+@keyframes added-tc-popup-animation-skew-off {
+    from {opacity: 1; transform: perspective(600px) rotateX(0deg)}
+    to {opacity: 0;  transform: perspective(600px) rotateX(-90deg)}
+}
+
+@keyframes added-tc-popup-animation-skew-bottom {
+    from {opacity: 0; transform: perspective(600px) rotateX(90deg)}
+    to {opacity: 1;  transform: perspective(600px) rotateX(0deg)}
+}
+
+@keyframes added-tc-popup-animation-skew-off-bottom {
+    from {opacity: 1; transform: perspective(600px) rotateX(0deg)}
+    to {opacity: 0;  transform: perspective(600px) rotateX(90deg)}
+}
+
 .wpr-added-to-cart-popup {
     position: fixed;
     display: flex;
     opacity: 0;
     z-index: 99999;
+}
+
+.wpr-added-to-cart-popup.wpr-added-to-cart-slide-in-left {
+    animation-name: added-tc-popup-animation-slide-in-left !important;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.wpr-added-to-cart-popup.wpr-added-to-cart-slide-out-left {
+    animation-name: added-tc-popup-animation-slide-out-left !important;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.wpr-added-to-cart-popup.wpr-added-to-cart-scale-up {
+    animation-name: added-tc-popup-animation-scale-up !important;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.wpr-added-to-cart-popup.wpr-added-to-cart-scale-down {
+    animation-name: added-tc-popup-animation-scale-down !important;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.wpr-atc-popup-top .wpr-added-to-cart-popup.wpr-added-to-cart-skew {
+    transform-origin: center top 0;
+    animation-name: added-tc-popup-animation-skew !important;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.wpr-atc-popup-top .wpr-added-to-cart-popup.wpr-added-to-cart-skew-off {
+    transform-origin: center top 0;
+    animation-name: added-tc-popup-animation-skew-off !important;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.wpr-atc-popup-bottom .wpr-added-to-cart-popup.wpr-added-to-cart-skew {
+    transform-origin: center bottom 0;
+    animation-name: added-tc-popup-animation-skew-bottom !important;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.wpr-atc-popup-bottom .wpr-added-to-cart-popup.wpr-added-to-cart-skew-off {
+    transform-origin: center bottom 0;
+    animation-name: added-tc-popup-animation-skew-off-bottom !important;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
 }
 
 .wpr-atc-popup-top .wpr-added-to-cart-popup {
@@ -11646,6 +11743,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 /* Product Mini Cart */
+.wpr-mini-cart-sidebar-body {
+    overflow: hidden;
+}
+
 ul.wpr-woo-mini-cart {
     position: relative;
     /* overflow: auto; */
