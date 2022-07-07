@@ -36,6 +36,10 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 		return [ 'qq', 'product-ini-cart', 'product', 'mini', 'cart' ];//tmp
 	}
 
+	public function get_script_depends() {
+		return ['wpr-perfect-scroll-js'];
+	}
+
 	public function add_control_mini_cart_style() {
 		$this->add_control(
 			'mini_cart_style',
