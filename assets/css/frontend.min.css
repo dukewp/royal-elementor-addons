@@ -2264,6 +2264,16 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     to {opacity: 0;  transform: scale(0)}
 }
 
+@keyframes added-tc-popup-animation-fade {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes added-tc-popup-animation-fade-out {
+    from {opacity: 1;}
+    to {opacity: 0;}
+}
+
 @keyframes added-tc-popup-animation-skew {
     from {opacity: 0; transform: perspective(600px) rotateX(-90deg)}
     to {opacity: 1;  transform: perspective(600px) rotateX(0deg)}
@@ -2311,6 +2321,18 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 .wpr-added-to-cart-popup.wpr-added-to-cart-scale-down {
     animation-name: added-tc-popup-animation-scale-down !important;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.wpr-added-to-cart-popup.wpr-added-to-cart-fade {
+    animation-name: added-tc-popup-animation-fade !important;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.wpr-added-to-cart-popup.wpr-added-to-cart-fade-out {
+    animation-name: added-tc-popup-animation-fade-out !important;
     animation-duration: 1s;
     animation-fill-mode: forwards;
 }

@@ -1621,8 +1621,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'default' => 'Default',
-					'slide-left' => 'Slide Left',
 					'scale-up' => 'Scale',
+					'fade' => 'Fade',
+					'slide-left' => 'Slide Left',
 					'skew' => 'Skew',
 				],
 				'default' => 'default',
