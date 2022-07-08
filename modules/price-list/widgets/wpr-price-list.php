@@ -850,7 +850,7 @@ class Wpr_Price_List extends Widget_Base {
 						</div>
 						
 						<?php if ( '' !== $item['prlist_description'] ) : ?>
-							<div class="wpr-price-list-description"><?php echo esc_html( $item['prlist_description'] ); ?></div>
+							<div class="wpr-price-list-description"><?php echo wp_kses_post( $item['prlist_description'] ); ?></div>
 						<?php endif; ?>
 					</div>
 

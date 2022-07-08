@@ -19,7 +19,7 @@ class WPR_Templates_Data {
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'blog blogger posts personal blog lifestyle blogger theme builder grid slider news',
 					'theme-builder' => true,
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 					'priority' => 2,
 				],
 				'v2' => [
@@ -28,8 +28,8 @@ class WPR_Templates_Data {
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'blog blogger posts personal blog lifestyle blogger theme builder grid slider news',
 					'theme-builder' => true,
-					'price' => $is_pro_active ? 'free' : 'free',
-					'priority' => 10,
+					'price' => $is_pro_active ? 'free' : 'pro',
+					'priority' => 4,
 				],
 			],
 			'food-blog' => [
@@ -51,7 +51,7 @@ class WPR_Templates_Data {
 					'tags' => 'blogger blog posts content news newspaper journal magazine business blog publishing theme builder sports grid slider',
 					'theme-builder' => true,
 					'price' => $is_pro_active ? 'free' : 'pro',
-					'priority' => 40,
+					'priority' => 6,
 				],
 				'v2' => [
 					'name' => 'Magazine Blog',
@@ -68,7 +68,7 @@ class WPR_Templates_Data {
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'blogger blog posts content news newspaper journal magazine business blog publishing theme builder sports grid slider',
 					'theme-builder' => true,
-					'price' => $is_pro_active ? 'free' : 'free',
+					'price' => $is_pro_active ? 'free' : 'pro',
 					'priority' => 30,
 				],
 			],
@@ -102,7 +102,7 @@ class WPR_Templates_Data {
 					'tags' => 'digital agency company corporate digital services office agency web digital marketing seo social media branding dark black',
 					'theme-builder' => true,
 					'price' => $is_pro_active ? 'free' : 'free',
-					'priority' => 92,
+					'priority' => 3,
 				],
 			],
 			'one-page' => [
@@ -113,7 +113,7 @@ class WPR_Templates_Data {
 					'tags' => 'digital agency company corporate digital services office agency web digital marketing seo social media branding one page onepage one pages parallax single page',
 					'theme-builder' => true,
 					'price' => $is_pro_active ? 'free' : 'free',
-					'priority' => 49,
+					'priority' => 7,
 				],
 			],
 			'travel-blog' => [
@@ -340,7 +340,7 @@ class WPR_Templates_Data {
 					'tags' => 'ittech advanced technology it technique computer windows technician digital',
 					'theme-builder' => false,
 					'price' => $is_pro_active ? 'free' : 'free',
-					'priority' => 250,
+					'priority' => 5,
 				],
 				'v2' => [
 					'name' => 'IT Tech v2',
