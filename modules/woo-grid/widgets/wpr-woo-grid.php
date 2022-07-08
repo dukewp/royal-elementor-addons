@@ -7482,10 +7482,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 				}
 
 				$this->crossell_ids = $product->get_cross_sell_ids();
-				// var_dump($this->crossell_ids);
+				var_dump($this->crossell_ids);
 			}
 	
-			$meta_query = WC()->query->get_meta_query();
+			// $meta_query = WC()->query->get_meta_query();
 			
 			if ( !empty($this->crossell_ids) ) {
 				$args = array(
@@ -7499,7 +7499,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'order' => 'asc',
 					'paged' => $paged,
 					'post__in' => $this->crossell_ids,
-					'meta_query' => $meta_query
+					// 'meta_query' => $meta_query
 				);
 			} else {
 				$args['post_type'] = 'none';
@@ -8830,7 +8830,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		// Get Posts
 		$posts = new \WP_Query( $this->get_main_query_args() );
 
-		// var_dump($posts->found_posts);
+		var_dump($posts->found_posts);
 
 		// Loop: Start
 		if ( $posts->have_posts() ) :

@@ -535,10 +535,17 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 		$product_count = WC()->cart->get_cart_contents_count();
 		$sub_total = WC()->cart->get_cart_subtotal();
 		$counter_attr = 'data-counter="' . $product_count . '"';
+
+		if ( !is_plugin_active('wpr-addons-pro/wpr-addons-pro.php') ) {
+			// global $woocommerce;
+			$cart_url = wc_get_cart_url();
+		} else {
+			$cart_url = '#';
+		}
 		?>
 
 		<span class="wpr-mini-cart-toggle-wrap">
-			<button id="wpr-mini-cart-toggle-btn" href="#" class="wpr-mini-cart-toggle-btn" aria-expanded="false">
+			<a href=<?php echo $cart_url ?> class="wpr-mini-cart-toggle-btn" aria-expanded="false">
 				<?php if ( 'none' !== $settings['toggle_text']) :
 						if ( 'price' == $settings['toggle_text'] ) { ?>
 							<span class="wpr-mini-cart-btn-price">
@@ -555,7 +562,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
                         <span class="wpr-mini-cart-icon-count <?php echo $product_count ? '' : 'wpr-mini-cart-icon-count-hidden'; ?>"><span><?php echo $product_count ?></span></span>
                     </i>
 				</span>
-			</button>
+			</a>
 		</span>
 		<?php
 	}

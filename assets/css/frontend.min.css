@@ -11766,7 +11766,8 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 /* Product Mini Cart */
 .wpr-mini-cart-sidebar-body {
-    overflow: hidden;
+    /* transition-duration: 1s;
+    overflow: hidden; */
 }
 
 ul.wpr-woo-mini-cart {
