@@ -1119,7 +1119,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'tab' => Controls_Manager::TAB_CONTENT,
 				'condition' => [
 					'query_selection' => ['upsell', 'cross-sell'],
-					'layout_select!' => 'slider'
+					// 'layout_select!' => 'slider'
 				]
 			]
 		);
@@ -1152,7 +1152,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'default' => 'h2',
 				'condition' => [
 					'query_selection' => ['upsell'],
-					'upsell_heading!' => ''
+					'grid_linked_products_heading!' => ''
 				]
 			]
 		);
@@ -6433,7 +6433,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'show_label' => false,
 				'condition' => [
 					'query_selection' => ['upsell', 'cross-sell'],
-					'layout_select!' => 'slider'
+					// 'layout_select!' => 'slider'
 				]
 			]
 		);
@@ -7445,7 +7445,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'post_type' => 'product',
 					'post__not_in' => $settings[ 'query_exclude_products' ],
 					'ignore_sticky_posts' => 1,
-					'no_found_rows' => 1,
+					// 'no_found_rows' => 1,
 					'posts_per_page' => $settings['query_posts_per_page'],
 					'orderby' => 'post__in',
 					'order' => 'asc',
@@ -7482,6 +7482,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				}
 
 				$this->crossell_ids = $product->get_cross_sell_ids();
+				// var_dump($this->crossell_ids);
 			}
 	
 			$meta_query = WC()->query->get_meta_query();
@@ -7492,7 +7493,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'post__not_in' => $settings[ 'query_exclude_products' ],
 					'tax_query' => $this->get_tax_query_args(),
 					'ignore_sticky_posts' => 1,
-					'no_found_rows' => 1,
+					// 'no_found_rows' => 1,
 					'posts_per_page' => $settings['query_posts_per_page'],
 					'orderby' => 'post__in',
 					'order' => 'asc',
@@ -8829,12 +8830,14 @@ class Wpr_Woo_Grid extends Widget_Base {
 		// Get Posts
 		$posts = new \WP_Query( $this->get_main_query_args() );
 
+		// var_dump($posts->found_posts);
+
 		// Loop: Start
 		if ( $posts->have_posts() ) :
 
 		$post_index = 0;
 
-		if ( ('upsell' === $settings['query_selection'] && '' !== $settings['upsell_heading']) || ('cross-sell' === $settings['query_selection'] && '' !== $settings['cross_sell_heading']) ) {
+		if ( ('upsell' === $settings['query_selection'] && '' !== $settings['grid_linked_products_heading']) || ('cross-sell' === $settings['query_selection'] && '' !== $settings['grid_linked_products_heading']) ) {
 			echo '<div class="wpr-grid-linked-products-heading">';
 				echo '<'. $settings['grid_linked_products_heading_tag'] .'>'. esc_html( $settings['grid_linked_products_heading'] ) .'</'. $settings['grid_linked_products_heading_tag'] .'>';
 			echo '</div>';
@@ -8917,14 +8920,16 @@ class Wpr_Woo_Grid extends Widget_Base {
 		echo '</section>';
 
 		if ( 'slider' === $settings['layout_select'] ) {
-			// Slider Navigation
-			echo '<div class="wpr-grid-slider-arrow-container">';
-				echo '<div class="wpr-grid-slider-prev-arrow wpr-grid-slider-arrow" id="wpr-grid-slider-prev-'. esc_attr($this->get_id()) .'">'. Utilities::get_wpr_icon( $settings['layout_slider_nav_icon'], '' ) .'</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				echo '<div class="wpr-grid-slider-next-arrow wpr-grid-slider-arrow" id="wpr-grid-slider-next-'. esc_attr($this->get_id()) .'">'. Utilities::get_wpr_icon( $settings['layout_slider_nav_icon'], '' ) .'</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo '</div>';
+			if ( $posts->found_posts > (int) $settings['layout_slider_amount'] &&  (int) $settings['layout_slider_amount'] < $settings['query_posts_per_page'] ) {
+				// Slider Navigation
+				echo '<div class="wpr-grid-slider-arrow-container">';
+					echo '<div class="wpr-grid-slider-prev-arrow wpr-grid-slider-arrow" id="wpr-grid-slider-prev-'. esc_attr($this->get_id()) .'">'. Utilities::get_wpr_icon( $settings['layout_slider_nav_icon'], '' ) .'</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo '<div class="wpr-grid-slider-next-arrow wpr-grid-slider-arrow" id="wpr-grid-slider-next-'. esc_attr($this->get_id()) .'">'. Utilities::get_wpr_icon( $settings['layout_slider_nav_icon'], '' ) .'</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo '</div>';
 
-			// Slider Dots
-			echo '<div class="wpr-grid-slider-dots"></div>';
+				// Slider Dots
+				echo '<div class="wpr-grid-slider-dots"></div>';
+			}
 		}
 
 
