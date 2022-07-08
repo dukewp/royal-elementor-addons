@@ -134,6 +134,27 @@ class Wpr_Content_Ticker extends Widget_Base {
 
 	public function add_section_ticker_items() {}
 
+	public function add_control_query_source () {
+
+		// Get Available Post Types
+		$this->post_types = Utilities::get_custom_types_of( 'post', false );
+
+		// Remove WooCommerce
+		$this->post_types['product-pro'] = 'Product (Pro)';
+		unset( $this->post_types['product'] );
+
+		$this->add_control(
+			'query_source',
+			[
+				'label' => esc_html__( 'Source', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'post',
+				'options' => $this->post_types,
+			]
+		);
+
+	}
+
 	protected function register_controls() {
 
 		// Section: General ----------
@@ -183,27 +204,16 @@ class Wpr_Content_Ticker extends Widget_Base {
 			]
 		);
 
-		// Get Available Post Types
-		$post_types = Utilities::get_custom_types_of( 'post', false );
+		$this->add_control_query_source();
 
-		// Remove WooCommerce
-		unset( $post_types['product'] );
-
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'content-ticker', 'query_source', ['prodocut-pro'] );
+		
 		// Get Available Taxonomies
 		$post_taxonomies = Utilities::get_custom_types_of( 'tax', false );
 
 		// Get Available Meta Keys
 		$post_meta_keys = Utilities::get_custom_meta_keys();
-
-		$this->add_control(
-			'query_source',
-			[
-				'label' => esc_html__( 'Source', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'post',
-				'options' => $post_types,
-			]
-		);
 
 		$this->add_control(
 			'query_selection',
@@ -276,7 +286,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 		}
 
 		// Exclude
-		foreach ( $post_types as $slug => $title ) {
+		foreach ( $this->post_types as $slug => $title ) {
 			$this->add_control(
 				'query_exclude_'. $slug,
 				[
@@ -295,7 +305,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 		}
 
 		// Manual Selection
-		foreach ( $post_types as $slug => $title ) {
+		foreach ( $this->post_types as $slug => $title ) {
 			$this->add_control(
 				'query_manual_'. $slug,
 				[
@@ -1776,9 +1786,9 @@ class Wpr_Content_Ticker extends Widget_Base {
 	// Get Taxonomies Related to Post Type
 	public function get_related_taxonomies() {
 		$relations = [];
-		$post_types = Utilities::get_custom_types_of( 'post', false );
+		$this->post_types = Utilities::get_custom_types_of( 'post', false );
 
-		foreach ( $post_types as $slug => $title ) {
+		foreach ( $this->post_types as $slug => $title ) {
 			$relations[$slug] = [];
 
 			foreach ( get_object_taxonomies( $slug ) as $tax ) {
@@ -1793,6 +1803,8 @@ class Wpr_Content_Ticker extends Widget_Base {
 	public function get_main_query_args() {
 		$settings = $this->get_settings();
 		$author = ! empty( $settings[ 'query_author' ] ) ? implode( ',', $settings[ 'query_author' ] ) : '';
+
+		$settings[ 'query_source' ] === 'product-pro' ? $settings[ 'query_source' ] = 'post' : '';
 
 		// Dynamic
 		$args = [
