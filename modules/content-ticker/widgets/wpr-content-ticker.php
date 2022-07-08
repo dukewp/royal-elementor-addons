@@ -209,7 +209,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 		$this->add_control_query_source();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'content-ticker', 'query_source', ['prodocut-pro', 'featured-pro', 'sale-pro'] );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'content-ticker', 'query_source', ['product-pro', 'featured-pro', 'sale-pro'] );
 		
 		// Get Available Taxonomies
 		$post_taxonomies = Utilities::get_custom_types_of( 'tax', false );
