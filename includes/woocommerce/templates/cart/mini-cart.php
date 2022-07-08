@@ -22,11 +22,6 @@ defined( 'ABSPATH' ) || exit;
 do_action( 'woocommerce_before_mini_cart' );
 ?>
 
-	
-<div class="wpr-close-cart">
-	<h2></h2>
-	<span></span>
-</div>
 
 <?php if ( ! WC()->cart->is_empty() ) : ?>
 	

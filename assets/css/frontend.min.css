@@ -11875,11 +11875,21 @@ ul.wpr-woo-mini-cart {
     margin: 0 !important;
 }
 
-.wpr-mini-cart-sidebar .widget_shopping_cart_content {
+.wpr-mini-cart-sidebar .wpr-shopping-cart-inner-wrap {
     position: absolute;
     top: 0;
     transition: all 1s ease;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.wpr-mini-cart-sidebar .widget_shopping_cart_content {
+    position: relative;
+    top: 0;
+    transition: all 1s ease;
+    height: auto;
+    flex: 1;
 }
 
 .wpr-subtotal-align-bottom.wpr-mini-cart-sidebar .widget_shopping_cart_content {
