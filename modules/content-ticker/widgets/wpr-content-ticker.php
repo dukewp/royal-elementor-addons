@@ -1861,32 +1861,32 @@ class Wpr_Content_Ticker extends Widget_Base {
 
 		if ( 'featured' === $settings[ 'query_source' ] ) {
 			$args['post_type'] = 'product';
-			$tax_query[] = array(
+			$tax_query[] = [
 				'taxonomy' => 'product_visibility',
 				'field'    => 'name',
 				'terms'    => 'featured',
 				'operator' => 'IN', // or 'NOT IN' to exclude feature products
-			);
+			];
 			$args['tax_query'] = $tax_query;
 		}
 
 		if ( 'sale' === $settings[ 'query_source' ] ) {
 			$args['post_type'] = 'product';
-			$meta_query[] = array(
+			$meta_query[] = [
 				'relation' => 'OR',
-				array( // Simple products type
+				[ // Simple products type
 					'key'           => '_sale_price',
 					'value'         => 0,
 					'compare'       => '>',
 					'type'          => 'numeric'
-				),
-				array( // Variable products type
+				],
+				[ // Variable products type
 					'key'           => '_min_variation_sale_price',
 					'value'         => 0,
 					'compare'       => '>',
 					'type'          => 'numeric'
-				)
-			);
+				]
+			];
 
 			$args['meta_query'] = $meta_query;
 		}
