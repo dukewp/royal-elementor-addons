@@ -786,6 +786,26 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'slider_title_tag',
+			[
+				'label' => esc_html__( 'Title HTML Tag', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => esc_html__( 'H1', 'wpr-addons' ),
+					'h2' => esc_html__( 'H2', 'wpr-addons' ),
+					'h3' => esc_html__( 'H3', 'wpr-addons' ),
+					'h4' => esc_html__( 'H4', 'wpr-addons' ),
+					'h5' => esc_html__( 'H5', 'wpr-addons' ),
+					'h6' => esc_html__( 'H6', 'wpr-addons' )
+				],
+				'default' => 'h2',
+				'condition' => [
+					'slider_title' => 'yes'
+				]
+			]
+		);
+
 		$this->add_responsive_control(
 			'slider_sub_title',
 			[
@@ -1226,7 +1246,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#ffffff',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-slider-title h2' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-slider-title *' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -1237,7 +1257,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-slider-title h2' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-slider-title *' => 'background-color: {{VALUE}}',
 				],
 				'separator' => 'after',
 			]
@@ -1248,7 +1268,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			[
 				'name'     => 'slider_title_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-slider-title h2',
+				'selector' => '{{WRAPPER}} .wpr-slider-title *',
 			]
 		);
 
@@ -1265,7 +1285,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 					'left' => 10,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-slider-title h2' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-slider-title *' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -1284,7 +1304,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 					'left' => 0,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-slider-title h2' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-slider-title *' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -2750,7 +2770,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 								//  Slider Title
 								if ( $settings['slider_title'] === 'yes' && ! empty( $item['slider_item_title'] ) ) {
 								$slider_html .= '<div class="wpr-slider-title">';
-									$slider_html .= '<h2>'. wp_kses_post($item['slider_item_title']) .'</h2>';
+									$slider_html .= '<' . $settings['slider_title_tag'] . '>'. wp_kses_post($item['slider_item_title']) .'</'. $settings['slider_title_tag'] .'>';
 								$slider_html .= '</div>';
 								}	
 								

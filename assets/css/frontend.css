@@ -4939,13 +4939,13 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     background-position: center;
 }
 
-.wpr-slider-title h2,
+.wpr-slider-title *,
 .wpr-slider-sub-title h3,
 .wpr-slider-description p {
     display: inline-block;
 }
 
-.wpr-slider-title h2 {
+.wpr-slider-title * {
     color: #ffffff;
     font-size: 40px;
     font-weight: 600;
