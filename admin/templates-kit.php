@@ -228,6 +228,11 @@ function wpr_install_reuired_plugins() {
             if ( !is_plugin_active( 'contact-form-7/wp-contact-form-7.php' ) ) {
                 array_push( $active_plugins, 'contact-form-7/wp-contact-form-7.php' );
             }
+        // zwoo
+        // } elseif ( 'woocommerce' == $_POST['plugin'] ) {
+        //     if ( !is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+        //         array_push( $active_plugins, 'woocommerce/woocommerce.php' );
+        //     }
         } elseif ( 'media-library-assistant' == $_POST['plugin'] ) {
             if ( !is_plugin_active( 'media-library-assistant/index.php' ) ) {
                 array_push( $active_plugins, 'media-library-assistant/index.php' );
@@ -250,7 +255,7 @@ function wpr_install_reuired_plugins() {
     }
 
     // Set Active Plugins
-    update_option( 'active_plugins', array_values($active_plugins) ); 
+    update_option( 'active_plugins', array_values($active_plugins) );
 
     // Get Current Theme
     $theme = get_option('stylesheet');
@@ -262,8 +267,22 @@ function wpr_install_reuired_plugins() {
         set_transient( 'royal-elementor-kit_activation_notice', true );
     }
 
-    // TODO: maybe return back  - 'ashe' !== $theme && 'bard' !== $theme && 
-      
+
+    // WooCommerce
+    // zwoo
+    if ( 'woocommerce' == $_POST['plugin'] ) {
+        // activate_plugin( 'woocommerce/woocommerce.php' );
+
+        // Create WooCommerce database tables.
+        // if ( is_callable( '\Automattic\WooCommerce\Admin\Install::create_tables' ) ) {
+        //     \Automattic\WooCommerce\Admin\Install::create_tables();
+        //     \Automattic\WooCommerce\Admin\Install::create_events();
+        // }
+
+        // if ( is_callable( 'WC_Install::install' ) ) {
+        //     WC_Install::install();
+        // }
+    }
 }
 
 /**
@@ -287,6 +306,11 @@ function wpr_import_templates_kit() {
     if ( class_exists( 'WP_Import' ) ) {
         $kit = isset($_POST['wpr_templates_kit']) ? sanitize_file_name(wp_unslash($_POST['wpr_templates_kit'])) : '';
         $file = isset($_POST['wpr_templates_kit_single']) ? sanitize_file_name(wp_unslash($_POST['wpr_templates_kit_single'])) : '';
+
+        // Prevent Importing Default Pages
+        if ( class_exists('WooCommerce') ) {
+            // add_filter( 'woocommerce_create_pages', '__return_empty_array' );
+        }
 
         // Tmp
         update_option( 'wpr-import-kit-id', $kit );
@@ -371,6 +395,7 @@ function setup_wpr_templates( $kit ) {
     $kit_version = substr($kit, (strripos($kit, '-v') + 1), strlen($kit));
     $get_available_kits = WPR_Templates_Data::get_available_kits();
     $has_theme_builder = $get_available_kits[$kit_name][$kit_version]['theme-builder'];
+    $has_woo_builder = $get_available_kits[$kit_name][$kit_version]['woo-builder'];
 
     // Set Home & Blog Pages
     $home_page = get_page_by_path('home-'. $kit);
@@ -397,6 +422,25 @@ function setup_wpr_templates( $kit ) {
     if ( $has_theme_builder ) {
         update_option('wpr_archive_conditions', '{"user-archive-'. $kit .'-blog":["archive/posts"],"user-archive-'. $kit .'-author":["archive/author"],"user-archive-'. $kit .'-date":["archive/date"],"user-archive-'. $kit .'-category-tag":["archive/categories/all","archive/tags/all"],"user-archive-'. $kit .'-search":["archive/search"]}');
         update_option('wpr_single_conditions', '{"user-single-'. $kit .'-404":["single/page_404"],"user-single-'. $kit .'-post":["single/posts/all"],"user-single-'. $kit .'-page":["single/pages/all"]}');
+    }
+
+    // WooCommerce Builder
+    if ( $has_woo_builder ) {
+        update_option('wpr_product_archive_conditions', '{"user-product_archive-'. $kit .'-shop":["product_archive/products"],"user-product_archive-'. $kit .'-category-tag":["product_archive/product_cat/all","product_archive/product_tags/all"]}');
+        update_option('wpr_product_single_conditions', '{"user-product_single-'. $kit .'-product":["product_single/product"]}');
+
+        $shop_id = get_page_by_path('shop-'. $kit) ? get_page_by_path('shop-'. $kit)->ID : '';
+        $cart_id = get_page_by_path('cart-'. $kit) ? get_page_by_path('cart-'. $kit)->ID : '';
+        $checkout_id = get_page_by_path('checkout-'. $kit) ? get_page_by_path('checkout-'. $kit)->ID : '';
+        $myaccount_id = get_page_by_path('my-account-'. $kit) ? get_page_by_path('my-account-'. $kit)->ID : '';
+        
+        update_option('woocommerce_shop_page_id', $shop_id);
+        update_option('woocommerce_cart_page_id', $cart_id);
+        update_option('woocommerce_checkout_page_id', $checkout_id);
+
+        if ( 'pro' === $get_available_kits[$kit_name][$kit_version]['price'] ) {
+            update_option('woocommerce_myaccount_page_id', $myaccount_id);
+        }
     }
 
     // Set Popup
@@ -511,6 +555,13 @@ function wpr_final_settings_setup() {
     if ( $post ) {
         wp_delete_post($post->ID,true);
     }
+
+    // zwoo
+    // if ( function_exists( 'wc_update_product_lookup_tables' ) ) {
+    //     if ( ! wc_update_product_lookup_tables_is_running() ) {
+    //         wc_update_product_lookup_tables();
+    //     }
+    // }
 }
 
 /**

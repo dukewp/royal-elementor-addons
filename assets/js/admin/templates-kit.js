@@ -136,6 +136,10 @@ jQuery(document).ready(function( $ ) {
 					WprTemplatesKit.installPluginViaAjax('contact-form-7');
 				}
 				
+				if ( 'woocommerce' in WprTemplatesKit.requiredPlugins && false === WprTemplatesKit.requiredPlugins['woocommerce'] ) {
+					WprTemplatesKit.installPluginViaAjax('woocommerce');
+				}
+				
 				if ( 'media-library-assistant' in WprTemplatesKit.requiredPlugins && false === WprTemplatesKit.requiredPlugins['media-library-assistant'] ) {
 					WprTemplatesKit.installPluginViaAjax('media-library-assistant');
 				}
