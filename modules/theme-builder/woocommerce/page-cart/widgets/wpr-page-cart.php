@@ -146,19 +146,24 @@ class Wpr_Page_Cart extends Widget_Base {
 			[
 				'label' => esc_html__( 'Width', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ '%', 'px' ],
 				'range' => [
 					'%' => [
 						'min' => 0,
 						'max' => 100,
+					],
+					'px' => [
+						'min' => 0,
+						'max' => 100,
 					]
 				],
-				'size_units' => [ '%' ],
 				'default' => [
 					'unit' => '%',
 					'size' => 100,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-cart-wrapper .cart-collaterals' => 'width: {{SIZE}}{{UNIT}}; margin-left: calc(100% - {{SIZE}}{{UNIT}});',
+					'{{WRAPPER}} .wpr-cart-wrapper .cart-collaterals' => 'width: {{SIZE}}{{UNIT}};',
+					// margin-left: calc(100% - {{SIZE}}{{UNIT}});
 				]
 			]
 		);
@@ -374,7 +379,7 @@ class Wpr_Page_Cart extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}}.wpr-cart-horizontal .woocommerce-cart-form' => 'width: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-cart-horizontal .cart-collaterals' => 'width: calc(100% - {{SIZE}}{{UNIT}});',
+					// '{{WRAPPER}}.wpr-cart-horizontal .cart-collaterals' => 'width: calc(100% - {{SIZE}}{{UNIT}});',
 				],
 				'condition' => [
 					'cart_layout' => 'horizontal'
@@ -401,8 +406,10 @@ class Wpr_Page_Cart extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}}.wpr-cart-horizontal .woocommerce-cart-form' => 'margin-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-cart-vertical .woocommerce-cart-form' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-cart-section-wrap .shop_table.cart' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-cart-section-table-wrap' => 'margin-bottom: {{SIZE}}{{UNIT}};'
+					// '{{WRAPPER}} .wpr-cart-section-wrap .shop_table.cart' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-cart-section-table-wrap' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'[data-elementor-device-mode="mobile"] {{WRAPPER}}.wpr-cart-horizontal .cart-collaterals' => 'margin-top: {{SIZE}}{{UNIT}};',
+					'[data-elementor-device-mode="mobile_extra"] {{WRAPPER}}.wpr-cart-horizontal .cart-collaterals' => 'margin-top: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
