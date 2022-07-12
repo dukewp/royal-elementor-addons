@@ -12869,6 +12869,10 @@ dl.variation dd {
     overflow-x: auto;
 }
 
+.wpr-cart-section-table-wrap table.shop_table {
+    margin-bottom: 0;
+}
+
 .wpr-cart-section-table-wrap table.shop_table,
 .cart_totals table.shop_table {
     border: none;
