@@ -406,7 +406,7 @@ class Wpr_Page_Cart extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}}.wpr-cart-horizontal .woocommerce-cart-form' => 'margin-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-cart-vertical .woocommerce-cart-form' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-cart-section-wrap .shop_table.cart' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}} .wpr-cart-section-wrap .shop_table.cart' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-cart-section-table-wrap' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 					'[data-elementor-device-mode="mobile"] {{WRAPPER}}.wpr-cart-horizontal .cart-collaterals' => 'margin-top: {{SIZE}}{{UNIT}};',
 					'[data-elementor-device-mode="mobile_extra"] {{WRAPPER}}.wpr-cart-horizontal .cart-collaterals' => 'margin-top: {{SIZE}}{{UNIT}};',
