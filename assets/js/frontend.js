@@ -3776,13 +3776,13 @@
 									$(this).find('.wpr-story-info-vertical').attr('data-aos', $(this).find('.wpr-story-info-vertical').attr('data-aos-right'));
 								}
 							});
-
-							AOS.init({
-								offset: parseInt(aosOffset),
-								duration: aosDuration,
-								once: true,
-							});
 						}
+
+						AOS.init({
+							offset: parseInt(aosOffset),
+							duration: aosDuration,
+							once: true,
+						});
 
 						$(window).scroll();
 
