@@ -1063,15 +1063,26 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     align-items: center;
 }
 
-.wpr-thumbnail-slider-arrows-wrap {
+.wpr-thumbnail-slider-arrow {
     position: absolute;
-    top: 90%;
+    top: 50%;
+    transform: translateY(-50%);
     left: 0;
     z-index: 1;
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.wpr-thumbnail-slider-next-arrow {
+    right: 0;
+    left: auto;
+}
+
+.wpr-thumbnail-slider-prev-arrow[disabled]{
+    /* pointer-events: none; */
+    opacity: 0.6;
 }
 
 .wpr-gallery-slider-arrow,
@@ -1120,6 +1131,11 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     visibility: hidden;
 }
 
+.wpr-thumbnail-slider-nav-fade .wpr-fcn-wrap:hover .wpr-thumbnail-slider-arrow[disabled] {
+    opacity: 0.6;
+}
+
+.wpr-thumbnail-slider-nav-fade .wpr-fcn-wrap:hover .wpr-thumbnail-slider-arrow,
 .wpr-gallery-slider-nav-fade .flex-viewport:hover .wpr-gallery-slider-arrow {
     opacity: 1;
     visibility: visible;
@@ -12213,14 +12229,13 @@ dl.variation dd {
     width: 100% !important;
 }
 
-.wpr-product-media-thumbs-none .wpr-product-media-wrap .flex-control-nav {
-    display: none;
+.wpr-fcn-wrap {
+    position: relative;
+    overflow: hidden;
 }
 
-.wpr-thumb-slider-wrap {
-    position: absolute;
-    bottom: 10%;
-    z-index: 99999;
+.wpr-product-media-thumbs-none .wpr-product-media-wrap .flex-control-nav {
+    display: none;
 }
 
 .wpr-product-media-thumbs-slider .wpr-product-media-wrap .flex-control-nav {
@@ -12234,6 +12249,15 @@ dl.variation dd {
 .wpr-product-media-thumbs-slider .wpr-product-media-wrap .flex-control-nav,
 .wpr-product-media-thumbs-slider .wpr-product-media-wrap .woocommerce-product-gallery {
     overflow: hidden;
+}
+
+.wpr-product-media-thumbs-vertical .woocommerce-product-gallery {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.wpr-product-media-thumbs-vertical .wpr-product-media-wrap .flex-control-nav {
+    flex-direction: column;
 }
 
 /* Product Media 2 */
