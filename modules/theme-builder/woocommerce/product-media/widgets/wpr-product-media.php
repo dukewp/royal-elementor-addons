@@ -174,21 +174,23 @@ class Wpr_Product_Media extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'gallery_slider_thumbs',
 			[
-				'label' => esc_html__( 'Show Thumbnail Images', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
-				'tablet_default' => 'yes',
-				'mobile_default' => 'yes',
-				'selectors_dictionary' => [
-					'' => 'none',
-					'yes' => 'grid'
+				'label' => esc_html__( 'Display Thumbs As', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'stacked' => esc_html__( 'Stacked', 'wpr-addons' ),
+					'slider' => esc_html__( 'Slider', 'wpr-addons' )
 				],
+				'default' => 'none',
+				'prefix_class' => 'wpr-product-media-thumbs-',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-media-wrap .flex-control-nav' => 'display: {{VALUE}};',
-				]
+					'{{WRAPPER}}.wpr-product-media-thumbs-stacked .wpr-product-media-wrap .flex-control-nav' => 'display: grid;',
+					'{{WRAPPER}}.wpr-product-media-thumbs-slider .wpr-product-media-wrap .flex-control-nav' => 'display: flex;',
+				],
+				'separator' => 'before',
 			]
 		);
 
@@ -199,12 +201,13 @@ class Wpr_Product_Media extends Widget_Base {
 				'type' => Controls_Manager::NUMBER,
 				'min' => 2,
 				'default' => 4,
+				'render_type' => 'template',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-media-wrap .flex-control-thumbs' => 'grid-template-columns: repeat({{VALUE}}, auto);',
+					'{{WRAPPER}}.wpr-product-media-thumbs-stacked .wpr-product-media-wrap .flex-control-thumbs' => 'grid-template-columns: repeat({{VALUE}}, auto);',
+					'{{WRAPPER}}.wpr-product-media-thumbs-slider .wpr-product-media-wrap .flex-control-thumbs li' => 'width: calc(100%/{{VALUE}}) !important;'
 				],
 				'condition' => [
-					// 'gallery_display_as' => 'slider',
-					'gallery_slider_thumbs' => 'yes'
+					'gallery_slider_thumbs' => ['slider', 'stacked'],
 				],
 
 			]
@@ -755,7 +758,7 @@ class Wpr_Product_Media extends Widget_Base {
 					'size' => 10,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-media-wrap .flex-control-nav' => 'grid-column-gap: {{SIZE}}{{UNIT}} !important;'
+					'{{WRAPPER}} .wpr-product-media-wrap .flex-control-nav' => 'grid-column-gap: {{SIZE}}{{UNIT}};'
 				],
 				// 'render_type' => 'template'
 			]
@@ -1227,18 +1230,16 @@ class Wpr_Product_Media extends Widget_Base {
 		$gallery_images = $product->get_gallery_image_ids();
 		// add_filter( 'woocommerce_single_product_carousel_options', [$this, 'wpr_update_woo_flexslider_options']);
 
-		// $this->add_render_attribute(
-		// 	'thumbnails_attributes',
-		// 	[
-		// 		'data-thumbnails-slider' => $settings['gallery_slider_thumbs'],
-		// 		'data-slidestoshow' => $settings['gallery_slider_thumb_cols']
-		// 	]
-		// );
-
-		// '.  $this->get_render_attribute_string( 'thumbnails_attributes' ) .'
+		$this->add_render_attribute(
+			'thumbnails_attributes',
+			[
+				// 'data-thumbnails-slider' => $settings['gallery_slider_thumbs'],
+				'data-slidestoshow' => $settings['gallery_slider_thumb_cols']
+			]
+		);
 
 		// Output
-		echo '<div class="wpr-product-media-wrap">';
+		echo '<div class="wpr-product-media-wrap" '.  $this->get_render_attribute_string( 'thumbnails_attributes' ) .'>';
 
 		// Sales Badge
 		if ( $product->is_on_sale() && 'yes' === $settings['product_media_sales_badge'] ) {

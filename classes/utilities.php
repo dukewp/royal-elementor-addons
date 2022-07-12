@@ -100,6 +100,7 @@ class Utilities {
 		return [
 			'Product Title' => ['product-title', '', '', ''],
 			'Product Media' => ['product-media', '', '', ''],
+			'Product Media Old' => ['product-media-old', '', '', ''],
 			'Product Price' => ['product-price', '', '', ''],
 			'Product Add to Cart' => ['product-add-to-cart', '', '', ''],
 			'Product Breadcrumbs' => ['product-Breadcrumbs', '', '', ''],

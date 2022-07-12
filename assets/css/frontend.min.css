@@ -12213,7 +12213,26 @@ dl.variation dd {
     width: 100% !important;
 }
 
-.wpr-product-media-wrap .swiper {
+.wpr-product-media-thumbs-none .wpr-product-media-wrap .flex-control-nav {
+    display: none;
+}
+
+.wpr-thumb-slider-wrap {
+    position: absolute;
+    bottom: 10%;
+    z-index: 99999;
+}
+
+.wpr-product-media-thumbs-slider .wpr-product-media-wrap .flex-control-nav {
+    position: relative;
+    max-width: none !important;
+    grid-column-gap: 0px !important;
+    grid-row-gap: 0 !important;
+    transition: all 0.6s ease;
+}
+
+.wpr-product-media-thumbs-slider .wpr-product-media-wrap .flex-control-nav,
+.wpr-product-media-thumbs-slider .wpr-product-media-wrap .woocommerce-product-gallery {
     overflow: hidden;
 }
 
