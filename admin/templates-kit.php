@@ -15,12 +15,11 @@ function wpr_addons_add_templates_kit_menu() {
 add_action( 'admin_menu', 'wpr_addons_add_templates_kit_menu' );
 
 // Import Template Kit
-add_action( 'wp_ajax_wpr_install_reuired_plugins', 'wpr_install_reuired_plugins' );
+add_action( 'wp_ajax_wpr_activate_reuired_plugins', 'wpr_activate_reuired_plugins' );
 add_action( 'wp_ajax_wpr_activate_reuired_theme', 'wpr_activate_reuired_theme' );
 add_action( 'wp_ajax_wpr_import_templates_kit', 'wpr_import_templates_kit' );
 add_action( 'wp_ajax_wpr_final_settings_setup', 'wpr_final_settings_setup' );
 add_action( 'wp_ajax_wpr_search_query_results', 'wpr_search_query_results' );
-
 
 /**
 ** Render Templates Kit Page
@@ -216,29 +215,32 @@ function wpr_activate_reuired_theme() {
 }
 
 /**
-** Install/Activate Required Plugins
+** Activate Required Plugins
 */
-function wpr_install_reuired_plugins() {
-    // Get currently active plugins
-    $active_plugins = (array) get_option( 'active_plugins', array() );
-
-    // Add Required Plugins
+function wpr_activate_reuired_plugins() {
     if ( isset($_POST['plugin']) ) {
         if ( 'contact-form-7' == $_POST['plugin'] ) {
             if ( !is_plugin_active( 'contact-form-7/wp-contact-form-7.php' ) ) {
-                array_push( $active_plugins, 'contact-form-7/wp-contact-form-7.php' );
+                activate_plugin( 'contact-form-7/wp-contact-form-7.php' );
             }
-        // zwoo
-        // } elseif ( 'woocommerce' == $_POST['plugin'] ) {
-        //     if ( !is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
-        //         array_push( $active_plugins, 'woocommerce/woocommerce.php' );
-        //     }
+        } elseif ( 'woocommerce' == $_POST['plugin'] ) {
+            if ( !is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+                activate_plugin( 'woocommerce/woocommerce.php' );
+            }
         } elseif ( 'media-library-assistant' == $_POST['plugin'] ) {
             if ( !is_plugin_active( 'media-library-assistant/index.php' ) ) {
-                array_push( $active_plugins, 'media-library-assistant/index.php' );
+                activate_plugin( 'media-library-assistant/index.php' );
             }
         }
     }
+}
+
+/**
+** Deactivate Extra Plugins
+*/
+function wpr_deactivate_extra_plugins() {
+    // Get currently active plugins
+    $active_plugins = (array) get_option( 'active_plugins', array() );
 
     $active_plugins = array_values($active_plugins);
 
@@ -266,23 +268,6 @@ function wpr_install_reuired_plugins() {
         switch_theme( 'royal-elementor-kit' );
         set_transient( 'royal-elementor-kit_activation_notice', true );
     }
-
-
-    // WooCommerce
-    // zwoo
-    if ( 'woocommerce' == $_POST['plugin'] ) {
-        // activate_plugin( 'woocommerce/woocommerce.php' );
-
-        // Create WooCommerce database tables.
-        // if ( is_callable( '\Automattic\WooCommerce\Admin\Install::create_tables' ) ) {
-        //     \Automattic\WooCommerce\Admin\Install::create_tables();
-        //     \Automattic\WooCommerce\Admin\Install::create_events();
-        // }
-
-        // if ( is_callable( 'WC_Install::install' ) ) {
-        //     WC_Install::install();
-        // }
-    }
 }
 
 /**
@@ -306,11 +291,6 @@ function wpr_import_templates_kit() {
     if ( class_exists( 'WP_Import' ) ) {
         $kit = isset($_POST['wpr_templates_kit']) ? sanitize_file_name(wp_unslash($_POST['wpr_templates_kit'])) : '';
         $file = isset($_POST['wpr_templates_kit_single']) ? sanitize_file_name(wp_unslash($_POST['wpr_templates_kit_single'])) : '';
-
-        // Prevent Importing Default Pages
-        if ( class_exists('WooCommerce') ) {
-            // add_filter( 'woocommerce_create_pages', '__return_empty_array' );
-        }
 
         // Tmp
         update_option( 'wpr-import-kit-id', $kit );
@@ -441,6 +421,9 @@ function setup_wpr_templates( $kit ) {
         if ( 'pro' === $get_available_kits[$kit_name][$kit_version]['price'] ) {
             update_option('woocommerce_myaccount_page_id', $myaccount_id);
         }
+
+        // Update Options
+        update_option( 'woocommerce_queue_flush_rewrite_rules', 'yes' );
     }
 
     // Set Popup
@@ -542,7 +525,7 @@ function wpr_final_settings_setup() {
     wpr_fix_elementor_images();
 
     // Fix Contact Form 7
-    fix_contact_form_7();
+    // fix_contact_form_7();
 
     // Track Kit
     wpr_track_imported_kit( $kit );

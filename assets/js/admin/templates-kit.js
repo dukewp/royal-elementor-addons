@@ -150,26 +150,40 @@ jQuery(document).ready(function( $ ) {
             wp.updates.installPlugin({
                 slug: slug,
                 success: function() {
-			        $.post(
-			            ajaxurl,
-			            {
-			                action: 'wpr_install_reuired_plugins',
+					console.log('plugin install notice - success');
+					$.ajax({
+						type: 'POST',
+						url: ajaxurl,
+						data: {
+			                action: 'wpr_activate_reuired_plugins',
 			                plugin: slug,
-			            }
-			        );
-			        WprTemplatesKit.requiredPlugins[slug] = true;
+						},
+						success: function( response ) {
+							console.log('NEW Success: equired plugin activated!');
+							WprTemplatesKit.requiredPlugins[slug] = true;
+						},
+						error: function( response ) {
+							console.log('NEW Success: but error activating');
+							console.log(response);
+							WprTemplatesKit.requiredPlugins[slug] = true;
+						}
+					});
                 },
                 error: function( xhr, ajaxOptions, thrownerror ) {
                     console.log(xhr.errorCode)
                     if ( 'folder_exists' === xhr.errorCode ) {
-				        $.post(
-				            ajaxurl,
-				            {
-				                action: 'wpr_install_reuired_plugins',
-				                plugin: slug,
-				            }
-				        );
-				        WprTemplatesKit.requiredPlugins[slug] = true;
+						$.ajax({
+							type: 'POST',
+							url: ajaxurl,
+							data: {
+								action: 'wpr_activate_reuired_plugins',
+								plugin: slug,
+							},
+							success: function( response ) {
+								console.log('NEW error: required plugin activated!');
+								WprTemplatesKit.requiredPlugins[slug] = true;
+							}
+						});
                     }
                 },
             });
