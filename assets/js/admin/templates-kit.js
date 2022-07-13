@@ -150,7 +150,6 @@ jQuery(document).ready(function( $ ) {
             wp.updates.installPlugin({
                 slug: slug,
                 success: function() {
-					console.log('plugin install notice - success');
 					$.ajax({
 						type: 'POST',
 						url: ajaxurl,
@@ -159,11 +158,9 @@ jQuery(document).ready(function( $ ) {
 			                plugin: slug,
 						},
 						success: function( response ) {
-							console.log('NEW Success: equired plugin activated!');
 							WprTemplatesKit.requiredPlugins[slug] = true;
 						},
 						error: function( response ) {
-							console.log('NEW Success: but error activating');
 							console.log(response);
 							WprTemplatesKit.requiredPlugins[slug] = true;
 						}
@@ -180,7 +177,6 @@ jQuery(document).ready(function( $ ) {
 								plugin: slug,
 							},
 							success: function( response ) {
-								console.log('NEW error: required plugin activated!');
 								WprTemplatesKit.requiredPlugins[slug] = true;
 							}
 						});
@@ -189,10 +185,27 @@ jQuery(document).ready(function( $ ) {
             });
 		},
 
+		wpr_fix_royal_compatibility: function() {
+			$.ajax({
+				type: 'POST',
+				url: ajaxurl,
+				data: {
+					action: 'wpr_deactivate_extra_plugins',
+				},
+				success: function( response ) {
+					console.log('plugins deactivated successfully');
+				},
+				error: function( response ) {
+					console.log('plugins not deactivated successfully');
+				}
+			});
+		},
+
 		importTemplatesKit: function( kitID ) {
 			console.log('Installing Plugins...');
 			WprTemplatesKit.importProgressBar('plugins');
 			WprTemplatesKit.installRequiredPlugins( kitID );
+			WprTemplatesKit.wpr_fix_royal_compatibility();
 
 	        var installPlugins = setInterval(function() {
 

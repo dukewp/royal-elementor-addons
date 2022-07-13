@@ -15,11 +15,14 @@ function wpr_addons_add_templates_kit_menu() {
 add_action( 'admin_menu', 'wpr_addons_add_templates_kit_menu' );
 
 // Import Template Kit
-add_action( 'wp_ajax_wpr_activate_reuired_plugins', 'wpr_activate_reuired_plugins' );
 add_action( 'wp_ajax_wpr_activate_reuired_theme', 'wpr_activate_reuired_theme' );
+add_action( 'wp_ajax_wpr_activate_reuired_plugins', 'wpr_activate_reuired_plugins' );
+add_action( 'wp_ajax_wpr_fix_royal_compatibility', 'wpr_fix_royal_compatibility' );
 add_action( 'wp_ajax_wpr_import_templates_kit', 'wpr_import_templates_kit' );
 add_action( 'wp_ajax_wpr_final_settings_setup', 'wpr_final_settings_setup' );
 add_action( 'wp_ajax_wpr_search_query_results', 'wpr_search_query_results' );
+add_action( 'init', 'disable_default_woo_pages_creation', 2 );
+
 
 /**
 ** Render Templates Kit Page
@@ -238,10 +241,9 @@ function wpr_activate_reuired_plugins() {
 /**
 ** Deactivate Extra Plugins
 */
-function wpr_deactivate_extra_plugins() {
+function wpr_fix_royal_compatibility() {
     // Get currently active plugins
     $active_plugins = (array) get_option( 'active_plugins', array() );
-
     $active_plugins = array_values($active_plugins);
 
     // Deactivate Extra Import Plugins
@@ -487,29 +489,6 @@ function wpr_fix_elementor_images() {
 }
 
 /**
-** Fix Contact Form 7
-*/
-function fix_contact_form_7() {
-    if ( class_exists('WPCF7_ContactForm') ) {
-        $new_contact_form = WPCF7_ContactForm::get_template(
-            array(
-                'title' =>
-                    /* translators: title of your first contact form. %d: number fixed to '1' */
-                    sprintf( __( 'Contact form %d', 'contact-form-7' ), 1 ),
-            )
-        );
-
-        // Get CF7s
-        $contact_forms = get_posts(['post_type'=>'wpcf7_contact_form']);
-
-        // Add new CF7
-        if ( empty($contact_forms) ) {
-            $new_contact_form->save();
-        }
-    }
-}
-
-/**
 ** Final Settings Setup
 */
 function wpr_final_settings_setup() {
@@ -524,9 +503,6 @@ function wpr_final_settings_setup() {
     // Fix Elementor Images
     wpr_fix_elementor_images();
 
-    // Fix Contact Form 7
-    // fix_contact_form_7();
-
     // Track Kit
     wpr_track_imported_kit( $kit );
 
@@ -538,13 +514,13 @@ function wpr_final_settings_setup() {
     if ( $post ) {
         wp_delete_post($post->ID,true);
     }
+}
 
-    // zwoo
-    // if ( function_exists( 'wc_update_product_lookup_tables' ) ) {
-    //     if ( ! wc_update_product_lookup_tables_is_running() ) {
-    //         wc_update_product_lookup_tables();
-    //     }
-    // }
+/**
+** Prevent WooCommerce creating default pages
+*/
+function disable_default_woo_pages_creation() {
+    add_filter( 'woocommerce_create_pages', '__return_empty_array' );
 }
 
 /**
