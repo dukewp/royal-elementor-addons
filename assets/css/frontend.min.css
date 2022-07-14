@@ -12650,6 +12650,14 @@ dl.variation dd {
     justify-content: flex-end;
 }
 
+.wpr-product-rating a {
+    display: none;
+}
+
+.wpr-pr-show-text-yes .wpr-product-rating a {
+    display: block;
+}
+
 /* Product Meta */
 .wpr-product-meta-left .wpr-product-meta .product_meta {
     justify-content: flex-start;
