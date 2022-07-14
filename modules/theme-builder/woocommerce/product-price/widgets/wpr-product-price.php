@@ -47,20 +47,6 @@ class Wpr_Product_Price extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'product_price_tag',
-			[
-				'label' => esc_html__( 'Display', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'inline',
-				'options' => [
-					'inline' => esc_html__( 'Inline', 'wpr-addons' ),
-					'separate' => esc_html__( 'Separate', 'wpr-addons' ),
-				],
-				'prefix_class' => 'wpr-product-price-'
-			]
-		);
-
 		$this->add_responsive_control(
             'product_price_align',
             [
@@ -85,9 +71,23 @@ class Wpr_Product_Price extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-price' => 'text-align: {{VALUE}}',
 				],
-				'separator' => 'before'
+				'separator' => 'after'
             ]
         );
+
+		$this->add_control(
+			'product_price_tag',
+			[
+				'label' => esc_html__( 'Sale Price Display', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'inline',
+				'options' => [
+					'inline' => esc_html__( 'Inline', 'wpr-addons' ),
+					'separate' => esc_html__( 'Separate', 'wpr-addons' ),
+				],
+				'prefix_class' => 'wpr-product-price-'
+			]
+		);
 
 		$this->end_controls_section(); // End Controls Section
 
