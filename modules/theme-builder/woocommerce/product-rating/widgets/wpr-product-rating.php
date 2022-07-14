@@ -60,6 +60,15 @@ class Wpr_Product_Rating extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'product_rating_show_text',
+			[
+				'label' => esc_html__( 'Show Text', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'prefix_class' => 'wpr-pr-show-text-'
+			]
+		);
+
 		$this->add_responsive_control(
 			'product_rating_alignment',
 			[
