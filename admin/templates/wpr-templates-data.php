@@ -10,8 +10,21 @@ class WPR_Templates_Data {
 		$is_pro_active = wpr_fs()->can_use_premium_code() && defined('WPR_ADDONS_PRO_VERSION');
 		$is_cf7_active = is_plugin_active('contact-form-7/wp-contact-form-7.php') ? 'true' : 'false';
 		$is_mla_active = is_plugin_active('media-library-assistant/index.php') ? 'true' : 'false';
+		$is_woo_active = is_plugin_active('woocommerce/woocommerce.php') ? 'true' : 'false';
 
 		return [
+			'shopdiko' => [
+				'v1' => [
+					'name' => 'ShopDiko',
+					'pages' => 'home,home-v1,home-v2,home-v3,lifestyle,about,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .',"woocommerce":'. $is_woo_active .'}',
+					'tags' => 'blog blogger posts personal blog lifestyle blogger theme builder grid slider news',
+					'theme-builder' => false,
+					'woo-builder' => true,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'priority' => 1,
+				],
+			],
 			'personal-blog' => [
 				'v1' => [
 					'name' => 'Personal Blog',

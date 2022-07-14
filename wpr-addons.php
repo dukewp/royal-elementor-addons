@@ -222,11 +222,10 @@ function royal_elementor_addons_activation_time() {//TODO: Try to locate this in
 	} 
 }
 
-// Delete Plugin Update Notice
-function royal_elementor_addons_deactivate() {
-
-}
-
 register_activation_hook( __FILE__, 'royal_elementor_addons_activation_time' );
+
+// Delete Plugin Update Notice
+function royal_elementor_addons_deactivate() {}
+
 // hook already exists with template kits notice
 register_deactivation_hook( __FILE__, 'royal_elementor_addons_deactivate' );

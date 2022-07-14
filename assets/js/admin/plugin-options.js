@@ -12,7 +12,8 @@ jQuery(document).ready(function( $ ) {
 
 	// Current Tab
 	var currentTab = $('.nav-tab-active').attr( 'data-title' );
-		currentTab = currentTab.trim().toLowerCase();
+		currentTab = currentTab.trim().toLowerCase(),
+		currentTab = currentTab.replace(' ', '_');
 
 	/*
 	** WooCommerce Comming Soon -------------------------
@@ -327,6 +328,7 @@ jQuery(document).ready(function( $ ) {
 							$(this).find(globalS).val(path[s]).trigger('change');
 							$(this).find('.'+ path[s] +'s-condition-select').show();
 						} else if ( s === 1 ) {
+							path[s-1] = 'product_archive' === path[s-1] ? 'archive' : path[s-1];
 							$(this).find('.'+ path[s-1] +'s-condition-select').val(path[s]).trigger('change');
 						} else if ( s === 2 ) {
 							$(this).find(inputIDs).val(path[s]).trigger('keyup').show();
@@ -366,9 +368,9 @@ jQuery(document).ready(function( $ ) {
 		$('.wpr-canvas-condition').hide();
 
 		// Show Conditions
-		if ( 'single' === currentTab ) {
+		if ( 'single' === currentTab || 'product_single' === currentTab ) {
 			conditionsWrap.find(singleS).show();
-		} else if ( 'archive' === currentTab ) {
+		} else if ( 'archive' === currentTab || 'product_archive' === currentTab ) {
 			conditionsWrap.find(archiveS).show();
 		} else {
 			conditionsWrap.find(globalS).show();
@@ -500,13 +502,13 @@ jQuery(document).ready(function( $ ) {
 			single = current.find(singleS).val(),
 			customIds = current.find(inputIDs);
 
-		if ( 'archive' === global ) {
+		if ( 'archive' === global || 'product_archive' === global ) {
 			if ( 'none' !== customIds.css('display') ) {
 				path = global +'/'+ archive +'/'+ customIds.val();
 			} else {
 				path = global +'/'+ archive;
 			}
-		} else if ( 'single' === global ) {
+		} else if ( 'single' === global || 'product_single' === global ) {
 			if ( 'none' !== customIds.css('display') ) {
 				path = global +'/'+ single +'/'+ customIds.val();
 			} else {

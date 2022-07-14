@@ -38,6 +38,7 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 
 		$default_archives = [
 			'archive/posts' => esc_html__( 'Posts Archive', 'wpr-addons' ),
+			'product_archive/products' => esc_html__( 'Products Archive', 'wpr-addons' ),
 			'archive/author' => esc_html__( 'Author Archive', 'wpr-addons' ),
 			'archive/date' => esc_html__( 'Date Archive', 'wpr-addons' ),
 			'archive/search' => esc_html__( 'Search Results', 'wpr-addons' ),
@@ -52,11 +53,17 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 			$template_type = get_post_meta( $id, '_wpr_template_type', true  );
 			$template_slug = get_post($id)->post_name;
 			
-			if ( 0 === strpos( $template_type, 'single' ) ) {
-				$conds = json_decode(get_option('wpr_single_conditions'));
+			if ( false !== strpos( $template_type, 'single' ) ) {
+				if ( 0 === strpos( $template_type, 'single' ) ) {
+					$conds = json_decode(get_option('wpr_single_conditions'));
+				} else {
+					$conds = json_decode(get_option('wpr_product_single_conditions'));
+				}
 				
 				if ( $template_slug == Utilities::get_template_slug($conds, 'single/posts', $id) ) {
 					$query = 'post';
+				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'product_single/product', $id) ) {
+					$query = 'product';
 				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'single/pages', $id) ) {
 					$query = 'page';
 				} else {
@@ -71,7 +78,11 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 					}
 				}
 			} else {
-				$conds = json_decode(get_option('wpr_archive_conditions'));
+				if ( 0 === strpos( $template_type, 'archive' ) ) {
+					$conds = json_decode(get_option('wpr_archive_conditions'));
+				} else {
+					$conds = json_decode(get_option('wpr_product_archive_conditions'));
+				}
 
 				if ( $template_slug == Utilities::get_template_slug($conds, 'archive/posts', $id) || $template_slug == Utilities::get_template_slug($conds, 'archive/all_archives', $id) ) {
 					$query = 'archive/posts';
@@ -81,6 +92,12 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 					$query = 'archive/author';
 				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/date', $id) ) {
 					$query = 'archive/date';
+				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'product_archive/products', $id) ) {
+					$query = 'product_archive/products';
+				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'product_archive/product_cat/all', $id) ) {
+					$query = 'product_cat';
+				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'product_archive/product_tag/all', $id) ) {
+					$query = 'product_tag';
 				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/categories', $id) ) {
 					$query = 'category';
 				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/tags', $id) ) {
@@ -97,7 +114,7 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 					}
 				}
 			}
-		}
+		} 
 
 		$this->add_control(
 			'preview_source',
@@ -358,11 +375,17 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 	public function get_container_attributes() {
 		$attributes = parent::get_container_attributes();
 
-		if ( is_singular() /* Not 404 */ ) {
+		if ( is_singular() ) { // Not 404
+			$template_type = get_post_meta(get_the_ID(), '_wpr_template_type', true);
 			$post_classes = get_post_class( '', get_the_ID() );
+
+			if ( 'product_single' === $template_type ) {
+				array_push($post_classes, 'product');
+			}
+
 			$attributes['class'] .= ' ' . implode( ' ', $post_classes );
 		}
-
+ 
 		return $attributes;
 	}
 }

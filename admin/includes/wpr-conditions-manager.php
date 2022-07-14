@@ -57,8 +57,13 @@ class WPR_Conditions_Manager {
         $template = NULL;
 
 		// Get Conditions
-		$archives = json_decode( get_option( 'wpr_archive_conditions' ), true );
-		$singles  = json_decode( get_option( 'wpr_single_conditions' ), true );
+		if ( class_exists( 'WooCommerce' ) && is_woocommerce() ) {
+			$archives = json_decode( get_option( 'wpr_product_archive_conditions' ), true );
+			$singles  = json_decode( get_option( 'wpr_product_single_conditions' ), true );
+		} else {
+			$archives = json_decode( get_option( 'wpr_archive_conditions' ), true );
+			$singles  = json_decode( get_option( 'wpr_single_conditions' ), true );
+		}
 
         if ( empty($archives) && empty($singles) ) {
             return NULL;
@@ -126,6 +131,19 @@ class WPR_Conditions_Manager {
                 // Tag
                 } elseif ( is_tag() ) {
                     $template = Utilities::get_template_slug( $conditions, 'archive/tags', $term_id );
+				// Products
+                } elseif ( class_exists( 'WooCommerce' ) && is_woocommerce() ) {
+                    $template = Utilities::get_template_slug( $conditions, 'product_archive/products' );
+
+                    // Product Categories
+                    if ( is_product_category() && null !== Utilities::get_template_slug( $conditions, 'product_archive/product_cat', $term_id ) ) {
+                        $template = Utilities::get_template_slug( $conditions, 'product_archive/product_cat' );
+                    }
+                    
+                    // Product Tags
+                    if ( is_product_tag() && null !== Utilities::get_template_slug( $conditions, 'product_archive/product_tag', $term_id ) ) {
+                        $template = Utilities::get_template_slug( $conditions, 'product_archive/product_tag' );
+                    }                    
                 }
 
             // Search Page
@@ -176,6 +194,8 @@ class WPR_Conditions_Manager {
                 // Blog Posts
                 if ( 'post' == $post_type ) {
                     $template = Utilities::get_template_slug( $conditions, 'single/posts', $post_id );
+                } elseif ( 'product' == $post_type ) {
+                    $template = Utilities::get_template_slug( $conditions, 'product_single/product', $post_id );
                 }
             } else {
                 // Front page

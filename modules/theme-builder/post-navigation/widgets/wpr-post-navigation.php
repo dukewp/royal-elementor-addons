@@ -32,7 +32,13 @@ class Wpr_Post_Navigation extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return Utilities::show_theme_buider_widget_on('single') ? [ 'wpr-theme-builder-widgets' ] : [];
+		if ( Utilities::show_theme_buider_widget_on('single') ) {
+			return [ 'wpr-theme-builder-widgets' ];
+		} elseif ( Utilities::show_theme_buider_widget_on('product_single') ) {
+			return [ 'wpr-woocommerce-builder-widgets' ];
+		} else {
+			return [];
+		}
 	}
 
 	public function get_keywords() {
@@ -726,6 +732,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 			$settings['post_nav_back'] = '';
 			$settings['post_nav_title'] = '';
 		}
+		wp_reset_postdata();
 
 		// Set Query
 		$nav_query = isset($settings['post_nav_query']) ? $settings['post_nav_query'] : 'all';

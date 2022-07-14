@@ -51,7 +51,7 @@ class WPR_Templates_Library_Blocks {
 
 							<?php
 
-							$modules = Utilities::get_available_modules();
+							$modules = Utilities::get_available_modules( Utilities::get_registered_modules() );
 
 							$exclude_widgets = [
 								'logo',

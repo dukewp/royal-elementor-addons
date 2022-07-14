@@ -35,7 +35,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return [ 'wpr-widgets'];
+		return Utilities::show_theme_buider_widget_on('product_archive') ? [ 'wpr-woocommerce-builder-widgets' ] : ['wpr-widgets'];
 	}
 
 	public function get_keywords() {
@@ -66,9 +66,11 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'options' => [
 					'dynamic' => esc_html__( 'Dynamic', 'wpr-addons' ),
 					'manual' => esc_html__( 'Manual', 'wpr-addons' ),
-					'featured' => esc_html__( 'Featured', 'wpr-addons' ),
-					'onsale' => esc_html__( 'On Sale', 'wpr-addons' ),
-					'pro-cr' => esc_html__( 'Current Query (Pro)', 'wpr-addons' ),
+					'current' => esc_html__( 'Current Query', 'wpr-addons' ),
+					'pro-fr' => esc_html__( 'Featured (Pro)', 'wpr-addons' ),
+					'pro-os' => esc_html__( 'On Sale (Pro)', 'wpr-addons' ),
+					'pro-us' => esc_html__( 'Upsell (Pro)', 'wpr-addons' ),
+					'pro-cs' => esc_html__( 'Cross-sell (Pro)', 'wpr-addons' ),
 				],
 			]
 		);
@@ -90,7 +92,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'pro-rn' => esc_html__( 'Random (Pro)', 'wpr-addons' ),
 				],
 				'condition' => [
-					'query_selection' => [ 'dynamic', 'onsale', 'featured' ],
+					'query_selection' => [ 'dynamic', 'onsale', 'featured', 'upsell', 'cross-sell' ],
 				],
 			]
 		);
@@ -173,6 +175,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 	}
+	
+	public function add_control_sort_and_results_count() {}
+	
+	public function add_section_grid_sorting() {}
+	
+	public function add_section_style_sort_and_results() {}
 
 	public function add_control_layout_slider_amount() {
 		$this->add_responsive_control(
@@ -346,6 +354,34 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'default' => ''
 		];
 	}
+
+	public function add_repeater_args_element_show_added_tc_popup() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
+		];
+	}
+
+	public function add_repeater_args_element_added_to_cart_animation() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
+		];
+	}
+
+	public function add_repeater_element_added_to_cart_fade_out_in() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
+		];
+	}
+
+	public function add_repeater_element_added_to_cart_animation_duration() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
+		];
+	}
 	
 	public function add_control_overlay_animation_divider() {}
 	
@@ -429,6 +465,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 	}
+
+	public function add_section_added_to_cart_popup() {}
 	
 	public function add_section_style_likes() {}
 	
@@ -500,6 +538,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 	
 	public function add_control_grid_slider_dots_hr() {}
 
+	public function add_control_atc_popup_repeater() {
+
+	}
+
 	protected function register_controls() {
 
 		// Tab: Content ==============
@@ -520,7 +562,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$this->add_control_query_selection();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'query_selection', ['pro-cr'] );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'query_selection', ['pro-fr','pro-os','pro-us','pro-cs'] );
 
 		$this->add_control_query_orderby();
 
@@ -567,7 +609,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'label_block' => true,
 				'options' => Utilities::get_posts_by_post_type( 'product' ),
 				'condition' => [
-					'query_selection!' => [ 'manual', 'onsale', 'current' ],
+					'query_selection!' => [ 'manual', 'onsale', 'current', 'upsell', 'cross-sell' ],
 				],
 			]
 		);
@@ -595,6 +637,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::NUMBER,
 				'default' => 9,
 				'min' => 0,
+				'condition' => [
+					'query_selection!' => 'current',
+				],
 			]
 		);
 
@@ -642,6 +687,18 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'label_block' => false
+			]
+		);
+
+		$this->add_control(
+			'current_query_notice',
+			[
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => sprintf( __( 'To set <strong>Posts per Page</strong> for all <strong>Shop Pages</strong>, navigate to <strong><a href="%s" target="_blank">Royal Addons > Settings<a></strong>.', 'wpr-addons' ), admin_url( '?page=wpr-addons&tab=wpr_tab_settings' ) ),
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				'condition' => [
+					'query_selection' => 'current',
+				],
 			]
 		);
 
@@ -815,6 +872,19 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
+		$this->add_control_sort_and_results_count();
+
+		if ( ! wpr_fs()->can_use_premium_code() ) {
+			$this->add_control(
+				'sort_and_results_count_pro_notice',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => '<span style="color:#2a2a2a;">Grid Sorting</span> option is available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-woo-grid-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					'content_classes' => 'wpr-pro-notice',
+				]
+			);
+		}
+
 		$this->add_responsive_control(
 			'layout_filters',
 			[
@@ -835,7 +905,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'{{WRAPPER}} .wpr-grid-filters' => 'display:{{VALUE}};',
 				],
 				'render_type' => 'template',
-				'separator' => 'before',
+				// 'separator' => 'before',
 				'condition' => [
 					'layout_select!' => 'slider',
 				]
@@ -1069,6 +1139,55 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'layout_slider_amount' => 1,
 					'layout_select' => 'slider',
 				],
+			]
+		);
+
+		$this->end_controls_section(); // End Controls Section
+
+		// Tab: Content ==============
+		// Section: Upsell / Cross-sell Title
+		$this->start_controls_section(
+			'section_grid_linked_products',
+			[
+				'label' => esc_html__( 'Upsell / Cross-sell Title', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+				'condition' => [
+					'query_selection' => ['upsell', 'cross-sell'],
+					// 'layout_select!' => 'slider'
+				]
+			]
+		);
+
+		$this->add_control(
+			'grid_linked_products_heading',
+			[
+				'label' => esc_html__( 'Heading', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => 'You may be interested in...',
+				'condition' => [
+					'query_selection' => ['upsell', 'cross-sell'],
+				]
+			]
+		);
+
+		$this->add_control(
+			'grid_linked_products_heading_tag',
+			[
+				'label' => esc_html__( 'Title HTML Tag', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => 'H1',
+					'h2' => 'H2',
+					'h3' => 'H3',
+					'h4' => 'H4',
+					'h5' => 'H5',
+					'h6' => 'H6',
+				],
+				'default' => 'h2',
+				'condition' => [
+					'query_selection' => ['upsell'],
+					'grid_linked_products_heading!' => ''
+				]
 			]
 		);
 
@@ -1515,6 +1634,14 @@ class Wpr_Woo_Grid extends Widget_Base {
 				]
 			]
 		);
+
+		$repeater->add_control( 'element_show_added_tc_popup', $this->add_repeater_args_element_show_added_tc_popup() );
+
+		$repeater->add_control( 'element_added_to_cart_animation', $this->add_repeater_args_element_added_to_cart_animation() );
+
+		$repeater->add_control( 'element_added_to_cart_fade_out_in', $this->add_repeater_element_added_to_cart_fade_out_in() );
+		
+		$repeater->add_control( 'element_added_to_cart_animation_duration', $this->add_repeater_element_added_to_cart_animation_duration() );
 
 		$repeater->add_control(
 			'element_extra_text_pos',
@@ -2201,6 +2328,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 		);
 
 		$this->end_controls_section(); // End Controls Section
+
+		$this->add_section_grid_sorting();
 
 		// Tab: Content ==============
 		// Section: Filters ----------
@@ -4650,6 +4779,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-item-add-to-cart .inner-block a.wpr-button-none:hover' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-item-add-to-cart .inner-block a.added_to_cart:hover' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-grid-item-add-to-cart .inner-block a:before' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-grid-item-add-to-cart .inner-block a:after' => 'background-color: {{VALUE}}',
 				]
@@ -4853,6 +4983,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+		$this->add_section_added_to_cart_popup();
 
 		// Styles =======================
 		// Section: Likes ---------------
@@ -5884,6 +6016,113 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$this->end_controls_section(); // End Controls Section
 
 		// Styles ====================
+		// Section: Upsell / Cross-sell Title
+		$this->start_controls_section(
+			'section_style_linked_products',
+			[
+				'label' => esc_html__( 'Upsell / Cross-sell Title', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'show_label' => false,
+				'condition' => [
+					'query_selection' => ['upsell', 'cross-sell'],
+					// 'layout_select!' => 'slider'
+				]
+			]
+		);
+
+		$this->add_control(
+			'linked_products_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-linked-products-heading' => 'color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'linked_products',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-grid-linked-products-heading *'
+			]
+		);
+
+		$this->add_responsive_control(
+			'linked_products_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 3,
+					'right' => 15,
+					'bottom' => 3,
+					'left' => 15,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-linked-products-heading' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'linked_products_distance_from_grid',
+			[
+				'label' => esc_html__( 'Distance From Grid', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 25,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-linked-products-heading' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				]
+				// 'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'linked_products_alignment',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'left'    => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					]
+				],
+				'default' => 'left',
+				'separator' => 'before',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-linked-products-heading *' => 'text-align: {{VALUE}};',
+				]
+			]
+		);
+
+		$this->end_controls_section(); // End Controls Section
+
+		$this->add_section_style_sort_and_results();
+
+		// Styles ====================
 		// Section: Filters ----------
 		$this->start_controls_section(
 			'section_style_filters',
@@ -6759,6 +6998,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$args = [
 			'post_type' => 'product',
 			'tax_query' => $this->get_tax_query_args(),
+			'meta_query' => $this->get_meta_query_args(),
 			'post__not_in' => $settings[ 'query_exclude_products' ],
 			'posts_per_page' => $settings['query_posts_per_page'],
 			'orderby' => 'date',
@@ -6779,8 +7019,85 @@ class Wpr_Woo_Grid extends Widget_Base {
 		if ( 'onsale' === $settings['query_selection'] ) {
 			$args['post__in'] = wc_get_product_ids_on_sale();
 		}
+		
+		if ( 'upsell' === $settings['query_selection'] ) {
+			// Get Product
+			$product = wc_get_product();
+	
+			if ( ! $product ) {
+				return;
+			}
+	
+			$meta_query = WC()->query->get_meta_query();
+	
+			$this->my_upsells = $product->get_upsell_ids();
+			
+			if ( !empty($this->my_upsells) ) {
+				$args = array(
+					'post_type' => 'product',
+					'post__not_in' => $settings[ 'query_exclude_products' ],
+					'ignore_sticky_posts' => 1,
+					// 'no_found_rows' => 1,
+					'posts_per_page' => $settings['query_posts_per_page'],
+					'orderby' => 'post__in',
+					'order' => 'asc',
+					'paged' => $paged,
+					'post__in' => $this->my_upsells,
+					'meta_query' => $meta_query
+				);
+			} else {
+				$args['post_type'] = ['none'];
+			}
+		}
 
-		// Order By
+		if ( 'cross-sell' === $settings['query_selection'] ) {
+			// Get Product
+			$this->crossell_ids = [];
+			
+			if( is_cart() ) {
+				$items = WC()->cart->get_cart();
+	
+				foreach($items as $item => $values) {
+					$product = $values['data'];
+					$cross_sell_products = $product->get_cross_sell_ids();
+					foreach($cross_sell_products as $cs_product) {
+						array_push($this->crossell_ids, $cs_product);
+					}
+				  }
+			}
+
+			if ( is_single() ) {
+				$product = wc_get_product();
+		
+				if ( ! $product ) {
+					return;
+				}
+
+				$this->crossell_ids = $product->get_cross_sell_ids();
+			}
+	
+			// $meta_query = WC()->query->get_meta_query();
+			
+			if ( !empty($this->crossell_ids) ) {
+				$args = [
+					'post_type' => 'product',
+					'post__not_in' => $settings[ 'query_exclude_products' ],
+					'tax_query' => $this->get_tax_query_args(),
+					'ignore_sticky_posts' => 1,
+					// 'no_found_rows' => 1,
+					'posts_per_page' => $settings['query_posts_per_page'],
+					// 'orderby' => 'post__in',
+					'order' => 'asc',
+					'paged' => $paged,
+					'post__in' => $this->crossell_ids,
+					// 'meta_query' => $meta_query
+				];
+			} else {
+				$args['post_type'] = 'none';
+			}
+		}
+
+		// Default Order By
 		if ( 'sales' === $settings['query_orderby'] ) {
 			$args['meta_key'] = 'total_sales';
 			$args['orderby']  = 'meta_value_num';
@@ -6827,8 +7144,19 @@ class Wpr_Woo_Grid extends Widget_Base {
 		if ( 'current' === $settings[ 'query_selection' ] && true !== \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
 			global $wp_query;
 
+			// Products Per Page
+			if ( is_product_category() ) {
+				$posts_per_page = intval(get_option('wpr_woo_shop_cat_ppp', 9));
+			} elseif ( is_product_tag() ) {
+				$posts_per_page = intval(get_option('wpr_woo_shop_tag_ppp', 9));
+			} else {
+				$posts_per_page = intval(get_option('wpr_woo_shop_ppp', 9));
+			}
+
 			$args = $wp_query->query_vars;
-			$args['posts_per_page'] = $settings['query_posts_per_page'];
+			$args['tax_query'] = $this->get_tax_query_args();
+			$args['meta_query'] = $this->get_meta_query_args();
+			$args['posts_per_page'] = $posts_per_page;
 			$args['orderby'] = $settings['query_randomize'];
 		}
 
@@ -6853,10 +7181,21 @@ class Wpr_Woo_Grid extends Widget_Base {
 				$args['orderby']  = 'rand';
 			} elseif ( 'date' === $_GET['orderby'] ) {
 				$args['orderby']  = 'date';
+			} else if ( 'title' === $_GET['orderby'] ){
+				$args['orderby']  = 'title';
+				$args['order'] = 'ASC';
+			} else if ( 'title-desc' === $_GET['orderby'] ) {
+				$args['orderby']  = 'title';
+				$args['order'] = 'DESC';
 			} else {
 				$args['order'] = 'ASC';
 				$args['orderby']  = 'menu_order';
 			}
+		}
+
+		// Search
+		if ( isset( $_GET['psearch'] ) ) {
+			$args['s'] = $_GET['psearch'];
 		}
 
 		return $args;
@@ -6864,21 +7203,105 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 	// Taxonomy Query Args
 	public function get_tax_query_args() {
-		$settings = $this->get_settings();
 		$tax_query = [];
 
-		foreach ( get_object_taxonomies( 'product' ) as $tax ) {
-			if ( ! empty($settings[ 'query_taxonomy_'. $tax ]) ) {
-				array_push( $tax_query, [
-					'taxonomy' => $tax,
-					'field' => 'id',
-					'terms' => $settings[ 'query_taxonomy_'. $tax ]
-				] );
+		// Filters Query
+		if ( isset($_GET['wprfilters']) ) {
+			$selected_filters = WC()->query->get_layered_nav_chosen_attributes();
+
+			if ( !empty($selected_filters) ) {
+				foreach ( $selected_filters as $taxonomy => $data ) {
+					array_push($tax_query, [
+						'taxonomy' => $taxonomy,
+						'field' => 'slug',
+						'terms' => $data['terms'],
+						'operator' => 'and' === $data['query_type'] ? 'AND' : 'IN',
+						'include_children' => false,
+					]);
+				}
+			}
+
+			// Product Categories
+			if ( isset($_GET['filter_product_cat']) ) {
+				array_push($tax_query, [
+					'taxonomy' => 'product_cat',
+					'field' => 'slug',
+					'terms' => explode( ',', $_GET['filter_product_cat'] ),
+					'operator' => 'IN',
+					'include_children' => true, // test this needed or not for hierarchy
+				]);
+			}
+
+			// Product Tags
+			if ( isset($_GET['filter_product_tag']) ) {
+				array_push($tax_query, [
+					'taxonomy' => 'product_tag',
+					'field' => 'slug',
+					'terms' => explode( ',', $_GET['filter_product_tag'] ),
+					'operator' => 'IN',
+					'include_children' => true, // test this needed or not for hierarchy
+				]);
+			}
+		// Grid Query
+		} else {
+			$settings = $this->get_settings();
+
+			foreach ( get_object_taxonomies( 'product' ) as $tax ) {
+				if ( ! empty($settings[ 'query_taxonomy_'. $tax ]) ) {
+					array_push( $tax_query, [
+						'taxonomy' => $tax,
+						'field' => 'id',
+						'terms' => $settings[ 'query_taxonomy_'. $tax ]
+					] );
+				}
+			}
+		}
+
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended
+		// Filter by rating.
+		if ( isset( $_GET['filter_rating'] ) ) {
+
+			$product_visibility_terms  = wc_get_product_visibility_term_ids();
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			$filter_rating = array_filter( array_map( 'absint', explode( ',', wp_unslash( $_GET['filter_rating'] ) ) ) );
+			$rating_terms  = array();
+			for ( $i = 1; $i <= 5; $i ++ ) {
+				if ( in_array( $i, $filter_rating, true ) && isset( $product_visibility_terms[ 'rated-' . $i ] ) ) {
+					$rating_terms[] = $product_visibility_terms[ 'rated-' . $i ];
+				}
+			}
+			if ( ! empty( $rating_terms ) ) {
+				$tax_query[] = array(
+					'taxonomy'      => 'product_visibility',
+					'field'         => 'term_taxonomy_id',
+					'terms'         => $rating_terms,
+					'operator'      => 'IN',
+				);
 			}
 		}
 
 		return $tax_query;
 	}
+
+	// Meta Query Args
+	public function get_meta_query_args(){
+        $meta_query = WC()->query->get_meta_query();
+
+		// Price Filter Args
+        if ( isset( $_GET['min_price'] ) || isset( $_GET['max_price'] ) ) {
+            $meta_query = array_merge( ['relation' => 'AND'], $meta_query );
+            $meta_query[] = [
+                [
+                    'key' => '_price',
+                    'value' => [ $_GET['min_price'], $_GET['max_price'] ],
+                    'compare' => 'BETWEEN',
+                    'type' => 'NUMERIC'
+                ],
+            ];
+        }
+
+		return $meta_query;
+    }
 
 	// Get Animation Class
 	public function get_animation_class( $data, $object ) {
@@ -7241,10 +7664,14 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$attributes = [
 			'rel="nofollow"',
-			'class="'. esc_attr($button_class) .' wpr-button-effect '. esc_attr($add_to_cart_animation) .'"',
+			'class="'. esc_attr($button_class) .' wpr-button-effect '. esc_attr($add_to_cart_animation) .' '. (!$product->is_in_stock() && 'simple' === $product->get_type() ? 'wpr-atc-not-clickable' : '').'"',
 			'aria-label="'. esc_attr($product->add_to_cart_description()) .'"',
 			'data-product_id="'. esc_attr($product->get_id()) .'"',
 			'data-product_sku="'. esc_attr($product->get_sku()) .'"',
+			'data-atc-popup="'. $settings['element_show_added_tc_popup']  .'"',
+			'data-atc-animation="'. $settings['element_added_to_cart_animation']  .'"',
+			'data-atc-fade-out-in="'. $settings['element_added_to_cart_fade_out_in']  .'"',
+			'data-atc-animation-time="'. $settings['element_added_to_cart_animation_duration']  .'"'
 		];
 
 		$button_HTML = '';
@@ -7272,7 +7699,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			array_push( $attributes, 'href="'. esc_url( get_permalink() ) .'"' );
 		} else {
 			array_push( $attributes, 'href="'. esc_url( $product->get_product_url() ) .'"' );
-			$button_HTML .= get_post_meta( get_the_ID(), '_button_text', true );
+			$button_HTML .= get_post_meta( get_the_ID(), '_button_text', true ) ? get_post_meta( get_the_ID(), '_button_text', true ) : 'Buy Product';
 		}
 
 		// Icon: After
@@ -7289,7 +7716,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 			echo '</div>';
 		echo '</div>';
 	}
-
 	// Render Rating
 	public function render_product_rating( $settings, $class ) {
 
@@ -7499,6 +7925,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 		}
 	}
 
+	// Render Sort & Results
+	public function render_grid_sorting( $settings ) {}
+
 	// Render Grid Filters
 	public function render_grid_filters( $settings ) {
 		$taxonomy = $settings['filters_select'];
@@ -7659,6 +8088,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 		if ( 'yes' !== $settings['layout_pagination'] || 1 === $this->get_max_num_pages( $settings ) || 'slider' === $settings['layout_select'] ) {
 			return;
 		}
+		
+		if ( (isset($this->my_upsells) && (count($this->my_upsells) <= $settings['query_posts_per_page'])) || (isset($this->crossell_ids) && (count($this->crossell_ids) <= $settings['query_posts_per_page'])) ) {
+			return;
+		}
 
 		global $paged;
 		$pages = $this->get_max_num_pages( $settings );
@@ -7708,7 +8141,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 				    if ( 'yes' === $settings['pagination_first_last'] ) {
 				    	if ( $paged >= 2 ) {
-					    	echo '<a href="'. esc_url(get_pagenum_link( 1, true )) .'" class="wpr-first-page">';
+					    	echo '<a href="'. esc_url(get_pagenum_link( $paged + 1, true )) .'" class="wpr-first-page">';
+					    	// echo '<a href="'. esc_url(substr(get_pagenum_link( $paged + 1, true ), 0, strpos(get_pagenum_link( $paged + 1, true ), '?orderby'))) .'" class="wpr-first-page">';
 					    		echo Utilities::get_wpr_icon( $settings['pagination_fl_icon'], 'left' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					    		echo '<span>'. esc_html($settings['pagination_first_text']) .'</span>';
 					    	echo '</a>';
@@ -7742,6 +8176,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 						if ( $paged === $i ) {
 							echo '<span class="wpr-grid-current-page">'. esc_html($i) .'</span>';
 						} else {
+							// var_dump(get_pagenum_link( $i, true ), substr(get_pagenum_link( $i, true ), 0, strpos(get_pagenum_link( $i, true ), '?orderby')));
 							echo '<a href="'. esc_url(get_pagenum_link( $i, true )) .'">'. esc_html($i) .'</a>';
 						}
 			        }
@@ -7976,13 +8411,13 @@ class Wpr_Woo_Grid extends Widget_Base {
 	}
 
 	protected function render() {
+		// Get Settings
+		$settings = $this->get_settings();
+
 		if ( ! class_exists( 'WooCommerce' ) ) {
 			echo '<h2>'. esc_html__( 'WooCommerce is NOT active!', 'wpr-addons' ) .'</h2>';
 			return;
 		}
-
-		// Get Settings
-		$settings = $this->get_settings();
 		// Get Posts
 		$posts = new \WP_Query( $this->get_main_query_args() );
 
@@ -7991,10 +8426,22 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$post_index = 0;
 
+		if ( ('upsell' === $settings['query_selection'] && '' !== $settings['grid_linked_products_heading']) || ('cross-sell' === $settings['query_selection'] && '' !== $settings['grid_linked_products_heading']) ) {
+			echo '<div class="wpr-grid-linked-products-heading">';
+				echo '<'. $settings['grid_linked_products_heading_tag'] .'>'. esc_html( $settings['grid_linked_products_heading'] ) .'</'. $settings['grid_linked_products_heading_tag'] .'>';
+			echo '</div>';
+		}
+		
 		// Grid Settings
 		if ( 'slider' !== $settings['layout_select'] ) {
-			// Filters
-			$this->render_grid_filters( $settings );
+			
+			if ( 'upsell' !== $settings['query_selection'] && 'cross-sell' !== $settings['query_selection'] ) {
+				// Sort & Results
+				$this->render_grid_sorting( $settings );
+
+				// Filters
+				$this->render_grid_filters( $settings );
+			}
 
 			$this->add_grid_settings( $settings );
 			$render_attribute = $this->get_render_attribute_string( 'grid-settings' );
@@ -8006,10 +8453,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 		}
 
 		// Grid Wrap
-		echo '<section class="wpr-grid elementor-clearfix" '. $render_attribute .'>';
+		echo '<section class="wpr-grid elementor-clearfix" '. $render_attribute .' data-found-posts = '. $posts->found_posts .'>';
+
 
 		while ( $posts->have_posts() ) : $posts->the_post();
-
 			// $post_index++;
 			// if ( Utilities::is_new_free_user() && $post_index > 12 ) {
 			// 	return;
@@ -8062,14 +8509,16 @@ class Wpr_Woo_Grid extends Widget_Base {
 		echo '</section>';
 
 		if ( 'slider' === $settings['layout_select'] ) {
-			// Slider Navigation
-			echo '<div class="wpr-grid-slider-arrow-container">';
-				echo '<div class="wpr-grid-slider-prev-arrow wpr-grid-slider-arrow" id="wpr-grid-slider-prev-'. esc_attr($this->get_id()) .'">'. Utilities::get_wpr_icon( $settings['layout_slider_nav_icon'], '' ) .'</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				echo '<div class="wpr-grid-slider-next-arrow wpr-grid-slider-arrow" id="wpr-grid-slider-next-'. esc_attr($this->get_id()) .'">'. Utilities::get_wpr_icon( $settings['layout_slider_nav_icon'], '' ) .'</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo '</div>';
+			if ( $posts->found_posts > (int) $settings['layout_slider_amount'] &&  (int) $settings['layout_slider_amount'] < $settings['query_posts_per_page'] ) {
+				// Slider Navigation
+				echo '<div class="wpr-grid-slider-arrow-container">';
+					echo '<div class="wpr-grid-slider-prev-arrow wpr-grid-slider-arrow" id="wpr-grid-slider-prev-'. esc_attr($this->get_id()) .'">'. Utilities::get_wpr_icon( $settings['layout_slider_nav_icon'], '' ) .'</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo '<div class="wpr-grid-slider-next-arrow wpr-grid-slider-arrow" id="wpr-grid-slider-next-'. esc_attr($this->get_id()) .'">'. Utilities::get_wpr_icon( $settings['layout_slider_nav_icon'], '' ) .'</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo '</div>';
 
-			// Slider Dots
-			echo '<div class="wpr-grid-slider-dots"></div>';
+				// Slider Dots
+				echo '<div class="wpr-grid-slider-dots"></div>';
+			}
 		}
 
 
@@ -8079,7 +8528,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 		// No Posts Found
 		else:
 
-			echo '<h2>'. esc_html($settings['query_not_found_text']) .'</h2>';
+			if ('upsell' !== $settings['query_selection'] && 'cross-sell' !== $settings['query_selection']) {
+				echo '<h2>'. esc_html($settings['query_not_found_text']) .'</h2>';
+			}
 
 		// Loop: End
 		endif;

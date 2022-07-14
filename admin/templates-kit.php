@@ -15,11 +15,13 @@ function wpr_addons_add_templates_kit_menu() {
 add_action( 'admin_menu', 'wpr_addons_add_templates_kit_menu' );
 
 // Import Template Kit
-add_action( 'wp_ajax_wpr_install_reuired_plugins', 'wpr_install_reuired_plugins' );
 add_action( 'wp_ajax_wpr_activate_reuired_theme', 'wpr_activate_reuired_theme' );
+add_action( 'wp_ajax_wpr_activate_reuired_plugins', 'wpr_activate_reuired_plugins' );
+add_action( 'wp_ajax_wpr_fix_royal_compatibility', 'wpr_fix_royal_compatibility' );
 add_action( 'wp_ajax_wpr_import_templates_kit', 'wpr_import_templates_kit' );
 add_action( 'wp_ajax_wpr_final_settings_setup', 'wpr_final_settings_setup' );
 add_action( 'wp_ajax_wpr_search_query_results', 'wpr_search_query_results' );
+add_action( 'init', 'disable_default_woo_pages_creation', 2 );
 
 
 /**
@@ -199,23 +201,48 @@ function wpr_activate_reuired_theme() {
 }
 
 /**
-** Install/Activate Required Plugins
+** Activate Required Plugins
 */
-function wpr_install_reuired_plugins() {
-    // Get currently active plugins
-    $active_plugins = (array) get_option( 'active_plugins', array() );
-
-    // Add Required Plugins
+function wpr_activate_reuired_plugins() {
     if ( isset($_POST['plugin']) ) {
         if ( 'contact-form-7' == $_POST['plugin'] ) {
-            array_push( $active_plugins, 'contact-form-7/wp-contact-form-7.php' );
+            if ( !is_plugin_active( 'contact-form-7/wp-contact-form-7.php' ) ) {
+                activate_plugin( 'contact-form-7/wp-contact-form-7.php' );
+            }
+        } elseif ( 'woocommerce' == $_POST['plugin'] ) {
+            if ( !is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+                activate_plugin( 'woocommerce/woocommerce.php' );
+            }
         } elseif ( 'media-library-assistant' == $_POST['plugin'] ) {
-            array_push( $active_plugins, 'media-library-assistant/index.php' );
+            if ( !is_plugin_active( 'media-library-assistant/index.php' ) ) {
+                activate_plugin( 'media-library-assistant/index.php' );
+            }
         }
+    }
+}
+
+/**
+** Deactivate Extra Plugins
+*/
+function wpr_fix_royal_compatibility() {
+    // Get currently active plugins
+    $active_plugins = (array) get_option( 'active_plugins', array() );
+    $active_plugins = array_values($active_plugins);
+
+    // Deactivate Extra Import Plugins
+    $ashe_extra_key = array_search('ashe-extra/ashe-extra.php', $active_plugins);
+    $bard_extra_key = array_search('bard-extra/bard-extra.php', $active_plugins);
+
+    if ( false !== $ashe_extra_key && array_key_exists($ashe_extra_key, $active_plugins) ) {
+        unset($active_plugins[$ashe_extra_key]);
+    }
+
+    if ( false !== $bard_extra_key && array_key_exists($bard_extra_key, $active_plugins) ) {
+        unset($active_plugins[$bard_extra_key]);
     }
 
     // Set Active Plugins
-    update_option( 'active_plugins', $active_plugins ); 
+    update_option( 'active_plugins', array_values($active_plugins) );
 
     // Get Current Theme
     $theme = get_option('stylesheet');
@@ -226,9 +253,6 @@ function wpr_install_reuired_plugins() {
         switch_theme( 'royal-elementor-kit' );
         set_transient( 'royal-elementor-kit_activation_notice', true );
     }
-
-    // TODO: maybe return back  - 'ashe' !== $theme && 'bard' !== $theme && 
-    
 }
 
 /**
@@ -334,6 +358,7 @@ function setup_wpr_templates( $kit ) {
     $kit_version = substr($kit, (strripos($kit, '-v') + 1), strlen($kit));
     $get_available_kits = WPR_Templates_Data::get_available_kits();
     $has_theme_builder = $get_available_kits[$kit_name][$kit_version]['theme-builder'];
+    $has_woo_builder = $get_available_kits[$kit_name][$kit_version]['woo-builder'];
 
     // Set Home & Blog Pages
     $home_page = get_page_by_path('home-'. $kit);
@@ -358,6 +383,28 @@ function setup_wpr_templates( $kit ) {
     if ( $has_theme_builder ) {
         update_option('wpr_archive_conditions', '{"user-archive-'. $kit .'-blog":["archive/posts"],"user-archive-'. $kit .'-author":["archive/author"],"user-archive-'. $kit .'-date":["archive/date"],"user-archive-'. $kit .'-category-tag":["archive/categories/all","archive/tags/all"],"user-archive-'. $kit .'-search":["archive/search"]}');
         update_option('wpr_single_conditions', '{"user-single-'. $kit .'-404":["single/page_404"],"user-single-'. $kit .'-post":["single/posts/all"],"user-single-'. $kit .'-page":["single/pages/all"]}');
+    }
+
+    // WooCommerce Builder
+    if ( $has_woo_builder ) {
+        update_option('wpr_product_archive_conditions', '{"user-product_archive-'. $kit .'-shop":["product_archive/products"],"user-product_archive-'. $kit .'-category-tag":["product_archive/product_cat/all","product_archive/product_tags/all"]}');
+        update_option('wpr_product_single_conditions', '{"user-product_single-'. $kit .'-product":["product_single/product"]}');
+
+        $shop_id = get_page_by_path('shop-'. $kit) ? get_page_by_path('shop-'. $kit)->ID : '';
+        $cart_id = get_page_by_path('cart-'. $kit) ? get_page_by_path('cart-'. $kit)->ID : '';
+        $checkout_id = get_page_by_path('checkout-'. $kit) ? get_page_by_path('checkout-'. $kit)->ID : '';
+        $myaccount_id = get_page_by_path('my-account-'. $kit) ? get_page_by_path('my-account-'. $kit)->ID : '';
+        
+        update_option('woocommerce_shop_page_id', $shop_id);
+        update_option('woocommerce_cart_page_id', $cart_id);
+        update_option('woocommerce_checkout_page_id', $checkout_id);
+
+        if ( 'pro' === $get_available_kits[$kit_name][$kit_version]['price'] ) {
+            update_option('woocommerce_myaccount_page_id', $myaccount_id);
+        }
+
+        // Update Options
+        update_option( 'woocommerce_queue_flush_rewrite_rules', 'yes' );
     }
 
     // Set Popup
@@ -421,29 +468,6 @@ function wpr_fix_elementor_images() {
 }
 
 /**
-** Fix Contact Form 7
-*/
-function fix_contact_form_7() {
-    if ( class_exists('WPCF7_ContactForm') ) {
-        $new_contact_form = WPCF7_ContactForm::get_template(
-            array(
-                'title' =>
-                    /* translators: title of your first contact form. %d: number fixed to '1' */
-                    sprintf( __( 'Contact form %d', 'contact-form-7' ), 1 ),
-            )
-        );
-
-        // Get CF7s
-        $contact_forms = get_posts(['post_type'=>'wpcf7_contact_form']);
-
-        // Add new CF7
-        if ( empty($contact_forms) ) {
-            $new_contact_form->save();
-        }
-    }
-}
-
-/**
 ** Final Settings Setup
 */
 function wpr_final_settings_setup() {
@@ -458,9 +482,6 @@ function wpr_final_settings_setup() {
     // Fix Elementor Images
     wpr_fix_elementor_images();
 
-    // Fix Contact Form 7
-    fix_contact_form_7();
-
     // Track Kit
     wpr_track_imported_kit( $kit );
 
@@ -472,6 +493,13 @@ function wpr_final_settings_setup() {
     if ( $post ) {
         wp_delete_post($post->ID,true);
     }
+}
+
+/**
+** Prevent WooCommerce creating default pages
+*/
+function disable_default_woo_pages_creation() {
+    add_filter( 'woocommerce_create_pages', '__return_empty_array' );
 }
 
 /**

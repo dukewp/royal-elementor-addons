@@ -134,6 +134,29 @@ class Wpr_Content_Ticker extends Widget_Base {
 
 	public function add_section_ticker_items() {}
 
+	public function add_control_query_source () {
+
+		// Get Available Post Types
+		$this->post_types = Utilities::get_custom_types_of( 'post', false );
+
+		// Remove WooCommerce
+		unset( $this->post_types['product'] );
+		$this->post_types['product-pro'] = 'Product (Pro)';
+		$this->post_types['featured-pro'] = 'Featured (Pro)';
+		$this->post_types['sale-pro'] = 'On Sale (Pro)';
+
+		$this->add_control(
+			'query_source',
+			[
+				'label' => esc_html__( 'Source', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'post',
+				'options' => $this->post_types,
+			]
+		);
+
+	}
+
 	protected function register_controls() {
 
 		// Section: General ----------
@@ -183,27 +206,16 @@ class Wpr_Content_Ticker extends Widget_Base {
 			]
 		);
 
-		// Get Available Post Types
-		$post_types = Utilities::get_custom_types_of( 'post', false );
+		$this->add_control_query_source();
 
-		// Remove WooCommerce
-		unset( $post_types['product'] );
-
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'content-ticker', 'query_source', ['product-pro', 'featured-pro', 'sale-pro'] );
+		
 		// Get Available Taxonomies
 		$post_taxonomies = Utilities::get_custom_types_of( 'tax', false );
 
 		// Get Available Meta Keys
 		$post_meta_keys = Utilities::get_custom_meta_keys();
-
-		$this->add_control(
-			'query_source',
-			[
-				'label' => esc_html__( 'Source', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'post',
-				'options' => $post_types,
-			]
-		);
 
 		$this->add_control(
 			'query_selection',
@@ -276,7 +288,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 		}
 
 		// Exclude
-		foreach ( $post_types as $slug => $title ) {
+		foreach ( $this->post_types as $slug => $title ) {
 			$this->add_control(
 				'query_exclude_'. $slug,
 				[
@@ -295,7 +307,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 		}
 
 		// Manual Selection
-		foreach ( $post_types as $slug => $title ) {
+		foreach ( $this->post_types as $slug => $title ) {
 			$this->add_control(
 				'query_manual_'. $slug,
 				[
@@ -1776,9 +1788,9 @@ class Wpr_Content_Ticker extends Widget_Base {
 	// Get Taxonomies Related to Post Type
 	public function get_related_taxonomies() {
 		$relations = [];
-		$post_types = Utilities::get_custom_types_of( 'post', false );
+		$this->post_types = Utilities::get_custom_types_of( 'post', false );
 
-		foreach ( $post_types as $slug => $title ) {
+		foreach ( $this->post_types as $slug => $title ) {
 			$relations[$slug] = [];
 
 			foreach ( get_object_taxonomies( $slug ) as $tax ) {
@@ -1793,6 +1805,8 @@ class Wpr_Content_Ticker extends Widget_Base {
 	public function get_main_query_args() {
 		$settings = $this->get_settings();
 		$author = ! empty( $settings[ 'query_author' ] ) ? implode( ',', $settings[ 'query_author' ] ) : '';
+
+		in_array( $settings[ 'query_source' ], ['product-pro', 'featured-pro', 'sale-pro'] ) ? $settings[ 'query_source' ] = 'post' : '';
 
 		// Dynamic
 		$args = [
@@ -1843,6 +1857,38 @@ class Wpr_Content_Ticker extends Widget_Base {
 				'order' => $settings[ 'post_order' ],
 				'offset' => $settings[ 'query_offset' ],
 			];
+		}
+
+		if ( 'featured' === $settings[ 'query_source' ] ) {
+			$args['post_type'] = 'product';
+			$tax_query[] = [
+				'taxonomy' => 'product_visibility',
+				'field'    => 'name',
+				'terms'    => 'featured',
+				'operator' => 'IN', // or 'NOT IN' to exclude feature products
+			];
+			$args['tax_query'] = $tax_query;
+		}
+
+		if ( 'sale' === $settings[ 'query_source' ] ) {
+			$args['post_type'] = 'product';
+			$meta_query[] = [
+				'relation' => 'OR',
+				[ // Simple products type
+					'key'           => '_sale_price',
+					'value'         => 0,
+					'compare'       => '>',
+					'type'          => 'numeric'
+				],
+				[ // Variable products type
+					'key'           => '_min_variation_sale_price',
+					'value'         => 0,
+					'compare'       => '>',
+					'type'          => 'numeric'
+				]
+			];
+
+			$args['meta_query'] = $meta_query;
 		}
 
 		return $args;

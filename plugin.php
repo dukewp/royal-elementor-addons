@@ -141,6 +141,10 @@ class Plugin {
 			// TODO: Remove this and fix with Transients
 			add_action( 'admin_enqueue_scripts', [ $this, 'hide_theme_notice' ] );
 		}
+
+		if ( class_exists('WooCommerce') ) {
+			require WPR_ADDONS_PATH . 'includes/woocommerce/woocommerce-config.php';
+		}
 	}
 
 	public function autoload( $class ) {
@@ -489,6 +493,12 @@ class Plugin {
 			'2.0',
 			true
 		);
+		wp_register_script( 
+			'wpr-perfect-scroll-js',
+			 WPR_ADDONS_URL .'assets/js/lib/perfect-scrollbar/perfect-scrollbar.min.js', 
+			 [ 'jquery' ], 
+			 '0.4.9' 
+		);
 	}
 
 	public function enqueue_panel_scripts() {
@@ -651,16 +661,55 @@ class Plugin {
 			);
 		}
 		
-
-		// Add Woo element category in panel
-		// \Elementor\Plugin::instance()->elements_manager->add_category(
-		// 	'wpr-woo-widgets',
-		// 	[
-		// 		'title' => sprintf(esc_html__( '%s WooCommerce', 'wpr-addons' ), Utilities::get_plugin_name()),
-		// 		'icon' => 'font',
-		// 	]
-		// );
+		// Add Woocommerce Builder category in panel
+		if ( Utilities::is_theme_builder_template() ) {
+			\Elementor\Plugin::instance()->elements_manager->add_category(
+				'wpr-woocommerce-builder-widgets',
+				[
+					'title' => sprintf(esc_html__( '%s Woocommerce Builder', 'wpr-addons' ), Utilities::get_plugin_name()),
+					'icon' => 'font',
+				]
+			);
+		}
+		
+		// Add Premium Widtgets category in panel
+		\Elementor\Plugin::instance()->elements_manager->add_category(
+			'wpr-premium-widgets',
+			[
+				'title' => sprintf(esc_html__( '%s Premium Widgets', 'wpr-addons' ), Utilities::get_plugin_name()),
+				'icon' => 'font',
+			]
+		);
 	}
+
+    public function promote_premium_widgets($config) {
+		if ( ! wpr_fs()->can_use_premium_code() ) {
+			$category = Utilities::is_theme_builder_template() ? 'wpr-woocommerce-builder-widgets' : 'wpr-premium-widgets';
+			
+			$config['promotionWidgets'] = [
+				[
+					'name' => 'wpr-woo-category-grid',
+					'title' => __('Woo Category Grid', 'wpr-addons'),
+					'icon' => 'wpr-icon eicon-gallery-grid',
+					'categories' => '["'. $category .'"]',
+				],
+				[
+					'name' => 'wpr-my-account',
+					'title' => __('My Account', 'wpr-addons'),
+					'icon' => 'wpr-icon eicon-my-account',
+					'categories' => '["'. $category .'"]',
+				],
+				[
+					'name' => 'wpr-product-filters',
+					'title' => __('Product Filters', 'wpr-addons'),
+					'icon' => 'wpr-icon eicon-filter',
+					'categories' => '["'. $category .'"]',
+				],
+			];
+		}
+
+        return $config;
+    }
 
 	protected function add_actions() {
 		// Register Widgets
@@ -697,6 +746,9 @@ class Plugin {
 
 		// Lightbox Styles
 		add_action( 'wp_head', [ $this, 'lightbox_styles' ], 988 );
+
+		// Promote Premium Widgets
+        add_filter('elementor/editor/localize_settings', [$this, 'promote_premium_widgets']);
 	}
 
 	/**

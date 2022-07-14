@@ -7370,7 +7370,7 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'name'     => 'pagination_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-grid-pagination'
+				'selector' => '{{WRAPPER}} .wpr-grid-pagination, {{WRAPPER}} .wpr-grid-pagination a'
 			]
 		);
 

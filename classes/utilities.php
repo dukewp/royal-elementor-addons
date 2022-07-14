@@ -66,15 +66,14 @@ class Utilities {
 	/**
 	** Get Enabled Modules
 	*/
-	public static function get_available_modules() {
-		$modules = Utilities::get_registered_modules();
-
+	public static function get_available_modules( $modules ) {
 		foreach ( $modules as $title => $data ) {
 			$slug = $data[0];
 			if ( 'on' !== get_option('wpr-element-'. $slug, 'on') ) {
 				unset($modules[$title]);
 			}
 		}
+
 		return $modules;
 	}
 
@@ -83,16 +82,112 @@ class Utilities {
 	*/
 	public static function get_theme_builder_modules() {
 		return [
-			'post-title',
-			'post-media',
-			'post-content',
-			'post-info',
-			'post-navigation',
-			'post-comments',
-			'author-box',
-			'archive-title',
+			'Post Title' => ['post-title', '', '', ''],
+			'Post Media' => ['post-media', '', '', ''],
+			'Post Content' => ['post-content', '', '', ''],
+			'Post Info' => ['post-info', '', '', ''],
+			'Post Navigation' => ['post-navigation', '', '', ''],
+			'Post Comments' => ['post-comments', '', '', ''],
+			'Author Box' => ['author-box', '', '', ''],
+			'Archive Title' => ['archive-title', '', '', ''],
 		];
 	}
+
+	/**
+	** Get WooCommerce Builder Modules
+	*/
+	public static function get_woocommerce_builder_modules() {
+		return [
+			'Product Title' => ['product-title', '', '', ''],
+			'Product Media' => ['product-media', '', '', ''],
+			'Product Price' => ['product-price', '', '', ''],
+			'Product Add to Cart' => ['product-add-to-cart', '', '', ''],
+			'Product Breadcrumbs' => ['product-Breadcrumbs', '', '', ''],
+			'Product Tabs' => ['product-tabs', '', '', ''],
+			'Product Excerpt' => ['product-excerpt', '', '', ''],
+			'Product Rating' => ['product-rating', '', '', ''],
+			'Product Meta' => ['product-meta', '', '', ''],
+			'Product Sales Badge' => ['product-sales-badge', '', '', ''],
+			'Product Stock' => ['product-stock', '', '', ''],
+			'Product Additional Info' => ['product-additional-information', '', '', ''],
+			'Product Notice' => ['product-notice', '', '', ''],
+			'Product Mini Cart' => ['product-mini-cart', '', '', ''],
+			'Page: Cart' => ['page-cart', '', '', ''],
+			'Page: Checkout ' => ['page-checkout', '', '', ''],
+		];
+	}
+
+	/**
+	** Get Shop Page URL
+	*/
+	public static function get_shop_url( $settings ) {
+		global $wp;
+
+        if ( '' == get_option('permalink_structure' ) ) {
+            $url = remove_query_arg(array('page', 'paged'), add_query_arg($wp->query_string, '', home_url($wp->request)));
+        } else {
+            $url = preg_replace('%\/page/[0-9]+%', '', home_url(trailingslashit($wp->request)));
+        }
+
+		// WPR Filters
+		$url = add_query_arg( 'wprfilters', '', $url );
+
+		// Min/Max.
+		if ( isset( $_GET['min_price'] ) ) {
+			$url = add_query_arg( 'min_price', wc_clean( wp_unslash( $_GET['min_price'] ) ), $url );
+		}
+
+		if ( isset( $_GET['max_price'] ) ) {
+			$url = add_query_arg( 'max_price', wc_clean( wp_unslash( $_GET['max_price'] ) ), $url );
+		}
+
+		// Search
+		if ( isset( $_GET['psearch'] ) ) {
+			$url = add_query_arg( 'psearch', wp_unslash( $_GET['psearch'] ), $url );
+		}
+
+		// Rating
+		if ( isset( $_GET['filter_rating'] ) ) {
+			$url = add_query_arg( 'filter_rating', wp_unslash( $_GET['filter_rating'] ), $url );
+		}
+
+		// Categories
+		if ( isset( $_GET['filter_product_cat'] ) ) {
+			$url = add_query_arg( 'filter_product_cat', wp_unslash( $_GET['filter_product_cat'] ), $url );
+		}
+
+		// Tags
+		if ( isset( $_GET['filter_product_tag'] ) ) {
+			$url = add_query_arg( 'filter_product_tag', wp_unslash( $_GET['filter_product_tag'] ), $url );
+		}
+
+		// All current filters.
+		if ( $_chosen_attributes = WC()->query->get_layered_nav_chosen_attributes() ) { // phpcs:ignore Squiz.PHP.DisallowMultipleAssignments.FoundInControlStructure, WordPress.CodeAnalysis.AssignmentInCondition.Found
+			foreach ( $_chosen_attributes as $name => $data ) {
+				$filter_name = wc_attribute_taxonomy_slug( $name );
+				if ( ! empty( $data['terms'] ) ) {
+					$url = add_query_arg( 'filter_' . $filter_name, implode( ',', $data['terms'] ), $url );
+				}
+
+				if ( !empty($settings) ) {
+					if ( 'or' === $settings['tax_query_type'] || isset($_GET['query_type_' . $filter_name]) ) {
+						$url = add_query_arg( 'query_type_' . $filter_name, 'or', $url );
+					}
+				}
+			}
+		}
+
+		// Sorting
+		if ( isset( $_GET['orderby'] ) ) {
+			$url = add_query_arg( 'orderby', wp_unslash( $_GET['orderby'] ), $url );
+		}
+
+		// Fix URL
+		// $url = str_replace( '%2C', ',', $url );
+		
+		return $url;
+	}
+
 
 	/**
 	** Get Available Custom Post Types or Taxonomies
@@ -120,6 +215,23 @@ class Utilities {
 		}
 
 		return $custom_type_list;
+	}
+
+	
+	/**
+	** Get Available WooCommerce Taxonomies
+	*/
+	public static function get_woo_taxonomies() {
+		$taxonomy_list = [];
+
+		foreach ( get_object_taxonomies( 'product' ) as $taxonomy_data ) {
+			$taxonomy = get_taxonomy( $taxonomy_data );
+			if( $taxonomy->show_ui ) {
+				$taxonomy_list[ $taxonomy_data ] = $taxonomy->label;
+			}
+		}
+
+		return $taxonomy_list;
 	}
 
 
@@ -220,7 +332,9 @@ class Utilities {
 
 		// Find a Custom Condition
 		foreach( $data as $id => $conditions ) {
+
 			if ( in_array( $page .'/'. $post_id, $conditions) ) {
+
 				$template = $id;
 			} elseif ( in_array( $page .'/all', $conditions) ) {
 				$template = $id;
@@ -325,7 +439,7 @@ class Utilities {
 		$current_page = get_post(get_the_ID());
 
 		if ( $current_page ) {
-			return strpos($current_page->post_name, 'user-archive') !== false || strpos($current_page->post_name, 'user-single') !== false;
+			return strpos($current_page->post_name, 'user-archive') !== false || strpos($current_page->post_name, 'user-single') !== false || strpos($current_page->post_name, 'user-product') !== false;
 		} else {
 			return false;
 		}

@@ -46,6 +46,11 @@ function is_plugin_installed($file) {
 
 // Register Settings
 function wpr_register_addons_settings() {
+    // WooCommerce
+    register_setting( 'wpr-settings', 'wpr_woo_shop_ppp' );
+    register_setting( 'wpr-settings', 'wpr_woo_shop_cat_ppp' );
+    register_setting( 'wpr-settings', 'wpr_woo_shop_tag_ppp' );
+
     // Integrations
     register_setting( 'wpr-settings', 'wpr_google_map_api_key' );
     register_setting( 'wpr-settings', 'wpr_mailchimp_api_key' );
@@ -83,11 +88,27 @@ function wpr_register_addons_settings() {
     // register_setting('wpr-extension-settings', 'wpr-reading-progress-bar');
 
     // Element Toggle
+    register_setting( 'wpr-elements-settings', 'wpr-element-toggle-all', [ 'default' => 'on' ]  );
+
+    // Widgets
     foreach ( Utilities::get_registered_modules() as $title => $data ) {
         $slug = $data[0];
         register_setting( 'wpr-elements-settings', 'wpr-element-'. $slug, [ 'default' => 'on' ] );
     }
-    register_setting( 'wpr-elements-settings', 'wpr-element-toggle-all', [ 'default' => 'on' ]  );
+
+    // Theme Builder
+    foreach ( Utilities::get_theme_builder_modules() as $title => $data ) {
+        $slug = $data[0];
+        register_setting( 'wpr-elements-settings', 'wpr-element-'. $slug, [ 'default' => 'on' ] );
+    }
+
+
+    // WooCommerce Builder
+    foreach ( Utilities::get_woocommerce_builder_modules() as $title => $data ) {
+        $slug = $data[0];
+        register_setting( 'wpr-elements-settings', 'wpr-element-'. $slug, [ 'default' => 'on' ] );
+    }
+
 }
 
 function wpr_addons_settings_page() {
@@ -181,29 +202,81 @@ function wpr_addons_settings_page() {
         </div>
         <p><?php esc_html_e( 'You can disable some widgets for faster page speed.', 'wpr-addons' ); ?></p>
     </div>
-
     <div class="wpr-elements">
-
     <?php
+        foreach ( Utilities::get_registered_modules() as $title => $data ) {
+            $slug = $data[0];
+            $url  = $data[1];
+            $reff = '?ref=rea-plugin-backend-elements-widget-prev'. $data[2];
+            $class = 'new' === $data[3] ? ' wpr-new-element' : '';
 
-    foreach ( Utilities::get_registered_modules() as $title => $data ) {
-        $slug = $data[0];
-        $url  = $data[1];
-        $reff = '?ref=rea-plugin-backend-elements-widget-prev'. $data[2];
-        $class = 'new' === $data[3] ? ' wpr-new-element' : '';
-
-        echo '<div class="wpr-element'. esc_attr($class) .'">';
-            echo '<div class="wpr-element-info">';
-                echo '<h3>'. esc_html($title) .'</h3>';
-                echo '<input type="checkbox" name="wpr-element-'. esc_attr($slug) .'" id="wpr-element-'. esc_attr($slug) .'" '. checked( get_option('wpr-element-'. $slug, 'on'), 'on', false ) .'>';
-                echo '<label for="wpr-element-'. esc_attr($slug) .'"></label>';
-                echo ( '' !== $url && empty(get_option('wpr_wl_plugin_links')) ) ? '<a href="'. esc_url($url . $reff) .'" target="_blank">'. esc_html__('View Widget Demo', 'wpr-addons') .'</a>' : '';
+            echo '<div class="wpr-element'. esc_attr($class) .'">';
+                echo '<div class="wpr-element-info">';
+                    echo '<h3>'. esc_html($title) .'</h3>';
+                    echo '<input type="checkbox" name="wpr-element-'. esc_attr($slug) .'" id="wpr-element-'. esc_attr($slug) .'" '. checked( get_option('wpr-element-'. $slug, 'on'), 'on', false ) .'>';
+                    echo '<label for="wpr-element-'. esc_attr($slug) .'"></label>';
+                    echo ( '' !== $url && empty(get_option('wpr_wl_plugin_links')) ) ? '<a href="'. esc_url($url . $reff) .'" target="_blank">'. esc_html__('View Widget Demo', 'wpr-addons') .'</a>' : '';
+                echo '</div>';
             echo '</div>';
-        echo '</div>';
-    }
-    
+        }
     ?>
+    </div>
 
+    <div class="wpr-elements-heading">
+        <h3><?php esc_html_e( 'Theme Builder Widgets', 'wpr-addons' ); ?></h3>
+        <p><?php esc_html_e( 'Post (CPT) Archive Pages, Post (CPT) Single Pages', 'wpr-addons' ); ?></p>
+    </div>
+    <div class="wpr-elements">
+    <?php
+        foreach ( Utilities::get_theme_builder_modules() as $title => $data ) {
+            $slug = $data[0];
+            $url  = $data[1];
+            $reff = '?ref=rea-plugin-backend-elements-widget-prev'. $data[2];
+            $class = 'new' === $data[3] ? ' wpr-new-element' : '';
+
+            echo '<div class="wpr-element'. esc_attr($class) .'">';
+                echo '<div class="wpr-element-info">';
+                    echo '<h3>'. esc_html($title) .'</h3>';
+                    echo '<input type="checkbox" name="wpr-element-'. esc_attr($slug) .'" id="wpr-element-'. esc_attr($slug) .'" '. checked( get_option('wpr-element-'. $slug, 'on'), 'on', false ) .'>';
+                    echo '<label for="wpr-element-'. esc_attr($slug) .'"></label>';
+                    echo ( '' !== $url && empty(get_option('wpr_wl_plugin_links')) ) ? '<a href="'. esc_url($url . $reff) .'" target="_blank">'. esc_html__('View Widget Demo', 'wpr-addons') .'</a>' : '';
+                echo '</div>';
+            echo '</div>';
+        }
+    ?>
+    </div>
+
+    <div class="wpr-elements-heading">
+        <h3><?php esc_html_e( 'WooCommerce Builder Widgets', 'wpr-addons' ); ?></h3>
+        <p><?php esc_html_e( 'Product Archive Pages, Product Single Pages. Cart, Checkout and My Account Pages', 'wpr-addons' ); ?></p>
+    </div>
+    <div class="wpr-elements">
+    <?php
+        $woocommerce_builder_modules = Utilities::get_woocommerce_builder_modules();
+        $premium_woo_modules = [
+			'Product Filters' => ['product-filters-pro', '#', '', 'pro'],
+			'Page My Account' => ['page-my-account-pro', '#', '', 'pro'],
+			'Woo Category Grid' => ['woo-category-grid-pro', '#', '', 'pro'],
+        ];
+
+        foreach ( array_merge($woocommerce_builder_modules, $premium_woo_modules) as $title => $data ) {
+            $slug = $data[0];
+            $url  = $data[1];
+            $reff = '?ref=rea-plugin-backend-elements-widget-prev'. $data[2];
+            $class = 'new' === $data[3] ? ' wpr-new-element' : '';
+            $class = 'pro' === $data[3] ? ' wpr-pro-element' : '';
+
+            echo '<div class="wpr-element'. esc_attr($class) .'">';
+                echo '<a href="'. esc_url($url . $reff) .'" target="_blank"></a>';
+                echo '<div class="wpr-element-info">';
+                    echo '<h3>'. esc_html($title) .'</h3>';
+                    echo '<input type="checkbox" name="wpr-element-'. esc_attr($slug) .'" id="wpr-element-'. esc_attr($slug) .'" '. checked( get_option('wpr-element-'. $slug, 'on'), 'on', false ) .'>';
+                    echo '<label for="wpr-element-'. esc_attr($slug) .'"></label>';
+                    echo ( '' !== $url && empty(get_option('wpr_wl_plugin_links')) ) ? '<a href="'. esc_url($url . $reff) .'" target="_blank">'. esc_html__('View Widget Demo', 'wpr-addons') .'</a>' : '';
+                echo '</div>';
+            echo '</div>';
+        }
+    ?>
     </div>
 
     <?php submit_button( '', 'wpr-options-button' ); ?>
@@ -221,6 +294,40 @@ function wpr_addons_settings_page() {
         <div class="wpr-settings">
 
         <?php submit_button( '', 'wpr-options-button' ); ?>
+
+        <div class="wpr-settings-group">
+            <h3 class="wpr-settings-group-title"><?php esc_html_e( 'WooCommerce', 'wpr-addons' ); ?></h3>
+
+            <?php if ( !wpr_fs()->can_use_premium_code() ) : ?>
+                <a href="#" class="wpr-settings-pro-overlay" target="_blank">
+                    <span class="dashicons dashicons-star-filled"></span>
+                    <span><?php esc_html_e( 'Upgrade to Pro', 'wpr-addons' ); ?></span>
+                </a>
+                <div class="wpr-setting">
+                    <h4>
+                        <span><?php esc_html_e( 'Shop Page: Products Per Page', 'wpr-addons' ); ?></span>
+                        <br>
+                    </h4>
+                    <input type="text" value="9">
+                </div>
+                <div class="wpr-setting">
+                    <h4>
+                        <span><?php esc_html_e( 'Product Category: Products Per Page', 'wpr-addons' ); ?></span>
+                        <br>
+                    </h4>
+                    <input type="text" value="9">
+                </div>
+                <div class="wpr-setting">
+                    <h4>
+                        <span><?php esc_html_e( 'Product Tag: Products Per Page', 'wpr-addons' ); ?></span>
+                        <br>
+                    </h4>
+                    <input type="text" value="9">
+                </div>
+            <?php else: ?>
+                <?php do_action('wpr_woocommerce_settings'); ?>
+            <?php endif; ?>
+        </div>
 
         <div class="wpr-settings-group">
             <h3 class="wpr-settings-group-title"><?php esc_html_e( 'Integrations', 'wpr-addons' ); ?></h3>
