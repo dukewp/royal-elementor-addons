@@ -289,21 +289,23 @@ class Wpr_Content_Ticker extends Widget_Base {
 
 		// Exclude
 		foreach ( $this->post_types as $slug => $title ) {
-			$this->add_control(
-				'query_exclude_'. $slug,
-				[
-					'label' => esc_html__( 'Exclude ', 'wpr-addons' ) . $title,
-					'type' => Controls_Manager::SELECT2,
-					'multiple' => true,
-					'label_block' => true,
-					'options' => Utilities::get_posts_by_post_type( $slug ),
-					'condition' => [
-						'query_source' => $slug,
-						'query_source!' => [ 'current', 'related' ],
-						'query_selection' => 'dynamic',
-					],
-				]
-			);
+			if ( 'featured' !== $slug && 'sale' !== $slug ) {
+				$this->add_control(
+					'query_exclude_'. $slug,
+					[
+						'label' => esc_html__( 'Exclude ', 'wpr-addons' ) . $title,
+						'type' => Controls_Manager::SELECT2,
+						'multiple' => true,
+						'label_block' => true,
+						'options' => Utilities::get_posts_by_post_type( $slug ),
+						'condition' => [
+							'query_source' => $slug,
+							'query_source!' => [ 'current', 'related' ],
+							'query_selection' => 'dynamic',
+						],
+					]
+				);
+			}
 		}
 
 		// Manual Selection
@@ -1812,7 +1814,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 		$args = [
 			'post_type' => $settings[ 'query_source' ],
 			'tax_query' => $this->get_tax_query_args(),
-			'post__not_in' => $settings[ 'query_exclude_'. $settings[ 'query_source' ] ],
+			'post__not_in' => isset($settings[ 'query_exclude_'. $settings[ 'query_source' ] ]) ? $settings[ 'query_exclude_'. $settings[ 'query_source' ] ] : '',
 			'posts_per_page' => $settings['query_posts_per_page'],
 			'orderby' => $settings[ 'post_orderby' ],
 			'order' => $settings[ 'post_order' ],
