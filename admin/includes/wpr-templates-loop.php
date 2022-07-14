@@ -251,8 +251,8 @@ class WPR_Templates_Loop {
 									<option value="tags" class="custom-ids"><?php esc_html_e( 'Post Tags', 'wpr-addons' ); ?></option>
 								<?php elseif ( 'wpr_tab_product_archive' === $active_tab ): ?>
 									<option value="products"><?php esc_html_e( 'Products Archive', 'wpr-addons' ); ?></option>
-									<option value="product_cat" class="custom-type-ids"><?php esc_html_e( 'Products Categories', 'wpr-addons' ); ?></option>
-									<option value="product_tag" class="custom-type-ids"><?php esc_html_e( 'Products Tags', 'wpr-addons' ); ?></option>								
+									<option value="product_cat" class="custom-type-ids"><?php esc_html_e( 'Products Categories (Pro)', 'wpr-addons' ); ?></option>
+									<option value="product_tag" class="custom-type-ids"><?php esc_html_e( 'Products Tags (Pro)', 'wpr-addons' ); ?></option>								
 								<?php endif; ?>
 							<?php endif; ?>
 						</select>

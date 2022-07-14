@@ -133,17 +133,7 @@ class WPR_Conditions_Manager {
                     $template = Utilities::get_template_slug( $conditions, 'archive/tags', $term_id );
 				// Products
                 } elseif ( class_exists( 'WooCommerce' ) && is_woocommerce() ) {
-                    $template = Utilities::get_template_slug( $conditions, 'product_archive/products' );
-
-                    // Product Categories
-                    if ( is_product_category() && null !== Utilities::get_template_slug( $conditions, 'product_archive/product_cat', $term_id ) ) {
-                        $template = Utilities::get_template_slug( $conditions, 'product_archive/product_cat' );
-                    }
-                    
-                    // Product Tags
-                    if ( is_product_tag() && null !== Utilities::get_template_slug( $conditions, 'product_archive/product_tag', $term_id ) ) {
-                        $template = Utilities::get_template_slug( $conditions, 'product_archive/product_tag' );
-                    }                    
+                    $template = Utilities::get_template_slug( $conditions, 'product_archive/products' );              
                 }
 
             // Search Page
