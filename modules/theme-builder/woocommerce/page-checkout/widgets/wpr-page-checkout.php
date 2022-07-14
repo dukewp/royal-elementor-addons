@@ -393,6 +393,8 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} .form-row .input-text' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .form-row .input-text::placeholder' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .col2-set select' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .select2 span' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .select2-container--default .select2-selection--single .select2-selection__arrow b' => 'border-color: {{VALUE}} transparent transparent transparent;',
 					'{{WRAPPER}} .col2-set .select2-container' => 'color: {{VALUE}};'
 				]
 			]
@@ -580,6 +582,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .input-text' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .select2-container' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} select' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 				'separator' => 'before'
 			]
@@ -603,6 +606,28 @@ class Wpr_Page_Checkout extends Widget_Base {
 				],			
 				'selectors' => [
 					'{{WRAPPER}} .form-row' => 'margin-top: {{SIZE}}{{UNIT}} !important;',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'textarea_height',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Textarea Height', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 500,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 100,
+				],			
+				'selectors' => [
+					'{{WRAPPER}} textarea' => 'Height: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
