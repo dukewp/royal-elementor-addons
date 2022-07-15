@@ -187,7 +187,7 @@ class Wpr_Product_Stock extends Widget_Base {
 			'product_icon_gutter',
 			[
 				'type' => Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
+				'label' => esc_html__( 'Spacing', 'wpr-addons' ),
 				'size_units' => [ 'px' ],
                 'separator' => 'before',
 				'range' => [

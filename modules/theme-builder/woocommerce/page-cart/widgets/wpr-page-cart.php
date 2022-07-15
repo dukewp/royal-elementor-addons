@@ -53,7 +53,7 @@ class Wpr_Page_Cart extends Widget_Base {
 		$this->add_control(
 			'cart_layout',
 			[
-				'label' => esc_html__( 'Layout', 'wpr-addons' ),
+				'label' => esc_html__( 'Select Layout', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
 				'default' => 'vertical',
 				'prefix_class' => 'wpr-cart-',
@@ -85,9 +85,6 @@ class Wpr_Page_Cart extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
-				'dynamic' => [
-					'active' => true,
-				],
 				'placeholder' => esc_html__( 'Update Cart', 'wpr-addons' ),
 				'default' => esc_html__( 'Update Cart', 'wpr-addons' ),
 			]
@@ -107,9 +104,6 @@ class Wpr_Page_Cart extends Widget_Base {
 			[
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
-				'dynamic' => [
-					'active' => true,
-				],
 				'placeholder' => esc_html__( 'Cart Totals', 'wpr-addons' ),
 				'default' => esc_html__( 'Cart Totals', 'wpr-addons' ),
 			]
@@ -151,7 +145,7 @@ class Wpr_Page_Cart extends Widget_Base {
 					'%' => [
 						'min' => 0,
 						'max' => 100,
-					]
+					],
 				],
 				'default' => [
 					'unit' => '%',
@@ -178,9 +172,6 @@ class Wpr_Page_Cart extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
-				'dynamic' => [
-					'active' => true,
-				],
 				'placeholder' => esc_html__( 'Proceed to Checkout', 'wpr-addons' ),
 				'default' => esc_html__( 'Proceed to Checkout', 'wpr-addons' ),
 			]
@@ -237,9 +228,6 @@ class Wpr_Page_Cart extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
-				'dynamic' => [
-					'active' => true,
-				],
 				'placeholder' => esc_html__( 'Update', 'wpr-addons' ),
 				'default' => esc_html__( 'Update', 'wpr-addons' ),
 			]
@@ -285,9 +273,6 @@ class Wpr_Page_Cart extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
-				'dynamic' => [
-					'active' => true,
-				],
 				'placeholder' => esc_html__( 'Apply coupon', 'wpr-addons' ),
 				'default' => esc_html__( 'Apply coupon', 'wpr-addons' ),
 			]
@@ -546,7 +531,7 @@ class Wpr_Page_Cart extends Widget_Base {
 			'cart_table_general_heading',
 			[
 				'type' => Controls_Manager::HEADING,
-				'label' => esc_html__( 'Tables', 'wpr-addons' ),
+				'label' => esc_html__( 'Table Cells', 'wpr-addons' ),
 				'separator' => 'before'
 			]
 		);
@@ -710,6 +695,7 @@ class Wpr_Page_Cart extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} table.cart th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
+				'separator' => 'before'
 			]
 		);
 
@@ -746,8 +732,101 @@ class Wpr_Page_Cart extends Widget_Base {
 		$this->start_controls_section(
 			'cart_table_description_styles',
 			[
-				'label' => __( 'Table Description', 'wpr-addons' ),
+				'label' => __( 'Table Cell', 'wpr-addons' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'cart_table_description_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'default' => '#222222',
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} table.cart td' => 'color: {{VALUE}}',
+					'{{WRAPPER}} table.cart td input' => 'color: {{VALUE}}'
+				],
+			]
+		);
+
+		$this->add_control(
+			'cart_table_description_bg_color',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
+				'selectors' => [
+					'{{WRAPPER}} table.cart td' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} table.shop_table td' => 'background-color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'cart_table_description_typography',
+				'label'    => esc_html__( 'Typography', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}} table.cart tr.cart_item td',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px'
+						],
+					]
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'cart_table_description_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 10,
+					'right' => 0,
+					'bottom' => 10,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} table.cart td' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_responsive_control(
+			'cart_table_description_alignment',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'default' => 'start',
+				'options' => [
+					'start' => [
+						'title' => esc_html__( 'Start', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'end' => [
+						'title' => esc_html__( 'End', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} table.cart td:not(.actions)' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} table.cart .variation' => 'justify-content: {{VALUE}};',
+				],
+				'separator' => 'after'
 			]
 		);
 
@@ -755,7 +834,7 @@ class Wpr_Page_Cart extends Widget_Base {
 			'cart_table_product_name_heading',
 			[
 				'type' => Controls_Manager::HEADING,
-				'label' => esc_html__( 'Name', 'wpr-addons' ),
+				'label' => esc_html__( 'Product Title', 'wpr-addons' ),
 			]
 		);
 
@@ -770,6 +849,37 @@ class Wpr_Page_Cart extends Widget_Base {
 					'{{WRAPPER}} table.cart td.product-name a' => 'color: {{VALUE}}'
 				],
 				'separator' => 'after'
+			]
+		);
+
+		$this->add_control(
+			'cart_table_product_image_heading',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Product Image', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_responsive_control(
+			'product_image_size',
+			[
+				'label' => esc_html__( 'Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 300,
+					],
+				],
+				'size_units' => [ 'px' ],
+				'default' => [
+					'unit' => 'px',
+					'size' => 70,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .product-thumbnail img' => 'width: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'after',
 			]
 		);
 
@@ -846,133 +956,6 @@ class Wpr_Page_Cart extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} table.cart td.product-remove a.remove' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 				]
-			]
-		);
-
-		$this->add_control(
-			'cart_table_description_color',
-			[
-				'label' => esc_html__( 'Color', 'wpr-addons' ),
-				'default' => '#222222',
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} table.cart td' => 'color: {{VALUE}}',
-					'{{WRAPPER}} table.cart td input' => 'color: {{VALUE}}'
-				],
-				'separator' => 'before'
-			]
-		);
-
-		$this->add_control(
-			'cart_table_description_bg_color',
-			[
-				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#FFFFFF',
-				'selectors' => [
-					'{{WRAPPER}} table.cart td' => 'background-color: {{VALUE}}',
-					'{{WRAPPER}} table.shop_table td' => 'background-color: {{VALUE}}'
-				]
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'cart_table_description_typography',
-				'label'    => esc_html__( 'Typography', 'wpr-addons' ),
-				'selector' => '{{WRAPPER}} table.cart tr.cart_item td',
-				'fields_options' => [
-					'typography' => [
-						'default' => 'custom',
-					],
-					'font_size' => [
-						'default' => [
-							'size' => '14',
-							'unit' => 'px'
-						],
-					]
-				]
-			]
-		);
-
-		$this->add_responsive_control(
-			'cart_table_description_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 10,
-					'right' => 0,
-					'bottom' => 10,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} table.cart td' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'cart_table_description_alignment',
-			[
-				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
-				'type' => Controls_Manager::CHOOSE,
-				'default' => 'start',
-				'options' => [
-					'start' => [
-						'title' => esc_html__( 'Start', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-left',
-					],
-					'center' => [
-						'title' => esc_html__( 'Center', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-center',
-					],
-					'end' => [
-						'title' => esc_html__( 'End', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-right',
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} table.cart td:not(.actions)' => 'text-align: {{VALUE}};',
-					'{{WRAPPER}} table.cart .variation' => 'justify-content: {{VALUE}};',
-				]
-			]
-		);
-
-		$this->end_controls_section();
-
-		// Tab: Style ==============
-		// Section: Product Image --
-		$this->start_controls_section(
-			'section_cart_product_image',
-			[
-				'label' => esc_html__( 'Product Image', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-			]
-		);
-
-		$this->add_responsive_control(
-			'product_image_size',
-			[
-				'label' => esc_html__( 'Size', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 300,
-					],
-				],
-				'size_units' => [ 'px' ],
-				'default' => [
-					'unit' => 'px',
-					'size' => 70,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .product-thumbnail img' => 'width: {{SIZE}}{{UNIT}};',
-				],
-				'separator' => 'before',
 			]
 		);
 
