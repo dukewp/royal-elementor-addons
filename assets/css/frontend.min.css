@@ -12769,6 +12769,7 @@ dl.variation dd {
 
 .elementor-widget-wpr-product-tabs .wc-tabs li {
     position: relative;
+    text-align: center;
 }
 
 .wpr-tabs-hr-position-justify>.elementor-widget-container .wc-tabs li {

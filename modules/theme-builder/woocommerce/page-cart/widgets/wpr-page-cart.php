@@ -146,13 +146,9 @@ class Wpr_Page_Cart extends Widget_Base {
 			[
 				'label' => esc_html__( 'Width', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ '%', 'px' ],
+				'size_units' => [ '%' ],
 				'range' => [
 					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
-					'px' => [
 						'min' => 0,
 						'max' => 100,
 					]
@@ -162,7 +158,7 @@ class Wpr_Page_Cart extends Widget_Base {
 					'size' => 100,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-cart-wrapper .cart-collaterals' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-cart-wrapper .cart-collaterals' => 'width: {{SIZE}}%;',
 					// margin-left: calc(100% - {{SIZE}}{{UNIT}});
 				]
 			]
@@ -992,33 +988,6 @@ class Wpr_Page_Cart extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'forms_field_title',
-			[
-				'type' => Controls_Manager::HEADING,
-				'label' => esc_html__( 'Field', 'wpr-addons' ),
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => 'forms_field_typography',
-				'selector' => '{{WRAPPER}} .coupon .input-text, {{WRAPPER}} .cart-collaterals .input-text, {{WRAPPER}} select, {{WRAPPER}} .select2-selection--single, {{WRAPPER}} .form-row input',
-				'fields_options' => [
-					'typography' => [
-						'default' => 'custom',
-					],
-					'font_size' => [
-						'default' => [
-							'size' => '14',
-							'unit' => 'px'
-						],
-					]
-				]
-			]
-		);
-
 		$this->start_controls_tabs( 'forms_fields_styles' );
 
 		$this->start_controls_tab( 
@@ -1079,6 +1048,25 @@ class Wpr_Page_Cart extends Widget_Base {
 				'name' => 'forms_fields_normal_box_shadow',
 				'label' => esc_html__( 'Box Shadow', 'wpr-addons' ),
 				'selector' => '{{WRAPPER}} .woocommerce-shipping-calculator .input-text, {{WRAPPER}} .woocommerce-shipping-calculator .select2-container',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'forms_field_typography',
+				'selector' => '{{WRAPPER}} .coupon .input-text, {{WRAPPER}} .cart-collaterals .input-text, {{WRAPPER}} select, {{WRAPPER}} .select2-selection--single, {{WRAPPER}} .form-row input',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px'
+						],
+					]
+				]
 			]
 		);
 
@@ -1523,6 +1511,44 @@ class Wpr_Page_Cart extends Widget_Base {
 			]
 		);
 
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'buttons_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .actions .button, {{WRAPPER}} .coupon .button, {{WRAPPER}} .shipping-calculator-form .button, {{WRAPPER}} .return-to-shop .button',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '15',
+							'unit' => 'px',
+						],
+					]
+				]
+			]
+		);
+
+		$this->add_control(
+			'buttons_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.2,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .actions .button' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .shipping-calculator-form .button' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .coupon .button' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .return-to-shop .button' => 'transition-duration: {{VALUE}}s'
+				],
+			]
+		);
+
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
@@ -1588,60 +1614,6 @@ class Wpr_Page_Cart extends Widget_Base {
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
-
-		$this->add_control(
-			'buttons_divider',
-			[
-				'type' => Controls_Manager::DIVIDER,
-				'style' => 'thick',
-			]
-		);
-
-		$this->add_control(
-			'buttons_transition_duration',
-			[
-				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.2,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'selectors' => [
-					'{{WRAPPER}} .actions .button' => 'transition-duration: {{VALUE}}s',
-					'{{WRAPPER}} .shipping-calculator-form .button' => 'transition-duration: {{VALUE}}s',
-					'{{WRAPPER}} .coupon .button' => 'transition-duration: {{VALUE}}s',
-					'{{WRAPPER}} .return-to-shop .button' => 'transition-duration: {{VALUE}}s'
-				],
-			]
-		);
-
-		$this->add_control(
-			'buttons_typo_divider',
-			[
-				'type' => Controls_Manager::DIVIDER,
-				'style' => 'thick',
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'buttons_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .actions .button, {{WRAPPER}} .coupon .button, {{WRAPPER}} .shipping-calculator-form .button, {{WRAPPER}} .return-to-shop .button',
-				'fields_options' => [
-					'typography' => [
-						'default' => 'custom',
-					],
-					'font_size' => [
-						'default' => [
-							'size' => '15',
-							'unit' => 'px',
-						],
-					]
-				]
-			]
-		);
 
 		$this->add_control(
 			'buttons_border_type',
@@ -1910,6 +1882,41 @@ class Wpr_Page_Cart extends Widget_Base {
 			]
 		);
 
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'cart_totals_texts',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .cart_totals th, {{WRAPPER}} .cart_totals td, {{WRAPPER}} .shipping-calculator-button',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '15',
+							'unit' => 'px',
+						]
+					]
+				]
+			]
+		);
+
+		$this->add_control(
+			'cart_totals_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.5,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .shipping-calculator-button' => 'transition-duration: {{VALUE}}s',
+				],
+			]
+		);
+
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
@@ -1959,49 +1966,6 @@ class Wpr_Page_Cart extends Widget_Base {
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
-
-		$this->add_control(
-			'cart_totals_divider',
-			[
-				'type' => Controls_Manager::DIVIDER,
-				'style' => 'thick',
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'cart_totals_texts',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .cart_totals th, {{WRAPPER}} .cart_totals td, {{WRAPPER}} .shipping-calculator-button',
-				'fields_options' => [
-					'typography' => [
-						'default' => 'custom',
-					],
-					'font_size' => [
-						'default' => [
-							'size' => '15',
-							'unit' => 'px',
-						]
-					]
-				]
-			]
-		);
-
-		$this->add_control(
-			'cart_totals_transition_duration',
-			[
-				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.5,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'selectors' => [
-					'{{WRAPPER}} .shipping-calculator-button' => 'transition-duration: {{VALUE}}s',
-				],
-			]
-		);
 
 		$this->add_control(
 			'cart_totals_border_type',
@@ -2150,6 +2114,41 @@ class Wpr_Page_Cart extends Widget_Base {
 			]
 		);
 
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'checkout_button_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wc-proceed-to-checkout .checkout-button',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '15',
+							'unit' => 'px',
+						],
+					]
+				]
+			]
+		);
+
+		$this->add_control(
+			'checkout_button_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.6,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wc-proceed-to-checkout .checkout-button' => 'transition-duration: {{VALUE}}s',
+				],
+			]
+		);
+
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
@@ -2206,57 +2205,6 @@ class Wpr_Page_Cart extends Widget_Base {
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
-
-		$this->add_control(
-			'checkout_button_divider',
-			[
-				'type' => Controls_Manager::DIVIDER,
-				'style' => 'thick',
-			]
-		);
-
-		$this->add_control(
-			'checkout_button_transition_duration',
-			[
-				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.6,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'selectors' => [
-					'{{WRAPPER}} .wc-proceed-to-checkout .checkout-button' => 'transition-duration: {{VALUE}}s',
-				],
-			]
-		);
-
-		$this->add_control(
-			'checkout_button_typo_divider',
-			[
-				'type' => Controls_Manager::DIVIDER,
-				'style' => 'thick',
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'checkout_button_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wc-proceed-to-checkout .checkout-button',
-				'fields_options' => [
-					'typography' => [
-						'default' => 'custom',
-					],
-					'font_size' => [
-						'default' => [
-							'size' => '15',
-							'unit' => 'px',
-						],
-					]
-				]
-			]
-		);
 
 		$this->add_control(
 			'checkout_button_border_type',
