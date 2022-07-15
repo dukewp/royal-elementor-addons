@@ -58,7 +58,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 		$this->add_control(
 			'checkout_layout',
 			[
-				'label' => esc_html__( 'Layout', 'wpr-addons' ),
+				'label' => esc_html__( 'Select Layout', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'render_type' => 'template',
 				'default' => 'horizontal',
@@ -212,7 +212,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} .col-2' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-checkout-order-review-table-inner' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .woocommerce-order-details' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
+				]
 			]
 		);
 
@@ -235,6 +235,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} .wpr-checkout-order-review-table-inner' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .woocommerce-order-details' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
+				'separator' => 'before'
 			]
 		);
 
@@ -263,8 +264,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}}.wpr-checkout-vertical .col-2' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-checkout-vertical .wpr-checkout-order-review-table-inner' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .woocommerce-order-details' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-				],
-				'separator' => 'before'
+				]
 			]
 		);
 
@@ -369,6 +369,22 @@ class Wpr_Page_Checkout extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'form_inputs_divider',
+			[
+				'type' => Controls_Manager::DIVIDER,
+				'style' => 'thick',
+			]
+		);
+
+		$this->add_control(
+			'form_inputs_title',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Inputs', 'wpr-addons' ),
+			]
+		);
+
 		$this->start_controls_tabs( 'forms_fields_styles' );
 
 		$this->start_controls_tab( 
@@ -436,6 +452,27 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'selector' => '{{WRAPPER}} .input-text, {{WRAPPER}} .select2-container',
 			]
 		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'forms_fields_typography',
+				'label'    => esc_html__( 'Typography', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}} .col2-set .input-text, {{WRAPPER}} .col2-set .input-text::placeholder, {{WRAPPER}} .form-row .input-text, {{WRAPPER}} .form-row .input-text::placeholder, {{WRAPPER}} .col2-set select, {{WRAPPER}} .col2-set .select2-container',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px',
+						],
+					]
+				]
+			]
+		);
+
 		$this->end_controls_tab();
 
 		$this->start_controls_tab( 'forms_fields_focus_styles', 
@@ -469,34 +506,6 @@ class Wpr_Page_Checkout extends Widget_Base {
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
-
-		$this->add_control(
-			'forms_fields_typography_divider',
-			[
-				'type' => Controls_Manager::DIVIDER,
-				'style' => 'thick',
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'forms_fields_typography',
-				'label'    => esc_html__( 'Typography', 'wpr-addons' ),
-				'selector' => '{{WRAPPER}} .col2-set .input-text, {{WRAPPER}} .col2-set .input-text::placeholder, {{WRAPPER}} .form-row .input-text, {{WRAPPER}} .form-row .input-text::placeholder, {{WRAPPER}} .col2-set select, {{WRAPPER}} .col2-set .select2-container',
-				'fields_options' => [
-					'typography' => [
-						'default' => 'custom',
-					],
-					'font_size' => [
-						'default' => [
-							'size' => '14',
-							'unit' => 'px',
-						],
-					]
-				]
-			]
-		);
 
 		$this->add_control(
 			'form_fields_border_type',
@@ -602,7 +611,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'size' => 10,
 				],			
 				'selectors' => [
-					'{{WRAPPER}} .form-row' => 'margin-top: {{SIZE}}{{UNIT}} !important;',
+					'{{WRAPPER}} .form-row:not(.place-order)' => 'margin-top: {{SIZE}}{{UNIT}} !important;',
 				],
 				'separator' => 'before'
 			]
@@ -943,26 +952,6 @@ class Wpr_Page_Checkout extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'checkout_table_heading_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 10,
-					'right' => 10,
-					'bottom' => 10,
-					'left' => 10,
-				],
-				'selectors' => [
-					'{{WRAPPER}} table.woocommerce-orders-table th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} table.shop_table thead th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} table.shop_table tfoot th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
-				]
-			]
-		);
-
-		$this->add_responsive_control(
 			'checkout_table_heading_alignment',
 			[
 				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
@@ -990,11 +979,32 @@ class Wpr_Page_Checkout extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'checkout_table_heading_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 10,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} table.woocommerce-orders-table th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} table.shop_table thead th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} table.shop_table tfoot th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				]
+			]
+		);
+
 		$this->add_control(
 			'checkout_table_description_title',
 			[
 				'type' => Controls_Manager::HEADING,
 				'label' => esc_html__( 'Table Description', 'wpr-addons' ),
+				'separator' => 'before'
 			]
 		);
 
@@ -1044,24 +1054,6 @@ class Wpr_Page_Checkout extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'checkout_table_description_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 10,
-					'right' => 10,
-					'bottom' => 10,
-					'left' => 10,
-				],
-				'selectors' => [
-					'{{WRAPPER}} table.shop_table td' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
 			'checkout_table_description_alignment',
 			[
 				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
@@ -1085,6 +1077,24 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} table.shop_table td' => 'text-align: {{VALUE}};',
 					'{{WRAPPER}} table.shop_table .variation' => 'justify-content: {{VALUE}};'
 				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'checkout_table_description_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 10,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} table.shop_table td' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
 			]
 		);
 
@@ -1263,6 +1273,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 			[
 				'type' => Controls_Manager::HEADING,
 				'label' => esc_html__( 'Input', 'wpr-addons' ),
+				'separator' => 'before'
 			]
 		);
 
@@ -1305,6 +1316,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 			[
 				'type' => Controls_Manager::HEADING,
 				'label' => esc_html__( 'Tooltips', 'wpr-addons' ),
+				'separator' => 'before'
 			]
 		);
 
@@ -1358,6 +1370,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 			[
 				'type' => Controls_Manager::HEADING,
 				'label' => esc_html__( 'Order Received', 'wpr-addons' ),
+				'separator' => 'before'
 			]
 		);
 
@@ -1380,6 +1393,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 			[
 				'type' => Controls_Manager::HEADING,
 				'label' => esc_html__( 'Order Overview Typography', 'wpr-addons' ),
+				'separator' => 'before'
 			]
 		);
 
@@ -1460,6 +1474,42 @@ class Wpr_Page_Checkout extends Widget_Base {
 			]
 		);
 
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'place_order_button_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .actions .button, 
+				{{WRAPPER}} .place-order button, {{WRAPPER}} .coupon .button',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '15',
+							'unit' => 'px',
+						],
+					]
+				]
+			]
+		);
+
+		$this->add_control(
+			'place_order_button_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.3,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .place-order button' => 'transition-duration: {{VALUE}}s',
+				],
+			]
+		);
+
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
@@ -1516,58 +1566,6 @@ class Wpr_Page_Checkout extends Widget_Base {
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
-
-		$this->add_control(
-			'place_order_button_divider',
-			[
-				'type' => Controls_Manager::DIVIDER,
-				'style' => 'thick',
-			]
-		);
-
-		$this->add_control(
-			'place_order_button_transition_duration',
-			[
-				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.3,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'selectors' => [
-					'{{WRAPPER}} .place-order button' => 'transition-duration: {{VALUE}}s',
-				],
-			]
-		);
-
-		$this->add_control(
-			'place_order_button_typo_divider',
-			[
-				'type' => Controls_Manager::DIVIDER,
-				'style' => 'thick',
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'place_order_button_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .actions .button, 
-				{{WRAPPER}} .place-order button, {{WRAPPER}} .coupon .button',
-				'fields_options' => [
-					'typography' => [
-						'default' => 'custom',
-					],
-					'font_size' => [
-						'default' => [
-							'size' => '15',
-							'unit' => 'px',
-						],
-					]
-				]
-			]
-		);
 
 		$this->add_control(
 			'place_order_button_border_type',
