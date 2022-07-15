@@ -1727,6 +1727,35 @@ class Wpr_Page_Cart extends Widget_Base {
 		);
 
 		$this->add_control(
+			'cart_totals_typography',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'General Typography', 'wpr-addons' ),
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'cart_totals_texts',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .cart_totals th, {{WRAPPER}} .cart_totals td, {{WRAPPER}} .shipping-calculator-button',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '15',
+							'unit' => 'px',
+						]
+					]
+				]
+			]
+		);
+
+		$this->add_control(
 			'cart_totals_title',
 			[
 				'type' => Controls_Manager::HEADING,
@@ -1871,26 +1900,6 @@ class Wpr_Page_Cart extends Widget_Base {
 				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .shipping-calucalator-button' => 'border-color: {{VALUE}}'
-				]
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'cart_totals_texts',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .cart_totals th, {{WRAPPER}} .cart_totals td, {{WRAPPER}} .shipping-calculator-button',
-				'fields_options' => [
-					'typography' => [
-						'default' => 'custom',
-					],
-					'font_size' => [
-						'default' => [
-							'size' => '15',
-							'unit' => 'px',
-						]
-					]
 				]
 			]
 		);
