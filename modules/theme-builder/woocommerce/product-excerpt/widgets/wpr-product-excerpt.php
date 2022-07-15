@@ -82,7 +82,7 @@ class Wpr_Product_Excerpt extends Widget_Base {
 		$this->add_control(
 			'excerpt_align',
 			[
-				'label'     => esc_html__('Align', 'wpr-addons'),
+				'label'     => esc_html__('Alignment', 'wpr-addons'),
 				'type'      => Controls_Manager::CHOOSE,
 				'default' => 'left',
 				'options'   => [

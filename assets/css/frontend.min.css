@@ -13096,14 +13096,22 @@ dl.variation dd {
             flex-direction: column;
 }
 
-.wpr-product-add-to-cart .quantity,
-.wpr-product-add-to-cart .wpr-quantity-wrapper {
+.wpr-product-add-to-cart .quantity {
     display: -webkit-inline-box;
     display: -ms-inline-flexbox;
     display: inline-flex;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+
+.wpr-product-add-to-cart .wpr-quantity-wrapper {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;

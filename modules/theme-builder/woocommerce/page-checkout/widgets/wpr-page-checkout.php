@@ -34,10 +34,6 @@ class Wpr_Page_Checkout extends Widget_Base {
 		return [ 'qq', 'checkout', 'product', 'page', 'checkout page', 'page checkout' ];//tmp
 	}
 
-	public function get_script_depends() {
-		return [];
-	}
-
 	protected function register_controls() {
 
 		// Tab: Style ==============
