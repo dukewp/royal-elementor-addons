@@ -92,7 +92,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'size' => 800,
 				],			
 				'selectors' => [
-					'{{WRAPPER}}.wpr-checkout-horizontal .wpr-checkout-order-review-table' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-checkout-horizontal #customer_details' => 'width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'checkout_layout' => 'horizontal'
