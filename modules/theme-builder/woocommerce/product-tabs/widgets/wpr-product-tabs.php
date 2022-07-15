@@ -203,6 +203,9 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'{{WRAPPER}} .wc-tabs li' => 'min-width: {{SIZE}}px;',
 					'{{WRAPPER}} .wc-tabs li a' => 'min-width: {{SIZE}}px; display: block;'
 				],
+				'condition' => [
+					'tabs_hr_position!' => 'justify',
+				],
 			]
 		);
 
