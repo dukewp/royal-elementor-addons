@@ -191,7 +191,7 @@ jQuery(document).ready(function( $ ) {
 			// Save Conditions
 			$.post(ajaxurl, data, function(response) {
 				setTimeout(function(){
-					if ( $('.wpr-no-templates').length === 0 ) {
+					if ( $('.wpr-my-templates-list li').length === 0 ) {
 						$('.wpr-my-templates-list').append('<li class="wpr-no-templates">You don\'t have any templates yet!</li>');
 						// $('.wpr-no-templates').hide();
 					}
