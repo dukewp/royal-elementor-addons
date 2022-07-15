@@ -705,6 +705,12 @@ class Plugin {
 					'icon' => 'wpr-icon eicon-filter',
 					'categories' => '["'. $category .'"]',
 				],
+				[
+					'name' => 'wpr-product-breadcrumbs',
+					'title' => __('Product Breadcrumbs', 'wpr-addons'),
+					'icon' => 'wpr-icon eicon-product-breadcrumbs',
+					'categories' => '["'. $category .'"]',
+				],
 			];
 		}
 
