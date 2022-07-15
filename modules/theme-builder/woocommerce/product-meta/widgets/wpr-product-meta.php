@@ -73,6 +73,7 @@ class Wpr_Product_Meta extends Widget_Base {
 			[
 				'label'     => esc_html__('Alignment', 'wpr-addons'),
 				'type'      => Controls_Manager::CHOOSE,
+				'default' => 'left',
 				'options'   => [
 					'left'   => [
 						'title' => esc_html__('Left', 'wpr-addons'),
