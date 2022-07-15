@@ -2455,6 +2455,34 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'filters_align',
+			[
+				'label' => esc_html__( 'Align', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'label_block' => false,
+				'default' => 'center',
+				'options' => [
+					'left' => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-h-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-h-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-h-align-right',
+					]
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-filters' => 'text-align: {{VALUE}}',
+				],
+				'separator' => 'before',
+			]
+		);
+
 		$this->add_control_filters_animation();
 
 		// Upgrade to Pro Notice
