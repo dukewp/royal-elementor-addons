@@ -138,7 +138,7 @@ class Wpr_Product_Rating extends Widget_Base {
 		$this->add_control(
 			'product_rating_text_color_hover',
 			[
-				'label' => esc_html__( 'Text Color Hover', 'wpr-addons' ),
+				'label' => esc_html__( 'Text Hover Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#787878',
 				'selectors' => [
