@@ -1340,14 +1340,6 @@ class Wpr_Product_AddToCart extends Widget_Base {
 		);
 
 		$this->add_control(
-			'add_to_cart_select',
-			[
-				'label'     => esc_html__('Select', 'wpr-addons'),
-				'type'      => Controls_Manager::HEADING,
-			]
-		);
-
-		$this->add_control(
 			'add_to_cart_variation_dropdown_color',
 			[
 				'label'     => esc_html__('Color', 'wpr-addons'),

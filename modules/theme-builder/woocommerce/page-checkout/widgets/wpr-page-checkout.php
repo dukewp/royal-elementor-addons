@@ -263,7 +263,8 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}}.wpr-checkout-vertical .col-2' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-checkout-vertical .wpr-checkout-order-review-table-inner' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .woocommerce-order-details' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-				]
+				],
+				'separator' => 'before'
 			]
 		);
 
@@ -603,6 +604,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .form-row' => 'margin-top: {{SIZE}}{{UNIT}} !important;',
 				],
+				'separator' => 'before'
 			]
 		);
 
@@ -1059,6 +1061,33 @@ class Wpr_Page_Checkout extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'checkout_table_description_alignment',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'default' => 'start',
+				'options' => [
+					'start' => [
+						'title' => esc_html__( 'Start', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'end' => [
+						'title' => esc_html__( 'End', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} table.shop_table td' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} table.shop_table .variation' => 'justify-content: {{VALUE}};'
+				]
+			]
+		);
+
 		$this->add_control(
 			'checkout_table_border_color',
 			[
@@ -1144,33 +1173,6 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} table tfoot tr:last-of-type th:first-of-type' => 'border-bottom-left-radius: {{LEFT}}{{UNIT}} !important;',
 					'{{WRAPPER}} table tfoot tr:last-of-type td:last-of-type' => 'border-bottom-right-radius: {{BOTTOM}}{{UNIT}} !important;',
 					'{{WRAPPER}} #order_review' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
-				]
-			]
-		);
-
-		$this->add_responsive_control(
-			'checkout_table_description_alignment',
-			[
-				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
-				'type' => Controls_Manager::CHOOSE,
-				'default' => 'start',
-				'options' => [
-					'start' => [
-						'title' => esc_html__( 'Start', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-left',
-					],
-					'center' => [
-						'title' => esc_html__( 'Center', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-center',
-					],
-					'end' => [
-						'title' => esc_html__( 'End', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-right',
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} table.shop_table td' => 'text-align: {{VALUE}};',
-					'{{WRAPPER}} table.shop_table .variation' => 'justify-content: {{VALUE}};'
 				]
 			]
 		);
@@ -1293,8 +1295,8 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'size' => 10,
 				],			
 				'selectors' => [
-					'{{WRAPPER}} ul.payment_methods li.wc_payment_method .input-radio' => 'margin-right: {{SIZE}}{{UNIT}} !important;',
-				],
+					'{{WRAPPER}} ul.payment_methods li.wc_payment_method .input-radio' => 'margin-right: {{SIZE}}{{UNIT}} !important;'
+				]
 			]
 		);
 
@@ -1671,6 +1673,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 	public function woocommerce_checkout_before_customer_details() {
 		echo '<div class="wpr-customer-details-wrapper">';
 	}
+	
 	public function woocommerce_checkout_before_order_review_heading() {
         echo '<div class="wpr-checkout-order-review-table">';
         echo '<div class="wpr-checkout-order-review-table-inner">';
