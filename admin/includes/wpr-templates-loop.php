@@ -75,11 +75,11 @@ class WPR_Templates_Loop {
 
 		// WP_Query arguments
 		$args = array (
-			'post_type'   => array( 'elementor_library' ),
+			'post_type' => array( 'elementor_library' ),
 			'post_status' => array( 'publish' ),
-			'meta_key' 	  => '_elementor_template_type',
-			'meta_value'  => ['page', 'section'],
-			'numberposts'  => -1
+			'meta_key' => '_elementor_template_type',
+			'meta_value' => ['page', 'section'],
+			'numberposts' => -1
 		);
 
 		// The Query
@@ -104,6 +104,8 @@ class WPR_Templates_Loop {
 					echo '</span>';
 				echo '</li>';
 			}
+		} else {
+			echo '<li class="wpr-no-templates">You don\'t have any templates yet!</li>';
 		}
 		
 		echo '</ul>';

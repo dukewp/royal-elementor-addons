@@ -348,19 +348,11 @@
 == My Templates
 --------------------------------------------------------------*/
 .wpr-my-templates-list {
-  width: 50%;
-}
-
-.wpr-header-templates-list.wpr-my-templates-list,
-.wpr-footer-templates-list.wpr-my-templates-list,
-.wpr-popup-templates-list.wpr-my-templates-list {
   width: 65%;
 }
 
 @media screen and (max-width: 1400px) {
-  .wpr-header-templates-list.wpr-my-templates-list,
-  .wpr-footer-templates-list.wpr-my-templates-list,
-  .wpr-popup-templates-list.wpr-my-templates-list {
+  .wpr-my-templates-list {
     width: 100%;
   }
 }
@@ -440,6 +432,10 @@
 .wpr-active-conditions-template {
   border-left: 5px solid #6A4BFF;
   background: #F6F7F7;
+}
+
+.wpr-my-templates-list .wpr-no-templates {
+  background: #fff !important;
 }
 
 
