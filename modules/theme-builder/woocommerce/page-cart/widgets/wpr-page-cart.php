@@ -988,6 +988,7 @@ class Wpr_Page_Cart extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .input-text' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .input-text::placeholder' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .woocommerce-shipping-calculator .input-text' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .woocommerce-shipping-calculator select' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .woocommerce-shipping-calculator span' => 'color: {{VALUE}};',
@@ -1817,6 +1818,15 @@ class Wpr_Page_Cart extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .cart_totals table.shop_table td' => 'background-color: {{VALUE}}'
 				]
+			]
+		);
+
+		$this->add_control(
+			'cart_totals_table_shipping_calc',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Shipping Calculator', 'wpr-addons' ),
+				'separator' => 'before'
 			]
 		);
 
