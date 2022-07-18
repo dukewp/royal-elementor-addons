@@ -13,9 +13,9 @@ class WPR_Templates_Data {
 		$is_woo_active = is_plugin_active('woocommerce/woocommerce.php') ? 'true' : 'false';
 
 		return [
-			'shopdiko' => [
+			'woo-shop' => [
 				'v1' => [
-					'name' => 'ShopDiko',
+					'name' => 'Woo Shop',
 					'pages' => 'home,home-v1,home-v2,home-v3,lifestyle,about,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .',"woocommerce":'. $is_woo_active .'}',
 					'tags' => 'blog blogger posts personal blog lifestyle blogger theme builder grid slider news',
