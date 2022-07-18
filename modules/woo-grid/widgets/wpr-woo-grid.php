@@ -8467,8 +8467,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 				// Sort & Results
 				$this->render_grid_sorting( $settings );
 
-				var_dump((is_product_category() || is_shop()) && !wpr_fs()->can_use_premium_code());
-
 				if ( !((is_product_category() || is_shop()) && !wpr_fs()->can_use_premium_code()) ) {
 					// Filters
 					$this->render_grid_filters( $settings );
