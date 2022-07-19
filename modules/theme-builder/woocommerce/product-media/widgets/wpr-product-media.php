@@ -110,8 +110,40 @@ class Wpr_Product_Media extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-media-wrap .flex-viewport' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-product-media-thumbs-vertical .wpr-product-media-wrap .flex-viewport' => 'margin-left: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before'
+			]
+		);
+
+		$this->add_responsive_control(
+			'product_media_height',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Height', 'wpr-addons' ),
+				'size_units' => [ 'px', '%', 'vh' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 1000,
+					],
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					],
+					'vh' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 500,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-media-wrap .flex-viewport' => 'height: {{SIZE}}{{UNIT}} !important;',
+					'{{WRAPPER}}.wpr-product-media-thumbs-vertical .wpr-product-media-wrap' => 'height: {{SIZE}}{{UNIT}} !important; overflow: hidden;',
+				]
 			]
 		);
 
@@ -273,7 +305,8 @@ class Wpr_Product_Media extends Widget_Base {
 				'render_type' => 'template',
 				'selectors' => [
 					'{{WRAPPER}}.wpr-product-media-thumbs-stacked .wpr-product-media-wrap .flex-control-thumbs' => 'grid-template-columns: repeat({{VALUE}}, auto);',
-					'{{WRAPPER}}.wpr-product-media-thumbs-slider.wpr-product-media-thumbs-horizontal .wpr-product-media-wrap .flex-control-thumbs li' => 'width: calc(100%/{{VALUE}}) !important;'
+					'{{WRAPPER}}.wpr-product-media-thumbs-slider.wpr-product-media-thumbs-horizontal .wpr-product-media-wrap .flex-control-thumbs li' => 'width: calc(100%/{{VALUE}}) !important;',
+					'{{WRAPPER}}.wpr-product-media-thumbs-slider.wpr-product-media-thumbs-vertical .wpr-product-media-wrap .flex-control-thumbs li' => 'height: calc(100%/{{VALUE}}) !important;'
 				],
 				'condition' => [
 					'gallery_slider_thumbs' => ['slider', 'stacked'],
