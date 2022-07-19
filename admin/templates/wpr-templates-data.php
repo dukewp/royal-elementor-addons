@@ -13,7 +13,7 @@ class WPR_Templates_Data {
 		$is_woo_active = is_plugin_active('woocommerce/woocommerce.php') ? 'true' : 'false';
 
 		return [
-			'woo-shop' => [
+			'wooshop' => [
 				'v1' => [
 					'name' => 'Woo Shop',
 					'pages' => 'home,home-v1,home-v2,home-v3,lifestyle,about,contact,',
