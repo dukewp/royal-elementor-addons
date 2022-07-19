@@ -346,6 +346,16 @@ class Wpr_Product_Media extends Widget_Base {
 		);
 
 		$this->add_control(
+			'lightbox_extra_icon',
+			[
+				'label' => esc_html__( 'Lightbox Icon', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'true',
+				'return_value' => 'true',
+			]
+		);
+
+		$this->add_control(
 			'choose_lightbox_extra_icon',
 			[
 				'label' => __( 'Icon', 'wpr-addons' ),
@@ -355,11 +365,174 @@ class Wpr_Product_Media extends Widget_Base {
 				'default' => [
 					'value' => 'fas fa-search',
 					'library' => 'solid',
+				],
+				'condition' => [
+					'lightbox_extra_icon' => 'true',
 				]
 			]
 		);
 
-		$this->end_controls_section();
+		$this->add_control(
+			'lightbox_popup_autoplay',
+			[
+				'label' => esc_html__( 'Autoplay Slides', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'true',
+				'return_value' => 'true',
+			]
+		);
+
+		$this->add_control(
+			'lightbox_popup_progressbar',
+			[
+				'label' => esc_html__( 'Show Progress Bar', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'true',
+				'return_value' => 'true',
+				'condition' => [
+					'lightbox_popup_autoplay' => 'true'
+				]
+			]
+		);
+
+		$this->add_control(
+			'lightbox_popup_pause',
+			[
+				'label' => esc_html__( 'Autoplay Speed', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 5,
+				'min' => 1,
+				'max' => 10,
+				'step' => 1,
+				'condition' => [
+					'lightbox_popup_autoplay' => 'true',
+				],
+			]
+		);
+
+		$this->add_control(
+			'lightbox_popup_counter',
+			[
+				'label' => esc_html__( 'Show Counter', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'true',
+				'return_value' => 'true',
+			]
+		);
+
+		$this->add_control(
+			'lightbox_popup_arrows',
+			[
+				'label' => esc_html__( 'Show Arrows', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'true',
+				'return_value' => 'true',
+			]
+		);
+
+		$this->add_control(
+			'lightbox_popup_captions',
+			[
+				'label' => esc_html__( 'Show Captions', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'true',
+				'return_value' => 'true',
+			]
+		);
+
+		$this->add_control(
+			'lightbox_popup_thumbnails',
+			[
+				'label' => esc_html__( 'Show Thumbnails', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'true',
+				'return_value' => 'true',
+			]
+		);
+
+		$this->add_control(
+			'lightbox_popup_thumbnails_default',
+			[
+				'label' => esc_html__( 'Show Thumbs by Default', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'true',
+				'return_value' => 'true',
+				'condition' => [
+					'lightbox_popup_thumbnails' => 'true'
+				]
+			]
+		);
+
+		$this->add_control(
+			'lightbox_popup_sharing',
+			[
+				'label' => esc_html__( 'Show Sharing Button', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'true',
+				'return_value' => 'true',
+			]
+		);
+
+		$this->add_control(
+			'lightbox_popup_zoom',
+			[
+				'label' => esc_html__( 'Show Zoom Button', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'true',
+				'return_value' => 'true',
+			]
+		);
+
+		$this->add_control(
+			'lightbox_popup_fullscreen',
+			[
+				'label' => esc_html__( 'Show Full Screen Button', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'true',
+				'return_value' => 'true',
+			]
+		);
+
+		$this->add_control(
+			'lightbox_popup_download',
+			[
+				'label' => esc_html__( 'Show Download Button', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'true',
+				'return_value' => 'true',
+			]
+		);
+
+		$this->end_controls_section(); // End Controls Section
+
+		// // Tab: Content ==============
+		// // Section: Lightbox Popup ---
+		// $this->start_controls_section(
+		// 	'section_lightbox_popup',
+		// 	[
+		// 		'label' => esc_html__( 'Lightbox Popup', 'wpr-addons' ),
+		// 		'tab' => Controls_Manager::TAB_CONTENT,
+		// 		'condition' => [
+		// 			'product_media_lightbox' => 'yes'
+		// 		]
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'choose_lightbox_extra_icon',
+		// 	[
+		// 		'label' => __( 'Icon', 'wpr-addons' ),
+		// 		'type' => \Elementor\Controls_Manager::ICONS,
+		// 		'skin' => 'inline',
+		// 		'label_block' => false,
+		// 		'default' => [
+		// 			'value' => 'fas fa-search',
+		// 			'library' => 'solid',
+		// 		]
+		// 	]
+		// );
+
+		// $this->end_controls_section();
 
 		$this->start_controls_section(
 			'section_style_lightbox_icon',
@@ -1333,6 +1506,28 @@ class Wpr_Product_Media extends Widget_Base {
 		return $options;
 	}
 
+	public function get_lightbox_settings( $settings ) {
+		$lightbox_settings = [
+			'selector' => '.slick-slide:not(.slick-cloned) .wpr-product-media-image, .wpr-product-media-wrap > .wpr-product-media-image',
+			'iframeMaxWidth' => '60%',
+			'hash' => false,
+			'autoplay' => $settings['lightbox_popup_autoplay'],
+			'pause' => $settings['lightbox_popup_pause'] * 1000,
+			'progressBar' => $settings['lightbox_popup_progressbar'],
+			'counter' => $settings['lightbox_popup_counter'],
+			'controls' => $settings['lightbox_popup_arrows'],
+			'getCaptionFromTitleOrAlt' => $settings['lightbox_popup_captions'],
+			'thumbnail' => $settings['lightbox_popup_thumbnails'],
+			'showThumbByDefault' => $settings['lightbox_popup_thumbnails_default'],
+			'share' => $settings['lightbox_popup_sharing'],
+			'zoom' => $settings['lightbox_popup_zoom'],
+			'fullScreen' => $settings['lightbox_popup_fullscreen'],
+			'download' => $settings['lightbox_popup_download'],
+		];
+
+		return json_encode( $lightbox_settings );	
+	}
+
 	protected function render() {
 		// Get Settings
 		$settings = $this->get_settings();
@@ -1342,6 +1537,11 @@ class Wpr_Product_Media extends Widget_Base {
 
 		if ( ! $product ) {
 			return;
+		}
+
+		// Lightbox
+		if ( 'yes' === $settings['product_media_lightbox'] ) {
+			$lightbox = ' data-lightbox="'. esc_attr( $this->get_lightbox_settings( $settings ) ) .'"';
 		}
 
 		// Product ID
@@ -1359,7 +1559,7 @@ class Wpr_Product_Media extends Widget_Base {
 		);
 
 		// Output
-		echo '<div class="wpr-product-media-wrap" '.  $this->get_render_attribute_string( 'thumbnails_attributes' ) .'>';
+		echo '<div class="wpr-product-media-wrap" '.  $this->get_render_attribute_string( 'thumbnails_attributes' ) .' '. $lightbox .'>';
 
 		// Sales Badge
 		if ( $product->is_on_sale() && 'yes' === $settings['product_media_sales_badge'] ) {
