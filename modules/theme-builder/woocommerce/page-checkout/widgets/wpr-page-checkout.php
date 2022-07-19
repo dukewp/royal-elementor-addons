@@ -27,7 +27,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return Utilities::show_theme_buider_widget_on('product_single') ? [] : ['wpr-woocommerce-builder-widgets'];
+		return Utilities::show_theme_buider_widget_on('product_single') ? ['wpr-widgets'] : ['wpr-woocommerce-builder-widgets'];
 	}
 
 	public function get_keywords() {
@@ -92,7 +92,9 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'size' => 800,
 				],			
 				'selectors' => [
-					'{{WRAPPER}}.wpr-checkout-horizontal #customer_details' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-checkout-horizontal .wpr-checkout-order-review-table' => 'width: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}}.wpr-checkout-horizontal #customer_details' => 'width: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}}.wpr-checkout-horizontal .wpr-checkout-order-review-table' => 'width: calc(100% - {{SIZE}}{{UNIT}});',
 				],
 				'condition' => [
 					'checkout_layout' => 'horizontal'

@@ -13035,6 +13035,23 @@ dl.variation dd {
 /* Product Notices */
 .wpr-checkout-notice .woocommerce-message {
     margin: 0;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wpr-checkout-notice .woocommerce-message:before {
+    top: 50% !important;
+    transform: translateY(-50%);
+}
+
+.wpr-checkout-notice .woocommerce-message:after {
+    display: none;
+}
+
+.wpr-checkout-notice .woocommerce-message p {
+    margin-bottom: 0 !important;
 }
 
 /* Add To Cart */
@@ -13440,6 +13457,10 @@ dl.variation dd {
 /*--------------------------------------------------------------
  == Checkout Page
 --------------------------------------------------------------*/
+.wpr-checkout-order-review-table {
+    overflow: hidden;
+}
+
 .wpr-checkout-order-review-table #order_review table {
   border: none !important;
 }
