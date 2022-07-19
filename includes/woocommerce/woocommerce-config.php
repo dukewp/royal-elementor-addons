@@ -69,6 +69,10 @@ class WPR_WooCommerce_Config {
 			$located = WPR_ADDONS_PATH .'includes/woocommerce/templates/cart/mini-cart.php';
 		}
 
+		if ( $template_name === 'notices/success.php' ) {
+			$located = WPR_ADDONS_PATH .'includes/woocommerce/templates/notices/success.php';
+		}
+
 		// if ( $template_name === 'cart/cart-empty.php' ) {
 
 		// }
