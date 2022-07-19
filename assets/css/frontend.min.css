@@ -13041,17 +13041,35 @@ dl.variation dd {
     align-items: center;
 }
 
-.wpr-checkout-notice .woocommerce-message:before {
-    top: 50% !important;
-    transform: translateY(-50%);
-}
-
 .wpr-checkout-notice .woocommerce-message:after {
     display: none;
 }
 
 .wpr-checkout-notice .woocommerce-message p {
     margin-bottom: 0 !important;
+}
+
+.wpr-checkout-notice a {
+    white-space: nowrap;
+}
+
+@media screen and (min-width: 481px) {
+    .wpr-checkout-notice .woocommerce-message:before {
+        top: 50% !important;
+        transform: translateY(-50%);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .wpr-checkout-notice .woocommerce-message {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+
+    .wpr-checkout-notice .woocommerce-message p {
+        margin-bottom: 0.9em !important;
+    }
 }
 
 /* Add To Cart */
