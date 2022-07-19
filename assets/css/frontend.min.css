@@ -13033,6 +13033,7 @@ dl.variation dd {
 }
 
 /* Product Notices */
+.wpr-checkout-notice .woocommerce-error,
 .wpr-checkout-notice .woocommerce-message {
     margin: 0;
     display: flex;
@@ -13041,15 +13042,18 @@ dl.variation dd {
     align-items: center;
 }
 
+.wpr-checkout-notice .woocommerce-error:before,
 .wpr-checkout-notice .woocommerce-message:before {
     top: 50% !important;
     transform: translateY(-50%);
 }
 
+.wpr-checkout-notice .woocommerce-error:after,
 .wpr-checkout-notice .woocommerce-message:after {
     display: none;
 }
 
+.wpr-checkout-notice .woocommerce-error p,
 .wpr-checkout-notice .woocommerce-message p {
     margin-bottom: 0 !important;
 }

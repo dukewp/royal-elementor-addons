@@ -73,6 +73,10 @@ class WPR_WooCommerce_Config {
 			$located = WPR_ADDONS_PATH .'includes/woocommerce/templates/notices/success.php';
 		}
 
+		if ( $template_name === 'notices/error.php' ) {
+			$located = WPR_ADDONS_PATH .'includes/woocommerce/templates/notices/error.php';
+		}
+
 		// if ( $template_name === 'cart/cart-empty.php' ) {
 
 		// }
