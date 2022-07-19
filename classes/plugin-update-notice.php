@@ -43,11 +43,10 @@ class WprPluginUpdateNotice {
                             <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/logo-128x128.png">
                         </div>
                         <div>
-                            <h3><span>New Feature</span><br> Royal Theme Builder</h3>
+                            <h3><span>New Feature</span><br> Royal WooCommerce Builder</h3>
                             <p>
-                                Royal Elementor Theme Builder lets you customize every fundamental part of your WordPress site<br> without coding including your Header, Footer, Archives, Posts, Default Pages, 404 Pages, etc..
-                                <br><strong>Please Note:</strong> WooCommerce Products and Product Archives Templates are comming soon!.
-                                <br><br><strong>New Theme Builder Template Kits:</strong>
+                                Royal Elementor WooCommerce Builder lets you customize every fundamental part of your WooCommerce site without coding. Including your Header, Footer, Product Archives, Products, Post Archives, Posts, Default Pages, 404 Pages, etc..
+                                <br><br><strong>New Woo Builder Template Kits:</strong>
                                 <a href="https://demosites.royal-elementor-addons.com/personal-blog-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Personal Blog</a>, 
                                 <a href="https://demosites.royal-elementor-addons.com/food-blog-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Food Blog</a>, 
                                 <a href="https://demosites.royal-elementor-addons.com/magazine-blog-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Magazine Blog</a>, 
@@ -56,7 +55,7 @@ class WprPluginUpdateNotice {
                             <br>
                             <div>
                                 <a href="'. esc_url(get_admin_url()) .'admin.php?page=wpr-templates-kit" class="wpr-get-started-button button button-primary">Go to Templates Library</a>
-                                <a href="'. esc_url(get_admin_url()) .'admin.php?page=wpr-theme-builder" class="wpr-get-started-button button button-secondary">Go to Theme Builder</a>
+                                <a href="'. esc_url(get_admin_url()) .'admin.php?page=wpr-theme-builder" class="wpr-get-started-button button button-secondary">Go to WooCommerce Builder</a>
                             </div>
                         </div>
                         <div class="image-wrap"><img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/theme-builder.png"></div>
@@ -212,7 +211,7 @@ class WprPluginUpdateNotice {
             }
 
             .wpr-plugin-update-notice .image-wrap img {
-              zoom: 0.5;
+              zoom: 0.45;
             }
 
             @media screen and (max-width: 1366px) {
