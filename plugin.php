@@ -560,6 +560,25 @@ class Plugin {
 			[],
 			Plugin::instance()->get_version()
 		);
+
+
+		$custom_css = "
+			.wpr-pro-notice {
+				background: #404349 !important;
+				border-color: #323232 !important;
+			}
+			.elementor-control select option[value*=pro-] {
+				background: #60646e !important;
+			}
+			.elementor-panel .wpr-icon:after {
+				box-shadow: 0 0 2px 2px #6985ee !important;
+			}
+			.wpr-pro-notice > span {
+				color: #fff !important;
+				font-weight: bold;
+			}
+		";
+		wp_add_inline_style( 'elementor-editor-dark-mode', $custom_css );
 	}
 
 
