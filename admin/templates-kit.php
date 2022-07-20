@@ -104,9 +104,9 @@ function wpr_addons_templates_kit_page() {
                     echo '<footer>';
                         echo '<h3>'. esc_html($data['name']) .'</h3>';
                         if ( $data['woo-builder'] ) {
-                            echo esc_html($data['theme-builder']) ? '<span class="wpr-woo-builder-label">'. esc_html__( 'Woo Builder', 'wpr-addons' ) .'</span>' : '';
+                            echo '<span class="wpr-woo-builder-label">'. esc_html__( 'Woo Builder', 'wpr-addons' ) .'</span>';
                         } elseif ( $data['theme-builder'] ) {
-                            echo esc_html($data['theme-builder']) ? '<span class="wpr-theme-builder-label">'. esc_html__( 'Theme Builder', 'wpr-addons' ) .'</span>' : '';
+                            echo '<span class="wpr-theme-builder-label">'. esc_html__( 'Theme Builder', 'wpr-addons' ) .'</span>';
                         }
                     echo '</footer>';
                 echo '</div>';
