@@ -34,7 +34,7 @@ class WprPluginUpdateNotice {
         global $current_screen;
 
         if ( is_admin() ) {
-            if ( 'royal-addons_page_wpr-templates-kit' === $current_screen->id ) {
+            if ( 'royal-addons_page_wpr-templates-kit' === $current_screen->id || 'update' === $current_screen->id ) {
                 return;
             }
 

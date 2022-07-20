@@ -11986,22 +11986,20 @@ ul.wpr-woo-mini-cart {
     position: relative;
     /* overflow: auto; */
     /* overflow: -moz-scrollbars-none; */
-    scrollbar-width: none;
+    /* scrollbar-width: none; */
 }
 
 .wpr-mini-cart .woocommerce-mini-cart::-webkit-scrollbar {
-    /* width: 9px;
-    background-color: transparent; */
-    display: none;
+    width: 9px;
+    background-color: transparent;
 }
 
 .wpr-mini-cart .woocommerce-mini-cart::-webkit-scrollbar-thumb {
-    /* border-left: 6px solid transparent;
-    border-right: 3px solid; */
-    display: none;
+    /* border-left: 6px solid transparent; */
+    border-right: 3px solid;
 }
 
-.wpr-woo-mini-cart.ps-container.ps-active-y>.ps-scrollbar-y-rail,
+/* .wpr-woo-mini-cart.ps-container.ps-active-y>.ps-scrollbar-y-rail,
 .wpr-woo-mini-cart.ps.ps--active-y>.ps__rail-y {
     display: block;
     background-color: transparent;
@@ -12025,7 +12023,7 @@ ul.wpr-woo-mini-cart {
 
 .wpr-woo-mini-cart .ps-scrollbar-x-rail {
     display: none !important;
-}
+} */
 
 .wpr-mini-cart .woocommerce-mini-cart__empty-message {
     text-align: center;
