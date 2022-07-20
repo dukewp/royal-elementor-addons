@@ -281,11 +281,17 @@ img {
 
 .wpr-templates-kit-grid .grid-item footer span {
   position: relative;
+  min-width: 77px;
+  height: 20px;
   background-color: #5130ef;
   color: #fff;
   font-size: 12px;
   padding: 2px 10px;
   border-radius: 3px;
+}
+
+span.wpr-woo-builder-label {
+  background-color: #7B51AD !important;
 }
 
 .wpr-templates-kit-grid .grid-item footer span:after {

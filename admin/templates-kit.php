@@ -103,7 +103,11 @@ function wpr_addons_templates_kit_page() {
                     echo '</div>';
                     echo '<footer>';
                         echo '<h3>'. esc_html($data['name']) .'</h3>';
-                        echo esc_html($data['theme-builder']) ? '<span>'. esc_html__( 'Theme Builder', 'wpr-addons' ) .'</span>' : '';
+                        if ( $data['woo-builder'] ) {
+                            echo esc_html($data['theme-builder']) ? '<span class="wpr-woo-builder-label">'. esc_html__( 'Woo Builder', 'wpr-addons' ) .'</span>' : '';
+                        } elseif ( $data['theme-builder'] ) {
+                            echo esc_html($data['theme-builder']) ? '<span class="wpr-theme-builder-label">'. esc_html__( 'Theme Builder', 'wpr-addons' ) .'</span>' : '';
+                        }
                     echo '</footer>';
                 echo '</div>';
             }
@@ -359,6 +363,7 @@ function setup_wpr_templates( $kit ) {
     $get_available_kits = WPR_Templates_Data::get_available_kits();
     $has_theme_builder = $get_available_kits[$kit_name][$kit_version]['theme-builder'];
     $has_woo_builder = $get_available_kits[$kit_name][$kit_version]['woo-builder'];
+    $has_off_canvas = $get_available_kits[$kit_name][$kit_version]['off-canvas'];
 
     // Set Home & Blog Pages
     $home_page = get_page_by_path('home-'. $kit);
@@ -399,7 +404,7 @@ function setup_wpr_templates( $kit ) {
         update_option('woocommerce_cart_page_id', $cart_id);
         update_option('woocommerce_checkout_page_id', $checkout_id);
 
-        if ( 'pro' === $get_available_kits[$kit_name][$kit_version]['price'] ) {
+        if ( '' !== $myaccount_id ) {
             update_option('woocommerce_myaccount_page_id', $myaccount_id);
         }
 
@@ -407,8 +412,13 @@ function setup_wpr_templates( $kit ) {
         update_option( 'woocommerce_queue_flush_rewrite_rules', 'yes' );
     }
 
-    // Set Popup
-    update_option('wpr_popup_conditions', '{"user-popup-'. $kit .'-popup":["global"]}'); 
+    // Set Popups
+
+    if ( $has_off_canvas ) {
+        update_option('wpr_popup_conditions', '{"user-popup-'. $kit .'-off-canvas":["global"],"user-popup-'. $kit .'-popup":["global"]}');
+    } else {
+        update_option('wpr_popup_conditions', '{"user-popup-'. $kit .'-popup":["global"]}');
+    }
 }
 
 /**
