@@ -331,6 +331,18 @@ class Pricing_Table extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'btn_id',
+			[
+				'label' => esc_html__( 'Button ID', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'placeholder' => 'button-id',
+				'condition' => [
+					'type_select' => 'button',
+				],
+			]
+		);
+
+		$repeater->add_control(
 			'btn_url',
 			[
 				'type' => Controls_Manager::URL,
@@ -2580,6 +2592,10 @@ class Pricing_Table extends Widget_Base {
 
 				if ( $item['btn_url']['nofollow'] ) :
 					$this->add_render_attribute( 'btn_attribute'. $item_count, 'nofollow', '' );
+				endif;
+
+				if ( '' !== $item['btn_id'] ) :
+					$this->add_render_attribute( 'btn_attribute' . $item_count, 'id', esc_html( $item['btn_id']) );
 				endif;
 
 				?>
