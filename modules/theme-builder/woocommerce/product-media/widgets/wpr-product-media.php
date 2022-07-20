@@ -37,11 +37,11 @@ class Wpr_Product_Media extends Widget_Base {
 	}
 
 	public function get_script_depends() {
-		return [ 'flexslider', 'zoom', 'wc-single-product', 'photoswipe', 'photoswipe-ui-default'  ];
+		return [ 'flexslider', 'zoom', 'wc-single-product', 'photoswipe', 'photoswipe-ui-default', 'wpr-lightgallery'  ];
 	}
 
 	public function get_style_depends() {
-		return [ 'woocommerce_prettyPhoto_css', 'photoswipe', 'photoswipe-default-skin' ];
+		return [ 'woocommerce_prettyPhoto_css', 'photoswipe', 'photoswipe-default-skin', 'wpr-lightgallery-css' ];
 	}
 	
 	protected function register_controls() {
@@ -1508,7 +1508,7 @@ class Wpr_Product_Media extends Widget_Base {
 
 	public function get_lightbox_settings( $settings ) {
 		$lightbox_settings = [
-			'selector' => '.slick-slide:not(.slick-cloned) .wpr-product-media-image, .wpr-product-media-wrap > .wpr-product-media-image',
+			'selector' => '.woocommerce-product-gallery__image',
 			'iframeMaxWidth' => '60%',
 			'hash' => false,
 			'autoplay' => $settings['lightbox_popup_autoplay'],
