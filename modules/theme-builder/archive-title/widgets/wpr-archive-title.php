@@ -30,7 +30,13 @@ class Wpr_Archive_Title extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return Utilities::show_theme_buider_widget_on('archive') ? [ 'wpr-theme-builder-widgets' ] : [];
+		if ( Utilities::show_theme_buider_widget_on('archive') ) {
+			return [ 'wpr-theme-builder-widgets' ];
+		} elseif ( Utilities::show_theme_buider_widget_on('product_archive') ) {
+			return [ 'wpr-woocommerce-builder-widgets' ];
+		} else {
+			return [];
+		}
 	}
 
 	public function get_keywords() {

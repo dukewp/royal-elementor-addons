@@ -120,7 +120,7 @@ class WPR_Templates_Loop {
 	public static function render_conditions_popup( $canvas = false ) {
 
 		// Active Tab
-		$active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
+		$active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'wpr_tab_header';
 		
 	?>
 
