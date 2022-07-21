@@ -1542,6 +1542,8 @@ class Wpr_Product_Media extends Widget_Base {
 		// Lightbox
 		if ( 'yes' === $settings['product_media_lightbox'] ) {
 			$lightbox = ' data-lightbox="'. esc_attr( $this->get_lightbox_settings( $settings ) ) .'"';
+		} else { 
+			$lightbox = '';
 		}
 
 		// Product ID
