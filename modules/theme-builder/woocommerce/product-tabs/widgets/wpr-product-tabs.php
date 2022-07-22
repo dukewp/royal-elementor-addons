@@ -510,7 +510,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'yes' => 'display: block !important;',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce-Tabs-panel h2:not(.woocommerce-Reviews-title)' => '{{value}}',
+					'{{WRAPPER}} .woocommerce-Tabs-panel h2:not(.woocommerce-Reviews-title):not(.elementor-heading-title)' => '{{value}}',
 					'{{WRAPPER}} .woocommerce-Reviews-title:not(:first-of-type)' => '{{value}}',
 				]
 			]
@@ -523,7 +523,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#333333',
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce-Tabs-panel h2' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-Tabs-panel h2:not(.elementor-heading-title)' => 'color: {{VALUE}}',
 				],
 				'condition' => [
 					'show_tab_content_titles' => 'yes'
@@ -536,7 +536,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 			[
 				'name' => 'content_heading_typography',
 				'label' => esc_html__( 'Typography', 'wpr-addons' ),
-				'selector' => '{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel h2',
+				'selector' => '{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel h2:not(.elementor-heading-title)',
 				'fields_options' => [
 					'typography' => [
 						'default' => 'custom',
@@ -571,7 +571,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 					'size' => 5,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .woocommerce-Tabs-panel h2' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-Tabs-panel h2:not(.elementor-heading-title)' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'show_tab_content_titles' => 'yes'
