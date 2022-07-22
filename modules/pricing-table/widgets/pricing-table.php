@@ -2583,16 +2583,18 @@ class Pricing_Table extends Widget_Base {
 				<?php echo wp_kses_post($item['text']); ?>
 
 			<?php elseif ( $item['type_select'] === 'button' && ( ! empty( $item['btn_text'] ) || '' !== $item['select_icon']['value'] ) ) :
-
-				$this->add_render_attribute( 'btn_attribute'. $item_count, 'href', $item['btn_url']['url'] );
-
-				if ( $item['btn_url']['is_external'] ) :
-					$this->add_render_attribute( 'btn_attribute'. $item_count, 'target', '_blank' );
-				endif;
-
-				if ( $item['btn_url']['nofollow'] ) :
-					$this->add_render_attribute( 'btn_attribute'. $item_count, 'nofollow', '' );
-				endif;
+				
+				if (  '' !== $item['btn_url']['url'] ) {
+					$this->add_render_attribute( 'btn_attribute'. $item_count, 'href', $item['btn_url']['url'] );
+	
+					if ( $item['btn_url']['is_external'] ) :
+						$this->add_render_attribute( 'btn_attribute'. $item_count, 'target', '_blank' );
+					endif;
+	
+					if ( $item['btn_url']['nofollow'] ) :
+						$this->add_render_attribute( 'btn_attribute'. $item_count, 'nofollow', '' );
+					endif;
+				}
 
 				if ( '' !== $item['btn_id'] ) :
 					$this->add_render_attribute( 'btn_attribute' . $item_count, 'id', esc_html( $item['btn_id']) );
