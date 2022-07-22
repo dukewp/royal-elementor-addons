@@ -180,7 +180,7 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 		$this->end_controls_section(); // End Controls Section
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'sharing-buttons', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'sharing-buttons', [
 			'Add Unlimited Social Icons',
 			'Custom Social Media Label',
 			'Layout Columns 1,2,3,4,5,6',

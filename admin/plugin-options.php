@@ -264,15 +264,16 @@ function wpr_addons_settings_page() {
             $url  = $data[1];
             $reff = '?ref=rea-plugin-backend-elements-widget-prev'. $data[2];
             $class = 'new' === $data[3] ? ' wpr-new-element' : '';
-            $class = 'pro' === $data[3] ? ' wpr-pro-element' : '';
+            $class = ('pro' === $data[3] && !wpr_fs()->can_use_premium_code()) ? ' wpr-pro-element' : '';
 
             echo '<div class="wpr-element'. esc_attr($class) .'">';
-                echo '<a href="'. esc_url($url . $reff) .'" target="_blank"></a>';
+                // echo '<a href="'. esc_url($url . $reff) .'" target="_blank"></a>';
+                echo '<a href="#"></a>';
                 echo '<div class="wpr-element-info">';
                     echo '<h3>'. esc_html($title) .'</h3>';
                     echo '<input type="checkbox" name="wpr-element-'. esc_attr($slug) .'" id="wpr-element-'. esc_attr($slug) .'" '. checked( get_option('wpr-element-'. $slug, 'on'), 'on', false ) .'>';
                     echo '<label for="wpr-element-'. esc_attr($slug) .'"></label>';
-                    echo ( '' !== $url && empty(get_option('wpr_wl_plugin_links')) ) ? '<a href="'. esc_url($url . $reff) .'" target="_blank">'. esc_html__('View Widget Demo', 'wpr-addons') .'</a>' : '';
+                    // echo ( '' !== $url && empty(get_option('wpr_wl_plugin_links')) ) ? '<a href="'. esc_url($url . $reff) .'" target="_blank">'. esc_html__('View Widget Demo', 'wpr-addons') .'</a>' : '';
                 echo '</div>';
             echo '</div>';
         }
@@ -300,7 +301,8 @@ function wpr_addons_settings_page() {
 
             <?php if ( !wpr_fs()->can_use_premium_code() ) : ?>
                 <a href="#" class="wpr-settings-pro-overlay" target="_blank">
-                    <span class="dashicons dashicons-star-filled"></span>
+                    <span class="dashicons dashicons-lock"></span>
+                    <span class="dashicons dashicons-unlock"></span>
                     <span><?php esc_html_e( 'Upgrade to Pro', 'wpr-addons' ); ?></span>
                 </a>
                 <div class="wpr-setting">

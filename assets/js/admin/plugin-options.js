@@ -16,13 +16,6 @@ jQuery(document).ready(function( $ ) {
 		currentTab = currentTab.replace(' ', '_');
 
 	/*
-	** WooCommerce Comming Soon -------------------------
-	*/
-	if ( 'product archive' === currentTab || 'product single' === currentTab ) {
-		$('.wpr-user-template').after('<div class="wpr-button-lock"></div>');
-	}
-
-	/*
 	** Get Active Filter -------------------------
 	*/
 	function getActiveFilter() {

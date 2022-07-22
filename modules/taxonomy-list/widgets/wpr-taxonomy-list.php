@@ -155,7 +155,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
         $this->end_controls_section();
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'taxonomy-list', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'taxonomy-list', [
 			'Query Custom Post Type Taxonomies (categories).'
 		] );
 

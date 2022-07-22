@@ -287,7 +287,7 @@ class Wpr_Post_Comments extends Widget_Base {
 		$this->end_controls_section();
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'post-comments', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'post-comments', [
 			'6 different Comment Form Layouts.',
 			'Custom comment author Avatar Size.',
 			'Comment Form - Show/Hide Input Placeholder Text (Set Placeholder Text instead of Input Labels).'

@@ -620,7 +620,7 @@ class Wpr_Promo_Box extends Widget_Base {
 		$this->end_controls_section(); // End Controls Section
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'promo-box', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'promo-box', [
 			'Classic Layout - Image & Content Side to Side with Image Width & Position options',
 			'Advanced Image Hover Animations',
 			'Advanced Content Hover Animations - Icon, Title, Description, Button separately',

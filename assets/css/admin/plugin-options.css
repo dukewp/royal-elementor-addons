@@ -850,46 +850,6 @@ input.wpr-user-template-title:focus {
   color: #a09f9f;
 }
 
-
-/*--------------------------------------------------------------
-== WooCommerce Comming Soon
---------------------------------------------------------------*/
-.wpr-coming-soon {
-  padding: 0 30px;
-  background-color: #fff;
-  text-align: center;
-}
-
-.wpr-coming-soon div {
-  width: 500px;
-  margin: 0 auto 40px auto;
-}
-
-.wpr-coming-soon h3 {
-  font-size: 28px;
-  margin-bottom: 20px;
-}
-
-.wpr-coming-soon {
-  color: #555;
-}
-
-.wpr-coming-soon img {
-  max-width: 100%;
-}
-
-.wpr-button-lock {
-  width: 220px;
-  height: 50px;
-  -webkit-box-ordinal-group: 3;
-      -ms-flex-order: 2;
-          order: 2;
-  margin-top: -50px;
-  background: rgba(0,0,0,0.4);
-  border-radius: 5px;
-}
-
-
 /*--------------------------------------------------------------
 == Freemius
 --------------------------------------------------------------*/
@@ -1006,6 +966,10 @@ input.wpr-user-template-title:focus {
   text-decoration: none;
   text-transform: uppercase;
   font-weight: bold;
+  
+  text-shadow: 1px 1px 1px #000;
+  -webkit-box-shadow: 1px 1px 15px rgba(0,0,0,0.3);
+          box-shadow: 1px 1px 15px rgba(0,0,0,0.3);
 }
 
 .wpr-settings-pro-overlay:hover,
@@ -1020,4 +984,16 @@ input.wpr-user-template-title:focus {
   -webkit-transform: translateX(-50%);
       -ms-transform: translateX(-50%);
           transform: translateX(-50%);
+}
+
+.wpr-settings-pro-overlay .dashicons:nth-child(2) {
+  display: none;
+}
+
+.wpr-settings-pro-overlay:hover .dashicons:nth-child(2) {
+  display: block;
+}
+
+.wpr-settings-pro-overlay:hover .dashicons:nth-child(1) {
+  display: none;
 }

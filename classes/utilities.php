@@ -880,17 +880,28 @@ class Utilities {
 	/**
 	** Pro Features List Section
 	*/
-	public static function pro_features_list_section( $module, $controls_manager, $widget, $features ) {
+	public static function pro_features_list_section( $module, $section, $type, $widget, $features ) {
 		if ( wpr_fs()->can_use_premium_code() ) {
 			return;
 		}
 
-		$module->start_controls_section(
-			'pro_features_section',
-			[
-				'label' => 'Pro Features <span class="dashicons dashicons-star-filled"></span>',
-			]
-		);
+		if ( '' === $section ) {
+			$module->start_controls_section(
+				'pro_features_section',
+				[
+					'label' => 'Pro Features <span class="dashicons dashicons-star-filled"></span>',
+				]
+			);			
+		} else {
+			$module->start_controls_section(
+				'pro_features_section',
+				[
+					'label' => 'Pro Features <span class="dashicons dashicons-star-filled"></span>',
+					'tab' => $section,
+				]
+			);
+		}
+
 
 		$list_html = '';
 
@@ -901,7 +912,7 @@ class Utilities {
 		$module->add_control(
 			'pro_features_list',
 			[
-				'type' => $controls_manager,
+				'type' => $type,
 				'raw' => '<ul>'. $list_html .'</ul>
 						  <a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-pro-sec-'. $widget .'-upgrade-pro#purchasepro" target="_blank">Get Pro version</a>',
 				'content_classes' => 'wpr-pro-features-list',

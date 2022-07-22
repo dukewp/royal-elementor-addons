@@ -377,7 +377,7 @@ class Wpr_Post_Info extends Widget_Base {
 		$this->end_controls_section();
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'post-info', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'post-info', [
 			'Display and Style Custom Fields in and Advanced way.',
 			'Query Custom Post Type Taxonomies (categories).'
 		] );

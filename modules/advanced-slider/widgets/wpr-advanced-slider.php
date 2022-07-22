@@ -1055,7 +1055,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 		$this->end_controls_section(); // End Controls Section
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'advanced-slider', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'advanced-slider', [
 			'Add Unlimited Slides',
 			'Elementor Templates Slider option',
 			'Scroll to Section Button',

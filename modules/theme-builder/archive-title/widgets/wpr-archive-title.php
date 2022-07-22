@@ -122,7 +122,7 @@ class Wpr_Archive_Title extends Widget_Base {
 		$this->end_controls_section(); // End Controls Section
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'archive-title', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'archive-title', [
 			'Show/Hide Taxonomy (Category) Description, also change Color and Typography.',
 		] );
 

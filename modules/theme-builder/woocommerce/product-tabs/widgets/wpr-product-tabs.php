@@ -420,7 +420,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 		$this->end_controls_tabs();
 
 		$this->end_controls_section();
-
+		
 		$this->start_controls_section(
 			'section_product_panel_style',
 			[
@@ -2110,6 +2110,12 @@ class Wpr_Product_Tabs extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, Controls_Manager::TAB_STYLE, Controls_Manager::RAW_HTML, 'product-tabs', [
+			'Tab Label Horizontal Align',
+			'Vertical Tabs Layout'
+		] );
     }
 	
 	public function change_html($reviews_title, $count, $product) {

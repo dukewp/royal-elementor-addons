@@ -2411,7 +2411,7 @@ class Wpr_Media_Grid extends Widget_Base {
 		$this->end_controls_section(); // End Controls Section
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'media-grid', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'media-grid', [
 			'Grid Columns 1,2,3,4,5,6,7,8',
 			'Masonry Layout',
 			'Random Images Query',

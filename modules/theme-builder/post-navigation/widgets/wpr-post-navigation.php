@@ -194,7 +194,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 		$this->end_controls_section();
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'post-navigation', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'post-navigation', [
 			'Set Navigation Query - Force to navigate posts through specific Taxonomy (category).',
 			'Advanced Layout Options - Fixed Left-Right, Fixed Bottom.',
 			'Multiple Navigation Arrows Locations.',

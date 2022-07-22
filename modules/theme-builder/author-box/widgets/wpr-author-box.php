@@ -263,7 +263,7 @@ class Wpr_Author_Box extends Widget_Base {
 		$this->end_controls_section(); // End Controls Section
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'author-box', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'author-box', [
 			'Link to Author Website.',
 			'Show/Hide Author Biography (description).'
 		] );
