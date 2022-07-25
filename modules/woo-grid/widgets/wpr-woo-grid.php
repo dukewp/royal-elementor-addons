@@ -688,6 +688,16 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'return_value' => 'yes',
 				'label_block' => false
 			]
+		);		
+
+		$this->add_control(
+			'query_exclude_out_of_stock',
+			[
+				'label' => esc_html__( 'Exclude Out Of Stock', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'label_block' => false
+			]
 		);
 
 		$this->add_control(
@@ -7164,6 +7174,17 @@ class Wpr_Woo_Grid extends Widget_Base {
 		// Exclude Items without F/Image
 		if ( 'yes' === $settings['query_exclude_no_images'] ) {
 			$args['meta_key'] = '_thumbnail_id';
+		}
+
+		// Exclude Out Of Stock
+		if ( 'yes' === $settings['query_exclude_out_of_stock'] ) {
+			$args['meta_query'] = [
+				[
+					'key'     => '_stock_status',
+					'value'   => 'outofstock',
+					'compare' => 'NOT LIKE',
+				]
+			];
 		}
 
 		// Manual

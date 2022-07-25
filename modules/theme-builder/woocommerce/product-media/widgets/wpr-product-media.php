@@ -1217,8 +1217,7 @@ class Wpr_Product_Media extends Widget_Base {
 		// Product ID
 		$post = get_post( $product->get_id() );
 		$gallery_images = $product->get_gallery_image_ids();
-
-		var_dump($gallery_images);
+		
 		// add_filter( 'woocommerce_single_product_carousel_options', [$this, 'wpr_update_woo_flexslider_options']);
 
 		// $this->add_render_attribute(

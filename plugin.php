@@ -8,6 +8,7 @@ use WprAddons\Includes\Controls\WPR_Control_Animations_Alt;
 use WprAddons\Includes\Controls\WPR_Control_Button_Animations;
 use WprAddons\Includes\Controls\WPR_Control_Arrow_Icons;
 use WprAddons\Classes\Utilities;
+use Elementor\Core\App\App;
 
 if ( ! defined( 'ABSPATH' ) ) {	exit; } // Exit if accessed directly
 
@@ -561,7 +562,6 @@ class Plugin {
 			Plugin::instance()->get_version()
 		);
 
-
 		$custom_css = "
 			.wpr-pro-notice {
 				background: #404349 !important;
@@ -578,7 +578,11 @@ class Plugin {
 				font-weight: bold;
 			}
 		";
-		wp_add_inline_style( 'elementor-editor-dark-mode', $custom_css );
+		
+		$ui_theme = get_user_meta(get_current_user_id(), 'elementor_preferences')[0]['ui_theme'];
+		if ( $ui_theme === 'dark' ) {
+			wp_add_inline_style( 'elementor-editor-dark-mode', $custom_css );
+		}
 	}
 
 
