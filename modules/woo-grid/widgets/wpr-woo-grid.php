@@ -7045,7 +7045,22 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		// On Sale
 		if ( 'onsale' === $settings['query_selection'] ) {
-			$args['post__in'] = wc_get_product_ids_on_sale();
+			// $args['post__in'] = wc_get_product_ids_on_sale();
+			$args['meta_query'] = array(
+				'relation' => 'OR',
+				array( // Simple products type
+					'key'           => '_sale_price',
+					'value'         => 0,
+					'compare'       => '>',
+					'type'          => 'numeric'
+				),
+				array( // Variable products type
+					'key'           => '_min_variation_sale_price',
+					'value'         => 0,
+					'compare'       => '>',
+					'type'          => 'numeric'
+				)
+			);
 		}
 		
 		if ( 'upsell' === $settings['query_selection'] ) {
