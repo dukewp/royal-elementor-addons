@@ -412,12 +412,12 @@ function setup_wpr_templates( $kit ) {
         update_option( 'woocommerce_queue_flush_rewrite_rules', 'yes' );
 
         // Enable Elementor Builder for WooCommerce CPT
-        $cpt_support = get_option( 'elementor_cpt_support' );
+        // $cpt_support = get_option( 'elementor_cpt_support' );
 		
-		if ( ! in_array( 'product', $cpt_support ) ) {
-		    $cpt_support[] = 'product';
-		    update_option( 'elementor_cpt_support', $cpt_support );
-		}
+		// if ( ! in_array( 'product', $cpt_support ) ) {
+		//     $cpt_support[] = 'product';
+		//     update_option( 'elementor_cpt_support', $cpt_support );
+		// }
     }
 
     // Set Popups
