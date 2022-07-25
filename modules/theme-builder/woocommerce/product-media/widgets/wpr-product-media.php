@@ -1217,6 +1217,8 @@ class Wpr_Product_Media extends Widget_Base {
 		// Product ID
 		$post = get_post( $product->get_id() );
 		$gallery_images = $product->get_gallery_image_ids();
+
+		var_dump($gallery_images);
 		// add_filter( 'woocommerce_single_product_carousel_options', [$this, 'wpr_update_woo_flexslider_options']);
 
 		// $this->add_render_attribute(
@@ -1249,11 +1251,13 @@ class Wpr_Product_Media extends Widget_Base {
 		}
 
 		// Slider Arrows
-		if ( 'yes' === $settings['gallery_slider_nav'] && 'none' !== $settings['gallery_slider_nav_icon']) {
-			echo '<div class="wpr-gallery-slider-arrows-wrap">';
-				echo '<div class="wpr-gallery-slider-prev-arrow wpr-gallery-slider-arrow">'. Utilities::get_wpr_icon( $settings['gallery_slider_nav_icon'], 'left' ) .'</div>';
-				echo '<div class="wpr-gallery-slider-next-arrow wpr-gallery-slider-arrow">'. Utilities::get_wpr_icon( $settings['gallery_slider_nav_icon'], 'right' ) .'</div>';
-			echo '</div>';
+		if ( !empty($gallery_images) ) {
+			if ( 'yes' === $settings['gallery_slider_nav'] && 'none' !== $settings['gallery_slider_nav_icon']) {
+				echo '<div class="wpr-gallery-slider-arrows-wrap">';
+					echo '<div class="wpr-gallery-slider-prev-arrow wpr-gallery-slider-arrow">'. Utilities::get_wpr_icon( $settings['gallery_slider_nav_icon'], 'left' ) .'</div>';
+					echo '<div class="wpr-gallery-slider-next-arrow wpr-gallery-slider-arrow">'. Utilities::get_wpr_icon( $settings['gallery_slider_nav_icon'], 'right' ) .'</div>';
+				echo '</div>';
+			}
 		}
 		
 		// // Thumbnail Slider Arrows

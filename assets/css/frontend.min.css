@@ -12507,10 +12507,6 @@ dl.variation dd {
     margin-bottom: 0;
 }
 
-[data-elementor-type="wpr-theme-builder"].product-type-simple .wpr-gallery-slider-arrows-wrap {
-    display: none;
-}
-
 [data-elementor-type="wpr-theme-builder"] ul.flex-direction-nav {
     position: absolute;
     top: 90%;
