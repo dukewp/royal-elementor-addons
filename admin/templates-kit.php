@@ -410,10 +410,17 @@ function setup_wpr_templates( $kit ) {
 
         // Update Options
         update_option( 'woocommerce_queue_flush_rewrite_rules', 'yes' );
+
+        // Enable Elementor Builder for WooCommerce CPT
+        $cpt_support = get_option( 'elementor_cpt_support' );
+		
+		if ( ! in_array( 'product', $cpt_support ) ) {
+		    $cpt_support[] = 'product';
+		    update_option( 'elementor_cpt_support', $cpt_support );
+		}
     }
 
     // Set Popups
-
     if ( $has_off_canvas ) {
         update_option('wpr_popup_conditions', '{"user-popup-'. $kit .'-off-canvas":["global"],"user-popup-'. $kit .'-popup":["global"]}');
     } else {
