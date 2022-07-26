@@ -579,8 +579,9 @@ class Plugin {
 			}
 		";
 		
-		$ui_theme = get_user_meta(get_current_user_id(), 'elementor_preferences')[0]['ui_theme'];
-		if ( $ui_theme === 'dark' ) {
+		$ui_theme = get_user_meta(get_current_user_id(), 'elementor_preferences') ? get_user_meta(get_current_user_id(), 'elementor_preferences')[0]['ui_theme'] : '';
+		
+		if ( $ui_theme && $ui_theme === 'dark' ) {
 			wp_add_inline_style( 'elementor-editor-dark-mode', $custom_css );
 		}
 	}

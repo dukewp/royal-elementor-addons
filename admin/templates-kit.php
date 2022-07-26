@@ -392,7 +392,7 @@ function setup_wpr_templates( $kit ) {
 
     // WooCommerce Builder
     if ( $has_woo_builder ) {
-        update_option('wpr_product_archive_conditions', '{"user-product_archive-'. $kit .'-shop":["product_archive/products"],"user-product_archive-'. $kit .'-product-category-tag":["product_archive/product_cat/all","product_archive/product_tags/all"]}');
+        update_option('wpr_product_archive_conditions', '{"user-product_archive-'. $kit .'-shop":["product_archive/products"],"user-product_archive-'. $kit .'-product-category-tag":["product_archive/product_cat/all","product_archive/product_tag/all"]}');
         update_option('wpr_product_single_conditions', '{"user-product_single-'. $kit .'-product":["product_single/product"]}');
 
         $shop_id = get_page_by_path('shop-'. $kit) ? get_page_by_path('shop-'. $kit)->ID : '';
