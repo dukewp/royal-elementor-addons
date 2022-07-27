@@ -276,6 +276,10 @@ function enqueue_scripts( $hook ) {
         wp_enqueue_style( 'wp-color-picker' );
         wp_enqueue_script( 'wp-color-picker-alpha', WPR_ADDONS_URL .'assets/js/admin/lib/wp-color-picker-alpha.min.js', ['jquery', 'wp-color-picker'], $version, true );
 
+        // Icon Picker
+        wp_enqueue_script( 'wpr-iconpicker-js', WPR_ADDONS_URL .'assets/js/admin/lib/iconpicker/fontawesome-iconpicker.min.js', ['jquery'], $version, true );
+        wp_enqueue_script( 'wpr-iconpicker-css', WPR_ADDONS_URL .'assets/js/admin/lib/iconpicker/fontawesome-iconpicker.min.css', ['jquery'], $version, true );
+
         // enqueue CSS
         wp_enqueue_style( 'wpr-mega-menu-css', WPR_ADDONS_URL .'assets/css/admin/mega-menu.css', [], $version );
 
