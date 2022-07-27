@@ -82,7 +82,7 @@ console.log(WprMegaMenuSettingsData)
             // Fix Color Picker
             if ( $('.wpr-mm-setting-color').length ) {
                 $('.wpr-mm-setting-color').find('.wp-color-result-text').text('Select Color');
-                $('.wpr-mm-setting-color').find('.wp-picker-clear').text('Clear');
+                $('.wpr-mm-setting-color').find('.wp-picker-clear').val('Clear');
             }
         },
 

@@ -695,7 +695,7 @@ jQuery(document).ready(function( $ ) {
 		// Fix Color Picker
 		if ( $('.wpr-settings').length ) {
 			$('.wpr-settings').find('.wp-color-result-text').text('Select Color');
-			$('.wpr-settings').find('.wp-picker-clear').text('Clear');
+			$('.wpr-settings').find('.wp-picker-clear').val('Clear');
 		}
 	});
 

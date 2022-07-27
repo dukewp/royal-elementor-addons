@@ -499,6 +499,9 @@
   margin-bottom: 70px;
 }
 
+.wp-picker-clear {
+  width: 100px !important;
+}
 
 /*--------------------------------------------------------------
 == Conditions
