@@ -35,6 +35,9 @@ console.log(WprMegaMenuSettingsData)
 
             // Color Pickers
             WprMegaMenuSettings.initColorPickers();
+
+            // Icon Picker
+            WprMegaMenuSettings.initIconPicker();
             
             // Close Popup
             WprMegaMenuSettings.closeSettingsPopup();
@@ -84,6 +87,15 @@ console.log(WprMegaMenuSettingsData)
                 $('.wpr-mm-setting-color').find('.wp-color-result-text').text('Select Color');
                 $('.wpr-mm-setting-color').find('.wp-picker-clear').val('Clear');
             }
+        },
+
+        initIconPicker: function() {
+            $('#wpr_mm_icon_picker').iconpicker();
+
+            // Bind iconpicker events to the element
+            $('#wpr_mm_icon_picker').on('iconpickerSelected', function(event){
+                console.log(event.iconpickerValue )
+            });
         },
 
 		getNavItemId: function( item ) {

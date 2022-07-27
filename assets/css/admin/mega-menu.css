@@ -204,3 +204,26 @@ button.wpr-edit-mega-menu-btn {
 .wpr-mm-setting-radius div {
   display: flex;
 }
+
+.wpr-mm-setting-icon div span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #a4afb7;
+  cursor: pointer;
+}
+
+.wpr-mm-setting-icon div span.wpr-mm-active-icon {
+  background-color: #a4afb7;
+  color: #fff;
+}
+
+.wpr-mm-setting-icon div span:first-child {
+  border-radius: 3px 0 0 3px;
+}
+
+.wpr-mm-setting-icon div span:last-child {
+  border-radius: 0 3px 3px 0;
+}

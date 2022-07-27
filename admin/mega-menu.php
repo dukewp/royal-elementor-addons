@@ -112,6 +112,11 @@ function render_settings_popup() {
                 </div>
 
                 <h4><?php esc_html_e('Icon', 'wpr-addons'); ?></h4>
+                <div class="wpr-mm-setting wpr-mm-setting-icon">
+                    <h4><?php esc_html_e('Icon Select', 'wpr-addons'); ?></h4>
+                    <div><span class="wpr-mm-active-icon"><i class="fas fa-ban"></i></span><span><i class="fas fa-angle-down"></i></span></div>
+                    <input type="text" id="wpr_mm_icon_picker" data-alpha="true" value="">
+                </div>
                 <div class="wpr-mm-setting wpr-mm-setting-color">
                     <h4><?php esc_html_e('Icon Color', 'wpr-addons'); ?></h4>
                     <input type="text" id="wpr_mm_icon_color" data-alpha="true" value="rgba(0,0,0,0.6);">
@@ -278,7 +283,8 @@ function enqueue_scripts( $hook ) {
 
         // Icon Picker
         wp_enqueue_script( 'wpr-iconpicker-js', WPR_ADDONS_URL .'assets/js/admin/lib/iconpicker/fontawesome-iconpicker.min.js', ['jquery'], $version, true );
-        wp_enqueue_script( 'wpr-iconpicker-css', WPR_ADDONS_URL .'assets/js/admin/lib/iconpicker/fontawesome-iconpicker.min.css', ['jquery'], $version, true );
+        wp_enqueue_style( 'wpr-iconpicker-css', WPR_ADDONS_URL .'assets/js/admin/lib/iconpicker/fontawesome-iconpicker.min.css', $version, true );
+        wp_enqueue_style( 'wpr-el-fontawesome-css', ELEMENTOR_URL .'assets/lib/font-awesome/css/all.min.css', [], $version );
 
         // enqueue CSS
         wp_enqueue_style( 'wpr-mega-menu-css', WPR_ADDONS_URL .'assets/css/admin/mega-menu.css', [], $version );
