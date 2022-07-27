@@ -36,6 +36,15 @@ class Wpr_Equal_Height {
             ]
 		);
 
+        $element->add_control(
+            'wpr_section_equal_height_update',
+            [
+                'type' => Controls_Manager::RAW_HTML,
+                'raw' => '<div class="elementor-update-preview editor-wpr-preview-update"><span>Update changes to Preview</span><button class="elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply</button>',
+                'separator' => 'after'
+            ]
+        );
+
         $element->end_controls_section();
 
     }
@@ -52,6 +61,23 @@ class Wpr_Equal_Height {
         if ( $element->get_name() !== 'section' ) {
             return;
         }
+
+		$settings = $element->get_settings_for_display();
+
+		if ( 'yes' === $settings['premium_eq_height_switcher'] ) {
+
+			$target_type = $settings['premium_eq_height_type'];
+
+			$target = ( 'custom' === $target_type ) ? explode( ',', $settings['premium_eq_height_custom_target'] ) : $settings['premium_eq_height_target'];
+
+			$addon_settings = array(
+				'targetType' => $target_type,
+				'target'     => $target,
+				'enableOn'   => $settings['premium_eq_height_enable_on'],
+			);
+
+			$element->add_render_attribute( '_wrapper', 'data-pa-eq-height', wp_json_encode( $addon_settings ) );
+		}
     }
     
     public function _print_template( $template, $widget ) {
