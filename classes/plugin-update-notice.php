@@ -62,7 +62,7 @@ class WprPluginUpdateNotice {
                                 <a href="'. esc_url(get_admin_url()) .'admin.php?page=wpr-theme-builder&tab=wpr_tab_product_archive" class="wpr-get-started-button button button-secondary">Go to WooCommerce Builder</a>
                             </div>
                         </div>
-                        <div class="image-wrap"><img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/theme-builder.png"></div>
+                        <div class="image-wrap"><img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/new-theme-builder.png"></div>
                         <canvas id="wpr-notice-confetti"></canvas>
                 </div>';
         }
