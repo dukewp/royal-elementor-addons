@@ -101,7 +101,7 @@ jQuery(document).ready(function( $ ) {
 		        $.post(
 		            ajaxurl,
 		            {
-		                action: 'wpr_activate_reuired_theme',
+		                action: 'wpr_activate_required_theme',
 		            }
 		        );
 
@@ -115,7 +115,7 @@ jQuery(document).ready(function( $ ) {
 			        $.post(
 			            ajaxurl,
 			            {
-			                action: 'wpr_activate_reuired_theme',
+			                action: 'wpr_activate_required_theme',
 			            }
 			        );
 
@@ -154,7 +154,7 @@ jQuery(document).ready(function( $ ) {
 						type: 'POST',
 						url: ajaxurl,
 						data: {
-			                action: 'wpr_activate_reuired_plugins',
+			                action: 'wpr_activate_required_plugins',
 			                plugin: slug,
 						},
 						success: function( response ) {
@@ -173,7 +173,7 @@ jQuery(document).ready(function( $ ) {
 							type: 'POST',
 							url: ajaxurl,
 							data: {
-								action: 'wpr_activate_reuired_plugins',
+								action: 'wpr_activate_required_plugins',
 								plugin: slug,
 							},
 							success: function( response ) {

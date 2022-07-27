@@ -15,8 +15,8 @@ function wpr_addons_add_templates_kit_menu() {
 add_action( 'admin_menu', 'wpr_addons_add_templates_kit_menu' );
 
 // Import Template Kit
-add_action( 'wp_ajax_wpr_activate_reuired_theme', 'wpr_activate_reuired_theme' );
-add_action( 'wp_ajax_wpr_activate_reuired_plugins', 'wpr_activate_reuired_plugins' );
+add_action( 'wp_ajax_wpr_activate_required_theme', 'wpr_activate_required_theme' );
+add_action( 'wp_ajax_wpr_activate_required_plugins', 'wpr_activate_required_plugins' );
 add_action( 'wp_ajax_wpr_fix_royal_compatibility', 'wpr_fix_royal_compatibility' );
 add_action( 'wp_ajax_wpr_import_templates_kit', 'wpr_import_templates_kit' );
 add_action( 'wp_ajax_wpr_final_settings_setup', 'wpr_final_settings_setup' );
@@ -190,7 +190,7 @@ function get_theme_status() {
 /**
 ** Install/Activate Required Theme
 */
-function wpr_activate_reuired_theme() {
+function wpr_activate_required_theme() {
     // Get Current Theme
     $theme = get_option('stylesheet');
 
@@ -207,7 +207,7 @@ function wpr_activate_reuired_theme() {
 /**
 ** Activate Required Plugins
 */
-function wpr_activate_reuired_plugins() {
+function wpr_activate_required_plugins() {
     if ( isset($_POST['plugin']) ) {
         if ( 'contact-form-7' == $_POST['plugin'] ) {
             if ( !is_plugin_active( 'contact-form-7/wp-contact-form-7.php' ) ) {
