@@ -28,7 +28,7 @@ class Wpr_Product_Meta extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'qq', 'product-meta', 'product', 'meta' ];//tmp
+		return [ 'qq', 'woocommerce', 'product-meta', 'product', 'meta' ];//tmp
 	}
 
 	protected function register_controls() {

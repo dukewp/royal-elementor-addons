@@ -32,7 +32,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'qq', 'product-add-to-cart', 'product', 'add-to-cart' ];//tmp
+		return [ 'qq', 'woocommerce', 'product-add-to-cart', 'product', 'add-to-cart' ];//tmp
 	}
 
 	public function get_script_depends() {

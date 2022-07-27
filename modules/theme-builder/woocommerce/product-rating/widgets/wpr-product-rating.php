@@ -30,7 +30,7 @@ class Wpr_Product_Rating extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'qq', 'product-rating', 'product', 'rating' ];//tmp
+		return [ 'qq', 'woocommerce', 'product-rating', 'product', 'rating' ];//tmp
 	}
 
 	protected function register_controls() {

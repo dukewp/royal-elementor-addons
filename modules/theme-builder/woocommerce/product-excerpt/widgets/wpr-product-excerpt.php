@@ -27,7 +27,7 @@ class Wpr_Product_Excerpt extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'qq', 'product-excerpt', 'product', 'excerpt' ];//tmp
+		return [ 'qq', 'woocommerce', 'product-excerpt', 'product', 'excerpt' ];//tmp
 	}
 
 	protected function register_controls() {

@@ -33,7 +33,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'qq', 'product-ini-cart', 'product', 'mini', 'cart' ];//tmp
+		return [ 'qq', 'woocommerce', 'product-ini-cart', 'product', 'mini', 'cart' ];//tmp
 	}
 
 	public function get_script_depends() {

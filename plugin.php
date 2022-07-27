@@ -586,7 +586,6 @@ class Plugin {
 		}
 	}
 
-
 	// Lightbox Styles
 	public function lightbox_styles() {
 	    echo '<style id="wpr_lightbox_styles">

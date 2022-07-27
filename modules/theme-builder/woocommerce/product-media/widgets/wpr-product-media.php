@@ -33,7 +33,7 @@ class Wpr_Product_Media extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'qq', 'product-media', 'product', 'image', 'media' ];//tmp
+		return [ 'qq', 'woocommerce', 'product-media', 'product', 'image', 'media' ];//tmp
 	}
 
 	public function get_script_depends() {

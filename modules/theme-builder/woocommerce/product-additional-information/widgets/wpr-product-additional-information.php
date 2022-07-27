@@ -34,7 +34,7 @@ class Wpr_Product_AdditionalInformation extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'qq', 'product-additional-information', 'product', 'additional information', 'information' ];//tmp
+		return [ 'qq', 'woocommerce', 'product-additional-information', 'product', 'additional information', 'information' ];//tmp
 	}	
 	
 	public function get_script_depends() {

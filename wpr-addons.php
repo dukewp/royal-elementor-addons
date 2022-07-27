@@ -230,6 +230,9 @@ register_activation_hook( __FILE__, 'royal_elementor_addons_activation_time' );
 
 // Delete Plugin Update Notice
 function royal_elementor_addons_deactivate() {
+	if ( get_option('wpr_plugin_update_dismiss_notice') ) {
+		delete_option('wpr_plugin_update_dismiss_notice');
+	}
 }
 
 // hook already exists with template kits notice
