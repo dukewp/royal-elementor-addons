@@ -104,6 +104,11 @@ class Plugin {
 			require WPR_ADDONS_PATH . 'extensions/wpr-sticky-section.php';
 		}
 
+		// Equal Height
+		if ( 'on' === get_option('wpr-equal-height', 'on') ) {
+			require WPR_ADDONS_PATH . 'extensions/wpr-equal-height.php';
+		}
+
 		// Reading Progress Bar
 		// if ( 'on' === get_option('wpr-reading-progress-bar', 'on') ) {
 		// 	require WPR_ADDONS_PATH . 'extensions/wpr-reading-progress-bar.php';
