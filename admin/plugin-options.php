@@ -254,24 +254,30 @@ function wpr_addons_settings_page() {
     <?php
         $woocommerce_builder_modules = Utilities::get_woocommerce_builder_modules();
         $premium_woo_modules = [
-			'Product Filters' => ['product-filters-pro', '#', '', 'pro'],
-			'Page My Account' => ['page-my-account-pro', '#', '', 'pro'],
-			'Woo Category Grid' => ['woo-category-grid-pro', '#', '', 'pro'],
+			'Product Filters' => ['product-filters-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-prodfilter-widgets-pro#purchasepro', '', 'pro'],
+			'Product Breadcrumbs' => ['product-breadcrumbs-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-breadcru-widgets-pro#purchasepro', '', 'pro'],
+			'Page My Account' => ['page-my-account-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-myacc-widgets-pro#purchasepro', '', 'pro'],
+			'Woo Category Grid' => ['woo-category-grid-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
         ];
 
         foreach ( array_merge($woocommerce_builder_modules, $premium_woo_modules) as $title => $data ) {
             $slug = $data[0];
             $url  = $data[1];
-            $reff = '?ref=rea-plugin-backend-elements-widget-prev'. $data[2];
-            $class = 'new' === $data[3] ? ' wpr-new-element' : '';
-            $class = ('pro' === $data[3] && !wpr_fs()->can_use_premium_code()) ? ' wpr-pro-element' : '';
+            $reff = '?ref=rea-plugin-backend-elements-widget-prev'. $data[1];
+            $class = 'new' === $data[3] ? 'wpr-new-element' : '';
+            $class = ('pro' === $data[3] && !wpr_fs()->can_use_premium_code()) ? 'wpr-pro-element' : '';
+            $default_value = class_exists( 'WooCommerce' ) ? 'on' : 'off';
 
-            echo '<div class="wpr-element'. esc_attr($class) .'">';
-                // echo '<a href="'. esc_url($url . $reff) .'" target="_blank"></a>';
-                echo '<a href="#"></a>';
+            if ( 'wpr-pro-element' === $class ) {
+                $default_value = 'off';
+                $reff = '';
+            }
+
+            echo '<div class="wpr-element '. esc_attr($class) .'">';
+                echo '<a href="'. esc_url($url . $reff) .'" target="_blank"></a>';
                 echo '<div class="wpr-element-info">';
                     echo '<h3>'. esc_html($title) .'</h3>';
-                    echo '<input type="checkbox" name="wpr-element-'. esc_attr($slug) .'" id="wpr-element-'. esc_attr($slug) .'" '. checked( get_option('wpr-element-'. $slug, 'on'), 'on', false ) .'>';
+                    echo '<input type="checkbox" name="wpr-element-'. esc_attr($slug) .'" id="wpr-element-'. esc_attr($slug) .'" '. checked( get_option('wpr-element-'. $slug, $default_value), 'on', false ) .'>';
                     echo '<label for="wpr-element-'. esc_attr($slug) .'"></label>';
                     // echo ( '' !== $url && empty(get_option('wpr_wl_plugin_links')) ) ? '<a href="'. esc_url($url . $reff) .'" target="_blank">'. esc_html__('View Widget Demo', 'wpr-addons') .'</a>' : '';
                 echo '</div>';
