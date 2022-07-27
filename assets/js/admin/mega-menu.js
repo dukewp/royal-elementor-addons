@@ -28,7 +28,13 @@ console.log(WprMegaMenuSettingsData)
             $('.wpr-mm-settings-popup-wrap').fadeIn();
 
             // Edit Menu Button
-            WprMegaMenuSettings.editMenuButton( $(this) );
+            WprMegaMenuSettings.initEditMenuButton( $(this) );
+
+            // Menu Width
+            WprMegaMenuSettings.initMenuWidthToggle();
+
+            // Color Pickers
+            WprMegaMenuSettings.initColorPickers();
             
             // Close Popup
             WprMegaMenuSettings.closeSettingsPopup();
@@ -38,9 +44,15 @@ console.log(WprMegaMenuSettingsData)
             $('.wpr-mm-settings-close-popup-btn').on('click', function() {
                 $('.wpr-mm-settings-popup-wrap').fadeOut();
             });
+
+
+            $('.wpr-mm-settings-popup-wrap').on('click', function(e) {
+                if(e.target !== e.currentTarget) return;
+                $(this).fadeOut();
+            });
         },
 
-        editMenuButton: function( selector ) {
+        initEditMenuButton: function( selector ) {
             $('.wpr-edit-mega-menu-btn').on('click', function() {
                 var id = selector.attr('data-id'),
                     depth = selector.attr('data-depth');
@@ -64,6 +76,16 @@ console.log(WprMegaMenuSettingsData)
 			});
 		},
 
+        initColorPickers: function() {
+            $('.wpr-mm-setting-color').find('input').wpColorPicker();
+
+            // Fix Color Picker
+            if ( $('.wpr-mm-setting-color').length ) {
+                $('.wpr-mm-setting-color').find('.wp-color-result-text').text('Select Color');
+                $('.wpr-mm-setting-color').find('.wp-picker-clear').text('Clear');
+            }
+        },
+
 		getNavItemId: function( item ) {
 			var id = item.attr( 'id' );
 			return id.replace( 'menu-item-', '' );
@@ -77,7 +99,26 @@ console.log(WprMegaMenuSettingsData)
 			} else {
                 return depthClass[0].replace( 'menu-item-depth-', '' );
             }
-		}
+		},
+
+        initMenuWidthToggle: function() {
+            var select = $('#wpr_mm_width'),
+                option = $('#wpr_mm_custom_width').closest('.wpr-mm-setting');
+            
+            if ( 'custom' === select.val() ) {
+                option.show();
+            } else {
+                option.hide();
+            }
+
+            select.on('change', function() {
+                if ( 'custom' === select.val() ) {
+                    option.show();
+                } else {
+                    option.hide();
+                }            
+            });
+        }
 
     }
 

@@ -49,7 +49,8 @@
   left: 50%;
   transform: translate(-50%,-50%);
   width: 100%;
-  max-width: 600px;
+  max-width: 700px;
+  margin-left: 80px;
   background-color: #fff;
   box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
 }
@@ -105,6 +106,8 @@
 }
 
 .wpr-mm-settings-wrap {
+  height: 60vh;
+  overflow-y: scroll;
   padding: 20px;
 }
 
@@ -125,11 +128,13 @@
   margin: 0;
 }
 
-.wpr-mm-setting select {
-  min-width: 133px;
+.wpr-mm-setting select,
+.wpr-mm-setting input[type="text"],
+.wpr-mm-setting input[type="number"] {
+  width: 166px;
 }
 
-.wpr-mm-setting input {
+.wpr-mm-setting-switcher input {
   position: absolute;
   z-index: -1000;
   left: -1000px;
@@ -142,7 +147,7 @@
   border: 0;
 }
 
-.wpr-mm-setting label {
+.wpr-mm-setting-switcher label {
   position: relative;
   display: block;
   width: 45px;
@@ -160,7 +165,7 @@
   transition: all 0.2s ease-in;
 }
 
-.wpr-mm-setting input + label:after {
+.wpr-mm-setting-switcher input + label:after {
   content: ' ';
   display: block;
   position: absolute;
@@ -175,20 +180,28 @@
   transition: all 0.2s ease-in;
 }
 
-.wpr-mm-setting input:checked + label {
+.wpr-mm-setting-switcher input:checked + label {
   background: #6A4BFF;
 }
 
-.wpr-mm-setting input:checked + label:after {
+.wpr-mm-setting-switcher input:checked + label:after {
   left: 24px;
 }
 
 button.wpr-edit-mega-menu-btn {
-  padding: 3px 15px !important;
+  padding: 3px 20px !important;
   font-size: 12px !important;
 }
 
 .wpr-edit-mega-menu-btn i {
   font-size: 125%;
   margin-right: 3px;
+}
+
+.wpr-mm-setting-radius div {
+  display: flex;
+}
+
+.wpr-mm-setting-radius input[type="number"] {
+  width: 83px;
 }

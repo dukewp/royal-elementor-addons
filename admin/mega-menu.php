@@ -79,7 +79,7 @@ function render_settings_popup() {
             
             <div class="wpr-mm-settings-wrap">
                 <h4><?php esc_html_e('General', 'wpr-addons'); ?></h4>
-                <div class="wpr-mm-setting">
+                <div class="wpr-mm-setting wpr-mm-setting-switcher">
                     <h4><?php esc_html_e('Enable Mega Menu', 'wpr-addons'); ?></h4>
                     <input type="checkbox" id="wpr_mm_enable">
                     <label for="wpr_mm_enable"></label>
@@ -100,6 +100,10 @@ function render_settings_popup() {
                     </select>
                 </div>
                 <div class="wpr-mm-setting">
+                    <h4><?php esc_html_e('Custom Width (px)', 'wpr-addons'); ?></h4>
+                    <input type="number" id="wpr_mm_custom_width" value="600">
+                </div>
+                <div class="wpr-mm-setting">
                     <h4><?php esc_html_e('Mega Menu Content', 'wpr-addons'); ?></h4>
                     <button class="button button-primary wpr-edit-mega-menu-btn">
                         <i class="eicon-elementor-square" aria-hidden="true"></i>
@@ -108,8 +112,54 @@ function render_settings_popup() {
                 </div>
 
                 <h4><?php esc_html_e('Icon', 'wpr-addons'); ?></h4>
+                <div class="wpr-mm-setting wpr-mm-setting-color">
+                    <h4><?php esc_html_e('Icon Color', 'wpr-addons'); ?></h4>
+                    <input type="text" id="wpr_mm_icon_color" data-alpha="true" value="rgba(0,0,0,0.6);">
+                </div>
+                <div class="wpr-mm-setting wpr-mm-setting-color">
+                    <h4><?php esc_html_e('Icon Background Color', 'wpr-addons'); ?></h4>
+                    <input type="text" id="wpr_mm_icon_bg_color" data-alpha="true" value="rgba(0,0,0,0.6);">
+                </div>
+                <div class="wpr-mm-setting">
+                    <h4><?php esc_html_e('Icon Size (px)', 'wpr-addons'); ?></h4>
+                    <input type="number" id="wpr_mm_icon_size" value="14">
+                </div>
+                <div class="wpr-mm-setting wpr-mm-setting-radius">
+                    <h4><?php esc_html_e('Icon Border Radius (px)', 'wpr-addons'); ?></h4>
+                    <div>
+                        <input type="number" id="wpr_mm_icon_bdrs_1" placeholder="<?php esc_html_e('Top', 'wpr-addons'); ?>">
+                        <input type="number" id="wpr_mm_icon_bdrs_2" placeholder="<?php esc_html_e('Right', 'wpr-addons'); ?>">
+                        <input type="number" id="wpr_mm_icon_bdrs_3" placeholder="<?php esc_html_e('Bottom', 'wpr-addons'); ?>">
+                        <input type="number" id="wpr_mm_icon_bdrs_4" placeholder="<?php esc_html_e('Left', 'wpr-addons'); ?>">
+                    </div>
+                </div>
 
                 <h4><?php esc_html_e('Badge', 'wpr-addons'); ?></h4>
+                <div class="wpr-mm-setting">
+                    <h4><?php esc_html_e('Badge Text', 'wpr-addons'); ?></h4>
+                    <input type="text" id="wpr_mm_badge_text" value="">
+                </div>
+                <div class="wpr-mm-setting wpr-mm-setting-color">
+                    <h4><?php esc_html_e('Badge Text Color', 'wpr-addons'); ?></h4>
+                    <input type="text" id="wpr_mm_badge_color" data-alpha="true" value="rgba(0,0,0,0.6);">
+                </div>
+                <div class="wpr-mm-setting wpr-mm-setting-color">
+                    <h4><?php esc_html_e('Badge Background Color', 'wpr-addons'); ?></h4>
+                    <input type="text" id="wpr_mm_badge_bg_color" data-alpha="true" value="rgba(0,0,0,0.6);">
+                </div>
+                <div class="wpr-mm-setting">
+                    <h4><?php esc_html_e('Badge Size (px)', 'wpr-addons'); ?></h4>
+                    <input type="number" id="wpr_mm_badge_size" value="14">
+                </div>
+                <div class="wpr-mm-setting wpr-mm-setting-radius">
+                    <h4><?php esc_html_e('Badge Border Radius (px)', 'wpr-addons'); ?></h4>
+                    <div>
+                        <input type="number" id="wpr_mm_badge_bdrs_1" placeholder="<?php esc_html_e('Top', 'wpr-addons'); ?>">
+                        <input type="number" id="wpr_mm_badge_bdrs_2" placeholder="<?php esc_html_e('Right', 'wpr-addons'); ?>">
+                        <input type="number" id="wpr_mm_badge_bdrs_3" placeholder="<?php esc_html_e('Bottom', 'wpr-addons'); ?>">
+                        <input type="number" id="wpr_mm_badge_bdrs_4" placeholder="<?php esc_html_e('Left', 'wpr-addons'); ?>">
+                    </div>
+                </div>
             </div>
 
             <div class="wpr-mm-settings-popup-footer">
@@ -223,8 +273,8 @@ function enqueue_scripts( $hook ) {
     if ( 'nav-menus.php' == $hook ) {
 
         // Color Picker
-        // wp_enqueue_style( 'wp-color-picker' );
-        // wp_enqueue_script( 'wp-color-picker-alpha', WPR_ADDONS_URL .'assets/js/admin/wp-color-picker-alpha.min.js', ['jquery', 'wp-color-picker'], $version, true );
+        wp_enqueue_style( 'wp-color-picker' );
+        wp_enqueue_script( 'wp-color-picker-alpha', WPR_ADDONS_URL .'assets/js/admin/wp-color-picker-alpha.min.js', ['jquery', 'wp-color-picker'], $version, true );
 
         // enqueue CSS
         wp_enqueue_style( 'wpr-mega-menu-css', WPR_ADDONS_URL .'assets/css/admin/mega-menu.css', [], $version );
