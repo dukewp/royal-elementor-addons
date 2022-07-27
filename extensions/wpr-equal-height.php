@@ -9,20 +9,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Wpr_Equal_Height {
 	public function __construct() {
-
-		// Enqueue the required JS file.
-		add_action( 'elementor/preview/enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-
-		// Create Premium Equal Height tab at the end of section layout tab.
 		add_action( 'elementor/element/section/section_advanced/after_section_end', [ $this, 'register_controls' ], 10 );
-
 		add_action( 'elementor/section/print_template', array( $this, '_print_template' ), 10, 2 );
-
-		// Insert data before section rendering.
 		add_action( 'elementor/frontend/section/before_render', array( $this, '_before_render' ), 10, 1 );
-
-		// Check if scripts should be loaded.
-		add_action( 'elementor/frontend/section/before_render', array( $this, 'check_script_enqueue' ) );
 
 	}
     
@@ -45,6 +34,18 @@ class Wpr_Equal_Height {
             ]
         );
 
+		$element->add_control (
+			'wpr_enable_equal_height',
+			[
+				'type' => Controls_Manager::SWITCHER,
+				'label' => esc_html__( 'Enable Equal Height', 'wpr-addons' ),
+				'default' => 'no',
+				'return_value' => 'yes',
+				'prefix_class' => 'wpr-equal-height-',
+				'render_type' => 'template',
+			]
+		);
+
         $element->end_controls_section();
 
     }
@@ -64,19 +65,19 @@ class Wpr_Equal_Height {
 
 		$settings = $element->get_settings_for_display();
 
-		if ( 'yes' === $settings['premium_eq_height_switcher'] ) {
+		if ( 'yes' === $settings['wpr_enable_equal_height'] ) {
 
-			$target_type = $settings['premium_eq_height_type'];
+			// $target_type = $settings['premium_eq_height_type'];
 
-			$target = ( 'custom' === $target_type ) ? explode( ',', $settings['premium_eq_height_custom_target'] ) : $settings['premium_eq_height_target'];
+			// $target = ( 'custom' === $target_type ) ? explode( ',', $settings['premium_eq_height_custom_target'] ) : $settings['premium_eq_height_target'];
 
-			$addon_settings = array(
-				'targetType' => $target_type,
-				'target'     => $target,
-				'enableOn'   => $settings['premium_eq_height_enable_on'],
-			);
+			// $addon_settings = array(
+			// 	'targetType' => $target_type,
+			// 	'target'     => $target,
+			// 	'enableOn'   => $settings['premium_eq_height_enable_on'],
+			// );
 
-			$element->add_render_attribute( '_wrapper', 'data-pa-eq-height', wp_json_encode( $addon_settings ) );
+			// $element->add_render_attribute( '_wrapper', 'data-pa-eq-height', wp_json_encode( $addon_settings ) );
 		}
     }
     
