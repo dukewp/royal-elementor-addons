@@ -139,6 +139,10 @@ function render_settings_popup() {
                     <h4><?php esc_html_e('Badge Text', 'wpr-addons'); ?></h4>
                     <input type="text" id="wpr_mm_badge_text" value="">
                 </div>
+                <div class="wpr-mm-setting">
+                    <h4><?php esc_html_e('Badge Size (px)', 'wpr-addons'); ?></h4>
+                    <input type="number" id="wpr_mm_badge_size" value="14">
+                </div>
                 <div class="wpr-mm-setting wpr-mm-setting-color">
                     <h4><?php esc_html_e('Badge Text Color', 'wpr-addons'); ?></h4>
                     <input type="text" id="wpr_mm_badge_color" data-alpha="true" value="rgba(0,0,0,0.6);">
@@ -146,10 +150,6 @@ function render_settings_popup() {
                 <div class="wpr-mm-setting wpr-mm-setting-color">
                     <h4><?php esc_html_e('Badge Background Color', 'wpr-addons'); ?></h4>
                     <input type="text" id="wpr_mm_badge_bg_color" data-alpha="true" value="rgba(0,0,0,0.6);">
-                </div>
-                <div class="wpr-mm-setting">
-                    <h4><?php esc_html_e('Badge Size (px)', 'wpr-addons'); ?></h4>
-                    <input type="number" id="wpr_mm_badge_size" value="14">
                 </div>
                 <div class="wpr-mm-setting wpr-mm-setting-radius">
                     <h4><?php esc_html_e('Badge Border Radius (px)', 'wpr-addons'); ?></h4>
@@ -274,7 +274,7 @@ function enqueue_scripts( $hook ) {
 
         // Color Picker
         wp_enqueue_style( 'wp-color-picker' );
-        wp_enqueue_script( 'wp-color-picker-alpha', WPR_ADDONS_URL .'assets/js/admin/wp-color-picker-alpha.min.js', ['jquery', 'wp-color-picker'], $version, true );
+        wp_enqueue_script( 'wp-color-picker-alpha', WPR_ADDONS_URL .'assets/js/admin/lib/wp-color-picker-alpha.min.js', ['jquery', 'wp-color-picker'], $version, true );
 
         // enqueue CSS
         wp_enqueue_style( 'wpr-mega-menu-css', WPR_ADDONS_URL .'assets/css/admin/mega-menu.css', [], $version );

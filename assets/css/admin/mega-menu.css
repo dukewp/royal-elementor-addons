@@ -129,9 +129,12 @@
 }
 
 .wpr-mm-setting select,
-.wpr-mm-setting input[type="text"],
+.wpr-mm-setting input[type="text"] {
+  width: 168px;
+}
+
 .wpr-mm-setting input[type="number"] {
-  width: 166px;
+  width: 103px;
 }
 
 .wpr-mm-setting-switcher input {
@@ -189,7 +192,7 @@
 }
 
 button.wpr-edit-mega-menu-btn {
-  padding: 3px 20px !important;
+  padding: 3px 22px !important;
   font-size: 12px !important;
 }
 
@@ -200,8 +203,4 @@ button.wpr-edit-mega-menu-btn {
 
 .wpr-mm-setting-radius div {
   display: flex;
-}
-
-.wpr-mm-setting-radius input[type="number"] {
-  width: 83px;
 }
