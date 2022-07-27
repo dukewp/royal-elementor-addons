@@ -114,6 +114,11 @@ jQuery(document).ready(function( $ ) {
 
 	// Open Popup
 	$('.wpr-user-template').on( 'click', function() {
+		if ( $(this).find('div').length ) {
+			alert('Please Install/Activate WooCommerce!');
+			return;
+		}
+
 		$('.wpr-user-template-title').val('');
 		$('.wpr-user-template-popup-wrap').fadeIn();
 	});

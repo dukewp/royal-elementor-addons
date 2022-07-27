@@ -28,6 +28,12 @@ function wpr_addons_theme_builder_page() {
         <div class="wpr-user-template">
             <span><?php esc_html_e( 'Create Template', 'wpr-addons' ); ?></span>
             <span class="plus-icon">+</span>
+
+            <?php
+            if ( ! class_exists( 'WooCommerce' ) && ('wpr_tab_product_archive' === $_GET['tab'] || 'wpr_tab_product_single' === $_GET['tab'] )) {
+                echo '<div></div>';
+            }
+            ?>
         </div>
 
         <a href="https://www.youtube.com/watch?v=cwkhwO_rPuo" class="wpr-options-button button" target="_blank" style="padding: 8px 22px;">
