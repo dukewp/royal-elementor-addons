@@ -137,6 +137,9 @@ class Plugin {
 			// Theme Builder
 			require WPR_ADDONS_PATH . 'admin/popups.php';
 
+			// Mega Menu
+			require WPR_ADDONS_PATH . 'admin/mega-menu.php';
+
 			// Hide Theme Notice
 			// TODO: Remove this and fix with Transients
 			add_action( 'admin_enqueue_scripts', [ $this, 'hide_theme_notice' ] );
