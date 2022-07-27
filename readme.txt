@@ -1,9 +1,9 @@
 ﻿=== Royal Elementor Addons (Header Footer Builder, Popups, Post Grid, Woocommerce Product Grid, Slider, Parallax Image, Free Elementor Widgets & Elementor Templates) ===
 Contributors: WP Royal, rubeushagrid13, cyberpinky, elementoraddonswpr
 Tags: elementor, elements, widgets for elementor, elementor addons, elementor widgets, elementor form, woocommerce elementor, page builder, elementor templates, wordpress page builder, best elementor addons, addons for elementor
-Stable tag: 1.3.44
+Stable tag: 1.3.45
 Requires at least: 5.0
-Tested up to: 6.0
+Tested up to: 6.0.1
 Requires PHP: 5.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -14,7 +14,7 @@ Elementor Post, Portfolio, Woocommerce Grid builder Widgets. Slider, Carousel, F
 
 **Royal Addons for Elementor** is the most versatile, intuitive, and easy to use [Elementor Page Builder](https://wordpress.org/plugins/elementor/) extension. Our goal is to provide you with the tools to make things happen, efficiently, and fast compare to other elementor plugins. Choosing us is not only a mindset, but it is also a requirement if you intend to gain an edge over your competitors when creating your website. The best part is that you can design anything **without having to touch a single line of code**.
 
-Comes with **50+ widgets, 35+ Elementor Template KIT (Growing Each Week), Theme Builder, Popup Builder, Premade Widget Blocks & Extensions for Elementor.** Creative and self-intuitive elementor widgets to take your WordPress website to the next level. **All widgets are Free** and the Pro Version offers even more advanced functionality.
+Comes with **50+ widgets, 40+ Elementor Template KIT (Growing Each Week), Theme Builder, Elementor WooCommerce Builder, Popup Builder, Premade Widget Blocks & Extensions for Elementor.** Creative and self-intuitive elementor widgets to take your WordPress website to the next level. **All widgets are Free** and the Pro Version offers even more advanced functionality.
 
 *Free and Pro functionalities are mixed in the Widget Demos below.*
 
@@ -77,6 +77,12 @@ Comes with **50+ widgets, 35+ Elementor Template KIT (Growing Each Week), Theme 
 and other custom branding related settings)
 - Sticky Section (Can be used for creating Sticky Header / Menu) - elementor extension
 - Custom CSS - Elementor free custom css , apply custom css to any section - elementor extension & other elementor enhancements coming soon.
+
+**Elementor Wocommerce Builder Templates Kits**
+- [**Woo Shop**](https://demosites.royal-elementor-addons.com/wooshop-v1/?ref=rea-wpo-pp-details-tab) - created with Elementor WooCommerce Builder
+- [**Fashion**](https://demosites.royal-elementor-addons.com/fashion-v1/?ref=rea-wpo-pp-details-tab) - created with Elementor WooCommerce Builder
+- [**Grocery Store**](https://demosites.royal-elementor-addons.com/grocery-store-v1/?ref=rea-wpo-pp-details-tab) - created with Elementor WooCommerce Builder
+- [**Furniture Store**](https://demosites.royal-elementor-addons.com/furniture-shop-v1/?ref=rea-wpo-pp-details-tab) - created with Elementor WooCommerce Builder
 
 **Elementor Theme Builder Templates Kits**
 
@@ -344,6 +350,19 @@ memory_limit 256M or more
 post_max_size 64M
 
 == Changelog ==
+
+= Royal Elementor Addons v1.3.45 - 2022-07-07 =
+* ADDED: Elementor Woocommerce Builder in Theme Builder Section.
+* ADDED: 14+ Elementor Woocommerce Single  Product Builder Widgets like: Add to cart widget, product Price widget, product Breadcrumbs widget (only in PRO) , product Media widget,  product Rating widget and so on...
+* ADDED: Elementor Woocommerce Minicart Widgets (Minicart sidebar and other advanced options supported only in PRO).
+* ADDED: Elementor Woocommerce Product Filter Widgets (only in PRO).
+* ADDED: Elementor Woocommerce Category Grid Widgets (only in PRO).
+* ADDED: Elementor Woocommerce My Account Widgets (only in PRO).
+* ADDED: Query products by Sale, Featured, Upsell, Cross-sell in Woo Grid/Slider/Carousel widget (only in PRO).
+* ADDED: Royal Elementor Woocommerce Builder [**Woo Shop**](https://demosites.royal-elementor-addons.com/wooshop-v1/?ref=rea-wpo-pp-details-tab) Templates Kit.
+* ADDED: Royal Elementor Woocommerce Builder [**Fashion**](https://demosites.royal-elementor-addons.com/fashion-v1/?ref=rea-wpo-pp-details-tab) Templates Kit. (only in PRO)
+* ADDED: Royal Elementor Woocommerce Builder [**Grocery Store**](https://demosites.royal-elementor-addons.com/grocery-store-v1/?ref=rea-wpo-pp-details-tab) Templates Kit. (only in PRO)
+* ADDED: Royal Elementor Woocommerce Builder [**Furniture Store**](https://demosites.royal-elementor-addons.com/furniture-shop-v1/?ref=rea-wpo-pp-details-tab) Templates Kit. (only in PRO)
 
 = Royal Elementor Addons v1.3.44 - 2022-06-03 =
 * ADDED: Royal Elementor Theme Builder [**Dark Digital Agency**](https://demosites.royal-elementor-addons.com/digital-agency-dark-v1/?ref=rea-wpo-pp-details-tab) Templates Kit.
