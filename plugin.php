@@ -7,6 +7,7 @@ use WprAddons\Includes\Controls\WPR_Control_Animations;
 use WprAddons\Includes\Controls\WPR_Control_Animations_Alt;
 use WprAddons\Includes\Controls\WPR_Control_Button_Animations;
 use WprAddons\Includes\Controls\WPR_Control_Arrow_Icons;
+use WprAddons\Includes\Controls\WPR_Select2;
 use WprAddons\Classes\Utilities;
 use Elementor\Core\App\App;
 
@@ -82,6 +83,7 @@ class Plugin {
 		// Custom Controls
 		require WPR_ADDONS_PATH . 'includes/controls/wpr-control-animations.php';
 		require WPR_ADDONS_PATH . 'includes/controls/wpr-control-icons.php';
+		require WPR_ADDONS_PATH . 'includes/controls/wpr-select2.php';
 
 		// Templates Library
 		require WPR_ADDONS_PATH . 'admin/includes/wpr-templates-library.php';
@@ -209,6 +211,7 @@ class Plugin {
 		$controls_manager->register( new WPR_Control_Animations_Alt() );
 		$controls_manager->register( new WPR_Control_Button_Animations() );
 		$controls_manager->register( new WPR_Control_Arrow_Icons() );
+		$controls_manager->register( new WPR_Select2() );
 
 	}
 

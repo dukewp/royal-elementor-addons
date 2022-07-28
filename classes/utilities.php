@@ -1,5 +1,6 @@
 <?php
 namespace WprAddons\Classes;
+use Elementor\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
@@ -927,6 +928,39 @@ class Utilities {
 	*/
 	public static function is_new_free_user() {
 		return !wpr_fs()->can_use_premium_code() && (intval(get_option('royal_elementor_addons_activation_time')) > 1649247746);
+	}
+
+	public static function get_all_breakpoints( $type = 'assoc' ) {
+
+		$devices = array(
+			'desktop' => __( 'Desktop', 'elementor' ),
+			'tablet'  => __( 'Tablet', 'elementor' ),
+			'mobile'  => __( 'Mobile', 'elementor' ),
+		);
+
+		$method_available = method_exists( Plugin::$instance->breakpoints, 'has_custom_breakpoints' );
+
+		if ( ( defined( 'ELEMENTOR_VERSION' ) && version_compare( ELEMENTOR_VERSION, '3.4.0', '>' ) ) && $method_available ) {
+
+			if ( Plugin::$instance->breakpoints->has_custom_breakpoints() ) {
+				$devices = array_merge(
+					$devices,
+					array(
+						'widescreen'   => __( 'Widescreen', 'elementor' ),
+						'laptop'       => __( 'Laptop', 'elementor' ),
+						'tablet_extra' => __( 'Tablet Extra', 'elementor' ),
+						'mobile_extra' => __( 'Mobile Extra', 'elementor' ),
+					)
+				);
+			}
+		}
+
+		if ( 'keys' === $type ) {
+			$devices = array_keys( $devices );
+		}
+
+		return $devices;
+
 	}
 
 }
