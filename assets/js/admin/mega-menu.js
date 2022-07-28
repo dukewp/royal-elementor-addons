@@ -93,8 +93,32 @@ console.log(WprMegaMenuSettingsData)
             $('#wpr_mm_icon_picker').iconpicker();
 
             // Bind iconpicker events to the element
-            $('#wpr_mm_icon_picker').on('iconpickerSelected', function(event){
-                console.log(event.iconpickerValue )
+            $('#wpr_mm_icon_picker').on('iconpickerSelected', function(event) {
+                $('.wpr-mm-setting-icon div span').removeClass('wpr-mm-active-icon');
+                $('.wpr-mm-setting-icon div span:last-child').addClass('wpr-mm-active-icon');
+                $('.wpr-mm-setting-icon div span:last-child i').removeAttr('class');
+                $('.wpr-mm-setting-icon div span:last-child i').addClass(event.iconpickerValue);
+            });
+
+            // Bind iconpicker events to the element
+            $('#wpr_mm_icon_picker').on('iconpickerHide', function(event){
+                setTimeout(function(){
+                    if ( 'wpr-mm-active-icon' == $('.wpr-mm-setting-icon div span:first-child').attr('class') ) {
+                        $('#wpr_mm_icon_picker').val('')
+                    }
+
+                    $('.wpr-mm-settings-wrap').removeAttr('style');
+                },100);
+            });
+
+            $('.wpr-mm-setting-icon div span:first-child').on('click', function() {
+                $('.wpr-mm-setting-icon div span').removeClass('wpr-mm-active-icon');
+                $(this).addClass('wpr-mm-active-icon');
+            });
+
+            $('.wpr-mm-setting-icon div span:last-child').on('click', function() {
+                $('#wpr_mm_icon_picker').focus();
+                $('.wpr-mm-settings-wrap').css('overflow', 'hidden');
             });
         },
 

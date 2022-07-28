@@ -227,3 +227,31 @@ button.wpr-edit-mega-menu-btn {
 .wpr-mm-setting-icon div span:last-child {
   border-radius: 0 3px 3px 0;
 }
+
+.wpr-mm-setting-icon input[type="text"] {
+  width: 0;
+  padding: 0;
+  border: 0;
+  box-shadow: none !important;
+  margin-left: -15px;
+}
+
+.wpr-mm-setting.iconpicker-container .iconpicker-popover {
+  padding: 5px;
+}
+
+.wpr-mm-setting.iconpicker-container .popover-title {
+  padding: 0;
+}
+
+.wpr-mm-setting.iconpicker-container input[type="search"] {
+  padding: 5px 10px;
+  margin: 0 !important;
+  border: 0;
+  width: 100%;
+}
+
+.wpr-mm-setting.iconpicker-container .arrow {
+  border-bottom-color: #f7f7f7 !important;
+  top: -8px !important;
+}
