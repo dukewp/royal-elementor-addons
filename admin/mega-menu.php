@@ -5,6 +5,7 @@ use WprAddons\Plugin;
 add_action( 'init', 'register_mega_menu_cpt' );
 add_filter( 'option_elementor_cpt_support', 'add_mega_menu_cpt_support' );
 add_filter( 'default_option_elementor_cpt_support', 'add_mega_menu_cpt_support' );
+add_action( 'template_include', 'set_post_type_template', 9999 );
 add_action( 'admin_footer', 'render_settings_popup', 10 );
 add_action( 'wp_ajax_wpr_create_mega_menu_template', 'wpr_create_mega_menu_template' );
 add_action( 'wp_ajax_wpr_save_mega_menu_settings', 'wpr_save_mega_menu_settings' );
@@ -74,6 +75,16 @@ function wpr_create_mega_menu_template() {
             'edit_link' => $edit_link
         ]
     ]);
+}
+
+// Convert to Canvas Template
+function set_post_type_template() {
+    var_dump(is_singular('wpr_mega_menu'));
+    if ( is_singular('wpr_mega_menu') && \Elementor\Plugin::instance()->preview->is_preview_mode() ) {
+        $template = WPR_ADDONS_PATH . 'admin/templates/wpr-canvas.php';
+    }
+
+    return WPR_ADDONS_PATH . 'admin/templates/wpr-canvas.php';
 }
 
 // Render Settings Popup
