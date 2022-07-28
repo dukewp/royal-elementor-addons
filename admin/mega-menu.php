@@ -3,6 +3,8 @@ use WprAddons\Plugin;
 
 // Init Actions
 add_action( 'init', 'register_mega_menu_cpt' );
+add_filter( 'option_elementor_cpt_support', 'add_mega_menu_cpt_support' );
+add_filter( 'default_option_elementor_cpt_support', 'add_mega_menu_cpt_support' );
 add_action( 'admin_footer', 'render_settings_popup', 10 );
 add_action( 'wp_ajax_wpr_create_mega_menu_template', 'wpr_create_mega_menu_template' );
 add_action( 'wp_ajax_wpr_save_mega_menu_settings', 'wpr_save_mega_menu_settings' );
@@ -23,6 +25,15 @@ function register_mega_menu_cpt() {
     );
 
     register_post_type( 'wpr_mega_menu', $args );
+}
+
+// Add Elementor Editor Support
+function add_mega_menu_cpt_support( $value ) {
+    if ( empty( $value ) ) {
+        $value = [];
+    }
+
+    return array_merge( $value, ['wpr_mega_menu'] ); 
 }
 
 // Create Menu Template
@@ -57,6 +68,12 @@ function wpr_create_mega_menu_template() {
         ),
         admin_url( 'post.php' )
     );
+
+    wp_send_json([
+        'data' => [
+            'edit_link' => $edit_link
+        ]
+    ]);
 }
 
 // Render Settings Popup
@@ -121,22 +138,9 @@ function render_settings_popup() {
                     <h4><?php esc_html_e('Icon Color', 'wpr-addons'); ?></h4>
                     <input type="text" id="wpr_mm_icon_color" data-alpha="true" value="rgba(0,0,0,0.6);">
                 </div>
-                <div class="wpr-mm-setting wpr-mm-setting-color">
-                    <h4><?php esc_html_e('Icon Background Color', 'wpr-addons'); ?></h4>
-                    <input type="text" id="wpr_mm_icon_bg_color" data-alpha="true" value="rgba(0,0,0,0.6);">
-                </div>
                 <div class="wpr-mm-setting">
                     <h4><?php esc_html_e('Icon Size (px)', 'wpr-addons'); ?></h4>
                     <input type="number" id="wpr_mm_icon_size" value="14">
-                </div>
-                <div class="wpr-mm-setting wpr-mm-setting-radius">
-                    <h4><?php esc_html_e('Icon Border Radius (px)', 'wpr-addons'); ?></h4>
-                    <div>
-                        <input type="number" id="wpr_mm_icon_bdrs_1" placeholder="<?php esc_html_e('Top', 'wpr-addons'); ?>">
-                        <input type="number" id="wpr_mm_icon_bdrs_2" placeholder="<?php esc_html_e('Right', 'wpr-addons'); ?>">
-                        <input type="number" id="wpr_mm_icon_bdrs_3" placeholder="<?php esc_html_e('Bottom', 'wpr-addons'); ?>">
-                        <input type="number" id="wpr_mm_icon_bdrs_4" placeholder="<?php esc_html_e('Left', 'wpr-addons'); ?>">
-                    </div>
                 </div>
 
                 <h4><?php esc_html_e('Badge', 'wpr-addons'); ?></h4>
@@ -173,12 +177,20 @@ function render_settings_popup() {
         </div>
     </div>
 
+    <!-- Iframe Popup -->
+    <div class="wpr-mm-editor-popup-wrap">
+        <div class="wpr-mm-editor-popup-iframe"></div>
+    </div>
     <?php
 }
 
 // Save Mega Menu Settings
 function wpr_save_mega_menu_settings() {
+    if ( isset($_POST['item_settings']) ) {
+        update_post_meta( $_POST['item_id'], 'wpr-mega-menu-settings', $_POST['item_settings'] );
+    }
 
+    wp_send_json_success($_POST['item_settings']);
 }
 
 // Get Menu Items Data

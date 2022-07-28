@@ -38,6 +38,9 @@ console.log(WprMegaMenuSettingsData)
 
             // Icon Picker
             WprMegaMenuSettings.initIconPicker();
+
+            // Save Settings
+            WprMegaMenuSettings.saveSettings( $(this) );
             
             // Close Popup
             WprMegaMenuSettings.closeSettingsPopup();
@@ -60,24 +63,30 @@ console.log(WprMegaMenuSettingsData)
                 var id = selector.attr('data-id'),
                     depth = selector.attr('data-depth');
 
-                WprMegaMenuSettings.createMenuTemplate(id, depth);
+                WprMegaMenuSettings.createOrEditMenuTemplate(id, depth);
             });
         },
 
-		createMenuTemplate: function(id, depth) {
-            console.log(id)
+		createOrEditMenuTemplate: function(id, depth) {
 			$.ajax({
 				type: 'POST',
 				url: ajaxurl,
 				data: {
 					action: 'wpr_create_mega_menu_template',
                     item_id: id,
+                    item_depth: depth
 				},
 				success: function( response ) {
-					console.log(response);
+					console.log(response.data['edit_link']);
+                    WprMegaMenuSettings.openTemplateEditorPopup(response.data['edit_link']);
 				}
 			});
 		},
+
+        openTemplateEditorPopup: function( editorLink ) {
+            $('.wpr-mm-editor-popup-wrap').fadeIn();
+            $('.wpr-mm-editor-popup-iframe').append('<iframe src="'+ editorLink +'" width="100%" height="100%"></iframe>');
+        },
 
         initColorPickers: function() {
             $('.wpr-mm-setting-color').find('input').wpColorPicker();
@@ -102,7 +111,7 @@ console.log(WprMegaMenuSettingsData)
 
             // Bind iconpicker events to the element
             $('#wpr_mm_icon_picker').on('iconpickerHide', function(event){
-                setTimeout(function(){
+                setTimeout(function() {
                     if ( 'wpr-mm-active-icon' == $('.wpr-mm-setting-icon div span:first-child').attr('class') ) {
                         $('#wpr_mm_icon_picker').val('')
                     }
@@ -120,6 +129,89 @@ console.log(WprMegaMenuSettingsData)
                 $('#wpr_mm_icon_picker').focus();
                 $('.wpr-mm-settings-wrap').css('overflow', 'hidden');
             });
+        },
+
+        saveSettings: function( selector ) {
+            var $saveButton = $('.wpr-save-mega-menu-btn');
+
+            $saveButton.on('click', function() {
+                var id = selector.attr('data-id'),
+                    depth = selector.attr('data-depth'),
+                    settings = WprMegaMenuSettings.getSettings();
+
+                $.ajax({
+                    type: 'POST',
+                    url: ajaxurl,
+                    data: {
+                        action: 'wpr_save_mega_menu_settings',
+                        item_id: id,
+                        item_depth: depth,
+                        item_settings: settings
+                    },
+                    success: function( response ) {
+                        $saveButton.text('Saved');
+                        $saveButton.append('<span class="dashicons dashicons-yes"></span>');
+                        console.log('Settings Saved!');
+
+                        setTimeout(function() {
+                            $('.wpr-mm-settings-popup-wrap').fadeOut();
+                        }, 1000);
+                    }
+                });
+            });
+        },
+
+        getSettings: function() {
+            var settings = {};
+
+            $('.wpr-mm-setting').each(function() {
+                var $this = $(this),
+                    checkbox = $this.find('input[type="checkbox"]'),
+                    select = $this.find('select'),
+                    number = $this.find('input[type="number"]'),
+                    text = $this.find('input[type="text"]');
+
+                // Checkbox
+                if ( checkbox.length ) {
+                    let id = checkbox.attr('id');
+                    settings[id] = checkbox.prop('checked') ? 'true' : 'false';
+                }
+
+                // Select
+                if ( select.length ) {
+                    let id = select.attr('id');
+                    settings[id] = select.val();
+                }
+                
+                // Multi Value
+                if ( $this.hasClass('wpr-mm-setting-radius') ) {
+                    let multiValue = [],
+                        id = $this.find('input').attr('id');
+
+                    $this.find('input').each(function() {
+                        multiValue.push($(this).val());
+                    });
+
+                    settings[id] = multiValue;
+                
+                // Number
+                } else {
+                    if ( number.length ) {
+                        let id = number.attr('id');
+                        settings[id] = number.val();
+                    }
+                }
+
+                // Text
+                if ( text.length ) {
+                    let id = text.attr('id');
+                    settings[id] = text.val();
+                }
+
+                
+            });
+
+            return settings;
         },
 
 		getNavItemId: function( item ) {
