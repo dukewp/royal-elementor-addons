@@ -199,6 +199,10 @@
   margin-bottom: 0;
 }
 
+.wpr-elements-heading .wpr-install-activate-woocommerce {
+  color: red;
+}
+
 .wpr-elements {
   display: -webkit-box;
   display: -ms-flexbox;

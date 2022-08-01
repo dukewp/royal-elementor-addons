@@ -1268,6 +1268,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}}.wpr-variations-layout-row .variations tr th' => 'width: {{SIZE}}%;',
+					'{{WRAPPER}}.wpr-variations-layout-column .variations tr th' => 'width: {{SIZE}}%;',
 				],
 				'separator' => 'before',
 			]
