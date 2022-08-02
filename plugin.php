@@ -110,18 +110,21 @@ class Plugin {
 
 		// Custom CSS
 		require WPR_ADDONS_PATH . 'extensions/wpr-custom-css.php';
-		
-		// Plugin Updaate Notice
-		require WPR_ADDONS_PATH . 'classes/plugin-update-notice.php';
-		
-		// Plugin Sale Notice
-		// require WPR_ADDONS_PATH . 'classes/plugin-sale-notice.php';
-		
-		// Rating Notice 
-		require WPR_ADDONS_PATH . 'classes/rating-notice.php';
+
+		// Mega Menu
+		require WPR_ADDONS_PATH . 'admin/mega-menu.php';
 
 		// Admin Files
 		if ( is_admin() ) {
+			// Plugin Updaate Notice
+			require WPR_ADDONS_PATH . 'classes/plugin-update-notice.php';
+			
+			// Plugin Sale Notice
+			// require WPR_ADDONS_PATH . 'classes/plugin-sale-notice.php';
+			
+			// Rating Notice 
+			require WPR_ADDONS_PATH . 'classes/rating-notice.php';
+
 			// Plugin Options
 			require WPR_ADDONS_PATH . 'admin/plugin-options.php';
 
@@ -136,9 +139,6 @@ class Plugin {
 
 			// Theme Builder
 			require WPR_ADDONS_PATH . 'admin/popups.php';
-
-			// Mega Menu
-			require WPR_ADDONS_PATH . 'admin/mega-menu.php';
 
 			// Hide Theme Notice
 			// TODO: Remove this and fix with Transients
