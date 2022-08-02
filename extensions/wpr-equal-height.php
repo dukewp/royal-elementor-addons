@@ -126,9 +126,9 @@ class Wpr_Equal_Height {
         }
 
 		$settings = $element->get_settings_for_display();
-
+		
 		if ( 'yes' === $settings['wpr_enable_equal_height'] ) {
-
+			
 			$target_type = $settings['wpr_equal_height_target_type'];
 
 			$target = ( 'custom' === $target_type ) ? explode( ',', $settings['wpr_equal_height_custom_target'] ) : $settings['wpr_equal_height_target'];
@@ -139,7 +139,7 @@ class Wpr_Equal_Height {
 				'enable_on'   => $settings['wpr_enable_equal_height_on'],
 			);
 
-			$element->add_render_attribute( 'equal_height_wrapper', 'data-wpr-equal-height', wp_json_encode( $equal_height_settings ) );
+			$element->add_render_attribute( '_wrapper', 'data-wpr-equal-height', wp_json_encode( $equal_height_settings ) );
 		}
     }
     
@@ -153,7 +153,7 @@ class Wpr_Equal_Height {
 		?>
 		<# if( 'yes' === settings.wpr_enable_equal_height ) {
 
-			view.addRenderAttribute( 'wpr_equal_height', 'id', 'wpr-equal-height' + view.getID() );
+			view.addRenderAttribute( 'wpr_equal_height', 'id', 'wpr-equal-height-' + view.getID() );
 			var targetType = settings.wpr_equal_height_target_type,
 
 				target = 'custom' === targetType ? settings.wpr_equal_height_custom_target.split(',') : settings.wpr_equal_height_target,

@@ -419,6 +419,12 @@ class Wpr_Archive_Title extends Widget_Base {
 			$title = isset($tax->post_title) ? $tax->post_title : $tax->name;
 			$description = isset($tax->description) ? $tax->description : '';
 
+			var_dump($tax);
+
+			if ( function_exists('is_shop') && is_shop() ) {
+				$title = $tax->label;
+			}
+
 			if ( '' !== $title ) {
 				echo '<'. esc_attr($settings['post_title_tag']) .' class="wpr-archive-title">';
 					echo '<span>'. wp_kses_post($settings['post_title_before_text']) .'</span>'. esc_html($title);
