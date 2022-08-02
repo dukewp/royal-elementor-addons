@@ -419,8 +419,6 @@ class Wpr_Archive_Title extends Widget_Base {
 			$title = isset($tax->post_title) ? $tax->post_title : $tax->name;
 			$description = isset($tax->description) ? $tax->description : '';
 
-			var_dump($tax);
-
 			if ( function_exists('is_shop') && is_shop() ) {
 				$title = $tax->label;
 			}
