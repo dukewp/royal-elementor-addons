@@ -47,6 +47,9 @@ function is_plugin_installed($file) {
 // Register Settings
 function wpr_register_addons_settings() {
     // WooCommerce
+    register_setting( 'wpr-settings', 'wpr_override_woo_cart' );
+    register_setting( 'wpr-settings', 'wpr_override_woo_mini_cart' );
+    register_setting( 'wpr-settings', 'wpr_override_woo_notifications' );
     register_setting( 'wpr-settings', 'wpr_woo_shop_ppp' );
     register_setting( 'wpr-settings', 'wpr_woo_shop_cat_ppp' );
     register_setting( 'wpr-settings', 'wpr_woo_shop_tag_ppp' );
@@ -306,7 +309,47 @@ function wpr_addons_settings_page() {
         <?php submit_button( '', 'wpr-options-button' ); ?>
 
         <div class="wpr-settings-group">
+            <h3 class="wpr-settings-group-title"><?php esc_html_e( 'WooCommerce Templates', 'wpr-addons' ); ?></h3>
+
+            <div class="wpr-woo-templates">
+                <div class="wpr-woo-template">
+                    <a href="#" target="_blank"></a>
+                    <div class="wpr-woo-template-info">
+                        <h3>Cart</h3>
+                        <input type="checkbox" name="wpr_override_woo_cart" id="wpr_override_woo_cart" <?php echo checked( get_option('wpr_override_woo_cart'), 'on', false ); ?>>
+                        <label for="wpr_override_woo_cart"></label>
+                    </div>
+                </div>
+                <div class="wpr-woo-template <?php echo !wpr_fs()->can_use_premium_code() ? 'wpr-pro-element' : '' ?>">
+                    <?php
+                        if ( wpr_fs()->can_use_premium_code() ) {
+                            $href = '#';
+                        } else {
+                            $href = 'https://royal-elementor-addons.com/#purchasepro';
+                        }
+                    ?>
+                    <a href="<?php echo $href ?>" target="_blank"></a>
+                    <div class="wpr-woo-template-info">
+                        <h3>Mini Cart</h3>
+                        <input type="checkbox" name="wpr_override_woo_mini_cart" id="wpr_override_woo_mini_cart" <?php echo checked( get_option('wpr_override_woo_mini_cart'), 'on', false ); ?>>
+                        <label for="wpr_override_woo_mini_cart"></label>
+                    </div>
+                </div>
+                <div class="wpr-woo-template">
+                    <a href="#" target="_blank"></a>
+                    <div class="wpr-woo-template-info">
+                        <h3>Notifications</h3>
+                        <input type="checkbox" name="wpr_override_woo_notifications" id="wpr_override_woo_notifications" <?php echo checked( get_option('wpr_override_woo_notifications'), 'on', false ); ?>>
+                        <label for="wpr_override_woo_notifications"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="wpr-settings-group">
             <h3 class="wpr-settings-group-title"><?php esc_html_e( 'WooCommerce', 'wpr-addons' ); ?></h3>
+            
+            <div class="wpr-settings-group-inner" style="position: relative;">
 
             <?php if ( !wpr_fs()->can_use_premium_code() ) : ?>
                 <a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-settings-woo-pro#purchasepro" class="wpr-settings-pro-overlay" target="_blank">
@@ -338,6 +381,9 @@ function wpr_addons_settings_page() {
             <?php else: ?>
                 <?php do_action('wpr_woocommerce_settings'); ?>
             <?php endif; ?>
+
+            </div>
+            
         </div>
 
         <div class="wpr-settings-group">
