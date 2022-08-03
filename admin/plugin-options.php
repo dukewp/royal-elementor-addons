@@ -309,17 +309,6 @@ function wpr_addons_settings_page() {
         <div class="wpr-settings-group wpr-settings-group-woo">
             <h3 class="wpr-settings-group-title"><?php esc_html_e( 'WooCommerce', 'wpr-addons' ); ?></h3>
             
-            <div class="wpr-woo-templates">
-                <div class="wpr-woo-template">
-                    <a href="#" target="_blank"></a>
-                    <div class="wpr-woo-template-info">
-                        <h3>Enable Royal WooCommerce Builder</h3>
-                        <input type="checkbox" name="wpr_override_woo_templates" id="wpr_override_woo_templates" <?php echo checked( get_option('wpr_override_woo_templates'), 'on', false ); ?>>
-                        <label for="wpr_override_woo_templates"></label>
-                    </div>
-                </div>
-            </div>
-            
             <div class="wpr-settings-group-inner" style="position: relative;">
 
             <?php if ( !wpr_fs()->can_use_premium_code() ) : ?>
@@ -354,6 +343,21 @@ function wpr_addons_settings_page() {
             <?php endif; ?>
 
             </div>
+            
+            <div class="wpr-woo-templates">
+                <div class="wpr-woo-template">
+                    <a href="#" target="_blank"></a>
+                    <div class="wpr-woo-template-info">
+                        <div class="wpr-woo-template-title">
+                            <h3>Royal Templates</h3>
+                            <p>Enable/Disable Royal addons Cart, Minicart, Notifications Templates</p>
+                        </div>
+                        <input type="checkbox" name="wpr_override_woo_templates" id="wpr_override_woo_templates" <?php echo checked( get_option('wpr_override_woo_templates'), 'on', false ); ?>>
+                        <label for="wpr_override_woo_templates"></label>
+                    </div>
+                </div>
+            </div>
+            
             
         </div>
 
