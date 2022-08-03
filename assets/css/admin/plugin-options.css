@@ -241,6 +241,11 @@
   width: 100%;
 }
 
+.wpr-woo-template-info {
+  display: flex;
+  justify-content: space-between;
+}
+
 .wpr-woo-template-info .wpr-woo-template-title {
   display: inline-flex;
   flex-direction: column;
@@ -257,6 +262,10 @@
   margin: 0;
   color: #3a3a3a;
   font-size: 16px;
+}
+
+.wpr-woo-template-info label {
+  min-width: 45px;
 }
 
 .wpr-woo-template-info label,
