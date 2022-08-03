@@ -36,7 +36,7 @@ function test() {
     add_action( 'init', 'register_mega_menu_cpt' );
     add_action( 'template_include', 'set_post_type_template', 9999 );
 }
-add_action('init','test',-999);
+add_action('init','test', -999);
 
 
 // Confinue only for Dashboard Screen
