@@ -47,6 +47,7 @@ function is_plugin_installed($file) {
 // Register Settings
 function wpr_register_addons_settings() {
     // WooCommerce
+    register_setting( 'wpr-settings', 'wpr_override_woo_templates' );
     register_setting( 'wpr-settings', 'wpr_woo_shop_ppp' );
     register_setting( 'wpr-settings', 'wpr_woo_shop_cat_ppp' );
     register_setting( 'wpr-settings', 'wpr_woo_shop_tag_ppp' );
@@ -305,8 +306,21 @@ function wpr_addons_settings_page() {
 
         <?php submit_button( '', 'wpr-options-button' ); ?>
 
-        <div class="wpr-settings-group">
+        <div class="wpr-settings-group wpr-settings-group-woo">
             <h3 class="wpr-settings-group-title"><?php esc_html_e( 'WooCommerce', 'wpr-addons' ); ?></h3>
+            
+            <div class="wpr-woo-templates">
+                <div class="wpr-woo-template">
+                    <a href="#" target="_blank"></a>
+                    <div class="wpr-woo-template-info">
+                        <h3>Enable Royal WooCommerce Builder</h3>
+                        <input type="checkbox" name="wpr_override_woo_templates" id="wpr_override_woo_templates" <?php echo checked( get_option('wpr_override_woo_templates'), 'on', false ); ?>>
+                        <label for="wpr_override_woo_templates"></label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="wpr-settings-group-inner" style="position: relative;">
 
             <?php if ( !wpr_fs()->can_use_premium_code() ) : ?>
                 <a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-settings-woo-pro#purchasepro" class="wpr-settings-pro-overlay" target="_blank">
@@ -338,6 +352,9 @@ function wpr_addons_settings_page() {
             <?php else: ?>
                 <?php do_action('wpr_woocommerce_settings'); ?>
             <?php endif; ?>
+
+            </div>
+            
         </div>
 
         <div class="wpr-settings-group">

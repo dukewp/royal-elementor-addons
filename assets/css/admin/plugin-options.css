@@ -208,6 +208,7 @@
   font-size: 18px;
 }
 
+.wpr-woo-templates,
 .wpr-elements {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -218,6 +219,11 @@
   margin-bottom: 50px;
 }
 
+.wpr-woo-templates {
+  margin-bottom: 0;
+}
+
+.wpr-woo-template,
 .wpr-element {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -231,6 +237,11 @@
   border-radius: 4px;
 }
 
+.wpr-woo-template {
+  width: 100%;
+}
+
+.wpr-woo-template-info h3,
 .wpr-element-info h3 {
   float: left;
   margin: 0;
@@ -238,11 +249,13 @@
   font-size: 16px;
 }
 
+.wpr-woo-template-info label,
 .wpr-element-info label,
 .wpr-elements-toggle label {
   float: right;
 }
 
+.wpr-woo-template-info span,
 .wpr-element-info span {
   display: block;
   margin-top: 3px;
@@ -251,6 +264,7 @@
   font-size: 12px;
 }
 
+.wpr-woo-template-info a,
 .wpr-element-info a {
   display: block;
   clear: both;
@@ -259,6 +273,7 @@
           box-shadow: none !important;
 }
 
+.wpr-woo-template-info input,
 .wpr-element-info input,
 .wpr-elements-toggle input,
 .wpr-setting-custom-ckbox input {
@@ -274,6 +289,7 @@
   border: 0;
 }
 
+.wpr-woo-template-info label,
 .wpr-element-info label,
 .wpr-elements-toggle label,
 .wpr-setting-custom-ckbox label {
@@ -294,6 +310,7 @@
   transition: all 0.2s ease-in;
 }
 
+.wpr-woo-template-info input + label:after,
 .wpr-element-info input + label:after,
 .wpr-elements-toggle input + label:after,
 .wpr-setting-custom-ckbox input + label:after {
@@ -311,12 +328,14 @@
   transition: all 0.2s ease-in;
 }
 
+.wpr-woo-template-info input:checked + label,
 .wpr-element-info input:checked + label,
 .wpr-elements-toggle input:checked + label,
 .wpr-setting-custom-ckbox input:checked + label {
   background: #6A4BFF;
 }
 
+.wpr-woo-template-info input:checked + label:after,
 .wpr-element-info input:checked + label:after,
 .wpr-elements-toggle input:checked + label:after,
 .wpr-setting-custom-ckbox input:checked + label:after {
@@ -475,6 +494,18 @@
   -webkit-box-shadow: 1px 2px 3px rgba(0,0,0,0.1);
           box-shadow: 1px 2px 3px rgba(0,0,0,0.1);
   border-radius: 0 3px 3px 3px;
+}
+
+.wpr-settings-group-woo {
+  padding: 0;
+}
+
+.wpr-woo-template {
+  margin: 30px;
+}
+
+.wpr-settings-group-inner {
+  padding: 30px;
 }
 
 .wpr-settings-group-title {
