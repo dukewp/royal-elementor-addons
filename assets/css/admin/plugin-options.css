@@ -201,6 +201,11 @@
 
 .wpr-elements-heading .wpr-install-activate-woocommerce {
   color: red;
+  font-weight: 700;
+}
+
+.wpr-install-activate-woocommerce .dashicons {
+  font-size: 18px;
 }
 
 .wpr-elements {

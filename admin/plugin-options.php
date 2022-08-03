@@ -250,7 +250,7 @@ function wpr_addons_settings_page() {
         <h3><?php esc_html_e( 'WooCommerce Builder Widgets', 'wpr-addons' ); ?></h3>
         <p><?php esc_html_e( 'Product Archive Pages, Product Single Pages. Cart, Checkout and My Account Pages', 'wpr-addons' ); ?></p>
         <?php if (!class_exists('WooCommerce')) : ?>
-            <p class='wpr-install-activate-woocommerce'><?php esc_html_e( 'Install/Activate WooCommerce to use these widgets', 'wpr-addons' ); ?></p>
+            <p class='wpr-install-activate-woocommerce'><span class="dashicons dashicons-info-outline"></span> <?php esc_html_e( 'Install/Activate WooCommerce to use these widgets', 'wpr-addons' ); ?></p>
         <?php endif; ?>
     </div>
     <div class="wpr-elements">
