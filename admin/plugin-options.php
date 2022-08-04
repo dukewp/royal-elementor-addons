@@ -309,7 +309,7 @@ function wpr_addons_settings_page() {
         <div class="wpr-settings-group wpr-settings-group-woo">
             <h3 class="wpr-settings-group-title"><?php esc_html_e( 'WooCommerce', 'wpr-addons' ); ?></h3>
             
-            <div class="wpr-settings-group-inner" style="position: relative;">
+            <div class="wpr-settings-group-inner">
 
             <?php if ( !wpr_fs()->can_use_premium_code() ) : ?>
                 <a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-settings-woo-pro#purchasepro" class="wpr-settings-pro-overlay" target="_blank">
