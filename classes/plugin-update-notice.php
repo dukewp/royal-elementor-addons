@@ -9,12 +9,8 @@ class WprPluginUpdateNotice {
     public function __construct() {
 
         if ( current_user_can('administrator') ) {
-            if ( !get_option('wpr_theme_builder_notice' . get_plugin_data(WPR_ADDONS__FILE__)['Version']) && get_option('wpr_plugin_update_dismiss_notice') ) {
-                delete_option('wpr_plugin_update_dismiss_notice');
-                add_option('wpr_theme_builder_notice' . get_plugin_data(WPR_ADDONS__FILE__)['Version'], true);
-            }
 
-            if ( !get_option('wpr_plugin_update_dismiss_notice') ) {
+            if ( !get_option('wpr_plugin_update_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version']) ) {
                 add_action( 'admin_init', [$this, 'render_notice'] );
             }
         }
@@ -31,7 +27,7 @@ class WprPluginUpdateNotice {
     }
     
     public function wpr_plugin_update_dismiss_notice() {
-        add_option( 'wpr_plugin_update_dismiss_notice', true );
+        add_option( 'wpr_plugin_update_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version'], true );
     }
 
     public function render_plugin_update_notice() {
@@ -127,6 +123,7 @@ class WprPluginUpdateNotice {
 
             jQuery(document).on( 'click', '.wpr-plugin-update-notice .notice-dismiss', function() {
                 jQuery(document).find('.wpr-plugin-update-notice').slideUp();
+                console.log('works update dismiss');
                 jQuery.post({
                     url: ajaxurl,
                     data: {
