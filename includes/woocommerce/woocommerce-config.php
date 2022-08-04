@@ -60,24 +60,24 @@ class WPR_WooCommerce_Config {
 
 	public function rewrite_default_wc_templates( $located, $template_name ) {
 		// Cart template
-		if ( $template_name === 'cart/cart.php' && get_option('wpr_override_woo_templates') === 'on' ) {
+		if ( $template_name === 'cart/cart.php' ) {
 			$located = WPR_ADDONS_PATH .'includes/woocommerce/templates/cart/cart.php';
 		}
 
 		// Mini-cart template
-		if ( $template_name === 'cart/mini-cart.php' && get_option('wpr_override_woo_templates') === 'on' ) {
+		if ( $template_name === 'cart/mini-cart.php' ) {
 			$located = WPR_ADDONS_PATH .'includes/woocommerce/templates/cart/mini-cart.php';
 		}
 
-		if ( $template_name === 'notices/success.php' && get_option('wpr_override_woo_templates') === 'on' ) {
+		if ( $template_name === 'notices/success.php' ) {
 			$located = WPR_ADDONS_PATH .'includes/woocommerce/templates/notices/success.php';
 		}
 
-		if ( $template_name === 'notices/error.php' && get_option('wpr_override_woo_templates') === 'on' ) {
+		if ( $template_name === 'notices/error.php' ) {
 			$located = WPR_ADDONS_PATH .'includes/woocommerce/templates/notices/error.php';
 		}
 		
-		if ( $template_name === 'notices/notice.php' && get_option('wpr_override_woo_templates') === 'on' ) {
+		if ( $template_name === 'notices/notice.php' ) {
 			$located = WPR_ADDONS_PATH .'includes/woocommerce/templates/notices/notice.php';
 		}
 
