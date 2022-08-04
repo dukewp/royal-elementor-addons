@@ -272,7 +272,7 @@ class Wpr_Product_Meta extends Widget_Base {
 
     protected function render() {
         $settings = $this->get_settings_for_display();
-		// var_dump($settings);
+		
         global $product;
 
         $product = wc_get_product();
