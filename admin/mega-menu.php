@@ -201,6 +201,7 @@ function render_settings_popup() {
 
     <!-- Iframe Popup -->
     <div class="wpr-mm-editor-popup-wrap">
+        <div class="wpr-mm-editor-close-popup-btn"><span class="dashicons dashicons-no-alt"></span></div>
         <div class="wpr-mm-editor-popup-iframe"></div>
     </div>
     <?php

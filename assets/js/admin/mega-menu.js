@@ -30,6 +30,9 @@ console.log(WprMegaMenuSettingsData)
             // Edit Menu Button
             WprMegaMenuSettings.initEditMenuButton( $(this) );
 
+            // Close Temmplate Editor Popup
+            WprMegaMenuSettings.closeTemplateEditorPopup();
+
             // Menu Width
             WprMegaMenuSettings.initMenuWidthToggle();
 
@@ -42,7 +45,7 @@ console.log(WprMegaMenuSettingsData)
             // Save Settings
             WprMegaMenuSettings.saveSettings( $(this) );
             
-            // Close Popup
+            // Close Settings Popup
             WprMegaMenuSettings.closeSettingsPopup();
         },
 
@@ -86,6 +89,15 @@ console.log(WprMegaMenuSettingsData)
         openTemplateEditorPopup: function( editorLink ) {
             $('.wpr-mm-editor-popup-wrap').fadeIn();
             $('.wpr-mm-editor-popup-iframe').append('<iframe src="'+ editorLink +'" width="100%" height="100%"></iframe>');
+        },
+
+        closeTemplateEditorPopup: function() {
+            $('.wpr-mm-editor-close-popup-btn').on('click', function() {
+                $('.wpr-mm-editor-popup-wrap').fadeOut();
+                setTimeout(function() {
+                    $('.wpr-mm-editor-popup-iframe').find('iframe').remove();
+                }, 1000);
+            });
         },
 
         initColorPickers: function() {

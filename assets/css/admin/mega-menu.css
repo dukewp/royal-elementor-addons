@@ -221,14 +221,24 @@ button.wpr-edit-mega-menu-btn {
 }
 
 .wpr-mm-editor-popup-iframe {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  width: 80vw;
-  height: 80vh;
+  width: calc(100vw - 100px);
+  height: calc(100vh - 100px);
+  margin: 35px 45px;
   background-color: #f9f9f9;
   box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+}
+
+.wpr-mm-editor-close-popup-btn {
+  position: absolute;
+  top: 40px;
+  right: 60px;
+  font-size: 50px !important;
+}
+
+.wpr-mm-editor-close-popup-btn span {
+  color: #444;
+  font-size: 25px;
+  cursor: pointer;
 }
 
 .wpr-mm-setting-radius div {
