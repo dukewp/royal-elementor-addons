@@ -6,22 +6,22 @@ function register_mega_menu_cpt() {
     $args = array(
         'label'				  => esc_html__( 'Royal Mega Menu', 'wpr-addons' ),
         'public'              => true,
+        'publicly_queryable' => true,
         'rewrite'             => false,
         'show_ui'             => true,
         'show_in_menu'        => true,
         'show_in_nav_menus'   => false,
         'exclude_from_search' => true,
         'capability_type'     => 'post',
+        'supports'            => array( 'title', 'editor', 'elementor' ),
         'hierarchical'        => false,
     );
 
     register_post_type( 'wpr_mega_menu', $args );
 }
 
-
-
 // Convert to Canvas Template
-function set_post_type_template( $template ) {
+function convert_to_canvas_template( $template ) {
     if ( is_singular('wpr_mega_menu') ) {
         $template = WPR_ADDONS_PATH . 'admin/templates/wpr-canvas.php';
     }
@@ -29,14 +29,13 @@ function set_post_type_template( $template ) {
     return $template;
 }
 
-
-
-
-function test() {
-    add_action( 'init', 'register_mega_menu_cpt' );
-    add_action( 'template_include', 'set_post_type_template', 9999 );
+// Init Mega Menu
+function init_mega_menu() {
+    register_mega_menu_cpt();
+    add_action( 'template_include', 'convert_to_canvas_template', 9999 );
 }
-add_action('init','test', -999);
+
+add_action('init', 'init_mega_menu', 999);
 
 
 // Confinue only for Dashboard Screen
