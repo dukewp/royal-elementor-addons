@@ -415,6 +415,7 @@ class Wpr_Page_Cart extends Widget_Base {
 				'default' => '#FFF',
 				'selectors' => [
 					'{{WRAPPER}} table.woocommerce-cart-form__contents' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-cart-section-table-wrap' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} table td' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-cart-section' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .cart_totals' => 'background-color: {{VALUE}}',
@@ -1022,6 +1023,7 @@ class Wpr_Page_Cart extends Widget_Base {
 					'{{WRAPPER}} .woocommerce-shipping-calculator .input-text' => 'background-color: {{VALUE}};',
 					'{{WRAPPER}} .woocommerce-shipping-calculator select' => 'background-color: {{VALUE}};',
 					'{{WRAPPER}} .woocommerce-shipping-calculator span' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} td.product-quantity input' => 'background-color: {{VALUE}};',
 				],
 			]
 		);

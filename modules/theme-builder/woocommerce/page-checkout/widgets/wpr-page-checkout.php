@@ -126,6 +126,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} .col-2' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-checkout-order-review-table-inner' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-order-details' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-form-coupon' => 'background-color: {{VALUE}}',
 				],
 			]
 		);
@@ -142,6 +143,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} .col-2' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-checkout-order-review-table-inner' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-order-details' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-form-coupon' => 'border-color: {{VALUE}}',
 				],
 			]
 		);
@@ -166,6 +168,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} .col-2' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} .wpr-checkout-order-review-table-inner' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} .woocommerce-order-details' => 'border-style: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-form-coupon' => 'border-style: {{VALUE}}',
 				],
 				'separator' => 'before',
 			]
@@ -189,6 +192,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} .col-2' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-checkout-order-review-table-inner' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .woocommerce-order-details' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-form-coupon' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
 					'checkout_general_border_type!' => 'none',
@@ -214,6 +218,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} .col-2' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-checkout-order-review-table-inner' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .woocommerce-order-details' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-form-coupon' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				]
 			]
 		);
@@ -236,6 +241,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} .col-2' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-checkout-order-review-table-inner' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .woocommerce-order-details' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-form-coupon' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before'
 			]
@@ -348,6 +354,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'default' => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .col2-set label' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .checkout_coupon p:first-child' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -356,7 +363,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'form_labels_typography',
-				'selector' => '{{WRAPPER}} .col2-set label, {{WRAPPER}} .order_comments',
+				'selector' => '{{WRAPPER}} .col2-set label, {{WRAPPER}} .order_comments, {{WRAPPER}} .checkout_coupon p:first-child',
 				'fields_options' => [
 					'typography' => [
 						'default' => 'custom',
@@ -1415,7 +1422,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_place_order_button',
 			[
-				'label' => esc_html__( 'Place Order Button', 'wpr-addons' ),
+				'label' => esc_html__( 'Coupon & Place Order Button', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 			]
@@ -1438,6 +1445,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'default' => '#FFF',
 				'selectors' => [
 					'{{WRAPPER}} .place-order button' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .checkout_coupon button' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -1450,6 +1458,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .place-order button' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .checkout_coupon button' => 'background-color: {{VALUE}}',
 				]
 			]
 		);
@@ -1462,6 +1471,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .place-order button' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .checkout_coupon button' => 'border-color: {{VALUE}}',
 				],
 			]
 		);
@@ -1472,7 +1482,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'name' => 'place_order_button_box_shadow',
 				'selector' => '{{WRAPPER}} .actions .button,
 				{{WRAPPER}} .coupon .button,
-				{{WRAPPER}} .place-order button',
+				{{WRAPPER}} .place-order button, {{WRAPPER}} .checkout_coupon button',
 			]
 		);
 
@@ -1482,7 +1492,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'name'     => 'place_order_button_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .actions .button, 
-				{{WRAPPER}} .place-order button, {{WRAPPER}} .coupon .button',
+				{{WRAPPER}} .place-order button, {{WRAPPER}} .coupon .button, {{WRAPPER}} .checkout_coupon button',
 				'fields_options' => [
 					'typography' => [
 						'default' => 'custom',
@@ -1508,6 +1518,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'step' => 0.1,
 				'selectors' => [
 					'{{WRAPPER}} .place-order button' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .checkout_coupon button' => 'transition-duration: {{VALUE}}s',
 				],
 			]
 		);
@@ -1529,6 +1540,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .place-order button:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .checkout_coupon button:hover' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -1541,6 +1553,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .place-order button:hover' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .checkout_coupon button:hover' => 'background-color: {{VALUE}}',
 				]
 			]
 		);
@@ -1553,6 +1566,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .place-order button:hover' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .checkout_coupon button:hover' => 'border-color: {{VALUE}}',
 				]
 			]
 		);
@@ -1561,7 +1575,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'place_order_button_box_shadow_hr',
-				'selector' => '{{WRAPPER}} .place-order button:hover',
+				'selector' => '{{WRAPPER}} .place-order button:hover. {{WRAPPER}} .checkout_coupon button:hover',
 			]
 		);
 
@@ -1585,6 +1599,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'default' => 'solid',
 				'selectors' => [
 					'{{WRAPPER}} .place-order button' => 'border-style: {{VALUE}}',
+					'{{WRAPPER}} .checkout_coupon button' => 'border-style: {{VALUE}}',
 				],
 				'separator' => 'before',
 			]
@@ -1604,6 +1619,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .place-order button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .checkout_coupon button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
 					'place_order_button_border_type!' => 'none',
@@ -1625,6 +1641,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .place-order button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .checkout_coupon button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				]
 			]
 		);
@@ -1644,6 +1661,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .place-order button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .checkout_coupon button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -1662,6 +1680,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .place-order button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .checkout_coupon button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
