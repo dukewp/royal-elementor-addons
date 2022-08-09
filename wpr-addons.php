@@ -7,7 +7,7 @@
  * Version: 1.3.45
  * License: GPLv3
  * Author URI: https://royal-elementor-addons.com/
- * Elementor tested up to: 3.6.7
+ * Elementor tested up to: 3.7.0
  * Elementor Pro tested up to: 3.7.2
  *
  * Text Domain: wpr-addons

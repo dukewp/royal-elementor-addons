@@ -13484,6 +13484,22 @@ dl.variation dd {
 /*--------------------------------------------------------------
  == Checkout Page
 --------------------------------------------------------------*/
+.elementor-widget-wpr-page-checkout .checkout_coupon p:first-child {
+    margin: 0;
+}
+
+.elementor-widget-wpr-page-checkout .checkout_coupon .form-row-first {
+    width: 80%;
+}
+
+.elementor-widget-wpr-page-checkout .checkout_coupon .form-row-last {
+    width: 18%;
+}
+
+.elementor-widget-wpr-page-checkout .checkout_coupon .form-row-last button {
+    width: 100%;
+}
+
 .wpr-checkout-order-review-table {
     overflow: hidden;
 }
