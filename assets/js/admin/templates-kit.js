@@ -25,7 +25,7 @@ jQuery(document).ready(function( $ ) {
 					return false;
 				}
 
-				var confirmImport = confirm('Are you sure you want to import this Template Kit?\n\nElementor Header, Footer, Pages, Media Files, Menus and some required plugins will be installed on your website.');
+				var confirmImport = confirm('For the best results, it is recommended to temporarily deactivate All other Active plugins Except Elementor and Royal Elementor Addons.\n\nElementor Header, Footer, Pages, Media Files, Menus and some required plugins will be installed on your website.');
 				
 				if ( confirmImport ) {
 					WprTemplatesKit.importTemplatesKit( $(this).attr('data-kit-id') );
