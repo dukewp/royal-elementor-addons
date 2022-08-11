@@ -48,6 +48,7 @@ function is_plugin_installed($file) {
 function wpr_register_addons_settings() {
     // WooCommerce
     register_setting( 'wpr-settings', 'wpr_override_woo_templates' );
+    register_setting( 'wpr-settings', 'wpr_enable_product_image_zoom' );
     register_setting( 'wpr-settings', 'wpr_woo_shop_ppp' );
     register_setting( 'wpr-settings', 'wpr_woo_shop_cat_ppp' );
     register_setting( 'wpr-settings', 'wpr_woo_shop_tag_ppp' );
@@ -351,6 +352,15 @@ function wpr_addons_settings_page() {
                 </div>
                 <input type="checkbox" name="wpr_override_woo_templates" id="wpr_override_woo_templates" <?php echo checked( get_option('wpr_override_woo_templates', 'on'), 'on', false ); ?>>
                 <label for="wpr_override_woo_templates"></label>
+            </div>
+            
+            <div class="wpr-woo-template-info">
+                <div class="wpr-woo-template-title">
+                    <h3>Product Image Zoom</h3>
+                    <span>Enable/Disable Image Zoom Effect on Woocommerce products</span>
+                </div>
+                <input type="checkbox" name="wpr_enable_product_image_zoom" id="wpr_enable_product_image_zoom" <?php echo checked( get_option('wpr_enable_product_image_zoom', 'on'), 'on', false ); ?>>
+                <label for="wpr_enable_product_image_zoom"></label>
             </div>
             
         </div>

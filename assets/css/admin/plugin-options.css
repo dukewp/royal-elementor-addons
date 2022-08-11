@@ -244,6 +244,7 @@
 .wpr-woo-template-info {
   display: flex;
   justify-content: space-between;
+  margin-top: 10px;
 }
 
 .wpr-woo-template-info .wpr-woo-template-title {

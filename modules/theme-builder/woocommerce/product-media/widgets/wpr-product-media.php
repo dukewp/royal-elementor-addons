@@ -1206,6 +1206,10 @@ class Wpr_Product_Media extends Widget_Base {
 	protected function render() {
 		// Get Settings
 		$settings = $this->get_settings();
+		function remove_image_zoom_support() {
+			remove_theme_support( 'wc-product-gallery-zoom' );
+		}
+		add_action( 'wp', 'remove_image_zoom_support', 100 );
 		// Get Product
 		$product = wc_get_product();
 		// $this->get_hoodies();
@@ -1217,18 +1221,6 @@ class Wpr_Product_Media extends Widget_Base {
 		// Product ID
 		$post = get_post( $product->get_id() );
 		$gallery_images = $product->get_gallery_image_ids();
-		
-		// add_filter( 'woocommerce_single_product_carousel_options', [$this, 'wpr_update_woo_flexslider_options']);
-
-		// $this->add_render_attribute(
-		// 	'thumbnails_attributes',
-		// 	[
-		// 		'data-thumbnails-slider' => $settings['gallery_slider_thumbs'],
-		// 		'data-slidestoshow' => $settings['gallery_slider_thumb_cols']
-		// 	]
-		// );
-
-		// '.  $this->get_render_attribute_string( 'thumbnails_attributes' ) .'
 
 		// Output
 		echo '<div class="wpr-product-media-wrap">';
