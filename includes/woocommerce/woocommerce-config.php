@@ -10,14 +10,6 @@ class WPR_WooCommerce_Config {
 		if ( 'on' !== get_option('wpr_enable_product_image_zoom', 'on') ) {
 			add_filter( 'woocommerce_single_product_zoom_enabled', '__return_false' );
 		}
-		// function remove_image_zoom_support() {
-		// 	remove_theme_support( 'wc-product-gallery-zoom' );
-		// }
-		// add_action( 'after_setup_theme', 'remove_image_zoom_support', 100 );
-		// function remove_image_zoom_support() {
-		// 	remove_theme_support( 'wc-product-gallery-zoom' );
-		// }
-		// add_action( 'wp', 'remove_image_zoom_support', 100 );
 
 		// Change number of products that are displayed per page (shop page)
 		add_filter( 'loop_shop_per_page', [$this, 'shop_products_per_page'], 20 );
