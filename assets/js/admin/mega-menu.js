@@ -167,6 +167,7 @@ console.log(WprMegaMenuSettingsData)
 
                         setTimeout(function() {
                             $('.wpr-mm-settings-popup-wrap').fadeOut();
+                            $saveButton.find('.dashicons').remove();
                         }, 1000);
                     }
                 });
