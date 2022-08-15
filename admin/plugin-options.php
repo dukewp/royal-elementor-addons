@@ -14,7 +14,7 @@ function wpr_addons_add_admin_menu() {
     add_menu_page( Utilities::get_plugin_name(), Utilities::get_plugin_name(), 'manage_options', 'wpr-addons', 'wpr_addons_settings_page', $menu_icon, '58.6' );
     
     add_action( 'admin_init', 'wpr_register_addons_settings' );
-    add_filter( 'plugin_action_links_royal-elementor-addons/wpr-addons.php', 'wpr_settings_link' );
+    add_filter( 'plugin_action_links_'. WPR_ADDONS_PLUGIN_BASE, 'wpr_settings_link' );
 }
 add_action( 'admin_menu', 'wpr_addons_add_admin_menu' );
 
