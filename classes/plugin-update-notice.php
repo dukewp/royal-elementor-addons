@@ -47,11 +47,11 @@ class WprPluginUpdateNotice {
                             <p>
                                 Royal Elementor WooCommerce Builder lets you customize every fundamental part of your WooCommerce site without coding. Including your Header, Footer, Product Archives, Products, Post Archives, Posts, Default Pages, 404 Pages, etc..
                                 <br><br><strong>New Woo Builder Template Kits:</strong>
-                                <a href="https://demosites.royal-elementor-addons.com/wooshop-v1/?ref=rea-plugin-backend-update-notice" target="_blank">WooShop</a>, 
                                 <a href="https://demosites.royal-elementor-addons.com/fashion-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Fashion</a>, 
                                 <a href="https://demosites.royal-elementor-addons.com/furniture-shop-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Furniture Shop</a>, 
-                                <a href="https://demosites.royal-elementor-addons.com/grocery-store-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Grocery Store</a>.
-                                <a href="https://demosites.royal-elementor-addons.com/woo-food-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Food Delivery</a>.
+                                <a href="https://demosites.royal-elementor-addons.com/grocery-store-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Grocery Store</a>,
+                                <a href="https://demosites.royal-elementor-addons.com/woo-food-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Food Delivery</a>,
+                                <a href="https://demosites.royal-elementor-addons.com/wooshop-v1/?ref=rea-plugin-backend-update-notice" target="_blank">WooShop</a>.
                             </p>
                             <br>
                             <div>
