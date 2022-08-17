@@ -1206,10 +1206,7 @@ class Wpr_Product_Media extends Widget_Base {
 	protected function render() {
 		// Get Settings
 		$settings = $this->get_settings();
-		function remove_image_zoom_support() {
-			remove_theme_support( 'wc-product-gallery-zoom' );
-		}
-		add_action( 'wp', 'remove_image_zoom_support', 100 );
+		
 		// Get Product
 		$product = wc_get_product();
 		// $this->get_hoodies();
