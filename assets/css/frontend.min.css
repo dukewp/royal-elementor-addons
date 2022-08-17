@@ -2893,6 +2893,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 .wpr-grid-orderby span {
     position: relative;
+    display: block;
 }
 
 .wpr-grid-sorting-wrap form .orderby {
@@ -12532,6 +12533,7 @@ dl.variation dd {
     top: 90%;
     /* transform: translateY(-50%); */
     z-index: -9;
+    opacity: 0;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;

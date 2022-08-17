@@ -51,6 +51,7 @@ class WprPluginUpdateNotice {
                                 <a href="https://demosites.royal-elementor-addons.com/fashion-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Fashion</a>, 
                                 <a href="https://demosites.royal-elementor-addons.com/furniture-shop-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Furniture Shop</a>, 
                                 <a href="https://demosites.royal-elementor-addons.com/grocery-store-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Grocery Store</a>.
+                                <a href="https://demosites.royal-elementor-addons.com/woo-food-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Food Delivery</a>.
                             </p>
                             <br>
                             <div>
