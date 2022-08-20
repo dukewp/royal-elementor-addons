@@ -120,7 +120,8 @@
 .elementor-control-tax2_transition_duration,
 .elementor-control-filters_transition_duration,
 .elementor-control-pagination_older_text,
-.elementor-control-tooltip_position {
+.elementor-control-tooltip_position,
+.elementor-control-post_info_custom_field_video_tutorial  {
 	padding-top: 15px !important;
 }
 
