@@ -333,6 +333,10 @@
   font-style: normal !important;
 }
 
+.elementor-control-product_notice_widget_info .elementor-control-raw-html {
+	color: red;
+}
+
 
 /*--------------------------------------------------------------
 == Modal Popup Editor

@@ -52,6 +52,16 @@ class Wpr_Product_Stock extends Widget_Base {
 		);
 
 		$this->add_control(
+			'in_stock_availability_text',
+			[
+				'label' => esc_html__( 'Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'placeholder' => esc_html__( 'In Stock', 'wpr-addons' ),
+				'default' => esc_html__( 'In Stock', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
 			'product_in_stock_icon',
 			[
 				'label'   => esc_html__('Select Icon', 'wpr-addons'),
@@ -113,6 +123,16 @@ class Wpr_Product_Stock extends Widget_Base {
 		);
 
 		$this->add_control(
+			'out_of_stock_availability_text',
+			[
+				'label' => esc_html__( 'Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'placeholder' => esc_html__( 'Out of Stock', 'wpr-addons' ),
+				'default' => esc_html__( 'Out of Stock', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
 			'product_out_of_stock_color',
 			[
 				'label'     => esc_html__('Icon Color', 'wpr-addons'),
@@ -142,6 +162,16 @@ class Wpr_Product_Stock extends Widget_Base {
 				'label' => esc_html__( 'Available On Backorder', 'wpr-addons' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'backorder_availability_text',
+			[
+				'label' => esc_html__( 'Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'placeholder' => esc_html__( 'On Backorder', 'wpr-addons' ),
+				'default' => esc_html__( 'On Backorder', 'wpr-addons' ),
 			]
 		);
 
@@ -289,11 +319,11 @@ class Wpr_Product_Stock extends Widget_Base {
         }
 
 		if ( $product->is_on_backorder() ) {
-			$stock_html = $availability['availability'] ? $availability['availability'] : esc_html__('On backorder', 'wpr-addons');
+			$stock_html = $availability['availability'] ? $availability['availability'] : esc_html__($settings['backorder_availability_text'], 'wpr-addons');
 		} elseif ( $product->is_in_stock() ) {
-			$stock_html = $availability['availability'] ? $availability['availability'] : esc_html__('In Stock', 'wpr-addons');
+			$stock_html = $availability['availability'] ? $availability['availability'] : esc_html__($settings['in_stock_availability_text'], 'wpr-addons');
 		} else {
-			$stock_html = $availability['availability'] ? $availability['availability'] : esc_html__('Out of stock', 'wpr-addons');
+			$stock_html = $availability['availability'] ? $availability['availability'] : esc_html__($settings['out_of_stock_availability_text'], 'wpr-addons');
 		}
 
         echo '<div class="wpr-product-stock">';

@@ -50,6 +50,16 @@ class Wpr_Product_Notice extends Widget_Base {
 		);
 
 		$this->add_control(
+			'product_notice_widget_info',
+			[
+				'raw' => esc_html__('This widget permanently visible only in editor for easy customization, as for live pages it appears when invoked by an action (Product Added To Cart for example)', 'wpr-addons'),
+				'type' => Controls_Manager::RAW_HTML,
+				'content_classes' => 'elementor-descriptor',
+				'separator' => 'none'
+			]
+		);
+
+		$this->add_control(
 			'notice_color',
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
