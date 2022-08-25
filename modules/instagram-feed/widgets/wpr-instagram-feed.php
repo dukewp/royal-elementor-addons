@@ -445,6 +445,8 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
 		$token_expires_in = get_option('wpr_instagram_access_token_expires_in');
 
+		var_dump($token_expires_in);
+
 		$compare_date = strtotime('-'.get_option('wpr_instagram_access_token_expires_in').' seconds');
 
 		$token_generation_date = strtotime(get_option('wpr_instagram_access_token_generation_date'));
