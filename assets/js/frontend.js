@@ -151,11 +151,11 @@
 				    availableDevices = !WprElements.editorCheck() ? $scope.attr('data-wpr-sticky-devices') : $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-sticky-devices'),
 				    activeDevices = !WprElements.editorCheck() ? $scope.attr('data-wpr-active-breakpoints') : $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-active-breakpoints'),
 				    stickySectionExists = $scope.hasClass('wpr-sticky-section-yes') || $scope.find('.wpr-sticky-section-yes-editor') ? true : false,
-				    positionStyle, adminBarHeight, location = +$scope.css('top').slice(0, -2),
+				    positionStyle, 
+                    adminBarHeight,
 				    stickyHeaderFooter = $scope.closest('div[data-elementor-type="wp-post"]').length ? $scope.closest('div[data-elementor-type="wp-post"]') : '',
 					headerFooterZIndex = !WprElements.editorCheck() ? $scope.attr('data-wpr-z-index') : $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-z-index');
 
-                    // $scope.closest('div[data-elementor-type="wp-post"]').length && 
 			    if ( !$scope.find('.wpr-sticky-section-yes-editor').length) {
 			        positionType = $scope.attr('data-wpr-position-type');
 			        positionLocation = $scope.attr('data-wpr-position-location');
@@ -164,6 +164,14 @@
 			        activeDevices = $scope.attr('data-wpr-active-breakpoints');
 					headerFooterZIndex = $scope.attr('data-wpr-z-index');
 			    }
+
+                if ( 'top' === positionLocation && 'auto' === $scope.css('top') ) {
+                    var offsetTop = 0;
+                    $scope.css('top', 0);
+                } else {
+                    var offsetTop = +$scope.css('top').slice(0, -2);
+                }
+
 			    if ( 0 == availableDevices.length ) {
 			        positionType = 'static';
 			    }
@@ -234,7 +242,7 @@
 			        if($('#wpadminbar').length) {
 			            adminBarHeight = $('#wpadminbar').css('height').slice(0, $('#wpadminbar').css('height').length - 2);
 			            if ( 'top'  ===  positionLocation && ( 'fixed' == $scope.css('position')  || 'sticky' == $scope.css('position') ) ) {
-			                $scope.css('top', +adminBarHeight + location + 'px');
+			                $scope.css('top', +adminBarHeight + offsetTop + 'px');
 			                $scope.css('bottom', 'auto');
 			            } 
 			        }
@@ -3195,6 +3203,7 @@
 				prBarCounterValuePersent = prBarOptions.counterValuePersent,
 				prBarAnimDuration = prBarOptions.animDuration,
 				prBarAnimDelay = prBarOptions.animDelay,
+				prBarLoopDelay = +prBarOptions.loopDelay,
 				currentDeviceMode = elementorFrontend.getCurrentDeviceMode(),
 				numeratorData = {
 					toValue: prBarCounterValue,
@@ -3253,6 +3262,45 @@
 			}
 
 			progressBar();
+
+			if (prBarOptions.loop === 'yes') {
+				setInterval(function() {
+
+					if ( isInViewport( prBarVrLine ) ) {
+						prBarVrLine.css({
+							'height': 0 + '%'
+						});
+					}
+	
+					if ( isInViewport( prBarHrLine ) ) {
+						prBarHrLine.css({
+							'width': 0 + '%'
+						});
+					}
+	
+					if ( isInViewport( prBarCircle ) ) {
+						var circleDashOffset = prBarCircleOptions.circleOffset;
+						
+						$prBarCirclePrline.css({
+							'stroke-dashoffset': $prBarCirclePrline.css('stroke-dasharray')
+						});
+					}
+
+					// Set Delay
+					if ( isInViewport( prBarVrLine ) || isInViewport( prBarHrLine ) || isInViewport( prBarCircle ) ) {
+						setTimeout(function() {
+							prBarCounter.numerator( {
+								toValue: 0,
+								duration: prBarAnimDuration,
+							} );
+						}, prBarAnimDelay);
+					}
+
+					setTimeout(function() {
+						progressBar();
+					}, prBarAnimDuration + prBarAnimDelay);
+				}, (prBarAnimDuration + prBarAnimDelay) * prBarLoopDelay);
+			}
 
 			 $(window).on('scroll', function() {
 				progressBar();
