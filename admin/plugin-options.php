@@ -87,7 +87,6 @@ function wpr_register_addons_settings() {
     register_setting('wpr-extension-settings', 'wpr-parallax-background');
     register_setting('wpr-extension-settings', 'wpr-parallax-multi-layer');
     register_setting('wpr-extension-settings', 'wpr-sticky-section');
-    // register_setting('wpr-extension-settings', 'wpr-reading-progress-bar');
 
     // Element Toggle
     register_setting( 'wpr-elements-settings', 'wpr-element-toggle-all', [ 'default' => 'on' ]  );

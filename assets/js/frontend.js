@@ -107,18 +107,18 @@
 
 		widgetSection: function( $scope ) {
 
-			readingProgressBar();
+			readingProgressBar($scope);
 
-			function readingProgressBar() {//TODO: Move this somewhere else
-				readingProgressBarFill();
+			function readingProgressBar($scope) {//TODO: Move this somewhere else
+				readingProgressBarFill($scope);
 				window.onscroll = function() {readingProgressBarFill()};
 
 				function readingProgressBarFill() {
-					if(document.querySelector('.wpr-mybar')) {
+					if(document.querySelector('.wpr-reading-progress-bar')) {
 						var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
 						var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
 						var scrolled = (winScroll / height) * 100;
-						document.querySelector("#wpr-mybar").style.width = scrolled + "%";
+						document.querySelector(".wpr-reading-progress-bar").style.width = scrolled + "%";
 					}
 				}
 
