@@ -60,50 +60,11 @@ class Wpr_Reading_Progress_Bar extends Widget_Base {
         );
 
 		$this->add_control(
-			'wpr_height',
+			'wpr_particles_apply_changes',
 			[
-				'label' => __( 'Height', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-                'render_type' => 'template',
-				'range' => [
-					'px' => [
-						'min'  => 1,
-						'max'  => 100,
-						'step' => 1,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 10,
-				],
-				'selectors' => [
-					'.wpr-reading-progress-bar-container' => 'height: {{SIZE}}{{UNIT}} !important',
-					'.wpr-reading-progress-bar-container .wpr-reading-progress-bar' => 'height: {{SIZE}}{{UNIT}} !important',
-				],
-			]
-		);
-
-		$this->add_control(
-			'wpr_background_color',
-			[
-				'label' => __( 'Background Color', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'default' => '#C5C5C6',
-				'selectors' => [
-					'.wpr-reading-progress-bar-container' => 'background-color: {{VALUE}};'
-				]
-			]
-		);
-
-		$this->add_control(
-			'wpr_fill_color',
-			[
-				'label' => __( 'Fill Color', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'default' => '#6A63DA',
-				'selectors' => [
-					'.wpr-reading-progress-bar-container .wpr-reading-progress-bar' => 'background-color: {{VALUE}};'
-				]
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => '<div class="elementor-update-preview editor-wpr-preview-update"><span>Update changes to Preview</span><button class="elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply</button>',
+				'separator' => 'after'
 			]
 		);
 
@@ -128,12 +89,83 @@ class Wpr_Reading_Progress_Bar extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'wpr_height',
+			[
+				'label' => __( 'Height', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+                'render_type' => 'template',
+				'range' => [
+					'px' => [
+						'min'  => 1,
+						'max'  => 100,
+						'step' => 1,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+				'selectors' => [
+					'.wpr-reading-progress-bar-container' => 'height: {{SIZE}}{{UNIT}} !important',
+					'.wpr-reading-progress-bar-container .wpr-reading-progress-bar' => 'height: {{SIZE}}{{UNIT}} !important',
+				],
+			]
+		);
+
+		$this->add_control(
+			'background_type',
+			[
+				'label' => __( 'Background Type', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::SELECT,
+				'default' => 'transparent',
+				'render_type' => 'template',
+				'options' => [
+					'transparent' => __( 'Transparent', 'wpr-addons' ),
+					'colored' => __( 'Colored', 'wpr-addons' ),
+				]
+			]
+		);
+
+		$this->add_control(
+			'wpr_background_color',
+			[
+				'label' => __( 'Background Color', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'default' => '#C5C5C6',
+				'selectors' => [
+					'.wpr-reading-progress-bar-container' => 'background-color: {{VALUE}};'
+				],
+				'condition' => [
+					'background_type' => 'colored'
+				]
+			]
+		);
+
+		$this->add_control(
+			'wpr_fill_color',
+			[
+				'label' => __( 'Fill Color', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'default' => '#6A63DA',
+				'selectors' => [
+					'.wpr-reading-progress-bar-container .wpr-reading-progress-bar' => 'background-color: {{VALUE}};'
+				]
+			]
+		);
+
         $this->end_controls_section();
         
 	}
 
 	public function render() {
     	$settings = $this->get_settings_for_display();
-        echo '<div class="wpr-reading-progress-bar-container"><div class="wpr-reading-progress-bar"></div></div>';
+
+		$this->add_render_attribute( 'wpr-rpb-attrs', [
+			'class' => 'wpr-reading-progress-bar-container',
+			'data-background-type' => $settings['background_type'],
+		] );
+
+        echo '<div '. $this->get_render_attribute_string('wpr-rpb-attrs') .'><div class="wpr-reading-progress-bar"></div></div>';
 	}
 }

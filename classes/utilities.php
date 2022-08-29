@@ -58,8 +58,8 @@ class Utilities {
 			'Site Logo' => ['logo', '', '', ''],
 			'Popup Trigger' => ['popup-trigger', '', '', ''],
 			'Taxonomy List' => ['taxonomy-list', '', '', ''],
-			'Reading Progress Bar' => ['reading-progress-bar', '', '', ''],
 			'Template' => ['elementor-template', '', '', ''],
+			'Reading Progress Bar' => ['reading-progress-bar', '', '', ''],
 			// 'Random Image' => ['random-image', '', ''],
 		];
 	}

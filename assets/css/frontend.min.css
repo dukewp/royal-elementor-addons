@@ -11976,6 +11976,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     left: 0;
     width: 100%;
     z-index: 9999999;
+    background-color: transparent;
 }
 
 .wpr-reading-progress-bar {
