@@ -787,7 +787,7 @@ class Wpr_Search extends Widget_Base {
 
 		?>
 
-		<form role="search" method="get" class="wpr-search-form" action="<?php echo esc_url(home_url()); ?>">
+		<form role="search" method="get" class="wpr-search-form wpr-search-form-test" action="<?php echo esc_url(home_url()); ?>">
 
 			<div class="wpr-search-form-input-wrap elementor-clearfix">
 				<input <?php echo $this->get_render_attribute_string( 'input' ); ?>>
@@ -805,8 +805,8 @@ class Wpr_Search extends Widget_Base {
 			}
 
 			?>
-			
 		</form>
+		
 
 		<?php
 

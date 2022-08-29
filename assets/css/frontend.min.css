@@ -6865,6 +6865,15 @@ body:not(.elementor-editor-active) .wpr-template-popup {
   == Search
   --------------------------------------------------------------*/
 
+.wpr-data-fetch {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    display: none;
+}
+
 .wpr-search-form-input-wrap {
     width: 100%;
     overflow: hidden;
