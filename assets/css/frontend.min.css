@@ -6872,6 +6872,39 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     width: 100%;
     height: auto;
     display: none;
+    border-style: solid;
+    border-top: none !important;
+}
+
+.wpr-data-fetch ul {
+    list-style-type: none;
+    padding: 0;
+    overflow-y: auto;
+    height: 30vh;
+}
+
+.wpr-data-fetch ul li {
+    display: flex;
+    padding: 5px;
+}
+
+.wpr-data-fetch img {
+    width: 10%;
+    height: auto;
+    margin-right: 10px;
+}
+
+.wpr-close-search {
+    position: absolute;
+    top: 10px;
+    right: 30px;
+}
+
+.wpr-close-search::before {
+    font-family: "Font Awesome 5 Free";
+    content: '\f00d';
+    font-weight: 600;
+    cursor: pointer;
 }
 
 .wpr-search-form-input-wrap {

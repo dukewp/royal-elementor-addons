@@ -69,6 +69,28 @@ class Wpr_Search extends Widget_Base {
 		);
 	}
 
+	public function add_control_ajax_query_type() {
+		$search_post_type = Utilities::get_custom_types_of( 'post', false );
+		$search_post_type = array_merge( [ 'all' => esc_html__( 'All', 'wpr-addons' ) ], $search_post_type );
+
+		foreach ( $search_post_type as $key => $value ) {
+			if ( 'all' != $key ) {
+				$search_post_type[$key] = $value .' (Pro)';
+			}
+		}
+
+		$this->add_control(
+			'ajax_query_type',
+			[
+				'label' => esc_html__( 'Ajax Query Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'label_block' => false,
+				'options' => $search_post_type,
+				'default' => 'all',
+			]
+		);
+	}
+
 	protected function register_controls() {
 		
 		// Section: Search -----------
@@ -82,6 +104,8 @@ class Wpr_Search extends Widget_Base {
 		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
 		$this->add_control_search_query();
+
+		$this->add_control_ajax_query_type();
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
@@ -269,6 +293,7 @@ class Wpr_Search extends Widget_Base {
 				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-search-form-input' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-data-fetch' => 'border-color: {{VALUE}};'
 				],
 			]
 		);
@@ -413,6 +438,7 @@ class Wpr_Search extends Widget_Base {
 				'size_units' => [ 'px', ],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-search-form-input' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-data-fetch' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 				'separator' => 'before',
 			]
@@ -432,6 +458,7 @@ class Wpr_Search extends Widget_Base {
 				'size_units' => [ 'px', '%' ],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-search-form-input' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-data-fetch' => 'border-radius: 0 0 {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 				'separator' => 'after',
 			]
@@ -733,7 +760,7 @@ class Wpr_Search extends Widget_Base {
 				],
 				'size_units' => [ 'px', '%' ],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-search-form-submit' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-search-form-submit' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 				'separator' => 'after',
 			]
