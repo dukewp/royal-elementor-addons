@@ -103,6 +103,9 @@ class Wpr_Archive_Title extends Widget_Base {
 					'h4' => 'H4',
 					'h5' => 'H5',
 					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+					'P' => 'p'
 				],
 				'default' => 'h1',
 			]
