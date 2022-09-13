@@ -41,6 +41,7 @@
 				'wpr-product-filters.default' : WprElements.widgetProductFilters,
 				'wpr-page-cart.default' : WprElements.widgetPageCart,
 				'wpr-my-account-pro.default' : WprElements.widgetPageMyAccount,
+				'wpr-reading-progress-bar.default' : WprElements.widgetReadingProgressBar,
 				'global': WprElements.widgetSection,
 
 				// Single
@@ -106,29 +107,6 @@
 		}, // End widgetFeaturedMedia
 
 		widgetSection: function( $scope ) {
-
-			readingProgressBar($scope);
-
-			function readingProgressBar($scope) {//TODO: Move this somewhere else
-				readingProgressBarFill($scope);
-				window.onscroll = function() {readingProgressBarFill()};
-
-				function readingProgressBarFill() {
-					if(document.querySelector('.wpr-reading-progress-bar')) {
-						var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-						var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-						var scrolled = (winScroll / height) * 100;
-						document.querySelector(".wpr-reading-progress-bar").style.width = scrolled + "%";
-					}
-				}
-
-				if( $('#wpadminbar').length && $('.wpr-reading-progress-bar-container').length ) {
-					if ( 0 === $('.wpr-reading-progress-bar-container').position().top ) {
-						// $('.wpr-reading-progress-bar-container').attr('style', 'top: 32px !important;');
-						$('.wpr-reading-progress-bar-container').css('top', ' 32px');
-					}
-				}
-			}
 
 			if ( $scope.attr('data-wpr-particles') || $scope.find('.wpr-particle-wrapper').attr('data-wpr-particles-editor') ) {
 				particlesEffect();
@@ -598,7 +576,10 @@
 			}
 
 			if ( $scope.find('.woocommerce-result-count').length ) {
-				$scope.find('.woocommerce-result-count').text(`Showing 1–${$scope.find('.wpr-grid-item').length} of ${iGrid.data('found-posts')} results`);
+				var resultCountText = $scope.find('.woocommerce-result-count').text();
+				resultCountText = resultCountText.replace( /\d\u2013\d+/, '1\u2013' + $scope.find('.wpr-grid-item').length );
+
+				$scope.find('.woocommerce-result-count').text(resultCountText);
 			}
 
 			// Settings
@@ -4421,6 +4402,51 @@
 			}	
 			
 		}, // End of widgetPageMyAccount
+
+		widgetReadingProgressBar: function($scope) {
+
+			if ( $scope.find('.wpr-reading-progress-bar-container').length != 0 ) {
+				var rpbContainer = $scope.find('.wpr-reading-progress-bar-container');
+				readingProgressBar($scope, rpbContainer);
+			}
+
+			function readingProgressBar($scope, rpbContainer) {
+
+				var initialPaddingTop = $('body').css('paddingTop');
+				var initialPaddingBottom = $('body').css('paddingBottom');
+
+				console.log(initialPaddingTop, initialPaddingBottom);
+
+				if ( '0px' === rpbContainer.css('top') ) {
+					if ( 'colored' == rpbContainer.data('background-type') ) {
+						$('body').css('paddingTop', $scope.find('.wpr-reading-progress-bar').css('height'));
+					}
+					if( $('#wpadminbar').length ) {
+						rpbContainer.css('top', $('#wpadminbar').height());
+					}
+					$('body').css('paddingBottom', initialPaddingBottom);
+				} else if ( '0px' === rpbContainer.css('bottom') && 'colored' == rpbContainer.data('background-type') ) {
+					$('body').css('paddingBottom', $scope.find('.wpr-reading-progress-bar').css('height'));
+					$('body').css('paddingTop', initialPaddingTop);
+				}
+
+				readingProgressBarFill($scope);
+				window.onscroll = function() {
+					readingProgressBarFill($scope);
+				};
+
+			}
+
+			function readingProgressBarFill($scope) {
+				if($scope.find('.wpr-reading-progress-bar').length) {
+					var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+					var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+					var scrolled = (winScroll / height) * 100;
+					$scope.find(".wpr-reading-progress-bar").css('width', scrolled + "%");
+				}
+			}
+
+		},
 
 		// Editor Check
 		editorCheck: function() {

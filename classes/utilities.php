@@ -59,7 +59,7 @@ class Utilities {
 			'Popup Trigger' => ['popup-trigger', '', '', ''],
 			'Taxonomy List' => ['taxonomy-list', '', '', ''],
 			'Template' => ['elementor-template', '', '', ''],
-			'Reading Progress Bar' => ['reading-progress-bar', '', '', ''],
+			// 'Reading Progress Bar' => ['reading-progress-bar', '', '', ''],
 			// 'Random Image' => ['random-image', '', ''],
 		];
 	}

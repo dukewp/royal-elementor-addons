@@ -1,9 +1,9 @@
 === Royal Elementor Addons (Header Footer Builder, Popups, Post Grid, Woocommerce Product Grid, Slider, Parallax Image, Free Elementor Widgets & Elementor Templates. Elementor WooCommerce Builder) ===
 Contributors: WP Royal, rubeushagrid13, cyberpinky, elementoraddonswpr
 Tags: elementor, elements, widgets for elementor, elementor addons, elementor widgets, elementor form, woocommerce elementor, page builder, elementor templates, wordpress page builder, best elementor addons, addons for elementor, elementor woocommerce builder
-Stable tag: 1.3.47
+Stable tag: 1.3.48
 Requires at least: 5.0
-Tested up to: 6.0.1
+Tested up to: 6.0.2
 Requires PHP: 5.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -383,6 +383,11 @@ memory_limit 256M or more
 post_max_size 64M
 
 == Changelog ==
+
+= Royal Elementor Addons v1.3.48 - 2022-09-13 =
+* FIXED: Fixed minor bugs.
+* ADDED: Royal Elementor Theme Builder [**Electornic Store**](https://demosites.royal-elementor-addons.com/estore-v1/?ref=rea-wpo-pp-details-tab) Templates Kit.
+* ADDED: Royal Elementor Theme Builder [**Food Delivery**](https://demosites.royal-elementor-addons.com/woo-food-v1/?ref=rea-wpo-pp-details-tab) Templates Kit.
 
 = Royal Elementor Addons v1.3.47 - 2022-08-10 =
 * FIXED: Fixed minor bugs.

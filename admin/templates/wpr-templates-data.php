@@ -39,6 +39,32 @@ class WPR_Templates_Data {
 					'priority' => 5,
 				],
 			],
+			'estore' => [
+				'v1' => [
+					'name' => 'Electronic Store',
+					'pages' => 'home,shop,single-product,blog,faq,about,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .',"woocommerce":'. $is_woo_active .'}',
+					'tags' => 'shop shopping woo-commerce woocommerce estore ecommerce product online market reseller ecommerce shop gadget iphone phone electronic ',
+					'theme-builder' => true,
+					'woo-builder' => true,
+					'off-canvas' => false,
+					'price' => $is_pro_active ? 'free' : 'pro',
+					'priority' => 4,
+				],
+			],
+			'woo-food' => [
+				'v1' => [
+					'name' => 'Food Delivery',
+					'pages' => 'home,home-v2,food,single-product,about,contact,faq,blog,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .',"woocommerce":'. $is_woo_active .'}',
+					'tags' => 'shop woo-commerce woocommerce ecommerce product online eshopping market ecommerce shop food delivery restaurant fast food pizzeria burger recipes cooking pizza restaurant snack',
+					'theme-builder' => true,
+					'woo-builder' => true,
+					'off-canvas' => false,
+					'price' => $is_pro_active ? 'free' : 'pro',
+					'priority' => 144,
+				],
+			],
 			'fashion' => [
 				'v1' => [
 					'name' => 'Fashion',
