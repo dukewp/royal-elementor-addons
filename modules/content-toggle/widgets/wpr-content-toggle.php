@@ -1139,7 +1139,7 @@ class Wpr_Content_Toggle extends Widget_Base {
 	public function wpr_dual_switcher_outer_text() {
 
 		$settings = $this->get_settings();
-		$this->add_inline_editing_attributes('switcher_first_label', 'basic');
+		
 		?>
 
 		<div class="wpr-switcher-inner wpr-switcher-first">
