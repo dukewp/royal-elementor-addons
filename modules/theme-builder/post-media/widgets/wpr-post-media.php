@@ -11,7 +11,9 @@ use Elementor\Core\Schemes\Color;
 use Elementor\Group_Control_Image_Size;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Post_Media extends Widget_Base {
 	
@@ -1525,7 +1527,7 @@ class Wpr_Post_Media extends Widget_Base {
 		
 		// Render Image
 		if ( has_post_thumbnail() ) {
-			echo '<div class="wpr-featured-media-image" data-src="'. esc_url( $src ) .'"'. $lightbox .'>';
+			echo '<div class="wpr-featured-media-image" data-src="'. esc_url( $src ) .'">';
 				if ( 'yes' === $show_caption && '' !== $caption ) {
 					echo '<div class="wpr-featured-media-caption">';
 						echo '<span>'. esc_html( $caption ) .'</span>';
@@ -1576,7 +1578,7 @@ class Wpr_Post_Media extends Widget_Base {
 				$track_url .= str_replace( '#', 'color=', $settings['audio_interface_color'] );
 			}
 
-			echo '<iframe height="'. $audio_height .'" src="'. esc_url( $track_url ) .'" allow="autoplay"></iframe>';
+			echo '<iframe height="'. esc_attr($audio_height) .'" src="'. esc_url( $track_url ) .'" allow="autoplay"></iframe>';
 		}
 	}
 
@@ -1638,35 +1640,38 @@ class Wpr_Post_Media extends Widget_Base {
 
 		echo '<div class="wpr-featured-media-wrap" data-caption="'. esc_attr( $post_format ) .'">';
 
-			switch ( $post_format ) {
-				case 'audio':
-					if ( 'meta' === $settings['featured_media_pfa_select'] ) {
-						$this->render_post_audio_video( $settings, 'audio' );
-					} else {
-						$this->render_post_thumbnail( $settings, $thumb_id );
-					}
-					break;
+			// Disable Post Formats for some time
+			// switch ( $post_format ) {
+			// 	case 'audio':
+			// 		if ( 'meta' === $settings['featured_media_pfa_select'] ) {
+			// 			$this->render_post_audio_video( $settings, 'audio' );
+			// 		} else {
+			// 			$this->render_post_thumbnail( $settings, $thumb_id );
+			// 		}
+			// 		break;
 
-				case 'video':
-					if ( 'meta' === $settings['featured_media_pfv_select'] ) {
-						$this->render_post_audio_video( $settings, 'video' );
-					} else {
-						$this->render_post_thumbnail( $settings, $thumb_id );
-					}
-					break;
+			// 	case 'video':
+			// 		if ( 'meta' === $settings['featured_media_pfv_select'] ) {
+			// 			$this->render_post_audio_video( $settings, 'video' );
+			// 		} else {
+			// 			$this->render_post_thumbnail( $settings, $thumb_id );
+			// 		}
+			// 		break;
 
-				case 'gallery':
-					if ( 'meta' === $settings['featured_media_pfg_select'] ) {
-						$this->render_post_gallery( $settings );
-					} else {
-						$this->render_post_thumbnail( $settings, $thumb_id );
-					}
-					break;
+			// 	case 'gallery':
+			// 		if ( 'meta' === $settings['featured_media_pfg_select'] ) {
+			// 			$this->render_post_gallery( $settings );
+			// 		} else {
+			// 			$this->render_post_thumbnail( $settings, $thumb_id );
+			// 		}
+			// 		break;
 				
-				default:
-					$this->render_post_thumbnail( $settings, $thumb_id );
-					break;
-			}
+			// 	default:
+			// 		$this->render_post_thumbnail( $settings, $thumb_id );
+			// 		break;
+			// }
+
+			$this->render_post_thumbnail( $settings, $thumb_id );
 
 		echo '</div>';
 

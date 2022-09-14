@@ -41,6 +41,16 @@
 	position: relative !important;
 }
 
+.elementor-element--promotion .wpr-icon:after {
+	top: 22px;
+	right: -1px;
+	opacity: 0.7;
+}
+
+#elementor-element--promotion__dialog .dialog-button {
+	text-align: center;
+}
+
 .elementor-control-type-section[class*="elementor-control-wpr_section_"]:after {
     content: 'R';
     display: block;
@@ -107,6 +117,7 @@
 .elementor-control-archive_link_transition_duration,
 .elementor-control-post_info_tax_select,
 .elementor-control-post_info_link_wrap,
+.elementor-control-post_info_modified_time,
 .elementor-control-tabs_sharing_custom_colors,
 .elementor-control-post_info_show_avatar,
 .elementor-control-post_info_cf,
@@ -123,6 +134,10 @@
 .elementor-control-tooltip_position,
 .elementor-control-post_info_comments_text_1 {
 	padding-top: 15px !important;
+}
+
+.elementor-control-post_info_custom_field_video_tutorial {
+	margin-top: 15px;
 }
 
 .elementor-control-title_pointer_animation + .elementor-control-title_transition_duration,
@@ -316,6 +331,10 @@
 
 .elementor-control-posts_slider_notice .elementor-control-raw-html {
   font-style: normal !important;
+}
+
+.elementor-control-product_notice_widget_info .elementor-control-raw-html {
+	color: red;
 }
 
 
@@ -669,7 +688,9 @@
 .elementor-control.elementor-control-author_name_links_to_pro_notice,
 .elementor-control.elementor-control-author_title_links_to_pro_notice,
 .elementor-control.elementor-control-comments_form_layout_pro_notice,
-.elementor-control.elementor-control-sharing_repeater_pro_notice {
+.elementor-control.elementor-control-sharing_repeater_pro_notice,
+.elementor-control.elementor-control-mini_cart_style_pro_notice,
+.elementor-control.elementor-control-tabs_position_pro_notice {
 	padding-bottom: 0 !important;
 }
 
@@ -710,7 +731,9 @@
 .elementor-control-author_name_links_to_pro_notice .wpr-pro-notice,
 .elementor-control-author_title_links_to_pro_notice .wpr-pro-notice,
 .elementor-control-comments_form_layout_pro_notice .wpr-pro-notice,
-.elementor-control-sharing_repeater_pro_notice .wpr-pro-notice {
+.elementor-control-sharing_repeater_pro_notice .wpr-pro-notice,
+.elementor-control-mini_cart_style_pro_notice .wpr-pro-notice,
+.elementor-control-tabs_position_pro_notice .wpr-pro-notice {
 	border-bottom: none !important;
 }
 
@@ -810,7 +833,8 @@
           order: 2;
 }
 
-#elementor-panel-category-wpr-theme-builder-widgets {
+#elementor-panel-category-wpr-theme-builder-widgets,
+#elementor-panel-category-wpr-woocommerce-builder-widgets {
   -webkit-box-ordinal-group: 2 !important;
       -ms-flex-order: 1 !important;
           order: 1 !important;

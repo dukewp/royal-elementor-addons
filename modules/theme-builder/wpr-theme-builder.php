@@ -3,7 +3,9 @@
 use Elementor\Controls_Manager;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 	
@@ -36,6 +38,7 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 
 		$default_archives = [
 			'archive/posts' => esc_html__( 'Posts Archive', 'wpr-addons' ),
+			'product_archive/products' => esc_html__( 'Products Archive', 'wpr-addons' ),
 			'archive/author' => esc_html__( 'Author Archive', 'wpr-addons' ),
 			'archive/date' => esc_html__( 'Date Archive', 'wpr-addons' ),
 			'archive/search' => esc_html__( 'Search Results', 'wpr-addons' ),
@@ -44,55 +47,74 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 		$taxonomy_archives = $post_taxonomies;
 
 		$id = get_the_ID();
-		$template_type = get_post_meta( $id, '_wpr_template_type', true  );
-		$template_slug = get_post($id)->post_name;
 		$query = '';
 
-		if ( 0 === strpos( $template_type, 'single' ) ) {
-			$conds = json_decode(get_option('wpr_single_conditions'));
+		if ( false !== $id ) {
+			$template_type = get_post_meta( $id, '_wpr_template_type', true  );
+			$template_slug = get_post($id)->post_name;
 			
-			if ( $template_slug == Utilities::get_template_slug($conds, 'single/posts', $id) ) {
-				$query = 'post';
-			} elseif ( $template_slug == Utilities::get_template_slug($conds, 'single/pages', $id) ) {
-				$query = 'page';
-			} else {
-				foreach ($post_types as $post_type => $value) {
-					if ( 'post' === $post_type || 'page' === $post_type ) {
-						continue;
-					}
+			if ( false !== strpos( $template_type, 'single' ) ) {
+				if ( 0 === strpos( $template_type, 'single' ) ) {
+					$conds = json_decode(get_option('wpr_single_conditions'));
+				} else {
+					$conds = json_decode(get_option('wpr_product_single_conditions'));
+				}
+				
+				if ( $template_slug == Utilities::get_template_slug($conds, 'single/posts', $id) ) {
+					$query = 'post';
+				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'product_single/product', $id) ) {
+					$query = 'product';
+				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'single/pages', $id) ) {
+					$query = 'page';
+				} else {
+					foreach ($post_types as $post_type => $value) {
+						if ( 'post' === $post_type || 'page' === $post_type ) {
+							continue;
+						}
 
-					if ( $template_slug == Utilities::get_template_slug($conds, 'single/'. $post_type, $id) ) {
-						$query = $post_type;
+						if ( $template_slug == Utilities::get_template_slug($conds, 'single/'. $post_type, $id) ) {
+							$query = $post_type;
+						}
+					}
+				}
+			} else {
+				if ( 0 === strpos( $template_type, 'archive' ) ) {
+					$conds = json_decode(get_option('wpr_archive_conditions'));
+				} else {
+					$conds = json_decode(get_option('wpr_product_archive_conditions'));
+				}
+
+				if ( $template_slug == Utilities::get_template_slug($conds, 'archive/posts', $id) || $template_slug == Utilities::get_template_slug($conds, 'archive/all_archives', $id) ) {
+					$query = 'archive/posts';
+				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/search', $id) ) {
+					$query = 'archive/search';
+				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/author', $id) ) {
+					$query = 'archive/author';
+				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/date', $id) ) {
+					$query = 'archive/date';
+				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'product_archive/products', $id) ) {
+					$query = 'product_archive/products';
+				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'product_archive/product_cat/all', $id) ) {
+					$query = 'product_cat';
+				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'product_archive/product_tag/all', $id) ) {
+					$query = 'product_tag';
+				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/categories', $id) ) {
+					$query = 'category';
+				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/tags', $id) ) {
+					$query = 'post_tag';
+				} else {
+					foreach ($post_taxonomies as $tax => $value) {
+						if ( 'category' === $tax || 'tag' === $tax ) {
+							continue;
+						}
+
+						if ( $template_slug == Utilities::get_template_slug($conds, 'archive/'. $tax, $id) ) {
+							$query = $tax;
+						}
 					}
 				}
 			}
-		} else {
-			$conds = json_decode(get_option('wpr_archive_conditions'));
-
-			if ( $template_slug == Utilities::get_template_slug($conds, 'archive/posts', $id) || $template_slug == Utilities::get_template_slug($conds, 'archive/all_archives', $id) ) {
-				$query = 'archive/posts';
-			} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/search', $id) ) {
-				$query = 'archive/search';
-			} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/author', $id) ) {
-				$query = 'archive/author';
-			} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/date', $id) ) {
-				$query = 'archive/date';
-			} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/categories', $id) ) {
-				$query = 'category';
-			} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/tags', $id) ) {
-				$query = 'post_tag';
-			} else {
-				foreach ($post_taxonomies as $tax => $value) {
-					if ( 'category' === $tax || 'tag' === $tax ) {
-						continue;
-					}
-
-					if ( $template_slug == Utilities::get_template_slug($conds, 'archive/'. $tax, $id) ) {
-						$query = $tax;
-					}
-				}
-			}
-		}
+		} 
 
 		$this->add_control(
 			'preview_source',
@@ -313,9 +335,9 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 		$plugin = Plugin::elementor();
 
 		if ( $plugin->preview->is_preview_mode( $this->get_main_id() ) ) {
-			echo $plugin->preview->builder_wrapper( '' );
+			echo ''. $plugin->preview->builder_wrapper( '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		} else {
-			echo $this->get_content();
+			echo ''. $this->get_content(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 
@@ -353,11 +375,17 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 	public function get_container_attributes() {
 		$attributes = parent::get_container_attributes();
 
-		if ( is_singular() /* Not 404 */ ) {
+		if ( is_singular() ) { // Not 404
+			$template_type = get_post_meta(get_the_ID(), '_wpr_template_type', true);
 			$post_classes = get_post_class( '', get_the_ID() );
+
+			if ( 'product_single' === $template_type ) {
+				array_push($post_classes, 'product');
+			}
+
 			$attributes['class'] .= ' ' . implode( ' ', $post_classes );
 		}
-
+ 
 		return $attributes;
 	}
 }

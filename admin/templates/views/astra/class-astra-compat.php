@@ -41,7 +41,7 @@ class Wpr_Astra_Compat {
 	 * Run all the Actions / Filters.
 	 */
 	public function hooks() {
-		$this->render_templates = new WPR_Render_Templates();
+		$this->render_templates = new WPR_Render_Templates( true );
 
 		if ( $this->render_templates->is_template_available('header') ) {
 			add_action( 'template_redirect', [ $this, 'astra_setup_header' ], 10 );

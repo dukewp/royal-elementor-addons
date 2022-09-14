@@ -750,7 +750,7 @@
                  ! is_array( $transient_data->response )
             ) {
                 $transient_data->response = array();
-            } else if ( ! empty( $transient_data->response[ $basename ] ) ) {
+            } elseif ( ! empty( $transient_data->response[ $basename ] ) ) {
                 $version = $is_plugin ?
                     ( ! empty( $transient_data->response[ $basename ]->new_version ) ?
                         $transient_data->response[ $basename ]->new_version :
@@ -1031,7 +1031,7 @@
 
                 if ( $this->_fs->is_addon_activated( $addon->id ) ) {
                     $addon_version = $this->_fs->get_addon_instance( $addon->id )->get_plugin_version();
-                } else if ( $this->_fs->is_addon_installed( $addon->id ) ) {
+                } elseif ( $this->_fs->is_addon_installed( $addon->id ) ) {
                     $addon_plugin_data = get_plugin_data(
                         ( WP_PLUGIN_DIR . '/' . $this->_fs->get_addon_basename( $addon->id ) ),
                         false,
@@ -1119,7 +1119,7 @@ if ( !isset($info->error) ) {
 
                     if ( isset( $new_version_readme_data->banners ) ) {
                         $new_version_readme_data->banners = (array) $new_version_readme_data->banners;
-                    } else if ( isset( $data->banners ) ) {
+                    } elseif ( isset( $data->banners ) ) {
                         $new_version_readme_data->banners = $data->banners;
                     }
 
@@ -1447,7 +1447,7 @@ if ( !isset($info->error) ) {
         static function _store_basename_for_source_adjustment( $response, $hook_extra ) {
             if ( isset( $hook_extra['plugin'] ) ) {
                 self::$_upgrade_basename = $hook_extra['plugin'];
-            } else if ( isset( $hook_extra['theme'] ) ) {
+            } elseif ( isset( $hook_extra['theme'] ) ) {
                 self::$_upgrade_basename = $hook_extra['theme'];
             } else {
                 self::$_upgrade_basename = null;
@@ -1487,7 +1487,7 @@ if ( !isset($info->error) ) {
             if ( isset( $upgrader->skin->options['extra'] ) ) {
                 // Set by the auto-install logic.
                 $desired_slug = $upgrader->skin->options['extra']['slug'];
-            } else if ( ! empty( $basename ) ) {
+            } elseif ( ! empty( $basename ) ) {
                 /**
                  * If it doesn't end with ".php", it's a theme.
                  *
@@ -1513,7 +1513,7 @@ if ( !isset($info->error) ) {
                  *
                  * @author Vova Feldman
                  */
-            } else if ( ! empty( $basename ) ) {
+            } elseif ( ! empty( $basename ) ) {
                 $fs = Freemius::get_instance_by_file(
                     $basename,
                     $is_theme ?

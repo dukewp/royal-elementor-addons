@@ -1,7 +1,9 @@
 <?php
 namespace WprAddons\Admin\Templates;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 /**
  * WPR_Templates_Library_Pages setup

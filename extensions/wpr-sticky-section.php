@@ -15,7 +15,9 @@ use Elementor\Core\Breakpoints;
 use WprAddons\Classes\Utilities;
 
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Sticky_Section {
 
@@ -148,7 +150,7 @@ class Wpr_Sticky_Section {
             $element->add_control(
                 'wpr_z_index',
                 [
-                    'label' => esc_html__( 'Z-Index', 'elementor' ),
+                    'label' => esc_html__( 'Z-Index', 'wpr-addons' ),
                     'type' => Controls_Manager::NUMBER,
                     'min' => -99,
 					'max' => 99999,
@@ -193,7 +195,6 @@ class Wpr_Sticky_Section {
 
 	public function breakpoints_manager() {
 		$active_breakpoints = [];
-
 		foreach ( \Elementor\Plugin::$instance->breakpoints->get_active_breakpoints() as $key => $value ) {
 			$active_breakpoints[$key . '_sticky'] = esc_html__(ucwords(preg_replace('/_/i', ' ', $key)), 'wpr-addons');
 		}
@@ -216,8 +217,11 @@ class Wpr_Sticky_Section {
         if ( $element->get_name() !== 'section' ) {
             return;
         }
+
 		
         $settings = $element->get_settings_for_display();
+
+		if ($settings['enable_sticky_section'] !== 'yes') return;
 		
         if ( $settings['enable_sticky_section'] === 'yes' ) {
             $element->add_render_attribute( '_wrapper', [
