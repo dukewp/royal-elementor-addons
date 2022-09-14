@@ -6864,6 +6864,15 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 /*--------------------------------------------------------------
   == Search
   --------------------------------------------------------------*/
+.wpr-data-fetch ul::-webkit-scrollbar {
+    width: 9px;
+    background-color: transparent;
+}
+
+.wpr-data-fetch ul::-webkit-scrollbar-thumb {
+    /* border-left: 6px solid transparent; */
+    border-right: 3px solid;
+}
 
 .wpr-data-fetch {
     position: relative;
@@ -6880,7 +6889,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     list-style-type: none;
     padding: 0;
     overflow-y: auto;
-    height: 30vh;
+    max-height: 30vh;
 }
 
 .wpr-data-fetch ul li {

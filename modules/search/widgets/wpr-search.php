@@ -47,6 +47,8 @@ class Wpr_Search extends Widget_Base {
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
 
+	public function add_section_style_ajax() {}
+
 	public function add_control_search_query() {
 		$search_post_type = Utilities::get_custom_types_of( 'post', false );
 		$search_post_type = array_merge( [ 'all' => esc_html__( 'All', 'wpr-addons' ) ], $search_post_type );
@@ -87,6 +89,9 @@ class Wpr_Search extends Widget_Base {
 				'label_block' => false,
 				'options' => $search_post_type,
 				'default' => 'all',
+				'condition' => [
+					'ajax_search' => 'yes'
+				]
 			]
 		);
 	}
@@ -104,6 +109,15 @@ class Wpr_Search extends Widget_Base {
 		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
 		$this->add_control_search_query();
+
+		$this->add_control(
+			'ajax_search',
+			[
+				'label' => esc_html__( 'AJAX Search', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'separator' => 'before',
+			]
+		);
 
 		$this->add_control_ajax_query_type();
 
@@ -767,6 +781,11 @@ class Wpr_Search extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+		// Styles
+		// Section: AJAX ------------
+		$this->add_section_style_ajax();
+		
 	}
 
 	protected function render_search_submit_btn() {
