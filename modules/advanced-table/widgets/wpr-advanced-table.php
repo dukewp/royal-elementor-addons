@@ -696,7 +696,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'type'			=> Controls_Manager::NUMBER,
 				'default' 		=> 1,
 				'min'     		=> 1,
-				'label_block'	=> true,
+				'label_block'	=> false,
 				'separator' => 'before',
 				'condition' 	=> [
 					'table_content_row_type' => 'col'
@@ -711,7 +711,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'type'			=> Controls_Manager::NUMBER,
 				'default' 		=> 1,
 				'min'     		=> 1,
-				'label_block'	=> true,
+				'label_block'	=> false,
 				'condition' 	=> [
 					'table_content_row_type' => 'col'
 				]
