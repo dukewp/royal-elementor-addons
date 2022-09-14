@@ -12033,6 +12033,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     transform: translateY(-50%);
 }
 
+.wpr-table-custom-pagination {
+    list-style-type: none;
+}
+
 .wpr-table-custom-pagination-inner-cont {
     display: flex;
     align-items: center;
