@@ -12000,6 +12000,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     /* display: none; */
 }
 
+.wpr-table-td-pag {
+    text-align: center;
+}
+
 .wpr-advanced-table {
     /* max-width: 100%!important; */
     border-collapse: collapse;

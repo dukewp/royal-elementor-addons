@@ -315,6 +315,7 @@ class Wpr_Advanced_Table extends Widget_Base {
 			[
 				'label' => esc_html__('Entry Info', 'wpr-addons'),
 				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'render_type' => 'template',
 				'return_value' => 'yes',
 				'default' => 'no',
 				'prefix_class' => 'wpr-entry-info-',
