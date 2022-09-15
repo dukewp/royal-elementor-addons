@@ -1755,6 +1755,8 @@ class Wpr_Advanced_Table extends Widget_Base {
 	
     }
 
+	public function render_custom_pagination($settings, $countRows) {}
+
 	protected function render_csv_data($url, $custom_pagination, $sorting_icon, $settings) {
 		
 		$url_ext = pathinfo($url, PATHINFO_EXTENSION);
@@ -1808,8 +1810,6 @@ class Wpr_Advanced_Table extends Widget_Base {
 
 		fclose($handle);
 	}
-
-	public function render_custom_pagination($settings, $countRows) {}
 
 	public function render_th_icon($item) {
 		ob_start();
