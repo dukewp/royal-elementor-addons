@@ -6,7 +6,9 @@ use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Core\Schemes\Typography;
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Back_To_Top extends Widget_Base {
 			
@@ -691,7 +693,7 @@ class Wpr_Back_To_Top extends Widget_Base {
 		}
 
 	if ( '' !== $settings['button_text'] && $settings['button_txt_show'] == 'yes' ) {
-		echo '<div class="wpr-stt-content">'.  $settings['button_text'] .'</div>';
+		echo '<div class="wpr-stt-content">'.  esc_html($settings['button_text']) .'</div>';
 	}
 			
 	echo '</div>';

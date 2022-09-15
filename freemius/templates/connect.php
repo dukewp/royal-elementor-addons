@@ -81,7 +81,7 @@
 
 		if ( ! $is_premium_code ) {
 			$show_close_button = true;
-		} else if ( $is_premium_only ) {
+		} elseif ( $is_premium_only ) {
 			$previous_theme_activation_url = $fs->get_previous_theme_activation_url();
 			$show_close_button             = ( ! empty( $previous_theme_activation_url ) );
 		}
@@ -174,7 +174,7 @@
 							'<b>' . $current_user->user_email . '</b>',
 							fs_text_inline( 'complete the install', 'complete-the-install', $slug )
 						) );
-					} else if ( $require_license_key ) {
+					} elseif ( $require_license_key ) {
 						$button_label = $is_network_upgrade_mode ?
                             fs_text_inline( 'Activate License', 'agree-activate-license', $slug ) :
                             fs_text_inline( 'Agree & Activate License', 'agree-activate-license', $slug );
@@ -371,7 +371,7 @@
 				'desc'       => 'Searched query of Templates Kit and Elmenetor Widgets Panel.',
 				'priority'   => 25,
 			);
-
+			
             $permissions['site'] = array(
                 'icon-class' => 'dashicons dashicons-admin-settings',
                 'tooltip'    => ( $require_license_key ? sprintf( $fs->get_text_inline( 'So you can manage and control your license remotely from the User Dashboard.', 'permissions-site_tooltip' ), $fs->get_module_type() ) : '' ),

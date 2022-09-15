@@ -26,7 +26,7 @@ abstract class Module_Base {
 	 */
 	public function __clone() {
 		// Cloning instances of the class is forbidden
-		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'wpr-addons' ), '1.0' );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin huh?', 'wpr-addons' ), '1.0' );
 	}
 
 	/**
@@ -37,7 +37,7 @@ abstract class Module_Base {
 	 */
 	public function __wakeup() {
 		// Unserializing instances of the class is forbidden
-		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'wpr-addons' ), '1.0' );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin huh?', 'wpr-addons' ), '1.0' );
 	}
 
 	public static function class_name() {
@@ -75,7 +75,7 @@ abstract class Module_Base {
 		$widget_manager = \Elementor\Plugin::instance()->widgets_manager;
 
 		foreach ( $this->get_widgets() as $widget ) {
-			$class_name = $this->reflection->getNamespaceName() . '\Widgets\\' . $widget;
+			$class_name = $this->reflection->getNamespaceName() .'\Widgets\\'. $widget;
 			$widget_manager->register_widget_type( new $class_name() );
 		}
 	}

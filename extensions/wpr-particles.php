@@ -3,7 +3,9 @@ use Elementor\Controls_Manager;
 use Elementor\Core\Schemes\Color;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Particles {
 
@@ -29,6 +31,23 @@ class Wpr_Particles {
 				'label' =>  sprintf(esc_html__('Particles - %s', 'wpr-addons'), Utilities::get_plugin_name()),
 			]
 		);
+
+		$element->add_control(
+			'wpr_particles_apply_changes',
+			[
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => '<div class="elementor-update-preview editor-wpr-preview-update"><span>Update changes to Preview</span><button class="elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply</button>',
+				'separator' => 'after'
+			]
+		);
+
+        $element->add_control(
+            'particles_video_tutorial',
+            [
+                'raw' => '<br><a href="https://www.youtube.com/watch?v=8OdnaoFSj94" target="_blank">Watch Video Tutorial <span class="dashicons dashicons-video-alt3"></span></a>',
+                'type' => Controls_Manager::RAW_HTML,
+            ]
+        );
 
 		$element->add_control (
 			'wpr_enable_particles',

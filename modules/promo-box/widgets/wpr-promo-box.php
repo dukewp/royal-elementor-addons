@@ -17,7 +17,9 @@ use Elementor\Utils;
 use Elementor\Icons;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Promo_Box extends Widget_Base {
 		
@@ -34,11 +36,11 @@ class Wpr_Promo_Box extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return [ 'wpr-widgets'];
+		return Utilities::show_theme_buider_widget_on('archive') ? [ 'wpr-theme-builder-widgets' ] : [ 'wpr-widgets'];
 	}
 
 	public function get_keywords() {
-		return [ 'royal', 'promo box', 'banner box', 'animated banner', 'interactive banner' ];
+		return [ 'royal', 'image hover', 'image effects', 'image box', 'promo box', 'banner box', 'animated banner', 'interactive banner' ];
 	}
 
 	public function get_style_depends() {
@@ -618,7 +620,7 @@ class Wpr_Promo_Box extends Widget_Base {
 		$this->end_controls_section(); // End Controls Section
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'promo-box', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'promo-box', [
 			'Classic Layout - Image & Content Side to Side with Image Width & Position options',
 			'Advanced Image Hover Animations',
 			'Advanced Content Hover Animations - Icon, Title, Description, Button separately',
@@ -1558,25 +1560,25 @@ class Wpr_Promo_Box extends Widget_Base {
 
 				if ( '' !== $settings['content_title'] ) {
 
-					echo '<'. $settings['content_title_tag'] .' '. $this->get_render_attribute_string( 'title_attribute' ) .'>';
+					echo '<'. esc_attr($settings['content_title_tag']) .' '. $this->get_render_attribute_string( 'title_attribute' ) .'>';
 					if ( 'title' === $settings['content_link_type'] || 'btn-title' === $settings['content_link_type']  ) {
-						echo '<a '.$this->get_render_attribute_string( 'link_attribute' ).'>';
+						echo '<a '. $this->get_render_attribute_string( 'link_attribute' ).'>';
 					}
 
-					echo '<span>'. $settings['content_title'] .'</span>';
+					echo '<span>'. wp_kses_post($settings['content_title']) .'</span>';
 				
 					if ( 'title' === $settings['content_link_type'] || 'btn-title' === $settings['content_link_type']  ) {
 						echo '</a>';
 					}
 
-					echo '</'. $settings['content_title_tag'] .'>';
+					echo '</'. esc_attr($settings['content_title_tag']) .'>';
 				}
 
 				?>
 
 				<?php if ( '' !== $settings['content_description'] ) : ?>
 					<div <?php echo $this->get_render_attribute_string( 'description_attribute' ); ?>>
-						<?php echo '<p>'. $settings['content_description'] .'</p>'; ?>	
+						<?php echo '<p>'. wp_kses_post($settings['content_description']) .'</p>'; ?>	
 					</div>						
 				<?php endif; ?>
 
@@ -1585,7 +1587,7 @@ class Wpr_Promo_Box extends Widget_Base {
 						<<?php echo esc_html($content_btn_element); ?> class="wpr-promo-box-btn" <?php echo $this->get_render_attribute_string( 'link_attribute' ); ?>>
 
 							<?php if ( '' !== $settings['content_btn_text'] ) : ?>
-							<span class="wpr-promo-box-btn-text"><?php echo $settings['content_btn_text']; ?></span>		
+							<span class="wpr-promo-box-btn-text"><?php echo esc_html($settings['content_btn_text']); ?></span>		
 							<?php endif; ?>
 
 							<?php if ( '' !== $settings['content_btn_icon']['value'] ) : ?>

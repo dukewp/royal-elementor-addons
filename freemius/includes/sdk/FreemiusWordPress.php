@@ -14,6 +14,9 @@
 	 * License for the specific language governing permissions and limitations
 	 * under the License.
 	 */
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
 
 	require_once dirname( __FILE__ ) . '/FreemiusBase.php';
 
@@ -361,7 +364,7 @@
 			// Connectivity errors simulation.
 			if ( FS_SDK__SIMULATE_NO_API_CONNECTIVITY_CLOUDFLARE ) {
 				self::ThrowCloudFlareDDoSException();
-			} else if ( FS_SDK__SIMULATE_NO_API_CONNECTIVITY_SQUID_ACL ) {
+			} elseif ( FS_SDK__SIMULATE_NO_API_CONNECTIVITY_SQUID_ACL ) {
 				self::ThrowSquidAclException();
 			}
 
@@ -466,7 +469,7 @@
 				     preg_match( '/text\/javascript/', $response_body )
 				) {
 					self::ThrowCloudFlareDDoSException( $response_body );
-				} else if ( preg_match( '/Access control configuration prevents your request from being allowed at this time. Please contact your service provider if you feel this is incorrect./', $response_body ) &&
+				} elseif ( preg_match( '/Access control configuration prevents your request from being allowed at this time. Please contact your service provider if you feel this is incorrect./', $response_body ) &&
 				            preg_match( '/squid/', $response_body )
 				) {
 					self::ThrowSquidAclException( $response_body );

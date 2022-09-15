@@ -18,7 +18,9 @@ use Elementor\Utils;
 use Elementor\Icons;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Tabs extends Widget_Base {
 		
@@ -503,12 +505,12 @@ class Wpr_Tabs extends Widget_Base {
 					'size' => 5,
 				],
 				'selectors' => [
-					'{{WRAPPER}}.wpr-tabs-icon-position-left '. $css_selector['control_list']. ' ' .$css_selector['control_icon'] => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-tabs-icon-position-right '. $css_selector['control_list']. ' ' .$css_selector['control_icon'] => 'margin-left: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-tabs-icon-position-center '. $css_selector['control_list']. ' ' .$css_selector['control_icon'] => 'margin-bottom: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-tabs-icon-position-left '. $css_selector['control_list']. ' ' .$css_selector['control_image'] => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-tabs-icon-position-right '. $css_selector['control_list']. ' ' .$css_selector['control_image'] => 'margin-left: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-tabs-icon-position-center '. $css_selector['control_list']. ' ' .$css_selector['control_image'] => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-tabs-icon-position-left '. $css_selector['control_list']. ' '. $css_selector['control_icon'] => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-tabs-icon-position-right '. $css_selector['control_list']. ' '. $css_selector['control_icon'] => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-tabs-icon-position-center '. $css_selector['control_list']. ' '. $css_selector['control_icon'] => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-tabs-icon-position-left '. $css_selector['control_list']. ' '. $css_selector['control_image'] => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-tabs-icon-position-right '. $css_selector['control_list']. ' '. $css_selector['control_image'] => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-tabs-icon-position-center '. $css_selector['control_list']. ' '. $css_selector['control_image'] => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -528,7 +530,7 @@ class Wpr_Tabs extends Widget_Base {
 		$this->add_section_settings();
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'tabs', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'tabs', [
 			'Add Unlimited Tabs',
 			'Tab Content Type - Elementor Template',
 			'Custom Tab Colors',
@@ -577,7 +579,7 @@ class Wpr_Tabs extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#7a7a7a',
 				'selectors' => [
-					'{{WRAPPER}} '. $css_selector['control_list']. ' ' .$css_selector['control_icon'] => 'color: {{VALUE}}',
+					'{{WRAPPER}} '. $css_selector['control_list'] .' '. $css_selector['control_icon'] => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -1427,7 +1429,7 @@ class Wpr_Tabs extends Widget_Base {
 			return '';
 		}
 
-		$edit_link = '<span class="wpr-template-edit-btn" data-permalink="'. get_permalink( $id ) .'">Edit Template</span>';
+		$edit_link = '<span class="wpr-template-edit-btn" data-permalink="'. esc_url(get_permalink( $id )) .'">Edit Template</span>';
 
 		return Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $id ) . $edit_link;
 	}
@@ -1450,7 +1452,7 @@ class Wpr_Tabs extends Widget_Base {
 		$tabs_options = [
 			'activeTab' 		=> $settings['active_tab'],
 			'trigger' 			=>  $settings['tabs_trigger'],
-			'autoplay' 			=> ( $settings['autoplay'] === 'yes' ),
+			'autoplay' 			=> isset($settings['autoplay']) ? $settings['autoplay'] : '',
 			'autoplaySpeed'		=> absint( $settings['autoplay_duration'] * 1000 ),
 		];
 
@@ -1476,14 +1478,18 @@ class Wpr_Tabs extends Widget_Base {
 
 				$tab_count = $index + 1;
 				$tab_setting_key = $this->get_repeater_setting_key( 'tab_control', 'tabs', $index );
-				$tab_image_src = Group_Control_Image_Size::get_attachment_image_src( $item['tab_image']['id'], 'tabs_image_size', $settings );
+				$tab_image_src = false;
+		
+				if ( isset($item['tab_image']['id']) ) {
+					$tab_image_src = Group_Control_Image_Size::get_attachment_image_src( $item['tab_image']['id'], 'tabs_image_size', $settings );
 
-				if ( ! $tab_image_src ) {
-					$tab_image_src = $item['tab_image']['url'];
+					if ( ! $tab_image_src ) {
+						$tab_image_src = $item['tab_image']['url'];
+					}
 				}
 
 				$this->add_render_attribute( $tab_setting_key, [
-					'id' => 'wpr-tab-' . $id_int . $tab_count,
+					'id' => 'wpr-tab-'. $id_int . $tab_count,
 					'class' => [ 'wpr-tab', 'elementor-repeater-item-'. $item['_id'] ],
 					'data-tab' => $tab_count,
 				] );
@@ -1493,7 +1499,7 @@ class Wpr_Tabs extends Widget_Base {
 				<div <?php echo $this->get_render_attribute_string( $tab_setting_key ); ?>>
 					
 					<?php if ( '' !== $item['tab_title'] ) : ?>
-					<div class="wpr-tab-title"><?php echo $item['tab_title']; ?></div>
+					<div class="wpr-tab-title"><?php echo esc_html($item['tab_title']); ?></div>
 					<?php endif; ?>
 
 					<?php if ( 'icon' === $item['tab_icon_type'] && '' !== $item['tab_icon']['value'] ) : ?>
@@ -1518,7 +1524,7 @@ class Wpr_Tabs extends Widget_Base {
 
 				$tab_content_setting_key = $this->get_repeater_setting_key( 'tab_content', 'tabs', $index );
 				$this->add_render_attribute( $tab_content_setting_key, [
-					'id' => 'wpr-tab-content-' . $id_int . $tab_count,
+					'id' => 'wpr-tab-content-'. $id_int . $tab_count,
 					'class' => [ 'wpr-tab-content', 'elementor-repeater-item-'. $item['_id'] ],
 					'data-tab' => $tab_count,
 				] );
@@ -1527,19 +1533,20 @@ class Wpr_Tabs extends Widget_Base {
 
 				<div <?php echo $this->get_render_attribute_string( $tab_content_setting_key ); ?>>
 					<?php 
-					echo '<div class="wpr-tab-content-inner elementor-clearfix wpr-anim-size-'. $settings['content_anim_size'] .' wpr-overlay-'. $settings['content_animation'] .'">';
+					echo '<div class="wpr-tab-content-inner elementor-clearfix wpr-anim-size-'. esc_attr($settings['content_anim_size']) .' wpr-overlay-'. esc_attr($settings['content_animation']) .'">';
 
 						if ( 'template' === $item['tab_content_type'] ) {
 
-							echo $this->wpr_tabs_template( $item['select_template'] );
+							// Render Elementor Template
+							echo ''. $this->wpr_tabs_template( $item['select_template'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
-						} else if( 'editor' === $item['tab_content_type'] ) {
+						} elseif( 'editor' === $item['tab_content_type'] ) {
 
-							echo $item['tab_content'];
+							echo wp_kses_post($item['tab_content']);
 
-						} else if( 'acf' === $item['tab_content_type'] ) {
+						} elseif( 'acf' === $item['tab_content_type'] ) {
 
-							echo get_post_meta( get_the_ID(), $item['tab_custom_field'], true );
+							echo wp_kses_post(get_post_meta( get_the_ID(), $item['tab_custom_field'], true ));
 						}
 
 					echo '</div>';

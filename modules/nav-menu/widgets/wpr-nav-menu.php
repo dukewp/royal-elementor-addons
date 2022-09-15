@@ -11,7 +11,9 @@ use Elementor\Core\Schemes\Typography;
 use Elementor\Widget_Base;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Nav_Menu extends Widget_Base {
 
@@ -196,12 +198,12 @@ class Wpr_Nav_Menu extends Widget_Base {
 		$this->start_controls_section(
 			'section_menu',
 			[
-				'label' => esc_html__( 'Menu', 'wpr-addons' ),
+				'label' => 'Menu <a href="#" onclick="window.open(\'https://www.youtube.com/watch?v=at0CPKtklF0\',\'_blank\').focus()">Video Tutorial <span class="dashicons dashicons-video-alt3"></span></a>',
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
 
-		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML, 'https://www.youtube.com/watch?v=at0CPKtklF0' );
+		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 		
 		$menus = $this->get_available_menus();
 
@@ -587,7 +589,7 @@ class Wpr_Nav_Menu extends Widget_Base {
 		$this->end_controls_section(); // End Controls Section
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'nav-menu', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'nav-menu', [
 			'Vertical Layout',
 			'Advanced Link Hover Effects: Slide, Grow, Drop',
 			'SubMenu Entrance Slide Effect',
@@ -711,8 +713,9 @@ class Wpr_Nav_Menu extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .menu-item-has-children .wpr-sub-icon' => 'font-size: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-pointer-background:not(.wpr-sub-icon-none) .wpr-nav-menu-horizontal .menu-item-has-children .wpr-pointer-item' => 'text-indent: -{{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-pointer-border:not(.wpr-sub-icon-none) .wpr-nav-menu-horizontal .menu-item-has-children .wpr-pointer-item' => 'text-indent: -{{SIZE}}{{UNIT}};',				],
+					'{{WRAPPER}}.wpr-pointer-background:not(.wpr-sub-icon-none) .wpr-nav-menu-horizontal .menu-item-has-children .wpr-pointer-item' => 'padding-right: calc({{SIZE}}px + {{menu_items_padding_hr.SIZE}}px);',
+					'{{WRAPPER}}.wpr-pointer-border:not(.wpr-sub-icon-none) .wpr-nav-menu-horizontal .menu-item-has-children .wpr-pointer-item' => 'padding-right: calc({{SIZE}}px + {{menu_items_padding_hr.SIZE}}px);',
+				],
 				'separator' => 'before'
 			]
 		);
@@ -1637,7 +1640,7 @@ class Wpr_Nav_Menu extends Widget_Base {
 			'echo' => false,
 			'menu' => $settings['menu_select'],
 			'menu_class' => 'wpr-nav-menu',
-			'menu_id' => 'menu-' . $this->get_nav_menu_index() . '-' . $this->get_id(),
+			'menu_id' => 'menu-'. $this->get_nav_menu_index() .'-'. $this->get_id(),
 			'container' => '',
 			'fallback_cb' => '__return_empty_string',
 		];
@@ -1650,17 +1653,21 @@ class Wpr_Nav_Menu extends Widget_Base {
 				if ( in_array( 'menu-item-has-children', $item->classes ) ) {
 					$item_class = 'wpr-menu-item wpr-pointer-item';
 
+					if ( in_array( 'current-menu-item', $item->classes ) || in_array( 'current-menu-ancestor', $item->classes ) ) {
+						$item_class .= ' wpr-active-menu-item';
+					}
+
 					// Sub Menu Classes
 					if ( $depth > 0 ) {
 						$item_class = 'wpr-sub-menu-item';
 
-						if ( in_array( 'current-menu-item', $item->classes ) ) {
+						if ( in_array( 'current-menu-item', $item->classes ) || in_array( 'current-menu-ancestor', $item->classes ) ) {
 							$item_class .= ' wpr-active-menu-item';
 						}
 					}
 
 					// Add Sub Menu Icon
-					$output  ='<a href="'. esc_url($item->url) .'" class="'. esc_attr($item_class) .'">'. $item->title;
+					$output  ='<a href="'. esc_url($item->url) .'" class="'. esc_attr($item_class) .'">'. esc_html($item->title);
 					if ( $depth > 0 ) {
 						if ( 'inline' === $settings['menu_items_submenu_position'] ) {
 							$output .='<i class="wpr-sub-icon fas" aria-hidden="true"></i>';
@@ -1691,7 +1698,7 @@ class Wpr_Nav_Menu extends Widget_Base {
 		$menu_html = wp_nav_menu( $args );
 
 		// Generate Mobile Menu HTML
-		$args['menu_id'] 	= 'mobile-menu-' . $this->get_nav_menu_index() . '-' . $this->get_id();
+		$args['menu_id'] 	= 'mobile-menu-'. $this->get_nav_menu_index() .'-'. $this->get_id();
 		$args['menu_class'] = 'wpr-mobile-nav-menu';
 		$moible_menu_html 	= wp_nav_menu( $args );
 
@@ -1710,8 +1717,8 @@ class Wpr_Nav_Menu extends Widget_Base {
 		}
 
 		// Main Menu
-		echo '<nav class="wpr-nav-menu-container wpr-nav-menu-'. $settings['menu_layout'] .'" data-trigger="'. esc_attr($settings['menu_items_submenu_trigger']) .'">';
-			echo $menu_html;
+		echo '<nav class="wpr-nav-menu-container wpr-nav-menu-'. esc_attr($settings['menu_layout']) .'" data-trigger="'. esc_attr($settings['menu_items_submenu_trigger']) .'">';
+			echo ''. $menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '</nav>';
 
 		// Mobile Menu
@@ -1725,14 +1732,14 @@ class Wpr_Nav_Menu extends Widget_Base {
 						echo '<span class="wpr-mobile-toggle-line"></span>';
 						echo '<span class="wpr-mobile-toggle-line"></span>';
 					} else {
-						echo '<span class="wpr-mobile-toggle-text">'. $settings['toggle_btn_txt_1'] .'</span>';
-						echo '<span class="wpr-mobile-toggle-text">'. $settings['toggle_btn_txt_2'] .'</span>';
+						echo '<span class="wpr-mobile-toggle-text">'. esc_html($settings['toggle_btn_txt_1']) .'</span>';
+						echo '<span class="wpr-mobile-toggle-text">'. esc_html($settings['toggle_btn_txt_2']) .'</span>';
 					}
 				echo '</div>';
 			echo '</div>';
 
 			// Menu
-			echo $moible_menu_html;
+			echo ''. $moible_menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		echo '</nav>';
 	}
