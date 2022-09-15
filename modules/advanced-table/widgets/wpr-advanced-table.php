@@ -197,13 +197,57 @@ class Wpr_Advanced_Table extends Widget_Base {
 		$this->add_control_enable_table_sorting();
 
 		$this->add_control(
-			'enable_row_pagination', 
+			'enable_custom_pagination', 
 			[
-				'label' => esc_html__('Table Row Index', 'wpr-addons'),
+				'label' => esc_html__('Table Navigation', 'wpr-addons'),
 				'type' => \Elementor\Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default' => 'no',
 				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'table_items_per_page',
+			[
+				'label' => esc_html__( 'Items Per Page', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'min' => 1,
+				'max' => 100,
+				'render_type' => 'template',
+				'frontend_available' => true,
+				'default' => 10,
+				'condition' => [
+					'enable_custom_pagination' => 'yes'
+				]
+			]
+		);
+		
+
+		$this->add_control(
+			'pagination_nav_icons',
+			[
+				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
+				'type' => 'wpr-arrow-icons',
+				'default' => 'none',
+				'condition' => [
+					'enable_custom_pagination' => 'yes',
+				]
+			]
+		);
+
+		$this->add_control(
+			'enable_entry_info',
+			[
+				'label' => esc_html__('Entry Info', 'wpr-addons'),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'render_type' => 'template',
+				'return_value' => 'yes',
+				'default' => 'no',
+				'prefix_class' => 'wpr-entry-info-',
+				'condition' => [
+					'enable_custom_pagination' => 'yes'
+				]
 			]
 		);
 
@@ -213,6 +257,17 @@ class Wpr_Advanced_Table extends Widget_Base {
 				'label' => esc_html__('Custom Cell Width', 'wpr-addons'),
 				'type' => \Elementor\Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'enable_row_pagination', 
+			[
+				'label' => esc_html__('Table Row Index', 'wpr-addons'),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'default' => 'no',
 				'separator' => 'before'
 			]
 		);
@@ -275,60 +330,6 @@ class Wpr_Advanced_Table extends Widget_Base {
 		// 		]
 		// 	]
 		// );
-
-		$this->add_control(
-			'enable_custom_pagination', [
-				'label' => esc_html__('Table Navigation', 'wpr-addons'),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'default' => 'no',
-				'separator' => 'before'
-			]
-		);
-
-		$this->add_control(
-			'table_items_per_page',
-			[
-				'label' => esc_html__( 'Items Per Page', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'min' => 1,
-				'max' => 100,
-				'render_type' => 'template',
-				'frontend_available' => true,
-				'default' => 10,
-				'condition' => [
-					'enable_custom_pagination' => 'yes'
-				]
-			]
-		);
-		
-
-		$this->add_control(
-			'pagination_nav_icons',
-			[
-				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
-				'type' => 'wpr-arrow-icons',
-				'default' => 'none',
-				'condition' => [
-					'enable_custom_pagination' => 'yes',
-				]
-			]
-		);
-
-		$this->add_control(
-			'enable_entry_info',
-			[
-				'label' => esc_html__('Entry Info', 'wpr-addons'),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
-				'render_type' => 'template',
-				'return_value' => 'yes',
-				'default' => 'no',
-				'prefix_class' => 'wpr-entry-info-',
-				'condition' => [
-					'enable_custom_pagination' => 'yes'
-				]
-			]
-		);
 
         $this->add_control(
             'table_export_csv_button',
