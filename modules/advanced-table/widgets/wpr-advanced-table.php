@@ -159,13 +159,24 @@ class Wpr_AdvancedTable extends Widget_Base {
 		);
 
 		$this->add_control(
-			'enable_table_live_search',
+			'enable_table_search',
 			[
 				'label' => esc_html__('Search', 'wpr-addons'),
 				'type' => \Elementor\Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default' => 'yes',
 				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'enable_table_search1',
+			[
+				'label' => sprintf( __( 'Show Search %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'default' => 'no',
+				'separator' => 'before',
+				'classes' => 'wpr-pro-control'
 			]
 		);
 
@@ -177,7 +188,7 @@ class Wpr_AdvancedTable extends Widget_Base {
                 'type'                  => Controls_Manager::TEXT,
                 'default'               => 'Type Here To Search...',
                 'condition'             => [
-                    'enable_table_live_search'   => 'yes',
+                    'enable_table_search'   => 'yes',
                 ],
                 // 'frontend_available'    => true,
             ]
@@ -2042,7 +2053,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'label' => esc_html__('Search', 'wpr-addons'),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 				'condition' => [
-					'enable_table_live_search' => 'yes'
+					'enable_table_search' => 'yes'
 				]
 			]
 		);
@@ -2886,7 +2897,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 
 		<?php 
 
-		if ( 'yes' === $settings['enable_table_live_search'] || 'yes' === $settings['enable_table_export'] ) {
+		if ( 'yes' === $settings['enable_table_search'] || 'yes' === $settings['enable_table_export'] ) {
 
 			echo '<div class="wpr-export-search-cont">';
 			echo '<div class="wpr-export-search-inner-cont">';
@@ -2898,7 +2909,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 				echo '</div>';
 			}
 
-			if ( 'yes' === $settings['enable_table_live_search'] ) {
+			if ( 'yes' === $settings['enable_table_search'] ) {
 				echo '<div class="wpr-table-live-search-cont">';
 					echo '<input type="search" id="wpr-table-live-search" placeholder="'. esc_attr($settings['search_placeholder']) .'">';
 					echo '<i class="fas fa-search wpr-search-input-icon"></i>';
