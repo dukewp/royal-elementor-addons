@@ -67,6 +67,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'label' => esc_html__( 'Data Type', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'custom',
+				'render_type' => 'template',
 				'options' => [
 					'custom' => esc_html__( 'Custom', 'wpr-addons' ),
 					'csv' => esc_html__( 'CSV', 'wpr-addons' ),
@@ -312,11 +313,13 @@ class Wpr_AdvancedTable extends Widget_Base {
 		);
 
 		$this->add_control(
-			'enable_entry_info', [
+			'enable_entry_info',
+			[
 				'label' => esc_html__('Entry Info', 'wpr-addons'),
 				'type' => \Elementor\Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default' => 'no',
+				'prefix_class' => 'wpr-entry-info-',
 				'condition' => [
 					'enable_custom_pagination' => 'yes'
 				]
@@ -2681,6 +2684,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'label' => esc_html__('Entry Info', 'wpr-addons'),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 				'condition' => [
+					'enable_custom_pagination' => 'yes',
 					'enable_entry_info' => 'yes'
 				]
 			]
@@ -2779,6 +2783,9 @@ class Wpr_AdvancedTable extends Widget_Base {
 	public function render_custom_pagination($settings, $countRows) { ?>
 		<div class="wpr-table-pagination-outer-cont">
 		<div class="wpr-table-pagination-cont">
+		<?php if ( 'yes' === $settings['enable_entry_info'] ) : ?>
+			<div class="wpr-entry-info"></div>
+		<?php endif; ?>
 		<ul class="wpr-table-custom-pagination">
 			<div class="wpr-table-custom-pagination-inner-cont">
 				<?php if ( 'none' !== $settings['pagination_nav_icons'] ) : ?>
@@ -2910,7 +2917,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 		$this->add_render_attribute(
 			'wpr_table_inner_container_attributes',
 			[
-				'class' => 'wpr-table-inner-container',
+				'class' => ['wpr-table-inner-container', 'yes' === $settings['enable_custom_pagination'] ? 'wpr-hide-table-before-arrange' : ''],
 				// 'data-table-columns' => !empty($settings['columns_number']) ? $settings['columns_number'] : '',
 				'data-table-sorting' => $settings['enable_table_sorting'],
 				'data-custom-pagination' => $settings['enable_custom_pagination'],
