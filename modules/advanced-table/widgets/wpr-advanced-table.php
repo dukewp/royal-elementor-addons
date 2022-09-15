@@ -160,7 +160,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 		$this->add_control(
 			'enable_table_live_search',
 			[
-				'label' => esc_html__('Live Search', 'wpr-addons'),
+				'label' => esc_html__('Search', 'wpr-addons'),
 				'type' => \Elementor\Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default' => 'yes',
@@ -317,7 +317,6 @@ class Wpr_AdvancedTable extends Widget_Base {
 				'type' => \Elementor\Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default' => 'no',
-				'separator' => 'before',
 				'condition' => [
 					'enable_custom_pagination' => 'yes'
 				]
@@ -2679,7 +2678,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 		$this->start_controls_section(
 			'entry_info_styles',
 			[
-				'label' => esc_html__('Info', 'wpr-addons'),
+				'label' => esc_html__('Entry Info', 'wpr-addons'),
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'enable_entry_info' => 'yes'
@@ -2782,12 +2781,14 @@ class Wpr_AdvancedTable extends Widget_Base {
 		<div class="wpr-table-pagination-cont">
 		<ul class="wpr-table-custom-pagination">
 			<div class="wpr-table-custom-pagination-inner-cont">
+				<?php if ( 'none' !== $settings['pagination_nav_icons'] ) : ?>
 				<li class='wpr-table-custom-pagination-prev wpr-table-prev-next wpr-table-custom-pagination-list'>
 					<?php 
 						echo Utilities::get_wpr_icon( $settings['pagination_nav_icons'], 'left');
 					 ?>
 				</li>
-
+				<?php endif; ?>
+  
 				<?php $total_rows = 0;
 					  $item_index = 0;
 
@@ -2810,9 +2811,11 @@ class Wpr_AdvancedTable extends Widget_Base {
 	
 					<?php } ?>
 					
+				<?php if ( 'none' !== $settings['pagination_nav_icons'] ) : ?>
 				<li class='wpr-table-custom-pagination-next wpr-table-prev-next wpr-table-custom-pagination-list wpr-table-prev-arrow wpr-table-arrow'>
 					<?php echo Utilities::get_wpr_icon( $settings['pagination_nav_icons'], 'right'); ?>
 				</li>
+				<?php endif; ?>
 			</div>
 		</ul>
 		</div>

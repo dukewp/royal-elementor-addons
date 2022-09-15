@@ -12035,6 +12035,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 .wpr-table-custom-pagination {
     list-style-type: none;
+    padding: 0;
 }
 
 .wpr-table-custom-pagination-inner-cont {
