@@ -50,6 +50,23 @@ class Wpr_Advanced_Table extends Widget_Base {
         return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-back-to-top-help-btn';
     }
 
+	public function add_control_choose_table_type() {
+		$this->add_control(
+			'choose_table_type',
+			[
+				'label' => esc_html__( 'Data Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'custom',
+				'render_type' => 'template',
+				'options' => [
+					'custom' => esc_html__( 'Custom', 'wpr-addons' ),
+					'pro-cv' => esc_html__( 'CSV (Pro)', 'wpr-addons' ),
+				],
+				'prefix_class' => 'wpr-advanced-table-type-'
+			]
+		);
+	}
+
 	public function add_control_enable_table_export() {
 		$this->add_control(
 			'enable_table_export',
@@ -119,77 +136,10 @@ class Wpr_Advanced_Table extends Widget_Base {
 
 		// Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
-		$this->add_control(
-			'choose_table_type',
-			[
-				'label' => esc_html__( 'Data Type', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'custom',
-				'render_type' => 'template',
-				'options' => [
-					'custom' => esc_html__( 'Custom', 'wpr-addons' ),
-					'csv' => esc_html__( 'CSV', 'wpr-addons' ),
-				],
-				'prefix_class' => 'wpr-advanced-table-type-'
-			]
-		);
+		$this->add_control_choose_table_type();
 
-		$this->add_control(
-			'choose_csv_type',
-			[
-				'label' => esc_html__( 'File Type', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'file',
-				'options' => [
-					'file' => esc_html__( 'upload CSV', 'wpr-addons' ),
-					'url' => esc_html__( 'Remote CSV URL', 'wpr-addons' ),
-				],
-				'condition' => [
-					'choose_table_type' => 'csv'
-				]
-			]
-		);
-
-        $this->add_control(
-            'table_upload_csv',
-            [
-                'label'     => esc_html__('Upload CSV File', 'wpr-addons'),
-                'type'      => Controls_Manager::MEDIA,
-                'media_type'=> array(),
-                'condition' => [
-                    'choose_table_type'   => 'csv',
-					'choose_csv_type' => 'file',
-                ]
-       		]
-		);
-
-		$this->add_control(
-			'display_header',
-			[
-				'label' => esc_html__('Show Table Header', 'wpr-addons'),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
-				'condition' => [
-					'choose_table_type' => 'csv',
-				]
-			]
-		);
-
-        $this->add_control(
-            'table_insert_url',
-            [
-                'label'         => esc_html__( 'Enter a CSV File URL', 'wpr-addons' ),
-                'type'          => Controls_Manager::URL,
-                'show_external' => false,
-                'label_block'   => true,
-                // 'default'       => [
-                //     'url' => Handler::get_url()  . 'assets/table.csv',
-                // ],
-                'condition' => [
-					'choose_table_type' => 'csv',
-                    'choose_csv_type'   => 'url',
-                ]
-            ]
-        );
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'advanced-table', 'choose_table_type', ['pro-cv'] );
 
 		// $this->add_control(
 		// 	'enable_custom_links',
@@ -1885,7 +1835,7 @@ class Wpr_Advanced_Table extends Widget_Base {
 				'data-table-sorting' => $settings['enable_table_sorting'],
 				'data-custom-pagination' => $settings['enable_custom_pagination'],
 				'data-row-pagination' => $settings['enable_row_pagination'],
-				'data-entry-info' => $settings['enable_entry_info'],
+				'data-entry-info' => wpr_fs()->can_use_premium_code() ? $settings['enable_entry_info'] : 'no',
 				'data-rows-per-page' => isset($settings['table_items_per_page']) ? $settings['table_items_per_page'] : ''
 			]
 		);
