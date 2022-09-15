@@ -22,7 +22,7 @@ use WprAddons\Classes\Utilities;
 // Security Note: Blocks direct access to the plugin PHP files.
 defined('ABSPATH') || die();
 
-class Wpr_AdvancedTable extends Widget_Base {
+class Wpr_Advanced_Table extends Widget_Base {
     public function get_name() {
 		return 'wpr-advanced-table';
 	}
