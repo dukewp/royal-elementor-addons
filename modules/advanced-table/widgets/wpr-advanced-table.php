@@ -197,7 +197,8 @@ class Wpr_Advanced_Table extends Widget_Base {
 		$this->add_control_enable_table_sorting();
 
 		$this->add_control(
-			'enable_row_pagination', [
+			'enable_row_pagination', 
+			[
 				'label' => esc_html__('Table Row Index', 'wpr-addons'),
 				'type' => \Elementor\Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
