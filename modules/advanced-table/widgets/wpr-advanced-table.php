@@ -50,6 +50,19 @@ class Wpr_Advanced_Table extends Widget_Base {
         return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-back-to-top-help-btn';
     }
 
+	public function add_control_enable_table_search() {
+		$this->add_control(
+			'enable_table_search',
+			[
+				'label' => sprintf( __( 'Show Search %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'default' => 'no',
+				'separator' => 'before',
+				'classes' => 'wpr-pro-control'
+			]
+		);
+	}
+
     public function register_controls() {
 
 		$this->start_controls_section(
@@ -157,41 +170,7 @@ class Wpr_Advanced_Table extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'enable_table_search',
-			[
-				'label' => esc_html__('Search', 'wpr-addons'),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'default' => 'yes',
-				'separator' => 'before'
-			]
-		);
-
-		$this->add_control(
-			'enable_table_search1',
-			[
-				'label' => sprintf( __( 'Show Search %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
-				'default' => 'no',
-				'separator' => 'before',
-				'classes' => 'wpr-pro-control'
-			]
-		);
-
-        // Search bar placeholder
-        $this->add_control(
-            'search_placeholder',
-            [
-                'label'                 => esc_html__( 'Search Placeholder', 'wpr-addons' ),
-                'type'                  => Controls_Manager::TEXT,
-                'default'               => 'Type Here To Search...',
-                'condition'             => [
-                    'enable_table_search'   => 'yes',
-                ],
-                // 'frontend_available'    => true,
-            ]
-        );
+		$this->add_control_enable_table_search();
 
 		$this->add_control(
 			'enable_table_sorting',
