@@ -12158,6 +12158,11 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     min-width: 50px;
 }
 
+.wpr-table-text-nowrap-yes th,
+.wpr-table-text-nowrap-yes td {
+    white-space: nowrap;
+}
+
 @media screen and (max-width: 768px) {
   .wpr-export-search-inner-cont,
   .wpr-table-pagination-cont {

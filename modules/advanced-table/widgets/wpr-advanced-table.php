@@ -151,7 +151,7 @@ class Wpr_Advanced_Table extends Widget_Base {
 		$this->add_control(
 			'display_header',
 			[
-				'label' => esc_html__('With Header', 'wpr-addons'),
+				'label' => esc_html__('Show Table Header', 'wpr-addons'),
 				'type' => \Elementor\Controls_Manager::SWITCHER,
 				'condition' => [
 					'choose_table_type' => 'csv',
@@ -264,9 +264,10 @@ class Wpr_Advanced_Table extends Widget_Base {
 		$this->add_responsive_control(
             'custom_cell_size',
             [
-                'label'      => esc_html__('Width', 'wpr-addons'),
-                'type'       => Controls_Manager::SLIDER,
-                'range'      => [
+                'label' => esc_html__('Width', 'wpr-addons'),
+				'description' => esc_html__('', 'wpr-addons'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
                     '%' => [
                         'min' => 1,
                         'max' => 100,
@@ -2206,7 +2207,7 @@ class Wpr_Advanced_Table extends Widget_Base {
 		if($url_ext === 'csv' || str_contains($url_ext2['dirname'], 'docs.google.com/spreadsheets')) { 
 			echo $this->wpr_parse_csv_to_table($url, $settings, $custom_pagination, $sorting_icon );
 		} else {
-			echo '<p class="wpr-no-csv-file-found">'. esc_html__('Please provide an csv file', 'wpr-addons') .'</p>';
+			echo '<p class="wpr-no-csv-file-found">'. esc_html__('Please provide a CSV file.', 'wpr-addons') .'</p>';
 		}
 		return \ob_get_clean();
 
