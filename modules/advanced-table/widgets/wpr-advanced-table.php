@@ -50,6 +50,21 @@ class Wpr_Advanced_Table extends Widget_Base {
         return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-back-to-top-help-btn';
     }
 
+	public function add_control_enable_table_export() {
+		$this->add_control(
+			'enable_table_export',
+			[
+				'label' => sprintf( __( 'Show Export Buttons %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'default' => 'no',
+				'separator' => 'before',
+				'classes' => 'wpr-pro-control'
+			]
+		);
+	}
+
+	public function add_section_export_buttons_styles() {}
+
 	public function add_control_enable_table_search() {
 		$this->add_control(
 			'enable_table_search',
@@ -62,6 +77,8 @@ class Wpr_Advanced_Table extends Widget_Base {
 			]
 		);
 	}
+
+	public function add_section_search_styles() {}
 
     public function register_controls() {
 
@@ -160,16 +177,7 @@ class Wpr_Advanced_Table extends Widget_Base {
 		// 	]
 		// );
 
-		$this->add_control(
-			'enable_table_export',
-			[
-				'label' => esc_html__('Show Export Buttons', 'wpr-addons'),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'default' => 'yes',
-				'separator' => 'before'
-			]
-		);
+		$this->add_control_enable_table_export();
 
 		$this->add_control_enable_table_search();
 
@@ -324,9 +332,6 @@ class Wpr_Advanced_Table extends Widget_Base {
                 'text'  => esc_html__('Export', 'wpr-addons'),
                 'event' => 'my-table-export',
 				'separator' => 'before'
-				// 'condition' => [
-				// 	'enable_table_export' => 'yes'
-				// ]
             ]
         );
 
@@ -1795,538 +1800,7 @@ class Wpr_Advanced_Table extends Widget_Base {
 
 		$this->end_controls_section();
 
-		$this->start_controls_section(
-			'export_buttons_styles_section',
-			[
-				'label' => esc_html__( 'Export', 'wpr-addons' ),
-				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
-                'condition' => [
-                    'enable_table_export' => 'yes'
-                ]
-			]
-		);
-        
-        $this->start_controls_tabs(
-			'export_button_style_tabs'
-		);
-
-		$this->start_controls_tab(
-			'export_buttons_style_normal_tab',
-			[
-				'label' => esc_html__( 'Normal', 'wpr-addons' ),
-			]
-		);
-
-		$this->add_control(
-			'export_buttons_color',
-			[
-				'label'  => esc_html__( 'Text Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#fff',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-export-button-cont .wpr-button' => 'color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_control(
-			'export_buttons_bg_color',
-			[
-				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#4A77A4',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-export-button-cont .wpr-button' => 'background-color: {{VALUE}}',
-				],
-			]
-		);
-		
-		$this->add_control(
-			'export_buttons_border_color',
-			[
-				'label'     => esc_html__( 'Border Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#DDD',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-export-button-cont .wpr-button' => 'border-color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_control(
-			'export_typograpphy_divider',
-			[
-				'type' => \Elementor\Controls_Manager::DIVIDER,
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'export_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-table-export-button-cont .wpr-button'
-			]
-		);
-
-		$this->add_control(
-			'export_hover_transition',
-			[
-				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.3,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'separator' => 'before',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-button' => '-webkit-transition-duration:  {{VALUE}}s; transition-duration:  {{VALUE}}s; transition-property: background-color color font-size;'
-				],
-				'separator' => 'before'
-			]
-		);
-
-        $this->add_responsive_control(
-			'export_container_width',
-			[
-				'label' => esc_html__( 'Width', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-                'size_units' => [ 'px', '%' ],
-                'default'   => [
-                    'size'  => 325,
-                    'unit'  => 'px'
-                ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 1000,
-						'step' => 1,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-						'step' => 1,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-export-button-cont' => 'width: {{SIZE}}{{UNIT}}; position: relative;',
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'export_buttons_border_type',
-			[
-				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'none' => esc_html__( 'None', 'wpr-addons' ),
-					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
-					'double' => esc_html__( 'Double', 'wpr-addons' ),
-					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
-					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
-					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
-				],
-				'separator' => 'before',
-				'default' => 'solid',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-export-button-cont .wpr-button' => 'border-style: {{VALUE}};',
-				],
-			]
-		);
-		
-		$this->add_responsive_control(
-			'export_buttons_border_width',
-			[
-				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', ],
-				'default' => [
-					'top' => 1,
-					'right' => 1,
-					'bottom' => 1,
-					'left' => 1,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-export-button-cont .wpr-button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'condition' => [
-					'export_buttons_border_type!' => 'none',
-				],
-			]
-		);
-		
-		$this->add_responsive_control(
-			'export_buttons_border_radius',
-			[
-				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 2,
-					'right' => 2,
-					'bottom' => 2,
-					'left' => 2,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-export-button-cont .wpr-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->start_controls_tab(
-			'export_buttons_style_hover_tab',
-			[
-				'label' => esc_html__( 'Hover', 'wpr-addons' ),
-			]
-		);
-
-		$this->add_control(
-			'export_buttons_color_hover',
-			[
-				'label'  => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#fff',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-export-button-cont .wpr-button:hover' => 'color: {{VALUE}}; cursor: pointer;',
-				],
-			]
-		);
-
-		$this->add_control(
-			'export_buttons_bg_color_hover',
-			[
-				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#4A77A4',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-export-button-cont .wpr-button:hover' => 'background-color: {{VALUE}}',
-				],
-			]
-		);
-		
-		$this->add_control(
-			'export_buttons_border_color_hover',
-			[
-				'label'     => esc_html__( 'Border Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#BBB',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-export-button-cont .wpr-button:hover' => 'border-color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->end_controls_tabs();
-
-		$this->end_controls_section();
-
-		$this->start_controls_section(
-			'search_style_section',
-			[
-				'label' => esc_html__('Search', 'wpr-addons'),
-				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
-				'condition' => [
-					'enable_table_search' => 'yes'
-				]
-			]
-		);
-
-		$this->start_controls_tabs(
-            'table_search_input_tabs'
-        );
-
-            $this->start_controls_tab(
-                'table_search_input_normal_tab',
-                [
-                    'label'     => esc_html__( 'Normal', 'wpr-addons' ),
-                ]
-            );
-
-            $this->add_control(
-                'table_search_input_color',
-                [
-                    'label'     => esc_html__( 'Color', 'wpr-addons' ),
-                    'type'      => Controls_Manager::COLOR,
-                    'selectors' => [
-                        '{{WRAPPER}} .wpr-table-live-search-cont input' => 'color: {{VALUE}};',
-                    ],
-                ]
-            );
-
-            $this->add_control(
-                'table_search_input_background_color',
-                [
-                    'label'     => esc_html__( 'Background Color', 'wpr-addons' ),
-                    'type'      => Controls_Manager::COLOR,
-                    'selectors' => [
-                        '{{WRAPPER}} .wpr-table-live-search-cont input' => 'background-color: {{VALUE}};',
-                        // '{{WRAPPER}} .wpr-table-live-search-cont' => 'background-color: {{VALUE}};',
-                    ],
-                ]
-            );
-
-            $this->add_control(
-                'table_search_input_border_color',
-                [
-                    'label'     => esc_html__( 'Border Color', 'wpr-addons' ),
-                    'type'      => Controls_Manager::COLOR,
-                    'selectors' => [
-                        '{{WRAPPER}} .wpr-table-live-search-cont input' => 'border-color: {{VALUE}};',
-                        // '{{WRAPPER}} .wpr-table-live-search-cont' => 'background-color: {{VALUE}};',
-                    ],
-                ]
-            );
-
-
-            $this->end_controls_tab();
-
-
-            $this->start_controls_tab(
-                'table_search_input_hover_tab',
-                [
-                    'label'     => esc_html__( 'Hover', 'wpr-addons' ),
-                ]
-            );
-
-            $this->add_control(
-                'table_search_input_hover_color',
-                [
-                    'label'     => esc_html__( 'Color', 'wpr-addons' ),
-                    'type'      => Controls_Manager::COLOR,
-                    'selectors' => [
-                        '{{WRAPPER}} .wpr-table-live-search-cont input:hover' => 'color: {{VALUE}};',
-                    ],
-                ]
-            );
-
-            $this->add_control(
-                'table_search_input_hover_background_color',
-                [
-                    'label'     => esc_html__( 'Background Color', 'wpr-addons' ),
-                    'type'      => Controls_Manager::COLOR,
-                    'selectors' => [
-                        '{{WRAPPER}} .wpr-table-live-search-cont input:hover' => 'background-color: {{VALUE}};',
-                    ],
-                ]
-            );
-
-
-            $this->end_controls_tab();
-
-            $this->start_controls_tab(
-                'table_search_input_focus_tab',
-                [
-                    'label'     => esc_html__( 'Focus', 'wpr-addons' ),
-                ]
-            );
-
-            $this->add_control(
-                'table_search_input_focus_color',
-                [
-                    'label'     => esc_html__( 'Color', 'wpr-addons' ),
-                    'type'      => Controls_Manager::COLOR,
-                    'selectors' => [
-                        '{{WRAPPER}} .wpr-table-live-search-cont input:focus' => 'color: {{VALUE}};',
-                    ],
-                ]
-            );
-
-            $this->add_control(
-                'table_search_input_focus_background_color',
-                [
-                    'label'     => esc_html__( 'Background Color', 'wpr-addons' ),
-                    'type'      => Controls_Manager::COLOR,
-                    'selectors' => [
-                        '{{WRAPPER}} .wpr-table-live-search-cont input:focus' => 'background-color: {{VALUE}};',
-                    ],
-                ]
-            );
-    
-            $this->end_controls_tab();
-
-        $this->end_controls_tabs();
-        
-        $this->add_group_control(
-			Group_Control_Box_Shadow::get_type(),
-			[
-			  'name' => 'table_search_input_border_shadow',
-			  'selector' => '{{WRAPPER}} .wpr-table-live-search-cont input',
-			  'separator' => 'before'
-			]
-		);
-
-        $this->add_group_control(
-            Group_Control_Typography::get_type(),
-            [
-                'name' => 'table_search_input_text_typography',
-                'label' =>esc_html__( 'Typography', 'wpr-addons' ),
-                'selector' => '{{WRAPPER}} .wpr-table-live-search-cont input',
-				'separator' => 'before'
-            ]
-        );
-
-        $this->add_control(
-            'table_search_input_placeholder_heading',
-            [
-                'label'     => esc_html__( 'Input Placeholder', 'wpr-addons' ),
-                'type'      => Controls_Manager::HEADING,
-                'separator' => 'before'
-            ]
-        );
-
-        $this->add_control(
-            'table_search_input_placeholder_color',
-            [
-                'label'     => esc_html__( 'Color', 'wpr-addons' ),
-                'type'      => Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .wpr-table-live-search-cont input::placeholder' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_group_control(
-            Group_Control_Typography::get_type(),
-            [
-                'name' => 'table_search_input_placeholder_typo',
-                'label' =>esc_html__( 'Typography', 'wpr-addons' ),
-                'selector' => '{{WRAPPER}} .wpr-table-live-search-cont input::placeholder',
-            ]
-        );
-
-        $this->add_control(
-            'table_search_icon_heading',
-            [
-                'label'     => esc_html__( 'Icon', 'wpr-addons' ),
-                'type'      => Controls_Manager::HEADING,
-                'separator' => 'before'
-            ]
-        );
-
-        $this->add_control(
-            'table_search_icon_color',
-            [
-                'label'     => esc_html__( 'Icon Color', 'wpr-addons' ),
-                'type'      => Controls_Manager::COLOR,
-                'default'   => '#cacaca',
-                'selectors' => [
-                    '{{WRAPPER}} i.wpr-search-input-icon' => 'color: {{VALUE}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'table_search_icon_font_size',
-            [
-                'label'      => esc_html__( 'Icon Size', 'wpr-addons' ),
-                'type'       => Controls_Manager::SLIDER,
-                'size_units' => [
-                    'px', 'em', 'rem',
-				],
-                'range'      => [
-                    'px' => [
-                        'min' => 1,
-                        'max' => 100,
-					],
-				],
-                'selectors'  => [
-                    '{{WRAPPER}} i.wpr-search-input-icon' => 'font-size: {{SIZE}}{{UNIT}}',
-				],
-			]
-        );
-
-        $this->add_control(
-            'table_search_input_heading',
-            [
-                'label'     => esc_html__( 'Input', 'wpr-addons' ),
-                'type'      => Controls_Manager::HEADING,
-                'separator' => 'before'
-            ]
-        );
-
-        $this->add_responsive_control(
-			'table_search_input_width',
-			[
-				'label' => esc_html__( 'Width', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-                'size_units' => [ 'px', '%' ],
-                'default'   => [
-                    'size'  => 325,
-                    'unit'  => 'px'
-                ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 1000,
-						'step' => 1,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-						'step' => 1,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-live-search-cont' => 'width: {{SIZE}}{{UNIT}}; position: relative;',
-				],
-			]
-		);
-
-		$this->add_control(
-			'table_search_input_border',
-			[
-				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'none' => esc_html__( 'None', 'wpr-addons' ),
-					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
-					'double' => esc_html__( 'Double', 'wpr-addons' ),
-					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
-					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
-					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
-				],
-				'separator' => 'before',
-				'default' => 'solid',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-live-search-cont input' => 'border-style: {{VALUE}};',
-				],
-			]
-		);
-
-        $this->add_responsive_control(
-			'table_search_input_border_width',
-			[
-				'label'      => esc_html__( 'Border Width', 'wpr-addons' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'selectors'  => [
-					'{{WRAPPER}} .wpr-table-live-search-cont input' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow: hidden;',
-				],
-				'condition' => [
-					'table_search_input_border!' => 'none'
-				]
-			]
-        );
-
-        $this->add_responsive_control(
-			'table_search_input_border_radius',
-			[
-				'label'      => esc_html__( 'Border Radius', 'wpr-addons' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'selectors'  => [
-					'{{WRAPPER}} .wpr-table-live-search-cont input' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow: hidden;',
-				],
-			]
-        );
-
-		$this->end_controls_section();
+		$this->add_section_export_buttons_styles();
 	
 		$this->start_controls_section(
 			'pagination_style_section',
@@ -2826,7 +2300,7 @@ class Wpr_Advanced_Table extends Widget_Base {
 	}
 
 	public function render_th_icon_or_image($item, $i) {
-		if( $item['header_icon'] === 'yes' && $item['header_icon_type'] === 'icon' ) {
+		if ( $item['header_icon'] === 'yes' && $item['header_icon_type'] === 'icon' ) {
 			$header_icon = '<span style="display: inline-block; vertical-align: middle;">'. $this->render_th_icon($item) . '</span>';
 		}
 
@@ -2850,11 +2324,11 @@ class Wpr_Advanced_Table extends Widget_Base {
 	}
 
 	public function render_td_icon_or_image($table_td, $j) {
-		if( $table_td[$j]['icon'] === 'yes' && $table_td[$j]['icon_type'] == 'icon' ) {
+		if ( $table_td[$j]['icon'] === 'yes' && $table_td[$j]['icon_type'] == 'icon' ) {
 			$tbody_icon = '<span style="display: inline-block; vertical-align: middle;">'. $this->render_td_icon($table_td, $j) . '</span>';
 		}
 
-		if( $table_td[$j]['icon'] == 'yes' && $table_td[$j]['icon_type'] == 'image' ) { 
+		if ( $table_td[$j]['icon'] == 'yes' && $table_td[$j]['icon_type'] == 'image' ) { 
             $this->add_render_attribute('wpr_table_td_img'. esc_attr($j), [
                 'src'	=> esc_url( $table_td[$j]['col_img']['url'] ),
                 'class'	=> 'wpr-data-table-th-img',
@@ -2867,6 +2341,8 @@ class Wpr_Advanced_Table extends Widget_Base {
 		echo $tbody_icon;
 	}
 
+	public function render_search_export() {}
+
     public function render() {
 		$settings = $this->get_settings_for_display(); 
 
@@ -2874,31 +2350,10 @@ class Wpr_Advanced_Table extends Widget_Base {
 		$table_td = [];
 		?>
 
-		<?php 
+		<?php
 
-		if ( 'yes' === $settings['enable_table_search'] || 'yes' === $settings['enable_table_export'] ) {
-
-			echo '<div class="wpr-export-search-cont">';
-			echo '<div class="wpr-export-search-inner-cont">';
-	
-			if ( 'yes' === $settings['enable_table_export'] ) {
-				echo '<div class="wpr-table-export-button-cont">';
-					echo '<button class="wpr-button wpr-xls">EXCEL</button>';
-					echo '<button class="wpr-button wpr-csv">CSV</button>';
-				echo '</div>';
-			}
-
-			if ( 'yes' === $settings['enable_table_search'] ) {
-				echo '<div class="wpr-table-live-search-cont">';
-					echo '<input type="search" id="wpr-table-live-search" placeholder="'. esc_attr($settings['search_placeholder']) .'">';
-					echo '<i class="fas fa-search wpr-search-input-icon"></i>';
-				echo '</div>';
-			}
-
-			echo '</div>';
-			echo '</div>';
-
-		}
+		// Render Search and/or Export Buttons
+		$this->render_search_export();
 		
 		$x = 0;
 		
