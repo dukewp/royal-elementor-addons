@@ -11994,6 +11994,12 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     overflow-x: auto;
 }
 
+.wpr-hide-table-before-arrange,
+.wpr-hide-pagination-on-search {
+    opacity: 0;
+    /* display: none; */
+}
+
 .wpr-advanced-table {
     /* max-width: 100%!important; */
     border-collapse: collapse;
@@ -12131,6 +12137,21 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-xls,
 .wpr-csv {
     padding: auto;
+}
+
+.wpr-entry-info-yes .wpr-table-pagination-cont {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wpr-entry-info-yes .wpr-table-custom-pagination {
+    justify-content: flex-end;
+}
+
+.wpr-entry-info {
+    white-space: nowrap;
+    min-width: 50px;
 }
 
 @media screen and (max-width: 768px) {
