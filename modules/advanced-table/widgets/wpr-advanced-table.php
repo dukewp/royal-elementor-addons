@@ -42,13 +42,6 @@ class Wpr_AdvancedTable extends Widget_Base {
 		return ['Advanced Table', 'Advanced', 'Table', 'Data table', 'Data'];
 	}
 
-	/**
-	 * Enqueue styles.
-	 */
-	public function get_style_depends() {
-		return [];
-	}
-
 	public function get_script_depends() {
 		return ['wpr-table-to-excel-js'];
 	}
@@ -109,6 +102,17 @@ class Wpr_AdvancedTable extends Widget_Base {
 					'choose_csv_type' => 'file',
                 ]
        		]
+		);
+
+		$this->add_control(
+			'display_header',
+			[
+				'label' => esc_html__('With Header', 'wpr-addons'),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'condition' => [
+					'choose_table_type' => 'csv',
+				]
+			]
 		);
 
         $this->add_control(
@@ -2726,7 +2730,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 
 		ob_start();
 		if($url_ext === 'csv' || str_contains($url_ext2['dirname'], 'docs.google.com/spreadsheets')) { 
-			echo $this->wpr_parse_csv_to_table($url, $settings, $custom_pagination, $sorting_icon, true);
+			echo $this->wpr_parse_csv_to_table($url, $settings, $custom_pagination, $sorting_icon );
 		} else {
 			echo '<p class="wpr-no-csv-file-found">'. esc_html__('Please provide an csv file', 'wpr-addons') .'</p>';
 		}
@@ -2734,13 +2738,14 @@ class Wpr_AdvancedTable extends Widget_Base {
 
 	}
 
-	protected function wpr_parse_csv_to_table($filename, $settings, $custom_pagination, $sorting_icon, $header=true) {
+	protected function wpr_parse_csv_to_table($filename, $settings, $custom_pagination, $sorting_icon ) {
 
 		$handle = fopen($filename, "r");
 		//display header row if true
 		echo '<table class="wpr-append-to-scope wpr-advanced-table" id="wpr-advanced-table">';
-		if ($header) {
+		if ( 'yes' === $settings['display_header'] ) {
 			$csvcontents = fgetcsv($handle);
+			var_dump($csvcontents);
 			echo '<thead><tr class="wpr-table-head-row wpr-table-row">';
 			foreach ($csvcontents as $headercolumn) {
 				echo "<th class='wpr-table-th wpr-table-text'>$headercolumn  $sorting_icon</th>";
