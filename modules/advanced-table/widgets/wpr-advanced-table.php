@@ -84,7 +84,7 @@ class Wpr_Advanced_Table extends Widget_Base {
 		$this->add_control(
 			'enable_table_sorting',
 			[
-				'label' => sprintf( __( 'Show Table Sorting %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'label' => sprintf( __( 'Show Sorting %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
 				'type' => \Elementor\Controls_Manager::SWITCHER,
 				'default' => 'no',
 				'separator' => 'before',
@@ -92,6 +92,21 @@ class Wpr_Advanced_Table extends Widget_Base {
 			]
 		);
 	}
+
+	public function add_control_enable_custom_pagination() {
+		$this->add_control(
+			'enable_custom_pagination',
+			[
+				'label' => sprintf( __( 'Show Pagination %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'default' => 'no',
+				'separator' => 'before',
+				'classes' => 'wpr-pro-control'
+			]
+		);
+	}
+
+	public function add_section_pagination_styles() {}
 
     public function register_controls() {
 
@@ -196,60 +211,7 @@ class Wpr_Advanced_Table extends Widget_Base {
 
 		$this->add_control_enable_table_sorting();
 
-		$this->add_control(
-			'enable_custom_pagination', 
-			[
-				'label' => esc_html__('Table Navigation', 'wpr-addons'),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'default' => 'no',
-				'separator' => 'before'
-			]
-		);
-
-		$this->add_control(
-			'table_items_per_page',
-			[
-				'label' => esc_html__( 'Items Per Page', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'min' => 1,
-				'max' => 100,
-				'render_type' => 'template',
-				'frontend_available' => true,
-				'default' => 10,
-				'condition' => [
-					'enable_custom_pagination' => 'yes'
-				]
-			]
-		);
-		
-
-		$this->add_control(
-			'pagination_nav_icons',
-			[
-				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
-				'type' => 'wpr-arrow-icons',
-				'default' => 'none',
-				'condition' => [
-					'enable_custom_pagination' => 'yes',
-				]
-			]
-		);
-
-		$this->add_control(
-			'enable_entry_info',
-			[
-				'label' => esc_html__('Entry Info', 'wpr-addons'),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
-				'render_type' => 'template',
-				'return_value' => 'yes',
-				'default' => 'no',
-				'prefix_class' => 'wpr-entry-info-',
-				'condition' => [
-					'enable_custom_pagination' => 'yes'
-				]
-			]
-		);
+		$this->add_control_enable_custom_pagination();
 
 		$this->add_control(
 			'custom_cell_width',
@@ -1809,393 +1771,9 @@ class Wpr_Advanced_Table extends Widget_Base {
 		$this->end_controls_section();
 
 		$this->add_section_export_buttons_styles();
+
+		$this->add_section_pagination_styles();
 	
-		$this->start_controls_section(
-			'pagination_style_section',
-			[
-				'label' => esc_html__('Pagination', 'wpr-addons'),
-				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
-				'condition' => [
-					'enable_custom_pagination' => 'yes'
-				]
-			]
-		);
-
-		$this->start_controls_tabs(
-			'pagination_normal_style_tabs'
-		);
-
-		$this->start_controls_tab(
-			'pagination_style_normal_tab',
-			[
-				'label' => esc_html__( 'Normal', 'wpr-addons' ),
-			]
-		);
-				
-		$this->add_control(
-			'pagination_color',
-			[
-				'label' => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'default' => '#fff',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-custom-pagination-list' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-table-custom-pagination-list svg' => 'fill: {{VALUE}}'
-				],
-			]
-		);
-				
-		$this->add_control(
-			'pagination_bg_color',
-			[
-				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'default' => '#4A77A4',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-custom-pagination-list' => 'background-color: {{VALUE}}'
-				],
-			]
-		);
-				
-		$this->add_control(
-			'pagination_bg_color_active',
-			[
-				'label' => esc_html__( 'Background Color (Active)', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'default' => '#28517A',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-custom-pagination-list.wpr-active-pagination-item' => 'background-color: {{VALUE}}'
-				],
-			]
-		);
-
-		$this->add_control(
-			'pagination_border_color',
-			[
-				'label'     => esc_html__( 'Border Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#ffffff',
-				'separator' => 'after',
-				'selectors' => [
-					// '{{WRAPPER}} .wpr-table-custom-pagination-inner-cont' => 'border-color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-table-custom-pagination-prev' => 'border-left-color: {{VALUE}}; border-top-color: {{VALUE}}; border-bottom-color: {{VALUE}};',
-					'{{WRAPPER}} .wpr-table-custom-pagination-next' => 'border-right-color: {{VALUE}}; border-top-color: {{VALUE}}; border-bottom-color: {{VALUE}};',
-					'{{WRAPPER}} .wpr-table-custom-pagination-list-item' => 'border-top-color: {{VALUE}}; border-bottom-color: {{VALUE}};',
-				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'table_pagination_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-table-custom-pagination-list',
-				'render_type' => 'template'
-			]
-		);
-
-		$this->add_control(
-			'pagination_hover_transition',
-			[
-				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.3,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'separator' => 'before',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-custom-pagination-inner-cont li' => '-webkit-transition-duration:  {{VALUE}}s; transition-duration:  {{VALUE}}s; transition-property: background-color color font-size;'
-				]
-			]
-		);
-
-		$this->add_responsive_control(
-			'pagination_icon_size',
-			[
-				'label' => esc_html__( 'Icon Size', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 200
-					]
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 15
-				],
-				'separator' => 'before',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-custom-pagination-list svg' => 'width: {{SIZE}}{{UNIT}}'
-				]
-			]
-		);
-
-		$this->add_responsive_control(
-			'pagination_horizontal_gutter',
-			[
-				'label' => esc_html__( 'Horizontal Gutter', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 200
-					]
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-custom-pagination-list:not(:last-child)' => 'margin-right: {{SIZE}}{{UNIT}}',
-				],
-				'separator' => 'before'
-			]
-		);
-
-		$this->add_responsive_control(
-			'pagination_vertical_gutter',
-			[
-				'label' => esc_html__( 'Vertical Gutter', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 200
-					]
-				],
-				'default' => [
-					'size' => 20,
-					'unit' => 'px'
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-pagination-cont' => 'margin-top: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'pagination_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'separator' => 'before',
-				'default' => [
-					'top' => 7,
-					'right' => 13,
-					'bottom' => 7,
-					'left' => 13,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-custom-pagination-list' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'pagination_border_type',
-			[
-				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'none' => esc_html__( 'None', 'wpr-addons' ),
-					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
-					'double' => esc_html__( 'Double', 'wpr-addons' ),
-					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
-					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
-					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
-				],
-				'separator' => 'before',
-				'default' => 'solid',
-				'selectors' => [
-					// '{{WRAPPER}} .wpr-table-custom-pagination-inner-cont' => 'border-style: {{VALUE}};',
-					'{{WRAPPER}} .wpr-table-custom-pagination-prev' => 'border-left-style: {{VALUE}}; border-top-style: {{VALUE}}; border-bottom-style: {{VALUE}};',
-					'{{WRAPPER}} .wpr-table-custom-pagination-next' => 'border-right-style: {{VALUE}}; border-top-style: {{VALUE}}; border-bottom-style: {{VALUE}};',
-					'{{WRAPPER}} .wpr-table-custom-pagination-list-item' => 'border-top-style: {{VALUE}}; border-bottom-style: {{VALUE}};',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'pagination_border_width',
-			[
-				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
-                'type'       => Controls_Manager::SLIDER,
-                'size_units' => [
-                    'px', '%'
-				],
-                'range'      => [
-                    'px' => [
-                        'min' => 1,
-                        'max' => 100,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-custom-pagination-prev' => 'border-left-width: {{SIZE}}{{UNIT}}; border-top-width: {{SIZE}}{{UNIT}}; border-bottom-width: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-table-custom-pagination-next' => 'border-right-width: {{SIZE}}{{UNIT}};  border-top-width: {{SIZE}}{{UNIT}}; border-bottom-width: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-table-custom-pagination-list-item' => 'border-top-width: {{SIZE}}{{UNIT}}; border-bottom-width: {{SIZE}}{{UNIT}};'
-				],
-				'condition' => [
-					'pagination_border_type!' => 'none'
-				]
-			]
-		);
-
-		$this->add_responsive_control(
-			'pagination_border_radius',
-			[
-				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
-                'type'       => Controls_Manager::SLIDER,
-                'size_units' => [
-                    'px', '%'
-				],
-                'range'      => [
-                    'px' => [
-                        'min' => 1,
-                        'max' => 100,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-custom-pagination-prev' => 'border-top-left-radius: {{SIZE}}{{UNIT}}; border-bottom-left-radius: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-table-custom-pagination-next' => 'border-top-right-radius: {{SIZE}}{{UNIT}}; border-bottom-right-radius: {{SIZE}}{{UNIT}};'
-				],
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->start_controls_tab(
-			'pagination_style_hover_tab',
-			[
-				'label' => esc_html__( 'Hover', 'wpr-addons' ),
-			]
-		);
-
-		$this->add_control(
-			'pagination_color_hover',
-			[
-				'label' => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'default' => '#FFFFFF',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-custom-pagination-list:hover' => 'color: {{VALUE}}'
-				],
-			]
-		);
-				
-		$this->add_control(
-			'pagination_bg_color_hover',
-			[
-				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-				'default' => '#28517A',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-custom-pagination-list:hover' => 'background-color: {{VALUE}}'
-				],
-			]
-		);
-
-		$this->add_control(
-			'pagination_border_color_hover',
-			[
-				'label'     => esc_html__( 'Border Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#ffffff',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-custom-pagination-inner-cont:hover' => 'border-color: {{VALUE}}',
-				],
-				'condition' => [
-					'pagination_border_type!' => 'none',
-				],
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->end_controls_tabs();
-
-		
-		$this->add_control(
-            'pagination_alignment',
-            [
-                'label'        => esc_html__('Alignment', 'wpr-addons'), 
-                'type'         => Controls_Manager::CHOOSE,
-                'label_block'  => false,
-                'default'      => 'center',
-				'separator' => 'before',
-                'options'      => [
-                    'flex-start'   => [
-                        'title' => esc_html__('Left', 'wpr-addons'),
-                        'icon'  => 'eicon-h-align-left',
-                    ],
-                    'center' => [
-                        'title' => esc_html__('Center', 'wpr-addons'),
-                        'icon'  => 'eicon-h-align-center',
-                    ],
-                    'flex-end'  => [
-                        'title' => esc_html__('Right', 'wpr-addons'),
-                        'icon'  => 'eicon-h-align-right',
-                    ],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-table-custom-pagination' => 'display: flex; justify-content: {{VALUE}}; align-items: center;',
-				],
-				'condition' => [
-					'enable_entry_info!' => 'yes'
-				]
-            ]
-        );
-
-		$this->end_controls_section();
-
-		$this->start_controls_section(
-			'entry_info_styles',
-			[
-				'label' => esc_html__('Entry Info', 'wpr-addons'),
-				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
-				'condition' => [
-					'enable_custom_pagination' => 'yes',
-					'enable_entry_info' => 'yes'
-				]
-			]
-		);
-
-		$this->add_control(
-			'entry_info_color',
-			[
-				'label'  => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#111',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-entry-info' => 'color: {{VALUE}}; cursor: pointer;',
-				],
-			]
-		);
-
-		$this->add_control(
-			'entry_info_color_hover',
-			[
-				'label'  => esc_html__( 'Hover Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-entry-info:hover' => 'color: {{VALUE}};',
-				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'entry_info_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-entry-info'
-			]
-		);
-
-		$this->end_controls_section();
     }
 
 	protected function render_csv_data($url, $custom_pagination, $sorting_icon, $settings) {
@@ -2252,54 +1830,7 @@ class Wpr_Advanced_Table extends Widget_Base {
 		fclose($handle);
 	}
 
-	public function render_custom_pagination($settings, $countRows) { ?>
-		<div class="wpr-table-pagination-outer-cont">
-		<div class="wpr-table-pagination-cont">
-		<?php if ( 'yes' === $settings['enable_entry_info'] ) : ?>
-			<div class="wpr-entry-info"></div>
-		<?php endif; ?>
-		<ul class="wpr-table-custom-pagination">
-			<div class="wpr-table-custom-pagination-inner-cont">
-				<?php if ( 'none' !== $settings['pagination_nav_icons'] ) : ?>
-				<li class='wpr-table-custom-pagination-prev wpr-table-prev-next wpr-table-custom-pagination-list'>
-					<?php 
-						echo Utilities::get_wpr_icon( $settings['pagination_nav_icons'], 'left');
-					 ?>
-				</li>
-				<?php endif; ?>
-  
-				<?php $total_rows = 0;
-					  $item_index = 0;
-
-				if ( 'custom' === $settings['choose_table_type'] ) {
-					foreach ( $settings['table_content_rows'] as $item ) {
-						if ( 'row' === $item['table_content_row_type'] ) {
-							$total_rows++;
-						}
-					}
-				}
-		
-				// $exact_number_of_pages = $total_rows/$settings['table_items_per_page'];
-				$total_pages = 'custom' === $settings['choose_table_type'] ? ceil($total_rows/$settings['table_items_per_page']) : ceil($countRows/$settings['table_items_per_page']);
-					
-				for (  $i = 1; $i <= $total_pages; $i++ ) {	?>
-	
-						<li class="wpr-table-custom-pagination-list wpr-table-custom-pagination-list-item <?php echo $i === 1 ? 'wpr-active-pagination-item' : ''; ?>">
-							<span><?php echo $i; ?></span>
-						</li>
-	
-					<?php } ?>
-					
-				<?php if ( 'none' !== $settings['pagination_nav_icons'] ) : ?>
-				<li class='wpr-table-custom-pagination-next wpr-table-prev-next wpr-table-custom-pagination-list wpr-table-prev-arrow wpr-table-arrow'>
-					<?php echo Utilities::get_wpr_icon( $settings['pagination_nav_icons'], 'right'); ?>
-				</li>
-				<?php endif; ?>
-			</div>
-		</ul>
-		</div>
-		</div>
-	<?php }
+	public function render_custom_pagination($settings, $countRows) {}
 
 	public function render_th_icon($item) {
 		ob_start();
