@@ -2745,7 +2745,6 @@ class Wpr_AdvancedTable extends Widget_Base {
 		echo '<table class="wpr-append-to-scope wpr-advanced-table" id="wpr-advanced-table">';
 		if ( 'yes' === $settings['display_header'] ) {
 			$csvcontents = fgetcsv($handle);
-			var_dump($csvcontents);
 			echo '<thead><tr class="wpr-table-head-row wpr-table-row">';
 			foreach ($csvcontents as $headercolumn) {
 				echo "<th class='wpr-table-th wpr-table-text'>$headercolumn  $sorting_icon</th>";
@@ -2769,8 +2768,7 @@ class Wpr_AdvancedTable extends Widget_Base {
 		}
 		echo '</tbody></table>';
 		echo '</div>';
-		echo '</div>'; // <?php echo Utilities::get_wpr_icon( $settings['pagination_nav_icons_left'], '' ); 
-		//\Elementor\Icons_Manager::render_icon( $settings['pagination_nav_icons_left'], [ 'aria-hidden' => 'true' ] );
+		echo '</div>';
 
 		if ( 'yes' == $settings['enable_custom_pagination'] ) {
 			$this->render_custom_pagination($settings, $countRows);
