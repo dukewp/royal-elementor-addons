@@ -80,6 +80,19 @@ class Wpr_Advanced_Table extends Widget_Base {
 
 	public function add_section_search_styles() {}
 
+	public function add_control_enable_table_sorting() {
+		$this->add_control(
+			'enable_table_sorting',
+			[
+				'label' => sprintf( __( 'Show Table Sorting %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'default' => 'no',
+				'separator' => 'before',
+				'classes' => 'wpr-pro-control'
+			]
+		);
+	}
+
     public function register_controls() {
 
 		$this->start_controls_section(
@@ -181,16 +194,7 @@ class Wpr_Advanced_Table extends Widget_Base {
 
 		$this->add_control_enable_table_search();
 
-		$this->add_control(
-			'enable_table_sorting',
-			[
-				'label' => esc_html__('Table Sorting', 'wpr-addons'),
-				'type' => \Elementor\Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'default' => 'yes',
-				'separator' => 'before'
-			]
-		);
+		$this->add_control_enable_table_sorting();
 
 		$this->add_control(
 			'enable_row_pagination', [
@@ -2358,7 +2362,7 @@ class Wpr_Advanced_Table extends Widget_Base {
 		
 		$x = 0;
 		
-		$sorting_icon = 'yes' === $settings['enable_table_sorting'] ? '<span class="wpr-sorting-icon"><i class="fas fa-sort"></i></span>' : ''; 
+		$sorting_icon = ('yes' === $settings['enable_table_sorting'] && wpr_fs()->can_use_premium_code() ) ? '<span class="wpr-sorting-icon"><i class="fas fa-sort"></i></span>' : ''; 
 		
 		$this->add_render_attribute(
 			'wpr_table_inner_container_attributes',
