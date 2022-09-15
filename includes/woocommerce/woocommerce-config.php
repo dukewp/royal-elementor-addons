@@ -5,11 +5,14 @@ class WPR_WooCommerce_Config {
 	public function __construct() {
 		add_action('wp_ajax_wpr_addons_add_cart_single_product', [$this, 'add_cart_single_product_ajax']);
 		add_action('wp_ajax_nopriv_wpr_addons_add_cart_single_product', [$this, 'add_cart_single_product_ajax']);
-		add_filter('woocommerce_single_product_carousel_options', [$this, 'wpr_update_woo_flexslider_options']);
 		
-		if ( 'on' !== get_option('wpr_enable_product_image_zoom', 'on') ) {
-			add_filter( 'woocommerce_single_product_zoom_enabled', '__return_false' );
+		if ( 'on' == get_option('wpr_enable_woo_flexslider_navigation', 'on') ) {
+			add_filter('woocommerce_single_product_carousel_options', [$this, 'wpr_update_woo_flexslider_options']);
 		}
+
+		// if ( 'on' !== get_option('wpr_enable_product_image_zoom', 'on') ) {
+		// 	add_filter( 'woocommerce_single_product_zoom_enabled', '__return_false' );
+		// }
 
 		// Change number of products that are displayed per page (shop page)
 		add_filter( 'loop_shop_per_page', [$this, 'shop_products_per_page'], 20 );
