@@ -11994,7 +11994,8 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     overflow-x: auto;
 }
 
-.wpr-hide-table-before-arrange {
+.wpr-hide-table-before-arrange,
+.wpr-hide-pagination-on-search {
     opacity: 0;
     /* display: none; */
 }
