@@ -12031,6 +12031,15 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     position: relative;
 }
 
+.wpr-equal-column-width-yes .wpr-advanced-table {
+    table-layout: fixed;
+}
+
+.wpr-equal-column-width-yes .wpr-advanced-table .wpr-table-th-pag,
+.wpr-equal-column-width-yes .wpr-advanced-table .wpr-table-td-pag {
+    width: 50px;
+}
+
 .wpr-table-live-search-cont input {
     min-width: 100%;
 }

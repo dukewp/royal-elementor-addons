@@ -252,36 +252,15 @@ class Wpr_Advanced_Table extends Widget_Base {
 		);
 
 		$this->add_control(
-			'custom_cell_width',
+			'equal_column_width',
 			[
-				'label' => esc_html__('Custom Cell Width', 'wpr-addons'),
+				'label' => esc_html__('Equal Column Width', 'wpr-addons'),
 				'type' => \Elementor\Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
-				'separator' => 'before'
+				'separator' => 'before',
+				'prefix_class' => 'wpr-equal-column-width-'
 			]
 		);
-
-		$this->add_responsive_control(
-            'custom_cell_size',
-            [
-                'label' => esc_html__('Width', 'wpr-addons'),
-				'description' => esc_html__('', 'wpr-addons'),
-                'type' => Controls_Manager::SLIDER,
-                'range' => [
-                    '%' => [
-                        'min' => 1,
-                        'max' => 100,
-                    ],
-                ],
-                'selectors'  => [
-                    '{{WRAPPER}} th:not(.wpr-table-th-pag)' => 'width: {{SIZE}}%;',
-                    '{{WRAPPER}} td:not(.wpr-table-td-pag)' => 'width: {{SIZE}}%;',
-                ],
-				'condition' => [
-					'custom_cell_width' => 'yes'
-				]
-            ]
-        );
 
 		$this->add_control(
 			'enable_row_pagination', 
