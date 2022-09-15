@@ -12178,6 +12178,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
       flex-direction: column;
   }
 
+  .wpr-equal-column-width-yes .wpr-advanced-table {
+      table-layout: auto;
+  }
+
   .wpr-table-export-button-cont {
       width: 100%;
       justify-content: space-around;
