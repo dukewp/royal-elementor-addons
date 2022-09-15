@@ -17,7 +17,7 @@ class Module extends Module_Base {
 
 	public function get_widgets() {
 		return [
-			'Wpr_AdvancedTable', // This should match the widget/element class.
+			'Wpr_Advanced_Table', // This should match the widget/element class.
 		];
 	}
 	
