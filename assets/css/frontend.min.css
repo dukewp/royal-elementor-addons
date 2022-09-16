@@ -12052,7 +12052,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 .wpr-table-custom-pagination {
-    list-style-type: none;
+    list-style-type: none !important;
     padding: 0;
 }
 
