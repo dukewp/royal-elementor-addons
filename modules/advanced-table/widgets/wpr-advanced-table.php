@@ -813,6 +813,15 @@ class Wpr_Advanced_Table extends Widget_Base {
 
 		$this->end_controls_section();
 
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'advanced-table', [
+			'Import Table data from CSV file upload or URL',
+			'Show/Hide Export Table data buttons',
+			'Enable Live Search for Tables',
+			'Enable Table Sorting option',
+			'Enable Table Pagination. Divide Table items by pages'
+		] );
+
 		$this->start_controls_section(
 			'style_section',
 			[
