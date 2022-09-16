@@ -4623,7 +4623,7 @@
 
 			// Table Live Search
 			beforeFilter = $scope.find("tbody .wpr-table-row");
-			$scope.find("#wpr-table-live-search").keyup(function () {
+			$scope.find(".wpr-table-live-search").keyup(function () {
 				value = this.value.toLowerCase().trim();
 				
 				var afterFilter = initialRows.each(function (index) {
