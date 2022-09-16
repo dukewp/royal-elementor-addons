@@ -821,6 +821,47 @@ class Wpr_Advanced_Table extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'table_responsive_width',
+			[
+				'label' => esc_html__( 'Table Min Width', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => ['px', '%'],
+				'render_type' => 'template',
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 1000
+					]
+				],
+				// 'devices' => [ 'desktop', 'tablet', 'mobile' ],
+				'default' => [
+					'size' => 600,
+					'unit' => 'px'
+				],
+				// 'desktop_default' => [
+				// 	'size' => 100,
+				// 	'unit' => '%',
+				// ],
+				// 'tablet_default' => [
+				// 	'size' => 100,
+				// 	'unit' => '%',
+				// ],
+				// 'mobile_default' => [
+				// 	'size' => 100,
+				// 	'unit' => '%',
+				// ],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-table-container .wpr-advanced-table' => 'min-width: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}} .wpr-export-search-inner-cont' => 'min-width: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}} .wpr-table-custom-pagination' => 'width: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}} .wpr-table-pagination-cont' => 'min-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-table-inner-container' => 'width: 100%;',
+				],
+				// 'separator' => 'before'
+			]
+		);
+
 		$this->add_control(
 			'all_border_type',
 			[
@@ -988,51 +1029,6 @@ class Wpr_Advanced_Table extends Widget_Base {
 				'separator' => 'before'
 			]
 		);
-
-		// $this->add_responsive_control(
-		// 	'table_width',
-		// 	[
-		// 		'label' => esc_html__( 'Table Width', 'wpr-addons' ),
-		// 		'type' => \Elementor\Controls_Manager::SLIDER,
-		// 		'size_units' => ['px', '%'],
-		// 		'render_type' => 'template',
-		// 		'range' => [
-		// 			'%' => [
-		// 				'min' => 0,
-		// 				'max' => 100,
-		// 			],
-		// 			'px' => [
-		// 				'min' => 0,
-		// 				'max' => 2000
-		// 			]
-		// 		],
-		// 		'devices' => [ 'desktop', 'tablet', 'mobile' ],
-		// 		'default' => [
-		// 			'size' => 100,
-		// 			'unit' => '%'
-		// 		],
-		// 		'desktop_default' => [
-		// 			'size' => 100,
-		// 			'unit' => '%',
-		// 		],
-		// 		'tablet_default' => [
-		// 			'size' => 100,
-		// 			'unit' => '%',
-		// 		],
-		// 		'mobile_default' => [
-		// 			'size' => 100,
-		// 			'unit' => '%',
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-table-container .wpr-advanced-table' => 'width: {{SIZE}}{{UNIT}};',
-		// 			'{{WRAPPER}} .wpr-export-search-inner-cont' => 'width: {{SIZE}}{{UNIT}};',
-		// 			// '{{WRAPPER}} .wpr-table-custom-pagination' => 'width: {{SIZE}}{{UNIT}};',
-		// 			'{{WRAPPER}} .wpr-table-pagination-cont' => 'width: {{SIZE}}{{UNIT}};',
-		// 			'{{WRAPPER}} .wpr-table-inner-container' => 'width: 100%;',
-		// 		],
-		// 		'separator' => 'before'
-		// 	]
-		// );
 
 		// $this->add_control(
         //     'table_alignment',
