@@ -866,6 +866,7 @@ class Wpr_Advanced_Table extends Widget_Base {
 					// '{{WRAPPER}} .wpr-table-custom-pagination' => 'width: {{SIZE}}{{UNIT}};',
 					// '{{WRAPPER}} .wpr-table-pagination-cont' => 'min-width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-table-inner-container' => 'width: 100%;',
+					'{{WRAPPER}} .wpr-advanced-table' => 'width: 100%;',
 				],
 				// 'separator' => 'before'
 			]
