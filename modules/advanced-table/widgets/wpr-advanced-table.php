@@ -80,6 +80,14 @@ class Wpr_Advanced_Table extends Widget_Base {
 		);
 	}
 
+	public function add_control_export_excel_text() {}
+
+	public function add_control_export_buttons_distance() {}
+
+	public function add_control_table_search_input_padding() {}
+
+	public function add_control_export_csv_text() {}
+
 	public function add_section_export_buttons_styles() {}
 
 	public function add_control_enable_table_search() {
@@ -110,6 +118,8 @@ class Wpr_Advanced_Table extends Widget_Base {
 		);
 	}
 
+	public function add_control_active_td_bg_color() {}
+
 	public function add_control_enable_custom_pagination() {
 		$this->add_control(
 			'enable_custom_pagination',
@@ -124,6 +134,29 @@ class Wpr_Advanced_Table extends Widget_Base {
 	}
 
 	public function add_section_pagination_styles() {}
+
+	public function add_control_stack_content_tooltip_section() {}
+
+	public function add_repeater_args_content_tooltip() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
+		];
+	}
+
+	public function add_repeater_args_content_tooltip_text() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
+		];
+	}
+
+	public function add_repeater_args_content_tooltip_show_icon() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
+		];
+	}
 
     public function register_controls() {
 
@@ -156,6 +189,10 @@ class Wpr_Advanced_Table extends Widget_Base {
 		// );
 
 		$this->add_control_enable_table_export();
+
+		$this->add_control_export_excel_text();
+
+		$this->add_control_export_csv_text();
 
 		$this->add_control_enable_table_search();
 
@@ -788,6 +825,12 @@ class Wpr_Advanced_Table extends Widget_Base {
 				]
 			]
 		);
+
+		$repeater->add_control( 'content_tooltip', $this->add_repeater_args_content_tooltip() );
+
+		$repeater->add_control( 'content_tooltip_text', $this->add_repeater_args_content_tooltip_text() );
+
+		$repeater->add_control( 'content_tooltip_show_icon', $this->add_repeater_args_content_tooltip_show_icon() );
 	
 		$this->add_control(
 			'table_content_rows',
@@ -835,12 +878,12 @@ class Wpr_Advanced_Table extends Widget_Base {
 			[
 				'label' => esc_html__( 'Table Min Width', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::SLIDER,
-				'size_units' => ['px', '%'],
+				'size_units' => ['px'],
 				'render_type' => 'template',
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 1000
+						'max' => 1500
 					]
 				],
 				// 'devices' => [ 'desktop', 'tablet', 'mobile' ],
@@ -959,63 +1002,13 @@ class Wpr_Advanced_Table extends Widget_Base {
 					'{{WRAPPER}} th:last-child' => 'border-top-right-radius: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} tr:last-child td:first-child' => 'border-bottom-left-radius: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} tr:last-child td:last-child' => 'border-bottom-right-radius: {{SIZE}}{{UNIT}};'
-				],
-				'separator' => 'before'
-			]
-		);
-
-        $this->add_responsive_control(
-			'export_buttons_distance',
-			[
-				'label' => esc_html__( 'Distance', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-                'size_units' => [ 'px', '%' ],
-                'default'   => [
-                    'size'  => 3,
-                    'unit'  => 'px'
-                ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 50,
-						'step' => 1,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-						'step' => 1,
-					],
-				],
-				'separator' => 'before',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-xls' => 'margin-right: {{SIZE}}{{UNIT}}; position: relative;',
-					'{{WRAPPER}} .wpr-table-export-button-cont' => 'margin-bottom: {{SIZE}}{{UNIT}}; position: relative;',
-					'{{WRAPPER}} .wpr-table-live-search-cont' => 'margin-bottom: {{SIZE}}{{UNIT}}; position: relative;',
 				]
 			]
 		);
 
-        $this->add_responsive_control(
-            'table_search_input_padding',
-            [
-                'label'      => esc_html__( 'Search & Export Padding', 'wpr-addons' ),
-                'type'       => Controls_Manager::DIMENSIONS,
-                'size_units' => [ 'px', 'em', '%' ],
-                'default'    => [
-                    'top'    => 10,
-                    'bottom' => 10,
-                    'left'   => 10,
-                    'right'  => 10,
-                    'unit'   => 'px'
-                ],
-				'separator' => 'before',
-                'selectors' => [
-                    '{{WRAPPER}} .wpr-table-live-search-cont input' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                    '{{WRAPPER}} .wpr-table-export-button-cont button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                    '{{WRAPPER}} .wpr-search-input-icon' => 'right: {{RIGHT}}{{UNIT}} !important',
-				]
-            ]
-        );
+		$this->add_control_export_buttons_distance();
+
+		$this->add_control_table_search_input_padding();
 
 		$this->add_control(
 			'hover_transition',
@@ -1507,19 +1500,7 @@ class Wpr_Advanced_Table extends Widget_Base {
 
 		$this->end_controls_tabs();
 
-		$this->add_control(
-			'active_td_bg_color',
-			[
-				'label'  => esc_html__( 'Active Column Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '',
-				'separator' => 'before',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-active-td-bg-color' => 'background: {{VALUE}} !important; color: #FFFFFF !important;',
-					'{{WRAPPER}} tr' => 'background: {{VALUE}} !important;',
-				],
-			]
-		);
+		$this->add_control_active_td_bg_color();
 
 		$this->add_control(
 			'typograpphy_divider',
@@ -1533,7 +1514,7 @@ class Wpr_Advanced_Table extends Widget_Base {
 			[
 				'name'     => 'td_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} td'
+				'selector' => '{{WRAPPER}} td, {{WRAPPER}} i.fa-question-circle'
 			]
 		);
 
@@ -1554,7 +1535,7 @@ class Wpr_Advanced_Table extends Widget_Base {
                     'size' => 20,
                 ],
                 'selectors'  => [
-                    '{{WRAPPER}} .wpr-advanced-table tbody i' => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .wpr-advanced-table tbody i:not(.fa-question-circle)' => 'font-size: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
@@ -1708,8 +1689,14 @@ class Wpr_Advanced_Table extends Widget_Base {
 		$this->add_section_export_buttons_styles();
 
 		$this->add_section_pagination_styles();
+
+		$this->add_control_stack_content_tooltip_section();
 	
     }
+
+	public function render_content_tooltip($item) {}
+
+	public function render_tooltip_icon($item) {}
 
 	public function render_custom_pagination($settings, $countRows) {}
 
@@ -1895,6 +1882,9 @@ class Wpr_Advanced_Table extends Widget_Base {
 						'icon_item' => $content_row['choose_td_icon'],
 						'col_img' => $content_row['td_col_img'],
 						'class' => ['elementor-repeater-item-'. esc_attr($content_row['_id']), 'wpr-table-td'],
+						'content_tooltip' => $content_row['content_tooltip'],
+						'content_tooltip_text' => $content_row['content_tooltip_text'],
+						'content_tooltip_show_icon' => $content_row['content_tooltip_show_icon']
 					];
 				}
 			} ?>
@@ -1952,12 +1942,19 @@ class Wpr_Advanced_Table extends Widget_Base {
 
 									<?php $table_td[$j]['icon'] === 'yes' && ($table_td[$j]['icon_position'] === 'left' || $table_td[$j]['icon_position'] === 'top' || $table_td[$j]['icon_position'] === 'bottom') ? $this->render_td_icon_or_image($table_td, $j) : '' ?>
 									<a href="<?php echo esc_url($table_td[$j]['link']['url']) ?>" target="<?php echo esc_attr($table_td[$j]['external']) ?>">
-										<span class="wpr-table-text"><?php echo wp_kses_post($table_td[$j]['content']); ?></span>
+										<span class="wpr-table-text">
+											<?php 
+												echo wp_kses_post($table_td[$j]['content']);
+
+												$this->render_tooltip_icon( $table_td[$j] );
+											?>
+										</span>
 									</a>
 									<?php $table_td[$j]['icon'] === 'yes' && $table_td[$j]['icon_position'] === 'right' ? $this->render_td_icon_or_image($table_td, $j) : '' ?>
 
 								</div>
 
+								<?php $this->render_content_tooltip( $table_td[$j] ); ?>
 							</td>
 							<?php }
 							} ?>

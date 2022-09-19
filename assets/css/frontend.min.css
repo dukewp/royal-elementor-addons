@@ -9593,6 +9593,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     font-size: 15px;
 }
 
+.elementor-widget-wpr-promo-box .wpr-promo-box-description p {
+    margin: 0;
+}
+
 .elementor-widget-wpr-promo-box .wpr-promo-box-btn,
 .elementor-widget-wpr-promo-box .wpr-promo-box-badge {
     font-size: 14px;
@@ -11999,6 +12003,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     opacity: 0;
 }
 
+.wpr-table-td {
+    position: relative;
+}
+
 .wpr-table-td-pag {
     text-align: center;
 }
@@ -12169,6 +12177,58 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-table-text-nowrap-yes th,
 .wpr-table-text-nowrap-yes td {
     white-space: nowrap;
+}
+
+.wpr-advanced-table .fa-question-circle {
+    font-weight: 400 !important;
+    font-family: "Font Awesome 5 Free" !important;
+}
+
+.wpr-advanced-table-content-tooltip {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    border-radius: 4px;
+    padding: 6px 10px;
+    visibility: hidden;
+    opacity: 0;
+    font-size: 15px;
+    -webkit-transform: translate(-50%, -100%);
+    -ms-transform: translate(-50%, -100%);
+    transform: translate(-50%, -100%);
+    -webkit-transition: all 230ms ease-in-out 0s;
+    -o-transition: all 230ms ease-in-out 0s;
+    transition: all 230ms ease-in-out 0s;
+    text-align: center;
+}
+
+.wpr-advanced-table-content-tooltip:before {
+    content: "";
+    position: absolute;
+    left: 10px;
+    bottom: -5px;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top-style: solid;
+    border-top-width: 6px;
+}
+
+.wpr-table-td:hover .wpr-advanced-table-content-tooltip {
+    visibility: visible;
+    opacity: 1;
+    top: 5px;
+    -ms-transform: translate(-50%, -100%);
+    transform: translate(-50%, -100%);
+    -webkit-transform: translate(-50%, -100%);
+}
+
+.wpr-advanced-table-content-tooltip:before {
+    left: 50%;
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%) !important;
 }
 
 @media screen and (max-width: 768px) {
