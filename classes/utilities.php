@@ -59,8 +59,8 @@ class Utilities {
 			'Popup Trigger' => ['popup-trigger', '', '', ''],
 			'Taxonomy List' => ['taxonomy-list', '', '', ''],
 			'Template' => ['elementor-template', '', '', ''],
-			'Data Table' => ['data-table', '', '', 'new']
-			// 'Reading Progress Bar' => ['reading-progress-bar', '', '', ''],
+			'Data Table' => ['data-table', '', '', 'new'],
+			'Reading Progress Bar' => ['reading-progress-bar', '', '', 'new'],
 			// 'Random Image' => ['random-image', '', ''],
 		];
 	}
