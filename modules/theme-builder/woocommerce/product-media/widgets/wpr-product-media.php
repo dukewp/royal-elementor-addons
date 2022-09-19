@@ -1237,7 +1237,6 @@ class Wpr_Product_Media extends Widget_Base {
 			echo '</div>';
 
 		}
-		var_dump(get_option('wpr_enable_woo_flexslider_navigation'), get_option('wpr_enable_product_image_zoom'), get_option('wpr_override_woo_templates'));
 
 		// Slider Arrows
 		if ( !empty($gallery_images) && 'on' === get_option('wpr_enable_woo_flexslider_navigation') ) {
