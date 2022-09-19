@@ -1689,6 +1689,11 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 /*--------------------------------------------------------------
 == Grid
 --------------------------------------------------------------*/
+
+.wpr-hide-items-before-append {
+    opacity: 0;
+}
+
 .wpr-grid {
     opacity: 0;
 }
