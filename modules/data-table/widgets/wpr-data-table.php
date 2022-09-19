@@ -1,6 +1,6 @@
 <?php
 
-namespace WprAddons\Modules\AdvancedTable\Widgets;
+namespace WprAddons\Modules\DataTable\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
@@ -22,13 +22,13 @@ use WprAddons\Classes\Utilities;
 // Security Note: Blocks direct access to the plugin PHP files.
 defined('ABSPATH') || die();
 
-class Wpr_Advanced_Table extends Widget_Base {
+class Wpr_Data_Table extends Widget_Base {
     public function get_name() {
-		return 'wpr-advanced-table';
+		return 'wpr-data-table';
 	}
 
 	public function get_title() {
-		return esc_html__('Advanced Table', 'wpr-addons');
+		return esc_html__('Data Table', 'wpr-addons');
 	}
 	public function get_icon() {
 		return 'wpr-icon eicon-table';
@@ -39,7 +39,7 @@ class Wpr_Advanced_Table extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return ['Advanced Table', 'Advanced', 'Table', 'Data table', 'Data'];
+		return ['Data Table', 'Advanced', 'Table', 'Data table', 'Data'];
 	}
 
 	public function get_script_depends() {
@@ -62,7 +62,7 @@ class Wpr_Advanced_Table extends Widget_Base {
 					'custom' => esc_html__( 'Custom', 'wpr-addons' ),
 					'pro-cv' => esc_html__( 'CSV (Pro)', 'wpr-addons' ),
 				],
-				'prefix_class' => 'wpr-advanced-table-type-'
+				'prefix_class' => 'wpr-data-table-type-'
 			]
 		);
 	}
@@ -172,7 +172,7 @@ class Wpr_Advanced_Table extends Widget_Base {
 		$this->add_control_choose_table_type();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'advanced-table', 'choose_table_type', ['pro-cv'] );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'data-table', 'choose_table_type', ['pro-cv'] );
 
 		// $this->add_control(
 		// 	'enable_custom_links',
@@ -769,6 +769,12 @@ class Wpr_Advanced_Table extends Widget_Base {
 			]
 		);
 
+		$repeater->add_control( 'content_tooltip', $this->add_repeater_args_content_tooltip() );
+
+		$repeater->add_control( 'content_tooltip_text', $this->add_repeater_args_content_tooltip_text() );
+
+		$repeater->add_control( 'content_tooltip_show_icon', $this->add_repeater_args_content_tooltip_show_icon() );
+
 		$repeater->add_control(
 			'td_background_color',
 			[
@@ -825,12 +831,6 @@ class Wpr_Advanced_Table extends Widget_Base {
 				]
 			]
 		);
-
-		$repeater->add_control( 'content_tooltip', $this->add_repeater_args_content_tooltip() );
-
-		$repeater->add_control( 'content_tooltip_text', $this->add_repeater_args_content_tooltip_text() );
-
-		$repeater->add_control( 'content_tooltip_show_icon', $this->add_repeater_args_content_tooltip_show_icon() );
 	
 		$this->add_control(
 			'table_content_rows',
@@ -857,7 +857,7 @@ class Wpr_Advanced_Table extends Widget_Base {
 		$this->end_controls_section();
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'advanced-table', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'data-table', [
 			'Import Table data from CSV file upload or URL',
 			'Show/Hide Export Table data buttons',
 			'Enable Live Search for Tables',
@@ -904,12 +904,12 @@ class Wpr_Advanced_Table extends Widget_Base {
 				// 	'unit' => '%',
 				// ],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-table-container .wpr-advanced-table' => 'min-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-table-container .wpr-data-table' => 'min-width: {{SIZE}}{{UNIT}};',
 					// '{{WRAPPER}} .wpr-export-search-inner-cont' => 'min-width: {{SIZE}}{{UNIT}};',
 					// '{{WRAPPER}} .wpr-table-custom-pagination' => 'width: {{SIZE}}{{UNIT}};',
 					// '{{WRAPPER}} .wpr-table-pagination-cont' => 'min-width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-table-inner-container' => 'width: 100%;',
-					'{{WRAPPER}} .wpr-advanced-table' => 'width: 100%;',
+					'{{WRAPPER}} .wpr-data-table' => 'width: 100%;',
 				],
 				// 'separator' => 'before'
 			]
@@ -1173,8 +1173,8 @@ class Wpr_Advanced_Table extends Widget_Base {
                     'size' => 20,
                 ],
                 'selectors'  => [
-                    '{{WRAPPER}} .wpr-advanced-table thead i' => 'font-size: {{SIZE}}{{UNIT}};',
-                    '{{WRAPPER}} .wpr-advanced-table thead svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}}',
+                    '{{WRAPPER}} .wpr-data-table thead i' => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .wpr-data-table thead svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}}',
                 ],
 				'separator' => 'before'
             ]
@@ -1196,7 +1196,7 @@ class Wpr_Advanced_Table extends Widget_Base {
                     'size' => 12,
                 ],
                 'selectors'  => [
-                    '{{WRAPPER}} .wpr-advanced-table thead .wpr-sorting-icon i' => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .wpr-data-table thead .wpr-sorting-icon i' => 'font-size: {{SIZE}}{{UNIT}};',
                 ],
 				'condition' => [
 					'enable_table_sorting' => 'yes'
@@ -1246,7 +1246,7 @@ class Wpr_Advanced_Table extends Widget_Base {
 					],
 				],
                 'selectors'             => [
-					'{{WRAPPER}} .wpr-advanced-table th img' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+					'{{WRAPPER}} .wpr-data-table th img' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
             ]
 		);
@@ -1274,7 +1274,7 @@ class Wpr_Advanced_Table extends Widget_Base {
 					],
 				],
                 'selectors'             => [
-					'{{WRAPPER}} .wpr-advanced-table th i' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+					'{{WRAPPER}} .wpr-data-table th i' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
             ]
 		);
@@ -1535,7 +1535,7 @@ class Wpr_Advanced_Table extends Widget_Base {
                     'size' => 20,
                 ],
                 'selectors'  => [
-                    '{{WRAPPER}} .wpr-advanced-table tbody i:not(.fa-question-circle)' => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .wpr-data-table tbody i:not(.fa-question-circle)' => 'font-size: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
@@ -1621,7 +1621,7 @@ class Wpr_Advanced_Table extends Widget_Base {
 					],
 				],
                 'selectors'             => [
-					'{{WRAPPER}} .wpr-advanced-table td img' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+					'{{WRAPPER}} .wpr-data-table td img' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
             ]
 		);
@@ -1649,7 +1649,7 @@ class Wpr_Advanced_Table extends Widget_Base {
 					],
 				],
                 'selectors'             => [
-					'{{WRAPPER}} .wpr-advanced-table td i' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+					'{{WRAPPER}} .wpr-data-table td i' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
             ]
 		);
@@ -1719,7 +1719,7 @@ class Wpr_Advanced_Table extends Widget_Base {
 
 		$handle = fopen($filename, "r");
 		//display header row if true
-		echo '<table class="wpr-append-to-scope wpr-advanced-table" id="wpr-advanced-table">';
+		echo '<table class="wpr-append-to-scope wpr-data-table" id="wpr-data-table">';
 		if ( 'yes' === $settings['display_header'] ) {
 			$csvcontents = fgetcsv($handle);
 			echo '<thead><tr class="wpr-table-head-row wpr-table-row">';
@@ -1889,7 +1889,7 @@ class Wpr_Advanced_Table extends Widget_Base {
 				}
 			} ?>
 
-			<table class="wpr-advanced-table" id="wpr-advanced-table">
+			<table class="wpr-data-table" id="wpr-data-table">
 			<?php if ( $settings['table_header'] ) { ?>
 					
 				<thead>

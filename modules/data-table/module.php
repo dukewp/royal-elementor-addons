@@ -1,5 +1,5 @@
 <?php
-namespace WprAddons\Modules\AdvancedTable;
+namespace WprAddons\Modules\DataTable;
 
 use WprAddons\Base\Module_Base;
 
@@ -12,12 +12,12 @@ class Module extends Module_Base {
 	}
 	
 	public function get_name() {
-		return 'wpr-advanced-table';
+		return 'wpr-data-table';
 	}
 
 	public function get_widgets() {
 		return [
-			'Wpr_Advanced_Table', // This should match the widget/element class.
+			'Wpr_Data_Table', // This should match the widget/element class.
 		];
 	}
 	

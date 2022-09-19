@@ -42,7 +42,7 @@
 				'wpr-page-cart.default' : WprElements.widgetPageCart,
 				'wpr-my-account-pro.default' : WprElements.widgetPageMyAccount,
 				'wpr-reading-progress-bar.default' : WprElements.widgetReadingProgressBar,
-				'wpr-advanced-table.default' : WprElements.widgetAdvancedTable,
+				'wpr-data-table.default' : WprElements.widgetDataTable,
 				'global': WprElements.widgetSection,
 
 				// Single
@@ -4449,7 +4449,7 @@
 
 		},
 
-		widgetAdvancedTable: function($scope) {
+		widgetDataTable: function($scope) {
 			
 			var beforeFilter = $scope.find("tbody .wpr-table-row"),
 				itemsPerPage = +$scope.find('.wpr-table-inner-container').attr('data-rows-per-page'),
@@ -4675,8 +4675,8 @@
 					var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
 
 					this.asc = !this.asc
-					if ($scope.hasClass('wpr-advanced-table-type-custom') ? !this.asc : this.asc) {
-						if ($scope.hasClass('wpr-advanced-table-type-custom')) {
+					if ($scope.hasClass('wpr-data-table-type-custom') ? !this.asc : this.asc) {
+						if ($scope.hasClass('wpr-data-table-type-custom')) {
 							$(this).find('.wpr-sorting-icon').html('<i class="fas fa-sort-down" aria-hidden="true"></i>');
 						} else {
 							$(this).find('.wpr-sorting-icon').html('<i class="fas fa-sort-up" aria-hidden="true"></i>');
@@ -4685,9 +4685,9 @@
 						console.log(rows);
 					} 
 	
-					if($scope.hasClass('wpr-advanced-table-type-custom') ? this.asc : !this.asc) {
+					if($scope.hasClass('wpr-data-table-type-custom') ? this.asc : !this.asc) {
 						
-						if ($scope.hasClass('wpr-advanced-table-type-custom')) {
+						if ($scope.hasClass('wpr-data-table-type-custom')) {
 							$(this).find('.wpr-sorting-icon').html('<i class="fas fa-sort-up" aria-hidden="true"></i>');
 						} else {
 
@@ -4728,7 +4728,7 @@
 						});
 					} else if ( $(this).hasClass('wpr-csv')) {
 						$(this).on('click', function() {
-							htmlToCSV('why-this-arg?', "placeholder.csv", $scope.find('.wpr-advanced-table'));
+							htmlToCSV('why-this-arg?', "placeholder.csv", $scope.find('.wpr-data-table'));
 						});
 					}
 				});
@@ -4821,9 +4821,9 @@
 				document.body.appendChild(download_link);
 			
 				download_link.click();
-			} // Advanced Table CSV export
+			} // Data Table CSV export
 
-		}, // End widgetAdvancedTable
+		}, // End widgetDataTable
 
 		// Editor Check
 		editorCheck: function() {

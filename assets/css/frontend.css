@@ -11985,7 +11985,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
   /* -------------------------------------
-   == Advanced Table 
+   == Data Table 
    ---------------------------------------  */
 
   /* override twenty-twentyone margins */
@@ -11994,7 +11994,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     overflow-x: auto;
 }
 
-.wpr-advanced-table {
+.wpr-data-table {
     /* max-width: 100%!important; */
     border-collapse: collapse;
     border-spacing: 0;
@@ -12016,7 +12016,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     align-items: center;
 }
 
-.wpr-advanced-table th {
+.wpr-data-table th {
     position: relative;
 }
 
@@ -12058,7 +12058,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     align-items: center;
 }
 
-.wpr-advanced-table img {
+.wpr-data-table img {
     display: inline-block;
 }
 

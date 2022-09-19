@@ -65,7 +65,7 @@ class WPR_Templates_Library_Blocks {
 								'flip-carousel',
 								'feature-list',
 								'dual-color-heading',
-								'advanced-table',
+								'data-table',
 							];
 							
 							foreach ($modules as $title => $slug) {
