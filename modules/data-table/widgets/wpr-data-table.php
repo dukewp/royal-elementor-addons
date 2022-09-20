@@ -46,8 +46,10 @@ class Wpr_Data_Table extends Widget_Base {
 		return ['wpr-table-to-excel-js'];
 	}
 
-	public function get_custom_help_url() {
-        return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-back-to-top-help-btn';
+    public function get_custom_help_url() {
+    	if ( empty(get_option('wpr_wl_plugin_links')) )
+        // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-pricing-table-help-btn';
+    		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
 
 	public function add_control_choose_table_type() {
@@ -138,10 +140,12 @@ class Wpr_Data_Table extends Widget_Base {
 	public function add_control_stack_content_tooltip_section() {}
 
 	public function add_repeater_args_content_tooltip() {
-		return [
-			'type' => Controls_Manager::HIDDEN,
-			'default' => ''
-		];
+			return [
+				'label' => sprintf( __( 'Show Tooltip %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'separator' => 'before',
+				'classes' => 'wpr-pro-control'
+			];
 	}
 
 	public function add_repeater_args_content_tooltip_text() {
@@ -217,7 +221,7 @@ class Wpr_Data_Table extends Widget_Base {
 				'label' => esc_html__('Table Row Index', 'wpr-addons'),
 				'type' => \Elementor\Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
-				'default' => 'no',
+				'default' => 'yes',
 				'separator' => 'before'
 			]
 		);
@@ -526,16 +530,16 @@ class Wpr_Data_Table extends Widget_Base {
 				'fields' => $repeater->get_controls(),
 				'default' => [
 					[
-						'table_th' => esc_html__( 'TABLE HEADER', 'wpr-addons' ),
+						'table_th' => esc_html__( 'TABLE HEADER 1', 'wpr-addons' ),
 					],
 					[
-						'table_th' => esc_html__( 'TABLE HEADER', 'wpr-addons' ),
+						'table_th' => esc_html__( 'TABLE HEADER 2', 'wpr-addons' ),
 					],
 					[
-						'table_th' => esc_html__( 'TABLE HEADER', 'wpr-addons' ),
+						'table_th' => esc_html__( 'TABLE HEADER 3', 'wpr-addons' ),
 					],
 					[
-						'table_th' => esc_html__( 'TABLE HEADER', 'wpr-addons' ),
+						'table_th' => esc_html__( 'TABLE HEADER 4', 'wpr-addons' ),
 					],
 				],
 				'title_field' => '{{{ table_th }}}',
@@ -592,7 +596,7 @@ class Wpr_Data_Table extends Widget_Base {
 				'placeholder' => esc_html__( 'https://your-link.com', 'wpr-addons' ),
 				'show_external' => true,
 				'default' => [
-					'url' => 'https://wp-royal.com/',
+					'url' => 'https://royal-elementor-addons.com/',
 					'is_external' => true,
 					'nofollow' => true,
 				],
@@ -743,7 +747,7 @@ class Wpr_Data_Table extends Widget_Base {
 					],
 				],
                 'selectors'  => [
-                    '{{WRAPPER}} {{CURRENT_ITEM}} .wpr-td-content-wrapper i' => 'font-size: {{SIZE}}{{UNIT}}',
+                    '{{WRAPPER}} {{CURRENT_ITEM}} .wpr-td-content-wrapper i:not(.fa-question-circle)' => 'font-size: {{SIZE}}{{UNIT}}',
 				],
 				'condition' => [
 					'td_icon' => 'yes',
@@ -840,15 +844,39 @@ class Wpr_Data_Table extends Widget_Base {
 				'fields' => $repeater->get_controls(),
 				'default' => [
 					[ 'table_content_row_type' => 'row' ],
-					[ 'table_content_row_type' => 'col'	],
-					[ 'table_content_row_type' => 'col' ],
-					[ 'table_content_row_type' => 'col' ],
-					[ 'table_content_row_type' => 'col' ],
+					[ 
+						'table_content_row_type' => 'col',
+						'table_td' => 'Content 1'
+					],
+					[ 
+						'table_content_row_type' => 'col',
+						'table_td' => 'Content 2'
+					],
+					[ 
+						'table_content_row_type' => 'col',
+						'table_td' => 'Content 3'
+					],
+					[ 
+						'table_content_row_type' => 'col',
+						'table_td' => 'Content 4'
+					],
 					[ 'table_content_row_type' => 'row' ],
-					[ 'table_content_row_type' => 'col'	],
-					[ 'table_content_row_type' => 'col' ],
-					[ 'table_content_row_type' => 'col' ],
-					[ 'table_content_row_type' => 'col' ],
+					[ 
+						'table_content_row_type' => 'col',
+						'table_td' => 'Content 1'
+					],
+					[ 
+						'table_content_row_type' => 'col',
+						'table_td' => 'Content 2'
+					],
+					[ 
+						'table_content_row_type' => 'col',
+						'table_td' => 'Content 3'
+					],
+					[ 
+						'table_content_row_type' => 'col',
+						'table_td' => 'Content 4'
+					],
 				],
 				'title_field' => '{{table_content_row_type}}::{{table_td}}',
 			]
@@ -862,7 +890,8 @@ class Wpr_Data_Table extends Widget_Base {
 			'Show/Hide Export Table data buttons',
 			'Enable Live Search for Tables',
 			'Enable Table Sorting option',
-			'Enable Table Pagination. Divide Table items by pages'
+			'Enable Table Pagination. Divide Table items by pages',
+			'Enable Tooltips on each cell.'
 		] );
 
 		$this->start_controls_section(
@@ -928,7 +957,7 @@ class Wpr_Data_Table extends Widget_Base {
 					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
 					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
 				],
-				'default' => 'none',
+				'default' => 'solid',
 				'selectors' => [
 					'{{WRAPPER}} th.wpr-table-th' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} th.wpr-table-th-pag' => 'border-style: {{VALUE}};',
@@ -944,7 +973,7 @@ class Wpr_Data_Table extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#E4E4E4',
 				'selectors' => [
 					'{{WRAPPER}} th.wpr-table-th' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} th.wpr-table-th-pag' => 'border-color: {{VALUE}}',
@@ -1090,7 +1119,7 @@ class Wpr_Data_Table extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#fff',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} th' => 'color: {{VALUE}}',
 				],
@@ -1102,7 +1131,7 @@ class Wpr_Data_Table extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#4A77A4',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} tr th' => 'background-color: {{VALUE}}',
 				],
@@ -1124,7 +1153,7 @@ class Wpr_Data_Table extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#fff',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} th:hover' => 'color: {{VALUE}}; cursor: pointer;',
 				],
@@ -1136,7 +1165,7 @@ class Wpr_Data_Table extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#28517A',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} tr th:hover' => 'background-color: {{VALUE}}',
 				],
@@ -1153,7 +1182,15 @@ class Wpr_Data_Table extends Widget_Base {
 			[
 				'name'     => 'th_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} th'
+				'selector' => '{{WRAPPER}} th',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'font_weight'     => [
+						'default' => '400',
+					]
+				],
 			]
 		);
 
@@ -1170,7 +1207,7 @@ class Wpr_Data_Table extends Widget_Base {
                     ],
                 ],
                 'default'    => [
-                    'size' => 20,
+                    'size' => 15,
                 ],
                 'selectors'  => [
                     '{{WRAPPER}} .wpr-data-table thead i' => 'font-size: {{SIZE}}{{UNIT}};',
@@ -1346,7 +1383,7 @@ class Wpr_Data_Table extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => 'gray',
+				'default' => '#7A7A7A',
 				'selectors' => [
 					// '{{WRAPPER}} tr:nth-child(odd) td a' => 'color: {{VALUE}} !important',
 					// '{{WRAPPER}} tr.wpr-odd td.wpr-table-text' => 'color: {{VALUE}}',
@@ -1362,7 +1399,7 @@ class Wpr_Data_Table extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#fff',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					// '{{WRAPPER}} tr.wpr-odd td' => 'background-color: {{VALUE}}', // TODO: decide tr or td
 					'{{WRAPPER}} tbody tr:nth-child(odd) td' => 'background-color: {{VALUE}}', // TODO: decide tr or td
@@ -1384,7 +1421,7 @@ class Wpr_Data_Table extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
+				'default' => '#7A7A7A',
 				'selectors' => [
 					// '{{WRAPPER}} tr.wpr-even td a .wpr-table-text' => 'color: {{VALUE}} !important',
 					// '{{WRAPPER}} tr.wpr-even td.wpr-table-text' => 'color: {{VALUE}}',
@@ -1399,7 +1436,7 @@ class Wpr_Data_Table extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#D7B2CE',
+				'default' => '#F3F3F3',
 				'selectors' => [
 					// '{{WRAPPER}} tr.wpr-even td' => 'background-color: {{VALUE}};',
 					'{{WRAPPER}} tbody tr:nth-child(even) td' => 'background-color: {{VALUE}};',
@@ -1430,7 +1467,7 @@ class Wpr_Data_Table extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => 'gray',
+				'default' => '#7A7A7A',
 				'selectors' => [
 					// '{{WRAPPER}} tr.wpr-odd td:hover a' => 'color: {{VALUE}} !important',
 					// '{{WRAPPER}} tr.wpr-odd td:hover.wpr-table-text' => 'color: {{VALUE}} !important',
@@ -1447,7 +1484,6 @@ class Wpr_Data_Table extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#ddd',
 				'selectors' => [
 					// '{{WRAPPER}} tr.wpr-odd:hover td' => 'background-color: {{VALUE}}; cursor: pointer;',
 					'{{WRAPPER}} tbody tr:nth-child(odd):hover td' => 'background-color: {{VALUE}}; cursor: pointer;',
@@ -1469,7 +1505,7 @@ class Wpr_Data_Table extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFFFFF',
+				'default' => '#7A7A7A',
 				// 'selectors' => [
 				// 	'{{WRAPPER}} tr.wpr-even td:hover.wpr-table-text' => 'color: {{VALUE}}',
 				// 	'{{WRAPPER}} tr.wpr-even td:hover a .wpr-table-text' => 'color: {{VALUE}} !important',
@@ -1488,7 +1524,6 @@ class Wpr_Data_Table extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#B280A6',
 				'selectors' => [
 					// '{{WRAPPER}} tr.wpr-even:hover td' => 'background-color: {{VALUE}}; cursor: pointer;',
 					'{{WRAPPER}} tbody tr:nth-child(even):hover td' => 'background-color: {{VALUE}}; cursor: pointer;',
@@ -1514,7 +1549,15 @@ class Wpr_Data_Table extends Widget_Base {
 			[
 				'name'     => 'td_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} td, {{WRAPPER}} i.fa-question-circle'
+				'selector' => '{{WRAPPER}} td, {{WRAPPER}} i.fa-question-circle',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'font_weight'     => [
+						'default' => '400',
+					]
+				],
 			]
 		);
 
@@ -1532,7 +1575,7 @@ class Wpr_Data_Table extends Widget_Base {
                     ],
                 ],
                 'default'    => [
-                    'size' => 20,
+                    'size' => 15,
                 ],
                 'selectors'  => [
                     '{{WRAPPER}} .wpr-data-table tbody i:not(.fa-question-circle)' => 'font-size: {{SIZE}}{{UNIT}};',
@@ -1944,9 +1987,11 @@ class Wpr_Data_Table extends Widget_Base {
 									<a href="<?php echo esc_url($table_td[$j]['link']['url']) ?>" target="<?php echo esc_attr($table_td[$j]['external']) ?>">
 										<span class="wpr-table-text">
 											<?php 
-												echo wp_kses_post($table_td[$j]['content']);
+												echo wp_kses_post( $table_td[$j]['content'] );
 
 												$this->render_tooltip_icon( $table_td[$j] );
+												
+												$this->render_content_tooltip( $table_td[$j] ); 
 											?>
 										</span>
 									</a>
@@ -1954,7 +1999,6 @@ class Wpr_Data_Table extends Widget_Base {
 
 								</div>
 
-								<?php $this->render_content_tooltip( $table_td[$j] ); ?>
 							</td>
 							<?php }
 							} ?>

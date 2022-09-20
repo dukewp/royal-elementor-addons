@@ -12154,6 +12154,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     transform-origin: center;
 } */
 
+.wpr-table-text {
+    position: relative;
+}
+
 .wpr-data-table-th-img,
 .wpr-table-text {
     vertical-align: middle;
@@ -12191,7 +12195,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 .wpr-data-table-content-tooltip {
     position: absolute;
-    top: 0;
+    top: -5px;
     left: 50%;
     border-radius: 4px;
     padding: 6px 10px;
@@ -12223,7 +12227,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-table-td:hover .wpr-data-table-content-tooltip {
     visibility: visible;
     opacity: 1;
-    top: 5px;
+    top: 0;
     -ms-transform: translate(-50%, -100%);
     transform: translate(-50%, -100%);
     -webkit-transform: translate(-50%, -100%);
