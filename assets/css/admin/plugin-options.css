@@ -41,7 +41,7 @@
   font-size: 16px;
 }
 
-/* .wpr-preview-buttons a:last-child { */
+.wpr-preview-buttons a:last-child,
 .wpr-preview-buttons a.wpr-how-to-use-theme-builder {
   background-color: transparent;
   border: 2px solid #6A4BFF !important;
@@ -49,15 +49,15 @@
   padding: 5px 22px;
 }
 
-.wpr-how-to-use-woo-builder {
+.wpr-preview-buttons a.wpr-how-to-use-woo-builder {
   background-color: transparent !important;
   border: 2px solid #96588a !important;
   color: #96588a !important;
   padding: 5px 22px;
 }
 
-.wpr-how-to-use-woo-builder:hover,
-.wpr-how-to-use-woo-builder:focus {
+.wpr-preview-buttons a.wpr-how-to-use-woo-builder:hover,
+.wpr-preview-buttons a.wpr-how-to-use-woo-builder:focus {
   color: #fff !important;
   background: #96588a !important;
   padding: 8px 22px !important;
