@@ -2126,20 +2126,16 @@ class Wpr_Charts extends Widget_Base {
 
         extract($settings);
 
-		// var_dump($tooltip_caret_size);
-
 		$data_charts_array = [];
 
-		if ( in_array($chart_type, array('bar', 'bar_horizontal', 'line', 'radar'))) {
-
-			var_dump($chart_type);
+		if ( in_array($chart_type, array('bar', 'bar_horizontal', 'line', 'radar')) ) {
 			
-			if(!empty($charts_labels_data)):
+			if ( !empty($charts_labels_data) ) :
 				$data_charts_array['labels'] = explode(',', trim($charts_labels_data));
 			endif;
 
-			if(is_array($charts_data_set) && sizeof($charts_data_set)) {
-				foreach($charts_data_set as $chart_data) {
+			if ( is_array($charts_data_set) && sizeof($charts_data_set) ) {
+				foreach ( $charts_data_set as $chart_data ) {
 					$data_charts_array['datasets'][] = [
 						'label' => $chart_data['chart_data_label'],
 						'data' => array_map('floatval', explode(',', trim($chart_data['chart_data_set'], ','))),
@@ -2154,7 +2150,7 @@ class Wpr_Charts extends Widget_Base {
 				}
 			}
 		} else {
-			if(is_array($charts_data_set) && sizeof($charts_data_set) && $settings['data_source'] !== 'csv') {
+			if ( is_array($charts_data_set) && sizeof($charts_data_set) && $settings['data_source'] !== 'csv' ) {
 				$chart_data_number_values = [];
 				$chart_background_colors = [];
 				$chart_background_hover_colors = [];
@@ -2163,24 +2159,24 @@ class Wpr_Charts extends Widget_Base {
 				$chart_data_border_width = [];
 				$chart_data_bar_percentage = [];
 				
-				foreach($charts_data_set AS $labels_data):
+				foreach ( $charts_data_set AS $labels_data ) :
 					$data_charts_array['labels'][] = $labels_data['chart_data_label'];
 				endforeach;
 			
-				if(!empty($charts_labels_data)):
+				if ( !empty($charts_labels_data) ) :
 					$data_charts_array_test = explode(',', trim($charts_labels_data));
 				endif;
 
-				foreach($data_charts_array_test as $key=>$test_data) {
+				foreach ( $data_charts_array_test as $key=>$test_data ) {
 					$chart_data_number_values[$key] = [];
 					$outer_key = $key;
-					foreach($charts_data_set as $key=>$chart_data) {
+					foreach ( $charts_data_set as $key=>$chart_data ) {
 						$number_value = sizeof(explode(',', trim($chart_data['chart_data_set'], ','))) >= $outer_key + 1 ? array_map('floatval', explode(',', trim($chart_data['chart_data_set'], ',')))[$outer_key] : '0';
 						array_push($chart_data_number_values[$outer_key],  $number_value);
 					}
 				}
 				
-				foreach($charts_data_set as $key=>$chart_data) {
+				foreach ( $charts_data_set as $key=>$chart_data ) {
 					array_push($chart_background_colors, trim($chart_data['chart_data_background_color']));
 					array_push($chart_background_hover_colors, trim($chart_data['chart_data_background_color_hover']));
 					array_push($chart_data_border_colors, trim($chart_data['chart_data_border_color']));
@@ -2189,7 +2185,7 @@ class Wpr_Charts extends Widget_Base {
 					!empty($settings['column_width_x']) ? array_push($chart_data_bar_percentage, trim($chart_data['column_width_x'])) : '';
 				}
 
-				foreach($data_charts_array_test as $key=>$data_test) {
+				foreach ( $data_charts_array_test as $key=>$data_test ) {
 					$data_charts_array['datasets'][] = [
 						'label' => $data_test, // test with fixed value 
 						'data' => $chart_data_number_values[$key],
@@ -2333,7 +2329,7 @@ class Wpr_Charts extends Widget_Base {
         
         echo '<div ' . $this->get_render_attribute_string( 'chart-settings') . '>';
 
-			if ($data_source === 'csv') {
+			if ( $data_source === 'csv' ) {
 				echo '<span class="wpr-rotating-plane"></span>';
 			}
 
