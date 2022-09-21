@@ -571,6 +571,7 @@
 
 		widgetGrid: function( $scope ) {
 			var iGrid = $scope.find( '.wpr-grid' );
+			var loadedItems;
 
 			if ( ! iGrid.length ) {
 				return;
@@ -768,6 +769,22 @@
 						if ( settings.pagination_max_pages - 1 !== pagesLoaded ) {
 							if ( 'load-more' === settings.pagination_type ) {
 								pagination.find( '.wpr-load-more-btn' ).fadeIn();
+
+								// if ( '*' !== $scope.find('.wpr-active-filter').attr('data-filter') ) {
+								// 	items.each(function() {
+		
+								// 		if ( !$(this).hasClass($scope.find('.wpr-active-filter').attr('data-filter').substring(1)) ) {
+								// 			loadedItems = false;
+								// 		} else {
+								// 			loadedItems = true;
+								// 			return false;
+								// 		}
+								// 	});
+		
+								// 	if ( !loadedItems ) {
+								// 		$scope.find( '.wpr-grid' ).infiniteScroll( 'loadNextPage' );
+								// 	}
+								// }
 							}
 						} else {
 							pagination.find( '.wpr-pagination-finish' ).fadeIn( 1000 );
@@ -1708,6 +1725,12 @@
 
 					// Infinite Scroll
 					if ( 'infinite-scroll' === settings.pagination_type ) {
+						if ( 0 === iGrid.find($(this).attr('data-filter')).length ) {
+							$scope.find( '.wpr-grid' ).infiniteScroll( 'loadNextPage' );
+						}
+					}
+
+					if ( 'load-more' === settings.pagination_type ) {
 						if ( 0 === iGrid.find($(this).attr('data-filter')).length ) {
 							$scope.find( '.wpr-grid' ).infiniteScroll( 'loadNextPage' );
 						}
@@ -4416,8 +4439,6 @@
 				var initialPaddingTop = $('body').css('paddingTop');
 				var initialPaddingBottom = $('body').css('paddingBottom');
 
-				console.log(initialPaddingTop, initialPaddingBottom);
-
 				if ( '0px' === rpbContainer.css('top') ) {
 					if ( 'colored' == rpbContainer.data('background-type') ) {
 						$('body').css('paddingTop', $scope.find('.wpr-reading-progress-bar').css('height'));
@@ -4460,6 +4481,7 @@
 
 			// Table Custom Pagination
 			if ( 'yes' === $scope.find('.wpr-table-inner-container').attr('data-custom-pagination') ) {
+
 				var tableRows = initialRows.filter(function(index) {
 					return index < $scope.find('.wpr-table-inner-container').attr('data-rows-per-page');
 				});
@@ -4565,6 +4587,8 @@
 				});
 
 			}
+
+			$scope.find('.wpr-table-inner-container').removeClass('wpr-hide-table-before-arrange');
 			
 			// var tableColumns =  '' !== ($scope.find('.wpr-table-inner-container').attr('data-table-columns')) ? ($scope.find('.wpr-table-inner-container').attr('data-table-columns')) : '';
 
@@ -4624,15 +4648,25 @@
 			// Table Live Search
 			beforeFilter = $scope.find("tbody .wpr-table-row");
 			$scope.find(".wpr-table-live-search").keyup(function () {
+				if ( this.value !== '' ) {
+					$scope.find('.wpr-table-pagination-cont').addClass('wpr-hide-pagination-on-search');
+				} else {
+					$scope.find('.wpr-table-pagination-cont').removeClass('wpr-hide-pagination-on-search');
+				}
 				value = this.value.toLowerCase().trim();
-				
-				var afterFilter = initialRows.each(function (index) {
+
+				var afterFilter = [];
+
+				initialRows.each(function (index) {
 					// if (!index) return; // TODO: restore if better
 					$(this).find("td").each(function () {
 						var id = $(this).text().toLowerCase().trim();
 						var not_found = (id.indexOf(value) == -1);
-						$(this).closest('tr').toggle(!not_found);
-						return not_found;
+						// $(this).closest('tr').toggle(!not_found);
+						// return not_found;
+						if ( !not_found ) {
+							afterFilter.push($(this).closest('tr'));
+						}
 					});
 				});
 
@@ -4647,12 +4681,16 @@
 
 			// Table Sorting
 			if ( 'yes' === $scope.find('.wpr-table-inner-container').attr('data-table-sorting') ) {
-				$(document).click(function() {
-					$scope.find('th').each(function() {
-						if($(this).hasClass('wpr-active-td-bg-color')) {
-							$(this).removeClass('wpr-active-td-bg-color');
+				$(window).click(function(e) {
+					if ( !$(e.target).hasClass('wpr-table-th') && 0 === $(e.target).closest('.wpr-table-th').length ) {
+						if ( !$(e.target).hasClass('wpr-active-td-bg-color') && 0 === $(e.target).closest('.wpr-active-td-bg-color').length ) {
+							$scope.find('td').each(function() {
+								if($(this).hasClass('wpr-active-td-bg-color')) {
+									$(this).removeClass('wpr-active-td-bg-color');
+								}
+							});
 						}
-					})
+					}
 				});
 
 				$scope.find('th').click(function(){
@@ -4682,7 +4720,6 @@
 							$(this).find('.wpr-sorting-icon').html('<i class="fas fa-sort-up" aria-hidden="true"></i>');
 						}
 						rows = rows.reverse() 
-						console.log(rows);
 					} 
 	
 					if($scope.hasClass('wpr-data-table-type-custom') ? this.asc : !this.asc) {
@@ -4718,7 +4755,7 @@
 				exportBtn.each(function() {
 					if ( $(this).hasClass('wpr-xls')) {
 						$(this).on('click', function() {    
-							let table = document.getElementsByTagName("table");
+							let table = $scope.find('table');
 							TableToExcel.convert(table[0], { // html code may contain multiple tables so here we are refering to 1st table tag
 								name: `export.xlsx`, // fileName you could use any name
 								sheet: {
@@ -4753,16 +4790,13 @@
 
 				if($scope.find('.wpr-entry-info').length == 0) {
 
-					$scope.find('.wpr-table-pagination-cont').prepend(`
-						<div class="wpr-entry-info" style="white-space: nowrap;">Showing ${firstEntry} to ${lastEntry} of ${initialRows.length} entries</div>
+					$scope.find('.wpr-entry-info').html(`
+						Showing ${firstEntry} to ${lastEntry} of ${initialRows.length} Entries.</div>
 					`);
 
 				}
 
 				$scope.find('.wpr-entry-info').html(`Showing ${firstEntry} to ${lastEntry} of ${initialRows.length} entries`);
-
-				$scope.find('.wpr-table-pagination-cont').css({'display': 'flex', 'justify-content': 'space-between', 'align-items': 'center'});
-				$scope.find('.wpr-table-custom-pagination').css('justify-content', 'flex-end');
 			}
 
 			function adjustPaginationList() {
