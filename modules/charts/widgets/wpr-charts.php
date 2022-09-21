@@ -833,7 +833,7 @@ class Wpr_Charts extends Widget_Base {
 					'right' => esc_html__( 'Right', 'wpr-addons' ),
 					'bottom' => esc_html__( 'Bottom', 'wpr-addons' ),
 					'left' => esc_html__( 'Left', 'wpr-addons' ),
-					'chartArea' => esc_html__( 'chartArea', 'wpr-addons' ),
+					// 'chartArea' => esc_html__( 'chartArea', 'wpr-addons' ),
 				],
 				'condition' => [
 					'show_chart_title' => 'yes',
