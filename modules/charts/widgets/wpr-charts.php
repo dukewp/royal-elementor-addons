@@ -161,7 +161,7 @@ class Wpr_Charts extends Widget_Base {
 		$this->add_control(
 			'data_type',
 			[
-				'label'              => __( 'Data Type', 'wpr-addons' ),
+				'label'              => __( 'Data Grid Type', 'wpr-addons' ),
 				'type'               => Controls_Manager::SELECT,
 				'options'            => [
 					'linear'      => __( 'Linear', 'wpr-addons' ),
