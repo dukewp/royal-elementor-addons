@@ -355,7 +355,7 @@ class Wpr_Data_Table extends Widget_Base {
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'default' => esc_html__( 'Table Title' , 'wpr-addons' ),
-				'dynamic'   => ['active' => true],
+				// 'dynamic' => ['active' => true],
 				'label_block' => true
 			]
 		);
@@ -396,10 +396,10 @@ class Wpr_Data_Table extends Widget_Base {
 				'label_block' => false,
 				'default' => 'left',
 				'options' => [
-					'left' => esc_html__('left', 'wpr-addons'),
-					'right' => esc_html__('right', 'wpr-addons'),
-					'top' => esc_html__('top', 'wpr-addons'),
-					'bottom' => esc_html__('bottom', 'wpr-addons'),
+					'left' => esc_html__('Left', 'wpr-addons'),
+					'right' => esc_html__('Right', 'wpr-addons'),
+					'top' => esc_html__('Top', 'wpr-addons'),
+					'bottom' => esc_html__('Bottom', 'wpr-addons'),
 				],
 				'condition' => [
 					'header_icon' => 'yes'
@@ -519,6 +519,33 @@ class Wpr_Data_Table extends Widget_Base {
 				'default' 		=> 1,
 				'min'     		=> 1,
 				'separator' => 'before'
+			]
+		);
+
+		$repeater->add_responsive_control(
+			'th_individual_align',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'label_block' => false,
+				'separator' => 'before',
+				'options' => [
+					'left' => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} {{CURRENT_ITEM}}' => 'text-align: {{VALUE}} !important;',
+				],
 			]
 		);
 
@@ -644,10 +671,10 @@ class Wpr_Data_Table extends Widget_Base {
 				'label_block' => false,
 				'default' => 'left',
 				'options' => [
-					'left' => esc_html__('left', 'wpr-addons'),
-					'right' => esc_html__('right', 'wpr-addons'),
-					'top' => esc_html__('top', 'wpr-addons'),
-					'bottom' => esc_html__('bottom', 'wpr-addons'),
+					'left' => esc_html__('Left', 'wpr-addons'),
+					'right' => esc_html__('Right', 'wpr-addons'),
+					'top' => esc_html__('Top', 'wpr-addons'),
+					'bottom' => esc_html__('Bottom', 'wpr-addons'),
 				],
 				'condition' => [
 					'td_icon' => 'yes'
@@ -761,7 +788,7 @@ class Wpr_Data_Table extends Widget_Base {
 			[
 				'label' => esc_html__( 'Icon Color', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
-				'default' => '#fff',
+				'default' => '#7A7A7A',
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}} i' => 'color: {{VALUE}}'
 				],
@@ -833,6 +860,33 @@ class Wpr_Data_Table extends Widget_Base {
 				'condition' 	=> [
 					'table_content_row_type' => 'col'
 				]
+			]
+		);
+
+		$repeater->add_responsive_control(
+			'td_individual_align',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'label_block' => false,
+				'separator' => 'before',
+				'options' => [
+					'left' => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} {{CURRENT_ITEM}}' => 'text-align: {{VALUE}} !important;',
+				],
 			]
 		);
 	

@@ -770,21 +770,21 @@
 							if ( 'load-more' === settings.pagination_type ) {
 								pagination.find( '.wpr-load-more-btn' ).fadeIn();
 
-								// if ( '*' !== $scope.find('.wpr-active-filter').attr('data-filter') ) {
-								// 	items.each(function() {
+								if ( '*' !== $scope.find('.wpr-active-filter').attr('data-filter') ) {
+									let dataFilterClass = $scope.find('.wpr-active-filter').attr('data-filter').substring(1);
+									items.each(function() {
+										if ( !$(this).hasClass(dataFilterClass) ) {
+											loadedItems = false;
+										} else {
+											loadedItems = true;
+											return false;
+										}
+									});
 		
-								// 		if ( !$(this).hasClass($scope.find('.wpr-active-filter').attr('data-filter').substring(1)) ) {
-								// 			loadedItems = false;
-								// 		} else {
-								// 			loadedItems = true;
-								// 			return false;
-								// 		}
-								// 	});
-		
-								// 	if ( !loadedItems ) {
-								// 		$scope.find( '.wpr-grid' ).infiniteScroll( 'loadNextPage' );
-								// 	}
-								// }
+									if ( !loadedItems ) {
+										$scope.find( '.wpr-grid' ).infiniteScroll( 'loadNextPage' );
+									}
+								}
 							}
 						} else {
 							pagination.find( '.wpr-pagination-finish' ).fadeIn( 1000 );
@@ -1730,6 +1730,7 @@
 						}
 					}
 
+					// Load More
 					if ( 'load-more' === settings.pagination_type ) {
 						if ( 0 === iGrid.find($(this).attr('data-filter')).length ) {
 							$scope.find( '.wpr-grid' ).infiniteScroll( 'loadNextPage' );
