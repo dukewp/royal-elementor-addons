@@ -1013,6 +1013,7 @@ class Wpr_Data_Table extends Widget_Base {
 				],
 				'default' => 'solid',
 				'selectors' => [
+					'{{WRAPPER}} .wpr-table-inner-container' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} th.wpr-table-th' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} th.wpr-table-th-pag' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} td.wpr-table-td' => 'border-style: {{VALUE}};',
@@ -1029,6 +1030,7 @@ class Wpr_Data_Table extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#E4E4E4',
 				'selectors' => [
+					'{{WRAPPER}} .wpr-table-inner-container' => 'border-color: {{VALUE}};',
 					'{{WRAPPER}} th.wpr-table-th' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} th.wpr-table-th-pag' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} td.wpr-table-td' => 'border-color: {{VALUE}}',
@@ -1053,11 +1055,11 @@ class Wpr_Data_Table extends Widget_Base {
 					'left' => 1,
 				],
 				'selectors' => [
+					'{{WRAPPER}} .wpr-table-inner-container' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} th.wpr-table-th' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} th.wpr-table-th-pag' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} td.wpr-table-td' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} td.wpr-table-td-pag' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					// '{{WRAPPER}} li' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
 					'all_border_type!' => 'none',
@@ -1081,10 +1083,12 @@ class Wpr_Data_Table extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} th:first-child' => 'border-top-left-radius: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} th:last-child' => 'border-top-right-radius: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} tr:last-child td:first-child' => 'border-bottom-left-radius: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} tr:last-child td:last-child' => 'border-bottom-right-radius: {{SIZE}}{{UNIT}};'
+					'{{WRAPPER}} .wpr-table-inner-container' => 'border-radius: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} table' => 'border-radius: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}} th:first-child' => 'border-top-left-radius: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}} th:last-child' => 'border-top-right-radius: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}} tr:last-child td:first-child' => 'border-bottom-left-radius: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}} tr:last-child td:last-child' => 'border-bottom-right-radius: {{SIZE}}{{UNIT}};'
 				]
 			]
 		);
