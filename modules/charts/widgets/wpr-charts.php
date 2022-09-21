@@ -195,7 +195,7 @@ class Wpr_Charts extends Widget_Base {
 		$this->add_control(
 			'exclude_dataset_on_click',
 			[
-				'label'   => esc_html__('Exclude Dataset On Click', 'wpr-addons'),
+				'label'   => esc_html__('Exclude Data on Label Click', 'wpr-addons'),
 				'type'    => Controls_Manager::SWITCHER ,
 				'default' => 'yes',
 				'return_value' => 'yes',
@@ -207,7 +207,7 @@ class Wpr_Charts extends Widget_Base {
 		$this->add_control(
 			'stacked_bar_chart',
 			[
-				'label'   => esc_html__('Stacked Bar Chart', 'wpr-addons'),
+				'label'   => esc_html__('Enable Stacked Chart', 'wpr-addons'),
 				'type'    => Controls_Manager::SWITCHER ,
 				'default' => 'yes',
 				'return_value' => 'yes',
@@ -221,7 +221,7 @@ class Wpr_Charts extends Widget_Base {
 		$this->add_control(
 			'inner_datalabels',
 			[
-				'label'   => esc_html__('Inner Datalabels', 'wpr-addons'),
+				'label'   => esc_html__('Show Data Values', 'wpr-addons'),
 				'type'    => Controls_Manager::SWITCHER ,
 				'default' => 'false',
 				'return_value' => 'true',
@@ -294,6 +294,7 @@ class Wpr_Charts extends Widget_Base {
 				'default' => 'yes',
 				'return_value' => 'yes',
 				'condition' => [
+					'chart_type' => ['line', 'radar'], 
 					'chart_animation' => 'yes',
 				]
 			]
@@ -314,7 +315,7 @@ class Wpr_Charts extends Widget_Base {
 		$this->add_control(
 			'animation_transition_type',
 			[
-				'label'   => esc_html__('Animation Transition Style', 'wpr-addons'),
+				'label'   => esc_html__('Animation Timing', 'wpr-addons'),
 				'type'    => Controls_Manager::SELECT,
 				'default' => 'linear',
 				'options' => [
