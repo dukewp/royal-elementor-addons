@@ -418,7 +418,7 @@ class Wpr_Charts extends Widget_Base {
 			'chart_data_background_color', [
 				'label'       => esc_html__('Background Color', 'wpr-addons'),
 				'type'        => Controls_Manager::COLOR,
-				'default'     => 'rgba(23, 187, 87, 0.48)',
+				'default'     => '#605BE5',
 			]
 		);
 
@@ -426,7 +426,7 @@ class Wpr_Charts extends Widget_Base {
 			'chart_data_border_color', [
 				'label'       => esc_html__('Border Color', 'wpr-addons'),
 				'type'        => Controls_Manager::COLOR,
-				'default'     => 'rgba(87, 187, 23, 0.48)',
+				'default'     => '#605BE5',
 			]
 		);
 
@@ -444,7 +444,7 @@ class Wpr_Charts extends Widget_Base {
 			'chart_data_background_color_hover', [
 				'label'       => esc_html__('Background Color', 'wpr-addons'),
 				'type'        => Controls_Manager::COLOR,
-				'default' => 'rgba(23, 23, 23, 0.5)'
+				'default' => '#7A7A7ACC'
 			]
 		);
 
@@ -452,7 +452,7 @@ class Wpr_Charts extends Widget_Base {
 			'chart_data_border_color_hover', [
 				'label'       => esc_html__('Border Color', 'wpr-addons'),
 				'type'        => Controls_Manager::COLOR,
-				'default'     => 'rgba(87, 187, 23, 0.48)',
+				'default'     => '#7A7A7ACC',
 			]
 		);
 		$chart_repeater_labels->end_controls_tab();
@@ -477,22 +477,22 @@ class Wpr_Charts extends Widget_Base {
 					[
 						'chart_data_label'            => esc_html__('Laptops', 'wpr-addons'),
 						'chart_data_set'              => '13,20,15',
-						'chart_data_background_color'   => 'rgba(242,41,91,0.48)',
-						'chart_data_border_color' => 'rgba(242,41,91,0.48)',
+						'chart_data_background_color'   => '#605BE5CC',
+						'chart_data_border_color' => '#605BE5CC',
 						'chart_data_border_width' => 1,
 					],
 					[
 						'chart_data_label'            => esc_html__('Phones', 'wpr-addons'),
 						'chart_data_set'              => '20,10,33',
-						'chart_data_background_color'   => 'rgba(69,53,244,0.48)',
-						'chart_data_border_color' => 'rgba(69,53,244,0.48)',
+						'chart_data_background_color'   => '#E5605BCC',
+						'chart_data_border_color' => '#E5605BCC',
 						'chart_data_border_width' => 1,
 					],
 					[
 						'chart_data_label'            => esc_html__('Other', 'wpr-addons'),
 						'chart_data_set'              => '10,3,23',
-						'chart_data_background_color'   => 'rgba(239,239,40,0.57)',
-						'chart_data_border_color' => 'rgba(239,239,40,0.57)',
+						'chart_data_background_color'   => '#5BE560CC',
+						'chart_data_border_color' => '#5BE560CC',
 						'chart_data_border_width' => 1,
 					],
 
