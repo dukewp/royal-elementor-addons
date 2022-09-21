@@ -974,7 +974,7 @@ class Wpr_Charts extends Widget_Base {
 		$this->add_control(
 			'tooltips_percent',
 			[
-				'label'              => __( 'Convert Values to percent', 'wpr-addons' ),
+				'label'              => __( 'Convert Values to Percents', 'wpr-addons' ),
 				'type'               => Controls_Manager::SWITCHER,
 				'return_value'       => 'true',
 				'frontend_available' => true,
