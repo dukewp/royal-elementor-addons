@@ -146,8 +146,8 @@ class Wpr_Charts extends Widget_Base {
 				'description' => esc_html__('doughnut, pie and polarArea charts only work with custom data source', 'wpr-addons'),
 				'default' => 'bar',
 				'options' => [
-					'bar'           => esc_html__('Bar', 'wpr-addons'),
-					'bar_horizontal' => esc_html__('Bar (Horizontal)', 'wpr-addons'),
+					'bar'           => esc_html__('Bar Vertical', 'wpr-addons'),
+					'bar_horizontal' => esc_html__('Bar Horizontal', 'wpr-addons'),
 					'line'          => esc_html__('Line', 'wpr-addons'),
 					'radar'         => esc_html__('Radar', 'wpr-addons'),
 					'doughnut'      => esc_html__('Doughnut', 'wpr-addons'),
