@@ -4589,59 +4589,6 @@
 			}
 
 			$scope.find('.wpr-table-inner-container').removeClass('wpr-hide-table-before-arrange');
-			
-			// var tableColumns =  '' !== ($scope.find('.wpr-table-inner-container').attr('data-table-columns')) ? ($scope.find('.wpr-table-inner-container').attr('data-table-columns')) : '';
-
-			// if ($scope.find('.wpr-table-th').length > tableColumns && tableColumns !== '') {
-
-			// 	var thisItemText = [];
-			// 	var hiddenTheadText = [];
-				
-			// 	$scope.find('.wpr-table-th').each(function(index){
-			// 		if(index >= tableColumns) {
-			// 			$(this).css('display', 'none');
-			// 			hiddenTheadText.push($(this).text());
-			// 		}
-			// 	});
-
-			// 	beforeFilter.each(function(index){
-			// 		$(this).find('.wpr-table-td').each(function(index) {
-			// 			if(index >= tableColumns) {
-			// 				$(this).css('display', 'none');
-			// 			}
-
-			// 			if(index == 0) {
-			// 				$(this).addClass('wpr-table-tr-before');
-			// 			}
-			// 		})
-			// 	});
-
-			// 	$(document).on('click', '.wpr-table-tr-before', function() {
-
-			// 			var colspanNum = 'yes' === $scope.find('.wpr-table-inner-container').attr('data-row-pagination') ? +tableColumns + 1 : tableColumns;
-
-			// 			thisItemText = [];
-			// 			var tdTextCount = 0;
-
-			// 			$(this).toggleClass('wpr-table-tr-before-remove');
-
-			// 			$(this).closest('.wpr-table-row').find('.wpr-table-td').each(function(index) {
-			// 				if ( index >= tableColumns ) {
-			// 					thisItemText.push(`<li class="wpr-table-hidden-td" style="font-weight: bold; border-top: 1px solid black; border-bottom: 1px solid black;">${hiddenTheadText[tdTextCount]}</li><li class="wpr-table-hidden-td" style="font-weight: light;">${$(this).text() === '' ? 'empty' : $(this).text()}</li>`);
-			// 					tdTextCount++;
-			// 				} 
-			// 			});
-
-			// 			if( !$(this).closest('.wpr-table-row').next('.wpr-table-appended-tr').length ) {
-							
-			// 				$(this).closest('.wpr-table-row').after('<tr class="wpr-table-appended-tr" style="align-items: center; width: 100%; text-align: center;"><td class="wpr-table-appended-td" colspan="'+ colspanNum +'" style="width: 100%; text-align: center; margin: auto;"><ul class="appended-ul">'+ thisItemText.toString().replace(/,/g, '') +'</ul></td></tr>');
-
-			// 			} else {
-			// 				$(this).closest('.wpr-table-row').next('.wpr-table-appended-tr').remove();
-			// 			}
-
-			// 	});
-			// }
 
 			entryInfo();
 
@@ -4788,15 +4735,7 @@
 					lastEntry = itemsPerPage * entryPage - (itemsPerPage - $scope.find('tbody tr').length),
 					firstEntry = lastEntry - $scope.find('tbody tr').length + 1;
 
-				if($scope.find('.wpr-entry-info').length == 0) {
-
-					$scope.find('.wpr-entry-info').html(`
-						Showing ${firstEntry} to ${lastEntry} of ${initialRows.length} Entries.</div>
-					`);
-
-				}
-
-				$scope.find('.wpr-entry-info').html(`Showing ${firstEntry} to ${lastEntry} of ${initialRows.length} entries`);
+				$scope.find('.wpr-entry-info').html('Showing ' + firstEntry + ' to ' + lastEntry + ' of ' + initialRows.length + ' Entries.');
 			}
 
 			function adjustPaginationList() {

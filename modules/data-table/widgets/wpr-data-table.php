@@ -1781,7 +1781,6 @@ class Wpr_Data_Table extends Widget_Base {
 				$oddEven = $countRows % 2 == 0 ? 'wpr-even' : 'wpr-odd';
 				echo '<tr class="wpr-table-row  '. esc_attr($oddEven) .'">';
 				foreach ($csvcontents as $column) {
-					// var_dump($column);
 					echo '<td class="wpr-table-td wpr-table-text">'. $column .'</td>';
 				}
 				echo '</tr>';
