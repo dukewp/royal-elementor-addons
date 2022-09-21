@@ -12030,6 +12030,24 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     margin-bottom: 0;
 }
 
+.wpr-data-table tr:first-child th {
+    border-top: none !important;
+}
+
+.wpr-data-table tr:last-child td {
+    border-bottom: none !important;
+}
+
+.wpr-data-table tr th:first-child,
+.wpr-data-table tr td:first-child {
+    border-left: none !important;
+}
+
+.wpr-data-table tr th:last-child,
+.wpr-data-table tr td:last-child {
+    border-right: none !important;
+}
+
 .wpr-flex-column { 
     display: -webkit-box; 
     display: -ms-flexbox; 

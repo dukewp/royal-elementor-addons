@@ -1448,6 +1448,7 @@ class Wpr_Data_Table extends Widget_Base {
 					// '{{WRAPPER}} tr.wpr-odd td a' => 'color: {{VALUE}} !important',
 					'{{WRAPPER}} tbody tr:nth-child(odd) td.wpr-table-text' => 'color: {{VALUE}}',
 					'{{WRAPPER}} tbody tr:nth-child(odd) td a' => 'color: {{VALUE}} !important',
+					'{{WRAPPER}} tbody tr:nth-child(odd) td' => 'color: {{VALUE}}'
 				],
 			]
 		);
@@ -1485,6 +1486,7 @@ class Wpr_Data_Table extends Widget_Base {
 					// '{{WRAPPER}} tr.wpr-even td.wpr-table-text' => 'color: {{VALUE}}',
 					'{{WRAPPER}} tbody tr:nth-child(even) td a .wpr-table-text' => 'color: {{VALUE}} !important',
 					'{{WRAPPER}} tbody tr:nth-child(even) td.wpr-table-text' => 'color: {{VALUE}}',
+					'{{WRAPPER}} tbody tr:nth-child(even) td.wpr-table-td-pag' => 'color: {{VALUE}}',
 				],
 			]
 		);
