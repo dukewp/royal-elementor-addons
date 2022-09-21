@@ -195,11 +195,10 @@ class Wpr_Charts extends Widget_Base {
 		$this->add_control(
 			'exclude_dataset_on_click',
 			[
-				'label'   => esc_html__('Exclude Data on Label Click', 'wpr-addons'),
+				'label'   => esc_html__('Exclude Data on Legend Click', 'wpr-addons'),
 				'type'    => Controls_Manager::SWITCHER ,
 				'default' => 'yes',
 				'return_value' => 'yes',
-				'separator' => 'before',
 				'separator' => 'before'
 			]
 		);
@@ -211,9 +210,8 @@ class Wpr_Charts extends Widget_Base {
 				'type'    => Controls_Manager::SWITCHER ,
 				'default' => 'yes',
 				'return_value' => 'yes',
-				'separator' => 'before',
 				'condition' => [
-					'chart_type' => ['bar', 'bar_horizontal', 'line']
+					'chart_type' => ['bar', 'bar_horizontal', 'radar', 'doughnut', 'pie']
 				]
 			]
 		);
@@ -225,7 +223,9 @@ class Wpr_Charts extends Widget_Base {
 				'type'    => Controls_Manager::SWITCHER ,
 				'default' => 'false',
 				'return_value' => 'true',
-				'separator' => 'before',
+				'condition' => [
+					'chart_type' => ['bar', 'bar_horizontal', 'line', '']
+				]
 			]
 		);
 
