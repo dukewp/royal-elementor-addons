@@ -146,8 +146,8 @@ class Wpr_Charts extends Widget_Base {
 				'description' => esc_html__('doughnut, pie and polarArea charts only work with custom data source', 'wpr-addons'),
 				'default' => 'bar',
 				'options' => [
-					'bar'           => esc_html__('Bar', 'wpr-addons'),
-					'bar_horizontal' => esc_html__('Bar (Horizontal)', 'wpr-addons'),
+					'bar'           => esc_html__('Bar Vertical', 'wpr-addons'),
+					'bar_horizontal' => esc_html__('Bar Horizontal', 'wpr-addons'),
 					'line'          => esc_html__('Line', 'wpr-addons'),
 					'radar'         => esc_html__('Radar', 'wpr-addons'),
 					'doughnut'      => esc_html__('Doughnut', 'wpr-addons'),
@@ -161,7 +161,7 @@ class Wpr_Charts extends Widget_Base {
 		$this->add_control(
 			'data_type',
 			[
-				'label'              => __( 'Data Type', 'wpr-addons' ),
+				'label'              => __( 'Data Grid Type', 'wpr-addons' ),
 				'type'               => Controls_Manager::SELECT,
 				'options'            => [
 					'linear'      => __( 'Linear', 'wpr-addons' ),
@@ -833,7 +833,7 @@ class Wpr_Charts extends Widget_Base {
 					'right' => esc_html__( 'Right', 'wpr-addons' ),
 					'bottom' => esc_html__( 'Bottom', 'wpr-addons' ),
 					'left' => esc_html__( 'Left', 'wpr-addons' ),
-					'chartArea' => esc_html__( 'chartArea', 'wpr-addons' ),
+					// 'chartArea' => esc_html__( 'chartArea', 'wpr-addons' ),
 				],
 				'condition' => [
 					'show_chart_title' => 'yes',
