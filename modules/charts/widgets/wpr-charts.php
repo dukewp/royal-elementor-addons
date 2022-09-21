@@ -195,11 +195,10 @@ class Wpr_Charts extends Widget_Base {
 		$this->add_control(
 			'exclude_dataset_on_click',
 			[
-				'label'   => esc_html__('Exclude Data on Label Click', 'wpr-addons'),
+				'label'   => esc_html__('Exclude Data on Legend Click', 'wpr-addons'),
 				'type'    => Controls_Manager::SWITCHER ,
 				'default' => 'yes',
 				'return_value' => 'yes',
-				'separator' => 'before',
 				'separator' => 'before'
 			]
 		);
@@ -211,9 +210,8 @@ class Wpr_Charts extends Widget_Base {
 				'type'    => Controls_Manager::SWITCHER ,
 				'default' => 'yes',
 				'return_value' => 'yes',
-				'separator' => 'before',
 				'condition' => [
-					'chart_type' => ['bar', 'bar_horizontal', 'line']
+					'chart_type' => ['bar', 'bar_horizontal', 'radar', 'doughnut', 'pie']
 				]
 			]
 		);
@@ -225,7 +223,9 @@ class Wpr_Charts extends Widget_Base {
 				'type'    => Controls_Manager::SWITCHER ,
 				'default' => 'false',
 				'return_value' => 'true',
-				'separator' => 'before',
+				'condition' => [
+					'chart_type' => ['bar', 'bar_horizontal', 'line', '']
+				]
 			]
 		);
 
@@ -1152,7 +1152,7 @@ class Wpr_Charts extends Widget_Base {
 		$this->start_controls_section(
             'section_datalabels_styles',
 			[
-				'label' => esc_html__( 'Datalabels', 'wpr-addons' ),
+				'label' => esc_html__( 'Data Values', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'inner_datalabels' => 'true'
@@ -1207,8 +1207,7 @@ class Wpr_Charts extends Widget_Base {
 				'type'               => Controls_Manager::NUMBER,
 				'min'                => 0,
 				'default'            => 600,
-				'frontend_available' => true,
-				'separator' => 'before'
+				'frontend_available' => true
 			]
 		);
 		
@@ -1227,8 +1226,7 @@ class Wpr_Charts extends Widget_Base {
 				'default' => [
 					'unit' => 'px',
 					'size' => 14,
-				],
-				'separator' => 'before'
+				]
 			]
 		);
 
@@ -1492,20 +1490,19 @@ class Wpr_Charts extends Widget_Base {
 		$this->add_responsive_control(
 			'ticks_padding_x',
 			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 200,
+						'max' => 50,
 					],
 				],
 				'size_units' => [ 'px' ],
 				'default' => [
 					'unit' => 'px',
 					'size' => 10,
-				],
-				'separator' => 'before'
+				]
 			]
 		);
 
@@ -1582,20 +1579,19 @@ class Wpr_Charts extends Widget_Base {
 		$this->add_responsive_control(
 			'ticks_padding_y',
 			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 200,
+						'max' => 50,
 					],
 				],
 				'size_units' => [ 'px' ],
 				'default' => [
 					'unit' => 'px',
 					'size' => 10,
-				],
-				'separator' => 'before'
+				]
 			]
 		);
 
@@ -1678,7 +1674,7 @@ class Wpr_Charts extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 200,
+						'max' => 50,
 					],
 				],
 				'size_units' => [ 'px' ],
@@ -1775,20 +1771,19 @@ class Wpr_Charts extends Widget_Base {
 				'default' => [
 					'unit' => 'px',
 					'size' => 40,
-				],
-				'separator' => 'before',
+				]
 			]
 		);
 
 		$this->add_responsive_control(
 			'chart_legend_padding',
 			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 200,
+						'max' => 50,
 					],
 				],
 				'size_units' => [ 'px' ],
