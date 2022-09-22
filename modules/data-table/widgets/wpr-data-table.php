@@ -826,7 +826,7 @@ class Wpr_Data_Table extends Widget_Base {
 				'default' => '',
 				'separator' => 'before',
 				'selectors' => [
-					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-table-text' => 'color: {{VALUE}}'
+					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-table-text' => 'color: {{VALUE}} !important'
 				],
 			]
 		);
@@ -1508,7 +1508,7 @@ class Wpr_Data_Table extends Widget_Base {
 				'selectors' => [
 					// '{{WRAPPER}} tr.wpr-even td a .wpr-table-text' => 'color: {{VALUE}} !important',
 					// '{{WRAPPER}} tr.wpr-even td.wpr-table-text' => 'color: {{VALUE}}',
-					'{{WRAPPER}} tbody tr:nth-child(even) td a .wpr-table-text' => 'color: {{VALUE}} !important',
+					'{{WRAPPER}} tbody tr:nth-child(even) td a .wpr-table-text' => 'color: {{VALUE}}',
 					'{{WRAPPER}} tbody tr:nth-child(even) td.wpr-table-text' => 'color: {{VALUE}}',
 					'{{WRAPPER}} tbody tr:nth-child(even) td.wpr-table-td-pag' => 'color: {{VALUE}}',
 				],
