@@ -499,12 +499,24 @@ class Wpr_Data_Table extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'header_th_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'default' => '',
+				'separator' => 'before',
+				'selectors' => [
+					'{{WRAPPER}} {{CURRENT_ITEM}}' => 'color: {{VALUE}}'
+				],
+			]
+		);
+
+		$repeater->add_control(
 			'header_th_background_color',
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'default' => '',
-				'separator' => 'before',
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}}' => 'background-color: {{VALUE}} !important'
 				],
@@ -807,12 +819,24 @@ class Wpr_Data_Table extends Widget_Base {
 		$repeater->add_control( 'content_tooltip_show_icon', $this->add_repeater_args_content_tooltip_show_icon() );
 
 		$repeater->add_control(
+			'td_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'default' => '',
+				'separator' => 'before',
+				'selectors' => [
+					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-table-text' => 'color: {{VALUE}}'
+				],
+			]
+		);
+
+		$repeater->add_control(
 			'td_background_color',
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'default' => '',
-				'separator' => 'before',
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}}' => 'background-color: {{VALUE}} !important'
 				],
