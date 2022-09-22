@@ -1822,7 +1822,7 @@ class Wpr_Data_Table extends Widget_Base {
 
 		$handle = fopen($filename, "r");
 		//display header row if true
-		echo '<table class="wpr-append-to-scope wpr-data-table" id="wpr-data-table">';
+		echo '<table class="wpr-append-to-scope wpr-data-table">';
 		if ( 'yes' === $settings['display_header'] ) {
 			$csvcontents = fgetcsv($handle);
 			echo '<thead><tr class="wpr-table-head-row wpr-table-row">';
@@ -2010,7 +2010,10 @@ class Wpr_Data_Table extends Widget_Base {
 						<th <?php echo $this->get_render_attribute_string('th_class'. esc_attr($i)); ?>>
 							<div <?php echo $this->get_render_attribute_string('th_inner_class'. esc_attr($i)); ?>>
 								<?php $item['header_icon'] === 'yes'  && $item['header_icon_position'] == 'left' ? $this->render_th_icon_or_image($item, $i) : '' ?>
-								<span class="wpr-table-text"><?php echo esc_html($item['table_th']); ?></span>
+								
+								<?php if ( '' !== $item['table_th'] ) :  ?>
+									<span class="wpr-table-text"><?php echo esc_html($item['table_th']); ?></span>
+								<?php endif; ?>
 								<?php $item['header_icon'] === 'yes' && $item['header_icon_position'] == 'right' ? $this->render_th_icon_or_image($item, $i) : '' ?>
 								<?php echo $sorting_icon; ?>
 								<?php $item['header_icon'] === 'yes' && ($item['header_icon_position'] == 'top' || $item['header_icon_position'] == 'bottom')? $this->render_th_icon_or_image($item, $i) : '' ?>
@@ -2043,17 +2046,19 @@ class Wpr_Data_Table extends Widget_Base {
 								<div class="wpr-td-content-wrapper <?php echo esc_attr(('top' === $table_td[$j]['icon_position']) ? 'wpr-flex-column' : (('bottom' === $table_td[$j]['icon_position']) ? 'wpr-flex-column-reverse' : '')) ?>">
 
 									<?php $table_td[$j]['icon'] === 'yes' && ($table_td[$j]['icon_position'] === 'left' || $table_td[$j]['icon_position'] === 'top' || $table_td[$j]['icon_position'] === 'bottom') ? $this->render_td_icon_or_image($table_td, $j) : '' ?>
-									<a href="<?php echo esc_url($table_td[$j]['link']['url']) ?>" target="<?php echo esc_attr($table_td[$j]['external']) ?>">
-										<span class="wpr-table-text">
-											<?php 
-												echo wp_kses_post( $table_td[$j]['content'] );
+									<?php if ( '' !== $table_td[$j]['content'] ) :  ?>
+										<a href="<?php echo esc_url($table_td[$j]['link']['url']) ?>" target="<?php echo esc_attr($table_td[$j]['external']) ?>">
+											<span class="wpr-table-text">
+												<?php 
+													echo wp_kses_post( $table_td[$j]['content'] );
 
-												$this->render_tooltip_icon( $table_td[$j] );
-												
-												$this->render_content_tooltip( $table_td[$j] ); 
-											?>
-										</span>
-									</a>
+													$this->render_tooltip_icon( $table_td[$j] );
+													
+													$this->render_content_tooltip( $table_td[$j] ); 
+												?>
+											</span>
+										</a>
+									<?php endif;  ?>
 									<?php $table_td[$j]['icon'] === 'yes' && $table_td[$j]['icon_position'] === 'right' ? $this->render_td_icon_or_image($table_td, $j) : '' ?>
 
 								</div>
