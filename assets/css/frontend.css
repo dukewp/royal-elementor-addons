@@ -9603,10 +9603,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     font-size: 15px;
 }
 
-.elementor-widget-wpr-promo-box .wpr-promo-box-description p {
-    margin: 0;
-}
-
 .elementor-widget-wpr-promo-box .wpr-promo-box-btn,
 .elementor-widget-wpr-promo-box .wpr-promo-box-badge {
     font-size: 14px;
