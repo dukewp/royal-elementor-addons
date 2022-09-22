@@ -267,6 +267,12 @@
   flex-direction: column;
 }
 
+.wpr-woo-template-title h3 {
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  color: #3c434a !important;
+}
+
 .wpr-woo-template-title p {
   margin: 0;
   font-size: 12px;

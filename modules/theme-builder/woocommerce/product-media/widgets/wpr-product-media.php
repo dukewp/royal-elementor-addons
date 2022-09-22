@@ -1239,7 +1239,7 @@ class Wpr_Product_Media extends Widget_Base {
 		}
 
 		// Slider Arrows
-		if ( !empty($gallery_images) && 'on' === get_option('wpr_enable_woo_flexslider_navigation') ) {
+		if ( !empty($gallery_images) && 'on' === get_option('wpr_enable_woo_flexslider_navigation', 'on') ) {
 			if ( 'yes' === $settings['gallery_slider_nav'] && 'none' !== $settings['gallery_slider_nav_icon']) {
 				echo '<div class="wpr-gallery-slider-arrows-wrap">';
 					echo '<div class="wpr-gallery-slider-prev-arrow wpr-gallery-slider-arrow">'. Utilities::get_wpr_icon( $settings['gallery_slider_nav_icon'], 'left' ) .'</div>';
