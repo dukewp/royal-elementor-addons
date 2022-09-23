@@ -968,12 +968,6 @@ class Wpr_Grid extends Widget_Base {
 				'label' => esc_html__( 'Show Filters', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
-				'widescreen_default' => 'yes',
-				'laptop_default' => 'yes',
-				'tablet_extra_default' => 'yes',
-				'tablet_default' => 'yes',
-				'mobile_extra_default' => 'yes',
-				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'none',
 					'yes' => 'block'
