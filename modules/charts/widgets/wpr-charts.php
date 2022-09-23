@@ -168,9 +168,9 @@ class Wpr_Charts extends Widget_Base {
 					'logarithmic' => __( 'Logarithmic', 'wpr-addons' ),
 				],
 				'default'            => 'linear',
-				// 'condition' => [
-				// 	'display_y_ticks' => 'true'
-				// ],
+				'condition' => [
+					'chart_type' => ['bar', 'line']
+				],
 				'frontend_available' => true,
 			]
 		);
