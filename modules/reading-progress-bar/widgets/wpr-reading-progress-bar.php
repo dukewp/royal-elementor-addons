@@ -69,6 +69,15 @@ class Wpr_Reading_Progress_Bar extends Widget_Base {
 		);
 
 		$this->add_control(
+			'rpb_info',
+			[
+				'raw' => esc_html__( 'Please scroll to view progress bar in action', 'wpr-addons' ),
+				'type' => Controls_Manager::RAW_HTML,
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+			]
+		);
+
+		$this->add_control(
 			'rpb_height',
 			[
 				'label' => __( 'Height', 'wpr-addons' ),
@@ -89,6 +98,7 @@ class Wpr_Reading_Progress_Bar extends Widget_Base {
 					'.wpr-reading-progress-bar-container' => 'height: {{SIZE}}{{UNIT}} !important',
 					'.wpr-reading-progress-bar-container .wpr-reading-progress-bar' => 'height: {{SIZE}}{{UNIT}} !important',
 				],
+				'separator' => 'before'
 			]
 		);
 
