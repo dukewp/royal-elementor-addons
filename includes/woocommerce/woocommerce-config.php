@@ -13,6 +13,9 @@ class WPR_WooCommerce_Config {
 		if ( 'on' !== get_option('wpr_enable_product_image_zoom', 'on') ) {
 			add_filter( 'woocommerce_single_product_zoom_enabled', '__return_false' );
 		}
+		
+		add_action( 'wp',[$this, 'wpr_remove_wc_lightbox'], 99 ); //: TODO condition
+		// add_filter( 'body_class', [$this, 'wpr_remove_elementor_lightbox'] ); //: TODO condition
 
 		// Change number of products that are displayed per page (shop page)
 		add_filter( 'loop_shop_per_page', [$this, 'shop_products_per_page'], 20 );
@@ -21,6 +24,18 @@ class WPR_WooCommerce_Config {
 		add_filter( 'wc_get_template', [ $this, 'rewrite_default_wc_templates' ], 10, 3 );
 
 		add_filter( 'woocommerce_add_to_cart_fragments', [$this, 'wc_refresh_mini_cart_count']);
+	}
+
+	function wpr_remove_elementor_lightbox( $classes ) {
+	
+		$classes[] = 'wpr-no-lightbox';
+	
+		// Return classes
+		return $classes;
+	}
+
+	function wpr_remove_wc_lightbox() {	 	 
+	   remove_theme_support( 'wc-product-gallery-lightbox' );	 	 
 	}
 
 	function wc_refresh_mini_cart_count($fragments) {
