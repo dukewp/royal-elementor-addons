@@ -28,7 +28,7 @@ class Wpr_Charts extends Widget_Base {
 	}
 
 	public function get_icon() {
-		return 'wpr-icon eicon-barcode';
+		return 'wpr-icon eicon-align-end-v';
 	}
 
 	public function get_categories() {
