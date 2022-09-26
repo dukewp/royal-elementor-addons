@@ -44,7 +44,7 @@ console.log(WprMegaMenuSettingsData)
 
             // Save Settings
             WprMegaMenuSettings.saveSettings( $(this) );
-            
+
             // Close Settings Popup
             WprMegaMenuSettings.closeSettingsPopup();
         },
@@ -53,7 +53,6 @@ console.log(WprMegaMenuSettingsData)
             $('.wpr-mm-settings-close-popup-btn').on('click', function() {
                 $('.wpr-mm-settings-popup-wrap').fadeOut();
             });
-
 
             $('.wpr-mm-settings-popup-wrap').on('click', function(e) {
                 if(e.target !== e.currentTarget) return;
@@ -260,7 +259,6 @@ console.log(WprMegaMenuSettingsData)
                 }            
             });
         }
-
     }
 
     // Init
