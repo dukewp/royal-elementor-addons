@@ -963,7 +963,7 @@ class Wpr_Data_Table extends Widget_Base {
 			'Enable Live Search for Tables',
 			'Enable Table Sorting option',
 			'Enable Table Pagination. Divide Table items by pages',
-			'Enable Tooltips on each cell.'
+			'Enable Tooltips on each cell'
 		] );
 
 		$this->start_controls_section(
