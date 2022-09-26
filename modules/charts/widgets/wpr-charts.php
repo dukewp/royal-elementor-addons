@@ -169,7 +169,7 @@ class Wpr_Charts extends Widget_Base {
 				],
 				'default'            => 'linear',
 				'condition' => [
-					'chart_type' => ['bar', 'line']
+					'chart_type' => ['bar', 'bar_horizontal', 'line']
 				],
 				'frontend_available' => true,
 			]
@@ -555,6 +555,21 @@ class Wpr_Charts extends Widget_Base {
 				'type'    => Controls_Manager::SWITCHER ,
 				'default' => 'true',
 				'return_value' => 'true',
+			]
+		);
+
+		$this->add_control(
+			'x_step_size',
+			[
+				'label'              => __( 'Step Size', 'wpr-addons' ),
+				'type'               => Controls_Manager::NUMBER,
+				'min'                => 0,
+				'max'                => 360,
+				'default'            => 0,
+				'frontend_available' => true,
+				'condition' => [
+					'display_x_ticks' => 'true'
+				]
 			]
 		);
 
@@ -2051,6 +2066,7 @@ class Wpr_Charts extends Widget_Base {
 			'responsive_chart',
 			[
 				'label'		=> esc_html__( 'Responsive Layout', 'wpr-addons' ),
+				'description' => esc_html__( 'Enables scrollbar on tablet and mobile screens', 'wpr-addons' ),
 				'type'		=> Controls_Manager::SWITCHER,
 				'selectors'	=> [
 					'{{WRAPPER}} .wpr-charts-container'	=> 'overflow: auto;',
@@ -2121,8 +2137,6 @@ class Wpr_Charts extends Widget_Base {
         extract($settings);
 
 		$data_charts_array = [];
-
-		var_dump($settings['data_type']);
 
 		if ( in_array($chart_type, array('bar', 'bar_horizontal', 'line', 'radar')) ) {
 			
