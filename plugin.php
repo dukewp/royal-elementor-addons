@@ -468,7 +468,7 @@ class Plugin {
 
 		wp_register_script(
 			'wpr-lottie-animations',
-			WPR_ADDONS_URL . 'assets/js/lib/lottie/lottie' . $this->script_suffix() . '.js',
+			WPR_ADDONS_URL . 'assets/js/lib/lottie/lottie'. $this->script_suffix() .'.js',
 			[],
 			'5.8.0',
 			true
@@ -483,7 +483,7 @@ class Plugin {
 		);
 		wp_register_script(
 			'wpr-aos-js',
-			 WPR_ADDONS_URL  . 'assets/js/lib/aos/aos' . $this->script_suffix() . '.js',
+			 WPR_ADDONS_URL  . 'assets/js/lib/aos/aos'. $this->script_suffix() .'.js',
 			 [], 
 			 null, 
 			 true
@@ -491,7 +491,7 @@ class Plugin {
 		
 		wp_register_script(
 			'wpr-charts',
-			WPR_ADDONS_URL . 'assets/js/lib/charts/charts' . $this->script_suffix() . '.js',
+			WPR_ADDONS_URL . 'assets/js/lib/charts/charts'. $this->script_suffix() .'.js',
 			[],
 			'3.7.0',
 			true

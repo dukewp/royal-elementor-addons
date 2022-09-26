@@ -170,6 +170,8 @@ class Wpr_Data_Table extends Widget_Base {
 				'label' => esc_html__('General', 'wpr-addons'),
 			]
 		);
+		
+		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
 		// Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
