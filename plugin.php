@@ -475,6 +475,13 @@ class Plugin {
 		);
 
 		wp_register_script( 
+			'wpr-table-to-excel-js',
+			 WPR_ADDONS_URL  . 'assets/js/lib/tableToExcel/tableToExcel.js',
+			 [],
+			 null, 
+			 true 
+		);
+		wp_register_script(
 			'wpr-aos-js',
 			 WPR_ADDONS_URL  . 'assets/js/lib/aos/aos' . $this->script_suffix() . '.js',
 			 [], 

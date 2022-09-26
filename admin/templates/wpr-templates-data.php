@@ -176,6 +176,19 @@ class WPR_Templates_Data {
 					'priority' => 60,
 				],
 			],
+			'travel-agency' => [
+				'v1' => [
+					'name' => 'Travel agency',
+					'pages' => 'home,tours,gallery,services,reviews,about,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'nature influencer travel blogger blog content slider tourism influencers creator travel forest slider generic multipurpose national-park nature-park sanctuary wilderness hitchhiking mountain river lakes outdoors travel agency company office travel services',
+					'theme-builder' => true,
+					'woo-builder' => false,
+					'off-canvas' => false,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'priority' => 61,
+				],
+			],
 			'digital-marketing-agency' => [
 				'v1' => [
 					'name' => 'Digital Marketing Agency',
