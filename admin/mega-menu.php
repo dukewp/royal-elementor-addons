@@ -246,7 +246,7 @@ function get_menu_items_settings() {
         foreach ( $menu_items as $key => $item_object ) {
             $item_id = $item_object->ID;
 
-            $item_meta = get_post_meta( $item_id, 'wpr-mega-menu-item', true );
+            $item_meta = get_post_meta( $item_id, 'wpr-mega-menu-settings', true );
 
             if ( !empty($item_meta) ) {
                 $settings[ $item_id ] = $item_meta;

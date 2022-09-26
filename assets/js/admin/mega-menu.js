@@ -1,6 +1,6 @@
 jQuery(document).ready(function( $ ) {
 	"use strict";
-console.log(WprMegaMenuSettingsData)
+
     var WprMegaMenuSettings = {
 
         init: function() {
@@ -24,6 +24,9 @@ console.log(WprMegaMenuSettingsData)
         },
 
         openSettingsPopup: function() {
+            // Set Settings
+            WprMegaMenuSettings.setSettings( $(this) );
+
             // Show Popup
             $('.wpr-mm-settings-popup-wrap').fadeIn();
 
@@ -121,7 +124,7 @@ console.log(WprMegaMenuSettingsData)
             });
 
             // Bind iconpicker events to the element
-            $('#wpr_mm_icon_picker').on('iconpickerHide', function(event){
+            $('#wpr_mm_icon_picker').on('iconpickerHide', function(event) {
                 setTimeout(function() {
                     if ( 'wpr-mm-active-icon' == $('.wpr-mm-setting-icon div span:first-child').attr('class') ) {
                         $('#wpr_mm_icon_picker').val('')
@@ -258,6 +261,46 @@ console.log(WprMegaMenuSettingsData)
                     option.hide();
                 }            
             });
+        },
+
+        setSettings: function( selector ) {
+            var id = selector.attr('data-id'),
+                settings = WprMegaMenuSettingsData[id];
+
+                console.log(settings);
+            
+            if ( ! $.isEmptyObject(settings) ) {
+                // General
+                if ( 'true' == settings['wpr_mm_enable'] ) {
+                    $('#wpr_mm_enable').attr('checked', 'checked');
+                } else {
+                    $('#wpr_mm_enable').attr('checked');
+                }
+                $('#wpr_mm_position').val(settings['wpr_mm_position']).trigger('change');
+                $('#wpr_mm_width').val(settings['wpr_mm_width']).trigger('change');
+                $('#wpr_mm_custom_width').val(settings['wpr_mm_custom_width']);
+
+                // Icon
+                if ( '' !== settings['wpr_mm_icon_picker'] ) {
+                    $('.wpr-mm-setting-icon div span').removeClass('wpr-mm-active-icon');
+                    $('.wpr-mm-setting-icon div span:last-child').addClass('wpr-mm-active-icon');
+                    $('.wpr-mm-setting-icon div span:last-child i').removeAttr('class');
+                    $('.wpr-mm-setting-icon div span:last-child i').addClass(settings['wpr_mm_icon_picker']);
+                }
+                $('#wpr_mm_icon_color').val(settings['wpr_mm_icon_color']).trigger('keyup');
+                $('#wpr_mm_icon_size').val(settings['wpr_mm_icon_size']);
+
+                // Badge
+                $('#wpr_mm_badge_text').val(settings['wpr_mm_badge_text']);
+                $('#wpr_mm_badge_size').val(settings['wpr_mm_badge_size']);
+                $('#wpr_mm_badge_color').val(settings['wpr_mm_badge_color']).trigger('keyup');
+                $('#wpr_mm_badge_bg_color').val(settings['wpr_mm_badge_bg_color']).trigger('keyup');
+                $('#wpr_mm_badge_bdrs_1').val(settings['wpr_mm_badge_bdrs_1'][0]);
+                $('#wpr_mm_badge_bdrs_2').val(settings['wpr_mm_badge_bdrs_1'][1]);
+                $('#wpr_mm_badge_bdrs_3').val(settings['wpr_mm_badge_bdrs_1'][2]);
+                $('#wpr_mm_badge_bdrs_4').val(settings['wpr_mm_badge_bdrs_1'][3]);
+            }
+
         }
     }
 
