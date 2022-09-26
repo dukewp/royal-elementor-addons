@@ -28,7 +28,7 @@ class Wpr_Charts extends Widget_Base {
 	}
 
 	public function get_icon() {
-		return 'wpr-icon eicon-barcode';
+		return 'wpr-icon eicon-align-end-v';
 	}
 
 	public function get_categories() {
@@ -399,7 +399,7 @@ class Wpr_Charts extends Widget_Base {
 				'type'        => Controls_Manager::TEXT,
 				'default'     => '10,23,15',
 				'label_block' => true,
-				'description' => esc_html__("Enter comma separated data values (Shouldn't Exceed number of values provided in Data Labels option). Example: 2,4,8,16,32 etc", 'wpr-addons'),
+				'description' => esc_html__("Enter comma separated data values (Shouldn't Exceed number of values provided in Data Labels option).", 'wpr-addons'),
 			]
 		);
 
@@ -519,6 +519,202 @@ class Wpr_Charts extends Widget_Base {
         );
 
 		$this->add_control(
+			'x_axis_conditions',
+			[
+				'label' => esc_html__( 'X-Axis', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+			]
+		);
+
+		$this->add_control(
+			'display_x_axis',
+			[
+				'label'   => esc_html__('Grid Lines', 'wpr-addons'),
+				'type'    => Controls_Manager::SWITCHER ,
+				'default' => 'true',
+				'return_value' => 'true',
+			]
+		);
+
+		$this->add_control(
+			'grid_line_width_x', [
+				'label'       => esc_html__('Grid Line Width', 'wpr-addons'),
+				'type'        => Controls_Manager::NUMBER,
+				'default'     => '1',
+				'step' => 0.1,
+				'condition' => [
+					'display_x_axis' => 'true'
+				]
+			]
+		);
+
+		$this->add_control(
+			'display_x_ticks',
+			[
+				'label'   => esc_html__('Ticks (Labels)', 'wpr-addons'),
+				'type'    => Controls_Manager::SWITCHER ,
+				'default' => 'true',
+				'return_value' => 'true',
+			]
+		);
+
+		$this->add_control(
+			'display_x_axis_title',
+			[
+				'label'   => esc_html__('Show Title', 'wpr-addons'),
+				'type'    => Controls_Manager::SWITCHER ,
+				'default' => 'true',
+				'return_value' => 'true',
+			]
+		);
+
+		$this->add_control(
+			'x_axis_title',
+			[
+				'label' => esc_html__( 'Title', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'placeholder' => esc_html__( 'X-Axis', 'wpr-addons' ),
+				'default' => esc_html__('X-Axis', 'wpr-addons'),
+				'condition' => [
+					'display_x_axis_title' => 'true',
+				],
+			]
+		);
+
+		$this->add_control(
+			'labels_rotation_x_axis',
+			array(
+				'label'              => __( 'Ticks (Labels) Rotation', 'wpr-addons' ),
+				'type'               => Controls_Manager::NUMBER,
+				'min'                => 0,
+				'max'                => 360,
+				'default'            => 0,
+				'frontend_available' => true,
+			)
+		);
+
+		$this->add_control(
+			'y_axis_conditions',
+			[
+				'label' => esc_html__( 'Y-Axis', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'display_y_axis',
+			[
+				'label'   => esc_html__('Grid Lines', 'wpr-addons'),
+				'type'    => Controls_Manager::SWITCHER ,
+				'default' => 'true',
+				'return_value' => 'true',
+			]
+		);
+
+		$this->add_control(
+			'grid_line_width_y', [
+				'label'       => esc_html__('Grid Line Width', 'wpr-addons'),
+				'type'        => Controls_Manager::NUMBER,
+				'default'     => '1',
+				'step' => 0.1,
+				'condition' => [
+					'display_y_axis' => 'true'
+				]
+			]
+		);
+
+		$this->add_control(
+			'display_y_ticks',
+			[
+				'label'   => esc_html__('Ticks (Labels)', 'wpr-addons'),
+				'type'    => Controls_Manager::SWITCHER ,
+				'default' => 'true',
+				'return_value' => 'true',
+			]
+		);
+
+		$this->add_control(
+			'y_step_size',
+			[
+				'label'              => __( 'Step Size', 'wpr-addons' ),
+				'type'               => Controls_Manager::NUMBER,
+				'min'                => 0,
+				'max'                => 360,
+				'default'            => 0,
+				'frontend_available' => true,
+				'condition' => [
+					'display_y_ticks' => 'true'
+				]
+			]
+		);
+
+		$this->add_control(
+			'display_y_axis_title',
+			[
+				'label'   => esc_html__('Show Title', 'wpr-addons'),
+				'type'    => Controls_Manager::SWITCHER ,
+				'default' => 'true',
+				'return_value' => 'true',
+			]
+		);
+
+		$this->add_control(
+			'y_axis_title',
+			[
+				'label' => esc_html__( 'Title', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'placeholder' => esc_html__( 'Y-Axis', 'wpr-addons' ),
+				'default' => esc_html__('Y-Axis', 'wpr-addons'),
+				'condition' => [
+					'display_y_axis_title' => 'true',
+				],
+			]
+		);
+
+		$this->add_control(
+			'labels_rotation_y_axis',
+			array(
+				'label'              => __( 'Ticks (Labels) Rotation', 'wpr-addons' ),
+				'type'               => Controls_Manager::NUMBER,
+				'min'                => 0,
+				'max'                => 360,
+				'default'            => 0,
+				'frontend_available' => true,
+			)
+		);
+
+		$this->add_control(
+			'reverse_x',
+			[
+				'label' => esc_html__( 'Reverse Charts', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'no',
+				'return_value' => 'yes',
+				'separator' => 'before',
+				'condition' => [
+					'show_chart_legend' => 'yes',
+					'chart_type' => ['bar_horizontal']
+				]
+			]
+		);
+
+		$this->add_control(
+			'reverse_y',
+			[
+				'label' => esc_html__( 'Reverse Charts', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'no',
+				'return_value' => 'yes',
+				'separator' => 'before',
+				'condition' => [
+					'show_chart_legend' => 'yes',
+					'chart_type' => ['bar', 'line']
+				]
+			]
+		);
+
+		$this->add_control(
 			'border_dash_length', [
 				'label'       => esc_html__('Border Dash length', 'wpr-addons'),
 				'type'        => Controls_Manager::NUMBER,
@@ -588,203 +784,6 @@ class Wpr_Charts extends Widget_Base {
 					]
 				]
 			]
-		);
-
-		$this->add_control(
-			'reverse_x',
-			[
-				'label' => esc_html__( 'Reverse', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'no',
-				'return_value' => 'yes',
-				'separator' => 'before',
-				'condition' => [
-					'show_chart_legend' => 'yes',
-					'chart_type' => ['bar_horizontal']
-				]
-			]
-		);
-
-		$this->add_control(
-			'reverse_y',
-			[
-				'label' => esc_html__( 'Reverse', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'no',
-				'return_value' => 'yes',
-				'separator' => 'before',
-				'condition' => [
-					'show_chart_legend' => 'yes',
-					'chart_type' => ['bar', 'line']
-				]
-			]
-		);
-
-		$this->add_control(
-			'x_axis_conditions',
-			[
-				'label' => esc_html__( 'X-Axis', 'wpr-addons' ),
-				'type' => Controls_Manager::HEADING,
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'display_x_axis',
-			[
-				'label'   => esc_html__('Grid Lines', 'wpr-addons'),
-				'type'    => Controls_Manager::SWITCHER ,
-				'default' => 'true',
-				'return_value' => 'true',
-			]
-		);
-
-		$this->add_control(
-			'grid_line_width_x', [
-				'label'       => esc_html__('Grid Line Width', 'wpr-addons'),
-				'type'        => Controls_Manager::NUMBER,
-				'default'     => '1',
-				'step' => 0.1,
-				'condition' => [
-					'display_x_axis' => 'true'
-				]
-			]
-		);
-
-		$this->add_control(
-			'display_x_ticks',
-			[
-				'label'   => esc_html__('Ticks', 'wpr-addons'),
-				'type'    => Controls_Manager::SWITCHER ,
-				'default' => 'true',
-				'return_value' => 'true',
-			]
-		);
-
-		$this->add_control(
-			'display_x_axis_title',
-			[
-				'label'   => esc_html__('Show Title', 'wpr-addons'),
-				'type'    => Controls_Manager::SWITCHER ,
-				'default' => 'true',
-				'return_value' => 'true',
-			]
-		);
-
-		$this->add_control(
-			'x_axis_title',
-			[
-				'label' => esc_html__( 'Title', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'placeholder' => esc_html__( 'X-Axis', 'wpr-addons' ),
-				'default' => esc_html__('X-Axis', 'wpr-addons'),
-				'condition' => [
-					'display_x_axis_title' => 'true',
-				],
-			]
-		);
-
-		$this->add_control(
-			'labels_rotation_x_axis',
-			array(
-				'label'              => __( 'Labels Rotation', 'wpr-addons' ),
-				'type'               => Controls_Manager::NUMBER,
-				'min'                => 0,
-				'max'                => 360,
-				'default'            => 0,
-				'frontend_available' => true,
-			)
-		);
-
-		$this->add_control(
-			'y_axis_conditions',
-			[
-				'label' => esc_html__( 'Y-Axis', 'wpr-addons' ),
-				'type' => Controls_Manager::HEADING,
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'display_y_axis',
-			[
-				'label'   => esc_html__('Grid Lines', 'wpr-addons'),
-				'type'    => Controls_Manager::SWITCHER ,
-				'default' => 'true',
-				'return_value' => 'true',
-			]
-		);
-
-		$this->add_control(
-			'grid_line_width_y', [
-				'label'       => esc_html__('Grid Line Width', 'wpr-addons'),
-				'type'        => Controls_Manager::NUMBER,
-				'default'     => '1',
-				'step' => 0.1,
-				'condition' => [
-					'display_y_axis' => 'true'
-				]
-			]
-		);
-
-		$this->add_control(
-			'display_y_ticks',
-			[
-				'label'   => esc_html__('Ticks', 'wpr-addons'),
-				'type'    => Controls_Manager::SWITCHER ,
-				'default' => 'true',
-				'return_value' => 'true',
-			]
-		);
-
-		$this->add_control(
-			'y_step_size',
-			[
-				'label'              => __( 'Step Size', 'wpr-addons' ),
-				'type'               => Controls_Manager::NUMBER,
-				'min'                => 0,
-				'max'                => 360,
-				'default'            => 0,
-				'frontend_available' => true,
-				'condition' => [
-					'display_y_ticks' => 'true'
-				]
-			]
-		);
-
-		$this->add_control(
-			'display_y_axis_title',
-			[
-				'label'   => esc_html__('Show Title', 'wpr-addons'),
-				'type'    => Controls_Manager::SWITCHER ,
-				'default' => 'true',
-				'return_value' => 'true',
-			]
-		);
-
-		$this->add_control(
-			'y_axis_title',
-			[
-				'label' => esc_html__( 'Title', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'placeholder' => esc_html__( 'Y-Axis', 'wpr-addons' ),
-				'default' => esc_html__('Y-Axis', 'wpr-addons'),
-				'condition' => [
-					'display_y_axis_title' => 'true',
-				],
-			]
-		);
-
-		$this->add_control(
-			'labels_rotation_y_axis',
-			array(
-				'label'              => __( 'Labels Rotation', 'wpr-addons' ),
-				'type'               => Controls_Manager::NUMBER,
-				'min'                => 0,
-				'max'                => 360,
-				'default'            => 0,
-				'frontend_available' => true,
-			)
 		);
 
         $this->end_controls_section();
