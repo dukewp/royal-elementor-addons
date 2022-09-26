@@ -1627,7 +1627,7 @@ class Wpr_Product_Media extends Widget_Base {
 
 		return json_encode( $lightbox_settings );	
 	}
-
+	
 	protected function render() {
 		// Get Settings
 		$settings = $this->get_settings();
@@ -1643,6 +1643,11 @@ class Wpr_Product_Media extends Widget_Base {
 		// Product ID
 		$post = get_post( $product->get_id() );
 		$gallery_images = $product->get_gallery_image_ids();
+		
+		add_action( 'wp', 'my_remove_lightbox', 99 );	 	 
+		function my_remove_lightbox() {	 	 
+		   remove_theme_support( 'wc-product-gallery-lightbox' );	 	 
+		}
 
 		// Lightbox
 		if ( 'yes' === $settings['product_media_lightbox'] ) {
