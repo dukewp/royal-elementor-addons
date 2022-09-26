@@ -2124,6 +2124,8 @@ class Wpr_Charts extends Widget_Base {
 
 		$data_charts_array = [];
 
+		var_dump($settings['data_type']);
+
 		if ( in_array($chart_type, array('bar', 'bar_horizontal', 'line', 'radar')) ) {
 			
 			if ( !empty($charts_labels_data) ) :
@@ -2208,7 +2210,7 @@ class Wpr_Charts extends Widget_Base {
 			'data_source' => $data_source,
             'chart_type' => $settings['chart_type'],
 			'stacked_bar_chart' => !empty($settings['stacked_bar_chart']) ? $settings['stacked_bar_chart'] : '',
-            'data_type' => $settings['data_type'],
+            'data_type' => isset($settings['data_type']) ? $settings['data_type'] : 'linear',
 			'chart_padding' => $chart_padding['size'],
 			'chart_padding_mobile' => isset($chart_padding_mobile['size']) ? $chart_padding_mobile['size'] : '',
 			'inner_datalabels' => $inner_datalabels,
