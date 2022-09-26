@@ -488,6 +488,14 @@ class Plugin {
 			 null, 
 			 true
 		);
+		
+		wp_register_script(
+			'wpr-charts',
+			WPR_ADDONS_URL . 'assets/js/lib/charts/charts'. $this->script_suffix() .'.js',
+			[],
+			'3.7.0',
+			true
+		);
 
 		wp_register_script(
 			'wpr-flipster',
@@ -496,6 +504,7 @@ class Plugin {
 			'2.0',
 			true
 		);
+
 		wp_register_script( 
 			'wpr-perfect-scroll-js',
 			 WPR_ADDONS_URL .'assets/js/lib/perfect-scrollbar/perfect-scrollbar.min.js', 
