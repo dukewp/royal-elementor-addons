@@ -863,7 +863,7 @@ class Wpr_Charts extends Widget_Base {
 		$this->start_controls_section(
             'section_chart_legend',
 			[
-				'label' => esc_html__( 'Legend', 'wpr-addons' ),
+				'label' => esc_html__( 'Legends', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -871,11 +871,10 @@ class Wpr_Charts extends Widget_Base {
 		$this->add_control(
 			'show_chart_legend',
 			[
-				'label' => esc_html__( 'Show Legend', 'wpr-addons' ),
+				'label' => esc_html__( 'Show Legends', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 				'return_value' => 'yes',
-				'separator' => 'before',
 			]
 		);
 
