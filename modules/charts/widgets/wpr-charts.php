@@ -53,6 +53,22 @@ class Wpr_Charts extends Widget_Base {
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
 
+	public function add_control_choose_chart_data_source() {
+		$this->add_control(
+			'data_source',
+			[
+				'label'              => __( 'Data Source', 'wpr-addons' ),
+				'type'               => Controls_Manager::SELECT,
+				'default'            => 'custom',
+				'options'            => [
+					'custom' => __( 'Custom', 'wpr-addons' ),
+					'pro-csv'    => 'CSV (Pro)' . __( ' File', 'wpr-addons' ),
+				],
+				'frontend_available' => true,
+			]
+		);
+	}
+
     protected function register_controls() {
 
         $this->start_controls_section(
@@ -63,24 +79,14 @@ class Wpr_Charts extends Widget_Base {
 			]
         );
 
-		$this->add_control(
-			'data_source',
-			[
-				'label'              => __( 'Data Source', 'wpr-addons' ),
-				'type'               => Controls_Manager::SELECT,
-				'default'            => 'custom',
-				'options'            => [
-					'custom' => __( 'Custom', 'wpr-addons' ),
-					'csv'    => 'CSV' . __( ' File', 'wpr-addons' ),
-				],
-				'frontend_available' => true,
-			]
-		);
+		$this->add_control_choose_chart_data_source();
+
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'charts', 'data_source', ['pro-csv'] );
 
 		$this->add_control(
 			'csv_source',
 			[
-				'label'              => __( 'Data Source', 'wpr-addons' ),
+				'label'              => __( 'CSV Source', 'wpr-addons' ),
 				'type'               => Controls_Manager::SELECT,
 				'default'            => 'url',
 				'options'            => [
@@ -381,6 +387,18 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 
+		if ( ! wpr_fs()->can_use_premium_code() ) {
+			$this->add_control(
+				'charts_repeater_labels_data_pro_notice',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => 'More than 3 Data Labels are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-flip-carousel-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+					'content_classes' => 'wpr-pro-notice',
+				]
+			);
+		}
+
 		// repeter for data fields
 		$chart_repeater_labels = new Repeater();
 
@@ -504,6 +522,18 @@ class Wpr_Charts extends Widget_Base {
 				// 'condition'   => ['chart_style' => ['bar', 'bar_horizontal', 'horizontalBar', 'line', 'radar']],
 			]
 		);
+
+		if ( ! wpr_fs()->can_use_premium_code() ) {
+			$this->add_control(
+				'charts_repeater_pro_notice',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => 'More than 3 Items are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-flip-carousel-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+					'content_classes' => 'wpr-pro-notice',
+				]
+			);
+		}
 
         $this->end_controls_section();
 		
@@ -2142,10 +2172,17 @@ class Wpr_Charts extends Widget_Base {
 			
 			if ( !empty($charts_labels_data) ) :
 				$data_charts_array['labels'] = explode(',', trim($charts_labels_data));
+				if ( 3 < sizeof($data_charts_array['labels']) ) {
+					$data_charts_array['labels'] = array_slice($data_charts_array['labels'], 0, 3);
+				}
 			endif;
 
 			if ( is_array($charts_data_set) && sizeof($charts_data_set) ) {
+				$charts_counter = 0;
 				foreach ( $charts_data_set as $chart_data ) {
+					if ( ! wpr_fs()->can_use_premium_code() && $charts_counter === 3 ) {
+						break;
+					}
 					$data_charts_array['datasets'][] = [
 						'label' => $chart_data['chart_data_label'],
 						'data' => array_map('floatval', explode(',', trim($chart_data['chart_data_set'], ','))),
@@ -2157,6 +2194,8 @@ class Wpr_Charts extends Widget_Base {
 						'barPercentage' => !empty($settings['column_width_x']) ? $settings['column_width_x'] : '',
 						'fill' => !empty($settings['chart_type_line_fill']) && 'yes' === $settings['chart_type_line_fill'] ? true : false,
 					];
+
+					$charts_counter++;
 				}
 			}
 		} else {
@@ -2169,8 +2208,13 @@ class Wpr_Charts extends Widget_Base {
 				$chart_data_border_width = [];
 				$chart_data_bar_percentage = [];
 				
+				$charts_counter = 0;
 				foreach ( $charts_data_set AS $labels_data ) :
+					if ( ! wpr_fs()->can_use_premium_code() && $charts_counter === 3 ) {
+						break;
+					}
 					$data_charts_array['labels'][] = $labels_data['chart_data_label'];
+					$charts_counter++;
 				endforeach;
 			
 				if ( !empty($charts_labels_data) ) :
@@ -2178,15 +2222,24 @@ class Wpr_Charts extends Widget_Base {
 				endif;
 
 				foreach ( $data_charts_array_test as $key=>$test_data ) {
+					if ( ! wpr_fs()->can_use_premium_code() && $key === 3 ) {
+						break;
+					}
 					$chart_data_number_values[$key] = [];
 					$outer_key = $key;
 					foreach ( $charts_data_set as $key=>$chart_data ) {
+						if ( ! wpr_fs()->can_use_premium_code() && $key === 3 ) {
+							break;
+						}
 						$number_value = sizeof(explode(',', trim($chart_data['chart_data_set'], ','))) >= $outer_key + 1 ? array_map('floatval', explode(',', trim($chart_data['chart_data_set'], ',')))[$outer_key] : '0';
 						array_push($chart_data_number_values[$outer_key],  $number_value);
 					}
 				}
 				
 				foreach ( $charts_data_set as $key=>$chart_data ) {
+					if ( ! wpr_fs()->can_use_premium_code() && $key === 3 ) {
+						break;
+					}
 					array_push($chart_background_colors, trim($chart_data['chart_data_background_color']));
 					array_push($chart_background_hover_colors, trim($chart_data['chart_data_background_color_hover']));
 					array_push($chart_data_border_colors, trim($chart_data['chart_data_border_color']));
@@ -2196,6 +2249,9 @@ class Wpr_Charts extends Widget_Base {
 				}
 
 				foreach ( $data_charts_array_test as $key=>$data_test ) {
+					if ( ! wpr_fs()->can_use_premium_code() && $key === 3 ) {
+						break;
+					}
 					$data_charts_array['datasets'][] = [
 						'label' => $data_test, // test with fixed value 
 						'data' => $chart_data_number_values[$key],
