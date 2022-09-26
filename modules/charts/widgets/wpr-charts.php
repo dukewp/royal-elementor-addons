@@ -399,7 +399,7 @@ class Wpr_Charts extends Widget_Base {
 				'type'        => Controls_Manager::TEXT,
 				'default'     => '10,23,15',
 				'label_block' => true,
-				'description' => esc_html__("Enter comma separated data values (Shouldn't Exceed number of values provided in Data Labels option).", 'wpr-addons'),
+				'description' => esc_html__("Only works with custom charts. Enter comma separated data values (Shouldn't Exceed number of values provided in Data Labels option).", 'wpr-addons'),
 			]
 		);
 
@@ -2316,6 +2316,7 @@ class Wpr_Charts extends Widget_Base {
 			'display_y_axis' => $display_y_axis,
 			'display_y_ticks' => $display_y_ticks,
 			'y_step_size' => $y_step_size,
+			'x_step_size' => $x_step_size,
 			'display_y_axis_title' => $display_y_axis_title,
 			'y_axis_title' => $y_axis_title,
 			'axis_title_color_y' => $axis_title_color_y,
