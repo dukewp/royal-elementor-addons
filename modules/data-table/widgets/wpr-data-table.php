@@ -431,9 +431,6 @@ class Wpr_Data_Table extends Widget_Base {
 			[
 				'label' => esc_html__( 'Image', 'wpr-addons'),
 				'type' => Controls_Manager::MEDIA,
-				'default' => [
-					'url' => \Elementor\Utils::get_placeholder_image_src(),
-				],
 				'condition' => [
 					'header_icon_type'	=> 'image'
 				]
@@ -453,13 +450,13 @@ class Wpr_Data_Table extends Widget_Base {
 					],
 					'px' => [
 						'min' => 0,
-						'max' => 2000
+						'max' => 500
 					]
 				],
 				'devices' => [ 'desktop', 'tablet', 'mobile' ],
 				'default' => [
 					'size' => 100,
-					'unit' => '%'
+					'unit' => 'px'
 				],
 				'desktop_default' => [
 					'size' => 100,
@@ -718,9 +715,6 @@ class Wpr_Data_Table extends Widget_Base {
 			[
 				'label' => esc_html__( 'Image', 'wpr-addons'),
 				'type' => Controls_Manager::MEDIA,
-				'default' => [
-					'url' => \Elementor\Utils::get_placeholder_image_src(),
-				],
 				'condition' => [
 					'td_icon' => 'yes',
 					'td_icon_type!'	=> ['none', 'icon']
@@ -741,13 +735,13 @@ class Wpr_Data_Table extends Widget_Base {
 					],
 					'px' => [
 						'min' => 0,
-						'max' => 2000
+						'max' => 500
 					]
 				],
 				'devices' => [ 'desktop', 'tablet', 'mobile' ],
 				'default' => [
 					'size' => 100,
-					'unit' => '%'
+					'unit' => 'px'
 				],
 				'desktop_default' => [
 					'size' => 100,
