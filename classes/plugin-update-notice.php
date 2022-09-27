@@ -7,10 +7,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class WprPluginUpdateNotice {
     public function __construct() {
-        // delete_option('wpr_plugin_update_dismiss_notice');
 
         if ( current_user_can('administrator') ) {
-            if ( !get_option('wpr_plugin_update_dismiss_notice') ) {
+
+            if ( !get_option('wpr_plugin_update_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version']) ) {
                 add_action( 'admin_init', [$this, 'render_notice'] );
             }
         }
@@ -27,39 +27,39 @@ class WprPluginUpdateNotice {
     }
     
     public function wpr_plugin_update_dismiss_notice() {
-        add_option( 'wpr_plugin_update_dismiss_notice', true );
+        add_option( 'wpr_plugin_update_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version'], true );
     }
 
     public function render_plugin_update_notice() {
         global $current_screen;
 
         if ( is_admin() ) {
-            if ( 'royal-addons_page_wpr-templates-kit' === $current_screen->id ) {
+            if ( 'royal-addons_page_wpr-templates-kit' === $current_screen->id || 'update' === $current_screen->id ) {
                 return;
             }
 
             echo '<div class="notice wpr-plugin-update-notice is-dismissible">
                         <div class="wpr-plugin-update-notice-logo">
-                            <img src="'. WPR_ADDONS_ASSETS_URL .'/img/logo-128x128.png">
+                            <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/logo-128x128.png">
                         </div>
                         <div>
-                            <h3><span>New Feature</span><br> Royal Theme Builder</h3>
+                            <h3><span>New Feature</span><br> Royal WooCommerce Builder</h3>
                             <p>
-                                Royal Elementor Theme Builder lets you customize every fundamental part of your WordPress site<br> without coding including your Header, Footer, Archives, Posts, Default Pages, 404 Pages, etc..
-                                <br><strong>Please Note:</strong> WooCommerce Products and Product Archives Templates are comming soon!.
-                                <br><br><strong>New Theme Builder Template Kits:</strong>
-                                <a href="https://demosites.royal-elementor-addons.com/personal-blog-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Personal Blog</a>, 
-                                <a href="https://demosites.royal-elementor-addons.com/food-blog-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Food Blog</a>, 
-                                <a href="https://demosites.royal-elementor-addons.com/magazine-blog-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Magazine Blog</a>, 
-                                <a href="https://demosites.royal-elementor-addons.com/travel-blog-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Travel Blog</a>.
+                                Royal Elementor WooCommerce Builder lets you customize every fundamental part of your WooCommerce site without coding. Including your Header, Footer, Product Archives, Products, Post Archives, Posts, Default Pages, 404 Pages, etc..
+                                <br><br><strong>New Woo Builder Template Kits:</strong>
+                                <a href="https://demosites.royal-elementor-addons.com/fashion-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Fashion</a>, 
+                                <a href="https://demosites.royal-elementor-addons.com/furniture-shop-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Furniture Shop</a>, 
+                                <a href="https://demosites.royal-elementor-addons.com/grocery-store-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Grocery Store</a>,
+                                <a href="https://demosites.royal-elementor-addons.com/woo-food-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Food Delivery</a>,
+                                <a href="https://demosites.royal-elementor-addons.com/wooshop-v1/?ref=rea-plugin-backend-update-notice" target="_blank">WooShop</a>.
                             </p>
                             <br>
                             <div>
-                                <a href="'. get_admin_url() .'admin.php?page=wpr-templates-kit" class="wpr-get-started-button button button-primary">Go to Templates Library</a>
-                                <a href="'. get_admin_url() .'admin.php?page=wpr-theme-builder" class="wpr-get-started-button button button-secondary">Go to Theme Builder</a>
+                                <a href="'. esc_url(get_admin_url()) .'admin.php?page=wpr-templates-kit" class="wpr-get-started-button button button-primary">Go to Templates Library</a>
+                                <a href="'. esc_url(get_admin_url()) .'admin.php?page=wpr-theme-builder&tab=wpr_tab_product_archive" class="wpr-get-started-button button button-secondary">Go to WooCommerce Builder</a>
                             </div>
                         </div>
-                        <div class="image-wrap"><img src="'. WPR_ADDONS_ASSETS_URL .'/img/theme-builder.png"></div>
+                        <div class="image-wrap"><img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/new-theme-builder.png"></div>
                         <canvas id="wpr-notice-confetti"></canvas>
                 </div>';
         }
@@ -67,7 +67,7 @@ class WprPluginUpdateNotice {
     
     public static function enqueue_scripts() {
         // Load Confetti
-        wp_enqueue_script( 'wpr-confetti-js', WPR_ADDONS_URL .'assets/js/lib/confetti/confetti.min.js', ['jquery'] );
+        wp_enqueue_script( 'wpr-confetti-js', WPR_ADDONS_URL .'assets/js/admin/lib/confetti/confetti.min.js', ['jquery'] );
 
         // Scripts & Styles
         echo "
@@ -115,15 +115,12 @@ class WprPluginUpdateNotice {
                             '#9900f1',
                         ],
                     } );
-                    dispatch( {
-                        type: 'set',
-                        confettiDone: true,
-                    } );
                 }, 900 );
             }
 
             jQuery(document).on( 'click', '.wpr-plugin-update-notice .notice-dismiss', function() {
                 jQuery(document).find('.wpr-plugin-update-notice').slideUp();
+                console.log('works update dismiss');
                 jQuery.post({
                     url: ajaxurl,
                     data: {
@@ -212,7 +209,7 @@ class WprPluginUpdateNotice {
             }
 
             .wpr-plugin-update-notice .image-wrap img {
-              zoom: 0.5;
+              zoom: 0.45;
             }
 
             @media screen and (max-width: 1366px) {

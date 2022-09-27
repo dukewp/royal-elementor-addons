@@ -120,7 +120,8 @@
 .elementor-control-tax2_transition_duration,
 .elementor-control-filters_transition_duration,
 .elementor-control-pagination_older_text,
-.elementor-control-tooltip_position {
+.elementor-control-tooltip_position,
+.elementor-control-post_info_custom_field_video_tutorial  {
 	padding-top: 15px !important;
 }
 
@@ -544,6 +545,10 @@
 	padding: 5px 0 15px 0 !important;
 }
 
+.elementor-control-data_source_pro_notice {
+	padding-bottom: 0 !important;
+}
+
 .wpr-pro-notice {
 	padding: 20px;
 	border-top: 1px solid #e6e9ec;
@@ -630,7 +635,8 @@
 .elementor-control.elementor-control-paralax_repeater_pro_notice,
 .elementor-control.elementor-control-opnepage_pro_notice,
 .elementor-control.elementor-control-timeline_repeater_pro_notice,
-.elementor-control.elementor-control-limit_grid_items_pro_notice {
+.elementor-control.elementor-control-limit_grid_items_pro_notice,
+.elementor-control.elementor-control-mini_cart_style_pro_notice {
 	padding-bottom: 0 !important;
 }
 
@@ -666,7 +672,8 @@
 .elementor-control-sharing_columns_pro_notice .wpr-pro-notice,
 .elementor-control-popup_trigger_pro_notice .wpr-pro-notice,
 .elementor-control-popup_show_again_delay_pro_notice .wpr-pro-notice,
-.elementor-control-group_popup_settings_pro_notice .wpr-pro-notice {
+.elementor-control-group_popup_settings_pro_notice .wpr-pro-notice,
+.elementor-control-mini_cart_style_pro_notice .wpr-pro-notice {
 	border-bottom: none !important;
 }
 

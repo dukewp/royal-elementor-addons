@@ -97,7 +97,7 @@ class WXR_Parser_Regex {
 
 				foreach ( $multiline_tags as $tag => $handler ) {
 					// Handle multi-line tags on a singular line.
-					if ( preg_match( '|<' . $tag . '>(.*?)</' . $tag . '>|is', $importline, $matches ) ) {
+					if ( preg_match( '|<'. $tag .'>(.*?)</'. $tag .'>|is', $importline, $matches ) ) {
 						$this->{$handler[0]}[] = call_user_func( $handler[1], $matches[1] );
 
 						continue;
@@ -969,7 +969,7 @@ class WXR_Parser_XML {
 				if ( $this->in_sub_tag ) {
 					$this->sub_data[ $this->in_sub_tag ] = $this->cdata;
 					$this->in_sub_tag = false;
-				} else if ( $this->in_tag ) {
+				} elseif ( $this->in_tag ) {
 					$this->data[ $this->in_tag ] = $this->cdata;
 					$this->in_tag = false;
 				}

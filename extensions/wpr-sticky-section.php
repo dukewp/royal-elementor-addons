@@ -15,7 +15,9 @@ use Elementor\Core\Breakpoints;
 use WprAddons\Classes\Utilities;
 
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Sticky_Section {
 
@@ -148,7 +150,7 @@ class Wpr_Sticky_Section {
             $element->add_control(
                 'wpr_z_index',
                 [
-                    'label' => esc_html__( 'Z-Index', 'elementor' ),
+                    'label' => esc_html__( 'Z-Index', 'wpr-addons' ),
                     'type' => Controls_Manager::NUMBER,
                     'min' => -99,
 					'max' => 99999,
