@@ -65,7 +65,6 @@ class WPR_Templates_Library_Blocks {
 								'flip-carousel',
 								'feature-list',
 								'dual-color-heading',
-								'data-table',
 								'reading-progress-bar',
 							];
 							

@@ -105,7 +105,6 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label'       => __( 'Separator', 'wpr-addons' ),
 				'type'        => Controls_Manager::TEXT,
-				'dynamic'     => array( 'active' => true ),
 				'default' => ',',
 				'label_block' => true,
 				'condition'   => [
@@ -119,7 +118,6 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label'       => __( 'Remote URL', 'wpr-addons' ),
 				'type'        => Controls_Manager::TEXT,
-				'dynamic'     => array( 'active' => true ),
 				'label_block' => true,
 				'condition'   => [
 					'data_source' => 'csv',

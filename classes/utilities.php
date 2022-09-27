@@ -28,7 +28,7 @@ class Utilities {
 			'Testimonial' => ['testimonial', 'https://royal-elementor-addons.com/elementor-testimonials-slider-widget/', '', ''],
 			'Nav Menu' => ['nav-menu', 'http://royal-elementor-addons.com/elementor-menu-widget/', '', ''],
 			'Onepage Navigation' => ['onepage-nav', 'https://royal-elementor-addons.com/elementor-one-page-navigation-widget/', '', ''],
-			'Data Table' => ['data-table', 'https://royal-elementor-addons.com/elementor-data-table-widget/', '', 'new'],
+			'Data Table' => ['data-table', 'https://royal-elementor-addons.com/elementor-data-table-widget/?ref=rea-plugin-backend-elements-widget-prev', '#filter:category-data-table', 'new'],
 			'Pricing Table' => ['pricing-table', 'https://royal-elementor-addons.com/elementor-pricing-table-widget/', '', ''],
 			'Content Toggle' => ['content-toggle', 'https://royal-elementor-addons.com/elementor-content-toggle-widget/', '', ''],
 			'Countdown' => ['countdown', 'https://royal-elementor-addons.com/elementor-countdown-widget/', '', ''],

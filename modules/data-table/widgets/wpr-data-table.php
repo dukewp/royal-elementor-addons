@@ -357,7 +357,6 @@ class Wpr_Data_Table extends Widget_Base {
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'default' => esc_html__( 'Table Title' , 'wpr-addons' ),
-				// 'dynamic' => ['active' => true],
 				'label_block' => true
 			]
 		);
@@ -1829,7 +1828,10 @@ class Wpr_Data_Table extends Widget_Base {
 		$url_ext2 = pathinfo($url);
 
 		ob_start();
-		if($url_ext === 'csv' || str_contains($url_ext2['dirname'], 'docs.google.com/spreadsheets')) { 
+		if( $url_ext === 'csv' || str_contains($url_ext2['dirname'], 'docs.google.com/spreadsheets') ) {
+			if (str_contains($url_ext2['dirname'], 'docs.google.com/spreadsheets')) {
+				$url = $settings['table_insert_url']['url'];
+			}
 			echo $this->wpr_parse_csv_to_table($url, $settings, $custom_pagination, $sorting_icon );
 		} else {
 			echo '<p class="wpr-no-csv-file-found">'. esc_html__('Please provide a CSV file.', 'wpr-addons') .'</p>';
