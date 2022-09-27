@@ -347,7 +347,7 @@ function wpr_addons_settings_page() {
             
             <div class="wpr-woo-template-info">
                 <div class="wpr-woo-template-title">
-                    <h3>Royal Templates</h3>
+                    <h4>Royal Templates</h4>
                     <span>Enable/Disable Royal addons Cart, Minicart, Notifications Templates</span>
                 </div>
                 <input type="checkbox" name="wpr_override_woo_templates" id="wpr_override_woo_templates" <?php echo checked( get_option('wpr_override_woo_templates', 'on'), 'on', false ); ?>>
@@ -356,7 +356,7 @@ function wpr_addons_settings_page() {
             
             <div class="wpr-woo-template-info">
                 <div class="wpr-woo-template-title">
-                    <h3>Product Image Zoom</h3>
+                    <h4>Product Image Zoom</h4>
                     <span>Enable/Disable Image Zoom Effect on Woocommerce products</span>
                 </div>
                 <input type="checkbox" name="wpr_enable_product_image_zoom" id="wpr_enable_product_image_zoom" <?php echo checked( get_option('wpr_enable_product_image_zoom', 'on'), 'on', false ); ?>>
@@ -365,7 +365,7 @@ function wpr_addons_settings_page() {
 
             <div class="wpr-woo-template-info">
                 <div class="wpr-woo-template-title">
-                    <h3>Product Slider Nav</h3>
+                    <h4>Product Slider Nav</h4>
                     <span>Enable/Disable Navigation Arrows on Woocommerce products slider</span>
                 </div>
                 <input type="checkbox" name="wpr_enable_woo_flexslider_navigation" id="wpr_enable_woo_flexslider_navigation" <?php echo checked( get_option('wpr_enable_woo_flexslider_navigation', 'on'), 'on', false ); ?>>
