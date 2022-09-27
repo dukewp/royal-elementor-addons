@@ -661,6 +661,18 @@ class Wpr_Image_Accordion extends Widget_Base {
 			]
 		);
 
+		if ( ! wpr_fs()->can_use_premium_code() ) {
+			$this->add_control(
+				'slider_repeater_pro_notice',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => 'More than 4 Slides are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-image-accordion-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+					'content_classes' => 'wpr-pro-notice',
+				]
+			);
+		}
+
 		$this->end_controls_section();
 
 		// Section: Accordion Options ---
@@ -2953,7 +2965,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 	public function get_elements_by_location( $location, $settings, $item ) {
 		$locations = [];
 
-		foreach ( $settings['accordion_elements'] as $data ) {
+		foreach ( $settings['accordion_elements'] as $key => $data ) {
 			$place = 'over';
 			$align_vr = $data['element_align_vr'];
 
@@ -3213,6 +3225,9 @@ class Wpr_Image_Accordion extends Widget_Base {
 		<div class="wpr-image-accordion-wrap">
 			<div class="wpr-image-accordion">
 			<?php foreach ( $settings['accordion_items'] as $key => $item ) :
+			if ( ! wpr_fs()->can_use_premium_code() && $key === 3 ) {
+				break;
+			}
 			
 			if ( !empty($item['accordion_item_bg_image']['id']) ) {
 				$this->item_bg_image_url = Group_Control_Image_Size::get_attachment_image_src( $item['accordion_item_bg_image']['id'], 'accordion_image_size', $settings );
@@ -3226,8 +3241,8 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'activeWidth' => $settings['accordion_active_item_style']['size'],
 				'defaultActive' => $settings['default_active'],
 				'interaction' => $settings['accordion_interaction'],
-				'overlayLink' => 'yes' === $item['wrapper_link'] ? $item['accordion_btn_url']['url'] : '',
-				'overlayLinkTarget' => $item['accordion_btn_url']['is_external'] === 'on' ? '_blank' : '_self'
+				'overlayLink' => 'yes' === $item['wrapper_link'] && isset($item['accordion_btn_url']) ? $item['accordion_btn_url']['url'] : '',
+				'overlayLinkTarget' => isset($item['accordion_btn_url']) && $item['accordion_btn_url']['is_external'] === 'on' ? '_blank' : '_self'
 			];
 
 			$layout['lightbox'] = [
