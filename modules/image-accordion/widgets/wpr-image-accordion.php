@@ -190,88 +190,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 			]
 		);
 	}
-	
-	public function add_control_title_pointer_color_hr() {
-		$this->add_control(
-			'title_pointer_color_hr',
-			[
-				'label'  => esc_html__( 'Hover Effect Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#605BE5',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-img-accordion-item-title .wpr-pointer-item:before' => 'background-color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-img-accordion-item-title .wpr-pointer-item:after' => 'background-color: {{VALUE}}',
-				],
-				'separator' => 'after',
-			]
-		);
-	}
-	
-	public function add_control_title_pointer() {
-		$this->add_control(
-			'title_pointer',
-			[
-				'label' => esc_html__( 'Hover Effect', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'none',
-				'options' => [
-					'none' => esc_html__( 'None', 'wpr-addons' ),
-					'underline' => esc_html__( 'Underline', 'wpr-addons' ),
-					'overline' => esc_html__( 'Overline', 'wpr-addons' ),
-				],
-			]
-		);
-	}
-	
-	public function add_control_title_pointer_height() {
-		$this->add_control(
-			'title_pointer_height',
-			[
-				'label' => esc_html__( 'Height', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 1,
-						'max' => 5,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 2,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-img-accordion-item-title .wpr-pointer-item:before' => 'height: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-img-accordion-item-title .wpr-pointer-item:after' => 'height: {{SIZE}}{{UNIT}};',
-				],
-				'separator' => 'before',
-				'condition' => [
-					'title_pointer' => [ 'underline', 'overline' ],
-				],
-			]
-		);
-	}
-	
-	public function add_control_title_pointer_animation() {
-		$this->add_control(
-			'title_pointer_animation',
-			[
-				'label' => esc_html__( 'Hover Animation', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'slide',
-				'options' => [
-					'none' => 'None',
-					'fade' => 'Fade',
-					'slide' => 'Slide',
-					'grow' => 'Grow',
-					'drop' => 'Drop',
-				],
-				'condition' => [
-					'title_pointer' => [ 'underline', 'overline' ],
-				],
-			]
-		);
-	}
 
     public function register_controls() {
 		
@@ -384,6 +302,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'default' => esc_html__( 'Item 1 Title' , 'wpr-addons' ),
+				'label_block' => true,
 				'separator' => 'before'
 			]
 		);
@@ -964,6 +883,19 @@ class Wpr_Image_Accordion extends Widget_Base {
 				]
 			]
 		);
+
+		// $repeater->add_control(
+		// 	'element_lightbox_overlay',
+		// 	[
+		// 		'label' => esc_html__( 'Media Overlay', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SWITCHER,
+		// 		'return_value' => 'yes',
+		// 		'separator' => 'after',
+		// 		'condition' => [
+		// 			'element_select' => [ 'lightbox' ],
+		// 		],
+		// 	]
+		// );
 
 		$repeater->add_control(
 			'animation_divider',
@@ -1598,17 +1530,9 @@ class Wpr_Image_Accordion extends Widget_Base {
 		// 	]
 		// );
 
-		// $this->add_control_title_pointer_color_hr();
-
 		// $this->end_controls_tab();
 
 		// $this->end_controls_tabs();
-
-		$this->add_control_title_pointer();
-
-		$this->add_control_title_pointer_height();
-
-		$this->add_control_title_pointer_animation();
 
 		$this->add_control(
 			'title_transition_duration',
@@ -2845,11 +2769,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 
 	// Render Post Title
 	public function render_repeater_title( $settings, $class, $item ) {
-		$title_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['title_pointer'];
-		$title_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['title_pointer_animation'];
-
-		$class .= ' wpr-pointer-'. $title_pointer;
-		$class .= ' wpr-pointer-line-fx wpr-pointer-fx-'. $title_pointer_animation;
 
 		if (!empty($item['accordion_item_title'])) :
 		echo '<'. $settings['element_title_tag'] .' class="'. esc_attr($class) .'">';
@@ -2917,7 +2836,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 				$lightbox_source = $this->item_bg_image_url;
 			
 				echo '<div style="opacity: 0;" class="wpr-accordion-image-wrap" data-src="'. $lightbox_source. '">';
-					echo '<img src="'. esc_url( $lightbox_source ) .'" alt="'. esc_attr( $item['accordion_item_title'] ) .'">';
 				echo '</div>';
 	
 				// Lightbox Button
@@ -2939,6 +2857,11 @@ class Wpr_Image_Accordion extends Widget_Base {
 					}
 	
 				echo '</span>';
+
+				// Media Overlay
+				// if ( 'yes' === $settings['element_lightbox_overlay'] ) {
+				// 	echo '<div class="wpr-img-accordion-lightbox-overlay"></div>';
+				// }
 
 			echo '</div>';
 		echo '</div>';
@@ -3044,7 +2967,15 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'zoom' => $settings['lightbox_popup_zoom'],
 				'fullScreen' => $settings['lightbox_popup_fullscreen'],
 				'download' => $settings['lightbox_popup_download'],
-				'getCaptionFromTitleOrAlt' => $settings['lightbox_popup_captions']
+				'getCaptionFromTitleOrAlt' => $settings['lightbox_popup_captions'],
+
+				// 'autoplay' => $settings['lightbox_popup_autoplay'],
+				// 'pause' => $settings['lightbox_popup_pause'] * 1000,
+				// 'progressBar' => $settings['lightbox_popup_progressbar'],
+				'counter' => false,
+				'controls' => true,
+				'thumbnail' => true,
+				'showThumbByDefault' => true
 			];
 
 			$this->add_render_attribute( 'accordion-settings'.$key, [
