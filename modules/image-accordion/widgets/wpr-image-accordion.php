@@ -384,7 +384,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'default' => esc_html__( 'Item 1 Title' , 'wpr-addons' ),
-				'label_block' => true,
 				'separator' => 'before'
 			]
 		);
