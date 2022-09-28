@@ -11920,6 +11920,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 .wpr-image-accordion-wrap {
     overflow: hidden;
+    opacity: 0;
 }
 
 .wpr-image-accordion-wrap h1 {
