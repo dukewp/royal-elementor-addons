@@ -326,7 +326,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 					'auto'    => esc_html__( 'Auto', 'wpr-addons' ),
 				],
 				'default'     => 'cover',
-				'label_block' => true,
 				'selectors'   => [
 					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-image-accordion-item .wpr-accordion-background' => 'background-size: {{VALUE}}',
 				]
@@ -350,7 +349,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 					'bottom right'  => esc_html__( 'Bottom Right', 'wpr-addons' ),
 				],
 				'default'     => 'center center',
-				'label_block' => true,
 				'selectors'   => [
 					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-image-accordion-item .wpr-accordion-background' => 'background-position: {{VALUE}}',
 				]
@@ -369,7 +367,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 					'repeat-y'  => esc_html__( 'Repeat-y', 'wpr-addons' ),
 				],
 				'default'     => 'repeat',
-				'label_block' => true,
 				'selectors'   => [
 					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-image-accordion-item .wpr-accordion-background' => 'background-repeat: {{VALUE}}',
 				]
@@ -383,7 +380,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'type'      => Controls_Manager::SELECT,
 				'options'   => [
 					'custom'   => esc_html__( 'Custom Content', 'wpr-addons' ),
-					'template' => esc_html__( 'Template', 'wpr-addons' ),
+					'template' => esc_html__( 'Elementor Template', 'wpr-addons' ),
 				],
 				'default'   => 'custom',
 				'separator' => 'before'
@@ -600,7 +597,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'label' => esc_html__( 'Button Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => 'Button',
-				'label_block' => true,
 				'condition' => [
 					'content_type' => 'custom'
 				]
@@ -612,7 +608,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 			[
 				'label' => esc_html__( 'Button URL', 'wpr-addons' ),
 				'type' => Controls_Manager::URL,
-				'label_block' => true,
 				'condition' => [
 					'content_type' => 'custom'
 				]
@@ -622,7 +617,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 		$repeater->add_control(
 			'wrapper_link',
 			[
-				'label' => esc_html__( 'Wrapper Link', 'wpr-addons' ),
+				'label' => esc_html__( 'Use Button URL as Image Link', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'label_block' => false,
 				'render_type' => 'template',
@@ -726,9 +721,8 @@ class Wpr_Image_Accordion extends Widget_Base {
 		$this->add_control(
 			'default_active',
 			[
-				'label'       => __( 'Active Image By Default', 'wpr-addons' ),
-				'type'        => Controls_Manager::NUMBER,
-				'description' => __( 'Set the index for the image to be hovered by default on page load, index starts from 1', 'wpr-addons' )
+				'label' => __( 'Active Image By Default', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
 			]
 		);
 
