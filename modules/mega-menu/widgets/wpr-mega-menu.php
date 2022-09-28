@@ -1684,12 +1684,17 @@ class Wpr_Mega_Menu extends Widget_Base {
 					}
 
 					$output .='</a>';
+				}
+
+				$item_meta = get_post_meta( $item->ID, 'wpr-mega-menu-settings', true);
+
+				// var_dump($item_meta);
 					
-					if ( true ) {
-						$elementor = \Elementor\Plugin::instance();
-						$content = $elementor->frontend->get_builder_content_for_display('15');
-						$output .= '<div class="wpr-sub-mega-menu">'. $content .'</div>';
-					}
+				// Mega Menu
+				if ( isset($item_meta['wpr_mm_enable']) && 'true' === $item_meta['wpr_mm_enable'] ) {
+					$elementor = \Elementor\Plugin::instance();
+					$content = $elementor->frontend->get_builder_content_for_display('15');
+					$output .= '<div class="wpr-sub-mega-menu">'. $content .'</div>';
 				}
 			}
 			
