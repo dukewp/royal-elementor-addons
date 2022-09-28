@@ -372,200 +372,12 @@ class Wpr_Image_Accordion extends Widget_Base {
 				]
 			]
 		);
-		
-		$repeater->add_control(
-			'content_type',
-			[
-				'label'     => __( 'Content Type', 'wpr-addons' ),
-				'type'      => Controls_Manager::SELECT,
-				'options'   => [
-					'custom'   => esc_html__( 'Custom Content', 'wpr-addons' ),
-					'template' => esc_html__( 'Elementor Template', 'wpr-addons' ),
-				],
-				'default'   => 'custom',
-				'separator' => 'before'
-			]
-		);
-
-		$repeater->add_control(
-			'temp_content',
-			[
-				'label'       => __( 'Select Template', 'wpr-addons' ),
-				'type'        => Controls_Manager::SELECT2,
-				'options'     => $templates_select,
-				'label_block' => true,
-				'condition' => [
-					'content_type' => 'template'
-				]
-			]
-		);
-
-		$repeater->add_responsive_control(
-			'template_content_vr',
-			[
-				'label' => esc_html__( 'Vertical Align', 'wpr-addons' ),
-				'type' => Controls_Manager::CHOOSE,
-				'label_block' => false,
-                'default' => 'center',
-				'options' => [
-					'flex-start' => [
-						'title' => esc_html__( 'Top', 'wpr-addons' ),
-						'icon' => 'eicon-v-align-top',
-					],
-					'center' => [
-						'title' => esc_html__( 'Middle', 'wpr-addons' ),
-						'icon' => 'eicon-v-align-middle',
-					],
-					'flex-end' => [
-						'title' => esc_html__( 'Bottom', 'wpr-addons' ),
-						'icon' => 'eicon-v-align-bottom',
-					],
-				],
-                'selectors' => [
-					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-template-wrap' => 'align-items: {{VALUE}}',
-				],
-				'condition' => [
-					'content_type' => 'template'
-				]
-			]
-		);
-
-		$repeater->add_responsive_control(
-			'template_content_hr',
-			[
-				'label' => esc_html__( 'Horizontal Align', 'wpr-addons' ),
-				'type' => Controls_Manager::CHOOSE,
-				'label_block' => false,
-                'default' => 'center',
-				'options' => [
-					'left' => [
-						'title' => esc_html__( 'Left', 'wpr-addons' ),
-						'icon' => 'eicon-h-align-left',
-					],
-					'center' => [
-						'title' => esc_html__( 'Center', 'wpr-addons' ),
-						'icon' => 'eicon-h-align-center',
-					],
-					'right' => [
-						'title' => esc_html__( 'Right', 'wpr-addons' ),
-						'icon' => 'eicon-h-align-right',
-					],
-				],
-				'selectors_dictionary' => [
-					'left' => 'left: 0; right: auto;',
-					'center' => 'left: 50%; transform: translateX(-50%)',
-					'right' => 'right: 0; left: auto;',
-				],
-                'selectors' => [
-					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-template-wrap' => '{{VALUE}}',
-				],
-				'condition' => [
-					'content_type' => 'template'
-				]
-			]
-		);
-
-		$repeater->add_control(
-			'element_animation',
-			[
-				'label' => esc_html__( 'Select Animation', 'wpr-addons' ),
-				'type' => 'wpr-animations',
-				'default' => 'fade-in',
-				'condition' => [
-					'content_type' => 'template'
-				]
-			]
-		);
 
 		// // Upgrade to Pro Notice :TODO
-		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'image-accordion', 'element_animation', ['pro-slrt','pro-slxrt','pro-slbt','pro-sllt','pro-sltp','pro-slxlt','pro-sktp','pro-skrt','pro-skbt','pro-sklt','pro-scup','pro-scdn','pro-rllt','pro-rlrt'] );
+		// Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'image-accordion', 'element_animation', ['pro-slrt','pro-slxrt','pro-slbt','pro-sllt','pro-sltp','pro-slxlt','pro-sktp','pro-skrt','pro-skbt','pro-sklt','pro-scup','pro-scdn','pro-rllt','pro-rlrt'] );
 
-		$repeater->add_control(
-			'element_animation_duration',
-			[
-				'label' => esc_html__( 'Animation Duration', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.3,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'selectors' => [
-					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-template-wrap' => 'transition-duration: {{VALUE}}s;'
-				],
-				'condition' => [
-					'content_type' => 'template',
-					'element_animation!' => 'none'
-				]
-			]
-		);
-
-		$repeater->add_control(
-			'element_animation_delay',
-			[
-				'label' => esc_html__( 'Animation Delay', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-animation-wrap:hover {{CURRENT_ITEM}}.wpr-template-wrap' => 'transition-delay: {{VALUE}}s;'
-				],
-				'condition' => [
-					'content_type' => 'template',
-					'element_animation!' => 'none'
-				]
-			]
-		);
-
-		$repeater->add_control(
-			'element_animation_timing',
-			[
-				'label' => esc_html__( 'Animation Timing', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => Utilities::wpr_animation_timings(),
-				'default' => 'ease-default',
-				'condition' => [
-					'content_type' => 'template',
-					'element_animation!' => 'none'
-				]
-			]
-		);
-
-		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'image-accordion', 'element_animation_timing', ['pro-eio','pro-eiqd','pro-eicb','pro-eiqrt','pro-eiqnt','pro-eisn','pro-eiex','pro-eicr','pro-eibk','pro-eoqd','pro-eocb','pro-eoqrt','pro-eoqnt','pro-eosn','pro-eoex','pro-eocr','pro-eobk','pro-eioqd','pro-eiocb','pro-eioqrt','pro-eioqnt','pro-eiosn','pro-eioex','pro-eiocr','pro-eiobk',] );
-
-		$repeater->add_control(
-			'element_animation_size',
-			[
-				'label' => esc_html__( 'Animation Size', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'small' => esc_html__( 'Small', 'wpr-addons' ),
-					'medium' => esc_html__( 'Medium', 'wpr-addons' ),
-					'large' => esc_html__( 'Large', 'wpr-addons' ),
-				],
-				'default' => 'large',
-				'condition' => [
-					'content_type' => 'template',
-					'element_animation!' => 'none'
-				]
-			]
-		);
-
-		$repeater->add_control(
-			'element_animation_tr',
-			[
-				'label' => esc_html__( 'Animation Transparency', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
-				'return_value' => 'yes',
-				'condition' => [
-					'content_type' => 'template',
-					'element_animation!' => 'none'
-				]
-			]
-		);
+		// // Upgrade to Pro Notice
+		// Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'image-accordion', 'element_animation_timing', ['pro-eio','pro-eiqd','pro-eicb','pro-eiqrt','pro-eiqnt','pro-eisn','pro-eiex','pro-eicr','pro-eibk','pro-eoqd','pro-eocb','pro-eoqrt','pro-eoqnt','pro-eosn','pro-eoex','pro-eocr','pro-eobk','pro-eioqd','pro-eiocb','pro-eioqrt','pro-eioqnt','pro-eiosn','pro-eioex','pro-eiocr','pro-eiobk',] );
 
 		$repeater->add_control(
 			'accordion_item_title', [
@@ -573,9 +385,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'default' => esc_html__( 'Item 1 Title' , 'wpr-addons' ),
 				'label_block' => true,
-				'condition' => [
-					'content_type' => 'custom'
-				]
+				'separator' => 'before'
 			]
 		);
 
@@ -584,10 +394,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'label' => esc_html__( 'Description', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::TEXTAREA,
 				'default' => esc_html__( 'Lorem ipsum dolos ave nita' , 'wpr-addons' ),
-				'label_block' => true,
-				'condition' => [
-					'content_type' => 'custom'
-				]
+				'label_block' => true
 			]
 		);
 
@@ -596,10 +403,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 			[
 				'label' => esc_html__( 'Button Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => 'Button',
-				'condition' => [
-					'content_type' => 'custom'
-				]
+				'default' => 'Button'
 			]
 		);
 
@@ -607,10 +411,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 			'accordion_btn_url',
 			[
 				'label' => esc_html__( 'Button URL', 'wpr-addons' ),
-				'type' => Controls_Manager::URL,
-				'condition' => [
-					'content_type' => 'custom'
-				]
+				'type' => Controls_Manager::URL
 			]
 		);
 		
@@ -3267,13 +3068,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 							<?php
 								echo '<div '. $render_attribute .'>';
 									echo $this->render_media_overlay( $settings );
-									if ( 'template' === $item['content_type'] ) {
-										echo '<div class="wpr-template-wrap elementor-repeater-item-'. $item['_id'] .' '. $this->get_animation_class( $item, 'element' ) .'">';
-											echo $this->wpr_accordion_template( $item['temp_content'] );
-										echo '</div>';
-									} else {
-										echo $this->get_elements_by_location( 'over', $settings, $item );
-									}
+									echo $this->get_elements_by_location( 'over', $settings, $item );
 								echo '</div>';
 							?>
 				</div>
