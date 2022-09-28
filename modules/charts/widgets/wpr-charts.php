@@ -844,7 +844,6 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Show Title', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
 				'return_value' => 'yes',
 				'separator' => 'before',
 			]
@@ -1018,6 +1017,7 @@ class Wpr_Charts extends Widget_Base {
 				'label'              => __( 'Convert Values to Percents', 'wpr-addons' ),
 				'type'               => Controls_Manager::SWITCHER,
 				'return_value'       => 'true',
+				'default' => 'true',
 				'frontend_available' => true,
 				'condition' => [
 					'show_chart_tooltip' => 'yes'
@@ -1331,6 +1331,7 @@ class Wpr_Charts extends Widget_Base {
 			'axis_title_color_x', [
 				'label'       => esc_html__('Color (X)', 'wpr-addons'),
 				'type'        => Controls_Manager::COLOR,
+				'default' => '#C0C0C0'
 			]
 		);
 
@@ -1401,6 +1402,7 @@ class Wpr_Charts extends Widget_Base {
 			'axis_title_color_y', [
 				'label'       => esc_html__('Color (Y)', 'wpr-addons'),
 				'type'        => Controls_Manager::COLOR,
+				'default' => '#C0C0C0'
 			]
 		);
 
@@ -1523,7 +1525,7 @@ class Wpr_Charts extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 14,
+					'size' => 17,
 				],
 			]
 		);
@@ -1877,7 +1879,7 @@ class Wpr_Charts extends Widget_Base {
 		$this->add_control(
 			'tooltip_caret_size',
 			[
-				'label' => esc_html__( 'Caret Size', 'wpr-addons' ),
+				'label' => esc_html__( 'Triangle Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px' ],
 				'range' => [
@@ -2170,7 +2172,7 @@ class Wpr_Charts extends Widget_Base {
 			
 			if ( !empty($charts_labels_data) ) :
 				$data_charts_array['labels'] = explode(',', trim($charts_labels_data));
-				if ( 3 < sizeof($data_charts_array['labels']) ) {
+				if ( !wpr_fs()->can_use_premium_code() && 3 < sizeof($data_charts_array['labels']) ) {
 					$data_charts_array['labels'] = array_slice($data_charts_array['labels'], 0, 3);
 				}
 			endif;
@@ -2178,7 +2180,7 @@ class Wpr_Charts extends Widget_Base {
 			if ( is_array($charts_data_set) && sizeof($charts_data_set) ) {
 				$charts_counter = 0;
 				foreach ( $charts_data_set as $chart_data ) {
-					if ( ! wpr_fs()->can_use_premium_code() && $charts_counter === 3 ) {
+					if ( !wpr_fs()->can_use_premium_code() && $charts_counter === 3 ) {
 						break;
 					}
 					$data_charts_array['datasets'][] = [

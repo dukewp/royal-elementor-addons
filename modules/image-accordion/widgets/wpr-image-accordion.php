@@ -639,21 +639,18 @@ class Wpr_Image_Accordion extends Widget_Base {
 						
 						'accordion_item_title' => esc_html__( 'Item 1 Title', 'wpr-addons' ),
 						'accordion_item_bg_image' =>[
-							'url' => Utils::get_placeholder_image_src(),
-						]
+							'url' => WPR_ADDONS_ASSETS_URL . 'img/logo-slider-purple.png',
+						],
 					],
 					[
 						
 						'accordion_item_title' => esc_html__( 'Item 2 Title', 'wpr-addons' ),
-						'accordion_item_bg_image' =>[
-							'url' => Utils::get_placeholder_image_src()
-						],
 					],
 					[
 						
 						'accordion_item_title' => esc_html__( 'Item 3 Title', 'wpr-addons' ),
 						'accordion_item_bg_image' =>[
-							'url' => Utils::get_placeholder_image_src()
+							'url' => WPR_ADDONS_ASSETS_URL . 'img/logo-slider-test.png',
 						],
 					],
 				],
@@ -666,7 +663,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'slider_repeater_pro_notice',
 				[
 					'type' => Controls_Manager::RAW_HTML,
-					'raw' => 'More than 4 Slides are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-image-accordion-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					'raw' => 'More than e Slides are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-image-accordion-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
 					// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
 					'content_classes' => 'wpr-pro-notice',
 				]
@@ -684,12 +681,22 @@ class Wpr_Image_Accordion extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'default_active',
+		$this->add_responsive_control(
+			'accordion_direction',
 			[
-				'label'       => __( 'Active By Default Index', 'wpr-addons' ),
-				'type'        => Controls_Manager::NUMBER,
-				'description' => __( 'Set the index for the image to be hovered by default on page load, index starts from 1', 'wpr-addons' )
+				'label' => esc_html__( 'Layout', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'render_type' => 'template',
+				'default' => 'row',
+				'options' => [
+					'row' => esc_html__('Horizontal', 'wpr-addons'),
+					'column' => esc_html__('Vertical', 'wpr-addons'),
+				],
+				'prefix_class' => 'wpr-image-accordion-',
+				'default' => 'row',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-image-accordion-wrap .wpr-image-accordion' => 'flex-direction: {{VALUE}};'
+				]
 			]
 		);
 
@@ -716,22 +723,12 @@ class Wpr_Image_Accordion extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'accordion_direction',
+		$this->add_control(
+			'default_active',
 			[
-				'label' => esc_html__( 'Accordion Layout', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'render_type' => 'template',
-				'default' => 'row',
-				'options' => [
-					'row' => esc_html__('Horizontal', 'wpr-addons'),
-					'column' => esc_html__('Vertical', 'wpr-addons'),
-				],
-				'prefix_class' => 'wpr-image-accordion-',
-				'default' => 'row',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-image-accordion-wrap .wpr-image-accordion' => 'flex-direction: {{VALUE}};'
-				]
+				'label'       => __( 'Active Image By Default', 'wpr-addons' ),
+				'type'        => Controls_Manager::NUMBER,
+				'description' => __( 'Set the index for the image to be hovered by default on page load, index starts from 1', 'wpr-addons' )
 			]
 		);
 
@@ -739,7 +736,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 			'accordion_height',
 			[
 				'type' => Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Accordion Height', 'wpr-addons' ),
+				'label' => esc_html__( 'Height', 'wpr-addons' ),
 				'size_units' => [ 'px', 'vh' ],
 				'range' => [
 					'px' => [
@@ -848,7 +845,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 		$this->add_control(
 			'accordion_item_transition',
 			[
-				'label' => esc_html__( 'Transition', 'wpr-addons' ),
+				'label' => esc_html__( 'Grow Transition', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
 				'default' => 0.3,
 				'min' => 0,
@@ -970,7 +967,7 @@ class Wpr_Image_Accordion extends Widget_Base {
                 'label' => esc_html__( 'Horizontal Align', 'wpr-addons' ),
                 'type' => Controls_Manager::CHOOSE,
                 'label_block' => false,
-                'default' => 'left',
+                'default' => 'center',
                 'options' => [
                     'left' => [
                         'title' => esc_html__( 'Left', 'wpr-addons' ),
@@ -1718,14 +1715,14 @@ class Wpr_Image_Accordion extends Widget_Base {
 			]
 		);
 
-		$this->start_controls_tabs( 'tabs_img_accordion_title_style' );
+		// $this->start_controls_tabs( 'tabs_img_accordion_title_style' );
 
-		$this->start_controls_tab(
-			'tab_img_accordion_title_normal',
-			[
-				'label' => esc_html__( 'Normal', 'wpr-addons' ),
-			]
-		);
+		// $this->start_controls_tab(
+		// 	'tab_img_accordion_title_normal',
+		// 	[
+		// 		'label' => esc_html__( 'Normal', 'wpr-addons' ),
+		// 	]
+		// );
 
 		$this->add_control(
 			'title_color',
@@ -1763,55 +1760,55 @@ class Wpr_Image_Accordion extends Widget_Base {
 			]
 		);
 
-		$this->end_controls_tab();
+		// $this->end_controls_tab();
 
-		$this->start_controls_tab(
-			'tab_img_accordion_title_hover',
-			[
-				'label' => esc_html__( 'Hover', 'wpr-addons' ),
-			]
-		);
+		// $this->start_controls_tab(
+		// 	'tab_img_accordion_title_hover',
+		// 	[
+		// 		'label' => esc_html__( 'Hover', 'wpr-addons' ),
+		// 	]
+		// );
 
-		$this->add_control(
-			'title_color_hr',
-			[
-				'label'  => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#54595f',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-img-accordion-item-title .inner-block a:hover' => 'color: {{VALUE}}',
-				],
-			]
-		);
+		// $this->add_control(
+		// 	'title_color_hr',
+		// 	[
+		// 		'label'  => esc_html__( 'Color', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::COLOR,
+		// 		'default' => '#54595f',
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-img-accordion-item-title .inner-block a:hover' => 'color: {{VALUE}}',
+		// 		],
+		// 	]
+		// );
 
-		$this->add_control(
-			'title_bg_color_hr',
-			[
-				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-img-accordion-item-title .inner-block a:hover' => 'background-color: {{VALUE}}',
-				]
-			]
-		);
+		// $this->add_control(
+		// 	'title_bg_color_hr',
+		// 	[
+		// 		'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::COLOR,
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-img-accordion-item-title .inner-block a:hover' => 'background-color: {{VALUE}}',
+		// 		]
+		// 	]
+		// );
 
-		$this->add_control(
-			'title_border_color_hr',
-			[
-				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#E8E8E8',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-img-accordion-item-title .inner-block a:hover' => 'border-color: {{VALUE}}',
-				],
-			]
-		);
+		// $this->add_control(
+		// 	'title_border_color_hr',
+		// 	[
+		// 		'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::COLOR,
+		// 		'default' => '#E8E8E8',
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-img-accordion-item-title .inner-block a:hover' => 'border-color: {{VALUE}}',
+		// 		],
+		// 	]
+		// );
 
-		$this->add_control_title_pointer_color_hr();
+		// $this->add_control_title_pointer_color_hr();
 
-		$this->end_controls_tab();
+		// $this->end_controls_tab();
 
-		$this->end_controls_tabs();
+		// $this->end_controls_tabs();
 
 		$this->add_control_title_pointer();
 
