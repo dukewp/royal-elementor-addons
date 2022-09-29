@@ -68,8 +68,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 					'grayscale-in' => esc_html__( 'Grayscale In', 'wpr-addons' ),
 					'grayscale-out' => esc_html__( 'Grayscale Out (Pro)', 'wpr-addons' ),
 					'blur-in' => esc_html__( 'Blur In', 'wpr-addons' ),
-					'blur-out' => esc_html__( 'Blur Out (Pro)', 'wpr-addons' ),
-					'slide' => esc_html__( 'Slide', 'wpr-addons' ),
+					'blur-out' => esc_html__( 'Blur Out (Pro)', 'wpr-addons' )
 				],
 				'default' => 'none',
 			]
