@@ -298,7 +298,7 @@ class Wpr_Charts extends Widget_Base {
 				'default' => 'yes',
 				'return_value' => 'yes',
 				'condition' => [
-					'chart_type' => ['line', 'radar'], 
+					'chart_type' => ['line', 'radar'],
 					'chart_animation' => 'yes',
 				]
 			]
@@ -312,6 +312,7 @@ class Wpr_Charts extends Widget_Base {
 				'default'     => 1000,
 				'condition' => [
 					'chart_animation' => 'yes',
+					'chart_type' => ['radar', 'line']
 				]
 			]
 		);
@@ -356,7 +357,8 @@ class Wpr_Charts extends Widget_Base {
 					'easeInOutBounce' => 'easeInOutBounce',
 				],
 				'condition' => [
-					'chart_animation' => 'yes'
+					'chart_animation' => 'yes',
+					'chart_type' => ['radar', 'line']
 				]
 			]
 		);
@@ -390,7 +392,7 @@ class Wpr_Charts extends Widget_Base {
 				'charts_repeater_labels_data_pro_notice',
 				[
 					'type' => Controls_Manager::RAW_HTML,
-					'raw' => 'More than 3 Data Labels are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-flip-carousel-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					'raw' => 'More than 3 Data Labels are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-charts-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
 					// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
 					'content_classes' => 'wpr-pro-notice',
 				]
@@ -526,7 +528,7 @@ class Wpr_Charts extends Widget_Base {
 				'charts_repeater_pro_notice',
 				[
 					'type' => Controls_Manager::RAW_HTML,
-					'raw' => 'More than 3 Items are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-flip-carousel-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					'raw' => 'More than 3 Items are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-charts-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
 					// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
 					'content_classes' => 'wpr-pro-notice',
 				]
@@ -844,7 +846,6 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Show Title', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
 				'return_value' => 'yes',
 				'separator' => 'before',
 			]
@@ -1018,6 +1019,7 @@ class Wpr_Charts extends Widget_Base {
 				'label'              => __( 'Convert Values to Percents', 'wpr-addons' ),
 				'type'               => Controls_Manager::SWITCHER,
 				'return_value'       => 'true',
+				'default' => 'true',
 				'frontend_available' => true,
 				'condition' => [
 					'show_chart_tooltip' => 'yes'
@@ -1331,6 +1333,7 @@ class Wpr_Charts extends Widget_Base {
 			'axis_title_color_x', [
 				'label'       => esc_html__('Color (X)', 'wpr-addons'),
 				'type'        => Controls_Manager::COLOR,
+				'default' => '#C0C0C0'
 			]
 		);
 
@@ -1401,6 +1404,7 @@ class Wpr_Charts extends Widget_Base {
 			'axis_title_color_y', [
 				'label'       => esc_html__('Color (Y)', 'wpr-addons'),
 				'type'        => Controls_Manager::COLOR,
+				'default' => '#C0C0C0'
 			]
 		);
 
@@ -1523,7 +1527,7 @@ class Wpr_Charts extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 14,
+					'size' => 17,
 				],
 			]
 		);
@@ -1877,7 +1881,7 @@ class Wpr_Charts extends Widget_Base {
 		$this->add_control(
 			'tooltip_caret_size',
 			[
-				'label' => esc_html__( 'Caret Size', 'wpr-addons' ),
+				'label' => esc_html__( 'Triangle Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px' ],
 				'range' => [
@@ -2170,7 +2174,7 @@ class Wpr_Charts extends Widget_Base {
 			
 			if ( !empty($charts_labels_data) ) :
 				$data_charts_array['labels'] = explode(',', trim($charts_labels_data));
-				if ( 3 < sizeof($data_charts_array['labels']) ) {
+				if ( !wpr_fs()->can_use_premium_code() && 3 < sizeof($data_charts_array['labels']) ) {
 					$data_charts_array['labels'] = array_slice($data_charts_array['labels'], 0, 3);
 				}
 			endif;
@@ -2178,7 +2182,7 @@ class Wpr_Charts extends Widget_Base {
 			if ( is_array($charts_data_set) && sizeof($charts_data_set) ) {
 				$charts_counter = 0;
 				foreach ( $charts_data_set as $chart_data ) {
-					if ( ! wpr_fs()->can_use_premium_code() && $charts_counter === 3 ) {
+					if ( !wpr_fs()->can_use_premium_code() && $charts_counter === 3 ) {
 						break;
 					}
 					$data_charts_array['datasets'][] = [
