@@ -298,7 +298,7 @@ class Wpr_Charts extends Widget_Base {
 				'default' => 'yes',
 				'return_value' => 'yes',
 				'condition' => [
-					// 'chart_type' => ['line', 'radar'], 
+					'chart_type' => ['line', 'radar'],
 					'chart_animation' => 'yes',
 				]
 			]
@@ -312,7 +312,7 @@ class Wpr_Charts extends Widget_Base {
 				'default'     => 1000,
 				'condition' => [
 					'chart_animation' => 'yes',
-					// 'chart_type' => ['radar', 'line']
+					'chart_type' => ['radar', 'line']
 				]
 			]
 		);
@@ -358,7 +358,7 @@ class Wpr_Charts extends Widget_Base {
 				],
 				'condition' => [
 					'chart_animation' => 'yes',
-					// 'chart_type' => ['radar', 'line']
+					'chart_type' => ['radar', 'line']
 				]
 			]
 		);
