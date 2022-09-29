@@ -530,6 +530,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'label' => __( 'Skew Images', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'separator' => 'before',
+				'prefix_class' => 'wpr-skew-acc-images-',
 				'condition' => [
 					'accordion_direction' => 'row',
 				],
@@ -554,6 +555,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-image-accordion-item' => 'transform: skewX({{SIZE}}deg) translateZ(0);',
+					'{{WRAPPER}} .wpr-image-accordion-item > *:not(.wpr-accordion-background)' => 'transform: skewX(-{{SIZE}}deg) translateZ(0);',
 				],
 				'condition' => [
 					'accordion_skew' => 'yes',
@@ -771,22 +773,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 		// $repeater->add_control( 'element_sharing_trigger_direction', $this->add_repeater_args_element_sharing_trigger_direction() );
 
 		// $repeater->add_control( 'element_sharing_tooltip', $this->add_repeater_args_element_sharing_tooltip() );
-
-		$repeater->add_control(
-			'element_separator_style',
-			[
-				'label' => esc_html__( 'Select Styling', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'wpr-img-accordion-sep-style-1',
-				'options' => [
-					'wpr-img-accordion-sep-style-1' => esc_html__( 'Separator Style 1', 'wpr-addons' ),
-					'wpr-img-accordion-sep-style-2' => esc_html__( 'Separator Style 2', 'wpr-addons' ),
-				],
-				'condition' => [
-					'element_select' => 'separator',
-				]
-			]
-		);
 
 		$repeater->add_control(
 			'element_lightbox_icon',
@@ -2476,146 +2462,11 @@ class Wpr_Image_Accordion extends Widget_Base {
 		$this->end_controls_section();
 
 		// Styles ====================
-		// Section: Separator Style 1 
-		$this->start_controls_section(
-			'section_style_separator1',
-			[
-				'label' => esc_html__( 'Separator Style 1', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-				'show_label' => false,
-			]
-		);
-
-		$this->add_control(
-			'separator1_color',
-			[
-				'label'  => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#E8E8E8',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-img-accordion-sep-style-1 .inner-block > span' => 'border-bottom-color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_control(
-			'separator1_width',
-			[
-				'label' => esc_html__( 'Width', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px','%'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 300,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],				
-				'default' => [
-					'unit' => '%',
-					'size' => 100,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-img-accordion-sep-style-1:not(.wpr-img-accordion-item-display-inline) .inner-block > span' => 'width: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-img-accordion-sep-style-1.wpr-img-accordion-item-display-inline' => 'width: {{SIZE}}{{UNIT}};',
-				],
-				'render_type' => 'template',
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'separator1_height',
-			[
-				'label' => esc_html__( 'Height', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 1,
-						'max' => 100,
-					],
-				],				
-				'default' => [
-					'unit' => 'px',
-					'size' => 2,
-				],
-				'render_type' => 'template',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-img-accordion-sep-style-1 .inner-block > span' => 'border-bottom-width: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'separator1_border_type',
-			[
-				'label' => esc_html__( 'Type', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
-					'double' => esc_html__( 'Double', 'wpr-addons' ),
-					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
-					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
-					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
-				],
-				'default' => 'solid',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-img-accordion-sep-style-1 .inner-block > span' => 'border-bottom-style: {{VALUE}};',
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_responsive_control(
-			'separator1_margin',
-			[
-				'label' => esc_html__( 'Margin', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 15,
-					'right' => 0,
-					'bottom' => 15,
-					'left' => 0,
-				],
-				'render_type' => 'template',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-img-accordion-sep-style-1 .inner-block' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'separator1_radius',
-			[
-				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-img-accordion-sep-style-1 .inner-block > span' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->end_controls_section();
-
-		// Styles ====================
 		// Section: Separator Style 2 
 		$this->start_controls_section(
 			'section_style_separator2',
 			[
-				'label' => esc_html__( 'Separator Style 2', 'wpr-addons' ),
+				'label' => esc_html__( 'Separator', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 			]
@@ -2895,7 +2746,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 
 	// Render Post Element Separator
 	public function render_repeater_separator( $settings, $class ) {
-		echo '<div class="'. esc_attr($class) .' '. $settings['element_separator_style'] .'">';
+		echo '<div class="'. esc_attr($class) .' wpr-img-accordion-sep-style-2">';
 			echo '<div class="inner-block"><span></span></div>';
 		echo '</div>';
 	}

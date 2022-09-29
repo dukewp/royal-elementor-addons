@@ -11923,6 +11923,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     opacity: 0;
 }
 
+.wpr-skew-acc-images-yes .wpr-image-accordion-wrap {
+    overflow: visible;
+}
+
 .wpr-image-accordion-wrap h1 {
     position: relative;
     margin-bottom: 45px;
