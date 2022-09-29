@@ -190,6 +190,12 @@ class Wpr_Image_Accordion extends Widget_Base {
 			]
 		);
 	}
+	
+	public function add_control_lightbox_popup_thumbnails() {}
+	
+	public function add_control_lightbox_popup_thumbnails_default() {}
+	
+	public function add_control_lightbox_popup_sharing() {}
 
     public function register_controls() {
 		
@@ -1335,6 +1341,64 @@ class Wpr_Image_Accordion extends Widget_Base {
 		);
 
 		$this->add_control(
+			'lightbox_popup_autoplay',
+			[
+				'label' => esc_html__( 'Autoplay Slides', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'true',
+				'return_value' => 'true',
+			]
+		);
+
+		$this->add_control(
+			'lightbox_popup_progressbar',
+			[
+				'label' => esc_html__( 'Show Progress Bar', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'true',
+				'return_value' => 'true',
+				'condition' => [
+					'lightbox_popup_autoplay' => 'true'
+				]
+			]
+		);
+
+		$this->add_control(
+			'lightbox_popup_pause',
+			[
+				'label' => esc_html__( 'Autoplay Speed', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 5,
+				'min' => 1,
+				'max' => 10,
+				'step' => 1,
+				'condition' => [
+					'lightbox_popup_autoplay' => 'true',
+				],
+			]
+		);
+
+		$this->add_control(
+			'lightbox_popup_counter',
+			[
+				'label' => esc_html__( 'Show Counter', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'true',
+				'return_value' => 'true',
+			]
+		);
+
+		$this->add_control(
+			'lightbox_popup_arrows',
+			[
+				'label' => esc_html__( 'Show Arrows', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'true',
+				'return_value' => 'true',
+			]
+		);
+
+		$this->add_control(
 			'lightbox_popup_captions',
 			[
 				'label' => esc_html__( 'Show Captions', 'wpr-addons' ),
@@ -1343,16 +1407,12 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'return_value' => 'true',
 			]
 		);
-		
-		$this->add_control(
-			'lightbox_popup_sharing',
-			[
-				'label' => esc_html__( 'Show Sharing Button', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'true',
-				'return_value' => 'true',
-			]
-		);
+
+		$this->add_control_lightbox_popup_thumbnails();
+
+		$this->add_control_lightbox_popup_thumbnails_default();
+
+		$this->add_control_lightbox_popup_sharing();
 
 		$this->add_control(
 			'lightbox_popup_zoom',
@@ -1381,6 +1441,16 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'true',
 				'return_value' => 'true',
+			]
+		);
+
+		$this->add_control(
+			'lightbox_popup_description',
+			[
+				'raw' => sprintf(__( 'You can change Lightbox Popup styling options globaly. Navigate to <strong>Dashboard > %s > Settings</strong>.', 'wpr-addons' ), Utilities::get_plugin_name()),
+				'type' => Controls_Manager::RAW_HTML,
+				'separator' => 'before',
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 			]
 		);
 
@@ -2834,8 +2904,9 @@ class Wpr_Image_Accordion extends Widget_Base {
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
 				$lightbox_source = $this->item_bg_image_url;
-			
+
 				echo '<div style="opacity: 0;" class="wpr-accordion-image-wrap" data-src="'. $lightbox_source. '">';
+					echo '<img src="'. esc_url( $lightbox_source ) .'" alt="'. esc_attr( $item['accordion_item_title'] ) .'">';
 				echo '</div>';
 	
 				// Lightbox Button
@@ -2934,10 +3005,39 @@ class Wpr_Image_Accordion extends Widget_Base {
 
     public function render() {
 		$settings = $this->get_settings_for_display();
+
+		if ( ! wpr_fs()->can_use_premium_code() ) {
+			$settings['lightbox_popup_thumbnails'] = '';
+			$settings['lightbox_popup_thumbnails_default'] = '';
+			$settings['lightbox_popup_sharing'] = '';
+		}
+
+		$lightbox_settings = [
+			'selector' => '.wpr-accordion-image-wrap',
+			'iframeMaxWidth' => '60%',
+			'iframeMaxWidth' => '60%',
+			'hash' => false,
+			'autoplay' => $settings['lightbox_popup_autoplay'],
+			'pause' => $settings['lightbox_popup_pause'] * 1000,
+			'progressBar' => $settings['lightbox_popup_progressbar'],
+			'counter' => $settings['lightbox_popup_counter'],
+			'controls' => $settings['lightbox_popup_arrows'],
+			'getCaptionFromTitleOrAlt' => $settings['lightbox_popup_captions'],
+			'thumbnail' => $settings['lightbox_popup_thumbnails'],
+			'showThumbByDefault' => $settings['lightbox_popup_thumbnails_default'],
+			'share' => $settings['lightbox_popup_sharing'],
+			'zoom' => $settings['lightbox_popup_zoom'],
+			'fullScreen' => $settings['lightbox_popup_fullscreen'],
+			'download' => $settings['lightbox_popup_download'],
+		];
+		
+		$this->add_render_attribute( 'lightbox-settings',[
+			'lightbox' =>  wp_json_encode($lightbox_settings)
+		]);
 		?>
 
 		<div class="wpr-image-accordion-wrap">
-			<div class="wpr-image-accordion">
+			<div class="wpr-image-accordion" <?php echo $this->get_render_attribute_string('lightbox-settings') ?>>
 			<?php foreach ( $settings['accordion_items'] as $key => $item ) :
 			if ( ! wpr_fs()->can_use_premium_code() && $key === 3 ) {
 				break;
@@ -2959,25 +3059,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'overlayLinkTarget' => isset($item['accordion_btn_url']) && $item['accordion_btn_url']['is_external'] === 'on' ? '_blank' : '_self'
 			];
 
-			$layout['lightbox'] = [
-				'selector' => '.wpr-accordion-image-wrap',
-				'iframeMaxWidth' => '60%',
-				'hash' => false,
-				'share' => $settings['lightbox_popup_sharing'],
-				'zoom' => $settings['lightbox_popup_zoom'],
-				'fullScreen' => $settings['lightbox_popup_fullscreen'],
-				'download' => $settings['lightbox_popup_download'],
-				'getCaptionFromTitleOrAlt' => $settings['lightbox_popup_captions'],
-
-				// 'autoplay' => $settings['lightbox_popup_autoplay'],
-				// 'pause' => $settings['lightbox_popup_pause'] * 1000,
-				// 'progressBar' => $settings['lightbox_popup_progressbar'],
-				'counter' => false,
-				'controls' => true,
-				'thumbnail' => true,
-				'showThumbByDefault' => true
-			];
-
 			$this->add_render_attribute( 'accordion-settings'.$key, [
 				'class' => ['wpr-img-accordion-media-hover', 'wpr-animation-wrap'],
 				'data-settings' => wp_json_encode( $layout ),
@@ -2994,7 +3075,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 				<div data-src=<?php echo $this->item_bg_image_url ?>   class="wpr-image-accordion-item elementor-repeater-item-<?php echo $item['_id'] . $this->get_image_effect_class( $settings )?>">
 
 				<div class="wpr-accordion-background" style="background-image: url(<?php echo $this->item_bg_image_url ?>);"></div>
-
+							
 							<?php
 								echo '<div '. $render_attribute .'>';
 									echo $this->render_media_overlay( $settings );
