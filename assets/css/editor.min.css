@@ -695,7 +695,8 @@
 .elementor-control.elementor-control-sharing_repeater_pro_notice,
 .elementor-control.elementor-control-mini_cart_style_pro_notice,
 .elementor-control.elementor-control-tabs_position_pro_notice,
-.elementor-control.elementor-control-choose_table_type_pro_notice {
+.elementor-control.elementor-control-choose_table_type_pro_notice,
+.elementor-control.elementor-control-accordion_repeater_pro_notice {
 	padding-bottom: 0 !important;
 }
 
@@ -739,7 +740,8 @@
 .elementor-control-sharing_repeater_pro_notice .wpr-pro-notice,
 .elementor-control-mini_cart_style_pro_notice .wpr-pro-notice,
 .elementor-control-tabs_position_pro_notice .wpr-pro-notice,
-.elementor-control-choose_table_type_pro_notice .wpr-pro-notice {
+.elementor-control-choose_table_type_pro_notice .wpr-pro-notice,
+.elementor-control-accordion_repeater_pro_notice .wpr-pro-notice {
 	border-bottom: none !important;
 }
 
