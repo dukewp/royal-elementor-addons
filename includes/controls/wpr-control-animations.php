@@ -85,14 +85,14 @@ class WPR_Control_Animations extends Base_Data_Control {
 		$control_uid = $this->get_control_uid();
 		?>
 		<div class="elementor-control-field">
-			<label for="<?php echo $control_uid; ?>" class="elementor-control-title">{{{ data.label }}}</label>
+			<label for="<?php echo esc_attr($control_uid); ?>" class="elementor-control-title">{{{ data.label }}}</label>
 			<div class="elementor-control-input-wrapper">
-				<select id="<?php echo $control_uid; ?>" data-setting="{{ data.name }}">
+				<select id="<?php echo esc_attr($control_uid); ?>" data-setting="{{ data.name }}">
 					<option value="none"><?php echo esc_html__( 'None', 'wpr-addons' ); ?></option>
 					<?php foreach ( self::get_animations() as $animations_group_name => $animations_group ) : ?>
-						<optgroup label="<?php echo $animations_group_name; ?>">
+						<optgroup label="<?php echo esc_attr($animations_group_name); ?>">
 							<?php foreach ( $animations_group as $animation_name => $animation_title ) : ?>
-								<option value="<?php echo $animation_name; ?>"><?php echo $animation_title; ?></option>
+								<option value="<?php echo esc_attr($animation_name); ?>"><?php echo esc_html($animation_title); ?></option>
 							<?php endforeach; ?>
 						</optgroup>
 					<?php endforeach; ?>
@@ -138,14 +138,14 @@ class WPR_Control_Animations_Alt extends WPR_Control_Animations {
 		unset($animations['Slide']['slide-x-left']);
 		?>
 		<div class="elementor-control-field">
-			<label for="<?php echo $control_uid; ?>" class="elementor-control-title">{{{ data.label }}}</label>
+			<label for="<?php echo esc_attr($control_uid); ?>" class="elementor-control-title">{{{ data.label }}}</label>
 			<div class="elementor-control-input-wrapper">
-				<select id="<?php echo $control_uid; ?>" data-setting="{{ data.name }}">
+				<select id="<?php echo esc_attr($control_uid); ?>" data-setting="{{ data.name }}">
 					<option value="none"><?php echo esc_html__( 'None', 'wpr-addons' ); ?></option>
 					<?php foreach ( $animations as $animations_group_name => $animations_group ) : ?>
-						<optgroup label="<?php echo $animations_group_name; ?>">
+						<optgroup label="<?php echo esc_attr($animations_group_name); ?>">
 							<?php foreach ( $animations_group as $animation_name => $animation_title ) : ?>
-								<option value="<?php echo $animation_name; ?>"><?php echo $animation_title; ?></option>
+								<option value="<?php echo esc_attr($animation_name); ?>"><?php echo esc_html($animation_name); ?></option>
 							<?php endforeach; ?>
 						</optgroup>
 					<?php endforeach; ?>
@@ -278,13 +278,13 @@ class WPR_Control_Button_Animations extends Base_Data_Control {
 		$control_uid = $this->get_control_uid();
 		?>
 		<div class="elementor-control-field">
-			<label for="<?php echo $control_uid; ?>" class="elementor-control-title">{{{ data.label }}}</label>
+			<label for="<?php echo esc_attr($control_uid); ?>" class="elementor-control-title">{{{ data.label }}}</label>
 			<div class="elementor-control-input-wrapper">
-				<select id="<?php echo $control_uid; ?>" data-setting="{{ data.name }}">
+				<select id="<?php echo esc_attr($control_uid); ?>" data-setting="{{ data.name }}">
 					<?php foreach ( self::get_animations() as $animations_group_name => $animations_group ) : ?>
-						<optgroup label="<?php echo $animations_group_name; ?>">
+						<optgroup label="<?php echo esc_attr($animations_group_name); ?>">
 							<?php foreach ( $animations_group as $animation_name => $animation_title ) : ?>
-								<option value="<?php echo $animation_name; ?>"><?php echo $animation_title; ?></option>
+								<option value="<?php echo esc_attr($animation_name); ?>"><?php echo esc_html($animation_title); ?></option>
 							<?php endforeach; ?>
 						</optgroup>
 					<?php endforeach; ?>

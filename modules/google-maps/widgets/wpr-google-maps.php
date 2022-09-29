@@ -11,7 +11,9 @@ use Elementor\Core\Schemes\Color;
 use Elementor\Core\Schemes\Typography;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Google_Maps extends Widget_Base {
 	
@@ -612,7 +614,7 @@ class Wpr_Google_Maps extends Widget_Base {
 		$attributes .= ' data-locations="'. esc_attr( json_encode($settings['google_map_locations']) ) .'"';
 		$attributes .= ' data-controls="'. esc_attr( json_encode($this->get_map_controls( $settings )) ) .'"';
 
-		echo '<div class="wpr-google-map" '. $attributes .'></div>';
+		echo '<div class="wpr-google-map" '. $attributes .'></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 	}
 	

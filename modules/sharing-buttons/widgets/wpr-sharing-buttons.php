@@ -11,7 +11,9 @@ use Elementor\Core\Schemes\Typography;
 use Elementor\Repeater;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Sharing_Buttons extends Widget_Base {
 	
@@ -57,13 +59,13 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 				'label' => esc_html__( 'Columns', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'0' => esc_html( 'Auto', 'wpr-addons' ),
-					'1' => esc_html( '1', 'wpr-addons' ),
-					'2' => esc_html( '2', 'wpr-addons' ),
-					'pro-3' => esc_html( '3 (Pro)', 'wpr-addons' ),
-					'pro-4' => esc_html( '4 (Pro)', 'wpr-addons' ),
-					'pro-5' => esc_html( '5 (Pro)', 'wpr-addons' ),
-					'pro-6' => esc_html( '6 (Pro)', 'wpr-addons' ),
+					'0' => esc_html__( 'Auto', 'wpr-addons' ),
+					'1' => esc_html__( '1', 'wpr-addons' ),
+					'2' => esc_html__( '2', 'wpr-addons' ),
+					'pro-3' => esc_html__( '3 (Pro)', 'wpr-addons' ),
+					'pro-4' => esc_html__( '4 (Pro)', 'wpr-addons' ),
+					'pro-5' => esc_html__( '5 (Pro)', 'wpr-addons' ),
+					'pro-6' => esc_html__( '6 (Pro)', 'wpr-addons' ),
 				],
 				'default' => '0',
 				'prefix_class' => 'elementor-grid%s-',
@@ -178,7 +180,7 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 		$this->end_controls_section(); // End Controls Section
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'sharing-buttons', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'sharing-buttons', [
 			'Add Unlimited Social Icons',
 			'Custom Social Media Label',
 			'Layout Columns 1,2,3,4,5,6',
@@ -706,7 +708,7 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 			];
 
 			echo '<div class="elementor-grid-item">';
-				echo Utilities::get_post_sharing_icon( $args );
+				echo Utilities::get_post_sharing_icon( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo '</div>';
 
 			$count++;

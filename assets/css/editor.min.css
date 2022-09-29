@@ -41,6 +41,16 @@
 	position: relative !important;
 }
 
+.elementor-element--promotion .wpr-icon:after {
+	top: 22px;
+	right: -1px;
+	opacity: 0.7;
+}
+
+#elementor-element--promotion__dialog .dialog-button {
+	text-align: center;
+}
+
 .elementor-control-type-section[class*="elementor-control-wpr_section_"]:after {
     content: 'R';
     display: block;
@@ -107,6 +117,7 @@
 .elementor-control-archive_link_transition_duration,
 .elementor-control-post_info_tax_select,
 .elementor-control-post_info_link_wrap,
+.elementor-control-post_info_modified_time,
 .elementor-control-tabs_sharing_custom_colors,
 .elementor-control-post_info_show_avatar,
 .elementor-control-post_info_cf,
@@ -123,6 +134,10 @@
 .elementor-control-tooltip_position,
 .elementor-control-post_info_comments_text_1 {
 	padding-top: 15px !important;
+}
+
+.elementor-control-post_info_custom_field_video_tutorial {
+	margin-top: 15px;
 }
 
 .elementor-control-title_pointer_animation + .elementor-control-title_transition_duration,
@@ -316,6 +331,10 @@
 
 .elementor-control-posts_slider_notice .elementor-control-raw-html {
   font-style: normal !important;
+}
+
+.elementor-control-product_notice_widget_info .elementor-control-raw-html {
+	color: red;
 }
 
 
@@ -578,6 +597,10 @@
 	padding: 5px 0 15px 0 !important;
 }
 
+.elementor-control.elementor-control-data_source_pro_notice {
+	padding-bottom: 0 !important;
+}
+
 .wpr-pro-notice {
 	padding: 20px;
 	border-top: 1px solid #e6e9ec;
@@ -669,7 +692,10 @@
 .elementor-control.elementor-control-author_name_links_to_pro_notice,
 .elementor-control.elementor-control-author_title_links_to_pro_notice,
 .elementor-control.elementor-control-comments_form_layout_pro_notice,
-.elementor-control.elementor-control-sharing_repeater_pro_notice {
+.elementor-control.elementor-control-sharing_repeater_pro_notice,
+.elementor-control.elementor-control-mini_cart_style_pro_notice,
+.elementor-control.elementor-control-tabs_position_pro_notice,
+.elementor-control.elementor-control-choose_table_type_pro_notice {
 	padding-bottom: 0 !important;
 }
 
@@ -710,7 +736,10 @@
 .elementor-control-author_name_links_to_pro_notice .wpr-pro-notice,
 .elementor-control-author_title_links_to_pro_notice .wpr-pro-notice,
 .elementor-control-comments_form_layout_pro_notice .wpr-pro-notice,
-.elementor-control-sharing_repeater_pro_notice .wpr-pro-notice {
+.elementor-control-sharing_repeater_pro_notice .wpr-pro-notice,
+.elementor-control-mini_cart_style_pro_notice .wpr-pro-notice,
+.elementor-control-tabs_position_pro_notice .wpr-pro-notice,
+.elementor-control-choose_table_type_pro_notice .wpr-pro-notice {
 	border-bottom: none !important;
 }
 
@@ -790,6 +819,47 @@
   font-size: 16px;
 }
 
+/* Pro Control Class */
+.elementor-control.wpr-pro-control label i {
+  color: #aeaeae;
+  font-size: 14px;
+  margin-left: 3px;
+}
+
+.elementor-control.wpr-pro-control .elementor-control-content:before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 9;
+  background: transparent;
+}
+
+.elementor-control.wpr-pro-control .elementor-control-content:after {
+  content: "This option is available in the Pro Version.";
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: 30px;
+  padding: 15px;
+  z-index: 99;
+  margin-top: 10px;
+  font-size: 12px;
+  color: #93003c;
+  background-color: #ffffff;
+  border-radius: 5px;
+  -webkit-box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+          box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+  border: 1px solid #e6e9ec;
+  -webkit-transition: all 0.2s ease-in;
+  -o-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+}
+
+.elementor-control.wpr-pro-control .elementor-control-content:hover:after {
+  visibility: visible;
+  opacity: 1; 
+}
 
 /*--------------------------------------------------------------
 == Theme Builder Widgets
@@ -810,7 +880,8 @@
           order: 2;
 }
 
-#elementor-panel-category-wpr-theme-builder-widgets {
+#elementor-panel-category-wpr-theme-builder-widgets,
+#elementor-panel-category-wpr-woocommerce-builder-widgets {
   -webkit-box-ordinal-group: 2 !important;
       -ms-flex-order: 1 !important;
           order: 1 !important;

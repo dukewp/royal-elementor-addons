@@ -11,7 +11,9 @@ use Elementor\Core\Schemes\Color;
 use Elementor\Group_Control_Border;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Author_Box extends Widget_Base {
 	
@@ -175,6 +177,9 @@ class Wpr_Author_Box extends Widget_Base {
 					'h4' => 'H4',
 					'h5' => 'H5',
 					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+					'P' => 'p'
 				],
 				'default' => 'h3',
 				'condition' => [
@@ -222,6 +227,9 @@ class Wpr_Author_Box extends Widget_Base {
 					'h4' => 'H4',
 					'h5' => 'H5',
 					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+					'P' => 'p'
 				],
 				'default' => 'h3',
 				'condition' => [
@@ -261,7 +269,7 @@ class Wpr_Author_Box extends Widget_Base {
 		$this->end_controls_section(); // End Controls Section
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'author-box', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'author-box', [
 			'Link to Author Website.',
 			'Show/Hide Author Biography (description).'
 		] );
@@ -425,14 +433,14 @@ class Wpr_Author_Box extends Widget_Base {
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-author-box-name',
 				'fields_options' => [
-					'typography'      => [
+					'typography' => [
 						'default' => 'custom',
 					],
-					'font_weight'    => [
+					'font_weight' => [
 						'default' => '500',
 					],
-					'font_size'      => [
-						'default'    => [
+					'font_size' => [
+						'default' => [
 							'size' => '18',
 							'unit' => 'px',
 						],
@@ -826,9 +834,9 @@ class Wpr_Author_Box extends Widget_Base {
 			if ( '' !== $settings['author_avatar'] && false !== $avatar ) {
 				echo '<div class="wpr-author-box-image">';
 					if ( 'posts' === $settings['author_name_links_to'] || $author_name_has_website ) {
-						echo '<a href="'. esc_url( $author_name_link ) .'" target="'. esc_attr($author_name_target) .'">'. $avatar .'</a>';
+						echo '<a href="'. esc_url( $author_name_link ) .'" target="'. esc_attr($author_name_target) .'">'. wp_kses_post($avatar) .'</a>';
 					} else {
-						echo $avatar;
+						echo wp_kses_post($avatar);
 					}
 				echo '</div>';
 			}
@@ -838,29 +846,29 @@ class Wpr_Author_Box extends Widget_Base {
 
 			// Author Name
 			if ( '' !== $settings['author_name'] && '' !== $name ) {
-				echo '<'. $settings['author_name_tag'] .' class="wpr-author-box-name">';
+				echo '<'. esc_attr($settings['author_name_tag']) .' class="wpr-author-box-name">';
 					if ( 'posts' === $settings['author_name_links_to'] || $author_name_has_website ) {
-						echo '<a href="'. esc_url( $author_name_link ) .'" target="'. esc_attr($author_name_target) .'">'. $name .'</a>';
+						echo '<a href="'. esc_url( $author_name_link ) .'" target="'. esc_attr($author_name_target) .'">'. esc_html($name) .'</a>';
 					} else {
-						echo $name;
+						echo esc_html($name);
 					}
-				echo '</'. $settings['author_name_tag'] .'>';
+				echo '</'. esc_attr($settings['author_name_tag']) .'>';
 			}
 
 			// Author Title
 			if ( '' !== $title && 'yes' === $settings['author_title'] ) {
-				echo '<'. $settings['author_title_tag'] .' class="wpr-author-box-title">';
+				echo '<'. esc_attr($settings['author_title_tag']) .' class="wpr-author-box-title">';
 					if ( 'posts' === $settings['author_title_links_to'] || $author_title_has_website ) {
-						echo '<a href="'. esc_url( $author_title_link ) .'" target="'. esc_attr($author_title_target) .'">'. $title .'</a>';
+						echo '<a href="'. esc_url( $author_title_link ) .'" target="'. esc_attr($author_title_target) .'">'. wp_kses_post($title) .'</a>';
 					} else {
-						echo $title;
+						echo wp_kses_post($title);
 					}
-				echo '</'. $settings['author_title_tag'] .'>';
+				echo '</'. esc_attr($settings['author_title_tag']) .'>';
 			}
 
 			// Author Biography
 			if ( '' !== $settings['author_bio'] && '' !== $biography ) {
-				echo '<p class="wpr-author-box-bio">'. $biography .'</p>';
+				echo '<p class="wpr-author-box-bio">'. wp_kses_post($biography) .'</p>';
 			}
 
 			// Author Posts Link

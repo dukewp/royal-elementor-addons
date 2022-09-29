@@ -1,7 +1,9 @@
 <?php
 namespace WprAddons\Classes;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 /**
  * WPR_Post_Likes setup
@@ -23,7 +25,7 @@ class WPR_Post_Likes {
 	*/
 	public function wpr_likes_init() {
 		// Security
-		$nonce = isset( $_REQUEST['nonce'] ) ? sanitize_text_field( $_REQUEST['nonce'] ) : 0;
+		$nonce = isset( $_REQUEST['nonce'] ) ? sanitize_text_field( wp_unslash($_REQUEST['nonce']) ) : 0;
 
 		if ( ! wp_verify_nonce( $nonce, 'wpr-post-likes-nonce' ) ) {
 			exit( esc_html__( 'Not permitted', 'wpr-addons' ) );
@@ -33,7 +35,7 @@ class WPR_Post_Likes {
 		$js_disabled = ( isset( $_REQUEST['disabled'] ) && $_REQUEST['disabled'] == true ) ? true : false;
 
 		// Base variables
-		$post_id = ( isset( $_REQUEST['post_id'] ) && is_numeric( $_REQUEST['post_id'] ) ) ? esc_html($_REQUEST['post_id']) : '';
+		$post_id = ( isset( $_REQUEST['post_id'] ) && is_numeric( $_REQUEST['post_id'] ) ) ? absint($_REQUEST['post_id']) : '';
 
 		$post_users = NULL;
 		$like_count = 0;
@@ -166,12 +168,12 @@ class WPR_Post_Likes {
 		}
 
 		// Button Attributes
-		$attributes  = 'href="'. admin_url( 'admin-ajax.php?action=wpr_likes_init&post_id='. $post_id .'&nonce='. $nonce ) .'"';
-		$attributes .= ' class="wpr-post-like-button'. $liked_class . $default_text_class .'"';
+		$attributes  = 'href="'. esc_url(admin_url( 'admin-ajax.php?action=wpr_likes_init&post_id='. $post_id .'&nonce='. $nonce )) .'"';
+		$attributes .= ' class="wpr-post-like-button'. esc_attr($liked_class . $default_text_class) .'"';
 		$attributes .= ' title="'. esc_attr($title) .'"';
 		$attributes .= ' data-nonce="'. esc_attr($nonce) .'"';
 		$attributes .= ' data-post-id="'. esc_attr($post_id) .'"';
-		$attributes .= ' data-ajax="'. admin_url( 'admin-ajax.php' ) .'"';
+		$attributes .= ' data-ajax="'. esc_url(admin_url( 'admin-ajax.php' )) .'"';
 		$attributes .= ' data-icon="'. esc_attr($icon_class) .'"';
 		$attributes .= ' data-text="'. esc_attr($button_text) .'"';
 
@@ -181,7 +183,7 @@ class WPR_Post_Likes {
 		$output .= $this->get_like_count( $like_count, $button_text );
 		$output .= '</a>';
 
-		return $output;
+		return $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -268,11 +270,11 @@ class WPR_Post_Likes {
 	*/
 	public function get_IP() {
 		if ( isset( $_SERVER['HTTP_CLIENT_IP'] ) && ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
-			$ip = $_SERVER['HTTP_CLIENT_IP'];
+			$ip = sanitize_text_field(wp_unslash($_SERVER['HTTP_CLIENT_IP']));
 		} elseif ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) && ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
-			$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+			$ip = sanitize_text_field(wp_unslash($_SERVER['HTTP_X_FORWARDED_FOR']));
 		} else {
-			$ip = ( isset( $_SERVER['REMOTE_ADDR'] ) ) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0';
+			$ip = ( isset( $_SERVER['REMOTE_ADDR'] ) ) ? sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR'])) : '0.0.0.0';
 		}
 
 		$ip = filter_var( $ip, FILTER_VALIDATE_IP );
@@ -289,9 +291,9 @@ class WPR_Post_Likes {
 
 		if ( $number >= 1000 && $number < 1000000 ) {
 			$formatted = number_format( $number/1000, $precision ).'K';
-		} else if ( $number >= 1000000 && $number < 1000000000 ) {
+		} elseif ( $number >= 1000000 && $number < 1000000000 ) {
 			$formatted = number_format( $number/1000000, $precision ).'M';
-		} else if ( $number >= 1000000000 ) {
+		} elseif ( $number >= 1000000000 ) {
 			$formatted = number_format( $number/1000000000, $precision ).'B';
 		} else {
 			$formatted = $number; // Number is less than 1000
@@ -312,7 +314,7 @@ class WPR_Post_Likes {
 			$number = $like_text;
 		}
 
-		return '<span class="wpr-post-like-count">'. $number .'</span>';
+		return '<span class="wpr-post-like-count">'. esc_html($number) .'</span>';
 	}
 }
 

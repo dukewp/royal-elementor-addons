@@ -11,7 +11,9 @@ use Elementor\Group_Control_Border;
 use Elementor\Repeater;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Post_Info extends Widget_Base {
 	
@@ -32,7 +34,7 @@ class Wpr_Post_Info extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'meta', 'info', 'date', 'time', 'author', 'categories', 'tags', 'comments' ];
+		return [ 'post meta', 'post info', 'date', 'time', 'author', 'categories', 'tags', 'comments' ];
 	}
 
 	public function add_options_post_info_select() {
@@ -103,7 +105,32 @@ class Wpr_Post_Info extends Widget_Base {
 			]
 		);
 
+		$repeater->add_control(
+			'post_info_custom_field_video_tutorial',
+			[
+				'raw' => esc_html__( 'See how to use custom fields in this', 'wpr-addons' ) . sprintf( '<br><a href="%1$s" target="_blank">%2$s <span class="dashicons dashicons-video-alt3"></span></a>', 'https://www.youtube.com/watch?v=9GvpqyHF_Cs', esc_html__( 'video tutorial', 'wpr-addons' ) ),
+				'type' => Controls_Manager::RAW_HTML,
+				'separator' => 'after',
+				'condition' => [
+					'post_info_select' => 'custom-field'
+				]
+			]
+		);
+
 		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'post-info', 'post_info_select', ['pro-cf'] );
+
+		$repeater->add_control(
+			'post_info_modified_time',
+			[
+				'label' => esc_html__( 'Show Modified Time', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => '',
+				'return_value' => 'yes',
+				'condition' => [
+					'post_info_select' => [ 'time', 'date' ],
+				]
+			]
+		);
 
 		$repeater->add_control(
 			'post_info_comments_text_1',
@@ -362,7 +389,7 @@ class Wpr_Post_Info extends Widget_Base {
 		$this->end_controls_section();
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'post-info', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'post-info', [
 			'Display and Style Custom Fields in and Advanced way.',
 			'Query Custom Post Type Taxonomies (categories).'
 		] );
@@ -1050,8 +1077,13 @@ class Wpr_Post_Info extends Widget_Base {
 			echo '<a href="'. esc_url( get_day_link( get_post_time( 'Y' ), get_post_time( 'm' ), get_post_time( 'j' ) ) ) .'">';
 		}
 
-		// Date
-		echo '<span>'. apply_filters( 'the_date', get_the_date( '' ), get_option( 'date_format' ), '', '' ) .'</span>';
+		// Modified Time
+		if ( 'yes' === $settings['post_info_modified_time']) {
+			echo esc_html(get_the_modified_time(get_option( 'date_format')));
+		} else {
+			// Date
+			echo '<span>'. esc_html(apply_filters( 'the_date', get_the_date( '' ), get_option( 'date_format' ), '', '' )) .'</span>';
+		}
 
 		// Wrap with Link
 		if ( 'yes' === $settings['post_info_link_wrap'] ) {
@@ -1063,8 +1095,12 @@ class Wpr_Post_Info extends Widget_Base {
 	public function render_post_info_time( $settings ) {
 		// Extra Icon & Text 
 		$this->render_extra_icon_text( $settings );
-		
-		echo '<span>'. get_the_time( '' ) .'</span>';
+
+		if ( 'yes' === $settings['post_info_modified_time']) {
+			echo esc_html(get_the_modified_time());
+		} else {
+			echo '<span>'. esc_html(get_the_time('')) .'</span>';
+		}
 	}
 
 	// Post Comments
@@ -1089,7 +1125,7 @@ class Wpr_Post_Info extends Widget_Base {
 			}
 
 			// Comments
-			echo '<span> '. $text .'</span>';
+			echo '<span> '. esc_html($text) .'</span>';
 
 			if ( 'yes' === $settings['post_info_link_wrap'] ) {
 				echo '</a>';
@@ -1113,7 +1149,7 @@ class Wpr_Post_Info extends Widget_Base {
 				echo get_avatar( $author_id, $settings['post_info_avatar_size'] );
 			}
 
-			echo '<span>'. get_the_author_meta( 'display_name', $author_id ) .'</span>';
+			echo '<span>'. esc_html(get_the_author_meta( 'display_name', $author_id )) .'</span>';
 
 		if ( 'yes' === $settings['post_info_link_wrap'] ) {
 			echo '</a>';
@@ -1131,13 +1167,13 @@ class Wpr_Post_Info extends Widget_Base {
 		// Taxonomies
 		foreach ( $terms as $term ) {
 			if ( 'yes' === $settings['post_info_link_wrap'] ) {
-				echo '<a href="'. get_term_link( $term->term_id ) .'">';
+				echo '<a href="'. esc_url(get_term_link( $term->term_id )) .'">';
 					// Term Name
 					echo esc_html( $term->name );
 
 					// Separator
 					if ( ++$count !== count( $terms ) ) {
-						echo '<span class="tax-sep">'. $settings['post_info_tax_sep'] .'</span>';
+						echo '<span class="tax-sep">'. esc_html($settings['post_info_tax_sep']) .'</span>';
 					}
 				echo '</a>';
 			} else {
@@ -1147,7 +1183,7 @@ class Wpr_Post_Info extends Widget_Base {
 
 					// Separator
 					if ( ++$count !== count( $terms ) ) {
-						echo '<span class="tax-sep">'. $settings['post_info_tax_sep'] .'</span>';
+						echo '<span class="tax-sep">'. esc_html($settings['post_info_tax_sep']) .'</span>';
 					}
 				echo '</span>';
 			}
@@ -1178,10 +1214,10 @@ class Wpr_Post_Info extends Widget_Base {
 		// Get Settings
 		$settings = $this->get_settings();
 
-		echo '<ul class="wpr-post-info wpr-post-info-'. $settings['post_info_layout'] .'">';
+		echo '<ul class="wpr-post-info wpr-post-info-'. esc_attr($settings['post_info_layout']) .'">';
 
 		foreach( $settings['post_info_elements'] as $element_settings ) {
-			echo '<li class="wpr-post-info-'. $element_settings['post_info_select'] .'">';
+			echo '<li class="wpr-post-info-'. esc_attr($element_settings['post_info_select']) .'">';
 
 			switch ( $element_settings['post_info_select'] ) {
 				case 'date':

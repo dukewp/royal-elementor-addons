@@ -15,7 +15,9 @@ use Elementor\Utils;
 use Elementor\Icons;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Search extends Widget_Base {
 		
@@ -196,7 +198,7 @@ class Wpr_Search extends Widget_Base {
 		$this->end_controls_section();
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'search', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'search', [
 			'Custom Search Query - Only Posts, Pages or Custom Post Types'
 		] );
 
@@ -785,7 +787,7 @@ class Wpr_Search extends Widget_Base {
 
 		?>
 
-		<form role="search" method="get" class="wpr-search-form" action="<?php echo home_url(); ?>">
+		<form role="search" method="get" class="wpr-search-form" action="<?php echo esc_url(home_url()); ?>">
 
 			<div class="wpr-search-form-input-wrap elementor-clearfix">
 				<input <?php echo $this->get_render_attribute_string( 'input' ); ?>>
