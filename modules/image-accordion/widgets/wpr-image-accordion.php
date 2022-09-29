@@ -380,11 +380,10 @@ class Wpr_Image_Accordion extends Widget_Base {
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
-				'slider_repeater_pro_notice',
+				'accordion_repeater_pro_notice',
 				[
 					'type' => Controls_Manager::RAW_HTML,
-					'raw' => 'More than e Slides are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-image-accordion-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
-					// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+					'raw' => 'More than 3 Slides are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-image-accordion-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
 					'content_classes' => 'wpr-pro-notice',
 				]
 			);
