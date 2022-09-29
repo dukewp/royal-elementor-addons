@@ -3,6 +3,8 @@ jQuery(document).ready(function( $ ) {
 
     var WprMegaMenuSettings = {
 
+        getLiveSettings: WprMegaMenuSettingsData,
+
         init: function() {
             WprMegaMenuSettings.initSettingsButtons();
         },
@@ -82,7 +84,7 @@ jQuery(document).ready(function( $ ) {
                     item_depth: depth
 				},
 				success: function( response ) {
-					console.log(response.data['edit_link']);
+                    console.log(response.data['edit_link']);
                     WprMegaMenuSettings.openTemplateEditorPopup(response.data['edit_link']);
 				}
 			});
@@ -90,7 +92,10 @@ jQuery(document).ready(function( $ ) {
 
         openTemplateEditorPopup: function( editorLink ) {
             $('.wpr-mm-editor-popup-wrap').fadeIn();
-            $('.wpr-mm-editor-popup-iframe').append('<iframe src="'+ editorLink +'" width="100%" height="100%"></iframe>');
+            console.log(editorLink);
+            // if ( !$('.wpr-mm-editor-popup-iframe').find('iframe').length ) {
+                $('.wpr-mm-editor-popup-iframe').append('<iframe src="'+ editorLink +'" width="100%" height="100%"></iframe>');
+            // }
         },
 
         closeTemplateEditorPopup: function() {
@@ -165,15 +170,23 @@ jQuery(document).ready(function( $ ) {
                     success: function( response ) {
                         $saveButton.text('Saved');
                         $saveButton.append('<span class="dashicons dashicons-yes"></span>');
-                        console.log('Settings Saved!');
 
                         setTimeout(function() {
                             $('.wpr-mm-settings-popup-wrap').fadeOut();
                             $saveButton.find('.dashicons').remove();
                         }, 1000);
+
+                        // Update Settings
+                        WprMegaMenuSettings.getLiveSettings[id] = settings;
+
+                        // Unbind Click
+                        $saveButton.off('click');
+
+                        console.log('Settings Saved!');
                     }
                 });
             });
+            
         },
 
         getSettings: function() {
@@ -265,9 +278,7 @@ jQuery(document).ready(function( $ ) {
 
         setSettings: function( selector ) {
             var id = selector.attr('data-id'),
-                settings = WprMegaMenuSettingsData[id];
-
-                console.log(settings);
+                settings = WprMegaMenuSettings.getLiveSettings[id];
             
             if ( ! $.isEmptyObject(settings) ) {
                 // General

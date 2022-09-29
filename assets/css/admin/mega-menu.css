@@ -1,7 +1,17 @@
 .wpr-mm-settings-btn {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.menu-item-depth-0:hover .wpr-mm-settings-btn {
+  visibility: visible;
+  opacity: 1;
+}
+
+.wpr-mm-settings-btn {
   position: absolute;
   top: 5px;
-  left: 110px;
+  left: 190px;
   display: flex;
   align-items: center;
   padding: 5px 11px 7px;
