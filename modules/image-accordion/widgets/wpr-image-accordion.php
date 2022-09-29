@@ -68,7 +68,8 @@ class Wpr_Image_Accordion extends Widget_Base {
 					'grayscale-in' => esc_html__( 'Grayscale In', 'wpr-addons' ),
 					'grayscale-out' => esc_html__( 'Grayscale Out (Pro)', 'wpr-addons' ),
 					'blur-in' => esc_html__( 'Blur In', 'wpr-addons' ),
-					'blur-out' => esc_html__( 'Blur Out (Pro)', 'wpr-addons' )
+					'blur-out' => esc_html__( 'Blur Out (Pro)', 'wpr-addons' ),
+					'slide' => esc_html__( 'Slide', 'wpr-addons' ),
 				],
 				'default' => 'none',
 			]
@@ -727,18 +728,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'default' => 'h2',
 				'condition' => [
 					'element_select' => 'title'
-				]
-			]
-		);
-
-		$repeater->add_control(
-			'element_dropcap',
-			[
-				'label' => esc_html__( 'Enable Drop Cap', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'condition' => [
-					'element_select' => [ 'description' ],
 				]
 			]
 		);
@@ -1723,18 +1712,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 		);
 
 		$this->add_control(
-			'description_dropcap_color',
-			[
-				'label'  => esc_html__( 'DropCap Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#3a3a3a',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-img-accordion-item-description.wpr-enable-dropcap p:first-child:first-letter' => 'color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_control(
 			'description_bg_color',
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
@@ -1764,16 +1741,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'name'     => 'description_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-img-accordion-item-description'
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'description_dropcap_typography',
-				'label' => esc_html__( 'Drop Cap Typography', 'wpr-addons' ),
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-img-accordion-item-description.wpr-enable-dropcap p:first-child:first-letter'
 			]
 		);
 
@@ -2705,8 +2672,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 
 	// Render Post Excerpt
 	public function render_repeater_description( $settings, $class, $item ) {
-		$dropcap_class = 'yes' === $settings['element_dropcap'] ? ' wpr-enable-dropcap' : '';
-		$class .= $dropcap_class;
 
 		if ( '' === $item['accordion_item_description'] ) {
 			return;
