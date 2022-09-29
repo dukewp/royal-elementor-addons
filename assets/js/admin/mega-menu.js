@@ -47,11 +47,11 @@ jQuery(document).ready(function( $ ) {
             // Icon Picker
             WprMegaMenuSettings.initIconPicker();
 
-            // Save Settings
-            WprMegaMenuSettings.saveSettings( $(this) );
-
             // Close Settings Popup
             WprMegaMenuSettings.closeSettingsPopup();
+
+            // Save Settings
+            WprMegaMenuSettings.saveSettings( $(this) );
         },
 
         closeSettingsPopup: function() {
@@ -63,6 +63,9 @@ jQuery(document).ready(function( $ ) {
                 if(e.target !== e.currentTarget) return;
                 $(this).fadeOut();
             });
+
+            // Unbind Click
+            $('.wpr-save-mega-menu-btn').off('click');
         },
 
         initEditMenuButton: function( selector ) {
@@ -92,10 +95,12 @@ jQuery(document).ready(function( $ ) {
 
         openTemplateEditorPopup: function( editorLink ) {
             $('.wpr-mm-editor-popup-wrap').fadeIn();
-            console.log(editorLink);
-            // if ( !$('.wpr-mm-editor-popup-iframe').find('iframe').length ) {
+
+            if ( !$('.wpr-mm-editor-popup-iframe').find('iframe').length ) {
                 $('.wpr-mm-editor-popup-iframe').append('<iframe src="'+ editorLink +'" width="100%" height="100%"></iframe>');
-            // }
+            }
+
+            $('body').css('overflow','hidden');
         },
 
         closeTemplateEditorPopup: function() {
@@ -103,6 +108,7 @@ jQuery(document).ready(function( $ ) {
                 $('.wpr-mm-editor-popup-wrap').fadeOut();
                 setTimeout(function() {
                     $('.wpr-mm-editor-popup-iframe').find('iframe').remove();
+                    $('body').css('overflow','visible');
                 }, 1000);
             });
         },
@@ -179,10 +185,7 @@ jQuery(document).ready(function( $ ) {
                         // Update Settings
                         WprMegaMenuSettings.getLiveSettings[id] = settings;
 
-                        // Unbind Click
-                        $saveButton.off('click');
-
-                        console.log('Settings Saved!');
+                        console.log('Settings Saved!' +' - '+ id);
                     }
                 });
             });
@@ -279,7 +282,7 @@ jQuery(document).ready(function( $ ) {
         setSettings: function( selector ) {
             var id = selector.attr('data-id'),
                 settings = WprMegaMenuSettings.getLiveSettings[id];
-            
+
             if ( ! $.isEmptyObject(settings) ) {
                 // General
                 if ( 'true' == settings['wpr_mm_enable'] ) {
@@ -310,8 +313,35 @@ jQuery(document).ready(function( $ ) {
                 $('#wpr_mm_badge_bdrs_2').val(settings['wpr_mm_badge_bdrs_1'][1]);
                 $('#wpr_mm_badge_bdrs_3').val(settings['wpr_mm_badge_bdrs_1'][2]);
                 $('#wpr_mm_badge_bdrs_4').val(settings['wpr_mm_badge_bdrs_1'][3]);
-            }
 
+            // Default Values
+            } else {
+                // General
+                $('#wpr_mm_enable').removeAttr('checked');
+                $('#wpr_mm_position').val('default').trigger('change');
+                $('#wpr_mm_width').val('default').trigger('change');
+                $('#wpr_mm_custom_width').val('600');
+
+                // Icon
+                if ( '' !== settings['wpr_mm_icon_picker'] ) {
+                    $('.wpr-mm-setting-icon div span').removeClass('wpr-mm-active-icon');
+                    $('.wpr-mm-setting-icon div span:first-child').addClass('wpr-mm-active-icon');
+                    $('.wpr-mm-setting-icon div span:last-child i').removeAttr('class');
+                    $('.wpr-mm-setting-icon div span:last-child i').addClass('fas fa-angle-down');
+                }
+                $('#wpr_mm_icon_color').val('#000000').trigger('keyup');
+                $('#wpr_mm_icon_size').val('16');
+
+                // Badge
+                $('#wpr_mm_badge_text').val('');
+                $('#wpr_mm_badge_size').val('16');
+                $('#wpr_mm_badge_color').val('#ffffff').trigger('keyup');
+                $('#wpr_mm_badge_bg_color').val('#000000').trigger('keyup');
+                $('#wpr_mm_badge_bdrs_1').val('');
+                $('#wpr_mm_badge_bdrs_2').val('');
+                $('#wpr_mm_badge_bdrs_3').val('');
+                $('#wpr_mm_badge_bdrs_4').val('');
+            }
         }
     }
 

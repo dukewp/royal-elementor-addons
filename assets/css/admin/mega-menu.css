@@ -305,3 +305,9 @@ button.wpr-edit-mega-menu-btn {
   border-bottom-color: #f7f7f7 !important;
   top: -8px !important;
 }
+
+.wpr-mm-setting select,
+.wpr-mm-setting input:not(.iconpicker-input),
+.wpr-mm-setting button {
+  border: 1px solid #e5e5e5 !important;
+}

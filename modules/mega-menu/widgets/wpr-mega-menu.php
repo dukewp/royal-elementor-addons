@@ -1642,7 +1642,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 			'menu_class' => 'wpr-nav-menu',
 			'menu_id' => 'menu-'. $this->get_nav_menu_index() .'-'. $this->get_id(),
 			'container' => '',
-			'walker' => new Main_Walker(),
+			// 'walker' => new Main_Walker(),
 			'fallback_cb' => '__return_empty_string',
 		];
 
@@ -1686,21 +1686,23 @@ class Wpr_Mega_Menu extends Widget_Base {
 					$output .='</a>';
 				}
 
-				$item_meta = get_post_meta( $item->ID, 'wpr-mega-menu-settings', true);
+				$mega_id = get_post_meta( $item->ID, 'wpr-mega-menu-item', true);
+				$mega_settings = get_post_meta( $item->ID, 'wpr-mega-menu-settings', true);
 
-				// var_dump($item_meta);
+				// var_dump($mega_settings);
 					
 				// Mega Menu
-				if ( isset($item_meta['wpr_mm_enable']) && 'true' === $item_meta['wpr_mm_enable'] ) {
+				if ( isset($mega_settings['wpr_mm_enable']) && 'true' === $mega_settings['wpr_mm_enable'] ) {
 					$elementor = \Elementor\Plugin::instance();
-					$content = $elementor->frontend->get_builder_content_for_display('15');
+					$content = $elementor->frontend->get_builder_content_for_display($mega_id);
 					$output .= '<div class="wpr-sub-mega-menu">'. $content .'</div>';
 				}
 			}
 			
-			if ( 0 < $depth ) {
-				$output = '';
-			}
+			// Tmp remove
+			// if ( 0 < $depth ) {
+			// 	$output = '';
+			// }
 
 			return $output;
 		}, 10, 4 );
