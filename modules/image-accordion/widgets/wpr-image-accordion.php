@@ -648,7 +648,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 			$repeater->add_control(
 	            'element_align_pro_notice',
 	            [
-					'raw' => 'Vertical Align option is available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-grid-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					'raw' => 'Vertical and Horizontal Align options are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-image-accordion-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
 					// 'raw' => 'Vertical Align option is available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
 					'type' => Controls_Manager::RAW_HTML,
 					'content_classes' => 'wpr-pro-notice',
@@ -2626,6 +2626,10 @@ class Wpr_Image_Accordion extends Widget_Base {
 
 			if ( 'over' === $location ) {
 				foreach ( $locations[$location] as $align => $elements ) {
+
+					if ( ! wpr_fs()->can_use_premium_code() ) {
+						$data['element_align_hr'] = 'center';
+					}
 
 					if ( 'middle' === $align ) {
 						echo '<div class="wpr-cv-container"><div class="wpr-cv-outer"><div class="wpr-cv-inner">';
