@@ -296,7 +296,6 @@ span.wpr-woo-builder-label {
 }
 
 .wpr-templates-kit-grid .grid-item footer span:after {
-  content: "This Kit includes Theme Builder templates.";
   display: none;
   width: 125px;
   position: absolute;
@@ -312,6 +311,14 @@ span.wpr-woo-builder-label {
   line-height: 15px;
   -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.4);
           box-shadow: 0 0 5px rgba(0,0,0,0.4);
+}
+
+.wpr-templates-kit-grid .grid-item footer span.wpr-theme-builder-label:after {
+  content: "This Kit includes Theme Builder templates.";
+}
+
+.wpr-templates-kit-grid .grid-item footer span.wpr-woo-builder-label:after {
+  content: "This Kit includes WooCommerce Builder templates.";
 }
 
 .wpr-templates-kit-grid .grid-item footer span:hover:after {
