@@ -494,7 +494,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 					'unit' => 'px'
 				],
 				'selectors' => [
-					// '{{WRAPPER}}.wpr-image-accordion-interaction-hover .wpr-image-accordion-wrap .wpr-image-accordion-item:hover' => 'flex: {{SIZE}};',
 					'{{WRAPPER}} .wpr-image-accordion-wrap .wpr-image-accordion-item.wpr-image-accordion-item-grow' => 'flex: {{SIZE}};',
 				]
 			]
@@ -503,7 +502,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 		$this->add_responsive_control(
 			'accordion_items_spacing',
 			[
-				'label' => esc_html__( 'Spacing', 'wpr-addons' ),
+				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => ['px'],
 				'default' => [
