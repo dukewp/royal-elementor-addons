@@ -216,181 +216,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 			}
 		}
 
-
-		$this->start_controls_section(
-			'section_accordion_items',
-			[
-				'label' => esc_html__( 'Content', 'wpr-addons' ),
-				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
-			]
-		);
-
-		$repeater = new Repeater();
-
-		$repeater->add_control(
-			'accordion_item_bg_image',
-			[
-				'label' => esc_html__( 'Image', 'wpr-addons' ),
-				'type' => Controls_Manager::MEDIA,
-				'render_type' => 'template',
-				'default' => [
-					'url' => WPR_ADDONS_ASSETS_URL . 'img/logo-slider-450x450.png',
-				]
-			]
-		);
-
-		$repeater->add_responsive_control(
-			'bg_image_size',
-			[
-				'label'       => esc_html__( 'Size', 'wpr-addons' ),
-				'type'        => Controls_Manager::SELECT,
-				'options'     => [
-					'cover'   => esc_html__( 'Cover', 'wpr-addons' ),
-					'contain' => esc_html__( 'Contain', 'wpr-addons' ),
-					'auto'    => esc_html__( 'Auto', 'wpr-addons' ),
-				],
-				'default'     => 'cover',
-				'selectors'   => [
-					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-image-accordion-item .wpr-accordion-background' => 'background-size: {{VALUE}}',
-				]
-			]
-		);
-
-		$repeater->add_responsive_control(
-			'bg_image_position',
-			[
-				'label'       => esc_html__( 'Position', 'wpr-addons' ),
-				'type'        => Controls_Manager::SELECT,
-				'options'     => [
-					'center center' => esc_html__( 'Center Center', 'wpr-addons' ),
-					'center left'   => esc_html__( 'Center Left', 'wpr-addons' ),
-					'center right'  => esc_html__( 'Center Right', 'wpr-addons' ),
-					'top center'    => esc_html__( 'Top Center', 'wpr-addons' ),
-					'top left'      => esc_html__( 'Top Left', 'wpr-addons' ),
-					'top right'     => esc_html__( 'Top Right', 'wpr-addons' ),
-					'bottom center' => esc_html__( 'Bottom Center', 'wpr-addons' ),
-					'bottom left'   => esc_html__( 'Bottom Left', 'wpr-addons' ),
-					'bottom right'  => esc_html__( 'Bottom Right', 'wpr-addons' ),
-				],
-				'default'     => 'center center',
-				'selectors'   => [
-					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-image-accordion-item .wpr-accordion-background' => 'background-position: {{VALUE}}',
-				]
-			]
-		);
-
-		$repeater->add_responsive_control(
-			'bg_image_repeat',
-			[
-				'label'       => esc_html__( 'Repeat', 'wpr-addons' ),
-				'type'        => Controls_Manager::SELECT,
-				'options'     => [
-					'repeat'    => esc_html__( 'Repeat', 'wpr-addons' ),
-					'no-repeat' => esc_html__( 'No-repeat', 'wpr-addons' ),
-					'repeat-x'  => esc_html__( 'Repeat-x', 'wpr-addons' ),
-					'repeat-y'  => esc_html__( 'Repeat-y', 'wpr-addons' ),
-				],
-				'default'     => 'repeat',
-				'selectors'   => [
-					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-image-accordion-item .wpr-accordion-background' => 'background-repeat: {{VALUE}}',
-				]
-			]
-		);
-
-		// // Upgrade to Pro Notice :TODO
-		// Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'image-accordion', 'element_animation', ['pro-slrt','pro-slxrt','pro-slbt','pro-sllt','pro-sltp','pro-slxlt','pro-sktp','pro-skrt','pro-skbt','pro-sklt','pro-scup','pro-scdn','pro-rllt','pro-rlrt'] );
-
-		// // Upgrade to Pro Notice
-		// Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'image-accordion', 'element_animation_timing', ['pro-eio','pro-eiqd','pro-eicb','pro-eiqrt','pro-eiqnt','pro-eisn','pro-eiex','pro-eicr','pro-eibk','pro-eoqd','pro-eocb','pro-eoqrt','pro-eoqnt','pro-eosn','pro-eoex','pro-eocr','pro-eobk','pro-eioqd','pro-eiocb','pro-eioqrt','pro-eioqnt','pro-eiosn','pro-eioex','pro-eiocr','pro-eiobk',] );
-
-		$repeater->add_control(
-			'accordion_item_title', [
-				'label' => esc_html__( 'Title', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => esc_html__( 'Item 1 Title' , 'wpr-addons' ),
-				'label_block' => true,
-				'separator' => 'before'
-			]
-		);
-
-		$repeater->add_control(
-			'accordion_item_description', [
-				'label' => esc_html__( 'Description', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::TEXTAREA,
-				'default' => esc_html__( 'Lorem ipsum dolos ave nita' , 'wpr-addons' ),
-				'label_block' => true
-			]
-		);
-
-		$repeater->add_control(
-			'element_button_text',
-			[
-				'label' => esc_html__( 'Button Text', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => 'Button'
-			]
-		);
-
-		$repeater->add_control(
-			'accordion_btn_url',
-			[
-				'label' => esc_html__( 'Button URL', 'wpr-addons' ),
-				'type' => Controls_Manager::URL
-			]
-		);
-		
-		$repeater->add_control(
-			'wrapper_link',
-			[
-				'label' => esc_html__( 'Use Button URL as Image Link', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_block' => false,
-				'render_type' => 'template',
-			]
-		);
-
-		$this->add_control(
-			'accordion_items',
-			[
-				'type' => Controls_Manager::REPEATER,
-				'fields' => $repeater->get_controls(),
-				'default' => [
-					[
-						
-						'accordion_item_title' => esc_html__( 'Item 1 Title', 'wpr-addons' ),
-						'accordion_item_bg_image' =>[
-							'url' => WPR_ADDONS_ASSETS_URL . 'img/logo-slider-purple.png',
-						],
-					],
-					[
-						
-						'accordion_item_title' => esc_html__( 'Item 2 Title', 'wpr-addons' ),
-					],
-					[
-						
-						'accordion_item_title' => esc_html__( 'Item 3 Title', 'wpr-addons' ),
-						'accordion_item_bg_image' =>[
-							'url' => WPR_ADDONS_ASSETS_URL . 'img/logo-slider-test.png',
-						],
-					],
-				],
-				'title_field' => '{{{ accordion_item_title }}}',
-			]
-		);
-
-		if ( ! wpr_fs()->can_use_premium_code() ) {
-			$this->add_control(
-				'accordion_repeater_pro_notice',
-				[
-					'type' => Controls_Manager::RAW_HTML,
-					'raw' => 'More than 3 Slides are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-image-accordion-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
-					'content_classes' => 'wpr-pro-notice',
-				]
-			);
-		}
-
-		$this->end_controls_section();
-
 		// Section: Accordion Options ---
 		$this->start_controls_section(
 			'accordion_settings',
@@ -579,6 +404,182 @@ class Wpr_Image_Accordion extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+
+		$this->start_controls_section(
+			'section_accordion_items',
+			[
+				'label' => esc_html__( 'Content', 'wpr-addons' ),
+				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$repeater = new Repeater();
+
+		$repeater->add_control(
+			'accordion_item_bg_image',
+			[
+				'label' => esc_html__( 'Image', 'wpr-addons' ),
+				'type' => Controls_Manager::MEDIA,
+				'render_type' => 'template',
+				'default' => [
+					'url' => WPR_ADDONS_ASSETS_URL . 'img/logo-slider-450x450.png',
+				]
+			]
+		);
+
+		$repeater->add_responsive_control(
+			'bg_image_size',
+			[
+				'label'       => esc_html__( 'Size', 'wpr-addons' ),
+				'type'        => Controls_Manager::SELECT,
+				'options'     => [
+					'cover'   => esc_html__( 'Cover', 'wpr-addons' ),
+					'contain' => esc_html__( 'Contain', 'wpr-addons' ),
+					'auto'    => esc_html__( 'Auto', 'wpr-addons' ),
+				],
+				'default'     => 'cover',
+				'selectors'   => [
+					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-image-accordion-item .wpr-accordion-background' => 'background-size: {{VALUE}}',
+				]
+			]
+		);
+
+		$repeater->add_responsive_control(
+			'bg_image_position',
+			[
+				'label'       => esc_html__( 'Position', 'wpr-addons' ),
+				'type'        => Controls_Manager::SELECT,
+				'options'     => [
+					'center center' => esc_html__( 'Center Center', 'wpr-addons' ),
+					'center left'   => esc_html__( 'Center Left', 'wpr-addons' ),
+					'center right'  => esc_html__( 'Center Right', 'wpr-addons' ),
+					'top center'    => esc_html__( 'Top Center', 'wpr-addons' ),
+					'top left'      => esc_html__( 'Top Left', 'wpr-addons' ),
+					'top right'     => esc_html__( 'Top Right', 'wpr-addons' ),
+					'bottom center' => esc_html__( 'Bottom Center', 'wpr-addons' ),
+					'bottom left'   => esc_html__( 'Bottom Left', 'wpr-addons' ),
+					'bottom right'  => esc_html__( 'Bottom Right', 'wpr-addons' ),
+				],
+				'default'     => 'center center',
+				'selectors'   => [
+					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-image-accordion-item .wpr-accordion-background' => 'background-position: {{VALUE}}',
+				]
+			]
+		);
+
+		$repeater->add_responsive_control(
+			'bg_image_repeat',
+			[
+				'label'       => esc_html__( 'Repeat', 'wpr-addons' ),
+				'type'        => Controls_Manager::SELECT,
+				'options'     => [
+					'repeat'    => esc_html__( 'Repeat', 'wpr-addons' ),
+					'no-repeat' => esc_html__( 'No-repeat', 'wpr-addons' ),
+					'repeat-x'  => esc_html__( 'Repeat-x', 'wpr-addons' ),
+					'repeat-y'  => esc_html__( 'Repeat-y', 'wpr-addons' ),
+				],
+				'default'     => 'repeat',
+				'selectors'   => [
+					'{{WRAPPER}} {{CURRENT_ITEM}}.wpr-image-accordion-item .wpr-accordion-background' => 'background-repeat: {{VALUE}}',
+				]
+			]
+		);
+
+		// // Upgrade to Pro Notice :TODO
+		// Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'image-accordion', 'element_animation', ['pro-slrt','pro-slxrt','pro-slbt','pro-sllt','pro-sltp','pro-slxlt','pro-sktp','pro-skrt','pro-skbt','pro-sklt','pro-scup','pro-scdn','pro-rllt','pro-rlrt'] );
+
+		// // Upgrade to Pro Notice
+		// Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'image-accordion', 'element_animation_timing', ['pro-eio','pro-eiqd','pro-eicb','pro-eiqrt','pro-eiqnt','pro-eisn','pro-eiex','pro-eicr','pro-eibk','pro-eoqd','pro-eocb','pro-eoqrt','pro-eoqnt','pro-eosn','pro-eoex','pro-eocr','pro-eobk','pro-eioqd','pro-eiocb','pro-eioqrt','pro-eioqnt','pro-eiosn','pro-eioex','pro-eiocr','pro-eiobk',] );
+
+		$repeater->add_control(
+			'accordion_item_title', [
+				'label' => esc_html__( 'Title', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::TEXT,
+				'default' => esc_html__( 'Item 1 Title' , 'wpr-addons' ),
+				'label_block' => true,
+				'separator' => 'before'
+			]
+		);
+
+		$repeater->add_control(
+			'accordion_item_description', [
+				'label' => esc_html__( 'Description', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::TEXTAREA,
+				'default' => esc_html__( 'Lorem ipsum dolos ave nita' , 'wpr-addons' ),
+				'label_block' => true
+			]
+		);
+
+		$repeater->add_control(
+			'element_button_text',
+			[
+				'label' => esc_html__( 'Button Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => 'Button'
+			]
+		);
+
+		$repeater->add_control(
+			'accordion_btn_url',
+			[
+				'label' => esc_html__( 'Button URL', 'wpr-addons' ),
+				'type' => Controls_Manager::URL
+			]
+		);
+		
+		$repeater->add_control(
+			'wrapper_link',
+			[
+				'label' => esc_html__( 'Use Button URL as Image Link', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_block' => false,
+				'render_type' => 'template',
+			]
+		);
+
+		$this->add_control(
+			'accordion_items',
+			[
+				'type' => Controls_Manager::REPEATER,
+				'fields' => $repeater->get_controls(),
+				'default' => [
+					[
+						
+						'accordion_item_title' => esc_html__( 'Item 1 Title', 'wpr-addons' ),
+						'accordion_item_bg_image' =>[
+							'url' => WPR_ADDONS_ASSETS_URL . 'img/logo-slider-purple.png',
+						],
+					],
+					[
+						
+						'accordion_item_title' => esc_html__( 'Item 2 Title', 'wpr-addons' ),
+					],
+					[
+						
+						'accordion_item_title' => esc_html__( 'Item 3 Title', 'wpr-addons' ),
+						'accordion_item_bg_image' =>[
+							'url' => WPR_ADDONS_ASSETS_URL . 'img/logo-slider-test.png',
+						],
+					],
+				],
+				'title_field' => '{{{ accordion_item_title }}}',
+			]
+		);
+
+		if ( ! wpr_fs()->can_use_premium_code() ) {
+			$this->add_control(
+				'accordion_repeater_pro_notice',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => 'More than 3 Slides are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-image-accordion-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					'content_classes' => 'wpr-pro-notice',
+				]
+			);
+		}
+
+		$this->end_controls_section();
+
 		// Tab: Content ==============
 		// Section: Elements ---------
 		$this->start_controls_section(
@@ -648,7 +649,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 			$repeater->add_control(
 	            'element_align_pro_notice',
 	            [
-					'raw' => 'Vertical and Horizontal Align options are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-image-accordion-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					'raw' => 'Vertical and Horizontal Align options are available in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-image-accordion-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
 					// 'raw' => 'Vertical Align option is available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
 					'type' => Controls_Manager::RAW_HTML,
 					'content_classes' => 'wpr-pro-notice',
