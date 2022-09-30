@@ -31,7 +31,7 @@ class Wpr_Product_Price extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'qq', 'product-price', 'product', 'price' ];//tmp
+		return [ 'qq', 'woocommerce', 'product-price', 'product', 'price' ];//tmp
 	}
 
 
@@ -44,20 +44,6 @@ class Wpr_Product_Price extends Widget_Base {
 			[
 				'label' => esc_html__( 'General', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
-			]
-		);
-
-		$this->add_control(
-			'product_price_tag',
-			[
-				'label' => esc_html__( 'Display', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'inline',
-				'options' => [
-					'inline' => esc_html__( 'Inline', 'wpr-addons' ),
-					'separate' => esc_html__( 'Separate', 'wpr-addons' ),
-				],
-				'prefix_class' => 'wpr-product-price-'
 			]
 		);
 
@@ -85,9 +71,23 @@ class Wpr_Product_Price extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-price' => 'text-align: {{VALUE}}',
 				],
-				'separator' => 'before'
+				'separator' => 'after'
             ]
         );
+
+		$this->add_control(
+			'product_price_tag',
+			[
+				'label' => esc_html__( 'Sale Price Display', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'inline',
+				'options' => [
+					'inline' => esc_html__( 'Inline', 'wpr-addons' ),
+					'separate' => esc_html__( 'Separate', 'wpr-addons' ),
+				],
+				'prefix_class' => 'wpr-product-price-'
+			]
+		);
 
 		$this->end_controls_section(); // End Controls Section
 

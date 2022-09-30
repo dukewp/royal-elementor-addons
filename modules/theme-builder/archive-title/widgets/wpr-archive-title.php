@@ -30,7 +30,13 @@ class Wpr_Archive_Title extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return Utilities::show_theme_buider_widget_on('archive') ? [ 'wpr-theme-builder-widgets' ] : [];
+		if ( Utilities::show_theme_buider_widget_on('archive') ) {
+			return [ 'wpr-theme-builder-widgets' ];
+		} elseif ( Utilities::show_theme_buider_widget_on('product_archive') ) {
+			return [ 'wpr-woocommerce-builder-widgets' ];
+		} else {
+			return [];
+		}
 	}
 
 	public function get_keywords() {
@@ -97,6 +103,9 @@ class Wpr_Archive_Title extends Widget_Base {
 					'h4' => 'H4',
 					'h5' => 'H5',
 					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+					'P' => 'p'
 				],
 				'default' => 'h1',
 			]
@@ -116,7 +125,7 @@ class Wpr_Archive_Title extends Widget_Base {
 		$this->end_controls_section(); // End Controls Section
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'archive-title', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'archive-title', [
 			'Show/Hide Taxonomy (Category) Description, also change Color and Typography.',
 		] );
 
@@ -412,6 +421,10 @@ class Wpr_Archive_Title extends Widget_Base {
 		if ( !is_null($tax) ) {
 			$title = isset($tax->post_title) ? $tax->post_title : $tax->name;
 			$description = isset($tax->description) ? $tax->description : '';
+			
+			if ( function_exists('is_shop') && is_shop() ) {
+				$title = $tax->label;
+			}
 
 			if ( '' !== $title ) {
 				echo '<'. esc_attr($settings['post_title_tag']) .' class="wpr-archive-title">';

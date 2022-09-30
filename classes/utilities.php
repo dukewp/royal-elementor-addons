@@ -28,17 +28,18 @@ class Utilities {
 			'Testimonial' => ['testimonial', 'https://royal-elementor-addons.com/elementor-testimonials-slider-widget/', '', ''],
 			'Nav Menu' => ['nav-menu', 'http://royal-elementor-addons.com/elementor-menu-widget/', '', ''],
 			'Onepage Navigation' => ['onepage-nav', 'https://royal-elementor-addons.com/elementor-one-page-navigation-widget/', '', ''],
+			'Data Table' => ['data-table', 'https://royal-elementor-addons.com/elementor-data-table-widget/', '', 'new'],
 			'Pricing Table' => ['pricing-table', 'https://royal-elementor-addons.com/elementor-pricing-table-widget/', '', ''],
 			'Content Toggle' => ['content-toggle', 'https://royal-elementor-addons.com/elementor-content-toggle-widget/', '', ''],
 			'Countdown' => ['countdown', 'https://royal-elementor-addons.com/elementor-countdown-widget/', '', ''],
 			'Progress Bar' => ['progress-bar', 'https://royal-elementor-addons.com/elementor-progress-bar-widget/', '', ''],
 			'Tabs' => ['tabs', 'https://royal-elementor-addons.com/elementor-tabs-widget/', '', ''],
-			'Dual Color Heading' => ['dual-color-heading', '', '', 'new'],
+			'Dual Color Heading' => ['dual-color-heading', 'https://royal-elementor-addons.com/elementor-dual-color-heading-widget/', '', ''],
 			'Advanced Text' => ['advanced-text', 'https://royal-elementor-addons.com/elementor-advanced-text-widget/', '', ''],
-			'Flip Carousel' => ['flip-carousel', '', '', 'new'],
+			'Flip Carousel' => ['flip-carousel', 'https://royal-elementor-addons.com/elementor-flip-carousel-widget/', '', ''],
 			'Flip Box' => ['flip-box', 'https://royal-elementor-addons.com/elementor-flip-box-widget/', '', ''],
 			'Promo Box' => ['promo-box', 'https://royal-elementor-addons.com/elementor-promo-box-widget/', '', ''],
-			'Feature List' => ['feature-list', '', '', 'new'],
+			'Feature List' => ['feature-list', 'https://royal-elementor-addons.com/elementor-feature-list-widget/', '', ''],
 			'Before After' => ['before-after', 'https://royal-elementor-addons.com/elementor-before-after-widget/', '', ''],
 			'Image Hotspots' => ['image-hotspots', 'https://royal-elementor-addons.com/elementor-image-hotspot-widget/', '', ''],
 			'Forms' => ['forms', 'https://royal-elementor-addons.com/elementor-forms-widget/', '', ''],
@@ -57,8 +58,12 @@ class Utilities {
 			'Lottie Animations' => ['lottie-animations', 'https://royal-elementor-addons.com/elementor-lottie-animation-widget/', '', ''],
 			'Site Logo' => ['logo', '', '', ''],
 			'Popup Trigger' => ['popup-trigger', '', '', ''],
+			'Image Accordion' => ['image-accordion', '', '', 'new'],
 			'Taxonomy List' => ['taxonomy-list', '', '', ''],
 			'Template' => ['elementor-template', '', '', ''],
+			'Charts' => ['charts', '', '', 'new'],
+			'Reading Progress Bar' => ['reading-progress-bar', 'https://royal-elementor-addons.com/elementor-reading-progress-bar-widget/', '', 'new'],
+			'Advanced Accordion' => ['advanced-accordion', '', '', 'new'],
 			// 'Random Image' => ['random-image', '', ''],
 		];
 	}
@@ -103,7 +108,6 @@ class Utilities {
 			'Product Media Old' => ['product-media-old', '', '', ''],
 			'Product Price' => ['product-price', '', '', ''],
 			'Product Add to Cart' => ['product-add-to-cart', '', '', ''],
-			'Product Breadcrumbs' => ['product-Breadcrumbs', '', '', ''],
 			'Product Tabs' => ['product-tabs', '', '', ''],
 			'Product Excerpt' => ['product-excerpt', '', '', ''],
 			'Product Rating' => ['product-rating', '', '', ''],
@@ -353,7 +357,18 @@ class Utilities {
 			}
 		}
 
-		return $template;
+		// tmp remove after 2 months
+		$templates_loop = new \WP_Query([
+			'post_type' => 'wpr_templates',
+			'name' => $template,
+			'posts_per_page' => 1,
+		]);
+		
+		if ( ! $templates_loop->have_posts() ) {
+			return null;
+		} else {
+			return $template;
+		}
 	}
 
 
@@ -871,17 +886,28 @@ class Utilities {
 	/**
 	** Pro Features List Section
 	*/
-	public static function pro_features_list_section( $module, $controls_manager, $widget, $features ) {
+	public static function pro_features_list_section( $module, $section, $type, $widget, $features ) {
 		if ( wpr_fs()->can_use_premium_code() ) {
 			return;
 		}
 
-		$module->start_controls_section(
-			'pro_features_section',
-			[
-				'label' => 'Pro Features <span class="dashicons dashicons-star-filled"></span>',
-			]
-		);
+		if ( '' === $section ) {
+			$module->start_controls_section(
+				'pro_features_section',
+				[
+					'label' => 'Pro Features <span class="dashicons dashicons-star-filled"></span>',
+				]
+			);			
+		} else {
+			$module->start_controls_section(
+				'pro_features_section',
+				[
+					'label' => 'Pro Features <span class="dashicons dashicons-star-filled"></span>',
+					'tab' => $section,
+				]
+			);
+		}
+
 
 		$list_html = '';
 
@@ -892,7 +918,7 @@ class Utilities {
 		$module->add_control(
 			'pro_features_list',
 			[
-				'type' => $controls_manager,
+				'type' => $type,
 				'raw' => '<ul>'. $list_html .'</ul>
 						  <a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-pro-sec-'. $widget .'-upgrade-pro#purchasepro" target="_blank">Get Pro version</a>',
 				'content_classes' => 'wpr-pro-features-list',

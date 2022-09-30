@@ -25,7 +25,7 @@ jQuery(document).ready(function( $ ) {
 					return false;
 				}
 
-				var confirmImport = confirm('Are you sure you want to import this Template Kit?\n\nElementor Header, Footer, Pages, Media Files, Menus and some required plugins will be installed on your website.');
+				var confirmImport = confirm('For the best results, it is recommended to temporarily deactivate All other Active plugins Except Elementor and Royal Elementor Addons.\n\nElementor Header, Footer, Pages, Media Files, Menus and some required plugins will be installed on your website.');
 				
 				if ( confirmImport ) {
 					WprTemplatesKit.importTemplatesKit( $(this).attr('data-kit-id') );
@@ -101,7 +101,7 @@ jQuery(document).ready(function( $ ) {
 		        $.post(
 		            ajaxurl,
 		            {
-		                action: 'wpr_activate_reuired_theme',
+		                action: 'wpr_activate_required_theme',
 		            }
 		        );
 
@@ -115,7 +115,7 @@ jQuery(document).ready(function( $ ) {
 			        $.post(
 			            ajaxurl,
 			            {
-			                action: 'wpr_activate_reuired_theme',
+			                action: 'wpr_activate_required_theme',
 			            }
 			        );
 
@@ -136,6 +136,10 @@ jQuery(document).ready(function( $ ) {
 					WprTemplatesKit.installPluginViaAjax('contact-form-7');
 				}
 				
+				if ( 'woocommerce' in WprTemplatesKit.requiredPlugins && false === WprTemplatesKit.requiredPlugins['woocommerce'] ) {
+					WprTemplatesKit.installPluginViaAjax('woocommerce');
+				}
+				
 				if ( 'media-library-assistant' in WprTemplatesKit.requiredPlugins && false === WprTemplatesKit.requiredPlugins['media-library-assistant'] ) {
 					WprTemplatesKit.installPluginViaAjax('media-library-assistant');
 				}
@@ -146,35 +150,62 @@ jQuery(document).ready(function( $ ) {
             wp.updates.installPlugin({
                 slug: slug,
                 success: function() {
-			        $.post(
-			            ajaxurl,
-			            {
-			                action: 'wpr_install_reuired_plugins',
+					$.ajax({
+						type: 'POST',
+						url: ajaxurl,
+						data: {
+			                action: 'wpr_activate_required_plugins',
 			                plugin: slug,
-			            }
-			        );
-			        WprTemplatesKit.requiredPlugins[slug] = true;
+						},
+						success: function( response ) {
+							WprTemplatesKit.requiredPlugins[slug] = true;
+						},
+						error: function( response ) {
+							console.log(response);
+							WprTemplatesKit.requiredPlugins[slug] = true;
+						}
+					});
                 },
                 error: function( xhr, ajaxOptions, thrownerror ) {
                     console.log(xhr.errorCode)
                     if ( 'folder_exists' === xhr.errorCode ) {
-				        $.post(
-				            ajaxurl,
-				            {
-				                action: 'wpr_install_reuired_plugins',
-				                plugin: slug,
-				            }
-				        );
-				        WprTemplatesKit.requiredPlugins[slug] = true;
+						$.ajax({
+							type: 'POST',
+							url: ajaxurl,
+							data: {
+								action: 'wpr_activate_required_plugins',
+								plugin: slug,
+							},
+							success: function( response ) {
+								WprTemplatesKit.requiredPlugins[slug] = true;
+							}
+						});
                     }
                 },
             });
+		},
+
+		wpr_fix_royal_compatibility: function() {
+			$.ajax({
+				type: 'POST',
+				url: ajaxurl,
+				data: {
+					action: 'wpr_deactivate_extra_plugins',
+				},
+				success: function( response ) {
+					console.log('plugins deactivated successfully');
+				},
+				error: function( response ) {
+					console.log('plugins not deactivated successfully');
+				}
+			});
 		},
 
 		importTemplatesKit: function( kitID ) {
 			console.log('Installing Plugins...');
 			WprTemplatesKit.importProgressBar('plugins');
 			WprTemplatesKit.installRequiredPlugins( kitID );
+			WprTemplatesKit.wpr_fix_royal_compatibility();
 
 	        var installPlugins = setInterval(function() {
 

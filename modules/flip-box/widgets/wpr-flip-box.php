@@ -375,7 +375,7 @@ class Wpr_Flip_Box extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 20,
-						'max' => 500,
+						'max' => 1000,
 					],
 					'vh' => [
 						'min' => 20,
@@ -492,7 +492,7 @@ class Wpr_Flip_Box extends Widget_Base {
 		$this->end_controls_section(); // End Controls Section
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'flip-box', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'flip-box', [
 			'Flip on Button Click',
 			'Advanced Flipping Animations',
 		] );

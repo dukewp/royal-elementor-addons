@@ -186,7 +186,7 @@ class WPR_Templates_Actions {
 
 			// Color Picker
 			wp_enqueue_style( 'wp-color-picker' );
-		    wp_enqueue_script( 'wp-color-picker-alpha', WPR_ADDONS_URL .'assets/js/admin/wp-color-picker-alpha.min.js', ['jquery', 'wp-color-picker'], $version, true );
+		    wp_enqueue_script( 'wp-color-picker-alpha', WPR_ADDONS_URL .'assets/js/admin/lib/wp-color-picker-alpha.min.js', ['jquery', 'wp-color-picker'], $version, true );
 
 		    // Media Upload
 			if ( ! did_action( 'wp_enqueue_media' ) ) {

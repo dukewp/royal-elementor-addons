@@ -16,13 +16,6 @@ jQuery(document).ready(function( $ ) {
 		currentTab = currentTab.replace(' ', '_');
 
 	/*
-	** WooCommerce Comming Soon -------------------------
-	*/
-	if ( 'product archive' === currentTab || 'product single' === currentTab ) {
-		$('.wpr-user-template').after('<div class="wpr-button-lock"></div>');
-	}
-
-	/*
 	** Get Active Filter -------------------------
 	*/
 	function getActiveFilter() {
@@ -64,9 +57,9 @@ jQuery(document).ready(function( $ ) {
 	/*
 	** Create User Template -------------------------
 	*/
-	function craeteUserTemplate() {
+	function createUserTemplate() {
 		// Get Template Library
-		var library = 'my-templates' === getActiveFilter() ? 'elementor_library' : 'wpr_templates';
+		var library = 'my_templates' === getActiveFilter() ? 'elementor_library' : 'wpr_templates';
 		// Get Template Title
 		var title = $('.wpr-user-template-title').val();
 		
@@ -97,7 +90,7 @@ jQuery(document).ready(function( $ ) {
 				var id = response.substring( 0, response.length - 1 );
 
 				// Redirect User to Editor
-				if ( 'my-templates' === currentTab.replace( /\W+/g, '-' ).toLowerCase() ) {
+				if ( 'my_templates' === currentTab.replace( /\W+/g, '-' ).toLowerCase() ) {
 					window.location.href = 'post.php?post='+ id +'&action=elementor';
 					return;
 				}
@@ -121,6 +114,11 @@ jQuery(document).ready(function( $ ) {
 
 	// Open Popup
 	$('.wpr-user-template').on( 'click', function() {
+		if ( $(this).find('div').length ) {
+			alert('Please Install/Activate WooCommerce!');
+			return;
+		}
+
 		$('.wpr-user-template-title').val('');
 		$('.wpr-user-template-popup-wrap').fadeIn();
 	});
@@ -144,7 +142,7 @@ jQuery(document).ready(function( $ ) {
 			$('.wpr-create-template + p').remove();
 
 			// Create Template
-			craeteUserTemplate();
+			createUserTemplate();
 		}
 	});
 
@@ -152,7 +150,7 @@ jQuery(document).ready(function( $ ) {
 	$('.wpr-user-template-title').keypress(function(e) {
 		if ( e.which == 13 ) {
 			e.preventDefault();
-			craeteUserTemplate();
+			createUserTemplate();
 		}
 	});
 
@@ -171,7 +169,7 @@ jQuery(document).ready(function( $ ) {
 			}
 
 			// Get Template Library
-			var library = 'my-templates' === getActiveFilter() ? 'elementor_library' : 'wpr_templates';
+			var library = 'my_templates' === getActiveFilter() ? 'elementor_library' : 'wpr_templates';
 
 			// Get Template Slug
 			var slug = deleteButton.attr('data-slug');
@@ -188,21 +186,30 @@ jQuery(document).ready(function( $ ) {
 				deleteButton.closest('li').remove();
 			});
 
-			// Delete associated Conditions
-			var conditions = JSON.parse($( '#wpr_'+ currentTab +'_conditions' ).val());
-				delete conditions[slug];
-
-			// Set Conditions
-			$('#wpr_'+ currentTab +'_conditions').val( JSON.stringify(conditions) );
-
-			// AJAX Data
-			var data = {
-				action: 'wpr_save_template_conditions'
-			};
-			data['wpr_'+ currentTab +'_conditions'] = JSON.stringify(conditions);
-
 			// Save Conditions
-			$.post(ajaxurl, data, function(response) {});
+			$.post(ajaxurl, data, function(response) {
+				setTimeout(function(){
+					if ( $('.wpr-my-templates-list li').length === 0 ) {
+						$('.wpr-my-templates-list').append('<li class="wpr-no-templates">You don\'t have any templates yet!</li>');
+						// $('.wpr-no-templates').hide();
+					}
+				}, 500);
+			});
+
+			// Delete associated Conditions
+			if ( 'my_templates' !== getActiveFilter() ) {
+				var conditions = JSON.parse($( '#wpr_'+ currentTab +'_conditions' ).val());
+					delete conditions[slug];
+
+				// Set Conditions
+				$('#wpr_'+ currentTab +'_conditions').val( JSON.stringify(conditions) );
+
+				// AJAX Data
+				var data = {
+					action: 'wpr_save_template_conditions'
+				};
+				data['wpr_'+ currentTab +'_conditions'] = JSON.stringify(conditions);
+			}
 		});
 	}
 
@@ -559,10 +566,18 @@ jQuery(document).ready(function( $ ) {
 			var conditions = getConditions( template, $( '#wpr_'+ currentTab +'_conditions' ).val() );
 
 			// Don't save if not active
-			if ( 'header' === currentTab || 'footer' == currentTab ) {
-				if ( !proActive && (('global' !== conditions[template][0] && 'undefined' !== typeof conditions[template][0]) || conditions[template].length > 1) ) {
-					alert('Please select "Entire Site" to continue! Mutiple and custom conditions are fully supported in the Pro version.');
-					return;
+			if ( !proActive && ('header' === currentTab || 'footer' == currentTab || 'product_archive' == currentTab) ) {
+				if ( 'header' === currentTab || 'footer' == currentTab ) {
+					if ( ('global' !== conditions[template][0] && 'undefined' !== typeof conditions[template][0]) || conditions[template].length > 1 ) {
+						alert('Please select "Entire Site" to continue! Mutiple and custom conditions are fully supported in the Pro version.');
+						return;
+					}
+				} else if ( 'product_archive' == currentTab ) {
+					console.log(conditions[template][0]);
+					if ( ('product_archive/products' !== conditions[template][0] && 'undefined' !== typeof conditions[template][0]) || conditions[template].length > 1 ) {
+						alert('Please select "Entire Site" to continue! Mutiple and custom conditions are fully supported in the Pro version.');
+						return;
+					}					
 				}
 			}
 
@@ -609,7 +624,7 @@ jQuery(document).ready(function( $ ) {
 	** Highlight Templates with Active Conditions --------
 	*/
 	if ( $('body').hasClass('royal-addons_page_wpr-theme-builder') || $('body').hasClass('royal-addons_page_wpr-popups') ) {
-		if ( 'my templates' !== currentTab ) {
+		if ( 'my_templates' !== currentTab ) {
 			var conditions = $( '#wpr_'+ currentTab +'_conditions' ).val(),
 				conditions = ('' === conditions || '[]' === conditions) ? {} : JSON.parse(conditions);
 
@@ -685,7 +700,7 @@ jQuery(document).ready(function( $ ) {
 		// Fix Color Picker
 		if ( $('.wpr-settings').length ) {
 			$('.wpr-settings').find('.wp-color-result-text').text('Select Color');
-			$('.wpr-settings').find('.wp-picker-clear').text('Clear');
+			$('.wpr-settings').find('.wp-picker-clear').val('Clear');
 		}
 	});
 

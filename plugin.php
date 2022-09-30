@@ -8,6 +8,7 @@ use WprAddons\Includes\Controls\WPR_Control_Animations_Alt;
 use WprAddons\Includes\Controls\WPR_Control_Button_Animations;
 use WprAddons\Includes\Controls\WPR_Control_Arrow_Icons;
 use WprAddons\Classes\Utilities;
+use Elementor\Core\App\App;
 
 if ( ! defined( 'ABSPATH' ) ) {	exit; } // Exit if accessed directly
 
@@ -103,11 +104,6 @@ class Plugin {
 			require WPR_ADDONS_PATH . 'extensions/wpr-sticky-section.php';
 		}
 
-		// Reading Progress Bar
-		// if ( 'on' === get_option('wpr-reading-progress-bar', 'on') ) {
-		// 	require WPR_ADDONS_PATH . 'extensions/wpr-reading-progress-bar.php';
-		// }
-
 		// Custom CSS
 		require WPR_ADDONS_PATH . 'extensions/wpr-custom-css.php';
 		
@@ -116,6 +112,9 @@ class Plugin {
 		
 		// Plugin Sale Notice
 		// require WPR_ADDONS_PATH . 'classes/plugin-sale-notice.php';
+		
+		// Rating Notice 
+		require WPR_ADDONS_PATH . 'classes/rating-notice.php';
 
 		// Admin Files
 		if ( is_admin() ) {
@@ -139,7 +138,7 @@ class Plugin {
 			add_action( 'admin_enqueue_scripts', [ $this, 'hide_theme_notice' ] );
 		}
 
-		if ( class_exists('WooCommerce') ) {
+		if ( class_exists('WooCommerce') && 'on' === get_option('wpr_override_woo_templates', 'on') ) {
 			require WPR_ADDONS_PATH . 'includes/woocommerce/woocommerce-config.php';
 		}
 	}
@@ -196,10 +195,10 @@ class Plugin {
 	public function register_custom_controls() {
 
 		$controls_manager = \Elementor\Plugin::$instance->controls_manager;
-		$controls_manager->register_control( 'wpr-animations', new WPR_Control_Animations() );
-		$controls_manager->register_control( 'wpr-animations-alt', new WPR_Control_Animations_Alt() );
-		$controls_manager->register_control( 'wpr-button-animations', new WPR_Control_Button_Animations() );
-		$controls_manager->register_control( 'wpr-arrow-icons', new WPR_Control_Arrow_Icons() );
+		$controls_manager->register( new WPR_Control_Animations() );
+		$controls_manager->register( new WPR_Control_Animations_Alt() );
+		$controls_manager->register( new WPR_Control_Button_Animations() );
+		$controls_manager->register( new WPR_Control_Arrow_Icons() );
 
 	}
 
@@ -476,11 +475,26 @@ class Plugin {
 		);
 
 		wp_register_script( 
+			'wpr-table-to-excel-js',
+			 WPR_ADDONS_URL  . 'assets/js/lib/tableToExcel/tableToExcel.js',
+			 [],
+			 null, 
+			 true 
+		);
+		wp_register_script(
 			'wpr-aos-js',
 			 WPR_ADDONS_URL  . 'assets/js/lib/aos/aos'. $this->script_suffix() .'.js',
 			 [], 
 			 null, 
 			 true
+		);
+		
+		wp_register_script(
+			'wpr-charts',
+			WPR_ADDONS_URL . 'assets/js/lib/charts/charts'. $this->script_suffix() .'.js',
+			[],
+			'3.7.0',
+			true
 		);
 
 		wp_register_script(
@@ -490,6 +504,7 @@ class Plugin {
 			'2.0',
 			true
 		);
+
 		wp_register_script( 
 			'wpr-perfect-scroll-js',
 			 WPR_ADDONS_URL .'assets/js/lib/perfect-scrollbar/perfect-scrollbar.min.js', 
@@ -557,8 +572,30 @@ class Plugin {
 			[],
 			Plugin::instance()->get_version()
 		);
-	}
 
+		$custom_css = "
+			.wpr-pro-notice {
+				background: #404349 !important;
+				border-color: #323232 !important;
+			}
+			.elementor-control select option[value*=pro-] {
+				background: #60646e !important;
+			}
+			.elementor-panel .wpr-icon:after {
+				box-shadow: 0 0 2px 2px #6985ee !important;
+			}
+			.wpr-pro-notice > span {
+				color: #fff !important;
+				font-weight: bold;
+			}
+		";
+		
+		$ui_theme = isset(get_user_meta(get_current_user_id(), 'elementor_preferences')[0]['ui_theme']) ? get_user_meta(get_current_user_id(), 'elementor_preferences')[0]['ui_theme'] : '';
+		
+		if ( $ui_theme && $ui_theme === 'dark' ) {
+			wp_add_inline_style( 'elementor-editor-dark-mode', $custom_css );
+		}
+	}
 
 	// Lightbox Styles
 	public function lightbox_styles() {
@@ -707,6 +744,12 @@ class Plugin {
 					'name' => 'wpr-product-filters',
 					'title' => __('Product Filters', 'wpr-addons'),
 					'icon' => 'wpr-icon eicon-filter',
+					'categories' => '["'. $category .'"]',
+				],
+				[
+					'name' => 'wpr-product-breadcrumbs',
+					'title' => __('Product Breadcrumbs', 'wpr-addons'),
+					'icon' => 'wpr-icon eicon-product-breadcrumbs',
 					'categories' => '["'. $category .'"]',
 				],
 			];

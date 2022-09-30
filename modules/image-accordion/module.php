@@ -1,5 +1,5 @@
 <?php
-namespace WprAddons\Modules\ThemeBuilder\Woocommerce\ProductBreadcrumbs;
+namespace WprAddons\Modules\ImageAccordion;
 
 use WprAddons\Base\Module_Base;
 
@@ -12,12 +12,12 @@ class Module extends Module_Base {
 	}
 	
 	public function get_name() {
-		return 'wpr-product-breadcrumbs';
+		return 'wpr-image-accordion';
 	}
 
 	public function get_widgets() {
 		return [
-			'Wpr_Product_Breadcrumbs', // This should match the widget/element class.
+			'Wpr_Image_Accordion', // This should match the widget/element class.
 		];
 	}
 	

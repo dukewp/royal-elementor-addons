@@ -80,7 +80,7 @@ class WprPluginSaleNotice {
     
     public static function enqueue_scripts() {
         // Load Confetti
-        wp_enqueue_script( 'wpr-confetti-js', WPR_ADDONS_URL .'assets/js/lib/confetti/confetti.min.js', ['jquery'] );
+        wp_enqueue_script( 'wpr-confetti-js', WPR_ADDONS_URL .'assets/js/admin/lib/confetti/confetti.min.js', ['jquery'] );
 
         // Scripts & Styles
         echo "
@@ -127,10 +127,6 @@ class WprPluginSaleNotice {
                             '#98e027',
                             '#9900f1',
                         ],
-                    } );
-                    dispatch( {
-                        type: 'set',
-                        confettiDone: true,
                     } );
                 }, 900 );
             }

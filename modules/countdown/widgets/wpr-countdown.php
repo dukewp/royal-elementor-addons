@@ -411,7 +411,7 @@ class Wpr_Countdown extends Widget_Base {
 		$this->end_controls_section(); // End Controls Section
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'countdown', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'countdown', [
 			'Evergreen Timer - User Specific Timer',
 			'An evergreen countdown timer is used to display the amount of time a particular user has to avail the offer. This is a great way to create a feeling of scarcity, urgency and exclusivity',
 		] );

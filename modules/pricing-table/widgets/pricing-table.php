@@ -331,6 +331,18 @@ class Pricing_Table extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'btn_id',
+			[
+				'label' => esc_html__( 'Button ID', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'placeholder' => 'button-id',
+				'condition' => [
+					'type_select' => 'button',
+				],
+			]
+		);
+
+		$repeater->add_control(
 			'btn_url',
 			[
 				'type' => Controls_Manager::URL,
@@ -773,8 +785,7 @@ class Pricing_Table extends Widget_Base {
 				],
 				'condition' => [
 					'badge_style!' => [ 'none', 'cyrcle' ],
-				],	
-			
+				],
 			]
 		);
 
@@ -825,7 +836,7 @@ class Pricing_Table extends Widget_Base {
 		$this->end_controls_section(); // End Controls Section
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'pricing-table', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'pricing-table', [
 			'List Item Advanced Tooltip',
 			'List Item Even/Odd Background Color',
 		] );
@@ -2571,15 +2582,21 @@ class Pricing_Table extends Widget_Base {
 				<?php echo wp_kses_post($item['text']); ?>
 
 			<?php elseif ( $item['type_select'] === 'button' && ( ! empty( $item['btn_text'] ) || '' !== $item['select_icon']['value'] ) ) :
+				
+				if (  '' !== $item['btn_url']['url'] ) {
+					$this->add_render_attribute( 'btn_attribute'. $item_count, 'href', $item['btn_url']['url'] );
+	
+					if ( $item['btn_url']['is_external'] ) :
+						$this->add_render_attribute( 'btn_attribute'. $item_count, 'target', '_blank' );
+					endif;
+	
+					if ( $item['btn_url']['nofollow'] ) :
+						$this->add_render_attribute( 'btn_attribute'. $item_count, 'nofollow', '' );
+					endif;
+				}
 
-				$this->add_render_attribute( 'btn_attribute'. $item_count, 'href', $item['btn_url']['url'] );
-
-				if ( $item['btn_url']['is_external'] ) :
-					$this->add_render_attribute( 'btn_attribute'. $item_count, 'target', '_blank' );
-				endif;
-
-				if ( $item['btn_url']['nofollow'] ) :
-					$this->add_render_attribute( 'btn_attribute'. $item_count, 'nofollow', '' );
+				if ( '' !== $item['btn_id'] ) :
+					$this->add_render_attribute( 'btn_attribute' . $item_count, 'id', esc_html( $item['btn_id']) );
 				endif;
 
 				?>

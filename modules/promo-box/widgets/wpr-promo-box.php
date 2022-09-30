@@ -620,7 +620,7 @@ class Wpr_Promo_Box extends Widget_Base {
 		$this->end_controls_section(); // End Controls Section
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'promo-box', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'promo-box', [
 			'Classic Layout - Image & Content Side to Side with Image Width & Position options',
 			'Advanced Image Hover Animations',
 			'Advanced Content Hover Animations - Icon, Title, Description, Button separately',
@@ -797,6 +797,25 @@ class Wpr_Promo_Box extends Widget_Base {
 				],
 			]
 		);
+
+		$this->add_responsive_control(
+			'content_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'size_units' => [ 'px', '%' ],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-promo-box' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow: hidden',
+				],
+			]
+		);
+
 
 		$this->add_control(
 			'content_vr_position',

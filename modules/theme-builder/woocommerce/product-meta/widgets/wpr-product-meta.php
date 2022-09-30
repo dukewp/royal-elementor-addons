@@ -28,7 +28,7 @@ class Wpr_Product_Meta extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'qq', 'product-meta', 'product', 'meta' ];//tmp
+		return [ 'qq', 'woocommerce', 'product-meta', 'product', 'meta' ];//tmp
 	}
 
 	protected function register_controls() {
@@ -73,6 +73,7 @@ class Wpr_Product_Meta extends Widget_Base {
 			[
 				'label'     => esc_html__('Alignment', 'wpr-addons'),
 				'type'      => Controls_Manager::CHOOSE,
+				'default' => 'left',
 				'options'   => [
 					'left'   => [
 						'title' => esc_html__('Left', 'wpr-addons'),
@@ -271,7 +272,7 @@ class Wpr_Product_Meta extends Widget_Base {
 
     protected function render() {
         $settings = $this->get_settings_for_display();
-		// var_dump($settings);
+		
         global $product;
 
         $product = wc_get_product();

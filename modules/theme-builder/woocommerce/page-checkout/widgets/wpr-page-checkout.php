@@ -27,15 +27,11 @@ class Wpr_Page_Checkout extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return Utilities::show_theme_buider_widget_on('product_single') ? [] : ['wpr-woocommerce-builder-widgets'];
+		return Utilities::show_theme_buider_widget_on('product_single') ? ['wpr-widgets'] : ['wpr-woocommerce-builder-widgets'];
 	}
 
 	public function get_keywords() {
-		return [ 'qq', 'checkout', 'product', 'page', 'checkout page', 'page checkout' ];//tmp
-	}
-
-	public function get_script_depends() {
-		return [];
+		return [ 'qq', 'woocommerce', 'checkout', 'product', 'page', 'checkout page', 'page checkout' ];//tmp
 	}
 
 	protected function register_controls() {
@@ -62,7 +58,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 		$this->add_control(
 			'checkout_layout',
 			[
-				'label' => esc_html__( 'Layout', 'wpr-addons' ),
+				'label' => esc_html__( 'Select Layout', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'render_type' => 'template',
 				'default' => 'horizontal',
@@ -97,6 +93,8 @@ class Wpr_Page_Checkout extends Widget_Base {
 				],			
 				'selectors' => [
 					'{{WRAPPER}}.wpr-checkout-horizontal .wpr-checkout-order-review-table' => 'width: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}}.wpr-checkout-horizontal #customer_details' => 'width: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}}.wpr-checkout-horizontal .wpr-checkout-order-review-table' => 'width: calc(100% - {{SIZE}}{{UNIT}});',
 				],
 				'condition' => [
 					'checkout_layout' => 'horizontal'
@@ -128,6 +126,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} .col-2' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-checkout-order-review-table-inner' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-order-details' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-form-coupon' => 'background-color: {{VALUE}}',
 				],
 			]
 		);
@@ -144,6 +143,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} .col-2' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-checkout-order-review-table-inner' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} .woocommerce-order-details' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-form-coupon' => 'border-color: {{VALUE}}',
 				],
 			]
 		);
@@ -168,6 +168,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} .col-2' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} .wpr-checkout-order-review-table-inner' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} .woocommerce-order-details' => 'border-style: {{VALUE}}',
+					'{{WRAPPER}} .woocommerce-form-coupon' => 'border-style: {{VALUE}}',
 				],
 				'separator' => 'before',
 			]
@@ -191,6 +192,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} .col-2' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-checkout-order-review-table-inner' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .woocommerce-order-details' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-form-coupon' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
 					'checkout_general_border_type!' => 'none',
@@ -216,7 +218,8 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} .col-2' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-checkout-order-review-table-inner' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .woocommerce-order-details' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
+					'{{WRAPPER}} .woocommerce-form-coupon' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
 			]
 		);
 
@@ -238,7 +241,9 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} .col-2' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-checkout-order-review-table-inner' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .woocommerce-order-details' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .woocommerce-form-coupon' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
+				'separator' => 'before'
 			]
 		);
 
@@ -349,6 +354,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'default' => '#787878',
 				'selectors' => [
 					'{{WRAPPER}} .col2-set label' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .checkout_coupon p:first-child' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -357,7 +363,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'form_labels_typography',
-				'selector' => '{{WRAPPER}} .col2-set label, {{WRAPPER}} .order_comments',
+				'selector' => '{{WRAPPER}} .col2-set label, {{WRAPPER}} .order_comments, {{WRAPPER}} .checkout_coupon p:first-child',
 				'fields_options' => [
 					'typography' => [
 						'default' => 'custom',
@@ -369,6 +375,22 @@ class Wpr_Page_Checkout extends Widget_Base {
 						]
 					]
 				]
+			]
+		);
+
+		$this->add_control(
+			'form_inputs_divider',
+			[
+				'type' => Controls_Manager::DIVIDER,
+				'style' => 'thick',
+			]
+		);
+
+		$this->add_control(
+			'form_inputs_title',
+			[
+				'type' => Controls_Manager::HEADING,
+				'label' => esc_html__( 'Inputs', 'wpr-addons' ),
 			]
 		);
 
@@ -393,6 +415,8 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'{{WRAPPER}} .form-row .input-text' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .form-row .input-text::placeholder' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .col2-set select' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .select2 span' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .select2-container--default .select2-selection--single .select2-selection__arrow b' => 'border-color: {{VALUE}} transparent transparent transparent;',
 					'{{WRAPPER}} .col2-set .select2-container' => 'color: {{VALUE}};'
 				]
 			]
@@ -437,6 +461,27 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'selector' => '{{WRAPPER}} .input-text, {{WRAPPER}} .select2-container',
 			]
 		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'forms_fields_typography',
+				'label'    => esc_html__( 'Typography', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}} .col2-set .input-text, {{WRAPPER}} .col2-set .input-text::placeholder, {{WRAPPER}} .form-row .input-text, {{WRAPPER}} .form-row .input-text::placeholder, {{WRAPPER}} .col2-set select, {{WRAPPER}} .col2-set .select2-container',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px',
+						],
+					]
+				]
+			]
+		);
+
 		$this->end_controls_tab();
 
 		$this->start_controls_tab( 'forms_fields_focus_styles', 
@@ -470,34 +515,6 @@ class Wpr_Page_Checkout extends Widget_Base {
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
-
-		$this->add_control(
-			'forms_fields_typography_divider',
-			[
-				'type' => Controls_Manager::DIVIDER,
-				'style' => 'thick',
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'forms_fields_typography',
-				'label'    => esc_html__( 'Typography', 'wpr-addons' ),
-				'selector' => '{{WRAPPER}} .col2-set .input-text, {{WRAPPER}} .col2-set .input-text::placeholder, {{WRAPPER}} .form-row .input-text, {{WRAPPER}} .form-row .input-text::placeholder, {{WRAPPER}} .col2-set select, {{WRAPPER}} .col2-set .select2-container',
-				'fields_options' => [
-					'typography' => [
-						'default' => 'custom',
-					],
-					'font_size' => [
-						'default' => [
-							'size' => '14',
-							'unit' => 'px',
-						],
-					]
-				]
-			]
-		);
 
 		$this->add_control(
 			'form_fields_border_type',
@@ -580,6 +597,8 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .input-text' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .select2-container' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} select' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .checkout_coupon button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before'
 			]
@@ -602,7 +621,30 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'size' => 10,
 				],			
 				'selectors' => [
-					'{{WRAPPER}} .form-row' => 'margin-top: {{SIZE}}{{UNIT}} !important;',
+					'{{WRAPPER}} .form-row:not(.place-order)' => 'margin-top: {{SIZE}}{{UNIT}} !important;',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_responsive_control(
+			'textarea_height',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Textarea Height', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 500,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 100,
+				],			
+				'selectors' => [
+					'{{WRAPPER}} textarea' => 'Height: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -920,26 +962,6 @@ class Wpr_Page_Checkout extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'checkout_table_heading_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 10,
-					'right' => 10,
-					'bottom' => 10,
-					'left' => 10,
-				],
-				'selectors' => [
-					'{{WRAPPER}} table.woocommerce-orders-table th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} table.shop_table thead th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} table.shop_table tfoot th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
-				]
-			]
-		);
-
-		$this->add_responsive_control(
 			'checkout_table_heading_alignment',
 			[
 				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
@@ -967,11 +989,32 @@ class Wpr_Page_Checkout extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'checkout_table_heading_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 10,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} table.woocommerce-orders-table th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} table.shop_table thead th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} table.shop_table tfoot th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				]
+			]
+		);
+
 		$this->add_control(
 			'checkout_table_description_title',
 			[
 				'type' => Controls_Manager::HEADING,
 				'label' => esc_html__( 'Table Description', 'wpr-addons' ),
+				'separator' => 'before'
 			]
 		);
 
@@ -1016,6 +1059,33 @@ class Wpr_Page_Checkout extends Widget_Base {
 							'unit' => 'px',
 						],
 					]
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'checkout_table_description_alignment',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'default' => 'start',
+				'options' => [
+					'start' => [
+						'title' => esc_html__( 'Start', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'end' => [
+						'title' => esc_html__( 'End', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} table.shop_table td' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} table.shop_table .variation' => 'justify-content: {{VALUE}};'
 				]
 			]
 		);
@@ -1127,33 +1197,6 @@ class Wpr_Page_Checkout extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'checkout_table_description_alignment',
-			[
-				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
-				'type' => Controls_Manager::CHOOSE,
-				'default' => 'start',
-				'options' => [
-					'start' => [
-						'title' => esc_html__( 'Start', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-left',
-					],
-					'center' => [
-						'title' => esc_html__( 'Center', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-center',
-					],
-					'end' => [
-						'title' => esc_html__( 'End', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-right',
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} table.shop_table td' => 'text-align: {{VALUE}};',
-					'{{WRAPPER}} table.shop_table .variation' => 'justify-content: {{VALUE}};'
-				]
-			]
-		);
-
 		$this->end_controls_section();
 
 		// Styles ====================
@@ -1240,6 +1283,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 			[
 				'type' => Controls_Manager::HEADING,
 				'label' => esc_html__( 'Input', 'wpr-addons' ),
+				'separator' => 'before'
 			]
 		);
 
@@ -1272,8 +1316,8 @@ class Wpr_Page_Checkout extends Widget_Base {
 					'size' => 10,
 				],			
 				'selectors' => [
-					'{{WRAPPER}} ul.payment_methods li.wc_payment_method .input-radio' => 'margin-right: {{SIZE}}{{UNIT}} !important;',
-				],
+					'{{WRAPPER}} ul.payment_methods li.wc_payment_method .input-radio' => 'margin-right: {{SIZE}}{{UNIT}} !important;'
+				]
 			]
 		);
 
@@ -1282,6 +1326,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 			[
 				'type' => Controls_Manager::HEADING,
 				'label' => esc_html__( 'Tooltips', 'wpr-addons' ),
+				'separator' => 'before'
 			]
 		);
 
@@ -1335,6 +1380,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 			[
 				'type' => Controls_Manager::HEADING,
 				'label' => esc_html__( 'Order Received', 'wpr-addons' ),
+				'separator' => 'before'
 			]
 		);
 
@@ -1357,6 +1403,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 			[
 				'type' => Controls_Manager::HEADING,
 				'label' => esc_html__( 'Order Overview Typography', 'wpr-addons' ),
+				'separator' => 'before'
 			]
 		);
 
@@ -1376,7 +1423,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_place_order_button',
 			[
-				'label' => esc_html__( 'Place Order Button', 'wpr-addons' ),
+				'label' => esc_html__( 'Coupon & Place Order Button', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 			]
@@ -1399,6 +1446,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'default' => '#FFF',
 				'selectors' => [
 					'{{WRAPPER}} .place-order button' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .checkout_coupon button' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -1411,6 +1459,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .place-order button' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .checkout_coupon button' => 'background-color: {{VALUE}}',
 				]
 			]
 		);
@@ -1423,6 +1472,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .place-order button' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .checkout_coupon button' => 'border-color: {{VALUE}}',
 				],
 			]
 		);
@@ -1433,7 +1483,44 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'name' => 'place_order_button_box_shadow',
 				'selector' => '{{WRAPPER}} .actions .button,
 				{{WRAPPER}} .coupon .button,
-				{{WRAPPER}} .place-order button',
+				{{WRAPPER}} .place-order button, {{WRAPPER}} .checkout_coupon button',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'place_order_button_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .actions .button, 
+				{{WRAPPER}} .place-order button, {{WRAPPER}} .coupon .button, {{WRAPPER}} .checkout_coupon button',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '15',
+							'unit' => 'px',
+						],
+					]
+				]
+			]
+		);
+
+		$this->add_control(
+			'place_order_button_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.3,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .place-order button' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .checkout_coupon button' => 'transition-duration: {{VALUE}}s',
+				],
 			]
 		);
 
@@ -1454,6 +1541,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .place-order button:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .checkout_coupon button:hover' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -1466,6 +1554,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .place-order button:hover' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .checkout_coupon button:hover' => 'background-color: {{VALUE}}',
 				]
 			]
 		);
@@ -1478,6 +1567,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .place-order button:hover' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .checkout_coupon button:hover' => 'border-color: {{VALUE}}',
 				]
 			]
 		);
@@ -1486,65 +1576,13 @@ class Wpr_Page_Checkout extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'place_order_button_box_shadow_hr',
-				'selector' => '{{WRAPPER}} .place-order button:hover',
+				'selector' => '{{WRAPPER}} .place-order button:hover. {{WRAPPER}} .checkout_coupon button:hover',
 			]
 		);
 
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
-
-		$this->add_control(
-			'place_order_button_divider',
-			[
-				'type' => Controls_Manager::DIVIDER,
-				'style' => 'thick',
-			]
-		);
-
-		$this->add_control(
-			'place_order_button_transition_duration',
-			[
-				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.3,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'selectors' => [
-					'{{WRAPPER}} .place-order button' => 'transition-duration: {{VALUE}}s',
-				],
-			]
-		);
-
-		$this->add_control(
-			'place_order_button_typo_divider',
-			[
-				'type' => Controls_Manager::DIVIDER,
-				'style' => 'thick',
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'place_order_button_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .actions .button, 
-				{{WRAPPER}} .place-order button, {{WRAPPER}} .coupon .button',
-				'fields_options' => [
-					'typography' => [
-						'default' => 'custom',
-					],
-					'font_size' => [
-						'default' => [
-							'size' => '15',
-							'unit' => 'px',
-						],
-					]
-				]
-			]
-		);
 
 		$this->add_control(
 			'place_order_button_border_type',
@@ -1562,6 +1600,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				'default' => 'solid',
 				'selectors' => [
 					'{{WRAPPER}} .place-order button' => 'border-style: {{VALUE}}',
+					'{{WRAPPER}} .checkout_coupon button' => 'border-style: {{VALUE}}',
 				],
 				'separator' => 'before',
 			]
@@ -1581,6 +1620,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .place-order button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .checkout_coupon button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
 					'place_order_button_border_type!' => 'none',
@@ -1602,6 +1642,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .place-order button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .checkout_coupon button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				]
 			]
 		);
@@ -1650,6 +1691,7 @@ class Wpr_Page_Checkout extends Widget_Base {
 	public function woocommerce_checkout_before_customer_details() {
 		echo '<div class="wpr-customer-details-wrapper">';
 	}
+	
 	public function woocommerce_checkout_before_order_review_heading() {
         echo '<div class="wpr-checkout-order-review-table">';
         echo '<div class="wpr-checkout-order-review-table-inner">';

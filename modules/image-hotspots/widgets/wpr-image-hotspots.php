@@ -532,7 +532,7 @@ class Wpr_Image_Hotspots extends Widget_Base {
 		$this->end_controls_section(); // End Controls Section
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'image-hotspots', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'image-hotspots', [
 			'Add Unlimited Hotspots',
 			'Show Tooltips on Click or Hover',
 			'Advanced Tooltip Positioning',
@@ -962,7 +962,7 @@ class Wpr_Image_Hotspots extends Widget_Base {
 						</<?php echo esc_attr( $hotspot_tag ); ?>>
 						
 						<?php if ( 'yes' === $item['hotspot_tooltip'] && '' !== $item['hotspot_tooltip_text'] ) : ?>
-							<div class="wpr-hotspot-tooltip"><?php echo esc_html($item['hotspot_tooltip_text']); ?></div>						
+							<div class="wpr-hotspot-tooltip"><?php echo wp_kses_post($item['hotspot_tooltip_text']); ?></div>						
 						<?php endif; ?>	
 
 					</div>

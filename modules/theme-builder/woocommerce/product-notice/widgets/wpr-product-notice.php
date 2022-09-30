@@ -32,7 +32,7 @@ class Wpr_Product_Notice extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'qq', 'product notice', 'product', 'notice', 'woocommerce notice', 'message', 'woocommerce message' ];//tmp
+		return [ 'qq', 'woocommerce', 'product notice', 'product', 'notice', 'woocommerce notice', 'message', 'woocommerce message' ];//tmp
 	}
 
 	public function get_script_depends() {
@@ -46,6 +46,16 @@ class Wpr_Product_Notice extends Widget_Base {
 			[
 				'label' => esc_html__( 'Notice', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'product_notice_widget_info',
+			[
+				'raw' => esc_html__('This widget permanently visible only in editor for easy customization, as for live pages it appears when invoked by an action (Product Added To Cart for example)', 'wpr-addons'),
+				'type' => Controls_Manager::RAW_HTML,
+				'content_classes' => 'elementor-descriptor',
+				'separator' => 'none'
 			]
 		);
 

@@ -317,7 +317,6 @@ class Wpr_Lottie_Animations extends Widget_Base {
 			array(
 				'label'       => __( 'Link', 'wpr-addons' ),
 				'type'        => Controls_Manager::URL,
-				'dynamic'     => array( 'active' => true ),
 				'default'     => array(
 					'url' => '#',
 				),

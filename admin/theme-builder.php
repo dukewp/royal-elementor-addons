@@ -28,10 +28,20 @@ function wpr_addons_theme_builder_page() {
         <div class="wpr-user-template">
             <span><?php esc_html_e( 'Create Template', 'wpr-addons' ); ?></span>
             <span class="plus-icon">+</span>
+
+            <?php
+            if ( ! class_exists( 'WooCommerce' ) && ('wpr_tab_product_archive' === $_GET['tab'] || 'wpr_tab_product_single' === $_GET['tab'] )) {
+                echo '<div></div>';
+            }
+            ?>
         </div>
 
-        <a href="https://www.youtube.com/watch?v=cwkhwO_rPuo" class="wpr-options-button button" target="_blank" style="padding: 8px 22px;">
+        <a href="https://www.youtube.com/watch?v=cwkhwO_rPuo" class="wpr-how-to-use-theme-builder wpr-options-button button" target="_blank" style="padding: 8px 22px;">
             <?php echo esc_html__( 'How to use Theme Builder', 'wpr-addons' ); ?>
+            <span class="dashicons dashicons-video-alt3"></span>
+        </a>
+        <a href="https://www.youtube.com/watch?v=f_3tNiBC3dw" class="wpr-how-to-use-woo-builder wpr-options-button button" target="_blank" style="padding: 8px 22px;">
+            <?php echo esc_html__( 'How to use WooCommerce Builder', 'wpr-addons' ); ?>
             <span class="dashicons dashicons-video-alt3"></span>
         </a>
     </div>
@@ -70,14 +80,12 @@ function wpr_addons_theme_builder_page() {
             <?php esc_html_e( 'Single', 'wpr-addons' ); ?>
         </a>
 
-        <?php if ( class_exists( 'WooCommerce' ) ) : ?>
         <a href="?page=wpr-theme-builder&tab=wpr_tab_product_archive" data-title="Product Archive" class="nav-tab <?php echo $active_tab == 'wpr_tab_product_archive' ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Product Archive', 'wpr-addons' ); ?>
         </a>
         <a href="?page=wpr-theme-builder&tab=wpr_tab_product_single" data-title="Product Single" class="nav-tab <?php echo $active_tab == 'wpr_tab_product_single' ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Product Single', 'wpr-addons' ); ?>
         </a>
-        <?php endif; ?>
 
         <a href="?page=wpr-theme-builder&tab=wpr_tab_my_templates" data-title="My Templates" class="nav-tab <?php echo ($active_tab == 'wpr_tab_my_templates') ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Saved Templates', 'wpr-addons' ); ?>
@@ -113,18 +121,26 @@ function wpr_addons_theme_builder_page() {
         <?php WPR_Templates_Loop::render_theme_builder_templates( 'single' ); ?>
 
     <?php elseif ( $active_tab == 'wpr_tab_product_archive' ) : ?>
+        
+        <?php if ( class_exists( 'WooCommerce' ) ) : ?>
+            <!-- Save Conditions -->
+            <input type="hidden" name="wpr_product_archive_conditions" id="wpr_product_archive_conditions" value="<?php echo esc_attr(get_option('wpr_product_archive_conditions', '[]')); ?>">
 
-        <!-- Save Conditions -->
-        <input type="hidden" name="wpr_product_archive_conditions" id="wpr_product_archive_conditions" value="<?php echo esc_attr(get_option('wpr_product_archive_conditions', '[]')); ?>">
-
-        <?php WPR_Templates_Loop::render_theme_builder_templates( 'product_archive' ); ?>
+            <?php WPR_Templates_Loop::render_theme_builder_templates( 'product_archive' ); ?>
+        <?php else : ?>
+            <div class="wpr-activate-woo-notice"><span class="dashicons dashicons-info-outline"></span> Please install/activate WooCommerce in order to create product archive templates!</div>
+        <?php endif; ?>
 
     <?php elseif ( $active_tab == 'wpr_tab_product_single' ) : ?>
 
-        <!-- Save Conditions -->
-        <input type="hidden" name="wpr_product_single_conditions" id="wpr_product_single_conditions" value="<?php echo esc_attr(get_option('wpr_product_single_conditions', '[]')); ?>">
+        <?php if ( class_exists( 'WooCommerce' ) ) : ?>
+            <!-- Save Conditions -->
+            <input type="hidden" name="wpr_product_single_conditions" id="wpr_product_single_conditions" value="<?php echo esc_attr(get_option('wpr_product_single_conditions', '[]')); ?>">
 
-        <?php WPR_Templates_Loop::render_theme_builder_templates( 'product_single' ); ?>
+            <?php WPR_Templates_Loop::render_theme_builder_templates( 'product_single' ); ?>
+        <?php else : ?>
+            <div class="wpr-activate-woo-notice"><span class="dashicons dashicons-info-outline"></span> Please install/activate WooCommerce in order to create product single templates!</div>
+        <?php endif ; ?>
 
     <?php elseif ( $active_tab == 'wpr_tab_my_templates' ) : ?>
 

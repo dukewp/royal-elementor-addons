@@ -75,11 +75,11 @@ class WPR_Templates_Loop {
 
 		// WP_Query arguments
 		$args = array (
-			'post_type'   => array( 'elementor_library' ),
+			'post_type' => array( 'elementor_library' ),
 			'post_status' => array( 'publish' ),
-			'meta_key' 	  => '_elementor_template_type',
-			'meta_value'  => ['page', 'section'],
-			'numberposts'  => -1
+			'meta_key' => '_elementor_template_type',
+			'meta_value' => ['page', 'section'],
+			'numberposts' => -1
 		);
 
 		// The Query
@@ -104,6 +104,8 @@ class WPR_Templates_Loop {
 					echo '</span>';
 				echo '</li>';
 			}
+		} else {
+			echo '<li class="wpr-no-templates">You don\'t have any templates yet!</li>';
 		}
 		
 		echo '</ul>';
@@ -118,7 +120,7 @@ class WPR_Templates_Loop {
 	public static function render_conditions_popup( $canvas = false ) {
 
 		// Active Tab
-		$active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
+		$active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'wpr_tab_header';
 		
 	?>
 
@@ -251,8 +253,8 @@ class WPR_Templates_Loop {
 									<option value="tags" class="custom-ids"><?php esc_html_e( 'Post Tags', 'wpr-addons' ); ?></option>
 								<?php elseif ( 'wpr_tab_product_archive' === $active_tab ): ?>
 									<option value="products"><?php esc_html_e( 'Products Archive', 'wpr-addons' ); ?></option>
-									<option value="product_cat" class="custom-type-ids"><?php esc_html_e( 'Products Categories', 'wpr-addons' ); ?></option>
-									<option value="product_tag" class="custom-type-ids"><?php esc_html_e( 'Products Tags', 'wpr-addons' ); ?></option>								
+									<option value="product_cat" class="custom-type-ids"><?php esc_html_e( 'Products Categories (Pro)', 'wpr-addons' ); ?></option>
+									<option value="product_tag" class="custom-type-ids"><?php esc_html_e( 'Products Tags (Pro)', 'wpr-addons' ); ?></option>								
 								<?php endif; ?>
 							<?php endif; ?>
 						</select>

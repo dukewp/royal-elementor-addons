@@ -530,7 +530,7 @@ class Wpr_Tabs extends Widget_Base {
 		$this->add_section_settings();
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'tabs', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'tabs', [
 			'Add Unlimited Tabs',
 			'Tab Content Type - Elementor Template',
 			'Custom Tab Colors',

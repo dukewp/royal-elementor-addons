@@ -15,11 +15,13 @@ function wpr_addons_add_templates_kit_menu() {
 add_action( 'admin_menu', 'wpr_addons_add_templates_kit_menu' );
 
 // Import Template Kit
-add_action( 'wp_ajax_wpr_install_reuired_plugins', 'wpr_install_reuired_plugins' );
-add_action( 'wp_ajax_wpr_activate_reuired_theme', 'wpr_activate_reuired_theme' );
+add_action( 'wp_ajax_wpr_activate_required_theme', 'wpr_activate_required_theme' );
+add_action( 'wp_ajax_wpr_activate_required_plugins', 'wpr_activate_required_plugins' );
+add_action( 'wp_ajax_wpr_fix_royal_compatibility', 'wpr_fix_royal_compatibility' );
 add_action( 'wp_ajax_wpr_import_templates_kit', 'wpr_import_templates_kit' );
 add_action( 'wp_ajax_wpr_final_settings_setup', 'wpr_final_settings_setup' );
 add_action( 'wp_ajax_wpr_search_query_results', 'wpr_search_query_results' );
+add_action( 'init', 'disable_default_woo_pages_creation', 2 );
 
 
 /**
@@ -67,6 +69,12 @@ function wpr_addons_templates_kit_page() {
     <div class="wpr-templates-kit-page-title">
         <h1><?php esc_html_e('Royal Elementor Templates Kit', 'wpr-addons'); ?></h1>
         <p><?php esc_html_e('Import any Templates Kit with just a Single click', 'wpr-addons'); ?></p>
+        <p>
+            <a href="https://www.youtube.com/watch?v=kl2xBoWW81o" class="wpr-options-button button" target="_blank">
+                <?php esc_html_e('Video Tutorial', 'wpr-addons'); ?>
+                <span class="dashicons dashicons-video-alt3"></span>
+            </a>
+        </p>
     </div>
 
     <div class="wpr-templates-kit-grid main-grid" data-theme-status="<?php echo esc_attr(get_theme_status()); ?>">
@@ -95,7 +103,11 @@ function wpr_addons_templates_kit_page() {
                     echo '</div>';
                     echo '<footer>';
                         echo '<h3>'. esc_html($data['name']) .'</h3>';
-                        echo esc_html($data['theme-builder']) ? '<span>'. esc_html__( 'Theme Builder', 'wpr-addons' ) .'</span>' : '';
+                        if ( $data['woo-builder'] ) {
+                            echo '<span class="wpr-woo-builder-label">'. esc_html__( 'Woo Builder', 'wpr-addons' ) .'</span>';
+                        } elseif ( $data['theme-builder'] ) {
+                            echo '<span class="wpr-theme-builder-label">'. esc_html__( 'Theme Builder', 'wpr-addons' ) .'</span>';
+                        }
                     echo '</footer>';
                 echo '</div>';
             }
@@ -178,7 +190,7 @@ function get_theme_status() {
 /**
 ** Install/Activate Required Theme
 */
-function wpr_activate_reuired_theme() {
+function wpr_activate_required_theme() {
     // Get Current Theme
     $theme = get_option('stylesheet');
 
@@ -189,52 +201,36 @@ function wpr_activate_reuired_theme() {
         set_transient( 'royal-elementor-kit_activation_notice', true );
     }
 
-    // TODO: maybe return back  - 'ashe' !== $theme && 'bard' !== $theme &&
-
-    // Get currently active plugins
-    $active_plugins = (array) get_option( 'active_plugins', array() );
-
-    // Deactivate Extra Import Plugins
-    $astra_sites_key = array_search('astra-sites/astra-sites.php', $active_plugins);
-    $ashe_extra_key = array_search('ashe-extra/ashe-extra.php', $active_plugins);
-    $bard_extra_key = array_search('bard-extra/bard-extra.php', $active_plugins);
-
-    if ( false !== $astra_sites_key && array_key_exists($astra_sites_key, $active_plugins) ) {
-        unset($active_plugins[$astra_sites_key]);
-    }
-
-    if ( false !== $ashe_extra_key && array_key_exists($ashe_extra_key, $active_plugins) ) {
-        unset($active_plugins[$ashe_extra_key]);
-    }
-
-    if ( false !== $bard_extra_key && array_key_exists($bard_extra_key, $active_plugins) ) {
-        unset($active_plugins[$bard_extra_key]);
-    }
-
-    // Set Active Plugins
-    update_option( 'active_plugins', array_values($active_plugins) ); 
+    // TODO: maybe return back  - 'ashe' !== $theme && 'bard' !== $theme && 
 }
 
 /**
-** Install/Activate Required Plugins
+** Activate Required Plugins
 */
-function wpr_install_reuired_plugins() {
-    // Get currently active plugins
-    $active_plugins = (array) get_option( 'active_plugins', array() );
-
-    // Add Required Plugins
+function wpr_activate_required_plugins() {
     if ( isset($_POST['plugin']) ) {
         if ( 'contact-form-7' == $_POST['plugin'] ) {
             if ( !is_plugin_active( 'contact-form-7/wp-contact-form-7.php' ) ) {
-                array_push( $active_plugins, 'contact-form-7/wp-contact-form-7.php' );
+                activate_plugin( 'contact-form-7/wp-contact-form-7.php' );
+            }
+        } elseif ( 'woocommerce' == $_POST['plugin'] ) {
+            if ( !is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+                activate_plugin( 'woocommerce/woocommerce.php' );
             }
         } elseif ( 'media-library-assistant' == $_POST['plugin'] ) {
             if ( !is_plugin_active( 'media-library-assistant/index.php' ) ) {
-                array_push( $active_plugins, 'media-library-assistant/index.php' );
+                activate_plugin( 'media-library-assistant/index.php' );
             }
         }
     }
+}
 
+/**
+** Deactivate Extra Plugins
+*/
+function wpr_fix_royal_compatibility() {
+    // Get currently active plugins
+    $active_plugins = (array) get_option( 'active_plugins', array() );
     $active_plugins = array_values($active_plugins);
 
     // Deactivate Extra Import Plugins
@@ -250,7 +246,7 @@ function wpr_install_reuired_plugins() {
     }
 
     // Set Active Plugins
-    update_option( 'active_plugins', array_values($active_plugins) ); 
+    update_option( 'active_plugins', array_values($active_plugins) );
 
     // Get Current Theme
     $theme = get_option('stylesheet');
@@ -261,9 +257,6 @@ function wpr_install_reuired_plugins() {
         switch_theme( 'royal-elementor-kit' );
         set_transient( 'royal-elementor-kit_activation_notice', true );
     }
-
-    // TODO: maybe return back  - 'ashe' !== $theme && 'bard' !== $theme && 
-      
 }
 
 /**
@@ -341,21 +334,19 @@ function import_elementor_site_settings( $kit ) {
     // $randomNum = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 7);
 
     // Get Remote File
-    $site_settings = @file_get_contents('https://royal-elementor-addons.com/library/templates-kit/'. $kit .'1/site-settings.json');
-    
+    $site_settings = @file_get_contents('https://royal-elementor-addons.com/library/templates-kit/'. $kit .'/site-settings.json');
+
     if ( false !== $site_settings ) {
         $site_settings = json_decode($site_settings, true);
 
         if ( ! empty($site_settings['settings']) ) {
             $default_kit = \Elementor\Plugin::$instance->documents->get_doc_for_frontend( get_option( 'elementor_active_kit' ) );
 
-            if ( false !== $default_kit ) {
-                $kit_settings = $default_kit->get_settings();
-                $new_settings = $site_settings['settings'];
-                $settings = array_merge($kit_settings, $new_settings);
+            $kit_settings = $default_kit->get_settings();
+            $new_settings = $site_settings['settings'];
+            $settings = array_merge($kit_settings, $new_settings);
 
-                $default_kit->save( [ 'settings' => $settings ] );
-            }
+            $default_kit->save( [ 'settings' => $settings ] );
         }
     }
 }
@@ -371,6 +362,8 @@ function setup_wpr_templates( $kit ) {
     $kit_version = substr($kit, (strripos($kit, '-v') + 1), strlen($kit));
     $get_available_kits = WPR_Templates_Data::get_available_kits();
     $has_theme_builder = $get_available_kits[$kit_name][$kit_version]['theme-builder'];
+    $has_woo_builder = $get_available_kits[$kit_name][$kit_version]['woo-builder'];
+    $has_off_canvas = $get_available_kits[$kit_name][$kit_version]['off-canvas'];
 
     // Set Home & Blog Pages
     $home_page = get_page_by_path('home-'. $kit);
@@ -383,8 +376,6 @@ function setup_wpr_templates( $kit ) {
         if ( $blog_page ) {
             update_option( 'page_for_posts', $blog_page->ID );
         }
-    } else {
-        update_option( 'show_on_front', 'posts' );
     }
 
     // Set Headers and Footers
@@ -399,8 +390,42 @@ function setup_wpr_templates( $kit ) {
         update_option('wpr_single_conditions', '{"user-single-'. $kit .'-404":["single/page_404"],"user-single-'. $kit .'-post":["single/posts/all"],"user-single-'. $kit .'-page":["single/pages/all"]}');
     }
 
-    // Set Popup
-    update_option('wpr_popup_conditions', '{"user-popup-'. $kit .'-popup":["global"]}'); 
+    // WooCommerce Builder
+    if ( $has_woo_builder ) {
+        update_option('wpr_product_archive_conditions', '{"user-product_archive-'. $kit .'-shop":["product_archive/products"],"user-product_archive-'. $kit .'-product-category-tag":["product_archive/product_cat/all","product_archive/product_tag/all"]}');
+        update_option('wpr_product_single_conditions', '{"user-product_single-'. $kit .'-product":["product_single/product"]}');
+
+        $shop_id = get_page_by_path('shop-'. $kit) ? get_page_by_path('shop-'. $kit)->ID : '';
+        $cart_id = get_page_by_path('cart-'. $kit) ? get_page_by_path('cart-'. $kit)->ID : '';
+        $checkout_id = get_page_by_path('checkout-'. $kit) ? get_page_by_path('checkout-'. $kit)->ID : '';
+        $myaccount_id = get_page_by_path('my-account-'. $kit) ? get_page_by_path('my-account-'. $kit)->ID : '';
+        
+        update_option('woocommerce_shop_page_id', $shop_id);
+        update_option('woocommerce_cart_page_id', $cart_id);
+        update_option('woocommerce_checkout_page_id', $checkout_id);
+
+        if ( '' !== $myaccount_id ) {
+            update_option('woocommerce_myaccount_page_id', $myaccount_id);
+        }
+
+        // Update Options
+        update_option( 'woocommerce_queue_flush_rewrite_rules', 'yes' );
+
+        // Enable Elementor Builder for WooCommerce CPT
+        // $cpt_support = get_option( 'elementor_cpt_support' );
+		
+		// if ( ! in_array( 'product', $cpt_support ) ) {
+		//     $cpt_support[] = 'product';
+		//     update_option( 'elementor_cpt_support', $cpt_support );
+		// }
+    }
+
+    // Set Popups
+    if ( $has_off_canvas ) {
+        update_option('wpr_popup_conditions', '{"user-popup-'. $kit .'-off-canvas":["global"],"user-popup-'. $kit .'-popup":["global"]}');
+    } else {
+        update_option('wpr_popup_conditions', '{"user-popup-'. $kit .'-popup":["global"]}');
+    }
 }
 
 /**
@@ -431,7 +456,7 @@ function wpr_fix_elementor_images() {
             // Elementor Data
             $data = get_post_meta( get_the_ID(), '_elementor_data', true );
 
-            if ( !empty($data) && is_string($data) ) {
+            if ( ! empty( $data ) ) {
                 $data = preg_replace('/\\\{1}\/sites\\\{1}\/\d+/', '', $data);
                 $data = str_replace( $demo_site_url, $site_url, $data );
                 $data = json_decode( $data, true );
@@ -443,7 +468,7 @@ function wpr_fix_elementor_images() {
             $page_settings = get_post_meta( get_the_ID(), '_elementor_page_settings', true );
             $page_settings = json_encode($page_settings);
 
-            if ( !empty($page_settings) ) {
+            if ( ! empty( $page_settings ) ) {
                 $page_settings = preg_replace('/\\\{1}\/sites\\\{1}\/\d+/', '', $page_settings);
                 $page_settings = str_replace( $demo_site_url, $site_url, $page_settings );
                 $page_settings = json_decode( $page_settings, true );
@@ -457,29 +482,6 @@ function wpr_fix_elementor_images() {
 
     // Clear Elementor Cache
     Plugin::$instance->files_manager->clear_cache();
-}
-
-/**
-** Fix Contact Form 7
-*/
-function fix_contact_form_7() {
-    if ( class_exists('WPCF7_ContactForm') ) {
-        $new_contact_form = WPCF7_ContactForm::get_template(
-            array(
-                'title' =>
-                    /* translators: title of your first contact form. %d: number fixed to '1' */
-                    sprintf( __( 'Contact form %d', 'contact-form-7' ), 1 ),
-            )
-        );
-
-        // Get CF7s
-        $contact_forms = get_posts(['post_type'=>'wpcf7_contact_form']);
-
-        // Add new CF7
-        if ( empty($contact_forms) ) {
-            $new_contact_form->save();
-        }
-    }
 }
 
 /**
@@ -497,9 +499,6 @@ function wpr_final_settings_setup() {
     // Fix Elementor Images
     wpr_fix_elementor_images();
 
-    // Fix Contact Form 7
-    fix_contact_form_7();
-
     // Track Kit
     wpr_track_imported_kit( $kit );
 
@@ -511,6 +510,13 @@ function wpr_final_settings_setup() {
     if ( $post ) {
         wp_delete_post($post->ID,true);
     }
+}
+
+/**
+** Prevent WooCommerce creating default pages
+*/
+function disable_default_woo_pages_creation() {
+    add_filter( 'woocommerce_create_pages', '__return_empty_array' );
 }
 
 /**

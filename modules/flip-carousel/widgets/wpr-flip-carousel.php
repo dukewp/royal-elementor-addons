@@ -68,7 +68,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			]
 		);
 
-		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
+		// Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
         $repeater = new Repeater();
 
@@ -343,7 +343,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 		$this->end_controls_section();
 		
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'flip-carousel', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'flip-carousel', [
 			'Add Unlimited Slides',
 			'Slider Autoplay options',
 		] );
@@ -1184,7 +1184,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 						: ''. $figcaption . $flip_slide_image .'';
 
 				$figure = 'yes' === $element['enable_slide_link']
-						? '<a '. $this->get_render_attribute_string( 'slide_link'. $i ) .'>' . esc_html($inner_figure) . '</a>'
+						? '<a '. $this->get_render_attribute_string( 'slide_link'. $i ) .'>' . wp_kses_post($inner_figure) . '</a>'
 						: $inner_figure;
 
                 echo '<li class="wpr-flip-item" data-flip-title="">';

@@ -177,6 +177,9 @@ class Wpr_Author_Box extends Widget_Base {
 					'h4' => 'H4',
 					'h5' => 'H5',
 					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+					'P' => 'p'
 				],
 				'default' => 'h3',
 				'condition' => [
@@ -224,6 +227,9 @@ class Wpr_Author_Box extends Widget_Base {
 					'h4' => 'H4',
 					'h5' => 'H5',
 					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+					'P' => 'p'
 				],
 				'default' => 'h3',
 				'condition' => [
@@ -263,7 +269,7 @@ class Wpr_Author_Box extends Widget_Base {
 		$this->end_controls_section(); // End Controls Section
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'author-box', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'author-box', [
 			'Link to Author Website.',
 			'Show/Hide Author Biography (description).'
 		] );

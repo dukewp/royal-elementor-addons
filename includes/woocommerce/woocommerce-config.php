@@ -5,8 +5,17 @@ class WPR_WooCommerce_Config {
 	public function __construct() {
 		add_action('wp_ajax_wpr_addons_add_cart_single_product', [$this, 'add_cart_single_product_ajax']);
 		add_action('wp_ajax_nopriv_wpr_addons_add_cart_single_product', [$this, 'add_cart_single_product_ajax']);
-		add_filter('woocommerce_single_product_carousel_options', [$this, 'wpr_update_woo_flexslider_options']);
-		// add_filter( 'woocommerce_single_product_zoom_enabled', '__return_false' );
+		
+		if ( 'on' == get_option('wpr_enable_woo_flexslider_navigation', 'on') ) {
+			add_filter('woocommerce_single_product_carousel_options', [$this, 'wpr_update_woo_flexslider_options']);
+		}
+
+		if ( 'on' !== get_option('wpr_enable_product_image_zoom', 'on') ) {
+			add_filter( 'woocommerce_single_product_zoom_enabled', '__return_false' );
+		}
+		
+		add_action( 'wp',[$this, 'wpr_remove_wc_lightbox'], 99 ); //: TODO condition
+		// add_filter( 'body_class', [$this, 'wpr_remove_elementor_lightbox'] ); //: TODO condition
 
 		// Change number of products that are displayed per page (shop page)
 		add_filter( 'loop_shop_per_page', [$this, 'shop_products_per_page'], 20 );
@@ -15,6 +24,18 @@ class WPR_WooCommerce_Config {
 		add_filter( 'wc_get_template', [ $this, 'rewrite_default_wc_templates' ], 10, 3 );
 
 		add_filter( 'woocommerce_add_to_cart_fragments', [$this, 'wc_refresh_mini_cart_count']);
+	}
+
+	function wpr_remove_elementor_lightbox( $classes ) {
+	
+		$classes[] = 'wpr-no-lightbox';
+	
+		// Return classes
+		return $classes;
+	}
+
+	function wpr_remove_wc_lightbox() {	 	 
+	   remove_theme_support( 'wc-product-gallery-lightbox' );	 	 
 	}
 
 	function wc_refresh_mini_cart_count($fragments) {
@@ -65,8 +86,20 @@ class WPR_WooCommerce_Config {
 		}
 
 		// Mini-cart template
-		if ( $template_name === 'cart/mini-cart.php') {
+		if ( $template_name === 'cart/mini-cart.php' ) {
 			$located = WPR_ADDONS_PATH .'includes/woocommerce/templates/cart/mini-cart.php';
+		}
+
+		if ( $template_name === 'notices/success.php' ) {
+			$located = WPR_ADDONS_PATH .'includes/woocommerce/templates/notices/success.php';
+		}
+
+		if ( $template_name === 'notices/error.php' ) {
+			$located = WPR_ADDONS_PATH .'includes/woocommerce/templates/notices/error.php';
+		}
+		
+		if ( $template_name === 'notices/notice.php' ) {
+			$located = WPR_ADDONS_PATH .'includes/woocommerce/templates/notices/notice.php';
 		}
 
 		// if ( $template_name === 'cart/cart-empty.php' ) {

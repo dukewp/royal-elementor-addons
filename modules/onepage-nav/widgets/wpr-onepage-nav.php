@@ -225,7 +225,7 @@ class Wpr_OnepageNav extends Widget_Base {
 		$this->add_section_settings();
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'onepage-nav', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'onepage-nav', [
 			'Highlight Active Nav Icon',
 			'Nav Icon Custom Color',
 			'Nav Icon Advanced Tooltip',

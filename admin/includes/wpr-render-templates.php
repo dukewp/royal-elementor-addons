@@ -61,11 +61,7 @@ class WPR_Render_Templates {
 		
 		// Other Themes
 		} else {
-			add_action( 'get_header', [ $this, 'replace_header' ] );
-			add_action( 'elementor/page_templates/canvas/before_content', [ $this, 'add_canvas_header' ] );
-
-			add_action( 'get_footer', [ $this, 'replace_footer' ] );
-			add_action( 'elementor/page_templates/canvas/after_content', [ $this, 'add_canvas_footer' ], 9 );
+			add_action( 'wp', [ $this, 'global_compatibility' ] );
 		}
 
 		// Scripts and Styles
@@ -76,6 +72,14 @@ class WPR_Render_Templates {
 			add_filter( 'template_include', [ $this, 'convert_to_canvas' ], 12 ); // 12 after WP Pages and WooCommerce.
 			add_action( 'elementor/page_templates/canvas/wpr_print_content', [ $this, 'canvas_page_content_display' ] );
 		}
+	}
+
+	public function global_compatibility() {
+		add_action( 'get_header', [ $this, 'replace_header' ] );
+		add_action( 'elementor/page_templates/canvas/before_content', [ $this, 'add_canvas_header' ] );
+
+		add_action( 'get_footer', [ $this, 'replace_footer' ] );
+		add_action( 'elementor/page_templates/canvas/after_content', [ $this, 'add_canvas_footer' ], 9 );
 	}
 
     /**

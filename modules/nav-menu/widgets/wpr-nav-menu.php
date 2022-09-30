@@ -589,7 +589,7 @@ class Wpr_Nav_Menu extends Widget_Base {
 		$this->end_controls_section(); // End Controls Section
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'nav-menu', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'nav-menu', [
 			'Vertical Layout',
 			'Advanced Link Hover Effects: Slide, Grow, Drop',
 			'SubMenu Entrance Slide Effect',
@@ -1653,11 +1653,15 @@ class Wpr_Nav_Menu extends Widget_Base {
 				if ( in_array( 'menu-item-has-children', $item->classes ) ) {
 					$item_class = 'wpr-menu-item wpr-pointer-item';
 
+					if ( in_array( 'current-menu-item', $item->classes ) || in_array( 'current-menu-ancestor', $item->classes ) ) {
+						$item_class .= ' wpr-active-menu-item';
+					}
+
 					// Sub Menu Classes
 					if ( $depth > 0 ) {
 						$item_class = 'wpr-sub-menu-item';
 
-						if ( in_array( 'current-menu-item', $item->classes ) ) {
+						if ( in_array( 'current-menu-item', $item->classes ) || in_array( 'current-menu-ancestor', $item->classes ) ) {
 							$item_class .= ' wpr-active-menu-item';
 						}
 					}

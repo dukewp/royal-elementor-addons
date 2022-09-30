@@ -30,7 +30,7 @@ class Wpr_Product_Rating extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'qq', 'product-rating', 'product', 'rating' ];//tmp
+		return [ 'qq', 'woocommerce', 'product-rating', 'product', 'rating' ];//tmp
 	}
 
 	protected function register_controls() {
@@ -57,6 +57,15 @@ class Wpr_Product_Rating extends Widget_Base {
                     '{{WRAPPER}} .wpr-product-rating' => 'display: {{VALUE}}; align-items: center;'
                 ],
 				'default' => 'flex',
+			]
+		);
+
+		$this->add_control(
+			'product_rating_show_text',
+			[
+				'label' => esc_html__( 'Show Text', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'prefix_class' => 'wpr-pr-show-text-'
 			]
 		);
 
@@ -129,7 +138,7 @@ class Wpr_Product_Rating extends Widget_Base {
 		$this->add_control(
 			'product_rating_text_color_hover',
 			[
-				'label' => esc_html__( 'Text Color Hover', 'wpr-addons' ),
+				'label' => esc_html__( 'Text Hover Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#787878',
 				'selectors' => [

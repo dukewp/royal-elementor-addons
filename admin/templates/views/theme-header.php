@@ -9,9 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $conditions = json_decode( get_option('wpr_header_conditions', '[]'), true );
 $template_slug = WPR_Conditions_Manager::header_footer_display_conditions($conditions);
 
-?>
-
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">

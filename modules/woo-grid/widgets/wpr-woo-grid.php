@@ -556,6 +556,16 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
+		$this->add_control(
+			'woo_grid_notice_video_tutorial',
+			[
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => __( 'Build WooCommerce Shop <strong>completely with Elementor and Royal Addons !</strong> <ul><li><a href="https://www.youtube.com/watch?v=f_3tNiBC3dw" target="_blank" style="color: #93003c;"><strong>Watch Video Tutorial <span class="dashicons dashicons-video-alt3"></strong></a></li></ul>', 'wpr-addons' ),
+				'separator' => 'after',
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+			]
+		);
+
 		// Get Available Meta Keys
 		$post_meta_keys = Utilities::get_custom_meta_keys();
 
@@ -684,6 +694,16 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'query_exclude_no_images',
 			[
 				'label' => esc_html__( 'Exclude Items w/o Thumbnail', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'label_block' => false
+			]
+		);		
+
+		$this->add_control(
+			'query_exclude_out_of_stock',
+			[
+				'label' => esc_html__( 'Exclude Out Of Stock', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'label_block' => false
@@ -891,12 +911,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'label' => esc_html__( 'Show Filters', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
-				'widescreen_default' => 'yes',
-				'laptop_default' => 'yes',
-				'tablet_extra_default' => 'yes',
-				'tablet_default' => 'yes',
-				'mobile_extra_default' => 'yes',
-				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'none',
 					'yes' => 'block'
@@ -1182,6 +1196,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'h4' => 'H4',
 					'h5' => 'H5',
 					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+					'P' => 'p'
 				],
 				'default' => 'h2',
 				'condition' => [
@@ -1357,6 +1374,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'h4' => 'H4',
 					'h5' => 'H5',
 					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+					'P' => 'p'
 				],
 				'default' => 'h2',
 				'condition' => [
@@ -2455,6 +2475,34 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'filters_align',
+			[
+				'label' => esc_html__( 'Align', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'label_block' => false,
+				'default' => 'center',
+				'options' => [
+					'left' => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-h-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-h-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-h-align-right',
+					]
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-filters' => 'text-align: {{VALUE}}',
+				],
+				'separator' => 'before',
+			]
+		);
+
 		$this->add_control_filters_animation();
 
 		// Upgrade to Pro Notice
@@ -2787,7 +2835,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$this->end_controls_section(); // End Controls Section
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'woo-grid', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'woo-grid', [
 			'Grid Columns 1,2,3,4,5,6',
 			'Masonry Layout',
 			'Products Slider Columns (Carousel) 1,2,3,4,5,6',
@@ -7017,7 +7065,22 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		// On Sale
 		if ( 'onsale' === $settings['query_selection'] ) {
-			$args['post__in'] = wc_get_product_ids_on_sale();
+			// $args['post__in'] = wc_get_product_ids_on_sale();
+			$args['meta_query'] = array(
+				'relation' => 'OR',
+				array( // Simple products type
+					'key'           => '_sale_price',
+					'value'         => 0,
+					'compare'       => '>',
+					'type'          => 'numeric'
+				),
+				array( // Variable products type
+					'key'           => '_min_variation_sale_price',
+					'value'         => 0,
+					'compare'       => '>',
+					'type'          => 'numeric'
+				)
+			);
 		}
 		
 		if ( 'upsell' === $settings['query_selection'] ) {
@@ -7121,6 +7184,17 @@ class Wpr_Woo_Grid extends Widget_Base {
 		// Exclude Items without F/Image
 		if ( 'yes' === $settings['query_exclude_no_images'] ) {
 			$args['meta_key'] = '_thumbnail_id';
+		}
+
+		// Exclude Out Of Stock
+		if ( 'yes' === $settings['query_exclude_out_of_stock'] ) {
+			$args['meta_query'] = [
+				[
+					'key'     => '_stock_status',
+					'value'   => 'outofstock',
+					'compare' => 'NOT LIKE',
+				]
+			];
 		}
 
 		// Manual
@@ -7926,7 +8000,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 	}
 
 	// Render Sort & Results
-	public function render_grid_sorting( $settings ) {}
+	public function render_grid_sorting( $settings, $posts ) {}
 
 	// Render Grid Filters
 	public function render_grid_filters( $settings ) {
@@ -8437,10 +8511,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 			
 			if ( 'upsell' !== $settings['query_selection'] && 'cross-sell' !== $settings['query_selection'] ) {
 				// Sort & Results
-				$this->render_grid_sorting( $settings );
+				$this->render_grid_sorting( $settings, $posts );
 
-				// Filters
-				$this->render_grid_filters( $settings );
+				if ( !((is_product_category() || is_product_tag()) && !wpr_fs()->can_use_premium_code()) ) {
+					// Filters
+					$this->render_grid_filters( $settings );
+				}
 			}
 
 			$this->add_grid_settings( $settings );

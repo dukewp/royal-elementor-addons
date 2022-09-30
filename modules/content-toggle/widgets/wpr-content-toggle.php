@@ -362,7 +362,7 @@ class Wpr_Content_Toggle extends Widget_Base {
 		$this->add_section_settings();
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'content-toggle', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'content-toggle', [
 			'Multi Label Switcher (ex: Monthly, Annually, Lifetime)',
 			'Switcher Label Inside/Outside Positioning',
 		] );
@@ -1139,7 +1139,7 @@ class Wpr_Content_Toggle extends Widget_Base {
 	public function wpr_dual_switcher_outer_text() {
 
 		$settings = $this->get_settings();
-
+		
 		?>
 
 		<div class="wpr-switcher-inner wpr-switcher-first">
