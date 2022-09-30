@@ -205,19 +205,6 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'active_item',
-			[
-				'label' => esc_html__( 'Active Item Index', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'label_block' => false,
-				'default' => 1,
-				'min' => 1,
-				'render_type' => 'template',
-				'frontend_available' => true,
-			]
-		);
-
         $this->add_control(
             'accordion_type',
             [
@@ -266,6 +253,20 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 						'max' => 1000,
 					],
 				]
+			]
+		);
+
+		$this->add_control(
+			'active_item',
+			[
+				'label' => esc_html__( 'Active Item Index', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'label_block' => false,
+				'default' => 1,
+				'min' => 1,
+				'render_type' => 'template',
+				'frontend_available' => true,
+				'separator' => 'before'
 			]
 		);
 
