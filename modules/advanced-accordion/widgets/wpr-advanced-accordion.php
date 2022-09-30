@@ -316,7 +316,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			[
 				'label' => esc_html__( 'Box Style', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => 'no-box',
+				'default' => 'side-box',
 				'options' => [
 					'no-box' => esc_html__( 'None', 'wpr-addons' ),
 					'side-box' => esc_html__( 'Side Box', 'wpr-addons' ),
@@ -488,7 +488,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#7a7a7a',
+				'default' => '#605BE4',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .accordion' => 'color: {{VALUE}}',
 				]
@@ -507,7 +507,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 						'default' => 'classic',
 					],
 					'color' => [
-						'default' => '#605BE5',
+						'default' => '#FFFFFF',
 					],
 				],
 				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .accordion'
@@ -519,7 +519,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
+				'default' => '#EAEAEA',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .accordion' => 'border-color: {{VALUE}}',
 				]
@@ -548,7 +548,6 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#fff',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .accordion:hover' => 'color: {{VALUE}}',
 				]
@@ -562,11 +561,6 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'label' => esc_html__( 'Background', 'wpr-addons' ),
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => ['image'],
-				'fields_options' => [
-					'color' => [
-						'default' => '#7a7a7a',
-					],
-				],
 				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .accordion:hover'
 			]
 		);
@@ -576,7 +570,6 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .accordion:hover' => 'border-color: {{VALUE}}',
 				]
@@ -605,7 +598,6 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#fff',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .accordion.active' => 'color: {{VALUE}}',
 				]
@@ -619,11 +611,6 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'label' => esc_html__( 'Background', 'wpr-addons' ),
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => ['image'],
-				'fields_options' => [
-					'color' => [
-						'default' => '#7a7a7a',
-					],
-				],
 				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .accordion.active'
 			]
 		);
@@ -633,7 +620,6 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .accordion.active' => 'border-color: {{VALUE}}',
 				]
@@ -666,6 +652,14 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'name' => 'tab_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .accordion',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'font_weight'     => [
+						'default' => '400',
+					]
+				]
 			]
 		);
 
@@ -683,7 +677,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 0,
+					'size' => 6,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .accordion' => 'margin-top: {{SIZE}}{{UNIT}}; margin-bottom: {{SIZE}}{{UNIT}};',
@@ -706,7 +700,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 6,
+					'size' => 5,
 				],
 				'selectors' => [
 					'{{WRAPPER}}.wpr-advanced-accordion-icon-no-box .wpr-acc-item-title .wpr-acc-title-text' => 'margin-left: {{SIZE}}{{UNIT}};',
@@ -765,7 +759,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'default' => [
 					'top' => 1,
 					'right' => 1,
-					'bottom' => 0,
+					'bottom' => 1,
 					'left' => 1,
 				],
 				'selectors' => [
@@ -826,7 +820,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#ffffff',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .panel' => 'background-color: {{VALUE}}',
 				],
@@ -987,7 +981,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			[
 				'label' => esc_html__( 'Main Icon Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#7a7a7a',
+				'default' => '#605BE4',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-toggle-icon i' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-toggle-icon svg' => 'fill: {{VALUE}}',
@@ -1000,7 +994,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			[
 				'label' => esc_html__( 'Toggle Icon Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#7a7a7a',
+				'default' => '#EDEDED',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-title-icon i' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-title-icon svg' => 'fill: {{VALUE}}',
@@ -1013,7 +1007,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			[
 				'label' => esc_html__( 'Icon Box Bg Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#bcd432',
+				'default' => '#605BE4',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-acc-icon-box' => 'background-color: {{VALUE}}',
 				],
@@ -1037,7 +1031,6 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			[
 				'label' => esc_html__( 'Main Icon Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#fff',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .accordion:hover .wpr-toggle-icon i' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-advanced-accordion .accordion:hover .wpr-toggle-icon svg' => 'fill: {{VALUE}}',
@@ -1050,7 +1043,6 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			[
 				'label' => esc_html__( 'Toggle Icon Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#fff',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .accordion:hover .wpr-title-icon i' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-advanced-accordion .accordion:hover .wpr-title-icon svg' => 'fill: {{VALUE}}',
@@ -1063,7 +1055,6 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			[
 				'label' => esc_html__( 'Icon Box Bg Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#bcd432',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .accordion:hover .wpr-acc-icon-box' => 'background-color: {{VALUE}}',
 				],
@@ -1087,7 +1078,6 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			[
 				'label' => esc_html__( 'Main Icon Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#fff',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .accordion.active .wpr-toggle-icon i' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-advanced-accordion .accordion.active .wpr-toggle-icon svg' => 'fill: {{VALUE}}',
@@ -1100,7 +1090,6 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			[
 				'label' => esc_html__( 'Toggle Icon Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#fff',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .accordion.active .wpr-title-icon i' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-advanced-accordion .accordion.active .wpr-title-icon svg' => 'fill: {{VALUE}}',
@@ -1113,7 +1102,6 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			[
 				'label' => esc_html__( 'Icon Box Bg Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#bcd432',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .accordion.active .wpr-acc-icon-box' => 'background-color: {{VALUE}}',
 				],
