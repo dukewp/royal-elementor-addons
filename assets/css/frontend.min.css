@@ -535,6 +535,24 @@ div[class*="wpr-main-menu-align-"] .wpr-nav-menu-vertical .wpr-nav-menu>li>.wpr-
     }
 }
 
+/* --- Mega Menu --- */
+.wpr-mega-menu-icon {
+    margin-right: 5px;
+}
+
+.wpr-mega-menu-badge {
+    padding: 2px 5px;
+}
+
+.wpr-nav-menu-horizontal .wpr-mega-menu-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.wpr-mobile-nav-menu .wpr-mega-menu-badge {
+    margin-left: 5px;
+}
 
 /* --- Sub Menu --- */
 .wpr-nav-menu .wpr-sub-menu {
@@ -632,7 +650,8 @@ div[class*="wpr-main-menu-align-"] .wpr-nav-menu-vertical .wpr-nav-menu>li>.wpr-
     display: block;
 }
 
-.wpr-mobile-sub-menu {
+.wpr-mobile-sub-menu,
+.wpr-mobile-sub-mega-menu {
     display: none;
 }
 

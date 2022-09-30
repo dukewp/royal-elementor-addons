@@ -159,6 +159,9 @@ jQuery(document).ready(function( $ ) {
         saveSettings: function( selector ) {
             var $saveButton = $('.wpr-save-mega-menu-btn');
 
+            // Reset
+            $saveButton.text('Save');
+
             $saveButton.on('click', function() {
                 var id = selector.attr('data-id'),
                     depth = selector.attr('data-depth'),
@@ -215,31 +218,34 @@ jQuery(document).ready(function( $ ) {
                 }
                 
                 // Multi Value
-                if ( $this.hasClass('wpr-mm-setting-radius') ) {
-                    let multiValue = [],
-                        id = $this.find('input').attr('id');
+                // if ( $this.hasClass('wpr-mm-setting-radius') ) {
+                //     let multiValue = [],
+                //         id = $this.find('input').attr('id');
 
-                    $this.find('input').each(function() {
-                        multiValue.push($(this).val());
-                    });
+                //     $this.find('input').each(function() {
+                //         multiValue.push($(this).val());
+                //     });
 
-                    settings[id] = multiValue;
-                
+                //     settings[id] = multiValue;
+                // }
+
                 // Number
-                } else {
-                    if ( number.length ) {
-                        let id = number.attr('id');
-                        settings[id] = number.val();
-                    }
+                if ( number.length ) {
+                    let id = number.attr('id');
+                    settings[id] = number.val();
                 }
-
+                
                 // Text
                 if ( text.length ) {
                     let id = text.attr('id');
-                    settings[id] = text.val();
-                }
 
-                
+                    if ( 'wpr_mm_icon_picker' !== id ) {
+                        settings[id] = text.val();
+                    } else {
+                        let icon_class = $('.wpr-mm-setting-icon div span.wpr-mm-active-icon').find('i').attr('class');
+                        settings[id] = 'fas fa-ban' !== icon_class ? icon_class : '';
+                    }
+                }
             });
 
             return settings;
@@ -282,17 +288,18 @@ jQuery(document).ready(function( $ ) {
         setSettings: function( selector ) {
             var id = selector.attr('data-id'),
                 settings = WprMegaMenuSettings.getLiveSettings[id];
-
+console.log(settings['wpr_mm_icon_picker']);
             if ( ! $.isEmptyObject(settings) ) {
                 // General
                 if ( 'true' == settings['wpr_mm_enable'] ) {
-                    $('#wpr_mm_enable').attr('checked', 'checked');
+                    $('#wpr_mm_enable').prop( 'checked', true );
                 } else {
-                    $('#wpr_mm_enable').removeAttr('checked');
+                    $('#wpr_mm_enable').prop( 'checked', false );
                 }
                 $('#wpr_mm_position').val(settings['wpr_mm_position']).trigger('change');
                 $('#wpr_mm_width').val(settings['wpr_mm_width']).trigger('change');
                 $('#wpr_mm_custom_width').val(settings['wpr_mm_custom_width']);
+                $('#wpr_mm_mobile_content').val(settings['wpr_mm_mobile_content']).trigger('change');
 
                 // Icon
                 if ( '' !== settings['wpr_mm_icon_picker'] ) {
@@ -300,6 +307,9 @@ jQuery(document).ready(function( $ ) {
                     $('.wpr-mm-setting-icon div span:last-child').addClass('wpr-mm-active-icon');
                     $('.wpr-mm-setting-icon div span:last-child i').removeAttr('class');
                     $('.wpr-mm-setting-icon div span:last-child i').addClass(settings['wpr_mm_icon_picker']);
+                } else {
+                    $('.wpr-mm-setting-icon div span:last-child').removeClass('wpr-mm-active-icon');
+                    $('.wpr-mm-setting-icon div span:first-child').addClass('wpr-mm-active-icon');
                 }
                 $('#wpr_mm_icon_color').val(settings['wpr_mm_icon_color']).trigger('keyup');
                 $('#wpr_mm_icon_size').val(settings['wpr_mm_icon_size']);
@@ -309,18 +319,16 @@ jQuery(document).ready(function( $ ) {
                 $('#wpr_mm_badge_size').val(settings['wpr_mm_badge_size']);
                 $('#wpr_mm_badge_color').val(settings['wpr_mm_badge_color']).trigger('keyup');
                 $('#wpr_mm_badge_bg_color').val(settings['wpr_mm_badge_bg_color']).trigger('keyup');
-                $('#wpr_mm_badge_bdrs_1').val(settings['wpr_mm_badge_bdrs_1'][0]);
-                $('#wpr_mm_badge_bdrs_2').val(settings['wpr_mm_badge_bdrs_1'][1]);
-                $('#wpr_mm_badge_bdrs_3').val(settings['wpr_mm_badge_bdrs_1'][2]);
-                $('#wpr_mm_badge_bdrs_4').val(settings['wpr_mm_badge_bdrs_1'][3]);
+                $('#wpr_mm_badge_bdrs').val(settings['wpr_mm_badge_bdrs']);
 
             // Default Values
             } else {
                 // General
-                $('#wpr_mm_enable').removeAttr('checked').trigger('change');
+                $('#wpr_mm_enable').prop( 'checked', false );
                 $('#wpr_mm_position').val('default').trigger('change');
                 $('#wpr_mm_width').val('default').trigger('change');
                 $('#wpr_mm_custom_width').val('600');
+                $('#wpr_mm_mobile_content').val('mega').trigger('change');
 
                 // Icon
                 if ( '' !== settings['wpr_mm_icon_picker'] ) {
@@ -329,18 +337,15 @@ jQuery(document).ready(function( $ ) {
                     $('.wpr-mm-setting-icon div span:last-child i').removeAttr('class');
                     $('.wpr-mm-setting-icon div span:last-child i').addClass('fas fa-angle-down');
                 }
-                $('#wpr_mm_icon_color').val('#000000').trigger('keyup');
-                $('#wpr_mm_icon_size').val('16');
+                $('#wpr_mm_icon_color').val('').trigger('keyup');
+                $('#wpr_mm_icon_size').val('');
 
                 // Badge
                 $('#wpr_mm_badge_text').val('');
-                $('#wpr_mm_badge_size').val('16');
+                $('#wpr_mm_badge_size').val('11');
                 $('#wpr_mm_badge_color').val('#ffffff').trigger('keyup');
                 $('#wpr_mm_badge_bg_color').val('#000000').trigger('keyup');
-                $('#wpr_mm_badge_bdrs_1').val('');
-                $('#wpr_mm_badge_bdrs_2').val('');
-                $('#wpr_mm_badge_bdrs_3').val('');
-                $('#wpr_mm_badge_bdrs_4').val('');
+                $('#wpr_mm_badge_bdrs').val('0');
             }
         }
     }

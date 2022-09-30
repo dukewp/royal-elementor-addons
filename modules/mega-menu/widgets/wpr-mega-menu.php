@@ -1591,41 +1591,6 @@ class Wpr_Mega_Menu extends Widget_Base {
 
 	}
 
-	public function custom_menu_item_classes( $atts, $item, $args, $depth ) {
-		$settings = $this->get_active_settings();
-
-		// Main or Mobile
-		if ( strpos( $args->menu_id, 'mobile-menu' ) === false ) {
-		    $main 	= 'wpr-menu-item wpr-pointer-item';
-		    $sub 	= 'wpr-sub-menu-item';
-		    $active = $settings['menu_item_highlight'] === 'yes' ? ' wpr-active-menu-item' : '';
-		} else {
-		    $main 	= 'wpr-mobile-menu-item';
-		    $sub 	= 'wpr-mobile-sub-menu-item';
-		    $active = $settings['mobile_menu_highlight'] === 'yes' ? ' wpr-active-menu-item' : '';
-		}
-
-		$classes = $depth ? $sub : $main;
-
-		if ( in_array( 'current-menu-item', $item->classes ) ) {
-			$classes .= $active;
-		}
-
-		if ( empty( $atts['class'] ) ) {
-			$atts['class'] = $classes;
-		} else {
-			$atts['class'] .= ' '. $classes;
-		}
-
-		return $atts;
-	}
-
-	public function custom_sub_menu_class( $classes ) {
-		$classes[] = 'wpr-sub-menu';
-
-		return $classes;
-	}
-
 	public function load_walkers() {
 		require WPR_ADDONS_PATH . 'modules/mega-menu/walkers/class-wpr-main-menu-walker.php';
 		require WPR_ADDONS_PATH . 'modules/mega-menu/walkers/class-wpr-mobile-menu-walker.php';
@@ -1655,8 +1620,6 @@ class Wpr_Mega_Menu extends Widget_Base {
 		];
 
 		// Add Custom Filters
-		add_filter( 'nav_menu_link_attributes', [ $this, 'custom_menu_item_classes' ], 10, 4 );
-		// add_filter( 'nav_menu_submenu_css_class', [ $this, 'custom_sub_menu_class' ] );
 		add_filter( 'nav_menu_item_id', '__return_empty_string' );
 
 		// Generate Menu HTML
@@ -1669,15 +1632,13 @@ class Wpr_Mega_Menu extends Widget_Base {
 			'menu_id' => 'mobile-menu-'. $this->get_nav_menu_index() .'-'. $this->get_id(),
 			'container' => '',
 			'fallback_cb' => '__return_empty_string',
-			// 'walker' => new \Wpr_Mobile_Menu_Walker(),
+			'walker' => new \Wpr_Mobile_Menu_Walker(),
 		];
 
 		// Generate Mobile Menu HTML
 		$moible_menu_html = wp_nav_menu( $mobile_args );
 
 		// Remove Custom Filters
-		remove_filter( 'nav_menu_link_attributes', [ $this, 'custom_menu_item_classes' ] );
-		// remove_filter( 'nav_menu_submenu_css_class', [ $this, 'custom_sub_menu_class' ] );
 		remove_filter( 'nav_menu_item_id', '__return_empty_string' );
 
 		if ( empty( $menu_html ) ) {

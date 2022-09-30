@@ -2,7 +2,7 @@
 
 class Wpr_Main_Menu_Walker extends \Walker_Nav_Menu {
 	public function start_lvl( &$output, $depth = 0, $args = array() ) {
-		if ( 'mega' === $this->get_item_type() ) {
+		if ( 'mega-content' === $this->get_menu_item_type() ) {
 			return;
 		}
 
@@ -18,15 +18,6 @@ class Wpr_Main_Menu_Walker extends \Walker_Nav_Menu {
 		// Default class.
 		$classes = array( 'sub-menu', 'wpr-sub-menu' );
 
-		/**
-		 * Filters the CSS class(es) applied to a menu list element.
-		 *
-		 * @since 4.8.0
-		 *
-		 * @param array    $classes The CSS classes that are applied to the menu `<ul>` element.
-		 * @param stdClass $args    An object of `wp_nav_menu()` arguments.
-		 * @param int      $depth   Depth of menu item. Used for padding.
-		 */
 		$class_names = join( ' ', apply_filters( 'nav_menu_submenu_css_class', $classes, $args, $depth ) );
 		$class_names = $class_names ? ' class="' . esc_attr( $class_names ) . '"' : '';
 
@@ -34,7 +25,7 @@ class Wpr_Main_Menu_Walker extends \Walker_Nav_Menu {
 	}
 
 	public function end_lvl( &$output, $depth = 0, $args = array() ) {
-		if ( 'mega' === $this->get_item_type() ) {
+		if ( 'mega-content' === $this->get_menu_item_type() ) {
 			return;
 		}
 
@@ -51,11 +42,24 @@ class Wpr_Main_Menu_Walker extends \Walker_Nav_Menu {
 	}
 
 	public function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
-		$this->set_item_type( $item->ID, $depth );
+		$this->set_menu_item_type( $item->ID, $depth );
 		
-		if ( 'mega' === $this->get_item_type() && 0 < $depth ) {
+		if ( 'mega-content' === $this->get_menu_item_type() && 0 < $depth ) {
 			return;
 		}
+
+        // Get Settings
+        $settings = $this->get_mega_menu_settings($item->ID);
+
+		if ( isset( $args->item_spacing ) && 'discard' === $args->item_spacing ) {
+			$t = '';
+			$n = '';
+		} else {
+			$t = "\t";
+			$n = "\n";
+		}
+
+		$indent   = ( $depth ) ? str_repeat( $t, $depth ) : '';
 
 		$id = apply_filters( 'nav_menu_item_id', 'menu-item-' . $item->ID, $item, $args, $depth );
 		$id = $id ? ' id="' . esc_attr( $id ) . '"' : '';
@@ -66,8 +70,7 @@ class Wpr_Main_Menu_Walker extends \Walker_Nav_Menu {
 		$item_li_class = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args, $depth ) );
 		$item_li_class = $item_li_class ? ' class="' . esc_attr( $item_li_class ) . '"' : '';
 		
-
-		$output .= '<li'. $id . $item_li_class .'>';
+		$output .= $indent .'<li'. $id . $item_li_class .'>';
 
 			$item_output = $args->before;
 				$item_a_class = 'wpr-menu-item wpr-pointer-item';
@@ -94,10 +97,54 @@ class Wpr_Main_Menu_Walker extends \Walker_Nav_Menu {
 						$item_a_class .= ' wpr-active-menu-item';
 					}
 				}
-				
-				// Anchor Output
-				$item_output .= '<a href="'. esc_url($item->url) .'" class="'. esc_attr($item_a_class) .'">';
+
+                $item_icon_html = '';
+                $item_badge_html = '';
+
+                // If has Settings
+                if ( $settings ) {
+                    // Icon
+                    if ( '' !== $settings['wpr_mm_icon_picker'] ) {
+                        $font_size = '' !== $settings['wpr_mm_icon_size'] ? $settings['wpr_mm_icon_size'] .'px' : 'inherit';
+                        $color = '' !== $settings['wpr_mm_icon_color'] ? $settings['wpr_mm_icon_color'] : 'inherit';
+                        $item_icon_style = 'style="font-size: '. $font_size .'; color: '. $color .'"';
+                        $item_icon_html = '<i class="wpr-mega-menu-icon '. $settings['wpr_mm_icon_picker'] .'" '. $item_icon_style .'></i>';
+                    }
+
+                    // Badge
+                    if ( '' !== $settings['wpr_mm_badge_text'] ) {
+                        $item_badge_style = 'font-size: '. $settings['wpr_mm_badge_size'] .'px;'; 
+                        $item_badge_style .= 'color: '. $settings['wpr_mm_badge_color'] .';';
+                        $item_badge_style .= 'background-color: '. $settings['wpr_mm_badge_bg_color'] .';';
+                        $item_badge_style .= 'border-radius: '. $settings['wpr_mm_badge_bdrs'] .'px;';
+                        $item_badge_html = '<span class="wpr-mega-menu-badge" style="'. $item_badge_style .'">'. $settings['wpr_mm_badge_text'] .'</span>';
+                    }
+                }
+
+                // Link Attributes
+                $atts = [];
+                $atts['title'] = ! empty( $item->attr_title ) ? $item->attr_title : '';
+                $atts['target'] = ! empty( $item->target ) ? $item->target : '';
+                $atts['rel'] = ! empty( $item->xfn ) ? $item->xfn : '';
+                $atts['href'] = ! empty( $item->url ) ? $item->url : '';
+                $atts['class'] = $item_a_class;
+        
+                $atts = apply_filters( 'nav_menu_link_attributes', $atts, $item, $args, $depth );
+        
+                $attributes = '';
+        
+                foreach ( $atts as $attr => $value ) {
+                    if ( ! empty( $value ) ) {
+                        $value = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
+                        $attributes .= ' ' . $attr . '="' . $value . '"';
+                    }
+                }
+                
+				// Link Output
+				$item_output .= '<a'. $attributes .'>';
+                    $item_output .= $item_icon_html;
 					$item_output .= $args->link_before . apply_filters( 'the_title', $item->title, $item->ID ) . $args->link_after;
+                    $item_output .= $item_badge_html;
 					$item_output .= $submenu_icon;
 				$item_output .= '</a>';
 			$item_output .= $args->after;
@@ -106,7 +153,7 @@ class Wpr_Main_Menu_Walker extends \Walker_Nav_Menu {
 	}
 
 	public function end_el( &$output, $item, $depth = 0, $args = array() ) {
-		if ( 'mega' === $this->get_item_type() && 0 < $depth ) {
+		if ( 'mega-content' === $this->get_menu_item_type() && 0 < $depth ) {
 			return;
 		}
 		
@@ -122,28 +169,34 @@ class Wpr_Main_Menu_Walker extends \Walker_Nav_Menu {
 		}
 	}
 
-	public function set_item_type( $item_id = 0, $depth = 0 ) {
+	public function set_menu_item_type( $item_id = 0, $depth = 0 ) {
 		if ( 0 < $depth ) {
 			return;
 		}
 
-		$item_type = 'simple';
+		$item_type = 'default-content';
 
 		if ( $this->has_mega_menu( $item_id ) ) {
-			$item_type = 'mega';
+			$item_type = 'mega-content';
 		}
 
-		wp_cache_set( 'item-type', $item_type, 'wpr-mega-menu' );
+		wp_cache_set( 'menu-item-type', $item_type, 'wpr-mega-menu' );
 
 	}
 
-	public function get_item_type() {
-		return wp_cache_get( 'item-type', 'wpr-mega-menu' );
+	public function get_menu_item_type() {
+		return wp_cache_get( 'menu-item-type', 'wpr-mega-menu' );
 	}
 
 	public function has_mega_menu( $item_id ) {
-		$mega_settings = get_post_meta( $item_id, 'wpr-mega-menu-settings', true);
+		$settings = get_post_meta( $item_id, 'wpr-mega-menu-settings', true);
 
-		return isset($mega_settings['wpr_mm_enable']) && 'true' === $mega_settings['wpr_mm_enable'] ? true : false;
+		return isset($settings['wpr_mm_enable']) && 'true' === $settings['wpr_mm_enable'] ? true : false;
+	}
+
+	public function get_mega_menu_settings( $item_id ) {
+		$settings = get_post_meta( $item_id, 'wpr-mega-menu-settings', true);
+
+		return isset($settings['wpr_mm_enable']) ? $settings : false;
 	}
 }

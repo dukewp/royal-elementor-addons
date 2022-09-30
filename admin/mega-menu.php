@@ -143,6 +143,13 @@ function render_settings_popup() {
                     <input type="number" id="wpr_mm_custom_width" value="600">
                 </div>
                 <div class="wpr-mm-setting">
+                    <h4><?php esc_html_e('Mobile Menu Content', 'wpr-addons'); ?></h4>
+                    <select id="wpr_mm_mobile_content">
+                        <option value="mega"><?php esc_html_e('Mega Menu', 'wpr-addons'); ?></option>
+                        <option value="wp-sub"><?php esc_html_e('WordPress Sub Menu', 'wpr-addons'); ?></option>
+                    </select>
+                </div>
+                <div class="wpr-mm-setting">
                     <h4><?php esc_html_e('Mega Menu Content', 'wpr-addons'); ?></h4>
                     <button class="button button-primary wpr-edit-mega-menu-btn">
                         <i class="eicon-elementor-square" aria-hidden="true"></i>
@@ -172,7 +179,7 @@ function render_settings_popup() {
                 </div>
                 <div class="wpr-mm-setting">
                     <h4><?php esc_html_e('Badge Size (px)', 'wpr-addons'); ?></h4>
-                    <input type="number" id="wpr_mm_badge_size" value="14">
+                    <input type="number" id="wpr_mm_badge_size" value="11">
                 </div>
                 <div class="wpr-mm-setting wpr-mm-setting-color">
                     <h4><?php esc_html_e('Badge Text Color', 'wpr-addons'); ?></h4>
@@ -182,14 +189,9 @@ function render_settings_popup() {
                     <h4><?php esc_html_e('Badge Background Color', 'wpr-addons'); ?></h4>
                     <input type="text" id="wpr_mm_badge_bg_color" data-alpha="true" value="rgba(0,0,0,0.6);">
                 </div>
-                <div class="wpr-mm-setting wpr-mm-setting-radius">
+                <div class="wpr-mm-setting">
                     <h4><?php esc_html_e('Badge Border Radius (px)', 'wpr-addons'); ?></h4>
-                    <div>
-                        <input type="number" id="wpr_mm_badge_bdrs_1" placeholder="<?php esc_html_e('Top', 'wpr-addons'); ?>">
-                        <input type="number" id="wpr_mm_badge_bdrs_2" placeholder="<?php esc_html_e('Right', 'wpr-addons'); ?>">
-                        <input type="number" id="wpr_mm_badge_bdrs_3" placeholder="<?php esc_html_e('Bottom', 'wpr-addons'); ?>">
-                        <input type="number" id="wpr_mm_badge_bdrs_4" placeholder="<?php esc_html_e('Left', 'wpr-addons'); ?>">
-                    </div>
+                    <input type="number" id="wpr_mm_badge_bdrs" value="0">
                 </div>
             </div>
 

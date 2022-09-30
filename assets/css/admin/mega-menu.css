@@ -306,6 +306,10 @@ button.wpr-edit-mega-menu-btn {
   top: -8px !important;
 }
 
+.wp-picker-input-wrap .wp-picker-container {
+  display: none;
+}
+
 .wpr-mm-setting select,
 .wpr-mm-setting input:not(.iconpicker-input),
 .wpr-mm-setting button {
