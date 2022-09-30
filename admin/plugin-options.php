@@ -14,7 +14,7 @@ function wpr_addons_add_admin_menu() {
     add_menu_page( Utilities::get_plugin_name(), Utilities::get_plugin_name(), 'manage_options', 'wpr-addons', 'wpr_addons_settings_page', $menu_icon, '58.6' );
     
     add_action( 'admin_init', 'wpr_register_addons_settings' );
-    add_filter( 'plugin_action_links_royal-elementor-addons/wpr-addons.php', 'wpr_settings_link' );
+    add_filter( 'plugin_action_links_'. WPR_ADDONS_PLUGIN_BASE, 'wpr_settings_link' );
 }
 add_action( 'admin_menu', 'wpr_addons_add_admin_menu' );
 
@@ -47,6 +47,9 @@ function is_plugin_installed($file) {
 // Register Settings
 function wpr_register_addons_settings() {
     // WooCommerce
+    register_setting( 'wpr-settings', 'wpr_override_woo_templates' );
+    register_setting( 'wpr-settings', 'wpr_enable_product_image_zoom' );
+    register_setting( 'wpr-settings', 'wpr_enable_woo_flexslider_navigation' );
     register_setting( 'wpr-settings', 'wpr_woo_shop_ppp' );
     register_setting( 'wpr-settings', 'wpr_woo_shop_cat_ppp' );
     register_setting( 'wpr-settings', 'wpr_woo_shop_tag_ppp' );
@@ -85,7 +88,6 @@ function wpr_register_addons_settings() {
     register_setting('wpr-extension-settings', 'wpr-parallax-background');
     register_setting('wpr-extension-settings', 'wpr-parallax-multi-layer');
     register_setting('wpr-extension-settings', 'wpr-sticky-section');
-    // register_setting('wpr-extension-settings', 'wpr-reading-progress-bar');
 
     // Element Toggle
     register_setting( 'wpr-elements-settings', 'wpr-element-toggle-all', [ 'default' => 'on' ]  );
@@ -249,29 +251,38 @@ function wpr_addons_settings_page() {
     <div class="wpr-elements-heading">
         <h3><?php esc_html_e( 'WooCommerce Builder Widgets', 'wpr-addons' ); ?></h3>
         <p><?php esc_html_e( 'Product Archive Pages, Product Single Pages. Cart, Checkout and My Account Pages', 'wpr-addons' ); ?></p>
+        <?php if (!class_exists('WooCommerce')) : ?>
+            <p class='wpr-install-activate-woocommerce'><span class="dashicons dashicons-info-outline"></span> <?php esc_html_e( 'Install/Activate WooCommerce to use these widgets', 'wpr-addons' ); ?></p>
+        <?php endif; ?>
     </div>
     <div class="wpr-elements">
     <?php
         $woocommerce_builder_modules = Utilities::get_woocommerce_builder_modules();
         $premium_woo_modules = [
-			'Product Filters' => ['product-filters-pro', '#', '', 'pro'],
-			'Page My Account' => ['page-my-account-pro', '#', '', 'pro'],
-			'Woo Category Grid' => ['woo-category-grid-pro', '#', '', 'pro'],
+			'Product Filters' => ['product-filters-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-prodfilter-widgets-pro#purchasepro', '', 'pro'],
+			'Product Breadcrumbs' => ['product-breadcrumbs-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-breadcru-widgets-pro#purchasepro', '', 'pro'],
+			'Page My Account' => ['page-my-account-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-myacc-widgets-pro#purchasepro', '', 'pro'],
+			'Woo Category Grid' => ['woo-category-grid-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
         ];
 
         foreach ( array_merge($woocommerce_builder_modules, $premium_woo_modules) as $title => $data ) {
             $slug = $data[0];
             $url  = $data[1];
-            $reff = '?ref=rea-plugin-backend-elements-widget-prev'. $data[2];
-            $class = 'new' === $data[3] ? ' wpr-new-element' : '';
-            $class = ('pro' === $data[3] && !wpr_fs()->can_use_premium_code()) ? ' wpr-pro-element' : '';
+            $reff = '?ref=rea-plugin-backend-elements-widget-prev'. $data[1];
+            $class = 'new' === $data[3] ? 'wpr-new-element' : '';
+            $class = ('pro' === $data[3] && !wpr_fs()->can_use_premium_code()) ? 'wpr-pro-element' : '';
+            $default_value = class_exists( 'WooCommerce' ) ? 'on' : 'off';
 
-            echo '<div class="wpr-element'. esc_attr($class) .'">';
-                // echo '<a href="'. esc_url($url . $reff) .'" target="_blank"></a>';
-                echo '<a href="#"></a>';
+            if ( 'wpr-pro-element' === $class ) {
+                $default_value = 'off';
+                $reff = '';
+            }
+
+            echo '<div class="wpr-element '. esc_attr($class) .'">';
+                echo '<a href="'. esc_url($url . $reff) .'" target="_blank"></a>';
                 echo '<div class="wpr-element-info">';
                     echo '<h3>'. esc_html($title) .'</h3>';
-                    echo '<input type="checkbox" name="wpr-element-'. esc_attr($slug) .'" id="wpr-element-'. esc_attr($slug) .'" '. checked( get_option('wpr-element-'. $slug, 'on'), 'on', false ) .'>';
+                    echo '<input type="checkbox" name="wpr-element-'. esc_attr($slug) .'" id="wpr-element-'. esc_attr($slug) .'" '. checked( get_option('wpr-element-'. $slug, $default_value), 'on', false ) .'>';
                     echo '<label for="wpr-element-'. esc_attr($slug) .'"></label>';
                     // echo ( '' !== $url && empty(get_option('wpr_wl_plugin_links')) ) ? '<a href="'. esc_url($url . $reff) .'" target="_blank">'. esc_html__('View Widget Demo', 'wpr-addons') .'</a>' : '';
                 echo '</div>';
@@ -296,11 +307,13 @@ function wpr_addons_settings_page() {
 
         <?php submit_button( '', 'wpr-options-button' ); ?>
 
-        <div class="wpr-settings-group">
+        <div class="wpr-settings-group wpr-settings-group-woo">
             <h3 class="wpr-settings-group-title"><?php esc_html_e( 'WooCommerce', 'wpr-addons' ); ?></h3>
+            
+            <div class="wpr-settings-group-inner">
 
             <?php if ( !wpr_fs()->can_use_premium_code() ) : ?>
-                <a href="#" class="wpr-settings-pro-overlay" target="_blank">
+                <a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-settings-woo-pro#purchasepro" class="wpr-settings-pro-overlay" target="_blank">
                     <span class="dashicons dashicons-lock"></span>
                     <span class="dashicons dashicons-unlock"></span>
                     <span><?php esc_html_e( 'Upgrade to Pro', 'wpr-addons' ); ?></span>
@@ -329,6 +342,36 @@ function wpr_addons_settings_page() {
             <?php else: ?>
                 <?php do_action('wpr_woocommerce_settings'); ?>
             <?php endif; ?>
+
+            </div>
+            
+            <div class="wpr-woo-template-info">
+                <div class="wpr-woo-template-title">
+                    <h4>Royal Templates</h4>
+                    <span>Enable/Disable Royal addons Cart, Minicart, Notifications Templates, Product Lightbox</span>
+                </div>
+                <input type="checkbox" name="wpr_override_woo_templates" id="wpr_override_woo_templates" <?php echo checked( get_option('wpr_override_woo_templates', 'on'), 'on', false ); ?>>
+                <label for="wpr_override_woo_templates"></label>
+            </div>
+            
+            <div class="wpr-woo-template-info">
+                <div class="wpr-woo-template-title">
+                    <h4>Product Image Zoom</h4>
+                    <span>Enable/Disable Image Zoom Effect on Woocommerce products</span>
+                </div>
+                <input type="checkbox" name="wpr_enable_product_image_zoom" id="wpr_enable_product_image_zoom" <?php echo checked( get_option('wpr_enable_product_image_zoom', 'on'), 'on', false ); ?>>
+                <label for="wpr_enable_product_image_zoom"></label>
+            </div>
+
+            <div class="wpr-woo-template-info">
+                <div class="wpr-woo-template-title">
+                    <h4>Product Slider Nav</h4>
+                    <span>Enable/Disable Navigation Arrows on Woocommerce products slider</span>
+                </div>
+                <input type="checkbox" name="wpr_enable_woo_flexslider_navigation" id="wpr_enable_woo_flexslider_navigation" <?php echo checked( get_option('wpr_enable_woo_flexslider_navigation', 'on'), 'on', false ); ?>>
+                <label for="wpr_enable_woo_flexslider_navigation"></label>
+            </div>
+            
         </div>
 
         <div class="wpr-settings-group">

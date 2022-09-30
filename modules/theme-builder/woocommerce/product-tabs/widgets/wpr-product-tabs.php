@@ -34,7 +34,7 @@ class Wpr_Product_Tabs extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'qq', 'product-tabs', 'product', 'tabs' ];//tmp
+		return [ 'qq', 'woocommerce', 'product-tabs', 'product', 'tabs' ];//tmp
 	}
 	
 	public function get_script_depends() {

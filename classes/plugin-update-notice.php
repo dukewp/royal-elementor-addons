@@ -7,10 +7,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class WprPluginUpdateNotice {
     public function __construct() {
-        // delete_option('wpr_plugin_update_dismiss_notice');
 
         if ( current_user_can('administrator') ) {
-            if ( !get_option('wpr_plugin_update_dismiss_notice') ) {
+
+            if ( !get_option('wpr_plugin_update_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version']) ) {
                 add_action( 'admin_init', [$this, 'render_notice'] );
             }
         }
@@ -27,7 +27,7 @@ class WprPluginUpdateNotice {
     }
     
     public function wpr_plugin_update_dismiss_notice() {
-        add_option( 'wpr_plugin_update_dismiss_notice', true );
+        add_option( 'wpr_plugin_update_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version'], true );
     }
 
     public function render_plugin_update_notice() {
@@ -47,18 +47,19 @@ class WprPluginUpdateNotice {
                             <p>
                                 Royal Elementor WooCommerce Builder lets you customize every fundamental part of your WooCommerce site without coding. Including your Header, Footer, Product Archives, Products, Post Archives, Posts, Default Pages, 404 Pages, etc..
                                 <br><br><strong>New Woo Builder Template Kits:</strong>
-                                <a href="https://demosites.royal-elementor-addons.com/wooshop-v1/?ref=rea-plugin-backend-update-notice" target="_blank">WooShop</a>, 
                                 <a href="https://demosites.royal-elementor-addons.com/fashion-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Fashion</a>, 
                                 <a href="https://demosites.royal-elementor-addons.com/furniture-shop-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Furniture Shop</a>, 
-                                <a href="https://demosites.royal-elementor-addons.com/grocery-store-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Grocery Store</a>.
+                                <a href="https://demosites.royal-elementor-addons.com/grocery-store-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Grocery Store</a>,
+                                <a href="https://demosites.royal-elementor-addons.com/woo-food-v1/?ref=rea-plugin-backend-update-notice" target="_blank">Food Delivery</a>,
+                                <a href="https://demosites.royal-elementor-addons.com/wooshop-v1/?ref=rea-plugin-backend-update-notice" target="_blank">WooShop</a>.
                             </p>
                             <br>
                             <div>
                                 <a href="'. esc_url(get_admin_url()) .'admin.php?page=wpr-templates-kit" class="wpr-get-started-button button button-primary">Go to Templates Library</a>
-                                <a href="'. esc_url(get_admin_url()) .'admin.php?page=wpr-theme-builder" class="wpr-get-started-button button button-secondary">Go to WooCommerce Builder</a>
+                                <a href="'. esc_url(get_admin_url()) .'admin.php?page=wpr-theme-builder&tab=wpr_tab_product_archive" class="wpr-get-started-button button button-secondary">Go to WooCommerce Builder</a>
                             </div>
                         </div>
-                        <div class="image-wrap"><img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/theme-builder.png"></div>
+                        <div class="image-wrap"><img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/new-theme-builder.png"></div>
                         <canvas id="wpr-notice-confetti"></canvas>
                 </div>';
         }
@@ -66,7 +67,7 @@ class WprPluginUpdateNotice {
     
     public static function enqueue_scripts() {
         // Load Confetti
-        wp_enqueue_script( 'wpr-confetti-js', WPR_ADDONS_URL .'assets/js/lib/confetti/confetti.min.js', ['jquery'] );
+        wp_enqueue_script( 'wpr-confetti-js', WPR_ADDONS_URL .'assets/js/admin/lib/confetti/confetti.min.js', ['jquery'] );
 
         // Scripts & Styles
         echo "
@@ -114,15 +115,12 @@ class WprPluginUpdateNotice {
                             '#9900f1',
                         ],
                     } );
-                    dispatch( {
-                        type: 'set',
-                        confettiDone: true,
-                    } );
                 }, 900 );
             }
 
             jQuery(document).on( 'click', '.wpr-plugin-update-notice .notice-dismiss', function() {
                 jQuery(document).find('.wpr-plugin-update-notice').slideUp();
+                console.log('works update dismiss');
                 jQuery.post({
                     url: ajaxurl,
                     data: {

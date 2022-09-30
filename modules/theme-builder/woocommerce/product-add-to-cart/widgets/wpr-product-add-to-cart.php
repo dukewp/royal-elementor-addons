@@ -32,7 +32,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'qq', 'product-add-to-cart', 'product', 'add-to-cart' ];//tmp
+		return [ 'qq', 'woocommerce', 'product-add-to-cart', 'product', 'add-to-cart' ];//tmp
 	}
 
 	public function get_script_depends() {
@@ -1268,6 +1268,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}}.wpr-variations-layout-row .variations tr th' => 'width: {{SIZE}}%;',
+					'{{WRAPPER}}.wpr-variations-layout-column .variations tr th' => 'width: {{SIZE}}%;',
 				],
 				'separator' => 'before',
 			]

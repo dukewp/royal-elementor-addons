@@ -82,6 +82,10 @@ class Wpr_Progress_Bar extends Widget_Base {
 
 	public function add_control_stripe_anim() {}
 
+	public function add_control_anim_loop() {}
+
+	public function add_control_anim_loop_delay() {}
+
 	protected function register_controls() {
 
 		// Section: General ----------
@@ -401,6 +405,10 @@ class Wpr_Progress_Bar extends Widget_Base {
 
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'progress-bar', 'anim_timing', Utilities::wpr_animation_timing_pro_conditions() );
+
+		$this->add_control_anim_loop();
+	
+		$this->add_control_anim_loop_delay();
 
 		$this->end_controls_section(); // End Controls Section
 
@@ -1274,7 +1282,9 @@ class Wpr_Progress_Bar extends Widget_Base {
 			'counterValuePersent' => $prbar_counter_persent,
 			'counterSeparator' => $settings['counter_separator'],
 			'animDuration' => ( $settings['anim_duration'] * 1000 ),
-			'animDelay' => ( $settings['anim_delay'] * 1000 )
+			'animDelay' => ( $settings['anim_delay'] * 1000 ),
+			'loop' => isset($settings['anim_loop']) ? $settings['anim_loop'] : '',
+			'loopDelay' => isset($settings['anim_loop_delay']) ? $settings['anim_loop_delay'] : '',
 		];
 
 		$this->add_render_attribute( 'wpr-progress-bar', [

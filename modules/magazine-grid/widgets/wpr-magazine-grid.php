@@ -735,6 +735,18 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'element_custom_field_info_video_tutorial',
+			[
+				'raw' => esc_html__( 'See how to use custom fields in this', 'wpr-addons' ) . sprintf( '<br><a href="%1$s" target="_blank">%2$s <span class="dashicons dashicons-video-alt3"></span></a>', 'https://www.youtube.com/watch?v=9GvpqyHF_Cs', esc_html__( 'video tutorial', 'wpr-addons' ) ),
+				'type' => Controls_Manager::RAW_HTML,
+				'separator' => 'after',
+				'condition' => [
+					'element_select' => 'custom-field'
+				]
+			]
+		);
+
+		$repeater->add_control(
 			'element_display',
 			[
 				'label' => esc_html__( 'Display', 'wpr-addons' ),
@@ -850,6 +862,9 @@ class Wpr_Magazine_Grid extends Widget_Base {
 					'h4' => 'H4',
 					'h5' => 'H5',
 					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+					'P' => 'p'
 				],
 				'default' => 'h2',
 				'condition' => [

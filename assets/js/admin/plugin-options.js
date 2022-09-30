@@ -57,7 +57,7 @@ jQuery(document).ready(function( $ ) {
 	/*
 	** Create User Template -------------------------
 	*/
-	function craeteUserTemplate() {
+	function createUserTemplate() {
 		// Get Template Library
 		var library = 'my_templates' === getActiveFilter() ? 'elementor_library' : 'wpr_templates';
 		// Get Template Title
@@ -114,6 +114,11 @@ jQuery(document).ready(function( $ ) {
 
 	// Open Popup
 	$('.wpr-user-template').on( 'click', function() {
+		if ( $(this).find('div').length ) {
+			alert('Please Install/Activate WooCommerce!');
+			return;
+		}
+
 		$('.wpr-user-template-title').val('');
 		$('.wpr-user-template-popup-wrap').fadeIn();
 	});
@@ -137,7 +142,7 @@ jQuery(document).ready(function( $ ) {
 			$('.wpr-create-template + p').remove();
 
 			// Create Template
-			craeteUserTemplate();
+			createUserTemplate();
 		}
 	});
 
@@ -145,7 +150,7 @@ jQuery(document).ready(function( $ ) {
 	$('.wpr-user-template-title').keypress(function(e) {
 		if ( e.which == 13 ) {
 			e.preventDefault();
-			craeteUserTemplate();
+			createUserTemplate();
 		}
 	});
 

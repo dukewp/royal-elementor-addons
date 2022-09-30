@@ -688,6 +688,16 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'return_value' => 'yes',
 				'label_block' => false
 			]
+		);		
+
+		$this->add_control(
+			'query_exclude_out_of_stock',
+			[
+				'label' => esc_html__( 'Exclude Out Of Stock', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'label_block' => false
+			]
 		);
 
 		$this->add_control(
@@ -891,12 +901,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'label' => esc_html__( 'Show Filters', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
-				'widescreen_default' => 'yes',
-				'laptop_default' => 'yes',
-				'tablet_extra_default' => 'yes',
-				'tablet_default' => 'yes',
-				'mobile_extra_default' => 'yes',
-				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'none',
 					'yes' => 'block'
@@ -1182,6 +1186,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'h4' => 'H4',
 					'h5' => 'H5',
 					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+					'P' => 'p'
 				],
 				'default' => 'h2',
 				'condition' => [
@@ -1357,6 +1364,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'h4' => 'H4',
 					'h5' => 'H5',
 					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+					'P' => 'p'
 				],
 				'default' => 'h2',
 				'condition' => [
@@ -7166,6 +7176,17 @@ class Wpr_Woo_Grid extends Widget_Base {
 			$args['meta_key'] = '_thumbnail_id';
 		}
 
+		// Exclude Out Of Stock
+		if ( 'yes' === $settings['query_exclude_out_of_stock'] ) {
+			$args['meta_query'] = [
+				[
+					'key'     => '_stock_status',
+					'value'   => 'outofstock',
+					'compare' => 'NOT LIKE',
+				]
+			];
+		}
+
 		// Manual
 		if ( 'manual' === $settings[ 'query_selection' ] ) {
 			$post_ids = [''];
@@ -7969,7 +7990,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 	}
 
 	// Render Sort & Results
-	public function render_grid_sorting( $settings ) {}
+	public function render_grid_sorting( $settings, $posts ) {}
 
 	// Render Grid Filters
 	public function render_grid_filters( $settings ) {
@@ -8480,7 +8501,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			
 			if ( 'upsell' !== $settings['query_selection'] && 'cross-sell' !== $settings['query_selection'] ) {
 				// Sort & Results
-				$this->render_grid_sorting( $settings );
+				$this->render_grid_sorting( $settings, $posts );
 
 				if ( !((is_product_category() || is_product_tag()) && !wpr_fs()->can_use_premium_code()) ) {
 					// Filters

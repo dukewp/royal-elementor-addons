@@ -41,11 +41,26 @@
   font-size: 16px;
 }
 
-.wpr-preview-buttons a:last-child {
+.wpr-preview-buttons a:last-child,
+.wpr-preview-buttons a.wpr-how-to-use-theme-builder {
   background-color: transparent;
   border: 2px solid #6A4BFF !important;
   color: #6A4BFF;
   padding: 5px 22px;
+}
+
+.wpr-preview-buttons a.wpr-how-to-use-woo-builder {
+  background-color: transparent !important;
+  border: 2px solid #96588a !important;
+  color: #96588a !important;
+  padding: 5px 22px;
+}
+
+.wpr-preview-buttons a.wpr-how-to-use-woo-builder:hover,
+.wpr-preview-buttons a.wpr-how-to-use-woo-builder:focus {
+  color: #fff !important;
+  background: #96588a !important;
+  padding: 8px 22px !important;
 }
 
 .wpr-settings-page-header h1 {
@@ -60,6 +75,7 @@
 }
 
 .wpr-user-template {
+  position: relative;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   overflow: hidden;
@@ -89,6 +105,15 @@
   background-color: #fff;
   font-size: 18px;
   text-align: center;
+}
+
+.wpr-user-template > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
 }
 
 .wpr-settings-page {
@@ -189,6 +214,16 @@
   margin-bottom: 0;
 }
 
+.wpr-elements-heading .wpr-install-activate-woocommerce {
+  color: red;
+  font-weight: 700;
+}
+
+.wpr-install-activate-woocommerce .dashicons {
+  font-size: 18px;
+}
+
+.wpr-woo-templates,
 .wpr-elements {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -199,6 +234,11 @@
   margin-bottom: 50px;
 }
 
+.wpr-woo-templates {
+  margin-bottom: 0;
+}
+
+.wpr-woo-template,
 .wpr-element {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -212,6 +252,38 @@
   border-radius: 4px;
 }
 
+.wpr-woo-template {
+  width: 100%;
+}
+
+.wpr-woo-template-info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.wpr-woo-template-info .wpr-woo-template-title {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.wpr-woo-template-title h3 {
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  color: #3c434a !important;
+}
+
+.wpr-woo-template-title p {
+  margin: 0;
+  font-size: 12px;
+}
+
+.wpr-woo-template-info h4 {
+  font-size: 1em !important;
+  font-weight: 600 !important;
+  margin: 0;
+}
+
 .wpr-element-info h3 {
   float: left;
   margin: 0;
@@ -219,11 +291,17 @@
   font-size: 16px;
 }
 
+.wpr-woo-template-info label {
+  min-width: 45px;
+}
+
+.wpr-woo-template-info label,
 .wpr-element-info label,
 .wpr-elements-toggle label {
   float: right;
 }
 
+.wpr-woo-template-info span,
 .wpr-element-info span {
   display: block;
   margin-top: 3px;
@@ -232,6 +310,7 @@
   font-size: 12px;
 }
 
+.wpr-woo-template-info a,
 .wpr-element-info a {
   display: block;
   clear: both;
@@ -240,6 +319,7 @@
           box-shadow: none !important;
 }
 
+.wpr-woo-template-info input,
 .wpr-element-info input,
 .wpr-elements-toggle input,
 .wpr-setting-custom-ckbox input {
@@ -255,6 +335,7 @@
   border: 0;
 }
 
+.wpr-woo-template-info label,
 .wpr-element-info label,
 .wpr-elements-toggle label,
 .wpr-setting-custom-ckbox label {
@@ -275,6 +356,7 @@
   transition: all 0.2s ease-in;
 }
 
+.wpr-woo-template-info input + label:after,
 .wpr-element-info input + label:after,
 .wpr-elements-toggle input + label:after,
 .wpr-setting-custom-ckbox input + label:after {
@@ -292,12 +374,14 @@
   transition: all 0.2s ease-in;
 }
 
+.wpr-woo-template-info input:checked + label,
 .wpr-element-info input:checked + label,
 .wpr-elements-toggle input:checked + label,
 .wpr-setting-custom-ckbox input:checked + label {
   background: #6A4BFF;
 }
 
+.wpr-woo-template-info input:checked + label:after,
 .wpr-element-info input:checked + label:after,
 .wpr-elements-toggle input:checked + label:after,
 .wpr-setting-custom-ckbox input:checked + label:after {
@@ -457,6 +541,10 @@
           box-shadow: 1px 2px 3px rgba(0,0,0,0.1);
   border-radius: 0 3px 3px 3px;
 }
+
+.wpr-settings-group-inner {
+  position: relative;
+} 
 
 .wpr-settings-group-title {
   position: absolute;

@@ -1,25 +1,26 @@
-﻿=== Royal Elementor Addons (Header Footer Builder, Popups, Post Grid, Woocommerce Product Grid, Slider, Parallax Image, Free Elementor Widgets & Elementor Templates) ===
+=== Royal Elementor Addons (Header Footer Builder, Popups, Post Grid, Woocommerce Product Grid, Slider, Parallax Image, Free Elementor Widgets & Elementor Templates. Elementor WooCommerce Builder) ===
 Contributors: WP Royal, rubeushagrid13, cyberpinky, elementoraddonswpr
-Tags: elementor, elements, widgets for elementor, elementor addons, elementor widgets, elementor form, woocommerce elementor, page builder, elementor templates, wordpress page builder, best elementor addons, addons for elementor
-Stable tag: 1.3.45
+Tags: elementor, elements, widgets for elementor, elementor addons, elementor widgets, elementor form, woocommerce elementor, page builder, elementor templates, wordpress page builder, best elementor addons, addons for elementor, elementor woocommerce builder
+Stable tag: 1.3.50
 Requires at least: 5.0
-Tested up to: 6.0.1
+Tested up to: 6.0.2
 Requires PHP: 5.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Elementor Post, Portfolio, Woocommerce Grid builder Widgets. Slider, Carousel, Form, Testimonial, Gallery, Nav menu addons, Elementor widgets & Elementor templates. Just best elementor addons. Collection of unique addons for elementor.
+Elementor Post, Portfolio, Woocommerce Grid builder Widgets. Slider, Carousel, Form, Testimonial, Gallery, Nav menu addons, Elementor widgets & Elementor templates. Just best elementor addons. Collection of unique addons for elementor. Elementor woocommerce builder & Elementor woocommerce templates.
 
 == Description ==
 
 **Royal Addons for Elementor** is the most versatile, intuitive, and easy to use [Elementor Page Builder](https://wordpress.org/plugins/elementor/) extension. Our goal is to provide you with the tools to make things happen, efficiently, and fast compare to other elementor plugins. Choosing us is not only a mindset, but it is also a requirement if you intend to gain an edge over your competitors when creating your website. The best part is that you can design anything **without having to touch a single line of code**.
 
-Comes with **50+ widgets, 40+ Elementor Template KIT (Growing Each Week), Theme Builder, Elementor WooCommerce Builder, Popup Builder, Premade Widget Blocks & Extensions for Elementor.** Creative and self-intuitive elementor widgets to take your WordPress website to the next level. **All widgets are Free** and the Pro Version offers even more advanced functionality.
+Comes with **70+ widgets, 40+ Elementor Template KIT (Growing Each Week), Theme Builder, Elementor WooCommerce Builder, Popup Builder, Premade Widget Blocks & Extensions for Elementor.** Creative and self-intuitive elementor widgets to take your WordPress website to the next level. **All widgets are Free** and the Pro Version offers even more advanced functionality.
 
 *Free and Pro functionalities are mixed in the Widget Demos below.*
 
 [**Plugin Demo Page**](https://royal-elementor-addons.com/?ref=rea-wpo-pp-details-tab#widgets)
-[**Elementor Templates Demo Page**](https://demosites.royal-elementor-addons.com/elementor-templates/?ref=rea-wpo-pp-details-tab#widgets)
+[**Elementor Templates Demo Page**](https://demosites.royal-elementor-addons.com/elementor-templates/?ref=rea-wpo-pp-details-tab)
+[**Woocommerce Elementor Templates Demo Page**](https://demosites.royal-elementor-addons.com/elementor-templates/?ref=rea-wpo-pp-details-tab#filter:category-shop)
 
 **Widget List:**
 
@@ -66,9 +67,36 @@ Comes with **50+ widgets, 40+ Elementor Template KIT (Growing Each Week), Theme 
 - [**Features List**](https://royal-elementor-addons.com/elementor-feature-list-widget/?ref=rea-wpo-pp-details-tab)
 - [**Dual Color Heading**](https://royal-elementor-addons.com/elementor-dual-color-heading-widget/?ref=rea-wpo-pp-details-tab)
 
+**Elementor Woocommerce Widgets:**
+
+- [**Advanced Product Grid**](https://royal-elementor-addons.com/elementor-grid-widget-examples/?ref=rea-wpo-pp-details-tab#filter:category-woo-grid)
+- [**Product Carousel**](https://royal-elementor-addons.com/elementor-grid-widget-examples/product-carousel-examples/?ref=rea-wpo-pp-details-tab)
+- [**Product Slider**](https://royal-elementor-addons.com/elementor-grid-widget-examples/product-slider-examples/?ref=rea-wpo-pp-details-tab#)
+- [**Product Filters**](https://demosites.royal-elementor-addons.com/fashion-v1/shop-fashion-v1?ref=rea-wpo-pp-details-tab)
+- [**Product Category Grid**](https://demosites.royal-elementor-addons.com/fashion-v1/?ref=rea-wpo-pp-details-tab#catgridprev)
+- [**My Account**](https://demosites.royal-elementor-addons.com/furniture-shop-v1/my-account-furniture-shop-v1/?ref=rea-wpo-pp-details-tab)
+- [**Cart**](https://demosites.royal-elementor-addons.com/grocery-store-v1/cart-grocery-store-v1/?ref=rea-wpo-pp-details-tab)
+- [**Checkout**](https://demosites.royal-elementor-addons.com/grocery-store-v1/checkout-grocery-store-v1/?ref=rea-wpo-pp-details-tab)
+- [**Mini Cart**](https://demosites.royal-elementor-addons.com/grocery-store-v1/shop-grocery-store-v1/?ref=rea-wpo-pp-details-tab)
+- [**Floating Mini Cart**](https://demosites.royal-elementor-addons.com/fashion-v1/shop-v2/?ref=rea-wpo-pp-details-tab)
+- [**Breadcrumbs**](https://demosites.royal-elementor-addons.com/fashion-v1/product/simple-jumper-with-cap/?ref=rea-wpo-pp-details-tab)
+- [**Add to Cart**](https://demosites.royal-elementor-addons.com/fashion-v1/product/simple-jumper-with-cap/?ref=rea-wpo-pp-details-tab)
+- [**Product Price**](https://demosites.royal-elementor-addons.com/fashion-v1/product/simple-jumper-with-cap/?ref=rea-wpo-pp-details-tab)
+- [**Product Navigation**](https://demosites.royal-elementor-addons.com/furniture-shop-v1/product/delilah-fabric-cocktail-chair/?ref=rea-wpo-pp-details-tab)
+- [**Product Media**](https://demosites.royal-elementor-addons.com/fashion-v1/product/urban-style-jacket-crop-top/?ref=rea-wpo-pp-details-tab)
+- [**Product Tabs**](https://demosites.royal-elementor-addons.com/furniture-shop-v1/product/delilah-fabric-cocktail-chair/?ref=rea-wpo-pp-details-tab)
+- [**Product Meta**](https://demosites.royal-elementor-addons.com/grocery-store-v1/product/exotic-cantaloupe/?ref=rea-wpo-pp-details-tab)
+- [**Product Rating**](https://demosites.royal-elementor-addons.com/grocery-store-v1/product/exotic-cantaloupe/?ref=rea-wpo-pp-details-tab)
+- [**Product Sale Badge**](https://demosites.royal-elementor-addons.com/grocery-store-v1/product/exotic-cantaloupe/?ref=rea-wpo-pp-details-tab)
+- [**Product Notice**](https://demosites.royal-elementor-addons.com/furniture-shop-v1/product/delilah-fabric-cocktail-chair/?ref=rea-wpo-pp-details-tab)
+- [**Product Excerpt**](https://demosites.royal-elementor-addons.com/furniture-shop-v1/product/delilah-fabric-cocktail-chair/?ref=rea-wpo-pp-details-tab)
+- [**Product Stock**](https://demosites.royal-elementor-addons.com/furniture-shop-v1/product/delilah-fabric-cocktail-chair/?ref=rea-wpo-pp-details-tab)
+- [**Product Additional Info**](https://demosites.royal-elementor-addons.com/furniture-shop-v1/product/delilah-fabric-cocktail-chair/?ref=rea-wpo-pp-details-tab)
+
+
 **Elementor Extensions and Other Features**
 
-- [**Elementor Theme Builder**](https://royal-elementor-addons.com/?ref=rea-wpo-pp-details-tab#headerfooterbuilder) - Header Footer Builder, Post Archive template builder, Single Post template builder, Single Page tamplate builder, Search, category, tags, 404, author, data page template builder.
+- [**Elementor Theme Builder & Woocommerce Builder**](https://royal-elementor-addons.com/?ref=rea-wpo-pp-details-tab#headerfooterbuilder) - Header Footer Builder, Post & Product Archive template builder, Single Post & Product template builder, Single Page tamplate builder, Search, category, tags, 404, author, data page template builder.
 - [**Popup Builder**](https://royal-elementor-addons.com/?ref=rea-wpo-pp-details-tab#popupbuilder) (Offer Sales Banners, Subscriptions Banners, GDPR Cookie Consent & Compliance Notice, Cookie Notice, Age Verification), 20+ Premade Popup Templates included in popup library
 - [**Parallax Scrolling**](https://royal-elementor-addons.com/elementor-parallax-background/?ref=rea-wpo-pp-details-tab) - Elementor Parallax effect extension
 - [**Parallax Multi-Layer Effect**](https://royal-elementor-addons.com/elementor-parallax-background/?ref=rea-wpo-pp-details-tab#multiparallax) - elementor extension
@@ -79,10 +107,13 @@ and other custom branding related settings)
 - Custom CSS - Elementor free custom css , apply custom css to any section - elementor extension & other elementor enhancements coming soon.
 
 **Elementor Wocommerce Builder Templates Kits**
+
+- [**Electronic Store**](https://demosites.royal-elementor-addons.com/estore-v1/?ref=rea-wpo-pp-details-tab) - created with Elementor WooCommerce Builder
 - [**Woo Shop**](https://demosites.royal-elementor-addons.com/wooshop-v1/?ref=rea-wpo-pp-details-tab) - created with Elementor WooCommerce Builder
 - [**Fashion**](https://demosites.royal-elementor-addons.com/fashion-v1/?ref=rea-wpo-pp-details-tab) - created with Elementor WooCommerce Builder
 - [**Grocery Store**](https://demosites.royal-elementor-addons.com/grocery-store-v1/?ref=rea-wpo-pp-details-tab) - created with Elementor WooCommerce Builder
 - [**Furniture Store**](https://demosites.royal-elementor-addons.com/furniture-shop-v1/?ref=rea-wpo-pp-details-tab) - created with Elementor WooCommerce Builder
+- [**Food Delivery**](https://demosites.royal-elementor-addons.com/woo-food-v1/?ref=rea-wpo-pp-details-tab) - created with Elementor WooCommerce Builder
 
 **Elementor Theme Builder Templates Kits**
 
@@ -124,6 +155,7 @@ and other custom branding related settings)
 - [**Pet Care Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/pet-care-v1/?ref=rea-wpo-pp-details-tab)
 - [**Digital Marketing Agency Templates Kit**](https://demosites.royal-elementor-addons.com/digital-marketing-agency-v1/?ref=rea-wpo-pp-details-tab)
 - [**One Page Digital Marketing Agency Templates Kit**](https://demosites.royal-elementor-addons.com/one-page-v1/blog-one-page-v1/?ref=rea-wpo-pp-details-tab)
+- [**Travel Agency Templates Kit**](https://demosites.royal-elementor-addons.com/travel-agency-v1/?ref=rea-wpo-pp-details-tab)
 
 **How to Import Template Kit:**
 
@@ -290,7 +322,11 @@ Royal Post Grid Elementor widget could be used as elementor post slider, element
 
 [Cybersecurity Templates Kit](https://demosites.royal-elementor-addons.com/cybersecurity-v1/?ref=rea-wpo-pp-details-tab) - One of the Royal Addons elementor templates. Elementor Templates Kit can be installed via plugin backend and most of it's content builded with our elementor addons. Navigate to Royal elementor Addons WP menu dashboard > Templates Kits and search for drone elementor template. Used content ticker elementor widgets, advanced text elementor widgets, timeline elementor widgets, flip box elementor widgets, advanced slider elementor widgets, post grid elementor widgets, pricing table elementor widgets, advanced tabs elementor widgets, testimonial slider elementor widgets, team member elementor widgets, skill bar elementor widgets, team member elementor widgets, contact form elementor widgets, google maps elementor widgets, menu elementor widgets, logo elementor widgets, back to top elementor widgets, phone call elementor widgets, pop up elementor widgets, Elementor pop up builder widgets. All elementor page templates kits and royal elementor addons widgets are responsive ready. This Kit is only created with royal addons which is the one of the best elementor addons on the market.
 
-[Medical Templates Kit](https://demosites.royal-elementor-addons.com/medical-v1/?ref=rea-wpo-pp-details-tab) - One of the Royal Addons elementor templates. Elementor Templates Kit can be installed via plugin backend and most of it's content builded with our elementor addons. Navigate to Royal elementor Addons WP menu dashboard > Templates Kits and search for Medical elementor template. Advanced text elementor widgets, flip box elementor widgets, circle bar elementor widgets, team member elementor widgets, testimonial elementor widgets, timeline elementor widgets, blog post grid elementor widgets, pricing table elementor widgets, advanced slider elementor widgets, promo box elementor widgets, progress bar elementor widgets, contact form elementor widgets, google maps elementor widgets, menu elementor widgets, logo elementor widgets, back to top elementor widgets, phone call elementor widgets, pop up elementor widgets, Elementor pop up builder widgets. Elementor sticky header extention. All elementor page templates kits and royal elementor addons widgets are responsive ready. This Kit is only created with royal addons which is the one of the best elementor addons on the market.
+[Medical Templates Kit](https://demosites.royal-elementor-addons.com/medical-v1/?ref=rea-wpo-pp-details-tab) - One of the Royal Addons elementor templates. Elementor Templates Kit can be installed via plugin backend and most of it's content builded with our elementor addons. Navigate to Royal elementor Addons WP menu dashboard > Templates Kits and search for Medical elementor template. Used Advanced text elementor widgets, flip box elementor widgets, circle bar elementor widgets, team member elementor widgets, testimonial elementor widgets, timeline elementor widgets, blog post grid elementor widgets, pricing table elementor widgets, advanced slider elementor widgets, promo box elementor widgets, progress bar elementor widgets, contact form elementor widgets, google maps elementor widgets, menu elementor widgets, logo elementor widgets, back to top elementor widgets, phone call elementor widgets, pop up elementor widgets, Elementor pop up builder widgets. Elementor sticky header extention. All elementor page templates kits and royal elementor addons widgets are responsive ready. This Kit is only created with royal addons which is the one of the best elementor addons on the market.
+
+**Elementor Woocommerce Builder demos**
+
+[Woo Shop](https://demosites.royal-elementor-addons.com/wooshop-v1/?ref=rea-wpo-pp-details-tab) - One of the Royal Addons elementor templates wich is builded with Woocommerce elementor builder. Elementor Templates Kit can be installed via plugin backend and most of it's content builded with our elementor addons. Navigate to Royal elementor Addons WP menu dashboard > Templates Kits and search for **Woocommerce** elementor template. Used elementor woocommerce widgets like: elementor woocommerce add to cart widget, elementor woocommerce builder cart widget, elementor woocommerce builder checkout widget, elementor woocommerce builder minicart widget, elementor woocommerce builder product price widget, elementor woocommerce builder product media widget, elementor woocommerce builder product tabs widget, elementor woocommerce builder product rating widget, elementor woocommerce builder product meta widget, elementor woocommerce builder product sale badge widget, elementor woocommerce builder product notice widget, elementor woocommerce builder product excerpt widget, elementor woocommerce builder products in Stock widget, elementor woocommerce builder additional info widget. Other regular widdgets used: advanced slider elementor widgets, promo box elementor widgets, progress bar elementor widgets, contact form elementor widgets, google maps elementor widgets, menu elementor widgets, logo elementor widgets, back to top elementor widgets. All elementor page templates kits and royal elementor addons widgets are responsive ready. This Kit is only created with royal addons which is the one of the best elementor addons on the market.
 
 
 **And even more is coming very soon.** Widgets and other features will be added with each major update based on popular demand. We are relly trying to make this plugin on of the best and super addons for elementor. Currently we have most advanced Post grid widgets for elementor , advanced product grid widgets for elementor, advanced Gallery grid widgets for elementor, advanced Magazing grid widgets for elementor, advanced contact forms widgets for elementor, advanced one page navigation widgets for elementor, advanced Slider widgets for elementor, most advanced popup and popup related widgets for elementor, advanced header footer builder and we promise in the nearest feature we will add much more!
@@ -351,7 +387,24 @@ post_max_size 64M
 
 == Changelog ==
 
-= Royal Elementor Addons v1.3.45 - 2022-07-07 =
+= Royal Elementor Addons v1.3.49 - 2022-09-22 =
+* FIXED: Minor bugs.
+* ADDED: Elementor Data Table Widget.
+* ADDED: Elementor Reading Progress Bar Widget.
+* ADDED: Royal Elementor Theme Builder [**Travel Agency**](https://demosites.royal-elementor-addons.com/travel-agency-v1/?ref=rea-wpo-pp-details-tab) Templates Kit.
+
+= Royal Elementor Addons v1.3.48 - 2022-09-13 =
+* FIXED: Fixed minor bugs.
+* ADDED: Royal Elementor Theme Builder [**Electornic Store**](https://demosites.royal-elementor-addons.com/estore-v1/?ref=rea-wpo-pp-details-tab) Templates Kit.
+* ADDED: Royal Elementor Theme Builder [**Food Delivery**](https://demosites.royal-elementor-addons.com/woo-food-v1/?ref=rea-wpo-pp-details-tab) Templates Kit.
+
+= Royal Elementor Addons v1.3.47 - 2022-08-10 =
+* FIXED: Fixed minor bugs.
+
+= Royal Elementor Addons v1.3.46 - 2022-08-04 =
+* FIXED: Fixed minor woocommerce related bugs.
+
+= Royal Elementor Addons v1.3.45 - 2022-07-027 =
 * ADDED: Elementor Woocommerce Builder in Theme Builder Section.
 * ADDED: 14+ Elementor Woocommerce Single  Product Builder Widgets like: Add to cart widget, product Price widget, product Breadcrumbs widget (only in PRO) , product Media widget,  product Rating widget and so on...
 * ADDED: Elementor Woocommerce Minicart Widgets (Minicart sidebar and other advanced options supported only in PRO).
