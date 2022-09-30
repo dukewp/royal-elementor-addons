@@ -14575,7 +14575,7 @@ dl.variation dd {
 }
 
 /*--------------------------------------------------------------
-== Charts
+== Widget Charts
 --------------------------------------------------------------*/
 
 .wpr-charts-container {
@@ -14596,4 +14596,84 @@ dl.variation dd {
     left: 50%;
     z-index: 999;
     transform: translate(-50%, -50%); 
+}
+
+/*--------------------------------------------------------------
+== Advanced Accordion
+--------------------------------------------------------------*/
+
+.wpr-advanced-accordion .accordion {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  transition: none;
+}
+
+.wpr-acc-icon-box {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wpr-acc-icon-box {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wpr-acc-icon-box-after {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  height: 0;
+  width: 0;
+}
+
+.wpr-acc-item-title {
+  z-index: 99;
+}
+
+.wpr-acc-item-title {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wpr-advanced-accordion .wpr-toggle-icon i {
+  transform: rotate(0);
+}
+
+.wpr-advanced-accordion .panel {
+  display: none;
+  overflow: hidden;
+  position: relative;
+  transition: max-height 0.2s ease-out;
+}
+
+.wpr-advanced-accordion .wpr-accordion-panel-active {
+  display: block;
+}
+
+.wpr-advanced-accordion .active, .accordion:hover {
+  background-color: #ccc;
+}
+
+.wpr-advanced-accordion .panel p,
+.wpr-advanced-accordion .panel div {
+  margin: 0;
 }

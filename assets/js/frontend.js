@@ -43,6 +43,7 @@
 				'wpr-my-account-pro.default' : WprElements.widgetPageMyAccount,
 				'wpr-reading-progress-bar.default' : WprElements.widgetReadingProgressBar,
 				'wpr-data-table.default' : WprElements.widgetDataTable,
+				'wpr-advanced-accordion.default' : WprElements.widgetAdvancedAccordion,
 				'global': WprElements.widgetSection,
 
 				// Single
@@ -529,7 +530,7 @@
 				var section = $( $(this).find( 'a' ).attr( 'href' ) ),
 					scrollSpeed = parseInt( $(this).parent().attr( 'data-speed' ), 10 );
 
-				$( 'body' ).animate({ scrollTop: section.offset().top }, scrollSpeed );
+				$( 'html, body' ).animate({ scrollTop: section.offset().top }, scrollSpeed );
 
 				// Active Class
 				getSectionOffset( $(window).scrollTop() );
@@ -4733,6 +4734,10 @@
 			} // Data Table CSV export
 
 		}, // End widgetDataTable
+
+		widgetAdvancedAccordion: function($scope) {
+
+		}, // end widgetAdvancedAccordion
 
 		// Editor Check
 		editorCheck: function() {
