@@ -348,7 +348,7 @@ function wpr_addons_settings_page() {
             <div class="wpr-woo-template-info">
                 <div class="wpr-woo-template-title">
                     <h4>Royal Templates</h4>
-                    <span>Enable/Disable Royal addons Cart, Minicart, Notifications Templates</span>
+                    <span>Enable/Disable Royal addons Cart, Minicart, Notifications Templates, Product Lightbox</span>
                 </div>
                 <input type="checkbox" name="wpr_override_woo_templates" id="wpr_override_woo_templates" <?php echo checked( get_option('wpr_override_woo_templates', 'on'), 'on', false ); ?>>
                 <label for="wpr_override_woo_templates"></label>

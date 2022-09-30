@@ -488,7 +488,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 						'default' => 'classic',
 					],
 					'color' => [
-						'default' => '#434900',
+						'default' => '#605BE5',
 					],
 				],
 				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .accordion'
