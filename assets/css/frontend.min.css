@@ -14625,8 +14625,9 @@ dl.variation dd {
 
 .wpr-advanced-accordion .panel {
   display: none;
-  transition: all 1s ease-in-out;
+  overflow: hidden;
   position: relative;
+  transition: max-height 0.2s ease-out;
 }
 
 .wpr-advanced-accordion .wpr-accordion-panel-active {
@@ -14635,11 +14636,6 @@ dl.variation dd {
 
 .wpr-advanced-accordion .active, .accordion:hover {
   background-color: #ccc;
-}
-
-.wpr-advanced-accordion .panel {
-  overflow: hidden;
-  transition: max-height 0.2s ease-out;
 }
 
 .wpr-advanced-accordion .panel p,
