@@ -1086,7 +1086,7 @@ class Wpr_Product_Media extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => 'rgba(255,255,255,0.8)',
+				'default' => '#C0A886',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-thumbnail-slider-arrow svg' => 'fill: {{VALUE}};',
@@ -1110,7 +1110,7 @@ class Wpr_Product_Media extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => 'rgba(255,255,255,0.8)',
+				'default' => '#FFFFFFCC',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'border-color: {{VALUE}};',
 				],
@@ -1131,7 +1131,7 @@ class Wpr_Product_Media extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#ffffff',
+				'default' => '#C0A886',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-thumbnail-slider-arrow:hover' => 'color: {{VALUE}};',
 				],
@@ -1739,8 +1739,6 @@ class Wpr_Product_Media extends Widget_Base {
 			]
 		);
 
-		// Output
-		echo '<div class="wpr-product-media-wrap" '.  $this->get_render_attribute_string( 'thumbnails_attributes' ) .' '. $lightbox .'>';
 		// Lightbox
 		if ( 'yes' === $settings['product_media_lightbox'] ) {
 			$lightbox = ' data-lightbox="'. esc_attr( $this->get_lightbox_settings( $settings ) ) .'"';
@@ -1749,7 +1747,7 @@ class Wpr_Product_Media extends Widget_Base {
 		}
 
 		// Output
-		echo '<div class="wpr-product-media-wrap" '. $lightbox .'>';
+		echo '<div class="wpr-product-media-wrap" '.  $this->get_render_attribute_string( 'thumbnails_attributes' ) .' '. $lightbox .'>';
 
 		// Sales Badge
 		if ( $product->is_on_sale() && 'yes' === $settings['product_media_sales_badge'] ) {
