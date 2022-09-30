@@ -812,6 +812,15 @@
   padding-bottom: 5px !important;
 }
 
+.elementor-control.elementor-control-woo_grid_notice_video_tutorial {
+	padding-bottom: 15px !important;
+}
+
+.elementor-control.elementor-control-woo_grid_notice_video_tutorial a {
+	display: inline-block;
+	margin-top: 5px;
+}
+
 .elementor-control[class*="video_tutorial"] a {
   line-height: 16px;
   font-size: 12px;
