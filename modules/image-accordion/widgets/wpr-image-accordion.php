@@ -85,8 +85,11 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => ['image'],
 				'fields_options' => [
+					'background' => [
+						'default' => 'classic',
+					],
 					'color' => [
-						'default' => 'rgba(0, 0, 0, 0.25)',
+						'default' => '#3E3636DE',
 					],
 				],
 				'selector' => '{{WRAPPER}} .wpr-img-accordion-hover-bg'
@@ -1010,6 +1013,9 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'fields' => $repeater->get_controls(),
 				'default' => [
 					[
+						'element_select' => 'lightbox',
+					],
+					[
 						'element_select' => 'title',
 					],
 					[
@@ -1018,12 +1024,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 					],
 					[
 						'element_select' => 'button',
-					],
-					[
-						'element_select' => 'separator',
-					],
-					[
-						'element_select' => 'lightbox',
 					],
 				],
 				'title_field' => '{{{ element_select.charAt(0).toUpperCase() + element_select.slice(1) }}}',
@@ -1499,7 +1499,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-img-accordion-item-title .inner-block a' => 'color: {{VALUE}}',
 				],
@@ -1706,7 +1706,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#6A6A6A',
+				'default' => '#DDDDDD',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-img-accordion-item-description .inner-block' => 'color: {{VALUE}}',
 				],
@@ -1880,8 +1880,11 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'label' => esc_html__( 'Background', 'wpr-addons' ),
 				'types' => [ 'classic', 'gradient' ],
 				'fields_options' => [
+					'background' => [
+						'default' => 'classic',
+					],
 					'color' => [
-						'default' => '#434900',
+						'default' => '#605BE5',
 					],
 				],
 				'selector' => '{{WRAPPER}} .wpr-img-accordion-item-button .inner-block a'
@@ -1893,7 +1896,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605BE5',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-img-accordion-item-button .inner-block a' => 'color: {{VALUE}}',
 				],
@@ -1935,11 +1938,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'name' => 'button_bg_color_hr',
 				'label' => esc_html__( 'Background', 'wpr-addons' ),
 				'types' => [ 'classic', 'gradient' ],
-				'fields_options' => [
-					'color' => [
-						'default' => '#434900',
-					],
-				],
 				'selector' => '{{WRAPPER}} .wpr-img-accordion-item-button .inner-block a.wpr-button-none:hover, {{WRAPPER}} .wpr-img-accordion-item-button .inner-block a:before, {{WRAPPER}} .wpr-img-accordion-item-button .inner-block a:after'
 			]
 		);
@@ -1949,7 +1947,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#4A45D2',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-img-accordion-item-button .inner-block a:hover' => 'color: {{VALUE}}',
 				],
@@ -2101,10 +2098,10 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
+					'top' => 7,
+					'right' => 18,
+					'bottom' => 8,
+					'left' => 18,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-img-accordion-item-button .inner-block a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -2121,7 +2118,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 0,
+					'top' => 15,
 					'right' => 0,
 					'bottom' => 0,
 					'left' => 0,
@@ -2140,10 +2137,10 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
+					'top' => 3,
+					'right' => 3,
+					'bottom' => 3,
+					'left' => 3,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-img-accordion-item-button .inner-block a' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',

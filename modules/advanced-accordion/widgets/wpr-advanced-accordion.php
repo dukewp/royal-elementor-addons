@@ -54,6 +54,13 @@ class Wpr_Advanced_Accordion extends Widget_Base {
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
 
+	public function add_repeater_args_accordion_content_type() {
+		return  [
+				'editor' => esc_html__( 'Editor', 'wpr-addons' ),
+				'pro-tm' => esc_html__( 'Elementor Template (Pro)', 'wpr-addons' )
+		];
+	}
+
     protected function register_controls() {
 		
 		$templates_select = [];
@@ -117,13 +124,13 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'label' => esc_html__( 'Content Type', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'editor',
-				'options' => [
-					'editor' => esc_html__( 'Editor', 'wpr-addons' ),
-					'template' => esc_html__( 'Template', 'wpr-addons' )
-				],
+				'options' => $this->add_repeater_args_accordion_content_type(),
 				'render_type' => 'template',
 			]
 		);
+
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'advanced-accordion', 'accordion_content_type', ['pro-tm'] );
 
 		$repeater->add_control(
 			'accordion_content_template',
@@ -145,7 +152,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'placeholder' => esc_html__( 'Tab Content', 'wpr-addons' ),
 				'default' => 'Nobis atque id hic neque possimus voluptatum voluptatibus tenetur, perspiciatis consequuntur. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima incidunt voluptates nemo, dolor optio quia architecto quis delectus perspiciatis.',
 				'condition' => [
-                    'accordion_content_type' => 'editor'
+                    'accordion_content_type!' => 'template'
 				]
 			]
 		);
@@ -173,6 +180,18 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'title_field' => '{{{ accordion_title }}}',
 			]
 		);
+
+		if ( ! wpr_fs()->can_use_premium_code() ) {
+			$this->add_control(
+				'acc_repeater_pro_notice',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => 'More than 3 Items are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-advanced-accordion-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+					'content_classes' => 'wpr-pro-notice',
+				]
+			);
+		}
 
         $this->end_controls_section();
 
@@ -244,7 +263,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 3000,
+						'max' => 1000,
 					],
 				]
 			]
@@ -1212,7 +1231,18 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 
         ?>
             <div <?php echo $this->get_render_attribute_string( 'accordion_attributes' ); ?>>
-                <?php foreach ($settings['advanced_accordion'] as $i=>$acc) : ?>
+                <?php 
+					foreach ($settings['advanced_accordion'] as $key=>$acc) :
+
+						$acc_content_type = $acc['accordion_content_type'];
+					
+					if ( ! wpr_fs()->can_use_premium_code() ) {
+						$acc_content_type = 'editor';
+						if ( $key === 3 ) {
+							break;
+						}
+					}
+				?>
 
 					<div class="wpr-accordion-item-wrap">
 						<button class="accordion">
@@ -1236,7 +1266,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 						</button>
 
 						<div class="panel">
-							<?php if ('editor' === $acc['accordion_content_type']) : ?>
+							<?php if ('editor' === $acc_content_type) : ?>
 								<div class="wpr-panel-content"><?php echo $acc['accordion_content'] ?></div>
 							<?php else: 
 								echo $this->wpr_accordion_template( $acc['accordion_content_template'] );
