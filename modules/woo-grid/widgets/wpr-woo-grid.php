@@ -556,6 +556,16 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
+		$this->add_control(
+			'woo_grid_notice_video_tutorial',
+			[
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => __( 'Build WooCommerce Shop <strong>completely with Elementor and Royal Addons !</strong> <ul><li><a href="https://www.youtube.com/watch?v=f_3tNiBC3dw" target="_blank" style="color: #93003c;"><strong>Watch Video Tutorial <span class="dashicons dashicons-video-alt3"></strong></a></li></ul>', 'wpr-addons' ),
+				'separator' => 'after',
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+			]
+		);
+
 		// Get Available Meta Keys
 		$post_meta_keys = Utilities::get_custom_meta_keys();
 

@@ -40,7 +40,7 @@ function wpr_addons_theme_builder_page() {
             <?php echo esc_html__( 'How to use Theme Builder', 'wpr-addons' ); ?>
             <span class="dashicons dashicons-video-alt3"></span>
         </a>
-        <a href="https://www.youtube.com/watch?v=o6DUra6Arvk" class="wpr-how-to-use-woo-builder wpr-options-button button" target="_blank" style="padding: 8px 22px;">
+        <a href="https://www.youtube.com/watch?v=f_3tNiBC3dw" class="wpr-how-to-use-woo-builder wpr-options-button button" target="_blank" style="padding: 8px 22px;">
             <?php echo esc_html__( 'How to use WooCommerce Builder', 'wpr-addons' ); ?>
             <span class="dashicons dashicons-video-alt3"></span>
         </a>

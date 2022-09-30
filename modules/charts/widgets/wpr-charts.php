@@ -1159,40 +1159,6 @@ class Wpr_Charts extends Widget_Base {
 		$this->end_controls_section();
 		
 		$this->start_controls_section(
-            'section_chart_general_styles',
-			[
-				'label' => esc_html__( 'General', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-			]
-        );
-
-		$this->add_responsive_control(
-			'chart_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'devices' => ['desktop', 'mobile'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 200,
-					],
-				],
-				'size_units' => [ 'px' ],
-				'default' => [
-					'unit' => 'px',
-					'size' => 10,
-				],
-				'mobile_default' => [
-					'unit' => 'px',
-					'size' => 0,
-				],
-			]
-		);
-
-        $this->end_controls_section();
-		
-		$this->start_controls_section(
             'section_datalabels_styles',
 			[
 				'label' => esc_html__( 'Data Values', 'wpr-addons' ),
@@ -1224,7 +1190,7 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Font Family', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::FONT,
-				'default' => "'Open Sans', sans-serif",
+				'default' => 'Roboto',
 			]
 		);
 		
@@ -1342,7 +1308,7 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Font Family', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::FONT,
-				'default' => "'Open Sans', sans-serif",
+				'default' => 'Roboto',
 			]
 		);
 		
@@ -1413,7 +1379,7 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Font Family', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::FONT,
-				'default' => "'Open Sans', sans-serif",
+				'default' => 'Roboto',
 			]
 		);
 		
@@ -1483,7 +1449,7 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Font Family', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::FONT,
-				'default' => "'Open Sans', sans-serif",
+				'default' => 'Roboto',
 			]
 		);
 		
@@ -1572,7 +1538,7 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Font Family', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::FONT,
-				'default' => "'Open Sans', sans-serif",
+				'default' => 'Roboto',
 			]
 		);
 		
@@ -1662,7 +1628,7 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Font Family', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::FONT,
-				'default' => "'Open Sans', sans-serif",
+				'default' => 'Roboto',
 			]
 		);
 		
@@ -1752,7 +1718,7 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Font Family', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::FONT,
-				'default' => "'Open Sans', sans-serif",
+				'default' => 'Roboto',
 			]
 		);
 
@@ -1924,7 +1890,7 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Font Family', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::FONT,
-				'default' => "'Open Sans', sans-serif",
+				'default' => 'Roboto',
 			]
 		);
 		
@@ -2014,7 +1980,7 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Font Family', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::FONT,
-				'default' => "'Open Sans', sans-serif",
+				'default' => 'Roboto',
 			]
 		);
 		
@@ -2281,8 +2247,6 @@ class Wpr_Charts extends Widget_Base {
             'chart_type' => $settings['chart_type'],
 			'stacked_bar_chart' => !empty($settings['stacked_bar_chart']) ? $settings['stacked_bar_chart'] : '',
             'data_type' => isset($settings['data_type']) ? $settings['data_type'] : 'linear',
-			'chart_padding' => $chart_padding['size'],
-			'chart_padding_mobile' => isset($chart_padding_mobile['size']) ? $chart_padding_mobile['size'] : '',
 			'inner_datalabels' => $inner_datalabels,
 			'inner_datalabels_color' => $inner_datalabels_color,
 			// 'inner_datalabels_bg_color' => $inner_datalabels_bg_color,

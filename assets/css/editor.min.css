@@ -597,10 +597,6 @@
 	padding: 5px 0 15px 0 !important;
 }
 
-.elementor-control.elementor-control-data_source_pro_notice {
-	padding-bottom: 0 !important;
-}
-
 .wpr-pro-notice {
 	padding: 20px;
 	border-top: 1px solid #e6e9ec;
@@ -696,7 +692,9 @@
 .elementor-control.elementor-control-mini_cart_style_pro_notice,
 .elementor-control.elementor-control-tabs_position_pro_notice,
 .elementor-control.elementor-control-choose_table_type_pro_notice,
-.elementor-control.elementor-control-accordion_repeater_pro_notice {
+.elementor-control.elementor-control-accordion_repeater_pro_notice,
+.elementor-control.elementor-control-acc_repeater_pro_notice,
+.elementor-control.elementor-control-data_source_pro_notice {
 	padding-bottom: 0 !important;
 }
 
@@ -741,7 +739,8 @@
 .elementor-control-mini_cart_style_pro_notice .wpr-pro-notice,
 .elementor-control-tabs_position_pro_notice .wpr-pro-notice,
 .elementor-control-choose_table_type_pro_notice .wpr-pro-notice,
-.elementor-control-accordion_repeater_pro_notice .wpr-pro-notice {
+.elementor-control-accordion_repeater_pro_notice .wpr-pro-notice,
+.elementor-control.elementor-control-acc_repeater_pro_notice {
 	border-bottom: none !important;
 }
 
@@ -810,6 +809,15 @@
 .elementor-control[class*="video_tutorial"] {
   padding-top: 0 !important;
   padding-bottom: 5px !important;
+}
+
+.elementor-control.elementor-control-woo_grid_notice_video_tutorial {
+	padding-bottom: 15px !important;
+}
+
+.elementor-control.elementor-control-woo_grid_notice_video_tutorial a {
+	display: inline-block;
+	margin-top: 5px;
 }
 
 .elementor-control[class*="video_tutorial"] a {

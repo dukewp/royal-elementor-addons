@@ -63,6 +63,7 @@ class Utilities {
 			'Template' => ['elementor-template', '', '', ''],
 			'Charts' => ['charts', '', '', 'new'],
 			'Reading Progress Bar' => ['reading-progress-bar', 'https://royal-elementor-addons.com/elementor-reading-progress-bar-widget/', '', 'new'],
+			'Advanced Accordion' => ['advanced-accordion', '', '', 'new'],
 			// 'Random Image' => ['random-image', '', ''],
 		];
 	}
