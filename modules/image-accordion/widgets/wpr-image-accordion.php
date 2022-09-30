@@ -197,6 +197,34 @@ class Wpr_Image_Accordion extends Widget_Base {
 	
 	public function add_control_lightbox_popup_sharing() {}
 
+	public function add_repeater_args_element_align_hr() {
+		return [
+			'label' => esc_html__( 'Horizontal Align', 'wpr-addons' ),
+			'type' => Controls_Manager::CHOOSE,
+			'label_block' => false,
+			'default' => 'center',
+			'options' => [
+				'left' => [
+					'title' => esc_html__( 'Left', 'wpr-addons' ),
+					'icon' => 'eicon-h-align-left',
+				],
+				'center' => [
+					'title' => esc_html__( 'Center', 'wpr-addons' ),
+					'icon' => 'eicon-h-align-center',
+				],
+				'right' => [
+					'title' => esc_html__( 'Right', 'wpr-addons' ),
+					'icon' => 'eicon-h-align-right',
+				]
+			],
+			'selectors' => [
+				'{{WRAPPER}} {{CURRENT_ITEM}}' => 'text-align: center'
+			],
+			'render_type' => 'template',
+			'separator' => 'after'
+		];
+	}
+
     public function register_controls() {
 		
 		$templates_select = [];
@@ -681,34 +709,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 			]
 		);
 
-		$repeater->add_control(
-            'element_align_hr',
-            [
-                'label' => esc_html__( 'Horizontal Align', 'wpr-addons' ),
-                'type' => Controls_Manager::CHOOSE,
-                'label_block' => false,
-                'default' => 'center',
-                'options' => [
-                    'left' => [
-                        'title' => esc_html__( 'Left', 'wpr-addons' ),
-                        'icon' => 'eicon-h-align-left',
-                    ],
-                    'center' => [
-                        'title' => esc_html__( 'Center', 'wpr-addons' ),
-                        'icon' => 'eicon-h-align-center',
-                    ],
-                    'right' => [
-                        'title' => esc_html__( 'Right', 'wpr-addons' ),
-                        'icon' => 'eicon-h-align-right',
-                    ]
-                ],
-				'selectors' => [
-					'{{WRAPPER}} {{CURRENT_ITEM}}' => 'text-align: {{VALUE}}'
-				],
-				'render_type' => 'template',
-				'separator' => 'after'
-            ]
-        );
+		$repeater->add_control( 'element_align_hr', $this->add_repeater_args_element_align_hr() );
 
 		$repeater->add_control(
 			'element_title_tag',
@@ -2594,10 +2595,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 			if ( 'over' === $location ) {
 				foreach ( $locations[$location] as $align => $elements ) {
 
-					if ( ! wpr_fs()->can_use_premium_code() ) {
-						$data['element_align_hr'] = 'center';
-					}
-
 					if ( 'middle' === $align ) {
 						echo '<div class="wpr-cv-container"><div class="wpr-cv-outer"><div class="wpr-cv-inner">';
 					}
@@ -2609,7 +2606,11 @@ class Wpr_Image_Accordion extends Widget_Base {
 							$class  = 'wpr-img-accordion-item-'. $data['element_select'];
 							$class .= ' elementor-repeater-item-'. $data['_id'];
 							$class .= ' wpr-img-accordion-item-display-'. $data['element_display'];
-							$class .= ' wpr-img-accordion-item-align-'. $data['element_align_hr'];
+							if  ( !wpr_fs()->can_use_premium_code() ) {
+								$class .= ' wpr-img-accordion-item-align-center';
+							} else {
+								$class .= ' wpr-img-accordion-item-align-'. $data['element_align_hr'];
+							}
 							$class .= $this->get_animation_class( $data, 'element' );
 
 							// Element
