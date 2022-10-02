@@ -281,7 +281,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'step' => 0.1,
 				'separator' => 'before',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion button.accordion' => 'transition: all {{VALUE}}s ease-in-out;',
+					'{{WRAPPER}} .wpr-advanced-accordion button.wpr-acc-button' => 'transition: all {{VALUE}}s ease-in-out;',
 				]
 			]
 		);
@@ -371,9 +371,9 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-acc-icon-box-after' => 'border-left: {{SIZE}}{{UNIT}} solid {{icon_box_color.VALUE}};',
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion:hover .wpr-acc-icon-box-after' => 'border-left: {{SIZE}}{{UNIT}} solid {{icon_box_hover_color.VALUE}};',
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion.active .wpr-acc-icon-box-after' => 'border-left: {{SIZE}}{{UNIT}} solid {{icon_box_active_color.VALUE}};',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button .wpr-acc-icon-box-after' => 'border-left: {{SIZE}}{{UNIT}} solid {{icon_box_color.VALUE}};',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button:hover .wpr-acc-icon-box-after' => 'border-left: {{SIZE}}{{UNIT}} solid {{icon_box_hover_color.VALUE}};',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.active .wpr-acc-icon-box-after' => 'border-left: {{SIZE}}{{UNIT}} solid {{icon_box_active_color.VALUE}};',
 				],
 				'condition' => [
 					'accordion_title_icon_box_style' => 'side-curve'
@@ -491,7 +491,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#605BE4',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button' => 'color: {{VALUE}}',
 				]
 			]
 		);
@@ -511,7 +511,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 						'default' => '#FFFFFF',
 					],
 				],
-				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .accordion'
+				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button'
 			]
 		);
 
@@ -522,7 +522,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#EAEAEA',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button' => 'border-color: {{VALUE}}',
 				]
 			]
 		);
@@ -531,7 +531,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'tab_box_shadow',
-				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .accordion',
+				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button',
 			]
 		);
 
@@ -550,7 +550,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button:hover' => 'color: {{VALUE}}',
 				]
 			]
 		);
@@ -562,7 +562,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'label' => esc_html__( 'Background', 'wpr-addons' ),
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => ['image'],
-				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .accordion:hover'
+				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button:hover'
 			]
 		);
 
@@ -572,7 +572,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion:hover' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button:hover' => 'border-color: {{VALUE}}',
 				]
 			]
 		);
@@ -581,7 +581,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'tab_hover_box_shadow',
-				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .accordion:hover',
+				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button:hover',
 			]
 		);
 
@@ -600,7 +600,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion.active' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.active' => 'color: {{VALUE}}',
 				]
 			]
 		);
@@ -612,7 +612,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'label' => esc_html__( 'Background', 'wpr-addons' ),
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => ['image'],
-				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .accordion.active'
+				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.active'
 			]
 		);
 
@@ -622,7 +622,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion.active' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.active' => 'border-color: {{VALUE}}',
 				]
 			]
 		);
@@ -631,7 +631,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'tab_active_box_shadow',
-				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .accordion.active',
+				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.active',
 			]
 		);
 
@@ -652,7 +652,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			[
 				'name' => 'tab_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .accordion',
+				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button',
 				'fields_options' => [
 					'typography'      => [
 						'default' => 'custom',
@@ -681,7 +681,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 					'size' => 6,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion' => 'margin-top: {{SIZE}}{{UNIT}}; margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button' => 'margin-top: {{SIZE}}{{UNIT}}; margin-bottom: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -724,7 +724,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 					'left' => 18,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -745,7 +745,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				],
 				'default' => 'solid',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button' => 'border-style: {{VALUE}};',
 				],
 				'separator' => 'before',
 			]
@@ -764,7 +764,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 					'left' => 1,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
 					'tab_border_type!' => 'none',
@@ -785,7 +785,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 					'left' => 0,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -810,7 +810,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#7a7a7a',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .panel .wpr-panel-content' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-panel .wpr-panel-content' => 'color: {{VALUE}};',
 				],
 				'separator' => 'before',
 			]
@@ -823,7 +823,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#FFFFFF',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .panel' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-panel' => 'background-color: {{VALUE}}',
 				],
 			]
 		);
@@ -841,7 +841,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			[
 				'name' => 'content_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .panel .wpr-panel-content',
+				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-panel .wpr-panel-content',
 			]
 		);
 
@@ -858,7 +858,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				],
 				'size_units' => [ 'px' ],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .panel' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-panel' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -879,7 +879,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				],
 				'default' => 'solid',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .panel' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-panel' => 'border-style: {{VALUE}};',
 				],
 				'separator' => 'before',
 			]
@@ -898,7 +898,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 					'left' => 1,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .panel' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-panel' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
 					'content_border_type!' => 'none',
@@ -913,7 +913,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#E8E8E8',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .panel' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-panel' => 'border-color: {{VALUE}}',
 				],
 				'condition' => [
 					'content_border_type!' => 'none',
@@ -934,7 +934,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 					'left' => 0,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .panel' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-panel' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -952,7 +952,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'content_box_shadow',
-				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .panel',
+				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-panel',
 			]
 		);
 
@@ -984,8 +984,8 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#605BE4',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-toggle-icon i' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-toggle-icon svg' => 'fill: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button .wpr-toggle-icon i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button .wpr-toggle-icon svg' => 'fill: {{VALUE}}',
 				]
 			]
 		);
@@ -997,8 +997,8 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#EDEDED',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-title-icon i' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-title-icon svg' => 'fill: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button .wpr-title-icon i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button .wpr-title-icon svg' => 'fill: {{VALUE}}',
 				]
 			]
 		);
@@ -1010,7 +1010,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#605BE4',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-acc-icon-box' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button .wpr-acc-icon-box' => 'background-color: {{VALUE}}',
 				],
 				'condition' => [
 					'accordion_title_icon_box_style!' => 'none'
@@ -1033,8 +1033,8 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'label' => esc_html__( 'Main Icon Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion:hover .wpr-toggle-icon i' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion:hover .wpr-toggle-icon svg' => 'fill: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button:hover .wpr-toggle-icon i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button:hover .wpr-toggle-icon svg' => 'fill: {{VALUE}}',
 				]
 			]
 		);
@@ -1045,8 +1045,8 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'label' => esc_html__( 'Toggle Icon Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion:hover .wpr-title-icon i' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion:hover .wpr-title-icon svg' => 'fill: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button:hover .wpr-title-icon i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button:hover .wpr-title-icon svg' => 'fill: {{VALUE}}',
 				]
 			]
 		);
@@ -1057,7 +1057,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'label' => esc_html__( 'Icon Box Bg Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion:hover .wpr-acc-icon-box' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button:hover .wpr-acc-icon-box' => 'background-color: {{VALUE}}',
 				],
 				'condition' => [
 					'accordion_title_icon_box_style!' => 'none'
@@ -1080,8 +1080,8 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'label' => esc_html__( 'Main Icon Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion.active .wpr-toggle-icon i' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion.active .wpr-toggle-icon svg' => 'fill: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.active .wpr-toggle-icon i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.active .wpr-toggle-icon svg' => 'fill: {{VALUE}}',
 				]
 			]
 		);
@@ -1092,8 +1092,8 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'label' => esc_html__( 'Toggle Icon Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion.active .wpr-title-icon i' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion.active .wpr-title-icon svg' => 'fill: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.active .wpr-title-icon i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.active .wpr-title-icon svg' => 'fill: {{VALUE}}',
 				]
 			]
 		);
@@ -1104,7 +1104,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'label' => esc_html__( 'Icon Box Bg Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion.active .wpr-acc-icon-box' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.active .wpr-acc-icon-box' => 'background-color: {{VALUE}}',
 				],
 				'condition' => [
 					'accordion_title_icon_box_style!' => 'none'
@@ -1133,8 +1133,8 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 					'size' => 15,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-title-icon i' => 'font-size: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-title-icon svg' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button .wpr-title-icon i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button .wpr-title-icon svg' => 'width: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -1157,8 +1157,8 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 					'size' => 15,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-toggle-icon i' => 'font-size: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-advanced-accordion .accordion .wpr-toggle-icon svg' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button .wpr-toggle-icon i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button .wpr-toggle-icon svg' => 'width: {{SIZE}}{{UNIT}};',
 				]
 			]
 		);
@@ -1234,7 +1234,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				?>
 
 					<div class="wpr-accordion-item-wrap">
-						<button class="accordion">
+						<button class="wpr-acc-button">
 							<span class="wpr-acc-item-title">
 								<?php if ('side-box' === $settings['accordion_title_icon_box_style']) : ?>
 									<div class="wpr-acc-icon-box">
@@ -1254,7 +1254,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 							<?php $this->render_second_icon($settings, $acc); ?>
 						</button>
 
-						<div class="panel">
+						<div class="wpr-acc-panel">
 							<?php if ('editor' === $acc_content_type) : ?>
 								<div class="wpr-panel-content"><?php echo $acc['accordion_content'] ?></div>
 							<?php else: 

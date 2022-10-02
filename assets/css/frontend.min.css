@@ -14568,7 +14568,7 @@ dl.variation dd {
 == Advanced Accordion
 --------------------------------------------------------------*/
 
-.wpr-advanced-accordion .accordion {
+.wpr-advanced-accordion .wpr-acc-button {
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -14624,7 +14624,7 @@ dl.variation dd {
   transform: rotate(0);
 }
 
-.wpr-advanced-accordion .panel {
+.wpr-advanced-accordion .wpr-acc-panel {
   display: none;
   overflow: hidden;
   position: relative;
@@ -14635,11 +14635,11 @@ dl.variation dd {
   display: block;
 }
 
-.wpr-advanced-accordion .active, .accordion:hover {
+.wpr-advanced-accordion .active, .wpr-acc-button:hover {
   background-color: #ccc;
 }
 
-.wpr-advanced-accordion .panel p,
-.wpr-advanced-accordion .panel div {
+.wpr-advanced-accordion .wpr-acc-panel p,
+.wpr-advanced-accordion .wpr-acc-panel div {
   margin: 0;
 }
