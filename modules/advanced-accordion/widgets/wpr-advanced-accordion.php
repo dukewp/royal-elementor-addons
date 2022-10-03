@@ -83,7 +83,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 		// Tab: Content ==============
 		// Section: Content ------------
 		$this->start_controls_section(
-			'section_accordion_content',
+			'wpr__section_accordion_content',
 			[
 				'label' => esc_html__( 'Content', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
@@ -181,17 +181,17 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			]
 		);
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
-			$this->add_control(
-				'acc_repeater_pro_notice',
-				[
-					'type' => Controls_Manager::RAW_HTML,
-					'raw' => 'More than 3 Items are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-advanced-accordion-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
-					// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
-					'content_classes' => 'wpr-pro-notice',
-				]
-			);
-		}
+		// if ( ! wpr_fs()->can_use_premium_code() ) {
+		// 	$this->add_control(
+		// 		'acc_repeater_pro_notice',
+		// 		[
+		// 			'type' => Controls_Manager::RAW_HTML,
+		// 			'raw' => 'More than 3 Items are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-advanced-accordion-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+		// 			// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+		// 			'content_classes' => 'wpr-pro-notice',
+		// 		]
+		// 	);
+		// }
 
         $this->end_controls_section();
 
@@ -373,7 +373,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button .wpr-acc-icon-box-after' => 'border-left: {{SIZE}}{{UNIT}} solid {{icon_box_color.VALUE}};',
 					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button:hover .wpr-acc-icon-box-after' => 'border-left: {{SIZE}}{{UNIT}} solid {{icon_box_hover_color.VALUE}};',
-					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.active .wpr-acc-icon-box-after' => 'border-left: {{SIZE}}{{UNIT}} solid {{icon_box_active_color.VALUE}};',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.wpr-acc-active .wpr-acc-icon-box-after' => 'border-left: {{SIZE}}{{UNIT}} solid {{icon_box_active_color.VALUE}};',
 				],
 				'condition' => [
 					'accordion_title_icon_box_style' => 'side-curve'
@@ -414,13 +414,26 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'skin' => 'inline',
 				'label_block' => false,
 				'default' => [
-					'value' => 'fas fa-angle-right',
+					'value' => 'fas fa-plus',
 					'library' => 'fa-solid',
 				],
 				'separator' => 'before',
 			]
 		);
-		
+
+		$this->add_control(
+			'toggle_icon_active',
+			[
+				'label' => esc_html__( 'Select Toggle Icon Active', 'wpr-addons' ),
+				'type' => Controls_Manager::ICONS,
+				'skin' => 'inline',
+				'label_block' => false,
+				'default' => [
+					'value' => 'fas fa-minus',
+					'library' => 'fa-solid',
+				]
+			]
+		);
 
 		$this->add_control(
 			'toggle_icon_rotation',
@@ -429,7 +442,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => ['px'],
 				'default' => [
-					'size' => 90,
+					'size' => 0,
 					'unit' => 'px'
 				],
 				'range' => [
@@ -439,7 +452,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .active .wpr-toggle-icon i' => 'transform: rotate({{SIZE}}deg); transform-origin: center;'
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-active .wpr-toggle-icon i' => 'transform: rotate({{SIZE}}deg); transform-origin: center;'
 				]
 			]
 		);
@@ -600,7 +613,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.active' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.wpr-acc-active' => 'color: {{VALUE}}',
 				]
 			]
 		);
@@ -612,7 +625,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'label' => esc_html__( 'Background', 'wpr-addons' ),
 				'types' => [ 'classic', 'gradient' ],
 				'exclude' => ['image'],
-				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.active'
+				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.wpr-acc-active'
 			]
 		);
 
@@ -622,7 +635,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.active' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.wpr-acc-active' => 'border-color: {{VALUE}}',
 				]
 			]
 		);
@@ -631,7 +644,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'tab_active_box_shadow',
-				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.active',
+				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.wpr-acc-active',
 			]
 		);
 
@@ -1080,8 +1093,8 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'label' => esc_html__( 'Main Icon Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.active .wpr-toggle-icon i' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.active .wpr-toggle-icon svg' => 'fill: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.wpr-acc-active .wpr-toggle-icon i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.wpr-acc-active .wpr-toggle-icon svg' => 'fill: {{VALUE}}',
 				]
 			]
 		);
@@ -1092,8 +1105,8 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'label' => esc_html__( 'Toggle Icon Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.active .wpr-title-icon i' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.active .wpr-title-icon svg' => 'fill: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.wpr-acc-active .wpr-title-icon i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.wpr-acc-active .wpr-title-icon svg' => 'fill: {{VALUE}}',
 				]
 			]
 		);
@@ -1104,7 +1117,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'label' => esc_html__( 'Icon Box Bg Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.active .wpr-acc-icon-box' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.wpr-acc-active .wpr-acc-icon-box' => 'background-color: {{VALUE}}',
 				],
 				'condition' => [
 					'accordion_title_icon_box_style!' => 'none'
@@ -1179,7 +1192,8 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 	public function render_first_icon($settings, $acc) {
 		if ( $settings['change_icons_position'] == 'reverse' ) :
 			if (!empty($settings['toggle_icon'])) : ?>
-				<span class="wpr-toggle-icon"><?php \Elementor\Icons_Manager::render_icon( $settings['toggle_icon'], [ 'aria-hidden' => 'true' ] ); ?></span>
+				<span class="wpr-toggle-icon wpr-ti-close"><?php \Elementor\Icons_Manager::render_icon( $settings['toggle_icon'], [ 'aria-hidden' => 'true' ] ); ?></span>
+				<span class="wpr-toggle-icon wpr-ti-open"><?php \Elementor\Icons_Manager::render_icon( $settings['toggle_icon_active'], [ 'aria-hidden' => 'true' ] ); ?></span>
 			<?php endif ;
 		else :
 			if (!empty($acc['accordion_icon'])) : ?>
@@ -1199,7 +1213,8 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			<?php	endif ;
 		else :
 			if (!empty($settings['toggle_icon'])) : ?>
-				<span class="wpr-toggle-icon"><?php \Elementor\Icons_Manager::render_icon( $settings['toggle_icon'], [ 'aria-hidden' => 'true' ] ); ?></span>
+				<span class="wpr-toggle-icon wpr-ti-close"><?php \Elementor\Icons_Manager::render_icon( $settings['toggle_icon'], [ 'aria-hidden' => 'true' ] ); ?></span>
+				<span class="wpr-toggle-icon wpr-ti-open"><?php \Elementor\Icons_Manager::render_icon( $settings['toggle_icon_active'], [ 'aria-hidden' => 'true' ] ); ?></span>
 			<?php endif ;
 		endif;
 	}
@@ -1227,9 +1242,9 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 					
 					if ( ! wpr_fs()->can_use_premium_code() ) {
 						$acc_content_type = 'editor';
-						if ( $key === 3 ) {
-							break;
-						}
+						// if ( $key === 3 ) {
+						// 	break;
+						// }
 					}
 				?>
 

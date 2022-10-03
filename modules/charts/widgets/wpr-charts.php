@@ -846,8 +846,7 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Show Title', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'separator' => 'before',
+				'return_value' => 'yes'
 			]
 		);
 
@@ -929,7 +928,6 @@ class Wpr_Charts extends Widget_Base {
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'no',
 				'return_value' => 'yes',
-				'separator' => 'before',
 				'condition' => [
 					'show_chart_legend' => 'yes',
 				]
@@ -1008,8 +1006,7 @@ class Wpr_Charts extends Widget_Base {
 				'label' => esc_html__( 'Show Tooltip', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
-				'return_value' => 'yes',
-				'separator' => 'before',
+				'return_value' => 'yes'
 			]
 		);
 
@@ -1133,6 +1130,7 @@ class Wpr_Charts extends Widget_Base {
 				'label' => esc_html__( 'Dots Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'devices' => ['desktop', 'mobile'],
+				'exclude' => ['tablet'],
 				'range' => [
 					'px' => [
 						'min' => 0,
@@ -1148,7 +1146,6 @@ class Wpr_Charts extends Widget_Base {
 					'unit' => 'px',
 					'size' => 5
 				],
-				// 'separator' => 'before',
 				'condition' => [
 					'chart_type!' => ['bar', 'bar_horizontal'],
 					'line_dots' => 'yes',
@@ -1157,6 +1154,91 @@ class Wpr_Charts extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'chart_section_style_res',
+			[
+				'label' => esc_html__( 'Responsive', 'wpr-addons' ),
+				'tab'	=> Controls_Manager::TAB_CONTENT,
+			]
+		);
+			/**
+			 * Control: Enable/Disable
+			*/
+		$this->add_control(
+			'responsive_chart',
+			[
+				'label'		=> esc_html__( 'Responsive Layout', 'wpr-addons' ),
+				'description' => esc_html__( 'Enables scrollbar on tablet and mobile screens', 'wpr-addons' ),
+				'type'		=> Controls_Manager::SWITCHER,
+				'selectors'	=> [
+					'{{WRAPPER}} .wpr-charts-container'	=> 'overflow: auto;',
+					'{{WRAPPER}} .wpr-charts-wrapper' => 'position: relative; margin: 0 auto;',
+				],
+			]
+		);
+
+			/**
+			 * Control: Width
+			 */
+		$this->add_responsive_control(
+			'chart_res_width',
+			[
+				'label'		=> esc_html__( 'Min Width (px)', 'wpr-addons' ),
+				'type'		=> Controls_Manager::SLIDER,
+				'range'		=> [
+					'px'	=> [
+						'min' => 0,
+						'max' => 1600
+					]
+				],
+				'default'	=> [
+					'size'	=> 800,
+				],
+				'selectors'	=> [
+					'{{WRAPPER}} .wpr-charts-wrapper' => 'min-width: {{SIZE}}px;',
+				],
+				'separator'	=> 'before',
+				'condition'	=> [
+					'responsive_chart' => 'yes',
+				],
+			]
+		);
+
+			/**
+			 * Control: Height
+			 */
+		$this->add_responsive_control(
+			'chart_res_height',
+			[
+				'label'		=> esc_html__( 'Min Height (px)', 'wpr-addons' ),
+				'type'		=> Controls_Manager::SLIDER,
+				'range'		=> [
+					'px'	=> [
+						'min' => 0,
+						'max' => 1600
+					]
+				],
+				'default'	=> [
+					'size'	=> 400,
+				],
+				'selectors'	=> [
+					'{{WRAPPER}} .wpr-charts-wrapper' => 'min-height: {{SIZE}}px;',
+				],
+				'condition'	=> [
+					'responsive_chart' => 'yes',
+				],
+			]
+		);
+		
+		$this->end_controls_section();
+
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'charts', [
+			'CSV file/url/googlesheets',
+			'More than 3 Data Labels',
+			'More than 3 Items'
+		] );
 		
 		$this->start_controls_section(
             'section_datalabels_styles',
@@ -1844,11 +1926,12 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 		
-		$this->add_control(
+		$this->add_responsive_control(
 			'tooltip_caret_size',
 			[
 				'label' => esc_html__( 'Triangle Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
+				'devices' => ['desktop', 'mobile'],
 				'size_units' => [ 'px' ],
 				'range' => [
 					'px' => [
@@ -1856,15 +1939,14 @@ class Wpr_Charts extends Widget_Base {
 						'max' => 100,
 					],
 				],
-				// 'devices' => ['desktop', 'mobile'],
 				'default' => [
 					'unit' => 'px',
 					'size' => 10,
 				],
-				// 'mobile_default' => [
-				// 	'unit' => 'px',
-				// 	'size' => 6,
-				// ],
+				'mobile_default' => [
+					'unit' => 'px',
+					'size' => 6,
+				],
 			]
 		);
 
@@ -2049,84 +2131,6 @@ class Wpr_Charts extends Widget_Base {
 		);
 
         $this->end_controls_section();
-
-		$this->start_controls_section(
-			'chart_section_style_res',
-			[
-				'label' => esc_html__( 'Responsive', 'wpr-addons' ),
-				'tab'	=> Controls_Manager::TAB_CONTENT,
-			]
-		);
-			/**
-			 * Control: Enable/Disable
-			*/
-		$this->add_control(
-			'responsive_chart',
-			[
-				'label'		=> esc_html__( 'Responsive Layout', 'wpr-addons' ),
-				'description' => esc_html__( 'Enables scrollbar on tablet and mobile screens', 'wpr-addons' ),
-				'type'		=> Controls_Manager::SWITCHER,
-				'selectors'	=> [
-					'{{WRAPPER}} .wpr-charts-container'	=> 'overflow: auto;',
-					'{{WRAPPER}} .wpr-charts-wrapper' => 'position: relative; margin: 0 auto;',
-				],
-			]
-		);
-
-			/**
-			 * Control: Width
-			 */
-		$this->add_responsive_control(
-			'chart_res_width',
-			[
-				'label'		=> esc_html__( 'Min Width (px)', 'wpr-addons' ),
-				'type'		=> Controls_Manager::SLIDER,
-				'range'		=> [
-					'px'	=> [
-						'min' => 0,
-						'max' => 1600
-					]
-				],
-				'default'	=> [
-					'size'	=> 800,
-				],
-				'selectors'	=> [
-					'{{WRAPPER}} .wpr-charts-wrapper' => 'min-width: {{SIZE}}px;',
-				],
-				'separator'	=> 'before',
-				'condition'	=> [
-					'responsive_chart' => 'yes',
-				],
-			]
-		);
-
-			/**
-			 * Control: Height
-			 */
-		$this->add_responsive_control(
-			'chart_res_height',
-			[
-				'label'		=> esc_html__( 'Min Height (px)', 'wpr-addons' ),
-				'type'		=> Controls_Manager::SLIDER,
-				'range'		=> [
-					'px'	=> [
-						'min' => 0,
-						'max' => 1600
-					]
-				],
-				'default'	=> [
-					'size'	=> 400,
-				],
-				'selectors'	=> [
-					'{{WRAPPER}} .wpr-charts-wrapper' => 'min-height: {{SIZE}}px;',
-				],
-				'condition'	=> [
-					'responsive_chart' => 'yes',
-				],
-			]
-		);
-		
-		$this->end_controls_section();
     }
 
     protected function render() {
@@ -2304,7 +2308,7 @@ class Wpr_Charts extends Widget_Base {
 			'tooltip_position' => $chart_tooltip_position,
 			'tooltip_padding' => $tooltip_padding['size'],
 			'tooltip_caret_size' => $tooltip_caret_size['size'],
-			// 'tooltip_caret_size_mobile' => $tooltip_caret_size_mobile['size'],
+			'tooltip_caret_size_mobile' => isset($tooltip_caret_size_mobile) ? $tooltip_caret_size_mobile['size'] : 0,
 			'chart_tooltip_bg_color' => $chart_tooltip_bg_color,
 			'chart_tooltip_title_color' => $chart_tooltip_title_color,
 			'chart_tooltip_title_font' => $chart_tooltip_title_font,
@@ -2319,7 +2323,7 @@ class Wpr_Charts extends Widget_Base {
 			'show_lines' => isset($show_lines) ? $show_lines : '',
 			'line_dots' => isset($line_dots) ? $line_dots : '',
 			'line_dots_radius' => isset($line_dots_radius) ? $line_dots_radius['size'] : '',
-			'line_dots_radius_mobile' => isset($line_dots_radius_mobile) ? $line_dots_radius_mobile['size'] : '',
+			'line_dots_radius_mobile' => isset($line_dots_radius_mobile) ? $line_dots_radius_mobile['size'] : 0,
 			'border_dash_offset' => $border_dash_offset,
 			'border_dash_length' => $border_dash_length,
 			'border_dash_spacing' => $border_dash_spacing,

@@ -14635,11 +14635,27 @@ dl.variation dd {
   display: block;
 }
 
-.wpr-advanced-accordion .active, .wpr-acc-button:hover {
+.wpr-advanced-accordion .wpr-acc-active, .wpr-acc-button:hover {
   background-color: #ccc;
 }
 
 .wpr-advanced-accordion .wpr-acc-panel p,
 .wpr-advanced-accordion .wpr-acc-panel div {
   margin: 0;
+}
+
+.wpr-ti-close {
+    display: inline-block;
+}
+
+.wpr-ti-open {
+    display: none;
+}
+
+.wpr-acc-active .wpr-ti-close {
+    display: none;
+}
+
+.wpr-acc-active .wpr-ti-open {
+    display: inline-block;
 }

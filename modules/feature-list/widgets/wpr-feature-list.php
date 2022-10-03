@@ -39,7 +39,7 @@ class Wpr_Feature_List extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'royal', 'features', 'feature list' ];
+		return [ 'royal', 'features', 'feature list', 'icon list' ];
 	}
 
     public function get_custom_help_url() {
