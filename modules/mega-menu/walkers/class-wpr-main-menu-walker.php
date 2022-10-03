@@ -67,16 +67,25 @@ class Wpr_Main_Menu_Walker extends \Walker_Nav_Menu {
 		$classes   = empty( $item->classes ) ? array() : (array) $item->classes;
 		$classes[] = 'menu-item-' . $item->ID;
 
+		if ( $this->has_mega_menu( $item->ID ) ) {
+			$classes[] = 'menu-item-has-children';
+		}
+
 		$item_li_class = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args, $depth ) );
 		$item_li_class = $item_li_class ? ' class="' . esc_attr( $item_li_class ) . '"' : '';
+
+        $item_a_class = 'wpr-menu-item wpr-pointer-item';
+
+		if ( in_array( 'current-menu-item', $item->classes ) ) {
+			$item_a_class .= ' wpr-active-menu-item';
+		}
 		
 		$output .= $indent .'<li'. $id . $item_li_class .'>';
 
 			$item_output = $args->before;
-				$item_a_class = 'wpr-menu-item wpr-pointer-item';
 				$submenu_icon = '';
 				// Parent Item
-				if ( in_array( 'menu-item-has-children', $item->classes ) ) {
+				if ( in_array( 'menu-item-has-children', $item->classes ) || $this->has_mega_menu( $item->ID ) ) {
 					if ( in_array( 'current-menu-item', $item->classes ) || in_array( 'current-menu-ancestor', $item->classes ) ) {
 						$item_a_class .= ' wpr-active-menu-item';
 					}
