@@ -110,10 +110,6 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'type' => Controls_Manager::ICONS,
 				'skin' => 'inline',
 				'label_block' => false,
-				'default' => [
-					'value' => 'fas fa-plus',
-					'library' => 'fa-solid',
-				],
 				'separator' => 'before',
 			]
 		);
@@ -166,14 +162,26 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'default' => [
 					[
 						'accordion_title' => esc_html__( 'Title #1', 'wpr-addons' ),
+						'accordion_icon' => [
+							'value' => 'fas fa-desktop',
+							'library' => 'solid'
+						],
 						'accordion_content' => esc_html__( 'Item content. Click the edit button to change this text.', 'wpr-addons' ),
 					],
 					[
 						'accordion_title' => esc_html__( 'Title #2', 'wpr-addons' ),
+						'accordion_icon' => [
+							'value' => 'fab fa-telegram-plane',
+							'library' => 'brands'
+						],
 						'accordion_content' => esc_html__( 'Item content. Click the edit button to change this text.', 'wpr-addons' ),
 					],
 					[
 						'accordion_title' => esc_html__( 'Title #3', 'wpr-addons' ),
+						'accordion_icon' => [
+							'value' => 'fas fa-layer-group',
+							'library' => 'solid'
+						],
 						'accordion_content' => esc_html__( 'Item content. Click the edit button to change this text.', 'wpr-addons' ),
 					]
 				],
@@ -995,7 +1003,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			[
 				'label' => esc_html__( 'Main Icon Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605BE4',
+				'default' => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button .wpr-toggle-icon i' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button .wpr-toggle-icon svg' => 'fill: {{VALUE}}',
