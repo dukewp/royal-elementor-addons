@@ -892,10 +892,21 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     display: none;
     position: absolute;
     z-index: 999;
-    width: 680px;
     border: 1px solid #e8e8e8;
     box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
     background: #fff;
+}
+
+li.wpr-mega-menu-pos-default {
+  position: static;
+}
+
+.wpr-mega-menu-pos-default .wpr-sub-mega-menu {
+  left: 0;
+}
+
+.wpr-mega-menu-width-full .wpr-sub-mega-menu {
+  width: 100vw;
 }
 
 

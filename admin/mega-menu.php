@@ -124,14 +124,21 @@ function render_settings_popup() {
                     <label for="wpr_mm_enable"></label>
                 </div>
                 <div class="wpr-mm-setting">
-                    <h4><?php esc_html_e('Mega Menu Position', 'wpr-addons'); ?></h4>
+                    <h4><?php esc_html_e('Mega Menu Content', 'wpr-addons'); ?></h4>
+                    <button class="button button-primary wpr-edit-mega-menu-btn">
+                        <i class="eicon-elementor-square" aria-hidden="true"></i>
+                        <?php esc_html_e('Edit with Elementor', 'wpr-addons'); ?>
+                    </button>
+                </div>
+                <div class="wpr-mm-setting">
+                    <h4><?php esc_html_e('Dropdown Position', 'wpr-addons'); ?></h4>
                     <select id="wpr_mm_position">
                         <option value="default"><?php esc_html_e('Default', 'wpr-addons'); ?></option>
                         <option value="relative"><?php esc_html_e('Relative', 'wpr-addons'); ?></option>
                     </select>
                 </div>
                 <div class="wpr-mm-setting">
-                    <h4><?php esc_html_e('Mega Menu Width', 'wpr-addons'); ?></h4>
+                    <h4><?php esc_html_e('Dropdown Width', 'wpr-addons'); ?></h4>
                     <select id="wpr_mm_width">
                         <option value="default"><?php esc_html_e('Default', 'wpr-addons'); ?></option>
                         <option value="full"><?php esc_html_e('Full', 'wpr-addons'); ?></option>
@@ -143,18 +150,18 @@ function render_settings_popup() {
                     <input type="number" id="wpr_mm_custom_width" value="600">
                 </div>
                 <div class="wpr-mm-setting">
-                    <h4><?php esc_html_e('Mobile Menu Content', 'wpr-addons'); ?></h4>
+                    <h4><?php esc_html_e('Dropdown Render Type', 'wpr-addons'); ?></h4>
+                    <select id="wpr_mm_render">
+                        <option value="default"><?php esc_html_e('Default', 'wpr-addons'); ?></option>
+                        <option value="ajax"><?php esc_html_e('Load with AJAX', 'wpr-addons'); ?></option>
+                    </select>
+                </div>
+                <div class="wpr-mm-setting">
+                    <h4><?php esc_html_e('Mobile Menu Dropdown', 'wpr-addons'); ?></h4>
                     <select id="wpr_mm_mobile_content">
                         <option value="mega"><?php esc_html_e('Mega Menu', 'wpr-addons'); ?></option>
                         <option value="wp-sub"><?php esc_html_e('WordPress Sub Menu', 'wpr-addons'); ?></option>
                     </select>
-                </div>
-                <div class="wpr-mm-setting">
-                    <h4><?php esc_html_e('Mega Menu Content', 'wpr-addons'); ?></h4>
-                    <button class="button button-primary wpr-edit-mega-menu-btn">
-                        <i class="eicon-elementor-square" aria-hidden="true"></i>
-                        <?php esc_html_e('Edit with Elementor', 'wpr-addons'); ?>
-                    </button>
                 </div>
 
                 <h4><?php esc_html_e('Icon', 'wpr-addons'); ?></h4>

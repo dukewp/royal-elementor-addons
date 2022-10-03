@@ -299,6 +299,7 @@ console.log(settings['wpr_mm_icon_picker']);
                 $('#wpr_mm_position').val(settings['wpr_mm_position']).trigger('change');
                 $('#wpr_mm_width').val(settings['wpr_mm_width']).trigger('change');
                 $('#wpr_mm_custom_width').val(settings['wpr_mm_custom_width']);
+                $('#wpr_mm_render').val(settings['wpr_mm_render']).trigger('change');
                 $('#wpr_mm_mobile_content').val(settings['wpr_mm_mobile_content']).trigger('change');
 
                 // Icon
@@ -328,6 +329,7 @@ console.log(settings['wpr_mm_icon_picker']);
                 $('#wpr_mm_position').val('default').trigger('change');
                 $('#wpr_mm_width').val('default').trigger('change');
                 $('#wpr_mm_custom_width').val('600');
+                $('#wpr_mm_render').val('default').trigger('change');
                 $('#wpr_mm_mobile_content').val('mega').trigger('change');
 
                 // Icon

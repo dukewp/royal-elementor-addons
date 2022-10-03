@@ -75,6 +75,7 @@ class Wpr_Mobile_Menu_Walker extends \Walker_Nav_Menu {
 		$item_li_class = $item_li_class ? ' class="' . esc_attr( $item_li_class ) . '"' : '';
 		
 		$item_a_class = 'wpr-mobile-menu-item';
+		
 		if ( in_array( 'current-menu-item', $item->classes ) ) {
 			$item_a_class .= ' wpr-active-menu-item';
 		}

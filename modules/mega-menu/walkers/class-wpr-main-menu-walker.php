@@ -71,6 +71,19 @@ class Wpr_Main_Menu_Walker extends \Walker_Nav_Menu {
 			$classes[] = 'menu-item-has-children';
 		}
 
+		$id_attr = '';
+		$custom_width_attr = '';
+
+		if ( $settings ) {
+			if ( 'true' === $settings['wpr_mm_enable'] ) {
+				$classes[] = 'wpr-mega-menu-'. $settings['wpr_mm_enable'];
+				$classes[] = 'wpr-mega-menu-pos-'. $settings['wpr_mm_position'];
+				$classes[] = 'wpr-mega-menu-width-'. $settings['wpr_mm_width'];
+				$id_attr = ' data-id="'. $item->ID .'"';
+				$custom_width_attr = 'custom' === $settings['wpr_mm_width'] ? ' data-custom-width="'. $settings['wpr_mm_custom_width'] .'"' : '';
+			}
+		}
+
 		$item_li_class = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args, $depth ) );
 		$item_li_class = $item_li_class ? ' class="' . esc_attr( $item_li_class ) . '"' : '';
 
@@ -80,7 +93,7 @@ class Wpr_Main_Menu_Walker extends \Walker_Nav_Menu {
 			$item_a_class .= ' wpr-active-menu-item';
 		}
 		
-		$output .= $indent .'<li'. $id . $item_li_class .'>';
+		$output .= $indent .'<li'. $id . $item_li_class . $custom_width_attr . $id_attr .'>';
 
 			$item_output = $args->before;
 				$submenu_icon = '';
@@ -168,10 +181,11 @@ class Wpr_Main_Menu_Walker extends \Walker_Nav_Menu {
 		
 		if ( $depth === 0 ) {
 			if ( $this->has_mega_menu($item->ID) ) {
-				$elementor = \Elementor\Plugin::instance();
-				$mega_id = get_post_meta( $item->ID, 'wpr-mega-menu-item', true);
-				$content = $elementor->frontend->get_builder_content_for_display($mega_id);
-				$output .= '<div class="wpr-sub-mega-menu">'. $content .'</div>';
+				// $elementor = \Elementor\Plugin::instance();
+				// $mega_id = get_post_meta( $item->ID, 'wpr-mega-menu-item', true);
+				// $content = $elementor->frontend->get_builder_content_for_display($mega_id);
+				// $output .= '<div class="wpr-sub-mega-menu">'. $content .'</div>';
+				$output .= '<div class="wpr-sub-mega-menu"></div>';
 			}
 
 			$output .= "</li>\n";
@@ -190,7 +204,6 @@ class Wpr_Main_Menu_Walker extends \Walker_Nav_Menu {
 		}
 
 		wp_cache_set( 'menu-item-type', $item_type, 'wpr-mega-menu' );
-
 	}
 
 	public function get_menu_item_type() {

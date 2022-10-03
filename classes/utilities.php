@@ -710,6 +710,18 @@ class Utilities {
 
 
 	/**
+	** Mega Menu AJAX Loading
+	*/
+	public static function mega_menu_ajax_loading() {
+		$elementor = \Elementor\Plugin::instance();
+		$mega_id = get_post_meta( $_POST['item_id'], 'wpr-mega-menu-item', true);
+		$content = $elementor->frontend->get_builder_content_for_display($mega_id);
+
+		wp_send_json( $content );
+	}
+
+
+	/**
 	** Mailchimp AJAX Subscribe
 	*/
 	public static function ajax_mailchimp_subscribe() {
