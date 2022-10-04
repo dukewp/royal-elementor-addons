@@ -173,11 +173,17 @@ class Wpr_Mobile_Menu_Walker extends \Walker_Nav_Menu {
 		
 		if ( $depth === 0 ) {
 			if ( $this->has_mega_menu($item->ID) ) {
-				// $elementor = \Elementor\Plugin::instance();
-				// $mega_id = get_post_meta( $item->ID, 'wpr-mega-menu-item', true);
-				// $content = $elementor->frontend->get_builder_content_for_display($mega_id);
-				// $output .= '<div class="wpr-mobile-sub-mega-menu">'. $content .'</div>';
-				$output .= '<div class="wpr-mobile-sub-mega-menu"></div>';
+				// Get Settings
+				$settings = $this->get_mega_menu_settings($item->ID);
+
+				if ( 'ajax' === $settings['wpr_mm_render'] ) {
+					$output .= '<div class="wpr-mobile-sub-mega-menu"></div>';
+				} else {
+					$elementor = \Elementor\Plugin::instance();
+					$mega_id = get_post_meta( $item->ID, 'wpr-mega-menu-item', true);
+					$content = $elementor->frontend->get_builder_content_for_display($mega_id);
+					$output .= '<div class="wpr-mobile-sub-mega-menu">'. $content .'</div>';
+				}
 			}
 
 			$output .= "</li>\n";
