@@ -554,6 +554,21 @@ div[class*="wpr-main-menu-align-"] .wpr-nav-menu-vertical .wpr-nav-menu>li>.wpr-
     margin-left: 5px;
 }
 
+.wpr-mobile-mega-menu .wpr-mobile-menu-item {
+    display: flex;
+    align-items: center;
+}
+
+.wpr-mobile-mega-menu .wpr-mobile-sub-icon {
+    margin-left: auto;
+    padding: 8px 10px;
+    font-size: 13px;
+}
+
+.wpr-mobile-mega-menu a:after {
+    display: none;
+}
+
 /* --- Sub Menu --- */
 .wpr-nav-menu .wpr-sub-menu {
     display: none;

@@ -181,11 +181,10 @@ class Wpr_Main_Menu_Walker extends \Walker_Nav_Menu {
 		
 		if ( $depth === 0 ) {
 			if ( $this->has_mega_menu($item->ID) ) {
-				// $elementor = \Elementor\Plugin::instance();
-				// $mega_id = get_post_meta( $item->ID, 'wpr-mega-menu-item', true);
-				// $content = $elementor->frontend->get_builder_content_for_display($mega_id);
-				// $output .= '<div class="wpr-sub-mega-menu">'. $content .'</div>';
-				$output .= '<div class="wpr-sub-mega-menu"></div>';
+				$elementor = \Elementor\Plugin::instance();
+				$mega_id = get_post_meta( $item->ID, 'wpr-mega-menu-item', true);
+				$content = $elementor->frontend->get_builder_content_for_display($mega_id);
+				$output .= '<div class="wpr-sub-mega-menu">'. $content .'</div>';
 			}
 
 			$output .= "</li>\n";

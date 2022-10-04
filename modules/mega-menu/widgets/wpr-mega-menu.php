@@ -460,34 +460,6 @@ class Wpr_Mega_Menu extends Widget_Base {
 		);
 
 		$this->add_control(
-			'mob_menu_item_align',
-			[
-				'label' => esc_html__( 'Item Align', 'wpr-addons' ),
-				'type' => Controls_Manager::CHOOSE,
-				'label_block' => false,
-				'default' => 'center',
-				'options' => [
-					'left' => [
-						'title' => esc_html__( 'Left', 'wpr-addons' ),
-						'icon' => 'eicon-h-align-left',
-					],
-					'center' => [
-						'title' => esc_html__( 'Center', 'wpr-addons' ),
-						'icon' => 'eicon-h-align-center',
-					],
-					'right' => [
-						'title' => esc_html__( 'Right', 'wpr-addons' ),
-						'icon' => 'eicon-h-align-right',
-					]
-				],
-				'prefix_class' => 'wpr-mobile-menu-item-align-',
-				'condition' => [
-					'mob_menu_display!' => 'none',
-				],
-			]
-		);
-
-		$this->add_control(
 			'heading_toggle_button',
 			[
 				'label' => esc_html__( 'Toggle Button', 'wpr-addons' ),
@@ -1612,7 +1584,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 		$main_args = [
 			'echo' => false,
 			'menu' => $settings['menu_select'],
-			'menu_class' => 'wpr-nav-menu',
+			'menu_class' => 'wpr-nav-menu wpr-mega-menu',
 			'menu_id' => 'menu-'. $this->get_nav_menu_index() .'-'. $this->get_id(),
 			'container' => '',
 			'fallback_cb' => '__return_empty_string',
@@ -1628,7 +1600,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 		$mobile_args = [
 			'echo' => false,
 			'menu' => $settings['menu_select'],
-			'menu_class' => 'wpr-mobile-nav-menu',
+			'menu_class' => 'wpr-mobile-nav-menu wpr-mobile-mega-menu',
 			'menu_id' => 'mobile-menu-'. $this->get_nav_menu_index() .'-'. $this->get_id(),
 			'container' => '',
 			'fallback_cb' => '__return_empty_string',

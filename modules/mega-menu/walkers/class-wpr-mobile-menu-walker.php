@@ -70,6 +70,19 @@ class Wpr_Mobile_Menu_Walker extends \Walker_Nav_Menu {
 		if ( $this->has_mega_menu( $item->ID ) ) {
 			$classes[] = 'menu-item-has-children';
 		}
+
+		$id_attr = '';
+
+		if ( $settings ) {
+			if ( 'true' === $settings['wpr_mm_enable'] ) {
+				$classes[] = 'wpr-mega-menu-'. $settings['wpr_mm_enable'];
+				$id_attr = ' data-id="'. $item->ID .'"';
+
+				if ( 'ajax' === $settings['wpr_mm_render'] ) {
+					$classes[] = 'wpr-mega-menu-ajax';
+				}
+			}
+		}
 		
 		$item_li_class = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args, $depth ) );
 		$item_li_class = $item_li_class ? ' class="' . esc_attr( $item_li_class ) . '"' : '';
@@ -80,10 +93,9 @@ class Wpr_Mobile_Menu_Walker extends \Walker_Nav_Menu {
 			$item_a_class .= ' wpr-active-menu-item';
 		}
 
-		$output .= $indent .'<li'. $id . $item_li_class .'>';
+		$output .= $indent .'<li'. $id . $item_li_class . $id_attr .'>';
 
 			$item_output = $args->before;
-				$submenu_icon = '';
 				// Parent Item
 				if ( in_array( 'menu-item-has-children', $item->classes ) ) {
 					if ( in_array( 'current-menu-item', $item->classes ) || in_array( 'current-menu-ancestor', $item->classes ) ) {
@@ -147,7 +159,7 @@ class Wpr_Mobile_Menu_Walker extends \Walker_Nav_Menu {
 					$item_output .= $item_icon_html;
 					$item_output .= $args->link_before . apply_filters( 'the_title', $item->title, $item->ID ) . $args->link_after;
 					$item_output .= $item_badge_html;
-					$item_output .= $submenu_icon;
+					$item_output .= in_array( 'menu-item-has-children', $item->classes ) || $this->has_mega_menu($item->ID) ? '<i class="wpr-mobile-sub-icon"></i>' : '';
 				$item_output .= '</a>';
 			$item_output .= $args->after;
 		
@@ -161,10 +173,11 @@ class Wpr_Mobile_Menu_Walker extends \Walker_Nav_Menu {
 		
 		if ( $depth === 0 ) {
 			if ( $this->has_mega_menu($item->ID) ) {
-				$elementor = \Elementor\Plugin::instance();
-				$mega_id = get_post_meta( $item->ID, 'wpr-mega-menu-item', true);
-				$content = $elementor->frontend->get_builder_content_for_display($mega_id);
-				$output .= '<div class="wpr-mobile-sub-mega-menu">'. $content .'</div>';
+				// $elementor = \Elementor\Plugin::instance();
+				// $mega_id = get_post_meta( $item->ID, 'wpr-mega-menu-item', true);
+				// $content = $elementor->frontend->get_builder_content_for_display($mega_id);
+				// $output .= '<div class="wpr-mobile-sub-mega-menu">'. $content .'</div>';
+				$output .= '<div class="wpr-mobile-sub-mega-menu"></div>';
 			}
 
 			$output .= "</li>\n";
