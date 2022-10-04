@@ -1,6 +1,7 @@
 <?php
 namespace WprAddons\Modules\Charts\Widgets;
 
+use Elementor\Fonts;
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Core\Responsive\Responsive;
@@ -1272,7 +1273,8 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Font Family', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::FONT,
-				'default' => 'Roboto',
+				'description' => esc_html__('Use only the fonts located under System options group', 'wpr-addons'),
+				'default' => 'Arial',
 			]
 		);
 		
@@ -1390,7 +1392,8 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Font Family', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::FONT,
-				'default' => 'Roboto',
+				'description' => esc_html__('Use only the fonts located under System options group', 'wpr-addons'),
+				'default' => 'Arial',
 			]
 		);
 		
@@ -1461,7 +1464,8 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Font Family', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::FONT,
-				'default' => 'Roboto',
+				'description' => esc_html__('Use only the fonts located under System options group', 'wpr-addons'),
+				'default' => 'Arial',
 			]
 		);
 		
@@ -1531,7 +1535,8 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Font Family', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::FONT,
-				'default' => 'Roboto',
+				'description' => esc_html__('Use only the fonts located under System options group', 'wpr-addons'),
+				'default' => 'Arial',
 			]
 		);
 		
@@ -1620,7 +1625,8 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Font Family', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::FONT,
-				'default' => 'Roboto',
+				'description' => esc_html__('Use only the fonts located under System options group', 'wpr-addons'),
+				'default' => 'Arial',
 			]
 		);
 		
@@ -1710,7 +1716,8 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Font Family', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::FONT,
-				'default' => 'Roboto',
+				'description' => esc_html__('Use only the fonts located under System options group', 'wpr-addons'),
+				'default' => 'Arial',
 			]
 		);
 		
@@ -1800,7 +1807,8 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Font Family', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::FONT,
-				'default' => 'Roboto',
+				'description' => esc_html__('Use only the fonts located under System options group', 'wpr-addons'),
+				'default' => 'Arial',
 			]
 		);
 
@@ -1972,7 +1980,8 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Font Family', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::FONT,
-				'default' => 'Roboto',
+				'description' => esc_html__('Use only the fonts located under System options group', 'wpr-addons'),
+				'default' => 'Arial',
 			]
 		);
 		
@@ -2062,7 +2071,8 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Font Family', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::FONT,
-				'default' => 'Roboto',
+				'description' => esc_html__('Use only the fonts located under System options group', 'wpr-addons'),
+				'default' => 'Arial',
 			]
 		);
 		

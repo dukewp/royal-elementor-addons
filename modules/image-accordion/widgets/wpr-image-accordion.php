@@ -158,7 +158,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 		return [
 			'title' => esc_html__( 'Title', 'wpr-addons' ),
 			'description' => esc_html__( 'Description', 'wpr-addons' ),
-			'pro-lbx' => esc_html__( 'Lightbox', 'wpr-addons' ),
+			'pro-lbx' => esc_html__( 'Lightbox (Pro)', 'wpr-addons' ),
 			'button' => esc_html__( 'Button', 'wpr-addons' ),
 			'separator' => esc_html__( 'Separator', 'wpr-addons' ),
 		];
@@ -2357,9 +2357,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 	}
 
 	public function get_elements( $type, $settings, $class, $item ) {
-		if ( 'pro-lbx' == $type ) {
-			$type = 'title';
-		}
 
 		switch ( $type ) {
 			case 'title':
@@ -2376,6 +2373,9 @@ class Wpr_Image_Accordion extends Widget_Base {
 
 			case 'lightbox':
 				$this->render_repeater_lightbox( $settings, $class, $item );
+				break;
+
+			case 'pro-lbx':
 				break;
 
 			case 'separator':

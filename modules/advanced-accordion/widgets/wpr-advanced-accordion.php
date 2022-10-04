@@ -61,6 +61,20 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 		];
 	}
 
+	public function add_control_show_acc_search() {
+		$this->add_control(
+			'show_acc_search',
+			[
+				'label' => sprintf( __( 'Show Search %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'separator' => 'before',
+				'classes' => 'wpr-pro-control'
+			]
+		);
+	}
+
+	public function add_section_style_search_input() {}
+
     protected function register_controls() {
 		
 		$templates_select = [];
@@ -111,6 +125,10 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'skin' => 'inline',
 				'label_block' => false,
 				'separator' => 'before',
+				'default' => [
+					'value' => 'far fa-edit',
+					'library' => 'regular'
+				]
 			]
 		);
  
@@ -275,6 +293,36 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'render_type' => 'template',
 				'frontend_available' => true,
 				'separator' => 'before'
+			]
+		);
+
+		$this->add_control_show_acc_search();
+
+
+		$this->add_control(
+			'acc_search_placeholder',
+			[
+				'label' => esc_html__( 'Placeholder', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => esc_html__( 'Search...', 'wpr-addons' ),
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'acc_search_icon',
+			[
+				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
+				'type' => Controls_Manager::ICONS,
+				'skin' => 'inline',
+				'label_block' => false,
+				'default' => [
+					'value' => 'fas fa-search',
+					'library' => 'fa-solid',
+				],
+				'condition' => [
+					'show_acc_search' => 'yes',
+				],
 			]
 		);
 
@@ -485,6 +533,14 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'advanced-accordion', [
+			'Elementor Templates Panel option',
+			'Show Search option',
+		] );
+
+		$this->add_section_style_search_input();
 
 		// Tab: Styles ===============
 		// Section: Switcher ---------
@@ -1241,8 +1297,31 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			]
 		);
 
-        ?>
+		if ( 'yes' === $settings['show_acc_search'] ) {
+
+			$this->add_render_attribute(
+				'input', [
+					'placeholder' => $settings['acc_search_placeholder'],
+					'class' => 'wpr-acc-search-input',
+					'type' => 'search',
+					'title' => esc_html__( 'Search', 'wpr-addons' ),
+				]
+			);
+
+		} ?>
+
             <div <?php echo $this->get_render_attribute_string( 'accordion_attributes' ); ?>>
+
+				<?php if ( 'yes' === $settings['show_acc_search'] ) : ?>
+					<div class="wpr-acc-search-input-wrap elementor-clearfix">
+						<?php if ( '' !== $settings['acc_search_icon']['value'] ) : ?>
+							<i class="<?php echo esc_attr( $settings['acc_search_icon']['value'] ); ?>"></i>
+						<?php endif; ?>
+						<input <?php echo $this->get_render_attribute_string( 'input' ); ?>>
+						<i class="fas fa-times"></i>
+					</div>
+				<?php endif; ?>
+
                 <?php 
 					foreach ($settings['advanced_accordion'] as $key=>$acc) :
 

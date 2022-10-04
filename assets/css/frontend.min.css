@@ -14568,6 +14568,24 @@ dl.variation dd {
 == Advanced Accordion
 --------------------------------------------------------------*/
 
+.wpr-acc-search-input-wrap {
+    position: relative;
+}
+
+.wpr-acc-search-input-wrap i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.wpr-acc-search-input-wrap i.fa-times {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    display: none;
+}
+
 .wpr-advanced-accordion .wpr-acc-button {
   position: relative;
   display: flex;
