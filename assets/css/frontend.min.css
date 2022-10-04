@@ -14579,9 +14579,6 @@ dl.variation dd {
 }
 
 .wpr-acc-search-input-wrap i.fa-times {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
     cursor: pointer;
     display: none;
 }
