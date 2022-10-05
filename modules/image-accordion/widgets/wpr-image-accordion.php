@@ -591,7 +591,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'accordion_repeater_pro_notice',
 				[
 					'type' => Controls_Manager::RAW_HTML,
-					'raw' => 'More than 3 Slides are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-image-accordion-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					'raw' => 'More than 3 Items are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-image-accordion-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
 					'content_classes' => 'wpr-pro-notice',
 				]
 			);
@@ -725,34 +725,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 			]
 		);
 
-		// $repeater->add_control( 'element_like_icon', $this->add_repeater_args_element_like_icon() );
-
-		// $repeater->add_control( 'element_like_show_count', $this->add_repeater_args_element_like_show_count() );
-
-		// $repeater->add_control( 'element_like_text', $this->add_repeater_args_element_like_text() );
-
-		// $repeater->add_control( 'element_sharing_icon_1', $this->add_repeater_args_element_sharing_icon_1() );
-
-		// $repeater->add_control( 'element_sharing_icon_2', $this->add_repeater_args_element_sharing_icon_2() );
-
-		// $repeater->add_control( 'element_sharing_icon_3', $this->add_repeater_args_element_sharing_icon_3() );
-
-		// $repeater->add_control( 'element_sharing_icon_4', $this->add_repeater_args_element_sharing_icon_4() );
-
-		// $repeater->add_control( 'element_sharing_icon_5', $this->add_repeater_args_element_sharing_icon_5() );
-
-		// $repeater->add_control( 'element_sharing_icon_6', $this->add_repeater_args_element_sharing_icon_6() );
-
-		// $repeater->add_control( 'element_sharing_trigger', $this->add_repeater_args_element_sharing_trigger() );
-
-		// $repeater->add_control( 'element_sharing_trigger_icon', $this->add_repeater_args_element_sharing_trigger_icon() );
-
-		// $repeater->add_control( 'element_sharing_trigger_action', $this->add_repeater_args_element_sharing_trigger_action() );
-
-		// $repeater->add_control( 'element_sharing_trigger_direction', $this->add_repeater_args_element_sharing_trigger_direction() );
-
-		// $repeater->add_control( 'element_sharing_tooltip', $this->add_repeater_args_element_sharing_tooltip() );
-
 		$repeater->add_control(
 			'element_lightbox_icon',
 			[
@@ -855,6 +827,20 @@ class Wpr_Image_Accordion extends Widget_Base {
 			]
 		);
 
+		$repeater->add_control(
+			'animation_divider',
+			[
+				'type' => Controls_Manager::DIVIDER,
+				'style' => 'thick',
+				'condition' => [
+					'element_select' => [
+						'button',
+						'lightbox'
+					],
+				]
+			]
+		);
+
 		// $repeater->add_control(
 		// 	'element_lightbox_overlay',
 		// 	[
@@ -867,14 +853,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 		// 		],
 		// 	]
 		// );
-
-		$repeater->add_control(
-			'animation_divider',
-			[
-				'type' => Controls_Manager::DIVIDER,
-				'style' => 'thick'
-			]
-		);
 
 		$repeater->add_control(
 			'element_animation',
@@ -1293,12 +1271,12 @@ class Wpr_Image_Accordion extends Widget_Base {
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'image-accordion', [
-			'Vertical Layout',
-			'Interaction on Click',
-			'Skew Images',
-			'More than 3 Items',
-			'Lightbox Pop-up',
-			'Unlimited Accordion Elements Positioning',
+			'Add Unlimited Images.',
+			'Vertical Accordion Layout.',
+			'Trigger Images on Click.',
+			'Skew Images by default.',
+			'Enable Image Lightbox',
+			'Advanced Elements Positioning',
 			'Image Effects: Zoom, Grayscale, Blur',
 			'Image Overlay Blend Mode',
 		] );
