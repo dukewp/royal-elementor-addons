@@ -41,6 +41,9 @@
 				'wpr-product-filters.default' : WprElements.widgetProductFilters,
 				'wpr-page-cart.default' : WprElements.widgetPageCart,
 				'wpr-my-account-pro.default' : WprElements.widgetPageMyAccount,
+				'wpr-reading-progress-bar.default' : WprElements.widgetReadingProgressBar,
+				'wpr-data-table.default' : WprElements.widgetDataTable,
+				'wpr-advanced-accordion.default' : WprElements.widgetAdvancedAccordion,
 				'global': WprElements.widgetSection,
 
 				// Single
@@ -106,29 +109,6 @@
 		}, // End widgetFeaturedMedia
 
 		widgetSection: function( $scope ) {
-
-			readingProgressBar($scope);
-
-			function readingProgressBar($scope) {//TODO: Move this somewhere else
-				readingProgressBarFill($scope);
-				window.onscroll = function() {readingProgressBarFill()};
-
-				function readingProgressBarFill() {
-					if(document.querySelector('.wpr-reading-progress-bar')) {
-						var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-						var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-						var scrolled = (winScroll / height) * 100;
-						document.querySelector(".wpr-reading-progress-bar").style.width = scrolled + "%";
-					}
-				}
-
-				if( $('#wpadminbar').length && $('.wpr-reading-progress-bar-container').length ) {
-					if ( 0 === $('.wpr-reading-progress-bar-container').position().top ) {
-						// $('.wpr-reading-progress-bar-container').attr('style', 'top: 32px !important;');
-						$('.wpr-reading-progress-bar-container').css('top', ' 32px');
-					}
-				}
-			}
 
 			if ( $scope.attr('data-wpr-particles') || $scope.find('.wpr-particle-wrapper').attr('data-wpr-particles-editor') ) {
 				particlesEffect();
@@ -399,7 +379,6 @@
 						e.preventDefault();
 						currentItem.addClass('wpr-sub-open');
 						subMenuAnimation( childrenSub, true );
-
 					} else {
 						currentItem.removeClass('wpr-sub-open');
 						subMenuAnimation( childrenSub, false );
@@ -551,7 +530,7 @@
 				var section = $( $(this).find( 'a' ).attr( 'href' ) ),
 					scrollSpeed = parseInt( $(this).parent().attr( 'data-speed' ), 10 );
 
-				$( 'body' ).animate({ scrollTop: section.offset().top }, scrollSpeed );
+				$( 'html, body' ).animate({ scrollTop: section.offset().top }, scrollSpeed );
 
 				// Active Class
 				getSectionOffset( $(window).scrollTop() );
@@ -592,13 +571,17 @@
 
 		widgetGrid: function( $scope ) {
 			var iGrid = $scope.find( '.wpr-grid' );
+			var loadedItems;
 
 			if ( ! iGrid.length ) {
 				return;
 			}
 
 			if ( $scope.find('.woocommerce-result-count').length ) {
-				$scope.find('.woocommerce-result-count').text(`Showing 1–${$scope.find('.wpr-grid-item').length} of ${iGrid.data('found-posts')} results`);
+				var resultCountText = $scope.find('.woocommerce-result-count').text();
+				resultCountText = resultCountText.replace( /\d\u2013\d+/, '1\u2013' + $scope.find('.wpr-grid-item').length );
+
+				$scope.find('.woocommerce-result-count').text(resultCountText);
 			}
 
 			// Settings
@@ -786,6 +769,22 @@
 						if ( settings.pagination_max_pages - 1 !== pagesLoaded ) {
 							if ( 'load-more' === settings.pagination_type ) {
 								pagination.find( '.wpr-load-more-btn' ).fadeIn();
+
+								if ( '*' !== $scope.find('.wpr-active-filter').attr('data-filter') ) {
+									let dataFilterClass = $scope.find('.wpr-active-filter').attr('data-filter').substring(1);
+									items.each(function() {
+										if ( !$(this).hasClass(dataFilterClass) ) {
+											loadedItems = false;
+										} else {
+											loadedItems = true;
+											return false;
+										}
+									});
+		
+									if ( !loadedItems ) {
+										$scope.find( '.wpr-grid' ).infiniteScroll( 'loadNextPage' );
+									}
+								}
 							}
 						} else {
 							pagination.find( '.wpr-pagination-finish' ).fadeIn( 1000 );
@@ -1731,6 +1730,13 @@
 						}
 					}
 
+					// Load More
+					if ( 'load-more' === settings.pagination_type ) {
+						if ( 0 === iGrid.find($(this).attr('data-filter')).length ) {
+							$scope.find( '.wpr-grid' ).infiniteScroll( 'loadNextPage' );
+						}
+					}
+
 					// Filtering Animation
 					if ( 'default' !== settings.filters_animation ) {
 						$scope.find( '.wpr-grid-item-inner' ).css({
@@ -2049,70 +2055,6 @@
 					}
 				});
 			}
-			
-			// if ( $scope.find('.flex-control-thumbs').length && 'yes' === $scope.find('.wpr-product-media-wrap').data('thumbnails-slider') ) {
-
-			// 	$scope.find('.flex-control-thumbs').wrap('<div class="swiper"></div>');
-			// 	$scope.find('.flex-control-thumbs').addClass('swiper-wrapper');
-			// 	$scope.find('.flex-control-thumbs').find('li').addClass('swiper-slide');
-
-			// 	var swiperLoader = function swiperLoader(swiperElement, swiperConfig) {
-			// 		if ('undefined' === typeof Swiper) {     
-			// 			var asyncSwiper = elementorFrontend.utils.swiper;     
-			// 			return new asyncSwiper(swiperElement, swiperConfig).then( function (newSwiperInstance) {     
-			// 				return newSwiperInstance;
-			// 			});  
-			// 		 } else {     
-			// 			  return swiperPromise(swiperElement, swiperConfig);  
-			// 		  }
-			// 	};  
-				
-			// 	var swiperPromise = function swiperPromise(swiperElement, swiperConfig) {    
-			// 		return new Promise(function (resolve, reject) {  
-			// 				var swiperInstance = new Swiper(swiperElement, swiperConfig);     
-			// 				resolve(swiperInstance);   
-			// 		}); 
-			// 	};
-			
-			// 	var swiperSlider = $scope.find('.swiper');
-			// 	var swiperNavigation = '<div class="swiper-button-prev"></div><div class="swiper-button-next"></div>';
-			// 	swiperSlider.append('<div class="swiper-button-prev wpr-thumbnail-slider-prev-arrow"></div><div class="swiper-button-next wpr-thumbnail-slider-next-arrow"></div>');
-							
-			// 	var slidestoshow = $scope.find('.wpr-product-media-wrap').data("slidestoshow");
-
-			// 	swiperLoader(swiperSlider, {
-			// 		// spaceBetween: +swiperSlider.data('swiper-space-between'),
-			// 		autoplay: swiperSlider.data("autoplay") === 'yes' ? true : false,
-			// 		// delay: +swiperSlider.attr('data-swiper-delay'),
-			// 		// speed: +swiperSlider.attr('data-swiper-speed'),
-			// 		slidesPerView: swiperSlider.data("slidestoshow"),
-			// 		direction: 'horizontal',
-			// 		// loop: true,
-			// 		// preloadImages: true,
-			// 		navigation: {
-			// 		  nextEl: '.wpr-thumbnail-slider-next-arrow',
-			// 		  prevEl: '.wpr-thumbnail-slider-prev-arrow',
-			// 		},
-			// 		// Responsive breakpoints
-			// 		breakpoints: {
-			// 		  // when window width is >= 320px
-			// 		  320: {
-			// 			slidesPerView: 1,
-			// 		  },
-			// 		  // when window width is >= 480px
-			// 		  480: {
-			// 			slidesPerView: 2,
-			// 		  },
-			// 		  // when window width is >= 640px
-			// 		  769: { // 640
-			// 			slidesPerView: slidestoshow,
-					  
-			// 		  }
-			// 		},
-				  
-			// 	  });
-
-			// }
 		}, // End widgetProductMedia
 
 		widgetCountDown: function( $scope ) {
@@ -4421,6 +4363,381 @@
 			}	
 			
 		}, // End of widgetPageMyAccount
+
+		widgetReadingProgressBar: function($scope) {
+
+			if ( $scope.find('.wpr-reading-progress-bar-container').length != 0 ) {
+				var rpbContainer = $scope.find('.wpr-reading-progress-bar-container');
+				readingProgressBar($scope, rpbContainer);
+			}
+
+			function readingProgressBar($scope, rpbContainer) {
+
+				var initialPaddingTop = $('body').css('paddingTop');
+				var initialPaddingBottom = $('body').css('paddingBottom');
+
+				if ( '0px' === rpbContainer.css('top') ) {
+					if ( 'colored' == rpbContainer.data('background-type') ) {
+						$('body').css('paddingTop', $scope.find('.wpr-reading-progress-bar').css('height'));
+					}
+					if( $('#wpadminbar').length ) {
+						rpbContainer.css('top', $('#wpadminbar').height());
+					}
+					$('body').css('paddingBottom', initialPaddingBottom);
+				} else if ( '0px' === rpbContainer.css('bottom') && 'colored' == rpbContainer.data('background-type') ) {
+					$('body').css('paddingBottom', $scope.find('.wpr-reading-progress-bar').css('height'));
+					$('body').css('paddingTop', initialPaddingTop);
+				}
+
+				readingProgressBarFill($scope);
+				window.onscroll = function() {
+					readingProgressBarFill($scope);
+				};
+
+			}
+
+			function readingProgressBarFill($scope) {
+				if($scope.find('.wpr-reading-progress-bar').length) {
+					var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+					var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+					var scrolled = (winScroll / height) * 100;
+					$scope.find(".wpr-reading-progress-bar").css('width', scrolled + "%");
+				}
+			}
+
+		},
+
+		widgetDataTable: function($scope) {
+			
+			var beforeFilter = $scope.find("tbody .wpr-table-row"),
+				itemsPerPage = +$scope.find('.wpr-table-inner-container').attr('data-rows-per-page'),
+				paginationListItems = $scope.find('.wpr-table-custom-pagination-list-item'),
+				initialRows = $scope.find('.wpr-table-inner-container tbody tr'),
+				table = $scope.find('.wpr-table-inner-container tbody'),
+				pageIndex, value, paginationIndex;
+
+			// Table Custom Pagination
+			if ( 'yes' === $scope.find('.wpr-table-inner-container').attr('data-custom-pagination') ) {
+
+				var tableRows = initialRows.filter(function(index) {
+					return index < $scope.find('.wpr-table-inner-container').attr('data-rows-per-page');
+				});
+
+				table.html(tableRows);
+
+				adjustPaginationList();
+
+				$scope.on('click', '.wpr-table-custom-pagination-list-item', function() {
+						paginationListItems.removeClass('wpr-active-pagination-item');
+						$(this).addClass('wpr-active-pagination-item');
+						adjustPaginationList();
+						table.hide();
+						pageIndex = +$(this).text();
+						itemsPerPage = +$scope.find('.wpr-table-inner-container').attr('data-rows-per-page');
+
+						table.html(initialRows.filter(function(index) {
+								index++;
+								return index > itemsPerPage * (pageIndex - 1) && index <= itemsPerPage * pageIndex;
+						}));
+
+						table.show();
+						beforeFilter = $scope.find("tbody .wpr-table-row");
+						beforeFilter.find('.wpr-table-tr-before-remove').each(function() {
+							$(this).removeClass('wpr-table-tr-before-remove');
+						});
+
+						entryInfo();
+				});
+
+				$scope.find('.wpr-table-prev-next').each(function() {
+					pageIndex = +$scope.find('.wpr-active-pagination-item').text();
+
+					if ( $(this).hasClass('wpr-table-custom-pagination-prev')) {
+
+						$(this).on('click', function() {
+
+							if ( 1 < pageIndex ) {
+								paginationListItems.removeClass('wpr-active-pagination-item');
+								pageIndex--;
+
+								paginationListItems.each(function(index) {
+									index++;
+									if ( index === pageIndex) {
+										$(this).addClass('wpr-active-pagination-item');
+										pageIndex = +$(this).text();
+									}
+								});
+								adjustPaginationList();
+	
+								table.html(initialRows.filter(function(index) {
+									index++;
+									return index > itemsPerPage * (pageIndex - 1) && index <= itemsPerPage * pageIndex;
+								}));
+
+								beforeFilter = $scope.find("tbody .wpr-table-row");
+
+								if ( '' == value ) {
+									table.html(beforeFilter);
+								}
+							}
+
+							entryInfo();
+						});
+
+					} else {
+
+						$(this).on('click', function() {
+
+							if (  paginationListItems.length > pageIndex ) {
+								paginationListItems.removeClass('wpr-active-pagination-item');
+								pageIndex++;
+								
+								paginationListItems.each(function(index) {
+									index++;
+									if ( index === pageIndex) {
+										$(this).addClass('wpr-active-pagination-item');
+										pageIndex = +$(this).text();
+									}
+								});
+								adjustPaginationList();
+	
+								table.html(initialRows.filter(function(index) {
+									index++;
+									return index > itemsPerPage * (pageIndex - 1) && index <= itemsPerPage * pageIndex;
+								}));
+
+								beforeFilter = $scope.find("tbody .wpr-table-row");
+													
+								if ( '' == value ) {
+									table.html(beforeFilter);
+								}
+							}
+
+							entryInfo();
+						});
+					}
+	
+					beforeFilter.find('.wpr-table-tr-before-remove').each(function() {
+						$(this).removeClass('wpr-table-tr-before-remove');
+					});
+
+				});
+
+			}
+
+			$scope.find('.wpr-table-inner-container').removeClass('wpr-hide-table-before-arrange');
+
+			entryInfo();
+
+			// Table Live Search
+			beforeFilter = $scope.find("tbody .wpr-table-row");
+			$scope.find(".wpr-table-live-search").keyup(function () {
+				if ( this.value !== '' ) {
+					$scope.find('.wpr-table-pagination-cont').addClass('wpr-hide-pagination-on-search');
+				} else {
+					$scope.find('.wpr-table-pagination-cont').removeClass('wpr-hide-pagination-on-search');
+				}
+				value = this.value.toLowerCase().trim();
+
+				var afterFilter = [];
+
+				initialRows.each(function (index) {
+					// if (!index) return; // TODO: restore if better
+					$(this).find("td").each(function () {
+						var id = $(this).text().toLowerCase().trim();
+						var not_found = (id.indexOf(value) == -1);
+						// $(this).closest('tr').toggle(!not_found);
+						// return not_found;
+						if ( !not_found ) {
+							afterFilter.push($(this).closest('tr'));
+						}
+					});
+				});
+
+				table.html(afterFilter);
+
+				if ( '' == value ) {
+					table.html(beforeFilter);
+				}
+
+				entryInfo();
+			});
+
+			// Table Sorting
+			if ( 'yes' === $scope.find('.wpr-table-inner-container').attr('data-table-sorting') ) {
+				$(window).click(function(e) {
+					if ( !$(e.target).hasClass('wpr-table-th') && 0 === $(e.target).closest('.wpr-table-th').length ) {
+						if ( !$(e.target).hasClass('wpr-active-td-bg-color') && 0 === $(e.target).closest('.wpr-active-td-bg-color').length ) {
+							$scope.find('td').each(function() {
+								if($(this).hasClass('wpr-active-td-bg-color')) {
+									$(this).removeClass('wpr-active-td-bg-color');
+								}
+							});
+						}
+					}
+				});
+
+				$scope.find('th').click(function(){
+
+					var indexOfTr = $(this).index();
+
+					$scope.find('td').each(function() {
+						if($(this).index() === indexOfTr) {
+							$(this).addClass('wpr-active-td-bg-color');
+						} else {
+							$(this).removeClass('wpr-active-td-bg-color');
+						}
+					});
+
+					$scope.find('th').each(function() {
+						$(this).find('.wpr-sorting-icon').html('<i class="fas fa-sort" aria-hidden="true"></i>');
+					});
+
+					var table = $(this).parents('table').eq(0);
+					var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+
+					this.asc = !this.asc
+					if ($scope.hasClass('wpr-data-table-type-custom') ? !this.asc : this.asc) {
+						if ($scope.hasClass('wpr-data-table-type-custom')) {
+							$(this).find('.wpr-sorting-icon').html('<i class="fas fa-sort-down" aria-hidden="true"></i>');
+						} else {
+							$(this).find('.wpr-sorting-icon').html('<i class="fas fa-sort-up" aria-hidden="true"></i>');
+						}
+						rows = rows.reverse() 
+					} 
+	
+					if($scope.hasClass('wpr-data-table-type-custom') ? this.asc : !this.asc) {
+						
+						if ($scope.hasClass('wpr-data-table-type-custom')) {
+							$(this).find('.wpr-sorting-icon').html('<i class="fas fa-sort-up" aria-hidden="true"></i>');
+						} else {
+
+							$(this).find('.wpr-sorting-icon').html('<i class="fas fa-sort-down" aria-hidden="true"></i>');
+						}
+					}
+	
+					for (var i = 0; i < rows.length; i++) {
+						table.append(rows[i])
+					}
+	
+					beforeFilter.find('.wpr-table-tr-before-remove').each(function() {
+						$(this).closest('.wpr-table-row').next('.wpr-table-appended-tr').remove();
+						$(this).removeClass('wpr-table-tr-before-remove');
+					});
+				});
+			}
+
+			if ( $scope.find('.wpr-table-inner-container').attr('data-row-pagination') === 'yes' ) {
+				$scope.find('.wpr-table-head-row').prepend('<th class="wpr-table-th-pag" style="vertical-align: middle;">' + '#' + '</th>')
+				initialRows.each(function(index) {
+						$(this).prepend('<td class="wpr-table-td-pag" style="vertical-align: middle;"><span style="vertical-align: middle;">'+ (index + 1) +'</span></td>')
+				})	
+			}
+
+			if ( $scope.find('.wpr-table-export-button-cont').length ) {
+				var exportBtn = $scope.find('.wpr-table-export-button-cont .wpr-button');;
+				exportBtn.each(function() {
+					if ( $(this).hasClass('wpr-xls')) {
+						$(this).on('click', function() {    
+							let table = $scope.find('table');
+							TableToExcel.convert(table[0], { // html code may contain multiple tables so here we are refering to 1st table tag
+								name: `export.xlsx`, // fileName you could use any name
+								sheet: {
+									name: 'Sheet 1' // sheetName
+								}
+							});
+						});
+					} else if ( $(this).hasClass('wpr-csv')) {
+						$(this).on('click', function() {
+							htmlToCSV('why-this-arg?', "placeholder.csv", $scope.find('.wpr-data-table'));
+						});
+					}
+				});
+			}
+
+			// if('yes' === $scope.find('.wpr-table-inner-container').attr('data-enable-tr-link')) {
+			// 	$scope.find('tbody tr:eq('+ $scope.find('.wpr-table-inner-container').attr('data-tr-index') +')').click(function() {
+			// 		window.location.href = 'https://stackoverflow.com/questions/503093/how-do-i-redirect-to-another-webpage';
+			// 		// window.open('https://stackoverflow.com/questions/503093/how-do-i-redirect-to-another-webpage', '_blank');
+			// 	});
+			// }
+
+			function entryInfo() {
+
+				if ( 'yes' !== $scope.find('.wpr-table-inner-container').attr('data-entry-info') ) {
+					return;
+				}
+
+				var entryPage = +$scope.find('.wpr-active-pagination-item').text(),
+					lastEntry = itemsPerPage * entryPage - (itemsPerPage - $scope.find('tbody tr').length),
+					firstEntry = lastEntry - $scope.find('tbody tr').length + 1;
+
+				$scope.find('.wpr-entry-info').html('Showing ' + firstEntry + ' to ' + lastEntry + ' of ' + initialRows.length + ' Entries.');
+			}
+
+			function adjustPaginationList() {
+				
+				paginationIndex = $scope.find('.wpr-active-pagination-item').index();
+				paginationListItems.each(function(index) {
+					if (index == 0 || index == paginationListItems.length - 1 || index <= paginationIndex && index >= paginationIndex - 2) {
+						$(this).css('display', 'flex');
+					} else {
+						$(this).css('display', 'none');
+					}
+				});
+			}
+			
+			function comparer(index) {
+				return function(a, b) {
+					var valA = getCellValue(a, index), valB = getCellValue(b, index)
+					return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB)
+				}
+			}
+
+			function getCellValue (row, index) { 
+				return $(row).children('td').eq(index).text() 
+			}
+
+			function htmlToCSV(html, filename, view) {
+				var data = [];
+				var rows = view.find(".wpr-table-row");
+						
+				for (var i = 0; i < rows.length; i++) {
+					var row = [], cols = rows[i].querySelectorAll(".wpr-table-text");
+							
+					for (var j = 0; j < cols.length; j++) {
+							row.push(cols[j].innerText);
+					}
+					
+					data.push(row.join(",")); 		
+				}
+			
+				downloadCSVFile(data.join("\n"), filename);
+			}
+		
+			function downloadCSVFile(csv, filename) {
+				var csv_file, download_link;
+			
+				csv_file = new Blob([csv], {type: "text/csv"});
+			
+				download_link = document.createElement("a");
+			
+				download_link.download = filename;
+			
+				download_link.href = window.URL.createObjectURL(csv_file);
+			
+				download_link.style.display = "none";
+			
+				document.body.appendChild(download_link);
+			
+				download_link.click();
+			} // Data Table CSV export
+
+		}, // End widgetDataTable
+
+		widgetAdvancedAccordion: function($scope) {
+
+		}, // end widgetAdvancedAccordion
 
 		// Editor Check
 		editorCheck: function() {

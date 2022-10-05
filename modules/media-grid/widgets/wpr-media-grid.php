@@ -684,12 +684,6 @@ class Wpr_Media_Grid extends Widget_Base {
 				'label' => esc_html__( 'Show Filters', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => '',
-				'widescreen_default' => '',
-				'laptop_default' => '',
-				'tablet_extra_default' => '',
-				'tablet_default' => '',
-				'mobile_extra_default' => '',
-				'mobile_default' => '',
 				'selectors_dictionary' => [
 					'' => 'none',
 					'yes' => 'block'
@@ -1105,6 +1099,9 @@ class Wpr_Media_Grid extends Widget_Base {
 					'h4' => 'H4',
 					'h5' => 'H5',
 					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+					'P' => 'p'
 				],
 				'default' => 'h2',
 				'condition' => [

@@ -52,7 +52,7 @@ class Wpr_Reading_Progress_Bar extends Widget_Base {
     public function register_controls() {
         
 		$this->start_controls_section(
-			'wpr_reading_progress_bar',
+			'reading_progress_bar',
 			[
                 'tab' => Controls_Manager::TAB_CONTENT,
 				'label' => __( 'Reading Progress Bar - Royal Addons', 'wpr-addons' ),
@@ -60,7 +60,7 @@ class Wpr_Reading_Progress_Bar extends Widget_Base {
         );
 
 		$this->add_control(
-			'wpr_particles_apply_changes',
+			'rpb_apply_changes',
 			[
 				'type' => Controls_Manager::RAW_HTML,
 				'raw' => '<div class="elementor-update-preview editor-wpr-preview-update"><span>Update changes to Preview</span><button class="elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply</button>',
@@ -69,28 +69,16 @@ class Wpr_Reading_Progress_Bar extends Widget_Base {
 		);
 
 		$this->add_control(
-			'wpr_progress_bar_position',
+			'rpb_info',
 			[
-				'label' => __( 'Position', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::SELECT,
-				'default' => 'top',
-				'render_type' => 'template',
-				'options' => [
-					'top' => __( 'Top', 'wpr-addons' ),
-					'bottom' => __( 'Bottom', 'wpr-addons' ),
-				],
-				'selectors_dictionary' => [
-					'top' => 'top: 0px; bottom: auto;',
-					'bottom' => 'bottom: 0px; top: auto;',
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-reading-progress-bar-container' => '{{VALUE}}',
-				]
+				'raw' => esc_html__( 'Please scroll to view progress bar in action', 'wpr-addons' ),
+				'type' => Controls_Manager::RAW_HTML,
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 			]
 		);
 
 		$this->add_control(
-			'wpr_height',
+			'rpb_height',
 			[
 				'label' => __( 'Height', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
@@ -110,11 +98,34 @@ class Wpr_Reading_Progress_Bar extends Widget_Base {
 					'.wpr-reading-progress-bar-container' => 'height: {{SIZE}}{{UNIT}} !important',
 					'.wpr-reading-progress-bar-container .wpr-reading-progress-bar' => 'height: {{SIZE}}{{UNIT}} !important',
 				],
+				'separator' => 'before'
 			]
 		);
 
 		$this->add_control(
-			'background_type',
+			'progress_bar_position',
+			[
+				'label' => __( 'Position', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::SELECT,
+				'default' => 'top',
+				'render_type' => 'template',
+				'separator' => 'before',
+				'options' => [
+					'top' => __( 'Top', 'wpr-addons' ),
+					'bottom' => __( 'Bottom', 'wpr-addons' ),
+				],
+				'selectors_dictionary' => [
+					'top' => 'top: 0px; bottom: auto;',
+					'bottom' => 'bottom: 0px; top: auto;',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-reading-progress-bar-container' => '{{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'rpb_background_type',
 			[
 				'label' => __( 'Background Type', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::SELECT,
@@ -128,7 +139,7 @@ class Wpr_Reading_Progress_Bar extends Widget_Base {
 		);
 
 		$this->add_control(
-			'wpr_background_color',
+			'rpb_background_color',
 			[
 				'label' => __( 'Background Color', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
@@ -143,13 +154,29 @@ class Wpr_Reading_Progress_Bar extends Widget_Base {
 		);
 
 		$this->add_control(
-			'wpr_fill_color',
+			'rpb_fill_color',
 			[
 				'label' => __( 'Fill Color', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'default' => '#6A63DA',
 				'selectors' => [
 					'.wpr-reading-progress-bar-container .wpr-reading-progress-bar' => 'background-color: {{VALUE}};'
+				]
+			]
+		);
+
+		$this->add_control(
+			'rpb_transition_duration',
+			[
+				'label' => esc_html__( 'Animation Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.1,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'separator' => 'before',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-reading-progress-bar' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
 				]
 			]
 		);
@@ -163,7 +190,7 @@ class Wpr_Reading_Progress_Bar extends Widget_Base {
 
 		$this->add_render_attribute( 'wpr-rpb-attrs', [
 			'class' => 'wpr-reading-progress-bar-container',
-			'data-background-type' => $settings['background_type'],
+			'data-background-type' => $settings['rpb_background_type'],
 		] );
 
         echo '<div '. $this->get_render_attribute_string('wpr-rpb-attrs') .'><div class="wpr-reading-progress-bar"></div></div>';

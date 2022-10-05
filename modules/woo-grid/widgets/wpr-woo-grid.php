@@ -556,6 +556,16 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
+		$this->add_control(
+			'woo_grid_notice_video_tutorial',
+			[
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => __( 'Build WooCommerce Shop <strong>completely with Elementor and Royal Addons !</strong> <ul><li><a href="https://www.youtube.com/watch?v=f_3tNiBC3dw" target="_blank" style="color: #93003c;"><strong>Watch Video Tutorial <span class="dashicons dashicons-video-alt3"></strong></a></li></ul>', 'wpr-addons' ),
+				'separator' => 'after',
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+			]
+		);
+
 		// Get Available Meta Keys
 		$post_meta_keys = Utilities::get_custom_meta_keys();
 
@@ -901,12 +911,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'label' => esc_html__( 'Show Filters', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
-				'widescreen_default' => 'yes',
-				'laptop_default' => 'yes',
-				'tablet_extra_default' => 'yes',
-				'tablet_default' => 'yes',
-				'mobile_extra_default' => 'yes',
-				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'none',
 					'yes' => 'block'
@@ -1192,6 +1196,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'h4' => 'H4',
 					'h5' => 'H5',
 					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+					'P' => 'p'
 				],
 				'default' => 'h2',
 				'condition' => [
@@ -1367,6 +1374,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'h4' => 'H4',
 					'h5' => 'H5',
 					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+					'P' => 'p'
 				],
 				'default' => 'h2',
 				'condition' => [
@@ -7990,7 +8000,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 	}
 
 	// Render Sort & Results
-	public function render_grid_sorting( $settings ) {}
+	public function render_grid_sorting( $settings, $posts ) {}
 
 	// Render Grid Filters
 	public function render_grid_filters( $settings ) {
@@ -8501,7 +8511,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			
 			if ( 'upsell' !== $settings['query_selection'] && 'cross-sell' !== $settings['query_selection'] ) {
 				// Sort & Results
-				$this->render_grid_sorting( $settings );
+				$this->render_grid_sorting( $settings, $posts );
 
 				if ( !((is_product_category() || is_product_tag()) && !wpr_fs()->can_use_premium_code()) ) {
 					// Filters

@@ -39,7 +39,7 @@ class Wpr_Feature_List extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'royal', 'features', 'feature list' ];
+		return [ 'royal', 'features', 'feature list', 'icon list' ];
 	}
 
     public function get_custom_help_url() {
@@ -85,7 +85,7 @@ class Wpr_Feature_List extends Widget_Base {
                 'prefix_class' => 'wpr-feature-list-',
 				'render_type' => 'template',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-feature-list-item' => 'display-flex; justify-content: {{VALUE}}',
+					'{{WRAPPER}} .wpr-feature-list-item' => 'justify-content: {{VALUE}}',
 				],
 				'separator' => 'before',
 			]
@@ -160,6 +160,9 @@ class Wpr_Feature_List extends Widget_Base {
 					'h4' => 'H4',
 					'h5' => 'H5',
 					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+					'P' => 'p'
 				],
 				'default' => 'h2'
 			]

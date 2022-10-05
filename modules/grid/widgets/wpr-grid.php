@@ -968,12 +968,6 @@ class Wpr_Grid extends Widget_Base {
 				'label' => esc_html__( 'Show Filters', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
-				'widescreen_default' => 'yes',
-				'laptop_default' => 'yes',
-				'tablet_extra_default' => 'yes',
-				'tablet_default' => 'yes',
-				'mobile_extra_default' => 'yes',
-				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'none',
 					'yes' => 'block'
@@ -1397,6 +1391,9 @@ class Wpr_Grid extends Widget_Base {
 					'h4' => 'H4',
 					'h5' => 'H5',
 					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+					'P' => 'p'
 				],
 				'default' => 'h2',
 				'condition' => [
@@ -7695,6 +7692,11 @@ class Wpr_Grid extends Widget_Base {
 	public function get_main_query_args() {
 		$settings = $this->get_settings();
 		$author = ! empty( $settings[ 'query_author' ] ) ? implode( ',', $settings[ 'query_author' ] ) : '';
+
+		// if ( is_user_logged_in() ){
+		// 	$logged_in_user = wp_get_current_user();
+		// 	$author = '1' . ',' . $logged_in_user->ID;
+		// }
 
 		// Get Paged
 		if ( get_query_var( 'paged' ) ) {

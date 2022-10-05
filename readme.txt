@@ -1,9 +1,9 @@
 === Royal Elementor Addons (Header Footer Builder, Popups, Post Grid, Woocommerce Product Grid, Slider, Parallax Image, Free Elementor Widgets & Elementor Templates. Elementor WooCommerce Builder) ===
 Contributors: WP Royal, rubeushagrid13, cyberpinky, elementoraddonswpr
 Tags: elementor, elements, widgets for elementor, elementor addons, elementor widgets, elementor form, woocommerce elementor, page builder, elementor templates, wordpress page builder, best elementor addons, addons for elementor, elementor woocommerce builder
-Stable tag: 1.3.47
+Stable tag: 1.3.50
 Requires at least: 5.0
-Tested up to: 6.0.1
+Tested up to: 6.0.2
 Requires PHP: 5.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -108,10 +108,12 @@ and other custom branding related settings)
 
 **Elementor Wocommerce Builder Templates Kits**
 
+- [**Electronic Store**](https://demosites.royal-elementor-addons.com/estore-v1/?ref=rea-wpo-pp-details-tab) - created with Elementor WooCommerce Builder
 - [**Woo Shop**](https://demosites.royal-elementor-addons.com/wooshop-v1/?ref=rea-wpo-pp-details-tab) - created with Elementor WooCommerce Builder
 - [**Fashion**](https://demosites.royal-elementor-addons.com/fashion-v1/?ref=rea-wpo-pp-details-tab) - created with Elementor WooCommerce Builder
 - [**Grocery Store**](https://demosites.royal-elementor-addons.com/grocery-store-v1/?ref=rea-wpo-pp-details-tab) - created with Elementor WooCommerce Builder
 - [**Furniture Store**](https://demosites.royal-elementor-addons.com/furniture-shop-v1/?ref=rea-wpo-pp-details-tab) - created with Elementor WooCommerce Builder
+- [**Food Delivery**](https://demosites.royal-elementor-addons.com/woo-food-v1/?ref=rea-wpo-pp-details-tab) - created with Elementor WooCommerce Builder
 
 **Elementor Theme Builder Templates Kits**
 
@@ -153,6 +155,7 @@ and other custom branding related settings)
 - [**Pet Care Elementor Templates Kit**](https://demosites.royal-elementor-addons.com/pet-care-v1/?ref=rea-wpo-pp-details-tab)
 - [**Digital Marketing Agency Templates Kit**](https://demosites.royal-elementor-addons.com/digital-marketing-agency-v1/?ref=rea-wpo-pp-details-tab)
 - [**One Page Digital Marketing Agency Templates Kit**](https://demosites.royal-elementor-addons.com/one-page-v1/blog-one-page-v1/?ref=rea-wpo-pp-details-tab)
+- [**Travel Agency Templates Kit**](https://demosites.royal-elementor-addons.com/travel-agency-v1/?ref=rea-wpo-pp-details-tab)
 
 **How to Import Template Kit:**
 
@@ -383,6 +386,17 @@ memory_limit 256M or more
 post_max_size 64M
 
 == Changelog ==
+
+= Royal Elementor Addons v1.3.49 - 2022-09-22 =
+* FIXED: Minor bugs.
+* ADDED: Elementor Data Table Widget.
+* ADDED: Elementor Reading Progress Bar Widget.
+* ADDED: Royal Elementor Theme Builder [**Travel Agency**](https://demosites.royal-elementor-addons.com/travel-agency-v1/?ref=rea-wpo-pp-details-tab) Templates Kit.
+
+= Royal Elementor Addons v1.3.48 - 2022-09-13 =
+* FIXED: Fixed minor bugs.
+* ADDED: Royal Elementor Theme Builder [**Electornic Store**](https://demosites.royal-elementor-addons.com/estore-v1/?ref=rea-wpo-pp-details-tab) Templates Kit.
+* ADDED: Royal Elementor Theme Builder [**Food Delivery**](https://demosites.royal-elementor-addons.com/woo-food-v1/?ref=rea-wpo-pp-details-tab) Templates Kit.
 
 = Royal Elementor Addons v1.3.47 - 2022-08-10 =
 * FIXED: Fixed minor bugs.
