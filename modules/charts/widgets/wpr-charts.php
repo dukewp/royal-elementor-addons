@@ -1236,9 +1236,11 @@ class Wpr_Charts extends Widget_Base {
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'charts', [
-			'CSV file/url/googlesheets',
-			'More than 3 Data Labels',
-			'More than 3 Items'
+			'Upload CSV File',
+			'Import CSV File from URL',
+			'Import published Google Sheets',
+			'Add Unlimited Data Labels',
+			'Add Unlimited Chart Items'
 		] );
 		
 		$this->start_controls_section(
@@ -1701,6 +1703,9 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'show_chart_title' => 'yes'
+				]
 			]
         );
 
@@ -2308,10 +2313,10 @@ class Wpr_Charts extends Widget_Base {
 			'chart_title_position' => !empty($chart_title_position) ? $chart_title_position : '',
 			'chart_title_color' => !empty($chart_title_color) ? $chart_title_color : '',
 			'title_font_family' => $title_font_family,
-			'title_font_size' => $title_font_size['size'],
-			'title_font_style' => $title_font_style,
+			'title_font_size' => isset($title_font_size) ? $title_font_size['size'] : '',
+			'title_font_style' => isset($title_font_style) ? $title_font_style : '',
 			'title_font_weight' => $title_font_weight,
-			'title_padding' => $chart_title_padding['size'],
+			'title_padding' => isset($chart_title_padding) ? $chart_title_padding['size'] : '',
 			'show_chart_tooltip' => $show_chart_tooltip,
 			'tooltips_percent' => $tooltips_percent,
 			'chart_interaction_mode' => $chart_interaction_mode,

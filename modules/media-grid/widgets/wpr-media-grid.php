@@ -2420,7 +2420,7 @@ class Wpr_Media_Grid extends Widget_Base {
 			'Advanced Image Likes',
 			'Advanced Image Sharing',
 			'Advanced Grid Loading Animations (Fade in & Slide Up)',
-			'Unlimited Grid Elements Positioning',
+			'Advanced Grid Elements Positioning',
 			'Unlimited Image Overlay Animations',
 			'Image overlay GIF upload option',
 			'Image Overlay Blend Mode',
