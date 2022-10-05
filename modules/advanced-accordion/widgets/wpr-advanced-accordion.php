@@ -298,17 +298,6 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 
 		$this->add_control_show_acc_search();
 
-
-		$this->add_control(
-			'acc_search_placeholder',
-			[
-				'label' => esc_html__( 'Placeholder', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => esc_html__( 'Search...', 'wpr-addons' ),
-				'separator' => 'before',
-			]
-		);
-
 		$this->add_control(
 			'acc_search_icon',
 			[
@@ -323,6 +312,18 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'condition' => [
 					'show_acc_search' => 'yes',
 				],
+			]
+		);
+
+		$this->add_control(
+			'acc_search_placeholder',
+			[
+				'label' => esc_html__( 'Placeholder', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => esc_html__( 'Search...', 'wpr-addons' ),
+				'condition' => [
+					'show_acc_search' => 'yes'
+				]
 			]
 		);
 
