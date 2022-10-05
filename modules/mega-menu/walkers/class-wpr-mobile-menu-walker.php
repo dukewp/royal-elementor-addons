@@ -78,7 +78,7 @@ class Wpr_Mobile_Menu_Walker extends \Walker_Nav_Menu {
 				$classes[] = 'wpr-mega-menu-'. $settings['wpr_mm_enable'];
 				$id_attr = ' data-id="'. $item->ID .'"';
 
-				if ( 'ajax' === $settings['wpr_mm_render'] ) {
+				if ( 'ajax' === $settings['wpr_mm_render'] && 'mega' === $settings['wpr_mm_mobile_content'] ) {
 					$classes[] = 'wpr-mega-menu-ajax';
 				}
 			}

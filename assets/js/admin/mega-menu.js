@@ -41,6 +41,9 @@ jQuery(document).ready(function( $ ) {
             // Menu Width
             WprMegaMenuSettings.initMenuWidthToggle();
 
+            // Mobile Content
+            WprMegaMenuSettings.initMobileContentToggle();
+
             // Color Pickers
             WprMegaMenuSettings.initColorPickers();
 
@@ -285,10 +288,29 @@ jQuery(document).ready(function( $ ) {
             });
         },
 
+        initMobileContentToggle: function() {
+            var select = $('#wpr_mm_mobile_content'),
+                option = $('#wpr_mm_render').closest('.wpr-mm-setting');
+            
+            if ( 'mega' === select.val() ) {
+                option.show();
+            } else {
+                option.hide();
+            }
+
+            select.on('change', function() {
+                if ( 'mega' === select.val() ) {
+                    option.show();
+                } else {
+                    option.hide();
+                }            
+            });
+        },
+
         setSettings: function( selector ) {
             var id = selector.attr('data-id'),
                 settings = WprMegaMenuSettings.getLiveSettings[id];
-console.log(settings['wpr_mm_icon_picker']);
+
             if ( ! $.isEmptyObject(settings) ) {
                 // General
                 if ( 'true' == settings['wpr_mm_enable'] ) {
@@ -309,8 +331,10 @@ console.log(settings['wpr_mm_icon_picker']);
                     $('.wpr-mm-setting-icon div span:last-child i').removeAttr('class');
                     $('.wpr-mm-setting-icon div span:last-child i').addClass(settings['wpr_mm_icon_picker']);
                 } else {
-                    $('.wpr-mm-setting-icon div span:last-child').removeClass('wpr-mm-active-icon');
+                    $('.wpr-mm-setting-icon div span').removeClass('wpr-mm-active-icon');
                     $('.wpr-mm-setting-icon div span:first-child').addClass('wpr-mm-active-icon');
+                    $('.wpr-mm-setting-icon div span:last-child i').removeAttr('class');
+                    $('.wpr-mm-setting-icon div span:last-child i').addClass('fas fa-angle-down');
                 }
                 $('#wpr_mm_icon_color').val(settings['wpr_mm_icon_color']).trigger('keyup');
                 $('#wpr_mm_icon_size').val(settings['wpr_mm_icon_size']);
@@ -339,7 +363,7 @@ console.log(settings['wpr_mm_icon_picker']);
                     $('.wpr-mm-setting-icon div span:last-child i').removeAttr('class');
                     $('.wpr-mm-setting-icon div span:last-child i').addClass('fas fa-angle-down');
                 }
-                $('#wpr_mm_icon_color').val('').trigger('keyup');
+                $('#wpr_mm_icon_color').val('').trigger('change');
                 $('#wpr_mm_icon_size').val('');
 
                 // Badge

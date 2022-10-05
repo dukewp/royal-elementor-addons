@@ -6,7 +6,7 @@ function register_mega_menu_cpt() {
     $args = array(
         'label'				  => esc_html__( 'Royal Mega Menu', 'wpr-addons' ),
         'public'              => true,
-        'publicly_queryable' => true,
+        'publicly_queryable'  => true,
         'rewrite'             => false,
         'show_ui'             => true,
         'show_in_menu'        => true,
@@ -83,10 +83,8 @@ function wpr_create_mega_menu_template() {
 
     $edit_link = add_query_arg(
         array(
-            'post'        => $mega_menu_id,
-            'action'      => 'elementor',
-            // 'context'     => 'jet-menu',
-            // 'parent_menu' => $menu_id,
+            'post' => $mega_menu_id,
+            'action' => 'elementor',
         ),
         admin_url( 'post.php' )
     );
@@ -150,17 +148,17 @@ function render_settings_popup() {
                     <input type="number" id="wpr_mm_custom_width" value="600">
                 </div>
                 <div class="wpr-mm-setting">
-                    <h4><?php esc_html_e('Dropdown Render Type', 'wpr-addons'); ?></h4>
-                    <select id="wpr_mm_render">
-                        <option value="default"><?php esc_html_e('Default', 'wpr-addons'); ?></option>
-                        <option value="ajax"><?php esc_html_e('Load with AJAX', 'wpr-addons'); ?></option>
+                    <h4><?php esc_html_e('Mobile Sub Content', 'wpr-addons'); ?></h4>
+                    <select id="wpr_mm_mobile_content">
+                        <option value="mega"><?php esc_html_e('Mega Menu', 'wpr-addons'); ?></option>
+                        <option value="wp-sub"><?php esc_html_e('WordPress Sub Items', 'wpr-addons'); ?></option>
                     </select>
                 </div>
                 <div class="wpr-mm-setting">
-                    <h4><?php esc_html_e('Mobile Menu Dropdown', 'wpr-addons'); ?></h4>
-                    <select id="wpr_mm_mobile_content">
-                        <option value="mega"><?php esc_html_e('Mega Menu', 'wpr-addons'); ?></option>
-                        <option value="wp-sub"><?php esc_html_e('WordPress Sub Menu', 'wpr-addons'); ?></option>
+                    <h4><?php esc_html_e('Mobile Sub Render', 'wpr-addons'); ?></h4>
+                    <select id="wpr_mm_render">
+                        <option value="default"><?php esc_html_e('Default', 'wpr-addons'); ?></option>
+                        <option value="ajax"><?php esc_html_e('Load with AJAX', 'wpr-addons'); ?></option>
                     </select>
                 </div>
 

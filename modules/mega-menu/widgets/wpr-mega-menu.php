@@ -820,11 +820,96 @@ class Wpr_Mega_Menu extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
-		// Section: Sub Menu ---------
+		// Section: Sub Mega Menu ---------
+		$this->start_controls_section(
+			'section_style_sub_mega_menu',
+			[
+				'label' => esc_html__( 'Sub Mega Menu', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'sub_mega_menu_color_bg',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'scheme' => [
+					'type' => Color::get_type(),
+					'value' => Color::COLOR_3,
+				],
+				'default' => '#7A7A7A00',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-sub-mega-menu' => 'background-color: {{VALUE}};',
+				],
+				'separator' => 'after'
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Border::get_type(),
+			[
+				'name' => 'sub_mega_menu_border',
+				'fields_options' => [
+					'border' => [
+						'default' => 'solid',
+					],
+					'width' => [
+						'default' => [
+							'top' => '1',
+							'right' => '1',
+							'bottom' => '1',
+							'left' => '1',
+							'isLinked' => true,
+						],
+					],
+					'color' => [
+						'default' => '#E8E8E8',
+					],
+				],
+				'selector' => '{{WRAPPER}} .wpr-sub-mega-menu',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'sub_mega_menu_box_shadow',
+				'exclude' => [
+					'box_shadow_position',
+				],
+				'selector' => '{{WRAPPER}} .wpr-sub-mega-menu',
+			]
+		);
+
+		$this->add_responsive_control(
+			'sub_mega_menu_offset',
+			[
+				'label' => esc_html__( 'Sub Mega Menu Offset', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 150,
+					],
+				],
+				'default' => [
+					'size' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-nav-menu-horizontal .wpr-nav-menu > li > .wpr-sub-mega-menu' => 'margin-top: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->end_controls_section(); // End Controls Section
+
+		// Section: WP Sub Menu ---------
 		$this->start_controls_section(
 			'section_style_sub_menu',
 			[
-				'label' => esc_html__( 'Sub Menu', 'wpr-addons' ),
+				'label' => esc_html__( 'WordPress Sub Menu', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -1564,8 +1649,8 @@ class Wpr_Mega_Menu extends Widget_Base {
 	}
 
 	public function load_walkers() {
-		require WPR_ADDONS_PATH . 'modules/mega-menu/walkers/class-wpr-main-menu-walker.php';
-		require WPR_ADDONS_PATH . 'modules/mega-menu/walkers/class-wpr-mobile-menu-walker.php';
+		require_once WPR_ADDONS_PATH . 'modules/mega-menu/walkers/class-wpr-main-menu-walker.php';
+		require_once WPR_ADDONS_PATH . 'modules/mega-menu/walkers/class-wpr-mobile-menu-walker.php';
 	}
 
 	protected function render() {

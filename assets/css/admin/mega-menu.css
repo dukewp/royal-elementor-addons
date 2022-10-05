@@ -251,6 +251,10 @@ button.wpr-edit-mega-menu-btn {
   cursor: pointer;
 }
 
+.wpr-mm-editor-close-popup-btn span:hover {
+  color: #888;
+}
+
 .wpr-mm-setting-radius div {
   display: flex;
 }
