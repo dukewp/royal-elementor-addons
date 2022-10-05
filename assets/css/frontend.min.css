@@ -6881,18 +6881,22 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 .wpr-data-fetch ul::-webkit-scrollbar-thumb {
     /* border-left: 6px solid transparent; */
-    border-right: 3px solid;
+    border-right: 3px solid blue;
+}
+
+.wpr-ajax-search-content a {
+    display: inline-block;
 }
 
 .wpr-data-fetch {
-    position: relative;
-    bottom: 0;
+    position: absolute;
+    top: 100%;
     left: 0;
     width: 100%;
     height: auto;
     display: none;
     border-style: solid;
-    border-top: none !important;
+    z-index: 9999;
 }
 
 .wpr-data-fetch ul {
@@ -6917,6 +6921,9 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     position: absolute;
     top: 10px;
     right: 30px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .wpr-close-search::before {

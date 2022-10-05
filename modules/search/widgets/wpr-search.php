@@ -71,27 +71,14 @@ class Wpr_Search extends Widget_Base {
 		);
 	}
 
-	public function add_control_ajax_query_type() {
-		$search_post_type = Utilities::get_custom_types_of( 'post', false );
-		$search_post_type = array_merge( [ 'all' => esc_html__( 'All', 'wpr-addons' ) ], $search_post_type );
-
-		foreach ( $search_post_type as $key => $value ) {
-			if ( 'all' != $key ) {
-				$search_post_type[$key] = $value .' (Pro)';
-			}
-		}
-
+	public function add_control_ajax_search() {
 		$this->add_control(
-			'ajax_query_type',
+			'ajax_search',
 			[
-				'label' => esc_html__( 'Ajax Query Type', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'label_block' => false,
-				'options' => $search_post_type,
-				'default' => 'all',
-				'condition' => [
-					'ajax_search' => 'yes'
-				]
+				'label' => sprintf( __( 'Enable AJAX Search %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'separator' => 'before',
+				'classes' => 'wpr-pro-control'
 			]
 		);
 	}
@@ -110,17 +97,6 @@ class Wpr_Search extends Widget_Base {
 
 		$this->add_control_search_query();
 
-		$this->add_control(
-			'ajax_search',
-			[
-				'label' => esc_html__( 'AJAX Search', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control_ajax_query_type();
-
 		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'search_pro_notice',
@@ -132,6 +108,8 @@ class Wpr_Search extends Widget_Base {
 				]
 			);
 		}
+
+		$this->add_control_ajax_search();
 
 
 		$this->add_control(
@@ -237,7 +215,8 @@ class Wpr_Search extends Widget_Base {
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'search', [
-			'Custom Search Query - Only Posts, Pages or Custom Post Types'
+			'Custom Search Query - Only Posts, Pages or Custom Post Types',
+			'AJAX Search',
 		] );
 
 		// Styles

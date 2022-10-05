@@ -1,6 +1,8 @@
 <?php
 namespace WprAddons\Classes;
 
+use WprAddons\Classes\Utilities;
+
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -20,11 +22,16 @@ if ( ! defined( 'ABSPATH' ) ) {
     }
 
     public function data_fetch(){
+		$all_post_types = [];
+        foreach(  Utilities::get_custom_types_of( 'post', false ) as $key=>$value ) {
+            array_push($all_post_types, $key);
+        }
+
         $the_query = new \WP_Query( 
             [
                 'posts_per_page' => -1, 
                 's' => esc_attr( $_POST['keyword'] ), 
-                'post_type' => $_POST['query_type'] === 'all' ? array('page', 'post', 'product') : array( $_POST['query_type'] ), 
+                'post_type' => $_POST['query_type'] === 'all' ? $all_post_types : array( $_POST['query_type'] ), 
             ]
         );
 
@@ -35,7 +42,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             
                     <li>
                         <?php the_post_thumbnail('thumbnail'); ?>
-                        <div class="">
+                        <div class="wpr-ajax-search-content">
                             <a href="<?php echo esc_url( the_permalink() ); ?>"><?php the_title();?></a>
                             <p><?php echo wp_trim_words(get_the_content(), 10); ?></p>
                         </div>
