@@ -289,7 +289,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'type' => Controls_Manager::NUMBER,
 				'label_block' => false,
 				'default' => 1,
-				'min' => 1,
+				'min' => 0,
 				'render_type' => 'template',
 				'frontend_available' => true,
 				'separator' => 'before'
@@ -330,7 +330,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 		$this->add_control(
 			'accordion_transition',
 			[
-				'label' => esc_html__( 'Transition', 'wpr-addons' ),
+				'label' => esc_html__( 'Animation Duration', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
 				'default' => 0.3,
 				'min' => 0,
@@ -346,11 +346,11 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 		$this->end_controls_section();
 
 		// Tab: Content ==========
-		// Section: Icon ---------
+		// Section: Icons ---------
 		$this->start_controls_section(
 			'section_icon_settings',
 			[
-				'label' => esc_html__( 'Icon', 'wpr-addons' ),
+				'label' => esc_html__( 'Icons', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
