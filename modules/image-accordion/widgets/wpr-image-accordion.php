@@ -74,7 +74,8 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'prefix_class' => 'wpr-image-accordion-',
 				'default' => 'row',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-image-accordion-wrap .wpr-image-accordion' => 'flex-direction: {{VALUE}};'
+					'{{WRAPPER}}.wpr-image-accordion-row .wpr-image-accordion-wrap .wpr-image-accordion' => 'flex-direction: {{VALUE}};',
+					'{{WRAPPER}}.wpr-image-accordion-column .wpr-image-accordion-wrap .wpr-image-accordion' => 'flex-direction: {{VALUE}};',
 				]
 			]
 		);
@@ -88,7 +89,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'hover' => esc_html__('Hover', 'wpr-addons'),
-					'pro-click' => esc_html__('Click (Pro)', 'wpr-addons'),
+					'pro-ck' => esc_html__('Click (Pro)', 'wpr-addons'),
 				],
 				'render_type' => 'template',
 				'default'  => 'hover',
@@ -286,7 +287,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 		$this->add_control_accordion_interaction();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'image-accordion', 'accordion_interaction', ['pro-click'] );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'image-accordion', 'accordion_interaction', ['pro-ck'] );
 
 		$this->add_group_control(
 			Group_Control_Image_Size::get_type(),
@@ -379,32 +380,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 		);
 
 		$this->add_control_accordion_skew();
-
-		$this->add_control(
-			'accordion_skew_size',
-			[
-				'label' => esc_html__( 'Skew Size', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['deg'],
-				'range' => [
-					'deg' => [
-						'min' => 0,
-						'max' => 360,
-					],
-				],				
-				'default' => [
-					'unit' => 'deg',
-					'size' => 15,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-image-accordion-item' => 'transform: skewX({{SIZE}}deg) translateZ(0);',
-					'{{WRAPPER}} .wpr-img-accordion-media-hover > *' => 'transform: skewX(-{{SIZE}}deg) translateZ(0);',
-				],
-				'condition' => [
-					'accordion_skew' => 'yes',
-				],
-			]
-		);
 
 		$this->add_control(
 			'accordion_item_transition',
@@ -2378,9 +2353,15 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'lightbox' =>  wp_json_encode($lightbox_settings)
 			]);
 		}
+
+		$no_column = '';
+
+		if ( $settings['accordion_direction'] == 'column' && !wpr_fs()->can_use_premium_code() ) {
+			$no_column = ' wpr-acc-no-column';
+		}
 		?>
 
-		<div class="wpr-image-accordion-wrap">
+		<div class="wpr-image-accordion-wrap <?php echo $no_column ?>">
 			<?php if ( ! wpr_fs()->can_use_premium_code() ) : ?>
 				<div class="wpr-image-accordion">
 			<?php else : ?>
@@ -2402,7 +2383,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 			$layout['activeItem'] = [
 				'activeWidth' => $settings['accordion_active_item_style']['size'],
 				'defaultActive' => $settings['default_active'],
-				'interaction' => $settings['accordion_interaction'],
+				'interaction' => wpr_fs()->can_use_premium_code() ? $settings['accordion_interaction'] : 'hover',
 				'overlayLink' => 'yes' === $item['wrapper_link'] && isset($item['accordion_btn_url']) ? $item['accordion_btn_url']['url'] : '',
 				'overlayLinkTarget' => isset($item['accordion_btn_url']) && $item['accordion_btn_url']['is_external'] === 'on' ? '_blank' : '_self'
 			];
