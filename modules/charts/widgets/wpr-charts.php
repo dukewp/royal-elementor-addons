@@ -1236,9 +1236,11 @@ class Wpr_Charts extends Widget_Base {
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'charts', [
-			'CSV file/url/googlesheets',
-			'More than 3 Data Labels',
-			'More than 3 Items'
+			'Upload CSV File',
+			'Import CSV File from URL',
+			'Import published Google Sheets',
+			'Add Unlimited Data Labels',
+			'Add Unlimited Chart Items'
 		] );
 		
 		$this->start_controls_section(

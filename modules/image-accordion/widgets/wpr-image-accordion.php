@@ -301,6 +301,8 @@ class Wpr_Image_Accordion extends Widget_Base {
 			[
 				'label' => __( 'Active Image By Default', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
+				'default' => 0,
+				'min' => 0,
 			]
 		);
 
@@ -590,7 +592,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'accordion_repeater_pro_notice',
 				[
 					'type' => Controls_Manager::RAW_HTML,
-					'raw' => 'More than 3 Slides are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-image-accordion-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					'raw' => 'More than 3 Items are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-image-accordion-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
 					'content_classes' => 'wpr-pro-notice',
 				]
 			);
@@ -724,34 +726,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 			]
 		);
 
-		// $repeater->add_control( 'element_like_icon', $this->add_repeater_args_element_like_icon() );
-
-		// $repeater->add_control( 'element_like_show_count', $this->add_repeater_args_element_like_show_count() );
-
-		// $repeater->add_control( 'element_like_text', $this->add_repeater_args_element_like_text() );
-
-		// $repeater->add_control( 'element_sharing_icon_1', $this->add_repeater_args_element_sharing_icon_1() );
-
-		// $repeater->add_control( 'element_sharing_icon_2', $this->add_repeater_args_element_sharing_icon_2() );
-
-		// $repeater->add_control( 'element_sharing_icon_3', $this->add_repeater_args_element_sharing_icon_3() );
-
-		// $repeater->add_control( 'element_sharing_icon_4', $this->add_repeater_args_element_sharing_icon_4() );
-
-		// $repeater->add_control( 'element_sharing_icon_5', $this->add_repeater_args_element_sharing_icon_5() );
-
-		// $repeater->add_control( 'element_sharing_icon_6', $this->add_repeater_args_element_sharing_icon_6() );
-
-		// $repeater->add_control( 'element_sharing_trigger', $this->add_repeater_args_element_sharing_trigger() );
-
-		// $repeater->add_control( 'element_sharing_trigger_icon', $this->add_repeater_args_element_sharing_trigger_icon() );
-
-		// $repeater->add_control( 'element_sharing_trigger_action', $this->add_repeater_args_element_sharing_trigger_action() );
-
-		// $repeater->add_control( 'element_sharing_trigger_direction', $this->add_repeater_args_element_sharing_trigger_direction() );
-
-		// $repeater->add_control( 'element_sharing_tooltip', $this->add_repeater_args_element_sharing_tooltip() );
-
 		$repeater->add_control(
 			'element_lightbox_icon',
 			[
@@ -854,6 +828,20 @@ class Wpr_Image_Accordion extends Widget_Base {
 			]
 		);
 
+		$repeater->add_control(
+			'animation_divider',
+			[
+				'type' => Controls_Manager::DIVIDER,
+				'style' => 'thick',
+				'condition' => [
+					'element_select' => [
+						'button',
+						'lightbox'
+					],
+				]
+			]
+		);
+
 		// $repeater->add_control(
 		// 	'element_lightbox_overlay',
 		// 	[
@@ -866,14 +854,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 		// 		],
 		// 	]
 		// );
-
-		$repeater->add_control(
-			'animation_divider',
-			[
-				'type' => Controls_Manager::DIVIDER,
-				'style' => 'thick'
-			]
-		);
 
 		$repeater->add_control(
 			'element_animation',
@@ -1292,12 +1272,12 @@ class Wpr_Image_Accordion extends Widget_Base {
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'image-accordion', [
-			'Vertical Layout',
-			'Interaction on Click',
-			'Skew Images',
-			'More than 3 Items',
-			'Lightbox Pop-up',
-			'Unlimited Accordion Elements Positioning',
+			'Add Unlimited Images.',
+			'Vertical Accordion Layout.',
+			'Trigger Images on Click.',
+			'Skew Images by default.',
+			'Enable Image Lightbox',
+			'Advanced Elements Positioning',
 			'Image Effects: Zoom, Grayscale, Blur',
 			'Image Overlay Blend Mode',
 		] );
@@ -1398,57 +1378,17 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-img-accordion-item-title .inner-block a' => 'border-color: {{VALUE}}',
 				],
-				'separator' => 'after',
 			]
 		);
 
-		// $this->end_controls_tab();
-
-		// $this->start_controls_tab(
-		// 	'tab_img_accordion_title_hover',
-		// 	[
-		// 		'label' => esc_html__( 'Hover', 'wpr-addons' ),
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'title_color_hr',
-		// 	[
-		// 		'label'  => esc_html__( 'Color', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::COLOR,
-		// 		'default' => '#54595f',
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-img-accordion-item-title .inner-block a:hover' => 'color: {{VALUE}}',
-		// 		],
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'title_bg_color_hr',
-		// 	[
-		// 		'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::COLOR,
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-img-accordion-item-title .inner-block a:hover' => 'background-color: {{VALUE}}',
-		// 		]
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'title_border_color_hr',
-		// 	[
-		// 		'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::COLOR,
-		// 		'default' => '#E8E8E8',
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-img-accordion-item-title .inner-block a:hover' => 'border-color: {{VALUE}}',
-		// 		],
-		// 	]
-		// );
-
-		// $this->end_controls_tab();
-
-		// $this->end_controls_tabs();
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'title_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-img-accordion-item-title a'
+			]
+		);
 
 		$this->add_control(
 			'title_transition_duration',
@@ -1464,16 +1404,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 					'{{WRAPPER}} .wpr-img-accordion-item-title .wpr-pointer-item:before' => 'transition-duration: {{VALUE}}s',
 					'{{WRAPPER}} .wpr-img-accordion-item-title .wpr-pointer-item:after' => 'transition-duration: {{VALUE}}s',
 				],
-				'separator' => 'after',
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'title_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-img-accordion-item-title a'
 			]
 		);
 
@@ -1605,7 +1535,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-img-accordion-item-description .inner-block' => 'border-color: {{VALUE}}',
 				],
-				'separator' => 'after',
 			]
 		);
 
@@ -1788,6 +1717,15 @@ class Wpr_Image_Accordion extends Widget_Base {
 		);
 
 		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'button_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-img-accordion-item-button a'
+			]
+		);
+
+		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'button_box_shadow',
@@ -1877,23 +1815,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 		);
 
 		$this->add_control_button_animation_height();
-
-		$this->add_control(
-			'button_typo_divider',
-			[
-				'type' => Controls_Manager::DIVIDER,
-				'style' => 'thick',
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'button_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-img-accordion-item-button a'
-			]
-		);
 
 		$this->add_control(
 			'button_border_type',
