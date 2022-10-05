@@ -1041,7 +1041,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_icon',
 			[
-				'label' => esc_html__( 'Icon', 'wpr-addons' ),
+				'label' => esc_html__( 'Icons', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE
 			]
 		);
