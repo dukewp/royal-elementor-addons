@@ -267,19 +267,13 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 		$this->add_control(
 			'interaction_speed',
 			[
-				'label' => esc_html__( 'Interaction Speed', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'default' => [
-					'size' => 400,
-					'unit' => 'px'
-				],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 1000,
-					],
-				]
+				'label' => esc_html__( 'Animation Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.4,
+				'step' => 0.1,
+				'min' => 0,
+				'max' => 2,
+				'render_type' => 'template',
 			]
 		);
 
@@ -324,22 +318,6 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'default' => esc_html__( 'Search...', 'wpr-addons' ),
 				'condition' => [
 					'show_acc_search' => 'yes'
-				]
-			]
-		);
-
-		$this->add_control(
-			'accordion_transition',
-			[
-				'label' => esc_html__( 'Transition', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.3,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'separator' => 'before',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion button.wpr-acc-button' => 'transition: all {{VALUE}}s ease-in-out;',
 				]
 			]
 		);
@@ -511,25 +489,6 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-active .wpr-toggle-icon i' => 'transform: rotate({{SIZE}}deg); transform-origin: center;'
-				]
-			]
-		);
-
-		$this->add_control(
-			'accordion_icon_transition',
-			[
-				'label' => esc_html__( 'Transition', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.3,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'separator' => 'before',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .wpr-toggle-icon i' => 'transition: all {{VALUE}}s ease-in-out;',
-					'{{WRAPPER}} .wpr-advanced-accordion .wpr-title-icon i' => 'transition: all {{VALUE}}s ease-in-out;',
-					'{{WRAPPER}} .wpr-advanced-accordion .wpr-toggle-icon svg' => 'transition: all {{VALUE}}s ease-in-out;',
-					'{{WRAPPER}} .wpr-advanced-accordion .wpr-title-icon svg' => 'transition: all {{VALUE}}s ease-in-out;',
 				]
 			]
 		);
@@ -739,6 +698,22 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 					'font_weight'     => [
 						'default' => '400',
 					]
+				]
+			]
+		);
+
+		$this->add_control(
+			'accordion_transition',
+			[
+				'label' => esc_html__( 'Transition', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.3,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'separator' => 'before',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-advanced-accordion button.wpr-acc-button' => 'transition: all {{VALUE}}s ease-in-out;',
 				]
 			]
 		);
@@ -1242,6 +1217,25 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'accordion_icon_transition',
+			[
+				'label' => esc_html__( 'Transition', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.3,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'separator' => 'before',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-toggle-icon i' => 'transition: all {{VALUE}}s ease-in-out;',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-title-icon i' => 'transition: all {{VALUE}}s ease-in-out;',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-toggle-icon svg' => 'transition: all {{VALUE}}s ease-in-out;',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-title-icon svg' => 'transition: all {{VALUE}}s ease-in-out;',
+				]
+			]
+		);
+
 		$this->end_controls_section(); // End Controls Section 
     }
 
@@ -1295,7 +1289,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'data-accordion-type' => $settings['accordion_type'],
 				'data-active-index' => $settings['active_item'],
 				'data-accordion-trigger' => isset($settings['accordion_trigger']) ? $settings['accordion_trigger'] : 'click',
-				'data-interaction-speed' => isset($settings['interaction_speed']['size']) ? $settings['interaction_speed']['size'] : 400
+				'data-interaction-speed' => isset($settings['interaction_speed']) ? $settings['interaction_speed'] : 0.4
 			]
 		);
 
