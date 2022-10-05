@@ -302,6 +302,8 @@ class Wpr_Image_Accordion extends Widget_Base {
 			[
 				'label' => __( 'Active Image By Default', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
+				'default' => 0,
+				'min' => 0,
 			]
 		);
 
@@ -1377,57 +1379,17 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-img-accordion-item-title .inner-block a' => 'border-color: {{VALUE}}',
 				],
-				'separator' => 'after',
 			]
 		);
 
-		// $this->end_controls_tab();
-
-		// $this->start_controls_tab(
-		// 	'tab_img_accordion_title_hover',
-		// 	[
-		// 		'label' => esc_html__( 'Hover', 'wpr-addons' ),
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'title_color_hr',
-		// 	[
-		// 		'label'  => esc_html__( 'Color', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::COLOR,
-		// 		'default' => '#54595f',
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-img-accordion-item-title .inner-block a:hover' => 'color: {{VALUE}}',
-		// 		],
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'title_bg_color_hr',
-		// 	[
-		// 		'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::COLOR,
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-img-accordion-item-title .inner-block a:hover' => 'background-color: {{VALUE}}',
-		// 		]
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'title_border_color_hr',
-		// 	[
-		// 		'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::COLOR,
-		// 		'default' => '#E8E8E8',
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-img-accordion-item-title .inner-block a:hover' => 'border-color: {{VALUE}}',
-		// 		],
-		// 	]
-		// );
-
-		// $this->end_controls_tab();
-
-		// $this->end_controls_tabs();
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'title_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-img-accordion-item-title a'
+			]
+		);
 
 		$this->add_control(
 			'title_transition_duration',
@@ -1443,16 +1405,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 					'{{WRAPPER}} .wpr-img-accordion-item-title .wpr-pointer-item:before' => 'transition-duration: {{VALUE}}s',
 					'{{WRAPPER}} .wpr-img-accordion-item-title .wpr-pointer-item:after' => 'transition-duration: {{VALUE}}s',
 				],
-				'separator' => 'after',
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'title_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-img-accordion-item-title a'
 			]
 		);
 
@@ -1584,7 +1536,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-img-accordion-item-description .inner-block' => 'border-color: {{VALUE}}',
 				],
-				'separator' => 'after',
 			]
 		);
 
@@ -1767,6 +1718,15 @@ class Wpr_Image_Accordion extends Widget_Base {
 		);
 
 		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'button_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-img-accordion-item-button a'
+			]
+		);
+
+		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'button_box_shadow',
@@ -1856,23 +1816,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 		);
 
 		$this->add_control_button_animation_height();
-
-		$this->add_control(
-			'button_typo_divider',
-			[
-				'type' => Controls_Manager::DIVIDER,
-				'style' => 'thick',
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'button_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-img-accordion-item-button a'
-			]
-		);
 
 		$this->add_control(
 			'button_border_type',
