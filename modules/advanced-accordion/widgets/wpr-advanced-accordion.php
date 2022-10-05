@@ -56,7 +56,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 
 	public function add_repeater_args_accordion_content_type() {
 		return  [
-				'editor' => esc_html__( 'Editor', 'wpr-addons' ),
+				'editor' => esc_html__( 'Text Editor', 'wpr-addons' ),
 				'pro-tm' => esc_html__( 'Elementor Template (Pro)', 'wpr-addons' )
 		];
 	}
@@ -99,7 +99,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 		// Tab: Content ==============
 		// Section: Content ------------
 		$this->start_controls_section(
-			'wpr__section_accordion_content',
+			'section_accordion_content',
 			[
 				'label' => esc_html__( 'Content', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
@@ -115,22 +115,6 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => esc_html__( 'Acc Item Title' , 'wpr-addons' ),
-				'label_block' => true,
-			]
-		);
-
-		$repeater->add_control(
-			'accordion_icon',
-			[
-				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
-				'type' => Controls_Manager::ICONS,
-				'skin' => 'inline',
-				'label_block' => false,
-				'separator' => 'before',
-				'default' => [
-					'value' => 'far fa-edit',
-					'library' => 'regular'
-				]
 			]
 		);
  
@@ -169,6 +153,21 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'default' => 'Nobis atque id hic neque possimus voluptatum voluptatibus tenetur, perspiciatis consequuntur. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima incidunt voluptates nemo, dolor optio quia architecto quis delectus perspiciatis.',
 				'condition' => [
                     'accordion_content_type!' => 'template'
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'accordion_icon',
+			[
+				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
+				'type' => Controls_Manager::ICONS,
+				'skin' => 'inline',
+				'label_block' => false,
+				'separator' => 'before',
+				'default' => [
+					'value' => 'far fa-edit',
+					'library' => 'regular'
 				]
 			]
 		);
@@ -284,7 +283,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'type' => Controls_Manager::NUMBER,
 				'label_block' => false,
 				'default' => 1,
-				'min' => 1,
+				'min' => 0,
 				'render_type' => 'template',
 				'frontend_available' => true,
 				'separator' => 'before'
@@ -325,11 +324,11 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 		$this->end_controls_section();
 
 		// Tab: Content ==========
-		// Section: Icon ---------
+		// Section: Icons ---------
 		$this->start_controls_section(
 			'section_icon_settings',
 			[
-				'label' => esc_html__( 'Icon', 'wpr-addons' ),
+				'label' => esc_html__( 'Icons', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -497,8 +496,8 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'advanced-accordion', [
-			'Elementor Templates Panel option',
-			'Show Search option',
+			'Load Elementor Template in Accordion Panels.',
+			'Enable Accordion content Live Search.',
 		] );
 
 		$this->add_section_style_search_input();
@@ -1017,7 +1016,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_icon',
 			[
-				'label' => esc_html__( 'Icon', 'wpr-addons' ),
+				'label' => esc_html__( 'Icons', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE
 			]
 		);
