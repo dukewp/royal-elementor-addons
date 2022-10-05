@@ -81,7 +81,7 @@ class Wpr_Product_Media extends Widget_Base {
 		$this->add_control(
 			'product_media_lightbox',
 			[
-				'label' => esc_html__( 'Show Lightbox Icon', 'wpr-addons' ),
+				'label' => esc_html__( 'Enable Lightbox', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'render_type' => 'template',
 				'return_value' => 'yes',
