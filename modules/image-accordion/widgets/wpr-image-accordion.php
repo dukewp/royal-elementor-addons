@@ -398,7 +398,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-image-accordion-item' => 'transform: skewX({{SIZE}}deg) translateZ(0);',
-					'{{WRAPPER}} .wpr-img-accordion-media-hover > *:not()' => 'transform: skewX(-{{SIZE}}deg) translateZ(0);',
+					'{{WRAPPER}} .wpr-img-accordion-media-hover > *' => 'transform: skewX(-{{SIZE}}deg) translateZ(0);',
 				],
 				'condition' => [
 					'accordion_skew' => 'yes',
