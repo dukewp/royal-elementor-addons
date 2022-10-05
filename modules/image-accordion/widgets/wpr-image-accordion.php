@@ -69,7 +69,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'default' => 'row',
 				'options' => [
 					'row' => esc_html__('Horizontal', 'wpr-addons'),
-					'pro-column' => esc_html__('Vertical (Pro)', 'wpr-addons'), 
+					'pro-cl' => esc_html__('Vertical (Pro)', 'wpr-addons'), 
 				],
 				'prefix_class' => 'wpr-image-accordion-',
 				'default' => 'row',
@@ -104,7 +104,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'label' => sprintf( __( 'Skew Images %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
 				'type' => Controls_Manager::SWITCHER,
 				'separator' => 'before',
-				'prefix_class' => 'wpr-skew-acc-images-',
 				'classes' => 'wpr-pro-control'
 			]
 		);
@@ -282,7 +281,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 		$this->add_control_accordion_direction();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'image-accordion', 'accordion_direction', ['pro-column'] );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'image-accordion', 'accordion_direction', ['pro-cl'] );
 
 		$this->add_control_accordion_interaction();
 
@@ -397,7 +396,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-image-accordion-item' => 'transform: skewX({{SIZE}}deg) translateZ(0);',
-					'{{WRAPPER}} .wpr-image-accordion-item > *:not(.wpr-accordion-background)' => 'transform: skewX(-{{SIZE}}deg) translateZ(0);',
+					'{{WRAPPER}} .wpr-img-accordion-media-hover > *:not()' => 'transform: skewX(-{{SIZE}}deg) translateZ(0);',
 				],
 				'condition' => [
 					'accordion_skew' => 'yes',

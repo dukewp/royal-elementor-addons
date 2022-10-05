@@ -106,7 +106,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			]
 		);
 
-		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
+		// Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
         
         $repeater = new \Elementor\Repeater();
 
@@ -393,7 +393,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => ['px'],
 				'default' => [
-					'size' => 90,
+					'size' => 70,
 					'unit' => 'px'
 				],
 				'range' => [
@@ -1209,7 +1209,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 15,
+					'size' => 18,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button .wpr-title-icon i' => 'font-size: {{SIZE}}{{UNIT}};',
