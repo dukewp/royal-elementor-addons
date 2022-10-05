@@ -75,6 +75,8 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 
 	public function add_section_style_search_input() {}
 
+	public function render_search_input( $settings ) {}
+
     protected function register_controls() {
 		
 		$templates_select = [];
@@ -241,8 +243,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
                 'options'     => [
                     'accordion' => esc_html__('Accordion', 'wpr-addons'),
                     'toggle'    => esc_html__('Toggle', 'wpr-addons'),
-                ],
-				'separator' => 'before'
+                ]
             ]
         );
 
@@ -1313,15 +1314,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 
             <div <?php echo $this->get_render_attribute_string( 'accordion_attributes' ); ?>>
 
-				<?php if ( 'yes' === $settings['show_acc_search'] ) : ?>
-					<div class="wpr-acc-search-input-wrap elementor-clearfix">
-						<?php if ( '' !== $settings['acc_search_icon']['value'] ) : ?>
-							<i class="<?php echo esc_attr( $settings['acc_search_icon']['value'] ); ?>"></i>
-						<?php endif; ?>
-						<input <?php echo $this->get_render_attribute_string( 'input' ); ?>>
-						<i class="fas fa-times"></i>
-					</div>
-				<?php endif; ?>
+			<?php $this->render_search_input( $settings ) ?>
 
                 <?php 
 					foreach ($settings['advanced_accordion'] as $key=>$acc) :
