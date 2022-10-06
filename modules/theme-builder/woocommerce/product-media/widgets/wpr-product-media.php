@@ -198,9 +198,6 @@ class Wpr_Product_Media extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}}.wpr-product-media-thumbs-stacked .wpr-product-media-wrap .flex-control-nav' => 'display: grid;',
 					'{{WRAPPER}}.wpr-product-media-thumbs-slider .wpr-product-media-wrap .flex-control-nav' => 'display: flex;',
-				],
-				'condition' => [
-					'gallery_slider_thumbs' => 'yes'
 				]
 			]
 		);
