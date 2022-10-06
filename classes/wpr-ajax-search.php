@@ -30,8 +30,8 @@ if ( ! defined( 'ABSPATH' ) ) {
         $the_query = new \WP_Query( 
             [
                 'posts_per_page' => -1, 
-                's' => esc_attr( $_POST['keyword'] ), 
-                'post_type' => $_POST['query_type'] === 'all' ? $all_post_types : array( $_POST['query_type'] ), 
+                's' => sanitize_text_field( $_POST['keyword'] ), 
+                'post_type' => $_POST['query_type'] === 'all' ? $all_post_types : array( sanitize_text_field($_POST['query_type']) ), 
             ]
         );
 
@@ -44,7 +44,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                         <?php the_post_thumbnail('thumbnail'); ?>
                         <div class="wpr-ajax-search-content">
                             <a href="<?php echo esc_url( the_permalink() ); ?>"><?php the_title();?></a>
-                            <p><?php echo wp_trim_words(get_the_content(), $_POST['number_of_words']); ?></p>
+                            <p><?php echo wp_trim_words(get_the_content(), sanitize_text_field($_POST['number_of_words'])); ?></p>
                         </div>
                     </li>
             
