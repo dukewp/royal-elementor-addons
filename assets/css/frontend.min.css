@@ -6884,6 +6884,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     border-right: 3px solid blue;
 }
 
+.wpr-ajax-search-content {
+    text-align: left;
+}
+
 .wpr-ajax-search-content a {
     display: inline-block;
 }

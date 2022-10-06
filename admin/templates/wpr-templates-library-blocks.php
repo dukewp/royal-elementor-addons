@@ -61,6 +61,7 @@ class WPR_Templates_Library_Blocks {
 								'popup-trigger',
 								'lottie-animations',
 								'taxonomy-list',
+								'page-list',
 								'elementor-template',
 								'flip-carousel',
 								'feature-list',

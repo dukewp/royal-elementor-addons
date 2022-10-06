@@ -60,6 +60,7 @@ class Utilities {
 			'Popup Trigger' => ['popup-trigger', '', '', ''],
 			'Image Accordion' => ['image-accordion', '', '', 'new'],
 			'Taxonomy List' => ['taxonomy-list', '', '', ''],
+			'Page List' => ['page-list', '', '', 'new'],
 			'Template' => ['elementor-template', '', '', ''],
 			'Charts' => ['charts', '', '', 'new'],
 			'Reading Progress Bar' => ['reading-progress-bar', 'https://royal-elementor-addons.com/elementor-reading-progress-bar-widget/', '', 'new'],
