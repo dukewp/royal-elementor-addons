@@ -175,14 +175,13 @@ class Wpr_Product_Media extends Widget_Base {
 					'stacked' => esc_html__( 'Stacked', 'wpr-addons' ),
 					'slider' => esc_html__( 'Slider', 'wpr-addons' )
 				],
-				'default' => 'none',
+				'default' => 'stacked',
 				'render_type' => 'template',
 				'prefix_class' => 'wpr-product-media-thumbs-',
 				'selectors' => [
 					'{{WRAPPER}}.wpr-product-media-thumbs-stacked .wpr-product-media-wrap .flex-control-nav' => 'display: grid;',
 					'{{WRAPPER}}.wpr-product-media-thumbs-slider .wpr-product-media-wrap .flex-control-nav' => 'display: flex;',
-				],
-				'separator' => 'before',
+				]
 			]
 		);
 
