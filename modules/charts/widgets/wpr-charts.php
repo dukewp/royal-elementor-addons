@@ -1171,6 +1171,7 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label'		=> esc_html__( 'Responsive Layout', 'wpr-addons' ),
 				'description' => esc_html__( 'Enables scrollbar on tablet and mobile screens', 'wpr-addons' ),
+				'default' => 'yes',
 				'type'		=> Controls_Manager::SWITCHER,
 				'selectors'	=> [
 					'{{WRAPPER}} .wpr-charts-container'	=> 'overflow: auto;',
