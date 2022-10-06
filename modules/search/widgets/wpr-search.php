@@ -47,6 +47,8 @@ class Wpr_Search extends Widget_Base {
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
 
+	public function add_section_style_ajax() {}
+
 	public function add_control_search_query() {
 		$search_post_type = Utilities::get_custom_types_of( 'post', false );
 		$search_post_type = array_merge( [ 'all' => esc_html__( 'All', 'wpr-addons' ) ], $search_post_type );
@@ -68,6 +70,20 @@ class Wpr_Search extends Widget_Base {
 			]
 		);
 	}
+
+	public function add_control_ajax_search() {
+		$this->add_control(
+			'ajax_search',
+			[
+				'label' => sprintf( __( 'Enable AJAX Search %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'separator' => 'before',
+				'classes' => 'wpr-pro-control'
+			]
+		);
+	}
+
+	public function add_control_number_of_words_in_excerpt() {}
 
 	protected function register_controls() {
 		
@@ -95,6 +111,9 @@ class Wpr_Search extends Widget_Base {
 			);
 		}
 
+		$this->add_control_ajax_search();
+
+		$this->add_control_number_of_words_in_excerpt();
 
 		$this->add_control(
 			'search_placeholder',
@@ -199,7 +218,8 @@ class Wpr_Search extends Widget_Base {
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'search', [
-			'Custom Search Query - Only Posts, Pages or Custom Post Types'
+			'Custom Search Query - Only Posts, Pages or Custom Post Types',
+			'AJAX Search',
 		] );
 
 		// Styles
@@ -269,6 +289,7 @@ class Wpr_Search extends Widget_Base {
 				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-search-form-input' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-data-fetch' => 'border-color: {{VALUE}};'
 				],
 			]
 		);
@@ -413,6 +434,7 @@ class Wpr_Search extends Widget_Base {
 				'size_units' => [ 'px', ],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-search-form-input' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-data-fetch' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 				'separator' => 'before',
 			]
@@ -432,6 +454,7 @@ class Wpr_Search extends Widget_Base {
 				'size_units' => [ 'px', '%' ],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-search-form-input' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-data-fetch' => 'border-radius: 0 0 {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 				'separator' => 'after',
 			]
@@ -733,13 +756,18 @@ class Wpr_Search extends Widget_Base {
 				],
 				'size_units' => [ 'px', '%' ],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-search-form-submit' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-search-form-submit' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 				'separator' => 'after',
 			]
 		);
 
 		$this->end_controls_section();
+
+		// Styles
+		// Section: AJAX ------------
+		$this->add_section_style_ajax();
+		
 	}
 
 	protected function render_search_submit_btn() {
@@ -787,7 +815,7 @@ class Wpr_Search extends Widget_Base {
 
 		?>
 
-		<form role="search" method="get" class="wpr-search-form" action="<?php echo esc_url(home_url()); ?>">
+		<form role="search" method="get" class="wpr-search-form wpr-search-form-test" action="<?php echo esc_url(home_url()); ?>">
 
 			<div class="wpr-search-form-input-wrap elementor-clearfix">
 				<input <?php echo $this->get_render_attribute_string( 'input' ); ?>>
@@ -805,8 +833,8 @@ class Wpr_Search extends Widget_Base {
 			}
 
 			?>
-			
 		</form>
+		
 
 		<?php
 

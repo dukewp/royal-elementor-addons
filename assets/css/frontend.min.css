@@ -6898,6 +6898,64 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 /*--------------------------------------------------------------
   == Search
   --------------------------------------------------------------*/
+.wpr-data-fetch ul::-webkit-scrollbar {
+    width: 9px;
+    background-color: transparent;
+}
+
+.wpr-data-fetch ul::-webkit-scrollbar-thumb {
+    /* border-left: 6px solid transparent; */
+    border-right: 3px solid blue;
+}
+
+.wpr-ajax-search-content a {
+    display: inline-block;
+}
+
+.wpr-data-fetch {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: auto;
+    display: none;
+    border-style: solid;
+    z-index: 9999;
+}
+
+.wpr-data-fetch ul {
+    list-style-type: none;
+    padding: 0;
+    overflow-y: auto;
+    max-height: 30vh;
+}
+
+.wpr-data-fetch ul li {
+    display: flex;
+    padding: 5px;
+}
+
+.wpr-data-fetch img {
+    width: 10%;
+    height: auto;
+    margin-right: 10px;
+}
+
+.wpr-close-search {
+    position: absolute;
+    top: 10px;
+    right: 30px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wpr-close-search::before {
+    font-family: "Font Awesome 5 Free";
+    content: '\f00d';
+    font-weight: 600;
+    cursor: pointer;
+}
 
 .wpr-search-form-input-wrap {
     width: 100%;
@@ -14631,7 +14689,22 @@ dl.variation dd {
 == Advanced Accordion
 --------------------------------------------------------------*/
 
-.wpr-advanced-accordion .accordion {
+.wpr-acc-search-input-wrap {
+    position: relative;
+}
+
+.wpr-acc-search-input-wrap i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.wpr-acc-search-input-wrap i.fa-times {
+    cursor: pointer;
+    display: none;
+}
+
+.wpr-advanced-accordion .wpr-acc-button {
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -14687,7 +14760,7 @@ dl.variation dd {
   transform: rotate(0);
 }
 
-.wpr-advanced-accordion .panel {
+.wpr-advanced-accordion .wpr-acc-panel {
   display: none;
   overflow: hidden;
   position: relative;
@@ -14698,11 +14771,27 @@ dl.variation dd {
   display: block;
 }
 
-.wpr-advanced-accordion .active, .accordion:hover {
+.wpr-advanced-accordion .wpr-acc-active, .wpr-acc-button:hover {
   background-color: #ccc;
 }
 
-.wpr-advanced-accordion .panel p,
-.wpr-advanced-accordion .panel div {
+.wpr-advanced-accordion .wpr-acc-panel p,
+.wpr-advanced-accordion .wpr-acc-panel div {
   margin: 0;
+}
+
+.wpr-ti-close {
+    display: inline-block;
+}
+
+.wpr-ti-open {
+    display: none;
+}
+
+.wpr-acc-active .wpr-ti-close {
+    display: none;
+}
+
+.wpr-acc-active .wpr-ti-open {
+    display: inline-block;
 }

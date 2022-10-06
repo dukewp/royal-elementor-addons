@@ -66,6 +66,9 @@ class WPR_Templates_Library_Blocks {
 								'feature-list',
 								'dual-color-heading',
 								'reading-progress-bar',
+								'image-accordion',
+								'advanced-accordion',
+								'charts'
 							];
 							
 							foreach ($modules as $title => $slug) {
