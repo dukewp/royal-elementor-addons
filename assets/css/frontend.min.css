@@ -878,15 +878,15 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 }
 
 li.wpr-mega-menu-pos-default {
-  position: static;
+    position: static;
 }
 
 .wpr-mega-menu-pos-default .wpr-sub-mega-menu {
-  left: 0;
+    left: 0;
 }
 
 .wpr-mega-menu-width-full .wpr-sub-mega-menu {
-  width: 100vw;
+    width: 100vw;
 }
 
 .wpr-mega-menu-icon {
@@ -898,9 +898,22 @@ li.wpr-mega-menu-pos-default {
 }
 
 .wpr-nav-menu-horizontal .wpr-mega-menu-badge {
-  position: absolute;
-  top: 0;
-  right: 0;
+    position: absolute;
+    top: -4px;
+    right: 0;
+}
+
+.wpr-nav-menu-horizontal .wpr-mega-menu-badge:after {
+    content: ' ';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    border-top-width: 3px;
+    border-top-style: solid;
+    border-top-color: inherit;
 }
 
 .wpr-nav-menu-vertical .wpr-mega-menu-badge,

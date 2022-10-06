@@ -156,13 +156,13 @@ class Wpr_Mega_Menu extends Widget_Base {
 			[
 				'label' => esc_html__( 'Show On', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => 'mobile',
+				'default' => 'tablet',
 				'options' => [
 					/* translators: %d: Breakpoint number. */
 					'mobile' => sprintf( esc_html__( 'Mobile (< %dpx)', 'wpr-addons' ), $breakpoints['md'] ),
 					/* translators: %d: Breakpoint number. */
 					'tablet' => sprintf( esc_html__( 'Tablet (< %dpx)', 'wpr-addons' ), $breakpoints['lg'] ),
-					'pro-nn' => esc_html__( 'Don\'t Show (Pro)', 'wpr-addons' ),
+					// 'pro-nn' => esc_html__( 'Don\'t Show (Pro)', 'wpr-addons' ),
 					'pro-al' => esc_html__( 'All Devices (Pro)', 'wpr-addons' ),
 				],
 				'prefix_class' => 'wpr-nav-menu-bp-',
@@ -198,7 +198,8 @@ class Wpr_Mega_Menu extends Widget_Base {
 		$this->start_controls_section(
 			'section_menu',
 			[
-				'label' => 'Menu <a href="#" onclick="window.open(\'https://www.youtube.com/watch?v=at0CPKtklF0\',\'_blank\').focus()">Video Tutorial <span class="dashicons dashicons-video-alt3"></span></a>',
+				'label' => 'Menu',
+				// 'label' => 'Menu <a href="#" onclick="window.open(\'https://www.youtube.com/watch?v=at0CPKtklF0\',\'_blank\').focus()">Video Tutorial <span class="dashicons dashicons-video-alt3"></span></a>',
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -334,6 +335,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'step' => 0.1,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-menu-item.wpr-pointer-item' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-menu-item.wpr-pointer-item .wpr-mega-menu-icon' => 'transition-duration: {{VALUE}}s',
 					'{{WRAPPER}} .wpr-menu-item.wpr-pointer-item:before' => 'transition-duration: {{VALUE}}s',
 					'{{WRAPPER}} .wpr-menu-item.wpr-pointer-item:after' => 'transition-duration: {{VALUE}}s',
 				],
@@ -698,6 +700,8 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-nav-menu .wpr-menu-item:hover,
+					{{WRAPPER}} .wpr-nav-menu .wpr-menu-item:hover .wpr-mega-menu-icon,
+					{{WRAPPER}} .wpr-nav-menu .wpr-menu-item.wpr-active-menu-item .wpr-mega-menu-icon,
 					 {{WRAPPER}} .wpr-nav-menu > .menu-item-has-children:hover > .wpr-sub-icon,
 					 {{WRAPPER}} .wpr-nav-menu .wpr-menu-item.wpr-active-menu-item,
 					 {{WRAPPER}} .wpr-nav-menu > .menu-item-has-children.current_page_item > .wpr-sub-icon' => 'color: {{VALUE}};',
@@ -728,16 +732,16 @@ class Wpr_Mega_Menu extends Widget_Base {
 
 		$this->end_controls_tabs();
 
-		$this->add_control(
-			'menu_item_highlight',
-			[
-				'label' => esc_html__( 'Highlight Active Item', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
-				'return_value' => 'yes',
-				'separator' => 'before'
-			]
-		);
+		// $this->add_control(
+		// 	'menu_item_highlight',
+		// 	[
+		// 		'label' => esc_html__( 'Highlight Active Item', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SWITCHER,
+		// 		'default' => 'yes',
+		// 		'return_value' => 'yes',
+		// 		'separator' => 'before'
+		// 	]
+		// );
 
 		$this->add_control(
 			'menu_items_sub_icon_size',
@@ -826,6 +830,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-nav-menu .wpr-menu-item' => 'padding-left: {{SIZE}}{{UNIT}}; padding-right: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}} .wpr-nav-menu-horizontal .wpr-mega-menu-badge' => 'right: {{SIZE}}px;',
 					'{{WRAPPER}}.wpr-pointer-background:not(.wpr-sub-icon-none) .wpr-nav-menu-vertical .menu-item-has-children .wpr-sub-icon' => 'text-indent: calc(-{{SIZE}}px - ({{menu_items_sub_icon_size.SIZE}}px / 2) - 2px);',
 					'{{WRAPPER}}.wpr-pointer-border:not(.wpr-sub-icon-none) .wpr-nav-menu-vertical .menu-item-has-children .wpr-sub-icon' => 'text-indent: calc(-{{SIZE}}px - ({{menu_items_sub_icon_size.SIZE}}px / 2) - 2px);',
 
@@ -1838,11 +1843,11 @@ class Wpr_Mega_Menu extends Widget_Base {
 			// Toggle Button
 			echo '<div class="wpr-mobile-toggle-wrap">';
 				echo '<div class="wpr-mobile-toggle">';
-					if ( $settings['toggle_btn_style'] === 'hamburger' ) {
+					if ( 'hamburger' === $settings['toggle_btn_style'] ) {
 						echo '<span class="wpr-mobile-toggle-line"></span>';
 						echo '<span class="wpr-mobile-toggle-line"></span>';
 						echo '<span class="wpr-mobile-toggle-line"></span>';
-					} else {
+					} elseif ( 'text' === $settings['toggle_btn_style'] ) {
 						echo '<span class="wpr-mobile-toggle-text">'. esc_html($settings['toggle_btn_txt_1']) .'</span>';
 						echo '<span class="wpr-mobile-toggle-text">'. esc_html($settings['toggle_btn_txt_2']) .'</span>';
 					}
