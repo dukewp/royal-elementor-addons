@@ -379,6 +379,44 @@ class Wpr_Image_Accordion extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'accordion_item_border',
+			[
+				'label'       => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type'        => Controls_Manager::SELECT,
+				'options'     => [
+					'outer'   => esc_html__( 'Outer', 'wpr-addons' ),
+					'individual' => esc_html__( 'Individual', 'wpr-addons' )
+				],
+				'default'     => 'outer',
+				'prefix_class' => 'wpr-acc-border-',
+				'render_type' => 'template',
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'accordion_item_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}}.wpr-acc-border-outer.wpr-image-accordion-row .wpr-image-accordion-item:first-child' => 'border-radius: {{TOP}}{{UNIT}} 0 0 {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-acc-border-outer.wpr-image-accordion-row .wpr-image-accordion-item:last-child' => 'border-radius: 0 {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} 0;',
+					'{{WRAPPER}}.wpr-acc-border-outer.wpr-image-accordion-column .wpr-image-accordion-item:first-child' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} 0 0;',
+					'{{WRAPPER}}.wpr-acc-border-outer.wpr-image-accordion-column .wpr-image-accordion-item:last-child' => 'border-radius: 0 0 {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-acc-border-individual .wpr-image-accordion-item' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
+			]
+		);
+
 		$this->add_control_accordion_skew();
 
 		$this->add_control(
@@ -1912,6 +1950,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-img-accordion-item-button .inner-block a' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-img-accordion-item-button .inner-block a:before' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
