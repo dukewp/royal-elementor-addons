@@ -127,10 +127,10 @@ class Wpr_Main_Menu_Walker extends \Walker_Nav_Menu {
                 if ( $settings ) {
                     // Icon
                     if ( '' !== $settings['wpr_mm_icon_picker'] ) {
-                        $font_size = '' !== $settings['wpr_mm_icon_size'] ? $settings['wpr_mm_icon_size'] .'px' : 'inherit';
-                        $color = '' !== $settings['wpr_mm_icon_color'] ? $settings['wpr_mm_icon_color'] : 'inherit';
-                        $item_icon_style = 'style="font-size: '. $font_size .'; color: '. $color .'"';
-                        $item_icon_html = '<i class="wpr-mega-menu-icon '. $settings['wpr_mm_icon_picker'] .'" '. $item_icon_style .'></i>';
+                        $font_size = '' !== $settings['wpr_mm_icon_size'] ? 'font-size: '. $settings['wpr_mm_icon_size'] .'px;' : '';
+                        $color = '' !== $settings['wpr_mm_icon_color'] ? ' color: '. $settings['wpr_mm_icon_color'] : ';';
+                        $item_icon_style = ( '' !== $font_size && '' !== $color ) ? ' style="'. $font_size . $color .'"' : '';
+                        $item_icon_html = '<i class="wpr-mega-menu-icon '. $settings['wpr_mm_icon_picker'] .'"'. $item_icon_style .'></i>';
                     }
 
                     // Badge
@@ -165,7 +165,9 @@ class Wpr_Main_Menu_Walker extends \Walker_Nav_Menu {
 				// Link Output
 				$item_output .= '<a'. $attributes .'>';
                     $item_output .= $item_icon_html;
-					$item_output .= $args->link_before . apply_filters( 'the_title', $item->title, $item->ID ) . $args->link_after;
+					$item_output .= $args->link_before;
+					$item_output .= '<span>'. apply_filters( 'the_title', $item->title, $item->ID ) .'</span>';
+					$item_output .= $args->link_after;
                     $item_output .= $item_badge_html;
 					$item_output .= $submenu_icon;
 				$item_output .= '</a>';

@@ -203,7 +203,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 			]
 		);
 
-		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
+		// Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 		
 		$menus = $this->get_available_menus();
 
@@ -233,6 +233,35 @@ class Wpr_Mega_Menu extends Widget_Base {
 		}
 
 		$this->add_control_menu_layout();
+
+		$this->add_responsive_control(
+			'vertical_menu_width',
+			[
+				'label' => esc_html__( 'Vertical Menu Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%' ],
+				'range' => [
+					'px' => [
+						'min' => 100,
+						'max' => 1000,
+						'step' => 5,
+					],
+					'%' => [
+						'min' => 10,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'size' => 300,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-nav-menu-vertical' => 'max-width: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'menu_layout' => 'vertical',
+				],
+			]
+		);
 
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'nav-menu', 'menu_layout', ['pro-vr'] );
@@ -329,22 +358,22 @@ class Wpr_Mega_Menu extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'menu_items_submenu_position',
-			[
-				'label' => esc_html__( 'Sub Menu Position', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'inline',
-				'options' => [
-					'inline' => esc_html__( 'Inline', 'wpr-addons' ),
-					'absolute' => esc_html__( 'Absolute', 'wpr-addons' ),
-				],
-				'prefix_class' => 'wpr-sub-menu-position-',
-				'condition' => [
-					'menu_layout' => 'vertical',
-				],
-			]
-		);
+		// $this->add_control(
+		// 	'menu_items_submenu_position',
+		// 	[
+		// 		'label' => esc_html__( 'Sub Menu Position', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'default' => 'inline',
+		// 		'options' => [
+		// 			'inline' => esc_html__( 'Inline', 'wpr-addons' ),
+		// 			'absolute' => esc_html__( 'Absolute', 'wpr-addons' ),
+		// 		],
+		// 		'prefix_class' => 'wpr-sub-menu-position-',
+		// 		'condition' => [
+		// 			'menu_layout' => 'vertical',
+		// 		],
+		// 	]
+		// );
 
 		$this->add_control(
 			'menu_items_submenu_trigger',
@@ -607,6 +636,47 @@ class Wpr_Mega_Menu extends Widget_Base {
 			]
 		);
 
+
+		$this->add_control(
+			'menu_item_icon_color',
+			[
+				'label' => esc_html__( 'Extra Icon Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'scheme' => [
+					'type' => Color::get_type(),
+					'value' => Color::COLOR_3,
+				],
+				'default' => '#333333',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-nav-menu .wpr-mega-menu-icon' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'menu_item_color_bg',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E800',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-nav-menu .wpr-menu-item' => 'background-color: {{VALUE}};',
+				],
+				'condition' => [
+					'menu_items_pointer' => 'background',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'menu_items_typography',
+				'scheme' => Typography::TYPOGRAPHY_1,
+				'selector' => '{{WRAPPER}} .wpr-nav-menu .wpr-menu-item,{{WRAPPER}} .wpr-mobile-nav-menu a,{{WRAPPER}} .wpr-mobile-toggle-text',
+			]
+		);
+
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
@@ -692,19 +762,30 @@ class Wpr_Mega_Menu extends Widget_Base {
 			]
 		);
 
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
+		$this->add_control(
+			'menu_items_extra_icon_size',
 			[
-				'name' => 'menu_items_typography',
-				'scheme' => Typography::TYPOGRAPHY_1,
-				'selector' => '{{WRAPPER}} .wpr-nav-menu .wpr-menu-item,{{WRAPPER}} .wpr-mobile-nav-menu a,{{WRAPPER}} .wpr-mobile-toggle-text',
+				'label' => esc_html__( 'Extra Icon Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 16,
+				],
+				'range' => [
+					'px' => [
+						'min' => 5,
+						'max' => 25,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-nav-menu .wpr-mega-menu-icon' => 'font-size: {{SIZE}}{{UNIT}};',
+				],
 			]
 		);
 
 		$this->add_control(
 			'pointer_height',
 			[
-				'label' => esc_html__( 'Pointer Height', 'wpr-addons' ),
+				'label' => esc_html__( 'Pointer Weight', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'devices' => [ self::RESPONSIVE_DESKTOP, self::RESPONSIVE_TABLET ],
 				'default' => [
@@ -723,7 +804,9 @@ class Wpr_Mega_Menu extends Widget_Base {
 					 {{WRAPPER}}.wpr-pointer-double-line .wpr-menu-item:after' => 'height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-pointer-border-fx .wpr-menu-item:before' => 'border-width: {{SIZE}}{{UNIT}};',
 				],
-				'separator' => 'before',
+				'condition' => [
+					'menu_items_pointer!' => 'background',
+				],
 			]
 		);
 
@@ -743,10 +826,11 @@ class Wpr_Mega_Menu extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-nav-menu .wpr-menu-item' => 'padding-left: {{SIZE}}{{UNIT}}; padding-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-pointer-background:not(.wpr-sub-icon-none) .wpr-nav-menu-vertical .menu-item-has-children .wpr-sub-icon' => 'text-indent: -{{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-pointer-border:not(.wpr-sub-icon-none) .wpr-nav-menu-vertical .menu-item-has-children .wpr-sub-icon' => 'text-indent: -{{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-pointer-background:not(.wpr-sub-icon-none) .wpr-nav-menu-vertical .menu-item-has-children .wpr-sub-icon' => 'text-indent: calc(-{{SIZE}}px - ({{menu_items_sub_icon_size.SIZE}}px / 2) - 2px);',
+					'{{WRAPPER}}.wpr-pointer-border:not(.wpr-sub-icon-none) .wpr-nav-menu-vertical .menu-item-has-children .wpr-sub-icon' => 'text-indent: calc(-{{SIZE}}px - ({{menu_items_sub_icon_size.SIZE}}px / 2) - 2px);',
 
-				]
+				],
+				'separator' => 'before'
 			]
 		);
 
@@ -767,8 +851,12 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-nav-menu > .menu-item' => 'margin-left: {{SIZE}}{{UNIT}}; margin-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-nav-menu-vertical .wpr-nav-menu > li > .wpr-sub-menu' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-nav-menu-vertical .wpr-nav-menu > li > .wpr-sub-mega-menu' => 'margin-left: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-main-menu-align-left .wpr-nav-menu-vertical .wpr-nav-menu > li > .wpr-sub-icon' => 'right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-main-menu-align-right .wpr-nav-menu-vertical .wpr-nav-menu > li > .wpr-sub-icon' => 'left: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'menu_layout!' => 'vertical',
 				],
 			]
 		);
@@ -790,6 +878,31 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-nav-menu .wpr-menu-item' => 'padding-top: {{SIZE}}{{UNIT}}; padding-bottom: {{SIZE}}{{UNIT}};',
 				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'menu_items_sub_offset',
+			[
+				'label' => esc_html__( 'Sub Menu Offset', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 15,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 25,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-nav-menu > .menu-item' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-nav-menu-vertical .wpr-nav-menu > li > .wpr-sub-menu' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-nav-menu-vertical .wpr-nav-menu > li > .wpr-sub-mega-menu' => 'margin-left: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'menu_layout' => 'vertical',
+				],
 			]
 		);
 
@@ -815,6 +928,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 					],
 				],
 				'selector' => '{{WRAPPER}} .wpr-menu-item',
+				'separator' => 'before'
 			]
 		);
 
@@ -890,7 +1004,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 150,
+						'max' => 25,
 					],
 				],
 				'default' => [
@@ -900,6 +1014,9 @@ class Wpr_Mega_Menu extends Widget_Base {
 					'{{WRAPPER}} .wpr-nav-menu-horizontal .wpr-nav-menu > li > .wpr-sub-mega-menu' => 'margin-top: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
+				'condition' => [
+					'menu_layout!' => 'vertical',
+				],
 			]
 		);
 
@@ -1068,7 +1185,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 150,
+						'max' => 25,
 					],
 				],
 				'default' => [
@@ -1077,7 +1194,9 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-nav-menu-horizontal .wpr-nav-menu > li > .wpr-sub-menu' => 'margin-top: {{SIZE}}{{UNIT}};',
 				],
-				'separator' => 'after',
+				'condition' => [
+					'menu_layout!' => 'vertical',
+				],
 			]
 		);
 
@@ -1088,7 +1207,8 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'type' => Controls_Manager::SWITCHER,
 				'prefix_class' => 'wpr-sub-divider-',
 				'default' => 'yes',
-				'return_value' => 'yes'
+				'return_value' => 'yes',
+				'separator' => 'before',
 			]
 		);
 
