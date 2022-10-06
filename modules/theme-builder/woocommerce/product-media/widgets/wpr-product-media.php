@@ -164,41 +164,25 @@ class Wpr_Product_Media extends Widget_Base {
 				'separator' => 'before',
 			]
 		);
-		
-		$this->add_responsive_control(
-			'gallery_slider_thumbs',
-			[
-				'label' => esc_html__( 'Show Thumbnail Images', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
-				'tablet_default' => 'yes',
-				'mobile_default' => 'yes',
-				'selectors_dictionary' => [
-					'' => 'none',
-					'yes' => 'grid'
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-product-media-wrap .flex-control-nav' => 'display: {{VALUE}};',
-				]
-			]
-		);
 
 		$this->add_control(
-			'gallery_slider_thumbs_type',
+			'gallery_slider_thumbs',
 			[
 				'label' => esc_html__( 'Display Thumbs As', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
 					'stacked' => esc_html__( 'Stacked', 'wpr-addons' ),
 					'slider' => esc_html__( 'Slider', 'wpr-addons' )
 				],
-				'default' => 'stacked',
+				'default' => 'none',
 				'render_type' => 'template',
 				'prefix_class' => 'wpr-product-media-thumbs-',
 				'selectors' => [
 					'{{WRAPPER}}.wpr-product-media-thumbs-stacked .wpr-product-media-wrap .flex-control-nav' => 'display: grid;',
 					'{{WRAPPER}}.wpr-product-media-thumbs-slider .wpr-product-media-wrap .flex-control-nav' => 'display: flex;',
-				]
+				],
+				'separator' => 'before',
 			]
 		);
 
@@ -215,7 +199,7 @@ class Wpr_Product_Media extends Widget_Base {
 				'render_type' => 'template',
 				'prefix_class' => 'wpr-product-media-thumbs-',
 				'condition' => [
-					'gallery_slider_thumbs_type' => 'slider'
+					'gallery_slider_thumbs' => 'slider'
 				]
 			]
 		);
@@ -237,7 +221,7 @@ class Wpr_Product_Media extends Widget_Base {
 					'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'display:{{VALUE}} !important;'
 				],
 				'condition' => [
-					'gallery_slider_thumbs_type' => 'slider',
+					'gallery_slider_thumbs' => 'slider',
 				]
 			]
 		);
@@ -250,7 +234,7 @@ class Wpr_Product_Media extends Widget_Base {
 				'return_value' => 'fade',
 				'prefix_class' => 'wpr-thumbnail-slider-nav-',
 				'condition' => [
-					'gallery_slider_thumbs_type' => 'slider',
+					'gallery_slider_thumbs' => 'slider',
 					'thumbnail_slider_nav' => 'yes',
 				]
 			]
@@ -263,7 +247,7 @@ class Wpr_Product_Media extends Widget_Base {
 				'type' => 'wpr-arrow-icons',
 				'default' => 'fas fa-angle',
 				'condition' => [
-					'gallery_slider_thumbs_type' => 'slider',
+					'gallery_slider_thumbs' => 'slider',
 					'thumbnail_slider_nav' => 'yes'
 				],
 			]
@@ -283,7 +267,7 @@ class Wpr_Product_Media extends Widget_Base {
 					'{{WRAPPER}}.wpr-product-media-thumbs-slider.wpr-product-media-thumbs-vertical .wpr-product-media-wrap .flex-control-thumbs li' => 'height: calc(100%/{{VALUE}}) !important;'
 				],
 				'condition' => [
-					'gallery_slider_thumbs_type' => ['slider', 'stacked'],
+					'gallery_slider_thumbs' => ['slider', 'stacked'],
 				],
 
 			]
@@ -298,7 +282,7 @@ class Wpr_Product_Media extends Widget_Base {
 				'default' => 2,
 				'render_type' => 'template',
 				'condition' => [
-					'gallery_slider_thumbs_type' => ['slider'],
+					'gallery_slider_thumbs' => ['slider'],
 				],
 
 			]
@@ -853,7 +837,7 @@ class Wpr_Product_Media extends Widget_Base {
 				'label' => esc_html__( 'Gallery Thumbnails Arrows', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
-					'gallery_slider_thumbs_type' => 'slider',
+					'gallery_slider_thumbs' => 'slider',
 				],
 			]
 		);
@@ -1562,7 +1546,7 @@ class Wpr_Product_Media extends Widget_Base {
 		}
 		
 		// Thumbnail Slider Arrows
-		if ( 'yes' === $settings['gallery_slider_thumbs'] && 'slider' === $settings['gallery_slider_thumbs_type'] && 'yes' === $settings['thumbnail_slider_nav'] && 'none' !== $settings['thumbnail_slider_nav_icon']) {
+		if ( 'slider' === $settings['gallery_slider_thumbs'] && 'yes' === $settings['thumbnail_slider_nav'] && 'none' !== $settings['thumbnail_slider_nav_icon']) {
 				echo '<div class="wpr-thumbnail-slider-prev-arrow wpr-thumbnail-slider-arrow">'. Utilities::get_wpr_icon( $settings['thumbnail_slider_nav_icon'], 'left' ) .'</div>';
 				echo '<div class="wpr-thumbnail-slider-next-arrow wpr-thumbnail-slider-arrow">'. Utilities::get_wpr_icon( $settings['thumbnail_slider_nav_icon'], 'right' ) .'</div>';
 		}
