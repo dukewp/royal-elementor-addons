@@ -14,7 +14,7 @@ class WPR_WooCommerce_Config {
 			add_filter( 'woocommerce_single_product_zoom_enabled', '__return_false' );
 		}
 		
-		// add_action( 'wp',[$this, 'wpr_remove_wc_lightbox'], 99 ); //: TODO condition
+		add_action( 'wp',[$this, 'wpr_remove_wc_lightbox'], 99 ); //: TODO condition
 		// add_filter( 'body_class', [$this, 'wpr_remove_elementor_lightbox'] ); //: TODO condition
 
 		// Change number of products that are displayed per page (shop page)
