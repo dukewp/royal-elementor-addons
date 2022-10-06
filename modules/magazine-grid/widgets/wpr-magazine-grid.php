@@ -1546,7 +1546,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			'Advanced Post Likes',
 			'Advanced Post Sharing',
 			'Custom Fields Support',
-			'Unlimited Grid Elements Positioning',
+			'Advanced Grid Elements Positioning',
 			'Unlimited Image Overlay Animations',
 			'Image overlay GIF upload option',
 			'Title, Category, Read More Advanced Link Hover Animations',
