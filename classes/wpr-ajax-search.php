@@ -44,7 +44,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                         <?php the_post_thumbnail('thumbnail'); ?>
                         <div class="wpr-ajax-search-content">
                             <a href="<?php echo esc_url( the_permalink() ); ?>"><?php the_title();?></a>
-                            <p><?php echo wp_trim_words(get_the_content(), 10); ?></p>
+                            <p><?php echo wp_trim_words(get_the_content(), $_POST['number_of_words']); ?></p>
                         </div>
                     </li>
             

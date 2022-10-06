@@ -83,6 +83,8 @@ class Wpr_Search extends Widget_Base {
 		);
 	}
 
+	public function add_control_number_of_words_in_excerpt() {}
+
 	protected function register_controls() {
 		
 		// Section: Search -----------
@@ -111,6 +113,7 @@ class Wpr_Search extends Widget_Base {
 
 		$this->add_control_ajax_search();
 
+		$this->add_control_number_of_words_in_excerpt();
 
 		$this->add_control(
 			'search_placeholder',
