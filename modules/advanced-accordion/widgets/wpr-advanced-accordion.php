@@ -1059,6 +1059,29 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'icon_box_border_radius',
+			[
+				'label' => esc_html__( 'Icon Box Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}}.wpr-advanced-accordion-icon-side-box .wpr-advanced-accordion .wpr-acc-icon-box' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-advanced-accordion-icon-side-curve .wpr-advanced-accordion .wpr-acc-icon-box' => 'border-radius: {{TOP}}{{UNIT}} 0 0 {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+				'condition' => [
+					'accordion_title_icon_box_style!' => 'no-box'
+				]
+			]
+		);
+
 		$this->end_controls_section(); // End Controls Section 
 
 		// Styles
