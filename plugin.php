@@ -89,6 +89,9 @@ class Plugin {
 		// Post Likes
 		require WPR_ADDONS_PATH . 'classes/wpr-post-likes.php';
 
+		// Ajax Search
+		require WPR_ADDONS_PATH . 'classes/wpr-ajax-search.php';
+
 		// Particles
 		if ( 'on' === get_option('wpr-particles-toggle', 'on') ) {//TODO: make this check automatic(loop through) for all extensions
 			require WPR_ADDONS_PATH . 'extensions/wpr-particles.php';
