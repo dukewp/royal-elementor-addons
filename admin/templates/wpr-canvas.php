@@ -42,7 +42,7 @@ $woocommerce_class =  $is_preview_mode && class_exists( 'WooCommerce' ) ? 'wooco
 	do_action( 'elementor/page_templates/canvas/before_content' );
 
 	// Elementor Editor
-	if ( \Elementor\Plugin::$instance->preview->is_preview_mode() && Utilities::is_theme_builder_template() ) {
+	if (( \Elementor\Plugin::$instance->preview->is_preview_mode() && Utilities::is_theme_builder_template()) || is_singular('wpr_mega_menu') ) {
 	     \Elementor\Plugin::$instance->modules_manager->get_modules( 'page-templates' )->print_content();
 
 	// Frontend
