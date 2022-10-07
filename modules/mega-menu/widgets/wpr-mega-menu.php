@@ -339,6 +339,9 @@ class Wpr_Mega_Menu extends Widget_Base {
 					'{{WRAPPER}} .wpr-menu-item.wpr-pointer-item:before' => 'transition-duration: {{VALUE}}s',
 					'{{WRAPPER}} .wpr-menu-item.wpr-pointer-item:after' => 'transition-duration: {{VALUE}}s',
 				],
+				'condition' => [
+					'menu_items_pointer!' => 'none',
+				],
 			]
 		);
 
@@ -830,7 +833,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-nav-menu .wpr-menu-item' => 'padding-left: {{SIZE}}{{UNIT}}; padding-right: {{SIZE}}{{UNIT}};',
-					// '{{WRAPPER}} .wpr-nav-menu-horizontal .wpr-mega-menu-badge' => 'right: {{SIZE}}px;',
+					'{{WRAPPER}} .wpr-nav-menu-horizontal .wpr-mega-menu-badge' => 'right: {{SIZE}}px;',
 					'{{WRAPPER}}.wpr-pointer-background:not(.wpr-sub-icon-none) .wpr-nav-menu-vertical .menu-item-has-children .wpr-sub-icon' => 'text-indent: calc(-{{SIZE}}px - ({{menu_items_sub_icon_size.SIZE}}px / 2) - 2px);',
 					'{{WRAPPER}}.wpr-pointer-border:not(.wpr-sub-icon-none) .wpr-nav-menu-vertical .menu-item-has-children .wpr-sub-icon' => 'text-indent: calc(-{{SIZE}}px - ({{menu_items_sub_icon_size.SIZE}}px / 2) - 2px);',
 

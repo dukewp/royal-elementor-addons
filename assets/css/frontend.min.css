@@ -891,10 +891,13 @@ li.wpr-mega-menu-pos-default {
 
 .wpr-mega-menu-icon {
     margin-right: 5px;
+    position: relative;
+    top: -1px;
 }
 
 .wpr-mega-menu-badge {
     padding: 2px 5px;
+    line-height: 1;
 }
 
 .wpr-nav-menu-horizontal .wpr-mega-menu-badge {
