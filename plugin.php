@@ -109,18 +109,21 @@ class Plugin {
 
 		// Custom CSS
 		require WPR_ADDONS_PATH . 'extensions/wpr-custom-css.php';
-		
-		// Plugin Updaate Notice
-		require WPR_ADDONS_PATH . 'classes/plugin-update-notice.php';
-		
-		// Plugin Sale Notice
-		// require WPR_ADDONS_PATH . 'classes/plugin-sale-notice.php';
-		
-		// Rating Notice 
-		require WPR_ADDONS_PATH . 'classes/rating-notice.php';
+
+		// Mega Menu
+		require WPR_ADDONS_PATH . 'admin/mega-menu.php';
 
 		// Admin Files
 		if ( is_admin() ) {
+			// Plugin Updaate Notice
+			require WPR_ADDONS_PATH . 'classes/plugin-update-notice.php';
+			
+			// Plugin Sale Notice
+			// require WPR_ADDONS_PATH . 'classes/plugin-sale-notice.php';
+			
+			// Rating Notice 
+			require WPR_ADDONS_PATH . 'classes/rating-notice.php';
+
 			// Plugin Options
 			require WPR_ADDONS_PATH . 'admin/plugin-options.php';
 
@@ -191,6 +194,8 @@ class Plugin {
 	}
 
 	public function register_ajax_hooks() {
+        add_action( 'wp_ajax_mega_menu_ajax_loading', [new Utilities, 'mega_menu_ajax_loading'] );
+        add_action( 'wp_ajax_nopriv_mega_menu_ajax_loading', [new Utilities, 'ajax_mega_menu_ajax_loading'] );
         add_action( 'wp_ajax_mailchimp_subscribe', [new Utilities, 'ajax_mailchimp_subscribe'] );
         add_action( 'wp_ajax_nopriv_mailchimp_subscribe', [new Utilities, 'ajax_mailchimp_subscribe'] );
 	}

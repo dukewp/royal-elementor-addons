@@ -27,6 +27,7 @@ class Utilities {
 			'Advanced Slider' => ['advanced-slider', 'https://royal-elementor-addons.com/elementor-advanced-slider-widget/', '', ''],
 			'Testimonial' => ['testimonial', 'https://royal-elementor-addons.com/elementor-testimonials-slider-widget/', '', ''],
 			'Nav Menu' => ['nav-menu', 'http://royal-elementor-addons.com/elementor-menu-widget/', '', ''],
+			'Mega Menu' => ['mega-menu', '#', '', ''],
 			'Onepage Navigation' => ['onepage-nav', 'https://royal-elementor-addons.com/elementor-one-page-navigation-widget/', '', ''],
 			'Data Table' => ['data-table', 'https://royal-elementor-addons.com/elementor-data-table-widget/', '', 'new'],
 			'Pricing Table' => ['pricing-table', 'https://royal-elementor-addons.com/elementor-pricing-table-widget/', '', ''],
@@ -705,6 +706,18 @@ class Utilities {
 		} else {
 			return '';
 		}
+	}
+
+
+	/**
+	** Mega Menu AJAX Loading
+	*/
+	public static function mega_menu_ajax_loading() {
+		$elementor = \Elementor\Plugin::instance();
+		$mega_id = get_post_meta( $_POST['item_id'], 'wpr-mega-menu-item', true);
+		$content = $elementor->frontend->get_builder_content_for_display($mega_id);
+
+		wp_send_json( $content );
 	}
 
 
