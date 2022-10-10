@@ -2582,6 +2582,8 @@ class Wpr_Advanced_Slider extends Widget_Base {
 		$slider_html = '';
 		$item_count = 0;
 
+		var_dump($settings['slider_loop']);
+
 		if ( empty( $settings['slider_items'] ) ) {
 			return;
 		}

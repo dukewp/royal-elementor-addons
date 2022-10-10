@@ -32,9 +32,9 @@ if ( ! defined( 'ABSPATH' ) ) {
             [
                 'posts_per_page' => -1, 
                 's' => sanitize_text_field( $_POST['keyword'] ), 
-                'post_type' => $_POST['query_type'] === 'all' || !wpr_fs()->can_use_premium_code() ? $all_post_types : array( sanitize_text_field($_POST['query_type']) ), 
+                'post_type' => $_POST['query_type'] === 'all' || !wpr_fs()->can_use_premium_code() ? $all_post_types : array( sanitize_text_field($_POST['query_type']) ),
             ]
-        );
+        );  
 
         echo '<span class="wpr-close-search"></span>';
         if( $the_query->have_posts() ) :

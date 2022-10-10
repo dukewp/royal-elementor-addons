@@ -546,7 +546,7 @@ class Wpr_Search extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFFFFF',
+				'default' => '#222222',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-data-fetch .wpr-no-results' => 'color: {{VALUE}};',
 				],

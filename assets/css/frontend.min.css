@@ -9459,6 +9459,7 @@ a.wpr-ajax-img-wrap {
 
 .wpr-flip-box-animation-fade .wpr-flip-box-active .wpr-flip-box-front {
     opacity: 0;
+    visibility: hidden;
 }
 
 
@@ -9487,6 +9488,7 @@ a.wpr-ajax-img-wrap {
     -webkit-transform: scale(0.9);
     -ms-transform: scale(0.9);
     transform: scale(0.9);
+    visibility: hidden;
 }
 
 
@@ -12059,9 +12061,9 @@ a.wpr-ajax-img-wrap {
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;
-      -webkit-box-align: flex-start;
-          -ms-flex-align: flex-start;
-              align-items: flex-start;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
       text-align: left;
   }
   
