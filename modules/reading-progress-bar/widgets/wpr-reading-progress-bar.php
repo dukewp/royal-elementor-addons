@@ -185,7 +185,7 @@ class Wpr_Reading_Progress_Bar extends Widget_Base {
         
 	}
 
-	public function render() {
+	protected function render() {
     	$settings = $this->get_settings_for_display();
 
 		$this->add_render_attribute( 'wpr-rpb-attrs', [

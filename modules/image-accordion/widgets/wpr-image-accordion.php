@@ -2358,7 +2358,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 	}	
 
 
-    public function render() {
+    protected function render() {
 		$settings = $this->get_settings_for_display();
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {
