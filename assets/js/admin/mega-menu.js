@@ -32,9 +32,6 @@ jQuery(document).ready(function( $ ) {
             // Show Popup
             $('.wpr-mm-settings-popup-wrap').fadeIn();
 
-            // Edit Menu Button
-            WprMegaMenuSettings.initEditMenuButton( $(this) );
-
             // Close Temmplate Editor Popup
             WprMegaMenuSettings.closeTemplateEditorPopup();
 
@@ -55,6 +52,9 @@ jQuery(document).ready(function( $ ) {
 
             // Save Settings
             WprMegaMenuSettings.saveSettings( $(this) );
+
+            // Edit Menu Button
+            WprMegaMenuSettings.initEditMenuButton( $(this) );
         },
 
         closeSettingsPopup: function() {
@@ -69,6 +69,7 @@ jQuery(document).ready(function( $ ) {
 
             // Unbind Click
             $('.wpr-save-mega-menu-btn').off('click');
+            $('.wpr-edit-mega-menu-btn').off('click');
         },
 
         initEditMenuButton: function( selector ) {
