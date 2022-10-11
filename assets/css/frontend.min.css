@@ -871,6 +871,10 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 /*--------------------------------------------------------------
 == Mega Menu
 --------------------------------------------------------------*/
+.wpr-mega-menu {
+    position: relative;
+}
+
 .wpr-sub-mega-menu {
     display: none;
     position: absolute;
@@ -935,6 +939,7 @@ li.wpr-mega-menu-pos-default {
 .wpr-mobile-mega-menu .wpr-mobile-menu-item {
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .wpr-mobile-mega-menu .wpr-mobile-sub-icon {
