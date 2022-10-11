@@ -339,6 +339,7 @@ jQuery(document).ready(function( $ ) {
                 }
                 $('#wpr_mm_icon_color').val(settings['wpr_mm_icon_color']).trigger('keyup');
                 $('#wpr_mm_icon_size').val(settings['wpr_mm_icon_size']);
+                $('#wpr_mm_icon_distance').val(settings['wpr_mm_icon_distance']);
 
                 // Badge
                 $('#wpr_mm_badge_text').val(settings['wpr_mm_badge_text']);
@@ -366,6 +367,7 @@ jQuery(document).ready(function( $ ) {
                 }
                 $('#wpr_mm_icon_color').val('').trigger('change');
                 $('#wpr_mm_icon_size').val('');
+                $('#wpr_mm_icon_distance').val('5px');
 
                 // Badge
                 $('#wpr_mm_badge_text').val('');

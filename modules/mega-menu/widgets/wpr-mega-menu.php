@@ -839,8 +839,8 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-nav-menu .wpr-menu-item' => 'padding-left: {{SIZE}}{{UNIT}}; padding-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-nav-menu-horizontal .wpr-mega-menu-badge' => 'right: {{SIZE}}px;',
-					'{{WRAPPER}}.wpr-pointer-background:not(.wpr-sub-icon-none) .wpr-nav-menu-vertical .menu-item-has-children .wpr-sub-icon' => 'text-indent: calc(-{{SIZE}}px - ({{menu_items_sub_icon_size.SIZE}}px / 2) - 2px);',
-					'{{WRAPPER}}.wpr-pointer-border:not(.wpr-sub-icon-none) .wpr-nav-menu-vertical .menu-item-has-children .wpr-sub-icon' => 'text-indent: calc(-{{SIZE}}px - ({{menu_items_sub_icon_size.SIZE}}px / 2) - 2px);',
+					// '{{WRAPPER}}.wpr-pointer-background:not(.wpr-sub-icon-none) .wpr-nav-menu-vertical .menu-item-has-children .wpr-sub-icon' => 'text-indent: calc(-{{SIZE}}px - ({{menu_items_sub_icon_size.SIZE}}px / 2) - 2px);',
+					// '{{WRAPPER}}.wpr-pointer-border:not(.wpr-sub-icon-none) .wpr-nav-menu-vertical .menu-item-has-children .wpr-sub-icon' => 'text-indent: calc(-{{SIZE}}px - ({{menu_items_sub_icon_size.SIZE}}px / 2) - 2px);',
 
 				],
 				'separator' => 'before'
@@ -1852,7 +1852,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 		}
 
 		// Main Menu
-		echo '<nav class="wpr-nav-menu-container wpr-nav-menu-'. esc_attr($settings['menu_layout']) .'" data-trigger="'. esc_attr($settings['menu_items_submenu_trigger']) .'">';
+		echo '<nav class="wpr-nav-menu-container wpr-mega-menu-container wpr-nav-menu-'. esc_attr($settings['menu_layout']) .'" data-trigger="'. esc_attr($settings['menu_items_submenu_trigger']) .'">';
 			echo ''. $menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '</nav>';
 

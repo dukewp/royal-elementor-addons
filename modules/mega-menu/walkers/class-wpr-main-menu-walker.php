@@ -127,9 +127,10 @@ class Wpr_Main_Menu_Walker extends \Walker_Nav_Menu {
                 if ( $settings ) {
                     // Icon
                     if ( '' !== $settings['wpr_mm_icon_picker'] ) {
-                        $font_size = '' !== $settings['wpr_mm_icon_size'] ? 'font-size: '. $settings['wpr_mm_icon_size'] .'px;' : '';
                         $color = '' !== $settings['wpr_mm_icon_color'] ? ' color: '. $settings['wpr_mm_icon_color'] : ';';
-                        $item_icon_style = ( '' !== $font_size && '' !== $color ) ? ' style="'. $font_size . $color .'"' : '';
+                        $font_size = '' !== $settings['wpr_mm_icon_size'] ? 'font-size: '. $settings['wpr_mm_icon_size'] .'px;' : '';
+                        $distance = '' !== $settings['wpr_mm_icon_distance'] ? 'margin-right: '. $settings['wpr_mm_icon_distance'] .'px;' : '';
+                        $item_icon_style = ( '' !== $font_size || '' !== $color || '' !== $distance ) ? ' style="'. $font_size . $color . $distance .'"' : '';
                         $item_icon_html = '<i class="wpr-mega-menu-icon '. $settings['wpr_mm_icon_picker'] .'"'. $item_icon_style .'></i>';
                     }
 
