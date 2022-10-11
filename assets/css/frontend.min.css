@@ -14852,10 +14852,13 @@ dl.variation dd {
     margin: 0;
 }
 
-.wpr-page-list i {
-   display: block;
+.wpr-page-list i,
+.wpr-page-list i:before {
    width: 100%;
    height: 100%;
+   display: inline-flex;
+   justify-content: center;
+   align-items: flex-start;
 }
 
 .wpr-page-list-vertical .wpr-page-list i,
@@ -14872,12 +14875,19 @@ dl.variation dd {
 }
 
 .wpr-page-list-item-icon {
-    display: inline-block;
     margin-right: 5px;
+    line-height: 1.5;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .wpr-page-list-item-icon i {
     font-size: 25px;
+    line-height: 1.5;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .wpr-page-list-horizontal .wpr-page-list {

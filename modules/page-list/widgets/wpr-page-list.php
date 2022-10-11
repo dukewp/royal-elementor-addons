@@ -38,7 +38,7 @@ class Wpr_Page_List extends Widget_Base {
 	}
 
     public function add_repeater_args_page_list() {
-        $args = array(
+        $args = [
             'sort_order' => 'asc',
             'sort_column' => 'post_title',
             'hierarchical' => 1,
@@ -54,7 +54,7 @@ class Wpr_Page_List extends Widget_Base {
             'offset' => 0,
             'post_type' => 'page',
             'post_status' => 'publish'
-        ); 
+		]; 
 
         $pages = get_pages($args); // get all pages based on supplied args
 
@@ -78,8 +78,7 @@ class Wpr_Page_List extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-pointer-item:before' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-pointer-item:after' => 'background-color: {{VALUE}}',
-				],
-				'separator' => 'before'
+				]
 			]
 		);
 	}
@@ -96,6 +95,7 @@ class Wpr_Page_List extends Widget_Base {
 					'underline' => esc_html__( 'Underline', 'wpr-addons' ),
 					'overline' => esc_html__( 'Overline', 'wpr-addons' ),
 				],
+				'separator' => 'before'
 			]
 		);
 	}
@@ -183,24 +183,6 @@ class Wpr_Page_List extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'open_in_new_page',
-			[
-				'label' => esc_html__( 'Open In New Page', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'render_type' => 'template',
-				'default' => 'yes',
-			]
-		);
-
-        $this->add_control_title_pointer_color_hr();
-
-        $this->add_control_title_pointer();
-
-        $this->add_control_title_pointer_height();
-
-        $this->add_control_title_pointer_animation();
-
         $this->end_controls_section();
 
 		// Tab: Content ==============
@@ -260,7 +242,7 @@ class Wpr_Page_List extends Widget_Base {
 			'page_list_item_sub_title', [
 				'label' => esc_html__( 'Sub Title', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
-				'default' => esc_html__( 'New Page Sub-title' , 'wpr-addons' ),
+				'default' => esc_html__( 'New Page Sub Title' , 'wpr-addons' ),
 				'label_block' => true,
 			]
 		);
@@ -281,6 +263,20 @@ class Wpr_Page_List extends Widget_Base {
                     'page_list_item_type' => 'custom'
                 ],
 				'label_block' => true,
+			]
+		);
+
+		$repeater->add_control(
+			'open_in_new_page',
+			[
+				'label' => esc_html__( 'Open In New Page', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'render_type' => 'template',
+				'default' => 'yes',
+				'separator' => 'before',
+                'condition' => [
+                    'page_list_item_type' => 'dynamic'
+                ]
 			]
 		);
 
@@ -379,176 +375,15 @@ class Wpr_Page_List extends Widget_Base {
         $this->end_controls_section();
 
 		// Styles ====================
-		// Section: List Item Style ---
+		// Section: General ---
 		$this->start_controls_section(
-			'section_style_page_list_item',
+			'section_style_page_list_general',
 			[
-				'label' => esc_html__( 'List Item Styles', 'wpr-addons' ),
+				'label' => esc_html__( 'General', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 			]
 		);
-
-		$this->start_controls_tabs( 'list_item_style' );
-
-		$this->start_controls_tab(
-			'page_list_item_normal',
-			[
-				'label' => esc_html__( 'Normal', 'wpr-addons' ),
-			]
-		);
-
-		$this->add_control(
-			'page_list_item_title_color',
-			[
-				'label'  => esc_html__( 'Title Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#605BE5',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-page-list-item-wrap a' => 'color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_control(
-			'page_list_item_sub_title_color',
-			[
-				'label'  => esc_html__( 'Sub-title Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#333333',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-page-list-item-wrap p' => 'color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_control(
-			'page_list_item_background_color',
-			[
-				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-                'default' => '#00000000',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-page-list-item-wrap' => 'background-color: {{VALUE}}',
-				]
-			]
-		);
-
-		$this->add_control(
-			'page_list_item_border_color',
-			[
-				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#E8E8E8',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-page-list-item-wrap' => 'border-color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_control(
-			'page_list_item_transition_duration',
-			[
-				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.5,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-page-list-item-wrap' => 'transition-duration: {{VALUE}}s',
-				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'page_list_item_title_typo',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-page-list-item-wrap a',
-				'fields_options' => [
-					'typography'      => [
-						'default' => 'custom',
-					],
-					'font_size'      => [
-						'default'    => [
-							'size' => '14',
-							'unit' => 'px',
-						],
-					]
-				]
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'page_list_item_sub_title_typo',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-page-list-item-wrap p',
-				'fields_options' => [
-					'typography'      => [
-						'default' => 'custom',
-					],
-					'font_size'      => [
-						'default'    => [
-							'size' => '14',
-							'unit' => 'px',
-						],
-					]
-				]
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->start_controls_tab(
-			'page_list_item_hover',
-			[
-				'label' => esc_html__( 'Hover', 'wpr-addons' ),
-			]
-		);
-
-		$this->add_control(
-			'page_list_item_title_color_hr',
-			[
-				'label'  => esc_html__( 'Title Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#605BE5',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-page-list-item-wrap a:hover' => 'color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_control(
-			'page_list_item_background_color_hr',
-			[
-				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-                'default' => '#00000000',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-page-list-item-wrap:hover' => 'background-color: {{VALUE}}',
-				]
-			]
-		);
-
-		$this->add_control(
-			'page_list_item_border_color_hr',
-			[
-				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#E8E8E8',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-page-list-item-wrap' => 'border-color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->end_controls_tabs();
 
 		$this->add_responsive_control(
 			'page_list_item_padding',
@@ -564,8 +399,7 @@ class Wpr_Page_List extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-page-list-item-wrap' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before',
+				]
 			]
 		);
 
@@ -643,6 +477,216 @@ class Wpr_Page_List extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-page-list-item-wrap' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
+			]
+		);
+
+		$this->end_controls_section();
+
+		// Styles ====================
+		// Section: Title ---
+		$this->start_controls_section(
+			'section_style_page_list_title',
+			[
+				'label' => esc_html__( 'Title', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'show_label' => false,
+			]
+		);
+
+		$this->start_controls_tabs( 'list_item_style' );
+
+		$this->start_controls_tab(
+			'page_list_item_normal',
+			[
+				'label' => esc_html__( 'Normal', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'page_list_item_title_color',
+			[
+				'label'  => esc_html__( 'Title Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-page-list-item-wrap a' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		// $this->add_control(
+		// 	'page_list_item_background_color',
+		// 	[
+		// 		'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::COLOR,
+        //         'default' => '#00000000',
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-page-list-item-wrap' => 'background-color: {{VALUE}}',
+		// 		]
+		// 	]
+		// );
+
+		$this->add_control(
+			'page_list_item_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-page-list-item-wrap' => 'border-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'page_list_item_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.5,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-page-list-item-wrap' => 'transition-duration: {{VALUE}}s',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'page_list_item_title_typo',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-page-list-item-wrap a',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'font_size'      => [
+						'default'    => [
+							'size' => '14',
+							'unit' => 'px',
+						],
+					],
+					'line_height'     => [
+						'default' => [
+							'size' => '1',
+							'unit' => 'em',
+						]
+					],
+				]
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'page_list_item_hover',
+			[
+				'label' => esc_html__( 'Hover', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'page_list_item_title_color_hr',
+			[
+				'label'  => esc_html__( 'Title Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-page-list-item-wrap a:hover' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		// $this->add_control(
+		// 	'page_list_item_background_color_hr',
+		// 	[
+		// 		'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::COLOR,
+        //         'default' => '#00000000',
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-page-list-item-wrap:hover' => 'background-color: {{VALUE}}',
+		// 		]
+		// 	]
+		// );
+
+        $this->add_control_title_pointer_color_hr();
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+        $this->add_control_title_pointer();
+
+        $this->add_control_title_pointer_height();
+
+        $this->add_control_title_pointer_animation();
+
+		$this->add_responsive_control(
+			'title_distance',
+			[
+				'label' => esc_html__( 'Bottom Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 5,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-page-list-item-wrap li a' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->end_controls_section();
+		
+
+		$this->start_controls_section(
+			'section_style_sub_title',
+			[
+				'label' => esc_html__( 'Sub Title', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE
+			]
+		);
+
+		$this->add_control(
+			'page_list_item_sub_title_color',
+			[
+				'label'  => esc_html__( 'Sub Title Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#333333',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-page-list-item-wrap p' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'page_list_item_sub_title_typo',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-page-list-item-wrap p',
+				'fields_options' => [
+					'typography'      => [
+						'default' => 'custom',
+					],
+					'font_size'      => [
+						'default'    => [
+							'size' => '14',
+							'unit' => 'px',
+						],
+					]
 				]
 			]
 		);
@@ -805,7 +849,9 @@ class Wpr_Page_List extends Widget_Base {
 					'size' => 15,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-page-list i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-page-list i' => 'font-size: {{SIZE}}{{UNIT}}; max-height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-page-list i:before' => 'max-height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-page-list-item-icon' => 'max-height: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before'
 			]
@@ -850,14 +896,15 @@ class Wpr_Page_List extends Widget_Base {
 
         echo '<div class="wpr-page-list-wrap">';
             echo '<ul class="wpr-page-list">';
-
-            if ( 'yes' === $settings['open_in_new_page'] ) {
-                $target = '_blank';
-            } else {
-                $target = '_self';
-            }
             
                 foreach ( $settings['page_list'] as $key=>$item ) {
+
+					if ( 'yes' === $item['open_in_new_page'] ) {
+						$target = '_blank';
+					} else {
+						$target = '_self';
+					}
+
                     if ( 'yes' === $item['show_page_list_item_icon'] ) {
                         ob_start();
                         \Elementor\Icons_Manager::render_icon( $item['page_list_item_icon'], [ 'aria-hidden' => 'true' ] );
