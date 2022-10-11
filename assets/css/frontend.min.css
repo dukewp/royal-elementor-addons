@@ -6970,6 +6970,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0;
 }
 
 .wpr-ajax-search-content {
@@ -7003,6 +7004,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     display: flex;
     padding: 5px;
     cursor: pointer;
+}
+
+.wpr-ajax-desc {
+    margin: 0;
 }
 
 a.wpr-ajax-img-wrap {
@@ -14861,12 +14866,6 @@ dl.variation dd {
    align-items: flex-start;
 }
 
-.wpr-page-list-vertical .wpr-page-list i,
-.wpr-page-list span {
-   /* line-height: 1.5;
-   vertical-align: middle; */
-}
-
 /* .wpr-page-list-horizontal .wpr-page-list li a, */
 .wpr-page-list .wpr-page-list-item-wrap {
     display: inline-flex;
@@ -14876,7 +14875,6 @@ dl.variation dd {
 
 .wpr-page-list-item-icon {
     margin-right: 5px;
-    line-height: 1.5;
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -14884,7 +14882,6 @@ dl.variation dd {
 
 .wpr-page-list-item-icon i {
     font-size: 25px;
-    line-height: 1.5;
     display: inline-flex;
     justify-content: center;
     align-items: center;

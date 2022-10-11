@@ -572,7 +572,7 @@ class Wpr_Page_List extends Widget_Base {
 					],
 					'line_height'     => [
 						'default' => [
-							'size' => '1',
+							'size' => '0.8',
 							'unit' => 'em',
 						]
 					],

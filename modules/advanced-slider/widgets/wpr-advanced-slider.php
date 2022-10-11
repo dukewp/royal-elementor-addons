@@ -963,17 +963,6 @@ class Wpr_Advanced_Slider extends Widget_Base {
 		$this->add_control_slider_autoplay_duration();
 
 		$this->add_control_slider_pause_on_hover();
-
-		$this->add_control(
-			'slider_loop',
-			[
-				'label' => esc_html__( 'Infinite Loop', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
-				'frontend_available' => true,
-				'separator' => 'before',
-			]
-		);
 		
 		$this->add_control(
 			'slider_effect',
@@ -2582,8 +2571,6 @@ class Wpr_Advanced_Slider extends Widget_Base {
 		$slider_html = '';
 		$item_count = 0;
 
-		var_dump($settings['slider_loop']);
-
 		if ( empty( $settings['slider_items'] ) ) {
 			return;
 		}
@@ -2869,7 +2856,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 
 		$slider_options = [
 			'rtl' => $slider_is_rtl,
-			'infinite' => ( $settings['slider_loop'] === 'yes' ),
+			'infinite' => true,
 			'speed' => absint( $settings['slider_effect_duration'] * 1000 ),
 			'arrows'=> true,
 			'dots' 	=> true,
