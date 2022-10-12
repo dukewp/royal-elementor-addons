@@ -339,7 +339,6 @@ jQuery(document).ready(function( $ ) {
                 }
                 $('#wpr_mm_icon_color').val(settings['wpr_mm_icon_color']).trigger('keyup');
                 $('#wpr_mm_icon_size').val(settings['wpr_mm_icon_size']);
-                $('#wpr_mm_icon_distance').val(settings['wpr_mm_icon_distance']);
 
                 // Badge
                 $('#wpr_mm_badge_text').val(settings['wpr_mm_badge_text']);
@@ -347,6 +346,11 @@ jQuery(document).ready(function( $ ) {
                 $('#wpr_mm_badge_color').val(settings['wpr_mm_badge_color']).trigger('keyup');
                 $('#wpr_mm_badge_bg_color').val(settings['wpr_mm_badge_bg_color']).trigger('keyup');
                 $('#wpr_mm_badge_bdrs').val(settings['wpr_mm_badge_bdrs']);
+                if ( 'true' == settings['wpr_mm_badge_animation'] ) {
+                    $('#wpr_mm_badge_animation').prop( 'checked', true );
+                } else {
+                    $('#wpr_mm_badge_animation').prop( 'checked', false );
+                }
 
             // Default Values
             } else {
@@ -367,7 +371,6 @@ jQuery(document).ready(function( $ ) {
                 }
                 $('#wpr_mm_icon_color').val('').trigger('change');
                 $('#wpr_mm_icon_size').val('');
-                $('#wpr_mm_icon_distance').val('5px');
 
                 // Badge
                 $('#wpr_mm_badge_text').val('');
@@ -375,6 +378,7 @@ jQuery(document).ready(function( $ ) {
                 $('#wpr_mm_badge_color').val('#ffffff').trigger('keyup');
                 $('#wpr_mm_badge_bg_color').val('#000000').trigger('keyup');
                 $('#wpr_mm_badge_bdrs').val('0');
+                $('#wpr_mm_badge_animation').prop( 'checked', false );
             }
         }
     }

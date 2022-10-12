@@ -650,7 +650,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 		$this->add_control(
 			'menu_item_icon_color',
 			[
-				'label' => esc_html__( 'Extra Icon Color', 'wpr-addons' ),
+				'label' => esc_html__( 'Custom Icon Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'scheme' => [
 					'type' => Color::get_type(),
@@ -777,7 +777,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 		$this->add_control(
 			'menu_items_extra_icon_size',
 			[
-				'label' => esc_html__( 'Extra Icon Size', 'wpr-addons' ),
+				'label' => esc_html__( 'Custom Icon Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 16,
@@ -790,6 +790,70 @@ class Wpr_Mega_Menu extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-nav-menu .wpr-mega-menu-icon' => 'font-size: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'menu_items_extra_icon_distance',
+			[
+				'label' => esc_html__( 'Custom Icon Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 5,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 25,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-nav-menu .wpr-mega-menu-icon' => 'margin-right: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'menu_items_badge_top_distance',
+			[
+				'label' => esc_html__( 'Badge Vertical Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 5,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 25,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-nav-menu .wpr-mega-menu-badge' => 'top: -{{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'menu_layout' => 'horizontal',
+				],
+			]
+		);
+
+		$this->add_control(
+			'menu_items_badge_right_distance',
+			[
+				'label' => esc_html__( 'Badge Horizontal Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 15,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-nav-menu-horizontal .wpr-mega-menu-badge' => 'right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-nav-menu-vertical .wpr-mega-menu-badge' => 'margin-left: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -838,9 +902,6 @@ class Wpr_Mega_Menu extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-nav-menu .wpr-menu-item' => 'padding-left: {{SIZE}}{{UNIT}}; padding-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-nav-menu-horizontal .wpr-mega-menu-badge' => 'right: {{SIZE}}px;',
-					// '{{WRAPPER}}.wpr-pointer-background:not(.wpr-sub-icon-none) .wpr-nav-menu-vertical .menu-item-has-children .wpr-sub-icon' => 'text-indent: calc(-{{SIZE}}px - ({{menu_items_sub_icon_size.SIZE}}px / 2) - 2px);',
-					// '{{WRAPPER}}.wpr-pointer-border:not(.wpr-sub-icon-none) .wpr-nav-menu-vertical .menu-item-has-children .wpr-sub-icon' => 'text-indent: calc(-{{SIZE}}px - ({{menu_items_sub_icon_size.SIZE}}px / 2) - 2px);',
 
 				],
 				'separator' => 'before'
@@ -909,11 +970,10 @@ class Wpr_Mega_Menu extends Widget_Base {
 					],
 				],
 				'selectors' => [
+					'{{WRAPPER}} .wpr-nav-menu-horizontal .wpr-nav-menu .wpr-sub-mega-menu' => 'transform: translateY({{SIZE}}{{UNIT}});',
+					'{{WRAPPER}} .wpr-nav-menu-horizontal .wpr-nav-menu > li > .wpr-sub-menu' => 'transform: translateY({{SIZE}}{{UNIT}});',
 					'{{WRAPPER}} .wpr-nav-menu-vertical .wpr-nav-menu > li > .wpr-sub-menu' => 'transform: translateX({{SIZE}}{{UNIT}});',
 					'{{WRAPPER}} .wpr-nav-menu-vertical .wpr-nav-menu > li > .wpr-sub-mega-menu' => 'transform: translateX({{SIZE}}{{UNIT}});',
-				],
-				'condition' => [
-					'menu_layout' => 'vertical',
 				],
 			]
 		);
@@ -1016,30 +1076,6 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'size_units' => [ 'px', '%' ],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-sub-mega-menu' => 'border-radius: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'sub_mega_menu_offset',
-			[
-				'label' => esc_html__( 'Sub Mega Menu Offset', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 25,
-					],
-				],
-				'default' => [
-					'size' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-nav-menu-horizontal .wpr-nav-menu .wpr-sub-mega-menu' => 'transform: translateY({{SIZE}}{{UNIT}});',
-				],
-				'separator' => 'before',
-				'condition' => [
-					'menu_layout!' => 'vertical',
 				],
 			]
 		);
@@ -1197,29 +1233,6 @@ class Wpr_Mega_Menu extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-sub-menu .wpr-sub-menu-item' => 'padding-top: {{SIZE}}{{UNIT}}; padding-bottom: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'sub_menu_offset',
-			[
-				'label' => esc_html__( 'Sub Menu Offset', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 25,
-					],
-				],
-				'default' => [
-					'size' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-nav-menu-horizontal .wpr-nav-menu > li > .wpr-sub-menu' => 'transform: translateY({{SIZE}}{{UNIT}});',
-				],
-				'condition' => [
-					'menu_layout!' => 'vertical',
 				],
 			]
 		);
