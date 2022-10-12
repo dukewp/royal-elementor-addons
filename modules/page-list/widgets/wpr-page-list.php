@@ -229,6 +229,7 @@ class Wpr_Page_List extends Widget_Base {
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'default' => esc_html__( 'New Page' , 'wpr-addons' ),
+				'label_block' => true,
 				'separator' => 'before',
                 'condition' => [
                     'page_list_item_type' => 'custom'
@@ -239,6 +240,7 @@ class Wpr_Page_List extends Widget_Base {
 		$repeater->add_control(
 			'page_list_item_sub_title', [
 				'label' => esc_html__( 'Sub Title', 'wpr-addons' ),
+				'label_block' => true,
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'default' => esc_html__( 'New Page Sub Title' , 'wpr-addons' ),
 			]
@@ -301,8 +303,20 @@ class Wpr_Page_List extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'show_page_list_item_badge_animation',
+			[
+				'label' => esc_html__( 'Enable Animation', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_block' => false,
+                'condition' => [
+                    'show_page_list_item_badge' => 'yes'
+                ]
+			]
+		);
+
+		$repeater->add_control(
 			'page_list_item_badge_text', [
-				'label' => esc_html__( 'Title', 'wpr-addons' ),
+				'label' => esc_html__( 'Badge Text', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'default' => esc_html__( 'Badge' , 'wpr-addons' ),
                 'condition' => [
@@ -360,7 +374,7 @@ class Wpr_Page_List extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_page_list_general',
 			[
-				'label' => esc_html__( 'General', 'wpr-addons' ),
+				'label' => esc_html__( 'List Items', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 			]
@@ -371,12 +385,13 @@ class Wpr_Page_List extends Widget_Base {
 			[
 				'label' => esc_html__( 'Padding', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
+				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 5,
+					'top' => '5',
 					'right' => 0,
-					'bottom' => 5,
+					'bottom' => '5',
 					'left' => 0,
+					'isLinked' => ''
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-page-list-item-wrap' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -389,12 +404,14 @@ class Wpr_Page_List extends Widget_Base {
 			[
 				'label' => esc_html__( 'Margin', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
+				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 5,
-					'right' => 8,
+					'top' => '5',
+					'right' =>  '8',
 					'bottom' => 0,
 					'left' => 0,
+					'unit' => 'px',
+					'isLinked' => false
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-page-list-item-wrap' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -940,13 +957,19 @@ class Wpr_Page_List extends Widget_Base {
 						$target = '_self';
 					}
 
+					if ( 'yes' === $item['show_page_list_item_badge_animation'] ) {
+						$badge_anim_class = ' wpr-pl-badge-anim-yes';
+					} else {
+						$badge_anim_class = '';
+					}
+
                     if ( '' !== $item['page_list_item_icon'] ) {
                         ob_start();
                         \Elementor\Icons_Manager::render_icon( $item['page_list_item_icon'], [ 'aria-hidden' => 'true' ] );
                         $icon = ob_get_clean();
                     }
                     if ( 'dynamic' === $item['page_list_item_type'] && isset($item['query_page_selection']) ) {
-                        echo '<div class="wpr-page-list-item-wrap '. $class .'">';
+                        echo '<div class="wpr-page-list-item-wrap '. $class . $badge_anim_class .'">';
                             echo '' !== $item['page_list_item_icon'] ? '<span class="wpr-page-list-item-icon">'. $icon .'</span>' : '';
                             echo '<li>';
                                 echo '<a class="wpr-pointer-item" href='. get_the_permalink($item['query_page_selection']) .' target='. $target .'>';
@@ -962,7 +985,7 @@ class Wpr_Page_List extends Widget_Base {
                         if ( ! empty( $item['page_list_item_title_url']['url'] ) ) {
                             $this->add_link_attributes( 'title_link_'. $key, $item['page_list_item_title_url'] );
                         }
-                        echo '<div class="wpr-page-list-item-wrap '. $class .'">';
+                        echo '<div class="wpr-page-list-item-wrap '. $class . $badge_anim_class .'">';
                             echo '' !== $item['page_list_item_icon'] ? '<span class="wpr-page-list-item-icon">'. $icon .'</span>' : '';
                             echo '<li>';
                                 echo '<a  '. $this->get_render_attribute_string( 'title_link_'. $key ) .' class="wpr-pointer-item">';
