@@ -6,7 +6,7 @@ function register_mega_menu_cpt() {
     $args = array(
         'label'				  => esc_html__( 'Royal Mega Menu', 'wpr-addons' ),
         'public'              => true,
-        'publicly_queryable'  => false,
+        'publicly_queryable'  => true,
         'rewrite'             => false,
         'show_ui'             => true,
         'show_in_menu'        => false,
