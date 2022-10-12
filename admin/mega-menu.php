@@ -176,10 +176,6 @@ function render_settings_popup() {
                     <h4><?php esc_html_e('Icon Size (px)', 'wpr-addons'); ?></h4>
                     <input type="number" id="wpr_mm_icon_size" value="14">
                 </div>
-                <div class="wpr-mm-setting">
-                    <h4><?php esc_html_e('Icon Distance (px)', 'wpr-addons'); ?></h4>
-                    <input type="number" id="wpr_mm_icon_distance" value="14">
-                </div>
 
                 <h4><?php esc_html_e('Badge', 'wpr-addons'); ?></h4>
                 <div class="wpr-mm-setting">
