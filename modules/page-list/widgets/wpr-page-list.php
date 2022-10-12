@@ -121,7 +121,6 @@ class Wpr_Page_List extends Widget_Base {
 					'{{WRAPPER}} .wpr-pointer-item:before' => 'height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-pointer-item:after' => 'height: {{SIZE}}{{UNIT}};',
 				],
-				'separator' => 'before',
 				'condition' => [
 					'title_pointer' => [ 'underline', 'overline' ],
 				],
@@ -231,7 +230,6 @@ class Wpr_Page_List extends Widget_Base {
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'default' => esc_html__( 'New Page' , 'wpr-addons' ),
 				'separator' => 'before',
-				'label_block' => true,
                 'condition' => [
                     'page_list_item_type' => 'custom'
                 ]
@@ -243,7 +241,6 @@ class Wpr_Page_List extends Widget_Base {
 				'label' => esc_html__( 'Sub Title', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'default' => esc_html__( 'New Page Sub Title' , 'wpr-addons' ),
-				'label_block' => true,
 			]
 		);
 
@@ -281,28 +278,13 @@ class Wpr_Page_List extends Widget_Base {
 		);
 
 		$repeater->add_control(
-			'show_page_list_item_icon',
-			[
-				'label' => esc_html__( 'Show Icon', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'label_block' => false,
-				'default' => 'yes',
-                'separator' => 'before'
-			]
-		);
-
-		$repeater->add_control(
 			'page_list_item_icon',
 			[
 				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
 				'type' => Controls_Manager::ICONS,
 				'skin' => 'inline',
 				'label_block' => false,
-				'exclude_inline_options' => 'svg',
-				'condition' => [
-					'show_page_list_item_icon' => 'yes'
-				]
+				'exclude_inline_options' => 'svg'
 			]
 		);
 
@@ -323,7 +305,6 @@ class Wpr_Page_List extends Widget_Base {
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'default' => esc_html__( 'Badge' , 'wpr-addons' ),
-				'label_block' => true,
                 'condition' => [
                     'show_page_list_item_badge' => 'yes'
                 ]
@@ -621,9 +602,9 @@ class Wpr_Page_List extends Widget_Base {
 
         $this->add_control_title_pointer();
 
-        $this->add_control_title_pointer_height();
-
         $this->add_control_title_pointer_animation();
+
+        $this->add_control_title_pointer_height();
 
 		$this->add_responsive_control(
 			'title_distance',
@@ -724,6 +705,33 @@ class Wpr_Page_List extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-page-list-item-badge' => 'background-color: {{VALUE}}',
 				],
+			]
+		);
+
+		$this->add_control(
+			'badge_vertical_align',
+			[
+				'label' => esc_html__( 'Vertical Align', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'label_block' => false,
+				'default' => 'center',
+				'options' => [
+					'top' => [
+						'title' => esc_html__( 'Top', 'wpr-addons' ),
+						'icon' => 'eicon-v-align-top',
+					],
+					'center' => [
+						'title' => esc_html__( 'Middle', 'wpr-addons' ),
+						'icon' => 'eicon-v-align-middle',
+					],
+					'bottom' => [
+						'title' => esc_html__( 'Bottom', 'wpr-addons' ),
+						'icon' => 'eicon-v-align-bottom',
+					]
+				],
+				'prefix_class' => 'wpr-pl-badge-',
+				'render_type' => 'template',
+				'separator' => 'before'
 			]
 		);
 
@@ -832,6 +840,33 @@ class Wpr_Page_List extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'icon_vertical_align',
+			[
+				'label' => esc_html__( 'Vertical Align', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'label_block' => false,
+				'default' => 'center',
+				'options' => [
+					'top' => [
+						'title' => esc_html__( 'Top', 'wpr-addons' ),
+						'icon' => 'eicon-v-align-top',
+					],
+					'center' => [
+						'title' => esc_html__( 'Middle', 'wpr-addons' ),
+						'icon' => 'eicon-v-align-middle',
+					],
+					'bottom' => [
+						'title' => esc_html__( 'Bottom', 'wpr-addons' ),
+						'icon' => 'eicon-v-align-bottom',
+					]
+				],
+				'prefix_class' => 'wpr-pl-icon-',
+				'render_type' => 'template',
+				'separator' => 'before'
+			]
+		);
+
 		$this->add_responsive_control(
 			'icon_size',
 			[
@@ -905,14 +940,14 @@ class Wpr_Page_List extends Widget_Base {
 						$target = '_self';
 					}
 
-                    if ( 'yes' === $item['show_page_list_item_icon'] ) {
+                    if ( '' !== $item['page_list_item_icon'] ) {
                         ob_start();
                         \Elementor\Icons_Manager::render_icon( $item['page_list_item_icon'], [ 'aria-hidden' => 'true' ] );
                         $icon = ob_get_clean();
                     }
                     if ( 'dynamic' === $item['page_list_item_type'] && isset($item['query_page_selection']) ) {
                         echo '<div class="wpr-page-list-item-wrap '. $class .'">';
-                            echo 'yes' === $item['show_page_list_item_icon'] ? '<span class="wpr-page-list-item-icon">'. $icon .'</span>' : '';
+                            echo '' !== $item['page_list_item_icon'] ? '<span class="wpr-page-list-item-icon">'. $icon .'</span>' : '';
                             echo '<li>';
                                 echo '<a class="wpr-pointer-item" href='. get_the_permalink($item['query_page_selection']) .' target='. $target .'>';
                                     echo get_the_title($item['query_page_selection']);
@@ -928,7 +963,7 @@ class Wpr_Page_List extends Widget_Base {
                             $this->add_link_attributes( 'title_link_'. $key, $item['page_list_item_title_url'] );
                         }
                         echo '<div class="wpr-page-list-item-wrap '. $class .'">';
-                            echo 'yes' === $item['show_page_list_item_icon'] ? '<span class="wpr-page-list-item-icon">'. $icon .'</span>' : '';
+                            echo '' !== $item['page_list_item_icon'] ? '<span class="wpr-page-list-item-icon">'. $icon .'</span>' : '';
                             echo '<li>';
                                 echo '<a  '. $this->get_render_attribute_string( 'title_link_'. $key ) .' class="wpr-pointer-item">';
                                     echo $item['page_list_item_title'];

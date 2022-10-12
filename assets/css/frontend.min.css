@@ -14844,6 +14844,7 @@ dl.variation dd {
 }
 
 .wpr-page-list li {
+    font-size: 0;
    text-align: left;
 }
 
@@ -14869,7 +14870,7 @@ dl.variation dd {
 /* .wpr-page-list-horizontal .wpr-page-list li a, */
 .wpr-page-list .wpr-page-list-item-wrap {
     display: inline-flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
 }
 
@@ -14913,6 +14914,22 @@ dl.variation dd {
 
 .wpr-page-list-vertical .wpr-sub-page {
    padding-left: 20px;
+}
+
+.wpr-pl-icon-top .wpr-page-list-item-icon {
+    margin-bottom: auto;
+}
+
+.wpr-pl-icon-bottom .wpr-page-list-item-icon {
+    margin-top: auto;
+}
+
+.wpr-pl-badge-top .wpr-page-list-item-badge {
+    margin-bottom: auto;
+}
+
+.wpr-pl-badge-bottom .wpr-page-list-item-badge {
+    margin-top: auto;
 }
 
 .wpr-page-list-item-badge {
