@@ -127,20 +127,21 @@ class Wpr_Main_Menu_Walker extends \Walker_Nav_Menu {
                 if ( $settings ) {
                     // Icon
                     if ( '' !== $settings['wpr_mm_icon_picker'] ) {
-                        $font_size = '' !== $settings['wpr_mm_icon_size'] ? 'font-size: '. $settings['wpr_mm_icon_size'] .'px;' : '';
                         $color = '' !== $settings['wpr_mm_icon_color'] ? ' color: '. $settings['wpr_mm_icon_color'] : ';';
-                        $item_icon_style = ( '' !== $font_size && '' !== $color ) ? ' style="'. $font_size . $color .'"' : '';
+                        $font_size = '' !== $settings['wpr_mm_icon_size'] ? 'font-size: '. $settings['wpr_mm_icon_size'] .'px;' : '';
+                        $item_icon_style = ( '' !== $font_size || '' !== $color || '' !== $distance ) ? ' style="'. $font_size . $color .'"' : '';
                         $item_icon_html = '<i class="wpr-mega-menu-icon '. $settings['wpr_mm_icon_picker'] .'"'. $item_icon_style .'></i>';
                     }
 
                     // Badge
                     if ( '' !== $settings['wpr_mm_badge_text'] ) {
+						$item_badge_class = 'true' === $settings['wpr_mm_badge_animation'] ? ' wpr-mega-menu-badge-animation' : '';
                         $item_badge_style = 'font-size: '. $settings['wpr_mm_badge_size'] .'px;'; 
                         $item_badge_style .= 'color: '. $settings['wpr_mm_badge_color'] .';';
                         $item_badge_style .= 'background-color: '. $settings['wpr_mm_badge_bg_color'] .';';
                         $item_badge_style .= 'border-color: '. $settings['wpr_mm_badge_bg_color'] .';';
                         $item_badge_style .= 'border-radius: '. $settings['wpr_mm_badge_bdrs'] .'px;';
-                        $item_badge_html = '<span class="wpr-mega-menu-badge" style="'. $item_badge_style .'">'. $settings['wpr_mm_badge_text'] .'</span>';
+                        $item_badge_html = '<span class="wpr-mega-menu-badge'. $item_badge_class .'" style="'. $item_badge_style .'">'. $settings['wpr_mm_badge_text'] .'</span>';
                     }
                 }
 

@@ -6,10 +6,10 @@ function register_mega_menu_cpt() {
     $args = array(
         'label'				  => esc_html__( 'Royal Mega Menu', 'wpr-addons' ),
         'public'              => true,
-        'publicly_queryable'  => true,
+        'publicly_queryable'  => false,
         'rewrite'             => false,
         'show_ui'             => true,
-        'show_in_menu'        => true,
+        'show_in_menu'        => false,
         'show_in_nav_menus'   => false,
         'exclude_from_search' => true,
         'capability_type'     => 'post',
@@ -176,6 +176,10 @@ function render_settings_popup() {
                     <h4><?php esc_html_e('Icon Size (px)', 'wpr-addons'); ?></h4>
                     <input type="number" id="wpr_mm_icon_size" value="14">
                 </div>
+                <div class="wpr-mm-setting">
+                    <h4><?php esc_html_e('Icon Distance (px)', 'wpr-addons'); ?></h4>
+                    <input type="number" id="wpr_mm_icon_distance" value="14">
+                </div>
 
                 <h4><?php esc_html_e('Badge', 'wpr-addons'); ?></h4>
                 <div class="wpr-mm-setting">
@@ -197,6 +201,11 @@ function render_settings_popup() {
                 <div class="wpr-mm-setting">
                     <h4><?php esc_html_e('Badge Border Radius (px)', 'wpr-addons'); ?></h4>
                     <input type="number" id="wpr_mm_badge_bdrs" value="0">
+                </div>
+                <div class="wpr-mm-setting wpr-mm-setting-switcher">
+                    <h4><?php esc_html_e('Enable Animation', 'wpr-addons'); ?></h4>
+                    <input type="checkbox" id="wpr_mm_badge_animation">
+                    <label for="wpr_mm_badge_animation"></label>
                 </div>
             </div>
 
