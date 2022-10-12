@@ -7099,6 +7099,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-data-fetch ul {
     list-style-type: none;
     padding: 0;
+    overflow: hidden;
     overflow-y: auto;
     max-height: 30vh;
     opacity: 0;
