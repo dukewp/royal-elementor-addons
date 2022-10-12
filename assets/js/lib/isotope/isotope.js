@@ -4,7 +4,7 @@
  * Licensed GPLv3 for open source use
  * or Isotope Commercial License for commercial use
  *
- * https://isotope.metafizzy.co
+ * https://isotopewpr.metafizzy.co
  * Copyright 2010-2018 Metafizzy
  */
 
@@ -2279,7 +2279,7 @@ return Outlayer;
   /* jshint strict: false */ /*globals define, module, require */
   if ( typeof define == 'function' && define.amd ) {
     // AMD
-    define( 'isotope-layout/js/item',[
+    define( 'isotopewpr-layout/js/item',[
         'outlayer/outlayer'
       ],
       factory );
@@ -2290,8 +2290,8 @@ return Outlayer;
     );
   } else {
     // browser global
-    window.Isotope = window.Isotope || {};
-    window.Isotope.Item = factory(
+    window.IsotopeWpr = window.IsotopeWpr || {};
+    window.IsotopeWpr.Item = factory(
       window.Outlayer
     );
   }
@@ -2357,7 +2357,7 @@ return Item;
   /* jshint strict: false */ /*globals define, module, require */
   if ( typeof define == 'function' && define.amd ) {
     // AMD
-    define( 'isotope-layout/js/layout-mode',[
+    define( 'isotopewpr-layout/js/layout-mode',[
         'get-size/get-size',
         'outlayer/outlayer'
       ],
@@ -2370,8 +2370,8 @@ return Item;
     );
   } else {
     // browser global
-    window.Isotope = window.Isotope || {};
-    window.Isotope.LayoutMode = factory(
+    window.IsotopeWpr = window.IsotopeWpr || {};
+    window.IsotopeWpr.LayoutMode = factory(
       window.getSize,
       window.Outlayer
     );
@@ -2381,14 +2381,14 @@ return Item;
   'use strict';
 
   // layout mode class
-  function LayoutMode( isotope ) {
-    this.isotope = isotope;
+  function LayoutMode( isotopewpr ) {
+    this.isotopewpr = isotopewpr;
     // link properties
-    if ( isotope ) {
-      this.options = isotope.options[ this.namespace ];
-      this.element = isotope.element;
-      this.items = isotope.filteredItems;
-      this.size = isotope.size;
+    if ( isotopewpr ) {
+      this.options = isotopewpr.options[ this.namespace ];
+      this.element = isotopewpr.element;
+      this.items = isotopewpr.filteredItems;
+      this.size = isotopewpr.size;
     }
   }
 
@@ -2410,7 +2410,7 @@ return Item;
 
   facadeMethods.forEach( function( methodName ) {
     proto[ methodName ] = function() {
-      return Outlayer.prototype[ methodName ].apply( this.isotope, arguments );
+      return Outlayer.prototype[ methodName ].apply( this.isotopewpr, arguments );
     };
   });
 
@@ -2419,17 +2419,17 @@ return Item;
   // for horizontal layout modes, check vertical size
   proto.needsVerticalResizeLayout = function() {
     // don't trigger if size did not change
-    var size = getSize( this.isotope.element );
+    var size = getSize( this.isotopewpr.element );
     // check that this.size and size are there
     // IE8 triggers resize on body size change, so they might not be
-    var hasSizes = this.isotope.size && size;
-    return hasSizes && size.innerHeight != this.isotope.size.innerHeight;
+    var hasSizes = this.isotopewpr.size && size;
+    return hasSizes && size.innerHeight != this.isotopewpr.size.innerHeight;
   };
 
   // ----- measurements ----- //
 
   proto._getMeasurement = function() {
-    this.isotope._getMeasurement.apply( this, arguments );
+    this.isotopewpr._getMeasurement.apply( this, arguments );
   };
 
   proto.getColumnWidth = function() {
@@ -2458,23 +2458,23 @@ return Item;
     var firstItemSize = this.getFirstItemSize();
     this[ segmentName ] = firstItemSize && firstItemSize[ outerSize ] ||
       // or size of container
-      this.isotope.size[ 'inner' + size ];
+      this.isotopewpr.size[ 'inner' + size ];
   };
 
   proto.getFirstItemSize = function() {
-    var firstItem = this.isotope.filteredItems[0];
+    var firstItem = this.isotopewpr.filteredItems[0];
     return firstItem && firstItem.element && getSize( firstItem.element );
   };
 
   // ----- methods that should reference isotope ----- //
 
   proto.layout = function() {
-    this.isotope.layout.apply( this.isotope, arguments );
+    this.isotopewpr.layout.apply( this.isotopewpr, arguments );
   };
 
   proto.getSize = function() {
-    this.isotope.getSize();
-    this.size = this.isotope.size;
+    this.isotopewpr.getSize();
+    this.size = this.isotopewpr.size;
   };
 
   // -------------------------- create -------------------------- //
@@ -2757,7 +2757,7 @@ return Item;
   /* jshint strict: false */ /*globals define, module, require */
   if ( typeof define == 'function' && define.amd ) {
     // AMD
-    define( 'isotope-layout/js/layout-modes/masonry',[
+    define( 'isotopewpr-layout/js/layout-modes/masonry',[
         '../layout-mode',
         'masonry-layout/masonry'
       ],
@@ -2771,7 +2771,7 @@ return Item;
   } else {
     // browser global
     factory(
-      window.Isotope.LayoutMode,
+      window.IsotopeWpr.LayoutMode,
       window.Masonry
     );
   }
@@ -2803,7 +2803,7 @@ return Item;
   var measureColumns = proto.measureColumns;
   proto.measureColumns = function() {
     // set items, used if measuring first item
-    this.items = this.isotope.filteredItems;
+    this.items = this.isotopewpr.filteredItems;
     measureColumns.call( this );
   };
 
@@ -2814,7 +2814,7 @@ return Item;
       return this.options.isFitWidth !== undefined ?
         this.options.isFitWidth : this.options.fitWidth;
     }
-    return _getOption.apply( this.isotope, arguments );
+    return _getOption.apply( this.isotopewpr, arguments );
   };
 
   return MasonryMode;
@@ -2830,7 +2830,7 @@ return Item;
   /* jshint strict: false */ /*globals define, module, require */
   if ( typeof define == 'function' && define.amd ) {
     // AMD
-    define( 'isotope-layout/js/layout-modes/fit-rows',[
+    define( 'isotopewpr-layout/js/layout-modes/fit-rows',[
         '../layout-mode'
       ],
       factory );
@@ -2842,7 +2842,7 @@ return Item;
   } else {
     // browser global
     factory(
-      window.Isotope.LayoutMode
+      window.IsotopeWpr.LayoutMode
     );
   }
 
@@ -2865,7 +2865,7 @@ proto._getItemLayoutPosition = function( item ) {
 
   var itemWidth = item.size.outerWidth + this.gutter;
   // if this element cannot fit in the current row
-  var containerWidth = this.isotope.size.innerWidth + this.gutter;
+  var containerWidth = this.isotopewpr.size.innerWidth + this.gutter;
   if ( this.x !== 0 && itemWidth + this.x > containerWidth ) {
     this.x = 0;
     this.y = this.maxY;
@@ -2899,7 +2899,7 @@ return FitRows;
   /* jshint strict: false */ /*globals define, module, require */
   if ( typeof define == 'function' && define.amd ) {
     // AMD
-    define( 'isotope-layout/js/layout-modes/vertical',[
+    define( 'isotopewpr-layout/js/layout-modes/vertical',[
         '../layout-mode'
       ],
       factory );
@@ -2911,7 +2911,7 @@ return FitRows;
   } else {
     // browser global
     factory(
-      window.Isotope.LayoutMode
+      window.IsotopeWpr.LayoutMode
     );
   }
 
@@ -2930,7 +2930,7 @@ proto._resetLayout = function() {
 
 proto._getItemLayoutPosition = function( item ) {
   item.getSize();
-  var x = ( this.isotope.size.innerWidth - item.size.outerWidth ) *
+  var x = ( this.isotopewpr.size.innerWidth - item.size.outerWidth ) *
     this.options.horizontalAlignment;
   var y = this.y;
   this.y += item.size.outerHeight;
@@ -2951,7 +2951,7 @@ return Vertical;
  * Licensed GPLv3 for open source use
  * or Isotope Commercial License for commercial use
  *
- * https://isotope.metafizzy.co
+ * https://isotopewpr.metafizzy.co
  * Copyright 2010-2018 Metafizzy
  */
 
@@ -2965,12 +2965,12 @@ return Vertical;
         'get-size/get-size',
         'desandro-matches-selector/matches-selector',
         'fizzy-ui-utils/utils',
-        'isotope-layout/js/item',
-        'isotope-layout/js/layout-mode',
+        'isotopewpr-layout/js/item',
+        'isotopewpr-layout/js/layout-mode',
         // include default layout modes
-        'isotope-layout/js/layout-modes/masonry',
-        'isotope-layout/js/layout-modes/fit-rows',
-        'isotope-layout/js/layout-modes/vertical'
+        'isotopewpr-layout/js/layout-modes/masonry',
+        'isotopewpr-layout/js/layout-modes/fit-rows',
+        'isotopewpr-layout/js/layout-modes/vertical'
       ],
       function( Outlayer, getSize, matchesSelector, utils, Item, LayoutMode ) {
         return factory( window, Outlayer, getSize, matchesSelector, utils, Item, LayoutMode );
@@ -2983,23 +2983,23 @@ return Vertical;
       require('get-size'),
       require('desandro-matches-selector'),
       require('fizzy-ui-utils'),
-      require('isotope-layout/js/item'),
-      require('isotope-layout/js/layout-mode'),
+      require('isotopewpr-layout/js/item'),
+      require('isotopewpr-layout/js/layout-mode'),
       // include default layout modes
-      require('isotope-layout/js/layout-modes/masonry'),
-      require('isotope-layout/js/layout-modes/fit-rows'),
-      require('isotope-layout/js/layout-modes/vertical')
+      require('isotopewpr-layout/js/layout-modes/masonry'),
+      require('isotopewpr-layout/js/layout-modes/fit-rows'),
+      require('isotopewpr-layout/js/layout-modes/vertical')
     );
   } else {
     // browser global
-    window.Isotope = factory(
+    window.IsotopeWpr = factory(
       window,
       window.Outlayer,
       window.getSize,
       window.matchesSelector,
       window.fizzyUIUtils,
-      window.Isotope.Item,
-      window.Isotope.LayoutMode
+      window.IsotopeWpr.Item,
+      window.IsotopeWpr.LayoutMode
     );
   }
 
@@ -3025,16 +3025,16 @@ var trim = String.prototype.trim ?
 // -------------------------- isotopeDefinition -------------------------- //
 
   // create an Outlayer layout class
-  var Isotope = Outlayer.create( 'isotope', {
+  var IsotopeWpr = Outlayer.create( 'isotopewpr', {
     layoutMode: 'masonry',
     isJQueryFiltering: true,
     sortAscending: true
   });
 
-  Isotope.Item = Item;
-  Isotope.LayoutMode = LayoutMode;
+  IsotopeWpr.Item = Item;
+  IsotopeWpr.LayoutMode = LayoutMode;
 
-  var proto = Isotope.prototype;
+  var proto = IsotopeWpr.prototype;
 
   proto._create = function() {
     this.itemGUID = 0;
@@ -3267,7 +3267,7 @@ var trim = String.prototype.trim ?
   };
 
   /**
-   * @params {Array} items - of Isotope.Items
+   * @params {Array} items - of IsotopeWpr.Items
    * @private
    */
   proto._updateItemsSortData = function( items ) {
@@ -3303,7 +3303,7 @@ var trim = String.prototype.trim ?
       var attr = attrMatch && attrMatch[1];
       var getValue = getValueGetter( attr, query );
       // use second argument as a parser
-      var parser = Isotope.sortDataParsers[ args[1] ];
+      var parser = IsotopeWpr.sortDataParsers[ args[1] ];
       // parse the value, if there was a parser
       sorter = parser ? function( elem ) {
         return elem && parser( getValue( elem ) );
@@ -3336,7 +3336,7 @@ var trim = String.prototype.trim ?
   })();
 
   // parsers used in getSortData shortcut strings
-  Isotope.sortDataParsers = {
+  IsotopeWpr.sortDataParsers = {
     'parseInt': function( val ) {
       return parseInt( val, 10 );
     },
@@ -3563,7 +3563,7 @@ var trim = String.prototype.trim ?
 
   // -----  ----- //
 
-  return Isotope;
+  return IsotopeWpr;
 
 }));
 
