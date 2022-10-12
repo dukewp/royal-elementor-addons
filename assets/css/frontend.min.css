@@ -880,6 +880,11 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     align-items: center;
 }
 
+.wpr-mega-menu .wpr-pointer-item:before,
+.wpr-mega-menu .wpr-pointer-item:after {
+    position: absolute;
+}
+
 .wpr-mega-menu .wpr-sub-icon {
     margin-left: auto;
 }

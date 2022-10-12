@@ -886,6 +886,31 @@ class Wpr_Mega_Menu extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'pointer_distance',
+			[
+				'label' => esc_html__( 'Pointer Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'devices' => [ self::RESPONSIVE_DESKTOP, self::RESPONSIVE_TABLET ],
+				'default' => [
+					'size' => 5,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 25,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}}:not(.wpr-pointer-border-fx) .wpr-pointer-item:before' => 'top: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}:not(.wpr-pointer-border-fx) .wpr-pointer-item:after' => 'bottom: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'menu_items_pointer!' => 'background',
+				],
+			]
+		);
+
 		$this->add_responsive_control(
 			'menu_items_padding_hr',
 			[
