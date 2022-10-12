@@ -804,10 +804,10 @@ class Wpr_Page_List extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
+					'top' => 2,
+					'right' => 5,
+					'bottom' => 2,
+					'left' => 5,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-page-list-item-badge' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
