@@ -15036,3 +15036,19 @@ dl.variation dd {
     background-color:rgb(255, 0, 179);
     padding: 3px 5px;
 }
+
+.wpr-pl-badge-anim-yes .wpr-page-list-item-badge {
+    animation: badgeFade 2s ease-in-out infinite;
+}
+
+@keyframes badgeFade {
+    0% {
+        opacity: 1
+    }
+    50% {
+        opacity: 0.5
+    }
+    0% {
+        opacity: 1
+    }
+}
