@@ -36,7 +36,7 @@ class Wpr_Storefront_Compat {
 	 * Run all the Actions / Filters.
 	 */
 	public function hooks() {
-		$this->render_templates = new WPR_Render_Templates();
+		$this->render_templates = new WPR_Render_Templates( true );
 
 		if ( $this->render_templates->is_template_available('header') ) {
 			add_action( 'template_redirect', [ $this, 'setup_header' ], 10 );
@@ -78,7 +78,8 @@ class Wpr_Storefront_Compat {
 
 		$css .= '</style>';
 
-		echo $css;
+		// Echo plain CSS (no user input or variables)
+		echo ''. $css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**

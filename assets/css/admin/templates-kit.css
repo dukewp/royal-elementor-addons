@@ -23,8 +23,8 @@ img {
       -ms-flex-pack: justify;
           justify-content: space-between;
   background: #fff;
-  -webkit-box-shadow: 0 0 5px 0 rgba(0,0,0,0.1);
-          box-shadow: 0 0 5px 0 rgba(0,0,0,0.1);
+  -webkit-box-shadow: 0 0 7px 0 rgba(0,0,0,0.2);
+          box-shadow: 0 0 7px 0 rgba(0,0,0,0.2);
 }
 
 .wpr-templates-kit-logo {
@@ -149,13 +149,35 @@ img {
 
 .wpr-templates-kit-page-title {
   text-align: center;
-  margin-top: 50px;
-  margin-bottom: 20px;
+  margin-top: 65px;
+  margin-bottom: 35px;
 }
 
 .wpr-templates-kit-page-title h1 {
   font-size: 35px;
   color: #555;
+}
+
+.button.wpr-options-button {
+  padding: 3px 18px;
+  border: 0;
+  color: #fff;
+  background: #6A4BFF;
+  -webkit-box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+          box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+  font-size: 14px;
+}
+
+.button.wpr-options-button:hover,
+.button.wpr-options-button:focus {
+  color: #fff;
+  background: #6A4BFF;
+  border: none;
+}
+
+.button.wpr-options-button .dashicons {
+  font-size: 16px;
+  line-height: 32px;
 }
 
 .wpr-templates-kit-grid {
@@ -166,6 +188,13 @@ img {
   grid-column-gap: 30px;
   grid-row-gap: 30px;
   padding: 30px;
+}
+
+
+@media screen and (max-width: 1400px) {
+  .wpr-templates-kit-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .wpr-templates-kit-grid .grid-item {
@@ -250,6 +279,52 @@ img {
   text-transform: capitalize;
 }
 
+.wpr-templates-kit-grid .grid-item footer span {
+  position: relative;
+  min-width: 77px;
+  height: 20px;
+  background-color: #5130ef;
+  color: #fff;
+  font-size: 12px;
+  padding: 2px 10px;
+  border-radius: 3px;
+}
+
+span.wpr-woo-builder-label {
+  background-color: #7B51AD !important;
+  text-align: center;
+}
+
+.wpr-templates-kit-grid .grid-item footer span:after {
+  display: none;
+  width: 125px;
+  position: absolute;
+  top: -50px;
+  left: 30%;
+  -webkit-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+          transform: translateX(-50%);
+  padding: 7px 10px;
+  border-radius: 3px;
+  background-color: #333;
+  font-size: 12px;
+  line-height: 15px;
+  -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.4);
+          box-shadow: 0 0 5px rgba(0,0,0,0.4);
+}
+
+.wpr-templates-kit-grid .grid-item footer span.wpr-theme-builder-label:after {
+  content: "This Kit includes Theme Builder templates.";
+}
+
+.wpr-templates-kit-grid .grid-item footer span.wpr-woo-builder-label:after {
+  content: "This Kit includes WooCommerce Builder templates.";
+}
+
+.wpr-templates-kit-grid .grid-item footer span:hover:after {
+  display: block;
+}
+
 .wpr-templates-kit-single {
   display: none;
 }
@@ -270,10 +345,15 @@ img {
   left: 0;
   right: 0;
   z-index: 10;
-  padding: 20px;
+  padding: 25px 30px;
   background: #fff;
-  -webkit-box-shadow: 0 0 3px 0 rgba(0,0,0,0.1);
-          box-shadow: 0 0 3px 0 rgba(0,0,0,0.1);
+  -webkit-box-shadow: 0 0 7px 0 rgba(0,0,0,0.2);
+          box-shadow: 0 0 7px 0 rgba(0,0,0,0.2);
+}
+
+.action-buttons-wrap a,
+.action-buttons-wrap button {
+  padding: 5px 25px !important;
 }
 
 .wpr-templates-kit-single .preview-demo .dashicons {
@@ -390,7 +470,7 @@ img {
 }
 
 .wpr-import-kit-popup .progress-bar {
-  width: 2px;
+  width: 30px;
   height: 4px;
   background: #2271B1;
 }
