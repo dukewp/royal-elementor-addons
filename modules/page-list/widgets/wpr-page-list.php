@@ -980,40 +980,46 @@ class Wpr_Page_List extends Widget_Base {
 
 					$this->add_render_attribute( 'page_list_item'. $key, 'class', 'wpr-page-list-item-wrap elementor-repeater-item-'. $item['_id']. $class . $badge_anim_class );
 
-                    if ( '' !== $item['page_list_item_icon'] ) {
+                    if ( isset($item['page_list_item_icon']) && '' !== $item['page_list_item_icon']['value'] ) {
                         ob_start();
                         \Elementor\Icons_Manager::render_icon( $item['page_list_item_icon'], [ 'aria-hidden' => 'true' ] );
                         $icon = ob_get_clean();
                     }
+
                     if ( 'dynamic' === $item['page_list_item_type'] && isset($item['query_page_selection']) ) {
+
                         echo '<div '. $this->get_render_attribute_string('page_list_item'. $key) .'>';
-                            echo '' !== $item['page_list_item_icon'] ? '<span class="wpr-page-list-item-icon">'. $icon .'</span>' : '';
+                            echo (isset($item['page_list_item_icon']) && '' !== $item['page_list_item_icon']['value']) ? '<span class="wpr-page-list-item-icon">'. $icon .'</span>' : '';
                             echo '<li>';
                                 echo '<a class="wpr-pointer-item" href='. get_the_permalink($item['query_page_selection']) .' target='. $target .'>';
                                     echo get_the_title($item['query_page_selection']);
                                 echo '</a>';
-                                if ( isset($item['page_list_item_sub_title']) ) {
+                                if ( isset($item['page_list_item_sub_title']) && '' !== $item['page_list_item_sub_title']  ) {
                                     echo '<p>'. $item['page_list_item_sub_title'] .'</p>';
                                 }
                             echo '</li>';
                             echo 'yes' === $item['show_page_list_item_badge'] ? '<span class="wpr-page-list-item-badge">'. $item['page_list_item_badge_text'] .'</span>' : '';
                         echo '</div>';
+
                     } else if ( 'custom' === $item['page_list_item_type'] && isset($item['page_list_item_title']) ) {
+
                         if ( ! empty( $item['page_list_item_title_url']['url'] ) ) {
                             $this->add_link_attributes( 'title_link_'. $key, $item['page_list_item_title_url'] );
                         }
+
                         echo '<div '. $this->get_render_attribute_string('page_list_item'. $key) .'>';
-                            echo '' !== $item['page_list_item_icon'] ? '<span class="wpr-page-list-item-icon">'. $icon .'</span>' : '';
+                            echo (isset($item['page_list_item_icon']) && '' !== $item['page_list_item_icon']['value']) ? '<span class="wpr-page-list-item-icon">'. $icon .'</span>' : '';
                             echo '<li>';
                                 echo '<a  '. $this->get_render_attribute_string( 'title_link_'. $key ) .' class="wpr-pointer-item">';
                                     echo $item['page_list_item_title'];
                                 echo '</a>';
-                                if ( isset($item['page_list_item_sub_title']) ) {
+                                if ( isset($item['page_list_item_sub_title']) && '' !== $item['page_list_item_sub_title'] ) {
                                     echo '<p>'. $item['page_list_item_sub_title'] .'</p>';
                                 }
                             echo '</li>';
                             echo 'yes' === $item['show_page_list_item_badge'] ? '<span class="wpr-page-list-item-badge">'. $item['page_list_item_badge_text'] .'</span>' : '';
                         echo '</div>';
+
                     }
                 }
 
