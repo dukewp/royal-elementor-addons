@@ -11156,8 +11156,8 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     align-items: flex-start;
 }
 
-.wpr-instagram-feed {
-    
+.wpr-instagram-follow-btn {
+    display: inline-block;
 }
 
 

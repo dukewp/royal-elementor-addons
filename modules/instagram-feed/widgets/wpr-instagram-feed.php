@@ -131,7 +131,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			[
 				'label' => esc_html__( 'Columns', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => '3',
+				'default' => '33.3%',
 				'options' => [
 					'100%' => esc_html__( 'One', 'wpr-addons' ),
 					'50%' => esc_html__( 'Two', 'wpr-addons' ),
@@ -140,10 +140,30 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					'20%' => esc_html__( 'Five', 'wpr-addons' ),
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-instagram-feed figure' => 'width: {{VALUE}}',
-					'{{WRAPPER}} .wpr-instagram-feed video' => 'width: {{VALUE}}'
+					'{{WRAPPER}} .wpr-insta-feed-content-wrap' => 'max-width: {{VALUE}}'
 				],
 				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'gutter',
+			[
+				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'unit' => 'px',
+					'size' => 5,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns.VALUE}} - (2 * {{SIZE}}px));'
+				]
 			]
 		);
 
@@ -418,7 +438,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		$response = wp_remote_get($url);
 		if(!isset($body)) {
 			$body = json_decode($response['body']);
-			var_dump($body);
+
 			update_option('wpr_instagram_access_token', $body->access_token);
 			update_option('wpr_instagram_access_token_expires_in', $body->expires_in);
 			update_option('wpr_instagram_access_token_generation_date', date('Y-m-d'));
@@ -445,8 +465,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
 		$token_expires_in = get_option('wpr_instagram_access_token_expires_in');
 
-		var_dump($token_expires_in);
-
 		$compare_date = strtotime('-'.get_option('wpr_instagram_access_token_expires_in').' seconds');
 
 		$token_generation_date = strtotime(get_option('wpr_instagram_access_token_generation_date'));
@@ -454,7 +472,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		$access_token = get_option('wpr_instagram_access_token');
 
 		if ( $token_generation_date <= $compare_date  ) {
-			var_dump('works');
+			
 			$this->refresh_access_token($access_token);
 		}
 
@@ -466,14 +484,19 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					<?php foreach($this->call_instagram_api($access_token) as $result) : ?>
 				
 					<?php if ( $result->media_type === 'IMAGE') : ?>
-					<figure>
-						<img src=<?php echo $result->media_url  ?> alt="">
-						<figcaption><?php echo $result->caption ?></figcaption>
-					</figure>
+						<div class="wpr-insta-feed-content-wrap">
+							<figure>
+								<img src=<?php echo $result->media_url  ?> alt="">
+								<figcaption><?php echo $result->caption ?></figcaption>
+							</figure>
+						</div>
 					<?php else : ?>
-						<video controls>
-						<source src=<?php echo $result->media_url ?> type="video/mp4">
-						</video>
+						<div class="wpr-insta-feed-content-wrap">
+							<video controls>
+								<source src=<?php echo $result->media_url ?> type="video/mp4">
+							</video>
+							<p><?php echo $result->caption ?></p>
+						</div>
 					<?php endif; ?>
 					<?php endforeach; ?>
 				</div>
