@@ -1012,8 +1012,8 @@ li.wpr-mega-menu-pos-default {
     display: none;
 }
 
-div[class*="wpr-sub-menu-fx-move"] .wpr-sub-menu,
-div[class*="wpr-sub-menu-fx-move"] .wpr-sub-mega-menu {
+div[class*="wpr-sub-menu-fx"] .wpr-sub-menu,
+div[class*="wpr-sub-menu-fx"] .wpr-sub-mega-menu {
     display: block;
     visibility: hidden;
     opacity: 0;
@@ -1021,11 +1021,15 @@ div[class*="wpr-sub-menu-fx-move"] .wpr-sub-mega-menu {
     transition: all 0.2s ease-in;
 }
 
-div[class*="wpr-sub-menu-fx-move"] .wpr-sub-menu.wpr-animate-sub,
-div[class*="wpr-sub-menu-fx-move"] .wpr-sub-mega-menu.wpr-animate-sub {
+div[class*="wpr-sub-menu-fx"] .wpr-sub-menu.wpr-animate-sub,
+div[class*="wpr-sub-menu-fx"] .wpr-sub-mega-menu.wpr-animate-sub {
     visibility: visible;
     opacity: 1;
     z-index: 9999;
+}
+
+.wpr-sub-menu-fx-fade .wpr-sub-mega-menu {
+    transition: all 0.3s ease-in;
 }
 
 .wpr-sub-menu-fx-move-up .wpr-sub-menu,

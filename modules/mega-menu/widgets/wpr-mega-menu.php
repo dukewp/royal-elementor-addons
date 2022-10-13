@@ -141,11 +141,10 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'default' => 'fade',
 				'options' => [
 					'fade' => esc_html__( 'Fade', 'wpr-addons' ),
-					'pro-sl' => esc_html__( 'Slide (Pro)', 'wpr-addons' ),
 					'move-up' => esc_html__( 'Move Up', 'wpr-addons' ),
 					'move-down' => esc_html__( 'Move Down', 'wpr-addons' ),
-					'move-left' => esc_html__( 'Move Left (VR Menu)', 'wpr-addons' ),
-					'move-right' => esc_html__( 'Move Right (VR Menu)', 'wpr-addons' ),
+					'move-left' => esc_html__( 'Move Left (VR)', 'wpr-addons' ),
+					'move-right' => esc_html__( 'Move Right (VR)', 'wpr-addons' ),
 				],
 				'prefix_class' => 'wpr-sub-menu-fx-',
 				'render_type' => 'template',
