@@ -62,16 +62,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		);
 
 		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
-
-
-		$this->add_control(
-			'instagram_login',
-			[
-				'type'        => Controls_Manager::RAW_HTML,
-				'raw'         => '<form onsubmit="connectInstagramInit(this);" action="javascript:void(0); class="wpr-facebook-login elementor-button" data-type="reviews"><input type="submit" value="Log in with Facebook" style="background-color: #3b5998; color: #fff;"></form>',
-				'label_block' => true,
-            ]
-		);
 		
 		if ( '' == get_option('wpr_instagram_access_token') ) {
 			$this->add_control(
@@ -92,6 +82,17 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'label_block' => false
+			]
+		);
+
+		$this->add_control(
+			'insta_feed_caption_pos',
+			[
+				'label'              => esc_html__('Caption Overlay', 'wpr-addons'),
+				'type'               => Controls_Manager::SWITCHER,
+				'frontend_available' => true,
+				'default'            => 'yes',
+				'prefix_class' => 'wpr-insta-feed-caption-over-'
 			]
 		);
 
@@ -126,6 +127,44 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'wpr_insta_feed_layout',
+			[
+				'label'              => esc_html__('Grid Style', 'elementskit'),
+				'type'               => Controls_Manager::SELECT,
+				'frontend_available' => true,
+				'default'            => 'layout-masonry',
+				'prefix_class' => 'wpr-insta-feed-'	,
+				'render_type' => 'template',
+				'separator' => 'before',
+				'options'            => [
+					'layout-list'     => esc_html__('List', 'elementskit'),
+					'layout-grid'     => esc_html__('Grid', 'elementskit'),
+					'layout-masonry' => esc_html__('Masonry', 'elementskit'),
+				],
+			]
+		);
+
+		$this->add_control(
+			'wpr_insta_feed_column_grid',
+			[
+				'label'              => esc_html__('Columns Grid', 'wpr-addons'),
+				'type'               => Controls_Manager::SELECT,
+				'default'            => 'wpr-insta-col-4',
+				'options'            => [
+					'wpr-insta-col-auto' => esc_html__('1 Columns', 'wpr-addons'),
+					'wpr-insta-col-6'    => esc_html__('2 Columns', 'wpr-addons'),
+					'wpr-insta-col-4'    => esc_html__('3 Columns', 'wpr-addons'),
+					'wpr-insta-col-3'    => esc_html__('4 Columns', 'wpr-addons'),
+				],
+				'frontend_available' => true,
+				'render_type' => 'template',
+				'condition' => [
+					'wpr_insta_feed_layout' => 'layout-masonry'
+				],
+			]
+		);
+
 		$this->add_responsive_control(
 			'columns',
 			[
@@ -139,10 +178,13 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					'25%' => esc_html__( 'Four', 'wpr-addons' ),
 					'20%' => esc_html__( 'Five', 'wpr-addons' ),
 				],
+				'render_type' => 'template',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-insta-feed-content-wrap' => 'max-width: {{VALUE}}'
+					'{{WRAPPER}} .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'max-width: {{VALUE}}'
 				],
-				'separator' => 'before'
+				'condition' => [
+					'wpr_insta_feed_layout' => 'layout-grid'
+				],
 			]
 		);
 
@@ -162,7 +204,8 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns.VALUE}} - (2 * {{SIZE}}px));'
+					'{{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-masonry' => 'column-gap: {{SIZE}}px;',
+					'{{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns.VALUE}} - (2 * {{SIZE}}px));'
 				]
 			]
 		);
@@ -183,6 +226,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-instagram-feed' => 'margin-bottom: {{SIZE}}px',
+					'{{WRAPPER}} .wpr-insta-feed-content-wrap' => 'margin-bottom: {{SIZE}}px',
 				]
 			]
 		);
@@ -455,7 +499,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		$this->add_render_attribute(
 			'instagram',
 			[
-				'class'         => 'wpr-instagram-feed',
+				'class'         => ['wpr-instagram-feed', 'wpr-'. $settings['wpr_insta_feed_layout'], $settings['wpr_insta_feed_column_grid']],
 				'data-settings' => wp_json_encode( $instagram_settings ),
 			]
 		);
@@ -484,18 +528,18 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					<?php foreach($this->call_instagram_api($access_token) as $result) : ?>
 				
 					<?php if ( $result->media_type === 'IMAGE') : ?>
-						<div class="wpr-insta-feed-content-wrap">
+						<div class="wpr-insta-feed-content-wrap wpr-insta-col-12">
 							<figure>
 								<img src=<?php echo $result->media_url  ?> alt="">
-								<figcaption><?php echo $result->caption ?></figcaption>
+								<figcaption class="wpr-insta-feed-caption"><span><?php echo $result->caption ?></span></figcaption>
 							</figure>
 						</div>
 					<?php else : ?>
-						<div class="wpr-insta-feed-content-wrap">
+						<div class="wpr-insta-feed-content-wrap wpr-insta-col-12">
 							<video controls>
 								<source src=<?php echo $result->media_url ?> type="video/mp4">
 							</video>
-							<p><?php echo $result->caption ?></p>
+							<p class="wpr-insta-feed-caption"><span><?php echo $result->caption ?></span></p>
 						</div>
 					<?php endif; ?>
 					<?php endforeach; ?>

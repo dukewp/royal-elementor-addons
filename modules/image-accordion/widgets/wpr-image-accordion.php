@@ -2197,7 +2197,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 		if (!empty($item['accordion_item_title'])) :
 		echo '<'. $settings['element_title_tag'] .' class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo '<a href="'. esc_url( '#' ) .'" class="wpr-pointer-item">';
+				echo '<a class="wpr-pointer-item">';
 					echo $item['accordion_item_title'];
 				echo '</a>';
 			echo '</div>';
