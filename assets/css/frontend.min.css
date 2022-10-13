@@ -890,6 +890,10 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     margin-left: auto;
 }
 
+.wpr-nav-menu-horizontal .wpr-sub-icon {
+    margin-top: -1px;
+}
+
 .wpr-nav-menu-vertical .wpr-sub-icon {
     -webkit-transform: rotate(-90deg);
     transform: rotate(-90deg);
@@ -1013,6 +1017,7 @@ div[class*="wpr-sub-menu-fx-move"] .wpr-sub-mega-menu {
     display: block;
     visibility: hidden;
     opacity: 0;
+    z-index: -1;
     transition: all 0.2s ease-in;
 }
 
@@ -1020,6 +1025,7 @@ div[class*="wpr-sub-menu-fx-move"] .wpr-sub-menu.wpr-animate-sub,
 div[class*="wpr-sub-menu-fx-move"] .wpr-sub-mega-menu.wpr-animate-sub {
     visibility: visible;
     opacity: 1;
+    z-index: 9999;
 }
 
 .wpr-sub-menu-fx-move-up .wpr-sub-menu,
