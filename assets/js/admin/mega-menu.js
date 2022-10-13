@@ -185,8 +185,8 @@ jQuery(document).ready(function( $ ) {
                         $saveButton.append('<span class="dashicons dashicons-yes"></span>');
 
                         setTimeout(function() {
-                            $('.wpr-mm-settings-popup-wrap').fadeOut();
                             $saveButton.find('.dashicons').remove();
+                            $saveButton.blur();
                         }, 1000);
 
                         // Update Settings

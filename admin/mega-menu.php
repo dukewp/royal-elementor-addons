@@ -147,61 +147,73 @@ function render_settings_popup() {
                     <h4><?php esc_html_e('Custom Width (px)', 'wpr-addons'); ?></h4>
                     <input type="number" id="wpr_mm_custom_width" value="600">
                 </div>
-                <div class="wpr-mm-setting">
+                <div class="wpr-mm-setting <?php echo !wpr_fs()->can_use_premium_code() ? 'wpr-mm-pro-setting' : ''; ?>">
                     <h4><?php esc_html_e('Mobile Sub Content', 'wpr-addons'); ?></h4>
-                    <select id="wpr_mm_mobile_content">
-                        <option value="mega"><?php esc_html_e('Mega Menu', 'wpr-addons'); ?></option>
-                        <option value="wp-sub"><?php esc_html_e('WordPress Sub Items', 'wpr-addons'); ?></option>
-                    </select>
+                    <div>
+                        <select id="wpr_mm_mobile_content">
+                            <option value="mega"><?php esc_html_e('Mega Menu', 'wpr-addons'); ?></option>
+                            <option value="wp-sub"><?php esc_html_e('WordPress Sub Items', 'wpr-addons'); ?></option>
+                        </select>
+                    </div>
                 </div>
-                <div class="wpr-mm-setting">
+                <div class="wpr-mm-setting <?php echo !wpr_fs()->can_use_premium_code() ? 'wpr-mm-pro-setting' : ''; ?>">
                     <h4><?php esc_html_e('Mobile Sub Render', 'wpr-addons'); ?></h4>
-                    <select id="wpr_mm_render">
-                        <option value="default"><?php esc_html_e('Default', 'wpr-addons'); ?></option>
-                        <option value="ajax"><?php esc_html_e('Load with AJAX', 'wpr-addons'); ?></option>
-                    </select>
+                    <div>
+                        <select id="wpr_mm_render">
+                            <option value="default"><?php esc_html_e('Default', 'wpr-addons'); ?></option>
+                            <option value="ajax"><?php esc_html_e('Load with AJAX', 'wpr-addons'); ?></option>
+                        </select>
+                    </div>
                 </div>
 
-                <h4><?php esc_html_e('Icon', 'wpr-addons'); ?></h4>
-                <div class="wpr-mm-setting wpr-mm-setting-icon">
-                    <h4><?php esc_html_e('Icon Select', 'wpr-addons'); ?></h4>
-                    <div><span class="wpr-mm-active-icon"><i class="fas fa-ban"></i></span><span><i class="fas fa-angle-down"></i></span></div>
-                    <input type="text" id="wpr_mm_icon_picker" data-alpha="true" value="">
-                </div>
-                <div class="wpr-mm-setting wpr-mm-setting-color">
-                    <h4><?php esc_html_e('Icon Color', 'wpr-addons'); ?></h4>
-                    <input type="text" id="wpr_mm_icon_color" data-alpha="true" value="rgba(0,0,0,0.6);">
-                </div>
-                <div class="wpr-mm-setting">
-                    <h4><?php esc_html_e('Icon Size (px)', 'wpr-addons'); ?></h4>
-                    <input type="number" id="wpr_mm_icon_size" value="14">
+                <h4 <?php echo !wpr_fs()->can_use_premium_code() ? 'class="wpr-mm-pro-heading"' : ''; ?>>
+                    <?php esc_html_e('Icon', 'wpr-addons'); ?>
+                </h4>
+                <div <?php echo !wpr_fs()->can_use_premium_code() ? 'class="wpr-mm-pro-section"' : ''; ?>>
+                    <div class="wpr-mm-setting wpr-mm-setting-icon">
+                        <h4><?php esc_html_e('Icon Select', 'wpr-addons'); ?></h4>
+                        <div><span class="wpr-mm-active-icon"><i class="fas fa-ban"></i></span><span><i class="fas fa-angle-down"></i></span></div>
+                        <input type="text" id="wpr_mm_icon_picker" data-alpha="true" value="">
+                    </div>
+                    <div class="wpr-mm-setting wpr-mm-setting-color">
+                        <h4><?php esc_html_e('Icon Color', 'wpr-addons'); ?></h4>
+                        <input type="text" id="wpr_mm_icon_color" data-alpha="true" value="rgba(0,0,0,0.6);">
+                    </div>
+                    <div class="wpr-mm-setting">
+                        <h4><?php esc_html_e('Icon Size (px)', 'wpr-addons'); ?></h4>
+                        <input type="number" id="wpr_mm_icon_size" value="14">
+                    </div>
                 </div>
 
-                <h4><?php esc_html_e('Badge', 'wpr-addons'); ?></h4>
-                <div class="wpr-mm-setting">
-                    <h4><?php esc_html_e('Badge Text', 'wpr-addons'); ?></h4>
-                    <input type="text" id="wpr_mm_badge_text" value="">
-                </div>
-                <div class="wpr-mm-setting">
-                    <h4><?php esc_html_e('Badge Size (px)', 'wpr-addons'); ?></h4>
-                    <input type="number" id="wpr_mm_badge_size" value="11">
-                </div>
-                <div class="wpr-mm-setting wpr-mm-setting-color">
-                    <h4><?php esc_html_e('Badge Text Color', 'wpr-addons'); ?></h4>
-                    <input type="text" id="wpr_mm_badge_color" data-alpha="true" value="rgba(0,0,0,0.6);">
-                </div>
-                <div class="wpr-mm-setting wpr-mm-setting-color">
-                    <h4><?php esc_html_e('Badge Background Color', 'wpr-addons'); ?></h4>
-                    <input type="text" id="wpr_mm_badge_bg_color" data-alpha="true" value="rgba(0,0,0,0.6);">
-                </div>
-                <div class="wpr-mm-setting">
-                    <h4><?php esc_html_e('Badge Border Radius (px)', 'wpr-addons'); ?></h4>
-                    <input type="number" id="wpr_mm_badge_bdrs" value="0">
-                </div>
-                <div class="wpr-mm-setting wpr-mm-setting-switcher">
-                    <h4><?php esc_html_e('Enable Animation', 'wpr-addons'); ?></h4>
-                    <input type="checkbox" id="wpr_mm_badge_animation">
-                    <label for="wpr_mm_badge_animation"></label>
+                <h4 <?php echo !wpr_fs()->can_use_premium_code() ? 'class="wpr-mm-pro-heading"' : ''; ?>>
+                    <?php esc_html_e('Badge', 'wpr-addons'); ?>
+                </h4>
+                <div <?php echo !wpr_fs()->can_use_premium_code() ? 'class="wpr-mm-pro-section"' : ''; ?>>
+                    <div class="wpr-mm-setting">
+                        <h4><?php esc_html_e('Badge Text', 'wpr-addons'); ?></h4>
+                        <input type="text" id="wpr_mm_badge_text" value="">
+                    </div>
+                    <div class="wpr-mm-setting">
+                        <h4><?php esc_html_e('Badge Size (px)', 'wpr-addons'); ?></h4>
+                        <input type="number" id="wpr_mm_badge_size" value="11">
+                    </div>
+                    <div class="wpr-mm-setting wpr-mm-setting-color">
+                        <h4><?php esc_html_e('Badge Text Color', 'wpr-addons'); ?></h4>
+                        <input type="text" id="wpr_mm_badge_color" data-alpha="true" value="rgba(0,0,0,0.6);">
+                    </div>
+                    <div class="wpr-mm-setting wpr-mm-setting-color">
+                        <h4><?php esc_html_e('Badge Background Color', 'wpr-addons'); ?></h4>
+                        <input type="text" id="wpr_mm_badge_bg_color" data-alpha="true" value="rgba(0,0,0,0.6);">
+                    </div>
+                    <div class="wpr-mm-setting">
+                        <h4><?php esc_html_e('Badge Border Radius (px)', 'wpr-addons'); ?></h4>
+                        <input type="number" id="wpr_mm_badge_bdrs" value="0">
+                    </div>
+                    <div class="wpr-mm-setting wpr-mm-setting-switcher">
+                        <h4><?php esc_html_e('Enable Animation', 'wpr-addons'); ?></h4>
+                        <input type="checkbox" id="wpr_mm_badge_animation">
+                        <label for="wpr_mm_badge_animation"></label>
+                    </div>
                 </div>
             </div>
 
