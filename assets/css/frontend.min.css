@@ -875,7 +875,8 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     position: relative;
 }
 
-.wpr-mega-menu a.wpr-menu-item {
+.wpr-mega-menu a.wpr-menu-item,
+.wpr-mega-menu a.wpr-sub-menu-item {
     display: flex;
     align-items: center;
 }
@@ -890,6 +891,11 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 }
 
 .wpr-nav-menu-vertical .wpr-sub-icon {
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+
+.wpr-mega-menu .wpr-sub-icon-rotate {
     -webkit-transform: rotate(-90deg);
     transform: rotate(-90deg);
 }
