@@ -907,6 +907,21 @@ class Wpr_Search extends Widget_Base {
 
 		$this->add_control_ajax_search();
 
+        $this->add_control(
+            'number_of_results',
+            [
+                'label' => __( 'Number of Results', 'wpr-addons' ),
+                'type' => Controls_Manager::NUMBER,
+                'min' => 1,
+                'step' => 1,
+                'default' => 10,
+                'render_type' => 'template',
+                'condition' => [
+                    'ajax_search' => 'yes'
+                ]
+            ]
+        );
+
 		$this->add_control_open_in_new_page();
 
 		$this->add_control_show_ajax_thumbnails();
@@ -1614,7 +1629,8 @@ class Wpr_Search extends Widget_Base {
 				'name' => 's',
 				'title' => esc_html__( 'Search', 'wpr-addons' ),
 				'value' => get_search_query(),
-				'wpr-query-type' => $settings['search_query'],
+				'query-type' => $settings['search_query'],
+				'number-of-results' => isset($settings['number_of_results']) ? $settings['number_of_results'] : -1,
 				'ajax-search' => isset($settings['ajax_search']) ? $settings['ajax_search'] : '',
 				'number-of-words' => isset($settings['number_of_words_in_excerpt']) ? $settings['number_of_words_in_excerpt'] : '',
 				'show-ajax-thumbnails' => isset($settings['show_ajax_thumbnails']) ? $settings['show_ajax_thumbnails'] : '',
