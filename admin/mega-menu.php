@@ -111,10 +111,13 @@ function render_settings_popup() {
             <div class="wpr-mm-settings-popup-header">
                 <span class="wpr-mm-popup-logo" style="background:url('<?php echo WPR_ADDONS_ASSETS_URL .'img/logo-40x40.png'; ?>') no-repeat center center / contain;">RE</span>
                 <span><?php esc_html_e('Royal Mega Menu', 'wpr-addons'); ?></span>
+                <span class="wpr-mm-popup-title"><?php esc_html_e('Menu Item: ', 'wpr-addons'); ?><span></span></span>
                 <span class="dashicons dashicons-no-alt wpr-mm-settings-close-popup-btn"></span>
             </div>
+
+            <?php $pro_active = wpr_fs()->can_use_premium_code() ? 'data-pro-active="true"' : 'data-pro-active="false"'; ?>
             
-            <div class="wpr-mm-settings-wrap">
+            <div class="wpr-mm-settings-wrap" <?php echo $pro_active; ?>>
                 <h4><?php esc_html_e('General', 'wpr-addons'); ?></h4>
                 <div class="wpr-mm-setting wpr-mm-setting-switcher">
                     <h4><?php esc_html_e('Enable Mega Menu', 'wpr-addons'); ?></h4>
@@ -154,6 +157,13 @@ function render_settings_popup() {
                             <option value="mega"><?php esc_html_e('Mega Menu', 'wpr-addons'); ?></option>
                             <option value="wp-sub"><?php esc_html_e('WordPress Sub Items', 'wpr-addons'); ?></option>
                         </select>
+
+                        <div class="wpr-mm-pro-radio">
+                            <input type="radio" name="mc" checked="checked">
+                            <label>Mega Menu</label><br>
+                            <input type="radio" name="mc">
+                            <label>WordPress Sub Items</label>
+                        </div>
                     </div>
                 </div>
                 <div class="wpr-mm-setting <?php echo !wpr_fs()->can_use_premium_code() ? 'wpr-mm-pro-setting' : ''; ?>">
@@ -163,8 +173,17 @@ function render_settings_popup() {
                             <option value="default"><?php esc_html_e('Default', 'wpr-addons'); ?></option>
                             <option value="ajax"><?php esc_html_e('Load with AJAX', 'wpr-addons'); ?></option>
                         </select>
+
+                        <div class="wpr-mm-pro-radio">
+                            <input type="radio" name="mr" checked="checked">
+                            <label>Default</label><br>
+                            <input type="radio" name="mr">
+                            <label>Load with AJAX</label>
+                        </div>
                     </div>
                 </div>
+
+                <br>
 
                 <h4 <?php echo !wpr_fs()->can_use_premium_code() ? 'class="wpr-mm-pro-heading"' : ''; ?>>
                     <?php esc_html_e('Icon', 'wpr-addons'); ?>
@@ -184,6 +203,8 @@ function render_settings_popup() {
                         <input type="number" id="wpr_mm_icon_size" value="14">
                     </div>
                 </div>
+
+                <br>
 
                 <h4 <?php echo !wpr_fs()->can_use_premium_code() ? 'class="wpr-mm-pro-heading"' : ''; ?>>
                     <?php esc_html_e('Badge', 'wpr-addons'); ?>

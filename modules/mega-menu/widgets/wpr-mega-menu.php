@@ -141,10 +141,10 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'default' => 'fade',
 				'options' => [
 					'fade' => esc_html__( 'Fade', 'wpr-addons' ),
-					'move-up' => esc_html__( 'Move Up', 'wpr-addons' ),
-					'move-down' => esc_html__( 'Move Down', 'wpr-addons' ),
-					'move-left' => esc_html__( 'Move Left (VR)', 'wpr-addons' ),
-					'move-right' => esc_html__( 'Move Right (VR)', 'wpr-addons' ),
+					'pro-mu' => esc_html__( 'Move Up (Pro)', 'wpr-addons' ),
+					'pro-md' => esc_html__( 'Move Down (Pro)', 'wpr-addons' ),
+					'pro-ml' => esc_html__( 'Move Left - VR (Pro)', 'wpr-addons' ),
+					'pro-mr' => esc_html__( 'Move Right - VR (Pro)', 'wpr-addons' ),
 				],
 				'prefix_class' => 'wpr-sub-menu-fx-',
 				'render_type' => 'template',
@@ -400,7 +400,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 		$this->add_control_menu_items_submenu_entrance();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'nav-menu', 'menu_items_submenu_entrance', ['pro-sl'] );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'nav-menu', 'menu_items_submenu_entrance', ['pro-mu', 'pro-md', 'pro-ml', 'pro-mr'] );
 
 		$this->end_controls_section(); // End Controls Section
 
@@ -602,7 +602,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'nav-menu', [
 			'Vertical Layout',
 			'Advanced Link Hover Effects: Slide, Grow, Drop',
-			'SubMenu Entrance Slide Effect',
+			'SubMenu Entrance Advanced Effect',
 			'SubMenu Width option',
 			'Advanced Display Conditions',
 			'Mobile Menu Display Custom Conditions',
@@ -995,6 +995,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-nav-menu-horizontal .wpr-nav-menu .wpr-sub-mega-menu' => 'transform: translateY({{SIZE}}{{UNIT}});',
+					'{{WRAPPER}}.wpr-main-menu-align-center .wpr-nav-menu-horizontal .wpr-mega-menu-width-custom .wpr-sub-mega-menu' => 'transform: translate(-50%, {{SIZE}}{{UNIT}});',
 					'{{WRAPPER}} .wpr-nav-menu-horizontal .wpr-nav-menu > li > .wpr-sub-menu' => 'transform: translateY({{SIZE}}{{UNIT}});',
 					'{{WRAPPER}} .wpr-nav-menu-vertical .wpr-nav-menu > li > .wpr-sub-menu' => 'transform: translateX({{SIZE}}{{UNIT}});',
 					'{{WRAPPER}} .wpr-nav-menu-vertical .wpr-nav-menu > li > .wpr-sub-mega-menu' => 'transform: translateX({{SIZE}}{{UNIT}});',
