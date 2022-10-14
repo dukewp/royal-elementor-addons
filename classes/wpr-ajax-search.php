@@ -34,14 +34,12 @@ if ( ! defined( 'ABSPATH' ) ) {
                 'posts_per_page' => sanitize_text_field($_POST['number_of_results']), 
                 's' => sanitize_text_field( $_POST['keyword'] ), 
                 'post_type' => $_POST['query_type'] === 'all' || !wpr_fs()->can_use_premium_code() ? $all_post_types : array( sanitize_text_field($_POST['query_type']) ),
+                'offset' => 2
             ]
         );  
         
-        echo '<span class="wpr-close-search"></span>';
         if( $the_query->have_posts() ) :
             $post_count = 0;
-            
-            echo '<ul>';
                 while( $the_query->have_posts() ) : $the_query->the_post(); 
                 if ( ( !has_post_thumbnail() && 'yes' === sanitize_text_field($_POST['exclude_without_thumb'])) ) : 
                     continue;
@@ -73,7 +71,6 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <?php 
                 $post_count++;
                 endwhile;
-            echo '</ul>';
 
             wp_reset_postdata();  
             
