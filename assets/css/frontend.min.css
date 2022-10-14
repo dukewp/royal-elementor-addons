@@ -7093,6 +7093,11 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     margin: 0;
 }
 
+.wpr-no-more-results {
+    display: none;
+    margin: 0;
+}
+
 .wpr-ajax-search-content {
     text-align: left;
 }

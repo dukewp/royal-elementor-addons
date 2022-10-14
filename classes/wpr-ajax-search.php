@@ -34,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 'posts_per_page' => sanitize_text_field($_POST['number_of_results']), 
                 's' => sanitize_text_field( $_POST['keyword'] ), 
                 'post_type' => $_POST['query_type'] === 'all' || !wpr_fs()->can_use_premium_code() ? $all_post_types : array( sanitize_text_field($_POST['query_type']) ),
-                'offset' => 2
+                'offset' => sanitize_text_field($_POST['search_results_offset'])
             ]
         );  
         
@@ -62,7 +62,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                         endif ; ?>
                         <div class="wpr-ajax-search-content">
                             <a target="<?php echo sanitize_text_field($_POST['ajax_search_link_target']) ?>" class="wpr-ajax-title" href="<?php echo esc_url( the_permalink() ); ?>"><?php the_title();?></a>
-                            <p class="wpr-ajax-desc"><a target="<?php echo sanitize_text_field($_POST['ajax_search_link_target']) ?>" href="<?php echo esc_url( the_permalink() ); ?>"><?php echo wp_trim_words(get_the_content(), sanitize_text_field($_POST['number_of_words'])); ?></a></p>
+                            <p class="wpr-ajax-desc"><span><?php echo sanitize_text_field($_POST['search_results_offset']) ?></span><a target="<?php echo sanitize_text_field($_POST['ajax_search_link_target']) ?>" href="<?php echo esc_url( the_permalink() ); ?>"><?php echo wp_trim_words(get_the_content(), sanitize_text_field($_POST['number_of_words'])); ?></a></p>
                             <?php if ( sanitize_text_field($_POST['show_view_result_btn']) ) : ?>
                                 <a target="<?php echo sanitize_text_field($_POST['ajax_search_link_target']) ?>" class="wpr-view-result" href="<?php echo esc_url( the_permalink() ); ?>"><?php echo sanitize_text_field($_POST['wpr_view_result_text']) ?></a>
                             <?php endif; ?>
@@ -72,11 +72,13 @@ if ( ! defined( 'ABSPATH' ) ) {
                 $post_count++;
                 endwhile;
 
-            wp_reset_postdata();  
+            wp_reset_postdata();
             
         else :
-
-            echo '<p class="wpr-no-results">'.esc_html__('No Results Found', 'wpr-addons').'</p>';
+            if (0 < sanitize_text_field($_POST['search_results_offset'])) {
+            } else {
+                echo '<p class="wpr-no-results">'.esc_html__('No Results Found', 'wpr-addons').'</p>';
+            }
 
         endif;
         
