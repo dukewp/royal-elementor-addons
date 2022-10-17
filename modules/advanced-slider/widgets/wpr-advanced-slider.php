@@ -57,7 +57,16 @@ class Wpr_Advanced_Slider extends Widget_Base {
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
 
-	public function add_control_slider_nav_hover() {}
+	public function add_control_slider_nav_hover() {
+		$this->add_control(
+			'slider_nav_hover',
+			[
+				'label' => sprintf( __( 'Show on Hover %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control'
+			]
+		);
+	}
 
 	public function add_control_slider_dots_layout() {
 		$this->add_control(
