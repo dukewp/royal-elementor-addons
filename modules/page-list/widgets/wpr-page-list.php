@@ -877,6 +877,7 @@ class Wpr_Page_List extends Widget_Base {
 		// Pointer Class
 		$page_title_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $settings['title_pointer'];
 		$page_title_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $settings['title_pointer_animation'];
+		$pointer_item_class = (isset($settings['title_pointer']) && 'none' !== $settings['title_pointer']) ? 'wpr-pointer-item' : '';
 
 		$class .= ' wpr-pointer-'. $page_title_pointer;
 		$class .= ' wpr-pointer-line-fx wpr-pointer-fx-'. $page_title_pointer_animation;
@@ -911,7 +912,7 @@ class Wpr_Page_List extends Widget_Base {
                         echo '<div '. $this->get_render_attribute_string('page_list_item'. $key) .'>';
                             echo (isset($item['page_list_item_icon']) && '' !== $item['page_list_item_icon']['value']) ? '<span class="wpr-page-list-item-icon">'. $icon .'</span>' : '';
                             echo '<li>';
-                                echo '<a class="wpr-pointer-item" href='. get_the_permalink($item['query_page_selection']) .' target='. $target .'>';
+                                echo '<a class="'. $pointer_item_class .'" href='. get_the_permalink($item['query_page_selection']) .' target='. $target .'>';
                                     echo get_the_title($item['query_page_selection']);
                                 echo '</a>';
                                 if ( isset($item['page_list_item_sub_title']) && '' !== $item['page_list_item_sub_title']  ) {
@@ -930,7 +931,7 @@ class Wpr_Page_List extends Widget_Base {
                         echo '<div '. $this->get_render_attribute_string('page_list_item'. $key) .'>';
                             echo (isset($item['page_list_item_icon']) && '' !== $item['page_list_item_icon']['value']) ? '<span class="wpr-page-list-item-icon">'. $icon .'</span>' : '';
                             echo '<li>';
-                                echo '<a  '. $this->get_render_attribute_string( 'title_link_'. $key ) .' class="wpr-pointer-item">';
+                                echo '<a  '. $this->get_render_attribute_string( 'title_link_'. $key ) .' class="'. $pointer_item_class .'">';
                                     echo $item['page_list_item_title'];
                                 echo '</a>';
                                 if ( isset($item['page_list_item_sub_title']) && '' !== $item['page_list_item_sub_title'] ) {
