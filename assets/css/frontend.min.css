@@ -909,6 +909,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     position: absolute;
     z-index: 99999;
     overflow: hidden; 
+    width: 100%;
 }
 
 li.wpr-mega-menu-pos-default {
