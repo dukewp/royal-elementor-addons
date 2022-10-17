@@ -4936,13 +4936,14 @@ class Wpr_Magazine_Grid extends Widget_Base {
 	public function render_post_title( $settings, $class ) {
 		$title_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['title_pointer'];
 		$title_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['title_pointer_animation'];
+		$pointer_item_class = (isset($settings['title_pointer']) && 'none' !== $settings['title_pointer']) ? 'wpr-pointer-item' : '';
 
 		$class .= ' wpr-pointer-'. $title_pointer;
 		$class .= ' wpr-pointer-line-fx wpr-pointer-fx-'. $title_pointer_animation;
 
 		echo '<'. esc_html($settings['element_title_tag']) .' class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo '<a href="'. esc_url( get_the_permalink() ) .'" class="wpr-pointer-item">';
+				echo '<a href="'. esc_url( get_the_permalink() ) .'" class="'. $pointer_item_class .'">';
 					echo esc_html(wp_trim_words( get_the_title(), $settings['element_word_count'] ));
 				echo '</a>';
 			echo '</div>';
@@ -5176,6 +5177,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		$tax1_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['tax1_pointer_animation'];
 		$tax2_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['tax2_pointer'];
 		$tax2_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['tax2_pointer_animation'];
+		$pointer_item_class = (isset($settings['tax1_pointer']) && 'none' !== $settings['tax1_pointer']) || (isset($settings['tax2_pointer']) && 'none' !== $settings['tax2_pointer']) ? 'wpr-pointer-item' : '';
 
 		// Pointer Class
 		if ( 'wpr-grid-tax-style-1' === $settings['element_tax_style'] ) {
@@ -5199,7 +5201,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 				// Taxonomies
 				foreach ( $terms as $term ) {
-					echo '<a href="'. esc_url(get_term_link( $term->term_id )) .'" class="wpr-pointer-item">'. esc_html( $term->name );
+					echo '<a href="'. esc_url(get_term_link( $term->term_id )) .'" class="'. $pointer_item_class .'">'. esc_html( $term->name );
 						if ( ++$count !== count( $terms ) ) {
 							echo '<span class="tax-sep">'. esc_html($settings['element_tax_sep']) .'</span>';
 						}

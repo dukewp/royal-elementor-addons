@@ -6459,13 +6459,14 @@ class Wpr_Media_Grid extends Widget_Base {
 	public function render_post_title( $settings, $class ) {
 		$title_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['title_pointer'];
 		$title_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['title_pointer_animation'];
+		$pointer_item_class = (isset($settings['title_pointer']) && 'none' !== $settings['title_pointer']) ? 'wpr-pointer-item' : '';
 
 		$class .= ' wpr-pointer-'. $title_pointer;
 		$class .= ' wpr-pointer-line-fx wpr-pointer-fx-'. $title_pointer_animation;
 
 		echo '<'. esc_attr($settings['element_title_tag']) .' class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo '<a href="'. esc_url( get_the_permalink() ) .'" class="wpr-pointer-item">';
+				echo '<a href="'. esc_url( get_the_permalink() ) .'" class="'. $pointer_item_class .'">';
 					echo esc_html(wp_trim_words( get_the_title(), $settings['element_word_count'] ));
 				echo '</a>';
 			echo '</div>';
@@ -6690,6 +6691,7 @@ class Wpr_Media_Grid extends Widget_Base {
 		$tax1_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['tax1_pointer_animation'];
 		$tax2_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['tax2_pointer'];
 		$tax2_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['tax2_pointer_animation'];
+		$pointer_item_class = (isset($settings['tax1_pointer']) && 'none' !== $settings['tax1_pointer']) || (isset($settings['tax2_pointer']) && 'none' !== $settings['tax2_pointer']) ? 'wpr-pointer-item' : '';
 
 		// Pointer Class
 		if ( 'wpr-grid-tax-style-1' === $settings['element_tax_style'] ) {
@@ -6713,7 +6715,7 @@ class Wpr_Media_Grid extends Widget_Base {
 
 				// Taxonomies
 				foreach ( $terms as $term ) {
-					echo '<a href="'. esc_url(get_term_link( $term->term_id )) .'" class="wpr-pointer-item">'. esc_html( $term->name );
+					echo '<a href="'. esc_url(get_term_link( $term->term_id )) .'" class="'. $pointer_item_class .'">'. esc_html( $term->name );
 						if ( ++$count !== count( $terms ) ) {
 							echo '<span class="tax-sep">'. esc_html($settings['element_tax_sep']) .'</span>';
 						}
@@ -6889,6 +6891,7 @@ class Wpr_Media_Grid extends Widget_Base {
 		// Pointer Class
 		$pointer_class  = ' wpr-pointer-'. $settings['filters_pointer'];
 		$pointer_class .= ' wpr-pointer-line-fx wpr-pointer-fx-'. $settings['filters_pointer_animation'];
+		$pointer_item_class = (isset($settings['filters_pointer']) && 'none' !== $settings['filters_pointer']) ? 'wpr-pointer-item' : '';
 
 		// Filters List
 		echo '<ul class="wpr-grid-filters elementor-clearfix wpr-grid-filters-sep-'. esc_attr($settings['filters_separator_align']) .'">';
@@ -6896,7 +6899,7 @@ class Wpr_Media_Grid extends Widget_Base {
 		// All Filter
 		if ( 'yes' === $settings['filters_all'] && 'yes' !== $settings['filters_linkable'] ) {
 			echo '<li class="'. esc_attr($pointer_class) .'">';
-			echo '<span data-filter="*" class="wpr-active-filter wpr-pointer-item">'. $left_icon . esc_html($settings['filters_all_text']) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo '<span data-filter="*" class="wpr-active-filter '. $pointer_item_class .'">'. $left_icon . esc_html($settings['filters_all_text']) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo '</li>';
 		}
 
@@ -6915,9 +6918,9 @@ class Wpr_Media_Grid extends Widget_Base {
 
 					echo '<li'. $data_role .' class="'. esc_attr($pointer_class) .'">';
 						if ( 'yes' !== $settings['filters_linkable'] ) {
-							echo ''. $left_separator .'<span class="wpr-pointer-item" data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo ''. $left_separator .'<span class="'. $pointer_item_class  .'" data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						} else {
-							echo ''. $left_separator .'<a class="wpr-pointer-item" href="'. esc_url(get_term_link( $filter->term_id, $taxonomy )) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</a>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo ''. $left_separator .'<a class="'. $pointer_item_class  .'" href="'. esc_url(get_term_link( $filter->term_id, $taxonomy )) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</a>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						}
 					echo '</li>';
 
@@ -6942,9 +6945,9 @@ class Wpr_Media_Grid extends Widget_Base {
 
 					echo '<li'. $data_role .' class="'. esc_attr($pointer_class) .'">';
 						if ( 'yes' !== $settings['filters_linkable'] ) {
-							echo ''. $left_separator .'<span class="wpr-pointer-item" data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo ''. $left_separator .'<span class="'. $pointer_item_class  .'" data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						} else {
-							echo ''. $left_separator .'<a class="wpr-pointer-item" href="'. esc_url(get_term_link( $filter->term_id, $taxonomy )) .'" data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</a>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo ''. $left_separator .'<a class="'. $pointer_item_class .'" href="'. esc_url(get_term_link( $filter->term_id, $taxonomy )) .'" data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</a>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						}
 					echo '</li>';
 
@@ -6975,7 +6978,7 @@ class Wpr_Media_Grid extends Widget_Base {
 					$data_attr = 'post_tag' === $taxonomy ? 'tag-'. $sub_filter->slug : $taxonomy .'-'. $sub_filter->slug;
 
 					echo '<li data-role="sub" class="'. esc_attr($pointer_class) .'">';
-						echo ''. $left_separator .'<span class="wpr-pointer-item" data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($sub_filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo ''. $left_separator .'<span class="'. $pointer_item_class .'" data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($sub_filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo '</li>';
 				}
 
