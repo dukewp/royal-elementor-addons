@@ -7476,7 +7476,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 	public function render_product_title( $settings, $class ) {
 		$title_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['title_pointer'];
 		$title_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['title_pointer_animation'];
-		$pointer_item_class = (isset($settings['title_pointer']) && 'none' !== $settings['title_pointer']) ? 'wpr-pointer-item' : '';
+		$pointer_item_class = (isset($this->get_settings()['title_pointer']) && 'none' !== $this->get_settings()['title_pointer']) ? 'wpr-pointer-item' : '';
 
 		$class .= ' wpr-pointer-'. $title_pointer;
 		$class .= ' wpr-pointer-line-fx wpr-pointer-fx-'. $title_pointer_animation;
@@ -7511,7 +7511,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		// Pointer Class
 		$categories_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['categories_pointer'];
 		$categories_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['categories_pointer_animation'];
-		$pointer_item_class = (isset($settings['categories_pointer']) && 'none' !== $settings['categories_pointer']) ? 'wpr-pointer-item' : '';
+		$pointer_item_class = (isset($this->get_settings()['categories_pointer']) && 'none' !== $this->get_settings()['categories_pointer']) ? 'wpr-pointer-item' : '';
 
 		$class .= ' wpr-pointer-'. $categories_pointer;
 		$class .= ' wpr-pointer-line-fx wpr-pointer-fx-'. $categories_pointer_animation;
@@ -7556,7 +7556,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		// Pointer Class
 		$tags_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['tags_pointer'];
 		$tags_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['tags_pointer_animation'];
-		$pointer_item_class = (isset($settings['tags_pointer']) && 'none' !== $settings['tags_pointer']) ? 'wpr-pointer-item' : '';
+		$pointer_item_class = (isset($this->get_settings()['tags_pointer']) && 'none' !== $this->get_settings()['tags_pointer']) ? 'wpr-pointer-item' : '';
 
 		$class .= ' wpr-pointer-'. $tags_pointer;
 		$class .= ' wpr-pointer-line-fx wpr-pointer-fx-'. $tags_pointer_animation;
