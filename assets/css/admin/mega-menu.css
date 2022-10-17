@@ -239,9 +239,9 @@ button.wpr-edit-mega-menu-btn {
 }
 
 .wpr-mm-editor-popup-iframe {
-  width: calc(100vw - 100px);
-  height: calc(100vh - 100px);
-  margin: 35px 45px;
+  width: calc(100vw - 70px);
+  height: calc(100vh - 70px);
+  margin: 35px 25px;
   background-color: #f9f9f9;
   box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
 }
@@ -249,7 +249,7 @@ button.wpr-edit-mega-menu-btn {
 .wpr-mm-editor-close-popup-btn {
   position: absolute;
   top: 40px;
-  right: 60px;
+  right: 45px;
   font-size: 50px !important;
 }
 

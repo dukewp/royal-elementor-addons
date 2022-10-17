@@ -210,7 +210,7 @@ class Wpr_Mobile_Menu_Walker extends \Walker_Nav_Menu {
 
 	public function has_mega_menu( $item_id ) {
 		$settings = get_post_meta( $item_id, 'wpr-mega-menu-settings', true);
-		$mega_content = wpr_fs()->can_use_premium_code() ? $settings['wpr_mm_mobile_content'] : 'mega';
+		$mega_content = wpr_fs()->can_use_premium_code() && isset($settings['wpr_mm_mobile_content']) ? $settings['wpr_mm_mobile_content'] : 'mega';
 
 		return isset($settings['wpr_mm_enable']) && 'true' === $settings['wpr_mm_enable'] && $mega_content ? true : false;
 	}
