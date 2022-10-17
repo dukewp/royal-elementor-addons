@@ -7076,7 +7076,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     }
 }
 
-
 /*--------------------------------------------------------------
   == Search
   --------------------------------------------------------------*/
@@ -14997,6 +14996,10 @@ dl.variation dd {
     display: inline-flex;
     align-items: center;
     justify-content: flex-start;
+}
+
+.wpr-page-list-item-wrap li {
+    line-height: 1.5;
 }
 
 .wpr-page-list-item-icon {
