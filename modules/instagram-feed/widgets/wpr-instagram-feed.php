@@ -526,6 +526,8 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'instagram' ) ); ?>>
 				
 					<?php foreach($this->call_instagram_api($access_token) as $result) : ?>
+
+						<?php var_dump($result) ?>
 				
 					<?php if ( $result->media_type === 'IMAGE') : ?>
 						<div class="wpr-insta-feed-content-wrap wpr-insta-col-12">
