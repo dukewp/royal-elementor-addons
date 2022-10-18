@@ -252,23 +252,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 	}
 
     public function register_controls() {
-		
-		$templates_select = [];
-
-		// Get All Templates
-		$templates = get_posts( [
-			'post_type'   => array( 'elementor_library' ),
-			'post_status' => array( 'publish' ),
-			'meta_key' 	  => '_elementor_template_type',
-			'meta_value'  => ['page', 'section'],
-			'numberposts' => -1
-		] );
-
-		if ( ! empty( $templates ) ) {
-			foreach ( $templates as $template ) {
-				$templates_select[$template->ID] = $template->post_title;
-			}
-		}
 
 		// Section: Accordion Options ---
 		$this->start_controls_section(
@@ -2320,16 +2303,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 				break;
 		}
 
-	}
-
-	public function wpr_accordion_template( $id ) {
-		if ( empty( $id ) ) {
-			return '';
-		}
-
-		$edit_link = '<span class="wpr-template-edit-btn" data-permalink="'. get_permalink( $id ) .'">Edit Template</span>';
-
-		return Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $id ) . $edit_link;
 	}
 
 	// Get Image Effect Class
