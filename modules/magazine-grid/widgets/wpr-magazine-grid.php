@@ -735,6 +735,19 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'show_last_update_date',
+			[
+				'label' => esc_html__( 'Show Last Update Date', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'separator' => 'after',
+				'condition' => [
+					'element_select' => 'date',
+				]
+			]
+		);
+
+		$repeater->add_control(
 			'element_custom_field_info_video_tutorial',
 			[
 				'raw' => esc_html__( 'See how to use custom fields in this', 'wpr-addons' ) . sprintf( '<br><a href="%1$s" target="_blank">%2$s <span class="dashicons dashicons-video-alt3"></span></a>', 'https://www.youtube.com/watch?v=9GvpqyHF_Cs', esc_html__( 'video tutorial', 'wpr-addons' ) ),
@@ -4936,13 +4949,14 @@ class Wpr_Magazine_Grid extends Widget_Base {
 	public function render_post_title( $settings, $class ) {
 		$title_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['title_pointer'];
 		$title_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['title_pointer_animation'];
+		$pointer_item_class = (isset($this->get_settings()['title_pointer']) && 'none' !== $this->get_settings()['title_pointer']) ? 'class="wpr-pointer-item"' : '';
 
 		$class .= ' wpr-pointer-'. $title_pointer;
 		$class .= ' wpr-pointer-line-fx wpr-pointer-fx-'. $title_pointer_animation;
 
 		echo '<'. esc_html($settings['element_title_tag']) .' class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo '<a href="'. esc_url( get_the_permalink() ) .'" class="wpr-pointer-item">';
+				echo '<a '. $pointer_item_class .' href="'. esc_url( get_the_permalink() ) .'">';
 					echo esc_html(wp_trim_words( get_the_title(), $settings['element_word_count'] ));
 				echo '</a>';
 			echo '</div>';
@@ -4996,7 +5010,11 @@ class Wpr_Magazine_Grid extends Widget_Base {
 				}
 
 				// Date
-				echo esc_html(apply_filters( 'the_date', get_the_date( '' ), get_option( 'date_format' ), '', '' ));
+				if ( 'yes' === $settings['show_last_update_date'] ) {
+					echo esc_html(get_the_modified_time(get_option( 'date_format' )));
+				} else {
+					echo esc_html(apply_filters( 'the_date', get_the_date( '' ), get_option( 'date_format' ), '', '' ));
+				}
 
 				// Icon: After
 				if ( 'after' === $settings['element_extra_icon_pos'] ) {
@@ -5176,6 +5194,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		$tax1_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['tax1_pointer_animation'];
 		$tax2_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['tax2_pointer'];
 		$tax2_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['tax2_pointer_animation'];
+		$pointer_item_class = (isset($this->get_settings()['tax1_pointer']) && 'none' !== $this->get_settings()['tax1_pointer']) || (isset($this->get_settings()['tax2_pointer']) && 'none' !== $this->get_settings()['tax2_pointer']) ? 'class="wpr-pointer-item"' : '';
 
 		// Pointer Class
 		if ( 'wpr-grid-tax-style-1' === $settings['element_tax_style'] ) {
@@ -5199,7 +5218,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 				// Taxonomies
 				foreach ( $terms as $term ) {
-					echo '<a href="'. esc_url(get_term_link( $term->term_id )) .'" class="wpr-pointer-item">'. esc_html( $term->name );
+					echo '<a '. $pointer_item_class .' href="'. esc_url(get_term_link( $term->term_id )) .'">'. esc_html( $term->name );
 						if ( ++$count !== count( $terms ) ) {
 							echo '<span class="tax-sep">'. esc_html($settings['element_tax_sep']) .'</span>';
 						}
