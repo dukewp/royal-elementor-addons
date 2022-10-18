@@ -371,8 +371,8 @@ template {
     z-index: 1;
 }
 
-.wpr-nav-menu li,
-.wpr-mobile-nav-menu li {
+.wpr-nav-menu li a,
+.wpr-mobile-nav-menu li a {
     font-size: 16px;
     line-height: 1;
 }
@@ -910,6 +910,11 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     z-index: 99999;
     overflow: hidden; 
     width: 100%;
+    text-align: left;
+}
+
+.wpr-nav-menu-vertical .wpr-sub-mega-menu {
+  width: 840px;
 }
 
 li.wpr-mega-menu-pos-default {

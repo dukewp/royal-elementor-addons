@@ -142,7 +142,8 @@ function render_settings_popup() {
                     <h4><?php esc_html_e('Dropdown Width', 'wpr-addons'); ?></h4>
                     <select id="wpr_mm_width">
                         <option value="default"><?php esc_html_e('Default', 'wpr-addons'); ?></option>
-                        <option value="full"><?php esc_html_e('Full', 'wpr-addons'); ?></option>
+                        <option value="stretch"><?php esc_html_e('Fit to Section', 'wpr-addons'); ?></option>
+                        <option value="full"><?php esc_html_e('Full Width', 'wpr-addons'); ?></option>
                         <option value="custom"><?php esc_html_e('Custom', 'wpr-addons'); ?></option>
                     </select>
                 </div>
