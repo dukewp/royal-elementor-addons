@@ -152,11 +152,11 @@ class Wpr_Mega_Menu extends Widget_Base {
 		);
 	}
 
-	public function add_control_mob_menu_display() {
+	public function add_control_mob_menu_show_on() {
 		$breakpoints = Responsive::get_breakpoints();
 
 		$this->add_control(
-			'mob_menu_display',
+			'mob_menu_show_on',
 			[
 				'label' => esc_html__( 'Show On', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
@@ -187,7 +187,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 					'pro-tx' => esc_html__( 'Text (Pro)', 'wpr-addons' ),
 				],
 				'condition' => [
-					'mob_menu_display!' => 'none',
+					'mob_menu_show_on!' => 'none',
 				],
 			]
 		);
@@ -413,10 +413,81 @@ class Wpr_Mega_Menu extends Widget_Base {
 			]
 		);
 
-		$this->add_control_mob_menu_display();
+		$this->add_control_mob_menu_show_on();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'nav-menu', 'mob_menu_display', ['pro-nn', 'pro-al'] );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'nav-menu', 'mob_menu_show_on', ['pro-nn', 'pro-al'] );
+
+		$this->add_control(
+			'mob_menu_display_as',
+			[
+				'label' => esc_html__( 'Display As', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'full-width',
+				'options' => [
+					'dropdown' => esc_html__( 'Dropdown', 'wpr-addons' ),
+					'offcanvas' => esc_html__( 'Off-Canvas', 'wpr-addons' ),
+				],
+				'prefix_class' => 'wpr-mobile-menu-display-',
+				'render_type' => 'template',
+			]
+		);
+
+		$this->add_control(
+			'mob_menu_offcanvas_align',
+			[
+				'label' => esc_html__( 'Off-Canvas Slide', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'label_block' => false,
+				'default' => 'left',
+				'options' => [
+					'left' => esc_html__( 'Left', 'wpr-addons' ),
+					'right' => esc_html__( 'Right', 'wpr-addons' )
+				],
+				'prefix_class' => 'wpr-mobile-menu-offcanvas-slide-',
+				'condition' => [
+					'mob_menu_display_as' => 'offcanvas',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'mob_menu_offcanvas_width',
+			[
+				'label' => esc_html__( 'Off-Canvas Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'tablet_default' => [
+					'size' => 300,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 300,
+					'unit' => 'px',
+				],
+				'default' => [
+					'size' => 300,
+					'unit' => 'px',
+				],
+				'size_units' => [ 'px', '%' ],
+				'range' => [
+					'px' => [
+						'min' => 50,
+						'max' => 1000,
+						'step' => 5,
+					],
+					'%' => [
+						'min' => 10,
+						'max' => 100,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}}.wpr-mobile-menu-display-offcanvas .wpr-mobile-mega-menu' => 'width: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'mob_menu_display_as' => 'offcanvas',
+				],
+			]
+		);
 
 		$this->add_control(
 			'mob_menu_stretch',
@@ -431,6 +502,9 @@ class Wpr_Mega_Menu extends Widget_Base {
 				],
 				'prefix_class' => 'wpr-mobile-menu-',
 				'render_type' => 'template',
+				'condition' => [
+					'mob_menu_display_as' => 'dropdown',
+				],
 			]
 		);
 
@@ -463,6 +537,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 					'{{WRAPPER}}.wpr-mobile-menu-custom-width .wpr-mobile-nav-menu' => 'width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
+					'mob_menu_display_as' => 'dropdown',
 					'mob_menu_stretch' => 'custom-width',
 				],
 			]
@@ -491,7 +566,8 @@ class Wpr_Mega_Menu extends Widget_Base {
 				],
 				'prefix_class' => 'wpr-mobile-menu-drdown-align-',
 				'condition' => [
-					'mob_menu_display!' => 'none',
+					'mob_menu_display_as' => 'dropdown',
+					'mob_menu_show_on!' => 'none',
 					'mob_menu_stretch' => [ 'custom-width', 'auto-width' ],
 				],
 			]
@@ -504,7 +580,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
-					'mob_menu_display!' => 'none',
+					'mob_menu_show_on!' => 'none',
 				],
 			]
 		);
@@ -529,7 +605,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				],
 				'prefix_class' => 'wpr-mobile-toggle-',
 				'condition' => [
-					'mob_menu_display!' => 'none',
+					'mob_menu_show_on!' => 'none',
 					'toggle_btn_style' => ['hamburger', 'pro-tx'],
 				],
 			]
@@ -542,7 +618,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'type' => Controls_Manager::TEXT,
 				'default' => esc_html__( 'Menu', 'wpr-addons' ),
 				'condition' => [
-					'mob_menu_display!' => 'none',
+					'mob_menu_show_on!' => 'none',
 					'toggle_btn_style' => 'text',
 				],
 			]
@@ -555,7 +631,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'type' => Controls_Manager::TEXT,
 				'default' => esc_html__( 'Close', 'wpr-addons' ),
 				'condition' => [
-					'mob_menu_display!' => 'none',
+					'mob_menu_show_on!' => 'none',
 					'toggle_btn_style' => 'text',
 				],
 			]
@@ -591,7 +667,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 					'{{WRAPPER}} .wpr-mobile-toggle-wrap' => '{{VALUE}}',
 				],
 				'condition' => [
-					'mob_menu_display!' => 'none',
+					'mob_menu_show_on!' => 'none',
 				],
 			]
 		);
@@ -682,7 +758,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 			[
 				'name' => 'menu_items_typography',
 				'scheme' => Typography::TYPOGRAPHY_1,
-				'selector' => '{{WRAPPER}} .wpr-nav-menu .wpr-menu-item,{{WRAPPER}} .wpr-mobile-nav-menu a,{{WRAPPER}} .wpr-mobile-toggle-text',
+				'selector' => '{{WRAPPER}} .wpr-menu-item,{{WRAPPER}} .wpr-mobile-menu-item,{{WRAPPER}} .wpr-mobile-toggle-text',
 			]
 		);
 
@@ -1422,273 +1498,6 @@ class Wpr_Mega_Menu extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
-		// Section: Mobile Menu -------
-		$this->start_controls_section(
-			'section_style_mobile_menu',
-			[
-				'label' => esc_html__( 'Mobile Menu', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-				'condition' => [
-					'mob_menu_display!' => 'none',
-				],
-			]
-		);
-
-		$this->start_controls_tabs( 'tabs_mobile_menu_style' );
-
-		$this->start_controls_tab(
-			'tab_mobile_menu_normal',
-			[
-				'label' => esc_html__( 'Normal', 'wpr-addons' ),
-			]
-		);
-
-		$this->add_control(
-			'mobile_menu_color',
-			[
-				'label' => esc_html__( 'Text Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => Color::get_type(),
-					'value' => Color::COLOR_3,
-				],
-				'default' => '#333333',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-mobile-nav-menu a,
-					 {{WRAPPER}} .wpr-mobile-nav-menu .menu-item-has-children > a:after' => 'color: {{VALUE}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'mobile_menu_bg_color',
-			[
-				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => Color::get_type(),
-					'value' => Color::COLOR_3,
-				],
-				'default' => '#ffffff',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-mobile-nav-menu li' => 'background-color: {{VALUE}};',
-				],
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->start_controls_tab(
-			'tab_mobile_menu_focus',
-			[
-				'label' => esc_html__( 'Focus', 'wpr-addons' ),
-			]
-		);
-
-		$this->add_control(
-			'mobile_menu_color_focus',
-			[
-				'label' => esc_html__( 'Text Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => Color::get_type(),
-					'value' => Color::COLOR_4,
-				],
-				'default' => '#ffffff',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-mobile-nav-menu li a:hover,
-					 {{WRAPPER}} .wpr-mobile-nav-menu .menu-item-has-children > a:hover:after,
-					 {{WRAPPER}} .wpr-mobile-nav-menu li a.wpr-active-menu-item,
-					 {{WRAPPER}} .wpr-mobile-nav-menu .menu-item-has-children.current_page_item > a:hover:after' => 'color: {{VALUE}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'mobile_menu_bg_color_focus',
-			[
-				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'scheme' => [
-					'type' => Color::get_type(),
-					'value' => Color::COLOR_3,
-				],
-				'default' => '#605BE5',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-mobile-nav-menu a:hover,
-					 {{WRAPPER}} .wpr-mobile-nav-menu a.wpr-active-menu-item' => 'background-color: {{VALUE}};',
-				],
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->end_controls_tabs();
-
-		$this->add_control(
-			'mobile_menu_highlight',
-			[
-				'label' => esc_html__( 'Highlight Active Item', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
-				'return_value' => 'yes'
-			]
-		);
-
-		$this->add_control(
-			'mobile_menu_padding_hr',
-			[
-				'label' => esc_html__( 'Item Horizontal Spacing', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'default' => [
-					'size' => 10,
-				],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 50,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-mobile-nav-menu a' => 'padding-left: {{SIZE}}{{UNIT}}; padding-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-mobile-nav-menu .menu-item-has-children > a:after' => 'margin-left: {{SIZE}}{{UNIT}}; margin-right: {{SIZE}}{{UNIT}};',
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'mobile_menu_padding_vr',
-			[
-				'label' => esc_html__( 'Item Vertical Spacing', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'default' => [
-					'size' => 10,
-				],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 50,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-mobile-nav-menu .wpr-mobile-menu-item' => 'padding-top: {{SIZE}}{{UNIT}}; padding-bottom: {{SIZE}}{{UNIT}};',
-				]
-			]
-		);
-
-		$this->add_control(
-			'mobile_menu_divider',
-			[
-				'label' => esc_html__( 'Item Divider', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'prefix_class' => 'wpr-mobile-divider-',
-				'default' => 'yes',
-				'return_value' => 'yes',
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'mobile_menu_divider_color',
-			[
-				'label' => esc_html__( 'Divider Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#e8e8e8',
-				'selectors' => [
-					'{{WRAPPER}}.wpr-mobile-divider-yes .wpr-mobile-nav-menu a' => 'border-bottom-color: {{VALUE}};',
-				],
-				'condition' => [
-					'mobile_menu_divider' => 'yes',
-				],
-			]
-		);
-
-		$this->add_control(
-			'mobile_menu_divider_height',
-			[
-				'label' => esc_html__( 'Divider Height', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'px' => [
-						'min' => 1,
-						'max' => 10,
-					],
-				],
-				'default' => [
-					'size' => 1,
-				],
-				'selectors' => [
-					'{{WRAPPER}}.wpr-mobile-divider-yes .wpr-mobile-nav-menu a' => 'border-bottom-width: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'mobile_menu_divider' => 'yes',
-				],
-			]
-		);
-
-		$this->add_control(
-			'mobile_menu_sub_font_size',
-			[
-				'label' => esc_html__( 'Sub Item Font Size', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'px' => [
-						'min' => 1,
-						'max' => 30,
-					],
-				],
-				'default' => [
-					'size' => 12,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-mobile-nav-menu .wpr-mobile-sub-menu-item' => 'font-size: {{SIZE}}{{UNIT}};',
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'mobile_menu_sub_padding_vr',
-			[
-				'label' => esc_html__( 'Sub Item Vertical Spacing', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'px' => [
-						'min' => 1,
-						'max' => 30,
-					],
-				],
-				'default' => [
-					'size' => 5,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-mobile-nav-menu .wpr-mobile-sub-menu-item' => 'padding-top: {{SIZE}}{{UNIT}}; padding-bottom: {{SIZE}}{{UNIT}};',
-				]
-			]
-		);
-
-		$this->add_control(
-			'mobile_menu_offset',
-			[
-				'label' => esc_html__( 'Dropdown Offset', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'px' => [
-					'min' => 1,
-					'min' => 50,
-				],
-				'default' => [
-					'size' => 10,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-mobile-nav-menu' => 'margin-top: {{SIZE}}{{UNIT}};',
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->end_controls_section(); // End Controls Section
-
 		// Section: Toggle Button ----
 		$this->start_controls_section(
 			'section_style_toggle_button',
@@ -1696,7 +1505,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'label' => esc_html__( 'Toggle Button', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
-					'mob_menu_display!' => 'none',
+					'mob_menu_show_on!' => 'none',
 				],
 			]
 		);
@@ -1883,6 +1692,273 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-mobile-toggle' => 'border-radius: {{SIZE}}{{UNIT}};',
 				],
+			]
+		);
+
+		$this->end_controls_section(); // End Controls Section
+
+		// Section: Mobile Menu -------
+		$this->start_controls_section(
+			'section_style_mobile_menu',
+			[
+				'label' => esc_html__( 'Mobile Menu', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'mob_menu_show_on!' => 'none',
+				],
+			]
+		);
+
+		$this->start_controls_tabs( 'tabs_mobile_menu_style' );
+
+		$this->start_controls_tab(
+			'tab_mobile_menu_normal',
+			[
+				'label' => esc_html__( 'Normal', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'mobile_menu_color',
+			[
+				'label' => esc_html__( 'Text Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'scheme' => [
+					'type' => Color::get_type(),
+					'value' => Color::COLOR_3,
+				],
+				'default' => '#333333',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-mobile-menu-item,
+					 {{WRAPPER}} .menu-item-has-children > .wpr-mobile-menu-item:after' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'mobile_menu_bg_color',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'scheme' => [
+					'type' => Color::get_type(),
+					'value' => Color::COLOR_3,
+				],
+				'default' => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-mobile-nav-menu li' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_mobile_menu_focus',
+			[
+				'label' => esc_html__( 'Focus', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'mobile_menu_color_focus',
+			[
+				'label' => esc_html__( 'Text Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'scheme' => [
+					'type' => Color::get_type(),
+					'value' => Color::COLOR_4,
+				],
+				'default' => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-mobile-nav-menu li a:hover,
+					 {{WRAPPER}} .wpr-mobile-nav-menu .menu-item-has-children > a:hover:after,
+					 {{WRAPPER}} .wpr-mobile-nav-menu li a.wpr-active-menu-item,
+					 {{WRAPPER}} .wpr-mobile-nav-menu .menu-item-has-children.current_page_item > a:hover:after' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'mobile_menu_bg_color_focus',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'scheme' => [
+					'type' => Color::get_type(),
+					'value' => Color::COLOR_3,
+				],
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-mobile-menu-item:hover,
+					 {{WRAPPER}} .wpr-mobile-menu-item.wpr-active-menu-item' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_control(
+			'mobile_menu_highlight',
+			[
+				'label' => esc_html__( 'Highlight Active Item', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes'
+			]
+		);
+
+		$this->add_control(
+			'mobile_menu_padding_hr',
+			[
+				'label' => esc_html__( 'Item Horizontal Spacing', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 10,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-mobile-menu-item' => 'padding-left: {{SIZE}}{{UNIT}}; padding-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .menu-item-has-children > a:after' => 'margin-left: {{SIZE}}{{UNIT}}; margin-right: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'mobile_menu_padding_vr',
+			[
+				'label' => esc_html__( 'Item Vertical Spacing', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 10,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-mobile-nav-menu .wpr-mobile-menu-item' => 'padding-top: {{SIZE}}{{UNIT}}; padding-bottom: {{SIZE}}{{UNIT}};',
+				]
+			]
+		);
+
+		$this->add_control(
+			'mobile_menu_divider',
+			[
+				'label' => esc_html__( 'Item Divider', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'prefix_class' => 'wpr-mobile-divider-',
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'mobile_menu_divider_color',
+			[
+				'label' => esc_html__( 'Divider Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#e8e8e8',
+				'selectors' => [
+					'{{WRAPPER}}.wpr-mobile-divider-yes .wpr-mobile-menu-item' => 'border-bottom-color: {{VALUE}};',
+				],
+				'condition' => [
+					'mobile_menu_divider' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'mobile_menu_divider_height',
+			[
+				'label' => esc_html__( 'Divider Height', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 1,
+						'max' => 10,
+					],
+				],
+				'default' => [
+					'size' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}}.wpr-mobile-divider-yes .wpr-mobile-menu-item' => 'border-bottom-width: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'mobile_menu_divider' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'mobile_menu_sub_font_size',
+			[
+				'label' => esc_html__( 'Sub Item Font Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 1,
+						'max' => 30,
+					],
+				],
+				'default' => [
+					'size' => 12,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-mobile-nav-menu .wpr-mobile-sub-menu-item' => 'font-size: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'mobile_menu_sub_padding_vr',
+			[
+				'label' => esc_html__( 'Sub Item Vertical Spacing', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 1,
+						'max' => 30,
+					],
+				],
+				'default' => [
+					'size' => 5,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-mobile-nav-menu .wpr-mobile-sub-menu-item' => 'padding-top: {{SIZE}}{{UNIT}}; padding-bottom: {{SIZE}}{{UNIT}};',
+				]
+			]
+		);
+
+		$this->add_control(
+			'mobile_menu_offset',
+			[
+				'label' => esc_html__( 'Dropdown Offset', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'px' => [
+					'min' => 1,
+					'min' => 50,
+				],
+				'default' => [
+					'size' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-mobile-nav-menu' => 'margin-top: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
 			]
 		);
 

@@ -702,7 +702,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     content: "\f067";
 }
 
-.wpr-mobile-divider-yes .wpr-mobile-nav-menu a {
+.wpr-mobile-divider-yes .wpr-mobile-menu-item {
     border-bottom-style: solid;
 }
 
@@ -1006,6 +1006,31 @@ li.wpr-mega-menu-pos-default {
     0% {
         opacity: 1
     }
+}
+
+/* Mobile Mega Menu */
+.wpr-mobile-menu-display-offcanvas .wpr-mobile-mega-menu {
+    display: block;
+    position: fixed;
+    width: 300px;
+    height: 100%;
+    transition: transform 0.2s ease-in;
+    background-color: #f9f9f9;
+}
+
+.wpr-mobile-menu-offcanvas-slide-left .wpr-mobile-mega-menu,
+.wpr-mobile-menu-offcanvas-slide-center .wpr-mobile-mega-menu {
+    left: 0;
+    transform: translateX(-100%);
+}
+
+.wpr-mobile-menu-offcanvas-slide-right .wpr-mobile-mega-menu {
+    right: 0;
+    transform: translateX(100%);
+}
+
+.wpr-mobile-menu-display-offcanvas .wpr-mobile-mega-menu-open {
+    transform: translateX(0);
 }
 
 .wpr-mobile-mega-menu .wpr-mobile-menu-item {
