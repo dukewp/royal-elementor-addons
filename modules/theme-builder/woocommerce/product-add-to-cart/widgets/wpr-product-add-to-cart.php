@@ -2020,6 +2020,22 @@ class Wpr_Product_AddToCart extends Widget_Base {
 		return 'product is added to your cart!';
 	}
 
+	function woocommerce_header_add_to_cart_fragment( $fragments ) {
+		global $woocommerce;
+
+		ob_start();
+
+		?>
+		<a class="cart-customlocation" href="<?php echo wc_get_cart_url(); ?>" title="<?php _e( 'View your shopping cart' ); ?>"><?php WC()->cart->get_cart_contents_count(); ?></a>
+
+		<?php
+
+		$fragments['a.cart-customlocation'] = ob_get_clean();
+
+		return $fragments;
+
+	}
+
 	protected function render() {
 		// Get Settings
 		$settings = $this->get_settings_for_display();
@@ -2091,23 +2107,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 		
 		add_filter( 'wc_add_to_cart_message', 'custom_wc_add_to_cart_message', 10, 2 );
 		
-		add_filter('add_to_cart_fragments', 'woocommerce_header_add_to_cart_fragment');
-
-		function woocommerce_header_add_to_cart_fragment( $fragments ) {
-			global $woocommerce;
-
-			ob_start();
-
-			?>
-			<a class="cart-customlocation" href="<?php echo wc_get_cart_url(); ?>" title="<?php _e( 'View your shopping cart' ); ?>"><?php WC()->cart->get_cart_contents_count(); ?></a>
-
-			<?php
-
-			$fragments['a.cart-customlocation'] = ob_get_clean();
-
-			return $fragments;
-
-		}
+		add_filter('add_to_cart_fragments', [$this, 'woocommerce_header_add_to_cart_fragment']);
 
 		// add_action( 'woocommerce_add_to_cart', 'action_woocommerce_add_to_cart', 10, 6 );
 		

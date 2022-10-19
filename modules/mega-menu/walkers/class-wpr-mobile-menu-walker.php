@@ -78,7 +78,7 @@ class Wpr_Mobile_Menu_Walker extends \Walker_Nav_Menu {
 				$classes[] = 'wpr-mega-menu-'. $settings['wpr_mm_enable'];
 				$id_attr = ' data-id="'. $item->ID .'"';
 
-				if ( 'ajax' === $settings['wpr_mm_render'] && 'mega' === $settings['wpr_mm_mobile_content'] ) {
+				if ( wpr_fs()->can_use_premium_code() && 'ajax' === $settings['wpr_mm_render'] && 'mega' === $settings['wpr_mm_mobile_content'] ) {
 					$classes[] = 'wpr-mega-menu-ajax';
 				}
 			}
@@ -118,7 +118,7 @@ class Wpr_Mobile_Menu_Walker extends \Walker_Nav_Menu {
                 // If has Settings
                 if ( $settings ) {
                     // Icon
-                    if ( '' !== $settings['wpr_mm_icon_picker'] ) {
+                    if ( wpr_fs()->can_use_premium_code() && '' !== $settings['wpr_mm_icon_picker'] ) {
                         $font_size = '' !== $settings['wpr_mm_icon_size'] ? $settings['wpr_mm_icon_size'] .'px' : 'inherit';
                         $color = '' !== $settings['wpr_mm_icon_color'] ? $settings['wpr_mm_icon_color'] : 'inherit';
                         $item_icon_style = 'style="font-size: '. $font_size .'; color: '. $color .'"';
@@ -126,11 +126,9 @@ class Wpr_Mobile_Menu_Walker extends \Walker_Nav_Menu {
                     }
 
                     // Badge
-                    if ( '' !== $settings['wpr_mm_badge_text'] ) {
-                        $item_badge_style = 'font-size: '. $settings['wpr_mm_badge_size'] .'px;'; 
+                    if ( wpr_fs()->can_use_premium_code() && '' !== $settings['wpr_mm_badge_text'] ) {
                         $item_badge_style .= 'color: '. $settings['wpr_mm_badge_color'] .';';
                         $item_badge_style .= 'background-color: '. $settings['wpr_mm_badge_bg_color'] .';';
-                        $item_badge_style .= 'border-radius: '. $settings['wpr_mm_badge_bdrs'] .'px;';
                         $item_badge_html = '<span class="wpr-mega-menu-badge" style="'. $item_badge_style .'">'. $settings['wpr_mm_badge_text'] .'</span>';
                     }
                 }
@@ -176,7 +174,7 @@ class Wpr_Mobile_Menu_Walker extends \Walker_Nav_Menu {
 				// Get Settings
 				$settings = $this->get_mega_menu_settings($item->ID);
 
-				if ( 'ajax' === $settings['wpr_mm_render'] ) {
+				if ( wpr_fs()->can_use_premium_code() && 'ajax' === $settings['wpr_mm_render'] ) {
 					$output .= '<div class="wpr-mobile-sub-mega-menu"></div>';
 				} else {
 					$elementor = \Elementor\Plugin::instance();
@@ -210,8 +208,9 @@ class Wpr_Mobile_Menu_Walker extends \Walker_Nav_Menu {
 
 	public function has_mega_menu( $item_id ) {
 		$settings = get_post_meta( $item_id, 'wpr-mega-menu-settings', true);
+		$mega_content = wpr_fs()->can_use_premium_code() && isset($settings['wpr_mm_mobile_content']) ? $settings['wpr_mm_mobile_content'] : 'mega';
 
-		return isset($settings['wpr_mm_enable']) && 'true' === $settings['wpr_mm_enable'] && 'mega' === $settings['wpr_mm_mobile_content'] ? true : false;
+		return isset($settings['wpr_mm_enable']) && 'true' === $settings['wpr_mm_enable'] && 'mega' === $mega_content ? true : false;
 	}
 
 	public function get_mega_menu_settings( $item_id ) {

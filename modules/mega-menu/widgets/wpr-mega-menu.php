@@ -141,11 +141,10 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'default' => 'fade',
 				'options' => [
 					'fade' => esc_html__( 'Fade', 'wpr-addons' ),
-					'pro-sl' => esc_html__( 'Slide (Pro)', 'wpr-addons' ),
-					'move-up' => esc_html__( 'Move Up', 'wpr-addons' ),
-					'move-down' => esc_html__( 'Move Down', 'wpr-addons' ),
-					'move-left' => esc_html__( 'Move Left (VR Menu)', 'wpr-addons' ),
-					'move-right' => esc_html__( 'Move Right (VR Menu)', 'wpr-addons' ),
+					'pro-mu' => esc_html__( 'Move Up (Pro)', 'wpr-addons' ),
+					'pro-md' => esc_html__( 'Move Down (Pro)', 'wpr-addons' ),
+					'pro-ml' => esc_html__( 'Move Left - VR (Pro)', 'wpr-addons' ),
+					'pro-mr' => esc_html__( 'Move Right - VR (Pro)', 'wpr-addons' ),
 				],
 				'prefix_class' => 'wpr-sub-menu-fx-',
 				'render_type' => 'template',
@@ -401,7 +400,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 		$this->add_control_menu_items_submenu_entrance();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'nav-menu', 'menu_items_submenu_entrance', ['pro-sl'] );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'nav-menu', 'menu_items_submenu_entrance', ['pro-mu', 'pro-md', 'pro-ml', 'pro-mr'] );
 
 		$this->end_controls_section(); // End Controls Section
 
@@ -603,7 +602,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'nav-menu', [
 			'Vertical Layout',
 			'Advanced Link Hover Effects: Slide, Grow, Drop',
-			'SubMenu Entrance Slide Effect',
+			'SubMenu Entrance Advanced Effect',
 			'SubMenu Width option',
 			'Advanced Display Conditions',
 			'Mobile Menu Display Custom Conditions',
@@ -752,29 +751,6 @@ class Wpr_Mega_Menu extends Widget_Base {
 		// );
 
 		$this->add_control(
-			'menu_items_sub_icon_size',
-			[
-				'label' => esc_html__( 'Sub Menu Icon Size', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'default' => [
-					'size' => 14,
-				],
-				'range' => [
-					'px' => [
-						'min' => 5,
-						'max' => 25,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .menu-item-has-children .wpr-sub-icon' => 'font-size: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-pointer-background:not(.wpr-sub-icon-none) .wpr-nav-menu-horizontal .menu-item-has-children .wpr-pointer-item' => 'padding-right: calc({{SIZE}}px + {{menu_items_padding_hr.SIZE}}px);',
-					'{{WRAPPER}}.wpr-pointer-border:not(.wpr-sub-icon-none) .wpr-nav-menu-horizontal .menu-item-has-children .wpr-pointer-item' => 'padding-right: calc({{SIZE}}px + {{menu_items_padding_hr.SIZE}}px);',
-				],
-				'separator' => 'before'
-			]
-		);
-
-		$this->add_control(
 			'menu_items_extra_icon_size',
 			[
 				'label' => esc_html__( 'Custom Icon Size', 'wpr-addons' ),
@@ -815,46 +791,25 @@ class Wpr_Mega_Menu extends Widget_Base {
 		);
 
 		$this->add_control(
-			'menu_items_badge_top_distance',
+			'menu_items_sub_icon_size',
 			[
-				'label' => esc_html__( 'Badge Vertical Distance', 'wpr-addons' ),
+				'label' => esc_html__( 'Sub Menu Icon Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
-					'size' => 5,
+					'size' => 14,
 				],
 				'range' => [
 					'px' => [
-						'min' => 0,
+						'min' => 5,
 						'max' => 25,
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-nav-menu .wpr-mega-menu-badge' => 'top: -{{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .menu-item-has-children .wpr-sub-icon' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-pointer-background:not(.wpr-sub-icon-none) .wpr-nav-menu-horizontal .menu-item-has-children .wpr-pointer-item' => 'padding-right: calc({{SIZE}}px + {{menu_items_padding_hr.SIZE}}px);',
+					'{{WRAPPER}}.wpr-pointer-border:not(.wpr-sub-icon-none) .wpr-nav-menu-horizontal .menu-item-has-children .wpr-pointer-item' => 'padding-right: calc({{SIZE}}px + {{menu_items_padding_hr.SIZE}}px);',
 				],
-				'condition' => [
-					'menu_layout' => 'horizontal',
-				],
-			]
-		);
-
-		$this->add_control(
-			'menu_items_badge_right_distance',
-			[
-				'label' => esc_html__( 'Badge Horizontal Distance', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'default' => [
-					'size' => 15,
-				],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 50,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-nav-menu-horizontal .wpr-mega-menu-badge' => 'right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-nav-menu-vertical .wpr-mega-menu-badge' => 'margin-left: {{SIZE}}{{UNIT}};',
-				],
+				'separator' => 'before'
 			]
 		);
 
@@ -996,6 +951,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-nav-menu-horizontal .wpr-nav-menu .wpr-sub-mega-menu' => 'transform: translateY({{SIZE}}{{UNIT}});',
+					'{{WRAPPER}}.wpr-main-menu-align-center .wpr-nav-menu-horizontal .wpr-mega-menu-width-custom .wpr-sub-mega-menu' => 'transform: translate(-50%, {{SIZE}}{{UNIT}});',
 					'{{WRAPPER}} .wpr-nav-menu-horizontal .wpr-nav-menu > li > .wpr-sub-menu' => 'transform: translateY({{SIZE}}{{UNIT}});',
 					'{{WRAPPER}} .wpr-nav-menu-vertical .wpr-nav-menu > li > .wpr-sub-menu' => 'transform: translateX({{SIZE}}{{UNIT}});',
 					'{{WRAPPER}} .wpr-nav-menu-vertical .wpr-nav-menu > li > .wpr-sub-mega-menu' => 'transform: translateX({{SIZE}}{{UNIT}});',
@@ -1026,6 +982,110 @@ class Wpr_Mega_Menu extends Widget_Base {
 				],
 				'selector' => '{{WRAPPER}} .wpr-menu-item',
 				'separator' => 'before'
+			]
+		);
+
+		$this->end_controls_section(); // End Controls Section
+
+		// Section: Menu Item Badge ---------
+		$this->start_controls_section(
+			'section_style_menu_item_badge',
+			[
+				'label' => esc_html__( 'Menu Item Badge', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'menu_items_badge_typography',
+				'scheme' => Typography::TYPOGRAPHY_1,
+				'selector' => '{{WRAPPER}} .wpr-nav-menu .wpr-mega-menu-badge'
+			]
+		);
+
+		$this->add_control(
+			'menu_items_badge_top_distance',
+			[
+				'label' => esc_html__( 'Vertical Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 5,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 25,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-nav-menu .wpr-mega-menu-badge' => 'top: -{{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
+				'condition' => [
+					'menu_layout' => 'horizontal',
+				],
+			]
+		);
+
+		$this->add_control(
+			'menu_items_badge_right_distance',
+			[
+				'label' => esc_html__( 'Horizontal Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 15,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-nav-menu-horizontal .wpr-mega-menu-badge' => 'right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-nav-menu-vertical .wpr-mega-menu-badge' => 'margin-left: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'menu_items_badge_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => '2',
+					'right' =>  '5',
+					'bottom' => '2',
+					'left' => '5',
+					'unit' => 'px',
+					'isLinked' => false
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-nav-menu .wpr-mega-menu-badge' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'menu_items_badge_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-nav-menu .wpr-mega-menu-badge' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
 			]
 		);
 

@@ -88,7 +88,8 @@
 .elementor-control-element_custom_field_wrapper_html,
 .elementor-control-slider_item_bg_size,
 .elementor-control-element_addcart_variable_txt,
-.elementor-control-type {
+.elementor-control-type,
+.elementor-control-show_last_update_date {
 	margin-bottom: 15px;
 }
 
@@ -151,7 +152,8 @@
 	padding-bottom: 0 !important;
 }
 
-.elementor-control-filters_transition_duration {
+.elementor-control-filters_transition_duration,
+.elementor-control-show_last_update_date {
 	padding-top: 0 !important;
 }
 
@@ -812,7 +814,8 @@
   padding-bottom: 5px !important;
 }
 
-.elementor-control.elementor-control-woo_grid_notice_video_tutorial {
+.elementor-control.elementor-control-woo_grid_notice_video_tutorial,
+.elementor-control-show_last_update_date {
 	padding-bottom: 15px !important;
 }
 
@@ -865,6 +868,14 @@
   -webkit-transition: all 0.2s ease-in;
   -o-transition: all 0.2s ease-in;
   transition: all 0.2s ease-in;
+}
+
+.elementor-repeater-fields .elementor-control.wpr-pro-control .elementor-control-content:after {
+	content: "This is available in the Pro Version.";
+}
+
+.elementor-control.wpr-pro-control.no-distance .elementor-control-content:after {
+	margin: 0;
 }
 
 .elementor-control.wpr-pro-control .elementor-control-content:hover:after {
