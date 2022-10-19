@@ -215,10 +215,6 @@ function render_settings_popup() {
                         <h4><?php esc_html_e('Badge Text', 'wpr-addons'); ?></h4>
                         <input type="text" id="wpr_mm_badge_text" value="">
                     </div>
-                    <div class="wpr-mm-setting">
-                        <h4><?php esc_html_e('Badge Size (px)', 'wpr-addons'); ?></h4>
-                        <input type="number" id="wpr_mm_badge_size" value="11">
-                    </div>
                     <div class="wpr-mm-setting wpr-mm-setting-color">
                         <h4><?php esc_html_e('Badge Text Color', 'wpr-addons'); ?></h4>
                         <input type="text" id="wpr_mm_badge_color" data-alpha="true" value="rgba(0,0,0,0.6);">
@@ -226,10 +222,6 @@ function render_settings_popup() {
                     <div class="wpr-mm-setting wpr-mm-setting-color">
                         <h4><?php esc_html_e('Badge Background Color', 'wpr-addons'); ?></h4>
                         <input type="text" id="wpr_mm_badge_bg_color" data-alpha="true" value="rgba(0,0,0,0.6);">
-                    </div>
-                    <div class="wpr-mm-setting">
-                        <h4><?php esc_html_e('Badge Border Radius (px)', 'wpr-addons'); ?></h4>
-                        <input type="number" id="wpr_mm_badge_bdrs" value="0">
                     </div>
                     <div class="wpr-mm-setting wpr-mm-setting-switcher">
                         <h4><?php esc_html_e('Enable Animation', 'wpr-addons'); ?></h4>

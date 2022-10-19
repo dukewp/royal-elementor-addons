@@ -940,6 +940,7 @@ li.wpr-mega-menu-pos-default {
 }
 
 .wpr-mega-menu-badge {
+    font-size: 11px;
     padding: 2px 5px;
     line-height: 1;
 }
