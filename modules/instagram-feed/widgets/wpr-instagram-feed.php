@@ -432,8 +432,8 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			[
 				'label' => esc_html__( 'Select Element', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => 'title',
 				'options' => $element_select,
+				'default' => 'caption',
 				'separator' => 'after'
 			]
 		);
@@ -1650,7 +1650,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#6A6A6A',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-item-caption .inner-block' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-insta-feed-item-caption .inner-block' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -1662,7 +1662,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#3a3a3a',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-item-caption.wpr-enable-dropcap p:first-child:first-letter' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-insta-feed-item-caption.wpr-enable-dropcap p:first-child:first-letter' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -1673,7 +1673,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-item-caption .inner-block' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-insta-feed-item-caption .inner-block' => 'background-color: {{VALUE}}',
 				]
 			]
 		);
@@ -1685,7 +1685,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#E8E8E8',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-item-caption .inner-block' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-insta-feed-item-caption .inner-block' => 'border-color: {{VALUE}}',
 				],
 				'separator' => 'after',
 			]
@@ -1696,7 +1696,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			[
 				'name'     => 'caption_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-grid-item-caption'
+				'selector' => '{{WRAPPER}} .wpr-insta-feed-item-caption'
 			]
 		);
 
@@ -1706,7 +1706,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'name'     => 'caption_dropcap_typography',
 				'label' => esc_html__( 'Drop Cap Typography', 'wpr-addons' ),
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-grid-item-caption.wpr-enable-dropcap p:first-child:first-letter'
+				'selector' => '{{WRAPPER}} .wpr-insta-feed-item-caption.wpr-enable-dropcap p:first-child:first-letter'
 			]
 		);
 
@@ -1727,7 +1727,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					'yes' => 'text-align: justify;'
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-item-caption .inner-block' => '{{VALUE}}',
+					'{{WRAPPER}} .wpr-insta-feed-item-caption .inner-block' => '{{VALUE}}',
 				],
 				'render_type' => 'template',
 			]
@@ -1750,7 +1750,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					'size' => 100,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-item-caption .inner-block' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-insta-feed-item-caption .inner-block' => 'width: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -1771,7 +1771,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				],
 				'default' => 'none',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-item-caption .inner-block' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .wpr-insta-feed-item-caption .inner-block' => 'border-style: {{VALUE}};',
 				],
 				'render_type' => 'template',
 				'separator' => 'before',
@@ -1791,7 +1791,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					'left' => 1,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-item-caption .inner-block' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-insta-feed-item-caption .inner-block' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'render_type' => 'template',
 				'condition' => [
@@ -1813,7 +1813,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					'left' => 0,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-item-caption .inner-block' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-insta-feed-item-caption .inner-block' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'render_type' => 'template',
 				'separator' => 'before',
@@ -1834,7 +1834,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				],
 				'render_type' => 'template',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-item-caption .inner-block' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-insta-feed-item-caption .inner-block' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -2685,12 +2685,16 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			echo '<div class="inner-block">';
 				$lightbox_source = $result->media_url;
 
+				if ( 'VIDEO' === $result->media_type ) {
+					$lightbox_source = $result->thumbnail_url;
+				}
+
 				// Lightbox Button
 				echo '<span data-src="'. esc_url( $lightbox_source ) .'">';
 				
 					// Text: Before
 					if ( 'before' === $settings['element_extra_text_pos'] ) {
-						echo '<span class="wpr-grid-extra-text-left">'. esc_html( $settings['element_extra_text'] ) .'</span>';
+						echo '<span class="wpr-insta-feed-extra-text-left">'. esc_html( $settings['element_extra_text'] ) .'</span>';
 					}
 
 					// Lightbox Icon
@@ -2698,14 +2702,14 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
 					// Text: After
 					if ( 'after' === $settings['element_extra_text_pos'] ) {
-						echo '<span class="wpr-grid-extra-text-right">'. esc_html( $settings['element_extra_text'] ) .'</span>';
+						echo '<span class="wpr-insta-feed-extra-text-right">'. esc_html( $settings['element_extra_text'] ) .'</span>';
 					}
 
 				echo '</span>';
 
 				// Media Overlay
 				if ( 'yes' === $settings['element_lightbox_overlay'] ) {
-					echo '<div class="wpr-grid-lightbox-overlay"></div>';
+					echo '<div class="wpr-insta-feed-lightbox-overlay"></div>';
 				}
 			echo '</div>';
 		echo '</div>';
@@ -2912,7 +2916,9 @@ class Wpr_Instagram_Feed extends Widget_Base {
 										<img src=<?php echo $result->media_url  ?> alt="">
 									</div>
 								<?php else : ?>
-									<img class="wpr-insta-feed-thumb" src=<?php echo $result->thumbnail_url ?> alt="">
+									<div class="wpr-insta-feed-image-wrap" data-src=<?php echo $result->thumbnail_url ?>>
+										<img class="wpr-insta-feed-thumb" src=<?php echo $result->thumbnail_url ?> alt="">
+									</div>
 								<?php endif ; ?>
 									<div class="wpr-insta-feed-media-hover wpr-animation-wrap">
 										<?php

@@ -12164,6 +12164,20 @@ a.wpr-ajax-img-wrap {
     position: absolute;
 }
 
+.wpr-insta-feed-item-lightbox .inner-block>span,
+.wpr-insta-feed-lightbox-overlay {
+    cursor: pointer;
+}
+
+.wpr-insta-feed-lightbox-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    width: 100%;
+    height: 100%;
+}
+
 .wpr-instagram-feed-cont .wpr-layout-masonry .wpr-insta-feed-content-wrap {
     -webkit-column-break-inside: avoid;
     -moz-column-break-inside: avoid;
