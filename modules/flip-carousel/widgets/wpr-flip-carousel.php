@@ -56,6 +56,17 @@ class Wpr_Flip_Carousel extends Widget_Base {
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
 
+	public function add_control_autoplay() {
+		$this->add_control(
+			'autoplay',
+			[
+				'label' => sprintf( __( 'Autoplay %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);	
+	}
+
 	public function add_controls_group_autoplay() {}
 
     protected function register_controls() {
@@ -214,6 +225,8 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'default' => 'yes',
 			]
 		);
+
+		$this->add_control_autoplay();
 
 		$this->add_controls_group_autoplay();
 

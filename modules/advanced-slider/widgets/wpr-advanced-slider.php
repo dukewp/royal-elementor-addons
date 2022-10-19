@@ -63,7 +63,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			[
 				'label' => sprintf( __( 'Show on Hover %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
 				'type' => Controls_Manager::SWITCHER,
-				'classes' => 'wpr-pro-control'
+				'classes' => 'wpr-pro-control no-distance'
 			]
 		);
 	}
@@ -85,18 +85,58 @@ class Wpr_Advanced_Slider extends Widget_Base {
 		);
 	}
 
-	public function add_control_slider_autoplay() {}
+	public function add_control_slider_autoplay() {
+		$this->add_control(
+			'slider_autoplay',
+			[
+				'label' => sprintf( __( 'Autoplay %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'separator' => 'before',
+				'classes' => 'wpr-pro-control'
+			]
+		);		
+	}
 
 	public function add_control_slider_autoplay_duration() {}
 
-	public function add_control_slider_pause_on_hover() {}
+	public function add_control_slider_pause_on_hover() {
+		$this->add_control(
+			'pause_on_hover',
+			[
+				'label' => sprintf( __( 'Pause on Hover %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);
+	}
 
-	public function add_control_slider_scroll_btn() {}
+	public function add_control_slider_scroll_btn() {
+		$this->add_control(
+			'slider_scroll_btn',
+			[
+				'label' => sprintf( __( 'Scroll to Section Button %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'separator' => 'before',
+				'classes' => 'wpr-pro-control'
+			]
+		);
+	}
 
 	public function add_repeater_args_slider_item_bg_kenburns() {
 		return [
-			'type' => Controls_Manager::HIDDEN,
-			'default' => ''
+			'label' => sprintf( __( 'Ken Burn Effect %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+			'type' => Controls_Manager::SWITCHER,
+			'separator' => 'before',
+			'conditions' => [
+				'terms' => [
+					[
+						'name' => 'slider_item_bg_image[url]',
+						'operator' => '!=',
+						'value' => '',
+					],
+				],
+			],
+			'classes' => 'wpr-pro-control'
 		];
 	}
 
@@ -983,6 +1023,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 					'slide' => esc_html__( 'Slide', 'wpr-addons' ),
 					'fade' => esc_html__( 'Fade', 'wpr-addons' ),
 				],
+				'separator' => 'before'
 			]
 		);
 

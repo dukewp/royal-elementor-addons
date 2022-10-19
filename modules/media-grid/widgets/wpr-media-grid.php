@@ -56,7 +56,16 @@ class Wpr_Media_Grid extends Widget_Base {
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
 
-	public function add_control_query_randomize() {}
+	public function add_control_query_randomize() {
+		$this->add_control(
+			'query_randomize',
+			[
+				'label' => sprintf( __( 'Randomize Query %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);
+	}
 	
 	public function add_control_layout_columns() {
 		$this->add_responsive_control(

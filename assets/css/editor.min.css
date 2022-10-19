@@ -870,6 +870,14 @@
   transition: all 0.2s ease-in;
 }
 
+.elementor-repeater-fields .elementor-control.wpr-pro-control .elementor-control-content:after {
+	content: "This is available in the Pro Version.";
+}
+
+.elementor-control.wpr-pro-control.no-distance .elementor-control-content:after {
+	margin: 0;
+}
+
 .elementor-control.wpr-pro-control .elementor-control-content:hover:after {
   visibility: visible;
   opacity: 1; 
