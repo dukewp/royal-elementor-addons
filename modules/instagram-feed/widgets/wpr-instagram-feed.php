@@ -2173,7 +2173,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
 	public static function call_instagram_api($access_token) {
 
-		$url = 'https://graph.instagram.com/me/media?fields=id,media_type,media_url,username,caption,timestamp&access_token=' . $access_token;
+		$url = 'https://graph.instagram.com/me/media?fields=id,media_type,media_url,thumbnail_url,username,caption,timestamp&access_token=' . $access_token;
 		$response = wp_remote_get($url);
 		$body = json_decode($response['body']);
 		if(!isset($body)) {
@@ -2467,8 +2467,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'instagram' ) ); ?>>
 				
 					<?php foreach($this->call_instagram_api($access_token) as $result) : ?>
-				
-					<?php if ( $result->media_type === 'IMAGE') : ?>
+
 						<div class="wpr-insta-feed-content-wrap wpr-insta-col-12">
 							<figure>
 								<?php
@@ -2476,7 +2475,11 @@ class Wpr_Instagram_Feed extends Widget_Base {
 									echo $this->get_elements_by_location( 'above', $settings, $result );
 								 ?>
 								<div class="wpr-insta-feed-media-wrap <?php echo esc_attr($this->get_image_effect_class( $settings )) ?>">
+								<?php if ($result->media_type == 'IMAGE') : ?>
 									<img src=<?php echo $result->media_url  ?> alt="">
+								<?php else : ?>
+									<img class="wpr-insta-feed-thumb" src=<?php echo $result->thumbnail_url ?> alt="">
+								<?php endif ; ?>
 									<div class="wpr-insta-feed-media-hover wpr-animation-wrap">
 										<?php
 											// Media Overlay
@@ -2493,14 +2496,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 								 ?>
 							</figure>
 						</div>
-					<?php else : ?>
-						<div class="wpr-insta-feed-content-wrap wpr-insta-col-12">
-							<video controls>
-								<source src=<?php echo $result->media_url ?> type="video/mp4">
-							</video>
-							<p class="wpr-insta-feed-caption"><span><?php echo $result->caption ?></span></p>
-						</div>
-					<?php endif; ?>
+						
 					<?php endforeach; ?>
 				</div>
 				

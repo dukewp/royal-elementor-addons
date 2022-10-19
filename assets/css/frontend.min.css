@@ -11884,6 +11884,11 @@ a.wpr-ajax-img-wrap {
 == Instagram Feed
 --------------------------------------------------------------*/
 
+.wpr-insta-feed-thumb {
+    width: 100%;
+    height: auto;
+}
+
 .wpr-insta-feed-item-display-block {
     clear: both;
 }
