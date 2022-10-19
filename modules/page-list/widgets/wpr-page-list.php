@@ -572,7 +572,7 @@ class Wpr_Page_List extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 5,
+					'size' => 8,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-page-list-item div a' => 'margin-bottom: {{SIZE}}{{UNIT}};',
@@ -619,6 +619,12 @@ class Wpr_Page_List extends Widget_Base {
 							'size' => '12',
 							'unit' => 'px',
 						],
+					],
+					'line_height'     => [
+						'default' => [
+							'size' => '0.8',
+							'unit' => 'em',
+						]
 					]
 				]
 			]
@@ -868,7 +874,7 @@ class Wpr_Page_List extends Widget_Base {
 
         $this->end_controls_section();
     }
-
+	
     protected function render() {
         $settings = $this->get_settings_for_display();
 
