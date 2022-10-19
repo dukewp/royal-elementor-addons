@@ -409,7 +409,7 @@ class Wpr_Page_List extends Widget_Base {
 					'isLinked' => ''
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-page-list-item-wrap' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-page-list-item' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				]
 			]
 		);
@@ -429,7 +429,7 @@ class Wpr_Page_List extends Widget_Base {
 					'isLinked' => false
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-page-list-item-wrap' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-page-list-item' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -449,7 +449,7 @@ class Wpr_Page_List extends Widget_Base {
 				],
 				'default' => 'solid',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-page-list-item-wrap' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .wpr-page-list-item' => 'border-style: {{VALUE}};',
 				],
 				'separator' => 'before',
 			]
@@ -468,7 +468,7 @@ class Wpr_Page_List extends Widget_Base {
 					'left' => 0,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-page-list-item-wrap' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-page-list-item' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
 					'page_list_item_border_type!' => 'none',
@@ -489,7 +489,7 @@ class Wpr_Page_List extends Widget_Base {
 					'left' => 0,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-page-list-item-wrap' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-page-list-item' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				]
 			]
 		);
@@ -523,7 +523,7 @@ class Wpr_Page_List extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#605BE5',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-page-list-item-wrap a' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-page-list-item a' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -535,7 +535,7 @@ class Wpr_Page_List extends Widget_Base {
 		// 		'type' => Controls_Manager::COLOR,
         //         'default' => '#00000000',
 		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-page-list-item-wrap' => 'background-color: {{VALUE}}',
+		// 			'{{WRAPPER}} .wpr-page-list-item' => 'background-color: {{VALUE}}',
 		// 		]
 		// 	]
 		// );
@@ -547,7 +547,7 @@ class Wpr_Page_List extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#E8E8E8',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-page-list-item-wrap' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-page-list-item' => 'border-color: {{VALUE}}',
 				],
 			]
 		);
@@ -562,7 +562,7 @@ class Wpr_Page_List extends Widget_Base {
 				'max' => 5,
 				'step' => 0.1,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-page-list-item-wrap' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-page-list-item' => 'transition-duration: {{VALUE}}s',
 				],
 			]
 		);
@@ -572,7 +572,7 @@ class Wpr_Page_List extends Widget_Base {
 			[
 				'name'     => 'page_list_item_title_typo',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-page-list-item-wrap a',
+				'selector' => '{{WRAPPER}} .wpr-page-list-item a',
 				'fields_options' => [
 					'typography'      => [
 						'default' => 'custom',
@@ -609,7 +609,7 @@ class Wpr_Page_List extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#605BE5',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-page-list-item-wrap a:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-page-list-item a:hover' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -621,7 +621,7 @@ class Wpr_Page_List extends Widget_Base {
 		// 		'type' => Controls_Manager::COLOR,
         //         'default' => '#00000000',
 		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-page-list-item-wrap:hover' => 'background-color: {{VALUE}}',
+		// 			'{{WRAPPER}} .wpr-page-list-item:hover' => 'background-color: {{VALUE}}',
 		// 		]
 		// 	]
 		// );
@@ -655,7 +655,7 @@ class Wpr_Page_List extends Widget_Base {
 					'size' => 5,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-page-list-item-wrap li a' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-page-list-item li a' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before'
 			]
@@ -679,7 +679,7 @@ class Wpr_Page_List extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#B6B6B6',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-page-list-item-wrap p' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-page-list-item p' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -689,7 +689,7 @@ class Wpr_Page_List extends Widget_Base {
 			[
 				'name'     => 'page_list_item_sub_title_typo',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-page-list-item-wrap p',
+				'selector' => '{{WRAPPER}} .wpr-page-list-item p',
 				'fields_options' => [
 					'typography'      => [
 						'default' => 'custom',
@@ -978,7 +978,7 @@ class Wpr_Page_List extends Widget_Base {
 						$badge_anim_class = '';
 					}
 
-					$this->add_render_attribute( 'page_list_item'. $key, 'class', 'wpr-page-list-item-wrap elementor-repeater-item-'. $item['_id']. $class . $badge_anim_class );
+					$this->add_render_attribute( 'page_list_item'. $key, 'class', 'wpr-page-list-item elementor-repeater-item-'. $item['_id']. $class . $badge_anim_class );
 
                     if ( '' !== $item['page_list_item_icon'] ) {
                         ob_start();
