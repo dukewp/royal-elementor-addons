@@ -14999,13 +14999,13 @@ dl.variation dd {
 }
 
 /* .wpr-page-list-horizontal .wpr-page-list li a, */
-.wpr-page-list .wpr-page-list-item-wrap {
+.wpr-page-list .wpr-page-list-item {
     display: inline-flex;
     align-items: center;
     justify-content: flex-start;
 }
 
-.wpr-page-list-item-wrap li {
+.wpr-page-list-item {
     line-height: 1.5;
 }
 
