@@ -481,7 +481,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}}.wpr-mobile-menu-display-offcanvas .wpr-mobile-mega-menu' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-mobile-menu-display-offcanvas .wpr-mobile-mega-menu-wrap' => 'width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'mob_menu_display_as' => 'offcanvas',
@@ -2048,7 +2048,17 @@ class Wpr_Mega_Menu extends Widget_Base {
 			echo '</div>';
 
 			// Menu
-			echo ''. $moible_menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo '<div class="wpr-mobile-mega-menu-wrap">';
+				if ( 'offcanvas' === $settings['mob_menu_display_as'] ) {
+					echo '<div class="mobile-mega-menu-header">';
+						echo '<div class="mobile-mega-menu-close">';
+							echo '<i class="fa-solid fa-xmark"></i>';
+						echo '</div>';
+					echo '</div>';
+				}
+
+				echo ''. $moible_menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo '</div>';
 
 		echo '</nav>';
 	}
