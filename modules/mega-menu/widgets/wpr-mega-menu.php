@@ -1956,7 +1956,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 					'size' => 10,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-mobile-nav-menu' => 'margin-top: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-mobile-menu-display-dropdown .wpr-mobile-nav-menu' => 'margin-top: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -2052,7 +2052,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				if ( 'offcanvas' === $settings['mob_menu_display_as'] ) {
 					echo '<div class="mobile-mega-menu-header">';
 						echo '<div class="mobile-mega-menu-close">';
-							echo '<i class="fa-solid fa-xmark"></i>';
+							echo '<i class="fas fa-times"></i>';
 						echo '</div>';
 					echo '</div>';
 				}
