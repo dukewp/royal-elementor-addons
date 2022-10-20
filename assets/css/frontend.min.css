@@ -13371,7 +13371,17 @@ dl.variation dd {
     margin-right: 10px !important;
 }
 
-/* Product Media */
+@media screen and (max-width: 768px) {
+    .wpr-mini-cart-dropdown .wpr-mini-cart {
+        position: fixed !important;
+        width: 100vw !important;
+        top: auto !important;
+    }
+}
+
+/*--------------------------------------------------------------
+ == Product Media
+--------------------------------------------------------------*/
 .wpr-product-media-wrap {
     position: relative;
     display: inline-block;
