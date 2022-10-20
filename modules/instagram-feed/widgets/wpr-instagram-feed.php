@@ -229,7 +229,8 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			'caption' => esc_html__( 'Caption', 'wpr-addons' ),
 			'date' => esc_html__( 'Date', 'wpr-addons' ),
 			'icon' => esc_html__( 'Icon', 'wpr-addons' ),
-			'lightbox' => esc_html__( 'Lightbox', 'wpr-addons' )
+			'lightbox' => esc_html__( 'Lightbox', 'wpr-addons' ),
+			'pro-shr' => esc_html__( 'Sharing (Pro)', 'wpr-addons' )
 		];
 	}
 	
@@ -238,6 +239,83 @@ class Wpr_Instagram_Feed extends Widget_Base {
 	public function add_control_lightbox_popup_thumbnails_default() {}
 	
 	public function add_control_lightbox_popup_sharing() {}
+
+	public function add_repeater_args_element_sharing_icon_1() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
+		];
+	}
+
+	public function add_repeater_args_element_sharing_icon_2() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
+		];
+	}
+
+	public function add_repeater_args_element_sharing_icon_3() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
+		];
+	}
+
+	public function add_repeater_args_element_sharing_icon_4() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
+		];
+	}
+
+	public function add_repeater_args_element_sharing_icon_5() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
+		];
+	}
+
+	public function add_repeater_args_element_sharing_icon_6() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
+		];
+	}
+
+	public function add_repeater_args_element_sharing_trigger() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
+		];
+	}
+
+	public function add_repeater_args_element_sharing_trigger_icon() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
+		];
+	}
+
+	public function add_repeater_args_element_sharing_trigger_action() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
+		];
+	}
+
+	public function add_repeater_args_element_sharing_trigger_direction() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
+		];
+	}
+
+	public function add_repeater_args_element_sharing_tooltip() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
+		];
+	}
 
 	protected function register_controls() {
 
@@ -272,6 +350,20 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'label_block' => false
+			]
+		);
+
+		$this->add_control(
+			'center_instagram_follow_button',
+			[
+				'label' => esc_html__( 'Center Follow Button', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'prefix_class' => 'wpr-if-cfb-',
+				'label_block' => false,
+				'condition' => [
+					'show_instagram_follow_button' => 'yes'
+				]
 			]
 		);
 
@@ -724,27 +816,27 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
 		// $repeater->add_control( 'element_like_text', $this->add_repeater_args_element_like_text() );
 
-		// $repeater->add_control( 'element_sharing_icon_1', $this->add_repeater_args_element_sharing_icon_1() );
+		$repeater->add_control( 'element_sharing_icon_1', $this->add_repeater_args_element_sharing_icon_1() );
 
-		// $repeater->add_control( 'element_sharing_icon_2', $this->add_repeater_args_element_sharing_icon_2() );
+		$repeater->add_control( 'element_sharing_icon_2', $this->add_repeater_args_element_sharing_icon_2() );
 
-		// $repeater->add_control( 'element_sharing_icon_3', $this->add_repeater_args_element_sharing_icon_3() );
+		$repeater->add_control( 'element_sharing_icon_3', $this->add_repeater_args_element_sharing_icon_3() );
 
-		// $repeater->add_control( 'element_sharing_icon_4', $this->add_repeater_args_element_sharing_icon_4() );
+		$repeater->add_control( 'element_sharing_icon_4', $this->add_repeater_args_element_sharing_icon_4() );
 
-		// $repeater->add_control( 'element_sharing_icon_5', $this->add_repeater_args_element_sharing_icon_5() );
+		$repeater->add_control( 'element_sharing_icon_5', $this->add_repeater_args_element_sharing_icon_5() );
 
-		// $repeater->add_control( 'element_sharing_icon_6', $this->add_repeater_args_element_sharing_icon_6() );
+		$repeater->add_control( 'element_sharing_icon_6', $this->add_repeater_args_element_sharing_icon_6() );
 
-		// $repeater->add_control( 'element_sharing_trigger', $this->add_repeater_args_element_sharing_trigger() );
+		$repeater->add_control( 'element_sharing_trigger', $this->add_repeater_args_element_sharing_trigger() );
 
-		// $repeater->add_control( 'element_sharing_trigger_icon', $this->add_repeater_args_element_sharing_trigger_icon() );
+		$repeater->add_control( 'element_sharing_trigger_icon', $this->add_repeater_args_element_sharing_trigger_icon() );
 
-		// $repeater->add_control( 'element_sharing_trigger_action', $this->add_repeater_args_element_sharing_trigger_action() );
+		$repeater->add_control( 'element_sharing_trigger_action', $this->add_repeater_args_element_sharing_trigger_action() );
 
-		// $repeater->add_control( 'element_sharing_trigger_direction', $this->add_repeater_args_element_sharing_trigger_direction() );
+		$repeater->add_control( 'element_sharing_trigger_direction', $this->add_repeater_args_element_sharing_trigger_direction() );
 
-		// $repeater->add_control( 'element_sharing_tooltip', $this->add_repeater_args_element_sharing_tooltip() );
+		$repeater->add_control( 'element_sharing_tooltip', $this->add_repeater_args_element_sharing_tooltip() );
 
 		$repeater->add_control(
 			'element_lightbox_pfa_select',
@@ -2053,6 +2145,10 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
 		$this->end_controls_section();
 
+		// Styles =========================
+		// Section: Sharing ---------------
+		$this->add_section_style_sharing();
+
 		// Styles ====================
 		// Section: Lightbox ---------
 		$this->start_controls_section(
@@ -2549,7 +2645,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
 	public static function call_instagram_api($access_token) {
 
-		$url = 'https://graph.instagram.com/me/media?fields=id,media_type,media_url,thumbnail_url,likes,comments,username,caption,timestamp&access_token=' . $access_token;
+		$url = 'https://graph.instagram.com/me/media?fields=id,media_type,media_url,thumbnail_url,permalink,username,caption,timestamp&access_token=' . $access_token;
 		$response = wp_remote_get($url);
 		$body = json_decode($response['body']);
 		if(!isset($body)) {
@@ -2715,6 +2811,8 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		echo '</div>';
 	}
 
+	public function render_post_sharing_icons( $settings, $class, $result ) {}
+
 	// Get Elements
 	public function get_elements( $type, $settings, $class, $result ) {
 		if ( 'pro-lk' == $type || 'pro-shr' == $type || 'pro-cf' == $type ) {
@@ -2752,9 +2850,9 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			// 	$this->render_post_likes( $settings, $class, $post_id );
 			// 	break;
 
-			// case 'sharing':
-			// 	$this->render_post_sharing_icons( $settings, $class );
-			// 	break;
+			case 'sharing':
+				$this->render_post_sharing_icons( $settings, $class, $result );
+				break;
 
 			case 'lightbox':
 				$this->render_post_lightbox( $settings, $class, $result );
@@ -2897,11 +2995,16 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			$this->refresh_access_token($access_token);
 		}
 
+		if ( '' === $access_token ) {
+			echo '<p>Please provide instagram access token!</p>';
+			return;
+		}
+
 		?>
 
 			<div class="wpr-instagram-feed-cont">
 				<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'instagram' ) ); ?>>
-				
+
 					<?php foreach($this->call_instagram_api($access_token) as $result) : ?>
 
 						<div class="wpr-insta-feed-content-wrap wpr-insta-col-12">
@@ -2938,6 +3041,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 						</div>
 
 					<?php endforeach; ?>
+					
 				</div>
 				
 				<?php if ( 'yes' === $settings['show_instagram_follow_button'] ) : ?>

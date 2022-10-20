@@ -11898,6 +11898,13 @@ a.wpr-ajax-img-wrap {
 == Instagram Feed
 --------------------------------------------------------------*/
 
+.wpr-if-cfb-yes .wpr-instagram-follow-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%);
+}
+
 .wpr-insta-feed-thumb {
     width: 100%;
     height: auto;
