@@ -11904,6 +11904,9 @@ a.wpr-ajax-img-wrap {
 
 .wpr-swiper-button {
     cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .wpr-grid-slider-nav-position-custom .wpr-swiper-button-prev,
@@ -11991,24 +11994,36 @@ a.wpr-ajax-img-wrap {
 .wpr-insta-feed-list-left .wpr-insta-feed-media-wrap,
 .wpr-insta-feed-list-left .wpr-insta-feed-item-below-content {
     float: left;
+}
+
+.wpr-insta-feed-list-left .wpr-insta-feed-item-caption {
     text-align: left !important;
 }
 
 .wpr-insta-feed-list-right .wpr-insta-feed-media-wrap,
 .wpr-insta-feed-list-right .wpr-insta-feed-item-below-content {
     float: right;
-    text-align: right !important;
+}
+
+.wpr-insta-feed-list-right .wpr-insta-feed-item-caption {
+    text-align: right !important
 }
 
 .wpr-insta-feed-list-zigzag .wpr-insta-feed-content-wrap:nth-child(odd) .wpr-insta-feed-media-wrap,
 .wpr-insta-feed-list-zigzag .wpr-insta-feed-content-wrap:nth-child(odd) .wpr-insta-feed-item-below-content {
     float: left;
+}
+
+.wpr-insta-feed-list-zigzag .wpr-insta-feed-content-wrap:nth-child(odd) .wpr-insta-feed-item-caption {
     text-align: left !important;
 }
 
 .wpr-insta-feed-list-zigzag .wpr-insta-feed-content-wrap:nth-child(even) .wpr-insta-feed-media-wrap,
 .wpr-insta-feed-list-zigzag .wpr-insta-feed-content-wrap:nth-child(even) .wpr-insta-feed-item-below-content {
     float: right;
+}
+
+.wpr-insta-feed-list-zigzag .wpr-insta-feed-content-wrap:nth-child(even) .wpr-insta-feed-item-caption {
     text-align: right !important;
 }
 
@@ -12046,6 +12061,12 @@ a.wpr-ajax-img-wrap {
     -webkit-column-count: 2.4;
     -moz-column-count: 2.4;
     column-count: 2.4;
+}
+
+.wpr-instagram-feed-cont .wpr-layout-masonry.wpr-insta-col-2-point-4 {
+    -webkit-column-count: 5;
+    -moz-column-count: 5;
+    column-count: 5;
 }
 
 .wpr-instagram-feed-cont .wpr-layout-masonry.wpr-insta-col-6 {
@@ -12260,6 +12281,7 @@ a.wpr-ajax-img-wrap {
     position: absolute;
 }
 
+.wpr-insta-feed-item-icon .inner-block>span,
 .wpr-insta-feed-item-lightbox .inner-block>span,
 .wpr-insta-feed-lightbox-overlay {
     cursor: pointer;
@@ -12299,6 +12321,28 @@ a.wpr-ajax-img-wrap {
 
 .wpr-instagram-follow-btn {
     display: inline-block;
+}
+
+.wpr-if-square-images-yes .wpr-insta-feed-media-wrap {
+    position: relative;
+    padding-bottom: 100%;
+    width: 100%;
+ }
+
+.wpr-if-square-images-yes .wpr-insta-feed-image-wrap {
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+}
+
+.wpr-if-square-images-yes img {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+        object-fit: cover; 
 }
 
 /* ---------------------------------- 
