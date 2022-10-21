@@ -833,8 +833,8 @@ class Wpr_Mega_Menu extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .menu-item-has-children .wpr-sub-icon' => 'font-size: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-pointer-background:not(.wpr-sub-icon-none) .wpr-nav-menu-horizontal .menu-item-has-children .wpr-pointer-item' => 'padding-right: calc({{SIZE}}px + {{menu_items_padding_hr.SIZE}}px);',
-					'{{WRAPPER}}.wpr-pointer-border:not(.wpr-sub-icon-none) .wpr-nav-menu-horizontal .menu-item-has-children .wpr-pointer-item' => 'padding-right: calc({{SIZE}}px + {{menu_items_padding_hr.SIZE}}px);',
+					// '{{WRAPPER}}.wpr-pointer-background:not(.wpr-sub-icon-none) .wpr-nav-menu-horizontal .menu-item-has-children .wpr-pointer-item' => 'padding-right: calc({{SIZE}}px + {{menu_items_padding_hr.SIZE}}px);',
+					// '{{WRAPPER}}.wpr-pointer-border:not(.wpr-sub-icon-none) .wpr-nav-menu-horizontal .menu-item-has-children .wpr-pointer-item' => 'padding-right: calc({{SIZE}}px + {{menu_items_padding_hr.SIZE}}px);',
 				],
 				'separator' => 'before'
 			]
@@ -908,8 +908,11 @@ class Wpr_Mega_Menu extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-nav-menu .wpr-menu-item' => 'padding-left: {{SIZE}}{{UNIT}}; padding-right: {{SIZE}}{{UNIT}};',
-
+					'{{WRAPPER}} .wpr-nav-menu .wpr-menu-item' => 'padding-left: {{SIZE}}px; padding-right: {{SIZE}}px;',
+					'{{WRAPPER}}.wpr-pointer-underline .wpr-menu-item:after,
+					 {{WRAPPER}}.wpr-pointer-overline .wpr-menu-item:before,
+					 {{WRAPPER}}.wpr-pointer-double-line .wpr-menu-item:before,
+					 {{WRAPPER}}.wpr-pointer-double-line .wpr-menu-item:after' => 'margin-left: {{SIZE}}px; margin-right: {{SIZE}}px; width: calc(100% - ({{SIZE}}px * 2));',
 				],
 				'separator' => 'before'
 			]
@@ -2014,7 +2017,6 @@ class Wpr_Mega_Menu extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-mobile-menu-item' => 'padding-left: {{SIZE}}{{UNIT}}; padding-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .menu-item-has-children > a:after' => 'margin-left: {{SIZE}}{{UNIT}}; margin-right: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -2127,9 +2129,6 @@ class Wpr_Mega_Menu extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-mobile-nav-menu .wpr-mobile-sub-menu-item' => 'padding-left: {{SIZE}}{{UNIT}}; padding-right: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'mob_menu_display_as' => 'offcanvas',
 				],
 			]
 		);
