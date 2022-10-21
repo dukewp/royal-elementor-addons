@@ -457,7 +457,8 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				],
 				'render_type' => 'template',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'max-width: {{VALUE}}'
+					'{{WRAPPER}} .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'width: {{VALUE}}',
+					'{{WRAPPER}} .wpr-layout-list .wpr-insta-feed-content-wrap' => 'width: {{VALUE}}'
 				],
 				'condition' => [
 					'wpr_insta_feed_layout' => ['layout-grid', 'layout-list']
@@ -465,7 +466,95 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			]
 		);
 
+		// Media
 		$this->add_control(
+			'layout_list_media_section',
+			[
+				'label' => esc_html__( 'Media', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+				'condition' => [
+					'wpr_insta_feed_layout' => 'layout-list',
+				],
+			]
+		);
+
+		$this->add_control(
+			'layout_list_align',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'left',
+				'options' => [
+					'left' => esc_html__( 'Left', 'wpr-addons' ),
+					'right' => esc_html__( 'Right', 'wpr-addons' ),
+					'zigzag' => esc_html__( 'ZigZag', 'wpr-addons' ),
+				],
+				'prefix_class' => 'wpr-insta-feed-list-',
+				'condition' => [
+					'wpr_insta_feed_layout' => 'layout-list'
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'layout_list_media_width',
+			[
+				'label' => esc_html__( 'Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'unit' => '%',
+					'size' => 30,
+				],
+				'range' => [
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-layout-list .wpr-insta-feed-media-wrap' => 'width: {{SIZE}}{{UNIT}};',
+					'body[data-elementor-device-mode=desktop] {{WRAPPER}} .wpr-layout-list .wpr-insta-feed-item-below-content' => 'width: calc(100% - {{SIZE}}{{UNIT}} - {{layout_list_media_distance.SIZE}}{{layout_list_media_distance.UNIT}});',
+					'body[data-elementor-device-mode=widescreen] {{WRAPPER}} .wpr-layout-list .wpr-insta-feed-item-below-content' => 'width: calc(100% - {{SIZE}}{{UNIT}} - {{layout_list_media_distance_widescreen.SIZE}}{{layout_list_media_distance_widescreen.UNIT}});',
+					'body[data-elementor-device-mode=laptop] {{WRAPPER}} .wpr-layout-list .wpr-insta-feed-item-below-content' => 'width: calc(100% - {{SIZE}}{{UNIT}} - {{layout_list_media_distance_laptop.SIZE}}{{layout_list_media_distance_laptop.UNIT}});',
+					'body[data-elementor-device-mode=tablet_extra] {{WRAPPER}} .wpr-layout-list .wpr-insta-feed-item-below-content' => 'width: calc(100% - {{SIZE}}{{UNIT}} - {{layout_list_media_distance_tablet_extra.SIZE}}{{layout_list_media_distance_tablet_extra.UNIT}});',
+					'body[data-elementor-device-mode=tablet] {{WRAPPER}} .wpr-layout-list .wpr-insta-feed-item-below-content' => 'width: calc(100% - {{SIZE}}{{UNIT}} - {{layout_list_media_distance_tablet.SIZE}}{{layout_list_media_distance_tablet.UNIT}});',
+					'body[data-elementor-device-mode=mobile_extra] {{WRAPPER}} .wpr-layout-list .wpr-insta-feed-item-below-content' => 'width: calc(100% - {{SIZE}}{{UNIT}} - {{layout_list_media_distance_mobile_extra.SIZE}}{{layout_list_media_distance_mobile_extra.UNIT}});',
+					'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-layout-list .wpr-insta-feed-item-below-content' => 'width: calc(100% - {{SIZE}}{{UNIT}} - {{layout_list_media_distance_mobile.SIZE}}{{layout_list_media_distance_mobile.UNIT}});'
+				],
+				'condition' => [
+					'wpr_insta_feed_layout' => 'layout-list',
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'layout_list_media_distance',
+			[
+				'label' => esc_html__( 'List Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 20,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}}.wpr-insta-feed-list-left .wpr-layout-list .wpr-insta-feed-media-wrap' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-insta-feed-list-right .wpr-layout-list .wpr-insta-feed-media-wrap' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-insta-feed-list-zigzag .wpr-layout-list .wpr-insta-feed-content-wrap:nth-child(odd) .wpr-insta-feed-media-wrap' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-insta-feed-list-zigzag .wpr-layout-list .wpr-insta-feed-content-wrap:nth-child(even) .wpr-insta-feed-media-wrap' => 'margin-left: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'wpr_insta_feed_layout' => 'layout-list',
+				]
+			]
+		);
+
+		$this->add_responsive_control(
 			'gutter',
 			[
 				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
@@ -482,7 +571,20 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-masonry' => 'column-gap: {{SIZE}}px;',
-					'{{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns.VALUE}} - (2 * {{SIZE}}px));'
+					'body[data-elementor-device-mode=desktop] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns.VALUE}} - (2 * {{SIZE}}px));',
+					'body[data-elementor-device-mode=desktop] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-list .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns.VALUE}} - (2 * {{SIZE}}px));',
+					'body[data-elementor-device-mode=widescreen] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_widescreen.VALUE}} - (2 * {{SIZE}}px));',
+					'body[data-elementor-device-mode=widescreen] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-list .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_widescreen.VALUE}} - (2 * {{SIZE}}px));',
+					'body[data-elementor-device-mode=laptop] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_laptop.VALUE}} - (2 * {{SIZE}}px));',
+					'body[data-elementor-device-mode=laptop] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-list .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_laptop.VALUE}} - (2 * {{SIZE}}px));',
+					'body[data-elementor-device-mode=tablet_extra] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_tablet_extra.VALUE}} - (2 * {{SIZE}}px));',
+					'body[data-elementor-device-mode=tablet_extra] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-list .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_tablet_extra.VALUE}} - (2 * {{SIZE}}px));',
+					'body[data-elementor-device-mode=tablet] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_tablet.VALUE}} - (2 * {{SIZE}}px));',
+					'body[data-elementor-device-mode=tablet] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-list .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_tablet.VALUE}} - (2 * {{SIZE}}px));',
+					'body[data-elementor-device-mode=mobile_extra] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_mobile_extra.VALUE}} - (2 * {{SIZE}}px));',
+					'body[data-elementor-device-mode=mobile_extra] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-list .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_mobile_extra.VALUE}} - (2 * {{SIZE}}px));',
+					'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_mobile.VALUE}} - (2 * {{SIZE}}px));',
+					'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-list .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_mobile.VALUE}} - (2 * {{SIZE}}px));',
 				]
 			]
 		);
