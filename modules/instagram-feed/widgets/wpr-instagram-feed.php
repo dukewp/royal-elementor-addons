@@ -460,7 +460,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					'{{WRAPPER}} .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'max-width: {{VALUE}}'
 				],
 				'condition' => [
-					'wpr_insta_feed_layout' => 'layout-grid'
+					'wpr_insta_feed_layout' => ['layout-grid', 'layout-list']
 				],
 			]
 		);
