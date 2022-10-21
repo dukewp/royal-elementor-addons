@@ -11898,6 +11898,52 @@ a.wpr-ajax-img-wrap {
 == Instagram Feed
 --------------------------------------------------------------*/
 
+.wpr-swiper-nav-wrap {
+    cursor: pointer
+}
+
+.wpr-swiper-button {
+    cursor: pointer;
+}
+
+.wpr-grid-slider-nav-position-custom .wpr-swiper-button-prev,
+.wpr-grid-slider-nav-position-custom .wpr-swiper-button-next {
+    position: absolute;
+    z-index: 99;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.wpr-swiper-button-prev {
+    left: 0;
+}
+
+.wpr-swiper-button-next {
+    right: 0
+}
+
+.wpr-grid-slider-nav-position-default .wpr-swiper-nav-wrap {
+    position: absolute;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    z-index: 99;
+}
+
+.wpr-grid-slider-nav-position-default .wpr-swiper-button-prev,
+.wpr-grid-slider-nav-position-default .wpr-swiper-button-next {
+    position: static;
+}
+
+.wpr-grid-slider-nav-align-top-center .wpr-swiper-nav-wrap,
+.wpr-grid-slider-nav-align-bottom-center .wpr-swiper-nav-wrap {
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
 .wpr-if-cfb-yes .wpr-instagram-follow-btn {
     position: absolute;
     top: 50%;
@@ -11935,6 +11981,10 @@ a.wpr-ajax-img-wrap {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
+}
+
+.wpr-instagram-feed-cont {
+    position: relative;
 }
 
 .wpr-instagram-feed-cont .wpr-layout-masonry {
