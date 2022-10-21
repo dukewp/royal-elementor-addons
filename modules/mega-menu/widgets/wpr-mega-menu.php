@@ -175,6 +175,26 @@ class Wpr_Mega_Menu extends Widget_Base {
 		);
 	}
 
+	public function add_controls_group_offcanvas() {
+		$this->add_control(
+			'mob_menu_display_as',
+			[
+				'label' => esc_html__( 'Display As', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'dropdown',
+				'options' => [
+					'dropdown' => esc_html__( 'Dropdown', 'wpr-addons' ),
+					'pro-oc' => esc_html__( 'Off-Canvas', 'wpr-addons' ),
+				],
+				'prefix_class' => 'wpr-mobile-menu-display-',
+				'render_type' => 'template',
+			]
+		);
+
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'nav-menu', 'mob_menu_display_as', ['pro-oc'] );
+	}
+
 	public function add_control_toggle_btn_style() {
 		$this->add_control(
 			'toggle_btn_style',
@@ -418,87 +438,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'nav-menu', 'mob_menu_show_on', ['pro-nn', 'pro-al'] );
 
-		$this->add_control(
-			'mob_menu_display_as',
-			[
-				'label' => esc_html__( 'Display As', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'dropdown',
-				'options' => [
-					'dropdown' => esc_html__( 'Dropdown', 'wpr-addons' ),
-					'offcanvas' => esc_html__( 'Off-Canvas', 'wpr-addons' ),
-				],
-				'prefix_class' => 'wpr-mobile-menu-display-',
-				'render_type' => 'template',
-			]
-		);
-
-		$this->add_control(
-			'mob_menu_offcanvas_align',
-			[
-				'label' => esc_html__( 'Off-Canvas Slide', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'label_block' => false,
-				'default' => 'left',
-				'options' => [
-					'left' => esc_html__( 'Left', 'wpr-addons' ),
-					'right' => esc_html__( 'Right', 'wpr-addons' )
-				],
-				'prefix_class' => 'wpr-mobile-menu-offcanvas-slide-',
-				'condition' => [
-					'mob_menu_display_as' => 'offcanvas',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'mob_menu_offcanvas_width',
-			[
-				'label' => esc_html__( 'Off-Canvas Width', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'tablet_default' => [
-					'size' => 300,
-					'unit' => 'px',
-				],
-				'mobile_default' => [
-					'size' => 300,
-					'unit' => 'px',
-				],
-				'default' => [
-					'size' => 300,
-					'unit' => 'px',
-				],
-				'size_units' => [ 'px', '%' ],
-				'range' => [
-					'px' => [
-						'min' => 50,
-						'max' => 1000,
-						'step' => 5,
-					],
-					'%' => [
-						'min' => 10,
-						'max' => 100,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}}.wpr-mobile-menu-display-offcanvas .wpr-mobile-mega-menu-wrap' => 'width: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'mob_menu_display_as' => 'offcanvas',
-				],
-			]
-		);
-
-		$this->add_control(
-			'mob_menu_offcanvas_logo',
-			[
-				'label' => esc_html__( 'Off-Canvas Logo', 'wpr-addons' ),
-				'type' => Controls_Manager::MEDIA,
-				'condition' => [
-					'mob_menu_display_as' => 'offcanvas',
-				],
-			]
-		);
+		$this->add_controls_group_offcanvas();
 
 		$this->add_control(
 			'mob_menu_stretch',
