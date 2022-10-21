@@ -12461,6 +12461,10 @@ a.wpr-ajax-img-wrap {
     min-width: 100%;
 }
 
+.wpr-img-accordion-item-description .inner-block {
+    display: inline-block;
+}
+
 .wpr-image-accordion-wrap .wpr-img-accordion-media-hover,
 .wpr-image-accordion-wrap .wpr-img-accordion-hover-bg {
     /* pointer-events: none; */
@@ -14964,6 +14968,10 @@ dl.variation dd {
 == Advanced Accordion
 --------------------------------------------------------------*/
 
+.wpr-acc-search-input {
+    width: 100%;
+}
+
 .wpr-acc-search-input-wrap {
     position: relative;
 }
@@ -15023,6 +15031,10 @@ dl.variation dd {
 
 .wpr-acc-item-title {
   z-index: 9;
+}
+
+.wpr-acc-title-text {
+    white-space: normal;
 }
 
 .wpr-acc-item-title {
