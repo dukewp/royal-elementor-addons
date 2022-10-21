@@ -22,6 +22,15 @@ class Wpr_Mobile_Menu_Walker extends \Walker_Nav_Menu {
 		$class_names = $class_names ? ' class="' . esc_attr( $class_names ) . '"' : '';
 
 		$output .= "{$n}{$indent}<ul $class_names>{$n}";
+
+		if ( $depth === 0 ) {
+			$output .= '<li>';
+				$output .= '<div class="wpr-menu-offcanvas-back">';
+					$output .= '<i class="fas fa-long-arrow-alt-left"></i>';
+					$output .= '<h3></h3>';
+				$output .= '</div>';
+			$output .= '</li>';
+		}
 	}
 
 	public function end_lvl( &$output, $depth = 0, $args = array() ) {
@@ -175,12 +184,24 @@ class Wpr_Mobile_Menu_Walker extends \Walker_Nav_Menu {
 				$settings = $this->get_mega_menu_settings($item->ID);
 
 				if ( wpr_fs()->can_use_premium_code() && 'ajax' === $settings['wpr_mm_render'] ) {
-					$output .= '<div class="wpr-mobile-sub-mega-menu"></div>';
+					$output .= '<div class="wpr-mobile-sub-mega-menu">';
+						$output .= '<div class="wpr-menu-offcanvas-back">';
+							$output .= '<i class="fas fa-long-arrow-alt-left"></i>';
+							$output .= '<h3></h3>';
+						$output .= '</div>';
+					$output .= '</div>';
 				} else {
 					$elementor = \Elementor\Plugin::instance();
 					$mega_id = get_post_meta( $item->ID, 'wpr-mega-menu-item', true);
 					$content = $elementor->frontend->get_builder_content_for_display($mega_id);
-					$output .= '<div class="wpr-mobile-sub-mega-menu">'. $content .'</div>';
+
+					$output .= '<div class="wpr-mobile-sub-mega-menu">';
+						$output .= '<div class="wpr-menu-offcanvas-back">';
+							$output .= '<i class="fas fa-long-arrow-alt-left"></i>';
+							$output .= '<h3></h3>';
+						$output .= '</div>';
+						$output .= ''. $content;
+					$output .= '</div>';
 				}
 			}
 
