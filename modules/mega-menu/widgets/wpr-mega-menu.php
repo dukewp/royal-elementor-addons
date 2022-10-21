@@ -769,7 +769,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 			[
 				'name' => 'menu_items_typography',
 				'scheme' => Typography::TYPOGRAPHY_1,
-				'selector' => '{{WRAPPER}} .wpr-menu-item,{{WRAPPER}} .wpr-mobile-menu-item,{{WRAPPER}} .wpr-mobile-toggle-text',
+				'selector' => '{{WRAPPER}} .wpr-menu-item,{{WRAPPER}} .wpr-mobile-menu-item,{{WRAPPER}} .wpr-mobile-toggle-text, .wpr-menu-offcanvas-back h3',
 			]
 		);
 
@@ -1196,7 +1196,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 					'type' => Color::get_type(),
 					'value' => Color::COLOR_3,
 				],
-				'default' => '#7A7A7A00',
+				'default' => '#ffffff',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-sub-mega-menu' => 'background-color: {{VALUE}};',
 				],
@@ -1790,6 +1790,8 @@ class Wpr_Mega_Menu extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-mobile-mega-menu-wrap' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-mobile-menu-display-offcanvas .wpr-mobile-sub-mega-menu' => 'margin-left: {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-mobile-menu-display-offcanvas .wpr-mobile-mega-menu > li > .wpr-mobile-sub-menu' => 'margin-left: {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -1889,6 +1891,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .mobile-mega-menu-header' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-menu-offcanvas-back' => 'padding-left:{{LEFT}}{{UNIT}}; padding-right:{{RIGHT}}{{UNIT}};',
 				],
 			]
 		);
@@ -1910,6 +1913,35 @@ class Wpr_Mega_Menu extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .mobile-mega-menu-header' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'mobile_menu_back_heading',
+			[
+				'label' => esc_html__('Back to Menu Arrow', 'wpr-addons'),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'menu_items_sub_back_size',
+			[
+				'label' => esc_html__( 'Icon Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 18,
+				],
+				'range' => [
+					'px' => [
+						'min' => 5,
+						'max' => 50,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .menu-item-has-children .wpr-menu-offcanvas-back' => 'font-size: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -2140,13 +2172,36 @@ class Wpr_Mega_Menu extends Widget_Base {
 		);
 
 		$this->add_control(
+			'mobile_menu_sub_padding_hr',
+			[
+				'label' => esc_html__( 'Sub Item Horizontal Spacing', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 30,
+					],
+				],
+				'default' => [
+					'size' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-mobile-nav-menu .wpr-mobile-sub-menu-item' => 'padding-left: {{SIZE}}{{UNIT}}; padding-right: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'mob_menu_display_as' => 'offcanvas',
+				],
+			]
+		);
+
+		$this->add_control(
 			'mobile_menu_sub_padding_vr',
 			[
 				'label' => esc_html__( 'Sub Item Vertical Spacing', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
-						'min' => 1,
+						'min' => 0,
 						'max' => 30,
 					],
 				],
@@ -2176,7 +2231,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				],
 				'separator' => 'before',
 				'condition' => [
-					'mob_menu_display_as' => 'offcanvas',
+					'mob_menu_display_as' => 'dropdown',
 				],
 			]
 		);
