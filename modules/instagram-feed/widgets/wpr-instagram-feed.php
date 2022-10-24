@@ -2346,9 +2346,9 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'size_units' => [ 'px' ],
 				'default' => [
 					'top' => 10,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-insta-feed-item-above-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
