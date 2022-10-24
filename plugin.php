@@ -91,6 +91,7 @@ class Plugin {
 
 		// Ajax Search
 		require WPR_ADDONS_PATH . 'classes/wpr-ajax-search.php';
+		require WPR_ADDONS_PATH . 'classes/wpr-load-more-instagram-posts.php';
 
 		// Particles
 		if ( 'on' === get_option('wpr-particles-toggle', 'on') ) {//TODO: make this check automatic(loop through) for all extensions

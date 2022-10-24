@@ -346,6 +346,15 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				]
 			);
 		}
+				
+		$this->add_control(
+			'limit',
+			[
+				'label' => esc_html__( 'Limit', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::NUMBER,
+				'default' => 20,
+			]
+		);
 
 		$this->add_control(
 			'show_instagram_follow_button',
@@ -3594,8 +3603,8 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		$this->end_controls_section(); // End Controls Section
     }
 
-	public static function call_instagram_api($access_token) {
-		$url = 'https://graph.instagram.com/me/media?fields=id,media_type,media_url,thumbnail_url,permalink,username,caption,timestamp&access_token='. $access_token .'&limit=1';
+	public static function call_instagram_api($access_token, $settings) {
+		$url = 'https://graph.instagram.com/me/media?fields=id,media_type,media_url,thumbnail_url,permalink,username,caption,timestamp&access_token='. $access_token .'&limit='. $settings['limit'];
 		$response = wp_remote_get($url);
 		$body = json_decode($response['body']);
 		if(!isset($body)) {
@@ -3944,7 +3953,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			$delay = isset($settings['wpr_insta_feed_delay']) ? $settings['wpr_insta_feed_delay'] : '';
 			$speed = $settings['wpr_insta_feed_speed'];
 
-			$instagram_settings['carousel'] = array(
+			$instagram_settings['carousel'] = [
 				'wpr_cs_navigation' => $navigation,
 				'wpr_cs_pagination' => $pagination,
 				'wpr_cs_pagination_type' => $pagination_type,
@@ -3967,7 +3976,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'wpr_cs_delay' => $delay,
 				'wpr_cs_speed' => $speed,
 				// 'enable_on'   => $settings['wpr_enable_equal_height_on'],
-			);
+			];
 		}
 
 		$this->add_render_attribute(
@@ -3975,6 +3984,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			[
 				'class'         => ['wpr-instagram-feed', 'wpr-'. $settings['wpr_insta_feed_layout'], $settings['wpr_insta_feed_column_grid']],
 				'data-settings' => wp_json_encode( $instagram_settings ),
+				'data-settings-test' => wp_json_encode( $settings )
 			]
 		);
 
@@ -4022,7 +4032,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				?>
 				<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'instagram' ) ); ?>>
 
-					<?php foreach($this->call_instagram_api($access_token) as $result) : ?>
+					<?php foreach($this->call_instagram_api($access_token, $settings) as $result) : ?>
 
 						<div class="wpr-insta-feed-content-wrap wpr-insta-col-12">
 							<figure>
@@ -4066,6 +4076,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 						<a class="wpr-instagram-follow-btn" <?php echo $this->get_render_attribute_string( 'instagram_follow_link' ); ?>><?php echo $settings['instagram_follow_text'] ?></a>
 					</div>
 				<?php endif; ?>
+				<button class="wpr-load-more-insta-posts">Load More Insta Posts</button>
 			</div>
 
 		<?php
