@@ -7101,6 +7101,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-no-more-results {
     display: none;
     margin: 0;
+    text-align: center;
 }
 
 .wpr-ajax-search-content {

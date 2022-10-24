@@ -1629,7 +1629,7 @@ class Wpr_Search extends Widget_Base {
 				'name' => 's',
 				'title' => esc_html__( 'Search', 'wpr-addons' ),
 				'value' => get_search_query(),
-				'query-type' => $settings['search_query'],
+				'wpr-query-type' => $settings['search_query'],
 				'number-of-results' => isset($settings['number_of_results']) ? $settings['number_of_results'] : -1,
 				'ajax-search' => isset($settings['ajax_search']) ? $settings['ajax_search'] : '',
 				'number-of-words' => isset($settings['number_of_words_in_excerpt']) ? $settings['number_of_words_in_excerpt'] : '',
