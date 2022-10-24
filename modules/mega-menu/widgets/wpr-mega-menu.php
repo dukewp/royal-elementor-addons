@@ -485,7 +485,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}}.wpr-mobile-menu-custom-width .wpr-mobile-nav-menu' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-mobile-menu-custom-width .wpr-mobile-mega-menu-wrap' => 'width: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'mob_menu_display_as' => 'dropdown',
@@ -709,7 +709,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 			[
 				'name' => 'menu_items_typography',
 				'scheme' => Typography::TYPOGRAPHY_1,
-				'selector' => '{{WRAPPER}} .wpr-menu-item,{{WRAPPER}} .wpr-mobile-menu-item,{{WRAPPER}} .wpr-mobile-toggle-text, .wpr-menu-offcanvas-back h3',
+				'selector' => '{{WRAPPER}} .wpr-menu-item,{{WRAPPER}} .wpr-mobile-menu-item,{{WRAPPER}} .wpr-mobile-sub-menu-item,{{WRAPPER}} .wpr-mobile-toggle-text, .wpr-menu-offcanvas-back h3',
 			]
 		);
 
@@ -1921,7 +1921,8 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'default' => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-mobile-menu-item,
-					 {{WRAPPER}} .menu-item-has-children > .wpr-mobile-menu-item:after' => 'color: {{VALUE}};',
+					{{WRAPPER}} .wpr-mobile-sub-menu-item,
+					{{WRAPPER}} .menu-item-has-children > .wpr-mobile-menu-item:after' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -1982,7 +1983,9 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-mobile-menu-item:hover,
-					 {{WRAPPER}} .wpr-mobile-menu-item.wpr-active-menu-item' => 'background-color: {{VALUE}};',
+					{{WRAPPER}} .wpr-mobile-sub-menu-item:hover,
+					{{WRAPPER}} .wpr-mobile-sub-menu-item.wpr-active-menu-item,
+					{{WRAPPER}} .wpr-mobile-menu-item.wpr-active-menu-item' => 'background-color: {{VALUE}};',
 				],
 			]
 		);
