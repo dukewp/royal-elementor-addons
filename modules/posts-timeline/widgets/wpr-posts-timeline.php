@@ -224,6 +224,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'Y, M, D' => esc_html__(date('Y, M, D')),
 					'm/d/Y' => esc_html__(date('m/d/Y')),
 					'd/m/Y' => esc_html__(date('d/m/Y')),
+					'j. F Y' => esc_html__(date('j. F y'))
 				],
 				'condition' => [
 					'timeline_content' => 'dynamic',
