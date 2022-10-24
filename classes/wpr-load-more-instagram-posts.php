@@ -33,6 +33,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 		return $body->data;	
 	}
 
+	// Get Animation Class
+	public function get_animation_class( $data, $object ) {
+		$class = '';
+
+		// Animation Class
+		if ( 'none' !== $data[ $object .'_animation'] ) {
+			$class .= ' wpr-'. $object .'-'. $data[ $object .'_animation'];
+			$class .= ' wpr-anim-size-'. $data[ $object .'_animation_size'];
+			$class .= ' wpr-anim-timing-'. $data[ $object .'_animation_timing'];
+
+			if ( 'yes' === $data[ $object .'_animation_tr'] ) {
+				$class .= ' wpr-anim-transparency';
+			}
+		}
+
+		return $class;
+	}
+
 	public function render_post_caption($settings, $class, $result) {
 
 		if ( '' === $result->caption ) {
@@ -295,9 +313,9 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <figure>
                     <?php
                         // Content: Below Media
-                        echo $this->get_elements_by_location( 'above', $settings, $result );
+                        echo $this->get_elements_by_location( 'above', $_POST['wpr_load_more_settings'], $result );
                     ?>
-                    <div class="wpr-insta-feed-media-wrap <?php echo esc_attr($this->get_image_effect_class( $settings )) ?>" data-overlay-link="<?php echo esc_attr( $settings['overlay_post_link'] ) ?>">
+                    <div class="wpr-insta-feed-media-wrap <?php echo esc_attr($this->get_image_effect_class( $_POST['wpr_load_more_settings'] )) ?>" data-overlay-link="<?php echo esc_attr( $_POST['wpr_load_more_settings'] ) ?>">
                     <?php if ($result->media_type == 'IMAGE') : ?>
                         <div class="wpr-insta-feed-image-wrap" data-src=<?php echo $result->media_url ?>>
                             <img src=<?php echo $result->media_url  ?> alt="">
@@ -310,16 +328,16 @@ if ( ! defined( 'ABSPATH' ) ) {
                         <div class="wpr-insta-feed-media-hover wpr-animation-wrap">
                             <?php
                                 // Media Overlay
-                                $this->render_media_overlay( $settings, $result );
+                                $this->render_media_overlay( $_POST['wpr_load_more_settings'], $result );
 
                                 // Content: Over Media
-                                $this->get_elements_by_location( 'over', $settings, $result );
+                                $this->get_elements_by_location( 'over', $_POST['wpr_load_more_settings'], $result );
                             ?>
                         </div>
                     </div>
                     <?php
                         // Content: Below Media
-                        echo $this->get_elements_by_location( 'below', $settings, $result );
+                        echo $this->get_elements_by_location( 'below', $_POST['wpr_load_more_settings'], $result );
                     ?>
                 </figure>
             </div>
