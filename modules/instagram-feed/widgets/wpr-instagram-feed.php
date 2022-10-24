@@ -3595,8 +3595,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
     }
 
 	public static function call_instagram_api($access_token) {
-
-		$url = 'https://graph.instagram.com/me/media?fields=id,media_type,media_url,thumbnail_url,permalink,username,caption,timestamp&access_token=' . $access_token;
+		$url = 'https://graph.instagram.com/me/media?fields=id,media_type,media_url,thumbnail_url,permalink,username,caption,timestamp&access_token='. $access_token .'&limit=1';
 		$response = wp_remote_get($url);
 		$body = json_decode($response['body']);
 		if(!isset($body)) {
@@ -3662,8 +3661,8 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
 
 	// Render Media Overlay
-	public function render_media_overlay( $settings ) {
-		echo '<div class="wpr-insta-feed-media-hover-bg '. esc_attr($this->get_animation_class( $settings, 'overlay' )) .'" data-url="'. esc_url( get_the_permalink( get_the_ID() ) ) .'">';
+	public function render_media_overlay( $settings, $result ) {
+		echo '<div class="wpr-insta-feed-media-hover-bg '. esc_attr($this->get_animation_class( $settings, 'overlay' )) .'" data-url="'. $result->permalink .'">';
 
 			if ( wpr_fs()->can_use_premium_code() ) {
 				if ( '' !== $settings['overlay_image']['url'] ) {
@@ -4031,7 +4030,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 									// Content: Below Media
 									echo $this->get_elements_by_location( 'above', $settings, $result );
 								 ?>
-								<div class="wpr-insta-feed-media-wrap <?php echo esc_attr($this->get_image_effect_class( $settings )) ?>">
+								<div class="wpr-insta-feed-media-wrap <?php echo esc_attr($this->get_image_effect_class( $settings )) ?>" data-overlay-link="<?php echo esc_attr( $settings['overlay_post_link'] ) ?>">
 								<?php if ($result->media_type == 'IMAGE') : ?>
 									<div class="wpr-insta-feed-image-wrap" data-src=<?php echo $result->media_url ?>>
 										<img src=<?php echo $result->media_url  ?> alt="">
@@ -4044,7 +4043,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 									<div class="wpr-insta-feed-media-hover wpr-animation-wrap">
 										<?php
 											// Media Overlay
-											$this->render_media_overlay( $settings );
+											$this->render_media_overlay( $settings, $result );
 
 											// Content: Over Media
 											$this->get_elements_by_location( 'over', $settings, $result );
