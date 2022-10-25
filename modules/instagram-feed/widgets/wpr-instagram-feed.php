@@ -226,7 +226,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
 	public function add_option_element_select() {
 		return [
-			'author' => esc_html__( 'Author', 'wpr-addons' ),
+			'username' => esc_html__( 'Username', 'wpr-addons' ),
 			'caption' => esc_html__( 'Caption', 'wpr-addons' ),
 			'date' => esc_html__( 'Date', 'wpr-addons' ),
 			'icon' => esc_html__( 'Icon', 'wpr-addons' ),
@@ -1350,9 +1350,9 @@ class Wpr_Instagram_Feed extends Widget_Base {
         );
 
 		$repeater->add_control(
-			'element_title_tag',
+			'element_username_tag',
 			[
-				'label' => esc_html__( 'Title HTML Tag', 'wpr-addons' ),
+				'label' => esc_html__( 'Username HTML Tag', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'h1' => 'H1',
@@ -1367,7 +1367,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				],
 				'default' => 'h2',
 				'condition' => [
-					'element_select' => 'author',
+					'element_select' => 'username',
 				]
 			]
 		);
@@ -1392,7 +1392,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'condition' => [
-					'element_select' => [ 'author' ]
+					'element_select' => [ 'username' ]
 				]
 			]
 		);
@@ -1405,7 +1405,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'default' => 16,
 				'min' => 8,
 				'condition' => [
-					'element_select' => [ 'author' ],
+					'element_select' => [ 'username' ],
 					'element_show_avatar' => 'yes'
 				],
 				'separator' => 'after'
@@ -1433,20 +1433,12 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'default' => ', ',
 				'condition' => [
 					'element_select!' => [
-						'title',
-						'content',
 						'caption',
 						'date',
-						'time',
-						'author',
-						'comments',
-						'read-more',
-						'likes',
+						'username',
 						'sharing',
 						'lightbox',
-						'custom-field',
 						'separator',
-						'post_format',
 					],
 				],
 				'separator' => 'after'
@@ -1560,22 +1552,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'condition' => [
 					'element_select' => [ 'lightbox' ],
 				],
-			]
-		);
-
-		$repeater->add_control(
-			'element_separator_style',
-			[
-				'label' => esc_html__( 'Select Styling', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'wpr-insta-feed-sep-style-1',
-				'options' => [
-					'wpr-insta-feed-sep-style-1' => esc_html__( 'Separator Style 1', 'wpr-addons' ),
-					'wpr-insta-feed-sep-style-2' => esc_html__( 'Separator Style 2', 'wpr-addons' ),
-				],
-				'condition' => [
-					'element_select' => 'separator',
-				]
 			]
 		);
 
@@ -2501,6 +2477,230 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					'{{WRAPPER}} .wpr-insta-feed-media-hover-bg' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
+			]
+		);
+
+		$this->end_controls_section();
+
+		// Styles ====================
+		// Section: Title ------------
+		$this->start_controls_section(
+			'section_style_username',
+			[
+				'label' => esc_html__( 'Username', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'show_label' => false,
+			]
+		);
+
+		$this->start_controls_tabs( 'tabs_grid_username_style' );
+
+		$this->start_controls_tab(
+			'tab_grid_username_normal',
+			[
+				'label' => esc_html__( 'Normal', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'title_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#333333',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-insta-feed-item-username .inner-block a' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'title_bg_color',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-insta-feed-item-username .inner-block a' => 'background-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'title_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-insta-feed-item-username .inner-block a' => 'border-color: {{VALUE}}',
+				],
+				'separator' => 'after',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_grid_username_hover',
+			[
+				'label' => esc_html__( 'Hover', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'title_color_hr',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#54595f',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-insta-feed-item-username .inner-block a:hover' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'title_bg_color_hr',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-insta-feed-item-username .inner-block a:hover' => 'background-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'title_border_color_hr',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-insta-feed-item-username .inner-block a:hover' => 'border-color: {{VALUE}}',
+				],
+			]
+		);
+
+		// $this->add_control_username_pointer_color_hr();
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		// $this->add_control_username_pointer();
+
+		// $this->add_control_username_pointer_height();
+
+		// $this->add_control_username_pointer_animation();
+
+		$this->add_control(
+			'title_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.2,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-insta-feed-item-username .inner-block a' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-insta-feed-item-username .wpr-pointer-item:before' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-insta-feed-item-username .wpr-pointer-item:after' => 'transition-duration: {{VALUE}}s',
+				],
+				'separator' => 'after',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'title_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-insta-feed-item-username a'
+			]
+		);
+
+		$this->add_control(
+			'title_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-insta-feed-item-username .inner-block a' => 'border-style: {{VALUE}};',
+				],
+				'render_type' => 'template',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'title_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-insta-feed-item-username .inner-block a' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'render_type' => 'template',
+				'condition' => [
+					'title_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'title_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-insta-feed-item-username .inner-block a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'render_type' => 'template',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'title_margin',
+			[
+				'label' => esc_html__( 'Margin', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-insta-feed-item-username .inner-block' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'render_type' => 'template',
 			]
 		);
 
@@ -3477,6 +3677,141 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
 		$this->end_controls_section();
 
+		// Styles ====================
+		// Section: Separator Style 1 
+		$this->start_controls_section(
+			'section_style_separator1',
+			[
+				'label' => esc_html__( 'Separator Style 1', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'show_label' => false,
+			]
+		);
+
+		$this->add_control(
+			'separator1_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-sep-style-1 .inner-block > span' => 'border-bottom-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'separator1_width',
+			[
+				'label' => esc_html__( 'Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px','%'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 300,
+					],
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],				
+				'default' => [
+					'unit' => '%',
+					'size' => 100,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-sep-style-1:not(.wpr-grid-item-display-inline) .inner-block > span' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-sep-style-1.wpr-grid-item-display-inline' => 'width: {{SIZE}}{{UNIT}};',
+				],
+				'render_type' => 'template',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'separator1_height',
+			[
+				'label' => esc_html__( 'Height', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 1,
+						'max' => 100,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 2,
+				],
+				'render_type' => 'template',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-sep-style-1 .inner-block > span' => 'border-bottom-width: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'separator1_border_type',
+			[
+				'label' => esc_html__( 'Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'solid',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-sep-style-1 .inner-block > span' => 'border-bottom-style: {{VALUE}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'separator1_margin',
+			[
+				'label' => esc_html__( 'Margin', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 15,
+					'right' => 0,
+					'bottom' => 15,
+					'left' => 0,
+				],
+				'render_type' => 'template',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-sep-style-1 .inner-block' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'separator1_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-sep-style-1 .inner-block > span' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->end_controls_section();
+
 		// Tab: Styles ===============
 		// Section: Button -----------
 		$this->start_controls_section(
@@ -4191,14 +4526,14 @@ class Wpr_Instagram_Feed extends Widget_Base {
 	}
 
 	// Render Post Title
-	public function render_post_author( $settings, $class, $result ) {
-		echo '<'. esc_attr($settings['element_title_tag']) .' class="'. esc_attr($class) .'">';
+	public function render_post_username( $settings, $class, $result ) {
+		echo '<'. esc_attr($settings['element_username_tag']) .' class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
 				echo '<a href="'. $result->permalink .'">';
 					echo esc_html($result->username);
 				echo '</a>';
 			echo '</div>';
-		echo '</'. esc_attr($settings['element_title_tag']) .'>';
+		echo '</'. esc_attr($settings['element_username_tag']) .'>';
 	}
 
 	public function render_post_caption($settings, $class, $result) {
@@ -4291,6 +4626,13 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
 	public function render_post_sharing_icons( $settings, $class, $result ) {}
 
+	// Render Post Element Separator
+	public function render_post_element_separator( $settings, $class ) {
+		echo '<div class="wpr-insta-feed-sep-style-1 '. esc_attr($class) .'">';
+			echo '<div class="inner-block"><span></span></div>';
+		echo '</div>';
+	}
+
 	// Get Elements
 	public function get_elements( $type, $settings, $class, $result ) {
 		if ( 'pro-lk' == $type || 'pro-shr' == $type || 'pro-cf' == $type ) {
@@ -4300,8 +4642,8 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		switch ( $type ) {
 	
 
-			case 'author':
-				$this->render_post_author( $settings, $class, $result );
+			case 'username':
+				$this->render_post_username( $settings, $class, $result );
 				break;
 
 			case 'caption':
@@ -4336,9 +4678,9 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				$this->render_post_lightbox( $settings, $class, $result );
 				break;
 
-			// case 'separator':
-			// 	$this->render_post_element_separator( $settings, $class );
-			// 	break;
+			case 'separator':
+				$this->render_post_element_separator( $settings, $class );
+				break;
 		}
 
 	}
