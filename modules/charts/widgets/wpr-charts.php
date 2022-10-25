@@ -1307,7 +1307,7 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 		
-		$this->add_responsive_control(
+		$this->add_control(
 			'inner_datalabels_font_size',
 			[
 				'label' => esc_html__( 'Font Size', 'wpr-addons' ),
@@ -1426,7 +1426,7 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 		
-		$this->add_responsive_control(
+		$this->add_control(
 			'axis_title_font_size_x',
 			[
 				'label' => esc_html__( 'Font Size', 'wpr-addons' ),
@@ -1498,7 +1498,7 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 		
-		$this->add_responsive_control(
+		$this->add_control(
 			'axis_title_font_size_y',
 			[
 				'label' => esc_html__( 'Font Size', 'wpr-addons' ),
@@ -1569,7 +1569,7 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 		
-		$this->add_responsive_control(
+		$this->add_control(
 			'ticks_font_size_x',
 			[
 				'label' => esc_html__( 'Font Size', 'wpr-addons' ),
@@ -1588,7 +1588,7 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'ticks_padding_x',
 			[
 				'label' => esc_html__( 'Distance', 'wpr-addons' ),
@@ -1659,7 +1659,7 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 		
-		$this->add_responsive_control(
+		$this->add_control(
 			'ticks_font_size_y',
 			[
 				'label' => esc_html__( 'Font Size', 'wpr-addons' ),
@@ -1678,7 +1678,7 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'ticks_padding_y',
 			[
 				'label' => esc_html__( 'Distance', 'wpr-addons' ),
@@ -1753,7 +1753,7 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 		
-		$this->add_responsive_control(
+		$this->add_control(
 			'title_font_size',
 			[
 				'label' => esc_html__( 'Font Size', 'wpr-addons' ),
@@ -1772,7 +1772,7 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'chart_title_padding',
 			[
 				'label' => esc_html__( 'Padding', 'wpr-addons' ),
@@ -1844,7 +1844,7 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'legend_font_size',
 			[
 				'label' => esc_html__( 'Font Size', 'wpr-addons' ),
@@ -1863,7 +1863,7 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'legend_box_width',
 			[
 				'label' => esc_html__( 'Box Size', 'wpr-addons' ),
@@ -1882,7 +1882,7 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'chart_legend_padding',
 			[
 				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
@@ -1921,7 +1921,7 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 		
-		$this->add_responsive_control(
+		$this->add_control(
 			'tooltip_padding',
 			[
 				'label' => esc_html__( 'Padding', 'wpr-addons' ),
@@ -1991,7 +1991,7 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 		
-		$this->add_responsive_control(
+		$this->add_control(
 			'chart_tooltip_title_font_size',
 			[
 				'label' => esc_html__( 'Font Size', 'wpr-addons' ),
@@ -2011,7 +2011,7 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'chart_tooltip_title_margin_bottom',
 			[
 				'label' => esc_html__( 'Title Spacing', 'wpr-addons' ),
@@ -2030,7 +2030,7 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'chart_tooltip_title_align',
 			[
 				'label' => esc_html__( 'Title Alignment', 'wpr-addons' ),
@@ -2082,7 +2082,7 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 		
-		$this->add_responsive_control(
+		$this->add_control(
 			'chart_tooltip_item_font_size',
 			[
 				'label' => esc_html__( 'Font Size', 'wpr-addons' ),
@@ -2102,7 +2102,7 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'chart_tooltip_item_spacing',
 			[
 				'label' => esc_html__( 'Item Spacing', 'wpr-addons' ),
@@ -2121,7 +2121,7 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
+		$this->add_control(
 			'chart_tooltip_item_align',
 			[
 				'label' => esc_html__( 'Item Alignment', 'wpr-addons' ),
