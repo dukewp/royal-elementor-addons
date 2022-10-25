@@ -697,305 +697,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			]
 		);
 
-		$this->start_controls_tabs(
-			'cs_nav_tabs',
-			[
-				'condition' => [
-					'enable_cs_nav' => 'yes'
-				]
-			]
-		);
-
-		$this->start_controls_tab(
-			'cs_nav_tab_normal',
-			[
-				'label' => __( 'Normal', 'wpr-addons' ),
-			]
-		);
-
-		$this->add_control(
-			'wpr_cs_nav_icon_color',
-			[
-				'label'  => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
-				'selectors' => [
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev i' => 'color: {{VALUE}}',
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next i' => 'color: {{VALUE}}',
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev svg' => 'fill: {{VALUE}}',
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next svg' => 'fill: {{VALUE}}'
-				],
-				'condition' => [
-					'enable_cs_nav' => 'yes'
-				]
-			]
-		);
-
-		$this->add_control(
-			'wpr_cs_nav_icon_bg_color',
-			[
-				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#605BE5',
-				'selectors' => [
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev' => 'background-color: {{VALUE}}',
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next' => 'background-color: {{VALUE}}',
-				],
-			]
-		);
-		
-		$this->add_control(
-			'wpr_cs_nav_icon_border_color',
-			[
-				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '',
-				'selectors' => [
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev' => 'border-color: {{VALUE}}',
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next' => 'border-color: {{VALUE}}',
-				]
-			]
-		);
-
-		$this->add_group_control(
-			\Elementor\Group_Control_Box_Shadow::get_type(),
-			[
-				'name' => 'box_shadow_navigation',
-				'label' => __( 'Box Shadow', 'wpr-addons' ),
-				'selector' => '{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev, {{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next',
-			]
-		);
-
-		$this->add_control(
-			'navigation_transition',
-			[
-				'label' => esc_html__( 'Transition', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 1,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'selectors' => [
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev i' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next i' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev svg' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next svg' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;'
-				],
-			]
-		);
-		
-		$this->end_controls_tab();
-
-		$this->start_controls_tab(
-			'wpr_cs_nav_tab_hover',
-			[
-				'label' => __( 'Hover', 'wpr-addons' ),
-			]
-		);
-		
-		$this->add_control(
-			'wpr_cs_nav_icon_color_hover',
-			[
-				'label'  => esc_html__( 'Icon Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '',
-				'selectors' => [
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next:hover i' => 'color: {{VALUE}}',
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev:hover i' => 'color: {{VALUE}}',
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev:hover svg' => 'fill: {{VALUE}}',
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next:hover svg' => 'fill: {{VALUE}}'
-				]
-			]
-		);
-
-		$this->add_control(
-			'wpr_cs_nav_icon_bg_color_hover',
-			[
-				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#423EC0',
-				'selectors' => [
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev:hover' => 'background-color: {{VALUE}}',
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next:hover' => 'background-color: {{VALUE}}',
-				],
-			]
-		);
-		
-		$this->add_control(
-			'wpr_cs_nav_icon_border_color_hover',
-			[
-				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '',
-				'selectors' => [
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev:hover' => 'border-color: {{VALUE}}',
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next:hover' => 'border-color: {{VALUE}}',
-				]
-			]
-		);
-
-		$this->add_group_control(
-			\Elementor\Group_Control_Box_Shadow::get_type(),
-			[
-				'name' => 'box_shadow_navigation_hover',
-				'label' => __( 'Box Shadow', 'wpr-addons' ),
-				'selector' => '{{WRAPPER}} .flipster__button:hover',
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->end_controls_tabs();
-		
-		$this->add_responsive_control(
-			'wpr_cs_nav_icon_size',
-			[
-				'type' => Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Icon Size', 'wpr-addons' ),
-				'size_units' => [ 'px' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 200,
-					]
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 20,
-				],			
-				'selectors' => [
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev i' => 'font-size: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next i' => 'font-size: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};'
-				],
-				'separator' => 'before',
-				'condition' => [
-					'enable_cs_nav' => 'yes'
-				]
-			]
-		);
-		
-		$this->add_responsive_control(
-			'wpr_cs_nav_icon_bg_size',
-			[
-				'type' => Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Box Size', 'wpr-addons' ),
-				'size_units' => [ 'px' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 150,
-					]
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 35,
-				],			
-				'selectors' => [
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};'
-				],
-				'condition' => [
-					'enable_cs_nav' => 'yes'
-				]
-			]
-		);
-
-		$this->add_control(
-			'wpr_cs_nav_border',
-			[
-				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'none' => esc_html__( 'None', 'wpr-addons' ),
-					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
-					'double' => esc_html__( 'Double', 'wpr-addons' ),
-					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
-					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
-					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
-				],
-				'default' => 'none',
-				'selectors' => [
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev' => 'border-style: {{VALUE}};',
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next' => 'border-style: {{VALUE}};'
-				],
-				'separator' => 'before',
-				'condition' => [
-					'enable_cs_nav' => 'yes'
-				]
-			]
-		);
-		
-		$this->add_control(
-			'wpr_cs_nav_border_width',
-			[
-				'type' => Controls_Manager::DIMENSIONS,
-				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
-				'size_units' => [ 'px', '%' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 150,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					]
-				],
-				'default' => [
-					'top' => 1,
-					'right' => 1,
-					'bottom' => 1,
-					'left' => 1,
-					'unit' => 'px'
-				],			
-				'selectors' => [
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',	
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'condition' => [
-					'enable_cs_nav' => 'yes',
-					'wpr_cs_nav_border!' => 'none'
-				]
-			]
-		);
-		
-		$this->add_control(
-			'icon_border_radius',
-			[
-				'type' => Controls_Manager::DIMENSIONS,
-				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
-				'size_units' => [ 'px', '%' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 150,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					]
-				],
-				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-					'unit' => 'px'
-				],			
-				'selectors' => [
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',	
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
-				],
-				'condition' => [
-					'enable_cs_nav' => 'yes'
-				]
-			]
-		);
-
 		$this->add_control (
 			'enable_cs_pag',
 			[
@@ -1024,7 +725,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		);
 
 		$this->add_control(
-			'wpr_cs_pag_color',
+			'cs_pag_color',
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
@@ -1043,7 +744,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		);
 
 		$this->add_control(
-			'wpr_cs_pag_bg_color',
+			'cs_pag_bg_color',
 			[
 				'label'  => esc_html__( 'Bar Background', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
@@ -1059,7 +760,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		);
 		
 		$this->add_responsive_control(
-			'wpr_cs_pag_size',
+			'cs_pag_size',
 			[
 				'type' => Controls_Manager::SLIDER,
 				'label' => esc_html__( 'Box Size', 'wpr-addons' ),
@@ -1087,7 +788,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		$this->add_group_control(
 			\Elementor\Group_Control_Typography::get_type(),
 			[
-				'name' => 'wpr_cs_pag_fraction_typography',
+				'name' => 'cs_pag_fraction_typography',
 				'label' => __( 'Typography', 'wpr-addons' ),
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}}.wpr-insta-feed-layout-carousel .swiper-pagination-fraction',
@@ -1110,7 +811,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'wpr_cs_pag_margin',
+			'cs_pag_margin',
 			[
 				'label' => esc_html__( 'Margin', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
@@ -1190,8 +891,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'default' => 500
 			]
 		);
-	
-		$this->add_control_stack_insta_feed_slider_nav_position();
 		
 		$this->add_control_insta_feed_slider_dots_hr();
 
@@ -4031,6 +3730,323 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		);
 
 		$this->end_controls_section(); // End Controls Section
+
+		// Styles ====================
+		// Section: Slider Navigation -------
+		$this->start_controls_section(
+			'section_style_slider_navigation',
+			[
+				'label' => esc_html__( 'Slider Navigation', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'show_label' => false,
+				'condition' => [
+					'layout_select' => 'layout-carousel',
+				],
+			]
+		);
+
+		$this->start_controls_tabs(
+			'cs_nav_tabs',
+			[
+				'condition' => [
+					'enable_cs_nav' => 'yes'
+				]
+			]
+		);
+
+		$this->start_controls_tab(
+			'cs_nav_tab_normal',
+			[
+				'label' => __( 'Normal', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'cs_nav_icon_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFF',
+				'selectors' => [
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev i' => 'color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next i' => 'color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev svg' => 'fill: {{VALUE}}',
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next svg' => 'fill: {{VALUE}}'
+				],
+				'condition' => [
+					'enable_cs_nav' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control(
+			'cs_nav_icon_bg_color',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->add_control(
+			'cs_nav_icon_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next' => 'border-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'box_shadow_navigation',
+				'label' => __( 'Box Shadow', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev, {{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next',
+			]
+		);
+
+		$this->add_control(
+			'navigation_transition',
+			[
+				'label' => esc_html__( 'Transition', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 1,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev i' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next i' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev svg' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next svg' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;'
+				],
+			]
+		);
+		
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'cs_nav_tab_hover',
+			[
+				'label' => __( 'Hover', 'wpr-addons' ),
+			]
+		);
+		
+		$this->add_control(
+			'cs_nav_icon_color_hover',
+			[
+				'label'  => esc_html__( 'Icon Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next:hover i' => 'color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev:hover i' => 'color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev:hover svg' => 'fill: {{VALUE}}',
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next:hover svg' => 'fill: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_control(
+			'cs_nav_icon_bg_color_hover',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#423EC0',
+				'selectors' => [
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev:hover' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next:hover' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->add_control(
+			'cs_nav_icon_border_color_hover',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev:hover' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next:hover' => 'border-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'box_shadow_navigation_hover',
+				'label' => __( 'Box Shadow', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}} .flipster__button:hover',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+		
+		$this->add_responsive_control(
+			'cs_nav_icon_size',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Icon Size', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 200,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 20,
+				],			
+				'selectors' => [
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};'
+				],
+				'separator' => 'before',
+				'condition' => [
+					'enable_cs_nav' => 'yes'
+				]
+			]
+		);
+		
+		$this->add_responsive_control(
+			'cs_nav_icon_bg_size',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Box Size', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 150,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 35,
+				],			
+				'selectors' => [
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};'
+				],
+				'condition' => [
+					'enable_cs_nav' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control(
+			'cs_nav_border',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next' => 'border-style: {{VALUE}};'
+				],
+				'separator' => 'before',
+				'condition' => [
+					'enable_cs_nav' => 'yes'
+				]
+			]
+		);
+		
+		$this->add_control(
+			'cs_nav_border_width',
+			[
+				'type' => Controls_Manager::DIMENSIONS,
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'size_units' => [ 'px', '%' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 150,
+					],
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					]
+				],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+					'unit' => 'px'
+				],			
+				'selectors' => [
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',	
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'enable_cs_nav' => 'yes',
+					'cs_nav_border!' => 'none'
+				]
+			]
+		);
+		
+		$this->add_control(
+			'icon_border_radius',
+			[
+				'type' => Controls_Manager::DIMENSIONS,
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'size_units' => [ 'px', '%' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 150,
+					],
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					]
+				],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+					'unit' => 'px'
+				],			
+				'selectors' => [
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',	
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				],
+				'condition' => [
+					'enable_cs_nav' => 'yes'
+				]
+			]
+		);
+	
+		$this->add_control_stack_insta_feed_slider_nav_position();
+
+		$this->end_controls_section();
 
 		// Styles ====================
 		// Section: Pagination -------
