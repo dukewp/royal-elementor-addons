@@ -195,7 +195,7 @@ class Plugin {
 
 	public function register_ajax_hooks() {
         add_action( 'wp_ajax_mega_menu_ajax_loading', [new Utilities, 'mega_menu_ajax_loading'] );
-        add_action( 'wp_ajax_nopriv_mega_menu_ajax_loading', [new Utilities, 'ajax_mega_menu_ajax_loading'] );
+        add_action( 'wp_ajax_nopriv_mega_menu_ajax_loading', [new Utilities, 'mega_menu_ajax_loading'] );
         add_action( 'wp_ajax_mailchimp_subscribe', [new Utilities, 'ajax_mailchimp_subscribe'] );
         add_action( 'wp_ajax_nopriv_mailchimp_subscribe', [new Utilities, 'ajax_mailchimp_subscribe'] );
 	}

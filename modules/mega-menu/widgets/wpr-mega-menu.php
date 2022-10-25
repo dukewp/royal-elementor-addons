@@ -184,7 +184,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'default' => 'dropdown',
 				'options' => [
 					'dropdown' => esc_html__( 'Dropdown', 'wpr-addons' ),
-					'pro-oc' => esc_html__( 'Off-Canvas', 'wpr-addons' ),
+					'pro-oc' => esc_html__( 'Off-Canvas (Pro)', 'wpr-addons' ),
 				],
 				'prefix_class' => 'wpr-mobile-menu-display-',
 				'render_type' => 'template',
@@ -383,6 +383,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 					'plus' => esc_html__( 'Plus', 'wpr-addons' ),
 				],
 				'prefix_class' => 'wpr-sub-icon-',
+				'render_type' => 'template',
 				'separator' => 'before'
 			]
 		);
@@ -884,8 +885,8 @@ class Wpr_Mega_Menu extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}}:not(.wpr-pointer-border-fx) .wpr-pointer-item:before' => 'top: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}:not(.wpr-pointer-border-fx) .wpr-pointer-item:after' => 'bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}:not(.wpr-pointer-border-fx) .wpr-pointer-item:before' => 'transform: translateY(-{{SIZE}}{{UNIT}});',
+					'{{WRAPPER}}:not(.wpr-pointer-border-fx) .wpr-pointer-item:after' => 'transform: translateY({{SIZE}}{{UNIT}});',
 				],
 				'condition' => [
 					'menu_items_pointer!' => 'background',
@@ -909,10 +910,6 @@ class Wpr_Mega_Menu extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-nav-menu .wpr-menu-item' => 'padding-left: {{SIZE}}px; padding-right: {{SIZE}}px;',
-					'{{WRAPPER}}.wpr-pointer-underline .wpr-menu-item:after,
-					 {{WRAPPER}}.wpr-pointer-overline .wpr-menu-item:before,
-					 {{WRAPPER}}.wpr-pointer-double-line .wpr-menu-item:before,
-					 {{WRAPPER}}.wpr-pointer-double-line .wpr-menu-item:after' => 'margin-left: {{SIZE}}px; margin-right: {{SIZE}}px; width: calc(100% - ({{SIZE}}px * 2));',
 				],
 				'separator' => 'before'
 			]
@@ -1834,7 +1831,6 @@ class Wpr_Mega_Menu extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .mobile-mega-menu-header' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-menu-offcanvas-back' => 'padding-left:{{LEFT}}{{UNIT}}; padding-right:{{RIGHT}}{{UNIT}};',
 				],
 			]
 		);
@@ -1863,16 +1859,28 @@ class Wpr_Mega_Menu extends Widget_Base {
 		$this->add_control(
 			'mobile_menu_back_heading',
 			[
-				'label' => esc_html__('Back to Menu Arrow', 'wpr-addons'),
+				'label' => esc_html__('Back to Menu Arrow & Title', 'wpr-addons'),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
 		);
 
 		$this->add_control(
-			'menu_items_sub_back_size',
+			'menu_items_sub_back_icon_color',
 			[
-				'label' => esc_html__( 'Icon Size', 'wpr-addons' ),
+				'label'  => esc_html__( 'Arrow Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#777777',
+				'selectors' => [
+					'{{WRAPPER}} .menu-item-has-children .wpr-menu-offcanvas-back svg' => 'fill: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'menu_items_sub_back_icon_size',
+			[
+				'label' => esc_html__( 'Arrow Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 18,
@@ -1884,7 +1892,39 @@ class Wpr_Mega_Menu extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .menu-item-has-children .wpr-menu-offcanvas-back' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .menu-item-has-children .wpr-menu-offcanvas-back svg' => 'width: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'menu_items_sub_back_heading_color',
+			[
+				'label'  => esc_html__( 'Heading Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#777777',
+				'selectors' => [
+					'{{WRAPPER}} .menu-item-has-children .wpr-menu-offcanvas-back h3' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'menu_items_sub_back_heading_size',
+			[
+				'label' => esc_html__( 'Heading Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 18,
+				],
+				'range' => [
+					'px' => [
+						'min' => 5,
+						'max' => 50,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .menu-item-has-children .wpr-menu-offcanvas-back h3' => 'font-size: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -2020,6 +2060,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-mobile-menu-item' => 'padding-left: {{SIZE}}{{UNIT}}; padding-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-mobile-menu-display-offcanvas .wpr-mobile-mega-menu > li > a > .wpr-mobile-sub-icon' => 'padding: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -2096,6 +2137,27 @@ class Wpr_Mega_Menu extends Widget_Base {
 		);
 
 		$this->add_control(
+			'mobile_menu_sub_icon_size',
+			[
+				'label' => esc_html__( 'Sub Menu Icon Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 5,
+						'max' => 25,
+					],
+				],
+				'default' => [
+					'size' => 14,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-mobile-mega-menu .wpr-mobile-sub-icon' => 'font-size: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
 			'mobile_menu_sub_font_size',
 			[
 				'label' => esc_html__( 'Sub Item Font Size', 'wpr-addons' ),
@@ -2112,7 +2174,6 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-mobile-nav-menu .wpr-mobile-sub-menu-item' => 'font-size: {{SIZE}}{{UNIT}};',
 				],
-				'separator' => 'before',
 			]
 		);
 
@@ -2124,7 +2185,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 30,
+						'max' => 50,
 					],
 				],
 				'default' => [
@@ -2132,6 +2193,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-mobile-nav-menu .wpr-mobile-sub-menu-item' => 'padding-left: {{SIZE}}{{UNIT}}; padding-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-menu-offcanvas-back' => 'padding-left:{{SIZE}}{{UNIT}}; padding-right:{{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -2263,14 +2325,17 @@ class Wpr_Mega_Menu extends Widget_Base {
 				echo '</div>';
 			echo '</div>';
 
+			$animation_class =  wpr_fs()->can_use_premium_code() ? 'wpr-anim-timing-'. $settings['mob_menu_offcanvas_animation_timing'] : '';
+
 			// Menu
-			echo '<div class="wpr-mobile-mega-menu-wrap">';
+			echo '<div class="wpr-mobile-mega-menu-wrap '. $animation_class .'">';
 				if ( 'offcanvas' === $settings['mob_menu_display_as'] ) {
 					echo '<div class="mobile-mega-menu-header">';
 						if ( ! empty( $settings['mob_menu_offcanvas_logo']['url'] ) ) {
 							echo '<div class="mobile-mega-menu-logo">';
-							echo '<img src="'. esc_url($settings["mob_menu_offcanvas_logo"]["url"]) .'" alt="">';
-							
+								echo '<a href="'. esc_url(home_url()) .'">';
+									echo '<img src="'. esc_url($settings["mob_menu_offcanvas_logo"]["url"]) .'" alt="">';
+								echo '</a>';
 							echo '</div>';
 						}
 						
