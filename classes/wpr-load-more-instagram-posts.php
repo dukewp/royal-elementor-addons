@@ -306,9 +306,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
     public function wpr_load_more_instagram_posts_function($settings) {
         foreach($this->call_instagram_api(get_option('wpr_instagram_access_token'), $_POST['wpr_load_more_settings']) as $key=>$result) : ?>
-            <?php if ($key < ($settings['limit'] + $_POST['next_post_index'])) :
-                continue; 
-            endif; ?>
+            <?php 
+				if ($key < ($settings['limit'] + $_POST['next_post_index'])) :
+					continue; 
+				endif;
+			?>
+
             <div class="wpr-insta-feed-content-wrap wpr-insta-col-12">
                 <figure>
                     <?php
