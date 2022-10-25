@@ -242,7 +242,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 					'default' => array_keys( $menus )[0],
 					'save_default' => true,
 					'separator' => 'after',
-					'description' => sprintf( __( 'Go to <a href="%s" target="_blank">Appearance > Menus</a> to manage your menus.', 'wpr-addons' ), admin_url( 'nav-menus.php' ) ),
+					'description' => sprintf( __( '<strong>Note:</strong> Navigate to <a href="%s" target="_blank">Appearance > Menus</a><br> to manage your <strong>Mega Menus</strong>.', 'wpr-addons' ), admin_url( 'nav-menus.php' ) ),
 				]
 			);
 		} else {
@@ -849,7 +849,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'type' => Controls_Manager::SLIDER,
 				'devices' => [ self::RESPONSIVE_DESKTOP, self::RESPONSIVE_TABLET ],
 				'default' => [
-					'size' => 4,
+					'size' => 2,
 				],
 				'range' => [
 					'px' => [
