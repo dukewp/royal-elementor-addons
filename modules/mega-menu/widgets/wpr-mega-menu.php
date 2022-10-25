@@ -192,7 +192,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'nav-menu', 'mob_menu_display_as', ['pro-oc'] );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'mega-menu', 'mob_menu_display_as', ['pro-oc'] );
 	}
 
 	public function add_control_toggle_btn_style() {
@@ -289,7 +289,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'nav-menu', 'menu_layout', ['pro-vr'] );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'mega-menu', 'menu_layout', ['pro-vr'] );
 
 		$this->add_responsive_control(
 			'menu_align',
@@ -337,12 +337,12 @@ class Wpr_Mega_Menu extends Widget_Base {
 		$this->add_control_menu_items_pointer();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'nav-menu', 'menu_items_pointer', ['pro-bd', 'pro-bg'] );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'mega-menu', 'menu_items_pointer', ['pro-bd', 'pro-bg'] );
 
 		$this->add_control_pointer_animation_line();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'nav-menu', 'pointer_animation_line', ['pro-sl', 'pro-dr', 'pro-gr']);
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'mega-menu', 'pointer_animation_line', ['pro-sl', 'pro-dr', 'pro-gr']);
 
 		$this->add_control_pointer_animation_border();
 
@@ -421,7 +421,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 		$this->add_control_menu_items_submenu_entrance();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'nav-menu', 'menu_items_submenu_entrance', ['pro-mu', 'pro-md', 'pro-ml', 'pro-mr'] );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'mega-menu', 'menu_items_submenu_entrance', ['pro-mu', 'pro-md', 'pro-ml', 'pro-mr'] );
 
 		$this->end_controls_section(); // End Controls Section
 
@@ -437,7 +437,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 		$this->add_control_mob_menu_show_on();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'nav-menu', 'mob_menu_show_on', ['pro-nn', 'pro-al'] );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'mega-menu', 'mob_menu_show_on', ['pro-nn', 'pro-al'] );
 
 		$this->add_controls_group_offcanvas();
 
@@ -540,7 +540,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 		$this->add_control_toggle_btn_style();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'nav-menu', 'toggle_btn_style', ['pro-tx'] );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'mega-menu', 'toggle_btn_style', ['pro-tx'] );
 
 		$this->add_control(
 			'toggle_btn_burger',
@@ -627,7 +627,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 		$this->end_controls_section(); // End Controls Section
 
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'nav-menu', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'mega-menu', [
 			'Vertical Layout',
 			'Advanced Link Hover Effects: Slide, Grow, Drop',
 			'SubMenu Entrance Advanced Effect',
