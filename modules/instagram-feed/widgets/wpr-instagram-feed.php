@@ -1367,7 +1367,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				],
 				'default' => 'h2',
 				'condition' => [
-					'element_select' => 'name',
+					'element_select' => 'author',
 				]
 			]
 		);
