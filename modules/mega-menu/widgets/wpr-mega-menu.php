@@ -635,6 +635,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 			'Advanced Display Conditions',
 			'Mobile Menu Display Custom Conditions',
 			'Mobile Menu Button Custom Text option',
+			'Mobile Menu Off-Canvas Layout',
 		] );
 		
 		// Tab: Styles ===============
@@ -824,7 +825,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'label' => esc_html__( 'Sub Menu Icon Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
-					'size' => 14,
+					'size' => 15,
 				],
 				'range' => [
 					'px' => [
@@ -848,7 +849,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'type' => Controls_Manager::SLIDER,
 				'devices' => [ self::RESPONSIVE_DESKTOP, self::RESPONSIVE_TABLET ],
 				'default' => [
-					'size' => 2,
+					'size' => 4,
 				],
 				'range' => [
 					'px' => [
@@ -876,7 +877,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'type' => Controls_Manager::SLIDER,
 				'devices' => [ self::RESPONSIVE_DESKTOP, self::RESPONSIVE_TABLET ],
 				'default' => [
-					'size' => 5,
+					'size' => 13,
 				],
 				'range' => [
 					'px' => [
@@ -900,7 +901,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'label' => esc_html__( 'Inner Horizontal Spacing', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
-					'size' => 7,
+					'size' => 0,
 				],
 				'range' => [
 					'px' => [
@@ -1004,7 +1005,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 						],
 					],
 					'color' => [
-						'default' => '#222222',
+						'default' => '#e8e8e8',
 					],
 				],
 				'selector' => '{{WRAPPER}} .wpr-menu-item',
@@ -1084,7 +1085,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => '2',
+					'top' => '3',
 					'right' =>  '5',
 					'bottom' => '2',
 					'left' => '5',
@@ -1870,7 +1871,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Arrow Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#777777',
+				'default' => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} .menu-item-has-children .wpr-menu-offcanvas-back svg' => 'fill: {{VALUE}}',
 				],
@@ -1902,7 +1903,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Heading Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#777777',
+				'default' => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} .menu-item-has-children .wpr-menu-offcanvas-back h3' => 'color: {{VALUE}}',
 				],
