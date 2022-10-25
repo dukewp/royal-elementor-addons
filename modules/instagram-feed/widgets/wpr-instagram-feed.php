@@ -226,6 +226,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
 	public function add_option_element_select() {
 		return [
+			'author' => esc_html__( 'Author', 'wpr-addons' ),
 			'caption' => esc_html__( 'Caption', 'wpr-addons' ),
 			'date' => esc_html__( 'Date', 'wpr-addons' ),
 			'icon' => esc_html__( 'Icon', 'wpr-addons' ),
@@ -1366,7 +1367,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				],
 				'default' => 'h2',
 				'condition' => [
-					'element_select' => 'title',
+					'element_select' => 'name',
 				]
 			]
 		);
@@ -4111,7 +4112,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
     }
 
 	public static function call_instagram_api($access_token, $settings) {
-		$url = 'https://graph.instagram.com/me/media?fields=id,media_type,media_url,thumbnail_url,permalink,username,caption,timestamp&access_token='. $access_token .'&limit='. $settings['limit'];
+		$url = 'https://graph.instagram.com/me/media?fields=id,media_type,media_url,thumbnail_url,permalink,children,username,caption,timestamp&access_token='. $access_token .'&limit='. $settings['limit'];
 		$response = wp_remote_get($url);
 		$body = json_decode($response['body']);
 		if(!isset($body)) {
@@ -4189,9 +4190,20 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		echo '</div>';
 	}
 
+	// Render Post Title
+	public function render_post_author( $settings, $class, $result ) {
+		echo '<'. esc_attr($settings['element_title_tag']) .' class="'. esc_attr($class) .'">';
+			echo '<div class="inner-block">';
+				echo '<a href="'. $result->permalink .'">';
+					echo esc_html($result->username);
+				echo '</a>';
+			echo '</div>';
+		echo '</'. esc_attr($settings['element_title_tag']) .'>';
+	}
+
 	public function render_post_caption($settings, $class, $result) {
 
-		if ( '' === $result->caption ) {
+		if ( !isset($result->caption) || '' === $result->caption ) {
 			return;
 		}
 
@@ -4286,6 +4298,11 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		}
 
 		switch ( $type ) {
+	
+
+			case 'author':
+				$this->render_post_author( $settings, $class, $result );
+				break;
 
 			case 'caption':
 				$this->render_post_caption( $settings, $class, $result );
@@ -4298,11 +4315,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			case 'icon':
 				$this->render_post_icon( $settings, $class, $result );
 				break;
-	
-
-			// case 'author':
-			// 	$this->render_post_author( $settings, $class );
-			// 	break;
 
 			// case 'comments':
 			// 	$this->render_post_comments( $settings, $class );
@@ -4613,11 +4625,11 @@ class Wpr_Instagram_Feed extends Widget_Base {
 									echo $this->get_elements_by_location( 'above', $settings, $result );
 								 ?>
 								<div class="wpr-insta-feed-media-wrap <?php echo esc_attr($this->get_image_effect_class( $settings )) ?>" data-overlay-link="<?php echo esc_attr( $settings['overlay_post_link'] ) ?>">
-								<?php if ($result->media_type == 'IMAGE') : ?>
+								<?php if ( 'CAROUSEL_ALBUM' == $result->media_type || 'IMAGE' == $result->media_type ) : ?>
 									<div class="wpr-insta-feed-image-wrap" data-src=<?php echo $result->media_url ?>>
 										<img src=<?php echo $result->media_url  ?> alt="">
 									</div>
-								<?php else : ?>
+								<?php elseif ($result->media_type == 'VIDEO') : ?>
 									<div class="wpr-insta-feed-image-wrap" data-src=<?php echo $result->thumbnail_url ?>>
 										<img class="wpr-insta-feed-thumb" src=<?php echo $result->thumbnail_url ?> alt="">
 									</div>

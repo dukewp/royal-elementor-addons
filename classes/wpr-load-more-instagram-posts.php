@@ -319,7 +319,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                         echo $this->get_elements_by_location( 'above', $_POST['wpr_load_more_settings'], $result );
                     ?>
                     <div class="wpr-insta-feed-media-wrap <?php echo esc_attr($this->get_image_effect_class( $_POST['wpr_load_more_settings'] )) ?>" data-overlay-link="<?php echo esc_attr( $_POST['wpr_load_more_settings'] ) ?>">
-                    <?php if ($result->media_type == 'IMAGE') : ?>
+                    <?php if ( 'CAROUSEL_ALBUM' == $result->media_type || 'IMAGE' == $result->media_type ) : ?>
                         <div class="wpr-insta-feed-image-wrap" data-src=<?php echo $result->media_url ?>>
                             <img src=<?php echo $result->media_url  ?> alt="">
                         </div>
