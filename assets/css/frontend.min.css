@@ -2022,6 +2022,7 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
 .wpr-grid-item-read-more .inner-block a,
 .wpr-grid-item-likes .inner-block a,
 .wpr-grid-item-sharing .inner-block>span,
+.wpr-insta-feed-item-sharing .inner-block>span,
 .wpr-grid-item-lightbox .inner-block>span,
 .wpr-grid-product-categories .inner-block a,
 .wpr-grid-product-tags .inner-block a,
@@ -2047,6 +2048,7 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
 .wpr-grid-item-display-custom.wpr-grid-item-read-more .inner-block a,
 .wpr-grid-item-display-custom.wpr-grid-item-likes .inner-block a,
 .wpr-grid-item-display-custom.wpr-grid-item-sharing .inner-block>span,
+.wpr-insta-feed-item-display-custom.wpr-insta-feed-item-sharing .inner-block>span,
 .wpr-grid-item-display-custom.wpr-grid-item-lightbox .inner-block>span,
 .wpr-grid-item-display-custom.wpr-grid-cf-style-1 .inner-block>a,
 .wpr-grid-item-display-custom.wpr-grid-cf-style-1 .inner-block>span,
@@ -2120,27 +2122,32 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
 
 /* Sharing */
 
-.wpr-grid-item-sharing .inner-block a {
+.wpr-grid-item-sharing .inner-block a,
+.wpr-insta-feed-item-sharing .inner-block a {
     text-align: center;
 }
 
-.wpr-grid-item-sharing .wpr-post-sharing {
+.wpr-grid-item-sharing .wpr-post-sharing,
+.wpr-insta-feed-item-sharing .wpr-post-sharing {
     position: relative;
 }
 
-.wpr-grid-item-sharing .wpr-sharing-icon {
+.wpr-grid-item-sharing .wpr-sharing-icon,
+.wpr-insta-feed-item-sharing .wpr-sharing-icon {
     display: inline-block;
     position: relative;
 }
 
-.wpr-grid-item-sharing .wpr-sharing-icon .wpr-tooltip {
+.wpr-grid-item-sharing .wpr-sharing-icon .wpr-tooltip,
+.wpr-insta-feed-item-sharing .wpr-sharing-icon .wpr-tooltip {
     left: 50%;
     -ms-transform: translate(-50%, -100%);
     transform: translate(-50%, -100%);
     -webkit-transform: translate(-50%, -100%);
 }
 
-.wpr-grid-item-sharing .wpr-sharing-icon:hover .wpr-tooltip {
+.wpr-grid-item-sharing .wpr-sharing-icon:hover .wpr-tooltip,
+.wpr-insta-feed-item-sharing .wpr-sharing-icon:hover .wpr-tooltip {
     visibility: visible;
     opacity: 1;
     -ms-transform: translate(-50%, -120%);
@@ -2148,30 +2155,35 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     -webkit-transform: translate(-50%, -120%);
 }
 
-.wpr-grid-item-sharing .wpr-tooltip:before {
+.wpr-grid-item-sharing .wpr-tooltip:before,
+.wpr-insta-feed-item-sharing .wpr-tooltip:before {
     left: 50%;
     -ms-transform: translateX(-50%);
     transform: translateX(-50%);
     -webkit-transform: translateX(-50%);
 }
 
-.wpr-grid-item-sharing .wpr-sharing-trigger {
+.wpr-grid-item-sharing .wpr-sharing-trigger,
+.wpr-insta-feed-item-sharing .wpr-sharing-trigger {
     cursor: pointer;
 }
 
-.wpr-grid-item-sharing .wpr-tooltip {
+.wpr-grid-item-sharing .wpr-tooltip,
+.wpr-insta-feed-item-sharing .wpr-tooltip {
     display: block;
     padding: 10px;
 }
 
-.wpr-grid-item-sharing .wpr-sharing-hidden {
+.wpr-grid-item-sharing .wpr-sharing-hidden,
+.wpr-insta-feed-item-sharing .wpr-sharing-hidden {
     visibility: hidden;
     position: absolute;
     z-index: 3;
     text-align: center;
 }
 
-.wpr-grid-item-sharing .wpr-sharing-hidden a {
+.wpr-grid-item-sharing .wpr-sharing-hidden a,
+.wpr-insta-feed-item-sharing .wpr-sharing-hidden a {
     opacity: 0;
 }
 
@@ -2213,11 +2225,13 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     transition-delay: 0.4s;
 }
 
-.wpr-grid-item-sharing a:last-of-type {
+.wpr-grid-item-sharing a:last-of-type,
+.wpr-insta-feed-item-sharing a:last-of-type {
     margin-right: 0 !important;
 }
 
-.wpr-grid-item-sharing .inner-block a {
+.wpr-grid-item-sharing .inner-block a,
+.wpr-insta-feed-item-sharing .inner-block a {
     -webkit-transition-property: color, background-color, border;
     -o-transition-property: color, background-color, border;
     transition-property: color, background-color, border;
@@ -3171,6 +3185,7 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
 .elementor-widget-wpr-grid .wpr-grid-item-read-more a,
 .elementor-widget-wpr-grid .wpr-grid-item-likes,
 .elementor-widget-wpr-grid .wpr-grid-item-sharing,
+.elementor-widget-wpr-instagram-feed .wpr-insta-feed-item-sharing,
 .elementor-widget-wpr-grid .wpr-grid-tax-style-1,
 .elementor-widget-wpr-grid .wpr-grid-cf-style-1,
 .elementor-widget-wpr-grid .wpr-grid-filters li,
