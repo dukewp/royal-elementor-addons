@@ -2429,18 +2429,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		);
 
 		$this->add_control(
-			'caption_dropcap_color',
-			[
-				'label'  => esc_html__( 'DropCap Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#3a3a3a',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-insta-feed-item-caption.wpr-enable-dropcap p:first-child:first-letter' => 'color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_control(
 			'caption_bg_color',
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
@@ -2470,16 +2458,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'name'     => 'caption_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-insta-feed-item-caption'
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'caption_dropcap_typography',
-				'label' => esc_html__( 'Drop Cap Typography', 'wpr-addons' ),
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-insta-feed-item-caption.wpr-enable-dropcap p:first-child:first-letter'
 			]
 		);
 
