@@ -573,8 +573,14 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'label' => esc_html__( 'Slides To Show', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
 				'separator' => 'before',
-				'default' => 1,
-				'min' => 1,
+				'default' => 3,
+				'widescreen_default' => 3,
+				'laptop_default' => 3,
+				'tablet_extra_default' => 2,
+				'tablet_default' => 2,
+				'mobile_extra_default' => 1,
+				'mobile_default' => 1,
+				// 'min' => 1,
 				'condition' => [
 					'layout_select' => 'layout-carousel',
 				]
@@ -587,6 +593,12 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'label' => __( 'Gutter', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::NUMBER,
 				'default' => 5,
+				'widescreen_default' => 5,
+				'laptop_default' => 5,
+				'tablet_extra_default' => 5,
+				'tablet_default' => 5,
+				'mobile_extra_default' => 5,
+				'mobile_default' => 5,
 				'condition' => [
 					'layout_select' => 'layout-carousel',
 				]
@@ -612,6 +624,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'label' => esc_html__( 'Navigation', 'wpr-addons' ),
 				'render_type' => 'template',
 				'separator' => 'before',
+				'default' => 'yes',
 				'condition' => [
 					'layout_select' => 'layout-carousel'
 				]
