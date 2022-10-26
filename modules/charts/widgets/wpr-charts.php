@@ -1329,6 +1329,149 @@ class Wpr_Charts extends Widget_Base {
         $this->end_controls_section();
 		
 		$this->start_controls_section(
+            'section_chart_axis_r',
+			[
+				'label' => esc_html__( 'Axis', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'condition'   => [
+					'chart_type' => ['radar', 'polarArea']
+				],
+			]
+        );
+
+		$this->add_control(
+			'r_axis_grid_lines_heading',
+			[
+				'label' => esc_html__( 'Grid Lines', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'axis_grid_line_color_r', [
+				'label' => esc_html__('Color', 'wpr-addons'),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#B2B2B2'
+			]
+		);
+
+		$this->add_control(
+			'axis_labels_heading',
+			[
+				'label' => esc_html__( 'Axis Labels', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'axis_labels_color', [
+				'label' => esc_html__('Color', 'wpr-addons'),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#B2B2B2'
+			]
+		);
+
+		$this->add_control(
+			'axis_labels_bg_color', [
+				'label' => esc_html__('Color', 'wpr-addons'),
+				'type' => Controls_Manager::COLOR,
+			]
+		);
+		
+		$this->add_control(
+			'axis_labels_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 5,
+				],
+			]
+		);
+
+		$this->add_control(
+			'chart_point_labels_heading',
+			[
+				'label' => esc_html__( 'Point Labels', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+			]
+		);
+
+		$this->add_control(
+			'chart_point_labels_color_r', [
+				'label'       => esc_html__('Color', 'wpr-addons'),
+				'type'        => Controls_Manager::COLOR,
+			]
+		);
+
+		$this->add_control(
+			'point_labels_font_family_r',
+			[
+				'label' => esc_html__( 'Font Family', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::FONT,
+				'description' => esc_html__('Use only the fonts located under System options group', 'wpr-addons'),
+				'default' => 'Arial',
+			]
+		);
+		
+		$this->add_control(
+			'point_labels_font_style_r',
+			[
+				'label'   => esc_html__('Font Style', 'wpr-addons'),
+				'type'    => Controls_Manager::SELECT,
+				'default' => 'normal',
+				'options' => [
+					'normal' => 'Normal',
+					'italic' => 'Italic',
+					'oblique' => 'Oblique',
+				],
+		
+			]
+		);
+		
+		$this->add_control(
+			'point_labels_font_weight_r',
+			[
+				'label'              => __( 'Font Weight ', 'wpr-addons' ),
+				'type'               => Controls_Manager::NUMBER,
+				'min'                => 0,
+				'default'            => 600,
+				'frontend_available' => true,
+			]
+		);
+		
+		$this->add_control(
+			'point_labels_font_size_r',
+			[
+				'label' => esc_html__( 'Font Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 10,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 14,
+				],
+			]
+		);
+
+		$this->end_controls_section();
+		
+		$this->start_controls_section(
             'section_chart_axis_styles',
 			[
 				'label' => esc_html__( 'Axis', 'wpr-addons' ),
@@ -2281,11 +2424,16 @@ class Wpr_Charts extends Widget_Base {
 			'ticks_font_weight_x' => $ticks_font_weight_x,
 			'ticks_font_size_x' => !empty($ticks_font_size_x['size']) ? $ticks_font_size_x['size'] : '',
 			'ticks_padding_y' => !empty($ticks_padding_y['size']) ? $ticks_padding_y['size'] : '',
-			'ticks_color_y' => $chart_ticks_color_y,
+			'ticks_color_y' => isset($chart_ticks_color_y) ? $chart_tick_color_y : '',
+			'point_labels_color_r' => isset($chart_point_labels_color_r) ? $chart_point_labels_color_r : '',
 			'ticks_font_family_y' => $ticks_font_family_y,
 			'ticks_font_style_y' => $ticks_font_style_y,
 			'ticks_font_weight_y' => $ticks_font_weight_y,
 			'ticks_font_size_y' => !empty($ticks_font_size_y['size']) ? $ticks_font_size_y['size'] : '',
+			'point_labels_font_family_r' => $point_labels_font_family_r,
+			'point_labels_font_style_r' => $point_labels_font_style_r,
+			'point_labels_font_weight_r' => $point_labels_font_weight_r,
+			'point_labels_font_size_r' => !empty($point_labels_font_size_r['size']) ? $point_labels_font_size_r['size'] : '',
 			'exclude_dataset_on_click' => $exclude_dataset_on_click,
 			'trigger_tooltip_on' => $trigger_tooltip_on,
             'chart_labels' => !empty($data_charts_array['labels']) ? $data_charts_array['labels'] : '',
@@ -2369,6 +2517,10 @@ class Wpr_Charts extends Widget_Base {
 			'rotation_y' => $labels_rotation_y_axis,
 			'axis_grid_line_color_y' => $axis_grid_line_color_y,
 			'grid_line_width_y' => $grid_line_width_y,
+			'axis_grid_line_color_r' => $axis_grid_line_color_r,
+			'axis_labels_color' => isset($axis_labels_color) ? $axis_labels_color : '',
+			'axis_labels_bg_color' => isset($axis_labels_bg_color) ? $axis_labels_bg_color : '',
+			'axis_labels_padding' => isset($axis_labels_padding) ? $axis_labels_padding : '',
 			'min_value' => $min_value,
 			'max_value' => $max_value,
 			'url' => $data_url,

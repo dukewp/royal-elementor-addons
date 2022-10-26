@@ -2289,6 +2289,22 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'name' => 'timeline_item_shadow',
 				'selector' => '{{WRAPPER}} .wpr-story-info',
+				'fields_options' => [
+                    'box_shadow_type' =>
+                        [ 
+                            'default' =>'yes' 
+                        ],
+                    'box_shadow' => [
+                        'default' =>
+                            [
+                                'horizontal' => 0,
+                                'vertical' => 0,
+                                'blur' => 20,
+                                'spread' => 1,
+                                'color' => 'rgba(0,0,0,0.1)'
+                            ]
+                    ]
+				],
 				'condition' => [
 					'timeline_layout' => ['horizontal', 'horizontal-bottom']
 				]
@@ -2310,9 +2326,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
                             [
                                 'horizontal' => 0,
                                 'vertical' => 0,
-                                'blur' => 10,
-                                'spread' => 0,
-                                'color' => 'rgba(0,0,0,0.5)'
+                                'blur' => 20,
+                                'spread' => 1,
+                                'color' => 'rgba(0,0,0,0.1)'
                             ]
                     ]
 				],
