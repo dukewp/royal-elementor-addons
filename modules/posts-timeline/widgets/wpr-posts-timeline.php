@@ -2300,6 +2300,22 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'name' => 'timeline_item_shadow_vertical',
 				'selector' => '{{WRAPPER}} .wpr-story-info-vertical',
+				'fields_options' => [
+                    'box_shadow_type' =>
+                        [ 
+                            'default' =>'yes' 
+                        ],
+                    'box_shadow' => [
+                        'default' =>
+                            [
+                                'horizontal' => 0,
+                                'vertical' => 0,
+                                'blur' => 10,
+                                'spread' => 0,
+                                'color' => 'rgba(0,0,0,0.5)'
+                            ]
+                    ]
+				],
 				'condition' => [
 					'timeline_layout' => ['centered', 'one-sided', 'one-sided-left']
 				]
