@@ -1201,7 +1201,7 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     font-size: 13px;
 }
 
-.wpr-mobile-menu-display-offcanvas .wpr-mobile-mega-menu > li > a > .wpr-mobile-sub-icon {
+.wpr-mobile-mega-menu > li > a > .wpr-mobile-sub-icon {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -1273,6 +1273,11 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
 }
 
 .wpr-menu-offcanvas-back {
+    display: none;
+}
+
+.wpr-mobile-menu-display-offcanvas .wpr-menu-offcanvas-back {
+    display: block;
     cursor: pointer;
 }
 

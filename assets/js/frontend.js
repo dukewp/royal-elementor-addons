@@ -711,7 +711,7 @@
 									subIcon.removeClass(mobileSubIconClass).addClass('fas fa-circle-notch fa-spin');
 								},
 								success: function( response ) {
-									subIcon.removeClass('fas fa-circle-notch fa-spin').addClass(mobileSubIconClass);
+									subIcon.removeClass('fas fa-circle-notch fa-spin').addClas(mobileSubIconClass);
 
 									if ( $scope.hasClass('wpr-mobile-menu-display-offcanvas') ) {
 										parentItem.find('.wpr-menu-offcanvas-back').after(response);
@@ -754,6 +754,7 @@
 				$(this).closest('.wpr-mobile-mega-menu').removeClass('wpr-mobile-sub-offcanvas-open');
 				$(this).closest('.menu-item').removeClass('wpr-mobile-sub-open');
 				$scope.find('.wpr-mobile-mega-menu-wrap').removeAttr('style');
+                $scope.find('.wpr-mobile-sub-mega-menu').removeAttr('style');
 			});
 
 			// Run Functions
@@ -832,11 +833,13 @@
 				selector.closest('.wpr-mobile-mega-menu').addClass('wpr-mobile-sub-offcanvas-open');
 				selector.find('.wpr-menu-offcanvas-back').find('h3').text(title);
 
-				let parentItem = $scope.find('.wpr-mobile-mega-menu').children('.wpr-mobile-sub-open');
-				let subSelector = parentItem.children('ul').length ? parentItem.children('ul') : parentItem.children('.wpr-mobile-sub-mega-menu');
-				let subHeight = subSelector.outerHeight();
-				console.log(subHeight);
+				let parentItem = $scope.find('.wpr-mobile-mega-menu').children('.wpr-mobile-sub-open'),
+				    subSelector = parentItem.children('ul').length ? parentItem.children('ul') : parentItem.children('.wpr-mobile-sub-mega-menu'),
+				    subHeight = subSelector.outerHeight();
+
 				if ( subHeight > $(window).height() ) {
+                    console.log(selector.attr('class'))
+                    $scope.find('.wpr-mobile-sub-mega-menu').not(selector.find('.wpr-mobile-sub-mega-menu')).hide();
 					$scope.find('.wpr-mobile-mega-menu-wrap').css('overflow-y', 'scroll');
 				}
 			}

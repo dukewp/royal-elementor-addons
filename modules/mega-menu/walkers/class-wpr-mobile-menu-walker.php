@@ -241,6 +241,6 @@ class Wpr_Mobile_Menu_Walker extends \Walker_Nav_Menu {
 	public function get_mega_menu_settings( $item_id ) {
 		$settings = get_post_meta( $item_id, 'wpr-mega-menu-settings', true);
 
-		return isset($settings['wpr_mm_enable']) ? $settings : false;
+		return ! empty($settings) ? $settings : false;
 	}
 }
