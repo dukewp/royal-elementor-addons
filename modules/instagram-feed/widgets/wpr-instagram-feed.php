@@ -379,16 +379,16 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		$this->add_control(
 			'insta_feed_column_grid',
 			[
-				'label'              => esc_html__('Columns Grid', 'wpr-addons'),
+				'label'              => esc_html__('Columns', 'wpr-addons'),
 				'type'               => Controls_Manager::SELECT,
 				'default'            => 'wpr-insta-col-4',
 				'options'            => [
-					'wpr-insta-col-auto' => esc_html__('1 Columns', 'wpr-addons'),
-					'wpr-insta-col-6'    => esc_html__('2 Columns', 'wpr-addons'),
-					'wpr-insta-col-4'    => esc_html__('3 Columns', 'wpr-addons'),
-					'wpr-insta-col-3'    => esc_html__('4 Columns', 'wpr-addons'),
-					'wpr-insta-col-2-point-4'    => esc_html__('5 Columns', 'wpr-addons'),
-					'wpr-insta-col-2'    => esc_html__('6 Columns', 'wpr-addons')
+					'wpr-insta-col-auto' => esc_html__('One', 'wpr-addons'),
+					'wpr-insta-col-6'    => esc_html__('Two', 'wpr-addons'),
+					'wpr-insta-col-4'    => esc_html__('Three', 'wpr-addons'),
+					'wpr-insta-col-3'    => esc_html__('Four', 'wpr-addons'),
+					'wpr-insta-col-2-point-4'    => esc_html__('Five', 'wpr-addons'),
+					'wpr-insta-col-2'    => esc_html__('Six', 'wpr-addons')
 				],
 				'frontend_available' => true,
 				'render_type' => 'template',
@@ -410,6 +410,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					'33.3%' => esc_html__( 'Three', 'wpr-addons' ),
 					'25%' => esc_html__( 'Four', 'wpr-addons' ),
 					'20%' => esc_html__( 'Five', 'wpr-addons' ),
+					'16.6%' => esc_html__( 'Six', 'wpr-addons' )
 				],
 				'render_type' => 'template',
 				'selectors' => [
@@ -566,6 +567,163 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'insta_feed_slides_to_show',
+			[
+				'label' => esc_html__( 'Slides To Show', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'separator' => 'before',
+				'default' => 1,
+				'min' => 1,
+				'condition' => [
+					'layout_select' => 'layout-carousel',
+				]
+			]
+		);
+				
+		$this->add_responsive_control(
+			'insta_feed_space_between',
+			[
+				'label' => __( 'Gutter', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::NUMBER,
+				'default' => 5,
+				'condition' => [
+					'layout_select' => 'layout-carousel',
+				]
+			]
+		);
+				
+		$this->add_control(
+			'insta_feed_speed',
+			[
+				'label' => __( 'Speed', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::NUMBER,
+				'default' => 500,
+				'condition' => [
+					'layout_select' => 'layout-carousel',
+				]
+			]
+		);
+
+		$this->add_control (
+			'enable_cs_nav',
+			[
+				'type' => Controls_Manager::SWITCHER,
+				'label' => esc_html__( 'Navigation', 'wpr-addons' ),
+				'render_type' => 'template',
+				'separator' => 'before',
+				'condition' => [
+					'layout_select' => 'layout-carousel'
+				]
+			]
+		);
+
+		$this->add_control(
+			'cs_nav_arrows',
+			[
+				'label' => esc_html__( 'Navigation Icon', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'fas fa-angle',
+				'options' => [
+					'fas fa-angle' => esc_html__( 'Angle', 'wpr-addons' ),
+					'fas fa-angle-double' => esc_html__( 'Angle Double', 'wpr-addons' ),
+					'fas fa-arrow' => esc_html__( 'Arrow', 'wpr-addons' ),
+					'fas fa-arrow-alt-circle' => esc_html__( 'Arrow Circle', 'wpr-addons' ),
+					'far fa-arrow-alt-circle' => esc_html__( 'Arrow Circle Alt', 'wpr-addons' ),
+					'fas fa-long-arrow-alt' => esc_html__( 'Long Arrow', 'wpr-addons' ),
+					'fas fa-chevron' => esc_html__( 'Chevron', 'wpr-addons' ),
+				],
+				'condition' => [
+					'layout_select' => 'layout-carousel',
+					'enable_cs_nav' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control (
+			'enable_cs_pag',
+			[
+				'type' => Controls_Manager::SWITCHER,
+				'label' => esc_html__( 'Pagination', 'wpr-addons' ),
+				'render_type' => 'template',
+				'separator' => 'before',
+				'condition' => [
+					'layout_select' => 'layout-carousel'
+				]
+			]
+		);
+
+		$this->add_control(
+			'cs_pag_type',
+			[
+				'label' => esc_html__( 'Pagination Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'bullets',
+				'options' => [
+					'bullets' => esc_html__( 'Bullets', 'wpr-addons' ),
+					'fraction' => esc_html__( 'Fraction', 'wpr-addons' ),
+					'progressbar' => esc_html__( 'Progressbar', 'wpr-addons' ),
+				],
+				'condition' => [
+					'layout_select' => 'layout-carousel',
+					'enable_cs_pag' => 'yes',
+				]
+			]
+		);
+
+		$this->add_control (
+			'enable_insta_feed_slider_autoplay',
+			[
+				'type' => Controls_Manager::SWITCHER,
+				'label' => esc_html__( 'Autoplay', 'wpr-addons' ),
+				'render_type' => 'template',
+				'separator' => 'before',
+				'condition' => [
+					'layout_select' => 'layout-carousel'
+				]
+			]
+		);
+				
+		$this->add_control(
+			'insta_feed_delay',
+			[
+				'label' => __( 'Delay', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::NUMBER,
+				'default' => 1000,
+				'condition' => [
+					'layout_select' => 'layout-carousel',
+					'enable_insta_feed_slider_autoplay' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control (
+			'enable_insta_feed_slider_loop',
+			[
+				'type' => Controls_Manager::SWITCHER,
+				'label' => esc_html__( 'Loop', 'wpr-addons' ),
+				'render_type' => 'template',
+				'separator' => 'before',
+				'condition' => [
+					'layout_select' => 'layout-carousel'
+				]
+			]
+		);
+
+		$this->add_control (
+			'force_square_images',
+			[
+				'type' => Controls_Manager::SWITCHER,
+				'label' => esc_html__( 'Square Images', 'wpr-addons' ),
+				'render_type' => 'template',
+				'separator' => 'before',
+				'prefix_class' => 'wpr-if-square-images-',
+				'condition' => [
+					'layout_select' => 'layout-carousel'
+				]
+			]
+		); 
+
 		$this->add_control(
 			'show_instagram_follow_button',
 			[
@@ -632,267 +790,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				]
 			]
 		);
-
-        $this->end_controls_section();
-
-		$this->start_controls_section(
-			'section_insta_feed_slider',
-			[
-                'label' => esc_html__('Slider Temporary', 'wpr-addons'),
-				'tab'   => Controls_Manager::TAB_CONTENT,
-				'condition' => [
-					'layout_select' => 'layout-carousel',
-				]
-            ]
-		);
-
-        $this->add_control(
-            'section_insta_feed_slider_update',
-            [
-                'type' => Controls_Manager::RAW_HTML,
-                'raw' => '<div class="elementor-update-preview editor-wpr-preview-update"><span>Update changes to Preview</span><button class="elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply</button>',
-                'separator' => 'after'
-            ]
-        );
-
-		$this->add_control (
-			'force_square_images',
-			[
-				'type' => Controls_Manager::SWITCHER,
-				'label' => esc_html__( 'Square Images', 'wpr-addons' ),
-				'render_type' => 'template',
-				'separator' => 'before',
-				'prefix_class' => 'wpr-if-square-images-'
-			]
-		);
-
-		$this->add_control (
-			'enable_cs_nav',
-			[
-				'type' => Controls_Manager::SWITCHER,
-				'label' => esc_html__( 'Navigation', 'wpr-addons' ),
-				'render_type' => 'template',
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'cs_nav_arrows',
-			[
-				'label' => esc_html__( 'Navigation Icon', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'fas fa-angle',
-				'options' => [
-					'fas fa-angle' => esc_html__( 'Angle', 'wpr-addons' ),
-					'fas fa-angle-double' => esc_html__( 'Angle Double', 'wpr-addons' ),
-					'fas fa-arrow' => esc_html__( 'Arrow', 'wpr-addons' ),
-					'fas fa-arrow-alt-circle' => esc_html__( 'Arrow Circle', 'wpr-addons' ),
-					'far fa-arrow-alt-circle' => esc_html__( 'Arrow Circle Alt', 'wpr-addons' ),
-					'fas fa-long-arrow-alt' => esc_html__( 'Long Arrow', 'wpr-addons' ),
-					'fas fa-chevron' => esc_html__( 'Chevron', 'wpr-addons' ),
-				],
-				'condition' => [
-					'enable_cs_nav' => 'yes'
-				]
-			]
-		);
-
-		$this->add_control (
-			'enable_cs_pag',
-			[
-				'type' => Controls_Manager::SWITCHER,
-				'label' => esc_html__( 'Pagination', 'wpr-addons' ),
-				'render_type' => 'template',
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'cs_pag_type',
-			[
-				'label' => esc_html__( 'Pagination Type', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'bullets',
-				'options' => [
-					'bullets' => esc_html__( 'Bullets', 'wpr-addons' ),
-					'fraction' => esc_html__( 'Fraction', 'wpr-addons' ),
-					'progressbar' => esc_html__( 'Progressbar', 'wpr-addons' ),
-				],
-				'condition' => [
-					'enable_cs_pag' => 'yes',
-				]
-			]
-		);
-
-		$this->add_control(
-			'cs_pag_color',
-			[
-				'label'  => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#222222',
-				'selectors' => [
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .swiper-pagination-bullet' => 'background-color: {{VALUE}}',
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .swiper-pagination-bullet-active' => 'background-color: {{VALUE}}',
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .swiper-pagination-fraction' => 'color: {{VALUE}}',
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .swiper-pagination-progressbar' => 'background-color: {{VALUE}};',
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .swiper-pagination-progressbar-fill' => 'background-color: {{VALUE}};'
-				],
-				'condition' => [
-					'enable_cs_pag' => 'yes',
-				]
-			]
-		);
-
-		$this->add_control(
-			'cs_pag_bg_color',
-			[
-				'label'  => esc_html__( 'Bar Background', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#00000040',
-				'selectors' => [
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .swiper-pagination-progressbar' => 'background-color: {{VALUE}};'
-				],
-				'condition' => [
-					'enable_cs_pag' => 'yes',
-					'cs_pag_type' => 'progressbar'
-				]
-			]
-		);
-		
-		$this->add_responsive_control(
-			'cs_pag_size',
-			[
-				'type' => Controls_Manager::SLIDER,
-				'label' => esc_html__( 'Box Size', 'wpr-addons' ),
-				'size_units' => [ 'px' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 50,
-					]
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 7,
-				],			
-				'selectors' => [
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .swiper-pagination-bullet' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};'
-				],
-				'condition' => [
-					'enable_cs_pag' => 'yes',
-					'cs_pag_type' => 'bullets'
-				]
-			]
-		);
-		
-		$this->add_group_control(
-			\Elementor\Group_Control_Typography::get_type(),
-			[
-				'name' => 'cs_pag_fraction_typography',
-				'label' => __( 'Typography', 'wpr-addons' ),
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}}.wpr-insta-feed-layout-carousel .swiper-pagination-fraction',
-				'fields_options' => [
-					'typography' => [
-						'default' => 'custom',
-					],
-					'font_size'   => [
-						'default' => [
-							'size' => '14',
-							'unit' => 'px',
-						]
-					]
-				],
-				'condition' => [
-					'enable_cs_pag' => 'yes',
-					'cs_pag_type' => 'fraction'
-				]
-			]
-		);
-
-		$this->add_responsive_control(
-			'cs_pag_margin',
-			[
-				'label' => esc_html__( 'Margin', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', '%' ],
-				'default' => [
-					'top' => 0,
-					'right' => 6,
-					'bottom' => 0,
-					'left' => 6,
-				],
-				'selectors' => [
-					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .swiper-pagination-bullet' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'condition' => [
-					'enable_cs_pag' => 'yes',
-					'cs_pag_type' => 'bullets'
-				]
-			]
-		);
-
-		$this->add_control (
-			'enable_insta_feed_slider_autoplay',
-			[
-				'type' => Controls_Manager::SWITCHER,
-				'label' => esc_html__( 'Autoplay', 'wpr-addons' ),
-				'render_type' => 'template',
-				'separator' => 'before',
-			]
-		);
-				
-		$this->add_control(
-			'insta_feed_delay',
-			[
-				'label' => __( 'Delay', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::NUMBER,
-				'default' => 1000,
-				'condition' => [
-					'enable_insta_feed_slider_autoplay' => 'yes'
-				]
-			]
-		);
-
-		$this->add_control (
-			'enable_insta_feed_slider_loop',
-			[
-				'type' => Controls_Manager::SWITCHER,
-				'label' => esc_html__( 'Loop', 'wpr-addons' ),
-				'render_type' => 'template',
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_responsive_control(
-			'insta_feed_slides_to_show',
-			[
-				'label' => esc_html__( 'Slides To Show', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 1,
-				'min' => 1
-			]
-		);
-				
-		$this->add_responsive_control(
-			'insta_feed_space_between',
-			[
-				'label' => __( 'Gutter', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::NUMBER,
-				'default' => 5
-			]
-		);
-				
-		$this->add_control(
-			'insta_feed_speed',
-			[
-				'label' => __( 'Speed', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::NUMBER,
-				'default' => 500
-			]
-		);
-		
-		$this->add_control_insta_feed_slider_dots_hr();
 
         $this->end_controls_section();
 
@@ -3719,18 +3616,12 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'show_label' => false,
 				'condition' => [
 					'layout_select' => 'layout-carousel',
+					'enable_cs_nav' => 'yes'
 				],
 			]
 		);
 
-		$this->start_controls_tabs(
-			'cs_nav_tabs',
-			[
-				'condition' => [
-					'enable_cs_nav' => 'yes'
-				]
-			]
-		);
+		$this->start_controls_tabs('cs_nav_tabs',);
 
 		$this->start_controls_tab(
 			'cs_nav_tab_normal',
@@ -3750,9 +3641,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next i' => 'color: {{VALUE}}',
 					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev svg' => 'fill: {{VALUE}}',
 					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next svg' => 'fill: {{VALUE}}'
-				],
-				'condition' => [
-					'enable_cs_nav' => 'yes'
 				]
 			]
 		);
@@ -3897,10 +3785,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};'
 				],
-				'separator' => 'before',
-				'condition' => [
-					'enable_cs_nav' => 'yes'
-				]
+				'separator' => 'before'
 			]
 		);
 		
@@ -3923,9 +3808,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};'
-				],
-				'condition' => [
-					'enable_cs_nav' => 'yes'
 				]
 			]
 		);
@@ -3948,10 +3830,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next' => 'border-style: {{VALUE}};'
 				],
-				'separator' => 'before',
-				'condition' => [
-					'enable_cs_nav' => 'yes'
-				]
+				'separator' => 'before'
 			]
 		);
 		
@@ -3983,7 +3862,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
-					'enable_cs_nav' => 'yes',
 					'cs_nav_border!' => 'none'
 				]
 			]
@@ -4015,9 +3893,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-prev' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',	
 					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .wpr-swiper-button-next' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
-				],
-				'condition' => [
-					'enable_cs_nav' => 'yes'
 				]
 			]
 		);
@@ -4025,6 +3900,111 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		$this->add_control_stack_insta_feed_slider_nav_position();
 
 		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_style_insta_feed_slider_pag',
+			[
+                'label' => esc_html__('Slider Pagination', 'wpr-addons'),
+				'tab'   => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'layout_select' => 'layout-carousel',
+					'enable_cs_pag' => 'yes'
+				]
+            ]
+		);
+
+		$this->add_control(
+			'cs_pag_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#222222',
+				'selectors' => [
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .swiper-pagination-bullet' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .swiper-pagination-bullet-active' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .swiper-pagination-fraction' => 'color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .swiper-pagination-progressbar' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .swiper-pagination-progressbar-fill' => 'background-color: {{VALUE}};'
+				]
+			]
+		);
+
+		$this->add_control(
+			'cs_pag_bg_color',
+			[
+				'label'  => esc_html__( 'Bar Background', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#00000040',
+				'selectors' => [
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .swiper-pagination-progressbar' => 'background-color: {{VALUE}};'
+				]
+			]
+		);
+		
+		$this->add_responsive_control(
+			'cs_pag_size',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Box Size', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 7,
+				],			
+				'selectors' => [
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .swiper-pagination-bullet' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};'
+				]
+			]
+		);
+		
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'cs_pag_fraction_typography',
+				'label' => __( 'Typography', 'wpr-addons' ),
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}}.wpr-insta-feed-layout-carousel .swiper-pagination-fraction',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size'   => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px',
+						]
+					]
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'cs_pag_margin',
+			[
+				'label' => esc_html__( 'Margin', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 6,
+					'bottom' => 0,
+					'left' => 6,
+				],
+				'selectors' => [
+					'{{WRAPPER}}.wpr-insta-feed-layout-carousel .swiper-pagination-bullet' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
+			]
+		);
+		
+		$this->add_control_insta_feed_slider_dots_hr();
+
+        $this->end_controls_section();
 
 		// Styles ====================
 		// Section: Pagination -------
@@ -4538,7 +4518,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo '<figcaption class="wpr-insta-feed-caption"><span>'. esc_html(wp_trim_words($result->caption, $settings['element_word_count'])) .'</span></figcaption>';
+				echo '<figcaption class="wpr-insta-feed-caption"><p>'. esc_html(wp_trim_words($result->caption, $settings['element_word_count'])) .'</p></figcaption>';
 			echo '</div>';
 		echo '</div>';
 	}

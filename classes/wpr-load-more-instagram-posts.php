@@ -51,6 +51,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 		return $class;
 	}
 
+	// Render Post Title
+	public function render_post_username( $settings, $class, $result ) {
+		echo '<'. esc_attr($settings['element_username_tag']) .' class="'. esc_attr($class) .'">';
+			echo '<div class="inner-block">';
+				echo '<a href="'. $result->permalink .'">';
+					echo esc_html($result->username);
+				echo '</a>';
+			echo '</div>';
+		echo '</'. esc_attr($settings['element_username_tag']) .'>';
+	}
+
 	public function render_post_caption($settings, $class, $result) {
 
 		if ( '' === $result->caption ) {
@@ -139,7 +150,61 @@ if ( ! defined( 'ABSPATH' ) ) {
 		echo '</div>';
 	}
 
-	public function render_post_sharing_icons( $settings, $class, $result ) {}
+	public function render_post_sharing_icons( $settings, $class, $result ) {
+		$args = [
+			'icons' => 'yes',
+			'tooltip' => $settings['element_sharing_tooltip'],
+			'url' => esc_url( $result->permalink ),
+			'title' => esc_html( '' ),
+			'text' => esc_html( isset($result->caption) ? $result->caption : '' ),
+			'image' => esc_url( $result->media_url ),
+		];
+
+		$hidden_class = '';
+
+		echo '<div class="'. esc_attr($class) .'">';
+			echo '<div class="inner-block">';
+				// Text: Before
+				if ( 'before' === $settings['element_extra_text_pos'] ) {
+					echo '<span class="wpr-insta-feed-extra-text-left">'. esc_html( $settings['element_extra_text'] ) .'</span>';
+				}
+
+				echo '<span class="wpr-post-sharing">';
+
+					if ( 'yes' === $settings['element_sharing_trigger'] ) {
+						$hidden_class = ' wpr-sharing-hidden';
+						$attributes  = ' data-action="'. esc_attr( $settings['element_sharing_trigger_action'] ) .'"';
+						$attributes .= ' data-direction="'. esc_attr( $settings['element_sharing_trigger_direction'] ) .'"';
+
+						echo '<a class="wpr-sharing-trigger wpr-sharing-icon"'. $attributes .'>';
+							if ( 'yes' === $settings['element_sharing_tooltip'] ) {
+								echo '<span class="wpr-sharing-tooltip wpr-tooltip">'. esc_html__( 'Share', 'wpr-addons' ) .'</span>';
+							}
+
+							echo Utilities::get_wpr_icon( $settings['element_sharing_trigger_icon'], '' );
+						echo '</a>';
+					}
+
+
+					echo '<span class="wpr-post-sharing-inner'. $hidden_class .'">';
+
+					for ( $i = 1; $i < 7; $i++ ) {
+						$args['network'] = $settings['element_sharing_icon_'. $i];
+
+						echo Utilities::get_post_sharing_icon( $args );
+					}
+
+					echo '</span>';
+
+				echo '</span>';
+
+				// Text: After
+				if ( 'after' === $settings['element_extra_text_pos'] ) {
+					echo '<span class="wpr-insta-feed-extra-text-right">'. esc_html( $settings['element_extra_text'] ) .'</span>';
+				}
+			echo '</div>';
+		echo '</div>';
+	}
 
 	// Get Elements
 	public function get_elements( $type, $settings, $class, $result ) {
@@ -148,6 +213,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 		}
 
 		switch ( $type ) {
+	
+
+			case 'username':
+				$this->render_post_username( $settings, $class, $result );
+				break;
 
 			case 'caption':
 				$this->render_post_caption( $settings, $class, $result );
@@ -160,11 +230,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 			case 'icon':
 				$this->render_post_icon( $settings, $class, $result );
 				break;
-	
-
-			// case 'author':
-			// 	$this->render_post_author( $settings, $class );
-			// 	break;
 
 			// case 'comments':
 			// 	$this->render_post_comments( $settings, $class );
@@ -186,10 +251,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 				$this->render_post_lightbox( $settings, $class, $result );
 				break;
 
-			// case 'separator':
-			// 	$this->render_post_element_separator( $settings, $class );
-			// 	break;
+			case 'separator':
+				$this->render_post_element_separator( $settings, $class );
+				break;
 		}
+
 	}
 
 	// Get Image Effect Class
