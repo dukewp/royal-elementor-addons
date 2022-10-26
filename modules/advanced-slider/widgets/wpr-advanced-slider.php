@@ -94,7 +94,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'separator' => 'before',
 				'classes' => 'wpr-pro-control'
 			]
-		);		
+		);
 	}
 
 	public function add_control_slider_autoplay_duration() {}

@@ -1270,6 +1270,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 					'{{WRAPPER}} .wpr-sub-menu .wpr-sub-menu-item:hover,
 					 {{WRAPPER}} .wpr-sub-menu > .menu-item-has-children .wpr-sub-menu-item:hover .wpr-sub-icon,
 					 {{WRAPPER}} .wpr-sub-menu .wpr-sub-menu-item.wpr-active-menu-item,
+					 {{WRAPPER}} .wpr-sub-menu .wpr-sub-menu-item.wpr-active-menu-item .wpr-sub-icon,
 					 {{WRAPPER}} .wpr-sub-menu > .menu-item-has-children.current_page_item .wpr-sub-icon' => 'color: {{VALUE}};',
 				],
 			]
@@ -2061,7 +2062,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-mobile-menu-item' => 'padding-left: {{SIZE}}{{UNIT}}; padding-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-mobile-menu-display-offcanvas .wpr-mobile-mega-menu > li > a > .wpr-mobile-sub-icon' => 'padding: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-mobile-mega-menu > li > a > .wpr-mobile-sub-icon' => 'padding: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -2330,7 +2331,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 
 			// Menu
 			echo '<div class="wpr-mobile-mega-menu-wrap '. $animation_class .'">';
-				if ( 'offcanvas' === $settings['mob_menu_display_as'] ) {
+				if ( wpr_fs()->can_use_premium_code() && 'offcanvas' === $settings['mob_menu_display_as'] ) {
 					echo '<div class="mobile-mega-menu-header">';
 						if ( ! empty( $settings['mob_menu_offcanvas_logo']['url'] ) ) {
 							echo '<div class="mobile-mega-menu-logo">';
@@ -2347,7 +2348,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				echo ''. $moible_menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo '</div>';
 
-			if ( 'offcanvas' === $settings['mob_menu_display_as'] ) {
+			if ( wpr_fs()->can_use_premium_code() && 'offcanvas' === $settings['mob_menu_display_as'] ) {
 				echo '<div class="wpr-mobile-mega-menu-overlay"></div>';
 			}
 

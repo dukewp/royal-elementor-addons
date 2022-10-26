@@ -124,9 +124,29 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		);
 	}
 
-	public function add_control_group_autoplay() {}
+	public function add_control_group_autoplay() {
+		$this->add_control(
+			'swiper_autoplay',
+			[
+				'label' => sprintf( __( 'Autoplay %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'separator' => 'before',
+				'classes' => 'wpr-pro-control'
+			]
+		);
+	}
 
-	public function add_control_show_pagination() {}
+	public function add_control_show_pagination() {
+		$this->add_control(
+			'show_pagination',
+			[
+				'label' => sprintf( __( 'Show Pagination %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'separator' => 'before',
+				'classes' => 'wpr-pro-control'
+			]
+		);	
+	}
 
 	public function add_control_posts_per_page() {
         $this->add_control(
