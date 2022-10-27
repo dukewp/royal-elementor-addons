@@ -1075,7 +1075,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#7a7a7a',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-panel .wpr-panel-content' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-panel .wpr-acc-panel-content' => 'color: {{VALUE}};',
 				]
 			]
 		);
@@ -1120,7 +1120,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			[
 				'name' => 'content_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-panel .wpr-panel-content',
+				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-panel .wpr-acc-panel-content',
 			]
 		);
 
@@ -1316,7 +1316,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 
 						<div class="wpr-acc-panel">
 							<?php if ('editor' === $acc_content_type) : ?>
-								<div class="wpr-panel-content"><?php echo $acc['accordion_content'] ?></div>
+								<div class="wpr-acc-panel-content"><?php echo $acc['accordion_content'] ?></div>
 							<?php else: 
 								echo $this->wpr_accordion_template( $acc['accordion_content_template'] );
 							endif; ?>
