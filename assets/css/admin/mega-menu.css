@@ -12,10 +12,16 @@
   position: absolute;
   top: 5px;
   left: 265px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   padding: 5px 11px 7px;
   color: #fff;
+  background: -webkit-gradient(linear, left top, left bottom, from(#6A4BFF), to(#7E94FE));
+  background: -o-linear-gradient(#6A4BFF, #7E94FE);
   background: linear-gradient(#6A4BFF, #7E94FE);
   font-weight: 500;
   border-radius: 3px;
@@ -57,12 +63,15 @@
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
   width: 100%;
   max-width: 700px;
   margin-left: 80px;
   background-color: #fff;
-  box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+  -webkit-box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+          box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
 }
 
 .wpr-mm-popup-title {
@@ -78,8 +87,12 @@
 }
 
 .wpr-mm-settings-popup-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   padding: 10px;
   border-bottom: 1px solid #e8e8e8;
   font-weight: 500;
@@ -97,8 +110,12 @@
 }
 
 .wpr-mm-settings-popup-footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: flex-end;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   padding: 10px;
   border-top: 1px solid #e8e8e8;
 }
@@ -115,7 +132,8 @@
   font-weight: 600;
   cursor: pointer;
   line-height: 1;
-  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
 }
 
 .button.wpr-save-mega-menu-btn:hover {
@@ -143,8 +161,12 @@
 }
 
 .wpr-mm-setting {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   padding: 10px;
 }
 
@@ -243,13 +265,14 @@ button.wpr-edit-mega-menu-btn {
   height: calc(100vh - 70px);
   margin: 35px 25px;
   background-color: #f9f9f9;
-  box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+  -webkit-box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+          box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
 }
 
 .wpr-mm-editor-close-popup-btn {
   position: absolute;
   top: 40px;
-  right: 45px;
+  right: 55px;
   font-size: 50px !important;
 }
 
@@ -264,13 +287,21 @@ button.wpr-edit-mega-menu-btn {
 }
 
 .wpr-mm-setting-radius div {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
 }
 
 .wpr-mm-setting-icon div span {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   width: 30px;
   height: 30px;
   border: 1px solid #a4afb7;
@@ -294,7 +325,8 @@ button.wpr-edit-mega-menu-btn {
   width: 0;
   padding: 0;
   border: 0;
-  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
   margin-left: -15px;
 }
 
@@ -359,7 +391,8 @@ h4.wpr-mm-pro-heading:after {
   padding: 10px;
   font-size: 12px;
   background-color: #fff;
-  box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+  -webkit-box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+          box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
   border: 1px solid #e8e8e8;
   border-radius: 4px;
   text-align: center;
@@ -369,7 +402,9 @@ h4.wpr-mm-pro-heading:after {
   content: 'Please upgrade to the Pro Version to access these options.';
   top: 50%;
   left: 50%;
-  transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+      -ms-transform: translateX(-50%) translateY(-50%);
+          transform: translateX(-50%) translateY(-50%);
   padding: 20px 30px;
   font-size: 13px;
 }
@@ -402,4 +437,8 @@ h4.wpr-mm-pro-heading:after {
 .wpr-mm-pro-radio {
   display: none;
   padding: 5px 10px;
+}
+
+.wpr-mm-setting select option[value*="pro-"] {
+  background-color: rgba(0,0,0,0.2);
 }

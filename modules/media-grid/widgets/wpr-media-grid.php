@@ -346,13 +346,49 @@ class Wpr_Media_Grid extends Widget_Base {
 		);
 	}
 	
-	public function add_control_lightbox_popup_thumbnails() {}
+	public function add_control_lightbox_popup_thumbnails() {
+		$this->add_control(
+			'lightbox_popup_thumbnails',
+			[
+				'label' => sprintf( __( 'Show Thumbnails %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);
+	}
 	
-	public function add_control_lightbox_popup_thumbnails_default() {}
+	public function add_control_lightbox_popup_thumbnails_default() {
+		$this->add_control(
+			'lightbox_popup_thumbnails_default',
+			[
+				'label' => sprintf( __( 'Show Thumbnails by Default %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);
+	}
 	
-	public function add_control_lightbox_popup_sharing() {}
+	public function add_control_lightbox_popup_sharing() {
+		$this->add_control(
+			'lightbox_popup_sharing',
+			[
+				'label' => sprintf( __( 'Show Sharing Button %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);
+	}
 	
-	public function add_control_filters_deeplinking() {}
+	public function add_control_filters_deeplinking() {
+		$this->add_control(
+			'filters_deeplinking',
+			[
+				'label' => sprintf( __( 'Enable Deep Linking %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);		
+	}
 	
 	public function add_control_filters_animation() {
 		$this->add_control(
@@ -376,7 +412,16 @@ class Wpr_Media_Grid extends Widget_Base {
 	
 	public function add_control_filters_icon_align() {}
 
-	public function add_control_filters_count() {}
+	public function add_control_filters_count() {
+		$this->add_control(
+			'filters_count',
+			[
+				'label' => sprintf( __( 'Show Count %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);
+	}
 	
 	public function add_control_filters_count_superscript() {}
 	

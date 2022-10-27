@@ -340,7 +340,10 @@ class Wpr_Search extends Widget_Base {
 			[
 				'label' => esc_html__( 'Image', 'wpr-addons' ),
 				'type' => Controls_Manager::HEADING,
-				'separator' => 'before'
+				'separator' => 'before',
+				'condition' => [
+					'show_ajax_thumbnails' => 'yes'
+				]
 			]
 		);
 
@@ -369,6 +372,9 @@ class Wpr_Search extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-data-fetch a.wpr-ajax-img-wrap' => 'width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-data-fetch .wpr-ajax-search-content' => 'width: calc(100% - {{SIZE}}{{UNIT}});',
+				],
+				'condition' => [
+					'show_ajax_thumbnails' => 'yes'
 				]
 			]
 		);
@@ -391,6 +397,9 @@ class Wpr_Search extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-data-fetch a.wpr-ajax-img-wrap' => 'margin-right: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'show_ajax_thumbnails' => 'yes'
 				]
 			]
 		);
@@ -822,7 +831,7 @@ class Wpr_Search extends Widget_Base {
 		$this->add_control(
 			'exclude_posts_without_thumbnail',
 			[
-				'label' => esc_html__( 'Exclude posts W/O thumbnails', 'wpr-addons' ),
+				'label' => esc_html__( 'Exclude results W/O thumbnails', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'render_type' => 'template',
                 'condition' => [
@@ -1629,7 +1638,7 @@ class Wpr_Search extends Widget_Base {
 				'name' => 's',
 				'title' => esc_html__( 'Search', 'wpr-addons' ),
 				'value' => get_search_query(),
-				'query-type' => $settings['search_query'],
+				'wpr-query-type' => $settings['search_query'],
 				'number-of-results' => isset($settings['number_of_results']) ? $settings['number_of_results'] : -1,
 				'ajax-search' => isset($settings['ajax_search']) ? $settings['ajax_search'] : '',
 				'number-of-words' => isset($settings['number_of_words_in_excerpt']) ? $settings['number_of_words_in_excerpt'] : '',

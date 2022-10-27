@@ -697,7 +697,8 @@
 .elementor-control.elementor-control-accordion_repeater_pro_notice,
 .elementor-control.elementor-control-acc_repeater_pro_notice,
 .elementor-control.elementor-control-data_source_pro_notice,
-.elementor-control.elementor-control-charts_repeater_pro_notice {
+.elementor-control.elementor-control-charts_repeater_pro_notice,
+.elementor-control.elementor-control-mob_menu_display_as_pro_notice {
 	padding-bottom: 0 !important;
 }
 
@@ -743,7 +744,8 @@
 .elementor-control-tabs_position_pro_notice .wpr-pro-notice,
 .elementor-control-choose_table_type_pro_notice .wpr-pro-notice,
 .elementor-control-accordion_repeater_pro_notice .wpr-pro-notice,
-.elementor-control.elementor-control-data_source_pro_notice .wpr-pro-notice {
+.elementor-control.elementor-control-data_source_pro_notice .wpr-pro-notice,
+.elementor-control.elementor-control-mob_menu_display_as_pro_notice .wpr-pro-notice {
 	border-bottom: none !important;
 }
 

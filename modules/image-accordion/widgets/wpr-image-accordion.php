@@ -1543,7 +1543,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'description_width',
 			[
 				'label' => esc_html__( 'Description Width', 'wpr-addons' ),

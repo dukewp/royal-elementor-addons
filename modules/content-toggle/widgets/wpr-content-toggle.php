@@ -1129,8 +1129,11 @@ class Wpr_Content_Toggle extends Widget_Base {
 		}
 
 		$edit_link = '<span class="wpr-template-edit-btn" data-permalink="'. esc_url(get_permalink( $id )) .'">Edit Template</span>';
+		
+		$type = get_post_meta(get_the_ID(), '_wpr_template_type', true);
+		$has_css = 'internal' === get_option( 'elementor_css_print_method' ) || '' !== $type;
 
-		return Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $id ) . $edit_link;
+		return Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $id, $has_css ) . $edit_link;
 	}
 
 	public function wpr_multi_switcher() {}
