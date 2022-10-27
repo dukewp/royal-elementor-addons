@@ -15243,7 +15243,7 @@ dl.variation dd {
   transition: max-height 0.2s ease-out;
 }
 
-.wpr-advanced-accordion .wpr-accordion-panel-active {
+.wpr-advanced-accordion .wpr-acc-panel-active {
   display: block;
 }
 
@@ -15254,6 +15254,10 @@ dl.variation dd {
 .wpr-advanced-accordion .wpr-acc-panel p,
 .wpr-advanced-accordion .wpr-acc-panel div {
   margin: 0;
+}
+
+.wpr-acc-panel-content {
+    font-size: 14px;
 }
 
 .wpr-ti-close {

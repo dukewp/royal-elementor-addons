@@ -15136,7 +15136,7 @@ dl.variation dd {
   transition: max-height 0.2s ease-out;
 }
 
-.wpr-advanced-accordion .wpr-accordion-panel-active {
+.wpr-advanced-accordion .wpr-acc-panel-active {
   display: block;
 }
 
