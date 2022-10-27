@@ -642,6 +642,7 @@
 
 				// Show Menu
 				if ( $scope.hasClass('wpr-mobile-menu-display-offcanvas') ) {
+					$('body').css('overflow', 'hidden');
 					$(this).parent().siblings('.wpr-mobile-mega-menu-wrap').toggleClass('wpr-mobile-mega-menu-open');
 				} else {
 					$(this).parent().siblings('.wpr-mobile-mega-menu-wrap').stop().slideToggle();
@@ -650,9 +651,11 @@
 				// Hide Off-Canvas Menu
 				$scope.find('.mobile-mega-menu-close').on('click', function() {
 					$(this).closest('.wpr-mobile-mega-menu-wrap').removeClass('wpr-mobile-mega-menu-open');
+					$('body').css('overflow', 'visible');
 				});
 				$scope.find('.wpr-mobile-mega-menu-overlay').on('click', function() {
 					$(this).siblings('.wpr-mobile-mega-menu-wrap').removeClass('wpr-mobile-mega-menu-open');
+					$('body').css('overflow', 'visible');
 				});
 
 				// Fix Width
@@ -701,10 +704,9 @@
 							let subIcon = parentItem.find('.wpr-mobile-sub-icon');
 
 							$.ajax({
-								type: 'POST',
-								url: WprConfig.ajaxurl,
+								type: 'GET',
+								url: WprConfig.resturl + '/wprmegamenu/',
 								data: {
-									action : 'mega_menu_ajax_loading',
 									item_id: parentItem.data('id')
 								},
 								beforeSend:function() {
@@ -721,8 +723,9 @@
 										parentItem.children('.wpr-mobile-sub-mega-menu').slideDown();
 									}
 
-									// Fix Grid
-									parentItem.find('.wpr-grid').css('opacity', '1');
+									parentItem.find('.wpr-mobile-sub-mega-menu').find('.elementor-element').each(function() {
+										elementorFrontend.elementsHandler.runReadyTrigger($(this));
+									});
 								}
 							});
 						} else {
@@ -838,7 +841,6 @@
 				    subHeight = subSelector.outerHeight();
 
 				if ( subHeight > $(window).height() ) {
-                    console.log(selector.attr('class'))
                     $scope.find('.wpr-mobile-sub-mega-menu').not(selector.find('.wpr-mobile-sub-mega-menu')).hide();
 					$scope.find('.wpr-mobile-mega-menu-wrap').css('overflow-y', 'scroll');
 				}
@@ -4297,14 +4299,16 @@
 			var customDatasets = chartSettings.chart_datasets ? JSON.parse(chartSettings.chart_datasets) : '';
 			
 			var newLegendClickHandler = function (e, legendItem, legend) {
-				const index = legendItem.datasetIndex;
-				const ci = legend.chart;
-				if (ci.isDatasetVisible(index)) {
-					ci.hide(index);
-					legendItem.hidden = true;
-				} else {
-					ci.show(index);
-					legendItem.hidden = false;
+				if ( (chartTypesArray.includes(chartSettings.chart_type) || chartSettings.chart_type === 'radar') ) {
+					const index = legendItem.datasetIndex;
+					const ci = legend.chart;
+					if (ci.isDatasetVisible(index)) {
+						ci.hide(index);
+						legendItem.hidden = true;
+					} else {
+						ci.show(index);
+						legendItem.hidden = false;
+					}
 				}
 			}
 			
@@ -4362,11 +4366,6 @@
 						radius: chartSettings.line_dots === 'yes' ? lineDotsWidth : 0 // default to disabled in all datasets
 					}
 				},
-				scale: {
-					ticks: {
-						backdropColor: 'rgb(128,0,128)'
-					}
-				},
 				scales: { // remove if corrupts other chart_types data
 					x: {
 						reverse: chartSettings.reverse_x == 'yes' ? true : false,
@@ -4405,7 +4404,7 @@
 							maxRotation: chartSettings.rotation_x,
 							minRotation: chartSettings.rotation_x,
 							color: chartSettings.ticks_color_x,
-							backdropColor: 'rgb(128,0,128)',
+							// backdropColor: 'rgb(128,0,128)',
 							font: {
 								size: chartSettings.ticks_font_size_x,
 								family: chartSettings.ticks_font_family_x,
@@ -4451,7 +4450,7 @@
 							maxRotation: chartSettings.rotation_y,
 							minRotation: chartSettings.rotation_y,
 							color: chartSettings.ticks_color_y,
-							backdropColor: 'rgb(128,0,128)',
+							// backdropColor: 'rgb(128,0,128)',
 							font: {
 								size: chartSettings.ticks_font_size_y,
 								family: chartSettings.ticks_font_family_y,
@@ -4541,6 +4540,43 @@
 			};
 
 			!chartTypesArray.includes(chartSettings.chart_type) && delete globalOptions.scales;
+
+			if ( !chartTypesArray.includes(chartSettings.chart_type) && (chartSettings.chart_type !== 'doughnut' && chartSettings.chart_type !== 'pie') ) {
+				
+				globalOptions.scales = {
+					r: {
+						angleLines: {
+						  color: chartSettings.angle_lines_color,
+						},
+						pointLabels: {
+							color: chartSettings.point_labels_color_r,
+							font: {
+								size: chartSettings.point_labels_font_size_r,
+								family: chartSettings.point_labels_font_family_r,
+								style: chartSettings.point_labels_font_style_r,
+								weight: chartSettings.point_labels_font_weight_r,
+							}
+						},
+						ticks: {
+							stepSize: chartSettings.r_step_size,
+							display: chartSettings.display_r_ticks,
+							backdropColor: chartSettings.axis_labels_bg_color,
+							backdropPadding: +chartSettings.axis_labels_padding,
+							color: chartSettings.axis_labels_color,
+						},
+						grid: {
+							display: chartSettings.display_r_axis,
+							drawBorder: chartSettings.display_r_axis,
+							drawOnChartArea: chartSettings.display_r_axis,
+							drawTicks: chartSettings.display_r_axis,
+							color: chartSettings.axis_grid_line_color_r,
+							borderDash: [chartSettings.border_dash_length_r, chartSettings.border_dash_spacing_r],
+							borderDashOffset: chartSettings.border_dash_offset_r,
+							lineWidth: chartSettings.grid_line_width_r,
+						}
+					},
+				}
+			}
 
 			if ('custom' === chartSettings.data_source) {
 				  const data = {
