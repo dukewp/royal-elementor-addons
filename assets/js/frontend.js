@@ -711,7 +711,7 @@
 									subIcon.removeClass(mobileSubIconClass).addClass('fas fa-circle-notch fa-spin');
 								},
 								success: function( response ) {
-									subIcon.removeClass('fas fa-circle-notch fa-spin').addClas(mobileSubIconClass);
+									subIcon.removeClass('fas fa-circle-notch fa-spin').addClass(mobileSubIconClass);
 
 									if ( $scope.hasClass('wpr-mobile-menu-display-offcanvas') ) {
 										parentItem.find('.wpr-menu-offcanvas-back').after(response);

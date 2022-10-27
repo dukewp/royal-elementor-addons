@@ -1980,7 +1980,8 @@ class Wpr_Mega_Menu extends Widget_Base {
 				],
 				'default' => '#ffffff',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-mobile-nav-menu li' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-mobile-nav-menu > li,
+					 {{WRAPPER}} .wpr-mobile-sub-menu li' => 'background-color: {{VALUE}};',
 				],
 			]
 		);
