@@ -715,7 +715,7 @@ class Utilities {
 	*/
 	public static function mega_menu_ajax_loading() {
 		$elementor = \Elementor\Plugin::instance();
-		$mega_id = get_post_meta( $_POST['item_id'], 'wpr-mega-menu-item', true);
+		$mega_id = get_post_meta( $_GET['item_id'], 'wpr-mega-menu-item', true);
 		$content = $elementor->frontend->get_builder_content_for_display($mega_id);
 
 		wp_send_json( $content );
