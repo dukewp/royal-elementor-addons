@@ -15149,6 +15149,10 @@ dl.variation dd {
   margin: 0;
 }
 
+.wpr-acc-panel-content {
+    font-size: 14px;
+}
+
 .wpr-ti-close {
     display: inline-block;
 }
