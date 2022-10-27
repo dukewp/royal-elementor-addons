@@ -198,13 +198,25 @@ class Plugin {
         add_action( 'wp_ajax_nopriv_mailchimp_subscribe', [new Utilities, 'ajax_mailchimp_subscribe'] );
 	}
 
+	public function mega_menu_ajax_loading() {
+		$elementor = \Elementor\Plugin::instance();
+		$mega_id = get_post_meta( $_GET['item_id'], 'wpr-mega-menu-item', true);
+		$content = $elementor->frontend->get_builder_content_for_display($mega_id);
+
+		wp_send_json( $content );
+	}
+
 	public function register_megamenu_route() {
 		add_action( 'rest_api_init', function() {
-			register_rest_route( 'wpraddons/v1', '/wprmegamenu/', array(
-				'methods' => 'GET',
-				'callback' =>  Utilities::mega_menu_ajax_loading(),
-				'permission_callback' => '__return_true'
-			) );
+			register_rest_route(
+				'wpraddons/v1',
+				'/wprmegamenu/',
+				[
+					'methods' => 'GET',
+					'callback' =>  [$this, 'mega_menu_ajax_loading'],
+					'permission_callback' => '__return_true'
+				]
+			);
 		} );
 	}
 
