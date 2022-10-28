@@ -54,22 +54,21 @@ if ( ! defined( 'ABSPATH' ) ) {
                 ?>
 
                 <li>
-                    <p><?php echo sanitize_text_field($_POST['number_of_results']) ?></p>
-                        <?php if ( 'yes' === sanitize_text_field($_POST['wpr_show_ajax_thumbnail']) ) :
-                            if ( has_post_thumbnail() ) :
-                                echo '<a class="wpr-ajax-img-wrap" target="'. sanitize_text_field($_POST['ajax_search_link_target']) .'" href="'. esc_url( get_the_permalink() ) .'">'.  $post_thumb .'</a>';
-                                // echo '<a class="wpr-ajax-img-wrap" target="'. sanitize_text_field($_POST['ajax_search_link_target']) .'" href="'. esc_url( get_the_permalink() ) .'">'.  '<img src="'. Group_Control_Image_Size::get_attachment_image_src( get_post_thumbnail_id(), 'ajax_search_image', [$_POST['ajax_search_image_size']] ) .'"/>' .'</a>';
-                            else :
-                                echo '<a class="wpr-ajax-img-wrap" target="'. sanitize_text_field($_POST['ajax_search_link_target']) .'" href='. esc_url( get_the_permalink() ) .'><img src='.Utils::get_placeholder_image_src().'></a>';
-                            endif ;
-                        endif ; ?>
-                        <div class="wpr-ajax-search-content">
-                            <a target="<?php echo sanitize_text_field($_POST['ajax_search_link_target']) ?>" class="wpr-ajax-title" href="<?php echo esc_url( the_permalink() ); ?>"><?php the_title();?></a>
-                            <p class="wpr-ajax-desc"><a target="<?php echo sanitize_text_field($_POST['ajax_search_link_target']) ?>" href="<?php echo esc_url( the_permalink() ); ?>"><?php echo wp_trim_words(get_the_content(), sanitize_text_field($_POST['number_of_words'])); ?></a></p>
-                            <?php if ( sanitize_text_field($_POST['show_view_result_btn']) ) : ?>
-                                <a target="<?php echo sanitize_text_field($_POST['ajax_search_link_target']) ?>" class="wpr-view-result" href="<?php echo esc_url( the_permalink() ); ?>"><?php echo sanitize_text_field($_POST['wpr_view_result_text']) ?></a>
-                            <?php endif; ?>
-                        </div>
+                    <?php if ( 'yes' === sanitize_text_field($_POST['wpr_show_ajax_thumbnail']) ) :
+                        if ( has_post_thumbnail() ) :
+                            echo '<a class="wpr-ajax-img-wrap" target="'. sanitize_text_field($_POST['ajax_search_link_target']) .'" href="'. esc_url( get_the_permalink() ) .'">'.  $post_thumb .'</a>';
+                            // echo '<a class="wpr-ajax-img-wrap" target="'. sanitize_text_field($_POST['ajax_search_link_target']) .'" href="'. esc_url( get_the_permalink() ) .'">'.  '<img src="'. Group_Control_Image_Size::get_attachment_image_src( get_post_thumbnail_id(), 'ajax_search_image', [$_POST['ajax_search_image_size']] ) .'"/>' .'</a>';
+                        else :
+                            echo '<a class="wpr-ajax-img-wrap" target="'. sanitize_text_field($_POST['ajax_search_link_target']) .'" href='. esc_url( get_the_permalink() ) .'><img src='.Utils::get_placeholder_image_src().'></a>';
+                        endif ;
+                    endif ; ?>
+                    <div class="wpr-ajax-search-content">
+                        <a target="<?php echo sanitize_text_field($_POST['ajax_search_link_target']) ?>" class="wpr-ajax-title" href="<?php echo esc_url( the_permalink() ); ?>"><?php the_title();?></a>
+                        <p class="wpr-ajax-desc"><a target="<?php echo sanitize_text_field($_POST['ajax_search_link_target']) ?>" href="<?php echo esc_url( the_permalink() ); ?>"><?php echo wp_trim_words(get_the_content(), sanitize_text_field($_POST['number_of_words'])); ?></a></p>
+                        <?php if ( sanitize_text_field($_POST['show_view_result_btn']) ) : ?>
+                            <a target="<?php echo sanitize_text_field($_POST['ajax_search_link_target']) ?>" class="wpr-view-result" href="<?php echo esc_url( the_permalink() ); ?>"><?php echo sanitize_text_field($_POST['wpr_view_result_text']) ?></a>
+                        <?php endif; ?>
+                    </div>
                 </li>
                 <?php 
                 $post_count++;
