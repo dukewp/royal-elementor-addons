@@ -54,6 +54,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 ?>
 
                 <li>
+                    <p><?php echo sanitize_text_field($_POST['number_of_results']) ?></p>
                         <?php if ( 'yes' === sanitize_text_field($_POST['wpr_show_ajax_thumbnail']) ) :
                             if ( has_post_thumbnail() ) :
                                 echo '<a class="wpr-ajax-img-wrap" target="'. sanitize_text_field($_POST['ajax_search_link_target']) .'" href="'. esc_url( get_the_permalink() ) .'">'.  $post_thumb .'</a>';
