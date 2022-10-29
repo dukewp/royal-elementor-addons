@@ -921,6 +921,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     overflow: hidden; 
     width: 100%;
     text-align: left;
+    font-size: 1rem;
 }
 
 .wpr-nav-menu-vertical .wpr-sub-mega-menu {
@@ -15147,10 +15148,6 @@ dl.variation dd {
 .wpr-advanced-accordion .wpr-acc-panel p,
 .wpr-advanced-accordion .wpr-acc-panel div {
   margin: 0;
-}
-
-.wpr-acc-panel-content {
-    font-size: 14px;
 }
 
 .wpr-ti-close {
