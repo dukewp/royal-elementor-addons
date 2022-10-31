@@ -52,7 +52,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 $post_thumb = ob_get_clean();
                 ?>
 
-                <li>
+                <li data-number-of-results = <?php echo $the_query->found_posts ?>>
                     <?php if ( 'yes' === sanitize_text_field($_POST['wpr_show_ajax_thumbnail']) ) :
                         if ( has_post_thumbnail() ) :
                             echo '<a class="wpr-ajax-img-wrap" target="'. sanitize_text_field($_POST['wpr_ajax_search_link_target']) .'" href="'. esc_url( get_the_permalink() ) .'">'.  $post_thumb .'</a>';
