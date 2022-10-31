@@ -46,6 +46,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                     continue;
                 endif;
 
+                if ($post_count == $_POST['wpr_number_of_results']) :
+                    return;
+                endif;
+
                 ob_start();
                 // the_post_thumbnail(sanitize_text_field($_POST['ajax_search_img_size']));
                 the_post_thumbnail('medium');
