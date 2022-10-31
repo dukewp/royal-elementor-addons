@@ -447,7 +447,7 @@ class WPR_Templates_Data {
 			],
 			'architecture' => [
 				'v1' => [
-					'name' => 'Architecture',
+					'name' => 'Architecture 1',
 					'pages' => 'home,about,portfolio,services,faq,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
 					'tags' => 'architecture company slider interior design designer landscaping office zoning building slider',
@@ -456,6 +456,17 @@ class WPR_Templates_Data {
 					'off-canvas' => false,
 					'price' => $is_pro_active ? 'free' : 'pro',
 					'priority' => 220,
+				],
+				'v2' => [
+					'name' => 'Architecture 2',
+					'pages' => 'home,about,projects,services,team,pricing,faq,contact,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'architecture company slider interior design designer landscaping office zoning building slider architecture commercial construction creative decorations exterior designer home decorations interior designer landscape design modern real-estate residential',
+					'theme-builder' => true,
+					'woo-builder' => false,
+					'off-canvas' => false,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'priority' => 223,
 				],
 			],
 			'fooddelivery' => [
@@ -571,19 +582,6 @@ class WPR_Templates_Data {
 					'off-canvas' => false,
 					'price' => $is_pro_active ? 'free' : 'free',
 					'priority' => 300,
-				],
-			],
-			'megatest' => [
-				'v1' => [
-					'name' => 'megatest',
-					'pages' => 'home,about,services,projects,contact,',
-					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
-					'tags' => 'megatest nature influencer travel blogger blog content slider tourism influencers creator travel forest slider generic multipurpose national-park nature-park sanctuary wilderness hitchhiking mountain river lakes outdoors',
-					'theme-builder' => true,
-					'woo-builder' => false,
-					'off-canvas' => false,
-					'price' => $is_pro_active ? 'free' : 'free',
-					'priority' => 1,
 				],
 			],
 		];

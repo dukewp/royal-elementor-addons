@@ -921,6 +921,10 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     overflow: hidden; 
     width: 100%;
     text-align: left;
+}
+
+.wpr-sub-mega-menu,
+.wpr-sub-mega-menu ul {
     font-size: 1rem;
 }
 

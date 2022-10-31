@@ -433,7 +433,7 @@ function setup_wpr_templates( $kit ) {
 */
 function wpr_fix_elementor_images() {
     $args = array(
-        'post_type' => ['wpr_templates', 'page'],
+        'post_type' => ['wpr_templates', 'wpr_mega_menu', 'page'],
         'posts_per_page' => '-1',
         'meta_key' => '_elementor_version'
     );
