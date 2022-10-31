@@ -670,7 +670,7 @@ class Wpr_Search extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'vh',
-					'size' => 30,
+					'size' => 20,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-data-fetch .wpr-no-results' => 'height: {{SIZE}}{{UNIT}};',
