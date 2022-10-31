@@ -1039,6 +1039,84 @@ class Wpr_Search extends Widget_Base {
 
 		$this->end_controls_section();
 
+		// Tab: Content ==============
+		// Section: Pagination -------
+		$this->start_controls_section(
+			'section_grid_pagination',
+			[
+				'label' => esc_html__( 'Pagination', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$this->add_control(
+			'pagination_load_more_text',
+			[
+				'label' => esc_html__( 'Load More Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => 'Load More'
+			]
+		);
+
+		$this->add_control(
+			'pagination_finish_text',
+			[
+				'label' => esc_html__( 'Finish Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => 'End of Content.'
+			]
+		);
+
+		$this->add_control(
+			'pagination_animation',
+			[
+				'label' => esc_html__( 'Select Animation', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'loader-1',
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'loader-1' => esc_html__( 'Loader 1', 'wpr-addons' ),
+					'loader-2' => esc_html__( 'Loader 2', 'wpr-addons' ),
+					'loader-3' => esc_html__( 'Loader 3', 'wpr-addons' ),
+					'loader-4' => esc_html__( 'Loader 4', 'wpr-addons' ),
+					'loader-5' => esc_html__( 'Loader 5', 'wpr-addons' ),
+					'loader-6' => esc_html__( 'Loader 6', 'wpr-addons' ),
+				]
+			]
+		);
+
+		$this->add_control(
+			'pagination_align',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'left'    => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					],
+					'justify' => [
+						'title' => esc_html__( 'Justified', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-justify',
+					],
+				],
+				'default' => 'center',
+				'prefix_class' => 'wpr-ajax-search-pagination-',
+				'render_type' => 'template',
+				'separator' => 'before',
+			]
+		);
+
+		$this->end_controls_section();
+
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'search', [
 			'Custom Search Query - Only Posts, Pages or Custom Post Types',
@@ -1590,7 +1668,472 @@ class Wpr_Search extends Widget_Base {
 		// Styles
 		// Section: AJAX ------------
 		$this->add_section_style_ajax();
+
+		// Styles ====================
+		// Section: Pagination -------
+		$this->start_controls_section(
+			'section_style_pagination',
+			[
+				'label' => esc_html__( 'Pagination', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'show_label' => false
+			]
+		);
+
+		$this->start_controls_tabs( 'tabs_grid_pagination_style' );
+
+		$this->start_controls_tab(
+			'tab_grid_pagination_normal',
+			[
+				'label' => esc_html__( 'Normal', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'pagination_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-ajax-search-pagination a' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-ajax-search-pagination svg' => 'fill: {{VALUE}}',
+					'{{WRAPPER}} .wpr-ajax-search-pagination > div > span' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-ajax-search-pagination span.wpr-disabled-arrow' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'pagination_bg_color',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-ajax-search-pagination a' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-ajax-search-pagination > div > span' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-ajax-search-pagination span.wpr-disabled-arrow' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-pagination-finish' => 'color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'pagination_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-ajax-search-pagination a' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-ajax-search-pagination > div > span' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-ajax-search-pagination span.wpr-disabled-arrow' => 'border-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'pagination_box_shadow',
+				'selector' => '{{WRAPPER}} .wpr-ajax-search-pagination a, {{WRAPPER}} .wpr-ajax-search-pagination > div > span',
+			]
+		);
+
+		$this->add_control(
+			'pagination_loader_color',
+			[
+				'label'  => esc_html__( 'Loader Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-double-bounce .wpr-child' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wave .wpr-rect' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-spinner-pulse' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-chasing-dots .wpr-child' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-three-bounce .wpr-child' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-fading-circle .wpr-circle:before' => 'background-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'pagination_wrapper_color',
+			[
+				'label'  => esc_html__( 'Wrapper Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-ajax-search-pagination' => 'background-color: {{VALUE}}',
+				],
+				'separator' => 'after',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_grid_pagination_hover',
+			[
+				'label' => esc_html__( 'Hover', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'pagination_color_hr',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-ajax-search-pagination a:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-ajax-search-pagination a:hover svg' => 'fill: {{VALUE}}',
+					'{{WRAPPER}} .wpr-ajax-search-pagination > div > span:not(.wpr-disabled-arrow):hover' => 'color: {{VALUE}}'
+				],
+			]
+		);
+
+		$this->add_control(
+			'pagination_bg_color_hr',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#4A45D2',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-ajax-search-pagination a:hover' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-ajax-search-pagination > div > span:not(.wpr-disabled-arrow):hover' => 'background-color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_control(
+			'pagination_border_color_hr',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-ajax-search-pagination a:hover' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-ajax-search-pagination > div > span:not(.wpr-disabled-arrow):hover' => 'border-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'pagination_box_shadow_hr',
+				'selector' => '{{WRAPPER}} .wpr-ajax-search-pagination a:hover, {{WRAPPER}} .wpr-ajax-search-pagination > div > span:not(.wpr-disabled-arrow):hover',
+				'separator' => 'after',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_control(
+			'pagination_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.1,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-ajax-search-pagination a' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-ajax-search-pagination svg' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-ajax-search-pagination > div > span' => 'transition-duration: {{VALUE}}s',
+				],
+				'separator' => 'after',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'pagination_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-ajax-search-pagination, {{WRAPPER}} .wpr-ajax-search-pagination a'
+			]
+		);
+
+		$this->add_responsive_control(
+			'pagination_icon_size',
+			[
+				'label' => esc_html__( 'Icon Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 5,
+						'max' => 30,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 15,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-ajax-search-pagination i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-ajax-search-pagination svg' => 'width: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'pagination_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-ajax-search-pagination a' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .wpr-ajax-search-pagination > div > span' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .wpr-ajax-search-pagination span.wpr-disabled-arrow' => 'border-style: {{VALUE}}',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'pagination_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-ajax-search-pagination a' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-ajax-search-pagination > div > span' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-ajax-search-pagination span.wpr-disabled-arrow' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'pagination_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'pagination_distance_from_grid',
+			[
+				'label' => esc_html__( 'Distance From Grid', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 25,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-ajax-search-pagination' => 'margin-top: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'pagination_gutter',
+			[
+				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 25,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+				'selectors' => [
+					// '{{WRAPPER}} .wpr-ajax-search-pagination a' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-ajax-search-pagination a:not(:last-child)' => 'margin-right: {{SIZE}}{{UNIT}};', 
+					'{{WRAPPER}} .wpr-ajax-search-pagination > div > span' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-ajax-search-pagination > div > a.wpr-prev-page' => 'margin-right: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}} .wpr-ajax-search-pagination span.wpr-disabled-arrow' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-ajax-search-pagination span.wpr-disabled-arrow:not(:last-child)' => 'margin-right: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'pagination_icon_spacing',
+			[
+				'label' => esc_html__( 'Icon Spacing', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 25,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-prev-post-link i' => 'padding-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-next-post-link i' => 'padding-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-first-page i' => 'padding-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-prev-page i' => 'padding-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-next-page i' => 'padding-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-last-page i' => 'padding-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-prev-post-link svg' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-next-post-link svg' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-first-page svg' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-prev-page svg' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-next-page svg' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-last-page svg' => 'margin-left: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'pagination_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 8,
+					'right' => 20,
+					'bottom' => 8,
+					'left' => 20,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-ajax-search-pagination a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-ajax-search-pagination > div > span' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-ajax-search-pagination span.wpr-disabled-arrow' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'pagination_wrapper_padding',
+			[
+				'label' => esc_html__( 'Wrapper Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-ajax-search-pagination' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'pagination_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 3,
+					'right' => 3,
+					'bottom' => 3,
+					'left' => 3,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-ajax-search-pagination a' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-ajax-search-pagination > div > span' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->end_controls_section();
 		
+	}
+
+	public function render_search_pagination($settings) {
+		echo '<div class="wpr-ajax-search-pagination elementor-clearfix wpr-ajax-search-pagination-load-more">';
+		echo '<button class="wpr-load-more-results">'. esc_html__($settings['pagination_load_more_text'], 'wpr-addons') .'</button>';
+		echo '<div class="wpr-pagination-loading">';
+			switch ( $settings['pagination_animation'] ) {
+				case 'loader-1':
+					echo '<div class="wpr-double-bounce">';
+						echo '<div class="wpr-child wpr-double-bounce1"></div>';
+						echo '<div class="wpr-child wpr-double-bounce2"></div>';
+					echo '</div>';
+					break;
+				case 'loader-2':
+					echo '<div class="wpr-wave">';
+						echo '<div class="wpr-rect wpr-rect1"></div>';
+						echo '<div class="wpr-rect wpr-rect2"></div>';
+						echo '<div class="wpr-rect wpr-rect3"></div>';
+						echo '<div class="wpr-rect wpr-rect4"></div>';
+						echo '<div class="wpr-rect wpr-rect5"></div>';
+					echo '</div>';
+					break;
+				case 'loader-3':
+					echo '<div class="wpr-spinner wpr-spinner-pulse"></div>';
+					break;
+				case 'loader-4':
+					echo '<div class="wpr-chasing-dots">';
+						echo '<div class="wpr-child wpr-dot1"></div>';
+						echo '<div class="wpr-child wpr-dot2"></div>';
+					echo '</div>';
+					break;
+				case 'loader-5':
+					echo '<div class="wpr-three-bounce">';
+						echo '<div class="wpr-child wpr-bounce1"></div>';
+						echo '<div class="wpr-child wpr-bounce2"></div>';
+						echo '<div class="wpr-child wpr-bounce3"></div>';
+					echo '</div>';
+					break;
+				case 'loader-6':
+					echo '<div class="wpr-fading-circle">';
+						echo '<div class="wpr-circle wpr-circle1"></div>';
+						echo '<div class="wpr-circle wpr-circle2"></div>';
+						echo '<div class="wpr-circle wpr-circle3"></div>';
+						echo '<div class="wpr-circle wpr-circle4"></div>';
+						echo '<div class="wpr-circle wpr-circle5"></div>';
+						echo '<div class="wpr-circle wpr-circle6"></div>';
+						echo '<div class="wpr-circle wpr-circle7"></div>';
+						echo '<div class="wpr-circle wpr-circle8"></div>';
+						echo '<div class="wpr-circle wpr-circle9"></div>';
+						echo '<div class="wpr-circle wpr-circle10"></div>';
+						echo '<div class="wpr-circle wpr-circle11"></div>';
+						echo '<div class="wpr-circle wpr-circle12"></div>';
+					echo '</div>';
+					break;
+				
+				default:
+					break;
+			}
+		echo '</div>';
+
+		echo '<p class="wpr-no-more-results">'. esc_html($settings['pagination_finish_text']) .'</p>';
+
+		echo '</div>';
 	}
 
 	protected function render_search_submit_btn() {
@@ -1670,11 +2213,9 @@ class Wpr_Search extends Widget_Base {
 		<div class="wpr-data-fetch">
 			<span class="wpr-close-search"></span>
 			<ul></ul>
-			<button class="wpr-load-more-results"><?php echo esc_html__('Load More', 'wpr-addons') ?></button>
-    		<p class="wpr-no-more-results"><?php echo esc_html__('No More Results', 'wpr-addons') ?></p>
+			<?php echo $this->render_search_pagination($settings); ?>
 		</div>
 		
-
 		<?php
 
 	}

@@ -7082,15 +7082,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 }
 
-.wpr-data-fetch .wpr-pagination-loading * {
-    color: black !important;
-    background-color: dodgerblue !important;
-}
-
-.wpr-data-fetch .wpr-double-bounce * {
-    background-color: black !important;
-}
-
 .wpr-data-fetch ul::-webkit-scrollbar {
     width: 4px;
     background-color: transparent;
