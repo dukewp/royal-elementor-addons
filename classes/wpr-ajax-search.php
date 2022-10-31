@@ -76,7 +76,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             wp_reset_postdata();
             
         else :
-            if (0 < sanitize_text_field($_POST['search_results_offset'])) {
+            if (0 < sanitize_text_field($_POST['wpr_search_results_offset'])) {
             } else {
                 echo '<p class="wpr-no-results">'.esc_html__('No Results Found', 'wpr-addons').'</p>';
             }
