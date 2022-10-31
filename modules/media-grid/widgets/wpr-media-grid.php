@@ -193,6 +193,7 @@ class Wpr_Media_Grid extends Widget_Base {
 			]
 		);
 	}
+	
 	public function add_controls_group_layout_slider_autoplay() {
 		$this->add_control(
 			'layout_slider_autoplay',
