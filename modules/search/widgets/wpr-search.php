@@ -1053,7 +1053,7 @@ class Wpr_Search extends Widget_Base {
 		$this->start_controls_section(
 			'section_ajax_search_pagination',
 			[
-				'label' => esc_html__( 'Pagination', 'wpr-addons' ),
+				'label' => esc_html__( 'AJAX Pagination', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
 				'condition' => [
 					'ajax_search' => 'yes'
@@ -1682,7 +1682,7 @@ class Wpr_Search extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_pagination',
 			[
-				'label' => esc_html__( 'Pagination', 'wpr-addons' ),
+				'label' => esc_html__( 'AJAX Pagination', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 				'condition' => [
@@ -1864,29 +1864,6 @@ class Wpr_Search extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'pagination_icon_size',
-			[
-				'label' => esc_html__( 'Icon Size', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 5,
-						'max' => 30,
-					],
-				],				
-				'default' => [
-					'unit' => 'px',
-					'size' => 15,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-ajax-search-pagination i' => 'font-size: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-ajax-search-pagination svg' => 'width: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
 		$this->add_control(
 			'pagination_border_type',
 			[
@@ -1951,63 +1928,6 @@ class Wpr_Search extends Widget_Base {
 					'{{WRAPPER}} .wpr-ajax-search-pagination' => 'margin-top: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before'
-			]
-		);
-
-		$this->add_control(
-			'pagination_gutter',
-			[
-				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px' ],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 25,
-					],
-				],				
-				'default' => [
-					'unit' => 'px',
-					'size' => 10,
-				],
-				'selectors' => [
-					// '{{WRAPPER}} .wpr-ajax-search-pagination .wpr-load-more-results' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-ajax-search-pagination > div > span' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-ajax-search-pagination > div > a.wpr-prev-page' => 'margin-right: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'pagination_icon_spacing',
-			[
-				'label' => esc_html__( 'Icon Spacing', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 25,
-					],
-				],				
-				'default' => [
-					'unit' => 'px',
-					'size' => 10,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-prev-post-link i' => 'padding-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-next-post-link i' => 'padding-left: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-first-page i' => 'padding-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-prev-page i' => 'padding-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-next-page i' => 'padding-left: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-last-page i' => 'padding-left: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-prev-post-link svg' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-next-post-link svg' => 'margin-left: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-first-page svg' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-prev-page svg' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-next-page svg' => 'margin-left: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-last-page svg' => 'margin-left: {{SIZE}}{{UNIT}};',
-				],
 			]
 		);
 
@@ -2180,7 +2100,7 @@ class Wpr_Search extends Widget_Base {
 				'title' => esc_html__( 'Search', 'wpr-addons' ),
 				'value' => get_search_query(),
 				'wpr-query-type' => $settings['search_query'],
-				'number-of-results' => isset($settings['number_of_results']) ? $settings['number_of_results'] : -1,
+				'number-of-results' => isset($settings['number_of_results']) && wpr_fs()->can_use_premium_code() ? $settings['number_of_results'] : 2,
 				'ajax-search' => isset($settings['ajax_search']) ? $settings['ajax_search'] : '',
 				'number-of-words' => isset($settings['number_of_words_in_excerpt']) ? $settings['number_of_words_in_excerpt'] : '',
 				'show-ajax-thumbnails' => isset($settings['show_ajax_thumbnails']) ? $settings['show_ajax_thumbnails'] : '',
