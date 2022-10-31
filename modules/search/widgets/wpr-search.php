@@ -41,6 +41,10 @@ class Wpr_Search extends Widget_Base {
 		return [ 'royal', 'search', 'search widget', 'ajax search' ];
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-animations-css', 'wpr-link-animations-css', 'wpr-button-animations-css', 'wpr-loading-animations-css', 'wpr-lightgallery-css' ];
+	}
+
     public function get_custom_help_url() {
     	if ( empty(get_option('wpr_wl_plugin_links')) )
         // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-search-help-btn';
@@ -1663,7 +1667,12 @@ class Wpr_Search extends Widget_Base {
 
 			?>
 		</form>
-		<div class="wpr-data-fetch"></div>
+		<div class="wpr-data-fetch">
+			<span class="wpr-close-search"></span>
+			<ul></ul>
+			<button class="wpr-load-more-results"><?php echo esc_html__('Load More', 'wpr-addons') ?></button>
+    		<p class="wpr-no-more-results"><?php echo esc_html__('No More Results', 'wpr-addons') ?></p>
+		</div>
 		
 
 		<?php
