@@ -41,13 +41,11 @@ if ( ! defined( 'ABSPATH' ) ) {
         if( $the_query->have_posts() ) :
             $number_of_queried_posts = $the_query->found_posts;
             $post_count = 0;
-                while( $the_query->have_posts() ) : $the_query->the_post(); 
+
+                while( $the_query->have_posts() ) : $the_query->the_post();
+
                 if ( ( !has_post_thumbnail() && 'yes' === sanitize_text_field($_POST['wpr_exclude_without_thumb'])) ) : 
                     continue;
-                endif;
-
-                if ($post_count == $_POST['wpr_number_of_results']) :
-                    return;
                 endif;
 
                 ob_start();
