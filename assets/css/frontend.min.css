@@ -7296,7 +7296,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
   == Search
   --------------------------------------------------------------*/
 
-.wpr-data-fetch .wpr-grid-pagination {
+.wpr-data-fetch .wpr-ajax-search-pagination {
     text-align: center;
 
 }

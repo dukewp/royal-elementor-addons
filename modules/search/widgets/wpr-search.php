@@ -1940,7 +1940,7 @@ class Wpr_Search extends Widget_Base {
 		$this->add_responsive_control(
 			'pagination_distance_from_grid',
 			[
-				'label' => esc_html__( 'Distance From Grid', 'wpr-addons' ),
+				'label' => esc_html__( 'Distance From List', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px' ],
 				'range' => [

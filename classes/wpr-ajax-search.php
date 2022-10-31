@@ -34,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 'posts_per_page' => sanitize_text_field($_POST['wpr_number_of_results']), 
                 's' => sanitize_text_field( $_POST['wpr_keyword'] ), 
                 'post_type' => $_POST['wpr_query_type'] === 'all' || !wpr_fs()->can_use_premium_code() ? $all_post_types : array( sanitize_text_field($_POST['wpr_query_type']) ),
-                'offset' => sanitize_text_field($_POST['search_results_offset'])
+                'offset' => sanitize_text_field($_POST['wpr_search_results_offset'])
             ]
         );
         
