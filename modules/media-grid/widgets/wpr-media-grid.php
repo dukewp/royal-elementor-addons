@@ -193,8 +193,7 @@ class Wpr_Media_Grid extends Widget_Base {
 			]
 		);
 	}
-	
-	public function add_control_layout_slider_autoplay() {
+	public function add_controls_group_layout_slider_autoplay() {
 		$this->add_control(
 			'layout_slider_autoplay',
 			[
@@ -204,8 +203,6 @@ class Wpr_Media_Grid extends Widget_Base {
 			]
 		);
 	}
-	
-	public function add_controls_group_layout_slider_autoplay() {}
 	
 	public function add_option_element_select() {
 		return [
