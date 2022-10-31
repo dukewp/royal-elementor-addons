@@ -1051,10 +1051,13 @@ class Wpr_Search extends Widget_Base {
 		// Tab: Content ==============
 		// Section: Pagination -------
 		$this->start_controls_section(
-			'section_grid_pagination',
+			'section_ajax_search_pagination',
 			[
 				'label' => esc_html__( 'Pagination', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
+				'condition' => [
+					'ajax_search' => 'yes'
+				]
 			]
 		);
 
@@ -1111,11 +1114,7 @@ class Wpr_Search extends Widget_Base {
 					'right' => [
 						'title' => esc_html__( 'Right', 'wpr-addons' ),
 						'icon' => 'eicon-text-align-right',
-					],
-					'justify' => [
-						'title' => esc_html__( 'Justified', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-justify',
-					],
+					]
 				],
 				'default' => 'center',
 				'prefix_class' => 'wpr-ajax-search-pagination-',
@@ -1685,7 +1684,10 @@ class Wpr_Search extends Widget_Base {
 			[
 				'label' => esc_html__( 'Pagination', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
-				'show_label' => false
+				'show_label' => false,
+				'condition' => [
+					'ajax_search' => 'yes'
+				]
 			]
 		);
 
@@ -1705,10 +1707,9 @@ class Wpr_Search extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#ffffff',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-ajax-search-pagination a' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-load-more-results' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-ajax-search-pagination svg' => 'fill: {{VALUE}}',
-					'{{WRAPPER}} .wpr-ajax-search-pagination > div > span' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-ajax-search-pagination span.wpr-disabled-arrow' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-ajax-search-pagination > div > span' => 'color: {{VALUE}}'
 				],
 			]
 		);
@@ -1720,10 +1721,9 @@ class Wpr_Search extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#605BE5',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-ajax-search-pagination a' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-load-more-results' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-ajax-search-pagination > div > span' => 'background-color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-ajax-search-pagination span.wpr-disabled-arrow' => 'background-color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-pagination-finish' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-no-more-results' => 'color: {{VALUE}}',
 				]
 			]
 		);
@@ -1735,9 +1735,8 @@ class Wpr_Search extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#E8E8E8',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-ajax-search-pagination a' => 'border-color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-ajax-search-pagination > div > span' => 'border-color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-ajax-search-pagination span.wpr-disabled-arrow' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-load-more-results' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-ajax-search-pagination > div > span' => 'border-color: {{VALUE}}'
 				],
 			]
 		);
@@ -1746,7 +1745,7 @@ class Wpr_Search extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'pagination_box_shadow',
-				'selector' => '{{WRAPPER}} .wpr-ajax-search-pagination a, {{WRAPPER}} .wpr-ajax-search-pagination > div > span',
+				'selector' => '{{WRAPPER}} .wpr-ajax-search-pagination .wpr-load-more-results, {{WRAPPER}} .wpr-ajax-search-pagination > div > span',
 			]
 		);
 
@@ -1795,9 +1794,8 @@ class Wpr_Search extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#ffffff',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-ajax-search-pagination a:hover' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-ajax-search-pagination a:hover svg' => 'fill: {{VALUE}}',
-					'{{WRAPPER}} .wpr-ajax-search-pagination > div > span:not(.wpr-disabled-arrow):hover' => 'color: {{VALUE}}'
+					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-load-more-results:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-load-more-results:hover svg' => 'fill: {{VALUE}}',
 				],
 			]
 		);
@@ -1809,8 +1807,7 @@ class Wpr_Search extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#4A45D2',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-ajax-search-pagination a:hover' => 'background-color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-ajax-search-pagination > div > span:not(.wpr-disabled-arrow):hover' => 'background-color: {{VALUE}}'
+					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-load-more-results:hover' => 'background-color: {{VALUE}}',
 				]
 			]
 		);
@@ -1822,8 +1819,7 @@ class Wpr_Search extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#E8E8E8',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-ajax-search-pagination a:hover' => 'border-color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-ajax-search-pagination > div > span:not(.wpr-disabled-arrow):hover' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-load-more-results:hover' => 'border-color: {{VALUE}}',
 				]
 			]
 		);
@@ -1832,7 +1828,7 @@ class Wpr_Search extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'pagination_box_shadow_hr',
-				'selector' => '{{WRAPPER}} .wpr-ajax-search-pagination a:hover, {{WRAPPER}} .wpr-ajax-search-pagination > div > span:not(.wpr-disabled-arrow):hover',
+				'selector' => '{{WRAPPER}} .wpr-ajax-search-pagination .wpr-load-more-results:hover',
 				'separator' => 'after',
 			]
 		);
@@ -1851,7 +1847,7 @@ class Wpr_Search extends Widget_Base {
 				'max' => 5,
 				'step' => 0.1,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-ajax-search-pagination a' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-load-more-results' => 'transition-duration: {{VALUE}}s',
 					'{{WRAPPER}} .wpr-ajax-search-pagination svg' => 'transition-duration: {{VALUE}}s',
 					'{{WRAPPER}} .wpr-ajax-search-pagination > div > span' => 'transition-duration: {{VALUE}}s',
 				],
@@ -1864,7 +1860,7 @@ class Wpr_Search extends Widget_Base {
 			[
 				'name'     => 'pagination_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-ajax-search-pagination, {{WRAPPER}} .wpr-ajax-search-pagination a'
+				'selector' => '{{WRAPPER}} .wpr-ajax-search-pagination, {{WRAPPER}} .wpr-ajax-search-pagination .wpr-load-more-results'
 			]
 		);
 
@@ -1906,9 +1902,8 @@ class Wpr_Search extends Widget_Base {
 				],
 				'default' => 'none',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-ajax-search-pagination a' => 'border-style: {{VALUE}};',
-					'{{WRAPPER}} .wpr-ajax-search-pagination > div > span' => 'border-style: {{VALUE}};',
-					'{{WRAPPER}} .wpr-ajax-search-pagination span.wpr-disabled-arrow' => 'border-style: {{VALUE}}',
+					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-load-more-results' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .wpr-ajax-search-pagination > div > span' => 'border-style: {{VALUE}};'
 				],
 				'separator' => 'before',
 			]
@@ -1927,9 +1922,8 @@ class Wpr_Search extends Widget_Base {
 					'left' => 1,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-ajax-search-pagination a' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-load-more-results' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-ajax-search-pagination > div > span' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-ajax-search-pagination span.wpr-disabled-arrow' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'condition' => [
 					'pagination_border_type!' => 'none',
@@ -1977,12 +1971,9 @@ class Wpr_Search extends Widget_Base {
 					'size' => 10,
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .wpr-ajax-search-pagination a' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-ajax-search-pagination a:not(:last-child)' => 'margin-right: {{SIZE}}{{UNIT}};', 
+					// '{{WRAPPER}} .wpr-ajax-search-pagination .wpr-load-more-results' => 'margin-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-ajax-search-pagination > div > span' => 'margin-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-ajax-search-pagination > div > a.wpr-prev-page' => 'margin-right: {{SIZE}}{{UNIT}};',
-					// '{{WRAPPER}} .wpr-ajax-search-pagination span.wpr-disabled-arrow' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-ajax-search-pagination span.wpr-disabled-arrow:not(:last-child)' => 'margin-right: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -2033,9 +2024,8 @@ class Wpr_Search extends Widget_Base {
 					'left' => 20,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-ajax-search-pagination a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-load-more-results' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-ajax-search-pagination > div > span' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-ajax-search-pagination span.wpr-disabled-arrow' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -2065,13 +2055,13 @@ class Wpr_Search extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 3,
-					'right' => 3,
-					'bottom' => 3,
-					'left' => 3,
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-ajax-search-pagination a' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-ajax-search-pagination .wpr-load-more-results' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-ajax-search-pagination > div > span' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 				'separator' => 'before',
@@ -2083,66 +2073,70 @@ class Wpr_Search extends Widget_Base {
 	}
 
 	public function render_search_pagination($settings) {
-		echo '<div class="wpr-ajax-search-pagination elementor-clearfix wpr-ajax-search-pagination-load-more">';
-		echo '<button class="wpr-load-more-results">'. esc_html__($settings['pagination_load_more_text'], 'wpr-addons') .'</button>';
-		echo '<div class="wpr-pagination-loading">';
-			switch ( $settings['pagination_animation'] ) {
-				case 'loader-1':
-					echo '<div class="wpr-double-bounce">';
-						echo '<div class="wpr-child wpr-double-bounce1"></div>';
-						echo '<div class="wpr-child wpr-double-bounce2"></div>';
-					echo '</div>';
-					break;
-				case 'loader-2':
-					echo '<div class="wpr-wave">';
-						echo '<div class="wpr-rect wpr-rect1"></div>';
-						echo '<div class="wpr-rect wpr-rect2"></div>';
-						echo '<div class="wpr-rect wpr-rect3"></div>';
-						echo '<div class="wpr-rect wpr-rect4"></div>';
-						echo '<div class="wpr-rect wpr-rect5"></div>';
-					echo '</div>';
-					break;
-				case 'loader-3':
-					echo '<div class="wpr-spinner wpr-spinner-pulse"></div>';
-					break;
-				case 'loader-4':
-					echo '<div class="wpr-chasing-dots">';
-						echo '<div class="wpr-child wpr-dot1"></div>';
-						echo '<div class="wpr-child wpr-dot2"></div>';
-					echo '</div>';
-					break;
-				case 'loader-5':
-					echo '<div class="wpr-three-bounce">';
-						echo '<div class="wpr-child wpr-bounce1"></div>';
-						echo '<div class="wpr-child wpr-bounce2"></div>';
-						echo '<div class="wpr-child wpr-bounce3"></div>';
-					echo '</div>';
-					break;
-				case 'loader-6':
-					echo '<div class="wpr-fading-circle">';
-						echo '<div class="wpr-circle wpr-circle1"></div>';
-						echo '<div class="wpr-circle wpr-circle2"></div>';
-						echo '<div class="wpr-circle wpr-circle3"></div>';
-						echo '<div class="wpr-circle wpr-circle4"></div>';
-						echo '<div class="wpr-circle wpr-circle5"></div>';
-						echo '<div class="wpr-circle wpr-circle6"></div>';
-						echo '<div class="wpr-circle wpr-circle7"></div>';
-						echo '<div class="wpr-circle wpr-circle8"></div>';
-						echo '<div class="wpr-circle wpr-circle9"></div>';
-						echo '<div class="wpr-circle wpr-circle10"></div>';
-						echo '<div class="wpr-circle wpr-circle11"></div>';
-						echo '<div class="wpr-circle wpr-circle12"></div>';
-					echo '</div>';
-					break;
-				
-				default:
-					break;
-			}
-		echo '</div>';
+		if ( 'yes' === $settings['ajax_search'] ) :
 
-		echo '<p class="wpr-no-more-results">'. esc_html($settings['pagination_finish_text']) .'</p>';
+			echo '<div class="wpr-ajax-search-pagination elementor-clearfix wpr-ajax-search-pagination-load-more">';
+			echo '<button class="wpr-load-more-results">'. esc_html__($settings['pagination_load_more_text'], 'wpr-addons') .'</button>';
+			echo '<div class="wpr-pagination-loading">';
+				switch ( $settings['pagination_animation'] ) {
+					case 'loader-1':
+						echo '<div class="wpr-double-bounce">';
+							echo '<div class="wpr-child wpr-double-bounce1"></div>';
+							echo '<div class="wpr-child wpr-double-bounce2"></div>';
+						echo '</div>';
+						break;
+					case 'loader-2':
+						echo '<div class="wpr-wave">';
+							echo '<div class="wpr-rect wpr-rect1"></div>';
+							echo '<div class="wpr-rect wpr-rect2"></div>';
+							echo '<div class="wpr-rect wpr-rect3"></div>';
+							echo '<div class="wpr-rect wpr-rect4"></div>';
+							echo '<div class="wpr-rect wpr-rect5"></div>';
+						echo '</div>';
+						break;
+					case 'loader-3':
+						echo '<div class="wpr-spinner wpr-spinner-pulse"></div>';
+						break;
+					case 'loader-4':
+						echo '<div class="wpr-chasing-dots">';
+							echo '<div class="wpr-child wpr-dot1"></div>';
+							echo '<div class="wpr-child wpr-dot2"></div>';
+						echo '</div>';
+						break;
+					case 'loader-5':
+						echo '<div class="wpr-three-bounce">';
+							echo '<div class="wpr-child wpr-bounce1"></div>';
+							echo '<div class="wpr-child wpr-bounce2"></div>';
+							echo '<div class="wpr-child wpr-bounce3"></div>';
+						echo '</div>';
+						break;
+					case 'loader-6':
+						echo '<div class="wpr-fading-circle">';
+							echo '<div class="wpr-circle wpr-circle1"></div>';
+							echo '<div class="wpr-circle wpr-circle2"></div>';
+							echo '<div class="wpr-circle wpr-circle3"></div>';
+							echo '<div class="wpr-circle wpr-circle4"></div>';
+							echo '<div class="wpr-circle wpr-circle5"></div>';
+							echo '<div class="wpr-circle wpr-circle6"></div>';
+							echo '<div class="wpr-circle wpr-circle7"></div>';
+							echo '<div class="wpr-circle wpr-circle8"></div>';
+							echo '<div class="wpr-circle wpr-circle9"></div>';
+							echo '<div class="wpr-circle wpr-circle10"></div>';
+							echo '<div class="wpr-circle wpr-circle11"></div>';
+							echo '<div class="wpr-circle wpr-circle12"></div>';
+						echo '</div>';
+						break;
+					
+					default:
+						break;
+				}
+			echo '</div>';
 
-		echo '</div>';
+			echo '<p class="wpr-no-more-results">'. esc_html($settings['pagination_finish_text']) .'</p>';
+
+			echo '</div>';
+
+		endif;
 	}
 
 	protected function render_search_submit_btn() {

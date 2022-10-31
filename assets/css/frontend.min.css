@@ -7296,6 +7296,39 @@ body:not(.elementor-editor-active) .wpr-template-popup {
   == Search
   --------------------------------------------------------------*/
 
+.wpr-ajax-search-pagination-center .wpr-ajax-search-pagination {
+    text-align: center;
+}
+
+.wpr-ajax-search-pagination-center .wpr-ajax-search-pagination {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+}
+
+.wpr-ajax-search-pagination-left .wpr-ajax-search-pagination {
+    text-align: left;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+}
+
+.wpr-ajax-search-pagination-right .wpr-ajax-search-pagination {
+    text-align: right;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
+}
+
 .wpr-data-fetch .wpr-ajax-search-pagination {
     text-align: center;
 
