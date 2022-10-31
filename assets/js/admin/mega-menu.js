@@ -17,8 +17,6 @@ jQuery(document).ready(function( $ ) {
                     
                 // Settings Button
                 $this.append('<div class="wpr-mm-settings-btn" data-id="'+ id +'" data-depth="'+ depth +'"><span>R</span>Mega Menu</div>');
-
-                // Active Label
             });
             
             // Open Popup
@@ -55,6 +53,9 @@ jQuery(document).ready(function( $ ) {
 
             // Edit Menu Button
             WprMegaMenuSettings.initEditMenuButton( $(this) );
+
+            // Set Tite
+            $('.wpr-mm-popup-title').find('span').text( $(this).closest('li').find('.menu-item-title').text() );
         },
 
         closeSettingsPopup: function() {
@@ -185,14 +186,13 @@ jQuery(document).ready(function( $ ) {
                         $saveButton.append('<span class="dashicons dashicons-yes"></span>');
 
                         setTimeout(function() {
-                            $('.wpr-mm-settings-popup-wrap').fadeOut();
                             $saveButton.find('.dashicons').remove();
+                            $saveButton.text('Save');
+                            $saveButton.blur();
                         }, 1000);
 
                         // Update Settings
                         WprMegaMenuSettings.getLiveSettings[id] = settings;
-
-                        console.log('Settings Saved!' +' - '+ id);
                     }
                 });
             });
@@ -342,10 +342,8 @@ jQuery(document).ready(function( $ ) {
 
                 // Badge
                 $('#wpr_mm_badge_text').val(settings['wpr_mm_badge_text']);
-                $('#wpr_mm_badge_size').val(settings['wpr_mm_badge_size']);
                 $('#wpr_mm_badge_color').val(settings['wpr_mm_badge_color']).trigger('keyup');
                 $('#wpr_mm_badge_bg_color').val(settings['wpr_mm_badge_bg_color']).trigger('keyup');
-                $('#wpr_mm_badge_bdrs').val(settings['wpr_mm_badge_bdrs']);
                 if ( 'true' == settings['wpr_mm_badge_animation'] ) {
                     $('#wpr_mm_badge_animation').prop( 'checked', true );
                 } else {
@@ -374,10 +372,29 @@ jQuery(document).ready(function( $ ) {
 
                 // Badge
                 $('#wpr_mm_badge_text').val('');
-                $('#wpr_mm_badge_size').val('11');
                 $('#wpr_mm_badge_color').val('#ffffff').trigger('keyup');
                 $('#wpr_mm_badge_bg_color').val('#000000').trigger('keyup');
-                $('#wpr_mm_badge_bdrs').val('0');
+                $('#wpr_mm_badge_animation').prop( 'checked', false );
+            }
+
+            if ( 'false' === $('.wpr-mm-settings-wrap').attr('data-pro-active') ) {
+                $('#wpr_mm_render').val('default').trigger('change');
+                $('#wpr_mm_mobile_content').val('mega').trigger('change');
+
+                // Icon
+                if ( '' !== settings['wpr_mm_icon_picker'] ) {
+                    $('.wpr-mm-setting-icon div span').removeClass('wpr-mm-active-icon');
+                    $('.wpr-mm-setting-icon div span:first-child').addClass('wpr-mm-active-icon');
+                    $('.wpr-mm-setting-icon div span:last-child i').removeAttr('class');
+                    $('.wpr-mm-setting-icon div span:last-child i').addClass('fas fa-angle-down');
+                }
+                $('#wpr_mm_icon_color').val('').trigger('change');
+                $('#wpr_mm_icon_size').val('');
+
+                // Badge
+                $('#wpr_mm_badge_text').val('');
+                $('#wpr_mm_badge_color').val('#ffffff').trigger('keyup');
+                $('#wpr_mm_badge_bg_color').val('#000000').trigger('keyup');
                 $('#wpr_mm_badge_animation').prop( 'checked', false );
             }
         }

@@ -60,8 +60,10 @@ class Wpr_Business_Hours extends Widget_Base {
 
 	public function add_repeater_args_highlight() {
 		return [
-			'type' => Controls_Manager::HIDDEN,
-			'default' => ''
+			'label' => sprintf( __( 'Highlight this Item %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+			'type' => Controls_Manager::SWITCHER,
+			'separator' => 'before',
+			'classes' => 'wpr-pro-control no-distance'
 		];
 	}
 
@@ -79,7 +81,16 @@ class Wpr_Business_Hours extends Widget_Base {
 		];
 	}
 
-	public function add_control_general_even_bg() {}
+	public function add_control_general_even_bg() {
+		$this->add_control(
+			'general_even_bg',
+			[
+				'label' => sprintf( __( 'Enable Even Color %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control'
+			]
+		);	
+	}
 
 	public function add_control_general_even_bg_color() {}
 

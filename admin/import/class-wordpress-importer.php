@@ -959,6 +959,15 @@ class WP_Import extends WP_Importer {
 			$post_meta_key_value[ $meta['key'] ] = $meta['value'];
 		}
 
+		// Duke - Import Menu Items Post Meta
+		$backup_menu_item_meta = [];
+		$backup_menu_item_meta['postmeta'] = $item['postmeta'];
+
+		foreach ( $item['postmeta'] as $meta ) {
+			${$meta['key']} = $meta['value'];
+		}
+		// End.
+
 		$_menu_item_object_id = $post_meta_key_value['_menu_item_object_id'];
 		if ( 'taxonomy' === $post_meta_key_value['_menu_item_type'] && isset( $this->processed_terms[ intval( $_menu_item_object_id ) ] ) ) {
 			$_menu_item_object_id = $this->processed_terms[ intval( $_menu_item_object_id ) ];
@@ -1003,6 +1012,28 @@ class WP_Import extends WP_Importer {
 
 		$id = wp_update_nav_menu_item( $menu_id, 0, $args );
 		if ( $id && ! is_wp_error( $id ) ) {
+			// Duke - Import Menu Items Post Meta
+			$menu_item_db_id = $id;
+			$backup_menu_item_meta['postmeta'] = apply_filters('wordpress_importer_menu_items_meta_import', $backup_menu_item_meta['postmeta'], $id);
+			$skip_meta_items = [
+				'_menu_item_type',
+				'_menu_item_menu_item_parent',
+				'_menu_item_object_id',
+				'_menu_item_object',
+				'_menu_item_target',
+				'_menu_item_classes',
+				'_menu_item_xfn',
+				'_menu_item_url'
+			];
+			if ( is_array($backup_menu_item_meta['postmeta']) && !empty($backup_menu_item_meta['postmeta']) ) {
+				foreach ( $backup_menu_item_meta['postmeta'] as $meta ) {
+					if ( !in_array($meta['key'], $skip_meta_items) ) {
+						update_post_meta( $menu_item_db_id, $meta['key'], maybe_unserialize($meta['value']));
+					}
+				}
+			}
+			// End.
+			
 			$this->processed_menu_items[ intval( $item['post_id'] ) ] = (int) $id;
 		}
 	}

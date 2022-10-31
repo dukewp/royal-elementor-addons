@@ -55,8 +55,17 @@ class Wpr_Flip_Carousel extends Widget_Base {
         // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-advanced-slider-help-btn';
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
-
-	public function add_controls_group_autoplay() {}
+	
+	public function add_controls_group_autoplay() {
+		$this->add_control(
+			'autoplay',
+			[
+				'label' => sprintf( __( 'Autoplay %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);
+	}
 
     protected function register_controls() {
 

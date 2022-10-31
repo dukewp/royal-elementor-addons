@@ -52,8 +52,9 @@ class Pricing_Table extends Widget_Base {
 
 	public function add_repeater_args_feature_tooltip() {
 		return [
-			'type' => Controls_Manager::HIDDEN,
-			'default' => ''
+			'label' => sprintf( __( 'Show Tooltip %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+			'type' => Controls_Manager::SWITCHER,
+			'classes' => 'wpr-pro-control'
 		];
 	}
 
@@ -73,7 +74,16 @@ class Pricing_Table extends Widget_Base {
 
 	public function add_contro_stack_feature_tooltip_section() {}
 
-	public function add_contro_stack_feature_even_bg() {}
+	public function add_controls_group_feature_even_bg() {
+		$this->add_control(
+			'feature_even_bg',
+			[
+				'label' => sprintf( __( 'Enable Even Color %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);
+	}
 
 	protected function register_controls() {
 
@@ -1017,7 +1027,7 @@ class Pricing_Table extends Widget_Base {
 			[
 				'label' => esc_html__( 'Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px' ],
+				'size_units' => [ 'px', '%' ],
 				'range' => [
 					'px' => [
 						'min' => 10,
@@ -1423,7 +1433,7 @@ class Pricing_Table extends Widget_Base {
 			]
 		);
 
-		$this->add_contro_stack_feature_even_bg();
+		$this->add_controls_group_feature_even_bg();
 
 		$this->add_responsive_control(
 			'feature_section_padding',

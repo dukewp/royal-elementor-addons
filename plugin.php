@@ -194,10 +194,30 @@ class Plugin {
 	}
 
 	public function register_ajax_hooks() {
-        add_action( 'wp_ajax_mega_menu_ajax_loading', [new Utilities, 'mega_menu_ajax_loading'] );
-        add_action( 'wp_ajax_nopriv_mega_menu_ajax_loading', [new Utilities, 'ajax_mega_menu_ajax_loading'] );
         add_action( 'wp_ajax_mailchimp_subscribe', [new Utilities, 'ajax_mailchimp_subscribe'] );
         add_action( 'wp_ajax_nopriv_mailchimp_subscribe', [new Utilities, 'ajax_mailchimp_subscribe'] );
+	}
+
+	public function mega_menu_ajax_loading() {
+		$elementor = \Elementor\Plugin::instance();
+		$mega_id = get_post_meta( $_GET['item_id'], 'wpr-mega-menu-item', true);
+		$content = $elementor->frontend->get_builder_content_for_display($mega_id);
+
+		wp_send_json( $content );
+	}
+
+	public function register_megamenu_route() {
+		add_action( 'rest_api_init', function() {
+			register_rest_route(
+				'wpraddons/v1',
+				'/wprmegamenu/',
+				[
+					'methods' => 'GET',
+					'callback' =>  [$this, 'mega_menu_ajax_loading'],
+					'permission_callback' => '__return_true'
+				]
+			);
+		} );
 	}
 
 	public function register_custom_controls() {
@@ -393,6 +413,7 @@ class Plugin {
 			'WprConfig', // This is used in the js file to group all of your scripts together
 			[
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
+				'resturl' => get_rest_url() . 'wpraddons/v1',
 				'nonce' => wp_create_nonce( 'wpr-addons-js' ),
 			]
 		);
@@ -768,6 +789,9 @@ class Plugin {
 
 		// Register Ajax Hooks
 		$this->register_ajax_hooks();
+
+		// Register Mega Menu Route
+		$this->register_megamenu_route();
 
 		// Register Custom Controls
 		add_action( 'elementor/controls/controls_registered', [ $this, 'register_custom_controls' ] );
