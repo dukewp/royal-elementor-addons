@@ -958,8 +958,6 @@ class Wpr_Media_Grid extends Widget_Base {
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'media-grid', 'layout_slider_dots_position', ['pro-vr'] );
 
-		$this->add_control_layout_slider_autoplay();
-
 		$this->add_controls_group_layout_slider_autoplay();
 
 		$this->add_control(

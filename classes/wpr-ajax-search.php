@@ -34,7 +34,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                 'posts_per_page' => sanitize_text_field($_POST['wpr_number_of_results']), 
                 's' => sanitize_text_field( $_POST['wpr_keyword'] ), 
                 'post_type' => $_POST['wpr_query_type'] === 'all' || !wpr_fs()->can_use_premium_code() ? $all_post_types : array( sanitize_text_field($_POST['wpr_query_type']) ),
-                'offset' => sanitize_text_field($_POST['wpr_search_results_offset'])
+                'offset' => sanitize_text_field($_POST['wpr_search_results_offset']),
+                'meta_query' => 'yes' === sanitize_text_field($_POST['wpr_exclude_without_thumb']) ? [
+                    ['key' => '_thumbnail_id']
+                ] : ''
             ]
         );
         
@@ -44,9 +47,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
                 while( $the_query->have_posts() ) : $the_query->the_post();
 
-                if ( ( !has_post_thumbnail() && 'yes' === sanitize_text_field($_POST['wpr_exclude_without_thumb'])) ) : 
-                    continue;
-                endif;
+                // if ( ( !has_post_thumbnail() && 'yes' === sanitize_text_field($_POST['wpr_exclude_without_thumb'])) ) : 
+                //     continue;
+                // endif;
 
                 ob_start();
                 // the_post_thumbnail(sanitize_text_field($_POST['ajax_search_img_size']));
