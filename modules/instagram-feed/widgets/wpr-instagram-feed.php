@@ -458,7 +458,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'distance_bottom',
 			[
 				'label' => esc_html__( 'Distance', 'wpr-addons' ),
@@ -473,8 +473,8 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}}:not(.wpr-if-cfb-yes) .wpr-instagram-feed' => 'margin-bottom: {{SIZE}}px',
-					'{{WRAPPER}} .wpr-insta-feed-content-wrap' => 'margin-bottom: {{SIZE}}px',
+					'{{WRAPPER}}:not(.wpr-if-cfb-yes):not(.wpr-insta-feed-layuout-carousel) .wpr-instagram-feed' => 'margin-bottom: {{SIZE}}px',
+					'{{WRAPPER}}:not(.wpr-insta-feed-layuout-carousel) .wpr-insta-feed-content-wrap' => 'margin-bottom: {{SIZE}}px',
 				]
 			]
 		);
@@ -756,7 +756,8 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'prefix_class' => 'wpr-if-cfb-',
 				'label_block' => false,
 				'condition' => [
-					'show_instagram_follow_button' => 'yes'
+					'show_instagram_follow_button' => 'yes',
+					'layout_select!' => 'layout-carousel'
 				]
 			]
 		);
