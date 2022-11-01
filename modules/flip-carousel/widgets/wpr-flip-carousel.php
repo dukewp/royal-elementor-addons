@@ -39,7 +39,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'flip carousel', 'flip', 'carousel', 'flip slider' ];
+		return [ 'royal', 'flip carousel', 'flip', 'carousel', 'flip slider' ];
 	}
 
 	public function get_script_depends() {

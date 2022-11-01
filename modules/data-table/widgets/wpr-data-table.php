@@ -39,7 +39,7 @@ class Wpr_Data_Table extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return ['Data Table', 'Advanced', 'Table', 'Data table', 'Data'];
+		return ['royal', 'Data Table', 'Advanced', 'Table', 'Data table', 'Data'];
 	}
 
 	public function get_script_depends() {

@@ -37,7 +37,7 @@ class Wpr_Charts extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'charts' ];
+		return [ 'royal', 'line charts', 'radar charts', 'doughnut charts', 'pie charts', 'polararea charts', 'polar charts', 'bar charts', 'horizontal charts', 'vertical charts' ];
 	}
 
 	public function get_script_depends() {

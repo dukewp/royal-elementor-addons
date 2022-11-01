@@ -423,7 +423,7 @@ span.wpr-woo-builder-label {
   font-size: 12px;
   text-align: right;
   text-decoration: none;
-  color: #b94b5a;
+  color: #8F5D64;
 }
 
 .wpr-import-help a:hover {
@@ -432,6 +432,7 @@ span.wpr-woo-builder-label {
 
 .wpr-import-help a span {
   vertical-align: middle;
+  margin-bottom: 2px;
   font-size: 12px !important;
   width: 12px !important;
   height: 12px !important;
