@@ -3359,55 +3359,174 @@
 				}
 			} );
 
-			if ($scope.find('.wpr-search-form-input').attr('ajax-search') === 'yes') {
-				$scope.find('.wpr-search-form-input').on('keyup', function() {
-					setTimeout(() => {
-						var thisValue = $(this).val();
-						$.ajax({
-							type: 'POST',
-							url: WprConfig.ajaxurl,
-							data: { 
-								action: 'data_fetch', 
-								nonce: WprConfig.nonce,
-								keyword: $scope.find('.wpr-search-form-input').val(),
-								query_type: $scope.find('.wpr-search-form-input').attr('wpr-query-type'),
-								number_of_results: $scope.find('.wpr-search-form-input').attr('number-of-results'),
-								number_of_words: $scope.find('.wpr-search-form-input').attr('number-of-words'),
-								wpr_show_ajax_thumbnail: $scope.find('.wpr-search-form-input').attr('show-ajax-thumbnails'),
-								show_view_result_btn: $scope.find('.wpr-search-form-input').attr('show-view-result-btn'),
-								wpr_view_result_text: $scope.find('.wpr-search-form-input').attr('view-result-text'),
-								exclude_without_thumb: $scope.find('.wpr-search-form-input').attr('exclude-without-thumb'),
-								ajax_search_link_target: $scope.find('.wpr-search-form-input').attr('link-target'),
-								ajax_search_img_size: $scope.find('.wpr-search-form-input').attr('ajax-search-img-size')
-							},
-							success: function(data) {
-								$scope.find('.wpr-data-fetch').html( data );
-								
-								if (thisValue.length > 2) {
-									$scope.find('.wpr-data-fetch').slideDown(600);
-									$scope.find('.wpr-data-fetch ul').fadeTo(600, 1);
-								} else {
-									$scope.find('.wpr-data-fetch').slideUp(600);
-									$scope.find('.wpr-data-fetch ul').fadeTo(600, 0);
+			var prevData;
+			var searchTimeout = null;
+
+			function ajaxSearchCall(thisObject, postsOffset, e) {
+				if ( e.which === 13 ) {
+					return false;
+				}
+
+				if (searchTimeout != null) {
+					clearTimeout(searchTimeout);
+				}
+				searchTimeout = setTimeout(() => {
+					var thisValue = thisObject.val();
+					$.ajax({
+						type: 'POST',
+						url: WprConfig.ajaxurl,
+						data: { 
+							action: 'wpr_data_fetch',
+							nonce: WprConfig.nonce,
+							wpr_keyword: $scope.find('.wpr-search-form-input').val(),
+							wpr_query_type: $scope.find('.wpr-search-form-input').attr('wpr-query-type'),
+							wpr_number_of_results: $scope.find('.wpr-search-form-input').attr('number-of-results'),
+							wpr_search_results_offset: postsOffset,
+							wpr_number_of_words: $scope.find('.wpr-search-form-input').attr('number-of-words'),
+							wpr_show_ajax_thumbnail: $scope.find('.wpr-search-form-input').attr('show-ajax-thumbnails'),
+							wpr_show_view_result_btn: $scope.find('.wpr-search-form-input').attr('show-view-result-btn'),
+							wpr_view_result_text: $scope.find('.wpr-search-form-input').attr('view-result-text'),
+							wpr_exclude_without_thumb: $scope.find('.wpr-search-form-input').attr('exclude-without-thumb'),
+							wpr_ajax_search_link_target: $scope.find('.wpr-search-form-input').attr('link-target'),
+							// wpr_ajax_search_img_size: $scope.find('.wpr-search-form-input').attr('ajax-search-img-size')
+						},
+						success: function(data) {
+							if ( $scope.find('.wpr-data-fetch ul').html() === '' ) {
+								$scope.find( '.wpr-pagination-loading' ).hide();
+								$scope.find('.wpr-data-fetch ul').html( data );
+								$scope.find('.wpr-no-more-results').fadeOut(100);
+								setTimeout(function() {
+									if (!data.includes('wpr-no-results')) {
+										$scope.find('.wpr-ajax-search-pagination').css('display', 'flex');
+										if ( $scope.find('.wpr-data-fetch ul').find('li').length < $scope.find('.wpr-search-form-input').attr('number-of-results') ||
+											$scope.find('.wpr-data-fetch ul').find('li').length == $scope.find('.wpr-data-fetch ul').find('li').data('number-of-results')) {
+											$scope.find('.wpr-ajax-search-pagination').css('display', 'none');
+											$scope.find('.wpr-load-more-results').fadeOut(100);
+										} else {
+											$scope.find('.wpr-ajax-search-pagination').css('display', 'flex');
+											$scope.find('.wpr-load-more-results').fadeIn(100);
+										}
+									} else {
+										$scope.find('.wpr-ajax-search-pagination').css('display', 'none');
+									}
+								}, 100);
+								prevData = data;
+							} else {
+								if ( data != prevData ) {
+									prevData = data;
+									if (data.includes('wpr-no-results')) {
+										$scope.find('.wpr-ajax-search-pagination').css('display', 'none');
+										$scope.find('.wpr-data-fetch ul').html('');
+									} else {
+										$scope.find('.wpr-ajax-search-pagination').css('display', 'flex');
+									}
+
+									$scope.find('.wpr-data-fetch ul').append( data );
+
+									if (data == '') {
+										$scope.find('.wpr-load-more-results').fadeOut(100);
+										setTimeout(function() {
+											$scope.find( '.wpr-pagination-loading' ).hide();
+											$scope.find('.wpr-no-more-results').fadeIn(100);
+										}, 100);
+									} else {
+										$scope.find( '.wpr-pagination-loading' ).hide();
+										$scope.find('.wpr-load-more-results').show();
+									}
+
+									if ($scope.find('.wpr-data-fetch ul').find('li').length < $scope.find('.wpr-search-form-input').attr('number-of-results')) {
+										$scope.find('.wpr-load-more-results').fadeOut(100);
+										setTimeout(function() {
+											$scope.find( '.wpr-pagination-loading' ).hide();
+											$scope.find('.wpr-no-more-results').fadeIn(100);
+										}, 100);
+									} else {
+										$scope.find('.wpr-load-more-results').show();
+									}
+
+									if ( $scope.find('.wpr-data-fetch ul').find('li').length == $scope.find('.wpr-data-fetch ul').find('li').data('number-of-results') ) {
+										$scope.find('.wpr-load-more-results').fadeOut(100);
+										setTimeout(function() {
+											$scope.find( '.wpr-pagination-loading' ).hide();
+											$scope.find('.wpr-no-more-results').fadeIn(100);
+										}, 100);
+									} else {
+										$scope.find('.wpr-load-more-results').show();
+									}
+									// $scope.find( '.wpr-pagination-loading' ).hide();
 								}
-							},
-							error: function(error) {
-								console.log(error);
 							}
-						});
-					}, 600);
+
+							if (data.includes('wpr-no-results')) {
+								$scope.find('.wpr-ajax-search-pagination').css('display', 'none');
+								$scope.find('.wpr-load-more-results').fadeOut();
+							} else {
+								$scope.find('.wpr-ajax-search-pagination').css('display', 'flex');
+							}
+							
+							if (thisValue.length > 2) {
+								$scope.find('.wpr-data-fetch').slideDown(200);
+								$scope.find('.wpr-data-fetch ul').fadeTo(200, 1);
+							} else {
+								$scope.find('.wpr-data-fetch').slideUp(200);
+								$scope.find('.wpr-data-fetch ul').fadeTo(200, 0);
+								setTimeout(function() {
+									$scope.find('.wpr-data-fetch ul').html('');
+									$scope.find('.wpr-no-results').remove();
+								}, 600);
+								postsOffset = 0;
+							}
+						},
+						error: function(error) {
+							console.log(error);
+						}
+					});
+				}, 400);
+			}
+
+			if ($scope.find('.wpr-search-form-input').attr('ajax-search') === 'yes') {
+				var postsOffset = 0;
+				// $scope.find('.wpr-data-fetch ul').on('scroll', function(e) { 
+				// 	if ( $(this).scrollTop() + $(this).innerHeight() >=  $(this)[0].scrollHeight ) {
+				// 		postsOffset += +$scope.find('.wpr-search-form-input').attr('number-of-results');
+				// 		ajaxSearchCall($scope.find('.wpr-search-form-input'), postsOffset, e);
+				// 	}
+				// });
+
+				$scope.find('.wpr-load-more-results').on('click', function(e) {
+					postsOffset += +$scope.find('.wpr-search-form-input').attr('number-of-results');
+					$scope.find('.wpr-load-more-results').hide();
+					$scope.find( '.wpr-pagination-loading' ).css( 'display', 'inline-block' );
+					ajaxSearchCall($scope.find('.wpr-search-form-input'), postsOffset, e);
+				});
+
+				$scope.find('.wpr-search-form-input').on('keyup', function(e) {
+					postsOffset = 0;
+					$scope.find('.wpr-data-fetch').hide();
+					$scope.find('.wpr-data-fetch ul').html('');
+					ajaxSearchCall($(this), postsOffset, e);
 				});
 	
 				$scope.find('.wpr-data-fetch').on('click', '.wpr-close-search', function() {
 					$scope.find('.wpr-search-form-input').val('');
-					$scope.find('.wpr-data-fetch').slideUp(700);
+					$scope.find('.wpr-data-fetch').slideUp(200);
+					setTimeout(function() {
+						$scope.find('.wpr-data-fetch ul').html('');
+						$scope.find('.wpr-no-results').remove();
+					}, 400);
+					postsOffset = 0;
 				});
 
 				$('body').on('click', function(e) {
 					if ( !e.target.classList.value.includes('wpr-data-fetch') && !e.target.closest('.wpr-data-fetch') ) {
 						if ( !e.target.classList.value.includes('wpr-search-form') && !e.target.closest('.wpr-search-form') ) {
 							$scope.find('.wpr-search-form-input').val('');
-							$scope.find('.wpr-data-fetch').slideUp(700);
+							$scope.find('.wpr-data-fetch').slideUp(200);
+							setTimeout(function() {
+								$scope.find('.wpr-data-fetch ul').html('');
+								$scope.find('.wpr-no-results').remove();
+							}, 400);
+							postsOffset = 0;
 						}
 					}
 				});
@@ -5163,7 +5282,7 @@
 					if ( thisValue.length > 0 ) {
 						$scope.find('.wpr-acc-search-input-wrap').find('i.fa-times').css('display', 'inline-block');
 						allInAcc.each(function() {
-							console.log($(this), $(this).text().toUpperCase().indexOf(thisValue.toUpperCase()));
+							// console.log($(this), $(this).text().toUpperCase().indexOf(thisValue.toUpperCase()));
 							if ( $(this).hasClass('wpr-accordion-item-wrap') ) {
 								var itemWrap = $(this);
 								if ( itemWrap.text().toUpperCase().indexOf(thisValue.toUpperCase()) == -1 ) {
@@ -5218,8 +5337,6 @@
 			var thisTargetHasClass = false;
 
 			if ( $scope.find('.wpr-image-accordion-wrap').hasClass('wpr-acc-no-column') ) {
-
-				console.log('works');
 				if ( !$scope.hasClass('wpr-image-accordion-row') );
 				$scope.removeClass('wpr-image-accordion-column').addClass('wpr-image-accordion-row');
 				$scope.find('.wpr-image-accordion').css('flex-direction', 'row');

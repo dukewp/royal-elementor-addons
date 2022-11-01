@@ -37,7 +37,7 @@ class Wpr_Charts extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'chart', 'charts' ];
+		return [ 'charts' ];
 	}
 
 	public function get_script_depends() {
@@ -79,6 +79,8 @@ class Wpr_Charts extends Widget_Base {
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
         );
+
+		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
 		$this->add_control_choose_chart_data_source();
 

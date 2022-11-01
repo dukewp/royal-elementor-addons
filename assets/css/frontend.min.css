@@ -7300,6 +7300,13 @@ body:not(.elementor-editor-active) .wpr-template-popup {
   == Search
   --------------------------------------------------------------*/
 
+.wpr-search-admin-notice  {
+    text-align: center;
+    margin: 0;
+    margin-top: 10px;
+    padding: 8px;
+}
+
 .wpr-ajax-search-pagination-center .wpr-ajax-search-pagination {
     text-align: center;
 }

@@ -148,6 +148,10 @@ function wpr_addons_templates_kit_page() {
                     <div class="progress-bar"></div>
                     <strong></strong>
                 </div>
+
+                <div class="wpr-import-help">
+                    <a href="https://royal-elementor-addons.com/contactus/?ref=rea-plugin-backend-templates-import-screen" target="_blank">Having Trouble with Demo Import?&nbsp;&nbsp;Get Help <span class="dashicons dashicons-sos"></span></a>
+                </div>
             </div>
         </div>
     </div>

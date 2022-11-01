@@ -923,6 +923,11 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     text-align: left;
 }
 
+.wpr-sub-mega-menu,
+.wpr-sub-mega-menu ul {
+    font-size: 1rem;
+}
+
 .wpr-nav-menu-vertical .wpr-sub-mega-menu {
     width: 840px;
 }
@@ -7294,6 +7299,52 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 /*--------------------------------------------------------------
   == Search
   --------------------------------------------------------------*/
+
+.wpr-search-admin-notice  {
+    text-align: center;
+    margin: 0;
+    margin-top: 10px;
+    padding: 8px;
+}
+
+.wpr-ajax-search-pagination-center .wpr-ajax-search-pagination {
+    text-align: center;
+}
+
+.wpr-ajax-search-pagination-center .wpr-ajax-search-pagination {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+}
+
+.wpr-ajax-search-pagination-left .wpr-ajax-search-pagination {
+    text-align: left;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+}
+
+.wpr-ajax-search-pagination-right .wpr-ajax-search-pagination {
+    text-align: right;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
+}
+
+.wpr-data-fetch .wpr-ajax-search-pagination {
+    text-align: center;
+
+}
+
 .wpr-data-fetch ul::-webkit-scrollbar {
     width: 4px;
     background-color: transparent;
@@ -7315,6 +7366,17 @@ body:not(.elementor-editor-active) .wpr-template-popup {
         -ms-flex-align: center;
             align-items: center;
     margin: 0;
+}
+
+.wpr-load-more-results {
+    display: none;
+    width: 100%;
+}
+
+.wpr-no-more-results {
+    display: none;
+    margin: 0;
+    text-align: center;
 }
 
 .wpr-ajax-search-content {
@@ -15147,10 +15209,6 @@ dl.variation dd {
 .wpr-advanced-accordion .wpr-acc-panel p,
 .wpr-advanced-accordion .wpr-acc-panel div {
   margin: 0;
-}
-
-.wpr-acc-panel-content {
-    font-size: 14px;
 }
 
 .wpr-ti-close {
