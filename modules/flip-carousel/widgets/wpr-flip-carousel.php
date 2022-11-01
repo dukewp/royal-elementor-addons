@@ -77,7 +77,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			]
 		);
 
-		// Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
+		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
         $repeater = new Repeater();
 
