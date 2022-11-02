@@ -61,6 +61,8 @@ class Wpr_Feature_List extends Widget_Base {
 			]
 		);
 
+		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
+
 		$this->add_responsive_control(
 			'list_layout',
 			[

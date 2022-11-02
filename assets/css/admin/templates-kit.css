@@ -413,6 +413,32 @@ span.wpr-woo-builder-label {
   background: rgba(0,0,0,0.5);
 }
 
+.wpr-import-help {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.wpr-import-help a {
+  width: 50%;
+  font-size: 12px;
+  text-align: right;
+  text-decoration: none;
+  color: #8F5D64;
+}
+
+.wpr-import-help a:hover {
+  text-decoration: underline;
+}
+
+.wpr-import-help a span {
+  vertical-align: middle;
+  margin-bottom: 2px;
+  font-size: 12px !important;
+  width: 12px !important;
+  height: 12px !important;
+  text-decoration: none !important
+}
+
 .wpr-import-kit-popup {
   overflow: hidden;
   position: fixed;

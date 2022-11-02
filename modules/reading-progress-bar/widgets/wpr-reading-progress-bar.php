@@ -59,6 +59,8 @@ class Wpr_Reading_Progress_Bar extends Widget_Base {
 			]
         );
 
+		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
+
 		$this->add_control(
 			'rpb_apply_changes',
 			[

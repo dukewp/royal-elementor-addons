@@ -26,7 +26,7 @@ class Wpr_Search extends Widget_Base {
 	}
 
 	public function get_title() {
-		return esc_html__( 'Search (AJAX)', 'wpr-addons' );
+		return esc_html__( 'Search (Ajax)', 'wpr-addons' );
 	}
 
 	public function get_icon() {
@@ -41,6 +41,10 @@ class Wpr_Search extends Widget_Base {
 		return [ 'royal', 'search', 'search widget', 'ajax search' ];
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-animations-css', 'wpr-link-animations-css', 'wpr-button-animations-css', 'wpr-loading-animations-css', 'wpr-lightgallery-css' ];
+	}
+
     public function get_custom_help_url() {
     	if ( empty(get_option('wpr_wl_plugin_links')) )
         // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-search-help-btn';
@@ -51,7 +55,7 @@ class Wpr_Search extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_ajax',
 			[
-				'label' => esc_html__( 'AJAX', 'wpr-addons' ),
+				'label' => esc_html__( 'Ajax', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'ajax_search' => 'yes',
@@ -467,6 +471,20 @@ class Wpr_Search extends Widget_Base {
 				'name' => 'view_result_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} a.wpr-view-result',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_family' => [
+						'default' => 'Roboto',
+					],
+					'font_size'   => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px',
+						]
+					]
+				]
 			]
 		);
 
@@ -510,9 +528,9 @@ class Wpr_Search extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'default' => [
 					'top' => 5,
-					'right' => 8,
+					'right' => 10,
 					'bottom' => 5,
-					'left' => 8,
+					'left' => 10,
 				],
 				'size_units' => [ 'px', ],
 				'selectors' => [
@@ -679,7 +697,7 @@ class Wpr_Search extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'vh',
-					'size' => 30,
+					'size' => 20,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-data-fetch .wpr-no-results' => 'height: {{SIZE}}{{UNIT}};',
@@ -747,6 +765,10 @@ class Wpr_Search extends Widget_Base {
 		$this->end_controls_section();
 	}
 
+	public function add_section_ajax_pagination() {}
+
+	public function add_section_style_ajax_pagination() {}
+
 	public function add_control_ajax_search_img_size() {
 
 		$intermediate_image_sizes = [];
@@ -793,18 +815,20 @@ class Wpr_Search extends Widget_Base {
 		$this->add_control(
 			'ajax_search',
 			[
-				'label' => esc_html__( 'Enable AJAX Search', 'wpr-addons' ),
+				'label' => esc_html__( 'Enable Ajax Search', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'separator' => 'before'
 			]
 		);
 	}
 
+	public function add_control_number_of_results() {}
+
 	public function add_control_open_in_new_page() {
 		$this->add_control(
 			'ajax_search_link_target',
 			[
-				'label' => esc_html__( 'Open Link In New Page', 'wpr-addons' ),
+				'label' => esc_html__( 'Open Link in New Tab', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
                 'condition' => [
                     'ajax_search' => 'yes'
@@ -817,7 +841,7 @@ class Wpr_Search extends Widget_Base {
 		$this->add_control(
 			'show_ajax_thumbnails',
 			[
-				'label' => esc_html__( 'Show AJAX thumbnails', 'wpr-addons' ),
+				'label' => esc_html__( 'Show Ajax Thumbnails', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'render_type' => 'template',
                 'condition' => [
@@ -831,7 +855,7 @@ class Wpr_Search extends Widget_Base {
 		$this->add_control(
 			'exclude_posts_without_thumbnail',
 			[
-				'label' => esc_html__( 'Exclude results W/O thumbnails', 'wpr-addons' ),
+				'label' => esc_html__( 'Exclude Results w/o Thumbnails', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'render_type' => 'template',
                 'condition' => [
@@ -846,7 +870,7 @@ class Wpr_Search extends Widget_Base {
         $this->add_control(
             'number_of_words_in_excerpt',
             [
-                'label' => __( 'Number of Words in Description', 'wpr-addons' ),
+                'label' => __( 'Description Number of Words', 'wpr-addons' ),
                 'type' => Controls_Manager::NUMBER,
                 'min' => 5,
                 'step' => 1,
@@ -863,7 +887,7 @@ class Wpr_Search extends Widget_Base {
 		$this->add_control(
 			'show_view_result_btn',
 			[
-				'label' => esc_html__( 'Show View Result Btn', 'wpr-addons' ),
+				'label' => esc_html__( 'Show View Results Button', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'render_type' => 'template',
                 'condition' => [
@@ -877,9 +901,9 @@ class Wpr_Search extends Widget_Base {
 		$this->add_control(
 			'view_result_text',
 			[
-				'label' => esc_html__( 'View Result', 'wpr-addons' ),
+				'label' => esc_html__( 'View Results', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => esc_html__( 'View Result', 'wpr-addons' ),
+				'default' => esc_html__( 'View Results', 'wpr-addons' ),
                 'condition' => [
 					'show_view_result_btn' => 'yes',
                     'ajax_search' => 'yes'
@@ -907,7 +931,7 @@ class Wpr_Search extends Widget_Base {
 				'search_pro_notice',
 				[
 					'type' => Controls_Manager::RAW_HTML,
-					'raw' => '<span style="color:#2a2a2a;">Search Query</span> option is fully supported<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-search-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					'raw' => '<span style="color:#2a2a2a;">Search Query</span> and <span style="color:#2a2a2a;">Ajax Search</span> options are fully supported<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-search-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
 					// 'raw' => '<span style="color:#2a2a2a;">Search Query</span> option is fully supported<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
 					'content_classes' => 'wpr-pro-notice',
 				]
@@ -916,20 +940,7 @@ class Wpr_Search extends Widget_Base {
 
 		$this->add_control_ajax_search();
 
-        $this->add_control(
-            'number_of_results',
-            [
-                'label' => __( 'Number of Results', 'wpr-addons' ),
-                'type' => Controls_Manager::NUMBER,
-                'min' => 1,
-                'step' => 1,
-                'default' => 10,
-                'render_type' => 'template',
-                'condition' => [
-                    'ajax_search' => 'yes'
-                ]
-            ]
-        );
+		$this->add_control_number_of_results();
 
 		$this->add_control_open_in_new_page();
 
@@ -1044,10 +1055,13 @@ class Wpr_Search extends Widget_Base {
 
 		$this->end_controls_section();
 
+		$this->add_section_ajax_pagination();
+
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'search', [
 			'Custom Search Query - Only Posts, Pages or Custom Post Types',
-			'AJAX Search',
+			'More than 2 Results in Ajax Search',
+			'Ajax Search Results Pagination (Load More)'
 		] );
 
 		// Styles
@@ -1595,8 +1609,12 @@ class Wpr_Search extends Widget_Base {
 		// Styles
 		// Section: AJAX ------------
 		$this->add_section_style_ajax();
+
+		$this->add_section_style_ajax_pagination();
 		
 	}
+
+	public function render_search_pagination($settings) {}
 
 	protected function render_search_submit_btn() {
 		$settings = $this->get_settings();
@@ -1639,7 +1657,7 @@ class Wpr_Search extends Widget_Base {
 				'title' => esc_html__( 'Search', 'wpr-addons' ),
 				'value' => get_search_query(),
 				'wpr-query-type' => $settings['search_query'],
-				'number-of-results' => isset($settings['number_of_results']) ? $settings['number_of_results'] : -1,
+				'number-of-results' => isset($settings['number_of_results']) && wpr_fs()->can_use_premium_code() ? $settings['number_of_results'] : 2,
 				'ajax-search' => isset($settings['ajax_search']) ? $settings['ajax_search'] : '',
 				'number-of-words' => isset($settings['number_of_words_in_excerpt']) ? $settings['number_of_words_in_excerpt'] : '',
 				'show-ajax-thumbnails' => isset($settings['show_ajax_thumbnails']) ? $settings['show_ajax_thumbnails'] : '',
@@ -1672,9 +1690,14 @@ class Wpr_Search extends Widget_Base {
 
 			?>
 		</form>
-		<div class="wpr-data-fetch"></div>
+		<div class="wpr-data-fetch">
+			<span class="wpr-close-search"></span>
+			<ul></ul>
+			<?php if ( !wpr_fs()->can_use_premium_code() && current_user_can( 'administrator' ) ) : ?>
+				<p class="wpr-search-admin-notice">More than 2 results are available in the PRO version (This notice is only visible to admin users)</p>
+			<?php endif; ?>
+		</div>
 		
-
 		<?php
 
 	}

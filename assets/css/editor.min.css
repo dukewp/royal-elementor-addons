@@ -507,6 +507,21 @@
 /*--------------------------------------------------------------
 == Widget Preview and Library buttons
 --------------------------------------------------------------*/
+
+.elementor-control-wpr_library_buttons .wpr-phone-call a:last-child,
+.elementor-control-wpr_library_buttons .wpr-back-to-top a:last-child,
+.elementor-control-wpr_library_buttons .wpr-lottie-animations a:last-child,
+.elementor-control-wpr_library_buttons .wpr-feature-list a:last-child,
+.elementor-control-wpr_library_buttons .wpr-reading-progress-bar a:last-child,
+.elementor-control-wpr_library_buttons .wpr-dual-color-heading a:last-child,
+.elementor-control-wpr_library_buttons .wpr-flip-carousel a:last-child,
+.elementor-control-wpr_library_buttons .wpr-advanced-accordion a:last-child,
+.elementor-control-wpr_library_buttons .wpr-image-accordion a:last-child,
+.elementor-control-wpr_library_buttons .wpr-mega-menu a:last-child,
+.elementor-control-wpr_library_buttons .wpr-charts a:last-child {
+	display: none;
+}
+
 .elementor-control-wpr_library_buttons {
 	height: 60px;
 	padding: 0;

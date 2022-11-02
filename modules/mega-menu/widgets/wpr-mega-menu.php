@@ -223,12 +223,12 @@ class Wpr_Mega_Menu extends Widget_Base {
 			'section_menu',
 			[
 				'label' => 'Menu',
-				// 'label' => 'Menu <a href="#" onclick="window.open(\'https://www.youtube.com/watch?v=at0CPKtklF0\',\'_blank\').focus()">Video Tutorial <span class="dashicons dashicons-video-alt3"></span></a>',
+				'label' => 'Menu <a href="#" onclick="window.open(\'https://www.youtube.com/watch?v=aHSgqzan1to\',\'_blank\').focus()">Video Tutorial <span class="dashicons dashicons-video-alt3"></span></a>',
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
 
-		// Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
+		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 		
 		$menus = $this->get_available_menus();
 
@@ -628,14 +628,18 @@ class Wpr_Mega_Menu extends Widget_Base {
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'mega-menu', [
+			'Load Sub Menu Items with Ajax',
+			'Add Icons and Badges to Menu Items',
+			'Submenu width Automatically Fit to Section width',
+			'Display Sub Menu items as Normal Mobile Menu Items',
 			'Vertical Layout',
+			'Mobile Menu Off-Canvas Layout',
+			'Mobile Menu Display Custom Conditions',
+			'Advanced Display Conditions',
+			'SubMenu Width option',
 			'Advanced Link Hover Effects: Slide, Grow, Drop',
 			'SubMenu Entrance Advanced Effect',
-			'SubMenu Width option',
-			'Advanced Display Conditions',
-			'Mobile Menu Display Custom Conditions',
-			'Mobile Menu Button Custom Text option',
-			'Mobile Menu Off-Canvas Layout',
+			'Mobile Menu Button Custom Text option'
 		] );
 		
 		// Tab: Styles ===============

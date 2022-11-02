@@ -11,14 +11,14 @@
 .wpr-mm-settings-btn {
   position: absolute;
   top: 5px;
-  left: 265px;
+  left: 260px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 5px 11px 7px;
+  padding: 5px 14px 7px;
   color: #fff;
   background: -webkit-gradient(linear, left top, left bottom, from(#6A4BFF), to(#7E94FE));
   background: -o-linear-gradient(#6A4BFF, #7E94FE);

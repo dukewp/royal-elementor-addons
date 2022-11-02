@@ -39,7 +39,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'flip carousel', 'flip', 'carousel', 'flip slider' ];
+		return [ 'royal', 'flip carousel', 'flip', 'carousel', 'flip slider' ];
 	}
 
 	public function get_script_depends() {
@@ -55,8 +55,8 @@ class Wpr_Flip_Carousel extends Widget_Base {
         // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-advanced-slider-help-btn';
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
-
-	public function add_control_autoplay() {
+	
+	public function add_controls_group_autoplay() {
 		$this->add_control(
 			'autoplay',
 			[
@@ -64,10 +64,8 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'type' => Controls_Manager::SWITCHER,
 				'classes' => 'wpr-pro-control no-distance'
 			]
-		);	
+		);
 	}
-
-	public function add_controls_group_autoplay() {}
 
     protected function register_controls() {
 
@@ -79,7 +77,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			]
 		);
 
-		// Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
+		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
         $repeater = new Repeater();
 
@@ -225,8 +223,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'default' => 'yes',
 			]
 		);
-
-		$this->add_control_autoplay();
 
 		$this->add_controls_group_autoplay();
 

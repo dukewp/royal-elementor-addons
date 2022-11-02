@@ -27,7 +27,7 @@ class Utilities {
 			'Advanced Slider' => ['advanced-slider', 'https://royal-elementor-addons.com/elementor-advanced-slider-widget/', '', ''],
 			'Testimonial' => ['testimonial', 'https://royal-elementor-addons.com/elementor-testimonials-slider-widget/', '', ''],
 			'Nav Menu' => ['nav-menu', 'http://royal-elementor-addons.com/elementor-menu-widget/', '', ''],
-			'Mega Menu' => ['mega-menu', '#', '', 'new'],
+			'Mega Menu' => ['mega-menu', 'https://royal-elementor-addons.com/elementor-mega-menu-widget/', '', 'new'],
 			'Onepage Navigation' => ['onepage-nav', 'https://royal-elementor-addons.com/elementor-one-page-navigation-widget/', '', ''],
 			'Data Table' => ['data-table', 'https://royal-elementor-addons.com/elementor-data-table-widget/', '', 'new'],
 			'Pricing Table' => ['pricing-table', 'https://royal-elementor-addons.com/elementor-pricing-table-widget/', '', ''],
@@ -56,7 +56,7 @@ class Utilities {
 			'Price List' => ['price-list', 'https://royal-elementor-addons.com/elementor-price-list-widget/', '', ''],
 			'Business Hours' => ['business-hours', 'https://royal-elementor-addons.com/elementor-business-hours-widget/', '', ''],
 			'Sharing Buttons' => ['sharing-buttons', 'https://royal-elementor-addons.com/elementor-social-sharing-buttons-widget/', '', ''],
-			'Search Form' => ['search', 'https://royal-elementor-addons.com/elementor-search-widget/', '', ''],
+			'Search Form (Ajax)' => ['search', 'https://royal-elementor-addons.com/elementor-search-widget/', '', ''],
 			'Back to Top' => ['back-to-top', 'https://royal-elementor-addons.com/elementor-back-to-top-widget/', '', ''],
 			'Phone Call' => ['phone-call', 'https://royal-elementor-addons.com/elementor-phone-call-widget/', '', ''],
 			'Lottie Animations' => ['lottie-animations', 'https://royal-elementor-addons.com/elementor-lottie-animation-widget/', '', ''],
@@ -857,7 +857,7 @@ class Utilities {
 			$module->add_control(
 	            'wpr_library_buttons',
 	            [
-					'raw' => '<div><a href="#" target="_blank" data-theme="'. esc_attr(get_template()) .'">'. esc_html__( 'Widget Preview', 'wpr-addons' ) .'</a> <a href="#">'. esc_html__( 'Predefined Styles', 'wpr-addons' ) .'</a></div>'. $tutorial_link,
+					'raw' => '<div class='. $module->get_name() .'><a href="#" target="_blank" data-theme="'. esc_attr(get_template()) .'">'. esc_html__( 'Widget Preview', 'wpr-addons' ) .'</a> <a href="#">'. esc_html__( 'Predefined Styles', 'wpr-addons' ) .'</a></div>'. $tutorial_link,
 					'type' => $controls_manager,
 				]
 	        );
