@@ -392,33 +392,36 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				],
 				'frontend_available' => true,
 				'render_type' => 'template',
+				'condition' => [
+					'layout_select' => 'layout-masonry'
+				],
 			]
 		);
 
-		// $this->add_responsive_control(
-		// 	'columns',
-		// 	[
-		// 		'label' => esc_html__( 'Columns', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SELECT,
-		// 		'default' => '33.3%',
-		// 		'options' => [
-		// 			'100%' => esc_html__( 'One', 'wpr-addons' ),
-		// 			'50%' => esc_html__( 'Two', 'wpr-addons' ),
-		// 			'33.3%' => esc_html__( 'Three', 'wpr-addons' ),
-		// 			'25%' => esc_html__( 'Four', 'wpr-addons' ),
-		// 			'20%' => esc_html__( 'Five', 'wpr-addons' ),
-		// 			'16.6%' => esc_html__( 'Six', 'wpr-addons' )
-		// 		],
-		// 		'render_type' => 'template',
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'width: {{VALUE}}',
-		// 			'{{WRAPPER}} .wpr-layout-list .wpr-insta-feed-content-wrap' => 'width: {{VALUE}}'
-		// 		],
-		// 		'condition' => [
-		// 			'layout_select' => ['layout-grid', 'layout-list']
-		// 		],
-		// 	]
-		// );
+		$this->add_responsive_control(
+			'columns',
+			[
+				'label' => esc_html__( 'Columns', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => '33.3%',
+				'options' => [
+					'100%' => esc_html__( 'One', 'wpr-addons' ),
+					'50%' => esc_html__( 'Two', 'wpr-addons' ),
+					'33.3%' => esc_html__( 'Three', 'wpr-addons' ),
+					'25%' => esc_html__( 'Four', 'wpr-addons' ),
+					'20%' => esc_html__( 'Five', 'wpr-addons' ),
+					'16.6%' => esc_html__( 'Six', 'wpr-addons' )
+				],
+				'render_type' => 'template',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'width: {{VALUE}}',
+					'{{WRAPPER}} .wpr-layout-list .wpr-insta-feed-content-wrap' => 'width: {{VALUE}}'
+				],
+				'condition' => [
+					'layout_select' => ['layout-grid', 'layout-list']
+				],
+			]
+		);
 
 		$this->add_responsive_control(
 			'gutter',
@@ -436,21 +439,21 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-instagram-feed-cont .wpr-instagram-feed:not(.wpr-layout-carousel)' => 'column-gap: {{SIZE}}px;',
-					// 'body[data-elementor-device-mode=desktop] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns.VALUE}} - (2 * {{SIZE}}px));',
-					// 'body[data-elementor-device-mode=desktop] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-list .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns.VALUE}} - (2 * {{SIZE}}px));',
-					// 'body[data-elementor-device-mode=widescreen] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_widescreen.VALUE}} - (2 * {{SIZE}}px));',
-					// 'body[data-elementor-device-mode=widescreen] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-list .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_widescreen.VALUE}} - (2 * {{SIZE}}px));',
-					// 'body[data-elementor-device-mode=laptop] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_laptop.VALUE}} - (2 * {{SIZE}}px));',
-					// 'body[data-elementor-device-mode=laptop] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-list .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_laptop.VALUE}} - (2 * {{SIZE}}px));',
-					// 'body[data-elementor-device-mode=tablet_extra] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_tablet_extra.VALUE}} - (2 * {{SIZE}}px));',
-					// 'body[data-elementor-device-mode=tablet_extra] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-list .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_tablet_extra.VALUE}} - (2 * {{SIZE}}px));',
-					// 'body[data-elementor-device-mode=tablet] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_tablet.VALUE}} - (2 * {{SIZE}}px));',
-					// 'body[data-elementor-device-mode=tablet] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-list .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_tablet.VALUE}} - (2 * {{SIZE}}px));',
-					// 'body[data-elementor-device-mode=mobile_extra] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_mobile_extra.VALUE}} - (2 * {{SIZE}}px));',
-					// 'body[data-elementor-device-mode=mobile_extra] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-list .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_mobile_extra.VALUE}} - (2 * {{SIZE}}px));',
-					// 'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_mobile.VALUE}} - (2 * {{SIZE}}px));',
-					// 'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-list .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_mobile.VALUE}} - (2 * {{SIZE}}px));',
+					'{{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-masonry' => 'column-gap: {{SIZE}}px;',
+					'body[data-elementor-device-mode=desktop] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns.VALUE}} - (2 * {{SIZE}}px));',
+					'body[data-elementor-device-mode=desktop] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-list .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns.VALUE}} - (2 * {{SIZE}}px));',
+					'body[data-elementor-device-mode=widescreen] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_widescreen.VALUE}} - (2 * {{SIZE}}px));',
+					'body[data-elementor-device-mode=widescreen] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-list .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_widescreen.VALUE}} - (2 * {{SIZE}}px));',
+					'body[data-elementor-device-mode=laptop] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_laptop.VALUE}} - (2 * {{SIZE}}px));',
+					'body[data-elementor-device-mode=laptop] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-list .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_laptop.VALUE}} - (2 * {{SIZE}}px));',
+					'body[data-elementor-device-mode=tablet_extra] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_tablet_extra.VALUE}} - (2 * {{SIZE}}px));',
+					'body[data-elementor-device-mode=tablet_extra] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-list .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_tablet_extra.VALUE}} - (2 * {{SIZE}}px));',
+					'body[data-elementor-device-mode=tablet] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_tablet.VALUE}} - (2 * {{SIZE}}px));',
+					'body[data-elementor-device-mode=tablet] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-list .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_tablet.VALUE}} - (2 * {{SIZE}}px));',
+					'body[data-elementor-device-mode=mobile_extra] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_mobile_extra.VALUE}} - (2 * {{SIZE}}px));',
+					'body[data-elementor-device-mode=mobile_extra] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-list .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_mobile_extra.VALUE}} - (2 * {{SIZE}}px));',
+					'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-grid .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_mobile.VALUE}} - (2 * {{SIZE}}px));',
+					'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-list .wpr-insta-feed-content-wrap' => 'margin: {{SIZE}}px; width: calc({{columns_mobile.VALUE}} - (2 * {{SIZE}}px));',
 				]
 			]
 		);
