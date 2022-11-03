@@ -791,6 +791,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'prefix_class' => 'wpr-if-cfb-',
 				'default' => 'bottom',
+				'render_type' => 'template',
 				'options' => [
 					'top' => esc_html__( 'Top', 'wpr-addons' ),
 					'center' => esc_html__( 'Center', 'wpr-addons' ),
@@ -3518,7 +3519,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605BE5',
+				'default' => '#4A45D2',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-instagram-follow-btn:hover' => 'background-color: {{VALUE}}'
 				],
@@ -3584,12 +3585,10 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					'size' => 25,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-instagram-follow-btn-wrap' => 'margin-top: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-if-cfb-top .wpr-instagram-follow-btn-wrap' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-if-cfb-bottom .wpr-instagram-follow-btn-wrap' => 'margin-left: {{SIZE}}{{UNIT}};',
 				],
-				'separator' => 'before',
-				'condition' => [
-					'center_instagram_follow_button!' => 'yes'
-				]
+				'separator' => 'before'
 			]
 		);
 
@@ -3600,10 +3599,10 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 10,
-					'right' => 10,
-					'bottom' => 10,
-					'left' => 10,
+					'top' => 8,
+					'right' => 20,
+					'bottom' => 8,
+					'left' => 20,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-instagram-follow-btn' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -3661,10 +3660,10 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 2,
-					'right' => 2,
-					'bottom' => 2,
-					'left' => 2,
+					'top' => 3,
+					'right' => 3,
+					'bottom' => 3,
+					'left' => 3,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-instagram-follow-btn' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -4421,39 +4420,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'pagination_icon_spacing',
-			[
-				'label' => esc_html__( 'Icon Spacing', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 25,
-					],
-				],				
-				'default' => [
-					'unit' => 'px',
-					'size' => 10,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-pagination .wpr-prev-post-link i' => 'padding-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-grid-pagination .wpr-next-post-link i' => 'padding-left: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-grid-pagination .wpr-first-page i' => 'padding-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-grid-pagination .wpr-prev-page i' => 'padding-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-grid-pagination .wpr-next-page i' => 'padding-left: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-grid-pagination .wpr-last-page i' => 'padding-left: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-grid-pagination .wpr-prev-post-link svg' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-grid-pagination .wpr-next-post-link svg' => 'margin-left: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-grid-pagination .wpr-first-page svg' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-grid-pagination .wpr-prev-page svg' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-grid-pagination .wpr-next-page svg' => 'margin-left: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-grid-pagination .wpr-last-page svg' => 'margin-left: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
 		$this->add_responsive_control(
 			'pagination_padding',
 			[
@@ -5009,6 +4975,12 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		}
 
 		?>
+				
+		<?php if ( 'yes' === $settings['show_instagram_follow_button'] && 'top' === $settings['follow_button_location'] ) : ?>
+			<div class="wpr-instagram-follow-btn-wrap">
+				<a class="wpr-instagram-follow-btn" <?php echo $this->get_render_attribute_string( 'instagram_follow_link' ); ?>><?php echo $settings['instagram_follow_text'] ?></a>
+			</div>
+		<?php endif; ?>
 
 			<div class="wpr-instagram-feed-cont">
 				<?php
@@ -5069,13 +5041,13 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					
 				</div>
 				
-				<?php if ( 'yes' === $settings['show_instagram_follow_button'] ) : ?>
+			</div>
+				
+				<?php if ( 'yes' === $settings['show_instagram_follow_button'] && ('bottom' === $settings['follow_button_location'] || 'center' === $settings['follow_button_location']) ) : ?>
 					<div class="wpr-instagram-follow-btn-wrap">
 						<a class="wpr-instagram-follow-btn" <?php echo $this->get_render_attribute_string( 'instagram_follow_link' ); ?>><?php echo $settings['instagram_follow_text'] ?></a>
 					</div>
 				<?php endif; ?>
-				
-			</div>
 
 		<?php
 

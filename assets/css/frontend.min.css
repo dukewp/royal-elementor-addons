@@ -12249,11 +12249,22 @@ a.wpr-ajax-img-wrap {
     transform: translateX(-50%);
 }
 
+.wpr-if-cfb-bottom .wpr-grid-pagination,
+.wpr-if-cfb-bottom .wpr-instagram-follow-btn-wrap {
+    display: inline-block;
+}
+
+.wpr-instagram-follow-btn {
+    display: inline-block;
+    cursor: pointer;
+}
+
 .wpr-if-cfb-center .wpr-instagram-follow-btn {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%);
+    z-index: 99;
 }
 
 .wpr-insta-feed-thumb {
@@ -12628,10 +12639,6 @@ a.wpr-ajax-img-wrap {
 .wpr-insta-feed-caption::-webkit-scrollbar-thumb {
     /* border-left: 6px solid transparent; */
     border-left: 3px solid red;
-}
-
-.wpr-instagram-follow-btn {
-    display: inline-block;
 }
 
 .wpr-if-square-images-yes .wpr-insta-feed-media-wrap {
