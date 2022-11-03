@@ -5042,19 +5042,23 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				</div>
 				
 			</div>
-				
-				<?php if ( 'yes' === $settings['show_instagram_follow_button'] && ('bottom' === $settings['follow_button_location'] || 'center' === $settings['follow_button_location']) ) : ?>
-					<div class="wpr-instagram-follow-btn-wrap">
-						<a class="wpr-instagram-follow-btn" <?php echo $this->get_render_attribute_string( 'instagram_follow_link' ); ?>><?php echo $settings['instagram_follow_text'] ?></a>
-					</div>
-				<?php endif; ?>
 
 		<?php
 
-		// Pagination
-		if ( 'yes' === $settings['show_pagination'] ) {
-			$this->render_insta_feed_pagination( $settings );
-		}
+		if ( 'yes' === $settings['show_pagination'] || 'yes' === $settings['show_instagram_follow_button'] ) :
+			echo '<div class="wpr-isnta-feed-buttons-wrap">';
+				// Pagination
+				if ( 'yes' === $settings['show_pagination'] ) {
+					$this->render_insta_feed_pagination( $settings );
+				}
+						
+				if ( 'yes' === $settings['show_instagram_follow_button'] && ('bottom' === $settings['follow_button_location'] || 'center' === $settings['follow_button_location']) ) : ?>
+					<div class="wpr-instagram-follow-btn-wrap">
+						<a class="wpr-instagram-follow-btn" <?php echo $this->get_render_attribute_string( 'instagram_follow_link' ); ?>><?php echo $settings['instagram_follow_text'] ?></a>
+					</div>
+				<?php endif;
+			echo '</div>';
+		endif;
 
     }
 }
