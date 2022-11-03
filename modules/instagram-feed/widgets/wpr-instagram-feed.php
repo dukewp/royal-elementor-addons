@@ -348,24 +348,24 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		// 	]
 		// );
 		
-		$this->add_control(
-			'instagram_access_token_test',
-			[
-				'type' => Controls_Manager::RAW_HTML,
-				'raw' => '<a class="wpr-authorize-instagram" href="https://www.instagram.com/oauth/authorize?client_id=5484217328332432&redirect_uri=https://reastats.kinsta.cloud/token/social-network.php&scope=user_profile,user_media&response_type=code" target="popup">'. esc_html__( 'Authorize Instagram', 'wpr-addons' ) .'</a>',
-				'separator' => 'after',
-				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
-			]
-		);
+		// $this->add_control(
+		// 	'instagram_access_token_test',
+		// 	[
+		// 		'type' => Controls_Manager::RAW_HTML,
+		// 		'raw' => '<a class="wpr-authorize-instagram" href="https://www.instagram.com/oauth/authorize?client_id=5484217328332432&redirect_uri=https://reastats.kinsta.cloud/token/social-network.php&scope=user_profile,user_media&response_type=code" target="popup">'. esc_html__( 'Authorize Instagram', 'wpr-addons' ) .'</a>',
+		// 		'separator' => 'after',
+		// 		'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+		// 	]
+		// );
 
-		$this->add_control(
-			'instagram_access_token',
-			[
-				'label' => esc_html__( 'Access Token', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'label_block' => true
-			]
-		);
+		// $this->add_control(
+		// 	'instagram_access_token',
+		// 	[
+		// 		'label' => esc_html__( 'Access Token', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::TEXT,
+		// 		'label_block' => true
+		// 	]
+		// );
 				
 		$this->add_control(
 			'limit',

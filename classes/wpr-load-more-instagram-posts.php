@@ -206,6 +206,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 		echo '</div>';
 	}
 
+	// Render Post Element Separator
+	public function render_post_element_separator( $settings, $class ) {
+		echo '<div class="wpr-insta-feed-sep-style-1 '. esc_attr($class) .'">';
+			echo '<div class="inner-block"><span></span></div>';
+		echo '</div>';
+	}
+
 	// Get Elements
 	public function get_elements( $type, $settings, $class, $result ) {
 		if ( 'pro-lk' == $type || 'pro-shr' == $type || 'pro-cf' == $type ) {
@@ -370,10 +377,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 		echo '</div>';
 	}
 
-    public function wpr_load_more_instagram_posts_function($settings) {
+    public function wpr_load_more_instagram_posts_function() {
         foreach($this->call_instagram_api(get_option('wpr_instagram_access_token'), $_POST['wpr_load_more_settings']) as $key=>$result) : ?>
             <?php 
-				if ($key < ($settings['limit'] + $_POST['next_post_index'])) :
+				if ($key < $_POST['next_post_index']) :
 					continue; 
 				endif;
 			?>
@@ -384,7 +391,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                         // Content: Below Media
                         echo $this->get_elements_by_location( 'above', $_POST['wpr_load_more_settings'], $result );
                     ?>
-                    <div class="wpr-insta-feed-media-wrap <?php echo esc_attr($this->get_image_effect_class( $_POST['wpr_load_more_settings'] )) ?>" data-overlay-link="<?php echo esc_attr( $_POST['wpr_load_more_settings'] ) ?>">
+                    <div class="wpr-insta-feed-media-wrap <?php echo esc_attr($this->get_image_effect_class( $_POST['wpr_load_more_settings'] )) ?>" data-overlay-link="<?php echo esc_attr( $_POST['wpr_load_more_settings']['overlay_post_link'] ) ?>">
                     <?php if ( 'CAROUSEL_ALBUM' == $result->media_type || 'IMAGE' == $result->media_type ) : ?>
                         <div class="wpr-insta-feed-image-wrap" data-src=<?php echo $result->media_url ?>>
                             <img src=<?php echo $result->media_url  ?> alt="">
