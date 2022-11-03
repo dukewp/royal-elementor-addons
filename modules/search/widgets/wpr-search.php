@@ -90,7 +90,7 @@ class Wpr_Search extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#F6F6F6',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-data-fetch li:hover' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-data-fetch ul li:hover' => 'background-color: {{VALUE}};',
 				],
 			]
 		);
@@ -113,7 +113,7 @@ class Wpr_Search extends Widget_Base {
 				'max' => 5,
 				'step' => 0.1,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-data-fetch li' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-data-fetch ul li' => 'transition-duration: {{VALUE}}s',
 				],
 			]
 		);
