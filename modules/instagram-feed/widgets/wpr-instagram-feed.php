@@ -370,7 +370,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		$this->add_control(
 			'limit',
 			[
-				'label' => esc_html__( 'Limit', 'wpr-addons' ),
+				'label' => esc_html__( 'Number of Posts', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::NUMBER,
 				'default' => 20,
 			]
@@ -3694,7 +3694,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				],
 				'default' => 'center',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-instagram-follow-btn' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} .wpr-instagram-follow-btn-wrap' => 'text-align: {{VALUE}};',
 				],
 				'render_type' => 'template',
 				'separator' => 'before',
@@ -4995,10 +4995,8 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
 		$token_generation_date = strtotime(get_option('wpr_instagram_access_token_generation_date'));
 
-		// $access_token = get_option('wpr_instagram_access_token');
-		$access_token = $settings['instagram_access_token'];
-
-		var_dump($token_generation_date, $compare_date, $token_generation_date <= $compare_date);
+		$access_token = get_option('wpr_instagram_access_token');
+		// $access_token = $settings['instagram_access_token'];
 
 		if ( $token_generation_date <= $compare_date  ) {
 			
