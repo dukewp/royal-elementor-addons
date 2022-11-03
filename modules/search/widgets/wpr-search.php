@@ -293,6 +293,7 @@ class Wpr_Search extends Widget_Base {
 				'default' => '#757575',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-data-fetch p a' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-search-admin-notice' => 'color: {{VALUE}};'
 				],
 			]
 		);
@@ -302,7 +303,7 @@ class Wpr_Search extends Widget_Base {
 			[
 				'name' => 'description_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-data-fetch p a',
+				'selector' => '{{WRAPPER}} .wpr-data-fetch p a, {{WRAPPER}} .wpr-search-admin-notice',
 				'fields_options' => [
 					'typography'      => [
 						'default' => 'custom',
