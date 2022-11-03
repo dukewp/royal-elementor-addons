@@ -51,6 +51,8 @@ class Wpr_Instagram_Feed extends Widget_Base {
     	if ( empty(get_option('wpr_wl_plugin_links')) )
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
+
+	public function add_section_style_sharing() {}
 	
 	public function add_control_overlay_animation_divider() {
 		$this->add_control(
