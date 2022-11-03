@@ -508,6 +508,7 @@
 == Widget Preview and Library buttons
 --------------------------------------------------------------*/
 
+.elementor-control-wpr_library_buttons .wpr-forms a:last-child,
 .elementor-control-wpr_library_buttons .wpr-phone-call a:last-child,
 .elementor-control-wpr_library_buttons .wpr-back-to-top a:last-child,
 .elementor-control-wpr_library_buttons .wpr-lottie-animations a:last-child,

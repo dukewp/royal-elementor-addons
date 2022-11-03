@@ -55,7 +55,7 @@ class Wpr_Forms extends Widget_Base {
 			]
 		);
 
-		// Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );s
+		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
 		$this->add_control(
 			'plugin_select',
