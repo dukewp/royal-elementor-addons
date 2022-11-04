@@ -396,19 +396,36 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'insta_feed_column_grid',
+		$this->add_responsive_control(
+			'columns_masonry',
 			[
 				'label'              => esc_html__('Columns', 'wpr-addons'),
 				'type'               => Controls_Manager::SELECT,
-				'default'            => 'wpr-insta-col-4',
+				'default'            => '3',
+				// 'options'            => [
+				// 	'wpr-insta-col-auto' => esc_html__('One', 'wpr-addons'),
+				// 	'wpr-insta-col-6'    => esc_html__('Two', 'wpr-addons'),
+				// 	'wpr-insta-col-4'    => esc_html__('Three', 'wpr-addons'),
+				// 	'wpr-insta-col-3'    => esc_html__('Four', 'wpr-addons'),
+				// 	'wpr-insta-col-2-point-4'    => esc_html__('Five', 'wpr-addons'),
+				// 	'wpr-insta-col-2'    => esc_html__('Six', 'wpr-addons')
+				// ],
 				'options'            => [
-					'wpr-insta-col-auto' => esc_html__('One', 'wpr-addons'),
-					'wpr-insta-col-6'    => esc_html__('Two', 'wpr-addons'),
-					'wpr-insta-col-4'    => esc_html__('Three', 'wpr-addons'),
-					'wpr-insta-col-3'    => esc_html__('Four', 'wpr-addons'),
-					'wpr-insta-col-2-point-4'    => esc_html__('Five', 'wpr-addons'),
-					'wpr-insta-col-2'    => esc_html__('Six', 'wpr-addons')
+					'1' => esc_html__('One', 'wpr-addons'),
+					'2'    => esc_html__('Two', 'wpr-addons'),
+					'3'    => esc_html__('Three', 'wpr-addons'),
+					'4'    => esc_html__('Four', 'wpr-addons'),
+					'5'    => esc_html__('Five', 'wpr-addons'),
+					'6'    => esc_html__('Six', 'wpr-addons'),
+					'7'    => esc_html__('Seven', 'wpr-addons'),
+					'8'    => esc_html__('Eight', 'wpr-addons'),
+					'9'    => esc_html__('Nine', 'wpr-addons'),
+					'10'    => esc_html__('Ten', 'wpr-addons'),
+					'11'    => esc_html__('Eleven', 'wpr-addons'),
+					'12'    => esc_html__('Twelve', 'wpr-addons'),
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-layout-masonry' => 'column-count: {{VALUE}}',
 				],
 				'frontend_available' => true,
 				'render_type' => 'template',
@@ -425,17 +442,23 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'default' => '3',
 				'options' => [
-					'1' => esc_html__( 'One', 'wpr-addons' ),
-					'2' => esc_html__( 'Two', 'wpr-addons' ),
-					'3' => esc_html__( 'Three', 'wpr-addons' ),
-					'4' => esc_html__( 'Four', 'wpr-addons' ),
-					'5' => esc_html__( 'Five', 'wpr-addons' ),
-					'6' => esc_html__( 'Six', 'wpr-addons' )
+					'1' => esc_html__('One', 'wpr-addons'),
+					'2'    => esc_html__('Two', 'wpr-addons'),
+					'3'    => esc_html__('Three', 'wpr-addons'),
+					'4'    => esc_html__('Four', 'wpr-addons'),
+					'5'    => esc_html__('Five', 'wpr-addons'),
+					'6'    => esc_html__('Six', 'wpr-addons'),
+					'7'    => esc_html__('Seven', 'wpr-addons'),
+					'8'    => esc_html__('Eight', 'wpr-addons'),
+					'9'    => esc_html__('Nine', 'wpr-addons'),
+					'10'    => esc_html__('Ten', 'wpr-addons'),
+					'11'    => esc_html__('Eleven', 'wpr-addons'),
+					'12'    => esc_html__('Twelve', 'wpr-addons'),
 				],
 				'render_type' => 'template',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-layout-grid' => 'grid-template-columns: repeat({{VALUE}}, auto)',
-					'{{WRAPPER}} .wpr-layout-list' => 'grid-template-columns: repeat({{VALUE}}, auto)'
+					'{{WRAPPER}} .wpr-layout-grid' => 'grid-template-columns: repeat({{VALUE}}, minmax(0, 1fr))',
+					'{{WRAPPER}} .wpr-layout-list' => 'grid-template-columns: repeat({{VALUE}}, minmax(0, 1fr))'
 				],
 				'condition' => [
 					'layout_select' => ['layout-grid', 'layout-list']
@@ -4973,7 +4996,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		$this->add_render_attribute(
 			'instagram',
 			[
-				'class'         => ['wpr-instagram-feed', 'wpr-'. $settings['layout_select'], $settings['insta_feed_column_grid']],
+				'class'         => ['wpr-instagram-feed', 'wpr-'. $settings['layout_select']],
 				'data-settings' => wp_json_encode( $instagram_settings ),
 				'data-settings-test' => wp_json_encode( $settings )
 			]
