@@ -247,11 +247,13 @@ class Utilities {
 	public static function get_users() {
 		$users = [];
 		
-		foreach ( get_users() as $key => $user ) {
-			$users[$user->data->ID] = $user->data->user_nicename;
+		if ( is_admin() ) {
+			foreach ( get_users() as $key => $user ) {
+				$users[$user->data->ID] = $user->data->user_nicename;
+			}
+			
+			wp_reset_postdata();
 		}
-		
-		wp_reset_postdata();
 
 		return $users;
 	}
