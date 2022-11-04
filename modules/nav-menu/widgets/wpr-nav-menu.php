@@ -1369,7 +1369,7 @@ class Wpr_Nav_Menu extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'mobile_menu_offset',
 			[
 				'label' => esc_html__( 'Dropdown Offset', 'wpr-addons' ),
