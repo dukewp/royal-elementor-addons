@@ -492,6 +492,34 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'buttons_alignment',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'left'    => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					]
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-isnta-feed-buttons-wrap' => 'text-align: {{VALUE}}'
+				],
+				'default' => 'center',
+				'render_type' => 'template',
+				'separator' => 'before',
+			]
+		);
+
 		// Media
 		$this->add_control(
 			'layout_list_media_section',
