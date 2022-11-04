@@ -978,7 +978,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 25,
+						'max' => 50,
 					],
 				],
 				'selectors' => [
