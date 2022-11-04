@@ -4586,7 +4586,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		} else {
 			$instagram_data = get_transient($key);
 		}
-		var_dump(MINUTE_IN_SECONDS);
+		
 		return $instagram_data;
 	}
 
