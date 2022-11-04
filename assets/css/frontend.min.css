@@ -12294,6 +12294,7 @@ a.wpr-ajax-img-wrap {
 }
 
 .wpr-insta-feed-layout-grid .wpr-instagram-feed,
+.wpr-insta-feed-layout-full-width .wpr-instagram-feed,
 .wpr-insta-feed-layout-list .wpr-instagram-feed {
     display: grid;
 }
