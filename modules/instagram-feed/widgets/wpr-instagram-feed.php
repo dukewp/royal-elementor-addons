@@ -366,6 +366,16 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'label_block' => true
 			]
 		);
+
+		$this->add_control(
+			'instagram_access_token_expires_in',
+			[
+				'label' => esc_html__( 'Expire Date', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => 5 == 4 ? 'false' : 'true',
+				'label_block' => true
+			]
+		);
 				
 		$this->add_control(
 			'limit',
@@ -4595,7 +4605,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		$response = wp_remote_get($url);
 		if(!isset($body)) {
 			$body = json_decode($response['body']);
-
+			var_dump($this->get_ID());
 			update_option('wpr_instagram_access_token', $body->access_token);
 			update_option('wpr_instagram_access_token_expires_in', $body->expires_in);
 			update_option('wpr_instagram_access_token_generation_date', date('Y-m-d'));
