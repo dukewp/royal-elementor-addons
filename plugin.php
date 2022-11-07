@@ -437,7 +437,7 @@ class Plugin {
 			[
 				'jquery',
 			],
-			'3.0.7',
+			'3.0.8',
 			true
 		);
 

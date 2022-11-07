@@ -371,10 +371,14 @@ template {
     z-index: 1;
 }
 
-.wpr-nav-menu li a,
-.wpr-mobile-nav-menu li a {
+.wpr-nav-menu > li > a,
+.wpr-mobile-nav-menu > li > a {
     font-size: 16px;
     line-height: 1;
+}
+
+.wpr-mobile-nav-menu li {
+    margin: 0;
 }
 
 .wpr-nav-menu-horizontal .wpr-nav-menu>li:first-child,

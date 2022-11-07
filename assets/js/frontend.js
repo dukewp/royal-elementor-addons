@@ -3485,6 +3485,9 @@
 			}
 
 			if ($scope.find('.wpr-search-form-input').attr('ajax-search') === 'yes') {
+
+				$scope.find('.wpr-search-form').attr('autocomplete', 'off');
+				
 				var postsOffset = 0;
 				// $scope.find('.wpr-data-fetch ul').on('scroll', function(e) { 
 				// 	if ( $(this).scrollTop() + $(this).innerHeight() >=  $(this)[0].scrollHeight ) {
@@ -3529,6 +3532,22 @@
 							postsOffset = 0;
 						}
 					}
+				});
+
+				
+
+				var mutationObserver = new MutationObserver(function(mutations) {
+					$scope.find('.wpr-data-fetch li').on('click', function() {
+						var itemUrl = $(this).find('a').attr('href');
+						var itemUrlTarget = $(this).find('a').attr('target');
+						window.open(itemUrl, itemUrlTarget).focus();
+					});
+				});
+
+				// Listen to Mini Cart Changes
+				mutationObserver.observe($scope[0], {
+					childList: true,
+					subtree: true,
 				});
 			}
 
