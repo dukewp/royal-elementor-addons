@@ -3,6 +3,7 @@ namespace WprAddons\Modules\ElementorTemplate\Widgets;
 
 use Elementor\Controls_Manager;
 use Elementor\Widget_Base;
+use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -76,6 +77,9 @@ class Wpr_Elementor_Template extends Widget_Base {
 		wp_reset_postdata();
 
 		$this->end_controls_section(); // End Controls Section
+
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
 	}
 		
 

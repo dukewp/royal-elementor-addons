@@ -886,6 +886,29 @@ class Utilities {
 	}
 
 	/**
+	** Request Feature Section
+	*/
+	public static function wpr_add_section_request_feature( $module, $raw_html, $tab ) {
+		$module->start_controls_section(
+			'section_request_new_feature',
+			[
+				'label' => __( 'Request Feature', 'wpr-addons' ),
+				'tab' => $tab,
+			]
+		);
+
+		$module->add_control(
+			'request_new_feature',
+			[
+				'type' => $raw_html,
+				'raw' => __( 'Missing an Option, have a New Widget or any kind of Feature Idea? Please share it with us and lets discuss. <a href="https://royaladdons.frill.co/b/6m4d5qm4/feature-ideas" target="_blank">Request New Feature <span class="dashicons dashicons-star-empty"></span></a>', 'wpr-addons' ),
+			]
+		);
+
+		$module->end_controls_section(); // End Controls Section
+	}
+
+	/**
 	** Pro Features List Section
 	*/
 	public static function pro_features_list_section( $module, $section, $type, $widget, $features ) {

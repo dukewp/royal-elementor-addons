@@ -260,6 +260,9 @@ class Wpr_OnepageNav extends Widget_Base {
 		// Section: Settings ---------
 		$this->add_section_settings();
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'onepage-nav', [
 			'Highlight Active Nav Icon',

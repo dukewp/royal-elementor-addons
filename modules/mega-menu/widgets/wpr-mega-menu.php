@@ -626,6 +626,12 @@ class Wpr_Mega_Menu extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'mega-menu', [
 			'Load Sub Menu Items with Ajax',
@@ -772,16 +778,16 @@ class Wpr_Mega_Menu extends Widget_Base {
 
 		$this->end_controls_tabs();
 
-		// $this->add_control(
-		// 	'menu_item_highlight',
-		// 	[
-		// 		'label' => esc_html__( 'Highlight Active Item', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SWITCHER,
-		// 		'default' => 'yes',
-		// 		'return_value' => 'yes',
-		// 		'separator' => 'before'
-		// 	]
-		// );
+		$this->add_control(
+			'menu_item_highlight',
+			[
+				'label' => esc_html__( 'Highlight Active Item', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'separator' => 'before'
+			]
+		);
 
 		$this->add_control(
 			'menu_items_extra_icon_size',

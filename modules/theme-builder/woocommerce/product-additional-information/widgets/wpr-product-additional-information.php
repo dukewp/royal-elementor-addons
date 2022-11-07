@@ -358,6 +358,9 @@ class Wpr_Product_AdditionalInformation extends Widget_Base {
 
 		$this->end_controls_section();
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, Controls_Manager::TAB_STYLE );
+
     }
 
     protected function render() {

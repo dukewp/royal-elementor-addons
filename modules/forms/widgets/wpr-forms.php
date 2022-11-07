@@ -356,6 +356,9 @@ class Wpr_Forms extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Styles ====================
 		// Section: Container --------
 		$this->start_controls_section(
