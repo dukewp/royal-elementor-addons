@@ -831,6 +831,28 @@ class Wpr_Product_Media extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'product_media_horizontal_distance',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Horizontal Distance', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 12,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-media-wrap .wpr-fcn-wrap' => 'margin-right: {{SIZE}}{{UNIT}};',
+				]
+			]
+		);
+
 		$this->end_controls_section(); // End Controls Section
 
 		$this->start_controls_section(
