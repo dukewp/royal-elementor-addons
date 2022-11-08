@@ -6,6 +6,8 @@ use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Core\Schemes\Typography;
+use WprAddons\Classes\Utilities;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -50,6 +52,9 @@ class Wpr_Phone_Call extends Widget_Base {
 			'tab' => Controls_Manager::TAB_CONTENT,
 		]
 	);
+
+	Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
+
 	$this->add_control(
 		'telnumber',
 		[
@@ -304,6 +309,8 @@ class Wpr_Phone_Call extends Widget_Base {
 
 	$this->end_controls_section();
 
+	// Section: Request New Feature
+	Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
 
 	// Section Button ------------
 	$this->start_controls_section(

@@ -34,7 +34,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return ['post timeline', 'blog', 'post', 'posts', 'timeline', 'posts timeline', 'story timeline', 'content timeline'];
+		return ['royal', 'post timeline', 'blog', 'post', 'posts', 'timeline', 'posts timeline', 'story timeline', 'content timeline'];
 	}
 
 	public function get_script_depends() {
@@ -124,9 +124,29 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		);
 	}
 
-	public function add_control_group_autoplay() {}
+	public function add_control_group_autoplay() {
+		$this->add_control(
+			'swiper_autoplay',
+			[
+				'label' => sprintf( __( 'Autoplay %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'separator' => 'before',
+				'classes' => 'wpr-pro-control'
+			]
+		);
+	}
 
-	public function add_control_show_pagination() {}
+	public function add_control_show_pagination() {
+		$this->add_control(
+			'show_pagination',
+			[
+				'label' => sprintf( __( 'Show Pagination %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'separator' => 'before',
+				'classes' => 'wpr-pro-control'
+			]
+		);	
+	}
 
 	public function add_control_posts_per_page() {
         $this->add_control(
@@ -224,6 +244,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'Y, M, D' => esc_html__(date('Y, M, D')),
 					'm/d/Y' => esc_html__(date('m/d/Y')),
 					'd/m/Y' => esc_html__(date('d/m/Y')),
+					'j. F Y' => esc_html__(date('j. F y'))
 				],
 				'condition' => [
 					'timeline_content' => 'dynamic',
@@ -2185,6 +2206,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		
 		$this->end_controls_section();
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'posts-timeline', [
 			'Add Unlimited Custom Timeline Items',
@@ -2268,6 +2292,22 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'name' => 'timeline_item_shadow',
 				'selector' => '{{WRAPPER}} .wpr-story-info',
+				'fields_options' => [
+                    'box_shadow_type' =>
+                        [ 
+                            'default' =>'yes' 
+                        ],
+                    'box_shadow' => [
+                        'default' =>
+                            [
+                                'horizontal' => 0,
+                                'vertical' => 0,
+                                'blur' => 20,
+                                'spread' => 1,
+                                'color' => 'rgba(0,0,0,0.1)'
+                            ]
+                    ]
+				],
 				'condition' => [
 					'timeline_layout' => ['horizontal', 'horizontal-bottom']
 				]
@@ -2279,6 +2319,22 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'name' => 'timeline_item_shadow_vertical',
 				'selector' => '{{WRAPPER}} .wpr-story-info-vertical',
+				'fields_options' => [
+                    'box_shadow_type' =>
+                        [ 
+                            'default' =>'yes' 
+                        ],
+                    'box_shadow' => [
+                        'default' =>
+                            [
+                                'horizontal' => 0,
+                                'vertical' => 0,
+                                'blur' => 20,
+                                'spread' => 1,
+                                'color' => 'rgba(0,0,0,0.1)'
+                            ]
+                    ]
+				],
 				'condition' => [
 					'timeline_layout' => ['centered', 'one-sided', 'one-sided-left']
 				]

@@ -106,7 +106,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			]
 		);
 
-		// Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
+		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
         
         $repeater = new \Elementor\Repeater();
 
@@ -380,8 +380,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-acc-icon-box' => 'width: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-acc-icon-box-after' => 'border-left: calc({{SIZE}}{{UNIT}}/);',
+					'{{WRAPPER}} .wpr-acc-icon-box' => 'width: {{SIZE}}{{UNIT}};'
 				],
 				'condition' => [
 					'accordion_title_icon_box_style!' => 'none'
@@ -389,7 +388,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			]
 		);
 		
-		$this->add_control(
+		$this->add_responsive_control(
 			'accordion_title_icon_after_box_width',
 			[
 				'label' => esc_html__( 'Triangle Width', 'wpr-addons' ),
@@ -409,31 +408,6 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button .wpr-acc-icon-box-after' => 'border-left: {{SIZE}}{{UNIT}} solid {{icon_box_color.VALUE}};',
 					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button:hover .wpr-acc-icon-box-after' => 'border-left: {{SIZE}}{{UNIT}} solid {{icon_box_hover_color.VALUE}};',
 					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.wpr-acc-active .wpr-acc-icon-box-after' => 'border-left: {{SIZE}}{{UNIT}} solid {{icon_box_active_color.VALUE}};',
-				],
-				'condition' => [
-					'accordion_title_icon_box_style' => 'side-curve'
-				]
-			]
-		);
-		
-		$this->add_control(
-			'accordion_title_icon_after_box_height',
-			[
-				'label' => esc_html__( 'Triangle Height', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'default' => [
-					'size' => 30,
-					'unit' => 'px'
-				],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-acc-icon-box-after' => 'border-top: {{SIZE}}{{UNIT}} solid transparent; border-bottom: {{SIZE}}{{UNIT}} solid transparent;',
 				],
 				'condition' => [
 					'accordion_title_icon_box_style' => 'side-curve'
@@ -493,6 +467,9 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'advanced-accordion', [
@@ -1059,6 +1036,29 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'icon_box_border_radius',
+			[
+				'label' => esc_html__( 'Icon Box Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}}.wpr-advanced-accordion-icon-side-box .wpr-advanced-accordion .wpr-acc-icon-box' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-advanced-accordion-icon-side-curve .wpr-advanced-accordion .wpr-acc-icon-box' => 'border-radius: {{TOP}}{{UNIT}} 0 0 {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+				'condition' => [
+					'accordion_title_icon_box_style!' => 'no-box'
+				]
+			]
+		);
+
 		$this->end_controls_section(); // End Controls Section 
 
 		// Styles
@@ -1078,7 +1078,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#7a7a7a',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-panel .wpr-panel-content' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-panel .wpr-acc-panel-content' => 'color: {{VALUE}};',
 				]
 			]
 		);
@@ -1123,7 +1123,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			[
 				'name' => 'content_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-panel .wpr-panel-content',
+				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-panel .wpr-acc-panel-content',
 			]
 		);
 
@@ -1215,8 +1215,11 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 		}
 
 		$edit_link = '<span class="wpr-template-edit-btn" data-permalink="'. get_permalink( $id ) .'">Edit Template</span>';
+		
+		$type = get_post_meta(get_the_ID(), '_wpr_template_type', true);
+		$has_css = 'internal' === get_option( 'elementor_css_print_method' ) || '' !== $type;
 
-		return Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $id ) . $edit_link;
+		return Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $id, $has_css ) . $edit_link;
 	}
 
 	public function render_first_icon($settings, $acc) {
@@ -1316,7 +1319,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 
 						<div class="wpr-acc-panel">
 							<?php if ('editor' === $acc_content_type) : ?>
-								<div class="wpr-panel-content"><?php echo $acc['accordion_content'] ?></div>
+								<div class="wpr-acc-panel-content"><?php echo $acc['accordion_content'] ?></div>
 							<?php else: 
 								echo $this->wpr_accordion_template( $acc['accordion_content_template'] );
 							endif; ?>

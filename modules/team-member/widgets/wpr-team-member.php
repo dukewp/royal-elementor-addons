@@ -465,6 +465,9 @@ class Wpr_Team_Member extends Widget_Base {
 		// Section: Overlay ---------------
 		$this->add_section_image_overlay();
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'team-member', [
 			'Advanced Layout options - Move Elements over Image (Title, Job, Social Icons, etc...)',

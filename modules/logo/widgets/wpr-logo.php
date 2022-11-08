@@ -50,7 +50,7 @@ class Wpr_Logo extends Widget_Base {
 
 	protected function register_controls() {
 		
-		// Section: logo -------------
+		// Section: Logo -------------
 		$this->start_controls_section(
 			'section_general',
 			[
@@ -203,6 +203,9 @@ class Wpr_Logo extends Widget_Base {
 		);
 
 		$this->end_controls_section(); // End Controls Section
+
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
 
 		// Styles
 		// Section: General ----------

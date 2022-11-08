@@ -44,6 +44,11 @@ function wpr_addons_theme_builder_page() {
             <?php echo esc_html__( 'How to use WooCommerce Builder', 'wpr-addons' ); ?>
             <span class="dashicons dashicons-video-alt3"></span>
         </a>
+
+        <a href="https://royaladdons.frill.co/b/6m4d5qm4/feature-ideas" class="wpr-options-button button" target="_blank" style="padding: 8px 22px;">
+            <?php echo esc_html__( 'Request New Feature', 'wpr-addons' ); ?>
+            <span class="dashicons dashicons-star-empty"></span>
+        </a>
     </div>
 </div>
 

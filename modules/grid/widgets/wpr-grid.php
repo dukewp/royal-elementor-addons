@@ -63,7 +63,16 @@ class Wpr_Grid extends Widget_Base {
 		return $post_types;
 	}
 
-	public function add_control_query_randomize() {}
+	public function add_control_query_randomize() {
+		$this->add_control(
+			'query_randomize',
+			[
+				'label' => sprintf( __( 'Randomize Query %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);	
+	}
 
 	public function add_control_query_slides_to_show() {
 		$this->add_control(
@@ -191,7 +200,21 @@ class Wpr_Grid extends Widget_Base {
 		);
 	}
 	
-	public function add_control_layout_slider_nav_hover() {}
+	public function add_control_layout_slider_nav_hover() {
+		$this->add_control(
+			'layout_slider_nav_hover',
+			[
+				'label' => sprintf( __( 'Show on Hover %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance',
+				'condition' => [
+					'layout_slider_nav' => 'yes',
+					'layout_select' => 'slider',
+
+				],
+			]
+		);	
+	}
 	
 	public function add_control_layout_slider_dots_position() {
 		$this->add_control(
@@ -214,7 +237,22 @@ class Wpr_Grid extends Widget_Base {
 		);
 	}
 	
-	public function add_control_stack_layout_slider_autoplay() {}
+	public function add_control_layout_slider_autoplay() {
+		$this->add_control(
+			'layout_slider_autoplay',
+			[
+				'label' => sprintf( __( 'Autoplay %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control',
+				'separator' => 'before',
+				'condition' => [
+					'layout_select' => 'slider',
+				],
+			]
+		);
+	}
+	
+	public function add_controls_group_layout_slider_autoplay() {}
 
 	public function add_option_element_select() {
 		return [
@@ -415,13 +453,49 @@ class Wpr_Grid extends Widget_Base {
 		);
 	}
 	
-	public function add_control_lightbox_popup_thumbnails() {}
+	public function add_control_lightbox_popup_thumbnails() {
+		$this->add_control(
+			'lightbox_popup_thumbnails',
+			[
+				'label' => sprintf( __( 'Show Thumbnails %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);	
+	}
 	
-	public function add_control_lightbox_popup_thumbnails_default() {}
+	public function add_control_lightbox_popup_thumbnails_default() {
+		$this->add_control(
+			'popup_thumbnails_default',
+			[
+				'label' => sprintf( __( 'Show Thumbs by Default %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);			
+	}
 	
-	public function add_control_lightbox_popup_sharing() {}
+	public function add_control_lightbox_popup_sharing() {
+		$this->add_control(
+			'lightbox_popup_sharing',
+			[
+				'label' => sprintf( __( 'Show Sharing Button %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);	
+	}
 	
-	public function add_control_filters_deeplinking() {}
+	public function add_control_filters_deeplinking() {
+		$this->add_control(
+			'filters_deeplinking',
+			[
+				'label' => sprintf( __( 'Enable Deep Linking %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);		
+	}
 	
 	public function add_control_filters_animation() {
 		$this->add_control(
@@ -445,7 +519,16 @@ class Wpr_Grid extends Widget_Base {
 	
 	public function add_control_filters_icon_align() {}
 
-	public function add_control_filters_count() {}
+	public function add_control_filters_count() {
+		$this->add_control(
+			'filters_count',
+			[
+				'label' => sprintf( __( 'Show Count %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);	
+	}
 	
 	public function add_control_filters_count_superscript() {}
 	
@@ -1164,7 +1247,9 @@ class Wpr_Grid extends Widget_Base {
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'layout_slider_dots_position', ['pro-vr'] );
 
-		$this->add_control_stack_layout_slider_autoplay();
+		$this->add_control_layout_slider_autoplay();
+
+		$this->add_controls_group_layout_slider_autoplay();
 
 		$this->add_control(
 			'layout_slider_loop',
@@ -1241,9 +1326,22 @@ class Wpr_Grid extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'show_last_update_date',
+			[
+				'label' => esc_html__( 'Show Last Update Date', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'separator' => 'after',
+				'condition' => [
+					'element_select' => 'date',
+				]
+			]
+		);
+
+		$repeater->add_control(
 			'element_custom_field_video_tutorial',
 			[
-				'raw' => esc_html__( 'See how to use custom fields in this', 'wpr-addons' ) . sprintf( '<br><a href="%1$s" target="_blank">%2$s <span class="dashicons dashicons-video-alt3"></span></a>', 'https://www.youtube.com/watch?v=9GvpqyHF_Cs', esc_html__( 'video tutorial', 'wpr-addons' ) ),
+				'raw' => esc_html__( 'See how to use Custom Fields in this', 'wpr-addons' ) . sprintf( '<br><a href="%1$s" target="_blank">%2$s <span class="dashicons dashicons-video-alt3"></span></a>', 'https://www.youtube.com/watch?v=9GvpqyHF_Cs', esc_html__( 'Video Tutorial', 'wpr-addons' ) ),
 				'type' => Controls_Manager::RAW_HTML,
 				'separator' => 'after',
 				'condition' => [
@@ -2853,6 +2951,9 @@ class Wpr_Grid extends Widget_Base {
 		);
 
 		$this->end_controls_section(); // End Controls Section
+
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'grid', [
@@ -7497,6 +7598,7 @@ class Wpr_Grid extends Widget_Base {
 					// '{{WRAPPER}} .wpr-grid-pagination a' => 'margin-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-grid-pagination a:not(:last-child)' => 'margin-right: {{SIZE}}{{UNIT}};', 
 					'{{WRAPPER}} .wpr-grid-pagination > div > span' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-pagination > div > a.wpr-prev-page' => 'margin-right: {{SIZE}}{{UNIT}};',
 					// '{{WRAPPER}} .wpr-grid-pagination span.wpr-disabled-arrow' => 'margin-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-grid-pagination span.wpr-disabled-arrow:not(:last-child)' => 'margin-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-grid-pagination span.wpr-grid-current-page' => 'margin-right: {{SIZE}}{{UNIT}};',
@@ -7910,13 +8012,14 @@ class Wpr_Grid extends Widget_Base {
 	public function render_post_title( $settings, $class ) {
 		$title_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['title_pointer'];
 		$title_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['title_pointer_animation'];
+		$pointer_item_class = (isset($this->get_settings()['title_pointer']) && 'none' !==$this->get_settings()['title_pointer']) ? 'class="wpr-pointer-item"' : '';
 
 		$class .= ' wpr-pointer-'. $title_pointer;
 		$class .= ' wpr-pointer-line-fx wpr-pointer-fx-'. $title_pointer_animation;
 
 		echo '<'. esc_attr($settings['element_title_tag']) .' class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo '<a href="'. esc_url( get_the_permalink() ) .'" class="wpr-pointer-item">';
+				echo '<a '. $pointer_item_class .' href="'. esc_url( get_the_permalink() ) .'">';
 					echo esc_html(wp_trim_words( get_the_title(), $settings['element_word_count'] ));
 				echo '</a>';
 			echo '</div>';
@@ -7970,7 +8073,11 @@ class Wpr_Grid extends Widget_Base {
 				}
 
 				// Date
-				echo esc_html(apply_filters( 'the_date', get_the_date( '' ), get_option( 'date_format' ), '', '' ));
+				if ( 'yes' === $settings['show_last_update_date'] ) {
+					echo esc_html(get_the_modified_time(get_option( 'date_format' )));
+				} else {
+					echo esc_html(apply_filters( 'the_date', get_the_date( '' ), get_option( 'date_format' ), '', '' ));
+				}
 
 				// Icon: After
 				if ( 'after' === $settings['element_extra_icon_pos'] ) {
@@ -8232,6 +8339,7 @@ class Wpr_Grid extends Widget_Base {
 		$tax1_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['tax1_pointer_animation'];
 		$tax2_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['tax2_pointer'];
 		$tax2_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['tax2_pointer_animation'];
+		$pointer_item_class = (isset($this->get_settings()['tax1_pointer']) && 'none' !== $this->get_settings()['tax1_pointer']) || (isset($this->get_settings()['tax2_pointer']) && 'none' !== $this->get_settings()['tax2_pointer']) ? 'class="wpr-pointer-item"' : '';
 
 		// Pointer Class
 		if ( 'wpr-grid-tax-style-1' === $settings['element_tax_style'] ) {
@@ -8255,7 +8363,7 @@ class Wpr_Grid extends Widget_Base {
 
 				// Taxonomies
 				foreach ( $terms as $term ) {
-					echo '<a href="'. esc_url(get_term_link( $term->term_id )) .'" class="wpr-pointer-item">'. esc_html( $term->name );
+					echo '<a '. $pointer_item_class .' href="'. esc_url(get_term_link( $term->term_id )) .'">'. esc_html( $term->name );
 						if ( ++$count !== count( $terms ) ) {
 							echo '<span class="tax-sep">'. esc_html($settings['element_tax_sep']) .'</span>';
 						}
@@ -8448,6 +8556,8 @@ class Wpr_Grid extends Widget_Base {
 		// Pointer Class
 		$pointer_class  = ' wpr-pointer-'. $settings['filters_pointer'];
 		$pointer_class .= ' wpr-pointer-line-fx wpr-pointer-fx-'. $settings['filters_pointer_animation'];
+		$pointer_item_class = (isset($settings['filters_pointer']) && 'none' !== $settings['filters_pointer']) ? 'class="wpr-pointer-item"' : '';
+		$pointer_item_class_name = (isset($settings['filters_pointer']) && 'none' !== $settings['filters_pointer']) ? 'wpr-pointer-item' : '';
 
 		// Filters List
 		echo '<ul class="wpr-grid-filters elementor-clearfix wpr-grid-filters-sep-'. esc_attr($settings['filters_separator_align']) .'">';
@@ -8455,7 +8565,7 @@ class Wpr_Grid extends Widget_Base {
 		// All Filter
 		if ( 'yes' === $settings['filters_all'] && 'yes' !== $settings['filters_linkable'] ) {
 			echo '<li class="'. esc_attr($pointer_class) .'">';
-			echo '<span data-filter="*" class="wpr-active-filter wpr-pointer-item">'. $left_icon . esc_html($settings['filters_all_text']) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo '<span data-filter="*" class="wpr-active-filter '. $pointer_item_class_name .'">'. $left_icon . esc_html($settings['filters_all_text']) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo '</li>';
 		}
 
@@ -8474,9 +8584,9 @@ class Wpr_Grid extends Widget_Base {
 
 					echo '<li'. $data_role .' class="'. esc_attr($pointer_class) .'">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						if ( 'yes' !== $settings['filters_linkable'] ) {
-							echo ''. $left_separator .'<span class="wpr-pointer-item" data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo ''. $left_separator .'<span '. $pointer_item_class .' data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						} else {
-							echo ''. $left_separator .'<a class="wpr-pointer-item" href="'. esc_url(get_term_link( $filter->term_id, $taxonomy )) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</a>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo ''. $left_separator .'<a '. $pointer_item_class .' href="'. esc_url(get_term_link( $filter->term_id, $taxonomy )) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</a>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						}
 					echo '</li>';
 
@@ -8502,9 +8612,9 @@ class Wpr_Grid extends Widget_Base {
 
 					echo '<li'. $data_role .' class="'. esc_attr($pointer_class) . esc_attr($hidden_class) .'">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						if ( 'yes' !== $settings['filters_linkable'] ) {
-							echo ''. $left_separator .'<span class="wpr-pointer-item" data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo ''. $left_separator .'<span '. $pointer_item_class .' data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						} else {
-							echo ''. $left_separator .'<a class="wpr-pointer-item" href="'. esc_url(get_term_link( $filter->term_id, $taxonomy )) .'" data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</a>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo ''. $left_separator .'<a '. $pointer_item_class .' href="'. esc_url(get_term_link( $filter->term_id, $taxonomy )) .'" data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</a>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						}
 					echo '</li>';
 
@@ -8535,7 +8645,7 @@ class Wpr_Grid extends Widget_Base {
 					$data_attr = 'post_tag' === $taxonomy ? 'tag-'. $sub_filter->slug : $taxonomy .'-'. $sub_filter->slug;
 
 					echo '<li data-role="sub" class="'. esc_attr($pointer_class) .'">';
-						echo ''. $left_separator .'<span class="wpr-pointer-item" data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($sub_filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo ''. $left_separator .'<span '. $pointer_item_class .' data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($sub_filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo '</li>';
 				}
 

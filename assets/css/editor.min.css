@@ -88,7 +88,8 @@
 .elementor-control-element_custom_field_wrapper_html,
 .elementor-control-slider_item_bg_size,
 .elementor-control-element_addcart_variable_txt,
-.elementor-control-type {
+.elementor-control-type,
+.elementor-control-show_last_update_date {
 	margin-bottom: 15px;
 }
 
@@ -151,7 +152,8 @@
 	padding-bottom: 0 !important;
 }
 
-.elementor-control-filters_transition_duration {
+.elementor-control-filters_transition_duration,
+.elementor-control-show_last_update_date {
 	padding-top: 0 !important;
 }
 
@@ -505,6 +507,22 @@
 /*--------------------------------------------------------------
 == Widget Preview and Library buttons
 --------------------------------------------------------------*/
+
+.elementor-control-wpr_library_buttons .wpr-forms a:last-child,
+.elementor-control-wpr_library_buttons .wpr-phone-call a:last-child,
+.elementor-control-wpr_library_buttons .wpr-back-to-top a:last-child,
+.elementor-control-wpr_library_buttons .wpr-lottie-animations a:last-child,
+.elementor-control-wpr_library_buttons .wpr-feature-list a:last-child,
+.elementor-control-wpr_library_buttons .wpr-reading-progress-bar a:last-child,
+.elementor-control-wpr_library_buttons .wpr-dual-color-heading a:last-child,
+.elementor-control-wpr_library_buttons .wpr-flip-carousel a:last-child,
+.elementor-control-wpr_library_buttons .wpr-advanced-accordion a:last-child,
+.elementor-control-wpr_library_buttons .wpr-image-accordion a:last-child,
+.elementor-control-wpr_library_buttons .wpr-mega-menu a:last-child,
+.elementor-control-wpr_library_buttons .wpr-charts a:last-child {
+	display: none;
+}
+
 .elementor-control-wpr_library_buttons {
 	height: 60px;
 	padding: 0;
@@ -561,11 +579,18 @@
   right: 20px;
   position: absolute;
   line-height: 20px;
+  font-size: 12px;
 }
 
 .elementor-section-title > a:hover {
   border-color: transparent;
 }
+
+.elementor-section-title > a .dashicons {
+	font-size: 16px;
+	vertical-align: middle;
+}
+
 
 /*--------------------------------------------------------------
 == Apply Changes Button
@@ -695,7 +720,8 @@
 .elementor-control.elementor-control-accordion_repeater_pro_notice,
 .elementor-control.elementor-control-acc_repeater_pro_notice,
 .elementor-control.elementor-control-data_source_pro_notice,
-.elementor-control.elementor-control-charts_repeater_pro_notice {
+.elementor-control.elementor-control-charts_repeater_pro_notice,
+.elementor-control.elementor-control-mob_menu_display_as_pro_notice {
 	padding-bottom: 0 !important;
 }
 
@@ -741,7 +767,8 @@
 .elementor-control-tabs_position_pro_notice .wpr-pro-notice,
 .elementor-control-choose_table_type_pro_notice .wpr-pro-notice,
 .elementor-control-accordion_repeater_pro_notice .wpr-pro-notice,
-.elementor-control.elementor-control-data_source_pro_notice .wpr-pro-notice {
+.elementor-control.elementor-control-data_source_pro_notice .wpr-pro-notice,
+.elementor-control.elementor-control-mob_menu_display_as_pro_notice .wpr-pro-notice {
 	border-bottom: none !important;
 }
 
@@ -812,7 +839,8 @@
   padding-bottom: 5px !important;
 }
 
-.elementor-control.elementor-control-woo_grid_notice_video_tutorial {
+.elementor-control.elementor-control-woo_grid_notice_video_tutorial,
+.elementor-control-show_last_update_date {
 	padding-bottom: 15px !important;
 }
 
@@ -867,10 +895,60 @@
   transition: all 0.2s ease-in;
 }
 
+.elementor-repeater-fields .elementor-control.wpr-pro-control .elementor-control-content:after {
+	content: "This is available in the Pro Version.";
+}
+
+.elementor-control.wpr-pro-control.no-distance .elementor-control-content:after {
+	margin: 0;
+}
+
 .elementor-control.wpr-pro-control .elementor-control-content:hover:after {
   visibility: visible;
   opacity: 1; 
 }
+
+/*--------------------------------------------------------------
+== Request New Feature
+--------------------------------------------------------------*/
+.elementor-control-section_request_new_feature .elementor-section-toggle,
+.elementor-control-section_request_new_feature .elementor-section-title {
+	color: #1CB4E4;
+	line-height: 20px;
+}
+
+.elementor-control-section_request_new_feature .elementor-section-title .dashicons {
+	line-height: 20px;
+	font-size: 13px;
+}
+
+.elementor-control-request_new_feature {
+	line-height: 20px;
+}
+
+.elementor-control-request_new_feature a {
+	display: block;
+	padding: 10px 15px;
+	border-radius: 3px;
+	margin-top: 15px;
+	text-align: center;
+	text-decoration: none;
+	background-color: #1CB4E4;
+	color: #fff;
+	font-size: 13px;
+	font-weight: 500;
+}
+
+.elementor-control-request_new_feature a:hover {
+	color: #fff;
+	background-color: #1589ad;
+}
+
+.elementor-control-request_new_feature a .dashicons {
+	font-size: 13px;
+	line-height: 18px;
+}
+
 
 /*--------------------------------------------------------------
 == Theme Builder Widgets

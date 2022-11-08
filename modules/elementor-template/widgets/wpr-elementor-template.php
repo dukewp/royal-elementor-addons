@@ -3,6 +3,7 @@ namespace WprAddons\Modules\ElementorTemplate\Widgets;
 
 use Elementor\Controls_Manager;
 use Elementor\Widget_Base;
+use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -76,6 +77,9 @@ class Wpr_Elementor_Template extends Widget_Base {
 		wp_reset_postdata();
 
 		$this->end_controls_section(); // End Controls Section
+
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
 	}
 		
 
@@ -85,7 +89,11 @@ class Wpr_Elementor_Template extends Widget_Base {
 
 		if ( '' !== $settings['select_template'] ) {
 			$edit_link = '<span class="wpr-template-edit-btn" data-permalink="'. esc_url(get_permalink($settings['select_template'])) .'">Edit Template</span>';
-			echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $settings['select_template'], true ) . $edit_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		
+			$type = get_post_meta(get_the_ID(), '_wpr_template_type', true);
+			$has_css = 'internal' === get_option( 'elementor_css_print_method' ) || '' !== $type;
+
+			echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $settings['select_template'], $has_css ) . $edit_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 }

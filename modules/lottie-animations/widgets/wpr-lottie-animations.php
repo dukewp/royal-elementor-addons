@@ -56,7 +56,7 @@ class Wpr_Lottie_Animations extends Widget_Base {
 			]
 		);
 
-		// Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
+		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
 		$this->add_control(
 			'source',
@@ -346,6 +346,9 @@ class Wpr_Lottie_Animations extends Widget_Base {
 
 
 		$this->end_controls_section(); // End Controls Section
+
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
 
 		$this->start_controls_section(
 			'lottie_styles',

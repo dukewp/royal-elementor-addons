@@ -27,14 +27,18 @@ class Utilities {
 			'Advanced Slider' => ['advanced-slider', 'https://royal-elementor-addons.com/elementor-advanced-slider-widget/', '', ''],
 			'Testimonial' => ['testimonial', 'https://royal-elementor-addons.com/elementor-testimonials-slider-widget/', '', ''],
 			'Nav Menu' => ['nav-menu', 'http://royal-elementor-addons.com/elementor-menu-widget/', '', ''],
+			'Mega Menu' => ['mega-menu', 'https://royal-elementor-addons.com/elementor-mega-menu-widget/', '', 'new'],
 			'Onepage Navigation' => ['onepage-nav', 'https://royal-elementor-addons.com/elementor-one-page-navigation-widget/', '', ''],
 			'Data Table' => ['data-table', 'https://royal-elementor-addons.com/elementor-data-table-widget/', '', 'new'],
 			'Pricing Table' => ['pricing-table', 'https://royal-elementor-addons.com/elementor-pricing-table-widget/', '', ''],
 			'Content Toggle' => ['content-toggle', 'https://royal-elementor-addons.com/elementor-content-toggle-widget/', '', ''],
+			'Charts' => ['charts', 'https://royal-elementor-addons.com/elementor-charts-widget/', '', 'new'],
 			'Countdown' => ['countdown', 'https://royal-elementor-addons.com/elementor-countdown-widget/', '', ''],
 			'Progress Bar' => ['progress-bar', 'https://royal-elementor-addons.com/elementor-progress-bar-widget/', '', ''],
 			'Tabs' => ['tabs', 'https://royal-elementor-addons.com/elementor-tabs-widget/', '', ''],
 			'Dual Color Heading' => ['dual-color-heading', 'https://royal-elementor-addons.com/elementor-dual-color-heading-widget/', '', ''],
+			'Image Accordion' => ['image-accordion', 'https://royal-elementor-addons.com/elementor-image-accordion-widget/', '', 'new'],
+			'Advanced Accordion' => ['advanced-accordion', 'https://royal-elementor-addons.com/elementor-advanced-accordion-widget/', '', 'new'],
 			'Advanced Text' => ['advanced-text', 'https://royal-elementor-addons.com/elementor-advanced-text-widget/', '', ''],
 			'Flip Carousel' => ['flip-carousel', 'https://royal-elementor-addons.com/elementor-flip-carousel-widget/', '', ''],
 			'Flip Box' => ['flip-box', 'https://royal-elementor-addons.com/elementor-flip-box-widget/', '', ''],
@@ -52,18 +56,16 @@ class Utilities {
 			'Price List' => ['price-list', 'https://royal-elementor-addons.com/elementor-price-list-widget/', '', ''],
 			'Business Hours' => ['business-hours', 'https://royal-elementor-addons.com/elementor-business-hours-widget/', '', ''],
 			'Sharing Buttons' => ['sharing-buttons', 'https://royal-elementor-addons.com/elementor-social-sharing-buttons-widget/', '', ''],
-			'Search Form' => ['search', 'https://royal-elementor-addons.com/elementor-search-widget/', '', ''],
+			'Search Form (Ajax)' => ['search', 'https://royal-elementor-addons.com/elementor-search-widget/', '', ''],
 			'Back to Top' => ['back-to-top', 'https://royal-elementor-addons.com/elementor-back-to-top-widget/', '', ''],
 			'Phone Call' => ['phone-call', 'https://royal-elementor-addons.com/elementor-phone-call-widget/', '', ''],
 			'Lottie Animations' => ['lottie-animations', 'https://royal-elementor-addons.com/elementor-lottie-animation-widget/', '', ''],
 			'Site Logo' => ['logo', '', '', ''],
 			'Popup Trigger' => ['popup-trigger', '', '', ''],
-			'Image Accordion' => ['image-accordion', '', '', 'new'],
 			'Taxonomy List' => ['taxonomy-list', '', '', ''],
+			'Page List' => ['page-list', '', '', 'new'],
 			'Template' => ['elementor-template', '', '', ''],
-			'Charts' => ['charts', '', '', 'new'],
 			'Reading Progress Bar' => ['reading-progress-bar', 'https://royal-elementor-addons.com/elementor-reading-progress-bar-widget/', '', 'new'],
-			'Advanced Accordion' => ['advanced-accordion', '', '', 'new'],
 			// 'Random Image' => ['random-image', '', ''],
 		];
 	}
@@ -246,11 +248,13 @@ class Utilities {
 	public static function get_users() {
 		$users = [];
 		
-		foreach ( get_users() as $key => $user ) {
-			$users[$user->data->ID] = $user->data->user_nicename;
+		if ( is_admin() ) {
+			foreach ( get_users() as $key => $user ) {
+				$users[$user->data->ID] = $user->data->user_nicename;
+			}
+			
+			wp_reset_postdata();
 		}
-		
-		wp_reset_postdata();
 
 		return $users;
 	}
@@ -708,7 +712,6 @@ class Utilities {
 		}
 	}
 
-
 	/**
 	** Mailchimp AJAX Subscribe
 	*/
@@ -854,7 +857,7 @@ class Utilities {
 			$module->add_control(
 	            'wpr_library_buttons',
 	            [
-					'raw' => '<div><a href="#" target="_blank" data-theme="'. esc_attr(get_template()) .'">'. esc_html__( 'Widget Preview', 'wpr-addons' ) .'</a> <a href="#">'. esc_html__( 'Predefined Styles', 'wpr-addons' ) .'</a></div>'. $tutorial_link,
+					'raw' => '<div class='. $module->get_name() .'><a href="#" target="_blank" data-theme="'. esc_attr(get_template()) .'">'. esc_html__( 'Widget Preview', 'wpr-addons' ) .'</a> <a href="#">'. esc_html__( 'Predefined Styles', 'wpr-addons' ) .'</a></div>'. $tutorial_link,
 					'type' => $controls_manager,
 				]
 	        );
@@ -881,6 +884,29 @@ class Utilities {
 				]
 			]
         );
+	}
+
+	/**
+	** Request Feature Section
+	*/
+	public static function wpr_add_section_request_feature( $module, $raw_html, $tab ) {
+		$module->start_controls_section(
+			'section_request_new_feature',
+			[
+				'label' => __( 'Request Feature', 'wpr-addons' ),
+				'tab' => $tab,
+			]
+		);
+
+		$module->add_control(
+			'request_new_feature',
+			[
+				'type' => $raw_html,
+				'raw' => __( 'Missing an Option, have a New Widget or any kind of Feature Idea? Please share it with us and lets discuss. <a href="https://royaladdons.frill.co/b/6m4d5qm4/feature-ideas" target="_blank">Request New Feature <span class="dashicons dashicons-star-empty"></span></a>', 'wpr-addons' ),
+			]
+		);
+
+		$module->end_controls_section(); // End Controls Section
 	}
 
 	/**

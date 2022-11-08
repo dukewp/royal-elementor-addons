@@ -48,14 +48,16 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
 
-	protected function register_controls()
-	{
+	protected function register_controls() {
+
 		$this->start_controls_section(
 			'section_content',
 			[
 				'label' => __('Settings', 'wpr-addons'),
 			]
 		);
+
+		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
 		$this->add_control(
 			'dual_heading_tag',
@@ -196,6 +198,9 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
 
 		$this->start_controls_section(
 			'primary_heading_styles',

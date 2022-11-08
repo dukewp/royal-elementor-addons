@@ -55,12 +55,14 @@ class WPR_Templates_Library_Blocks {
 
 							$exclude_widgets = [
 								'logo',
+								'mega-menu',
 								'forms',
 								'phone-call',
 								'back-to-top',
 								'popup-trigger',
 								'lottie-animations',
 								'taxonomy-list',
+								'page-list',
 								'elementor-template',
 								'flip-carousel',
 								'feature-list',
@@ -68,7 +70,7 @@ class WPR_Templates_Library_Blocks {
 								'reading-progress-bar',
 								'image-accordion',
 								'advanced-accordion',
-								'charts'
+								'charts',
 							];
 							
 							foreach ($modules as $title => $slug) {

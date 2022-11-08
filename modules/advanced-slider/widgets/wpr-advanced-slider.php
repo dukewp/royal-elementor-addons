@@ -57,7 +57,16 @@ class Wpr_Advanced_Slider extends Widget_Base {
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
 
-	public function add_control_slider_nav_hover() {}
+	public function add_control_slider_nav_hover() {
+		$this->add_control(
+			'slider_nav_hover',
+			[
+				'label' => sprintf( __( 'Show on Hover %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);
+	}
 
 	public function add_control_slider_dots_layout() {
 		$this->add_control(
@@ -76,18 +85,58 @@ class Wpr_Advanced_Slider extends Widget_Base {
 		);
 	}
 
-	public function add_control_slider_autoplay() {}
+	public function add_control_slider_autoplay() {
+		$this->add_control(
+			'slider_autoplay',
+			[
+				'label' => sprintf( __( 'Autoplay %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'separator' => 'before',
+				'classes' => 'wpr-pro-control'
+			]
+		);
+	}
 
 	public function add_control_slider_autoplay_duration() {}
 
-	public function add_control_slider_pause_on_hover() {}
+	public function add_control_slider_pause_on_hover() {
+		$this->add_control(
+			'pause_on_hover',
+			[
+				'label' => sprintf( __( 'Pause on Hover %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);
+	}
 
-	public function add_control_slider_scroll_btn() {}
+	public function add_control_slider_scroll_btn() {
+		$this->add_control(
+			'slider_scroll_btn',
+			[
+				'label' => sprintf( __( 'Scroll to Section Button %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'separator' => 'before',
+				'classes' => 'wpr-pro-control'
+			]
+		);
+	}
 
 	public function add_repeater_args_slider_item_bg_kenburns() {
 		return [
-			'type' => Controls_Manager::HIDDEN,
-			'default' => ''
+			'label' => sprintf( __( 'Ken Burn Effect %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+			'type' => Controls_Manager::SWITCHER,
+			'separator' => 'before',
+			'conditions' => [
+				'terms' => [
+					[
+						'name' => 'slider_item_bg_image[url]',
+						'operator' => '!=',
+						'value' => '',
+					],
+				],
+			],
+			'classes' => 'wpr-pro-control'
 		];
 	}
 
@@ -963,17 +1012,6 @@ class Wpr_Advanced_Slider extends Widget_Base {
 		$this->add_control_slider_autoplay_duration();
 
 		$this->add_control_slider_pause_on_hover();
-
-		$this->add_control(
-			'slider_loop',
-			[
-				'label' => esc_html__( 'Infinite Loop', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
-				'frontend_available' => true,
-				'separator' => 'before',
-			]
-		);
 		
 		$this->add_control(
 			'slider_effect',
@@ -985,6 +1023,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 					'slide' => esc_html__( 'Slide', 'wpr-addons' ),
 					'fade' => esc_html__( 'Fade', 'wpr-addons' ),
 				],
+				'separator' => 'before'
 			]
 		);
 
@@ -1053,6 +1092,9 @@ class Wpr_Advanced_Slider extends Widget_Base {
 		);
 
 		$this->end_controls_section(); // End Controls Section
+
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'advanced-slider', [
@@ -2571,8 +2613,11 @@ class Wpr_Advanced_Slider extends Widget_Base {
 		}
 
 		$edit_link = '<span class="wpr-template-edit-btn" data-permalink="'. esc_url(get_permalink( $id )) .'">Edit Template</span>';
+		
+		$type = get_post_meta(get_the_ID(), '_wpr_template_type', true);
+		$has_css = 'internal' === get_option( 'elementor_css_print_method' ) || '' !== $type;
 
-		return Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $id ) . $edit_link;
+		return Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $id, $has_css ) . $edit_link;
 	}
 
 	public function render_pro_element_slider_scroll_btn() {}
@@ -2867,7 +2912,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 
 		$slider_options = [
 			'rtl' => $slider_is_rtl,
-			'infinite' => ( $settings['slider_loop'] === 'yes' ),
+			'infinite' => true,
 			'speed' => absint( $settings['slider_effect_duration'] * 1000 ),
 			'arrows'=> true,
 			'dots' 	=> true,

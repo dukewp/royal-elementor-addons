@@ -33,7 +33,7 @@ class Wpr_Product_Media extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'qq', 'woocommerce', 'product-media', 'product', 'image', 'media' ];//tmp
+		return [ 'qq', 'woocommerce', 'product media', 'product', 'image', 'media' ];//tmp
 	}
 
 	public function get_script_depends() {
@@ -462,6 +462,9 @@ class Wpr_Product_Media extends Widget_Base {
 		);
 
 		$this->end_controls_section(); // End Controls Section
+
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
 
 		// Styles ====================
 		// Section: Navigation -------

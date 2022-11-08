@@ -252,23 +252,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 	}
 
     public function register_controls() {
-		
-		$templates_select = [];
-
-		// Get All Templates
-		$templates = get_posts( [
-			'post_type'   => array( 'elementor_library' ),
-			'post_status' => array( 'publish' ),
-			'meta_key' 	  => '_elementor_template_type',
-			'meta_value'  => ['page', 'section'],
-			'numberposts' => -1
-		] );
-
-		if ( ! empty( $templates ) ) {
-			foreach ( $templates as $template ) {
-				$templates_select[$template->ID] = $template->post_title;
-			}
-		}
 
 		// Section: Accordion Options ---
 		$this->start_controls_section(
@@ -278,6 +261,8 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'type' => Controls_Manager::SECTION,
 			]
 		);
+
+		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
 		$this->add_control_accordion_direction();
 
@@ -375,6 +360,44 @@ class Wpr_Image_Accordion extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}}.wpr-image-accordion-row .wpr-image-accordion-item:not(:last-child)' => 'margin-right: {{SIZE}}px;',
 					'{{WRAPPER}}.wpr-image-accordion-column .wpr-image-accordion-item:not(:last-child)' => 'margin-bottom: {{SIZE}}px;'
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'accordion_item_border',
+			[
+				'label'       => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type'        => Controls_Manager::SELECT,
+				'options'     => [
+					'outer'   => esc_html__( 'Outer', 'wpr-addons' ),
+					'individual' => esc_html__( 'Individual', 'wpr-addons' )
+				],
+				'default'     => 'outer',
+				'prefix_class' => 'wpr-acc-border-',
+				'render_type' => 'template',
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'accordion_item_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}}.wpr-acc-border-outer.wpr-image-accordion-row .wpr-image-accordion-item:first-child' => 'border-radius: {{TOP}}{{UNIT}} 0 0 {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-acc-border-outer.wpr-image-accordion-row .wpr-image-accordion-item:last-child' => 'border-radius: 0 {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} 0;',
+					'{{WRAPPER}}.wpr-acc-border-outer.wpr-image-accordion-column .wpr-image-accordion-item:first-child' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} 0 0;',
+					'{{WRAPPER}}.wpr-acc-border-outer.wpr-image-accordion-column .wpr-image-accordion-item:last-child' => 'border-radius: 0 0 {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-acc-border-individual .wpr-image-accordion-item' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				]
 			]
 		);
@@ -1245,6 +1268,9 @@ class Wpr_Image_Accordion extends Widget_Base {
 
 		$this->add_section_lightbox_popup();
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'image-accordion', [
 			'Add Unlimited Images.',
@@ -1522,7 +1548,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'description_width',
 			[
 				'label' => esc_html__( 'Description Width', 'wpr-addons' ),
@@ -1912,6 +1938,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-img-accordion-item-button .inner-block a' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-img-accordion-item-button .inner-block a:before' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -2158,7 +2185,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 		if (!empty($item['accordion_item_title'])) :
 		echo '<'. $settings['element_title_tag'] .' class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo '<a href="'. esc_url( '#' ) .'" class="wpr-pointer-item">';
+				echo '<a class="wpr-pointer-item">';
 					echo $item['accordion_item_title'];
 				echo '</a>';
 			echo '</div>';
@@ -2283,16 +2310,6 @@ class Wpr_Image_Accordion extends Widget_Base {
 
 	}
 
-	public function wpr_accordion_template( $id ) {
-		if ( empty( $id ) ) {
-			return '';
-		}
-
-		$edit_link = '<span class="wpr-template-edit-btn" data-permalink="'. get_permalink( $id ) .'">Edit Template</span>';
-
-		return Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $id ) . $edit_link;
-	}
-
 	// Get Image Effect Class
 	public function get_image_effect_class( $settings ) {
 		$class = '';
@@ -2319,7 +2336,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 	}	
 
 
-    public function render() {
+    protected function render() {
 		$settings = $this->get_settings_for_display();
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {

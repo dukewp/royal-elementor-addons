@@ -43,7 +43,17 @@ class Wpr_Mailchimp extends Widget_Base {
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
 
-	public function add_control_extra_fields() {}
+	public function add_control_extra_fields() {
+		$this->add_control(
+			'extra_fields',
+			[
+				'label' => sprintf( __( 'Show Extra Fields %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'separator' => 'before',
+				'classes' => 'wpr-pro-control'
+			]
+		);
+	}
 	
 	public function add_control_name_label() {}
 	
@@ -251,6 +261,9 @@ class Wpr_Mailchimp extends Widget_Base {
 		$this->add_control_last_name_placeholder();
 
 		$this->end_controls_section(); // End Controls Section
+
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'mailchimp', [

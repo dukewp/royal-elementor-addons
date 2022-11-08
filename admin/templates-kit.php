@@ -148,6 +148,10 @@ function wpr_addons_templates_kit_page() {
                     <div class="progress-bar"></div>
                     <strong></strong>
                 </div>
+
+                <div class="wpr-import-help">
+                    <a href="https://royal-elementor-addons.com/contactus/?ref=rea-plugin-backend-templates-import-screen" target="_blank">Having trouble with template import?&nbsp;&nbsp;Get help <span class="dashicons dashicons-sos"></span></a>
+                </div>
             </div>
         </div>
     </div>
@@ -433,7 +437,7 @@ function setup_wpr_templates( $kit ) {
 */
 function wpr_fix_elementor_images() {
     $args = array(
-        'post_type' => ['wpr_templates', 'page'],
+        'post_type' => ['wpr_templates', 'wpr_mega_menu', 'page'],
         'posts_per_page' => '-1',
         'meta_key' => '_elementor_version'
     );

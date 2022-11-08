@@ -42,7 +42,7 @@ class WPR_Conditions_Manager {
         if ( \Elementor\Plugin::$instance->preview->is_preview_mode() ) {
         	$template_type = Utilities::get_wpr_template_type(get_the_ID());
         	
-        	if ( 'header' === $template_type || 'footer' ===$template_type ) {
+        	if ( 'header' === $template_type || 'footer' === $template_type || is_singular('wpr_mega_menu') ) {
         		$template = NULL;
         	}
         }

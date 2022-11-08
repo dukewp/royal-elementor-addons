@@ -59,6 +59,8 @@ class Wpr_Reading_Progress_Bar extends Widget_Base {
 			]
         );
 
+		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
+
 		$this->add_control(
 			'rpb_apply_changes',
 			[
@@ -71,7 +73,7 @@ class Wpr_Reading_Progress_Bar extends Widget_Base {
 		$this->add_control(
 			'rpb_info',
 			[
-				'raw' => esc_html__( 'Please scroll to view progress bar in action', 'wpr-addons' ),
+				'raw' => esc_html__( 'Please scroll down a page to see how Progress Bar in works action.', 'wpr-addons' ),
 				'type' => Controls_Manager::RAW_HTML,
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 			]
@@ -182,10 +184,13 @@ class Wpr_Reading_Progress_Bar extends Widget_Base {
 		);
 
         $this->end_controls_section();
+
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
         
 	}
 
-	public function render() {
+	protected function render() {
     	$settings = $this->get_settings_for_display();
 
 		$this->add_render_attribute( 'wpr-rpb-attrs', [

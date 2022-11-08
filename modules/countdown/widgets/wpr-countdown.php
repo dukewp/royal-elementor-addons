@@ -69,7 +69,17 @@ class Wpr_Countdown extends Widget_Base {
 
 	public function add_control_evergreen_show_again_delay() {}
 
-	public function add_control_evergreen_stop_after_date() {}
+	public function add_control_evergreen_stop_after_date() {
+		$this->add_control(
+			'evergreen_stop_after_date',
+			[
+				'label' => sprintf( __( 'Stop Showing after Date %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'separator' => 'before',
+				'classes' => 'wpr-pro-control'
+			]
+		);	
+	}
 
 	public function add_control_evergreen_stop_after_date_select() {}
 
@@ -409,6 +419,9 @@ class Wpr_Countdown extends Widget_Base {
 		wp_reset_postdata();
 
 		$this->end_controls_section(); // End Controls Section
+
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'countdown', [

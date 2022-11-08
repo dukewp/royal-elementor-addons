@@ -61,6 +61,8 @@ class Wpr_Feature_List extends Widget_Base {
 			]
 		);
 
+		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
+
 		$this->add_responsive_control(
 			'list_layout',
 			[
@@ -75,7 +77,7 @@ class Wpr_Feature_List extends Widget_Base {
 					],
 					'center' => [
 						'title' => esc_html__( 'Center', 'wpr-addons' ),
-						'icon' => 'eicon-v-align-middle',
+						'icon' => 'eicon-h-align-center',
 					],
 					'right' => [
 						'title' => esc_html__( 'Right', 'wpr-addons' ),
@@ -88,6 +90,38 @@ class Wpr_Feature_List extends Widget_Base {
 					'{{WRAPPER}} .wpr-feature-list-item' => 'justify-content: {{VALUE}}',
 				],
 				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'icon_vertical_align',
+			[
+				'label' => esc_html__( 'Vertical Align', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'label_block' => false,
+				'default' => 'center',
+				'options' => [
+					'flex-start' => [
+						'title' => esc_html__( 'Top', 'wpr-addons' ),
+						'icon' => 'eicon-v-align-top',
+					],
+					'center' => [
+						'title' => esc_html__( 'Middle', 'wpr-addons' ),
+						'icon' => 'eicon-v-align-middle',
+					],
+					'flex-end' => [
+						'title' => esc_html__( 'Bottom', 'wpr-addons' ),
+						'icon' => 'eicon-v-align-bottom',
+					]
+				],
+				'render_type' => 'template',
+				'selectors' => [
+					'{{WRAPPER}}.wpr-feature-list-left .wpr-feature-list-item' => 'align-items: {{VALUE}}',
+					'{{WRAPPER}}.wpr-feature-list-right .wpr-feature-list-item' => 'align-items: {{VALUE}}'
+				],
+				'condition' => [
+					'list_layout!' => 'center', 
+				]
 			]
 		);
 
@@ -534,6 +568,9 @@ class Wpr_Feature_List extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
 
 		// Tab: STYLE ==============
 		// Section: Icon ----------

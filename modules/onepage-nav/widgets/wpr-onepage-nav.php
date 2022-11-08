@@ -48,9 +48,45 @@ class Wpr_OnepageNav extends Widget_Base {
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
 
-	public function add_section_settings() {}
+	public function add_section_settings() {
+		$this->start_controls_section(
+			'section_settings',
+			[
+				'label' => esc_html__( 'Settings', 'wpr-addons' ),
+			]
+		);
 
-	public function add_control_nav_item_stretch() {}
+		$this->add_control(
+			'nav_item_show_tooltip',
+			[
+				'label' => sprintf( __( 'Show Tooltip %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);
+
+		$this->add_control(
+			'nav_item_highlight',
+			[
+				'label' => sprintf( __( 'Highlight Active Item %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);
+
+		$this->end_controls_section(); // End Controls Section
+	}
+
+	public function add_control_nav_item_stretch() {
+		$this->add_control(
+			'nav_item_stretch',
+			[
+				'label' => sprintf( __( 'Stretch Vertically %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);
+	}
 
 	public function add_condition_nav_item_stretch() {
 		return [];
@@ -223,6 +259,9 @@ class Wpr_OnepageNav extends Widget_Base {
 
 		// Section: Settings ---------
 		$this->add_section_settings();
+
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'onepage-nav', [

@@ -78,11 +78,30 @@ class Wpr_Progress_Bar extends Widget_Base {
 
 	public function add_control_prline_width() {}
 
-	public function add_control_stripe_switcher() {}
+	public function add_control_stripe_switcher() {
+		$this->add_control(
+			'stripe_switcher',
+			[
+				'label' => sprintf( __( 'Show Stripe %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);
+	}
 
 	public function add_control_stripe_anim() {}
 
-	public function add_control_anim_loop() {}
+	public function add_control_anim_loop() {
+		$this->add_control(
+			'anim_loop',
+			[
+				'label' => sprintf( __( 'Animation Loop %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance',
+				'separator' => 'before',
+			]
+		);
+	}
 
 	public function add_control_anim_loop_delay() {}
 
@@ -411,6 +430,9 @@ class Wpr_Progress_Bar extends Widget_Base {
 		$this->add_control_anim_loop_delay();
 
 		$this->end_controls_section(); // End Controls Section
+
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'progress-bar', [
