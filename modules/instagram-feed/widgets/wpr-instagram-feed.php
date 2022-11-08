@@ -351,7 +351,8 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			'instagram_access_token_test',
 			[
 				'type' => Controls_Manager::RAW_HTML,
-				'raw' => '<a class="wpr-authorize-instagram" href="https://www.instagram.com/oauth/authorize?client_id=5484217328332432&redirect_uri=https://reastats.kinsta.cloud/token/social-network.php&scope=user_profile,user_media&response_type=code" target="popup">'. esc_html__( 'Authorize Instagram', 'wpr-addons' ) .'</a>',
+				'raw' => '<a class="wpr-authorize-instagram" href="https://www.instagram.com/oauth/authorize?client_id=5484217328332432&redirect_uri=https://reastats.kinsta.cloud/token/social-network.php&scope=user_profile,user_media&response_type=code" target="popup">'. esc_html__( 'Click here to Authorize Instagram','wpr-addons' ) .'</a>',
+				'description' => 'In order to authorize instagram you must be logged in',
 				'separator' => 'before',
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 			]
@@ -369,7 +370,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		$this->add_control(
 			'instagram_access_token_expires_in',
 			[
-				'label' => esc_html__( 'Expire Date', 'wpr-addons' ),
+				'label' => esc_html__( 'Expiry Date', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
 				'label_block' => true
 			]
