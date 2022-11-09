@@ -13711,6 +13711,10 @@ dl.variation dd {
     width: 100% !important;
 }
 
+.wpr-product-media-wrap .swiper {
+    overflow: hidden;
+}
+
 .wpr-fcn-wrap {
     position: relative;
     overflow: hidden;
