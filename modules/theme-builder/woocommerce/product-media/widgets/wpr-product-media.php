@@ -797,7 +797,7 @@ class Wpr_Product_Media extends Widget_Base {
 					'size' => 12,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-media-wrap .wpr-fcn-wrap' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-product-media-thumbs-vertical .wpr-product-media-wrap .wpr-fcn-wrap' => 'margin-right: {{SIZE}}{{UNIT}};',
 				]
 			]
 		);
@@ -1448,8 +1448,6 @@ class Wpr_Product_Media extends Widget_Base {
 	protected function render() {
 		// Get Settings
 		$settings = $this->get_settings();
-
-		var_dump($settings['gallery_slider_thumbs']);
 		
 		// Get Product
 		$product = wc_get_product();
