@@ -1562,6 +1562,13 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     align-items: flex-start;
 }
 
+.wpr-product-media-thumbs-vertical .flex-control-nav li img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+
+}
+
 /* temporary-end */
 
 .wpr-gallery-slider-arrow,
