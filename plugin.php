@@ -308,7 +308,7 @@ class Plugin {
 			'wpr-addons-css',
 			WPR_ADDONS_URL . 'assets/css/frontend'. $this->script_suffix() .'.css',
 			[],
-			Plugin::instance()->get_version()
+			Plugin::instance()->get_version() .'1'
 		);
 
         // Load FontAwesome - TODO: Check if necessary (maybe elementor is already loading this)
@@ -394,7 +394,7 @@ class Plugin {
 			[
 				'jquery',
 			],
-			Plugin::instance()->get_version(),
+			Plugin::instance()->get_version() .'1',
 			true
 		);
 

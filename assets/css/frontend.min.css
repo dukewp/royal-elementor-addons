@@ -948,7 +948,7 @@ li.wpr-mega-menu-pos-default {
     width: 100vw;
 }
 
-.wpr-main-menu-align-center .wpr-nav-menu-horizontal .wpr-mega-menu-width-custom .wpr-sub-mega-menu {
+.wpr-main-menu-align-center .wpr-nav-menu-horizontal .wpr-mega-menu-pos-default.wpr-mega-menu-width-custom .wpr-sub-mega-menu {
     left: 50%;
 }
 
