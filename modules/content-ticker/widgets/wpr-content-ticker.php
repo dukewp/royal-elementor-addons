@@ -1473,7 +1473,6 @@ class Wpr_Content_Ticker extends Widget_Base {
 				'default' => '#555555',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-ticker-title a' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .wpr-ticker-title *' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-ticker-title:after' => 'color: {{VALUE}};',
 				],
 			]
