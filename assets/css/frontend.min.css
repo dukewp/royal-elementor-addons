@@ -946,6 +946,7 @@ li.wpr-mega-menu-pos-default {
 
 .wpr-mega-menu-width-full .wpr-sub-mega-menu {
     width: 100vw;
+    left: -110%;
 }
 
 .wpr-main-menu-align-center .wpr-nav-menu-horizontal .wpr-mega-menu-pos-default.wpr-mega-menu-width-custom .wpr-sub-mega-menu {
