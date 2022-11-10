@@ -1489,6 +1489,7 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
             transform: translateY(-50%);
     left: 0;
     z-index: 1;
+    height: 0 !important;
     width: 100%;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -1669,7 +1670,7 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     position: absolute;
     top: 0;
     right: 0;
-    z-index: 9;
+    z-index: 1;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
