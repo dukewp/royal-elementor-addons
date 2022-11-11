@@ -946,6 +946,7 @@ li.wpr-mega-menu-pos-default {
 
 .wpr-mega-menu-width-full .wpr-sub-mega-menu {
     width: 100vw;
+    left: -110%;
 }
 
 .wpr-main-menu-align-center .wpr-nav-menu-horizontal .wpr-mega-menu-pos-default.wpr-mega-menu-width-custom .wpr-sub-mega-menu {
@@ -1489,6 +1490,25 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
             transform: translateY(-50%);
     left: 0;
     z-index: 1;
+    height: 0 !important;
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+
+/* TEMPORARY - GOGA */
+.wpr-thumbnail-slider-arrows-wrap {
+    position: absolute;
+    top: 90%;
+    left: 0;
+    z-index: 1;
     width: 100%;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -1651,7 +1671,7 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     position: absolute;
     top: 0;
     right: 0;
-    z-index: 9;
+    z-index: 1;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -13709,6 +13729,10 @@ dl.variation dd {
 .wpr-product-media-wrap .flex-control-thumbs li {
     clear: none !important;
     width: 100% !important;
+}
+
+.wpr-product-media-wrap .swiper {
+    overflow: hidden;
 }
 
 .wpr-fcn-wrap {

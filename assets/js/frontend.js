@@ -39,7 +39,6 @@
 				'wpr-advanced-accordion.default' : WprElements.widgetAdvancedAccordion,
                 'wpr-image-accordion.default' : WprElements.widgetImageAccordion,
 				'wpr-product-media.default' : WprElements.widgetProductMedia,
-				'wpr-product-media-old.default' : WprElements.widgetProductMediaOld,
 				'wpr-product-add-to-cart.default' : WprElements.widgetProductAddToCart,
 				'wpr-product-mini-cart.default' : WprElements.widgetProductMiniCart,
 				'wpr-product-filters.default' : WprElements.widgetProductFilters,
@@ -1237,8 +1236,8 @@
 						$scope.find( '.slick-dots' ).css( 'width', dotsWrapWidth );
 					}
 
-					// on Resize // TODO: Change all resize functions to smartresize (debounce)
-					$(window).on( 'resize', function() {
+
+					$(window).smartresize(function() {
 						setTimeout(function() {
 							// Calculate Width
 							var dotsWrapWidth = $scope.find( '.slick-dots li' ).outerWidth() * $scope.find( '.slick-dots li' ).length - parseInt( $scope.find( '.slick-dots li span' ).css( 'margin-right' ), 10 );
@@ -2369,86 +2368,6 @@
 				});
 			}
 		}, // End widgetFeaturedMedia
-
-		widgetProductMediaOld: function( $scope ) {
-			var productImage = $scope.find( '.wpr-product-media-image' ),
-				gallery = $scope.find( '.wpr-gallery-slider' ),
-				gallerySettings = gallery.attr( 'data-slick' );
-			
-			gallery.animate({ 'opacity' : '1' }, 1000 );
-		
-			if ( '[]' !== gallerySettings && gallery.length ) {
-				// Get Settings
-				var gallerySettings = JSON.parse( gallerySettings );
-		
-				// Gallery
-				gallery.slick();
-		
-				// Thumbnail Navigation
-				if ( 'yes' === gallerySettings.thumbnail_nav ) {
-					var navigation = $scope.find( '.wpr-product-thumb-nav' );
-		
-					// Init Slick
-					navigation.slick();
-		
-					navigation.find( '.slick-slide' ).on( 'click', function () {
-						var index = $(this).attr('data-slick-index');
-		
-						$(this).siblings().removeClass( 'slick-current' );
-						$(this).addClass( 'slick-current' );
-		
-						gallery.slick( 'slickGoTo', parseInt( index, 10 ) );
-					});
-				}
-			}
-		
-			// Lightbox
-			var lightboxSettings = $( '.wpr-product-media-image' ).attr( 'data-lightbox' );
-		
-			if ( typeof lightboxSettings !== typeof undefined && lightboxSettings !== false && ! WprElements.editorCheck() ) {
-				var MediaWrap = $scope.find( '.wpr-product-media-wrap' );
-					lightboxSettings = JSON.parse( lightboxSettings );
-		
-				// Init Lightbox
-				MediaWrap.lightGallery( lightboxSettings );
-		
-				// Show/Hide Controls
-				MediaWrap.on( 'onAferAppendSlide.lg, onAfterSlide.lg', function( event, prevIndex, index ) {
-					var lightboxControls = $( '#lg-actual-size, #lg-zoom-in, #lg-zoom-out, #lg-download' ),
-						lightboxDownload = $( '#lg-download' ).attr( 'href' );
-		
-					if ( $( '#lg-download' ).length ) {
-						if ( -1 === lightboxDownload.indexOf( 'wp-content' ) ) {
-							lightboxControls.addClass( 'wpr-hidden-element' );
-						} else {
-							lightboxControls.removeClass( 'wpr-hidden-element' );
-						}
-					}
-		
-					// Autoplay Button
-					if ( '' === lightboxSettings.autoplay ) {
-						$( '.lg-autoplay-button' ).css({
-							 'width' : '0',
-							 'height' : '0',
-							 'overflow' : 'hidden'
-						});
-					}
-				});
-			}
-		
-			// Zoom
-			if ( $scope.hasClass( 'wpr-gallery-zoom-yes' ) ) {
-				productImage.on( 'mousemove', function( event ) {
-					var xPos = ((event.pageX - $(this).offset().left) / $(this).width()) * 100,
-						yPos = ((event.pageY - $(this).offset().top) / $(this).height()) * 100;
-		
-					$(this).children( 'img' ).css({
-						'transform-origin': xPos +'% '+ yPos +'%'
-					});
-				});
-			}
-		
-		}, // End widgetProductMediaOld
         
         widgetProductMedia: function( $scope ) {
 
@@ -3322,7 +3241,7 @@
 				}
 
 				// on Resize
-				$(window).on( 'resize', function() {
+				$(window).smartresize(function() {
 					setTimeout(function() {
 						// Calculate Width
 						var dotsWrapWidth = $scope.find( '.slick-dots li' ).outerWidth() * $scope.find( '.slick-dots li' ).length - parseInt( $scope.find( '.slick-dots li span' ).css( 'margin-right' ), 10 );
@@ -3442,8 +3361,7 @@
 				$scope.find( '.slick-dots' ).css( 'width', dotsWrapWidth );
 			}
 
-			// on Resize
-			$(window).on( 'resize', function() {
+			$(window).smartresize(function() {
 				setTimeout(function() {
 					if ( $scope.find( '.slick-dots' ).length ) {
 						// Calculate Width
