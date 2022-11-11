@@ -813,15 +813,6 @@ class Wpr_Product_Media extends Widget_Base {
 					'gallery_slider_thumbs_type' => 'slider',
 				],
 			]
-		);	$this->start_controls_section(
-			'section_style_thumbnail_arrows_nav',
-			[
-				'label' => esc_html__( 'Gallery Thumbnails Arrows', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-				'condition' => [
-					'gallery_slider_thumbs_type' => 'slider',
-				],
-			]
 		);
 
 		$this->start_controls_tabs( 'tabs_thumbnail_slider_nav_style' );
