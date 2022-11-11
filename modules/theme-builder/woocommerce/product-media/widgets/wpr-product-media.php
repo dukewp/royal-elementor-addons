@@ -45,23 +45,38 @@ class Wpr_Product_Media extends Widget_Base {
 	}
 
 	public function add_control_gallery_slider_thumbs() {
+		// $this->add_control(
+		// 	'gallery_slider_thumbs_type',
+		// 	[
+		// 		'label' => esc_html__( 'Display Thumbs As', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'options' => [
+		// 			'stacked' => esc_html__( 'Stacked', 'wpr-addons' ),
+		// 			'sl-pro' => esc_html__( 'Slider (Pro)', 'wpr-addons' )
+		// 		],
+		// 		'default' => 'stacked',
+		// 		'render_type' => 'template',
+		// 		'prefix_class' => 'wpr-product-media-thumbs-',
+		// 		'selectors' => [
+		// 			'{{WRAPPER}}.wpr-product-media-thumbs-none .wpr-product-media-wrap .flex-control-nav' => 'display: none;',
+		// 			'{{WRAPPER}}.wpr-product-media-thumbs-stacked .wpr-product-media-wrap .flex-control-nav' => 'display: grid;',
+		// 			'{{WRAPPER}}.wpr-product-media-thumbs-slider .wpr-product-media-wrap .flex-control-nav' => 'display: flex;',
+        //         ],
+        //         'condition' => [
+        //             'gallery_slider_thumbs' => 'yes'
+        //         ]
+		// 	]
+		// );
+
 		$this->add_control(
 			'gallery_slider_thumbs_type',
 			[
-				'label' => esc_html__( 'Display Thumbs As', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'stacked' => esc_html__( 'Stacked', 'wpr-addons' ),
-					'sl-pro' => esc_html__( 'Slider (Pro)', 'wpr-addons' )
-				],
+				'type' => \Elementor\Controls_Manager::HIDDEN,
 				'default' => 'stacked',
-				'render_type' => 'template',
 				'prefix_class' => 'wpr-product-media-thumbs-',
 				'selectors' => [
-					'{{WRAPPER}}.wpr-product-media-thumbs-none .wpr-product-media-wrap .flex-control-nav' => 'display: none;',
 					'{{WRAPPER}}.wpr-product-media-thumbs-stacked .wpr-product-media-wrap .flex-control-nav' => 'display: grid;',
-					'{{WRAPPER}}.wpr-product-media-thumbs-slider .wpr-product-media-wrap .flex-control-nav' => 'display: flex;',
-                ],
+				],
                 'condition' => [
                     'gallery_slider_thumbs' => 'yes'
                 ]
