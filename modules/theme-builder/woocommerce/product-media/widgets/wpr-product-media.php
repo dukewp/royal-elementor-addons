@@ -43,6 +43,50 @@ class Wpr_Product_Media extends Widget_Base {
 	public function get_style_depends() {
 		return [ 'woocommerce_prettyPhoto_css', 'photoswipe', 'photoswipe-default-skin', 'wpr-lightgallery-css'];
 	}
+
+	public function add_control_gallery_slider_thumbs() {
+		// $this->add_control(
+		// 	'gallery_slider_thumbs_type',
+		// 	[
+		// 		'label' => esc_html__( 'Display Thumbs As', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'options' => [
+		// 			'stacked' => esc_html__( 'Stacked', 'wpr-addons' ),
+		// 			'sl-pro' => esc_html__( 'Slider (Pro)', 'wpr-addons' )
+		// 		],
+		// 		'default' => 'stacked',
+		// 		'render_type' => 'template',
+		// 		'prefix_class' => 'wpr-product-media-thumbs-',
+		// 		'selectors' => [
+		// 			'{{WRAPPER}}.wpr-product-media-thumbs-none .wpr-product-media-wrap .flex-control-nav' => 'display: none;',
+		// 			'{{WRAPPER}}.wpr-product-media-thumbs-stacked .wpr-product-media-wrap .flex-control-nav' => 'display: grid;',
+		// 			'{{WRAPPER}}.wpr-product-media-thumbs-slider .wpr-product-media-wrap .flex-control-nav' => 'display: flex;',
+        //         ],
+        //         'condition' => [
+        //             'gallery_slider_thumbs' => 'yes'
+        //         ]
+		// 	]
+		// );
+
+		$this->add_control(
+			'gallery_slider_thumbs_type',
+			[
+				'type' => \Elementor\Controls_Manager::HIDDEN,
+				'default' => 'stacked',
+				'prefix_class' => 'wpr-product-media-thumbs-',
+				'selectors' => [
+					'{{WRAPPER}}.wpr-product-media-thumbs-stacked .wpr-product-media-wrap .flex-control-nav' => 'display: grid;',
+				],
+                'condition' => [
+                    'gallery_slider_thumbs' => 'yes'
+                ]
+			]
+		);
+	}
+
+	public function add_controls_group_gallery_slider_thumbs() {}
+
+	public function add_control_gallery_slider_thumbs_to_slide() {}
 	
 	protected function register_controls() {
 
@@ -170,8 +214,6 @@ class Wpr_Product_Media extends Widget_Base {
 				'label' => esc_html__( 'Show Thumbnail Images', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
-				'tablet_default' => 'yes',
-				'mobile_default' => 'yes',
 				'selectors_dictionary' => [
 					'' => 'none',
 					'yes' => 'grid'
@@ -182,6 +224,13 @@ class Wpr_Product_Media extends Widget_Base {
 			]
 		);
 
+		$this->add_control_gallery_slider_thumbs();
+
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'query_source', ['pro-rl'] );
+
+		$this->add_controls_group_gallery_slider_thumbs();
+
 		$this->add_control(
 			'gallery_slider_thumb_cols',
 			[
@@ -191,15 +240,19 @@ class Wpr_Product_Media extends Widget_Base {
 				'default' => 4,
 				'render_type' => 'template',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-media-wrap .flex-control-thumbs' => 'grid-template-columns: repeat({{VALUE}}, auto);',
+					'{{WRAPPER}}.wpr-product-media-thumbs-stacked .wpr-product-media-wrap .flex-control-thumbs' => 'grid-template-columns: repeat({{VALUE}}, auto);',
+					'{{WRAPPER}}.wpr-product-media-thumbs-slider .wpr-product-media-thumbs-horizontal.wpr-product-media-wrap .flex-control-thumbs li' => 'width: calc(100%/{{VALUE}}) !important;',
+					'{{WRAPPER}}.wpr-product-media-thumbs-slider.wpr-product-media-thumbs-vertical .wpr-product-media-wrap .flex-control-thumbs li' => 'height: calc(100%/{{VALUE}}) !important;'
 				],
 				'condition' => [
-					// 'gallery_display_as' => 'slider',
-					'gallery_slider_thumbs' => 'yes'
+					'gallery_slider_thumbs' => 'yes',
+					'gallery_slider_thumbs_type' => ['slider', 'stacked'],
 				],
 
 			]
 		);
+
+		$this->add_control_gallery_slider_thumbs_to_slide();
 
 		$this->end_controls_section();
 
@@ -379,6 +432,12 @@ class Wpr_Product_Media extends Widget_Base {
 
 		// Section: Request New Feature
 		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'product-media', [
+			'Convert Thumbnails to Carousel',
+		] );
+
 
 		// Styles ====================
 		// Section: Navigation -------
@@ -670,6 +729,7 @@ class Wpr_Product_Media extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-media-wrap .flex-control-nav' => 'max-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-product-media-wrap .wpr-fcn-wrap' => 'max-width: {{SIZE}}{{UNIT}};'
 				],
 				// 'render_type' => 'template'
 			]
@@ -692,7 +752,8 @@ class Wpr_Product_Media extends Widget_Base {
 					'size' => 10,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-media-wrap .flex-control-nav' => 'grid-column-gap: {{SIZE}}{{UNIT}} !important;'
+					'{{WRAPPER}}.wpr-product-media-thumbs-stacked .wpr-product-media-wrap .flex-control-nav' => 'grid-column-gap: {{SIZE}}{{UNIT}} !important;',
+					'{{WRAPPER}}.wpr-product-media-thumbs-slider .wpr-product-media-wrap .flex-control-nav li:not(:last-child)' => 'margin-right: {{SIZE}}{{UNIT}};'
 				],
 				// 'render_type' => 'template'
 			]
@@ -715,8 +776,12 @@ class Wpr_Product_Media extends Widget_Base {
 					'size' => 10,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-media-wrap .flex-control-nav' => 'grid-row-gap: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-product-media-thumbs-stacked .wpr-product-media-wrap .flex-control-nav' => 'grid-row-gap: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-product-media-thumbs-slider.wpr-product-media-thumbs-vertical .wpr-product-media-wrap .flex-control-nav li:not(:last-child)' => 'margin-bottom: {{SIZE}}{{UNIT}};'
 				],
+				'condition' => [
+					'gallery_slider_thumbs_type' => 'stacked'
+				]
 			]
 		);
 
@@ -737,258 +802,278 @@ class Wpr_Product_Media extends Widget_Base {
 					'size' => 12,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-product-media-wrap .flex-viewport' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}:not(.wpr-product-media-thumbs-vertical) .wpr-product-media-wrap .flex-viewport' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				]
 			]
 		);
 
-		$this->end_controls_section(); // End Controls Section
-
-		// $this->start_controls_section(
-		// 	'section_style_thumbnail_arrows_nav',
-		// 	[
-		// 		'label' => esc_html__( 'Gallery Thumbnails Arrows', 'wpr-addons' ),
-		// 		'tab' => Controls_Manager::TAB_STYLE,
-		// 		'condition' => [
-		// 			'gallery_display_as' => 'slider',
-		// 		],
-		// 	]
-		// );
-
-		// $this->start_controls_tabs( 'tabs_thumbnail_slider_nav_style' );
-
-		// $this->start_controls_tab(
-		// 	'tab_thumbnail_slider_nav_normal',
-		// 	[
-		// 		'label' => esc_html__( 'Normal', 'wpr-addons' ),
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'thumbnail_slider_nav_color',
-		// 	[
-		// 		'label' => esc_html__( 'Color', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::COLOR,
-		// 		'default' => 'rgba(255,255,255,0.8)',
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'color: {{VALUE}};',
-		// 			'{{WRAPPER}} .wpr-thumbnail-slider-arrow svg' => 'fill: {{VALUE}};',
-		// 		],
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'thumbnail_slider_nav_bg_color',
-		// 	[
-		// 		'label' => esc_html__( 'Background Color', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::COLOR,
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'background-color: {{VALUE}};',
-		// 		],
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'thumbnail_slider_nav_border_color',
-		// 	[
-		// 		'label' => esc_html__( 'Border Color', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::COLOR,
-		// 		'default' => 'rgba(255,255,255,0.8)',
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'border-color: {{VALUE}};',
-		// 		],
-		// 	]
-		// );
-
-		// $this->end_controls_tab();
-
-		// $this->start_controls_tab(
-		// 	'tab_thumbnail_slider_nav_hover',
-		// 	[
-		// 		'label' => esc_html__( 'Hover', 'wpr-addons' ),
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'thumbnail_slider_nav_hover_color',
-		// 	[
-		// 		'label' => esc_html__( 'Color', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::COLOR,
-		// 		'default' => '#ffffff',
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-thumbnail-slider-arrow:hover' => 'color: {{VALUE}};',
-		// 		],
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'thumbnail_slider_nav_hover_bg_color',
-		// 	[
-		// 		'label' => esc_html__( 'Background Color', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::COLOR,
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-thumbnail-slider-arrow:hover' => 'background-color: {{VALUE}};',
-		// 		],
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'thumbnail_slider_nav_hover_border_color',
-		// 	[
-		// 		'label' => esc_html__( 'Border Color', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::COLOR,
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-thumbnail-slider-arrow:hover' => 'border-color: {{VALUE}};',
-		// 		],
-		// 	]
-		// );
-
-		// $this->end_controls_tab();
-
-		// $this->end_controls_tabs();
-
-		// $this->add_control(
-		// 	'thumbnail_slider_nav_transition_duration',
-		// 	[
-		// 		'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::NUMBER,
-		// 		'default' => 0.1,
-		// 		'min' => 0,
-		// 		'max' => 5,
-		// 		'step' => 0.1,
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'transition-duration: {{VALUE}}s',
-		// 		],
-		// 		'separator' => 'before',
-		// 	]
-		// );
-
 		// $this->add_responsive_control(
-		// 	'thumbnail_slider_nav_font_size',
+		// 	'product_media_horizontal_distance',
 		// 	[
-		// 		'label' => esc_html__( 'Icon Size', 'wpr-addons' ),
 		// 		'type' => Controls_Manager::SLIDER,
-		// 		'size_units' => ['px'],
+		// 		'label' => esc_html__( 'Horizontal Distance', 'wpr-addons' ),
+		// 		'size_units' => [ 'px' ],
 		// 		'range' => [
 		// 			'px' => [
-		// 				'min' => 10,
+		// 				'min' => 0,
 		// 				'max' => 50,
 		// 			],
 		// 		],
 		// 		'default' => [
 		// 			'unit' => 'px',
-		// 			'size' => 25,
+		// 			'size' => 12,
 		// 		],
 		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'font-size: {{SIZE}}{{UNIT}};',
-		// 			'{{WRAPPER}} .wpr-thumbnail-slider-arrow svg' => 'width: {{SIZE}}{{UNIT}};',
-		// 		],
-		// 		'separator' => 'before',
+		// 			'{{WRAPPER}}.wpr-product-media-thumbs-vertical .wpr-product-media-wrap .wpr-fcn-wrap' => 'margin-right: {{SIZE}}{{UNIT}};',
+		// 		]
 		// 	]
 		// );
 
-		// $this->add_responsive_control(
-		// 	'thumbnail_slider_nav_size',
-		// 	[
-		// 		'label' => esc_html__( 'Box Size', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'size_units' => ['px'],
-		// 		'range' => [
-		// 			'px' => [
-		// 				'min' => 10,
-		// 				'max' => 100,
-		// 			],
-		// 		],
-		// 		'default' => [
-		// 			'unit' => 'px',
-		// 			'size' => 50,
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};', // remove line-height if not needed
-		// 			'{{WRAPPER}} .wpr-thumbnail-slider-arrows-wrap' => 'height: {{SIZE}}{{UNIT}};', // remove line-height if not needed
-		// 		],
-		// 	]
-		// );
+		$this->end_controls_section(); // End Controls Section
 
-		// $this->add_responsive_control(
-		// 	'thumbnail_slider_nav_position_horizontal',
-		// 	[
-		// 		'type' => Controls_Manager::SLIDER,
-		// 		'label' => esc_html__( 'Horizontal Position', 'wpr-addons' ),
-		// 		'size_units' => [ 'px' ],
-		// 		'range' => [
-		// 			'px' => [
-		// 				'min' => 0,
-		// 				'max' => 25,
-		// 			],
-		// 		],
-		// 		'default' => [
-		// 			'unit' => 'px',
-		// 			'size' => 0,
-		// 		],
-		// 		'separator' => 'after',
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-thumbnail-slider-prev-arrow' => 'left: {{SIZE}}{{UNIT}};',
-		// 			'{{WRAPPER}} .wpr-thumbnail-slider-next-arrow' => 'right: {{SIZE}}{{UNIT}};',
-		// 		],
-		// 	]
-		// );
+		$this->start_controls_section(
+			'section_style_thumbnail_arrows_nav',
+			[
+				'label' => esc_html__( 'Gallery Thumbnails Arrows', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'gallery_slider_thumbs_type' => 'slider',
+				],
+			]
+		);
 
-		// $this->add_control(
-		// 	'thumbnail_slider_nav_border_type',
-		// 	[
-		// 		'label' => esc_html__( 'Border Type', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SELECT,
-		// 		'options' => [
-		// 			'none' => esc_html__( 'None', 'wpr-addons' ),
-		// 			'solid' => esc_html__( 'Solid', 'wpr-addons' ),
-		// 			'double' => esc_html__( 'Double', 'wpr-addons' ),
-		// 			'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
-		// 			'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
-		// 			'groove' => esc_html__( 'Groove', 'wpr-addons' ),
-		// 		],
-		// 		'default' => 'none',
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'border-style: {{VALUE}};',
-		// 		],
-		// 	]
-		// );
+		$this->start_controls_tabs( 'tabs_thumbnail_slider_nav_style' );
 
-		// $this->add_control(
-		// 	'thumbnail_slider_nav_border_width',
-		// 	[
-		// 		'label' => esc_html__( 'Border Width', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::DIMENSIONS,
-		// 		'size_units' => [ 'px' ],
-		// 		'default' => [
-		// 			'top' => 2,
-		// 			'right' => 2,
-		// 			'bottom' => 0,
-		// 			'left' => 2,
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-		// 		],
-		// 		'condition' => [
-		// 			'thumbnail_slider_nav_border_type!' => 'none',
-		// 		],
-		// 	]
-		// );
+		$this->start_controls_tab(
+			'tab_thumbnail_slider_nav_normal',
+			[
+				'label' => esc_html__( 'Normal', 'wpr-addons' ),
+			]
+		);
 
-		// $this->add_control(
-		// 	'thumbnail_slider_nav_border_radius',
-		// 	[
-		// 		'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::DIMENSIONS,
-		// 		'size_units' => [ 'px', '%' ],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-		// 		],
-		// 		'separator' => 'after',
-		// 	]
-		// );
+		$this->add_control(
+			'thumbnail_slider_nav_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#C0A886',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow svg' => 'fill: {{VALUE}};',
+				],
+			]
+		);
 
-		// $this->end_controls_section(); // End Controls Section
+		$this->add_control(
+			'thumbnail_slider_nav_bg_color',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'thumbnail_slider_nav_border_color',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFFFFFCC',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'border-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_thumbnail_slider_nav_hover',
+			[
+				'label' => esc_html__( 'Hover', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'thumbnail_slider_nav_hover_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#C0A886',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow:hover' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'thumbnail_slider_nav_hover_bg_color',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow:hover' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'thumbnail_slider_nav_hover_border_color',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow:hover' => 'border-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_control(
+			'thumbnail_slider_nav_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.1,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'transition-duration: {{VALUE}}s',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'thumbnail_slider_nav_font_size',
+			[
+				'label' => esc_html__( 'Icon Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 10,
+						'max' => 50,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 25,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow svg' => 'width: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'thumbnail_slider_nav_size',
+			[
+				'label' => esc_html__( 'Box Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 10,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 50,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};', // remove line-height if not needed
+					// '{{WRAPPER}} .wpr-thumbnail-slider-arrows-wrap' => 'height: {{SIZE}}{{UNIT}};', // remove line-height if not needed
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'thumbnail_slider_nav_position_horizontal',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Horizontal Position', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 25,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 0,
+				],
+				'separator' => 'after',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-thumbnail-slider-prev-arrow' => 'left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-thumbnail-slider-next-arrow' => 'right: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'thumbnail_slider_nav_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'border-style: {{VALUE}};',
+				],
+			]
+		);	$this->add_control(
+			'thumbnail_slider_nav_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 2,
+					'right' => 2,
+					'bottom' => 0,
+					'left' => 2,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'thumbnail_slider_nav_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'thumbnail_slider_nav_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'after',
+			]
+		);
+
+		$this->end_controls_section(); // End Controls Section
 
 		$this->start_controls_section(
 			'section_product_sales_badge_styles',
@@ -1401,10 +1486,20 @@ class Wpr_Product_Media extends Widget_Base {
 		$post = get_post( $product->get_id() );
 		$gallery_images = $product->get_gallery_image_ids();
 		
-		add_action( 'wp', 'my_remove_lightbox', 99 );	 	 
+		add_action( 'wp', 'my_remove_lightbox', 99 );
+
 		function my_remove_lightbox() {	 	 
 		   remove_theme_support( 'wc-product-gallery-lightbox' );	 	 
 		}
+
+		$this->add_render_attribute(
+			'thumbnails_attributes',
+			[
+				'class' => ['wpr-product-media-wrap', 'wpr-product-media-thumbs-horizontal'],
+				'data-slidestoshow' => $settings['gallery_slider_thumb_cols'],
+				'data-slidestoscroll' => $settings['gallery_slider_thumbs_to_slide'],
+			]
+		);
 
 		// Lightbox
 		if ( 'yes' === $settings['product_media_lightbox'] ) {
@@ -1414,7 +1509,7 @@ class Wpr_Product_Media extends Widget_Base {
 		}
 
 		// Output
-		echo '<div class="wpr-product-media-wrap" '. $lightbox .'>';
+		echo '<div '.  $this->get_render_attribute_string( 'thumbnails_attributes' ) .' '. $lightbox .'>';
 
 		// Sales Badge
 		if ( $product->is_on_sale() && 'yes' === $settings['product_media_sales_badge'] ) {
@@ -1442,13 +1537,11 @@ class Wpr_Product_Media extends Widget_Base {
 			}
 		}
 		
-		// // Thumbnail Slider Arrows
-		// if ( 'yes' === $settings['thumbnail_slider_nav'] && 'none' !== $settings['thumbnail_slider_nav_icon']) {
-		// 	echo '<div class="wpr-thumbnail-slider-arrows-wrap">';
-		// 		echo '<div class="wpr-thumbnail-slider-prev-arrow wpr-thumbnail-slider-arrow">'. Utilities::get_wpr_icon( $settings['thumbnail_slider_nav_icon'], 'left' ) .'</div>';
-		// 		echo '<div class="wpr-thumbnail-slider-next-arrow wpr-thumbnail-slider-arrow">'. Utilities::get_wpr_icon( $settings['thumbnail_slider_nav_icon'], 'right' ) .'</div>';
-		// 	echo '</div>';
-		// }
+		// Thumbnail Slider Arrows
+		if ( 'slider' === $settings['gallery_slider_thumbs_type'] && 'yes' === $settings['thumbnail_slider_nav'] && 'none' !== $settings['thumbnail_slider_nav_icon']) {
+				echo '<div class="wpr-thumbnail-slider-prev-arrow wpr-tsa-hidden wpr-thumbnail-slider-arrow">'. Utilities::get_wpr_icon( $settings['thumbnail_slider_nav_icon'], 'left' ) .'</div>';
+				echo '<div class="wpr-thumbnail-slider-next-arrow wpr-tsa-hidden wpr-thumbnail-slider-arrow">'. Utilities::get_wpr_icon( $settings['thumbnail_slider_nav_icon'], 'right' ) .'</div>';
+		}
 
         wc_get_template('single-product/product-image.php');
 		echo '</div>';
