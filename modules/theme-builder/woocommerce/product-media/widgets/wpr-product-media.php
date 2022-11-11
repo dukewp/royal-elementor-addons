@@ -224,10 +224,11 @@ class Wpr_Product_Media extends Widget_Base {
 				'render_type' => 'template',
 				'selectors' => [
 					'{{WRAPPER}}.wpr-product-media-thumbs-stacked .wpr-product-media-wrap .flex-control-thumbs' => 'grid-template-columns: repeat({{VALUE}}, auto);',
-					'{{WRAPPER}}.wpr-product-media-thumbs-slider.wpr-product-media-thumbs-horizontal .wpr-product-media-wrap .flex-control-thumbs li' => 'width: calc(100%/{{VALUE}}) !important;',
+					'{{WRAPPER}}.wpr-product-media-thumbs-slider .wpr-product-media-thumbs-horizontal.wpr-product-media-wrap .flex-control-thumbs li' => 'width: calc(100%/{{VALUE}}) !important;',
 					'{{WRAPPER}}.wpr-product-media-thumbs-slider.wpr-product-media-thumbs-vertical .wpr-product-media-wrap .flex-control-thumbs li' => 'height: calc(100%/{{VALUE}}) !important;'
 				],
 				'condition' => [
+					'gallery_slider_thumbs' => 'yes',
 					'gallery_slider_thumbs_type' => ['slider', 'stacked'],
 				],
 
@@ -1478,6 +1479,7 @@ class Wpr_Product_Media extends Widget_Base {
 		$this->add_render_attribute(
 			'thumbnails_attributes',
 			[
+				'class' => ['wpr-product-media-wrap', 'wpr-product-media-thumbs-horizontal'],
 				'data-slidestoshow' => $settings['gallery_slider_thumb_cols'],
 				'data-slidestoscroll' => $settings['gallery_slider_thumbs_to_slide'],
 			]
@@ -1491,7 +1493,7 @@ class Wpr_Product_Media extends Widget_Base {
 		}
 
 		// Output
-		echo '<div class="wpr-product-media-wrap" '.  $this->get_render_attribute_string( 'thumbnails_attributes' ) .' '. $lightbox .'>';
+		echo '<div '.  $this->get_render_attribute_string( 'thumbnails_attributes' ) .' '. $lightbox .'>';
 
 		// Sales Badge
 		if ( $product->is_on_sale() && 'yes' === $settings['product_media_sales_badge'] ) {
