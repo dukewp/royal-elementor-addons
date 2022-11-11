@@ -986,7 +986,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-nav-menu-horizontal .wpr-nav-menu .wpr-sub-mega-menu' => 'transform: translateY({{SIZE}}{{UNIT}});',
-					'{{WRAPPER}}.wpr-main-menu-align-center .wpr-nav-menu-horizontal .wpr-mega-menu-width-custom .wpr-sub-mega-menu' => 'transform: translate(-50%, {{SIZE}}{{UNIT}});',
+					'{{WRAPPER}}.wpr-main-menu-align-center .wpr-nav-menu-horizontal .wpr-mega-menu-pos-default.wpr-mega-menu-width-custom .wpr-sub-mega-menu' => 'transform: translate(-50%, {{SIZE}}{{UNIT}});',
 					'{{WRAPPER}} .wpr-nav-menu-horizontal .wpr-nav-menu > li > .wpr-sub-menu' => 'transform: translateY({{SIZE}}{{UNIT}});',
 					'{{WRAPPER}} .wpr-nav-menu-vertical .wpr-nav-menu > li > .wpr-sub-menu' => 'transform: translateX({{SIZE}}{{UNIT}});',
 					'{{WRAPPER}} .wpr-nav-menu-vertical .wpr-nav-menu > li > .wpr-sub-mega-menu' => 'transform: translateX({{SIZE}}{{UNIT}});',
