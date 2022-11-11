@@ -189,6 +189,7 @@ class Wpr_Product_Media extends Widget_Base {
 				'type' => Controls_Manager::NUMBER,
 				'min' => 2,
 				'default' => 4,
+				'render_type' => 'template',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-media-wrap .flex-control-thumbs' => 'grid-template-columns: repeat({{VALUE}}, auto);',
 				],
@@ -543,7 +544,6 @@ class Wpr_Product_Media extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-gallery-slider-arrow' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-gallery-slider-arrows-wrap' => 'height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-product-media-wrap .flex-direction-nav li' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-product-media-wrap .flex-direction-nav li a.flex-prev' => 'display: block; width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-product-media-wrap .flex-direction-nav li a.flex-next' => 'display: block; width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
