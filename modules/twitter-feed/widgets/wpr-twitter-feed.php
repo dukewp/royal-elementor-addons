@@ -60,7 +60,10 @@ class Wpr_Twitter_Feed extends Widget_Base {
             ]
         );
 
-        $this->add_control(
+		$repeater = new Repeater();
+
+
+        $repeater->add_control(
             'twitter_feed_account_name',
             [
                 'label' => esc_html__('Account Name', 'wpr-addons'),
@@ -70,6 +73,35 @@ class Wpr_Twitter_Feed extends Widget_Base {
                 'description' => esc_html__('Use @ sign with your account name.', 'wpr-addons'),
             ]
         );
+
+		$this->add_control(
+			'twitter_accounts',
+			[
+				'type' => Controls_Manager::REPEATER,
+				'fields' => $repeater->get_controls(),
+				'default' => [
+					[
+						'twitter_feed_account_name' => '@giorgi_karchava',
+					],
+					[
+						'twitter_feed_account_name' => '@cufotheme',
+					]
+				],
+				'title_field' => '<i class="{{{ twitter_feed_account_name }}}"></i> Account Name',
+			]
+		);
+
+		if ( Utilities::is_new_free_user() ) {
+			$this->add_control(
+				'sharing_repeater_pro_notice',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => 'More than 4 Buttons are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-sharing-buttons-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+					'content_classes' => 'wpr-pro-notice',
+				]
+			);
+		}
 
         $this->add_control(
             'twitter_feed_hashtag_name',
@@ -175,25 +207,31 @@ class Wpr_Twitter_Feed extends Widget_Base {
 
         add_filter('https_ssl_verify', '__return_false');
 
-        $response = wp_remote_get('https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=' . $settings['twitter_feed_account_name'] . '&count=999&tweet_mode=extended', [
-            'httpversion' => '1.1',
-            'blocking' => true,
-            'headers' => [
-                'Authorization' => "Bearer $token",
-            ],
-        ]);
+        $response = [];
+        $items_array = [];
 
-        if ( is_wp_error( $response ) ) {
-            // return $html;
+        foreach ($settings['twitter_accounts'] as $key=>$value) {
+            $response[$key] = wp_remote_get('https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=' . $value['twitter_feed_account_name'] . '&count=999&tweet_mode=extended', [
+                'httpversion' => '1.1',
+                'blocking' => true,
+                'headers' => [
+                    'Authorization' => "Bearer $token",
+                ],
+            ]);
+
+            if ( is_wp_error( $response[$key] ) ) {
+                // return $html;
+            }
+    
+            if ( ! empty( $response[$key]['response'] ) && $response[$key]['response']['code'] == 200 ) {
+                $items_array[] = json_decode( wp_remote_retrieve_body( $response[$key] ), true );
+                // set_transient( $cache_key, $items, $expiration );
+            }
         }
 
-        if ( ! empty( $response['response'] ) && $response['response']['code'] == 200 ) {
-            $items      = json_decode( wp_remote_retrieve_body( $response ), true );
-            // set_transient( $cache_key, $items, $expiration );
-            var_dump($items);
-        }
         echo '<div class="wpr-twitter-feed">';
         $banner_placeholder = WPR_ADDONS_ASSETS_URL . 'img/placeholder.png';
+        foreach ( $items_array as $key=>$items ) :
         foreach ( $items as $item) :
         $banner = $item['user']['profile_banner_url'] ? $item['user']['profile_banner_url'] : $banner_placeholder;
         ?>
@@ -212,8 +250,10 @@ class Wpr_Twitter_Feed extends Widget_Base {
                             <p>
                                 <strong><?php echo $item['user']['name'] ?></strong> <small><a href="<?php echo 'https://twitter.com/' . $item['user']['screen_name'] ?>">@<?php echo $item['user']['screen_name'] ?></a></small>
                                 <br>
-                                <span><?php echo $item['full_text'] ?></span>
-                                <span><?php echo $item['created_at'] ?></span>
+                                <p><?php echo $item['full_text'] ?></p>
+                                <p><?php echo $item['created_at'] ?></p>
+                                <p><?php echo strtotime($item['created_at']) ?></p>
+                                <p><?php echo wp_date(get_option( 'date_format' ), strtotime($item['created_at'])) ?></p>
                             </p>
                             </div>
                             <div class="level-left">
@@ -230,6 +270,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
                 </div>
             </div>
         <?php
+        endforeach;
         endforeach;
         echo '</div>';
     }
