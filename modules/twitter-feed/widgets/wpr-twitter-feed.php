@@ -231,46 +231,55 @@ class Wpr_Twitter_Feed extends Widget_Base {
         }
 
         echo '<div class="wpr-twitter-feed">';
-        $banner_placeholder = WPR_ADDONS_ASSETS_URL . 'img/placeholder.png';
+
         foreach ( $items_array as $key=>$items ) :
+        $i = 0;
         foreach ( $items as $item) :
+        if ($i++ < 4) :
+                
+        $banner_placeholder = WPR_ADDONS_ASSETS_URL . 'img/placeholder.png';
         $banner = $item['user']['profile_banner_url'] ? $item['user']['profile_banner_url'] : $banner_placeholder;
         ?>
-            <div class="wpr-tf-columns">
-                <div class="wpr-tf-column"><div class="tweet">
-                    <div class="box">
-                        <img src="<?php echo $banner ?>" alt="">
-                        <article class="media">
-                        <div class="media-left">
-                            <figure class="image is-64x64">
-                            <img src="<?php echo $item['user']['profile_image_url'] ?>" alt="Image">
-                            </figure>
+                <div class="wpr-tf-column">
+                    <div class="tweet">
+                        <div class="box">
+                            <img src="<?php echo $banner ?>" alt="">
+                            <article class="media">
+                                <div class="media-left">
+                                    <figure class="image is-64x64">
+                                    <img src="<?php echo $item['user']['profile_image_url'] ?>" alt="Image">
+                                    </figure>
+                                </div>
+                                <div class="media-content">
+                                    <div class="content">
+                                    <p>
+                                        <strong><?php echo $item['user']['name'] ?></strong> <small><a href="<?php echo 'https://twitter.com/' . $item['user']['screen_name'] ?>">@<?php echo $item['user']['screen_name'] ?></a></small>
+                                        <br>
+                                        <p><?php 
+                                            $string = preg_replace("~[[:alpha:]]+://[^<>[:space:]]+[[:alnum:]/]~", "<a href=\"\\0\">\\0</a>", $item['full_text']);
+                                            $new_string = preg_replace('/\#([a-z0-9]+)/i', '<a href="https://twitter.com/hashtag/$1?src=hashtag_click">#$1</a>', $string);
+                                            echo preg_replace('/\@([a-z0-9]+)/i', '<a href="https://twitter.com/$1">@$1</a>' ,$new_string);
+                                        ?></p>
+                                        <p><?php echo wp_date(get_option( 'date_format' ), strtotime($item['created_at'])) ?></p>
+                                    </p>
+                                    </div>
+                                    <div class="level-left">
+                                        <a class="level-item">
+                                        <span class="icon small"><i class="fas fa-heart"></i></span>
+                                        <span class="likes">
+                                        <?php echo $item['favorite_count'] ?></span>
+                                        <span class="icon small"><i class="fa fa-retweet"></i></span>
+                                        <span class="retweets">
+                                        <?php echo $item['retweet_count'] ?></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </article>
                         </div>
-                        <div class="media-content">
-                            <div class="content">
-                            <p>
-                                <strong><?php echo $item['user']['name'] ?></strong> <small><a href="<?php echo 'https://twitter.com/' . $item['user']['screen_name'] ?>">@<?php echo $item['user']['screen_name'] ?></a></small>
-                                <br>
-                                <p><?php echo $item['full_text'] ?></p>
-                                <p><?php echo $item['created_at'] ?></p>
-                                <p><?php echo strtotime($item['created_at']) ?></p>
-                                <p><?php echo wp_date(get_option( 'date_format' ), strtotime($item['created_at'])) ?></p>
-                            </p>
-                            </div>
-                            <div class="level-left">
-                                <a class="level-item">
-                                <span class="icon small"><i class="fas fa-heart"></i></span>
-                                <span class="likes">
-                                <?php echo $item['favorite_count'] ?></span>
-                                </a>
-                            </div>
-                        </div>
-                        </article>
-                    </div>
                     </div> 
                 </div>
-            </div>
         <?php
+        endif;
         endforeach;
         endforeach;
         echo '</div>';
