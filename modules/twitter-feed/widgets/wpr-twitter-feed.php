@@ -226,7 +226,12 @@ class Wpr_Twitter_Feed extends Widget_Base {
             if ( ! empty( $response[$key]['response'] ) && $response[$key]['response']['code'] == 200 ) {
                 $items_array[] = json_decode( wp_remote_retrieve_body( $response[$key] ), true );
                 // set_transient( $cache_key, $items, $expiration );
-                var_dump($items_array);
+                foreach ($items_array as $key=>$value) {
+                    var_dump($value);
+                    // var_dump($value['media']);
+                    // var_dump($value['extended_entities']);
+                    echo '<hr style="height: 5px; background: black;">';
+                }
             }
         }
 
@@ -272,6 +277,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
                                         <span class="retweets">
                                         <?php echo $item['retweet_count'] ?></span>
                                         </a>
+                                        <?php echo $item['source'] ?>
                                     </div>
                                 </div>
                             </article>
