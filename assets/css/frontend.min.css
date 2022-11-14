@@ -3295,6 +3295,14 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     height: 100%;
 }
 
+.wpr-adjust-slider-prev-arrow {
+    left: 1% !important;
+}
+
+.wpr-adjust-slider-next-arrow {
+    right: 1% !important;
+}
+
 .wpr-grid-slider-prev-arrow {
     left: 1%;
     -webkit-transform: translateY(-50%);
