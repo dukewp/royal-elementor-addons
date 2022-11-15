@@ -482,10 +482,21 @@ class Wpr_Taxonomy_List extends Widget_Base {
         // Get Taxonomies
 		$terms = get_terms([
 			'taxonomy' => $settings['query_tax_selection'],
-			'hide_empty' => 'yes' === $settings['query_hide_empty'],
+			'hide_empty' => 'yes' === $settings['query_hide_empty']
 		]);
 
          echo '<ul class="wpr-taxonomy-list">';
+
+		 $parents = [];
+		 $children = [];
+
+		foreach ($terms as $key => $term) {
+			if ($term->parent > 0) {
+				$children[$key] = $term;
+			}
+		}
+
+		var_dump($children);
 
         foreach ($terms as $key => $term) {
         	$sub_class = $term->parent > 0 ? ' class="wpr-sub-taxonomy"' : '';
