@@ -479,24 +479,10 @@ class Wpr_Taxonomy_List extends Widget_Base {
 		$icon = ob_get_clean();
 		$icon_wrapper = !empty($settings['tax_list_icon']) ? '<span>'. $icon .'</span>' : '';
 
-        // Get Taxonomies
-		$terms = get_terms([
-			'taxonomy' => $settings['query_tax_selection'],
-			'hide_empty' => 'yes' === $settings['query_hide_empty']
-		]);
-
+		// 	'hide_empty' => 'yes' === $settings['query_hide_empty']
+		
          echo '<ul class="wpr-taxonomy-list">';
-
-		 $parents = [];
-		 $children = [];
-
-		foreach ($terms as $key => $term) {
-			if ($term->parent > 0) {
-				$children[$key] = $term;
-			}
-		}
-
-		var_dump($children);
+		$terms = get_terms( $settings['query_tax_selection'], [ 'parent' => 0, 'child_of' => 0 ] );
 
         foreach ($terms as $key => $term) {
         	$sub_class = $term->parent > 0 ? ' class="wpr-sub-taxonomy"' : '';
@@ -507,6 +493,20 @@ class Wpr_Taxonomy_List extends Widget_Base {
 		            echo ($settings['show_tax_count']) ? '<span><span class="wpr-term-count">&nbsp;('. esc_html($term->count) .')</span></span>' : '';
 	            echo '</a>';
             echo '</li>';
+
+			$children = get_terms( $settings['query_tax_selection'], [ 'parent' => $term->term_id ] );
+
+			foreach ($children as $term) :
+				$sub_class = $term->parent > 0 ? ' class="wpr-sub-taxonomy"' : '';
+				
+				echo '<li'. $sub_class .'>';
+					echo '<a href="'. esc_url(get_term_link($term->term_id)) .'">';
+						echo '<span class="wpr-tax-wrap">'. $icon_wrapper .'<span>'. esc_html($term->name) .'</span></span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo ($settings['show_tax_count']) ? '<span><span class="wpr-term-count">&nbsp;('. esc_html($term->count) .')</span></span>' : '';
+					echo '</a>';
+				echo '</li>';
+
+			endforeach;
         }
 
          echo '</ul>';

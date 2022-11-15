@@ -1497,7 +1497,7 @@ class Wpr_Product_Media extends Widget_Base {
 			[
 				'class' => ['wpr-product-media-wrap', 'wpr-product-media-thumbs-horizontal'],
 				'data-slidestoshow' => $settings['gallery_slider_thumb_cols'],
-				'data-slidestoscroll' => $settings['gallery_slider_thumbs_to_slide'],
+				'data-slidestoscroll' => isset($settings['gallery_slider_thumbs_to_slide']) ? $settings['gallery_slider_thumbs_to_slide'] : '',
 			]
 		);
 
