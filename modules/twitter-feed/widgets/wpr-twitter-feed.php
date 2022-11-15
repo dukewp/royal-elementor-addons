@@ -113,6 +113,16 @@ class Wpr_Twitter_Feed extends Widget_Base {
             ]
         );
 
+		$this->add_control(
+			'number_of_posts',
+			[
+				'label' => esc_html__( 'Items Per Page', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 10,
+				'min' => 0,
+			]
+		);
+
         $this->add_control(
             'twitter_feed_consumer_key',
             [
@@ -211,7 +221,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
         $items_array = [];
 
         foreach ($settings['twitter_accounts'] as $key=>$value) {
-            $response[$key] = wp_remote_get('https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=' . $value['twitter_feed_account_name'] . '&count=999&tweet_mode=extended', [
+            $response[$key] = wp_remote_get('https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=' . $value['twitter_feed_account_name'] . '&count='. $settings['number_of_posts'] .'&tweet_mode=extended', [
                 'httpversion' => '1.1',
                 'blocking' => true,
                 'headers' => [
@@ -226,12 +236,6 @@ class Wpr_Twitter_Feed extends Widget_Base {
             if ( ! empty( $response[$key]['response'] ) && $response[$key]['response']['code'] == 200 ) {
                 $items_array[] = json_decode( wp_remote_retrieve_body( $response[$key] ), true );
                 // set_transient( $cache_key, $items, $expiration );
-                foreach ($items_array as $key=>$value) {
-                    var_dump($value);
-                    // var_dump($value['media']);
-                    // var_dump($value['extended_entities']);
-                    echo '<hr style="height: 5px; background: black;">';
-                }
             }
         }
 
@@ -240,7 +244,6 @@ class Wpr_Twitter_Feed extends Widget_Base {
         foreach ( $items_array as $key=>$items ) :
         $i = 0;
         foreach ( $items as $item) :
-        if ($i++ < 4) :
                 
         $banner_placeholder = WPR_ADDONS_ASSETS_URL . 'img/placeholder.png';
         $banner = $item['user']['profile_banner_url'] ? $item['user']['profile_banner_url'] : $banner_placeholder;
@@ -278,6 +281,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
                                         <?php echo $item['retweet_count'] ?></span>
                                         </a>
                                         <?php echo $item['source'] ?>
+                                        <?php echo $item['extended_entities']['media']  ?>
                                     </div>
                                 </div>
                             </article>
@@ -285,9 +289,11 @@ class Wpr_Twitter_Feed extends Widget_Base {
                     </div> 
                 </div>
         <?php
-        endif;
+
         endforeach;
         endforeach;
         echo '</div>';
+
+        var_dump($items_array);
     }
 }
