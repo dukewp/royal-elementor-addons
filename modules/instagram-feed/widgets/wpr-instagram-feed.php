@@ -5147,7 +5147,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 						<div class="wpr-insta-feed-content-wrap wpr-insta-col-12">
 							<figure>
 								<?php
-									// Content: Below Media
+									// Content: Above Media
 									echo $this->get_elements_by_location( 'above', $settings, $result );
 								 ?>
 								<div class="wpr-insta-feed-media-wrap <?php echo esc_attr($this->get_image_effect_class( $settings )) ?>" data-overlay-link="<?php echo esc_attr( $settings['overlay_post_link'] ) ?>">
