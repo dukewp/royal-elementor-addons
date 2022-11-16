@@ -309,6 +309,8 @@ class Wpr_Phone_Call extends Widget_Base {
 
 	$this->end_controls_section();
 
+	// Section: Request New Feature
+	Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
 
 	// Section Button ------------
 	$this->start_controls_section(

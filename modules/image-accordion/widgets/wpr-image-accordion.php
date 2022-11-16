@@ -1268,6 +1268,9 @@ class Wpr_Image_Accordion extends Widget_Base {
 
 		$this->add_section_lightbox_popup();
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'image-accordion', [
 			'Add Unlimited Images.',

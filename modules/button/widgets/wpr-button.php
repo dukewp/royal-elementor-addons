@@ -401,6 +401,9 @@ class Wpr_Button extends Widget_Base {
 		// Section: Tooltip ---------
 		$this->add_section_tooltip();
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'button', [
 			'Advanced Tooltip options',

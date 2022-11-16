@@ -90,7 +90,7 @@ class Wpr_Search extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#F6F6F6',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-data-fetch li:hover' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-data-fetch ul li:hover' => 'background-color: {{VALUE}};',
 				],
 			]
 		);
@@ -113,8 +113,71 @@ class Wpr_Search extends Widget_Base {
 				'max' => 5,
 				'step' => 0.1,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-data-fetch li' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-data-fetch ul li' => 'transition-duration: {{VALUE}}s',
 				],
+			]
+		);
+
+		$this->add_responsive_control(
+            'slider_content_hr',
+            [
+                'label' => esc_html__( 'Horizontal Position', 'wpr-addons' ),
+                'type' => Controls_Manager::CHOOSE,
+                'label_block' => false,
+                'options' => [
+                    'left' => [
+                        'title' => esc_html__( 'Left', 'wpr-addons' ),
+                        'icon' => 'eicon-h-align-left',
+                    ],
+                    'center' => [
+                        'title' => esc_html__( 'Center', 'wpr-addons' ),
+                        'icon' => 'eicon-h-align-center',
+                    ],
+                    'right' => [
+                        'title' => esc_html__( 'Right', 'wpr-addons' ),
+                        'icon' => 'eicon-h-align-right',
+                    ]
+                ],
+				'selectors_dictionary' => [
+					'left' => 'left: 0; right: auto;',
+					'center' => 'left: 50%; transform: translateX(-50%)',
+					'right' => 'right: 0; left: auto;'
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-data-fetch' => '{{VALUE}};',
+				],
+				'separator' => 'before'
+            ]
+        );
+
+		$this->add_responsive_control(
+			'search_list_width',
+			[
+				'label' => esc_html__( 'Container Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px', '%', 'vw'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 2000,
+					],
+					'%' => [
+						'min' => 50,
+						'max' => 200,
+					],
+					'vw' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => '%',
+					'size' => 100,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-data-fetch' => 'width: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before'
 			]
 		);
 
@@ -1058,6 +1121,9 @@ class Wpr_Search extends Widget_Base {
 
 		$this->add_section_ajax_pagination();
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'search', [
 			'Custom Search Query - Only Posts, Pages or Custom Post Types',
@@ -1665,7 +1731,7 @@ class Wpr_Search extends Widget_Base {
 				'show-view-result-btn' => isset($settings['show_view_result_btn']) ? $settings['show_view_result_btn'] : '',
 				'view-result-text' => isset($settings['show_ajax_thumbnails']) ? $settings['view_result_text'] : '',
 				'exclude-without-thumb' => isset($settings['exclude_posts_without_thumbnail']) ? $settings['exclude_posts_without_thumbnail'] : '',
-				'link-target' => isset($settings['ajax_search_link_target']) ? $settings['ajax_search_link_target'] : '',
+				'link-target' => isset($settings['ajax_search_link_target']) && ( 'yes' === $settings['ajax_search_link_target'] ) ? '_blank'  : '_self',
 				// 'ajax-search-img-size' => isset($settings['ajax_search_img_size']) ? $settings['ajax_search_img_size'] : ''
 			]
 		);

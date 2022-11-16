@@ -137,6 +137,11 @@ function wpr_addons_settings_page() {
             <?php echo esc_html__( 'How to use Widgets', 'wpr-addons' ); ?>
             <span class="dashicons dashicons-video-alt3"></span>
         </a>
+
+        <a href="https://royaladdons.frill.co/b/6m4d5qm4/feature-ideas" class="wpr-options-button button" target="_blank">
+            <?php echo esc_html__( 'Request New Feature', 'wpr-addons' ); ?>
+            <span class="dashicons dashicons-star-empty"></span>
+        </a>
     </div>
     <?php endif; ?>
 </div>

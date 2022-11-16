@@ -210,6 +210,9 @@ class Wpr_Post_Media extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Tab: PF Audio =============
 		// Section: General ----------
 		$this->start_controls_section(

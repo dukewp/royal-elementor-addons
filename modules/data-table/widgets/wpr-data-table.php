@@ -39,7 +39,7 @@ class Wpr_Data_Table extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return ['royal', 'Data Table', 'Advanced', 'Table', 'Data table', 'Data'];
+		return ['royal', 'data table', 'advanced', 'table', 'data', 'comparison table', 'table comparison'];
 	}
 
 	public function get_script_depends() {
@@ -956,6 +956,9 @@ class Wpr_Data_Table extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'data-table', [

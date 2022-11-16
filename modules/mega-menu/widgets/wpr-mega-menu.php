@@ -626,6 +626,9 @@ class Wpr_Mega_Menu extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'mega-menu', [
 			'Load Sub Menu Items with Ajax',
@@ -772,16 +775,16 @@ class Wpr_Mega_Menu extends Widget_Base {
 
 		$this->end_controls_tabs();
 
-		// $this->add_control(
-		// 	'menu_item_highlight',
-		// 	[
-		// 		'label' => esc_html__( 'Highlight Active Item', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SWITCHER,
-		// 		'default' => 'yes',
-		// 		'return_value' => 'yes',
-		// 		'separator' => 'before'
-		// 	]
-		// );
+		$this->add_control(
+			'menu_item_highlight',
+			[
+				'label' => esc_html__( 'Highlight Active Item', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'separator' => 'before'
+			]
+		);
 
 		$this->add_control(
 			'menu_items_extra_icon_size',
@@ -978,12 +981,12 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 25,
+						'max' => 50,
 					],
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-nav-menu-horizontal .wpr-nav-menu .wpr-sub-mega-menu' => 'transform: translateY({{SIZE}}{{UNIT}});',
-					'{{WRAPPER}}.wpr-main-menu-align-center .wpr-nav-menu-horizontal .wpr-mega-menu-width-custom .wpr-sub-mega-menu' => 'transform: translate(-50%, {{SIZE}}{{UNIT}});',
+					'{{WRAPPER}}.wpr-main-menu-align-center .wpr-nav-menu-horizontal .wpr-mega-menu-pos-default.wpr-mega-menu-width-custom .wpr-sub-mega-menu' => 'transform: translate(-50%, {{SIZE}}{{UNIT}});',
 					'{{WRAPPER}} .wpr-nav-menu-horizontal .wpr-nav-menu > li > .wpr-sub-menu' => 'transform: translateY({{SIZE}}{{UNIT}});',
 					'{{WRAPPER}} .wpr-nav-menu-vertical .wpr-nav-menu > li > .wpr-sub-menu' => 'transform: translateX({{SIZE}}{{UNIT}});',
 					'{{WRAPPER}} .wpr-nav-menu-vertical .wpr-nav-menu > li > .wpr-sub-mega-menu' => 'transform: translateX({{SIZE}}{{UNIT}});',
@@ -2225,7 +2228,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'mobile_menu_offset',
 			[
 				'label' => esc_html__( 'Dropdown Offset', 'wpr-addons' ),

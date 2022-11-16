@@ -2111,6 +2111,9 @@ class Wpr_Product_Tabs extends Widget_Base {
 
 		$this->end_controls_section();
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, Controls_Manager::TAB_STYLE );
+
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, Controls_Manager::TAB_STYLE, Controls_Manager::RAW_HTML, 'product-tabs', [
 			'Tab Label Horizontal Align',

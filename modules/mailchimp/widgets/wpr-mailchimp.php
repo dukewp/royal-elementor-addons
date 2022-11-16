@@ -262,6 +262,9 @@ class Wpr_Mailchimp extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'mailchimp', [
 			'Add Extra Fields - Name & Last Name'

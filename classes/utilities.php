@@ -251,11 +251,13 @@ class Utilities {
 	public static function get_users() {
 		$users = [];
 		
-		foreach ( get_users() as $key => $user ) {
-			$users[$user->data->ID] = $user->data->user_nicename;
+		if ( is_admin() ) {
+			foreach ( get_users() as $key => $user ) {
+				$users[$user->data->ID] = $user->data->user_nicename;
+			}
+			
+			wp_reset_postdata();
 		}
-		
-		wp_reset_postdata();
 
 		return $users;
 	}
@@ -885,6 +887,29 @@ class Utilities {
 				]
 			]
         );
+	}
+
+	/**
+	** Request Feature Section
+	*/
+	public static function wpr_add_section_request_feature( $module, $raw_html, $tab ) {
+		$module->start_controls_section(
+			'section_request_new_feature',
+			[
+				'label' => __( 'Request Feature', 'wpr-addons' ),
+				'tab' => $tab,
+			]
+		);
+
+		$module->add_control(
+			'request_new_feature',
+			[
+				'type' => $raw_html,
+				'raw' => __( 'Missing an Option, have a New Widget or any kind of Feature Idea? Please share it with us and lets discuss. <a href="https://royaladdons.frill.co/b/6m4d5qm4/feature-ideas" target="_blank">Request New Feature <span class="dashicons dashicons-star-empty"></span></a>', 'wpr-addons' ),
+			]
+		);
+
+		$module->end_controls_section(); // End Controls Section
 	}
 
 	/**

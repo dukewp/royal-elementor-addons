@@ -103,6 +103,9 @@ class Wpr_Post_Content extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Styles ====================
 		// Section: Content ----------
 		$this->start_controls_section(

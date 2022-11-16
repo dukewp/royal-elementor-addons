@@ -136,7 +136,7 @@ class Wpr_Main_Menu_Walker extends \Walker_Nav_Menu {
                     // Badge
                     if ( wpr_fs()->can_use_premium_code() && '' !== $settings['wpr_mm_badge_text'] ) {
 						$item_badge_class = 'true' === $settings['wpr_mm_badge_animation'] ? ' wpr-mega-menu-badge-animation' : '';
-                        $item_badge_style .= 'color: '. $settings['wpr_mm_badge_color'] .';';
+                        $item_badge_style = 'color: '. $settings['wpr_mm_badge_color'] .';';
                         $item_badge_style .= 'background-color: '. $settings['wpr_mm_badge_bg_color'] .';';
                         $item_badge_style .= 'border-color: '. $settings['wpr_mm_badge_bg_color'] .';';
                         $item_badge_html = '<span class="wpr-mega-menu-badge'. $item_badge_class .'" style="'. $item_badge_style .'">'. $settings['wpr_mm_badge_text'] .'</span>';
