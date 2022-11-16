@@ -12257,6 +12257,11 @@ a.wpr-ajax-img-wrap {
         height: 100%;
     }
 
+    .wpr-twit-image {
+        width: 100%;
+        height: auto;
+    }
+
     .wpr-twitter-feed .level-item {
         padding-left: 10px;
         color: #00d1b2;

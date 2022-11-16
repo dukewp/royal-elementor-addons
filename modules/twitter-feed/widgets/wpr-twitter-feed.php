@@ -81,13 +81,10 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				'fields' => $repeater->get_controls(),
 				'default' => [
 					[
-						'twitter_feed_account_name' => '@giorgi_karchava',
-					],
-					[
-						'twitter_feed_account_name' => '@cufotheme',
+						'twitter_feed_account_name' => '@NASA',
 					]
 				],
-				'title_field' => '<i class="{{{ twitter_feed_account_name }}}"></i> Account Name',
+				'title_field' => '{{{ twitter_feed_account_name }}}',
 			]
 		);
 
@@ -244,6 +241,19 @@ class Wpr_Twitter_Feed extends Widget_Base {
         foreach ( $items_array as $key=>$items ) :
         $i = 0;
         foreach ( $items as $item) :
+
+        if ( $item['extended_entities']['media'] ) {
+            $media = $item['extended_entities']['media'];
+        } else if ( isset( $item['retweeted_status']['entities']['media'] ) ) {
+            $media = $item['retweeted_status']['entities']['media'];
+        } else if ( isset( $item['quoted_status']['entities']['media'] ) ) {
+            $media = $item['quoted_status']['entities']['media'];
+        } else {
+            $media = [];
+        }
+
+        var_dump($item);
+
                 
         $banner_placeholder = WPR_ADDONS_ASSETS_URL . 'img/placeholder.png';
         $banner = $item['user']['profile_banner_url'] ? $item['user']['profile_banner_url'] : $banner_placeholder;
@@ -268,7 +278,12 @@ class Wpr_Twitter_Feed extends Widget_Base {
                                             $new_string = preg_replace('/\#([a-z0-9]+)/i', '<a href="https://twitter.com/hashtag/$1?src=hashtag_click">#$1</a>', $string);
                                             echo preg_replace('/\@([a-z0-9]+)/i', '<a href="https://twitter.com/$1">@$1</a>' ,$new_string);
                                         ?></p>
-                                        <p><?php echo wp_date(get_option( 'date_format' ), strtotime($item['created_at'])) ?></p>
+                                        <p>
+                                            <?php 
+                                                // echo wp_date(get_option( 'date_format' ), strtotime($item['created_at'])) 
+                                                echo human_time_diff(strtotime($item['created_at'])) .' '. esc_html__('ago');
+                                            ?>
+                                        </p>
                                     </p>
                                     </div>
                                     <div class="level-left">
@@ -278,10 +293,13 @@ class Wpr_Twitter_Feed extends Widget_Base {
                                         <?php echo $item['favorite_count'] ?></span>
                                         <span class="icon small"><i class="fa fa-retweet"></i></span>
                                         <span class="retweets">
-                                        <?php echo $item['retweet_count'] ?></span>
+                                            <?php echo $item['retweet_count'] ?>
+                                        </span>
                                         </a>
                                         <?php echo $item['source'] ?>
-                                        <?php echo $item['extended_entities']['media']  ?>
+                                        <?php
+                                            echo (isset( $media[0] ) && $media[0]['type'] == 'photo') ? '<img class="wpr-twit-image" src="' . $media[0]['media_url_https'] . '">' : '';
+                                        ?>
                                     </div>
                                 </div>
                             </article>
@@ -293,7 +311,5 @@ class Wpr_Twitter_Feed extends Widget_Base {
         endforeach;
         endforeach;
         echo '</div>';
-
-        var_dump($items_array);
     }
 }
