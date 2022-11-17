@@ -13,7 +13,7 @@ class Wpr_Control_Ajax_Select2_Api {
 				'wpraddons/v1/ajaxselect2',
 				'/get_posts_by_post_type/',
 				[
-					'methods' => 'GET',
+					'methods' => \WP_REST_Server::ALLMETHODS,
 					'callback' =>  [$this, 'callback'],
 					'permission_callback' => '__return_true'
 				]
@@ -22,7 +22,6 @@ class Wpr_Control_Ajax_Select2_Api {
 	}
 
 	public function callback( ) {
-
 		if ( ! current_user_can( 'edit_posts' ) ) {
 			return;   
 		}
@@ -31,8 +30,15 @@ class Wpr_Control_Ajax_Select2_Api {
 			'post_type'      => 'post',
 			'post_status'    => 'publish',
 			'posts_per_page' => 15,
-			'post__in' => '',
 		);
+
+		if ( isset( $this->request['ids'] ) ) {
+			$ids                    = explode( ',', $this->request['ids'] );
+			$query_args['post__in'] = $ids;
+		}
+		if ( isset( $this->request['s'] ) ) {
+			$query_args['s'] = $this->request['s'];
+		}
 
 		$query   = new \WP_Query( $query_args );
 		$options = array();

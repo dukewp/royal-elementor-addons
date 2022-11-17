@@ -32,7 +32,7 @@ jQuery(window).on("elementor:init", (function() {
                     "X-WP-Nonce": nonce
                 },
                 data: {
-                    ids: ''
+                    ids: String(controlValue)
                 }
             }).then((function(response) {
                 console.log(response);
