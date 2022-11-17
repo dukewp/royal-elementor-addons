@@ -56,6 +56,16 @@ class Wpr_Phone_Call extends Widget_Base {
 	Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
 	$this->add_control(
+		'ajax_query',
+		[
+			'label' => esc_html__( 'Ajax Select2 ', 'wpr-addons' ),
+			'type' => 'wpr-ajax-select2',
+			'multiple' => true,
+			'label_block' => true,
+			'options' => 'ajaxselect2/get_posts_by_post_type',
+		]
+	);
+	$this->add_control(
 		'telnumber',
 		[
 			'label' => esc_html__( 'Phone Number', 'wpr-addons' ),
