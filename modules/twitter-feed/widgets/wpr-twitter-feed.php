@@ -51,6 +51,217 @@ class Wpr_Twitter_Feed extends Widget_Base {
     	if ( empty(get_option('wpr_wl_plugin_links')) )
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
+	
+	
+	public function add_control_stack_twitter_feed_slider_nav_position() {
+		$this->add_control(
+			'twitter_feed_slider_nav_position',
+			[
+				'label' => esc_html__( 'Positioning', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'label_block' => false,
+				'default' => 'custom',
+				'options' => [
+					'default' => esc_html__( 'Default', 'wpr-addons' ),
+					'custom' => esc_html__( 'Custom', 'wpr-addons' ),
+				],
+				'prefix_class' => 'wpr-grid-slider-nav-position-',
+			]
+		);
+
+		$this->add_control(
+			'twitter_feed_slider_nav_position_default',
+			[
+				'label' => esc_html__( 'Align', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'label_block' => false,
+				'default' => 'top-left',
+				'options' => [
+					'top-left' => esc_html__( 'Top Left', 'wpr-addons' ),
+					'top-center' => esc_html__( 'Top Center', 'wpr-addons' ),
+					'top-right' => esc_html__( 'Top Right', 'wpr-addons' ),
+					'bottom-left' => esc_html__( 'Bottom Left', 'wpr-addons' ),
+					'bottom-center' => esc_html__( 'Bottom Center', 'wpr-addons' ),
+					'bottom-right' => esc_html__( 'Bottom Right', 'wpr-addons' ),
+				],
+				'prefix_class' => 'wpr-grid-slider-nav-align-',
+				'condition' => [
+					'twitter_feed_slider_nav_position' => 'default',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'twitter_feed_slider_nav_outer_distance',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Outer Distance', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 50,
+				],
+				'selectors' => [
+					'{{WRAPPER}}[class*="wpr-grid-slider-nav-align-top"] .wpr-swiper-nav-wrap' => 'top: {{SIZE}}px;',
+					'{{WRAPPER}}[class*="wpr-grid-slider-nav-align-bottom"] .wpr-swiper-nav-wrap' => 'bottom: {{SIZE}}px;',
+					'{{WRAPPER}}.wpr-grid-slider-nav-align-top-left .wpr-swiper-nav-wrap' => 'left: {{SIZE}}px;',
+					'{{WRAPPER}}.wpr-grid-slider-nav-align-bottom-left .wpr-swiper-nav-wrap' => 'left: {{SIZE}}px;',
+					'{{WRAPPER}}.wpr-grid-slider-nav-align-top-right .wpr-swiper-nav-wrap' => 'right: {{SIZE}}px;',
+					'{{WRAPPER}}.wpr-grid-slider-nav-align-bottom-right .wpr-swiper-nav-wrap' => 'right: {{SIZE}}px;',
+				],
+				'condition' => [
+					'twitter_feed_slider_nav_position' => 'default',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'twitter_feed_slider_nav_inner_distance',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Inner Distance', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 20,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-swiper-nav-wrap .wpr-swiper-button-prev' => 'margin-right: {{SIZE}}px;',
+				],
+				'condition' => [
+					'twitter_feed_slider_nav_position' => 'default',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'twitter_feed_slider_nav_position_top',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Vertical Position', 'wpr-addons' ),
+				'size_units' => [ '%', 'px' ],
+				'range' => [
+					'%' => [
+						'min' => -20,
+						'max' => 120,
+					],
+					'px' => [
+						'min' => -200,
+						'max' => 2000,
+					],
+				],
+				'default' => [
+					'unit' => '%',
+					'size' => 50,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-swiper-button' => 'top: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'twitter_feed_slider_nav_position' => 'custom',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'twitter_feed_slider_nav_position_left',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Left Position', 'wpr-addons' ),
+				'size_units' => [ '%', 'px' ],
+				'range' => [
+					'%' => [
+						'min' => 0,
+						'max' => 120,
+					],
+					'px' => [
+						'min' => 0,
+						'max' => 2000,
+					],
+				],
+				'default' => [
+					'unit' => '%',
+					'size' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-swiper-button-prev' => 'left: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'twitter_feed_slider_nav_position' => 'custom',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'twitter_feed_slider_nav_position_right',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Right Position', 'wpr-addons' ),
+				'size_units' => [ '%', 'px' ],
+				'range' => [
+					'%' => [
+						'min' => 0,
+						'max' => 120,
+					],
+					'px' => [
+						'min' => 0,
+						'max' => 2000,
+					],
+				],
+				'default' => [
+					'unit' => '%',
+					'size' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-swiper-button-next' => 'right: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'twitter_feed_slider_nav_position' => 'custom',
+				],
+			]
+		);		
+	}
+
+	public function add_control_twitter_feed_slider_dots_hr() {
+		$this->add_responsive_control(
+			'twitter_feed_slider_dots_hr',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Horizontal Position', 'wpr-addons' ),
+				'size_units' => [ '%', 'px' ],
+				'range' => [
+					'%' => [
+						'min' => -20,
+						'max' => 120,
+					],
+					'px' => [
+						'min' => -200,
+						'max' => 2000,
+					],
+				],
+				'default' => [
+					'unit' => '%',
+					'size' => 50,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .swiper-pagination-bullets' => 'left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .swiper-pagination-fraction' => 'left: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+	}
 
 	public function add_option_element_select() {
 		return [
@@ -411,9 +622,9 @@ class Wpr_Twitter_Feed extends Widget_Base {
             'twitter_feed_hashtag_name',
             [
                 'label' => esc_html__('Hashtag Name', 'wpr-addons'),
-                'type' => Controls_Manager::TEXT,
-                'label_block' => false,
-                'description' => esc_html__('Remove # sign from your hashtag name.', 'wpr-addons'),
+                'type' => Controls_Manager::TEXTAREA,
+                'label_block' => true,
+                'description' => esc_html__('Enter comma-separated list and remove # sign from your hashtag name', 'wpr-addons'),
             ]
         );
 
@@ -424,6 +635,25 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				'type' => Controls_Manager::NUMBER,
 				'default' => 10,
 				'min' => 0,
+			]
+		);
+
+		$this->add_control(
+			'layout_select',
+			[
+				'label' => esc_html__('Select Layout', 'wpr-addons'),
+				'type' => Controls_Manager::SELECT,
+				'frontend_available' => true,
+				'label_block' => false,
+				'default' => 'masonry',
+				'prefix_class' => 'wpr-twitter-feed-'	,
+				'render_type' => 'template',
+				'separator' => 'before',
+				'options' => [
+					'masonry' => esc_html__('Masonry', 'wpr-addons'),
+					'list'     => esc_html__('List Style', 'wpr-addons'),
+					'carousel' => esc_html__('Slider\Carousel', 'wpr-addons'),
+				],
 			]
 		);
 
@@ -498,7 +728,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
                 'default'     => 60,
                 'description' => __( 'Cache expiration time (Minutes)', 'wpr-addons' ),
                 'condition'   => [
-                    'eael_auto_clear_cache' => 'yes'
+                    'auto_clear_cache' => 'yes'
                 ]
             ]
         );
@@ -509,10 +739,10 @@ class Wpr_Twitter_Feed extends Widget_Base {
                 'label'       => __( 'Clear Cache', 'wpr-addons' ),
                 'type'        => Controls_Manager::BUTTON,
                 'text'        => __( 'Clear', 'wpr-addons' ),
-                'event'       => 'ea:cache:clear',
+                'event'       => 'wpr-clear-cache',
                 'description' => esc_html__( 'Note: This will refresh your feed and fetch the latest data from your Twitter account', 'wpr-addons' ),
                 'condition'   => [
-                    'eael_auto_clear_cache' => ''
+                    'auto_clear_cache' => 'yes'
                 ]
             ]
         );
@@ -1168,6 +1398,574 @@ class Wpr_Twitter_Feed extends Widget_Base {
 
         $this->end_controls_section();
 
+		// Tab: Content ===============
+		// Section: Carousel -----------
+		$this->start_controls_section(
+			'section_carousel_settings',
+			[
+				'label' => esc_html__( 'Carousel', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$this->add_responsive_control(
+			'twitter_feed_slides_to_show',
+			[
+				'label' => esc_html__( 'Slides To Show', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'separator' => 'before',
+				'default' => 3,
+				'widescreen_default' => 3,
+				'laptop_default' => 3,
+				'tablet_extra_default' => 2,
+				'tablet_default' => 2,
+				'mobile_extra_default' => 1,
+				'mobile_default' => 1,
+				// 'min' => 1,
+				'condition' => [
+					'layout_select' => 'carousel',
+				]
+			]
+		);
+				
+		$this->add_responsive_control(
+			'twitter_feed_space_between',
+			[
+				'label' => __( 'Gutter', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::NUMBER,
+				'default' => 5,
+				'widescreen_default' => 5,
+				'laptop_default' => 5,
+				'tablet_extra_default' => 5,
+				'tablet_default' => 5,
+				'mobile_extra_default' => 5,
+				'mobile_default' => 5,
+				'condition' => [
+					'layout_select' => 'carousel',
+				]
+			]
+		);
+				
+		$this->add_control(
+			'twitter_feed_speed',
+			[
+				'label' => __( 'Speed', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::NUMBER,
+				'default' => 500,
+				'condition' => [
+					'layout_select' => 'carousel',
+				]
+			]
+		);
+
+		$this->add_control (
+			'enable_cs_nav',
+			[
+				'type' => Controls_Manager::SWITCHER,
+				'label' => esc_html__( 'Navigation', 'wpr-addons' ),
+				'render_type' => 'template',
+				'separator' => 'before',
+				'default' => 'yes',
+				'condition' => [
+					'layout_select' => 'carousel'
+				]
+			]
+		);
+
+		$this->add_control(
+			'cs_nav_arrows',
+			[
+				'label' => esc_html__( 'Navigation Icon', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'fas fa-angle',
+				'options' => [
+					'fas fa-angle' => esc_html__( 'Angle', 'wpr-addons' ),
+					'fas fa-angle-double' => esc_html__( 'Angle Double', 'wpr-addons' ),
+					'fas fa-arrow' => esc_html__( 'Arrow', 'wpr-addons' ),
+					'fas fa-arrow-alt-circle' => esc_html__( 'Arrow Circle', 'wpr-addons' ),
+					'far fa-arrow-alt-circle' => esc_html__( 'Arrow Circle Alt', 'wpr-addons' ),
+					'fas fa-long-arrow-alt' => esc_html__( 'Long Arrow', 'wpr-addons' ),
+					'fas fa-chevron' => esc_html__( 'Chevron', 'wpr-addons' ),
+				],
+				'condition' => [
+					'layout_select' => 'carousel',
+					'enable_cs_nav' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control (
+			'enable_cs_pag',
+			[
+				'type' => Controls_Manager::SWITCHER,
+				'label' => esc_html__( 'Pagination', 'wpr-addons' ),
+				'render_type' => 'template',
+				'separator' => 'before',
+				'condition' => [
+					'layout_select' => 'carousel'
+				]
+			]
+		);
+
+		$this->add_control(
+			'cs_pag_type',
+			[
+				'label' => esc_html__( 'Pagination Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'bullets',
+				'options' => [
+					'bullets' => esc_html__( 'Bullets', 'wpr-addons' ),
+					'fraction' => esc_html__( 'Fraction', 'wpr-addons' ),
+					'progressbar' => esc_html__( 'Progressbar', 'wpr-addons' ),
+				],
+				'condition' => [
+					'layout_select' => 'carousel',
+					'enable_cs_pag' => 'yes',
+				]
+			]
+		);
+
+		$this->add_control (
+			'enable_twitter_feed_slider_autoplay',
+			[
+				'type' => Controls_Manager::SWITCHER,
+				'label' => esc_html__( 'Autoplay', 'wpr-addons' ),
+				'render_type' => 'template',
+				'separator' => 'before',
+				'condition' => [
+					'layout_select' => 'carousel'
+				]
+			]
+		);
+				
+		$this->add_control(
+			'twitter_feed_delay',
+			[
+				'label' => __( 'Delay', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::NUMBER,
+				'default' => 1000,
+				'condition' => [
+					'layout_select' => 'carousel',
+					'enable_twitter_feed_slider_autoplay' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control (
+			'enable_twitter_feed_slider_loop',
+			[
+				'type' => Controls_Manager::SWITCHER,
+				'label' => esc_html__( 'Loop', 'wpr-addons' ),
+				'render_type' => 'template',
+				'separator' => 'before',
+				'condition' => [
+					'layout_select' => 'carousel'
+				]
+			]
+		);
+
+		$this->end_controls_section();
+
+		// Styles ====================
+		// Section: Slider Navigation -------
+		$this->start_controls_section(
+			'section_style_slider_navigation',
+			[
+				'label' => esc_html__( 'Slider Navigation', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'show_label' => false,
+				'condition' => [
+					'layout_select' => 'carousel',
+					'enable_cs_nav' => 'yes'
+				],
+			]
+		);
+
+		$this->start_controls_tabs('cs_nav_tabs',);
+
+		$this->start_controls_tab(
+			'cs_nav_tab_normal',
+			[
+				'label' => __( 'Normal', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'cs_nav_icon_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFF',
+				'selectors' => [
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-prev i' => 'color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-next i' => 'color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-prev svg' => 'fill: {{VALUE}}',
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-next svg' => 'fill: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_control(
+			'cs_nav_icon_bg_color',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-prev' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-next' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->add_control(
+			'cs_nav_icon_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-prev' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-next' => 'border-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'box_shadow_navigation',
+				'label' => __( 'Box Shadow', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-prev, {{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-next',
+			]
+		);
+
+		$this->add_control(
+			'navigation_transition',
+			[
+				'label' => esc_html__( 'Transition', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 1,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-prev' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-next' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-prev i' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-next i' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-prev svg' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-next svg' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;'
+				],
+			]
+		);
+		
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'cs_nav_tab_hover',
+			[
+				'label' => __( 'Hover', 'wpr-addons' ),
+			]
+		);
+		
+		$this->add_control(
+			'cs_nav_icon_color_hover',
+			[
+				'label'  => esc_html__( 'Icon Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-next:hover i' => 'color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-prev:hover i' => 'color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-prev:hover svg' => 'fill: {{VALUE}}',
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-next:hover svg' => 'fill: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_control(
+			'cs_nav_icon_bg_color_hover',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#423EC0',
+				'selectors' => [
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-prev:hover' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-next:hover' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->add_control(
+			'cs_nav_icon_border_color_hover',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-prev:hover' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-next:hover' => 'border-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'box_shadow_navigation_hover',
+				'label' => __( 'Box Shadow', 'wpr-addons' ),
+				'selector' => '{{WRAPPER}} .flipster__button:hover',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+		
+		$this->add_responsive_control(
+			'cs_nav_icon_size',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Icon Size', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 200,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 20,
+				],			
+				'selectors' => [
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-prev i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-next i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-prev svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-next svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};'
+				],
+				'separator' => 'before'
+			]
+		);
+		
+		$this->add_responsive_control(
+			'cs_nav_icon_bg_size',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Box Size', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 150,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 35,
+				],			
+				'selectors' => [
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-prev' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-next' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};'
+				]
+			]
+		);
+
+		$this->add_control(
+			'cs_nav_border',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-prev' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-next' => 'border-style: {{VALUE}};'
+				],
+				'separator' => 'before'
+			]
+		);
+		
+		$this->add_control(
+			'cs_nav_border_width',
+			[
+				'type' => Controls_Manager::DIMENSIONS,
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'size_units' => [ 'px', '%' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 150,
+					],
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					]
+				],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+					'unit' => 'px'
+				],			
+				'selectors' => [
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-prev' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',	
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-next' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'cs_nav_border!' => 'none'
+				]
+			]
+		);
+		
+		$this->add_control(
+			'icon_border_radius',
+			[
+				'type' => Controls_Manager::DIMENSIONS,
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'size_units' => [ 'px', '%' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 150,
+					],
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					]
+				],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+					'unit' => 'px'
+				],			
+				'selectors' => [
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-prev' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',	
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .wpr-swiper-button-next' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				]
+			]
+		);
+	
+		$this->add_control_stack_twitter_feed_slider_nav_position();
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_style_twitter_feed_slider_pag',
+			[
+                'label' => esc_html__('Slider Pagination', 'wpr-addons'),
+				'tab'   => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'layout_select' => 'layout-carousel',
+					'enable_cs_pag' => 'yes'
+				]
+            ]
+		);
+
+		$this->add_control(
+			'cs_pag_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#222222',
+				'selectors' => [
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .swiper-pagination-bullet' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .swiper-pagination-bullet-active' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .swiper-pagination-fraction' => 'color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .swiper-pagination-progressbar' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .swiper-pagination-progressbar-fill' => 'background-color: {{VALUE}};'
+				]
+			]
+		);
+
+		$this->add_control(
+			'cs_pag_bg_color',
+			[
+				'label'  => esc_html__( 'Bar Background', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#00000040',
+				'selectors' => [
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .swiper-pagination-progressbar' => 'background-color: {{VALUE}};'
+				]
+			]
+		);
+		
+		$this->add_responsive_control(
+			'cs_pag_size',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Box Size', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 7,
+				],			
+				'selectors' => [
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .swiper-pagination-bullet' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};'
+				]
+			]
+		);
+		
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'cs_pag_fraction_typography',
+				'label' => __( 'Typography', 'wpr-addons' ),
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}}.wpr-twitter-feed-carousel .swiper-pagination-fraction',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size'   => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px',
+						]
+					]
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'cs_pag_margin',
+			[
+				'label' => esc_html__( 'Margin', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 6,
+					'bottom' => 0,
+					'left' => 6,
+				],
+				'selectors' => [
+					'{{WRAPPER}}.wpr-twitter-feed-carousel .swiper-pagination-bullet' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
+			]
+		);
+		
+		$this->add_control_twitter_feed_slider_dots_hr();
+
+        $this->end_controls_section();
+
 		// Tab: Styles ===============
 		// Section: Button -----------
 		$this->start_controls_section(
@@ -1466,83 +2264,206 @@ class Wpr_Twitter_Feed extends Widget_Base {
     protected function render() {
         $settings = $this->get_settings_for_display();
 
-        if (empty($token)) {
-            $credentials = base64_encode($settings['twitter_feed_consumer_key'] . ':' . $settings['twitter_feed_consumer_secret']);
+		$twitter_feed_account_names = [];
 
-            add_filter('https_ssl_verify', '__return_false');
+		foreach ( $settings['twitter_accounts'] as $key=>$value ) {
+			array_push($twitter_feed_account_names, $value['twitter_feed_account_name']);
+		}
 
-            $response = wp_remote_post('https://api.twitter.com/oauth2/token', [
-                'method' => 'POST',
-                'httpversion' => '1.1',
-                'blocking' => true,
-                'headers' => [
-                    'Authorization' => 'Basic ' . $credentials,
-                    'Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8',
-                ],
-                'body' => ['grant_type' => 'client_credentials'],
-            ]);
+        $token = get_option($this->get_ID() . '_' . implode("_", $twitter_feed_account_names) . '_tf_token');
+	    $expiration = ! empty( $settings['auto_clear_cache'] ) && ! empty( $settings['twitter_feed_cache_limit'] ) ? absint( $settings['twitter_feed_cache_limit'] ) * MINUTE_IN_SECONDS : DAY_IN_SECONDS;
+	    $cache_key = implode("_", $twitter_feed_account_names) . '_' . $expiration . '_' . md5( $settings['twitter_feed_hashtag_name'] . $settings['twitter_feed_consumer_key'] . $settings['twitter_feed_consumer_secret'] ) . '_tf_cache';
+        $items_array = get_transient( $cache_key );
 
-            $body = json_decode(wp_remote_retrieve_body($response));
+		var_dump(md5($settings['twitter_feed_hashtag_name']));
 
-            if ($body) {
-                // update_option($id . '_' . $settings['eael_twitter_feed_ac_name'] . '_tf_token', $body->access_token);
-                $token = $body->access_token;
-            }
-        }
+		var_dump($cache_key);
+		var_dump($token);
 
-        add_filter('https_ssl_verify', '__return_false');
+        if ($items_array === false) {
+			if (empty($token)) {
+				$credentials = base64_encode($settings['twitter_feed_consumer_key'] . ':' . $settings['twitter_feed_consumer_secret']);
 
-        $response = [];
-        $items_array = [];
+				add_filter('https_ssl_verify', '__return_false');
 
-        foreach ($settings['twitter_accounts'] as $key=>$value) {
-            $response[$key] = wp_remote_get('https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=' . $value['twitter_feed_account_name'] . '&count='. $settings['number_of_posts'] .'&tweet_mode=extended', [
-                'httpversion' => '1.1',
-                'blocking' => true,
-                'headers' => [
-                    'Authorization' => "Bearer $token",
-                ],
-            ]);
+				$response = wp_remote_post('https://api.twitter.com/oauth2/token', [
+					'method' => 'POST',
+					'httpversion' => '1.1',
+					'blocking' => true,
+					'headers' => [
+						'Authorization' => 'Basic ' . $credentials,
+						'Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8',
+					],
+					'body' => ['grant_type' => 'client_credentials'],
+				]);
 
-            if ( is_wp_error( $response[$key] ) ) {
-                // return $html;
-            }
-    
-            if ( ! empty( $response[$key]['response'] ) && $response[$key]['response']['code'] == 200 ) {
-                $items_array[] = json_decode( wp_remote_retrieve_body( $response[$key] ), true );
-                // set_transient( $cache_key, $items, $expiration );
-            }
-        }
+				$body = json_decode(wp_remote_retrieve_body($response));
+
+				if ($body) {
+					var_dump('lksajdflkasjdflkjasdlkf');
+					update_option($this->get_ID() . '_' . implode("_", $twitter_feed_account_names) . '_tf_token', $body->access_token);
+					$token = $body->access_token;
+				}
+			}
+
+			add_filter('https_ssl_verify', '__return_false');
+
+			$response = [];
+			$items_array = [];
+
+			foreach ($settings['twitter_accounts'] as $key=>$value) {
+				array_push($twitter_feed_account_names, $value['twitter_feed_account_name']);
+				$response[$key] = wp_remote_get('https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=' . $value['twitter_feed_account_name'] . '&count='. $settings['number_of_posts'] .'&tweet_mode=extended', [
+					'httpversion' => '1.1',
+					'blocking' => true,
+					'headers' => [
+						'Authorization' => "Bearer $token",
+					],
+				]);
+
+				if ( is_wp_error( $response[$key] ) ) {
+					// return $html;
+				}
+		
+				if ( ! empty( $response[$key]['response'] ) && $response[$key]['response']['code'] == 200 ) {
+					$items_array[] = json_decode( wp_remote_retrieve_body( $response[$key] ), true );
+					set_transient( $cache_key, $items_array, $expiration );
+				}
+			}
+		}
 
         $header_banner_placeholder = WPR_ADDONS_ASSETS_URL . 'img/placeholder.png';
         $header_banner = $items_array[0][0]['user']['profile_banner_url'] ? $items_array[0][0]['user']['profile_banner_url'] : $header_banner_placeholder;
 
-        // var_dump($items_array[0][0]['user']);
+		if ( 'carousel' === $settings['layout_select'] ) {
+			
+			$navigation = $settings['enable_cs_nav'];
+			$pagination = $settings['enable_cs_pag'];
+			$pagination_type = isset($settings['cs_pag_type']) ? $settings['cs_pag_type'] : '';
+			$autoplay = $settings['enable_twitter_feed_slider_autoplay'];
+			$loop = $settings['enable_twitter_feed_slider_loop'];
+			$slides_to_show = $settings['twitter_feed_slides_to_show'];
+			$slides_to_show_widescreen = isset($settings['twitter_feed_slides_to_show_widescreen']) ? $settings['twitter_feed_slides_to_show_widescreen'] : $slides_to_show;
+			$slides_to_show_laptop = isset($settings['twitter_feed_slides_to_show_laptop']) ? $settings['twitter_feed_slides_to_show_laptop'] : $settings['twitter_feed_slides_to_show'];
+			$slides_to_show_tablet_extra = isset($settings['twitter_feed_slides_to_show_tablet_extra']) ? $settings['twitter_feed_slides_to_show_tablet_extra'] : $slides_to_show_laptop;
+			$slides_to_show_tablet = isset($settings['twitter_feed_slides_to_show_tablet']) ? $settings['twitter_feed_slides_to_show_tablet'] : $slides_to_show_tablet_extra;
+			$slides_to_show_mobile_extra = isset($settings['twitter_feed_slides_to_show_mobile_extra']) ? $settings['twitter_feed_slides_to_show_mobile_extra'] : $slides_to_show_tablet;
+			$slides_to_show_mobile = isset($settings['twitter_feed_slides_to_show_mobile']) ? $settings['twitter_feed_slides_to_show_mobile'] : $slides_to_show_mobile_extra;
+			$space_between = $settings['twitter_feed_space_between'];
+			$space_between_widescreen = isset($settings['twitter_feed_space_between_widescreen']) ? $settings['twitter_feed_space_between_widescreen'] : $space_between;
+			$space_between_laptop = isset($settings['twitter_feed_space_between_laptop']) ? $settings['twitter_feed_space_between_laptop'] : $space_between;
+			$space_between_tablet_extra = isset($settings['twitter_feed_space_between_tablet_extra']) ? $settings['twitter_feed_space_between_tablet_extra'] : $space_between_laptop;
+			$space_between_tablet = isset($settings['twitter_feed_space_between_tablet']) ? $settings['twitter_feed_space_between_tablet'] : $space_between_tablet_extra;
+			$space_between_mobile_extra = isset($settings['twitter_feed_space_between_mobile_extra']) ? $settings['twitter_feed_space_between_mobile_extra'] : $space_between_tablet;
+			$space_between_mobile = isset($settings['twitter_feed_space_between_mobile']) ? $settings['twitter_feed_space_between_mobile'] : $space_between_mobile_extra;
+			$delay = isset($settings['twitter_feed_delay']) ? $settings['twitter_feed_delay'] : '';
+			$speed = $settings['twitter_feed_speed'];
 
+			$twitter_settings['carousel'] = [
+				'wpr_cs_navigation' => $navigation,
+				'wpr_cs_pagination' => $pagination,
+				'wpr_cs_pagination_type' => $pagination_type,
+				'wpr_cs_autoplay' => $autoplay,
+				'wpr_cs_loop' => $loop,
+				'wpr_cs_slides_to_show' => $slides_to_show,
+				'wpr_cs_slides_to_show_widescreen' => $slides_to_show_widescreen,
+				'wpr_cs_slides_to_show_laptop' => $slides_to_show_laptop,
+				'wpr_cs_slides_to_show_tablet_extra' => $slides_to_show_tablet_extra,
+				'wpr_cs_slides_to_show_tablet' => $slides_to_show_tablet,
+				'wpr_cs_slides_to_show_mobile_extra' => $slides_to_show_mobile_extra,
+				'wpr_cs_slides_to_show_mobile' => $slides_to_show_mobile,
+				'wpr_cs_space_between' => $space_between,
+				'wpr_cs_space_between_widescreen' => $space_between_widescreen,
+				'wpr_cs_space_between_laptop' => $space_between_laptop,
+				'wpr_cs_space_between_tablet_extra' => $space_between_tablet_extra,
+				'wpr_cs_space_between_tablet' => $space_between_tablet,
+				'wpr_cs_space_between_tablet' => $space_between_mobile_extra,
+				'wpr_cs_space_between_tablet' => $space_between_mobile,
+				'wpr_cs_delay' => $delay,
+				'wpr_cs_speed' => $speed,
+				// 'enable_on'   => $settings['wpr_enable_equal_height_on'],
+			];
+		}
+
+		$this->add_render_attribute(
+			'twitter_feed',
+			[
+				'class'         => ['wpr-twitter-feed', 'wpr-'. $settings['layout_select']],
+				'data-settings' => wp_json_encode( $twitter_settings ),
+				// 'data-settings-test' => wp_json_encode( $settings )
+			]
+		);
         
         echo '<div class="wpr-twitter-feed-header">';
             echo '<img src="'. $header_banner .'" >'; ?>
 
-            <div class="wpr-tf-statistics">
-                <span class=""><a href='https://twitter.com/<?php echo $items_array[0][0]['user']['screen_name'] ?>' target="_blank"><span><?php echo $this->format_numbers($items_array[0][0]['user']['statuses_count']) ?></span><span> Tweets</span></a></span>
-                <span class=""><a href='https://twitter.com/<?php echo $items_array[0][0]['user']['screen_name'] ?>/following' target="_blank"><span><?php echo $this->format_numbers($items_array[0][0]['user']['friends_count']) ?></span><span> Following</span></a></span>
-                <span class=""><a href='https://twitter.com/<?php echo $items_array[0][0]['user']['screen_name'] ?>/followers' target="_blank"><span><?php echo $this->format_numbers($items_array[0][0]['user']['followers_count']) ?></span> <span>Followers</span></a></span>
+			
+			<div class="wpr-tf-header-content">
+			<div class="wpr-tf-header-profile-img">
+                <img src="<?php echo str_replace('_normal', '', $items_array[0][0]['user']['profile_image_url']) ?>" alt="Image">
+				<div class="wpr-tf-statistics">
+					<div class="wpr-tf-header-user">
+						<p><?php echo $items_array[0][0]['user']['name'] ?></p>
+						<p><?php echo '@'. $items_array[0][0]['user']['screen_name'] ?></p>
+					</div>
+					<span class=""><a href='https://twitter.com/<?php echo $items_array[0][0]['user']['screen_name'] ?>' target="_blank"><span><?php echo $this->format_numbers($items_array[0][0]['user']['statuses_count']) ?></span><span> Tweets</span></a></span>
+					<span class=""><a href='https://twitter.com/<?php echo $items_array[0][0]['user']['screen_name'] ?>/following' target="_blank"><span><?php echo $this->format_numbers($items_array[0][0]['user']['friends_count']) ?></span><span> Following</span></a></span>
+					<span class=""><a href='https://twitter.com/<?php echo $items_array[0][0]['user']['screen_name'] ?>/followers' target="_blank"><span><?php echo $this->format_numbers($items_array[0][0]['user']['followers_count']) ?></span> <span>Followers</span></a></span>
+				</div>
             </div>
 
-            <span class="wpr-twitter-follow-btn-wrap">
-                <a class="wpr-twitter-follow-btn" rel="nofollow" href="https://twitter.com/intent/follow?screen_name=<?php echo $items_array[0][0]['user']['screen_name'] ?>" target="_blank">
-                    Follow
-                </a>
-            </span>
+				<span class="wpr-twitter-follow-btn-wrap">
+					<a class="wpr-twitter-follow-btn" rel="nofollow" href="https://twitter.com/intent/follow?screen_name=<?php echo $items_array[0][0]['user']['screen_name'] ?>" target="_blank">
+						Follow
+					</a>
+				</span>
+			</div>
 
         <?php echo '</div>';
 
-        echo '<div class="wpr-twitter-feed">';
+		echo '<div class="wpr-twitter-feed-cont">';
+		if ( 'yes' === $settings['enable_cs_nav'] ) {
+			echo '<div class="wpr-swiper-nav-wrap">';
+				echo '<button class="wpr-swiper-button wpr-swiper-button-prev">';
+					echo Utilities::get_wpr_icon( $settings['cs_nav_arrows'], 'left' );
+				echo '</button>';
+				echo '<button class="wpr-swiper-button wpr-swiper-button-next">';
+					echo Utilities::get_wpr_icon( $settings['cs_nav_arrows'], 'right' );
+				echo '</button>';
+			echo '</div>';
+		}
+		
+
+		if ( 'yes' === $settings['enable_cs_pag'] ) {
+			echo '<div class="swiper-pagination"></div>';
+		}
+
+        echo '<div '. wp_kses_post( $this->get_render_attribute_string( 'twitter_feed' ) ) .'>';
 
         foreach ( $items_array as $key=>$items ) :
         $i = 0;
-        foreach ( $items as $item) :
 
+		if ($settings['twitter_feed_hashtag_name']) {
+			$hashtag_names = explode(',', str_replace(' ', '', $settings['twitter_feed_hashtag_name']));
+
+			foreach ($items as $key => $item) {
+				$match = false;
+
+				if ($item['entities']['hashtags']) {
+					foreach ($item['entities']['hashtags'] as $tag) {
+						if (in_array($tag['text'], $hashtag_names)) {
+							$match = true;
+						}
+					}
+				}
+
+				if ($match == false) {
+					unset($items[$key]);
+				}
+			}
+		}
+
+        foreach ( $items as $item) :
                 
         $banner_placeholder = WPR_ADDONS_ASSETS_URL . 'img/placeholder.png';
         $banner = $item['user']['profile_banner_url'] ? $item['user']['profile_banner_url'] : $banner_placeholder;
@@ -1562,6 +2483,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 
         endforeach;
         endforeach;
+        echo '</div>';
         echo '</div>';
     }
 }
