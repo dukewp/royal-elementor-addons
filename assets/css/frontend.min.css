@@ -2360,6 +2360,7 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
 .wpr-grid-cf-style-2 .inner-block>a,
 .wpr-grid-cf-style-2 .inner-block>span,
 .wpr-grid-sep-style-1 .inner-block>span,
+.wpr-twitter-feed-sep-style-1 .inner-block>span,
 .wpr-grid-sep-style-2 .inner-block>span,
 .wpr-grid-item-status .inner-block>span,
 .wpr-grid-item-price .inner-block>span,
@@ -2382,6 +2383,7 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
 .wpr-grid-item-display-custom.wpr-grid-cf-style-2 .inner-block>a,
 .wpr-grid-item-display-custom.wpr-grid-cf-style-2 .inner-block>span,
 .wpr-grid-item-display-custom.wpr-grid-sep-style-1 .inner-block>span,
+.wpr-twitter-feed-item-display-custom.wpr-twitter-feed-sep-style-1 .inner-block>span,
 .wpr-grid-item-display-custom.wpr-grid-sep-style-2 .inner-block>span,
 .wpr-grid-item-display-custom.wpr-grid-item-product-status .inner-block>span,
 .wpr-grid-item-display-custom.wpr-grid-item-product-price .inner-block>span,
@@ -2619,7 +2621,8 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
 
 /* Separator */
 
-.wpr-grid-item-separator .inner-block {
+.wpr-grid-item-separator .inner-block,
+.wpr-twitter-feed-item-separator {
     font-size: 0;
     line-height: 0;
 }
@@ -12322,6 +12325,27 @@ a.wpr-ajax-img-wrap {
 == Twitter Feed
 --------------------------------------------------------------*/
 
+    .wpr-twitter-feed-item-display-block {
+        clear: both;
+    }
+
+    .wpr-twitter-feed-item-display-inline.wpr-twitter-feed-item-align-left,
+    .wpr-twitter-feed-item-display-custom.wpr-twitter-feed-item-align-left {
+        float: left;
+    }
+
+    .wpr-twitter-feed-item-display-inline.wpr-twitter-feed-item-align-right,
+    .wpr-twitter-feed-item-display-custom.wpr-twitter-feed-item-align-right {
+        float: right;
+    }
+
+    .wpr-twitter-feed-item-display-inline.wpr-twitter-feed-item-align-center,
+    .wpr-twitter-feed-item-display-custom.wpr-twitter-feed-item-align-center {
+        float: none;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
     .wpr-tf-header-content {
         display: flex;
         justify-content: space-between;
@@ -12373,10 +12397,6 @@ a.wpr-ajax-img-wrap {
         margin-bottom: 20px;
     }
 
-    .wpr-twitter-feed article {
-        display: flex;
-    }
-
     .wpr-twitter-feed-masonry .wpr-twitter-feed .wpr-tweet  {
         margin-bottom: 20px;
     }
@@ -12390,11 +12410,6 @@ a.wpr-ajax-img-wrap {
         break-inside: avoid;
     }
 
-    .wpr-twitter-feed small i,
-    .wpr-twitter-feed small {
-        color: #00d1b2;
-    }
-
     .wpr-twitter-feed figure img {
         border-radius: 50%;
         width: 100%;
@@ -12404,22 +12419,6 @@ a.wpr-ajax-img-wrap {
     .wpr-twit-image {
         width: 100%;
         height: auto;
-    }
-
-    .wpr-twitter-feed input:focus {
-        border-color: #00d1b2;  
-    }
-
-    .wpr-twitter-feed .likes {
-        padding: 0 7.5px;
-    }
-
-    .wpr-twitter-feed input {
-        font-weight: bold;
-    }
-
-    .wpr-twitter-feed .tweets-move {
-        transition: transform 1s;
     }
 
     .wpr-twitter-follow-btn {
