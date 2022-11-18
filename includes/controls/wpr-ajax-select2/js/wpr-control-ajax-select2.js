@@ -16,7 +16,8 @@ jQuery(window).on("elementor:init", (function() {
                     },
                     data: function(response) {
                         return {
-                            s: response.term
+                            s: response.term,
+                            tax: controlTax
                         }
                     }
                 },
@@ -24,7 +25,8 @@ jQuery(window).on("elementor:init", (function() {
             });
 
             var controlValue = void 0 !== $this.getControlValue() ? $this.getControlValue() : "";
-            console.log(controlValue);
+            var controlTax = '' !== $select.attr('data-tax-slug') ? $select.attr('data-tax-slug') : '';
+
             controlValue.isArray && (controlValue = $this.getControlValue().join()), jQuery.ajax({
                 url: restUrl,
                 dataType: "json",
@@ -32,11 +34,11 @@ jQuery(window).on("elementor:init", (function() {
                     "X-WP-Nonce": nonce
                 },
                 data: {
-                    ids: String(controlValue)
+                    ids: String(controlValue),
+                    tax: controlTax
                 }
             }).then((function(response) {
                 console.log(response);
-
                 null !== response && response.results.length > 0 && (jQuery.each(response.results, (function(index, element) {
                     var option = new Option(element.text, element.id, !0, !0);
                     $select.append(option).trigger("change")

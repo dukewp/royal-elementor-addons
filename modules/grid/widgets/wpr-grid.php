@@ -38,7 +38,7 @@ class Wpr_Grid extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'royal', 'blog', 'portfolio grid', 'posts', 'post grid', 'posts grid', 'post slider', 'posts slider', 'post carousel', 'posts carousel', 'massonry grid', 'isotope', 'post gallery', 'posts gallery', 'filterable grid' ];
+		return [ 'qq', 'royal', 'blog', 'portfolio grid', 'posts', 'post grid', 'posts grid', 'post slider', 'posts slider', 'post carousel', 'posts carousel', 'massonry grid', 'isotope', 'post gallery', 'posts gallery', 'filterable grid' ];
 	}
 
 	public function get_script_depends() {
@@ -707,21 +707,67 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
+		// $this->add_control(
+		// 	'query_author',
+		// 	[
+		// 		'label' => esc_html__( 'Authors ', 'wpr-addons' ),
+		// 		'type' => 'wpr-ajax-select2',
+		// 		'taxslug' => 'category',
+		// 		'options' => 'ajaxselect2/get_users',
+		// 		'multiple' => true,
+		// 		'label_block' => true,
+		// 		'separator' => 'before',
+		// 		'condition' => [
+		// 			'query_source!' => [ 'current', 'related' ],
+		// 			'query_selection' => 'dynamic',
+		// 		],
+		// 	]
+		// );
 		$this->add_control(
-			'query_author',
+			'query_taxonomy_category',
 			[
-				'label' => esc_html__( 'Authors', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT2,
+				'label' => 'cat new',
+				'type' => 'wpr-ajax-select2',
+				'taxslug' => 'category',
+				'options' => 'ajaxselect2/get_taxonomies',
 				'multiple' => true,
 				'label_block' => true,
-				'options' => Utilities::get_users(),
-				'separator' => 'before',
 				'condition' => [
-					'query_source!' => [ 'current', 'related' ],
+					'query_source' => 'post',
 					'query_selection' => 'dynamic',
 				],
 			]
 		);
+		// $this->add_control(
+		// 	'query_taxonomy_post_tag',
+		// 	[
+		// 		'label' => 'tag new',
+		// 		'type' => 'wpr-ajax-select2',
+		// 		'taxslug' => 'post_tag',
+		// 		'options' => 'ajaxselect2/get_taxonomies',
+		// 		'multiple' => true,
+		// 		'label_block' => true,
+		// 		'condition' => [
+		// 			'query_source' => 'post',
+		// 			'query_selection' => 'dynamic',
+		// 		],
+		// 	]
+		// );
+		// $this->add_control(
+		// 	'query_author',
+		// 	[
+		// 		'label' => esc_html__( 'Authors', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SELECT2,
+		// 		'multiple' => true,
+		// 		'label_block' => true,
+		// 		'options' => Utilities::get_users(),
+		// 		'separator' => 'before',
+		// 		'condition' => [
+		// 			'query_source!' => [ 'current', 'related' ],
+		// 			'query_selection' => 'dynamic',
+		// 		],
+		// 	]
+		// );
 
 		// Taxonomies
 		foreach ( $post_taxonomies as $slug => $title ) {
@@ -732,20 +778,36 @@ class Wpr_Grid extends Widget_Base {
 				$post_type = $wp_taxonomies[$slug]->object_type[0];
 			}
 
-			$this->add_control(
-				'query_taxonomy_'. $slug,
-				[
-					'label' => $title,
-					'type' => Controls_Manager::SELECT2,
-					'multiple' => true,
-					'label_block' => true,
-					'options' => Utilities::get_terms_by_taxonomy( $slug ),
-					'condition' => [
-						'query_source' => $post_type,
-						'query_selection' => 'dynamic',
-					],
-				]
-			);
+			// $this->add_control(
+			// 	'query_taxonomy_'. $slug,
+			// 	[
+			// 		'label' => $title,
+			// 		'type' => 'wpr-ajax-select2',
+			// 		'taxslug' => $slug,
+			// 		'options' => 'ajaxselect2/get_taxonomies',
+			// 		'multiple' => true,
+			// 		'label_block' => true,
+			// 		'condition' => [
+			// 			'query_source' => $post_type,
+			// 			'query_selection' => 'dynamic',
+			// 		],
+			// 	]
+			// );
+			
+			// $this->add_control(
+			// 	'query_taxonomy_'. $slug,
+			// 	[
+			// 		'label' => $title,
+			// 		'type' => Controls_Manager::SELECT2,
+			// 		'multiple' => true,
+			// 		'label_block' => true,
+			// 		'options' => Utilities::get_terms_by_taxonomy( $slug ),
+			// 		'condition' => [
+			// 			'query_source' => $post_type,
+			// 			'query_selection' => 'dynamic',
+			// 		],
+			// 	]
+			// );
 		}
 
 		// Exclude

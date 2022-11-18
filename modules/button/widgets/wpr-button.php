@@ -656,10 +656,10 @@ class Wpr_Button extends Widget_Base {
 	}
 
 	protected function render() {
-
-	$settings = $this->get_settings();
-	$btn_element = 'div';
-	$btn_url =  $settings['button_url']['url'];
+		
+		$settings = $this->get_settings();
+		$btn_element = 'div';
+		$btn_url =  $settings['button_url']['url'];
 
 	?>
 	
