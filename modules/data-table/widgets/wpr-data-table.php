@@ -1470,6 +1470,7 @@ class Wpr_Data_Table extends Widget_Base {
 					// '{{WRAPPER}} tr.wpr-odd td a' => 'color: {{VALUE}} !important',
 					'{{WRAPPER}} tbody tr:nth-child(odd) td.wpr-table-text' => 'color: {{VALUE}}',
 					'{{WRAPPER}} tbody tr:nth-child(odd) td a' => 'color: {{VALUE}} !important',
+					'{{WRAPPER}} tbody tr:nth-child(odd) td span' => 'color: {{VALUE}} !important',
 					'{{WRAPPER}} tbody tr:nth-child(odd) td' => 'color: {{VALUE}}'
 				],
 			]
@@ -1555,6 +1556,7 @@ class Wpr_Data_Table extends Widget_Base {
 					// '{{WRAPPER}} tr.wpr-odd td:hover.wpr-table-text' => 'color: {{VALUE}} !important',
 					// '{{WRAPPER}} tr.wpr-odd td:hover i' => 'color: {{VALUE}}',
 					'{{WRAPPER}} tbody tr:nth-child(odd) td:hover a' => 'color: {{VALUE}} !important',
+					'{{WRAPPER}} tbody tr:nth-child(odd) td:hover span' => 'color: {{VALUE}} !important',
 					'{{WRAPPER}} tbody tr:nth-child(odd) td:hover.wpr-table-text' => 'color: {{VALUE}} !important',
 					'{{WRAPPER}} tbody tr:nth-child(odd) td:hover i' => 'color: {{VALUE}}',
 				],
@@ -2071,8 +2073,12 @@ class Wpr_Data_Table extends Widget_Base {
 								<div class="wpr-td-content-wrapper <?php echo esc_attr(('top' === $table_td[$j]['icon_position']) ? 'wpr-flex-column' : (('bottom' === $table_td[$j]['icon_position']) ? 'wpr-flex-column-reverse' : '')) ?>">
 
 									<?php $table_td[$j]['icon'] === 'yes' && ($table_td[$j]['icon_position'] === 'left' || $table_td[$j]['icon_position'] === 'top' || $table_td[$j]['icon_position'] === 'bottom') ? $this->render_td_icon_or_image($table_td, $j) : '' ?>
-									<?php if ( '' !== $table_td[$j]['content'] ) :  ?>
-										<a href="<?php echo esc_url($table_td[$j]['link']['url']) ?>" target="<?php echo esc_attr($table_td[$j]['external']) ?>">
+									<?php if ( '' !== $table_td[$j]['content'] ) : 
+										  if ( '' !== $table_td[$j]['link']['url'] ) : ?>
+											<a href="<?php echo esc_url($table_td[$j]['link']['url']) ?>" target="<?php echo esc_attr($table_td[$j]['external']) ?>">
+									<?php else : ?>
+											<span>
+									<?php endif; ?> 
 											<span class="wpr-table-text">
 												<?php 
 													echo wp_kses_post( $table_td[$j]['content'] );
@@ -2082,7 +2088,11 @@ class Wpr_Data_Table extends Widget_Base {
 													$this->render_content_tooltip( $table_td[$j] ); 
 												?>
 											</span>
+										<?php if ( '' !== $table_td[$j]['link']['url'] ) : ?>
 										</a>
+										<?php else : ?>
+										</span>
+										<?php endif; ?>
 									<?php endif;  ?>
 									<?php $table_td[$j]['icon'] === 'yes' && $table_td[$j]['icon_position'] === 'right' ? $this->render_td_icon_or_image($table_td, $j) : '' ?>
 

@@ -63,6 +63,26 @@ class Wpr_Grid extends Widget_Base {
 		return $post_types;
 	}
 
+	public function add_control_order_posts() {
+        $this->add_control(
+			'order_posts',
+			[
+				'label' => esc_html__( 'Order By', 'wpr-addons'),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'date',
+				'label_block' => false,
+				'options' => [
+					'date' => esc_html__( 'Date', 'wpr-addons'),
+					'tl-pro' => esc_html__( 'Title (Pro)', 'wpr-addons'),
+					'mf-pro' => esc_html__( 'Date Modified (Pro)', 'wpr-addons')
+				],
+				'condition' => [
+					'query_randomize!' => 'rand',
+				]
+			]
+		);
+	}
+
 	public function add_control_query_randomize() {
 		$this->add_control(
 			'query_randomize',
@@ -691,6 +711,28 @@ class Wpr_Grid extends Widget_Base {
 				'condition' => [
 					'query_source!' => [ 'current', 'related' ],
 				],
+			]
+		);
+
+		$this->add_control_order_posts();
+
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'order_posts', ['tl-pro', 'mf-pro'] );
+
+        $this->add_control(
+			'order_direction',
+			[
+				'label' => esc_html__( 'Order', 'wpr-addons'),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'DESC',
+				'label_block' => false,
+				'options' => [
+					'ASC' => esc_html__( 'Ascending', 'wpr-addons'),
+					'DESC' => esc_html__( 'Descending', 'wpr-addons'),
+				],
+				'condition' => [
+					'query_randomize!' => 'rand',
+				]
 			]
 		);
 
@@ -7885,7 +7927,10 @@ class Wpr_Grid extends Widget_Base {
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$settings[ 'query_randomize' ] = '';
+			$settings['order_posts'] = 'date';
 		}
+
+		$query_order_by = '' != $settings['query_randomize'] ? $settings['query_randomize'] : $settings['order_posts'];
 
 		// Dynamic
 		$args = [
@@ -7893,7 +7938,7 @@ class Wpr_Grid extends Widget_Base {
 			'tax_query' => $this->get_tax_query_args(),
 			'post__not_in' => $settings[ 'query_exclude_'. $settings[ 'query_source' ] ],
 			'posts_per_page' => $settings['query_posts_per_page'],
-			'orderby' => $settings[ 'query_randomize' ],
+			'orderby' => $query_order_by,
 			'author' => $author,
 			'paged' => $paged,
 			'offset' => $offset
@@ -7917,7 +7962,7 @@ class Wpr_Grid extends Widget_Base {
 				'post__in' => $post_ids,
 				'ignore_sticky_posts' => 1,
 				'posts_per_page' => $settings['query_posts_per_page'],
-				'orderby' => $settings[ 'query_randomize' ],
+				'orderby' => $query_order_by,
 				'paged' => $paged,
 			];
 		}
@@ -7927,7 +7972,7 @@ class Wpr_Grid extends Widget_Base {
 			global $wp_query;
 
 			$args = $wp_query->query_vars;
-			$args['orderby'] = $settings['query_randomize'];
+			$args['orderby'] = $query_order_by;
 			$args['offset'] = ( $paged - 1 ) * intval(get_option('posts_per_page')) + intval($settings[ 'query_offset' ]);
 		}
 
@@ -7939,9 +7984,13 @@ class Wpr_Grid extends Widget_Base {
 				'post__not_in' => [ get_the_ID() ],
 				'ignore_sticky_posts' => 1,
 				'posts_per_page' => $settings['query_posts_per_page'],
-				'orderby' => $settings[ 'query_randomize' ],
+				'orderby' => $query_order_by,
 				'offset' => $offset,
 			];
+		}
+
+		if ( 'rand' !== $query_order_by ) {
+			$args['order'] = $settings['order_direction'];
 		}
 
 		return $args;
