@@ -1467,7 +1467,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
         $this->add_control(
 			'order_direction',
 			[
-				'label' => esc_html__( 'Order By', 'wpr-addons'),
+				'label' => esc_html__( 'Order', 'wpr-addons'),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'DESC',
 				'label_block' => false,

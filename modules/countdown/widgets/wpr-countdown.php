@@ -386,15 +386,18 @@ class Wpr_Countdown extends Widget_Base {
 		);
 
 		// Get All Templates
-		$templates = get_posts( [
-			'post_type'   => array( 'elementor_library' ),
-			'post_status' => array( 'publish' ),
-			'meta_key' 	  => '_elementor_template_type',
-			'meta_value'  => ['page', 'section'],
-			'numberposts'  => -1
-		] );
-
+		$templates = [];
 		$templates_select = [];
+
+		if ( is_admin() ) {
+			$templates = get_posts( [
+				'post_type'   => array( 'elementor_library' ),
+				'post_status' => array( 'publish' ),
+				'meta_key' 	  => '_elementor_template_type',
+				'meta_value'  => ['page', 'section'],
+				'numberposts'  => -1
+			] );
+		}
 
 		if ( ! empty( $templates ) ) {
 			foreach ( $templates as $template ) {

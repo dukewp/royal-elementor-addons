@@ -310,14 +310,17 @@ class Utilities {
 	** Get Posts of Post Type
 	*/
 	public static function get_posts_by_post_type( $slug ) {
-		$query = get_posts( [ 'post_type' => $slug, 'posts_per_page' => -1 ] );
 		$posts = [];
 
-		foreach ( $query as $post ) {
-			$posts[$post->ID] = $post->post_title;
+		if ( is_admin() ) {
+			$query = get_posts( [ 'post_type' => $slug, 'posts_per_page' => -1 ] );
+
+			foreach ( $query as $post ) {
+				$posts[$post->ID] = $post->post_title;
+			}
+			
+			wp_reset_postdata();
 		}
-		
-		wp_reset_postdata();
 
 		return $posts;
 	}

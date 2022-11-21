@@ -38,7 +38,7 @@ class Wpr_Grid extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'royal', 'blog', 'portfolio grid', 'posts', 'post grid', 'posts grid', 'post slider', 'posts slider', 'post carousel', 'posts carousel', 'massonry grid', 'isotope', 'post gallery', 'posts gallery', 'filterable grid' ];
+		return [ 'qq', 'royal', 'blog', 'portfolio grid', 'posts', 'post grid', 'posts grid', 'post slider', 'posts slider', 'post carousel', 'posts carousel', 'massonry grid', 'isotope', 'post gallery', 'posts gallery', 'filterable grid' ];
 	}
 
 	public function get_script_depends() {
@@ -61,6 +61,26 @@ class Wpr_Grid extends Widget_Base {
 		$post_types['pro-rl'] = esc_html__( 'Related Query (Pro)', 'wpr-addons' );
 		
 		return $post_types;
+	}
+
+	public function add_control_order_posts() {
+        $this->add_control(
+			'order_posts',
+			[
+				'label' => esc_html__( 'Order By', 'wpr-addons'),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'date',
+				'label_block' => false,
+				'options' => [
+					'date' => esc_html__( 'Date', 'wpr-addons'),
+					'tl-pro' => esc_html__( 'Title (Pro)', 'wpr-addons'),
+					'mf-pro' => esc_html__( 'Date Modified (Pro)', 'wpr-addons')
+				],
+				'condition' => [
+					'query_randomize!' => 'rand',
+				]
+			]
+		);
 	}
 
 	public function add_control_query_randomize() {
@@ -694,6 +714,28 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
+		$this->add_control_order_posts();
+
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'order_posts', ['tl-pro', 'mf-pro'] );
+
+        $this->add_control(
+			'order_direction',
+			[
+				'label' => esc_html__( 'Order', 'wpr-addons'),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'DESC',
+				'label_block' => false,
+				'options' => [
+					'ASC' => esc_html__( 'Ascending', 'wpr-addons'),
+					'DESC' => esc_html__( 'Descending', 'wpr-addons'),
+				],
+				'condition' => [
+					'query_randomize!' => 'rand',
+				]
+			]
+		);
+
 		$this->add_control(
 			'query_tax_selection',
 			[
@@ -707,21 +749,67 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
+		// $this->add_control(
+		// 	'query_author',
+		// 	[
+		// 		'label' => esc_html__( 'Authors ', 'wpr-addons' ),
+		// 		'type' => 'wpr-ajax-select2',
+		// 		'taxslug' => 'category',
+		// 		'options' => 'ajaxselect2/get_users',
+		// 		'multiple' => true,
+		// 		'label_block' => true,
+		// 		'separator' => 'before',
+		// 		'condition' => [
+		// 			'query_source!' => [ 'current', 'related' ],
+		// 			'query_selection' => 'dynamic',
+		// 		],
+		// 	]
+		// );
 		$this->add_control(
-			'query_author',
+			'query_taxonomy_category',
 			[
-				'label' => esc_html__( 'Authors', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT2,
+				'label' => 'cat new',
+				'type' => 'wpr-ajax-select2',
+				'taxslug' => 'category',
+				'options' => 'ajaxselect2/get_taxonomies',
 				'multiple' => true,
 				'label_block' => true,
-				'options' => Utilities::get_users(),
-				'separator' => 'before',
 				'condition' => [
-					'query_source!' => [ 'current', 'related' ],
+					'query_source' => 'post',
 					'query_selection' => 'dynamic',
 				],
 			]
 		);
+		// $this->add_control(
+		// 	'query_taxonomy_post_tag',
+		// 	[
+		// 		'label' => 'tag new',
+		// 		'type' => 'wpr-ajax-select2',
+		// 		'taxslug' => 'post_tag',
+		// 		'options' => 'ajaxselect2/get_taxonomies',
+		// 		'multiple' => true,
+		// 		'label_block' => true,
+		// 		'condition' => [
+		// 			'query_source' => 'post',
+		// 			'query_selection' => 'dynamic',
+		// 		],
+		// 	]
+		// );
+		// $this->add_control(
+		// 	'query_author',
+		// 	[
+		// 		'label' => esc_html__( 'Authors', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SELECT2,
+		// 		'multiple' => true,
+		// 		'label_block' => true,
+		// 		'options' => Utilities::get_users(),
+		// 		'separator' => 'before',
+		// 		'condition' => [
+		// 			'query_source!' => [ 'current', 'related' ],
+		// 			'query_selection' => 'dynamic',
+		// 		],
+		// 	]
+		// );
 
 		// Taxonomies
 		foreach ( $post_taxonomies as $slug => $title ) {
@@ -732,20 +820,36 @@ class Wpr_Grid extends Widget_Base {
 				$post_type = $wp_taxonomies[$slug]->object_type[0];
 			}
 
-			$this->add_control(
-				'query_taxonomy_'. $slug,
-				[
-					'label' => $title,
-					'type' => Controls_Manager::SELECT2,
-					'multiple' => true,
-					'label_block' => true,
-					'options' => Utilities::get_terms_by_taxonomy( $slug ),
-					'condition' => [
-						'query_source' => $post_type,
-						'query_selection' => 'dynamic',
-					],
-				]
-			);
+			// $this->add_control(
+			// 	'query_taxonomy_'. $slug,
+			// 	[
+			// 		'label' => $title,
+			// 		'type' => 'wpr-ajax-select2',
+			// 		'taxslug' => $slug,
+			// 		'options' => 'ajaxselect2/get_taxonomies',
+			// 		'multiple' => true,
+			// 		'label_block' => true,
+			// 		'condition' => [
+			// 			'query_source' => $post_type,
+			// 			'query_selection' => 'dynamic',
+			// 		],
+			// 	]
+			// );
+			
+			// $this->add_control(
+			// 	'query_taxonomy_'. $slug,
+			// 	[
+			// 		'label' => $title,
+			// 		'type' => Controls_Manager::SELECT2,
+			// 		'multiple' => true,
+			// 		'label_block' => true,
+			// 		'options' => Utilities::get_terms_by_taxonomy( $slug ),
+			// 		'condition' => [
+			// 			'query_source' => $post_type,
+			// 			'query_selection' => 'dynamic',
+			// 		],
+			// 	]
+			// );
 		}
 
 		// Exclude
@@ -7823,7 +7927,10 @@ class Wpr_Grid extends Widget_Base {
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$settings[ 'query_randomize' ] = '';
+			$settings['order_posts'] = 'date';
 		}
+
+		$query_order_by = '' != $settings['query_randomize'] ? $settings['query_randomize'] : $settings['order_posts'];
 
 		// Dynamic
 		$args = [
@@ -7831,7 +7938,7 @@ class Wpr_Grid extends Widget_Base {
 			'tax_query' => $this->get_tax_query_args(),
 			'post__not_in' => $settings[ 'query_exclude_'. $settings[ 'query_source' ] ],
 			'posts_per_page' => $settings['query_posts_per_page'],
-			'orderby' => $settings[ 'query_randomize' ],
+			'orderby' => $query_order_by,
 			'author' => $author,
 			'paged' => $paged,
 			'offset' => $offset
@@ -7855,7 +7962,7 @@ class Wpr_Grid extends Widget_Base {
 				'post__in' => $post_ids,
 				'ignore_sticky_posts' => 1,
 				'posts_per_page' => $settings['query_posts_per_page'],
-				'orderby' => $settings[ 'query_randomize' ],
+				'orderby' => $query_order_by,
 				'paged' => $paged,
 			];
 		}
@@ -7865,7 +7972,7 @@ class Wpr_Grid extends Widget_Base {
 			global $wp_query;
 
 			$args = $wp_query->query_vars;
-			$args['orderby'] = $settings['query_randomize'];
+			$args['orderby'] = $query_order_by;
 			$args['offset'] = ( $paged - 1 ) * intval(get_option('posts_per_page')) + intval($settings[ 'query_offset' ]);
 		}
 
@@ -7877,9 +7984,13 @@ class Wpr_Grid extends Widget_Base {
 				'post__not_in' => [ get_the_ID() ],
 				'ignore_sticky_posts' => 1,
 				'posts_per_page' => $settings['query_posts_per_page'],
-				'orderby' => $settings[ 'query_randomize' ],
+				'orderby' => $query_order_by,
 				'offset' => $offset,
 			];
+		}
+
+		if ( 'rand' !== $query_order_by ) {
+			$args['order'] = $settings['order_direction'];
 		}
 
 		return $args;
