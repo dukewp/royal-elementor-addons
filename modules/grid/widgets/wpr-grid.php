@@ -445,6 +445,13 @@ class Wpr_Grid extends Widget_Base {
 			'default' => ''
 		];
 	}
+
+	public function add_repeater_args_trim_text_by() {
+		return [
+			'word_count' => esc_html__( 'Word Count', 'wpr-addons' ),
+			'lc-pro' => esc_html__( 'Letter Count (Pro)', 'wpr-addons' )
+		];
+	}
 	
 	public function add_control_overlay_animation_divider() {}
 	
@@ -1617,6 +1624,20 @@ class Wpr_Grid extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'trim_text_by',
+			[
+				'label' => esc_html__( 'Trim Text By', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'word_count',
+				'options' => $this->add_repeater_args_trim_text_by(),
+				'separator' => 'after',
+				'condition' => [
+					'element_select' => [ 'title', 'excerpt' ],
+				]
+			]
+		);
+
+		$repeater->add_control(
 			'element_word_count',
 			[
 				'label' => esc_html__( 'Word Count', 'wpr-addons' ),
@@ -1625,6 +1646,21 @@ class Wpr_Grid extends Widget_Base {
 				'min' => 1,
 				'condition' => [
 					'element_select' => [ 'title', 'excerpt' ],
+					'trim_text_by' => 'word_count'
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'element_letter_count',
+			[
+				'label' => esc_html__( 'Letter Count', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 40,
+				'min' => 1,
+				'condition' => [
+					'element_select' => [ 'title', 'excerpt' ],
+					'trim_text_by' => 'letter_count'
 				]
 			]
 		);
@@ -8131,7 +8167,12 @@ class Wpr_Grid extends Widget_Base {
 		echo '<'. esc_attr($settings['element_title_tag']) .' class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
 				echo '<a '. $pointer_item_class .' href="'. esc_url( get_the_permalink() ) .'">';
-					echo esc_html(wp_trim_words( get_the_title(), $settings['element_word_count'] ));
+					if ( 'word_count' === $settings['trim_text_by'] ) {
+						echo esc_html(wp_trim_words( get_the_title(), $settings['element_word_count'] ));
+					} else {
+						echo mb_strimwidth(html_entity_decode(get_the_title()), 0, $settings['element_letter_count'], '...');
+						echo substr(html_entity_decode(get_the_title()), 0, $settings['element_letter_count']);
+					}
 				echo '</a>';
 			echo '</div>';
 		echo '</'. esc_attr($settings['element_title_tag']) .'>';
@@ -8164,7 +8205,11 @@ class Wpr_Grid extends Widget_Base {
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
+			  if ( 'word_count' === $settings['trim_text_by']) {
 				echo '<p>'. esc_html(wp_trim_words( get_the_excerpt(), $settings['element_word_count'] )) .'</p>';
+			  } else {
+				echo '<p>'. esc_html(implode('', array_slice( str_split(get_the_excerpt()), 0, $settings['element_letter_count'] ))) .'</p>';
+			  }
 			echo '</div>';
 		echo '</div>';
 	}
