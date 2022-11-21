@@ -707,68 +707,22 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
-		// $this->add_control(
-		// 	'query_author',
-		// 	[
-		// 		'label' => esc_html__( 'Authors ', 'wpr-addons' ),
-		// 		'type' => 'wpr-ajax-select2',
-		// 		'taxslug' => 'category',
-		// 		'options' => 'ajaxselect2/get_users',
-		// 		'multiple' => true,
-		// 		'label_block' => true,
-		// 		'separator' => 'before',
-		// 		'condition' => [
-		// 			'query_source!' => [ 'current', 'related' ],
-		// 			'query_selection' => 'dynamic',
-		// 		],
-		// 	]
-		// );
 		$this->add_control(
-			'query_taxonomy_category',
+			'query_author',
 			[
-				'label' => 'cat new',
+				'label' => esc_html__( 'Authors', 'wpr-addons' ),
 				'type' => 'wpr-ajax-select2',
-				'taxslug' => 'category',
-				'options' => 'ajaxselect2/get_taxonomies',
+				'options' => 'ajaxselect2/get_users',
 				'multiple' => true,
 				'label_block' => true,
+				'separator' => 'before',
 				'condition' => [
-					'query_source' => 'post',
+					'query_source!' => [ 'current', 'related' ],
 					'query_selection' => 'dynamic',
 				],
 			]
 		);
-		// $this->add_control(
-		// 	'query_taxonomy_post_tag',
-		// 	[
-		// 		'label' => 'tag new',
-		// 		'type' => 'wpr-ajax-select2',
-		// 		'taxslug' => 'post_tag',
-		// 		'options' => 'ajaxselect2/get_taxonomies',
-		// 		'multiple' => true,
-		// 		'label_block' => true,
-		// 		'condition' => [
-		// 			'query_source' => 'post',
-		// 			'query_selection' => 'dynamic',
-		// 		],
-		// 	]
-		// );
-		// $this->add_control(
-		// 	'query_author',
-		// 	[
-		// 		'label' => esc_html__( 'Authors', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SELECT2,
-		// 		'multiple' => true,
-		// 		'label_block' => true,
-		// 		'options' => Utilities::get_users(),
-		// 		'separator' => 'before',
-		// 		'condition' => [
-		// 			'query_source!' => [ 'current', 'related' ],
-		// 			'query_selection' => 'dynamic',
-		// 		],
-		// 	]
-		// );
-
+		
 		// Taxonomies
 		foreach ( $post_taxonomies as $slug => $title ) {
 			global $wp_taxonomies;
@@ -778,36 +732,21 @@ class Wpr_Grid extends Widget_Base {
 				$post_type = $wp_taxonomies[$slug]->object_type[0];
 			}
 
-			// $this->add_control(
-			// 	'query_taxonomy_'. $slug,
-			// 	[
-			// 		'label' => $title,
-			// 		'type' => 'wpr-ajax-select2',
-			// 		'taxslug' => $slug,
-			// 		'options' => 'ajaxselect2/get_taxonomies',
-			// 		'multiple' => true,
-			// 		'label_block' => true,
-			// 		'condition' => [
-			// 			'query_source' => $post_type,
-			// 			'query_selection' => 'dynamic',
-			// 		],
-			// 	]
-			// );
-			
-			// $this->add_control(
-			// 	'query_taxonomy_'. $slug,
-			// 	[
-			// 		'label' => $title,
-			// 		'type' => Controls_Manager::SELECT2,
-			// 		'multiple' => true,
-			// 		'label_block' => true,
-			// 		'options' => Utilities::get_terms_by_taxonomy( $slug ),
-			// 		'condition' => [
-			// 			'query_source' => $post_type,
-			// 			'query_selection' => 'dynamic',
-			// 		],
-			// 	]
-			// );
+			$this->add_control(
+				'query_taxonomy_'. $slug,
+				[
+					'label' => $title,
+					'type' => 'wpr-ajax-select2',
+					'options' => 'ajaxselect2/get_taxonomies',
+					'query_slug' => $slug,
+					'multiple' => true,
+					'label_block' => true,
+					'condition' => [
+						'query_source' => $post_type,
+						'query_selection' => 'dynamic',
+					],
+				]
+			);
 		}
 
 		// Exclude
@@ -816,10 +755,11 @@ class Wpr_Grid extends Widget_Base {
 				'query_exclude_'. $slug,
 				[
 					'label' => esc_html__( 'Exclude ', 'wpr-addons' ) . $title,
-					'type' => Controls_Manager::SELECT2,
+					'type' => 'wpr-ajax-select2',
+					'options' => 'ajaxselect2/get_posts_by_post_type',
+					'query_slug' => $slug,
 					'multiple' => true,
 					'label_block' => true,
-					'options' => Utilities::get_posts_by_post_type( $slug ),
 					'condition' => [
 						'query_source' => $slug,
 						'query_source!' => [ 'current', 'related' ],
@@ -835,10 +775,10 @@ class Wpr_Grid extends Widget_Base {
 				'query_manual_'. $slug,
 				[
 					'label' => esc_html__( 'Select ', 'wpr-addons' ) . $title,
-					'type' => Controls_Manager::SELECT2,
+					'type' => 'wpr-ajax-select2',
+					'options' => 'ajaxselect2/get_posts_by_post_type',
 					'multiple' => true,
 					'label_block' => true,
-					'options' => Utilities::get_posts_by_post_type( $slug ),
 					'condition' => [
 						'query_source' => $slug,
 						'query_selection' => 'manual',
