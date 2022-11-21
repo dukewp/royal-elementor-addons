@@ -8170,7 +8170,7 @@ class Wpr_Grid extends Widget_Base {
 					if ( 'word_count' === $settings['trim_text_by'] ) {
 						echo esc_html(wp_trim_words( get_the_title(), $settings['element_word_count'] ));
 					} else {
-						echo mb_strimwidth(html_entity_decode(get_the_title()), 0, $settings['element_letter_count'], '...');
+						echo mb_strimwidth(html_entity_decode(get_the_title()), 0, $settings['element_letter_count'] + 1, '...');
 						echo substr(html_entity_decode(get_the_title()), 0, $settings['element_letter_count']);
 					}
 				echo '</a>';
