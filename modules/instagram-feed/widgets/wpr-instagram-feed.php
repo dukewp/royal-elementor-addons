@@ -40,7 +40,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 	}
 
 	public function get_script_depends() {
-		return [ 'wpr-instafeed', 'wpr-lightgallery' ];
+		return [ 'wpr-lightgallery' ];
 	}
 
 	public function get_style_depends() {

@@ -413,17 +413,6 @@ class Plugin {
 			Plugin::instance()->get_version(),
 			true
 		);
-
-		wp_localize_script(
-			'wpr-addons-js',
-			'WprConfig', // This is used in the js file to group all of your scripts together
-			[
-				'ajaxurl' => admin_url( 'admin-ajax.php' ),
-				'resturl' => get_rest_url() . 'wpraddons/v1',
-				'nonce' => wp_create_nonce( 'wpr-addons-js' ),
-				'insta_access_token' => get_option('wpr_instagram_access_token')
-			]
-		);
 	}
 
 	public function register_scripts() {
@@ -517,20 +506,13 @@ class Plugin {
 			 null, 
 			 true 
 		);
+		
 		wp_register_script(
 			'wpr-aos-js',
 			 WPR_ADDONS_URL  . 'assets/js/lib/aos/aos'. $this->script_suffix() .'.js',
 			 [], 
 			 null, 
 			 true
-		);
-
-		wp_register_script(
-			'wpr-instafeed',
-			WPR_ADDONS_URL . 'assets/js/lib/instafeed/instafeed' . $this->script_suffix() . '.js',
-			[],
-			null,
-			true
 		);
 		
 		wp_register_script(
@@ -605,14 +587,6 @@ class Plugin {
 			WPR_ADDONS_URL . 'assets/js/library-editor'. $this->script_suffix() .'.js',
 			[ 'jquery' ],
 			Plugin::instance()->get_version(),
-			true
-		);
-
-		wp_register_script(
-			'wpr-instafeed',
-			WPR_ADDONS_URL . 'assets/js/lib/instafeed/instafeed' . $this->script_suffix() . '.js',
-			[],
-			null,
 			true
 		);
 	}
