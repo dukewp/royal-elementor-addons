@@ -150,7 +150,8 @@
 .elementor-control-insta_feed_elements .elementor-control-element_extra_text_pos,
 .elementor-control-insta_feed_elements .elementor-control-element_sharing_icon_1,
 .elementor-control-insta_feed_elements .elementor-control-element_username_tag,
-.elementor-control-insta_feed_elements .elementor-control-element_location {
+.elementor-control-insta_feed_elements .elementor-control-element_location,
+.elementor-control-twitter_feed_elements .elementor-control-element_username_tag {
 	padding-top: 0 !important;
 }
 
@@ -192,6 +193,11 @@
 .elementor-control-element_show_on {
 	padding-top: 15px !important;
 	border-top: 1px solid #d5dadf;
+}
+
+.elementor-control-twitter_feed_elements .elementor-control-element_show_on {
+	padding-top: 0 !important;
+	border-top: none;
 }
 
 [class*="wpr__section_"] ~ .elementor-control-type-number .elementor-control-input-wrapper,

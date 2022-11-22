@@ -1111,33 +1111,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		);
 
 		$repeater->add_control(
-			'element_show_avatar',
-			[
-				'label' => esc_html__( 'Show Avatar', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'condition' => [
-					'element_select' => [ 'username' ]
-				]
-			]
-		);
-
-		$repeater->add_control(
-			'element_avatar_size',
-			[
-				'label' => esc_html__( 'Avatar Size', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 16,
-				'min' => 8,
-				'condition' => [
-					'element_select' => [ 'username' ],
-					'element_show_avatar' => 'yes'
-				],
-				'separator' => 'after'
-			]
-		);
-
-		$repeater->add_control(
 			'element_read_more_text',
 			[
 				'label' => esc_html__( 'Read More Text', 'wpr-addons' ),
@@ -1145,26 +1118,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'default' => 'Read More',
 				'condition' => [
 					'element_select' => [ 'read-more' ],
-				],
-				'separator' => 'after'
-			]
-		);
-
-		$repeater->add_control(
-			'element_tax_sep',
-			[
-				'label' => esc_html__( 'Separator', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => ', ',
-				'condition' => [
-					'element_select!' => [
-						'caption',
-						'date',
-						'username',
-						'sharing',
-						'lightbox',
-						'separator',
-					],
 				],
 				'separator' => 'after'
 			]
@@ -4197,6 +4150,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'show_label' => false,
 				'condition' => [
 					'layout_select!' => 'layout-carousel',
+					'show_pagination' => 'yes',
 				],
 			]
 		);

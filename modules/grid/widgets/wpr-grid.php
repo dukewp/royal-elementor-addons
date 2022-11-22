@@ -3098,6 +3098,7 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
+		// TEMPORARY - GOGA
 		$this->add_control(
 			'apply_styling_to_media_wrap',
 			[

@@ -39,13 +39,13 @@ class Wpr_Twitter_Feed extends Widget_Base {
 		return [ 'royal', 'twitter feed' ];
 	}
 
-	// public function get_script_depends() {
-	// 	return [ 'wpr-twitterfeed', 'wpr-lightgallery' ];
-	// }
+	public function get_script_depends() {
+		return [ 'wpr-twitterfeed', 'wpr-lightgallery' ];
+	}
 
-	// public function get_style_depends() {
-	// 	return ['wpr-animations-css', 'wpr-loading-animations-css', 'wpr-lightgallery-css'];
-	// }
+	public function get_style_depends() {
+		return ['wpr-animations-css', 'wpr-loading-animations-css', 'wpr-lightgallery-css'];
+	}
 
     public function get_custom_help_url() {
     	if ( empty(get_option('wpr_wl_plugin_links')) )
@@ -332,26 +332,60 @@ class Wpr_Twitter_Feed extends Widget_Base {
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
 				echo '<span>';
+
 				// Text: Before
-				if ( 'before' === $settings['element_extra_text_pos'] ) {
-					echo '<span class="wpr-twitter-feed-extra-text-left">'. esc_html( $settings['element_extra_text'] ) .'</span>';
-				}
+				// if ( 'before' === $settings['element_extra_text_pos'] ) {
+				// 	echo '<span class="wpr-twitter-feed-extra-text-left">'. esc_html( $settings['element_extra_text'] ) .'</span>';
+				// }
 				// Icon: Before
-				if ( 'before' === $settings['element_extra_icon_pos'] ) {
-					echo '<i class="wpr-twitter-feed-extra-icon-left '. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
-				}
+				// if ( 'before' === $settings['element_extra_icon_pos'] ) {
+				// 	echo '<i class="wpr-twitter-feed-extra-icon-left '. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
+				// }
+
                 // echo wp_date(get_option( 'date_format' ), strtotime($item['created_at'])) 
                 echo human_time_diff(strtotime($item['created_at'])) .' '. esc_html__('ago');
 
 				// Icon: After
-				if ( 'after' === $settings['element_extra_icon_pos'] ) {
-					echo '<i class="wpr-twitter-feed-extra-icon-right '. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
-				}
+				// if ( 'after' === $settings['element_extra_icon_pos'] ) {
+				// 	echo '<i class="wpr-twitter-feed-extra-icon-right '. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
+				// }
 				// Text: After
-				if ( 'after' === $settings['element_extra_text_pos'] ) {
-					echo '<span class="wpr-twitter-feed-extra-text-right">'. esc_html( $settings['element_extra_text'] ) .'</span>';
-				}
+				// if ( 'after' === $settings['element_extra_text_pos'] ) {
+				// 	echo '<span class="wpr-twitter-feed-extra-text-right">'. esc_html( $settings['element_extra_text'] ) .'</span>';
+				// }
+				
 				echo '</span>';
+			echo '</div>';
+		echo '</div>';
+	}
+	
+	public function render_post_lightbox( $settings, $class, $item ) { 
+		echo '<div class="'. esc_attr($class) .'">';
+			echo '<div class="inner-block">';
+				$lightbox_source = $item[''];
+
+				// Lightbox Button
+				echo '<span data-src="'. esc_url( $lightbox_source ) .'">';
+				
+					// Text: Before
+					if ( 'before' === $settings['element_extra_text_pos'] ) {
+						echo '<span class="wpr-twitter-feed-extra-text-left">'. esc_html( $settings['element_extra_text'] ) .'</span>';
+					}
+
+					// Lightbox Icon
+					echo '<i class="'. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
+
+					// Text: After
+					if ( 'after' === $settings['element_extra_text_pos'] ) {
+						echo '<span class="wpr-twitter-feed-extra-text-right">'. esc_html( $settings['element_extra_text'] ) .'</span>';
+					}
+
+				echo '</span>';
+
+				// Media Overlay
+				if ( 'yes' === $settings['element_lightbox_overlay'] ) {
+					echo '<div class="wpr-twitter-feed-lightbox-overlay"></div>';
+				}
 			echo '</div>';
 		echo '</div>';
 	}
@@ -374,7 +408,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 		echo '</div>';
 	}
 
-	public function render_post_comments($settings, $class, $item) {
+	public function render_post_comment($settings, $class, $item) {
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">'; 
@@ -428,12 +462,14 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			}
 		}
 
-		echo '<div class="'. esc_attr($class) .'">';
-			echo '<div class="inner-block">'; 
-                // && $media[0]['type'] == 'photo'
-                echo (isset( $media[0] )) ? '<img class="wpr-twit-image" src="' . $media[0]['media_url_https'] . '">' : '';
+		if ( !empty($media) ) {
+			echo '<div class="'. esc_attr($class) .'">';
+				echo '<div class="inner-block">'; 
+					// && $media[0]['type'] == 'photo'
+					echo (isset( $media[0] )) ? '<img class="wpr-twit-image" src="' . $media[0]['media_url_https'] . '">' : '';
+				echo '</div>';
 			echo '</div>';
-		echo '</div>';
+		}
 	}
 
 	// Get Elements
@@ -465,8 +501,8 @@ class Wpr_Twitter_Feed extends Widget_Base {
             	$this->render_post_likes( $settings, $class, $item );
             	break;
 
-			case 'comments':
-				$this->render_post_comments( $settings, $class, $item );
+			case 'comment':
+				$this->render_post_comment( $settings, $class, $item );
 				break;
 
             case 'retweets':
@@ -730,6 +766,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				'render_type' => 'template',
 				'separator' => 'before',
 				'options' => [
+					'grid'     => esc_html__('Grid', 'wpr-addons'),
 					'masonry' => esc_html__('Masonry', 'wpr-addons'),
 					'list'     => esc_html__('List Style', 'wpr-addons'),
 					'carousel' => esc_html__('Slider\Carousel', 'wpr-addons'),
@@ -846,6 +883,19 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'show_pagination',
+			[
+				'label' => esc_html__( 'Show Pagination', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'render_type' => 'template',
+				'separator' => 'before',
+				'condition' => [
+					'layout_select!' => 'carousel',
+				]
+			]
+		);
+
         $this->end_controls_section();
 
 		// Tab: Content ==============
@@ -880,13 +930,8 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			'element_location',
 			[
 				'label' => esc_html__( 'Location', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'below',
-				'options' => [
-					'above' => esc_html__( 'Above Media', 'wpr-addons' ),
-					'over' => esc_html__( 'Over Media', 'wpr-addons' ),
-					'below' => esc_html__( 'Below Media', 'wpr-addons' ),
-				]
+				'type' => Controls_Manager::HIDDEN,
+				'default' => 'above',
 			]
 		);
 
@@ -1003,7 +1048,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 		$repeater->add_control(
 			'element_username_tag',
 			[
-				'label' => esc_html__( 'Username HTML Tag', 'wpr-addons' ),
+				'label' => esc_html__( 'HTML Tag', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'h1' => 'H1',
@@ -1019,7 +1064,8 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				'default' => 'h2',
 				'condition' => [
 					'element_select' => 'username',
-				]
+				],
+				'separator' => 'after',
 			]
 		);
 
@@ -1030,36 +1076,10 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				'type' => Controls_Manager::NUMBER,
 				'default' => 20,
 				'min' => 1,
+				'separator' => 'after',
 				'condition' => [
-					'element_select' => [ 'caption' ],
+					'element_select' => [ 'twit' ],
 				]
-			]
-		);
-
-		$repeater->add_control(
-			'element_show_avatar',
-			[
-				'label' => esc_html__( 'Show Avatar', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'condition' => [
-					'element_select' => [ 'username' ]
-				]
-			]
-		);
-
-		$repeater->add_control(
-			'element_avatar_size',
-			[
-				'label' => esc_html__( 'Avatar Size', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 16,
-				'min' => 8,
-				'condition' => [
-					'element_select' => [ 'username' ],
-					'element_show_avatar' => 'yes'
-				],
-				'separator' => 'after'
 			]
 		);
 
@@ -1071,63 +1091,6 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				'default' => 'Read More',
 				'condition' => [
 					'element_select' => [ 'read-more' ],
-				],
-				'separator' => 'after'
-			]
-		);
-
-		$repeater->add_control(
-			'element_tax_sep',
-			[
-				'label' => esc_html__( 'Separator', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => ', ',
-				'condition' => [
-					'element_select!' => [
-						'caption',
-						'date',
-						'username',
-						'sharing',
-						'lightbox',
-						'separator',
-					],
-				],
-				'separator' => 'after'
-			]
-		);
-
-		// $repeater->add_control(
-		// 	'element_comments_text_1',
-		// 	[
-		// 		'label' => esc_html__( 'No Comments', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::TEXT,
-		// 		'default' => 'No Comments',
-		// 		'condition' => [
-		// 			'element_select' => [ 'comments' ],
-		// 		]
-		// 	]
-		// );
-
-		$repeater->add_control(
-			'element_comments_text_2',
-			[
-				'label' => esc_html__( 'One Comment', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => 'Comment',
-				'condition' => [
-					'element_select' => [ 'comments' ],
-				]
-			]
-		);
-
-		$repeater->add_control(
-			'element_comments_text_3',
-			[
-				'label' => esc_html__( 'Multiple Comments', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => 'Comments',
-				'condition' => [
-					'element_select' => [ 'comments' ],
 				],
 				'separator' => 'after'
 			]
@@ -1206,209 +1169,191 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			]
 		);
 
-		$repeater->add_control(
-			'element_extra_text_pos',
-			[
-				'label' => esc_html__( 'Extra Text Display', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'none' => esc_html__( 'None', 'wpr-addons' ),
-					'before' => esc_html__( 'Before Element', 'wpr-addons' ),
-					'after' => esc_html__( 'After Element', 'wpr-addons' ),
-				],
-				'default' => 'none',
-				'condition' => [
-					'element_select!' => [
-						'title',
-						'content',
-						'caption',
-						'read-more',
-						'separator',
-					],
-				]
-			]
-		);
+		// $repeater->add_control(
+		// 	'element_extra_text_pos',
+		// 	[
+		// 		'label' => esc_html__( 'Extra Text Display', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'options' => [
+		// 			'none' => esc_html__( 'None', 'wpr-addons' ),
+		// 			'before' => esc_html__( 'Before Element', 'wpr-addons' ),
+		// 			'after' => esc_html__( 'After Element', 'wpr-addons' ),
+		// 		],
+		// 		'default' => 'none',
+		// 		'condition' => [
+		// 			'element_select' => [
+		// 				'lightbox',
+		// 			],
+		// 		]
+		// 	]
+		// );
 
-		$repeater->add_control(
-			'element_extra_text',
-			[
-				'label' => esc_html__( 'Extra Text', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => '',
-				'condition' => [
-					'element_select!' => [
-						'title',
-						'content',
-						'caption',
-						'read-more',
-						'separator',
-					],
-					'element_extra_text_pos!' => 'none'
-				]
-			]
-		);
+		// $repeater->add_control(
+		// 	'element_extra_text',
+		// 	[
+		// 		'label' => esc_html__( 'Extra Text', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::TEXT,
+		// 		'default' => '',
+		// 		'condition' => [
+		// 			'element_select!' => [
+		// 				'lightbox',
+		// 			],
+		// 			'element_extra_text_pos!' => 'none'
+		// 		]
+		// 	]
+		// );
 
-		$repeater->add_control(
-			'element_extra_icon_pos',
-			[
-				'label' => esc_html__( 'Extra Icon Position', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'none' => esc_html__( 'None', 'wpr-addons' ),
-					'before' => esc_html__( 'Before Element', 'wpr-addons' ),
-					'after' => esc_html__( 'After Element', 'wpr-addons' ),
-				],
-				'default' => 'none',
-				'condition' => [
-					'element_select!' => [
-						'title',
-						'content',
-						'caption',
-						'separator',
-						'likes',
-						'sharing',
-					],
-				]
-			]
-		);
+		// $repeater->add_control(
+		// 	'element_extra_icon_pos',
+		// 	[
+		// 		'label' => esc_html__( 'Extra Icon Position', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'options' => [
+		// 			'none' => esc_html__( 'None', 'wpr-addons' ),
+		// 			'before' => esc_html__( 'Before Element', 'wpr-addons' ),
+		// 			'after' => esc_html__( 'After Element', 'wpr-addons' ),
+		// 		],
+		// 		'default' => 'none',
+		// 		'condition' => [
+		// 			'element_select!' => [
+		// 				'lightbox',
+		// 			],
+		// 		]
+		// 	]
+		// );
 
-		$repeater->add_control(
-			'element_extra_icon',
-			[
-				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
-				'type' => Controls_Manager::ICONS,
-				'skin' => 'inline',
-				'label_block' => false,
-				'default' => [
-					'value' => 'fas fa-search',
-					'library' => 'fa-solid',
-				],
-				'condition' => [
-					'element_select!' => [
-						'title',
-						'content',
-						'caption',
-						'separator',
-						'likes',
-						'sharing',
-					],
-					'element_extra_icon_pos!' => 'none'
-				]
-			]
-		);
+		// $repeater->add_control(
+		// 	'element_extra_icon',
+		// 	[
+		// 		'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::ICONS,
+		// 		'skin' => 'inline',
+		// 		'label_block' => false,
+		// 		'default' => [
+		// 			'value' => 'fas fa-search',
+		// 			'library' => 'fa-solid',
+		// 		],
+		// 		'condition' => [
+		// 			'element_select!' => [
+		// 				'lightbox'
+		// 			],
+		// 			'element_extra_icon_pos!' => 'none'
+		// 		]
+		// 	]
+		// );
 
-		$repeater->add_control(
-			'animation_divider',
-			[
-				'type' => Controls_Manager::DIVIDER,
-				'style' => 'thick',
-				'condition' => [
-					'element_location' => 'over' 
-				],
-			]
-		);
+		// $repeater->add_control(
+		// 	'animation_divider',
+		// 	[
+		// 		'type' => Controls_Manager::DIVIDER,
+		// 		'style' => 'thick',
+		// 		'condition' => [
+		// 			'element_location' => 'over' 
+		// 		],
+		// 	]
+		// );
 
-		$repeater->add_control(
-			'element_animation',
-			[
-				'label' => esc_html__( 'Select Animation', 'wpr-addons' ),
-				'type' => 'wpr-animations',
-				'default' => 'none',
-				'condition' => [
-					'element_location' => 'over' 
-				],
-			]
-		);
+		// $repeater->add_control(
+		// 	'element_animation',
+		// 	[
+		// 		'label' => esc_html__( 'Select Animation', 'wpr-addons' ),
+		// 		'type' => 'wpr-animations',
+		// 		'default' => 'none',
+		// 		'condition' => [
+		// 			'element_location' => 'over' 
+		// 		],
+		// 	]
+		// );
 
 		// Upgrade to Pro Notice :TODO
-		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'twitter-feed', 'element_animation', ['pro-slrt','pro-slxrt','pro-slbt','pro-sllt','pro-sltp','pro-slxlt','pro-sktp','pro-skrt','pro-skbt','pro-sklt','pro-scup','pro-scdn','pro-rllt','pro-rlrt'] );
+		// Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'twitter-feed', 'element_animation', ['pro-slrt','pro-slxrt','pro-slbt','pro-sllt','pro-sltp','pro-slxlt','pro-sktp','pro-skrt','pro-skbt','pro-sklt','pro-scup','pro-scdn','pro-rllt','pro-rlrt'] );
 
-		$repeater->add_control(
-			'element_animation_duration',
-			[
-				'label' => esc_html__( 'Animation Duration', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.3,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'selectors' => [
-					'{{WRAPPER}} {{CURRENT_ITEM}}' => 'transition-duration: {{VALUE}}s;'
-				],
-				'condition' => [
-					'element_animation!' => 'none',
-					'element_location' => 'over',
-				],
-			]
-		);
+		// $repeater->add_control(
+		// 	'element_animation_duration',
+		// 	[
+		// 		'label' => esc_html__( 'Animation Duration', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::NUMBER,
+		// 		'default' => 0.3,
+		// 		'min' => 0,
+		// 		'max' => 5,
+		// 		'step' => 0.1,
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} {{CURRENT_ITEM}}' => 'transition-duration: {{VALUE}}s;'
+		// 		],
+		// 		'condition' => [
+		// 			'element_animation!' => 'none',
+		// 			'element_location' => 'over',
+		// 		],
+		// 	]
+		// );
 
-		$repeater->add_control(
-			'element_animation_delay',
-			[
-				'label' => esc_html__( 'Animation Delay', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0,
-				'min' => 0,
-				'max' => 5,
-				'step' => 0.1,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-animation-wrap:hover {{CURRENT_ITEM}}' => 'transition-delay: {{VALUE}}s;'
-				],
-				'condition' => [
-					'element_animation!' => 'none',
-					'element_location' => 'over' 
-				],
-			]
-		);
+		// $repeater->add_control(
+		// 	'element_animation_delay',
+		// 	[
+		// 		'label' => esc_html__( 'Animation Delay', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::NUMBER,
+		// 		'default' => 0,
+		// 		'min' => 0,
+		// 		'max' => 5,
+		// 		'step' => 0.1,
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-animation-wrap:hover {{CURRENT_ITEM}}' => 'transition-delay: {{VALUE}}s;'
+		// 		],
+		// 		'condition' => [
+		// 			'element_animation!' => 'none',
+		// 			'element_location' => 'over' 
+		// 		],
+		// 	]
+		// );
 
-		$repeater->add_control(
-			'element_animation_timing',
-			[
-				'label' => esc_html__( 'Animation Timing', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => Utilities::wpr_animation_timings(),
-				'default' => 'ease-default',
-				'condition' => [
-					'element_animation!' => 'none',
-					'element_location' => 'over' 
-				],
-			]
-		);
+		// $repeater->add_control(
+		// 	'element_animation_timing',
+		// 	[
+		// 		'label' => esc_html__( 'Animation Timing', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'options' => Utilities::wpr_animation_timings(),
+		// 		'default' => 'ease-default',
+		// 		'condition' => [
+		// 			'element_animation!' => 'none',
+		// 			'element_location' => 'over' 
+		// 		],
+		// 	]
+		// );
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'twitter-feed', 'element_animation_timing', ['pro-eio','pro-eiqd','pro-eicb','pro-eiqrt','pro-eiqnt','pro-eisn','pro-eiex','pro-eicr','pro-eibk','pro-eoqd','pro-eocb','pro-eoqrt','pro-eoqnt','pro-eosn','pro-eoex','pro-eocr','pro-eobk','pro-eioqd','pro-eiocb','pro-eioqrt','pro-eioqnt','pro-eiosn','pro-eioex','pro-eiocr','pro-eiobk',] );
+		// Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'twitter-feed', 'element_animation_timing', ['pro-eio','pro-eiqd','pro-eicb','pro-eiqrt','pro-eiqnt','pro-eisn','pro-eiex','pro-eicr','pro-eibk','pro-eoqd','pro-eocb','pro-eoqrt','pro-eoqnt','pro-eosn','pro-eoex','pro-eocr','pro-eobk','pro-eioqd','pro-eiocb','pro-eioqrt','pro-eioqnt','pro-eiosn','pro-eioex','pro-eiocr','pro-eiobk',] );
 
-		$repeater->add_control(
-			'element_animation_size',
-			[
-				'label' => esc_html__( 'Animation Size', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'small' => esc_html__( 'Small', 'wpr-addons' ),
-					'medium' => esc_html__( 'Medium', 'wpr-addons' ),
-					'large' => esc_html__( 'Large', 'wpr-addons' ),
-				],
-				'default' => 'large',
-				'condition' => [
-					'element_animation!' => 'none',
-					'element_location' => 'over' 
-				],
-			]
-		);
+		// $repeater->add_control(
+		// 	'element_animation_size',
+		// 	[
+		// 		'label' => esc_html__( 'Animation Size', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'options' => [
+		// 			'small' => esc_html__( 'Small', 'wpr-addons' ),
+		// 			'medium' => esc_html__( 'Medium', 'wpr-addons' ),
+		// 			'large' => esc_html__( 'Large', 'wpr-addons' ),
+		// 		],
+		// 		'default' => 'large',
+		// 		'condition' => [
+		// 			'element_animation!' => 'none',
+		// 			'element_location' => 'over' 
+		// 		],
+		// 	]
+		// );
 
-		$repeater->add_control(
-			'element_animation_tr',
-			[
-				'label' => esc_html__( 'Animation Transparency', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
-				'return_value' => 'yes',
-				'condition' => [
-					'element_animation!' => 'none',
-					'element_location' => 'over' 
-				],
-			]
-		);
+		// $repeater->add_control(
+		// 	'element_animation_tr',
+		// 	[
+		// 		'label' => esc_html__( 'Animation Transparency', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SWITCHER,
+		// 		'default' => 'yes',
+		// 		'return_value' => 'yes',
+		// 		'condition' => [
+		// 			'element_animation!' => 'none',
+		// 			'element_location' => 'over' 
+		// 		],
+		// 	]
+		// );
 
 		$repeater->add_responsive_control(
 			'element_show_on',
@@ -1479,7 +1424,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 						'element_location' => 'above',
 					],
 					[
-						'element_select' => 'comments',
+						'element_select' => 'comment',
 						'element_location' => 'above',
 						'element_display' => 'inline',
 						'element_align_hr' => 'left'
@@ -1670,6 +1615,88 @@ class Wpr_Twitter_Feed extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+		// Tab: Content ==============
+		// Section: Pagination -------
+		$this->start_controls_section(
+			'section_twitter_feed_pagination',
+			[
+				'label' => esc_html__( 'Pagination', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+				'condition' => [
+					'layout_select!' => 'carousel',
+					'show_pagination' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'pagination_load_more_text',
+			[
+				'label' => esc_html__( 'Load More Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => 'Load More',
+			]
+		);
+
+		$this->add_control(
+			'pagination_finish_text',
+			[
+				'label' => esc_html__( 'Finish Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => 'End of Content.',
+			]
+		);
+
+		$this->add_control(
+			'pagination_animation',
+			[
+				'label' => esc_html__( 'Select Animation', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'loader-1',
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'loader-1' => esc_html__( 'Loader 1', 'wpr-addons' ),
+					'loader-2' => esc_html__( 'Loader 2', 'wpr-addons' ),
+					'loader-3' => esc_html__( 'Loader 3', 'wpr-addons' ),
+					'loader-4' => esc_html__( 'Loader 4', 'wpr-addons' ),
+					'loader-5' => esc_html__( 'Loader 5', 'wpr-addons' ),
+					'loader-6' => esc_html__( 'Loader 6', 'wpr-addons' ),
+				],
+			]
+		);
+
+		$this->add_control(
+			'pagination_align',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'left'    => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					],
+					'justify' => [
+						'title' => esc_html__( 'Justified', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-justify',
+					],
+				],
+				'default' => 'center',
+				'prefix_class' => 'wpr-grid-pagination-',
+				'render_type' => 'template',
+				'separator' => 'before',
+			]
+		);
+
+		$this->end_controls_section(); // End Controls Section
 
 		// Styles ====================
 		// Section: Slider Navigation -------
@@ -3364,7 +3391,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
                 'label' => esc_html__('Slider Pagination', 'wpr-addons'),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition' => [
-					'layout_select' => 'layout-carousel',
+					'layout_select' => 'carousel',
 					'enable_cs_pag' => 'yes'
 				]
             ]
@@ -3480,7 +3507,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#1D9BF0',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-twitter-feed-item-comments span' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-twitter-feed-item-comment span' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-twitter-feed-item-likes span' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-twitter-feed-item-retweets span' => 'color: {{VALUE}}'
 				],
@@ -3494,7 +3521,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#777777',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-twitter-feed-item-comments  a:hover span' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-twitter-feed-item-comment  a:hover span' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-twitter-feed-item-likes  a:hover span' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-twitter-feed-item-retweets  a:hover span' => 'color: {{VALUE}}'
 				],
@@ -3518,7 +3545,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 					'size' => 15,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-twitter-feed-item-comments span' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-twitter-feed-item-comment span' => 'font-size: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-twitter-feed-item-likes span' => 'font-size: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-twitter-feed-item-retweets span' => 'font-size: {{SIZE}}{{UNIT}};',
 				]
@@ -3538,7 +3565,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 					'left' => 0,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-twitter-feed-item-comments' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-twitter-feed-item-comment' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-twitter-feed-item-likes' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-twitter-feed-item-retweets' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				]
@@ -3818,6 +3845,387 @@ class Wpr_Twitter_Feed extends Widget_Base {
 		);
 
 		$this->end_controls_section(); // End Controls Section
+
+		// Styles ====================
+		// Section: Pagination -------
+		$this->start_controls_section(
+			'section_style_pagination',
+			[
+				'label' => esc_html__( 'Pagination', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'show_label' => false,
+				'condition' => [
+					'layout_select!' => 'carousel',
+					'show_pagination' => 'yes',
+				],
+			]
+		);
+
+		$this->start_controls_tabs( 'tabs_grid_pagination_style' );
+
+		$this->start_controls_tab(
+			'tab_grid_pagination_normal',
+			[
+				'label' => esc_html__( 'Normal', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'pagination_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-pagination button' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-pagination svg' => 'fill: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-pagination > div > span' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-pagination span.wpr-disabled-arrow' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'pagination_bg_color',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-pagination button' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-pagination > div > span' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-pagination span.wpr-disabled-arrow' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-pagination-finish' => 'color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'pagination_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-pagination button' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-pagination > div > span' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-pagination span.wpr-disabled-arrow' => 'border-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'pagination_box_shadow',
+				'selector' => '{{WRAPPER}} .wpr-grid-pagination button, {{WRAPPER}} .wpr-grid-pagination > div > span',
+			]
+		);
+
+		$this->add_control(
+			'pagination_loader_color',
+			[
+				'label'  => esc_html__( 'Loader Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-double-bounce .wpr-child' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wave .wpr-rect' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-spinner-pulse' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-chasing-dots .wpr-child' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-three-bounce .wpr-child' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-fading-circle .wpr-circle:before' => 'background-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'pagination_wrapper_color',
+			[
+				'label'  => esc_html__( 'Wrapper Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-pagination' => 'background-color: {{VALUE}}',
+				],
+				'separator' => 'after',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_grid_pagination_hover',
+			[
+				'label' => esc_html__( 'Hover', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'pagination_color_hr',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-pagination button:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-pagination button:hover svg' => 'fill: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-pagination > div > span:not(.wpr-disabled-arrow):hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-pagination span.wpr-grid-current-page' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'pagination_bg_color_hr',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#4A45D2',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-pagination button:hover' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-pagination > div > span:not(.wpr-disabled-arrow):hover' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-pagination span.wpr-grid-current-page' => 'background-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'pagination_border_color_hr',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-pagination button:hover' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-pagination > div > span:not(.wpr-disabled-arrow):hover' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-pagination span.wpr-grid-current-page' => 'border-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'pagination_box_shadow_hr',
+				'selector' => '{{WRAPPER}} .wpr-grid-pagination button:hover, {{WRAPPER}} .wpr-grid-pagination > div > span:not(.wpr-disabled-arrow):hover',
+				'separator' => 'after',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_control(
+			'pagination_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.1,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-pagination button' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-grid-pagination svg' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-grid-pagination > div > span' => 'transition-duration: {{VALUE}}s',
+				],
+				'separator' => 'after',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'pagination_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-grid-pagination, {{WRAPPER}} .wpr-grid-pagination button'
+			]
+		);
+
+		$this->add_responsive_control(
+			'pagination_icon_size',
+			[
+				'label' => esc_html__( 'Icon Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 5,
+						'max' => 30,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 15,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-pagination i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-pagination svg' => 'width: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'pagination_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-pagination button' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .wpr-grid-pagination > div > span' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .wpr-grid-pagination span.wpr-grid-current-page' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .wpr-grid-pagination span.wpr-disabled-arrow' => 'border-style: {{VALUE}}',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'pagination_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-pagination button' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-pagination > div > span' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-pagination span.wpr-grid-current-page' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-pagination span.wpr-disabled-arrow' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'pagination_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'pagination_distance_from_feed',
+			[
+				'label' => esc_html__( 'Top Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 25,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-pagination' => 'margin-top: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'pagination_gutter',
+			[
+				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 25,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+				'selectors' => [
+					// '{{WRAPPER}} .wpr-grid-pagination button' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-pagination button:not(:last-child)' => 'margin-right: {{SIZE}}{{UNIT}};', 
+					'{{WRAPPER}} .wpr-grid-pagination > div > span' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-pagination > div > a.wpr-prev-page' => 'margin-right: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}} .wpr-grid-pagination span.wpr-disabled-arrow' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-pagination span.wpr-disabled-arrow:not(:last-child)' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-pagination span.wpr-grid-current-page' => 'margin-right: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'pagination_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 8,
+					'right' => 20,
+					'bottom' => 8,
+					'left' => 20,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-pagination button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-pagination > div > span' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-pagination span.wpr-disabled-arrow' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-pagination span.wpr-grid-current-page' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'pagination_wrapper_padding',
+			[
+				'label' => esc_html__( 'Wrapper Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-pagination' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'pagination_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 3,
+					'right' => 3,
+					'bottom' => 3,
+					'left' => 3,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-pagination button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-pagination > div > span' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-pagination span.wpr-grid-current-page' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->end_controls_section();
     }
 
     public function round_down($number, $decimals) {
@@ -3842,6 +4250,72 @@ class Wpr_Twitter_Feed extends Widget_Base {
         return $num;
     }
 
+	public function render_twitter_feed_pagination($settings) {
+		echo '<div class="wpr-grid-pagination elementor-clearfix wpr-grid-pagination-load-more">';
+			echo '<button class="wpr-load-more-twitter-posts wpr-load-more-btn">';
+				echo esc_html($settings['pagination_load_more_text']);
+			echo '</button>';
+
+			echo '<div class="wpr-pagination-loading">';
+				// switch ( $settings['pagination_animation'] ) {
+				switch ( 'loader-1' ) {
+					case 'loader-1':
+						echo '<div class="wpr-double-bounce">';
+							echo '<div class="wpr-child wpr-double-bounce1"></div>';
+							echo '<div class="wpr-child wpr-double-bounce2"></div>';
+						echo '</div>';
+						break;
+					case 'loader-2':
+						echo '<div class="wpr-wave">';
+							echo '<div class="wpr-rect wpr-rect1"></div>';
+							echo '<div class="wpr-rect wpr-rect2"></div>';
+							echo '<div class="wpr-rect wpr-rect3"></div>';
+							echo '<div class="wpr-rect wpr-rect4"></div>';
+							echo '<div class="wpr-rect wpr-rect5"></div>';
+						echo '</div>';
+						break;
+					case 'loader-3':
+						echo '<div class="wpr-spinner wpr-spinner-pulse"></div>';
+						break;
+					case 'loader-4':
+						echo '<div class="wpr-chasing-dots">';
+							echo '<div class="wpr-child wpr-dot1"></div>';
+							echo '<div class="wpr-child wpr-dot2"></div>';
+						echo '</div>';
+						break;
+					case 'loader-5':
+						echo '<div class="wpr-three-bounce">';
+							echo '<div class="wpr-child wpr-bounce1"></div>';
+							echo '<div class="wpr-child wpr-bounce2"></div>';
+							echo '<div class="wpr-child wpr-bounce3"></div>';
+						echo '</div>';
+						break;
+					case 'loader-6':
+						echo '<div class="wpr-fading-circle">';
+							echo '<div class="wpr-circle wpr-circle1"></div>';
+							echo '<div class="wpr-circle wpr-circle2"></div>';
+							echo '<div class="wpr-circle wpr-circle3"></div>';
+							echo '<div class="wpr-circle wpr-circle4"></div>';
+							echo '<div class="wpr-circle wpr-circle5"></div>';
+							echo '<div class="wpr-circle wpr-circle6"></div>';
+							echo '<div class="wpr-circle wpr-circle7"></div>';
+							echo '<div class="wpr-circle wpr-circle8"></div>';
+							echo '<div class="wpr-circle wpr-circle9"></div>';
+							echo '<div class="wpr-circle wpr-circle10"></div>';
+							echo '<div class="wpr-circle wpr-circle11"></div>';
+							echo '<div class="wpr-circle wpr-circle12"></div>';
+						echo '</div>';
+						break;
+					
+					default:
+						break;
+				}
+			echo '</div>';
+
+			echo '<p class="wpr-pagination-finish">'. esc_html($settings['pagination_finish_text']) .'</p>';
+		echo '</div>';
+	}
+
     protected function render() {
         $settings = $this->get_settings_for_display();
 
@@ -3851,9 +4325,9 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			array_push($twitter_feed_account_names, $value['twitter_feed_account_name']);
 		}
 
-        $token = get_transient($this->get_ID() . '_' . implode("_", $twitter_feed_account_names) . '_tf_token');
-	    $expiration = ! empty( $settings['auto_clear_cache'] ) && ! empty( $settings['twitter_feed_cache_limit'] ) ? absint( $settings['twitter_feed_cache_limit'] ) * MINUTE_IN_SECONDS : DAY_IN_SECONDS;
-	    $cache_key = implode("_", $twitter_feed_account_names) . '_' . $expiration . '_' . md5( $settings['twitter_feed_hashtag_name'] . $settings['twitter_feed_consumer_key'] . $settings['twitter_feed_consumer_secret'] ) . '_tf_cache';
+        $token = get_transient('wpr_' . $settings['number_of_posts'] . '_' . $this->get_ID() . '_' . implode("_", $twitter_feed_account_names) . '_tf_token');
+	    $expiration = ! empty('wpr_' . $settings['auto_clear_cache'] ) && ! empty( $settings['twitter_feed_cache_limit'] ) ? absint( $settings['twitter_feed_cache_limit'] ) * MINUTE_IN_SECONDS : DAY_IN_SECONDS;
+	    $cache_key = 'wpr_' . implode("_", $twitter_feed_account_names) . '_' . $expiration . '_' . md5( $settings['twitter_feed_hashtag_name'] . $settings['twitter_feed_consumer_key'] . $settings['twitter_feed_consumer_secret'] ) . '_tf_cache' . '_' . $settings['number_of_posts'];
         $items_array = get_transient( $cache_key );
 
         if ($items_array === false) {
@@ -3877,7 +4351,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 
 				if ($body) {
 					var_dump('new token generated');
-					set_transient($this->get_ID() . '_' . implode("_", $twitter_feed_account_names) . '_tf_token', $body->access_token, $expiration);
+					set_transient('wpr_' . $settings['number_of_posts'] . '_' . $this->get_ID() . '_' . implode("_", $twitter_feed_account_names) . '_tf_token', $body->access_token, $expiration);
 					$token = $body->access_token;
 				}
 			}
@@ -3969,8 +4443,8 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			'twitter_feed',
 			[
 				'class' => ['wpr-twitter-feed', 'wpr-'. $settings['layout_select']],
-				'data-settings' => $settings['layout_select'] === 'carousel' ? wp_json_encode( $twitter_settings ) : ''
-				// 'data-settings-test' => wp_json_encode( $settings )
+				'data-settings' => $settings['layout_select'] === 'carousel' ? wp_json_encode( $twitter_settings ) : wp_json_encode([]),
+				'data-settings-test' => wp_json_encode( $settings )
 			]
 		);
 
@@ -4069,5 +4543,9 @@ class Wpr_Twitter_Feed extends Widget_Base {
         endforeach;
         echo '</div>';
         echo '</div>';
+
+		if ( 'yes' === $settings['show_pagination'] ) :
+			echo $this->render_twitter_feed_pagination($settings);
+		endif;
     }
 }

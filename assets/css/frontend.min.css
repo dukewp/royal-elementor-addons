@@ -12393,10 +12393,19 @@ a.wpr-ajax-img-wrap {
         column-gap: 20px;
     }
 
+    .wpr-twitter-feed-grid .wpr-twitter-feed {
+         display: grid;
+         grid-template-columns: repeat(3, minmax(0, 1fr));
+         column-gap: 5px;
+         row-gap: 5px; 
+         grid-template-rows: min-content;
+    }
+
     .wpr-twitter-feed .button {
         margin-bottom: 20px;
     }
 
+    .wpr-twitter-feed-list .wpr-twitter-feed .wpr-tweet,
     .wpr-twitter-feed-masonry .wpr-twitter-feed .wpr-tweet  {
         margin-bottom: 20px;
     }
