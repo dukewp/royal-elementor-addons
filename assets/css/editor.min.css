@@ -135,7 +135,8 @@
 .elementor-control-filters_transition_duration,
 .elementor-control-pagination_older_text,
 .elementor-control-tooltip_position,
-.elementor-control-post_info_comments_text_1 {
+.elementor-control-post_info_comments_text_1,
+.elementor-control-element_letter_count {
 	padding-top: 15px !important;
 }
 

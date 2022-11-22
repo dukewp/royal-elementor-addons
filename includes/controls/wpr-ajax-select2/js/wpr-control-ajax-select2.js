@@ -7,6 +7,9 @@ jQuery(window).on("elementor:init", (function() {
                 $select = $this.ui.select,
                 restUrl = $select.attr("data-rest-url"),
                 nonce = window.wpApiSettings.nonce;
+                
+            var querySlug = '' !== $select.attr('data-query-slug') ? $select.attr('data-query-slug') : '';
+
             $select.select2({
                 ajax: {
                     url: restUrl,
@@ -17,7 +20,7 @@ jQuery(window).on("elementor:init", (function() {
                     data: function(response) {
                         return {
                             s: response.term,
-                            tax: controlTax
+                            query_slug: querySlug
                         }
                     }
                 },
@@ -25,7 +28,6 @@ jQuery(window).on("elementor:init", (function() {
             });
 
             var controlValue = void 0 !== $this.getControlValue() ? $this.getControlValue() : "";
-            var controlTax = '' !== $select.attr('data-tax-slug') ? $select.attr('data-tax-slug') : '';
 
             controlValue.isArray && (controlValue = $this.getControlValue().join()), jQuery.ajax({
                 url: restUrl,
@@ -35,13 +37,17 @@ jQuery(window).on("elementor:init", (function() {
                 },
                 data: {
                     ids: String(controlValue),
-                    tax: controlTax
+                    query_slug: querySlug
                 }
             }).then((function(response) {
-                console.log(response);
                 null !== response && response.results.length > 0 && (jQuery.each(response.results, (function(index, element) {
                     var option = new Option(element.text, element.id, !0, !0);
-                    $select.append(option).trigger("change")
+                    $select.append(option);
+                    
+                    if ( '' !== controlValue ) {
+                        $select.append(option).trigger('change.select2');
+                        $select.val(controlValue).trigger('change.select2');
+                    }
                 })), $select.trigger({
                     type: "select2:select",
                     params: {

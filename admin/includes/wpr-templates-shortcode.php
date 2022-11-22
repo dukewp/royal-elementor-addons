@@ -36,36 +36,14 @@ class WPR_Templates_Shortcode {
 
 	public function extend_shortcode( $section, $section_id, $args ) {
 		if ( $section->get_name() == 'shortcode' && $section_id == 'section_shortcode' ) {
-			$templates_select = [];
-
-			// Get All Templates
-			if (is_admin()) {
-				$templates = get_posts( [
-					'post_type'   => array( 'elementor_library' ),
-					'post_status' => array( 'publish' ),
-					'meta_key' 	  => '_elementor_template_type',
-					'meta_value'  => ['page', 'section'],
-					'numberposts'  => -1
-				] );
-			}
-
-			if ( ! empty( $templates ) ) {
-				foreach ( $templates as $template ) {
-					$templates_select[$template->ID] = $template->post_title;
-				}
-			}
-
 			$section->add_control(
 				'select_template' ,
 				[
-					'label'        => esc_html__( 'Select Template', 'wpr-addons' ),
-					'type'         => Elementor\Controls_Manager::SELECT2,
-					'options'      => $templates_select,
+					'label' => esc_html__( 'Select Template', 'wpr-addons' ),
+					'type' => 'wpr-ajax-select2',
+					'options' => 'ajaxselect2/get_elementor_templates',
 				]
 			);
-
-			// Restore original Post Data
-			wp_reset_postdata();
 		}
 	}
 

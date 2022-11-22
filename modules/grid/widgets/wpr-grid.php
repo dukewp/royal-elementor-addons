@@ -445,6 +445,13 @@ class Wpr_Grid extends Widget_Base {
 			'default' => ''
 		];
 	}
+
+	public function add_repeater_args_trim_text_by() {
+		return [
+			'word_count' => esc_html__( 'Word Count', 'wpr-addons' ),
+			'lc-pro' => esc_html__( 'Letter Count (Pro)', 'wpr-addons' )
+		];
+	}
 	
 	public function add_control_overlay_animation_divider() {}
 	
@@ -749,68 +756,22 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
-		// $this->add_control(
-		// 	'query_author',
-		// 	[
-		// 		'label' => esc_html__( 'Authors ', 'wpr-addons' ),
-		// 		'type' => 'wpr-ajax-select2',
-		// 		'taxslug' => 'category',
-		// 		'options' => 'ajaxselect2/get_users',
-		// 		'multiple' => true,
-		// 		'label_block' => true,
-		// 		'separator' => 'before',
-		// 		'condition' => [
-		// 			'query_source!' => [ 'current', 'related' ],
-		// 			'query_selection' => 'dynamic',
-		// 		],
-		// 	]
-		// );
 		$this->add_control(
-			'query_taxonomy_category',
+			'query_author',
 			[
-				'label' => 'cat new',
+				'label' => esc_html__( 'Authors', 'wpr-addons' ),
 				'type' => 'wpr-ajax-select2',
-				'taxslug' => 'category',
-				'options' => 'ajaxselect2/get_taxonomies',
+				'options' => 'ajaxselect2/get_users',
 				'multiple' => true,
 				'label_block' => true,
+				'separator' => 'before',
 				'condition' => [
-					'query_source' => 'post',
+					'query_source!' => [ 'current', 'related' ],
 					'query_selection' => 'dynamic',
 				],
 			]
 		);
-		// $this->add_control(
-		// 	'query_taxonomy_post_tag',
-		// 	[
-		// 		'label' => 'tag new',
-		// 		'type' => 'wpr-ajax-select2',
-		// 		'taxslug' => 'post_tag',
-		// 		'options' => 'ajaxselect2/get_taxonomies',
-		// 		'multiple' => true,
-		// 		'label_block' => true,
-		// 		'condition' => [
-		// 			'query_source' => 'post',
-		// 			'query_selection' => 'dynamic',
-		// 		],
-		// 	]
-		// );
-		// $this->add_control(
-		// 	'query_author',
-		// 	[
-		// 		'label' => esc_html__( 'Authors', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SELECT2,
-		// 		'multiple' => true,
-		// 		'label_block' => true,
-		// 		'options' => Utilities::get_users(),
-		// 		'separator' => 'before',
-		// 		'condition' => [
-		// 			'query_source!' => [ 'current', 'related' ],
-		// 			'query_selection' => 'dynamic',
-		// 		],
-		// 	]
-		// );
-
+		
 		// Taxonomies
 		foreach ( $post_taxonomies as $slug => $title ) {
 			global $wp_taxonomies;
@@ -820,36 +781,21 @@ class Wpr_Grid extends Widget_Base {
 				$post_type = $wp_taxonomies[$slug]->object_type[0];
 			}
 
-			// $this->add_control(
-			// 	'query_taxonomy_'. $slug,
-			// 	[
-			// 		'label' => $title,
-			// 		'type' => 'wpr-ajax-select2',
-			// 		'taxslug' => $slug,
-			// 		'options' => 'ajaxselect2/get_taxonomies',
-			// 		'multiple' => true,
-			// 		'label_block' => true,
-			// 		'condition' => [
-			// 			'query_source' => $post_type,
-			// 			'query_selection' => 'dynamic',
-			// 		],
-			// 	]
-			// );
-			
-			// $this->add_control(
-			// 	'query_taxonomy_'. $slug,
-			// 	[
-			// 		'label' => $title,
-			// 		'type' => Controls_Manager::SELECT2,
-			// 		'multiple' => true,
-			// 		'label_block' => true,
-			// 		'options' => Utilities::get_terms_by_taxonomy( $slug ),
-			// 		'condition' => [
-			// 			'query_source' => $post_type,
-			// 			'query_selection' => 'dynamic',
-			// 		],
-			// 	]
-			// );
+			$this->add_control(
+				'query_taxonomy_'. $slug,
+				[
+					'label' => $title,
+					'type' => 'wpr-ajax-select2',
+					'options' => 'ajaxselect2/get_taxonomies',
+					'query_slug' => $slug,
+					'multiple' => true,
+					'label_block' => true,
+					'condition' => [
+						'query_source' => $post_type,
+						'query_selection' => 'dynamic',
+					],
+				]
+			);
 		}
 
 		// Exclude
@@ -858,10 +804,11 @@ class Wpr_Grid extends Widget_Base {
 				'query_exclude_'. $slug,
 				[
 					'label' => esc_html__( 'Exclude ', 'wpr-addons' ) . $title,
-					'type' => Controls_Manager::SELECT2,
+					'type' => 'wpr-ajax-select2',
+					'options' => 'ajaxselect2/get_posts_by_post_type',
+					'query_slug' => $slug,
 					'multiple' => true,
 					'label_block' => true,
-					'options' => Utilities::get_posts_by_post_type( $slug ),
 					'condition' => [
 						'query_source' => $slug,
 						'query_source!' => [ 'current', 'related' ],
@@ -877,10 +824,10 @@ class Wpr_Grid extends Widget_Base {
 				'query_manual_'. $slug,
 				[
 					'label' => esc_html__( 'Select ', 'wpr-addons' ) . $title,
-					'type' => Controls_Manager::SELECT2,
+					'type' => 'wpr-ajax-select2',
+					'options' => 'ajaxselect2/get_posts_by_post_type',
 					'multiple' => true,
 					'label_block' => true,
-					'options' => Utilities::get_posts_by_post_type( $slug ),
 					'condition' => [
 						'query_source' => $slug,
 						'query_selection' => 'manual',
@@ -1617,6 +1564,20 @@ class Wpr_Grid extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'trim_text_by',
+			[
+				'label' => esc_html__( 'Trim Text By', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'word_count',
+				'options' => $this->add_repeater_args_trim_text_by(),
+				'separator' => 'after',
+				'condition' => [
+					'element_select' => [ 'title', 'excerpt' ],
+				]
+			]
+		);
+
+		$repeater->add_control(
 			'element_word_count',
 			[
 				'label' => esc_html__( 'Word Count', 'wpr-addons' ),
@@ -1625,6 +1586,21 @@ class Wpr_Grid extends Widget_Base {
 				'min' => 1,
 				'condition' => [
 					'element_select' => [ 'title', 'excerpt' ],
+					'trim_text_by' => 'word_count'
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'element_letter_count',
+			[
+				'label' => esc_html__( 'Letter Count', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 40,
+				'min' => 1,
+				'condition' => [
+					'element_select' => [ 'title', 'excerpt' ],
+					'trim_text_by' => 'letter_count'
 				]
 			]
 		);
@@ -8177,7 +8153,12 @@ class Wpr_Grid extends Widget_Base {
 		echo '<'. esc_attr($settings['element_title_tag']) .' class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
 				echo '<a '. $pointer_item_class .' href="'. esc_url( get_the_permalink() ) .'">';
-					echo esc_html(wp_trim_words( get_the_title(), $settings['element_word_count'] ));
+					if ( 'word_count' === $settings['trim_text_by'] ) {
+						echo esc_html(wp_trim_words( get_the_title(), $settings['element_word_count'] ));
+					} else {
+						echo mb_strimwidth(html_entity_decode(get_the_title()), 0, $settings['element_letter_count'] + 1, '...');
+						echo substr(html_entity_decode(get_the_title()), 0, $settings['element_letter_count']);
+					}
 				echo '</a>';
 			echo '</div>';
 		echo '</'. esc_attr($settings['element_title_tag']) .'>';
@@ -8210,7 +8191,11 @@ class Wpr_Grid extends Widget_Base {
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
+			  if ( 'word_count' === $settings['trim_text_by']) {
 				echo '<p>'. esc_html(wp_trim_words( get_the_excerpt(), $settings['element_word_count'] )) .'</p>';
+			  } else {
+				echo '<p>'. esc_html(implode('', array_slice( str_split(get_the_excerpt()), 0, $settings['element_letter_count'] ))) .'</p>';
+			  }
 			echo '</div>';
 		echo '</div>';
 	}
