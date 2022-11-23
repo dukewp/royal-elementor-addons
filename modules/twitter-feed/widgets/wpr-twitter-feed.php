@@ -315,23 +315,24 @@ class Wpr_Twitter_Feed extends Widget_Base {
 	public function render_post_read_more ( $settings, $class, $item ) {
 
 		$read_more_animation = ! wpr_fs()->can_use_premium_code() ? 'wpr-button-none' : $this->get_settings()['read_more_animation'];
+		$read_more_animation = 'wpr-change-it-later';
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo '<a href="'. esc_url( get_the_permalink() ) .'" class="wpr-button-effect '. esc_attr($read_more_animation) .'">';
+				echo '<a href="'. esc_url('https://twitter.com/KateUpton/status/'. $item['id'] ) .'" class="wpr-button-effect '. esc_attr($read_more_animation) .'">';
 
-				// Icon: Before
-				if ( 'before' === $settings['element_extra_icon_pos'] ) {
-					echo '<i class="wpr-grid-extra-icon-left '. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
-				}
+				// // Icon: Before
+				// if ( 'before' === $settings['element_extra_icon_pos'] ) {
+				// 	echo '<i class="wpr-grid-extra-icon-left '. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
+				// }
 
 				// Read More Text
 				echo '<span>'. esc_html( $settings['element_read_more_text'] ) .'</span>';
 
 				// Icon: After
-				if ( 'after' === $settings['element_extra_icon_pos'] ) {
-					echo '<i class="wpr-grid-extra-icon-right '. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
-				}
+				// if ( 'after' === $settings['element_extra_icon_pos'] ) {
+				// 	echo '<i class="wpr-grid-extra-icon-right '. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
+				// }
 
 				echo '</a>';
 			echo '</div>';
@@ -546,7 +547,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
             	break;
 
 			case 'read-more':
-				$this->render_post_read_more( $settings, $class );
+				$this->render_post_read_more( $settings, $class, $item );
 				break;
 
 			// case 'lightbox':
@@ -1112,7 +1113,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 		);
 
 		$repeater->add_control(
-			'element_account_name_text',
+			'element_read_more_text',
 			[
 				'label' => esc_html__( 'Read More Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
@@ -4483,6 +4484,8 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				'data-settings-test' => wp_json_encode( $settings )
 			]
 		);
+
+		// var_dump($items_array);
 
 		if ( $settings['show_header'] ) {
         
