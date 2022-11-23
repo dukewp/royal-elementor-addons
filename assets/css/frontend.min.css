@@ -12447,6 +12447,27 @@ a.wpr-ajax-img-wrap {
      margin: 0;
 }
 
+.wpr-taxonomy-list li:not(.wpr-sub-hidden) {
+    display: flex;
+    align-items: center;
+}
+
+.wpr-taxonomy-list li a {
+    flex-grow: 1;
+    /* flex-shrink: 0; */
+}
+
+.wpr-taxonomy-list li .wpr-tax-dropdown {
+/* flex-shrink: 1;
+flex-grow: 0; */
+    width: auto;
+    cursor: pointer;
+}
+
+.wpr-sub-hidden {
+    display: none;
+}
+
 .wpr-taxonomy-list li {
     text-align: left;
 }
@@ -12512,6 +12533,10 @@ a.wpr-ajax-img-wrap {
 
 .wpr-taxonomy-list-vertical .wpr-sub-taxonomy {
     padding-left: 20px;
+}
+
+.wpr-taxonomy-list-vertical .wpr-inner-sub-taxonomy {
+    padding-left: 40px;
 }
 
 /*--------------------------------------------------------------
