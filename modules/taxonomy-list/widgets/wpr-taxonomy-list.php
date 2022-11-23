@@ -37,6 +37,8 @@ class Wpr_Taxonomy_List extends Widget_Base {
 		return [ 'royal', 'taxonomy-list', 'taxonomy', 'category', 'categories', 'tag', 'list'];
 	}
 
+	public function add_section_style_toggle_icon() {}
+
 	public function get_post_taxonomies() {
 		return [
 			'category' => esc_html__( 'Categories', 'wpr-addons' ),
@@ -44,6 +46,35 @@ class Wpr_Taxonomy_List extends Widget_Base {
 			'product_cat' => esc_html__( 'Product Categories', 'wpr-addons' ),
 			'product_tag' => esc_html__( 'Product Tags', 'wpr-addons' ),
 		];
+	}
+
+	public function add_controls_group_sub_category_filters() {
+		$this->add_control(
+			'show_sub_categories',
+			[
+				'label' => sprintf( __( 'Show Sub Categories %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control',
+			]
+		);
+
+		$this->add_control(
+			'show_sub_children',
+			[
+				'label' => sprintf( __( 'Show Sub Children %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control',
+			]
+		);
+
+		$this->add_control(
+			'show_sub_categories_on_click',
+			[
+				'label' => sprintf( __( 'Show Children Click %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control',
+			]
+		);
 	}
 
     protected function register_controls() {
@@ -86,6 +117,8 @@ class Wpr_Taxonomy_List extends Widget_Base {
 			]
 		);
 
+		$this->add_controls_group_sub_category_filters();
+
 		$this->add_control(
 			'layout_heading',
 			[
@@ -101,6 +134,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				'label' => esc_html__( 'Select Layout', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
 				'default' => 'vertical',
+				'render_type' => 'template',
 				'options' => [
 					'vertical' => [
 						'title' => esc_html__( 'Vertical', 'wpr-addons' ),
@@ -398,7 +432,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 		$this->end_controls_section();
 
 		// Tab: Style ==============
-		// Section: Content --------
+		// Section: Icon --------
 		$this->start_controls_section(
 			'section_style_icon',
 			[
@@ -462,12 +496,14 @@ class Wpr_Taxonomy_List extends Widget_Base {
 					'size' => 5,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-taxonomy-list li i' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-taxonomy-list li i:not(.wpr-tax-dropdown)' => 'margin-right: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
 
         $this->end_controls_section();
+
+		$this->add_section_style_toggle_icon();
     }
 
     protected function render() {
@@ -481,30 +517,62 @@ class Wpr_Taxonomy_List extends Widget_Base {
 
 		// 	'hide_empty' => 'yes' === $settings['query_hide_empty']
 		
-         echo '<ul class="wpr-taxonomy-list">';
-		$terms = get_terms( $settings['query_tax_selection'], [ 'parent' => 0, 'child_of' => 0 ] );
+         echo '<ul class="wpr-taxonomy-list" data-show-on-click="'. $settings['show_sub_categories_on_click'] .'">';
+		$terms = get_terms( $settings['query_tax_selection'], [ 'hide_empty' => 'yes' === $settings['query_hide_empty'], 'parent' => 0, 'child_of' => 0 ] );
 
         foreach ($terms as $key => $term) {
-        	$sub_class = $term->parent > 0 ? ' class="wpr-sub-taxonomy"' : '';
+        	$cat_class = ' class="wpr-taxonomy"';
+			$data_parent_term_id = $term->term_id;
+
+			if ( 'yes' === $settings['show_sub_categories'] ) {
+				$children = get_terms( $settings['query_tax_selection'], [ 'hide_empty' => 'yes' === $settings['query_hide_empty'], 'parent' => $term->term_id ] );
+			} else {
+				$children = [];
+			}
         	
-            echo '<li'. $sub_class .'>';
+            echo '<li'. $cat_class . 'data-term-id="'.$data_parent_term_id .'">';
+				echo !empty($children) && ('vertical' === $settings['taxonomy_list_layout']) && ('yes' === $settings['show_sub_categories_on_click']) ? '<i class="fas fa-caret-right wpr-tax-dropdown" aria-hidden="true"></i>' : '';
 	            echo '<a href="'. esc_url(get_term_link($term->term_id)) .'">';
 					echo '<span class="wpr-tax-wrap">'. $icon_wrapper .'<span>'. esc_html($term->name) .'</span></span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		            echo ($settings['show_tax_count']) ? '<span><span class="wpr-term-count">&nbsp;('. esc_html($term->count) .')</span></span>' : '';
 	            echo '</a>';
             echo '</li>';
 
-			$children = get_terms( $settings['query_tax_selection'], [ 'parent' => $term->term_id ] );
-
 			foreach ($children as $term) :
-				$sub_class = $term->parent > 0 ? ' class="wpr-sub-taxonomy"' : '';
+				$hidden_class = $settings['show_sub_categories_on_click'] == 'yes' ? ' wpr-sub-hidden' : '';
+				$sub_class = $term->parent > 0 ? ' class="wpr-sub-taxonomy' . $hidden_class . '"' : '';
+				$data_child_term_id = $data_parent_term_id;
+				$data_item_id = $term->term_id;
+
+				if ( 'yes' === $settings['show_sub_categories'] && 'yes' === $settings['show_sub_children'] ) {
+					$grand_children = get_terms( $settings['query_tax_selection'], [ 'hide_empty' => 'yes' === $settings['query_hide_empty'], 'parent' => $term->term_id ] );
+				} else {
+					$grand_children = [];
+				}
 				
-				echo '<li'. $sub_class .'>';
+				echo '<li'. $sub_class . 'data-term-id="child-'. $data_child_term_id .'" data-id="'. $data_item_id .'">';
+				echo !empty($grand_children) && ('vertical' === $settings['taxonomy_list_layout']) && ('yes' === $settings['show_sub_categories_on_click']) ? '<i class="fas fa-caret-right wpr-tax-dropdown" aria-hidden="true"></i>' : '';
 					echo '<a href="'. esc_url(get_term_link($term->term_id)) .'">';
 						echo '<span class="wpr-tax-wrap">'. $icon_wrapper .'<span>'. esc_html($term->name) .'</span></span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						echo ($settings['show_tax_count']) ? '<span><span class="wpr-term-count">&nbsp;('. esc_html($term->count) .')</span></span>' : '';
 					echo '</a>';
 				echo '</li>';
+	
+				foreach ($grand_children as $term) :
+					$hidden_class = $settings['show_sub_categories_on_click'] == 'yes' ? ' wpr-sub-hidden' : '';
+					$sub_class = $term->parent > 0 ? ' class="wpr-inner-sub-taxonomy' . $hidden_class . '"' : '';
+					$data_grandchild_term_id = ' data-parent-id="'. $data_item_id .'" data-term-id="grandchild-'. $data_child_term_id .'"';
+					
+					echo '<li'. $sub_class . $data_grandchild_term_id .'>';
+						echo '<a href="'. esc_url(get_term_link($term->term_id)) .'">';
+							echo '<span class="wpr-tax-wrap">'. $icon_wrapper .'<span>'. esc_html($term->name) .'</span></span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo ($settings['show_tax_count']) ? '<span><span class="wpr-term-count">&nbsp;('. esc_html($term->count) .')</span></span>' : '';
+						echo '</a>';
+					echo '</li>';
+					
+	
+				endforeach;
+				
 
 			endforeach;
         }
