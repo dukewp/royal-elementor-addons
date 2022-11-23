@@ -270,6 +270,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			'profile-picture' => esc_html__( 'Profile Picture', 'wpr-addons' ),
 			'twit' => esc_html__( 'Tweet', 'wpr-addons' ),
 			'date' => esc_html__( 'Date', 'wpr-addons' ),
+			'read-more' => esc_html__( 'Read More', 'wpr-addons' ),
 			'comment' => esc_html__( 'Comment', 'wpr-addons' ),
 			'likes' => esc_html__( 'Likes', 'wpr-addons' ),
 			'retweets' => esc_html__( 'Retweets', 'wpr-addons' ),
@@ -309,6 +310,33 @@ class Wpr_Twitter_Feed extends Widget_Base {
             <?php
 			echo '</div>';
 		echo '</div>';
+	}
+
+	public function render_post_read_more ( $settings, $class, $item ) {
+
+		$read_more_animation = ! wpr_fs()->can_use_premium_code() ? 'wpr-button-none' : $this->get_settings()['read_more_animation'];
+
+		echo '<div class="'. esc_attr($class) .'">';
+			echo '<div class="inner-block">';
+				echo '<a href="'. esc_url( get_the_permalink() ) .'" class="wpr-button-effect '. esc_attr($read_more_animation) .'">';
+
+				// Icon: Before
+				if ( 'before' === $settings['element_extra_icon_pos'] ) {
+					echo '<i class="wpr-grid-extra-icon-left '. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
+				}
+
+				// Read More Text
+				echo '<span>'. esc_html( $settings['element_read_more_text'] ) .'</span>';
+
+				// Icon: After
+				if ( 'after' === $settings['element_extra_icon_pos'] ) {
+					echo '<i class="wpr-grid-extra-icon-right '. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
+				}
+
+				echo '</a>';
+			echo '</div>';
+		echo '</div>';
+
 	}
 
 	public function render_post_caption($settings, $class, $item) {
@@ -517,9 +545,9 @@ class Wpr_Twitter_Feed extends Widget_Base {
             	$this->render_post_user_profile_picture( $settings, $class, $item );
             	break;
 
-			// case 'read-more':
-			// 	$this->render_post_account_name( $settings, $class );
-			// 	break;
+			case 'read-more':
+				$this->render_post_read_more( $settings, $class );
+				break;
 
 			// case 'lightbox':
 			// 	$this->render_post_lightbox( $settings, $class, $item );
@@ -1405,6 +1433,14 @@ class Wpr_Twitter_Feed extends Widget_Base {
 					],
 					[
 						'element_select' => 'date',
+						// 'element_display' => 'inline',
+						// 'element_extra_text_pos' => 'after',
+						// 'element_extra_text' => '/',
+						'element_location' => 'above',
+						// 'element_align_hr' => 'left'
+					],
+					[
+						'element_select' => 'read-more',
 						// 'element_display' => 'inline',
 						// 'element_extra_text_pos' => 'after',
 						// 'element_extra_text' => '/',
