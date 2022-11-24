@@ -78,25 +78,6 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 	public function render_search_input( $settings ) {}
 
     protected function register_controls() {
-		
-		$templates_select = [];
-
-		// Get All Templates
-		if (is_admin()) {
-			$templates = get_posts( [
-				'post_type'   => array( 'elementor_library' ),
-				'post_status' => array( 'publish' ),
-				'meta_key' 	  => '_elementor_template_type',
-				'meta_value'  => ['page', 'section'],
-				'numberposts' => -1
-			] );
-		}
-
-		if ( ! empty( $templates ) ) {
-			foreach ( $templates as $template ) {
-				$templates_select[$template->ID] = $template->post_title;
-			}
-		}
 
 		// Tab: Content ==============
 		// Section: Content ------------
@@ -138,8 +119,9 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			'accordion_content_template',
 			[
 				'label'	=> esc_html__( 'Select Template', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT2,
-				'options' => $templates_select,
+				'type' => 'wpr-ajax-select2',
+				'options' => 'ajaxselect2/get_elementor_templates',
+				'label_block' => true,
 				'condition' => [
 					'accordion_content_type' => 'template',
 				],

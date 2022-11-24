@@ -250,10 +250,10 @@ class Wpr_Content_Ticker extends Widget_Base {
 			'query_author',
 			[
 				'label' => esc_html__( 'Authors', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT2,
+				'type' => 'wpr-ajax-select2',
+				'options' => 'ajaxselect2/get_users',
 				'multiple' => true,
 				'label_block' => true,
-				'options' => Utilities::get_users(),
 				'separator' => 'before',
 				'condition' => [
 					'query_source!' => [ 'current', 'related' ],
@@ -275,10 +275,11 @@ class Wpr_Content_Ticker extends Widget_Base {
 				'query_taxonomy_'. $slug,
 				[
 					'label' => $title,
-					'type' => Controls_Manager::SELECT2,
+					'type' => 'wpr-ajax-select2',
+					'options' => 'ajaxselect2/get_taxonomies',
+					'query_slug' => $slug,
 					'multiple' => true,
 					'label_block' => true,
-					'options' => Utilities::get_terms_by_taxonomy( $slug ),
 					'condition' => [
 						'query_source' => $post_type,
 						'query_selection' => 'dynamic',
@@ -294,10 +295,11 @@ class Wpr_Content_Ticker extends Widget_Base {
 					'query_exclude_'. $slug,
 					[
 						'label' => esc_html__( 'Exclude ', 'wpr-addons' ) . $title,
-						'type' => Controls_Manager::SELECT2,
+						'type' => 'wpr-ajax-select2',
+						'options' => 'ajaxselect2/get_posts_by_post_type',
+						'query_slug' => $slug,
 						'multiple' => true,
 						'label_block' => true,
-						'options' => Utilities::get_posts_by_post_type( $slug ),
 						'condition' => [
 							'query_source' => $slug,
 							'query_source!' => [ 'current', 'related' ],
@@ -314,10 +316,10 @@ class Wpr_Content_Ticker extends Widget_Base {
 				'query_manual_'. $slug,
 				[
 					'label' => esc_html__( 'Select ', 'wpr-addons' ) . $title,
-					'type' => Controls_Manager::SELECT2,
+					'type' => 'wpr-ajax-select2',
+					'options' => 'ajaxselect2/get_posts_by_post_type',
 					'multiple' => true,
 					'label_block' => true,
-					'options' => Utilities::get_posts_by_post_type( $slug ),
 					'condition' => [
 						'query_source' => $slug,
 						'query_selection' => 'manual',

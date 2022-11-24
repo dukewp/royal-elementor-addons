@@ -214,13 +214,7 @@
 /* Fix Select Inputs */
 .elementor-control-button_hover_animation .elementor-control-input-wrapper,
 .elementor-control-front_btn_animation .elementor-control-input-wrapper,
-.elementor-control-back_btn_animation .elementor-control-input-wrapper,
-
-.elementor-control-select_template .select2-selection,
-.elementor-control-switcher_first_select_template .select2-selection,
-.elementor-control-switcher_second_select_template .select2-selection,
-.elementor-control-switcher_select_template .select2-selection,
-.elementor-control-slider_select_template .select2-selection {
+.elementor-control-back_btn_animation .elementor-control-input-wrapper {
 	width: 135px !important;
 }
 

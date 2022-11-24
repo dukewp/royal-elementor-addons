@@ -114,23 +114,6 @@ class Wpr_Tabs extends Widget_Base {
 
 	protected function register_controls() {
 
-		$templates_select = [];
-
-		// Get All Templates
-		$templates = get_posts( [
-			'post_type'   => array( 'elementor_library' ),
-			'post_status' => array( 'publish' ),
-			'meta_key' 	  => '_elementor_template_type',
-			'meta_value'  => ['page', 'section'],
-			'numberposts'  => -1
-		] );
-
-		if ( ! empty( $templates ) ) {
-			foreach ( $templates as $template ) {
-				$templates_select[$template->ID] = $template->post_title;
-			}
-		}
-
 		// CSS Selectors
 		$css_selector = [
 			'general' => '> .elementor-widget-container > .wpr-tabs',
@@ -248,8 +231,9 @@ class Wpr_Tabs extends Widget_Base {
 			'select_template' ,
 			[
 				'label'	=> esc_html__( 'Select Template', 'wpr-addons' ),
-				'type' => Elementor\Controls_Manager::SELECT2,
-				'options' => $templates_select,
+				'type' => 'wpr-ajax-select2',
+				'options' => 'ajaxselect2/get_elementor_templates',
+				'label_block' => true,
 				'condition' => [
 					'tab_content_type' => 'template',
 				],

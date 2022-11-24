@@ -584,10 +584,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'query_taxonomy_product_cat',
 			[
 				'label' => esc_html__( 'Categories', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT2,
+				'options' => 'ajaxselect2/get_taxonomies',
+				'query_slug' => 'product_cat',
 				'multiple' => true,
 				'label_block' => true,
-				'options' => Utilities::get_terms_by_taxonomy( 'product_cat' ),
 				'condition' => [
 					'query_selection' => [ 'dynamic', 'onsale', 'featured' ],
 				],
@@ -599,10 +599,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'query_taxonomy_product_tag',
 			[
 				'label' => esc_html__( 'Tags', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT2,
+				'options' => 'ajaxselect2/get_taxonomies',
+				'query_slug' => 'product_tag',
 				'multiple' => true,
 				'label_block' => true,
-				'options' => Utilities::get_terms_by_taxonomy( 'product_tag' ),
 				'condition' => [
 					'query_selection' => [ 'dynamic', 'onsale', 'featured' ],
 				],
@@ -614,10 +614,11 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'query_exclude_products',
 			[
 				'label' => esc_html__( 'Exclude Products', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT2,
+				'type' => 'wpr-ajax-select2',
+				'options' => 'ajaxselect2/get_posts_by_post_type',
+				'query_slug' => 'product',
 				'multiple' => true,
 				'label_block' => true,
-				'options' => Utilities::get_posts_by_post_type( 'product' ),
 				'condition' => [
 					'query_selection!' => [ 'manual', 'onsale', 'current', 'upsell', 'cross-sell' ],
 				],
@@ -629,10 +630,11 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'query_manual_products',
 			[
 				'label' => esc_html__( 'Select Products', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT2,
+				'type' => 'wpr-ajax-select2',
+				'options' => 'ajaxselect2/get_posts_by_post_type',
+				'query_slug' => 'product',
 				'multiple' => true,
 				'label_block' => true,
-				'options' => Utilities::get_posts_by_post_type( 'product' ),
 				'condition' => [
 					'query_selection' => 'manual',
 				],

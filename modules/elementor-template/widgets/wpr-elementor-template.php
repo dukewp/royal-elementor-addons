@@ -46,30 +46,14 @@ class Wpr_Elementor_Template extends Widget_Base {
 				'label' => esc_html__( 'General', 'wpr-addons' ),
 			]
 		);
-		
-		$templates_select = [];
-
-		// Get All Templates
-		$templates = get_posts( [
-			'post_type'   => array( 'elementor_library' ),
-			'post_status' => array( 'publish' ),
-			'meta_key' 	  => '_elementor_template_type',
-			'meta_value'  => ['page', 'section'],
-			'numberposts'  => -1
-		] );
-
-		if ( ! empty( $templates ) ) {
-			foreach ( $templates as $template ) {
-				$templates_select[$template->ID] = $template->post_title;
-			}
-		}
 
 		$this->add_control(
 			'select_template' ,
 			[
 				'label' => esc_html__( 'Select Template', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT2,
-				'options' => $templates_select,
+				'type' => 'wpr-ajax-select2',
+				'options' => 'ajaxselect2/get_elementor_templates',
+				'label_block' => true,
 			]
 		);
 

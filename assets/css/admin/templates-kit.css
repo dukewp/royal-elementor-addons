@@ -602,3 +602,9 @@ span.wpr-woo-builder-label {
 .wpr-templates-kit-not-found a:hover {
   background: #5836fd;
 }
+
+/* Disable Notices */
+.notice:not(.wpr-plugin-update-notice),
+div.fs-notice.updated, div.fs-notice.success {
+  display: none !important;
+}

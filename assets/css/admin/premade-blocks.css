@@ -435,3 +435,9 @@
     position: relative;
     width: calc(33.3%);
 }
+
+/* Disable Notices */
+.notice:not(.wpr-plugin-update-notice),
+div.fs-notice.updated, div.fs-notice.success {
+  display: none !important;
+}
