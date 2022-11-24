@@ -73,8 +73,8 @@ class Wpr_Grid extends Widget_Base {
 				'label_block' => false,
 				'options' => [
 					'date' => esc_html__( 'Date', 'wpr-addons'),
-					'tl-pro' => esc_html__( 'Title (Pro)', 'wpr-addons'),
-					'mf-pro' => esc_html__( 'Date Modified (Pro)', 'wpr-addons')
+					'pro-tl' => esc_html__( 'Title (Pro)', 'wpr-addons'),
+					'pro-mf' => esc_html__( 'Date Modified (Pro)', 'wpr-addons')
 				],
 				'condition' => [
 					'query_randomize!' => 'rand',
@@ -449,7 +449,7 @@ class Wpr_Grid extends Widget_Base {
 	public function add_repeater_args_trim_text_by() {
 		return [
 			'word_count' => esc_html__( 'Word Count', 'wpr-addons' ),
-			'lc-pro' => esc_html__( 'Letter Count (Pro)', 'wpr-addons' )
+			'pro-lc' => esc_html__( 'Letter Count (Pro)', 'wpr-addons' )
 		];
 	}
 	
@@ -724,7 +724,7 @@ class Wpr_Grid extends Widget_Base {
 		$this->add_control_order_posts();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'order_posts', ['tl-pro', 'mf-pro'] );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'order_posts', ['pro-tl', 'pro-mf'] );
 
         $this->add_control(
 			'order_direction',
@@ -8111,8 +8111,7 @@ class Wpr_Grid extends Widget_Base {
 					if ( 'word_count' === $settings['trim_text_by'] ) {
 						echo esc_html(wp_trim_words( get_the_title(), $settings['element_word_count'] ));
 					} else {
-						echo mb_strimwidth(html_entity_decode(get_the_title()), 0, $settings['element_letter_count'] + 1, '...');
-						echo substr(html_entity_decode(get_the_title()), 0, $settings['element_letter_count']);
+						echo substr(html_entity_decode(get_the_title()), 0, $settings['element_letter_count']) .'...';
 					}
 				echo '</a>';
 			echo '</div>';

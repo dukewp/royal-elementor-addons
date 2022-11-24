@@ -52,7 +52,7 @@ class Wpr_Product_Media extends Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'stacked' => esc_html__( 'Stacked', 'wpr-addons' ),
-					'sl-pro' => esc_html__( 'Slider (Pro)', 'wpr-addons' )
+					'pro-sl' => esc_html__( 'Slider (Pro)', 'wpr-addons' )
 				],
 				'default' => 'stacked',
 				'render_type' => 'template',

@@ -141,9 +141,9 @@ class Wpr_Content_Ticker extends Widget_Base {
 
 		// Remove WooCommerce
 		unset( $this->post_types['product'] );
-		$this->post_types['product-pro'] = 'Product (Pro)';
-		$this->post_types['featured-pro'] = 'Featured (Pro)';
-		$this->post_types['sale-pro'] = 'On Sale (Pro)';
+		$this->post_types['pro-pd'] = 'Product (Pro)';
+		$this->post_types['pro-ft'] = 'Featured (Pro)';
+		$this->post_types['pro-sl'] = 'On Sale (Pro)';
 
 		$this->add_control(
 			'query_source',
@@ -209,7 +209,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 		$this->add_control_query_source();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'content-ticker', 'query_source', ['product-pro', 'featured-pro', 'sale-pro'] );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'content-ticker', 'query_source', ['pro-pd', 'pro-ft', 'pro-sl'] );
 		
 		// Get Available Taxonomies
 		$post_taxonomies = Utilities::get_custom_types_of( 'tax', false );
@@ -1814,7 +1814,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 		$settings = $this->get_settings();
 		$author = ! empty( $settings[ 'query_author' ] ) ? implode( ',', $settings[ 'query_author' ] ) : '';
 
-		in_array( $settings[ 'query_source' ], ['product-pro', 'featured-pro', 'sale-pro'] ) ? $settings[ 'query_source' ] = 'post' : '';
+		in_array( $settings[ 'query_source' ], ['pro-pd', 'pro-ft', 'pro-sl'] ) ? $settings[ 'query_source' ] = 'post' : '';
 
 		// Dynamic
 		$args = [
