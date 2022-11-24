@@ -70,7 +70,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 		$this->add_control(
 			'show_sub_categories_on_click',
 			[
-				'label' => sprintf( __( 'Show Children Click %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'label' => sprintf( __( 'Show Children on Click %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
 				'type' => Controls_Manager::SWITCHER,
 				'classes' => 'wpr-pro-control',
 			]
