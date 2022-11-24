@@ -1295,11 +1295,11 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$post_types = Utilities::get_custom_types_of( 'post', false );
 		$post_types = $this->add_option_query_source();
 		unset( $post_types['product'] );
-		// unset($post_types['page']);
-		// unset($post_types['e-landing-page']);
+		unset( $post_types['e-landing-page'] );
+
 		$post_taxonomies = Utilities::get_custom_types_of( 'tax', false );
 		$categories = [];
-		foreach(get_categories() as $key=>$category) {
+		foreach ( get_categories() as $key => $category ) {
 			array_push($categories, $key);
 		}
 

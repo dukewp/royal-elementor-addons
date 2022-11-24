@@ -135,12 +135,12 @@ class Wpr_Content_Ticker extends Widget_Base {
 	public function add_section_ticker_items() {}
 
 	public function add_control_query_source () {
-
 		// Get Available Post Types
 		$this->post_types = Utilities::get_custom_types_of( 'post', false );
 
 		// Remove WooCommerce
 		unset( $this->post_types['product'] );
+		unset( $this->$post_types['e-landing-page'] );
 		$this->post_types['pro-pd'] = 'Product (Pro)';
 		$this->post_types['pro-ft'] = 'Featured (Pro)';
 		$this->post_types['pro-sl'] = 'On Sale (Pro)';

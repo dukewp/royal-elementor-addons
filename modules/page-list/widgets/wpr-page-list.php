@@ -89,8 +89,8 @@ class Wpr_Page_List extends Widget_Base {
                 'label_block' => false,
                 'default' => 'custom',
                 'options'     => [
-                    'dynamic'  => esc_html__( 'Dynamic', 'wpr-addons' ),
-                    'custom' => esc_html__( 'Custom', 'wpr-addons' )
+                    'custom' => esc_html__( 'Custom', 'wpr-addons' ),
+                    'dynamic'  => esc_html__( 'Dynamic', 'wpr-addons' )
                 ]
             ]
         );

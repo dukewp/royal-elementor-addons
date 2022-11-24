@@ -552,7 +552,6 @@ class Wpr_Media_Grid extends Widget_Base {
 				'label_block' => true,
 				'separator' => 'before',
 				'condition' => [
-					'query_source!' => [ 'current', 'related' ],
 					'query_selection' => 'dynamic',
 				],
 			]
