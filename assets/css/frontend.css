@@ -12506,6 +12506,10 @@ a.wpr-ajax-img-wrap {
     padding-left: 20px;
 }
 
+.wpr-taxonomy-list-vertical .wpr-inner-sub-taxonomy {
+    padding-left: 40px;
+}
+
 /*--------------------------------------------------------------
   == Feature List
   --------------------------------------------------------------*/

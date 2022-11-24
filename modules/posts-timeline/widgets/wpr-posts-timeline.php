@@ -5569,12 +5569,11 @@ class Wpr_Posts_Timeline extends Widget_Base {
 	}
 
 	public function add_option_query_source() {
-		$pro_query = [
-			'pro-rl' => 'Related Query (Pro)',
-			'pro-cr' => 'Current Query (Pro)',
-		];
+		$post_types = Utilities::get_custom_types_of( 'post', false );
+		$post_types['pro-cr'] = esc_html__( 'Current Query (Pro)', 'wpr-addons' );
+		$post_types['pro-rl'] = esc_html__( 'Related Query (Pro)', 'wpr-addons' );
 		
-		return array_merge(Utilities::get_custom_types_of( 'post', false ), $pro_query);
+		return $post_types;
 	}
 
 	protected function render() {
