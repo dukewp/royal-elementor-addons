@@ -531,9 +531,9 @@ class Wpr_Taxonomy_List extends Widget_Base {
 			}
         	
             echo '<li'. $cat_class . 'data-term-id="'.$data_parent_term_id .'">';
-				echo !empty($children) && ('vertical' === $settings['taxonomy_list_layout']) && ('yes' === $settings['show_sub_categories_on_click']) ? '<i class="fas fa-caret-right wpr-tax-dropdown" aria-hidden="true"></i>' : '';
+				$toggle_icon = !empty($children) && ('vertical' === $settings['taxonomy_list_layout']) && ('yes' === $settings['show_sub_categories_on_click']) ? '<i class="fas fa-caret-right wpr-tax-dropdown" aria-hidden="true"></i>' : '';
 	            echo '<a href="'. esc_url(get_term_link($term->term_id)) .'">';
-					echo '<span class="wpr-tax-wrap">'. $icon_wrapper .'<span>'. esc_html($term->name) .'</span></span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo '<span class="wpr-tax-wrap">'. $toggle_icon . ' ' . $icon_wrapper .'<span>'. esc_html($term->name) .'</span></span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		            echo ($settings['show_tax_count']) ? '<span><span class="wpr-term-count">&nbsp;('. esc_html($term->count) .')</span></span>' : '';
 	            echo '</a>';
             echo '</li>';
@@ -551,9 +551,9 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				}
 				
 				echo '<li'. $sub_class . 'data-term-id="child-'. $data_child_term_id .'" data-id="'. $data_item_id .'">';
-				echo !empty($grand_children) && ('vertical' === $settings['taxonomy_list_layout']) && ('yes' === $settings['show_sub_categories_on_click']) ? '<i class="fas fa-caret-right wpr-tax-dropdown" aria-hidden="true"></i>' : '';
+				$toggle_icon = !empty($grand_children) && ('vertical' === $settings['taxonomy_list_layout']) && ('yes' === $settings['show_sub_categories_on_click']) ? '<i class="fas fa-caret-right wpr-tax-dropdown" aria-hidden="true"></i>' : '';
 					echo '<a href="'. esc_url(get_term_link($term->term_id)) .'">';
-						echo '<span class="wpr-tax-wrap">'. $icon_wrapper .'<span>'. esc_html($term->name) .'</span></span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo '<span class="wpr-tax-wrap">'. $toggle_icon . ' ' . $icon_wrapper .'<span>'. esc_html($term->name) .'</span></span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						echo ($settings['show_tax_count']) ? '<span><span class="wpr-term-count">&nbsp;('. esc_html($term->count) .')</span></span>' : '';
 					echo '</a>';
 				echo '</li>';
