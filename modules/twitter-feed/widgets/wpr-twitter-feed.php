@@ -314,7 +314,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 
 	public function render_post_read_more ( $settings, $class, $item ) {
 
-		$read_more_animation = ! wpr_fs()->can_use_premium_code() ? 'wpr-button-none' : $this->get_settings()['read_more_animation'];
+		// $read_more_animation = ! wpr_fs()->can_use_premium_code() ? 'wpr-button-none' : $this->get_settings()['read_more_animation'];
 		$read_more_animation = 'wpr-change-it-later';
 
 		echo '<div class="'. esc_attr($class) .'">';
