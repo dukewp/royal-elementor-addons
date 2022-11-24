@@ -826,6 +826,7 @@ class Wpr_Grid extends Widget_Base {
 					'label' => esc_html__( 'Select ', 'wpr-addons' ) . $title,
 					'type' => 'wpr-ajax-select2',
 					'options' => 'ajaxselect2/get_posts_by_post_type',
+					'query_slug' => $slug,
 					'multiple' => true,
 					'label_block' => true,
 					'condition' => [
