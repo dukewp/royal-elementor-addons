@@ -140,7 +140,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 
 		// Remove WooCommerce
 		unset( $this->post_types['product'] );
-		unset( $this->$post_types['e-landing-page'] );
+		unset( $this->post_types['e-landing-page'] );
 		$this->post_types['pro-pd'] = 'Product (Pro)';
 		$this->post_types['pro-ft'] = 'Featured (Pro)';
 		$this->post_types['pro-sl'] = 'On Sale (Pro)';
