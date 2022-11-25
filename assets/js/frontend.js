@@ -47,6 +47,7 @@
 				'wpr-reading-progress-bar.default' : WprElements.widgetReadingProgressBar,
 				'wpr-data-table.default' : WprElements.widgetDataTable,
 				'wpr-charts.default': WprElements.widgetCharts,
+				'wpr-taxonomy-list.default': WprElements.widgetTaxonomyList,
 				'global': WprElements.widgetSection,
 
 				// Single
@@ -1225,6 +1226,32 @@
 						}
 					],
 				});
+
+				var gridNavPrevArrow = $scope.find('.wpr-grid-slider-prev-arrow');
+				var gridNavNextArrow = $scope.find('.wpr-grid-slider-next-arrow');
+
+				if ( gridNavPrevArrow.length > 0 && gridNavNextArrow.length > 0 ) {
+					var positionSum = gridNavPrevArrow.position().left * -2;
+					if ( positionSum > 0 ) {
+						console.log(positionSum);
+						$(window).on('load', function() {
+							if ( $(window).width() <= ($scope.outerWidth() + gridNavPrevArrow.outerWidth() + gridNavNextArrow.outerWidth() + positionSum) ) {
+								gridNavPrevArrow.addClass('wpr-adjust-slider-prev-arrow');
+								gridNavNextArrow.addClass('wpr-adjust-slider-next-arrow');
+							}
+						});
+		
+						$(window).smartresize(function() {
+							if ( $(window).width() <= ($scope.outerWidth() + gridNavPrevArrow.outerWidth() + gridNavNextArrow.outerWidth() + positionSum) ) {
+								gridNavPrevArrow.addClass('wpr-adjust-slider-prev-arrow');
+								gridNavNextArrow.addClass('wpr-adjust-slider-next-arrow');
+							} else {
+								gridNavPrevArrow.removeClass('wpr-adjust-slider-prev-arrow');
+								gridNavNextArrow.removeClass('wpr-adjust-slider-next-arrow');
+							}
+						});
+					}
+				}
 
 				// Adjust Horizontal Pagination
 				if ( $scope.find( '.slick-dots' ).length && $scope.hasClass( 'wpr-grid-slider-dots-horizontal') ) {
@@ -2463,7 +2490,6 @@
 	
 				$scope.find('.wpr-thumbnail-slider-next-arrow').on('click', function() {
 					console.log(
-						'works',
 						slideCount + thumbsToScroll,
 						$scope.find('.flex-control-nav li').length - 1
 						);
@@ -2698,7 +2724,8 @@
 					}
 
 					if ( dataActions.hasOwnProperty( 'load-template' ) ) {
-						countDownWrap.parent().find( '.elementor-inner' ).parent().show();
+						// countDownWrap.parent().find( '.elementor-inner' ).parent().show();
+						countDownWrap.next('.elementor').show();
 					}
 
 				}
@@ -4899,6 +4926,62 @@
 				});
 			}
 		}, // End of widgetCharts
+
+		widgetTaxonomyList: function($scope) {
+			var taxList = $scope.find('.wpr-taxonomy-list');
+
+			if ( taxList.data('show-on-click') == 'yes' ) {
+
+				// $scope.find('.wpr-tax-dropdown').css('margin-left', -($scope.find('.wpr-tax-dropdown').width()));
+
+				taxList.find('.wpr-taxonomy i.wpr-tax-dropdown').on('click', function(e) {
+
+					e.preventDefault();
+
+					if ( taxList.find('.wpr-sub-taxonomy[data-term-id="child-'+ $(this).closest('li').data('term-id') +'"]').hasClass('wpr-sub-hidden') ) {
+						console.log('works or not');
+						$(this).removeClass('fa-caret-right').addClass('fa-caret-down');
+						// $scope.find('.fa-caret-down').css('margin-left', -($scope.find('.fa-caret-down').width()));
+						taxList.find('.wpr-sub-taxonomy[data-term-id="child-'+ $(this).closest('li').data('term-id') +'"]').removeClass('wpr-sub-hidden');
+					} else {
+						$(this).removeClass('fa-caret-down').addClass('fa-caret-right');
+						// $scope.find('.fa-caret-right').css('margin-left', -($scope.find('.fa-caret-right').width()));
+						taxList.find('.wpr-sub-taxonomy[data-term-id="child-'+ $(this).closest('li').data('term-id') +'"]').addClass('wpr-sub-hidden');
+
+						taxList.find('.wpr-inner-sub-taxonomy[data-term-id="grandchild-'+ $(this).closest('li').data('term-id') +'"]').each(function() {
+							if ( !$(this).hasClass('wpr-sub-hidden') ) {
+								taxList.find('.wpr-sub-taxonomy[data-id="'+ $(this).data('parent-id') +'"] i.wpr-tax-dropdown').removeClass('fa-caret-down').addClass('fa-caret-right');
+								// $scope.find('.fa-caret-right').css('margin-left', -($scope.find('.fa-caret-right').width()));
+								$(this).addClass('wpr-sub-hidden');
+							}
+						});
+
+						// if (!taxList.find('.wpr-inner-sub-taxonomy[data-term-id="grandchild-'+ $(this).parent('li').data('term-id') +'"]').hasClass('wpr-sub-hidden')) {
+						// 	taxList.find('.wpr-sub-taxonomy[data-term-id="child-'+ $(this).parent('li').data('term-id') +'"] i').removeClass('fa-caret-down').addClass('fa-caret-right');
+						// 	taxList.find('.wpr-inner-sub-taxonomy[data-term-id="grandchild-'+ $(this).parent('li').data('term-id') +'"]').addClass('wpr-sub-hidden');
+						// }
+					}
+				});
+
+				taxList.find('.wpr-sub-taxonomy i.wpr-tax-dropdown').on('click', function(e) {
+
+					e.preventDefault();
+
+					console.log($(this).parent('li').data('term-id'));
+
+					if ( taxList.find('.wpr-inner-sub-taxonomy[data-parent-id="'+ $(this).closest('li').data('id') +'"]').hasClass('wpr-sub-hidden') ) {
+						$(this).removeClass('fa-caret-right').addClass('fa-caret-down');
+						// $scope.find('.fa-caret-down').css('margin-left', -($scope.find('.fa-caret-down').width()));
+						taxList.find('.wpr-inner-sub-taxonomy[data-parent-id="'+ $(this).closest('li').data('id') +'"]').removeClass('wpr-sub-hidden');
+					} else {
+						$(this).removeClass('fa-caret-down').addClass('fa-caret-right');
+						// taxList.find('.wpr-sub-taxonomy i').removeClass('fa-caret-down').addClass('fa-caret-right');
+						// $scope.find('.fa-caret-right').css('margin-left', -($scope.find('.fa-caret-right').width()));
+						taxList.find('.wpr-inner-sub-taxonomy[data-parent-id="'+ $(this).closest('li').data('id') +'"]').addClass('wpr-sub-hidden');
+					}
+				});
+			}
+		}, // End of widgetTaxonomyList
 
 		widgetPostsTimeline: function($scope) { // goback
 			var iScrollTarget = $scope.find( '.wpr-timeline-centered' ).length > 0 ? $scope.find( '.wpr-timeline-centered' ) : '',

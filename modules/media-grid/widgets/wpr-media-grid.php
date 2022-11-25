@@ -66,6 +66,30 @@ class Wpr_Media_Grid extends Widget_Base {
 			]
 		);
 	}
+
+	public function add_control_order_posts() {
+        $this->add_control(
+			'order_posts',
+			[
+				'label' => esc_html__( 'Order By', 'wpr-addons'),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'date',
+				'label_block' => false,
+				'options' => [
+					'date' => esc_html__( 'Date', 'wpr-addons'),
+					'pro-tl' => esc_html__( 'Title (Pro)', 'wpr-addons'),
+					'pro-mf' => esc_html__( 'Last Modified (Pro)', 'wpr-addons'),
+					'pro-d' => esc_html__( 'Post ID', 'wpr-addons' ),
+					'pro-ar' => esc_html__( 'Post Author', 'wpr-addons' ),
+					'pro-cc' => esc_html__( 'Comment Count', 'wpr-addons' )
+				],
+				'condition' => [
+					'query_randomize!' => 'rand',
+					'query_selection!' => 'manual'
+				]
+			]
+		);
+	}
 	
 	public function add_control_layout_columns() {
 		$this->add_responsive_control(
@@ -539,6 +563,29 @@ class Wpr_Media_Grid extends Widget_Base {
 					'dynamic' => esc_html__( 'Dynamic', 'wpr-addons' ),
 					'manual' => esc_html__( 'Manual', 'wpr-addons' ),
 				],
+			]
+		);
+
+		$this->add_control_order_posts();
+
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'order_posts', ['pro-tl', 'pro-mf', 'pro-d', 'pro-ar', 'pro-cc'] );
+
+        $this->add_control(
+			'order_direction',
+			[
+				'label' => esc_html__( 'Order', 'wpr-addons'),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'DESC',
+				'label_block' => false,
+				'options' => [
+					'ASC' => esc_html__( 'Ascending', 'wpr-addons'),
+					'DESC' => esc_html__( 'Descending', 'wpr-addons'),
+				],
+				'condition' => [
+					'query_randomize!' => 'rand',
+					'query_selection!' => 'manual'
+				]
 			]
 		);
 
@@ -2487,6 +2534,7 @@ class Wpr_Media_Grid extends Widget_Base {
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'media-grid', [
+			'Posts Order',
 			'Grid Columns 1,2,3,4,5,6,7,8',
 			'Masonry Layout',
 			'Random Images Query',
@@ -6409,6 +6457,13 @@ class Wpr_Media_Grid extends Widget_Base {
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$settings[ 'query_randomize' ] = '';
+			$settings['order_posts'] = 'date';
+		}
+
+		$query_order_by = '' != $settings['query_randomize'] ? $settings['query_randomize'] : $settings['order_posts'];
+
+		if ( 'manual' === $settings[ 'query_selection' ] ) {
+			$query_order_by = 'post__in';
 		}
 
 		// Dynamic
@@ -6418,7 +6473,7 @@ class Wpr_Media_Grid extends Widget_Base {
 			'tax_query' => $this->get_tax_query_args(),
 			'post__not_in' => $settings[ 'query_exclude_attachment' ],
 			'posts_per_page' => $settings['query_posts_per_page'],
-			'orderby' => $settings[ 'query_randomize' ],
+			'orderby' => $query_order_by,
 			'author' => $author,
 			'paged' => $paged,
 			'offset' => $offset
@@ -6443,6 +6498,10 @@ class Wpr_Media_Grid extends Widget_Base {
 				'posts_per_page' => $settings['query_posts_per_page'],
 				'paged' => $paged,
 			];
+		}
+
+		if ( 'rand' !== $query_order_by && 'manual' !== $settings['query_selection'] ) {
+			$args['order'] = $settings['order_direction'];
 		}
 
 		return $args;

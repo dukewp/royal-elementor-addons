@@ -193,7 +193,9 @@ class Wpr_Taxonomy_List extends Widget_Base {
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'taxonomy-list', [
-			'Query Custom Post Type Taxonomies (categories).'
+			'Query Custom Post Type Taxonomies (categories).',
+			'Show/Hide Sub Taxonomies',
+			'Show Sub Taxonomies On Click',
 		] );
 
 		// Styles ====================
