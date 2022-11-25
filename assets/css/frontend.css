@@ -1291,7 +1291,7 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     cursor: pointer;
 }
 
-.wpr-mobile-menu-display-dropdown .wpr-mobile-mega-menu > li > .wpr-mobile-sub-menu > li:first-child {
+.wpr-mobile-menu-display-dropdown .wpr-mobile-mega-menu li.wpr-menu-offcanvas-back-wrap {
     display: none;
 }
 
