@@ -153,7 +153,7 @@ class WPR_Templates_Actions {
 	*/
 	public function wpr_import_library_template() {
         $source = new WPR_Library_Source();
-		$slug = isset($_POST['slug']) ? sanitize_text_field(wp_unslash($_POST['slug'])): '';
+		$slug = isset($_POST['slug']) ? sanitize_text_field(wp_unslash($_POST['slug'])) : '';
 
         $data = $source->get_data([
         	'template_id' => $slug
