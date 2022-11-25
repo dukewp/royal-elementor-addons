@@ -332,6 +332,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 		// Remove WooCommerce
 		unset( $post_types['product'] );
+		unset( $post_types['e-landing-page'] );
 
 		// Get Available Taxonomies
 		$post_taxonomies = Utilities::get_custom_types_of( 'tax', false );
