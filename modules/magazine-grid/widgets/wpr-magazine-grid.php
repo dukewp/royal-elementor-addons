@@ -76,6 +76,29 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		);
 	}
 
+	public function add_control_order_posts() {
+        $this->add_control(
+			'order_posts',
+			[
+				'label' => esc_html__( 'Order By', 'wpr-addons'),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'date',
+				'label_block' => false,
+				'options' => [
+					'date' => esc_html__( 'Date', 'wpr-addons'),
+					'pro-tl' => esc_html__( 'Title (Pro)', 'wpr-addons'),
+					'pro-mf' => esc_html__( 'Last Modified (Pro)', 'wpr-addons'),
+					'pro-d' => esc_html__( 'Post ID', 'wpr-addons' ),
+					'pro-ar' => esc_html__( 'Post Author', 'wpr-addons' ),
+					'pro-cc' => esc_html__( 'Comment Count', 'wpr-addons' )
+				],
+				'condition' => [
+					'query_randomize!' => 'rand',
+				]
+			]
+		);
+	}
+
 	public function add_option_element_select() {
 		return [
 			'title' => esc_html__( 'Title', 'wpr-addons' ),
@@ -246,6 +269,13 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			'default' => ''
 		];
 	}
+
+	public function add_repeater_args_element_trim_text_by() {
+		return [
+			'word_count' => esc_html__( 'Word Count', 'wpr-addons' ),
+			'pro-lc' => esc_html__( 'Letter Count (Pro)', 'wpr-addons' )
+		];
+	}
 	
 	public function add_control_overlay_animation_divider() {}
 	
@@ -366,6 +396,28 @@ class Wpr_Magazine_Grid extends Widget_Base {
 				'condition' => [
 					'query_source!' => [ 'current', 'related' ],
 				],
+			]
+		);
+
+		$this->add_control_order_posts();
+
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'order_posts', ['pro-tl', 'pro-mf', 'pro-d', 'pro-ar', 'pro-cc'] );
+
+        $this->add_control(
+			'order_direction',
+			[
+				'label' => esc_html__( 'Order', 'wpr-addons'),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'DESC',
+				'label_block' => false,
+				'options' => [
+					'ASC' => esc_html__( 'Ascending', 'wpr-addons'),
+					'DESC' => esc_html__( 'Descending', 'wpr-addons'),
+				],
+				'condition' => [
+					'query_randomize!' => 'rand',
+				]
 			]
 		);
 
@@ -912,6 +964,20 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'element_trim_text_by',
+			[
+				'label' => esc_html__( 'Trim Text By', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'word_count',
+				'options' => $this->add_repeater_args_element_trim_text_by(),
+				'separator' => 'after',
+				'condition' => [
+					'element_select' => [ 'title', 'excerpt' ],
+				]
+			]
+		);
+
+		$repeater->add_control(
 			'element_word_count',
 			[
 				'label' => esc_html__( 'Word Count', 'wpr-addons' ),
@@ -920,6 +986,21 @@ class Wpr_Magazine_Grid extends Widget_Base {
 				'min' => 1,
 				'condition' => [
 					'element_select' => [ 'title', 'excerpt' ],
+					'element_trim_text_by' => 'word_count'
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'element_letter_count',
+			[
+				'label' => esc_html__( 'Letter Count', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 40,
+				'min' => 1,
+				'condition' => [
+					'element_select' => [ 'title', 'excerpt' ],
+					'element_trim_text_by' => 'letter_count'
 				]
 			]
 		);
@@ -1566,6 +1647,8 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'magazine-grid', [
+			'Posts Order',
+			'Trim Title & Excerpt By Letter Count',
 			'Random Posts Query',
 			'+6 Magazine Grid Layouts',
 			'Magazine Grid Slider',
@@ -4781,6 +4864,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 			$settings['slider_enable'] = '';
 			$settings[ 'query_randomize' ] = '';
+			$settings['order_posts'] = 'date';
 		}
 
 		if ( '1-2' === $settings['layout_select'] || '1-1-1' === $settings['layout_select'] ) {
@@ -4801,6 +4885,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		}
 
 		$offset = ( $paged - 1 ) * $query_posts_per_page + $settings[ 'query_offset' ];
+		$query_order_by = '' != $settings['query_randomize'] ? $settings['query_randomize'] : $settings['order_posts'];
 
 		if ( 'yes' === $settings['slider_enable'] ) {
 			$offset = $offset + $query_posts_per_page * $slide_offset;
@@ -4812,7 +4897,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			'tax_query' => $this->get_tax_query_args(),
 			'post__not_in' => $settings[ 'query_exclude_'. $settings[ 'query_source' ] ],
 			'posts_per_page' => $query_posts_per_page,
-			'orderby' => $settings[ 'query_randomize' ],
+			'orderby' => $query_order_by,
 			'author' => $author,
 			'paged' => $paged,
 			'offset' => $offset
@@ -4834,7 +4919,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			$args = [
 				'post_type' => $settings[ 'query_source' ],
 				'post__in' => $post_ids,
-				'orderby' => $settings[ 'query_randomize' ],
+				'orderby' => $query_order_by,
 				'posts_per_page' => $query_posts_per_page,
 				'offset' => $query_posts_per_page * $slide_offset
 			];
@@ -4846,7 +4931,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 			$args = $wp_query->query_vars;
 			$args['posts_per_page'] = $query_posts_per_page;
-			$args['orderby'] = $settings['query_randomize'];
+			$args['orderby'] = $query_order_by;
 		}
 
 		// Related
@@ -4857,9 +4942,13 @@ class Wpr_Magazine_Grid extends Widget_Base {
 				'post__not_in' => [ get_the_ID() ],
 				'ignore_sticky_posts' => 1,
 				'posts_per_page' => $query_posts_per_page,
-				'orderby' => $settings[ 'query_randomize' ],
+				'orderby' => $query_order_by,
 				'offset' => $offset,
 			];
+		}
+
+		if ( 'rand' !== $query_order_by ) {
+			$args['order'] = $settings['order_direction'];
 		}
 
 		return $args;
@@ -4973,7 +5062,11 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		echo '<'. esc_html($settings['element_title_tag']) .' class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
 				echo '<a '. $pointer_item_class .' href="'. esc_url( get_the_permalink() ) .'">';
+				if ( 'word_count' === $settings['element_trim_text_by'] ) {
 					echo esc_html(wp_trim_words( get_the_title(), $settings['element_word_count'] ));
+				} else {
+					echo substr(html_entity_decode(get_the_title()), 0, $settings['element_letter_count']) . '...';
+				}
 				echo '</a>';
 			echo '</div>';
 		echo '</'. esc_html($settings['element_title_tag']) .'>';
@@ -5006,7 +5099,12 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
+				if ( 'word_count' === $settings['element_trim_text_by']) {
 				echo '<p>'. esc_html(wp_trim_words( get_the_excerpt(), $settings['element_word_count'] )) .'</p>';
+				} else {
+				// echo '<p>'. substr(html_entity_decode(get_the_title()), 0, $settings['element_letter_count']) .'...' . '</p>';
+				echo '<p>'. esc_html(implode('', array_slice( str_split(get_the_excerpt()), 0, $settings['element_letter_count'] ))) .'...' .'</p>';
+				}
 			echo '</div>';
 		echo '</div>';
 	}
