@@ -82,6 +82,10 @@ class Wpr_Control_Ajax_Select2_Api {
 			$args['s'] = $request['s'];
 		}
 
+		if ( 'attachment' === $post_type ) {
+			$args['post_status'] = 'any';
+		}
+
 		$options = [];
 		$query = new \WP_Query( $args );
 

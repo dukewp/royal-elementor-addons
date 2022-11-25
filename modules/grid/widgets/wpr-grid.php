@@ -38,7 +38,7 @@ class Wpr_Grid extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'qq', 'royal', 'blog', 'portfolio grid', 'posts', 'post grid', 'posts grid', 'post slider', 'posts slider', 'post carousel', 'posts carousel', 'massonry grid', 'isotope', 'post gallery', 'posts gallery', 'filterable grid' ];
+		return [ 'royal', 'blog', 'portfolio grid', 'posts', 'post grid', 'posts grid', 'post slider', 'posts slider', 'post carousel', 'posts carousel', 'massonry grid', 'isotope', 'post gallery', 'posts gallery', 'filterable grid' ];
 	}
 
 	public function get_script_depends() {
@@ -63,6 +63,17 @@ class Wpr_Grid extends Widget_Base {
 		return $post_types;
 	}
 
+	public function add_control_query_randomize() {
+		$this->add_control(
+			'query_randomize',
+			[
+				'label' => sprintf( __( 'Randomize Query %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);	
+	}
+
 	public function add_control_order_posts() {
         $this->add_control(
 			'order_posts',
@@ -73,25 +84,17 @@ class Wpr_Grid extends Widget_Base {
 				'label_block' => false,
 				'options' => [
 					'date' => esc_html__( 'Date', 'wpr-addons'),
-					'tl-pro' => esc_html__( 'Title (Pro)', 'wpr-addons'),
-					'mf-pro' => esc_html__( 'Date Modified (Pro)', 'wpr-addons')
+					'pro-tl' => esc_html__( 'Title (Pro)', 'wpr-addons'),
+					'pro-mf' => esc_html__( 'Last Modified (Pro)', 'wpr-addons'),
+					'pro-d' => esc_html__( 'Post ID', 'wpr-addons' ),
+					'pro-ar' => esc_html__( 'Post Author', 'wpr-addons' ),
+					'pro-cc' => esc_html__( 'Comment Count', 'wpr-addons' )
 				],
 				'condition' => [
 					'query_randomize!' => 'rand',
 				]
 			]
 		);
-	}
-
-	public function add_control_query_randomize() {
-		$this->add_control(
-			'query_randomize',
-			[
-				'label' => sprintf( __( 'Randomize Query %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
-				'type' => Controls_Manager::SWITCHER,
-				'classes' => 'wpr-pro-control no-distance'
-			]
-		);	
 	}
 
 	public function add_control_query_slides_to_show() {
@@ -446,10 +449,10 @@ class Wpr_Grid extends Widget_Base {
 		];
 	}
 
-	public function add_repeater_args_trim_text_by() {
+	public function add_repeater_args_element_trim_text_by() {
 		return [
 			'word_count' => esc_html__( 'Word Count', 'wpr-addons' ),
-			'lc-pro' => esc_html__( 'Letter Count (Pro)', 'wpr-addons' )
+			'pro-lc' => esc_html__( 'Letter Count (Pro)', 'wpr-addons' )
 		];
 	}
 	
@@ -685,6 +688,7 @@ class Wpr_Grid extends Widget_Base {
 
 		// Remove WooCommerce
 		unset( $post_types['product'] );
+		unset( $post_types['e-landing-page'] );
 
 		// Get Available Taxonomies
 		$post_taxonomies = Utilities::get_custom_types_of( 'tax', false );
@@ -724,7 +728,7 @@ class Wpr_Grid extends Widget_Base {
 		$this->add_control_order_posts();
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'order_posts', ['tl-pro', 'mf-pro'] );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'order_posts', ['pro-tl', 'pro-mf', 'pro-d', 'pro-ar', 'pro-cc'] );
 
         $this->add_control(
 			'order_direction',
@@ -826,6 +830,7 @@ class Wpr_Grid extends Widget_Base {
 					'label' => esc_html__( 'Select ', 'wpr-addons' ) . $title,
 					'type' => 'wpr-ajax-select2',
 					'options' => 'ajaxselect2/get_posts_by_post_type',
+					'query_slug' => $slug,
 					'multiple' => true,
 					'label_block' => true,
 					'condition' => [
@@ -1564,12 +1569,12 @@ class Wpr_Grid extends Widget_Base {
 		);
 
 		$repeater->add_control(
-			'trim_text_by',
+			'element_trim_text_by',
 			[
 				'label' => esc_html__( 'Trim Text By', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'word_count',
-				'options' => $this->add_repeater_args_trim_text_by(),
+				'options' => $this->add_repeater_args_element_trim_text_by(),
 				'separator' => 'after',
 				'condition' => [
 					'element_select' => [ 'title', 'excerpt' ],
@@ -1586,7 +1591,7 @@ class Wpr_Grid extends Widget_Base {
 				'min' => 1,
 				'condition' => [
 					'element_select' => [ 'title', 'excerpt' ],
-					'trim_text_by' => 'word_count'
+					'element_trim_text_by' => 'word_count'
 				]
 			]
 		);
@@ -1600,7 +1605,7 @@ class Wpr_Grid extends Widget_Base {
 				'min' => 1,
 				'condition' => [
 					'element_select' => [ 'title', 'excerpt' ],
-					'trim_text_by' => 'letter_count'
+					'element_trim_text_by' => 'letter_count'
 				]
 			]
 		);
@@ -3037,6 +3042,8 @@ class Wpr_Grid extends Widget_Base {
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'grid', [
+			'Posts Order',
+			'Trim Title & Excerpt By Letter Count',
 			'Grid Columns 1,2,3,4,5,6',
 			'Masonry Layout',
 			'List Layout Zig-zag',
@@ -8153,11 +8160,10 @@ class Wpr_Grid extends Widget_Base {
 		echo '<'. esc_attr($settings['element_title_tag']) .' class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
 				echo '<a '. $pointer_item_class .' href="'. esc_url( get_the_permalink() ) .'">';
-					if ( 'word_count' === $settings['trim_text_by'] ) {
+					if ( 'word_count' === $settings['element_trim_text_by'] ) {
 						echo esc_html(wp_trim_words( get_the_title(), $settings['element_word_count'] ));
 					} else {
-						echo mb_strimwidth(html_entity_decode(get_the_title()), 0, $settings['element_letter_count'] + 1, '...');
-						echo substr(html_entity_decode(get_the_title()), 0, $settings['element_letter_count']);
+						echo substr(html_entity_decode(get_the_title()), 0, $settings['element_letter_count']) .'...';
 					}
 				echo '</a>';
 			echo '</div>';
@@ -8191,10 +8197,11 @@ class Wpr_Grid extends Widget_Base {
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-			  if ( 'word_count' === $settings['trim_text_by']) {
+			  if ( 'word_count' === $settings['element_trim_text_by']) {
 				echo '<p>'. esc_html(wp_trim_words( get_the_excerpt(), $settings['element_word_count'] )) .'</p>';
 			  } else {
-				echo '<p>'. esc_html(implode('', array_slice( str_split(get_the_excerpt()), 0, $settings['element_letter_count'] ))) .'</p>';
+				// echo '<p>'. substr(html_entity_decode(get_the_title()), 0, $settings['element_letter_count']) .'...' . '</p>';
+				echo '<p>'. esc_html(implode('', array_slice( str_split(get_the_excerpt()), 0, $settings['element_letter_count'] ))) .'...' .'</p>';
 			  }
 			echo '</div>';
 		echo '</div>';

@@ -37,37 +37,6 @@ class Wpr_Page_List extends Widget_Base {
 		return [ 'royal', 'page-list', 'list'];
 	}
 
-    public function add_repeater_args_page_list() {
-        $args = [
-            'sort_order' => 'asc',
-            'sort_column' => 'post_title',
-            'hierarchical' => 1,
-            'exclude' => '',
-            'include' => '',
-            'meta_key' => '',
-            'meta_value' => '',
-            'authors' => '',
-            'child_of' => 0,
-            'parent' => -1,
-            'exclude_tree' => '',
-            'number' => '',
-            'offset' => 0,
-            'post_type' => 'page',
-            'post_status' => 'publish'
-		]; 
-
-        $pages = get_pages($args); // get all pages based on supplied args
-
-        $pages_array = [];
-        
-        foreach($pages as $page) { // $pages is array of object
-            $pages_array[$page->ID] = $page->post_title;
-        }
-
-        return $pages_array;
-
-    }
-
 	public function add_control_title_pointer_color_hr() {}
 
 	public function add_control_title_pointer() {}
@@ -120,8 +89,8 @@ class Wpr_Page_List extends Widget_Base {
                 'label_block' => false,
                 'default' => 'custom',
                 'options'     => [
-                    'dynamic'  => esc_html__( 'Dynamic', 'wpr-addons' ),
-                    'custom' => esc_html__( 'Custom', 'wpr-addons' )
+                    'custom' => esc_html__( 'Custom', 'wpr-addons' ),
+                    'dynamic'  => esc_html__( 'Dynamic', 'wpr-addons' )
                 ]
             ]
         );
@@ -130,8 +99,9 @@ class Wpr_Page_List extends Widget_Base {
 			'query_page_selection',
 			[
 				'label' => esc_html__( 'Select Page', 'wpr-addons' ),
-                'type' => Controls_Manager::SELECT2,
-				'options' => $this->add_repeater_args_page_list(),
+				'type' => 'wpr-ajax-select2',
+				'options' => 'ajaxselect2/get_posts_by_post_type',
+				'query_slug' => 'page',
 				'label_block' => true,
                 'condition' => [
                     'page_list_item_type' => 'dynamic'

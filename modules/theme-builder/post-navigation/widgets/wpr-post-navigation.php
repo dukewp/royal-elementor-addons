@@ -221,6 +221,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 			'Show/Hide Post Title.',
 			'Show/Hide Post Thumbnail, Show on hover or set as Navigation Label Background.',
 			'Show/Hide Back Button - Set custom link to any page to go back to.',
+			'Display Navigation on Separate Lines'
 		] );
 
 		// Styles ====================

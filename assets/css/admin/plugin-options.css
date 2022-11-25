@@ -1124,3 +1124,9 @@ input.wpr-user-template-title:focus {
     background: -o-linear-gradient(top, white, black);
     background: linear-gradient(to bottom, white, black);
 }
+
+/* Disable Notices */
+.notice:not(.wpr-plugin-update-notice),
+div.fs-notice.updated, div.fs-notice.success {
+  display: none !important;
+}

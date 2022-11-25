@@ -52,7 +52,7 @@ class Wpr_Product_Media extends Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'stacked' => esc_html__( 'Stacked', 'wpr-addons' ),
-					'sl-pro' => esc_html__( 'Slider (Pro)', 'wpr-addons' )
+					'pro-sl' => esc_html__( 'Slider (Pro)', 'wpr-addons' )
 				],
 				'default' => 'stacked',
 				'render_type' => 'template',
@@ -856,7 +856,7 @@ class Wpr_Product_Media extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#C0A886',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-thumbnail-slider-arrow' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-thumbnail-slider-arrow svg' => 'fill: {{VALUE}};',
@@ -901,7 +901,7 @@ class Wpr_Product_Media extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#C0A886',
+				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-thumbnail-slider-arrow:hover' => 'color: {{VALUE}};',
 				],

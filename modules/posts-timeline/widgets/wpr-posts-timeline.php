@@ -1295,11 +1295,11 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$post_types = Utilities::get_custom_types_of( 'post', false );
 		$post_types = $this->add_option_query_source();
 		unset( $post_types['product'] );
-		// unset($post_types['page']);
-		// unset($post_types['e-landing-page']);
+		unset( $post_types['e-landing-page'] );
+
 		$post_taxonomies = Utilities::get_custom_types_of( 'tax', false );
 		$categories = [];
-		foreach(get_categories() as $key=>$category) {
+		foreach ( get_categories() as $key => $category ) {
 			array_push($categories, $key);
 		}
 
@@ -1362,10 +1362,11 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'query_manual_'. $slug,
 				[
 					'label' => esc_html__( 'Select ', 'wpr-addons' ) . $title,
-					'type' => Controls_Manager::SELECT2,
+					'type' => 'wpr-ajax-select2',
+					'options' => 'ajaxselect2/get_posts_by_post_type',
+					'query_slug' => $slug,
 					'multiple' => true,
 					'label_block' => true,
-					'options' => Utilities::get_posts_by_post_type( $slug ),
 					'condition' => [
 						'timeline_post_types' => $slug,
 						'query_selection' => 'manual',
@@ -1379,10 +1380,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			'query_author',
 			[
 				'label' => esc_html__( 'Authors', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT2,
+				'type' => 'wpr-ajax-select2',
+				'options' => 'ajaxselect2/get_users',
 				'multiple' => true,
 				'label_block' => true,
-				'options' => Utilities::get_users(),
 				'separator' => 'before',
 				'condition' => [
 					'timeline_post_types!' => [ 'current', 'related' ],
@@ -1402,10 +1403,11 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'query_taxonomy_'. $slug,
 				[
 					'label' => $title,
-					'type' => Controls_Manager::SELECT2,
+					'type' => 'wpr-ajax-select2',
+					'options' => 'ajaxselect2/get_taxonomies',
+					'query_slug' => $slug,
 					'multiple' => true,
 					'label_block' => true,
-					'options' => Utilities::get_terms_by_taxonomy( $slug ),
 					'condition' => [
 						'timeline_post_types' => $post_type,
 						'query_selection' => 'dynamic',
@@ -1419,10 +1421,11 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'query_exclude_'. $slug,
 				[
 					'label' => esc_html__( 'Exclude ', 'wpr-addons' ) . $title,
-					'type' => Controls_Manager::SELECT2,
+					'type' => 'wpr-ajax-select2',
+					'options' => 'ajaxselect2/get_posts_by_post_type',
+					'query_slug' => $slug,
 					'multiple' => true,
 					'label_block' => true,
-					'options' => Utilities::get_posts_by_post_type( $slug ),
 					'condition' => [
 						'timeline_content' => 'dynamic',
 						'timeline_post_types' => $slug,

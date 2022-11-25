@@ -332,12 +332,13 @@ class Wpr_Lottie_Animations extends Widget_Base {
 		$this->add_control(
 			'existing_link',
 			array(
-				'label'       => __( 'Existing Page', 'wpr-addons' ),
-				'type'        => Controls_Manager::SELECT2,
-				'options'     => $this->get_all_posts(),
-				'multiple'    => false,
+				'label' => __( 'Existing Page', 'wpr-addons' ),
+				'type' => 'wpr-ajax-select2',
+				'options' => 'ajaxselect2/get_posts_by_post_type',
+				'query_slug' => 'page',
+				'multiple' => false,
 				'label_block' => true,
-				'condition'   => array(
+				'condition' => array(
 					'link_switcher'  => 'yes',
 					'link_selection' => 'link',
 				),
@@ -449,26 +450,6 @@ class Wpr_Lottie_Animations extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 	
-	}
-
-	public function get_all_posts() {
-
-		$all_posts = get_posts(
-			array(
-				'posts_per_page'         => -1,
-				'post_type'              => array( 'page', 'post' ),
-				'update_post_term_cache' => false,
-				'update_post_meta_cache' => false,
-				'fields'                 => array( 'ids' ),
-			)
-		);
-
-		if ( ! empty( $all_posts ) && ! is_wp_error( $all_posts ) ) {
-			foreach ( $all_posts as $post ) {
-				$this->options[ $post->ID ] = strlen( $post->post_title ) > 20 ? substr( $post->post_title, 0, 20 ) . '...' : $post->post_title;
-			}
-		}
-		return $this->options;
 	}
 
 	public function lottie_attributes($settings) {

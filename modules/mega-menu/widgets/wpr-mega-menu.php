@@ -223,7 +223,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 			'section_menu',
 			[
 				'label' => 'Menu',
-				'label' => 'Menu <a href="#" onclick="window.open(\'https://www.youtube.com/watch?v=aHSgqzan1to\',\'_blank\').focus()">Video Tutorial <span class="dashicons dashicons-video-alt3"></span></a>',
+				'label' => 'Menu <a href="#" onclick="window.open(\'https://www.youtube.com/watch?v=lzWYMq1BJsA\',\'_blank\').focus()">Video Tutorial <span class="dashicons dashicons-video-alt3"></span></a>',
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);

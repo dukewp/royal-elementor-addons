@@ -40,20 +40,20 @@ jQuery(window).on("elementor:init", (function() {
                     query_slug: querySlug
                 }
             }).then((function(response) {
-                null !== response && response.results.length > 0 && (jQuery.each(response.results, (function(index, element) {
-                    var option = new Option(element.text, element.id, !0, !0);
-                    $select.append(option);
-                    
-                    if ( '' !== controlValue ) {
+                if ( '' !== controlValue ) {
+                    null !== response && response.results.length > 0 && (jQuery.each(response.results, (function(index, element) {
+                        var option = new Option(element.text, element.id, !0, !0);
+                        $select.append(option);
                         $select.append(option).trigger('change.select2');
                         $select.val(controlValue).trigger('change.select2');
-                    }
-                })), $select.trigger({
-                    type: "select2:select",
-                    params: {
-                        data: response
-                    }
-                }))
+                        
+                    })), $select.trigger({
+                        type: "select2:select",
+                        params: {
+                            data: response
+                        }
+                    }))
+                }
             }))
         },
 

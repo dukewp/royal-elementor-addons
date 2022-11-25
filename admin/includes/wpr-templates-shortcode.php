@@ -42,6 +42,7 @@ class WPR_Templates_Shortcode {
 					'label' => esc_html__( 'Select Template', 'wpr-addons' ),
 					'type' => 'wpr-ajax-select2',
 					'options' => 'ajaxselect2/get_elementor_templates',
+					'label_block' => true,
 				]
 			);
 		}
