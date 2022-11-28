@@ -4357,7 +4357,8 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
         -ms-grid-columns: 1fr !important;
         grid-template-columns: 1fr !important;
         -ms-grid-rows: (1fr)[6] !important;
-        grid-template-rows: repeat(6, 1fr) !important;
+        /* add !important if necessary */
+        grid-template-rows: repeat(6, 1fr);
     }
     .wpr-magazine-grid.wpr-mgzn-grid-3-h.wpr-mgzn-grid-rows-2>*:nth-child(1) {
         -ms-grid-row: 1;
