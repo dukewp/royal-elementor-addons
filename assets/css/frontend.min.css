@@ -4427,6 +4427,18 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
         -ms-grid-row: 9;
         -ms-grid-column: 1;
     }
+    
+    .wpr-magazin-grid-one-column-yes .wpr-magazine-grid {
+        grid-template-columns: 1fr !important;
+        grid-template-rows: auto !important;
+    }
+
+    .wpr-magazin-grid-one-column-yes .wpr-magazine-grid  article.wpr-mgzn-grid-item {
+        grid-column-start: auto !important;
+        grid-column-end: auto !important;
+        grid-row-start: auto !important;
+        grid-row-end: auto !important;
+    }
 }
 
 
@@ -4481,7 +4493,7 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
 }
 
 .wpr-sharing-buttons .wpr-sharing-icon {
-    transition-propery: opacity, border-color;
+    transition-property: opacity, border-color;
     -webkit-transition-timing-function: linear;
     -o-transition-timing-function: linear;
     transition-timing-function: linear;
@@ -4489,7 +4501,7 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
 
 .wpr-sharing-buttons .wpr-sharing-icon i,
 .wpr-sharing-buttons .wpr-sharing-icon span {
-    transition-propery: color, background-color;
+    transition-property: color, background-color;
     -webkit-transition-timing-function: linear;
     -o-transition-timing-function: linear;
     transition-timing-function: linear;
