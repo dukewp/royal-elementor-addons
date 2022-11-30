@@ -166,6 +166,13 @@ class WPR_Templates_Actions {
 	** Reset Template
 	*/
 	public function wpr_delete_template() {
+
+		$nonce = $_POST['nonce'];
+
+		if ( !wp_verify_nonce( $nonce, 'delete_post-' . $_POST['template_slug'] ) ) {
+		  exit; // Get out of here, the nonce is rotten!
+		}
+
 		$template_slug = isset($_POST['template_slug']) ? sanitize_text_field(wp_unslash($_POST['template_slug'])): '';
 		$template_library = isset($_POST['template_library']) ? sanitize_text_field(wp_unslash($_POST['template_library'])): '';
 

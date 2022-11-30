@@ -52,8 +52,13 @@ class WPR_Templates_Loop {
 							echo '<span class="wpr-template-conditions button button-primary" data-slug="'. esc_attr($slug) .'" data-show-on-canvas="'. esc_attr($show_on_canvas) .'">'. esc_html__( 'Manage Conditions', 'wpr-addons' ) .'</span>';
 							// Edit
 							echo '<a href="'. esc_url($edit_url) .'" class="wpr-edit-template button button-primary">'. esc_html__( 'Edit Template', 'wpr-addons' ) .'</a>';
+
 							// Delete
-							echo '<span class="wpr-delete-template button button-primary" data-slug="'. esc_attr($slug) .'" data-warning="'. esc_html__( 'Are you sure you want to delete this template?', 'wpr-addons' ) .'"><span class="dashicons dashicons-no-alt"></span></span>';
+							$one_time_nonce = wp_create_nonce( 'delete_post-' . $slug );
+
+							echo '<span class="wpr-delete-template button button-primary"  data-nonce="'. $one_time_nonce .'" data-slug="'. esc_attr($slug) .'" data-warning="'. esc_html__( 'Are you sure you want to delete this template?', 'wpr-addons' ) .'"><span class="dashicons dashicons-no-alt"></span></span>';
+
+
 				        echo '</div>';
 					echo '</li>';
 				}

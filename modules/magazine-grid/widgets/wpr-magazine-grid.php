@@ -99,6 +99,17 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		);
 	}
 
+	public function add_control_force_responsive_one_column() {
+		$this->add_control(
+			'force_responsive_one_column',
+			[
+				'label' => sprintf( __( 'Force Responsive One Column %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control'
+			]
+		);
+	}
+
 	public function add_option_element_select() {
 		return [
 			'title' => esc_html__( 'Title', 'wpr-addons' ),
@@ -643,6 +654,8 @@ class Wpr_Magazine_Grid extends Widget_Base {
 				]
 	        );
 		}
+
+		$this->add_control_force_responsive_one_column();
 
 		$this->add_group_control(
 			Group_Control_Image_Size::get_type(),
