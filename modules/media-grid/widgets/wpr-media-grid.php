@@ -7258,7 +7258,7 @@ class Wpr_Media_Grid extends Widget_Base {
 
 		// Load More / Infinite Scroll
 		} else {
-			echo '<a href="'. esc_url(get_pagenum_link( $paged + 1, true )) .'" class="wpr-load-more-btn">';
+			echo '<a href="'. esc_url(get_pagenum_link( $paged + 1, true )) .'" class="wpr-load-more-btn" data-e-disable-page-transition >';
 				echo esc_html($settings['pagination_load_more_text']);
 			echo '</a>';
 
