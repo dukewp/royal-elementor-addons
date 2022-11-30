@@ -12375,6 +12375,10 @@ a.wpr-ajax-img-wrap {
         margin: 0;
     }
 
+    .wpr-twitter-feed-cont {
+        position: relative;
+    }
+
     .wpr-twitter-feed p {
         margin: 0;
     }
