@@ -174,8 +174,11 @@ jQuery(document).ready(function( $ ) {
 			// Get Template Slug
 			var slug = deleteButton.attr('data-slug');
 
+			var oneTimeNonce = deleteButton.attr('data-nonce');
+
 			// AJAX Data
 			var data = {
+				nonce: oneTimeNonce,
 				action: 'wpr_delete_template',
 				template_slug: slug,
 				template_library: library,
