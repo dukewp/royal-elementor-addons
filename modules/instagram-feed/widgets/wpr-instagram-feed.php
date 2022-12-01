@@ -835,15 +835,15 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'show_username',
-			[
-				'label' => esc_html__( 'Show Username', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'render_type' => 'template',
-				'separator' => 'before',
-			]
-		);
+		// $this->add_control(
+		// 	'show_username',
+		// 	[
+		// 		'label' => esc_html__( 'Show Username', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SWITCHER,
+		// 		'render_type' => 'template',
+		// 		'separator' => 'before',
+		// 	]
+		// );
 
 		$this->add_control(
 			'show_pagination',
