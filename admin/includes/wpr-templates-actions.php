@@ -114,8 +114,10 @@ class WPR_Templates_Actions {
 		$user_template_library = isset($_POST['user_template_library']) ? sanitize_text_field(wp_unslash($_POST['user_template_library'])): false;
 		$user_template_title = isset($_POST['user_template_title']) ? sanitize_text_field(wp_unslash($_POST['user_template_title'])): false;
 		$user_template_slug = isset($_POST['user_template_slug']) ? sanitize_text_field(wp_unslash($_POST['user_template_slug'])): false;
+		
+		$check_post_type =( $user_template_library == 'wpr_templates' || $user_template_library == 'elementor_library' );
 
-		if ( $user_template_title ) {
+		if ( $user_template_title && $check_post_type ) {
 			// Create
 			$template_id = wp_insert_post(array (
 				'post_type' 	=> $user_template_library,
@@ -185,7 +187,7 @@ class WPR_Templates_Actions {
 
 		$post = get_page_by_path( $template_slug, OBJECT, $template_library );
 
-		if ( get_post_type($post->ID) != 'wpr_templates' || get_post_type($post->ID) != 'elementor_library' ) {
+		if ( get_post_type($post->ID) == 'wpr_templates' || get_post_type($post->ID) == 'elementor_library' ) {
 			wp_delete_post( $post->ID, true );
 		}
 	}
