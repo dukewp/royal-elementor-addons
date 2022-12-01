@@ -103,6 +103,13 @@ class WPR_Templates_Actions {
 	** Create Template
 	*/
 	public function wpr_create_template() {
+
+		$nonce = $_POST['nonce'];
+
+		if ( !wp_verify_nonce( $nonce, 'wpr-plugin-options-js')  || !current_user_can( 'edit_posts' ) ) {
+		  exit; // Get out of here, the nonce is rotten!
+		}
+
 		$user_template_type = isset($_POST['user_template_type']) ? sanitize_text_field(wp_unslash($_POST['user_template_type'])): false;
 		$user_template_library = isset($_POST['user_template_library']) ? sanitize_text_field(wp_unslash($_POST['user_template_library'])): false;
 		$user_template_title = isset($_POST['user_template_title']) ? sanitize_text_field(wp_unslash($_POST['user_template_title'])): false;
@@ -169,7 +176,7 @@ class WPR_Templates_Actions {
 
 		$nonce = $_POST['nonce'];
 
-		if ( !wp_verify_nonce( $nonce, 'delete_post-' . $_POST['template_slug'] ) ) {
+		if ( !wp_verify_nonce( $nonce, 'delete_post-' . $_POST['template_slug'] )  || !current_user_can( 'edit_posts' ) ) {
 		  exit; // Get out of here, the nonce is rotten!
 		}
 
@@ -177,7 +184,10 @@ class WPR_Templates_Actions {
 		$template_library = isset($_POST['template_library']) ? sanitize_text_field(wp_unslash($_POST['template_library'])): '';
 
 		$post = get_page_by_path( $template_slug, OBJECT, $template_library );
-		wp_delete_post( $post->ID, true );
+
+		if ( get_post_type($post->ID) != 'wpr_templates' || get_post_type($post->ID) != 'elementor_library' ) {
+			wp_delete_post( $post->ID, true );
+		}
 	}
 
 	/**
@@ -205,6 +215,14 @@ class WPR_Templates_Actions {
 
 		    // enqueue JS
 		    wp_enqueue_script( 'wpr-plugin-options-js', WPR_ADDONS_URL .'assets/js/admin/plugin-options.js', ['jquery'], $version );
+
+			wp_localize_script(
+				'wpr-plugin-options-js',
+				'WprPluginOptions', // This is used in the js file to group all of your scripts together
+				[
+					'nonce' => wp_create_nonce( 'wpr-plugin-options-js' ),
+				]
+			);
 
 		}
 

@@ -73,6 +73,7 @@ jQuery(document).ready(function( $ ) {
 		// AJAX Data
 		var data = {
 			action: 'wpr_create_template',
+			nonce: WprPluginOptions.nonce,
 			user_template_library: library,
 			user_template_title: title,
 			user_template_slug: slug,
@@ -174,7 +175,8 @@ jQuery(document).ready(function( $ ) {
 			// Get Template Slug
 			var slug = deleteButton.attr('data-slug');
 
-			var oneTimeNonce = deleteButton.attr('data-nonce');
+			// var oneTimeNonce = deleteButton.attr('data-nonce');
+			var oneTimeNonce = 'lskjdflksj';
 
 			// AJAX Data
 			var data = {
