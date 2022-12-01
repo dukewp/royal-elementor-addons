@@ -909,9 +909,21 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					'{{WRAPPER}} .wpr-isnta-feed-buttons-wrap' => 'text-align: {{VALUE}}'
 				],
 				'separator' => 'before',
-				// 'condition' => [
-				// 	''
-				// ]
+				'conditions' => [
+					'relation' => 'or',
+					'terms' => [
+						[
+							'name' => 'show_instagram_follow_button',
+							'operator' => '==',
+							'value' => 'yes'
+						],
+						[
+							'name' => 'show_pagination',
+							'operator' => '==',
+							'value' => 'yes'
+						]
+					]
+				]
 			]
 		);
 
