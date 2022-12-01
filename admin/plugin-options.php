@@ -57,9 +57,6 @@ function wpr_register_addons_settings() {
     // Integrations
     register_setting( 'wpr-settings', 'wpr_google_map_api_key' );
     register_setting( 'wpr-settings', 'wpr_mailchimp_api_key' );
-    register_setting( 'wpr-settings', 'wpr_instagram_access_token' );
-    register_setting( 'wpr-settings', 'wpr_instagram_access_token_expires_in' );
-    register_setting( 'wpr-settings', 'wpr_instagram_access_token_generation_date' );
 
     // Lightbox
     register_setting( 'wpr-settings', 'wpr_lb_bg_color' );
@@ -403,24 +400,6 @@ function wpr_addons_settings_page() {
                 </h4>
 
                 <input type="text" name="wpr_mailchimp_api_key" id="wpr_mailchimp_api_key" value="<?php echo esc_attr(get_option('wpr_mailchimp_api_key')); ?>">
-            </div>
-
-            <div class="wpr-setting">
-                <h4>
-                    <span><?php esc_html_e( 'Instagram Access Token', 'wpr-addons' ); ?></span>
-                    <br>
-                    <a href="#" target="_blank"><?php esc_html_e( 'How to get Instagram Access Token?', 'wpr-addons' ); ?></a>
-                    <br>
-                    <a class="wpr-authorize-instagram" href="https://www.instagram.com/oauth/authorize?client_id=5484217328332432&redirect_uri=https://reastats.kinsta.cloud/token/social-network.php&scope=user_profile,user_media&response_type=code" target="popup"><?php esc_html_e( 'Authorize Instagram', 'wpr-addons' ); ?></a>
-                </h4>
-
-                <input type="text" name="wpr_instagram_access_token" id="wpr_instagram_access_token" value="<?php echo esc_attr(get_option('wpr_instagram_access_token')); ?>">
-
-                <h4>Expires In</h4>
-                <input type="text" name="wpr_instagram_access_token_expires_in" id="wpr_instagram_access_token_expires_in" value="<?php echo esc_attr(get_option('wpr_instagram_access_token_expires_in')); ?>">
-
-                <h4>Token Generation Date</h4>
-                <input type="date" name="wpr_instagram_access_token_generation_date" id="wpr_instagram_access_token_generation_date" value=<?php echo esc_attr(get_option('wpr_instagram_access_token_generation_date')); ?>>
             </div>
         </div>
 

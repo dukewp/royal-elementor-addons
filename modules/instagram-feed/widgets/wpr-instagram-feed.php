@@ -327,11 +327,11 @@ class Wpr_Instagram_Feed extends Widget_Base {
 	protected function register_controls() {
 
 		// Tab: Content ==============
-		// Section: General ------------
+		// Section: API ------------
 		$this->start_controls_section(
-			'section_general',
+			'section_insta_api',
 			[
-				'label' => esc_html__( 'General', 'wpr-addons' ),
+				'label' => esc_html__( 'API', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -339,22 +339,12 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 		
 		$this->add_control(
-			'instagram_access_token_notice',
+			'instagram_access_token_authorize',
 			[
 				'type' => Controls_Manager::RAW_HTML,
-				'raw' => sprintf( __( 'Please enter <strong>Instagram Access Token</strong> from <br><a href="%s" target="_blank">Dashboard > %s > Settings</a> tab to get this widget working.', 'wpr-addons' ), admin_url( 'admin.php?page=wpr-addons&tab=wpr_tab_settings' ), Utilities::get_plugin_name() ),
-				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
-			]
-		);
-		
-		$this->add_control(
-			'instagram_access_token_test',
-			[
-				'type' => Controls_Manager::RAW_HTML,
-				'raw' => '<a class="wpr-authorize-instagram" href="https://www.instagram.com/oauth/authorize?client_id=5484217328332432&redirect_uri=https://reastats.kinsta.cloud/token/social-network.php&scope=user_profile,user_media&response_type=code" target="popup">'. esc_html__( 'Click here to Authorize Instagram','wpr-addons' ) .'</a>',
+				'raw' => '<a class="wpr-authorize-instagram" href="https://www.instagram.com/oauth/authorize?client_id=5484217328332432&redirect_uri=https://reastats.kinsta.cloud/token/social-network.php&scope=user_profile,user_media&response_type=code" target="popup">'. esc_html__( 'Authorize Instagram','wpr-addons' ) .'</a>',
 				'description' => 'In order to authorize instagram you must be logged in',
-				'separator' => 'before',
-				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				// 'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 			]
 		);
 
@@ -377,6 +367,15 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		);
 				
 		$this->add_control(
+			'cache_timeout',
+			[
+				'label' => esc_html__( 'Cache Timeout', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::NUMBER,
+				'default' => 600,
+			]
+		);
+				
+		$this->add_control(
 			'limit',
 			[
 				'label' => esc_html__( 'Number of Posts', 'wpr-addons' ),
@@ -393,16 +392,19 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'default' => 2,
 			]
 		);
-				
-		$this->add_control(
-			'cache_timeout',
+
+        $this->end_controls_section();
+
+		// Tab: Content ==============
+		// Section: Layout ------------
+		$this->start_controls_section(
+			'section_layout',
 			[
-				'label' => esc_html__( 'Cache Timout', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::NUMBER,
-				'default' => 600,
+				'label' => esc_html__( 'Layout', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
-
+		
 		$this->add_control(
 			'layout_select',
 			[
@@ -546,34 +548,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'condition' => [
 					'layout_select' => ['layout-grid', 'layout-list', 'layout-masonry', 'layout-full-width']
 				]
-			]
-		);
-
-		$this->add_control(
-			'buttons_alignment',
-			[
-				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
-				'type' => Controls_Manager::CHOOSE,
-				'options' => [
-					'left'    => [
-						'title' => esc_html__( 'Left', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-left',
-					],
-					'center' => [
-						'title' => esc_html__( 'Center', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-center',
-					],
-					'right' => [
-						'title' => esc_html__( 'Right', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-right',
-					]
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-isnta-feed-buttons-wrap' => 'text-align: {{VALUE}}'
-				],
-				'default' => 'center',
-				'render_type' => 'template',
-				'separator' => 'before',
 			]
 		);
 
@@ -835,16 +809,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			]
 		);
 
-		// $this->add_control(
-		// 	'show_username',
-		// 	[
-		// 		'label' => esc_html__( 'Show Username', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SWITCHER,
-		// 		'render_type' => 'template',
-		// 		'separator' => 'before',
-		// 	]
-		// );
-
 		$this->add_control(
 			'show_pagination',
 			[
@@ -861,7 +825,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		$this->add_control(
 			'show_instagram_follow_button',
 			[
-				'label' => esc_html__( 'Follow Button', 'wpr-addons' ),
+				'label' => esc_html__( 'Show Follow Button', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'separator' => 'before',
 				'return_value' => 'yes',
@@ -917,6 +881,37 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'condition' => [
 					'show_instagram_follow_button' => 'yes',
 				]
+			]
+		);
+
+		$this->add_control(
+			'buttons_alignment',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'render_type' => 'template',
+				'default' => 'center',
+				'options' => [
+					'left'    => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					]
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-isnta-feed-buttons-wrap' => 'text-align: {{VALUE}}'
+				],
+				'separator' => 'before',
+				// 'condition' => [
+				// 	''
+				// ]
 			]
 		);
 
