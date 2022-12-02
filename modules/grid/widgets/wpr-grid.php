@@ -56,7 +56,12 @@ class Wpr_Grid extends Widget_Base {
     }
 
 	public function add_option_query_source() {
-		$post_types = Utilities::get_custom_types_of( 'post', false );
+		$post_types = [];
+		$post_types['post'] = esc_html__( 'Posts', 'wpr-addons' );
+		$post_types['page'] = esc_html__( 'Pages', 'wpr-addons' );
+
+		// $post_types = Utilities::get_custom_types_of( 'post', true );
+
 		$post_types['current'] = esc_html__( 'Current Query', 'wpr-addons' );
 		$post_types['pro-rl'] = esc_html__( 'Related Query (Pro)', 'wpr-addons' );
 		
