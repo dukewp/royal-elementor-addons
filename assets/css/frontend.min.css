@@ -12608,6 +12608,10 @@ a.wpr-ajax-img-wrap {
     column-gap: 30px;
 }
 
+.wpr-insta-feed-content-wrap {
+    text-align: center;
+}
+
 .wpr-insta-feed-content-wrap,
 .wpr-insta-feed-media-wrap {
     position: relative;

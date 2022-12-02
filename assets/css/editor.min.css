@@ -152,17 +152,15 @@
 .elementor-control-insta_feed_elements .elementor-control-element_sharing_icon_1,
 .elementor-control-insta_feed_elements .elementor-control-element_username_tag,
 .elementor-control-insta_feed_elements .elementor-control-element_location,
-.elementor-control-twitter_feed_elements .elementor-control-element_username_tag {
+.elementor-control-twitter_feed_elements .elementor-control-element_username_tag,
+.elementor-control-filters_transition_duration,
+.elementor-control-show_last_update_date,
+.elementor-control-insta_layout_select {
 	padding-top: 0 !important;
 }
 
 .elementor-control-pagination_load_more_text {
 	padding-bottom: 0 !important;
-}
-
-.elementor-control-filters_transition_duration,
-.elementor-control-show_last_update_date {
-	padding-top: 0 !important;
 }
 
 .elementor-control-animation_divider,
