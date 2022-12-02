@@ -52,9 +52,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	// Render Post Title
-	public function render_post_username( $settings, $class, $result ) { 
+	public function render_post_username( $settings, $class, $result ) {
 
-		$target = 'yes' == $settings['open_in_new_tab'] ? '_blank' : '_self';
+		$target = 'yes' == $_POST['wpr_load_more_settings']['open_in_new_tab'] ? '_blank' : '_self';
 
 		echo '<'. esc_attr($settings['element_username_tag']) .' class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
@@ -109,7 +109,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	public function render_post_icon($settings, $class, $result) {
 
-		$target = 'yes' == $settings['open_in_new_tab'] ? '_blank' : '_self';
+		$target = 'yes' == $_POST['wpr_load_more_settings']['open_in_new_tab'] ? '_blank' : '_self';
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
@@ -372,7 +372,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	// Render Media Overlay
 	public function render_media_overlay( $settings, $result ) {
 
-		$target = 'yes' == $settings['open_in_new_tab'] ? '_blank' : '_self';
+		$target = 'yes' == $_POST['wpr_load_more_settings']['open_in_new_tab'] ? '_blank' : '_self';
 
 		echo '<div class="wpr-insta-feed-media-hover-bg '. esc_attr($this->get_animation_class( $settings, 'overlay' )) .'" data-url="'. $result->permalink .'" data-target="'. $target .'">';
 

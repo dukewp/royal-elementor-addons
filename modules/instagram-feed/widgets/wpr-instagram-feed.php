@@ -343,6 +343,22 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'description' => esc_html__('Determine how often you want the feed to be updated')
 			]
 		);
+
+		$this->add_control(
+			'cache_timeout_test',
+			[
+				'label'   => esc_html__( 'Cache Timeout', 'powerpack' ),
+				'type'    => Controls_Manager::SELECT,
+				'default' => 'hour',
+				'options' => [
+					'none'   => esc_html__( 'None', 'powerpack' ),
+					'minute' => esc_html__( 'Minute', 'powerpack' ),
+					'hour'   => esc_html__( 'Hour', 'powerpack' ),
+					'day'    => esc_html__( 'Day', 'powerpack' ),
+					'week'   => esc_html__( 'Week', 'powerpack' ),
+				],
+			]
+		);
 				
 		$this->add_control(
 			'limit',
@@ -4567,7 +4583,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 	// can't use this variable of class in static function, is it necessary to use static ?
 	public function call_instagram_api($access_token, $settings) {
 
-        $key = 'wpr_instagram-feed_'.$this->get_ID(). '_' .md5($settings['cache_timeout']);
+        $key = 'wpr_instagram-feed_'.$this->get_ID(). '_' .md5($settings['cache_timeout_test']);
 
 		if ( !get_option('wpr_instagram_posts_limit'. $this->get_ID()) ) {
 			update_option('wpr_instagram_posts_limit'. $this->get_ID(), $settings['limit']);
@@ -4581,8 +4597,8 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		}
 
 		if ( get_transient($key) === false ) {
-			// var_dump('api call');
-			$limit = wp_is_mobile() ? $settings['limit_mobile'] : $setings['limit'];
+			var_dump('api call');
+			$limit = wp_is_mobile() ? $settings['limit_mobile'] : $settings['limit'];
 
 			$url = 'https://graph.instagram.com/me/media?fields=id,media_type,media_url,thumbnail_url,permalink,children,username,caption,timestamp&access_token='. $access_token .'&limit='. $settings['limit'];
 
@@ -4593,16 +4609,45 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			if(!isset($body)) {
 				return $response['body'];
 			}
-
 			$instagram_data = $body->data;
-			
-			set_transient($key, $instagram_data, $settings['cache_timeout'] * MINUTE_IN_SECONDS);
+
+			$cache_timeout = $this->get_cache_duration();
+
+			if ( 'none' !== $settings['cache_timeout_test'])  {
+				set_transient($key, $instagram_data, $cache_timeout);
+			}
+
 		} else {
-			// var_dump('transient call');
+			var_dump('transient call');
 			$instagram_data = get_transient($key);
 		}
 		
 		return $instagram_data;
+	}
+
+	public function get_cache_duration() {
+		$settings = $this->get_settings();
+		$cache_duration = $settings['cache_timeout_test'];
+		$duration = 0;
+
+		switch ( $cache_duration ) {
+			case 'minute':
+				$duration = MINUTE_IN_SECONDS;
+				break;
+			case 'hour':
+				$duration = HOUR_IN_SECONDS;
+				break;
+			case 'day':
+				$duration = DAY_IN_SECONDS;
+				break;
+			case 'week':
+				$duration = WEEK_IN_SECONDS;
+				break;
+			default:
+				break;
+		}
+
+		return $duration;
 	}
 
 	public function refresh_access_token($access_token) {
@@ -5069,16 +5114,8 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			$this->add_link_attributes( 'instagram_follow_link', $settings['instagram_follow_link'] );
 		}
 
-		// $token_expires_in = get_option('wpr_instagram_access_token_expires_in');
-
-		// $compare_date = strtotime('-'.get_option('wpr_instagram_access_token_expires_in').' seconds');
-
-		// $token_generation_date = strtotime(get_option('wpr_instagram_access_token_generation_date'));
-
-		// $access_token = get_option('wpr_instagram_access_token');
-
 		if ( get_transient('wpr_instagram_access_token'. $this->get_ID()) ) {
-			// var_dump('transient works');
+			var_dump('transient works');
 			$access_token = get_transient('wpr_instagram_access_token'. $this->get_ID());
 			$token_expires_in = get_transient('wpr_instagram_access_token_expires_in'. $this->get_ID());
 
@@ -5086,7 +5123,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 	
 			$token_generation_date = strtotime(get_transient('wpr_instagram_access_token_generation_date'. $this->get_ID()));
 		} else {
-			// var_dump('settings-work');
+			var_dump('settings-work');
 			$access_token = $settings['instagram_access_token'];
 
 			if ( !get_transient('wpr_instagram_access_token_expires_in'. $this->get_ID()) ) {
@@ -5103,8 +5140,14 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			$token_generation_date = strtotime(get_transient('wpr_instagram_access_token_generation_date'. $this->get_ID()));
 		}
 
-		// if ( $token_generation_date <= $compare_date  ) {
-		if ( !$token_expires_in  ) {
+		var_dump($token_generation_date, $compare_date);
+
+		var_dump(date('Y/m/d H:i:s', $token_generation_date), date('Y/m/d H:i:s', $compare_date));
+
+		var_dump($token_expires_in);
+
+		if ( $token_generation_date <= $compare_date  ) {
+		// if ( !$token_expires_in  ) {
 				$this->refresh_access_token($access_token);
 		}
 
