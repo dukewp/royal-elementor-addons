@@ -136,12 +136,22 @@ class Wpr_Content_Ticker extends Widget_Base {
 
 	public function add_control_query_source () {
 		// Get Available Post Types
-		$this->post_types = Utilities::get_custom_types_of( 'post', false );
+		$this->post_types = [];
+		$this->post_types['post'] = esc_html__( 'Posts', 'wpr-addons' );
+		$this->post_types['page'] = esc_html__( 'Pages', 'wpr-addons' );
 
-		// Remove WooCommerce
-		unset( $this->post_types['product'] );
-		unset( $this->post_types['e-landing-page'] );
-		$this->post_types['pro-pd'] = 'Product (Pro)';
+		$custom_post_types = Utilities::get_custom_types_of( 'post', true );
+		foreach( $custom_post_types as $slug => $title ) {
+			if ( 'product' === $slug || 'e-landing-page' === $slug ) {
+				continue;
+			}
+
+			if ( Utilities::is_new_free_user2() ) {
+				$this->post_types['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Pro)';
+			}
+		}
+
+		$this->post_types['pro-pd'] = 'Products (Pro)';
 		$this->post_types['pro-ft'] = 'Featured (Pro)';
 		$this->post_types['pro-sl'] = 'On Sale (Pro)';
 

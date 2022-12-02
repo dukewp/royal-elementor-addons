@@ -66,7 +66,7 @@ class Wpr_Grid extends Widget_Base {
 				continue;
 			}
 
-			if ( ! wpr_fs()->can_use_premium_code() ) {//is_new_free_user
+			if ( Utilities::is_new_free_user2() ) {
 				$post_types['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Pro)';
 			}
 		}
@@ -88,7 +88,7 @@ class Wpr_Grid extends Widget_Base {
 				continue;
 			}
 
-			if ( ! wpr_fs()->can_use_premium_code() ) {//is_new_free_user
+			if ( Utilities::is_new_free_user2() ) {
 				$post_taxonomies['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Pro)';
 			}
 		}

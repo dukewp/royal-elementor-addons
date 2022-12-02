@@ -962,5 +962,9 @@ class Utilities {
 	public static function is_new_free_user() {
 		return !wpr_fs()->can_use_premium_code() && (intval(get_option('royal_elementor_addons_activation_time')) > 1649247746);
 	}
+	
+	public static function is_new_free_user2() {
+		return !wpr_fs()->can_use_premium_code() && (intval(get_option('royal_elementor_addons_activation_time')) > 1649247746);
+	}
 
 }

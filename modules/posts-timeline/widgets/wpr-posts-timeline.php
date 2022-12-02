@@ -1292,16 +1292,11 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 		$this->end_controls_section();
 
-		$post_types = Utilities::get_custom_types_of( 'post', false );
+		// Get Available Post Types
 		$post_types = $this->add_option_query_source();
-		unset( $post_types['product'] );
-		unset( $post_types['e-landing-page'] );
 
+		// Get Available Taxonomies
 		$post_taxonomies = Utilities::get_custom_types_of( 'tax', false );
-		$categories = [];
-		foreach ( get_categories() as $key => $category ) {
-			array_push($categories, $key);
-		}
 
         $this->start_controls_section(
             'query_section',
@@ -5570,8 +5565,22 @@ class Wpr_Posts_Timeline extends Widget_Base {
 	}
 
 	public function add_option_query_source() {
-		$post_types = Utilities::get_custom_types_of( 'post', false );
-		$post_types['pro-cr'] = esc_html__( 'Current Query (Pro)', 'wpr-addons' );
+		$post_types = [];
+		$post_types['post'] = esc_html__( 'Posts', 'wpr-addons' );
+		$post_types['page'] = esc_html__( 'Pages', 'wpr-addons' );
+
+		$custom_post_types = Utilities::get_custom_types_of( 'post', true );
+		foreach( $custom_post_types as $slug => $title ) {
+			if ( 'product' === $slug || 'e-landing-page' === $slug ) {
+				continue;
+			}
+
+			if ( Utilities::is_new_free_user2() ) {
+				$post_types['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Pro)';
+			}
+		}
+
+		$post_types['current'] = esc_html__( 'Current Query', 'wpr-addons' );
 		$post_types['pro-rl'] = esc_html__( 'Related Query (Pro)', 'wpr-addons' );
 		
 		return $post_types;
