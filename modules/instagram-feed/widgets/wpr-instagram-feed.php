@@ -311,7 +311,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			[
 				'type' => Controls_Manager::RAW_HTML,
 				'raw' => '<a class="wpr-authorize-instagram" href="https://www.instagram.com/oauth/authorize?client_id=5484217328332432&redirect_uri=https://reastats.kinsta.cloud/token/social-network.php&scope=user_profile,user_media&response_type=code" target="popup">'. esc_html__( 'Authorize Instagram','wpr-addons' ) .'</a>',
-				'description' => 'In order to authorize instagram you must be logged in',
 				// 'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 			]
 		);
@@ -330,7 +329,8 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			[
 				'label' => esc_html__( 'Expiry Date', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
-				'label_block' => true
+				'label_block' => true,
+				'description' => esc_html__('Please Note: You just need to enter this once, later it will update automatically')
 			]
 		);
 				
@@ -340,6 +340,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'label' => esc_html__( 'Cache Timeout', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::NUMBER,
 				'default' => 600,
+				'description' => esc_html__('Determine how often you want the feed to be updated')
 			]
 		);
 				
@@ -389,8 +390,12 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					'layout-masonry' => esc_html__('Masonry', 'wpr-addons'),
 					'layout-list'     => esc_html__('List Style', 'wpr-addons'),
 					'layout-full-width'     => esc_html__('Full Width', 'wpr-addons'),
-					'layout-carousel' => esc_html__('Slider\Carousel', 'wpr-addons'),
+					'layout-carousel' => esc_html__('Slider/Carousel', 'wpr-addons'),
 				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-layout-full-width' => 'grid-template-columns: repeat({{limit.VALUE}}, minmax(0, 1fr))',
+					'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-layout-full-width' => 'grid-template-columns: repeat({{limit_mobile.VALUE}}, minmax(0, 1fr))',
+				]
 			]
 		);
 
@@ -457,11 +462,9 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-layout-grid' => 'grid-template-columns: repeat({{VALUE}}, minmax(0, 1fr))',
 					'{{WRAPPER}} .wpr-layout-list' => 'grid-template-columns: repeat({{VALUE}}, minmax(0, 1fr))',
-					'{{WRAPPER}} .wpr-layout-full-width' => 'grid-template-columns: repeat({{limit.VALUE}}, minmax(0, 1fr))',
-					'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-layout-full-width' => 'grid-template-columns: repeat({{limit_mobile.VALUE}}, minmax(0, 1fr))',
 				],
 				'condition' => [
-					'insta_layout_select' => ['layout-grid', 'layout-list', 'layout-full-width']
+					'insta_layout_select' => ['layout-grid', 'layout-list']
 				],
 			]
 		);
@@ -514,7 +517,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					'{{WRAPPER}}.wpr-insta-feed-layout-full-width .wpr-instagram-feed' => 'row-gap: {{SIZE}}px',
 				],
 				'condition' => [
-					'insta_layout_select' => ['layout-grid', 'layout-list', 'layout-masonry', 'layout-full-width']
+					'insta_layout_select' => ['layout-grid', 'layout-list', 'layout-masonry']
 				]
 			]
 		);
@@ -658,6 +661,20 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		);
 
 		$this->add_control (
+			'force_square_images',
+			[
+				'type' => Controls_Manager::SWITCHER,
+				'label' => esc_html__( 'Force Square Images', 'wpr-addons' ),
+				'render_type' => 'template',
+				'separator' => 'before',
+				'prefix_class' => 'wpr-if-square-images-',
+				'condition' => [
+					'insta_layout_select!' => 'layout-masonry'
+				]
+			]
+		);
+
+		$this->add_control (
 			'enable_cs_nav',
 			[
 				'type' => Controls_Manager::SWITCHER,
@@ -763,20 +780,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			]
 		);
 
-		$this->add_control (
-			'force_square_images',
-			[
-				'type' => Controls_Manager::SWITCHER,
-				'label' => esc_html__( 'Enable Square Images', 'wpr-addons' ),
-				'render_type' => 'template',
-				'separator' => 'before',
-				'prefix_class' => 'wpr-if-square-images-',
-				'condition' => [
-					'insta_layout_select!' => 'layout-masonry'
-				]
-			]
-		);
-
 		$this->add_control(
 			'show_pagination',
 			[
@@ -785,7 +788,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'render_type' => 'template',
 				'separator' => 'before',
 				'condition' => [
-					'insta_layout_select!' => 'layout-carousel',
+					'insta_layout_select!' => ['layout-carousel', 'layout-full-width'],
 				]
 			]
 		);
@@ -798,57 +801,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'separator' => 'before',
 				'return_value' => 'yes',
 				'label_block' => false
-			]
-		);
-
-		$this->add_control(
-			'follow_button_location',
-			[
-				'label' => esc_html__( 'Button Location', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'prefix_class' => 'wpr-if-cfb-',
-				'default' => 'bottom',
-				'render_type' => 'template',
-				'options' => [
-					'top' => esc_html__( 'Top', 'wpr-addons' ),
-					'center' => esc_html__( 'Center', 'wpr-addons' ),
-					'bottom' => esc_html__( 'Bottom', 'wpr-addons' )
-				],
-				'condition' => [
-					'show_instagram_follow_button' => 'yes',
-				]
-			]
-		);
-
-		$this->add_control(
-			'instagram_follow_text',
-			[
-				'label' => esc_html__( 'Button Text', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => 'Follow on Instagram',
-				'label_block' => true,
-				'condition' => [
-					'show_instagram_follow_button' => 'yes',
-				]
-			]
-		);
-
-		$this->add_control(
-			'instagram_follow_link',
-			[
-				'label' => esc_html__( 'Button Link', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::URL,
-				'placeholder' => esc_html__( 'https://your-link.com', 'wpr-addons' ),
-				'default' => [
-					'url' => '',
-					'is_external' => true,
-					'nofollow' => true,
-					'custom_attributes' => '',
-				],
-				'label_block' => true,
-				'condition' => [
-					'show_instagram_follow_button' => 'yes',
-				]
 			]
 		);
 
@@ -894,6 +846,15 @@ class Wpr_Instagram_Feed extends Widget_Base {
 						]
 					]
 				]
+			]
+		);
+
+		$this->add_control(
+			'open_in_new_tab',
+			[
+				'label' => esc_html__( 'Open Links In New Tab', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'separator' => 'before',
 			]
 		);
 
@@ -1848,6 +1809,87 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		);
 
 		$this->end_controls_section(); // End Controls Section
+
+		// Tab: Content ==============
+		// Section: Pagination -------
+		$this->start_controls_section(
+			'section_insta_feed_follow_button',
+			[
+				'label' => esc_html__( 'Follow Button', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+				'condition' => [
+					'show_instagram_follow_button' => 'yes'
+				],
+			]
+		);
+
+		$this->add_control(
+			'follow_button_location',
+			[
+				'label' => esc_html__( 'Button Location', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'prefix_class' => 'wpr-if-cfb-',
+				'default' => 'bottom',
+				'render_type' => 'template',
+				'options' => [
+					'top' => esc_html__( 'Top', 'wpr-addons' ),
+					'center' => esc_html__( 'Center', 'wpr-addons' ),
+					'bottom' => esc_html__( 'Bottom', 'wpr-addons' )
+				],
+				'condition' => [
+					'show_instagram_follow_button' => 'yes',
+				]
+			]
+		);
+
+		$this->add_control(
+			'instagram_follow_text',
+			[
+				'label' => esc_html__( 'Button Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => 'Follow on Instagram',
+				'label_block' => true,
+				'condition' => [
+					'show_instagram_follow_button' => 'yes',
+				]
+			]
+		);
+
+		$this->add_control(
+			'instagram_follow_link',
+			[
+				'label' => esc_html__( 'Button Link', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::URL,
+				'placeholder' => esc_html__( 'https://your-link.com', 'wpr-addons' ),
+				'default' => [
+					'url' => '',
+					'is_external' => true,
+					'nofollow' => true,
+					'custom_attributes' => '',
+				],
+				'label_block' => true,
+				'condition' => [
+					'show_instagram_follow_button' => 'yes',
+				]
+			]
+		);
+
+		$this->add_control(
+			'instagram_follow_icon',
+			[
+				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
+				'type' => Controls_Manager::ICONS,
+				'skin' => 'inline',
+				'label_block' => false,
+				// 'separator' => 'before',
+				'default' => [
+					'value' => 'fab fa-instagram',
+					'library' => 'brands'
+				]
+			]
+		);
+
+		$this->end_controls_section();
 
 		// Tab: Content ==============
 		// Section: Pagination -------
@@ -2819,7 +2861,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#9C9C9C',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-insta-feed-item-icon .inner-block > span' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-insta-feed-item-icon .inner-block > a' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -2830,7 +2872,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-insta-feed-item-icon .inner-block > span' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-insta-feed-item-icon .inner-block > a' => 'background-color: {{VALUE}}',
 				]
 			]
 		);
@@ -2842,7 +2884,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#E8E8E8',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-insta-feed-item-icon .inner-block > span' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-insta-feed-item-icon .inner-block > a' => 'border-color: {{VALUE}}',
 				],
 			]
 		);
@@ -2871,7 +2913,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#605BE5',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-insta-feed-item-icon .inner-block > span:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-insta-feed-item-icon .inner-block > a:hover' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -2882,7 +2924,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-insta-feed-item-icon .inner-block > span:hover' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-insta-feed-item-icon .inner-block > a:hover' => 'background-color: {{VALUE}}',
 				]
 			]
 		);
@@ -2894,7 +2936,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#E8E8E8',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-insta-feed-item-icon .inner-block > span:hover' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-insta-feed-item-icon .inner-block > a:hover' => 'border-color: {{VALUE}}',
 				],
 				'separator' => 'after',
 			]
@@ -2922,7 +2964,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'max' => 5,
 				'step' => 0.1,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-insta-feed-item-icon .inner-block > span' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-insta-feed-item-icon .inner-block > a' => 'transition-duration: {{VALUE}}s',
 				],
 				'separator' => 'after',
 			]
@@ -2952,7 +2994,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				],
 				'default' => 'none',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-insta-feed-item-icon .inner-block > span' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .wpr-insta-feed-item-icon .inner-block > a' => 'border-style: {{VALUE}};',
 				],
 				'render_type' => 'template',
 				'separator' => 'before',
@@ -2972,7 +3014,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					'left' => 1,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-insta-feed-item-icon .inner-block > span' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-insta-feed-item-icon .inner-block > a' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'render_type' => 'template',
 				'condition' => [
@@ -3018,7 +3060,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					'left' => 0,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-insta-feed-item-icon .inner-block > span' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-insta-feed-item-icon .inner-block > a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'render_type' => 'template',
 				'separator' => 'before',
@@ -3057,7 +3099,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					'left' => 2,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-insta-feed-item-icon .inner-block > span' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-insta-feed-item-icon .inner-block > a' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -3343,7 +3385,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_separator1',
 			[
-				'label' => esc_html__( 'Separator Style', 'wpr-addons' ),
+				'label' => esc_html__( 'Separator', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 			]
@@ -3614,7 +3656,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		$this->add_responsive_control(
 			'button_distance_from_feed',
 			[
-				'label' => esc_html__( 'Top Distance', 'wpr-addons' ),
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px' ],
 				'range' => [
@@ -3630,6 +3672,29 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}}.wpr-if-cfb-top .wpr-instagram-follow-btn-wrap' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-if-cfb-bottom .wpr-instagram-follow-btn-wrap' => 'margin-left: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_responsive_control(
+			'button_icond_distance',
+			[
+				'label' => esc_html__( 'Icon Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 25,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 4,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-instagram-follow-btn i' => 'margin-right: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before'
 			]
@@ -4597,16 +4662,22 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
 	// Render Media Overlay
 	public function render_media_overlay( $settings, $result ) {
-		echo '<div class="wpr-insta-feed-media-hover-bg '. esc_attr($this->get_animation_class( $settings, 'overlay' )) .'" data-url="'. $result->permalink .'">';
+
+		$target = 'yes' == $this->get_settings()['open_in_new_tab'] ? '_blank' : '_self';
+
+		echo '<div class="wpr-insta-feed-media-hover-bg '. esc_attr($this->get_animation_class( $settings, 'overlay' )) .'" data-url="'. $result->permalink .'" data-target="'. $target .'">';
 
 		echo '</div>';
 	}
 
 	// Render Post Title
 	public function render_post_username( $settings, $class, $result ) { 
+
+		$target = 'yes' == $this->get_settings()['open_in_new_tab'] ? '_blank' : '_self';
+
 		echo '<'. esc_attr($settings['element_username_tag']) .' class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo '<a href="'. $result->permalink .'">';
+				echo '<a href="'. $result->permalink .'" target="'. $target .'">';
 					echo esc_html($result->username);
 				echo '</a>';
 			echo '</div>';
@@ -4658,11 +4729,13 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
 	public function render_post_icon($settings, $class, $result) {
 
+		$target = 'yes' == $this->get_settings()['open_in_new_tab'] ? '_blank' : '_self';
+
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-			   echo '<span>';
+			   echo '<a href='. $result->permalink .' target='. $target .'>';
 				echo '<i class="fab fa-instagram"></i>';
-			   echo '</span>';
+			   echo '</a>';
 			echo '</div>';
 		echo '</div>';
 	}
@@ -5044,7 +5117,14 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				
 		<?php if ( 'yes' === $settings['show_instagram_follow_button'] && 'top' === $settings['follow_button_location'] ) : ?>
 			<div class="wpr-instagram-follow-btn-wrap">
-				<a class="wpr-instagram-follow-btn" <?php echo $this->get_render_attribute_string( 'instagram_follow_link' ); ?>><?php echo $settings['instagram_follow_text'] ?></a>
+				<a class="wpr-instagram-follow-btn" <?php echo $this->get_render_attribute_string( 'instagram_follow_link' ); ?>>
+					<?php 
+						if ( '' !== $settings['instagram_follow_icon']) {
+							\Elementor\Icons_Manager::render_icon( $settings['instagram_follow_icon'], [ 'aria-hidden' => 'true' ] ); 
+						}
+					?>
+					<?php echo $settings['instagram_follow_text'] ?>
+				</a>
 			</div>
 		<?php endif; ?>
 
@@ -5120,7 +5200,14 @@ class Wpr_Instagram_Feed extends Widget_Base {
 						
 				if ( 'yes' === $settings['show_instagram_follow_button'] && ('bottom' === $settings['follow_button_location'] || 'center' === $settings['follow_button_location']) ) : ?>
 					<div class="wpr-instagram-follow-btn-wrap">
-						<a class="wpr-instagram-follow-btn" <?php echo $this->get_render_attribute_string( 'instagram_follow_link' ); ?>><?php echo $settings['instagram_follow_text'] ?></a>
+						<a class="wpr-instagram-follow-btn" <?php echo $this->get_render_attribute_string( 'instagram_follow_link' ); ?>>
+							<?php 
+								if ( '' !== $settings['instagram_follow_icon']) {
+									\Elementor\Icons_Manager::render_icon( $settings['instagram_follow_icon'], [ 'aria-hidden' => 'true' ] ); 
+								}
+							?>
+							<?php echo $settings['instagram_follow_text'] ?>
+						</a>
 					</div>
 				<?php endif;
 			echo '</div>';
