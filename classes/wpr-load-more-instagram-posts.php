@@ -368,12 +368,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	public function render_media_overlay( $settings, $result ) {
 		echo '<div class="wpr-insta-feed-media-hover-bg '. esc_attr($this->get_animation_class( $settings, 'overlay' )) .'" data-url="'. $result->permalink .'">';
 
-			if ( wpr_fs()->can_use_premium_code() ) {
-				if ( '' !== $settings['overlay_image']['url'] ) {
-					echo '<img src="'. esc_url( $settings['overlay_image']['url'] ) .'">';
-				}
-			}
-
 		echo '</div>';
 	}
 

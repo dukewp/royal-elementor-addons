@@ -12510,6 +12510,18 @@ a.wpr-ajax-img-wrap {
     display: inline-block;
 }
 
+.wpr-insta-feed-item-above-content {
+    border-bottom: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.wpr-instagram-feed:not(.wpr-layout-list) .wpr-insta-feed-item-below-content {
+    border-top: 0 !important;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+}
+
 .wpr-instagram-follow-btn {
     display: inline-block;
     cursor: pointer;
