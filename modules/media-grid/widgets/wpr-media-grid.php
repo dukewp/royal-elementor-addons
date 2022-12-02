@@ -3065,7 +3065,7 @@ class Wpr_Media_Grid extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#ffffff',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-item-caption .inner-block' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-item-caption .inner-block p' => 'color: {{VALUE}}',
 				],
 			]
 		);
