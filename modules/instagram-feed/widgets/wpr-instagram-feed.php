@@ -1196,38 +1196,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		$repeater->add_control( 'element_sharing_tooltip', $this->add_repeater_args_element_sharing_tooltip() );
 
 		$repeater->add_control(
-			'element_lightbox_pfa_select',
-			[
-				'label' => esc_html__( 'Post Format Audio', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'default',
-				'options' => [
-					'default' => esc_html__( 'Default', 'wpr-addons' ),
-					'meta' => esc_html__( 'Meta Value', 'wpr-addons' ),
-				],
-				'condition' => [
-					'element_select' => 'lightbox',
-				],
-			]
-		);
-
-		$repeater->add_control(
-			'element_lightbox_pfv_select',
-			[
-				'label' => esc_html__( 'Post Format Video', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'default',
-				'options' => [
-					'default' => esc_html__( 'Default', 'wpr-addons' ),
-					'meta' => esc_html__( 'Meta Value', 'wpr-addons' ),
-				],
-				'condition' => [
-					'element_select' => 'lightbox',
-				],
-			]
-		);
-
-		$repeater->add_control(
 			'element_lightbox_overlay',
 			[
 				'label' => esc_html__( 'Media Overlay', 'wpr-addons' ),
