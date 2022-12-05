@@ -106,7 +106,7 @@ class WPR_Templates_Actions {
 
 		$nonce = $_POST['nonce'];
 
-		if ( !wp_verify_nonce( $nonce, 'wpr-plugin-options-js')  || !current_user_can( 'edit_posts' ) ) {
+		if ( !wp_verify_nonce( $nonce, 'wpr-plugin-options-js')  || !current_user_can( 'manage_options' ) ) {
 		  exit; // Get out of here, the nonce is rotten!
 		}
 
@@ -178,7 +178,7 @@ class WPR_Templates_Actions {
 
 		$nonce = $_POST['nonce'];
 
-		if ( !wp_verify_nonce( $nonce, 'delete_post-' . $_POST['template_slug'] )  || !current_user_can( 'edit_posts' ) ) {
+		if ( !wp_verify_nonce( $nonce, 'delete_post-' . $_POST['template_slug'] )  || !current_user_can( 'manage_options' ) ) {
 		  exit; // Get out of here, the nonce is rotten!
 		}
 
