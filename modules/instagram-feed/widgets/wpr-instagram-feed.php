@@ -310,7 +310,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			'instagram_access_token_authorize',
 			[
 				'type' => Controls_Manager::RAW_HTML,
-				'raw' => '<a class="wpr-authorize-instagram" href="https://www.instagram.com/oauth/authorize?client_id=5484217328332432&redirect_uri=https://reastats.kinsta.cloud/token/social-network.php&scope=user_profile,user_media&response_type=code" target="popup">'. esc_html__( 'Authorize Instagram','wpr-addons' ) .'</a>',
+				'raw' => '<a class="wpr-authorize-instagram" href="https://www.instagram.com/oauth/authorize?client_id=1551600955281199&redirect_uri=https://reastats.kinsta.cloud/token/social-network.php&scope=user_profile,user_media&response_type=code" target="popup">'. esc_html__( 'Authorize Instagram','wpr-addons' ) .'</a>',
 				// 'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 			]
 		);
@@ -4597,7 +4597,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		}
 
 		if ( get_transient($key) === false ) {
-			var_dump('api call');
+			// var_dump('api call');
 			$limit = wp_is_mobile() ? $settings['limit_mobile'] : $settings['limit'];
 
 			$url = 'https://graph.instagram.com/me/media?fields=id,media_type,media_url,thumbnail_url,permalink,children,username,caption,timestamp&access_token='. $access_token .'&limit='. $settings['limit'];
@@ -4618,7 +4618,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			}
 
 		} else {
-			var_dump('transient call');
+			// var_dump('transient call');
 			$instagram_data = get_transient($key);
 		}
 		
@@ -5115,7 +5115,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		}
 
 		if ( get_transient('wpr_instagram_access_token'. $this->get_ID()) ) {
-			var_dump('transient works');
+			// var_dump('transient works');
 			$access_token = get_transient('wpr_instagram_access_token'. $this->get_ID());
 			$token_expires_in = get_transient('wpr_instagram_access_token_expires_in'. $this->get_ID());
 
@@ -5123,7 +5123,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 	
 			$token_generation_date = strtotime(get_transient('wpr_instagram_access_token_generation_date'. $this->get_ID()));
 		} else {
-			var_dump('settings-work');
+			// var_dump('settings-work');
 			$access_token = $settings['instagram_access_token'];
 
 			if ( !get_transient('wpr_instagram_access_token_expires_in'. $this->get_ID()) ) {
@@ -5140,14 +5140,18 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			$token_generation_date = strtotime(get_transient('wpr_instagram_access_token_generation_date'. $this->get_ID()));
 		}
 
-		var_dump($token_generation_date, $compare_date);
+		// var_dump((int) get_option( '_transient_timeout_wpr_instagram_access_token_expires_in'. $this->get_ID(), 0 ) - time());
 
-		var_dump(date('Y/m/d H:i:s', $token_generation_date), date('Y/m/d H:i:s', $compare_date));
+		// function secondsToTime($seconds) {
+		// 	$dtF = new \DateTime('@0');
+		// 	$dtT = new \DateTime("@$seconds");
+		// 	return $dtF->diff($dtT)->format('%a days, %h hours, %i minutes and %s seconds');
+		// }
 
-		var_dump($token_expires_in);
+		// var_dump(secondsToTime((int) get_option( '_transient_timeout_wpr_instagram_access_token_expires_in'. $this->get_ID(), 0 ) - time()));
 
-		if ( $token_generation_date <= $compare_date  ) {
-		// if ( !$token_expires_in  ) {
+		// if ( $token_generation_date <= $compare_date  ) {
+		if ( !$token_expires_in  ) {
 				$this->refresh_access_token($access_token);
 		}
 
