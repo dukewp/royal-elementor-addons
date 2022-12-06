@@ -69,6 +69,8 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 			if ( Utilities::is_new_free_user2() ) {
 				$post_types['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Pro)';
+			} else {
+				$post_types[$slug] = esc_html( $title );
 			}
 		}
 
