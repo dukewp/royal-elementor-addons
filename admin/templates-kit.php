@@ -18,6 +18,7 @@ add_action( 'admin_menu', 'wpr_addons_add_templates_kit_menu' );
 add_action( 'wp_ajax_wpr_activate_required_theme', 'wpr_activate_required_theme' );
 add_action( 'wp_ajax_wpr_activate_required_plugins', 'wpr_activate_required_plugins' );
 add_action( 'wp_ajax_wpr_fix_royal_compatibility', 'wpr_fix_royal_compatibility' );
+add_action( 'wp_ajax_wpr_reset_previous_import', 'wpr_reset_previous_import' );
 add_action( 'wp_ajax_wpr_import_templates_kit', 'wpr_import_templates_kit' );
 add_action( 'wp_ajax_wpr_final_settings_setup', 'wpr_final_settings_setup' );
 add_action( 'wp_ajax_wpr_search_query_results', 'wpr_search_query_results' );
@@ -240,6 +241,7 @@ function wpr_fix_royal_compatibility() {
     // Deactivate Extra Import Plugins
     $ashe_extra_key = array_search('ashe-extra/ashe-extra.php', $active_plugins);
     $bard_extra_key = array_search('bard-extra/bard-extra.php', $active_plugins);
+    $astra_sites_key = array_search('astra-sites/astra-sites.php', $active_plugins);
 
     if ( false !== $ashe_extra_key && array_key_exists($ashe_extra_key, $active_plugins) ) {
         unset($active_plugins[$ashe_extra_key]);
@@ -247,6 +249,10 @@ function wpr_fix_royal_compatibility() {
 
     if ( false !== $bard_extra_key && array_key_exists($bard_extra_key, $active_plugins) ) {
         unset($active_plugins[$bard_extra_key]);
+    }
+
+    if ( false !== $astra_sites_key && array_key_exists($astra_sites_key, $active_plugins) ) {
+        unset($active_plugins[$astra_sites_key]);
     }
 
     // Set Active Plugins
@@ -362,6 +368,33 @@ function download_template( $kit, $file ) {
 
     // Success.
     return $local_file['file'];
+}
+
+/**
+** Reset Previous Import
+*/
+function wpr_reset_previous_import() {
+    $args = [
+        'post_type' => 'any',
+        'posts_per_page' => '-1',
+        'meta_key' => '_wpr_demo_import_item'
+    ];
+
+    $imported_items = new WP_Query ( $args );
+
+    if ( $imported_items->have_posts() ) {
+        while ( $imported_items->have_posts() ) {
+            $imported_items->the_post();
+
+           wp_delete_post( get_the_ID(), true );
+        }
+
+        wp_send_json_success( esc_html__('Previous Import Files have been successfully Reset.', 'wpr-addons') );
+    } else {
+        wp_send_json_success( esc_html__('There is no Data for Reset.', 'wpr-addons') );
+    }
+
+    wp_reset_postdata();
 }
 
 /**

@@ -903,6 +903,10 @@ class WP_Import extends WP_Importer {
 					}
 				}
 			}
+
+			// Mark items as WPR Imported
+			add_post_meta( $post_id, '_wpr_demo_import_item', true );
+
 		}
 
 		unset( $this->posts );
