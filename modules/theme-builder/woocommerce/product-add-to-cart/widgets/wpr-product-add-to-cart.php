@@ -373,7 +373,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'quantity_size',
 			[
 				'label' => esc_html__( 'Font Size', 'wpr-addons' ),
@@ -418,7 +418,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'add_to_cart_quantity_width',
 			[
 				'label' => esc_html__( 'Width', 'wpr-addons' ),
@@ -473,7 +473,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'quantity_icons_size',
 			[
 				'label' => esc_html__( 'Font Size', 'wpr-addons' ),
@@ -494,7 +494,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'quantity_icons_width',
 			[
 				'label' => esc_html__( 'Width', 'wpr-addons' ),
@@ -760,7 +760,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 
 		$this->end_controls_tabs();
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'add_to_cart_width',
 			[
 				'label' => esc_html__( 'Width', 'wpr-addons' ),
