@@ -3076,6 +3076,7 @@ class Wpr_Grid extends Widget_Base {
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'grid', [
 			'Posts Order',
+			'Custom Post Types Support',
 			'Trim Title & Excerpt By Letter Count',
 			'Grid Columns 1,2,3,4,5,6',
 			'Masonry Layout',

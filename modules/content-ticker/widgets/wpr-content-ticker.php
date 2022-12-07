@@ -1045,6 +1045,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'content-ticker', [
 			'Add Custom Ticker Items (Instead of loading Dynamically)',
+			'Custom Post Types Support',
 			'Marquee Animation - a Smooth Animation with Direction option',
 			'Slider Animation options - Typing, Fade & Vertical Slide',
 			'Heading Icon Type - Animated Circle',
