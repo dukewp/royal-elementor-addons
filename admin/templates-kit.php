@@ -319,15 +319,49 @@ function download_template( $kit, $file ) {
 
     // Remote and Local Files
     $remote_file_url = 'https://royal-elementor-addons.com/library/templates-kit/'. $kit .'/main.xml?='. $randomNum;
-    $local_file_path = WPR_ADDONS_PATH .'admin/import/tmp.xml';
 
-    // No Limit for Execution
-    set_time_limit(0);
+    // If the function it's not available, require it.
+    if ( ! function_exists( 'download_url' ) ) {
+        require_once ABSPATH . 'wp-admin/includes/file.php';
+    }
 
-    // Copy File From Server
-    copy( $remote_file_url, $local_file_path );
+    $tmp_file = download_url( $remote_file_url );
 
-    return $local_file_path;
+    // WP Error.
+    if ( is_wp_error( $tmp_file ) ) {
+        wp_send_json_error(esc_html__('Import File download failed! Please contact Customer Support.', 'wpr-addons'));
+        return '';
+    }
+
+    // Array based on $_FILE as seen in PHP file uploads.
+    $file_args = [
+        'name'     => 'main.xml',
+        'tmp_name' => $tmp_file,
+        'error'    => 0,
+        'size'     => filesize( $tmp_file ),
+    ];
+
+    $defaults = array(
+        'test_form' => false,
+        'test_size' => true,
+        'test_upload' => true,
+        'mimes'  => [
+            'xml'  => 'text/xml',
+            'json' => 'text/plain',
+        ],
+        'wp_handle_sideload' => 'upload',
+    );
+
+    // Move the temporary file into the uploads directory.
+    $local_file = wp_handle_sideload( $file_args, $defaults );
+
+    if ( isset( $local_file['error'] ) ) {
+        wp_send_json_error( esc_html__('Import File upload failed! Please contact Customer Support.', 'wpr-addons') );
+        return '';
+    }
+
+    // Success.
+    return $local_file['file'];
 }
 
 /**
@@ -524,69 +558,46 @@ function disable_default_woo_pages_creation() {
 }
 
 /**
- *  Allow SVG Import - Add Mime Types
- */
-function wpr_svgs_upload_mimes( $mimes = array() ) {
-
-    // allow SVG file upload
-    $mimes['svg'] = 'image/svg+xml';
+** Add .xml and .svg files as supported format in the uploader.
+*/
+function custom_upload_mimes( $mimes ) {
+    // Allow SVG files.
+    $mimes['svg']  = 'image/svg+xml';
     $mimes['svgz'] = 'image/svg+xml';
 
-    // allow JSON file upload
-    $mimes['json'] = 'text/plain';
+    // Allow XML files.
+    $mimes['xml'] = 'text/xml';
+
+    // Allow JSON files.
+    $mimes['json'] = 'application/json';
 
     return $mimes;
-
 }
-add_filter( 'upload_mimes', 'wpr_svgs_upload_mimes', 99 );
 
-/**
- * Check Mime Types
- */
-function wpr_svgs_upload_check( $checked, $file, $filename, $mimes ) {
+add_filter( 'upload_mimes', 'custom_upload_mimes', 99 );
 
-    if ( ! $checked['type'] ) {
+function real_mime_types_5_1_0( $defaults, $file, $filename, $mimes, $real_mime ) {
+    return real_mimes( $defaults, $filename );
+}
 
-        $check_filetype     = wp_check_filetype( $filename, $mimes );
-        $ext                = $check_filetype['ext'];
-        $type               = $check_filetype['type'];
-        $proper_filename    = $filename;
+function real_mime_types( $defaults, $file, $filename, $mimes ) {
+    return real_mimes( $defaults, $filename );
+}
 
-        if ( $type && 0 === strpos( $type, 'image/' ) && $ext !== 'svg' ) {
-            $ext = $type = false;
-        }
-
-        $checked = compact( 'ext','type','proper_filename' );
+function real_mimes( $defaults, $filename ) {
+    if ( strpos( $filename, 'main' ) !== false ) {
+        $defaults['ext']  = 'xml';
+        $defaults['type'] = 'text/xml';
     }
 
-    return $checked;
-
+    return $defaults;
 }
-add_filter( 'wp_check_filetype_and_ext', 'wpr_svgs_upload_check', 10, 4 );
 
-/**
- * Mime Check fix for WP 4.7.1 / 4.7.2
- *
- * Fixes uploads for these 2 version of WordPress.
- * Issue was fixed in 4.7.3 core.
- */
-function wpr_svgs_allow_svg_upload( $data, $file, $filename, $mimes ) {
-
-    global $wp_version;
-    if ( $wp_version !== '4.7.1' || $wp_version !== '4.7.2' ) {
-        return $data;
-    }
-
-    $filetype = wp_check_filetype( $filename, $mimes );
-
-    return [
-        'ext'               => $filetype['ext'],
-        'type'              => $filetype['type'],
-        'proper_filename'   => $data['proper_filename']
-    ];
-
+if ( version_compare( get_bloginfo( 'version' ), '5.1.0', '>=' ) ) {
+    add_filter( 'wp_check_filetype_and_ext', 'real_mime_types_5_1_0', 10, 5, 99 );
+} else {
+    add_filter( 'wp_check_filetype_and_ext', 'real_mime_types', 10, 4 );
 }
-add_filter( 'wp_check_filetype_and_ext', 'wpr_svgs_allow_svg_upload', 10, 4 );
 
 /**
 ** Search Query Results

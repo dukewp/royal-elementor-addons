@@ -223,6 +223,8 @@ jQuery(document).ready(function( $ ) {
 							wpr_templates_kit_single: false
 						},
 						success: function( response ) {
+							// needs check to display errors only
+							console.log(response);
 							console.log('Setting up Final Settings...');
 							WprTemplatesKit.importProgressBar('settings');
 

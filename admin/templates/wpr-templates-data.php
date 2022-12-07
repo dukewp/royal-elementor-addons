@@ -13,6 +13,19 @@ class WPR_Templates_Data {
 		$is_woo_active = is_plugin_active('woocommerce/woocommerce.php') ? 'true' : 'false';
 
 		return [
+			'test' => [
+				'v1' => [
+					'name' => 'Test v1',
+					'pages' => 'home,',
+					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
+					'tags' => 'shop shopping woo-commerce woocommerce estore ecommerce product online eshopping market reseller ecommerce shop',
+					'theme-builder' => false,
+					'woo-builder' => false,
+					'off-canvas' => false,
+					'price' => 'free',
+					'priority' => 1,
+				],
+			],
 			'grocery-store' => [
 				'v1' => [
 					'name' => 'Grocery Store',

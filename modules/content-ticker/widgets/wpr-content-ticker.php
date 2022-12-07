@@ -146,7 +146,11 @@ class Wpr_Content_Ticker extends Widget_Base {
 				continue;
 			}
 
-			$this->post_types[$slug] = esc_html( $title );
+			if ( Utilities::is_new_free_user2() ) {
+				$this->post_types['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Pro)';
+			} else {
+				$this->post_types[$slug] = esc_html( $title );
+			}
 		}
 
 		$this->post_types['pro-pd'] = 'Products (Pro)';
