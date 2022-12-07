@@ -394,7 +394,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'add_to_cart_quantity_height',
 			[
 				'label' => esc_html__( 'Height', 'wpr-addons' ),
@@ -783,7 +783,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'add_to_cart_height',
 			[
 				'label' => esc_html__( 'Height', 'wpr-addons' ),

@@ -1676,6 +1676,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'magazine-grid', [
 			'Posts Order',
+			'Custom Post Types Support',
 			'Trim Title & Excerpt By Letter Count',
 			'Random Posts Query',
 			'+6 Magazine Grid Layouts',
