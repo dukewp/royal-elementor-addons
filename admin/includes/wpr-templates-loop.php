@@ -181,6 +181,18 @@ class WPR_Templates_Loop {
 									<option value="search"><?php esc_html_e( 'Search Results', 'wpr-addons' ); ?></option>
 									<option value="categories" class="custom-ids"><?php esc_html_e( 'Post Categories', 'wpr-addons' ); ?></option>
 									<option value="tags" class="custom-ids"><?php esc_html_e( 'Post Tags', 'wpr-addons' ); ?></option>
+
+									<?php // Custom Taxonomies
+										$custom_taxonomies = Utilities::get_custom_types_of( 'tax', true );
+										foreach ($custom_taxonomies as $key => $value) {
+											if ( 'product_cat' === $key || 'product_tag' === $key ) {
+												continue;
+											}
+
+											// List Taxonomies
+											echo '<option value="'. esc_attr($key) .'" class="custom-type-ids">'. esc_html($value) .'</option>';
+										}
+									?>
 								<?php elseif ( 'wpr_tab_product_archive' === $active_tab ): ?>
 									<option value="products"><?php esc_html_e( 'Products Archive', 'wpr-addons' ); ?></option>
 									<option value="product_cat" class="custom-type-ids"><?php esc_html_e( 'Products Categories', 'wpr-addons' ); ?></option>
@@ -197,8 +209,8 @@ class WPR_Templates_Loop {
 								<option value="pages" class="custom-ids"><?php esc_html_e( 'Pages', 'wpr-addons' ); ?></option>
 								<option value="posts" class="custom-ids"><?php esc_html_e( 'Posts', 'wpr-addons' ); ?></option>
 								<?php // Custom Post Types
-									$custom_taxonomies = Utilities::get_custom_types_of( 'post', true );
-									foreach ($custom_taxonomies as $key => $value) {
+									$custom_post_types = Utilities::get_custom_types_of( 'post', true );
+									foreach ($custom_post_types as $key => $value) {
 										echo '<option value="'. esc_attr($key) .'" class="custom-type-ids">'. esc_html($value) .'</option>';
 									}
 								?>					
@@ -208,6 +220,17 @@ class WPR_Templates_Loop {
 									<option value="page_404"><?php esc_html_e( '404 Page', 'wpr-addons' ); ?></option>
 									<option value="pages" class="custom-ids"><?php esc_html_e( 'Pages', 'wpr-addons' ); ?></option>
 									<option value="posts" class="custom-ids"><?php esc_html_e( 'Posts', 'wpr-addons' ); ?></option>
+
+									<?php // Custom Post Types
+										$custom_post_types = Utilities::get_custom_types_of( 'post', true );
+										foreach ($custom_post_types as $key => $value) {
+											if ( 'product' === $key || 'e-landing-page' === $key ) {
+												continue;
+											}
+
+											echo '<option value="'. esc_attr($key) .'" class="custom-type-ids">'. esc_html($value) .'</option>';
+										}
+									?>
 								<?php elseif ( 'wpr_tab_product_single' === $active_tab ): ?>
 									<option value="product" class="custom-type-ids"><?php esc_html_e( 'Products', 'wpr-addons' ); ?></option>
 								<?php endif; ?>
@@ -256,10 +279,22 @@ class WPR_Templates_Loop {
 									<option value="search"><?php esc_html_e( 'Search Results', 'wpr-addons' ); ?></option>
 									<option value="categories" class="custom-ids"><?php esc_html_e( 'Post Categories', 'wpr-addons' ); ?></option>
 									<option value="tags" class="custom-ids"><?php esc_html_e( 'Post Tags', 'wpr-addons' ); ?></option>
+
+									<?php // Custom Taxonomies
+										$custom_taxonomies = Utilities::get_custom_types_of( 'tax', true );
+										foreach ($custom_taxonomies as $key => $value) {
+											if ( 'product_cat' === $key || 'product_tag' === $key ) {
+												continue;
+											}
+
+											// List Taxonomies
+											echo '<option value="'. esc_attr($key) .'" class="custom-type-ids">'. esc_html($value) .' (Pro)</option>';
+										}
+									?>
 								<?php elseif ( 'wpr_tab_product_archive' === $active_tab ): ?>
 									<option value="products"><?php esc_html_e( 'Products Archive', 'wpr-addons' ); ?></option>
 									<option value="product_cat" class="custom-type-ids"><?php esc_html_e( 'Products Categories (Pro)', 'wpr-addons' ); ?></option>
-									<option value="product_tag" class="custom-type-ids"><?php esc_html_e( 'Products Tags (Pro)', 'wpr-addons' ); ?></option>								
+									<option value="product_tag" class="custom-type-ids"><?php esc_html_e( 'Products Tags (Pro)', 'wpr-addons' ); ?></option>						
 								<?php endif; ?>
 							<?php endif; ?>
 						</select>
@@ -272,8 +307,8 @@ class WPR_Templates_Loop {
 								<option value="pages" class="custom-ids"><?php esc_html_e( 'Pages (Pro)', 'wpr-addons' ); ?></option>
 								<option value="posts" class="custom-ids"><?php esc_html_e( 'Posts (Pro)', 'wpr-addons' ); ?></option>
 								<?php // Custom Post Types
-									$custom_taxonomies = Utilities::get_custom_types_of( 'post', true );
-									foreach ($custom_taxonomies as $key => $value) {
+									$custom_post_types = Utilities::get_custom_types_of( 'post', true );
+									foreach ($custom_post_types as $key => $value) {
 										echo '<option value="'. esc_attr($key) .'" class="custom-type-ids">'. esc_html($value) .' (Pro)</option>';
 									}
 								?>					
@@ -283,6 +318,17 @@ class WPR_Templates_Loop {
 									<option value="page_404"><?php esc_html_e( '404 Page', 'wpr-addons' ); ?></option>
 									<option value="pages" class="custom-ids"><?php esc_html_e( 'Pages', 'wpr-addons' ); ?></option>
 									<option value="posts" class="custom-ids"><?php esc_html_e( 'Posts', 'wpr-addons' ); ?></option>
+
+									<?php // Custom Post Types
+										$custom_post_types = Utilities::get_custom_types_of( 'post', true );
+										foreach ($custom_post_types as $key => $value) {
+											if ( 'product' === $key || 'e-landing-page' === $key ) {
+												continue;
+											}
+											
+											echo '<option value="'. esc_attr($key) .'" class="custom-type-ids">'. esc_html($value) .' (Pro)</option>';
+										}
+									?>
 								<?php elseif ( 'wpr_tab_product_single' === $active_tab ): ?>
 									<option value="product" class="custom-type-ids"><?php esc_html_e( 'Products', 'wpr-addons' ); ?></option>
 								<?php endif; ?>

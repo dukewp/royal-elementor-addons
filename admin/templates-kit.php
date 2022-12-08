@@ -375,7 +375,16 @@ function download_template( $kit, $file ) {
 */
 function wpr_reset_previous_import() {
     $args = [
-        'post_type' => 'any',
+        'post_type' => [
+            'page',
+            'post',
+            'product',
+            'wpr_mega_menu',
+            'wpr_templates',
+            'elementor_library',
+            'attachment'
+        ],
+        'post_status' => 'any',
         'posts_per_page' => '-1',
         'meta_key' => '_wpr_demo_import_item'
     ];
@@ -385,16 +394,36 @@ function wpr_reset_previous_import() {
     if ( $imported_items->have_posts() ) {
         while ( $imported_items->have_posts() ) {
             $imported_items->the_post();
+        
+            // Dont Delete Elementor Kit
+            if ( 'Default Kit' == get_the_title() ) {
+                continue;
+            }
 
-           wp_delete_post( get_the_ID(), true );
+            // Delete Posts
+            wp_delete_post( get_the_ID(), true );
+        }
+
+        // Reset
+        wp_reset_query();
+
+        $imported_terms = get_terms([
+            'meta_key' => '_wpr_demo_import_item',
+            'posts_per_page' => -1,
+            'hide_empty' => false,
+        ]);
+
+        if ( !empty($imported_terms) ) {
+            foreach( $imported_terms as $imported_term ) {
+                // Delete Terms
+                wp_delete_term( $imported_term->term_id, $imported_term->taxonomy );
+            }
         }
 
         wp_send_json_success( esc_html__('Previous Import Files have been successfully Reset.', 'wpr-addons') );
     } else {
         wp_send_json_success( esc_html__('There is no Data for Reset.', 'wpr-addons') );
     }
-
-    wp_reset_postdata();
 }
 
 /**
