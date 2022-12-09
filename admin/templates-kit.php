@@ -246,7 +246,8 @@ function wpr_fix_royal_compatibility() {
         'woocommerce/woocommerce.php',
         'really-simple-ssl/rlrsssl-really-simple-ssl.php',
         'wp-mail-smtp/wp_mail_smtp.php',
-        'updraftplus/updraftplus.php'
+        'updraftplus/updraftplus.php',
+        'temporary-login-without-password/temporary-login-without-password.php'
     ];
 
     // Deactivate Extra Import Plugins
