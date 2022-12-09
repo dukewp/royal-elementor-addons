@@ -608,3 +608,36 @@ span.wpr-woo-builder-label {
 div.fs-notice.updated, div.fs-notice.success {
   display: none !important;
 }
+
+/* Impot Error */
+.progress-wrap.import-error .progress-bar {
+  width: 100% !important;
+  background-color: #ff6060;
+}
+
+.progress-wrap.import-error strong span {
+  font-weight: normal;
+  font-style: italic;
+  color: #888;
+}
+
+.wpr-import-help.import-error {
+  text-align: center;
+}
+
+.wpr-import-help.import-error a {
+  width: auto;
+  display: inline-block;
+  color: #fff;
+  background-color: #2271B1;
+  font-size: 14px;
+  padding: 5px 15px 6px;
+  text-decoration: none;
+  border-radius: 3px;
+}
+
+.wpr-import-help.import-error a span {
+  font-size: 14px !important;
+  width: 14px !important;
+  height: 14px !important;
+}
