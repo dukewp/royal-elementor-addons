@@ -296,6 +296,9 @@ function wpr_import_templates_kit() {
         // Tmp
         update_option( 'wpr-import-kit-id', $kit );
 
+        // No Limit for Execution
+        set_time_limit(0);
+
         // Download Import File
         $local_file_path = download_template( $kit, $file );
 
