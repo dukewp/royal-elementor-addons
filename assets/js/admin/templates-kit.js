@@ -235,7 +235,15 @@ jQuery(document).ready(function( $ ) {
 								},
 								success: function( response ) {
 									// needs check to display errors only
-									console.log(response);
+									if ( undefined !== response.success) {
+										console.log(response.data);
+										$('.progress-wrap, .wpr-import-help').addClass('import-error');
+										$('.progress-wrap').find('strong').html(response.data['error'] +'<br><span>'+ response.data['help'] +'<span>');
+										$('.wpr-import-help a').html('Contact Support <span class="dashicons dashicons-email"></span>');
+
+										return false;
+									}
+
 									console.log('Setting up Final Settings...');
 									WprTemplatesKit.importProgressBar('settings');
 		

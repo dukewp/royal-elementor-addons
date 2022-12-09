@@ -237,22 +237,24 @@ function wpr_fix_royal_compatibility() {
     // Get currently active plugins
     $active_plugins = (array) get_option( 'active_plugins', array() );
     $active_plugins = array_values($active_plugins);
+    $required_plugins = [
+        'elementor/elementor.php',
+        'royal-elementor-addons/wpr-addons.php',
+        'royal-elementor-addons-pro/wpr-addons-pro.php',
+        'wpr-addons-pro/wpr-addons-pro.php',
+        'contact-form-7/wp-contact-form-7.php',
+        'woocommerce/woocommerce.php',
+        'really-simple-ssl/rlrsssl-really-simple-ssl.php',
+        'wp-mail-smtp/wp_mail_smtp.php',
+        'updraftplus/updraftplus.php'
+    ];
 
     // Deactivate Extra Import Plugins
-    $ashe_extra_key = array_search('ashe-extra/ashe-extra.php', $active_plugins);
-    $bard_extra_key = array_search('bard-extra/bard-extra.php', $active_plugins);
-    $astra_sites_key = array_search('astra-sites/astra-sites.php', $active_plugins);
-
-    if ( false !== $ashe_extra_key && array_key_exists($ashe_extra_key, $active_plugins) ) {
-        unset($active_plugins[$ashe_extra_key]);
-    }
-
-    if ( false !== $bard_extra_key && array_key_exists($bard_extra_key, $active_plugins) ) {
-        unset($active_plugins[$bard_extra_key]);
-    }
-
-    if ( false !== $astra_sites_key && array_key_exists($astra_sites_key, $active_plugins) ) {
-        unset($active_plugins[$astra_sites_key]);
+    foreach ( $active_plugins as $key => $value ) {
+        if ( ! in_array($value, $required_plugins) ) {
+            $active_key = array_search($value, $active_plugins);;
+            unset($active_plugins[$active_key]);
+        }
     }
 
     // Set Active Plugins
@@ -335,8 +337,11 @@ function download_template( $kit, $file ) {
 
     // WP Error.
     if ( is_wp_error( $tmp_file ) ) {
-        wp_send_json_error(esc_html__('Import File download failed! Please contact Customer Support.', 'wpr-addons'));
-        return '';
+        wp_send_json_error([
+            'error' => esc_html__('Error: Import File download failed.', 'wpr-addons'),
+            'help' => esc_html__('Please contact Customer Support and send this Error.', 'wpr-addons')
+        ]);
+        return false;
     }
 
     // Array based on $_FILE as seen in PHP file uploads.
@@ -362,8 +367,11 @@ function download_template( $kit, $file ) {
     $local_file = wp_handle_sideload( $file_args, $defaults );
 
     if ( isset( $local_file['error'] ) ) {
-        wp_send_json_error( esc_html__('Import File upload failed! Please contact Customer Support.', 'wpr-addons') );
-        return '';
+        wp_send_json_error([
+            'error' => esc_html__('Error: Import File upload failed.', 'wpr-addons'),
+            'help' => esc_html__('Please contact Customer Support and send this Error.', 'wpr-addons')
+        ]);
+        return false;
     }
 
     // Success.
