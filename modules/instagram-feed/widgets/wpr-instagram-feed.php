@@ -4600,7 +4600,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			// var_dump('api call');
 			$limit = wp_is_mobile() ? $settings['limit_mobile'] : $settings['limit'];
 
-			$url = 'https://graph.instagram.com/me/media?fields=id,media_type,media_url,thumbnail_url,permalink,children,username,caption,timestamp&access_token='. $access_token .'&limit='. $settings['limit'];
+			$url = 'https://graph.instagram.com/me/media?fields=id,media_type,media_url,thumbnail_url,permalink,children,username,caption,timestamp&access_token='. $access_token .'&limit='. $limit;
 
 			$response = wp_remote_get($url);
 
