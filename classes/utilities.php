@@ -66,6 +66,7 @@ class Utilities {
 			'Page List' => ['page-list', '', '', 'new'],
 			'Template' => ['elementor-template', '', '', ''],
 			'Reading Progress Bar' => ['reading-progress-bar', 'https://royal-elementor-addons.com/elementor-reading-progress-bar-widget/', '', 'new'],
+			'Offcanvas' => ['offcanvas', 'https://royal-elementor-addons.com/elementor-offcanvas-widget/', '', 'new'],
 			// 'Random Image' => ['random-image', '', ''],
 		];
 	}

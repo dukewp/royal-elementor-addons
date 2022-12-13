@@ -15597,6 +15597,28 @@ dl.variation dd {
             animation: badgeFade 2s ease-in-out infinite;
 }
 
+/*--------------------------------------------------------------
+== Offcanvas
+--------------------------------------------------------------*/
+
+.wpr-offcanvas-cont {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba( 0, 0, 0, 0.5);
+    display: none;
+    z-index: 99;
+}
+
+.wpr-offcanvas {
+    position: relative;
+    height: 100%;
+    width: 40%;
+    background-color: #FFF;
+}
+
 @keyframes badgeFade {
     0% {
         opacity: 1
