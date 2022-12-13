@@ -527,6 +527,27 @@ function wpr_addons_settings_page() {
 
 } // End wpr_addons_settings_page()
 
+// Add Pro Plugin Link Sub Menu item that will redirect to wp.org
+// function wpr_addons_add_pro_plugin_direct_link_page() {
+//     add_submenu_page( 'wpr-addons', 'Pro Plugin Direct Link', 'Pro Plugin Direct Link', 'manage_options', 'wpr-pro-plugin-direct-link', 'wpr_addons_pro_plugin_direct_link', 99 );
+// }
+// add_action( 'admin_menu', 'wpr_addons_add_pro_plugin_direct_link_page', 99 );
+
+// function wpr_addons_pro_plugin_direct_link() {  
+//     define( 'FS__API_SCOPE', 'developer' );
+//     define( 'FS__API_DEV_ID', 8416 );
+//     define( 'FS__API_PUBLIC_KEY', 'pk_a0b21b234a7c9581a555b9ee9f28a' );
+//     define( 'FS__API_SECRET_KEY', 'sk_HN%H:Qlyn]0(3R[IhfCYss3A9.]mO' );
+    
+//     // Init SDK.
+//     $api = new Freemius_Api_WordPress(FS__API_SCOPE, FS__API_DEV_ID, FS__API_PUBLIC_KEY, FS__API_SECRET_KEY);
+    
+//     // Get all products.
+//     $result = $api->Api('/plugins/8416/licenses/721741/tags/latest.json?format=json');
+
+//     var_dump($result);
+// }
+
 
 
 // Add Support Sub Menu item that will redirect to wp.org

@@ -8118,7 +8118,7 @@ class Wpr_Grid extends Widget_Base {
 
 		if ( has_post_thumbnail() ) {
 			echo '<div class="wpr-grid-image-wrap" data-src="'. esc_url( $src ) .'">';
-				echo '<img src="'. esc_url( $src ) .'" alt="'. esc_attr( $alt ) .'" class="wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
+				echo '<img src="'. WPR_ADDONS_ASSETS_URL . 'img/icon-256x256.png" alt="'. esc_attr( $alt ) .'" class="wpr-hidden-image wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
 			echo '</div>';
 		}
 	}
