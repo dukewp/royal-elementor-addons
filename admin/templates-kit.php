@@ -24,6 +24,10 @@ add_action( 'wp_ajax_wpr_final_settings_setup', 'wpr_final_settings_setup' );
 add_action( 'wp_ajax_wpr_search_query_results', 'wpr_search_query_results' );
 add_action( 'init', 'disable_default_woo_pages_creation', 2 );
 
+// Set Image Timeout
+if ( version_compare( get_bloginfo( 'version' ), '5.1.0', '>=' ) ) {
+    add_filter( 'http_request_timeout', 'set_image_request_timeout', 10, 2 );
+}
 
 /**
 ** Render Templates Kit Page
@@ -247,7 +251,8 @@ function wpr_fix_royal_compatibility() {
         'really-simple-ssl/rlrsssl-really-simple-ssl.php',
         'wp-mail-smtp/wp_mail_smtp.php',
         'updraftplus/updraftplus.php',
-        'temporary-login-without-password/temporary-login-without-password.php'
+        'temporary-login-without-password/temporary-login-without-password.php',
+        'wp-reset/wp-reset.php'
     ];
 
     // Deactivate Extra Import Plugins
@@ -297,6 +302,9 @@ function wpr_import_templates_kit() {
         // Tmp
         update_option( 'wpr-import-kit-id', $kit );
 
+        // Regenerate Extra Image Sizes
+        add_filter( 'intermediate_image_sizes_advanced', 'disable_extra_image_sizes', 10, 3 );
+
         // No Limit for Execution
         set_time_limit(0);
 
@@ -341,11 +349,17 @@ function download_template( $kit, $file ) {
 
     // WP Error.
     if ( is_wp_error( $tmp_file ) ) {
-        wp_send_json_error([
-            'error' => esc_html__('Error: Import File download failed.', 'wpr-addons'),
-            'help' => esc_html__('Please contact Customer Support and send this Error.', 'wpr-addons')
-        ]);
-        return false;
+        // Fallback URL
+        $remote_file_url = 'https://mysitetutorial.com/library/templates-kit/'. $kit .'/main.xml?='. $randomNum;
+        $tmp_file = download_url( $remote_file_url );
+
+        if ( is_wp_error( $tmp_file ) ) {
+            wp_send_json_error([
+                'error' => esc_html__('Error: Import File download failed.', 'wpr-addons'),
+                'help' => esc_html__('Please contact Customer Support and send this Error.', 'wpr-addons')
+            ]);
+            return false;
+        }
     }
 
     // Array based on $_FILE as seen in PHP file uploads.
@@ -622,6 +636,71 @@ function wpr_final_settings_setup() {
     if ( $post ) {
         wp_delete_post($post->ID,true);
     }
+
+    // Regenerate Extra Image Sizes
+    regenerate_extra_image_sizes();
+}
+
+/**
+** Regenerate Extra Image Sizes
+*/
+function disable_extra_image_sizes( $new_sizes, $image_meta, $attachment_id ) {
+    $all_attachments = get_option( 'st_attachments', array() );
+
+    // If the cron job is already scheduled, bail.
+    if ( in_array( $attachment_id, $all_attachments, true ) ) {
+        return $new_sizes;
+    }
+
+    $all_attachments[] = $attachment_id;
+
+    update_option( 'st_attachments', $all_attachments, 'no' );
+
+    // Return blank array of sizes to not generate any sizes in this request.
+    return array();
+}
+
+/**
+** Regenerate Extra Image Sizes
+*/
+function regenerate_extra_image_sizes() {
+    $all_attachments = get_option( 'st_attachments', array() );
+
+    if ( empty( $all_attachments ) ) {
+        return;
+    }
+
+    foreach ( $all_attachments as $attachment_id ) {
+        $file = get_attached_file( $attachment_id );
+        if ( false !== $file ) {
+            wp_generate_attachment_metadata( $attachment_id, $file );
+        }
+    }
+    update_option( 'st_attachments', array(), 'no' );
+}
+
+/**
+** Validate Image Extension
+*/
+function wpr_validate_image_ext( $link = '' ) {
+    return preg_match( '/^((https?:\/\/)|(www\.))([a-z0-9-].?)+(:[0-9]+)?\/[\w\-\@]+\.(jpg|png|gif|jpeg|svg)\/?$/i', $link );
+}
+
+/**
+** Set Timeout for Image Request
+*/
+function set_image_request_timeout( $timeout_value, $url ) {
+    if ( strpos( $url, 'https://royal-elementor-addons.com/' ) === false ) {
+        return $timeout_value;
+    }
+
+    $valid_ext = preg_match( '/^((https?:\/\/)|(www\.))([a-z0-9-].?)+(:[0-9]+)?\/[\w\-\@]+\.(jpg|png|gif|jpeg|svg)\/?$/i', $url );
+
+    if ( $valid_ext ) {
+        $timeout_value = 300;
+    }
+
+    return $timeout_value;
 }
 
 /**
