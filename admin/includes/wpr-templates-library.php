@@ -9,8 +9,8 @@ use WprAddons\Admin\Includes\WPR_Templates_Shortcode;
 use WprAddons\Admin\Includes\WPR_Templates_Modal_Popups;
 use WprAddons\Admin\Includes\WPR_Templates_Actions;
 use WprAddons\Admin\Templates\WPR_Templates_Library_Blocks;
-use WprAddons\Admin\Templates\WPR_Templates_Library_Popups;
 use WprAddons\Admin\Templates\WPR_Templates_Library_Pages;
+use WprAddons\Admin\Templates\WPR_Templates_Library_Popups;
 use WprAddons\Classes\Utilities;
 
 /**
@@ -43,13 +43,13 @@ class WPR_Templates_Library {
 		new WPR_Templates_Actions();
 
 		// Add Blocks to Library
-		new WPR_Templates_Library_Blocks();
+		// new WPR_Templates_Library_Blocks();
+
+		// Add Pages to Library
+		new WPR_Templates_Library_Pages();
 
 		// Add Popups to Library
 		new WPR_Templates_Library_Popups();
-
-		// Add Pages to Library
-		// new WPR_Templates_Library_Pages();
 
 		// Enable Elementor for 'wpr_templates'
 		$this->add_elementor_cpt_support();

@@ -587,6 +587,19 @@ class WPR_Templates_Data {
 		];
 	}
 
+	public static function get_available_kits_for_pages() {
+		return [
+			'digital-marketing-agency-v1' => [
+				'name' => 'Digital Marketing Agency',
+				'pages' => [ 'home','seo','branding','marketing','social','blog','about','contact' ]
+			],
+			'travel-agency-v1' => [
+				'name' => 'Travel agency',
+				'pages' => 'home','tours','gallery','services','reviews','about','contact'
+			]
+		];
+	}
+
 	public static function get_available_blocks() {
 		return [
 			'grid' => [
