@@ -40,14 +40,14 @@ class WPR_Templates_Library_Pages {
 			foreach( $kits as $kit => $data ) :
 
 				$template_title = $data['name'];
-				$template_class = (strpos($template_slug, 'pro') && !wpr_fs()->can_use_premium_code()) ? ' wpr-tplib-pro-wrap' : '';
+				$template_class = ('pro' === $data['price'] && !wpr_fs()->can_use_premium_code()) ? ' wpr-tplib-pro-wrap' : '';
 				
 				foreach( $data['pages'] as $page ) :
 
 			?>
 
 				<div class="wpr-tplib-template-wrap<?php echo esc_attr($template_class); ?>">
-						<div class="wpr-tplib-template" data-slug="<?php echo esc_attr($kit); ?>" data-filter="<?php echo esc_attr($kit); ?>">
+						<div class="wpr-tplib-template" data-slug="<?php echo esc_attr($page); ?>" data-kit="<?php echo esc_attr($kit); ?>">
 							<div class="wpr-tplib-template-media">
 								<img src="<?php echo esc_url('https://royal-elementor-addons.com/library/templates-kit/'. $kit .'/'. $page .'.jpg'); ?>">
 								<div class="wpr-tplib-template-media-overlay">
@@ -55,9 +55,9 @@ class WPR_Templates_Library_Pages {
 								</div>
 							</div>
 							<div class="wpr-tplib-template-footer elementor-clearfix">
-							<h3><?php echo esc_html($template_title); ?></h3>
+							<h3><?php echo esc_html($template_title .' - '. ucwords($page)); ?></h3>
 
-								<?php if ( strpos($kit, 'pro') && !wpr_fs()->can_use_premium_code() ) : ?>
+								<?php if ( 'pro' === $data['price'] && !wpr_fs()->can_use_premium_code() ) : ?>
 									<span class="wpr-tplib-insert-template wpr-tplib-insert-pro"><i class="eicon-star"></i> <span><?php esc_html_e( 'Go Pro', 'wpr-addons' ); ?></span></span>
 								<?php else : ?>
 									<span class="wpr-tplib-insert-template"><i class="eicon-file-download"></i> <span><?php esc_html_e( 'Insert', 'wpr-addons' ); ?></span></span>

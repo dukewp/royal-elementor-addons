@@ -43,10 +43,10 @@ class WPR_Templates_Library {
 		new WPR_Templates_Actions();
 
 		// Add Blocks to Library
-		// new WPR_Templates_Library_Blocks();
+		new WPR_Templates_Library_Blocks();
 
 		// Add Pages to Library
-		new WPR_Templates_Library_Pages();
+		// new WPR_Templates_Library_Pages();
 
 		// Add Popups to Library
 		new WPR_Templates_Library_Popups();

@@ -163,9 +163,11 @@ class WPR_Templates_Actions {
 	public function wpr_import_library_template() {
         $source = new WPR_Library_Source();
 		$slug = isset($_POST['slug']) ? sanitize_text_field(wp_unslash($_POST['slug'])) : '';
+		$kit = isset($_POST['kit']) ? sanitize_text_field(wp_unslash($_POST['kit'])) : '';
 
         $data = $source->get_data([
-        	'template_id' => $slug
+        	'template_id' => $slug,
+			'kit_id' => $kit
         ]);
         
         echo json_encode($data);
@@ -310,12 +312,18 @@ class WPR_Library_Source extends \Elementor\TemplateLibrary\Source_Base {
 		return $templates[ $template_id ];
 	}
 
-	public function request_template_data( $template_id ) {
+	public function request_template_data( $template_id, $kit_id ) {
 		if ( empty( $template_id ) ) {
 			return;
 		}
 
-		$response = wp_remote_get( 'https://royal-elementor-addons.com/library/premade-styles/'. $template_id .'.json', [
+		if ( '' !== $kit_id ) {
+			$url = 'https://royal-elementor-addons.com/library/templates-kit/'. $kit_id .'/';
+		} else {
+			$url = 'https://royal-elementor-addons.com/library/premade-styles/';
+		}
+
+		$response = wp_remote_get( $url . $template_id .'.json', [
 			'timeout'   => 60,
 			'sslverify' => false
 		] );
@@ -324,7 +332,7 @@ class WPR_Library_Source extends \Elementor\TemplateLibrary\Source_Base {
 	}
 
 	public function get_data( array $args ) {//TODO: FIX - This function imports placeholder images in library
-		$data = $this->request_template_data( $args['template_id'] );
+		$data = $this->request_template_data( $args['template_id'], $args['kit_id'] );
 
 		$data = json_decode( $data, true );
 

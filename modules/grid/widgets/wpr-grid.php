@@ -823,7 +823,7 @@ class Wpr_Grid extends Widget_Base {
 				[
 					'label' => $title,
 					'type' => 'wpr-ajax-select2',
-					'options' => 'ajaxselect2/available_',
+					'options' => 'ajaxselect2/get_taxonomies',
 					'query_slug' => $slug,
 					'multiple' => true,
 					'label_block' => true,

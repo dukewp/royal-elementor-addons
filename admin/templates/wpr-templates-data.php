@@ -588,14 +588,18 @@ class WPR_Templates_Data {
 	}
 
 	public static function get_available_kits_for_pages() {
+		$is_pro_active = wpr_fs()->can_use_premium_code() && defined('WPR_ADDONS_PRO_VERSION');
+		
 		return [
 			'digital-marketing-agency-v1' => [
 				'name' => 'Digital Marketing Agency',
-				'pages' => [ 'home','seo','branding','marketing','social','blog','about','contact' ]
+				'pages' => ['home','seo','branding','marketing','social','blog','about','contact'],
+				'price' => $is_pro_active ? 'free' : 'free',
 			],
-			'travel-agency-v1' => [
-				'name' => 'Travel agency',
-				'pages' => 'home','tours','gallery','services','reviews','about','contact'
+			'fashion-v1' => [
+				'name' => 'Fashion Shop',
+				'pages' => ['home','shop-v1','shop-v2','single-product','blog','my-account','about','faq','contact'],
+				'price' => $is_pro_active ? 'free' : 'pro'
 			]
 		];
 	}
