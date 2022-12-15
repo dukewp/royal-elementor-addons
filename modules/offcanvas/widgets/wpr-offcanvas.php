@@ -97,25 +97,26 @@ class Wpr_Offcanvas extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
+		// needs to be responsive ?
+		$this->add_control(
             'offcanvas_position',
             [
                 'label'        => esc_html__('Position', 'wpr-addons'), 
                 'type'         => Controls_Manager::CHOOSE,
                 'label_block'  => false,
-                'default'      => 'center',
-				// 'separator' => 'before',
+                'default'      => 'left',
+				'render_type' => 'template',
                 'options'      => [
                     'top'   => [
                         'title' => esc_html__('Top', 'wpr-addons'),
                         'icon'  => 'eicon-v-align-top',
                     ],
                     'right' => [
-                        'title' => esc_html__('Center', 'wpr-addons'),
+                        'title' => esc_html__('Right', 'wpr-addons'),
                         'icon'  => 'eicon-h-align-right',
                     ],
                     'left'  => [
-                        'title' => esc_html__('Right', 'wpr-addons'),
+                        'title' => esc_html__('Left', 'wpr-addons'),
                         'icon'  => 'eicon-h-align-left',
                     ],
                     'bottom'  => [
@@ -126,19 +127,43 @@ class Wpr_Offcanvas extends Widget_Base {
                         'title' => esc_html__('Middle', 'wpr-addons'),
                         'icon'  => 'eicon-v-align-middle',
                     ],
-				],
-				'selectors_dictionary' => [
-					'top' => 'top: 0; bottom: auto; left: 0; width: 100%; height: auto; transform: translateX(0) translateY(0);',
-					'bottom' => 'bottom: 0; top: auto; left: 0; width: 100%; height: auto; transform: translateX(0) translateY(0);',
-					'right' => 'top: 0; right: 0; left: auto; height: 100%; width: auto; transform: translateX(0) translateY(0);',
-					'left' => 'top: 0; left: 0; right: auto; height: 100%; width: auto; transform: translateX(0) translateY(0);',
-					'middle' => 'top: 50%; left: 50%; transform: translateX(-50%) translateY(-50%); height: auto; width: auto'
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-offcanvas-content' => '{{VALUE}}',
 				]
             ]
         );
+
+		$this->add_control(
+			'offcanvas_entrance_animation',
+			[
+				'label' => esc_html__( 'Entrance Animation', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'render_type' => 'template',
+				'default' => 'slide',
+				'options' => [
+					'slide' => esc_html__( 'Slide', 'wpr-addons' ),
+					'grow' => esc_html__( 'Grow', 'wpr-addons' ),
+					'fade' => esc_html__( 'Fade', 'wpr-addons' ),
+				],
+				'prefix_class' => 'wpr-offcanvas-entrance-animation-'
+			]
+		);
+
+		$this->add_control(
+			'offcanvas_entrance_type',
+			[
+				'label' => esc_html__( 'Entrance Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'render_type' => 'template',
+				'options' => [
+					'cover' => esc_html__( 'Cover', 'wpr-addons' ),
+					'push' => esc_html__( 'Push', 'wpr-addons' ),
+				],
+				'prefix_class' => 'wpr-offcanvas-entrance-type-',
+				'default' => 'cover',
+				'condition' => [
+					'offcanvas_position' => ['left', 'right']
+				]
+			]
+		);
 
 		$this->add_control(
 			'offcanvas_open_by_default',
@@ -729,7 +754,7 @@ class Wpr_Offcanvas extends Widget_Base {
 			</button>
 
 			<div class="wpr-offcanvas-wrap">
-				<div class="wpr-offcanvas-content">
+				<div class="wpr-offcanvas-content wpr-offcanvas-content-<?php echo $settings['offcanvas_position'] ?>">
 					<div class="wpr-offcanvas-header">
 						<span class="wpr-close-offcanvas">
 							<i class="fa fa-times" aria-hidden="true"></i>
