@@ -882,15 +882,7 @@ class Wpr_Media_Grid extends Widget_Base {
 				'min' => 1,
 				'max' => 10,
 				'default' => 2,
-				'prefix_class' => 'wpr-grid-slides-to-scroll-',
 				'frontend_available' => true,
-				'default' => 2,
-				'widescreen_default' => 2,
-				'laptop_default' => 2,
-				'tablet_extra_default' => 2,
-				'tablet_default' => 1,
-				'mobile_extra_default' => 1,
-				'mobile_default' => 1,
 				'separator' => 'before',
 				'condition' => [
 					'layout_select' => 'slider',
@@ -7410,6 +7402,7 @@ class Wpr_Media_Grid extends Widget_Base {
 			'pauseOnHover' => $settings['layout_slider_pause_on_hover'],
 			'prevArrow' => '#wpr-grid-slider-prev-'. $this->get_id(),
 			'nextArrow' => '#wpr-grid-slider-next-'. $this->get_id(),
+			'sliderSlidesToScroll' => +$settings['layout_slides_to_scroll'],
 		];
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {

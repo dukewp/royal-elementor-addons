@@ -1171,6 +1171,8 @@
 			} else {
 				iGrid.animate({ 'opacity': '1' }, 1000);
 
+				settings = JSON.parse( iGrid.attr( 'data-slick' ) );
+
 				var sliderClass = $scope.attr('class'),
 					sliderColumnsDesktop = sliderClass.match(/wpr-grid-slider-columns-\d/) ? sliderClass.match(/wpr-grid-slider-columns-\d/).join().slice(-1) : 2,
 					sliderColumnsWideScreen = sliderClass.match(/columns--widescreen\d/) ? sliderClass.match(/columns--widescreen\d/).join().slice(-1) : sliderColumnsDesktop,
@@ -1179,7 +1181,7 @@
 					sliderColumnsTablet = sliderClass.match(/columns--tablet\d/) ? sliderClass.match(/columns--tablet\d/).join().slice(-1) : 2,
 					sliderColumnsMobileExtra = sliderClass.match(/columns--mobile_extra\d/) ? sliderClass.match(/columns--mobile_extra\d/).join().slice(-1) : sliderColumnsTablet,
 					sliderColumnsMobile = sliderClass.match(/columns--mobile\d/) ? sliderClass.match(/columns--mobile\d/).join().slice(-1) : 1,
-					sliderSlidesToScroll = sliderClass.match(/wpr-grid-slides-to-scroll-\d/) ? +(sliderClass.match(/wpr-grid-slides-to-scroll-\d/).join().slice(-1)) : 1;
+					sliderSlidesToScroll = settings.sliderSlidesToScroll;
 
 				iGrid.slick({
 					appendDots : $scope.find( '.wpr-grid-slider-dots' ),
@@ -1289,8 +1291,6 @@
 						}, 300 );
 					});
 				}
-
-				settings = JSON.parse( iGrid.attr( 'data-slick' ) );
 			}
 
 			// Add To Cart AJAX
@@ -3316,7 +3316,9 @@
 		}, // End widgetAdvancedSlider
 
 		widgetTestimonialCarousel: function( $scope ) {
+			
 			var testimonialCarousel = $scope.find( '.wpr-testimonial-carousel' );
+			var settings = JSON.parse( testimonialCarousel.attr( 'data-slick' ) );
 			// Slider Columns
 			var sliderClass = $scope.attr('class'),
 				sliderColumnsDesktop = sliderClass.match(/wpr-testimonial-slider-columns-\d/) ? sliderClass.match(/wpr-testimonial-slider-columns-\d/).join().slice(-1) : 2,
@@ -3326,7 +3328,7 @@
 				sliderColumnsTablet = sliderClass.match(/columns--tablet\d/) ? sliderClass.match(/columns--tablet\d/).join().slice(-1) : 2,
 				sliderColumnsMobileExtra = sliderClass.match(/columns--mobile_extra\d/) ? sliderClass.match(/columns--mobile_extra\d/).join().slice(-1) : sliderColumnsTablet,
 				sliderColumnsMobile = sliderClass.match(/columns--mobile\d/) ? sliderClass.match(/columns--mobile\d/).join().slice(-1) : 1,
-				sliderSlidesToScroll = +(sliderClass.match(/wpr-adv-slides-to-scroll-\d/).join().slice(-1)),
+				sliderSlidesToScroll = settings.sliderSlidesToScroll,
 				dataSlideEffect = testimonialCarousel.attr('data-slide-effect');
 
 			testimonialCarousel.slick({

@@ -1216,7 +1216,6 @@ class Wpr_Grid extends Widget_Base {
 				'min' => 1,
 				'max' => 10,
 				'default' => 1,
-				'prefix_class' => 'wpr-grid-slides-to-scroll-',
 				'render_type' => 'template',
 				'frontend_available' => true,
 				'separator' => 'before',
@@ -9104,6 +9103,7 @@ class Wpr_Grid extends Widget_Base {
 			'pauseOnHover' => $settings['layout_slider_pause_on_hover'],
 			'prevArrow' => '#wpr-grid-slider-prev-'. $this->get_id(),
 			'nextArrow' => '#wpr-grid-slider-next-'. $this->get_id(),
+			'sliderSlidesToScroll' => +$settings['layout_slides_to_scroll'],
 		];
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {
