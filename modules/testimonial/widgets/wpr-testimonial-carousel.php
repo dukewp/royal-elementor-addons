@@ -515,13 +515,6 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 				'max' => 10,
 				'frontend_available' => true,
 				'default' => 2,
-				'widescreen_default' => 2,
-				'laptop_default' => 2,
-				'tablet_extra_default' => 2,
-				'tablet_default' => 1,
-				'mobile_extra_default' => 1,
-				'mobile_default' => 1,
-				'prefix_class' => 'wpr-adv-slides-to-scroll-',
 				'render_type' => 'template',
 			]
 		);
@@ -2821,6 +2814,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 			'pauseOnHover' => $settings['testimonial_pause_on_hover'],
 			'prevArrow' => '#wpr-testimonial-prev-'. $this->get_id(),
 			'nextArrow' => '#wpr-testimonial-next-'. $this->get_id(),
+			'sliderSlidesToScroll' => +$settings['testimonial_slides_to_scroll'],
 		];
 
 		$this->add_render_attribute( 'testimonial-caousel-attribute', [
