@@ -593,12 +593,13 @@ class WPR_Templates_Data {
 		return [
 			'digital-marketing-agency-v1' => [
 				'name' => 'Digital Marketing Agency',
-				'pages' => ['home','seo','branding','marketing','social','blog','about','contact'],
+				'pages' => ['home','seo','branding','marketing','social','about','contact'],
+				'preview' => ['home','seo-services','branding','digital-marketing','social-media','about','contact'],
 				'price' => $is_pro_active ? 'free' : 'free',
 			],
 			'fashion-v1' => [
 				'name' => 'Fashion Shop',
-				'pages' => ['home','shop-v1','shop-v2','single-product','blog','my-account','about','faq','contact'],
+				'pages' => ['home','shop-v1','shop-v2','single-product','my-account','about','faq','contact'],
 				'price' => $is_pro_active ? 'free' : 'pro'
 			]
 		];

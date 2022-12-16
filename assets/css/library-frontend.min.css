@@ -199,19 +199,20 @@
 }
 
 .wpr-tplib-sidebar {
-    padding: 30px 30px 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
 }
 
 .wpr-tplib-sidebar .wpr-tplib-search {
-    display: none;
     position: relative;
-    margin: 30px 0;
+    width: 210px;
 }
 
 .wpr-tplib-sidebar .wpr-tplib-search i {
     position: absolute;
     top: 50%;
-    right: 10px;
+    right: 15px;
     font-size: 12px;
     -webkit-transform: translateY(-50%);
         -ms-transform: translateY(-50%);
@@ -220,9 +221,10 @@
 
 .wpr-tplib-sidebar .wpr-tplib-search input {
     width: 100%;
-    padding: 8px 10px;
+    padding: 7px 15px;
     border: 0;
     border-bottom: 1px solid #efefef;
+    font-size: 14px;
 }
 
 .wpr-tplib-sidebar .wpr-tplib-search input::-webkit-input-placeholder {
@@ -281,7 +283,8 @@
     color: #fff;
 }
 
-.wpr-tplib-filters {
+.wpr-tplib-filters,
+.wpr-tplib-price {
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     display: -webkit-box;
@@ -302,7 +305,8 @@
     color: #6d7882;
 }
 
-.wpr-tplib-filters h3 {
+.wpr-tplib-filters h3,
+.wpr-tplib-price h3 {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -318,11 +322,13 @@
     border-radius: 3px;
 }
 
-.wpr-tplib-filters h3 span {
+.wpr-tplib-filters h3 span,
+.wpr-tplib-price h3 span {
     width: 100%;
 }
 
-.wpr-tplib-filters-list {
+.wpr-tplib-filters-list,
+.wpr-tplib-price-list {
     visibility: hidden;
     opacity: 0;
     position: absolute;
@@ -339,7 +345,8 @@
     border-radius: 3px;
 }
 
-.wpr-tplib-filters-list ul {
+.wpr-tplib-filters-list ul,
+.wpr-tplib-price-list ul {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -349,7 +356,8 @@
     padding-left: 0;
 }
 
-.wpr-tplib-filters-list ul li {
+.wpr-tplib-filters-list ul li,
+.wpr-tplib-price-list ul li {
     width: 25%;
     padding: 12px;
     color: #6d7882;
@@ -359,9 +367,28 @@
     cursor: pointer;
 }
 
-.wpr-tplib-filters-list ul li:hover {
+.wpr-tplib-filters-list ul li:hover,
+.wpr-tplib-price-list ul li:hover {
     background: #f9f9f9;
     color: #222;
+}
+
+.wpr-tplib-price {
+    width: 120px;
+}
+
+.wpr-tplib-price-list {
+    width: 120px;
+    padding: 10px;
+}
+
+.wpr-tplib-price-list ul {
+    flex-direction: column;
+}
+
+.wpr-tplib-price-list ul li {
+    width: 100%;
+    padding: 8px 12px;
 }
 
 .wpr-tplib-template-gird {

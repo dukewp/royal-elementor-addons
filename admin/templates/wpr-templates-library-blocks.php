@@ -32,11 +32,6 @@ class WPR_Templates_Library_Blocks {
 		?>
 
 		<div class="wpr-tplib-sidebar">
-			<div class="wpr-tplib-search">
-				<input type="text" placeholder="Search Template">
-				<i class="eicon-search"></i>
-			</div>
-
 			<div class="wpr-tplib-filters-wrap">
 				<div class="wpr-tplib-filters">
 					<h3>
