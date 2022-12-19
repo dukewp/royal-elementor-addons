@@ -165,9 +165,6 @@ class Wpr_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Upload Image', 'wpr-addons' ),
 				'type' => Controls_Manager::MEDIA,
-				'default' => [
-					'url' => Utils::get_placeholder_image_src(),
-				],
 				'condition' => [
 					'tab_icon_type' => 'image',
 				],

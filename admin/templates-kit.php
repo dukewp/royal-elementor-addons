@@ -302,8 +302,8 @@ function wpr_import_templates_kit() {
         // Tmp
         update_option( 'wpr-import-kit-id', $kit );
 
-        // Regenerate Extra Image Sizes
-        add_filter( 'intermediate_image_sizes_advanced', 'disable_extra_image_sizes', 10, 3 );
+        // Disable Extra Image Sizes
+        add_filter( 'intermediate_image_sizes_advanced', [new Utilities, 'disable_extra_image_sizes'], 10, 3 );
 
         // No Limit for Execution
         set_time_limit(0);
@@ -638,45 +638,7 @@ function wpr_final_settings_setup() {
     }
 
     // Regenerate Extra Image Sizes
-    regenerate_extra_image_sizes();
-}
-
-/**
-** Regenerate Extra Image Sizes
-*/
-function disable_extra_image_sizes( $new_sizes, $image_meta, $attachment_id ) {
-    $all_attachments = get_option( 'st_attachments', array() );
-
-    // If the cron job is already scheduled, bail.
-    if ( in_array( $attachment_id, $all_attachments, true ) ) {
-        return $new_sizes;
-    }
-
-    $all_attachments[] = $attachment_id;
-
-    update_option( 'st_attachments', $all_attachments, 'no' );
-
-    // Return blank array of sizes to not generate any sizes in this request.
-    return array();
-}
-
-/**
-** Regenerate Extra Image Sizes
-*/
-function regenerate_extra_image_sizes() {
-    $all_attachments = get_option( 'st_attachments', array() );
-
-    if ( empty( $all_attachments ) ) {
-        return;
-    }
-
-    foreach ( $all_attachments as $attachment_id ) {
-        $file = get_attached_file( $attachment_id );
-        if ( false !== $file ) {
-            wp_generate_attachment_metadata( $attachment_id, $file );
-        }
-    }
-    update_option( 'st_attachments', array(), 'no' );
+    Utilities::regenerate_extra_image_sizes();
 }
 
 /**

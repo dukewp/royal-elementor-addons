@@ -266,6 +266,11 @@ class WPR_Templates_Actions {
 		        ]
 		    ] );
 		} );
+
+		// Regenerate Extra Image Sizes
+		$ajax->register_ajax_action( 'wpr_library_template_import_finished', function() {
+			Utilities::regenerate_extra_image_sizes();
+		} );
 	}
 }
 
@@ -323,7 +328,7 @@ class WPR_Library_Source extends \Elementor\TemplateLibrary\Source_Base {
 			$url = 'https://royal-elementor-addons.com/library/premade-styles/';
 		}
 
-		$response = wp_remote_get( $url . $template_id .'.json', [
+		$response = wp_remote_get($url . $template_id .'.json', [
 			'timeout'   => 60,
 			'sslverify' => false
 		] );
@@ -331,7 +336,7 @@ class WPR_Library_Source extends \Elementor\TemplateLibrary\Source_Base {
 		return wp_remote_retrieve_body( $response );
 	}
 
-	public function get_data( array $args ) {//TODO: FIX - This function imports placeholder images in library
+	public function get_data( array $args ) {
 		$data = $this->request_template_data( $args['template_id'], $args['kit_id'] );
 
 		$data = json_decode( $data, true );
@@ -340,8 +345,39 @@ class WPR_Library_Source extends \Elementor\TemplateLibrary\Source_Base {
 			throw new \Exception( 'Template does not have any content' );
 		}
 
-		$data['content'] = $this->replace_elements_ids( $data['content'] );
+		add_filter( 'intermediate_image_sizes_advanced', [new Utilities, 'disable_extra_image_sizes'], 10, 3 );
+
+		// Remove Parallax Images from Import File
+		foreach( $data['content'] as $key => $content ) {
+			if ( isset($data['content'][$key]['settings']['bg_image']) ) {
+				unset($data['content'][$key]['settings']['bg_image']);
+			}
+			if ( isset($data['content'][$key]['settings']['hover_parallax']) ) {
+				unset($data['content'][$key]['settings']['hover_parallax']);
+			}
+		}
+
+		$parallax_bg = get_option('wpr-parallax-background', 'on');
+		$parallax_multi = get_option('wpr-parallax-multi-layer', 'on');
+
+		// Disable Extensions during Import
+		if ( 'on' === $parallax_bg ) {
+			update_option('wpr-parallax-background', '');
+		}
+		if ( 'on' === $parallax_multi ) {
+			update_option('wpr-parallax-multi-layer', '');
+		}
+
+		$data['content'] = $this->replace_elements_ids( $data['content'] );		
 		$data['content'] = $this->process_export_import_content( $data['content'], 'on_import' );
+
+		// Enable Back
+		if ( 'on' === $parallax_bg ) {
+			update_option('wpr-parallax-background', 'on');
+		}
+		if ( 'on' === $parallax_multi ) {
+			update_option('wpr-parallax-multi-layer', 'on');
+		}
 
 		return $data;
 	}
