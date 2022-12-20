@@ -5826,6 +5826,11 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     visibility: visible;
 }
 
+.wpr-offcanvas-container .wpr-template-edit-btn {
+    top: auto;
+    bottom: 0;
+}
+
 
 /*--------------------------------------------------------------
   == Mailchimp
@@ -15611,11 +15616,6 @@ dl.variation dd {
     max-height: 100%;
     display: none;
     z-index: 99;
-}
-
-.wpr-push-offcanvas-z-index {
-    position: relative;
-    z-index: 99999;
 }
 
 .wpr-offcanvas-wrap-active {

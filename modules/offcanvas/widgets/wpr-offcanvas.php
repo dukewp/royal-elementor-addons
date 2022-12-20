@@ -160,7 +160,7 @@ class Wpr_Offcanvas extends Widget_Base {
 				'prefix_class' => 'wpr-offcanvas-entrance-type-',
 				'default' => 'cover',
 				'condition' => [
-					'offcanvas_position' => ['left', 'right']
+					'offcanvas_position' => ['top', 'left', 'right']
 				]
 			]
 		);
@@ -276,8 +276,13 @@ class Wpr_Offcanvas extends Widget_Base {
 				'label' => esc_html__( 'Reverse Header', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'render_type' => 'template',
-				'prefix_class' => 'wpr-offcanvas-reverse-header-'
-				// 'separator' => 'before',
+				'prefix_class' => 'wpr-offcanvas-reverse-header-',
+				'selectors_dictionary' => [
+					'yes' => 'flex-direction: row-reverse'
+				],
+				'selectors' => [
+					'.wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-header' => '{{VALUE}}',
+				]
 			]
 		);
 
@@ -298,6 +303,7 @@ class Wpr_Offcanvas extends Widget_Base {
 				'default' => '#222222',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-close-offcanvas' => 'color: {{VALUE}};',
+					'.wpr-offcanvas-wrap-{{ID}} .wpr-close-offcanvas' => 'color: {{VALUE}};'
 				],
 			]
 		);
@@ -319,7 +325,8 @@ class Wpr_Offcanvas extends Widget_Base {
 					'size' => 12,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-close-offcanvas i' => 'font-size: {{SIZE}}{{UNIT}};'
+					'{{WRAPPER}} .wpr-close-offcanvas i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'.wpr-offcanvas-wrap-{{ID}} .wpr-close-offcanvas i' => 'font-size: {{SIZE}}{{UNIT}};'
 				]
 			]
 		);
@@ -341,6 +348,7 @@ class Wpr_Offcanvas extends Widget_Base {
 				'default' => '#222222',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-offcanvas-title' => 'color: {{VALUE}};',
+					'.wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-title' => 'color: {{VALUE}};'
 				],
 			]
 		);
@@ -350,7 +358,7 @@ class Wpr_Offcanvas extends Widget_Base {
 			[
 				'name' => 'offcanvas_title',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-offcanvas-title',
+				'selector' => '{{WRAPPER}} .wpr-offcanvas-title, .wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-title',
 			]
 		);
 
@@ -382,6 +390,7 @@ class Wpr_Offcanvas extends Widget_Base {
 				'default' => '#FFFFFF00',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-offcanvas-wrap' => 'background-color: {{VALUE}};',
+					'.wpr-offcanvas-wrap-{{ID}}' => 'background-color: {{VALUE}};'
 				],
 			]
 		);
@@ -402,6 +411,7 @@ class Wpr_Offcanvas extends Widget_Base {
 				'default' => '#FFFFFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-offcanvas-content' => 'background-color: {{VALUE}};',
+					'.wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-content' => 'background-color: {{VALUE}};'
 				],
 			]
 		);
@@ -414,6 +424,7 @@ class Wpr_Offcanvas extends Widget_Base {
 				'default' => '#000',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-offcanvas-content' => 'border-color: {{VALUE}}',
+					'.wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-content' => 'border-color: {{VALUE}}'
 				]
 			]
 		);
@@ -423,7 +434,7 @@ class Wpr_Offcanvas extends Widget_Base {
 			[
 				'name' => 'offcanvas_box_shadow',
 				'label' => esc_html__( 'Box Shadow', 'wpr-addons' ),
-				'selector' => '{{WRAPPER}} .wpr-offcanvas-content',
+				'selector' => '{{WRAPPER}} .wpr-offcanvas-content, .wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-content',
 			]
 		);
 
@@ -443,6 +454,7 @@ class Wpr_Offcanvas extends Widget_Base {
 				'default' => 'none',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-offcanvas-content' => 'border-style: {{VALUE}};',
+					'.wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-content' => 'border-style: {{VALUE}};'
 				]
 			]
 		);
@@ -461,6 +473,7 @@ class Wpr_Offcanvas extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-offcanvas-content' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'.wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-content' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 				'separator' => 'before',
 				'condition' =>[
@@ -483,6 +496,7 @@ class Wpr_Offcanvas extends Widget_Base {
 					],
 					'selectors' => [
 						'{{WRAPPER}} .wpr-offcanvas-content' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+						'.wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-content' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 					],
 					'separator' => 'after',
 				]
@@ -502,6 +516,7 @@ class Wpr_Offcanvas extends Widget_Base {
 				'size_units' => [ 'px' ],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-offcanvas-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'.wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 			]
 		);
