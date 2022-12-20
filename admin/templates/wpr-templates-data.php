@@ -597,8 +597,14 @@ class WPR_Templates_Data {
 				'preview' => ['home','seo-services','branding','digital-marketing','social-media','about','contact'],
 				'price' => $is_pro_active ? 'free' : 'free',
 			],
+			'nature-v1' => [
+				'name' => 'Nature',
+				'pages' => ['home','about','services','projects','contact'],
+				'preview' => ['home','about-us','services','projects','contact'],
+				'price' => $is_pro_active ? 'free' : 'free',
+			],
 			'fashion-v1' => [
-				'name' => 'Fashion Shop',
+				'name' => 'Fashion Shop Beta*',
 				'pages' => ['home','shop-v1','shop-v2','single-product','my-account','about','faq','contact'],
 				'price' => $is_pro_active ? 'free' : 'pro'
 			]

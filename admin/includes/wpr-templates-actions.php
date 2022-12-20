@@ -267,9 +267,44 @@ class WPR_Templates_Actions {
 		    ] );
 		} );
 
+		// Elementor Search Data
+		$ajax->register_ajax_action( 'wpr_templates_library_search_data', function( $data ) {
+			// Freemius OptIn
+			if ( ! (wpr_fs()->is_registered() && wpr_fs()->is_tracking_allowed() || wpr_fs()->is_pending_activation() )) {
+				// return;
+			}
+
+			if ( strlen($data['search_query']) > 25 ) {
+				return;
+			}
+
+			// Send Search Query
+		    wp_remote_post( 'https://reastats.kinsta.cloud/wp-json/templates-library-search/data', [
+		        'body' => [
+		            'search_query' => $data['search_query']
+		        ]
+		    ] );
+		} );
+
 		// Regenerate Extra Image Sizes
-		$ajax->register_ajax_action( 'wpr_library_template_import_finished', function() {
+		$ajax->register_ajax_action( 'wpr_library_template_import_finished', function( $data ) {
 			Utilities::regenerate_extra_image_sizes();
+
+			// Freemius OptIn
+			if ( ! (wpr_fs()->is_registered() && wpr_fs()->is_tracking_allowed() || wpr_fs()->is_pending_activation() )) {
+				// return;
+			}
+
+			if ( ! isset($data['kit']) ) {
+				return;
+			}
+
+			// Send Search Query
+		    wp_remote_post( 'https://reastats.kinsta.cloud/wp-json/templates-library-import/data', [
+		        'body' => [
+		            'imported_template' => $data['kit'] .'-'. $data['template']
+		        ]
+		    ] );
 		} );
 	}
 }

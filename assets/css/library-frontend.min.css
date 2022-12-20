@@ -539,6 +539,7 @@
 }
 
 .wpr-tplib-template-footer h3 {
+    display: flex;
     overflow: hidden;
     color: #6d7882;
     font-family: "Roboto",Arial,Helvetica,Verdana,sans-serif;
@@ -547,6 +548,27 @@
     white-space: nowrap;
     -o-text-overflow: ellipsis;
        text-overflow: ellipsis;
+}
+
+@media screen and ( max-width: 1919px ) {
+    .wpr-tplib-template-footer h3 span:first-child {
+        text-overflow: ellipsis;
+        overflow: hidden; 
+        max-width: 130px; 
+        white-space: nowrap;
+    } 
+}
+
+@media screen and ( max-width: 1366px ) {
+    .wpr-tplib-template-footer h3 span:first-child {
+        max-width: 109px; 
+    } 
+}
+
+@media screen and ( max-width: 1280px ) {
+    .wpr-tplib-template-footer h3 span:first-child {
+        max-width: 90px; 
+    } 
 }
 
 .wpr-tplib-template-footer .wpr-tplib-insert-template {
@@ -565,7 +587,6 @@
     -o-transition: all 0.1s ease-in;
     transition: all 0.1s ease-in;
 }
-
 
 #masonry-effect {
     display: -webkit-box;

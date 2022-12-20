@@ -78,7 +78,10 @@ class WPR_Templates_Library_Pages {
 								</div>
 							</div>
 							<div class="wpr-tplib-template-footer elementor-clearfix">
-							<h3><?php echo esc_html($template_title); ?></h3>
+								<h3>
+									<span><?php echo esc_html($data['name']) ?></span>
+									<span><?php echo '&nbsp;- '. esc_html(ucwords($page)); ?></span>
+								</h3>
 
 								<?php if ( 'pro' === $data['price'] && !wpr_fs()->can_use_premium_code() ) : ?>
 									<span class="wpr-tplib-insert-template wpr-tplib-insert-pro"><i class="eicon-star"></i> <span><?php esc_html_e( 'Go Pro', 'wpr-addons' ); ?></span></span>
