@@ -271,7 +271,7 @@ class WPR_Templates_Actions {
 		$ajax->register_ajax_action( 'wpr_templates_library_search_data', function( $data ) {
 			// Freemius OptIn
 			if ( ! (wpr_fs()->is_registered() && wpr_fs()->is_tracking_allowed() || wpr_fs()->is_pending_activation() )) {
-				// return;
+				return;
 			}
 
 			if ( strlen($data['search_query']) > 25 ) {
@@ -292,7 +292,7 @@ class WPR_Templates_Actions {
 
 			// Freemius OptIn
 			if ( ! (wpr_fs()->is_registered() && wpr_fs()->is_tracking_allowed() || wpr_fs()->is_pending_activation() )) {
-				// return;
+				return;
 			}
 
 			if ( ! isset($data['kit']) ) {
@@ -363,7 +363,10 @@ class WPR_Library_Source extends \Elementor\TemplateLibrary\Source_Base {
 			$url = 'https://royal-elementor-addons.com/library/premade-styles/';
 		}
 
-		$response = wp_remote_get($url . $template_id .'.json', [
+		// Avoid Cache
+		$randomNum = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 7);
+		
+		$response = wp_remote_get($url . $template_id .'.json?='. $randomNum, [
 			'timeout'   => 60,
 			'sslverify' => false
 		] );
@@ -385,7 +388,7 @@ class WPR_Library_Source extends \Elementor\TemplateLibrary\Source_Base {
 		// Remove Parallax Images from Import File
 		foreach( $data['content'] as $key => $content ) {
 			if ( isset($data['content'][$key]['settings']['bg_image']) ) {
-				unset($data['content'][$key]['settings']['bg_image']);
+				// unset($data['content'][$key]['settings']['bg_image']);
 			}
 			if ( isset($data['content'][$key]['settings']['hover_parallax']) ) {
 				unset($data['content'][$key]['settings']['hover_parallax']);

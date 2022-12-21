@@ -593,8 +593,20 @@ class WPR_Templates_Data {
 		return [
 			'digital-marketing-agency-v1' => [
 				'name' => 'Digital Marketing Agency',
-				'pages' => ['home','seo','branding','marketing','social','about','contact'],
+				'pages' => ['home','seo','branding','marketing','social','about','contact'], // missing: services
 				'preview' => ['home','seo-services','branding','digital-marketing','social-media','about','contact'],
+				'price' => $is_pro_active ? 'free' : 'free',
+			],
+			'digital-agency-dark-v1' => [
+				'name' => 'Digital Agency Dark',
+				'pages' => ['home','about','services','team','portfolio','blog','contact'],
+				'preview' => ['home','about','services','team','portfolio','blog','contact'],
+				'price' => $is_pro_active ? 'free' : 'free',
+			],
+			'ittech-v1' => [
+				'name' => 'IT Tech',
+				'pages' => ['home','about','services','pricing','faq','contact'],
+				'preview' => ['home','about-us','services','pricing','faq','contact'],
 				'price' => $is_pro_active ? 'free' : 'free',
 			],
 			'nature-v1' => [
@@ -604,8 +616,9 @@ class WPR_Templates_Data {
 				'price' => $is_pro_active ? 'free' : 'free',
 			],
 			'fashion-v1' => [
-				'name' => 'Fashion Shop Beta*',
-				'pages' => ['home','shop-v1','shop-v2','single-product','my-account','about','faq','contact'],
+				'name' => 'Fashion Shop',
+				'pages' => ['home','shop-v1','shop-v2','about','faq','contact'],
+				'preview' => ['home','shop-fashion-v1','shop-v2','about','faq','contact'],
 				'price' => $is_pro_active ? 'free' : 'pro'
 			]
 		];

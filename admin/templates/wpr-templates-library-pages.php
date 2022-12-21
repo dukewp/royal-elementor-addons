@@ -62,7 +62,7 @@ class WPR_Templates_Library_Pages {
 				
 				foreach( $data['pages'] as $key => $page ) :
 
-					$template_title = $data['name'] .' - '. ucwords($page);
+					$template_title = $data['name'] .' - '. str_replace('-', ' ', ucwords($page));
 					$template_price = ('pro' === $data['price'] && !wpr_fs()->can_use_premium_code()) ? 'pro' : 'free';
 					$template_class = 'pro' === $template_price ? ' wpr-tplib-pro-wrap' : '';
 					$preview_url = $data['preview'][$key];
