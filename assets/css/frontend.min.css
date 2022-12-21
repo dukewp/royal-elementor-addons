@@ -15620,6 +15620,7 @@ dl.variation dd {
 
 .wpr-offcanvas-wrap-active {
     display: block;
+    transition-duration: 0.6s;
 }
 
 .wpr-offcanvas-header {
@@ -15677,6 +15678,8 @@ dl.variation dd {
     top: 50%;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
+    transform-origin: top left;
+    transition-property: transform;
     height: auto;
     width: auto;
 }
@@ -15870,6 +15873,46 @@ dl.variation dd {
             animation-fill-mode: forwards;  
 }
 
+@-webkit-keyframes offcanvas-slide-in-align-middle {
+    0% {top: 150%;}
+    100% {top: 50%}
+}
+
+@keyframes offcanvas-slide-in-align-middle {
+    0% {top: 150%;}
+    100% {top: 50%}
+}
+
+@-webkit-keyframes offcanvas-slide-out-align-middle {
+    0% {top: 50%}
+    100% {top: 150%;}
+}
+
+@keyframes offcanvas-slide-out-align-middle {
+    0% {top: 50%}
+    100% {top: 150%;}
+}
+
+.wpr-offcanvas-content-middle.wpr-offcanvas-slide-in {
+    top: 50%;
+    -webkit-animation-name: offcanvas-slide-in-align-middle;
+            animation-name: offcanvas-slide-in-align-middle;
+    -webkit-animation-duration: 0.6s;
+            animation-duration: 0.6s;
+    -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;  
+}
+
+.wpr-offcanvas-content-middle.wpr-offcanvas-slide-out {
+    top: 150%;
+    -webkit-animation-name: offcanvas-slide-out-align-middle;
+            animation-name: offcanvas-slide-out-align-middle;
+    -webkit-animation-duration: 0.6s;
+            animation-duration: 0.6s;
+    -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;  
+}
+
 /* grow animations */
 @-webkit-keyframes offcanvas-grow-in-align-bottom {
     0% {-webkit-transform: scaleY(0);transform: scaleY(0); transform-origin: bottom;}
@@ -16048,26 +16091,28 @@ dl.variation dd {
 }
 
 @-webkit-keyframes offcanvas-grow-in-align-middle {
-    0% {-webkit-transform: scale(0);transform: scale(0); transform-origin: center;}
-    100% {-webkit-transform: scale(1);transform: scale(1); transform-origin: center;}
+    0% {-webkit-transform: scale(0) translateX(-50%) translateY(-50%);transform: scale(0) translateX(-50%) translateY(-50%); transform-origin: top left;}
+    100% {-webkit-transform: scale(1) translateX(-50%) translateY(-50%);transform: scale(1) translateX(-50%) translateY(-50%); transform-origin: top left;}
 }
 
 @keyframes offcanvas-grow-in-align-middle {
-    0% {-webkit-transform: scale(0);transform: scale(0); transform-origin: center;}
-    100% {-webkit-transform: scale(1);transform: scale(1); transform-origin: center;}
+    0% {-webkit-transform: scale(0) translateX(-50%) translateY(-50%);transform: scale(0) translateX(-50%) translateY(-50%); transform-origin: top left;}
+    100% {-webkit-transform: scale(1) translateX(-50%) translateY(-50%);transform: scale(1) translateX(-50%) translateY(-50%); transform-origin: top left;}
 }
 
 @-webkit-keyframes offcanvas-grow-out-align-middle {
-    0% {-webkit-transform: scale(1);transform: scale(1); transform-origin: center;}
-    100% {-webkit-transform: scale(0);transform: scale(0); transform-origin: center;}
+    0% {-webkit-transform: scale(1) translateX(-50%) translateY(-50%);transform: scale(1) translateX(-50%) translateY(-50%); transform-origin: top left;}
+    100% {-webkit-transform: scale(0) translateX(-50%) translateY(-50%);transform: scale(0) translateX(-50%) translateY(-50%); transform-origin: top left;}
 }
 
 @keyframes offcanvas-grow-out-align-middle {
-    0% {-webkit-transform: scale(1);transform: scale(1); transform-origin: center;}
-    100% {-webkit-transform: scale(0);transform: scale(0); transform-origin: center;}
+    0% {-webkit-transform: scale(1) translateX(-50%) translateY(-50%);transform: scale(1) translateX(-50%) translateY(-50%); transform-origin: top left;}
+    100% {-webkit-transform: scale(0) translateX(-50%) translateY(-50%);transform: scale(0) translateX(-50%) translateY(-50%); transform-origin: top left;}
 }
 
 .wpr-offcanvas-content-middle.wpr-offcanvas-grow-in {
+    transform-origin: top left;
+    transition-property: transform;
     -webkit-transform: scale(1);
         -ms-transform: scale(1);
             transform: scale(1) translateX(-50%) translateY(-50%);
@@ -16076,10 +16121,12 @@ dl.variation dd {
     -webkit-animation-duration: 0.6s;
             animation-duration: 0.6s;
     -webkit-animation-fill-mode: forwards;
-            animation-fill-mode: forwards;  
+            animation-fill-mode: forwards;
 }
 
 .wpr-offcanvas-content-middle.wpr-offcanvas-grow-out {
+    transform-origin: top left;
+    transition-property: transform;
     -webkit-transform: scale(0);
         -ms-transform: scale(0);
             transform: scale(0) translateX(-50%) translateY(-50%);
