@@ -779,7 +779,11 @@ class Wpr_Offcanvas extends Widget_Base {
 						<?php endif; ?>
 					</div>
 					<?php
-						echo $this->wpr_offcanvas_template($settings['offcanvas_template']);
+						if ( !empty($settings['offcanvas_template']) ) {
+							echo $this->wpr_offcanvas_template($settings['offcanvas_template']);
+						} else {
+							echo '<p>Please select a template!</p>';
+						}
 					?>
 				</div>
 			</div>

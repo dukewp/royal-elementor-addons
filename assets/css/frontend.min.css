@@ -15690,6 +15690,8 @@ dl.variation dd {
 
 .wpr-close-offcanvas {
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
 }
 
 .wpr-close-offcanvas::before {
