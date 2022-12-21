@@ -12456,6 +12456,11 @@ a.wpr-ajax-img-wrap {
 == Instagram Feed
 --------------------------------------------------------------*/
 
+.wpr-instagram-hidden-item {
+    opacity: 0 !important;
+    overflow: hidden;
+}
+
 .wpr-swiper-nav-wrap {
     cursor: pointer
 }
@@ -12614,7 +12619,7 @@ a.wpr-ajax-img-wrap {
     text-align: right !important;
 }
 
-.wpr-instagram-feed-cont .wpr-layout-masonry {
+.wpr-instagram-feed-cont .wpr-masonry {
     -webkit-column-gap: 30px;
     -moz-column-gap: 30px;
     column-gap: 30px;
@@ -12622,6 +12627,7 @@ a.wpr-ajax-img-wrap {
 
 .wpr-insta-feed-content-wrap {
     text-align: center;
+    transition-duration: 0.6s;
 }
 
 .wpr-insta-feed-content-wrap,
@@ -12683,7 +12689,7 @@ a.wpr-ajax-img-wrap {
     height: 100%;
 }
 
-.wpr-instagram-feed-cont .wpr-layout-masonry .wpr-insta-feed-content-wrap {
+.wpr-instagram-feed-cont .wpr-masonry .wpr-insta-feed-content-wrap {
     -webkit-column-break-inside: avoid;
     -moz-column-break-inside: avoid;
     break-inside: avoid;

@@ -40,7 +40,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 	}
 
 	public function get_script_depends() {
-		return [ 'wpr-lightgallery' ];
+		return [ 'wpr-isotope', 'wpr-lightgallery' ];
 	}
 
 	public function get_style_depends() {
@@ -397,13 +397,13 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'frontend_available' => true,
 				'label_block' => false,
-				'default' => 'layout-masonry',
+				'default' => 'masonry',
 				'prefix_class' => 'wpr-insta-feed-'	,
 				'render_type' => 'template',
 				'separator' => 'before',
 				'options' => [
 					'layout-grid'     => esc_html__('Grid', 'wpr-addons'),
-					'layout-masonry' => esc_html__('Masonry', 'wpr-addons'),
+					'masonry' => esc_html__('Masonry', 'wpr-addons'),
 					'layout-list'     => esc_html__('List Style', 'wpr-addons'),
 					'layout-full-width'     => esc_html__('Full Width', 'wpr-addons'),
 					'layout-carousel' => esc_html__('Slider/Carousel', 'wpr-addons'),
@@ -412,45 +412,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					'{{WRAPPER}} .wpr-layout-full-width' => 'grid-template-columns: repeat({{limit.VALUE}}, minmax(0, 1fr))',
 					'body[data-elementor-device-mode=mobile] {{WRAPPER}} .wpr-layout-full-width' => 'grid-template-columns: repeat({{limit_mobile.VALUE}}, minmax(0, 1fr))',
 				]
-			]
-		);
-
-		$this->add_responsive_control(
-			'columns_masonry',
-			[
-				'label'              => esc_html__('Columns', 'wpr-addons'),
-				'type'               => Controls_Manager::SELECT,
-				'default'            => '3',
-				// 'options'            => [
-				// 	'wpr-insta-col-auto' => esc_html__('One', 'wpr-addons'),
-				// 	'wpr-insta-col-6'    => esc_html__('Two', 'wpr-addons'),
-				// 	'wpr-insta-col-4'    => esc_html__('Three', 'wpr-addons'),
-				// 	'wpr-insta-col-3'    => esc_html__('Four', 'wpr-addons'),
-				// 	'wpr-insta-col-2-point-4'    => esc_html__('Five', 'wpr-addons'),
-				// 	'wpr-insta-col-2'    => esc_html__('Six', 'wpr-addons')
-				// ],
-				'options'            => [
-					'1' => esc_html__('One', 'wpr-addons'),
-					'2'    => esc_html__('Two', 'wpr-addons'),
-					'3'    => esc_html__('Three', 'wpr-addons'),
-					'4'    => esc_html__('Four', 'wpr-addons'),
-					'5'    => esc_html__('Five', 'wpr-addons'),
-					'6'    => esc_html__('Six', 'wpr-addons'),
-					'7'    => esc_html__('Seven', 'wpr-addons'),
-					'8'    => esc_html__('Eight', 'wpr-addons'),
-					'9'    => esc_html__('Nine', 'wpr-addons'),
-					'10'    => esc_html__('Ten', 'wpr-addons'),
-					'11'    => esc_html__('Eleven', 'wpr-addons'),
-					'12'    => esc_html__('Twelve', 'wpr-addons'),
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-layout-masonry' => 'column-count: {{VALUE}}',
-				],
-				'frontend_available' => true,
-				'render_type' => 'template',
-				'condition' => [
-					'insta_layout_select' => 'layout-masonry'
-				],
 			]
 		);
 
@@ -474,13 +435,15 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					'11'    => esc_html__('Eleven', 'wpr-addons'),
 					'12'    => esc_html__('Twelve', 'wpr-addons'),
 				],
-				'render_type' => 'template',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-layout-grid' => 'grid-template-columns: repeat({{VALUE}}, minmax(0, 1fr))',
 					'{{WRAPPER}} .wpr-layout-list' => 'grid-template-columns: repeat({{VALUE}}, minmax(0, 1fr))',
+					// '{{WRAPPER}} .wpr-masonry' => 'column-count: {{VALUE}}',
 				],
+				'frontend_available' => true,
+				'render_type' => 'template',
 				'condition' => [
-					'insta_layout_select' => ['layout-grid', 'layout-list']
+					'insta_layout_select' => ['layout-grid', 'layout-list', 'masonry']
 				],
 			]
 		);
@@ -490,6 +453,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			[
 				'label' => esc_html__( 'Horizontal Gutter', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
+				'render_type' => 'template',
 				'default' => [
 					'unit' => 'px',
 					'size' => 10,
@@ -501,7 +465,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-masonry' => 'column-gap: {{SIZE}}px;',
+					// '{{WRAPPER}} .wpr-instagram-feed-cont .wpr-masonry' => 'column-gap: {{SIZE}}px;',
 					'{{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-grid' => 'column-gap: {{SIZE}}px;',
 					'{{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-list' => 'column-gap: {{SIZE}}px;',
 					'{{WRAPPER}} .wpr-instagram-feed-cont .wpr-layout-full-width' => 'column-gap: {{SIZE}}px;'
@@ -517,6 +481,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			[
 				'label' => esc_html__( 'Vertical Gutter', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
+				'render_type' => 'template',
 				'default' => [
 					'size' => 10,
 				],
@@ -527,13 +492,13 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-layout-masonry .wpr-insta-feed-content-wrap' => 'margin-bottom: {{SIZE}}px',
+					'{{WRAPPER}} .wpr-masonry .wpr-insta-feed-content-wrap' => 'margin-bottom: {{SIZE}}px',
 					'{{WRAPPER}}.wpr-insta-feed-layout-grid .wpr-instagram-feed' => 'row-gap: {{SIZE}}px',
 					'{{WRAPPER}}.wpr-insta-feed-layout-list .wpr-instagram-feed' => 'row-gap: {{SIZE}}px',
 					'{{WRAPPER}}.wpr-insta-feed-layout-full-width .wpr-instagram-feed' => 'row-gap: {{SIZE}}px',
 				],
 				'condition' => [
-					'insta_layout_select' => ['layout-grid', 'layout-list', 'layout-masonry']
+					'insta_layout_select' => ['layout-grid', 'layout-list', 'masonry']
 				]
 			]
 		);
@@ -685,7 +650,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'separator' => 'before',
 				'prefix_class' => 'wpr-if-square-images-',
 				'condition' => [
-					'insta_layout_select!' => 'layout-masonry'
+					'insta_layout_select!' => 'masonry'
 				]
 			]
 		);
@@ -4596,8 +4561,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			}
 		}
 
-		if ( get_transient($key) === false ) {
-			// var_dump('api call');
+		if ( get_transient($key) === false || empty($intagram_data) ) {
 			$limit = wp_is_mobile() ? $settings['limit_mobile'] : $settings['limit'];
 
 			$url = 'https://graph.instagram.com/me/media?fields=id,media_type,media_url,thumbnail_url,permalink,children,username,caption,timestamp&access_token='. $access_token .'&limit='. $limit;
@@ -4618,7 +4582,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			}
 
 		} else {
-			// var_dump('transient call');
 			$instagram_data = get_transient($key);
 		}
 		
