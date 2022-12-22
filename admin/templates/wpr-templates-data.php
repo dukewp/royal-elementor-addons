@@ -615,12 +615,12 @@ class WPR_Templates_Data {
 				'preview' => ['home','about-us','services','projects','contact'],
 				'price' => $is_pro_active ? 'free' : 'free',
 			],
-			'fashion-v1' => [
-				'name' => 'Fashion Shop',
-				'pages' => ['home','shop-v1','shop-v2','about','faq','contact'],
-				'preview' => ['home','shop-fashion-v1','shop-v2','about','faq','contact'],
-				'price' => $is_pro_active ? 'free' : 'pro'
-			]
+			// 'fashion-v1' => [
+			// 	'name' => 'Fashion Shop',
+			// 	'pages' => ['home','shop-v1','shop-v2','about','faq','contact'],
+			// 	'preview' => ['home','shop-fashion-v1','shop-v2','about','faq','contact'],
+			// 	'price' => $is_pro_active ? 'free' : 'pro'
+			// ]
 		];
 	}
 
