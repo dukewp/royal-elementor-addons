@@ -492,7 +492,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-masonry .wpr-insta-feed-content-wrap' => 'margin-bottom: {{SIZE}}px',
+					// '{{WRAPPER}} .wpr-masonry .wpr-insta-feed-content-wrap' => 'margin-bottom: {{SIZE}}px',
 					'{{WRAPPER}}.wpr-insta-feed-layout-grid .wpr-instagram-feed' => 'row-gap: {{SIZE}}px',
 					'{{WRAPPER}}.wpr-insta-feed-layout-list .wpr-instagram-feed' => 'row-gap: {{SIZE}}px',
 					'{{WRAPPER}}.wpr-insta-feed-layout-full-width .wpr-instagram-feed' => 'row-gap: {{SIZE}}px',
@@ -5160,7 +5160,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
 					<?php foreach($this->call_instagram_api($access_token, $settings) as $result) : ?>
 
-						<div class="wpr-insta-feed-content-wrap wpr-insta-col-12">
+						<div class="wpr-insta-feed-content-wrap elementor-clearfix wpr-insta-col-12">
 							<figure>
 								<?php
 									// Content: Above Media
