@@ -5829,7 +5829,9 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-mailchimp-first-name label,
 .wpr-mailchimp-first-name input,
 .wpr-mailchimp-last-name label,
-.wpr-mailchimp-last-name input {
+.wpr-mailchimp-last-name input,
+.wpr-mailchimp-phone-number label,
+.wpr-mailchimp-phone-number input {
     display: block;
     width: 100%;
 }
@@ -5853,7 +5855,8 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 .wpr-mailchimp-layout-hr .wpr-mailchimp-email,
 .wpr-mailchimp-layout-hr .wpr-mailchimp-first-name,
-.wpr-mailchimp-layout-hr .wpr-mailchimp-last-name {
+.wpr-mailchimp-layout-hr .wpr-mailchimp-last-name,
+.wpr-mailchimp-layout-hr .wpr-mailchimp-phone-number {
     -webkit-box-flex: 1;
     -ms-flex-positive: 1;
     flex-grow: 1;

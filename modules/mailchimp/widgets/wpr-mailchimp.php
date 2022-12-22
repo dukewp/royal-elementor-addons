@@ -63,6 +63,8 @@ class Wpr_Mailchimp extends Widget_Base {
 	
 	public function add_control_last_name_placeholder() {}
 
+	public function add_control_phone_number_label_and_placeholder() {}
+
 	protected function register_controls() {
 
 		// Tab: Content ==============
@@ -260,6 +262,8 @@ class Wpr_Mailchimp extends Widget_Base {
 
 		$this->add_control_last_name_placeholder();
 
+		$this->add_control_phone_number_label_and_placeholder();
+
 		$this->end_controls_section(); // End Controls Section
 
 		// Section: Request New Feature
@@ -267,7 +271,7 @@ class Wpr_Mailchimp extends Widget_Base {
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'mailchimp', [
-			'Add Extra Fields - Name & Last Name'
+			'Add Extra Fields - Name, Last Name & Phone Number'
 		] );
 
 		// Styles ====================
@@ -846,8 +850,8 @@ class Wpr_Mailchimp extends Widget_Base {
 					'size' => 10,
 				],
 				'selectors' => [
-					'{{WRAPPER}}.wpr-mailchimp-layout-vr .wpr-mailchimp-email, {{WRAPPER}}.wpr-mailchimp-layout-vr .wpr-mailchimp-first-name, {{WRAPPER}}.wpr-mailchimp-layout-vr .wpr-mailchimp-last-name' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-mailchimp-layout-hr .wpr-mailchimp-email, {{WRAPPER}}.wpr-mailchimp-layout-hr .wpr-mailchimp-first-name, {{WRAPPER}}.wpr-mailchimp-layout-hr .wpr-mailchimp-last-name' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-mailchimp-layout-vr .wpr-mailchimp-email, {{WRAPPER}}.wpr-mailchimp-layout-vr .wpr-mailchimp-first-name, {{WRAPPER}}.wpr-mailchimp-layout-vr .wpr-mailchimp-last-name, {{WRAPPER}}.wpr-mailchimp-layout-vr .wpr-mailchimp-phone-number' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-mailchimp-layout-hr .wpr-mailchimp-email, {{WRAPPER}}.wpr-mailchimp-layout-hr .wpr-mailchimp-first-name, {{WRAPPER}}.wpr-mailchimp-layout-hr .wpr-mailchimp-last-name, {{WRAPPER}}.wpr-mailchimp-layout-hr .wpr-mailchimp-phone-number' => 'margin-right: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'after'
 			]
