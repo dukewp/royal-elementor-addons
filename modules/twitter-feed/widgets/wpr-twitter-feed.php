@@ -40,7 +40,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 	}
 
 	public function get_script_depends() {
-		return [ 'wpr-twitterfeed', 'wpr-lightgallery' ];
+		return [ 'wpr-isotope', 'wpr-lightgallery' ];
 	}
 
 	public function get_style_depends() {
@@ -824,10 +824,62 @@ class Wpr_Twitter_Feed extends Widget_Base {
 					'12'    => esc_html__('Twelve', 'wpr-addons'),
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-twitter-feed' => 'column-count: {{VALUE}}',
+					'{{WRAPPER}}.wpr-twitter-feed-grid .wpr-twitter-feed' => 'column-count: {{VALUE}}',
+					'{{WRAPPER}}.wpr-twitter-feed-list .wpr-twitter-feed' => 'column-count: {{VALUE}}',
 				],
 				'frontend_available' => true,
 				'render_type' => 'template'
+			]
+		);
+
+		$this->add_responsive_control(
+			'gutter',
+			[
+				'label' => esc_html__( 'Horizontal Gutter', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'render_type' => 'template',
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid' => 'column-gap: {{SIZE}}px;',
+					'{{WRAPPER}} .wpr-list' => 'column-gap: {{SIZE}}px;',
+				],
+				'condition' => [
+					'layout_select!' => 'carousel'
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'distance_bottom',
+			[
+				'label' => esc_html__( 'Vertical Gutter', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'render_type' => 'template',
+				'default' => [
+					'size' => 10,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}}.wpr-twitter-feed-grid .wpr-twitter-feed' => 'row-gap: {{SIZE}}px',
+					'{{WRAPPER}}.wpr-twitter-feed-list .wpr-twitter-feed' => 'row-gap: {{SIZE}}px',
+				],
+				'condition' => [
+					'layout_select!' => 'carousel'
+				]
 			]
 		);
 
@@ -4565,7 +4617,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
         $banner_placeholder = WPR_ADDONS_ASSETS_URL . 'img/placeholder.png';
         $banner = $item['user']['profile_banner_url'] ? $item['user']['profile_banner_url'] : $banner_placeholder;
         ?>
-                <div class="wpr-tweet">
+                <div class="wpr-tweet elementor-clearfix">
                         <img src="<?php echo $banner ?>" alt="">
                         <article class="media">
 

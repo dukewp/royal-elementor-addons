@@ -12340,6 +12340,11 @@ a.wpr-ajax-img-wrap {
 == Twitter Feed
 --------------------------------------------------------------*/
 
+    .wpr-twitter-hidden-item {
+        opacity: 0 !important;
+        overflow: hidden;
+    }
+
     .wpr-twitter-feed-item-display-block {
         clear: both;
     }
@@ -12402,6 +12407,10 @@ a.wpr-ajax-img-wrap {
         border-radius: 50%;
     }
 
+    .wpr-twitter-feed-masonry .wpr-tweet {
+        float: left;
+    }
+
     .wpr-twitter-feed-masonry .wpr-twitter-feed {
         height: auto;
         /* padding-top: 0px; */
@@ -12450,6 +12459,10 @@ a.wpr-ajax-img-wrap {
 
     .wpr-twitter-follow-btn {
         display: inline-block;
+    }
+
+    .wpr-load-more-twitter-posts {
+        cursor: pointer;
     }
 
 /*--------------------------------------------------------------
@@ -12732,6 +12745,10 @@ a.wpr-ajax-img-wrap {
     height: 100%;
     -o-object-fit: cover;
         object-fit: cover; 
+}
+
+.wpr-load-more-insta-posts {
+    cursor: pointer;
 }
 
 /* ---------------------------------- 
