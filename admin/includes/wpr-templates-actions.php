@@ -388,7 +388,7 @@ class WPR_Library_Source extends \Elementor\TemplateLibrary\Source_Base {
 		// Remove Parallax Images from Import File
 		foreach( $data['content'] as $key => $content ) {
 			if ( isset($data['content'][$key]['settings']['bg_image']) ) {
-				// unset($data['content'][$key]['settings']['bg_image']);
+				unset($data['content'][$key]['settings']['bg_image']);
 			}
 			if ( isset($data['content'][$key]['settings']['hover_parallax']) ) {
 				unset($data['content'][$key]['settings']['hover_parallax']);
