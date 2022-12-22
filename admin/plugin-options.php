@@ -7,6 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 use WprAddons\Admin\Includes\WPR_Templates_Loop;
 use WprAddonsPro\Admin\Wpr_White_Label;
 use WprAddons\Classes\Utilities;
+use WprAddons\Admin\Templates\WPR_Templates_Data;
 
 // Register Menus
 function wpr_addons_add_admin_menu() {
@@ -114,7 +115,7 @@ function wpr_register_addons_settings() {
 }
 
 function wpr_addons_settings_page() {
-    
+
 ?>
 
 <div class="wrap wpr-settings-page-wrap">

@@ -473,6 +473,44 @@ class Utilities {
 		return $result;
 	}
 
+	/**
+	** Disable Extra Image Sizes
+	*/
+	public static function disable_extra_image_sizes( $new_sizes, $image_meta, $attachment_id ) {
+		$all_attachments = get_option( 'st_attachments', array() );
+
+		// If the cron job is already scheduled, bail.
+		if ( in_array( $attachment_id, $all_attachments, true ) ) {
+			return $new_sizes;
+		}
+
+		$all_attachments[] = $attachment_id;
+
+		update_option( 'st_attachments', $all_attachments, 'no' );
+
+		// Return blank array of sizes to not generate any sizes in this request.
+		return array();
+	}
+
+	/**
+	** Regenerate Extra Image Sizes
+	*/
+	public static function regenerate_extra_image_sizes() {
+		$all_attachments = get_option( 'st_attachments', array() );
+	
+		if ( empty( $all_attachments ) ) {
+			return;
+		}
+	
+		foreach ( $all_attachments as $attachment_id ) {
+			$file = get_attached_file( $attachment_id );
+			if ( false !== $file ) {
+				wp_generate_attachment_metadata( $attachment_id, $file );
+			}
+		}
+		update_option( 'st_attachments', array(), 'no' );
+	}
+
 	// Get Post Sharing Icon
 	public static function get_post_sharing_icon( $args = [] ) {
 		
@@ -734,6 +772,7 @@ class Utilities {
         $merge_fields = array(
             'FNAME' => !empty( $fields['wpr_mailchimp_firstname'] ) ? sanitize_text_field($fields['wpr_mailchimp_firstname']) : '',
             'LNAME' => !empty( $fields['wpr_mailchimp_lastname'] ) ? sanitize_text_field($fields['wpr_mailchimp_lastname']) : '',
+			'PHONE' => !empty ( $fields['wpr_mailchimp_phone_number'] ) ? sanitize_text_field($fields['wpr_mailchimp_phone_number']) : '',
         );
 
         // API URL

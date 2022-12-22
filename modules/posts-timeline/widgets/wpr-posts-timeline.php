@@ -672,9 +672,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'label' => __( 'Choose Image', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::MEDIA,
 				'description' => __('Image Size will not work with default image','wpr-addons'),
-				'default' => [
-					'url' => \Elementor\Utils::get_placeholder_image_src(),
-				],
 				'condition' => [
 					'repeater_media' => 'image'
 				]

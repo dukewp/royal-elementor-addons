@@ -93,6 +93,8 @@
         -ms-flex-pack: center;
             justify-content: center;
     width: 100%;
+    margin: 0;
+    padding: 0;
     margin-left: -130px;
     list-style: none;
 }
@@ -197,6 +199,8 @@
 }
 
 .wpr-tplib-sidebar {
+    display: flex;
+    justify-content: space-between;
     padding: 30px 30px 20px 30px;
 }
 
@@ -487,6 +491,7 @@
     left: 0;
     width: 100%;
     height: 100%;
+    border: none;
 }
 
 .wpr-tplib-template-footer {

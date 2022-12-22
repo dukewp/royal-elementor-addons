@@ -163,9 +163,11 @@ class WPR_Templates_Actions {
 	public function wpr_import_library_template() {
         $source = new WPR_Library_Source();
 		$slug = isset($_POST['slug']) ? sanitize_text_field(wp_unslash($_POST['slug'])) : '';
+		$kit = isset($_POST['kit']) ? sanitize_text_field(wp_unslash($_POST['kit'])) : '';
 
         $data = $source->get_data([
-        	'template_id' => $slug
+        	'template_id' => $slug,
+			'kit_id' => $kit
         ]);
         
         echo json_encode($data);
@@ -264,6 +266,46 @@ class WPR_Templates_Actions {
 		        ]
 		    ] );
 		} );
+
+		// Elementor Search Data
+		$ajax->register_ajax_action( 'wpr_templates_library_search_data', function( $data ) {
+			// Freemius OptIn
+			if ( ! (wpr_fs()->is_registered() && wpr_fs()->is_tracking_allowed() || wpr_fs()->is_pending_activation() )) {
+				return;
+			}
+
+			if ( strlen($data['search_query']) > 25 ) {
+				return;
+			}
+
+			// Send Search Query
+		    wp_remote_post( 'https://reastats.kinsta.cloud/wp-json/templates-library-search/data', [
+		        'body' => [
+		            'search_query' => $data['search_query']
+		        ]
+		    ] );
+		} );
+
+		// Regenerate Extra Image Sizes
+		$ajax->register_ajax_action( 'wpr_library_template_import_finished', function( $data ) {
+			Utilities::regenerate_extra_image_sizes();
+
+			// Freemius OptIn
+			if ( ! (wpr_fs()->is_registered() && wpr_fs()->is_tracking_allowed() || wpr_fs()->is_pending_activation() )) {
+				return;
+			}
+
+			if ( ! isset($data['kit']) ) {
+				return;
+			}
+
+			// Send Search Query
+		    wp_remote_post( 'https://reastats.kinsta.cloud/wp-json/templates-library-import/data', [
+		        'body' => [
+		            'imported_template' => $data['kit'] .'-'. $data['template']
+		        ]
+		    ] );
+		} );
 	}
 }
 
@@ -310,12 +352,21 @@ class WPR_Library_Source extends \Elementor\TemplateLibrary\Source_Base {
 		return $templates[ $template_id ];
 	}
 
-	public function request_template_data( $template_id ) {
+	public function request_template_data( $template_id, $kit_id ) {
 		if ( empty( $template_id ) ) {
 			return;
 		}
 
-		$response = wp_remote_get( 'https://royal-elementor-addons.com/library/premade-styles/'. $template_id .'.json', [
+		if ( '' !== $kit_id ) {
+			$url = 'https://royal-elementor-addons.com/library/templates-kit/'. $kit_id .'/';
+		} else {
+			$url = 'https://royal-elementor-addons.com/library/premade-styles/';
+		}
+
+		// Avoid Cache
+		$randomNum = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 7);
+		
+		$response = wp_remote_get($url . $template_id .'.json?='. $randomNum, [
 			'timeout'   => 60,
 			'sslverify' => false
 		] );
@@ -323,8 +374,8 @@ class WPR_Library_Source extends \Elementor\TemplateLibrary\Source_Base {
 		return wp_remote_retrieve_body( $response );
 	}
 
-	public function get_data( array $args ) {//TODO: FIX - This function imports placeholder images in library
-		$data = $this->request_template_data( $args['template_id'] );
+	public function get_data( array $args ) {
+		$data = $this->request_template_data( $args['template_id'], $args['kit_id'] );
 
 		$data = json_decode( $data, true );
 
@@ -332,8 +383,39 @@ class WPR_Library_Source extends \Elementor\TemplateLibrary\Source_Base {
 			throw new \Exception( 'Template does not have any content' );
 		}
 
-		$data['content'] = $this->replace_elements_ids( $data['content'] );
+		add_filter( 'intermediate_image_sizes_advanced', [new Utilities, 'disable_extra_image_sizes'], 10, 3 );
+
+		// Remove Parallax Images from Import File
+		foreach( $data['content'] as $key => $content ) {
+			if ( isset($data['content'][$key]['settings']['bg_image']) ) {
+				unset($data['content'][$key]['settings']['bg_image']);
+			}
+			if ( isset($data['content'][$key]['settings']['hover_parallax']) ) {
+				unset($data['content'][$key]['settings']['hover_parallax']);
+			}
+		}
+
+		$parallax_bg = get_option('wpr-parallax-background', 'on');
+		$parallax_multi = get_option('wpr-parallax-multi-layer', 'on');
+
+		// Disable Extensions during Import
+		if ( 'on' === $parallax_bg ) {
+			update_option('wpr-parallax-background', '');
+		}
+		if ( 'on' === $parallax_multi ) {
+			update_option('wpr-parallax-multi-layer', '');
+		}
+
+		$data['content'] = $this->replace_elements_ids( $data['content'] );		
 		$data['content'] = $this->process_export_import_content( $data['content'], 'on_import' );
+
+		// Enable Back
+		if ( 'on' === $parallax_bg ) {
+			update_option('wpr-parallax-background', 'on');
+		}
+		if ( 'on' === $parallax_multi ) {
+			update_option('wpr-parallax-multi-layer', 'on');
+		}
 
 		return $data;
 	}

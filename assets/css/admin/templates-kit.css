@@ -190,6 +190,9 @@ img {
   padding: 30px;
 }
 
+.wpr-templates-kit-grid.single-grid {
+  padding-bottom: 60px;
+}
 
 @media screen and (max-width: 1400px) {
   .wpr-templates-kit-grid {
