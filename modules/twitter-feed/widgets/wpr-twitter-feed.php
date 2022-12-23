@@ -4439,7 +4439,6 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				$body = json_decode(wp_remote_retrieve_body($response));
 
 				if ($body) {
-					var_dump('new token generated');
 					set_transient('wpr_' . $settings['number_of_posts'] . '_' . $this->get_ID() . '_' . implode("_", $twitter_feed_account_names) . '_tf_token', $body->access_token, $expiration);
 					$token = $body->access_token;
 				}
