@@ -433,6 +433,7 @@ class WP_Import extends WP_Importer {
 			}
 
 			$this->process_termmeta( $cat, $id );
+			add_term_meta( $id, '_wpr_demo_import_item', true );
 		}
 
 		unset( $this->categories );
@@ -494,6 +495,7 @@ class WP_Import extends WP_Importer {
 			}
 
 			$this->process_termmeta( $tag, $id['term_id'] );
+			add_term_meta( $id['term_id'], '_wpr_demo_import_item', true );
 		}
 
 		unset( $this->tags );
@@ -565,6 +567,7 @@ class WP_Import extends WP_Importer {
 			}
 
 			$this->process_termmeta( $term, $id['term_id'] );
+			add_term_meta( $id['term_id'], '_wpr_demo_import_item', true );
 		}
 
 		unset( $this->terms );
@@ -903,6 +906,10 @@ class WP_Import extends WP_Importer {
 					}
 				}
 			}
+
+			// Mark items as WPR Imported
+			add_post_meta( $post_id, '_wpr_demo_import_item', true );
+
 		}
 
 		unset( $this->posts );
@@ -1074,6 +1081,7 @@ class WP_Import extends WP_Importer {
 		// As per wp-admin/includes/upload.php.
 		$post_id = wp_insert_attachment( $post, $upload['file'] );
 		wp_update_attachment_metadata( $post_id, wp_generate_attachment_metadata( $post_id, $upload['file'] ) );
+		add_post_meta( $post_id, '_wpr_demo_import_item', true );
 
 		// Remap resized image URLs, works by stripping the extension and remapping the URL stub.
 		if ( preg_match( '!^image/!', $info['type'] ) ) {

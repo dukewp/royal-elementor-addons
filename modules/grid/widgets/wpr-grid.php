@@ -56,11 +56,48 @@ class Wpr_Grid extends Widget_Base {
     }
 
 	public function add_option_query_source() {
-		$post_types = Utilities::get_custom_types_of( 'post', false );
+		$post_types = [];
+		$post_types['post'] = esc_html__( 'Posts', 'wpr-addons' );
+		$post_types['page'] = esc_html__( 'Pages', 'wpr-addons' );
+
+		$custom_post_types = Utilities::get_custom_types_of( 'post', true );
+		foreach( $custom_post_types as $slug => $title ) {
+			if ( 'product' === $slug || 'e-landing-page' === $slug ) {
+				continue;
+			}
+
+			if ( Utilities::is_new_free_user2() ) {
+				$post_types['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Pro)';
+			} else {
+				$post_types[$slug] = esc_html( $title );
+			}
+		}
+
 		$post_types['current'] = esc_html__( 'Current Query', 'wpr-addons' );
 		$post_types['pro-rl'] = esc_html__( 'Related Query (Pro)', 'wpr-addons' );
 		
 		return $post_types;
+	}
+
+	public function get_available_taxonomies() {
+		$post_taxonomies = [];
+		$post_taxonomies['category'] = esc_html__( 'Categories', 'wpr-addons' );
+		$post_taxonomies['post_tag'] = esc_html__( 'Tags', 'wpr-addons' );
+
+		$custom_post_taxonomies = Utilities::get_custom_types_of( 'tax', true );
+		foreach( $custom_post_taxonomies as $slug => $title ) {
+			if ( 'product_tag' === $slug || 'product_cat' === $slug ) {
+				continue;
+			}
+
+			if ( Utilities::is_new_free_user2() ) {
+				$post_taxonomies['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Pro)';
+			} else {
+				$post_taxonomies[$slug] = esc_html( $title );
+			}
+		}
+
+		return $post_taxonomies;
 	}
 
 	public function add_control_query_randomize() {
@@ -686,12 +723,8 @@ class Wpr_Grid extends Widget_Base {
 		// Get Available Post Types
 		$post_types = $this->add_option_query_source();
 
-		// Remove WooCommerce
-		unset( $post_types['product'] );
-		unset( $post_types['e-landing-page'] );
-
 		// Get Available Taxonomies
-		$post_taxonomies = Utilities::get_custom_types_of( 'tax', false );
+		$post_taxonomies = $this->get_available_taxonomies();
 
 		// Get Available Meta Keys
 		$post_meta_keys = Utilities::get_custom_meta_keys();
@@ -1183,7 +1216,6 @@ class Wpr_Grid extends Widget_Base {
 				'min' => 1,
 				'max' => 10,
 				'default' => 1,
-				'prefix_class' => 'wpr-grid-slides-to-scroll-',
 				'render_type' => 'template',
 				'frontend_available' => true,
 				'separator' => 'before',
@@ -3043,6 +3075,7 @@ class Wpr_Grid extends Widget_Base {
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'grid', [
 			'Posts Order',
+			'Custom Post Types Support',
 			'Trim Title & Excerpt By Letter Count',
 			'Grid Columns 1,2,3,4,5,6',
 			'Masonry Layout',
@@ -9116,6 +9149,7 @@ class Wpr_Grid extends Widget_Base {
 			'pauseOnHover' => $settings['layout_slider_pause_on_hover'],
 			'prevArrow' => '#wpr-grid-slider-prev-'. $this->get_id(),
 			'nextArrow' => '#wpr-grid-slider-next-'. $this->get_id(),
+			'sliderSlidesToScroll' => +$settings['layout_slides_to_scroll'],
 		];
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {

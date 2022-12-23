@@ -36,6 +36,7 @@ jQuery(document).ready(function( $ ) {
 			// Close Button Click
 			$('.wpr-import-kit-popup-wrap').find('.close-btn').on('click', function(){
 				$('.wpr-import-kit-popup-wrap').fadeOut();
+				window.location.reload();
 			});
 
 			// Search Templates Kit
@@ -190,13 +191,13 @@ jQuery(document).ready(function( $ ) {
 				type: 'POST',
 				url: ajaxurl,
 				data: {
-					action: 'wpr_deactivate_extra_plugins',
+					action: 'wpr_fix_royal_compatibility',
 				},
 				success: function( response ) {
-					console.log('plugins deactivated successfully');
+					console.log('Plugins deactivated successfully!');
 				},
 				error: function( response ) {
-					console.log('plugins not deactivated successfully');
+					console.log('No plugins deactivated!');
 				}
 			});
 		},
@@ -210,36 +211,59 @@ jQuery(document).ready(function( $ ) {
 	        var installPlugins = setInterval(function() {
 
 	        	if ( Object.values(WprTemplatesKit.requiredPlugins).every(Boolean) && WprTemplatesKit.requiredTheme ) {
-					console.log('Importing Kit: '+ kitID +'...');
-					WprTemplatesKit.importProgressBar('content');
-
-					// Import Kit
+					// Reset Previous Kit (if any) and then Import New one
 					$.ajax({
 						type: 'POST',
 						url: ajaxurl,
 						data: {
-							action: 'wpr_import_templates_kit',
-							wpr_templates_kit: kitID,
-							wpr_templates_kit_single: false
+							action: 'wpr_reset_previous_import'
 						},
 						success: function( response ) {
-							console.log('Setting up Final Settings...');
-							WprTemplatesKit.importProgressBar('settings');
+							console.log(response['data']);
 
-							// Final Adjustments
+							console.log('Importing Templates Kit: '+ kitID +'...');
+							WprTemplatesKit.importProgressBar('content');
+		
+							// Import Kit
 							$.ajax({
 								type: 'POST',
 								url: ajaxurl,
 								data: {
-									action: 'wpr_final_settings_setup'
+									action: 'wpr_import_templates_kit',
+									wpr_templates_kit: kitID,
+									wpr_templates_kit_single: false
 								},
 								success: function( response ) {
-									setTimeout(function(){
-										console.log('Import Finished!');
-										WprTemplatesKit.importProgressBar('finish');
-									}, 1000 );
+									// needs check to display errors only
+									if ( undefined !== response.success) {
+										console.log(response.data);
+										$('.progress-wrap, .wpr-import-help').addClass('import-error');
+										$('.progress-wrap').find('strong').html(response.data['error'] +'<br><span>'+ response.data['help'] +'<span>');
+										$('.wpr-import-help a').html('Contact Support <span class="dashicons dashicons-email"></span>');
+
+										return false;
+									}
+
+									console.log('Setting up Final Settings...');
+									WprTemplatesKit.importProgressBar('settings');
+		
+									// Final Adjustments
+									$.ajax({
+										type: 'POST',
+										url: ajaxurl,
+										data: {
+											action: 'wpr_final_settings_setup'
+										},
+										success: function( response ) {
+											setTimeout(function(){
+												console.log('Import Finished!');
+												WprTemplatesKit.importProgressBar('finish');
+											}, 1000 );
+										}
+									});
 								}
 							});
+
 						}
 					});
 

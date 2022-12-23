@@ -3,7 +3,7 @@
 use WprAddons\Admin\Includes\WPR_Render_Templates;
 
 /**
- * Astra theme compatibility.
+ * Storefront theme compatibility.
  */
 class Wpr_Storefront_Compat {
 

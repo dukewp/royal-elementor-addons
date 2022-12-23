@@ -18,11 +18,16 @@ add_action( 'admin_menu', 'wpr_addons_add_templates_kit_menu' );
 add_action( 'wp_ajax_wpr_activate_required_theme', 'wpr_activate_required_theme' );
 add_action( 'wp_ajax_wpr_activate_required_plugins', 'wpr_activate_required_plugins' );
 add_action( 'wp_ajax_wpr_fix_royal_compatibility', 'wpr_fix_royal_compatibility' );
+add_action( 'wp_ajax_wpr_reset_previous_import', 'wpr_reset_previous_import' );
 add_action( 'wp_ajax_wpr_import_templates_kit', 'wpr_import_templates_kit' );
 add_action( 'wp_ajax_wpr_final_settings_setup', 'wpr_final_settings_setup' );
 add_action( 'wp_ajax_wpr_search_query_results', 'wpr_search_query_results' );
 add_action( 'init', 'disable_default_woo_pages_creation', 2 );
 
+// Set Image Timeout
+if ( version_compare( get_bloginfo( 'version' ), '5.1.0', '>=' ) ) {
+    add_filter( 'http_request_timeout', 'set_image_request_timeout', 10, 2 );
+}
 
 /**
 ** Render Templates Kit Page
@@ -236,17 +241,26 @@ function wpr_fix_royal_compatibility() {
     // Get currently active plugins
     $active_plugins = (array) get_option( 'active_plugins', array() );
     $active_plugins = array_values($active_plugins);
+    $required_plugins = [
+        'elementor/elementor.php',
+        'royal-elementor-addons/wpr-addons.php',
+        'royal-elementor-addons-pro/wpr-addons-pro.php',
+        'wpr-addons-pro/wpr-addons-pro.php',
+        'contact-form-7/wp-contact-form-7.php',
+        'woocommerce/woocommerce.php',
+        'really-simple-ssl/rlrsssl-really-simple-ssl.php',
+        'wp-mail-smtp/wp_mail_smtp.php',
+        'updraftplus/updraftplus.php',
+        'temporary-login-without-password/temporary-login-without-password.php',
+        'wp-reset/wp-reset.php'
+    ];
 
     // Deactivate Extra Import Plugins
-    $ashe_extra_key = array_search('ashe-extra/ashe-extra.php', $active_plugins);
-    $bard_extra_key = array_search('bard-extra/bard-extra.php', $active_plugins);
-
-    if ( false !== $ashe_extra_key && array_key_exists($ashe_extra_key, $active_plugins) ) {
-        unset($active_plugins[$ashe_extra_key]);
-    }
-
-    if ( false !== $bard_extra_key && array_key_exists($bard_extra_key, $active_plugins) ) {
-        unset($active_plugins[$bard_extra_key]);
+    foreach ( $active_plugins as $key => $value ) {
+        if ( ! in_array($value, $required_plugins) ) {
+            $active_key = array_search($value, $active_plugins);;
+            unset($active_plugins[$active_key]);
+        }
     }
 
     // Set Active Plugins
@@ -288,6 +302,12 @@ function wpr_import_templates_kit() {
         // Tmp
         update_option( 'wpr-import-kit-id', $kit );
 
+        // Disable Extra Image Sizes
+        add_filter( 'intermediate_image_sizes_advanced', [new Utilities, 'disable_extra_image_sizes'], 10, 3 );
+
+        // No Limit for Execution
+        set_time_limit(0);
+
         // Download Import File
         $local_file_path = download_template( $kit, $file );
 
@@ -319,15 +339,117 @@ function download_template( $kit, $file ) {
 
     // Remote and Local Files
     $remote_file_url = 'https://royal-elementor-addons.com/library/templates-kit/'. $kit .'/main.xml?='. $randomNum;
-    $local_file_path = WPR_ADDONS_PATH .'admin/import/tmp.xml';
 
-    // No Limit for Execution
-    set_time_limit(0);
+    // If the function it's not available, require it.
+    if ( ! function_exists( 'download_url' ) ) {
+        require_once ABSPATH . 'wp-admin/includes/file.php';
+    }
 
-    // Copy File From Server
-    copy( $remote_file_url, $local_file_path );
+    $tmp_file = download_url( $remote_file_url );
 
-    return $local_file_path;
+    // WP Error.
+    if ( is_wp_error( $tmp_file ) ) {
+        // Fallback URL
+        $remote_file_url = 'https://mysitetutorial.com/library/templates-kit/'. $kit .'/main.xml?='. $randomNum;
+        $tmp_file = download_url( $remote_file_url );
+
+        if ( is_wp_error( $tmp_file ) ) {
+            wp_send_json_error([
+                'error' => esc_html__('Error: Import File download failed.', 'wpr-addons'),
+                'help' => esc_html__('Please contact Customer Support and send this Error.', 'wpr-addons')
+            ]);
+            return false;
+        }
+    }
+
+    // Array based on $_FILE as seen in PHP file uploads.
+    $file_args = [
+        'name'     => 'main.xml',
+        'tmp_name' => $tmp_file,
+        'error'    => 0,
+        'size'     => filesize( $tmp_file ),
+    ];
+
+    $defaults = array(
+        'test_form' => false,
+        'test_size' => true,
+        'test_upload' => true,
+        'mimes'  => [
+            'xml'  => 'text/xml',
+            'json' => 'text/plain',
+        ],
+        'wp_handle_sideload' => 'upload',
+    );
+
+    // Move the temporary file into the uploads directory.
+    $local_file = wp_handle_sideload( $file_args, $defaults );
+
+    if ( isset( $local_file['error'] ) ) {
+        wp_send_json_error([
+            'error' => esc_html__('Error: Import File upload failed.', 'wpr-addons'),
+            'help' => esc_html__('Please contact Customer Support and send this Error.', 'wpr-addons')
+        ]);
+        return false;
+    }
+
+    // Success.
+    return $local_file['file'];
+}
+
+/**
+** Reset Previous Import
+*/
+function wpr_reset_previous_import() {
+    $args = [
+        'post_type' => [
+            'page',
+            'post',
+            'product',
+            'wpr_mega_menu',
+            'wpr_templates',
+            'elementor_library',
+            'attachment'
+        ],
+        'post_status' => 'any',
+        'posts_per_page' => '-1',
+        'meta_key' => '_wpr_demo_import_item'
+    ];
+
+    $imported_items = new WP_Query ( $args );
+
+    if ( $imported_items->have_posts() ) {
+        while ( $imported_items->have_posts() ) {
+            $imported_items->the_post();
+        
+            // Dont Delete Elementor Kit
+            if ( 'Default Kit' == get_the_title() ) {
+                continue;
+            }
+
+            // Delete Posts
+            wp_delete_post( get_the_ID(), true );
+        }
+
+        // Reset
+        wp_reset_query();
+
+        $imported_terms = get_terms([
+            'meta_key' => '_wpr_demo_import_item',
+            'posts_per_page' => -1,
+            'hide_empty' => false,
+        ]);
+
+        if ( !empty($imported_terms) ) {
+            foreach( $imported_terms as $imported_term ) {
+                // Delete Terms
+                wp_delete_term( $imported_term->term_id, $imported_term->taxonomy );
+            }
+        }
+
+        wp_send_json_success( esc_html__('Previous Import Files have been successfully Reset.', 'wpr-addons') );
+    } else {
+        wp_send_json_success( esc_html__('There is no Data for Reset.', 'wpr-addons') );
+    }
 }
 
 /**
@@ -514,6 +636,33 @@ function wpr_final_settings_setup() {
     if ( $post ) {
         wp_delete_post($post->ID,true);
     }
+
+    // Regenerate Extra Image Sizes
+    Utilities::regenerate_extra_image_sizes();
+}
+
+/**
+** Validate Image Extension
+*/
+function wpr_validate_image_ext( $link = '' ) {
+    return preg_match( '/^((https?:\/\/)|(www\.))([a-z0-9-].?)+(:[0-9]+)?\/[\w\-\@]+\.(jpg|png|gif|jpeg|svg)\/?$/i', $link );
+}
+
+/**
+** Set Timeout for Image Request
+*/
+function set_image_request_timeout( $timeout_value, $url ) {
+    if ( strpos( $url, 'https://royal-elementor-addons.com/' ) === false ) {
+        return $timeout_value;
+    }
+
+    $valid_ext = preg_match( '/^((https?:\/\/)|(www\.))([a-z0-9-].?)+(:[0-9]+)?\/[\w\-\@]+\.(jpg|png|gif|jpeg|svg)\/?$/i', $url );
+
+    if ( $valid_ext ) {
+        $timeout_value = 300;
+    }
+
+    return $timeout_value;
 }
 
 /**
@@ -524,69 +673,46 @@ function disable_default_woo_pages_creation() {
 }
 
 /**
- *  Allow SVG Import - Add Mime Types
- */
-function wpr_svgs_upload_mimes( $mimes = array() ) {
-
-    // allow SVG file upload
-    $mimes['svg'] = 'image/svg+xml';
+** Add .xml and .svg files as supported format in the uploader.
+*/
+function custom_upload_mimes( $mimes ) {
+    // Allow SVG files.
+    $mimes['svg']  = 'image/svg+xml';
     $mimes['svgz'] = 'image/svg+xml';
 
-    // allow JSON file upload
-    $mimes['json'] = 'text/plain';
+    // Allow XML files.
+    $mimes['xml'] = 'text/xml';
+
+    // Allow JSON files.
+    $mimes['json'] = 'application/json';
 
     return $mimes;
-
 }
-add_filter( 'upload_mimes', 'wpr_svgs_upload_mimes', 99 );
 
-/**
- * Check Mime Types
- */
-function wpr_svgs_upload_check( $checked, $file, $filename, $mimes ) {
+add_filter( 'upload_mimes', 'custom_upload_mimes', 99 );
 
-    if ( ! $checked['type'] ) {
+function real_mime_types_5_1_0( $defaults, $file, $filename, $mimes, $real_mime ) {
+    return real_mimes( $defaults, $filename );
+}
 
-        $check_filetype     = wp_check_filetype( $filename, $mimes );
-        $ext                = $check_filetype['ext'];
-        $type               = $check_filetype['type'];
-        $proper_filename    = $filename;
+function real_mime_types( $defaults, $file, $filename, $mimes ) {
+    return real_mimes( $defaults, $filename );
+}
 
-        if ( $type && 0 === strpos( $type, 'image/' ) && $ext !== 'svg' ) {
-            $ext = $type = false;
-        }
-
-        $checked = compact( 'ext','type','proper_filename' );
+function real_mimes( $defaults, $filename ) {
+    if ( strpos( $filename, 'main' ) !== false ) {
+        $defaults['ext']  = 'xml';
+        $defaults['type'] = 'text/xml';
     }
 
-    return $checked;
-
+    return $defaults;
 }
-add_filter( 'wp_check_filetype_and_ext', 'wpr_svgs_upload_check', 10, 4 );
 
-/**
- * Mime Check fix for WP 4.7.1 / 4.7.2
- *
- * Fixes uploads for these 2 version of WordPress.
- * Issue was fixed in 4.7.3 core.
- */
-function wpr_svgs_allow_svg_upload( $data, $file, $filename, $mimes ) {
-
-    global $wp_version;
-    if ( $wp_version !== '4.7.1' || $wp_version !== '4.7.2' ) {
-        return $data;
-    }
-
-    $filetype = wp_check_filetype( $filename, $mimes );
-
-    return [
-        'ext'               => $filetype['ext'],
-        'type'              => $filetype['type'],
-        'proper_filename'   => $data['proper_filename']
-    ];
-
+if ( version_compare( get_bloginfo( 'version' ), '5.1.0', '>=' ) ) {
+    add_filter( 'wp_check_filetype_and_ext', 'real_mime_types_5_1_0', 10, 5, 99 );
+} else {
+    add_filter( 'wp_check_filetype_and_ext', 'real_mime_types', 10, 4 );
 }
-add_filter( 'wp_check_filetype_and_ext', 'wpr_svgs_allow_svg_upload', 10, 4 );
 
 /**
 ** Search Query Results

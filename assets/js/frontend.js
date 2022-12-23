@@ -351,6 +351,14 @@
 			var subMenuFirst = $navMenu.find( '.wpr-nav-menu > li.menu-item-has-children' ),
 				subMenuDeep = $navMenu.find( '.wpr-sub-menu li.menu-item-has-children' );
 
+			if ( $scope.find('.wpr-mobile-toggle').length ) {
+				$scope.find('a').on('click', function() {
+					if (this.pathname == window.location.pathname && !($(this).parent('li').children().length > 1)) {
+						$scope.find('.wpr-mobile-toggle').trigger('click');
+					}
+				});
+			}
+
 			if ( $navMenu.attr('data-trigger') === 'click' ) {
 				// First Sub
 				subMenuFirst.children('a').on( 'click', function(e) {
@@ -540,6 +548,14 @@
 			// Menu
 			var subMenuFirst = $navMenu.find( '.wpr-nav-menu > li.menu-item-has-children' ),
 				subMenuDeep = $navMenu.find( '.wpr-sub-menu li.menu-item-has-children' );
+
+			if ( $scope.find('.wpr-mobile-toggle').length ) {
+				$scope.find('a').on('click', function() {
+					if (this.pathname == window.location.pathname && !($(this).parent('li').children().length > 1)) {
+						$scope.find('.wpr-mobile-toggle').trigger('click');
+					}
+				});
+			}
 
 			// Click
 			if ( $navMenu.attr('data-trigger') === 'click' ) {
@@ -1076,7 +1092,7 @@
 							var updatedResultCount = resultCount.replace( /\d\u2013\d+/, '1\u2013' + ( $scope.find('.wpr-grid-item').length + items.length ) );
 							$scope.find('.woocommerce-result-count').text(updatedResultCount);
 						}
-
+						
 						iGrid.infiniteScroll( 'appendItems', items );
 						iGrid.isotopewpr( 'appended', items );
 
@@ -1155,15 +1171,17 @@
 			} else {
 				iGrid.animate({ 'opacity': '1' }, 1000);
 
+				settings = JSON.parse( iGrid.attr( 'data-slick' ) );
+
 				var sliderClass = $scope.attr('class'),
 					sliderColumnsDesktop = sliderClass.match(/wpr-grid-slider-columns-\d/) ? sliderClass.match(/wpr-grid-slider-columns-\d/).join().slice(-1) : 2,
 					sliderColumnsWideScreen = sliderClass.match(/columns--widescreen\d/) ? sliderClass.match(/columns--widescreen\d/).join().slice(-1) : sliderColumnsDesktop,
 					sliderColumnsLaptop = sliderClass.match(/columns--laptop\d/) ? sliderClass.match(/columns--laptop\d/).join().slice(-1) : sliderColumnsDesktop,
-					sliderColumnsTabletExtra = sliderClass.match(/columns--tablet_extra\d/) ? sliderClass.match(/columns--tablet_extra\d/).join().slice(-1) : sliderColumnsTablet,
 					sliderColumnsTablet = sliderClass.match(/columns--tablet\d/) ? sliderClass.match(/columns--tablet\d/).join().slice(-1) : 2,
+					sliderColumnsTabletExtra = sliderClass.match(/columns--tablet_extra\d/) ? sliderClass.match(/columns--tablet_extra\d/).join().slice(-1) : sliderColumnsTablet,
 					sliderColumnsMobileExtra = sliderClass.match(/columns--mobile_extra\d/) ? sliderClass.match(/columns--mobile_extra\d/).join().slice(-1) : sliderColumnsTablet,
 					sliderColumnsMobile = sliderClass.match(/columns--mobile\d/) ? sliderClass.match(/columns--mobile\d/).join().slice(-1) : 1,
-					sliderSlidesToScroll = sliderClass.match(/wpr-grid-slides-to-scroll-\d/) ? +(sliderClass.match(/wpr-grid-slides-to-scroll-\d/).join().slice(-1)) : 1;
+					sliderSlidesToScroll = settings.sliderSlidesToScroll;
 
 				iGrid.slick({
 					appendDots : $scope.find( '.wpr-grid-slider-dots' ),
@@ -1233,7 +1251,6 @@
 				if ( gridNavPrevArrow.length > 0 && gridNavNextArrow.length > 0 ) {
 					var positionSum = gridNavPrevArrow.position().left * -2;
 					if ( positionSum > 0 ) {
-						console.log(positionSum);
 						$(window).on('load', function() {
 							if ( $(window).width() <= ($scope.outerWidth() + gridNavPrevArrow.outerWidth() + gridNavNextArrow.outerWidth() + positionSum) ) {
 								gridNavPrevArrow.addClass('wpr-adjust-slider-prev-arrow');
@@ -1274,8 +1291,6 @@
 						}, 300 );
 					});
 				}
-
-				settings = JSON.parse( iGrid.attr( 'data-slick' ) );
 			}
 
 			// Add To Cart AJAX
@@ -2145,6 +2160,16 @@
 					fade: 'fade' === dataSlideEffect ? true : false
 				});
 			}
+
+			var iGridLength = iGrid.find('.wpr-mgzn-grid-item').length;
+
+			// $(window).smartresize(function() {
+			// 	if (window.matchMedia("(max-width: 767px)").matches) { // If media query matches
+			// 		iGrid.find('.wpr-magazine-grid.wpr-mgzn-grid-3-h')[0].style.gridTemplateRows = 'repeat('+ iGridLength +', 1fr)';
+			// 	} else {
+			// 		iGrid.find('.wpr-magazine-grid.wpr-mgzn-grid-3-h').removeAttr('style');
+			// 	}
+			// });
 
 			// Media Hover Link
 			if ( 'yes' === iGrid.find( '.wpr-grid-media-wrap' ).attr( 'data-overlay-link' ) && ! WprElements.editorCheck() ) {
@@ -3091,8 +3116,8 @@
 				sliderColumnsDesktop = sliderClass.match(/wpr-adv-slider-columns-\d/) ? sliderClass.match(/wpr-adv-slider-columns-\d/).join().slice(-1) : 2,
 				sliderColumnsWideScreen = sliderClass.match(/columns--widescreen\d/) ? sliderClass.match(/columns--widescreen\d/).join().slice(-1) : sliderColumnsDesktop,
 				sliderColumnsLaptop = sliderClass.match(/columns--laptop\d/) ? sliderClass.match(/columns--laptop\d/).join().slice(-1) : sliderColumnsDesktop,
-				sliderColumnsTabletExtra = sliderClass.match(/columns--tablet_extra\d/) ? sliderClass.match(/columns--tablet_extra\d/).join().slice(-1) : sliderColumnsTablet,
 				sliderColumnsTablet = sliderClass.match(/columns--tablet\d/) ? sliderClass.match(/columns--tablet\d/).join().slice(-1) : 2,
+				sliderColumnsTabletExtra = sliderClass.match(/columns--tablet_extra\d/) ? sliderClass.match(/columns--tablet_extra\d/).join().slice(-1) : sliderColumnsTablet,
 				sliderColumnsMobileExtra = sliderClass.match(/columns--mobile_extra\d/) ? sliderClass.match(/columns--mobile_extra\d/).join().slice(-1) : sliderColumnsTablet,
 				sliderColumnsMobile = sliderClass.match(/columns--mobile\d/) ? sliderClass.match(/columns--mobile\d/).join().slice(-1) : 1,
 				sliderSlidesToScroll = +(sliderClass.match(/wpr-adv-slides-to-scroll-\d/).join().slice(-1)),
@@ -3292,17 +3317,21 @@
 
 		widgetTestimonialCarousel: function( $scope ) {
 			var testimonialCarousel = $scope.find( '.wpr-testimonial-carousel' );
+			var settings = JSON.parse( testimonialCarousel.attr( 'data-slick' ) );
+			
 			// Slider Columns
 			var sliderClass = $scope.attr('class'),
 				sliderColumnsDesktop = sliderClass.match(/wpr-testimonial-slider-columns-\d/) ? sliderClass.match(/wpr-testimonial-slider-columns-\d/).join().slice(-1) : 2,
 				sliderColumnsWideScreen = sliderClass.match(/columns--widescreen\d/) ? sliderClass.match(/columns--widescreen\d/).join().slice(-1) : sliderColumnsDesktop,
 				sliderColumnsLaptop = sliderClass.match(/columns--laptop\d/) ? sliderClass.match(/columns--laptop\d/).join().slice(-1) : sliderColumnsDesktop,
-				sliderColumnsTabletExtra = sliderClass.match(/columns--tablet_extra\d/) ? sliderClass.match(/columns--tablet_extra\d/).join().slice(-1) : sliderColumnsTablet,
 				sliderColumnsTablet = sliderClass.match(/columns--tablet\d/) ? sliderClass.match(/columns--tablet\d/).join().slice(-1) : 2,
+				sliderColumnsTabletExtra = sliderClass.match(/columns--tablet_extra\d/) ? sliderClass.match(/columns--tablet_extra\d/).join().slice(-1) : sliderColumnsTablet,
 				sliderColumnsMobileExtra = sliderClass.match(/columns--mobile_extra\d/) ? sliderClass.match(/columns--mobile_extra\d/).join().slice(-1) : sliderColumnsTablet,
 				sliderColumnsMobile = sliderClass.match(/columns--mobile\d/) ? sliderClass.match(/columns--mobile\d/).join().slice(-1) : 1,
-				sliderSlidesToScroll = +(sliderClass.match(/wpr-adv-slides-to-scroll-\d/).join().slice(-1)),
+				sliderSlidesToScroll = settings.sliderSlidesToScroll,
 				dataSlideEffect = testimonialCarousel.attr('data-slide-effect');
+
+				console.log(sliderColumnsDesktop, sliderColumnsLaptop, sliderColumnsWideScreen, sliderColumnsMobileExtra, sliderColumnsTabletExtra);
 
 			testimonialCarousel.slick({
 				appendArrows: $scope.find('.wpr-testimonial-controls'),
@@ -4068,8 +4097,8 @@
 				sliderColumnsDesktop = sliderClass.match(/wpr-ticker-slider-columns-\d/) ? sliderClass.match(/wpr-ticker-slider-columns-\d/).join().slice(-1) : 2,
 				sliderColumnsWideScreen = sliderClass.match(/columns--widescreen\d/) ? sliderClass.match(/columns--widescreen\d/).join().slice(-1) : sliderColumnsDesktop,
 				sliderColumnsLaptop = sliderClass.match(/columns--laptop\d/) ? sliderClass.match(/columns--laptop\d/).join().slice(-1) : sliderColumnsDesktop,
-				sliderColumnsTabletExtra = sliderClass.match(/columns--tablet_extra\d/) ? sliderClass.match(/columns--tablet_extra\d/).join().slice(-1) : sliderColumnsTablet,
 				sliderColumnsTablet = sliderClass.match(/columns--tablet\d/) ? sliderClass.match(/columns--tablet\d/).join().slice(-1) : 2,
+				sliderColumnsTabletExtra = sliderClass.match(/columns--tablet_extra\d/) ? sliderClass.match(/columns--tablet_extra\d/).join().slice(-1) : sliderColumnsTablet,
 				sliderColumnsMobileExtra = sliderClass.match(/columns--mobile_extra\d/) ? sliderClass.match(/columns--mobile_extra\d/).join().slice(-1) : sliderColumnsTablet,
 				sliderColumnsMobile = sliderClass.match(/columns--mobile\d/) ? sliderClass.match(/columns--mobile\d/).join().slice(-1) : 1,
 				dataSlideEffect = $contentTickerSlider.attr('data-slide-effect'),
@@ -4153,12 +4182,19 @@
 
 			// Active Tab
 			var activeTabIndex = tabsData.activeTab - 1;
+
+			var activeTabIndexFromLocation = window.location.href.indexOf("active_tab=");
+
+			if (activeTabIndexFromLocation > -1) {
+				activeTabIndex = +window.location.href.substring(activeTabIndexFromLocation,  window.location.href.lastIndexOf("#")).replace("active_tab=", '') - 1;
+			}
+
 				$tabList.eq( activeTabIndex ).addClass( 'wpr-tab-active' );
 				$contentList.eq( activeTabIndex ).addClass( 'wpr-tab-content-active wpr-animation-enter' );
 
 			if ( tabsData.autoplay === 'yes' ) {
 				
-				var startIndex = tabsData.activeTab - 1;
+				var startIndex = activeTabIndex;
 
 				var autoplayInterval = setInterval( function() {
 
@@ -4939,7 +4975,6 @@
 					e.preventDefault();
 
 					if ( taxList.find('.wpr-sub-taxonomy[data-term-id="child-'+ $(this).closest('li').data('term-id') +'"]').hasClass('wpr-sub-hidden') ) {
-						console.log('works or not');
 						$(this).removeClass('fa-caret-right').addClass('fa-caret-down');
 						// $scope.find('.fa-caret-down').css('margin-left', -($scope.find('.fa-caret-down').width()));
 						taxList.find('.wpr-sub-taxonomy[data-term-id="child-'+ $(this).closest('li').data('term-id') +'"]').removeClass('wpr-sub-hidden');
@@ -4966,8 +5001,6 @@
 				taxList.find('.wpr-sub-taxonomy i.wpr-tax-dropdown').on('click', function(e) {
 
 					e.preventDefault();
-
-					console.log($(this).parent('li').data('term-id'));
 
 					if ( taxList.find('.wpr-inner-sub-taxonomy[data-parent-id="'+ $(this).closest('li').data('id') +'"]').hasClass('wpr-sub-hidden') ) {
 						$(this).removeClass('fa-caret-right').addClass('fa-caret-down');
@@ -5420,7 +5453,6 @@
 					if ( thisValue.length > 0 ) {
 						$scope.find('.wpr-acc-search-input-wrap').find('i.fa-times').css('display', 'inline-block');
 						allInAcc.each(function() {
-							// console.log($(this), $(this).text().toUpperCase().indexOf(thisValue.toUpperCase()));
 							if ( $(this).hasClass('wpr-accordion-item-wrap') ) {
 								var itemWrap = $(this);
 								if ( itemWrap.text().toUpperCase().indexOf(thisValue.toUpperCase()) == -1 ) {

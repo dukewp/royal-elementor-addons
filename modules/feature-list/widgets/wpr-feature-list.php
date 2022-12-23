@@ -376,9 +376,6 @@ class Wpr_Feature_List extends Widget_Base {
 			[
 				'label' => esc_html__( 'Choose Image', 'plugin-name' ),
 				'type' => \Elementor\Controls_Manager::MEDIA,
-				'default' => [
-					'url' => \Elementor\Utils::get_placeholder_image_src(),
-				],
 				'skin' => 'inline',
 				'condition' => [
 					'feature_list_media_type' => 'image'
@@ -519,10 +516,6 @@ class Wpr_Feature_List extends Widget_Base {
 							'value' => 'fas fa-rocket',
 							'library' => 'solid'
 						],
-						'list_image' =>[
-							'url' => Utils::get_placeholder_image_src(),	
-							'id' => '',
-						],
 					],
 					[
 						'list_title' => esc_html__( 'Key Features', 'wpr-addons' ),
@@ -530,10 +523,6 @@ class Wpr_Feature_List extends Widget_Base {
 						'list_icon' => [
 							'value' => 'far fa-flag',
 							'library' => 'solid'
-						],
-						'list_image' =>[
-							'url' => Utils::get_placeholder_image_src(),	
-							'id' => '',
 						],
 						'feature_list_custom_styles' => 'yes',
 						'feature_list_icon_wrapper_bg_color_unique' => '#966CE6'
@@ -545,10 +534,6 @@ class Wpr_Feature_List extends Widget_Base {
 							'value' => 'fas fa-grip-lines-vertical',
 							'library' => 'solid'
 						],
-						'list_image' =>[
-							'url' => Utils::get_placeholder_image_src(),	
-							'id' => '',
-						],
 					],
 					[
 						'list_title' => esc_html__( 'Custom Styles', 'wpr-addons' ),
@@ -556,10 +541,6 @@ class Wpr_Feature_List extends Widget_Base {
 						'list_icon' => [
 							'value' => 'fas fa-paint-brush',
 							'library' => 'solid'
-						],
-						'list_image' =>[
-							'url' => Utils::get_placeholder_image_src(),	
-							'id' => '',
 						],
 					],
 				],

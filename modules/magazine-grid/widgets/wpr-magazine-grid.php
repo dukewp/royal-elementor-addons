@@ -57,12 +57,27 @@ class Wpr_Magazine_Grid extends Widget_Base {
     }
 
 	public function add_option_query_source() {
-		$pro_query = [
-			'pro-rl' => 'Related Query (Pro)',
-			'pro-cr' => 'Current Query (Pro)',
-		];
+		$post_types = [];
+		$post_types['post'] = esc_html__( 'Posts', 'wpr-addons' );
+		$post_types['page'] = esc_html__( 'Pages', 'wpr-addons' );
+
+		$custom_post_types = Utilities::get_custom_types_of( 'post', true );
+		foreach( $custom_post_types as $slug => $title ) {
+			if ( 'product' === $slug || 'e-landing-page' === $slug ) {
+				continue;
+			}
+
+			if ( Utilities::is_new_free_user2() ) {
+				$post_types['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Pro)';
+			} else {
+				$post_types[$slug] = esc_html( $title );
+			}
+		}
+
+		$post_types['pro-cr'] = esc_html__( 'Current Query (Pro)', 'wpr-addons' );
+		$post_types['pro-rl'] = esc_html__( 'Related Query (Pro)', 'wpr-addons' );
 		
-		return array_merge(Utilities::get_custom_types_of( 'post', false ), $pro_query);
+		return $post_types;
 	}
 
 	public function add_control_query_randomize() {
@@ -1661,6 +1676,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'magazine-grid', [
 			'Posts Order',
+			'Custom Post Types Support',
 			'Trim Title & Excerpt By Letter Count',
 			'Random Posts Query',
 			'+6 Magazine Grid Layouts',

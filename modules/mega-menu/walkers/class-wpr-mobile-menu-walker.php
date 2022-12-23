@@ -147,7 +147,7 @@ class Wpr_Mobile_Menu_Walker extends \Walker_Nav_Menu {
                 $atts['title'] = ! empty( $item->attr_title ) ? $item->attr_title : '';
                 $atts['target'] = ! empty( $item->target ) ? $item->target : '';
                 $atts['rel'] = ! empty( $item->xfn ) ? $item->xfn : '';
-                $atts['href'] = ! empty( $item->url ) ? $item->url : '';
+                $atts['href'] = ! empty( $item->url ) ? $item->url : '#';
                 $atts['class'] = $item_a_class;
         
                 $atts = apply_filters( 'nav_menu_link_attributes', $atts, $item, $args, $depth );
