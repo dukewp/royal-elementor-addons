@@ -113,6 +113,14 @@ class Wpr_Mailchimp extends Widget_Base {
 		);
 
 		$this->add_control(
+			'clear_fields_on_submit',
+			[
+				'label' => esc_html__( 'Clear Fields On Submit', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+			]
+		);
+
+		$this->add_control(
 			'show_form_header',
 			[
 				'label' => esc_html__( 'Show Form Header', 'wpr-addons' ),
@@ -1378,7 +1386,7 @@ class Wpr_Mailchimp extends Widget_Base {
 
 		?>
 
-		<form class="wpr-mailchimp-form" id="wpr-mailchimp-form-<?php echo esc_attr( $this->get_id() ); ?>" method="POST" data-api-key="<?php echo esc_attr(get_option('wpr_mailchimp_api_key')); ?>" data-list-id="<?php echo esc_attr($settings['maichimp_audience']); ?>">
+		<form class="wpr-mailchimp-form" id="wpr-mailchimp-form-<?php echo esc_attr( $this->get_id() ); ?>" method="POST" data-api-key="<?php echo esc_attr(get_option('wpr_mailchimp_api_key')); ?>" data-list-id="<?php echo esc_attr($settings['maichimp_audience']); ?>" data-clear-fields="<?php echo esc_attr($settings['clear_fields_on_submit']); ?>">
 			<!-- Form Header -->
 			<?php if ( 'yes' === $settings['show_form_header'] ) : ?>
 			<div class="wpr-mailchimp-header">
