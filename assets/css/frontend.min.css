@@ -12345,7 +12345,7 @@ a.wpr-ajax-img-wrap {
 
     .wpr-twitter-hidden-item {
         opacity: 0 !important;
-        overflow: hidden;
+        overflow: hidden !important;
     }
 
     .wpr-twitter-feed-item-display-block {
@@ -12408,10 +12408,6 @@ a.wpr-ajax-img-wrap {
         width: 200px;
         height: 200px;
         border-radius: 50%;
-    }
-
-    .wpr-twitter-feed-masonry .wpr-tweet {
-        float: left;
     }
 
     .wpr-twitter-feed-masonry .wpr-twitter-feed {
