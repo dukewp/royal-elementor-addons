@@ -15641,6 +15641,10 @@ dl.variation dd {
     background-color: #FFF;
 }
 
+.wpr-offcanvas-content .elementor-invisible {
+    visibility: visible !important;
+}
+
 .wpr-offcanvas-content-top {
     top: 0;
     left: 0;
