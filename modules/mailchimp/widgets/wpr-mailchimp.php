@@ -43,6 +43,17 @@ class Wpr_Mailchimp extends Widget_Base {
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
 
+	public function add_control_clear_fields_on_submit() {
+		$this->add_control(
+			'clear_fields_on_submit',
+			[
+				'label' => sprintf( __( 'Clear Fields On Submit %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control'
+			]
+		);
+	}
+
 	public function add_control_extra_fields() {
 		$this->add_control(
 			'extra_fields',
@@ -112,13 +123,7 @@ class Wpr_Mailchimp extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'clear_fields_on_submit',
-			[
-				'label' => esc_html__( 'Clear Fields On Submit', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-			]
-		);
+		$this->add_control_clear_fields_on_submit();
 
 		$this->add_control(
 			'show_form_header',
@@ -1384,9 +1389,15 @@ class Wpr_Mailchimp extends Widget_Base {
 		// Get Settings
 		$settings = $this->get_settings();
 
+		if ( wpr_fs()->can_use_premium_code() ) {
+			$clear_fields_on_submit = esc_attr($settings['clear_fields_on_submit']);
+		} else {
+			$clear_fields_on_submit = '';
+		}
+
 		?>
 
-		<form class="wpr-mailchimp-form" id="wpr-mailchimp-form-<?php echo esc_attr( $this->get_id() ); ?>" method="POST" data-api-key="<?php echo esc_attr(get_option('wpr_mailchimp_api_key')); ?>" data-list-id="<?php echo esc_attr($settings['maichimp_audience']); ?>" data-clear-fields="<?php echo esc_attr($settings['clear_fields_on_submit']); ?>">
+		<form class="wpr-mailchimp-form" id="wpr-mailchimp-form-<?php echo esc_attr( $this->get_id() ); ?>" method="POST" data-api-key="<?php echo esc_attr(get_option('wpr_mailchimp_api_key')); ?>" data-list-id="<?php echo esc_attr($settings['maichimp_audience']); ?>" data-clear-fields="<?php echo $clear_fields_on_submit; ?>">
 			<!-- Form Header -->
 			<?php if ( 'yes' === $settings['show_form_header'] ) : ?>
 			<div class="wpr-mailchimp-header">
