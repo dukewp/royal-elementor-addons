@@ -591,6 +591,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'query_taxonomy_product_cat',
 			[
 				'label' => esc_html__( 'Categories', 'wpr-addons' ),
+				'type' => 'wpr-ajax-select2',
 				'options' => 'ajaxselect2/get_taxonomies',
 				'query_slug' => 'product_cat',
 				'multiple' => true,
@@ -606,6 +607,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'query_taxonomy_product_tag',
 			[
 				'label' => esc_html__( 'Tags', 'wpr-addons' ),
+				'type' => 'wpr-ajax-select2',
 				'options' => 'ajaxselect2/get_taxonomies',
 				'query_slug' => 'product_tag',
 				'multiple' => true,
