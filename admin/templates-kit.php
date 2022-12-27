@@ -200,6 +200,13 @@ function get_theme_status() {
 ** Install/Activate Required Theme
 */
 function wpr_activate_required_theme() {
+
+    $nonce = $_POST['nonce'];
+
+    if ( !wp_verify_nonce( $nonce, 'wpr-templates-kit-js' )  || !current_user_can( 'manage_options' ) ) {
+      exit; // Get out of here, the nonce is rotten!
+    }
+    
     // Get Current Theme
     $theme = get_option('stylesheet');
 
@@ -217,6 +224,13 @@ function wpr_activate_required_theme() {
 ** Activate Required Plugins
 */
 function wpr_activate_required_plugins() {
+
+    $nonce = $_POST['nonce'];
+
+    if ( !wp_verify_nonce( $nonce, 'wpr-templates-kit-js')  || !current_user_can( 'manage_options' ) ) {
+      exit; // Get out of here, the nonce is rotten!
+    }
+
     if ( isset($_POST['plugin']) ) {
         if ( 'contact-form-7' == $_POST['plugin'] ) {
             if ( !is_plugin_active( 'contact-form-7/wp-contact-form-7.php' ) ) {
@@ -238,6 +252,13 @@ function wpr_activate_required_plugins() {
 ** Deactivate Extra Plugins
 */
 function wpr_fix_royal_compatibility() {
+
+    $nonce = $_POST['nonce'];
+
+    if ( !wp_verify_nonce( $nonce, 'wpr-templates-kit-js' )  || !current_user_can( 'manage_options' ) ) {
+      exit; // Get out of here, the nonce is rotten!
+    }
+
     // Get currently active plugins
     $active_plugins = (array) get_option( 'active_plugins', array() );
     $active_plugins = array_values($active_plugins);
@@ -281,6 +302,12 @@ function wpr_fix_royal_compatibility() {
 ** Import Template Kit
 */
 function wpr_import_templates_kit() {
+
+    $nonce = $_POST['nonce'];
+
+    if ( !wp_verify_nonce( $nonce, 'wpr-templates-kit-js' )  || !current_user_can( 'manage_options' ) ) {
+      exit; // Get out of here, the nonce is rotten!
+    }
 
     // Temp Define Importers
     if ( ! defined('WP_LOAD_IMPORTERS') ) {
@@ -400,6 +427,13 @@ function download_template( $kit, $file ) {
 ** Reset Previous Import
 */
 function wpr_reset_previous_import() {
+
+    $nonce = $_POST['nonce'];
+
+    if ( !wp_verify_nonce( $nonce, 'wpr-templates-kit-js' )  || !current_user_can( 'manage_options' ) ) {
+      exit; // Get out of here, the nonce is rotten!
+    }
+    
     $args = [
         'post_type' => [
             'page',
@@ -614,6 +648,13 @@ function wpr_fix_elementor_images() {
 ** Final Settings Setup
 */
 function wpr_final_settings_setup() {
+
+    $nonce = $_POST['nonce'];
+
+    if ( !wp_verify_nonce( $nonce, 'wpr-templates-kit-js' )  || !current_user_can( 'manage_options' ) ) {
+      exit; // Get out of here, the nonce is rotten!
+    }
+    
     $kit = !empty(get_option('wpr-import-kit-id')) ? esc_html(get_option('wpr-import-kit-id')) : '';
 
     // Elementor Site Settings

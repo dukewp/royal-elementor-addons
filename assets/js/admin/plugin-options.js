@@ -210,7 +210,8 @@ jQuery(document).ready(function( $ ) {
 
 				// AJAX Data
 				var data = {
-					action: 'wpr_save_template_conditions'
+					action: 'wpr_save_template_conditions',
+					nonce: WprPluginOptions.nonce,
 				};
 				data['wpr_'+ currentTab +'_conditions'] = JSON.stringify(conditions);
 			}
@@ -591,6 +592,7 @@ jQuery(document).ready(function( $ ) {
 			// AJAX Data
 			var data = {
 				action: 'wpr_save_template_conditions',
+				nonce: WprPluginOptions.nonce,
 				template: template
 			};
 			data['wpr_'+ currentTab +'_conditions'] = JSON.stringify(conditions);
