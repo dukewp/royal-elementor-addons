@@ -589,6 +589,14 @@ class Plugin {
 			]
 		);
 
+		wp_localize_script(
+			'wpr-addons-library-frontend-js',
+			'WprLibFrontLoc',
+			[
+				'nonce' => wp_create_nonce('wpr-addons-library-frontend-js')
+			]
+		);
+
 		wp_enqueue_script(
 			'wpr-addons-library-editor-js',
 			WPR_ADDONS_URL . 'assets/js/library-editor'. $this->script_suffix() .'.js',

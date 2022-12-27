@@ -60,8 +60,11 @@ function add_mega_menu_cpt_support( $value ) {
 
 // Create Menu Template
 function wpr_create_mega_menu_template() {
-    if ( ! current_user_can( 'manage_options' ) ) {
-        return;
+
+    $nonce = $_POST['nonce'];
+
+    if ( !wp_verify_nonce( $nonce, 'wpr-mega-menu-js' )  || !current_user_can( 'manage_options' ) ) {
+      return; // Get out of here, the nonce is rotten!
     }
 
     // $menu_id = intval( $_REQUEST['menu'] );
@@ -251,6 +254,13 @@ function render_settings_popup() {
 
 // Save Mega Menu Settings
 function wpr_save_mega_menu_settings() {
+
+    $nonce = $_POST['nonce'];
+
+    if ( !wp_verify_nonce( $nonce, 'wpr-mega-menu-js' )  || !current_user_can( 'manage_options' ) ) {
+      exit; // Get out of here, the nonce is rotten!
+    }
+
     if ( isset($_POST['item_settings']) ) {
         update_post_meta( $_POST['item_id'], 'wpr-mega-menu-settings', $_POST['item_settings'] );
     }
@@ -296,7 +306,7 @@ function get_menu_items_settings() {
                 $settings[ $item_id ] = [];
             }
         }
-    
+        
         return $settings;
     }
 }
@@ -369,7 +379,14 @@ function enqueue_scripts( $hook ) {
         // enqueue JS
         wp_enqueue_script( 'wpr-mega-menu-js', WPR_ADDONS_URL .'assets/js/admin/mega-menu.js', ['jquery'], $version );
 
-        wp_localize_script( 'wpr-mega-menu-js', 'WprMegaMenuSettingsData', get_menu_items_settings() );
+        wp_localize_script( 
+            'wpr-mega-menu-js',
+            'WprMegaMenuSettingsData',
+            [
+                'settingsData' => get_menu_items_settings(),
+				'nonce' => wp_create_nonce( 'wpr-mega-menu-js' ),
+            ]
+        );
 
     }
 

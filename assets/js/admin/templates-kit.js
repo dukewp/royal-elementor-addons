@@ -103,6 +103,7 @@ jQuery(document).ready(function( $ ) {
 		            ajaxurl,
 		            {
 		                action: 'wpr_activate_required_theme',
+						nonce: WprTemplatesKitLoc.nonce,
 		            }
 		        );
 
@@ -117,6 +118,7 @@ jQuery(document).ready(function( $ ) {
 			            ajaxurl,
 			            {
 			                action: 'wpr_activate_required_theme',
+							nonce: WprTemplatesKitLoc.nonce,
 			            }
 			        );
 
@@ -157,6 +159,7 @@ jQuery(document).ready(function( $ ) {
 						data: {
 			                action: 'wpr_activate_required_plugins',
 			                plugin: slug,
+							nonce: WprTemplatesKitLoc.nonce,
 						},
 						success: function( response ) {
 							WprTemplatesKit.requiredPlugins[slug] = true;
@@ -176,6 +179,7 @@ jQuery(document).ready(function( $ ) {
 							data: {
 								action: 'wpr_activate_required_plugins',
 								plugin: slug,
+								nonce: WprTemplatesKitLoc.nonce,
 							},
 							success: function( response ) {
 								WprTemplatesKit.requiredPlugins[slug] = true;
@@ -192,6 +196,7 @@ jQuery(document).ready(function( $ ) {
 				url: ajaxurl,
 				data: {
 					action: 'wpr_fix_royal_compatibility',
+					nonce: WprTemplatesKitLoc.nonce,
 				},
 				success: function( response ) {
 					console.log('Plugins deactivated successfully!');
@@ -216,7 +221,8 @@ jQuery(document).ready(function( $ ) {
 						type: 'POST',
 						url: ajaxurl,
 						data: {
-							action: 'wpr_reset_previous_import'
+							action: 'wpr_reset_previous_import',
+							nonce: WprTemplatesKitLoc.nonce,
 						},
 						success: function( response ) {
 							console.log(response['data']);
@@ -230,6 +236,7 @@ jQuery(document).ready(function( $ ) {
 								url: ajaxurl,
 								data: {
 									action: 'wpr_import_templates_kit',
+									nonce: WprTemplatesKitLoc.nonce,
 									wpr_templates_kit: kitID,
 									wpr_templates_kit_single: false
 								},
@@ -252,7 +259,8 @@ jQuery(document).ready(function( $ ) {
 										type: 'POST',
 										url: ajaxurl,
 										data: {
-											action: 'wpr_final_settings_setup'
+											action: 'wpr_final_settings_setup',
+											nonce: WprTemplatesKitLoc.nonce,
 										},
 										success: function( response ) {
 											setTimeout(function(){
@@ -281,6 +289,7 @@ jQuery(document).ready(function( $ ) {
 				url: ajaxurl,
 				data: {
 					action: 'wpr_import_templates_kit',
+					nonce: WprTemplatesKitLoc.nonce,
 					wpr_templates_kit: kitID,
 					wpr_templates_kit_single: templateID
 				},

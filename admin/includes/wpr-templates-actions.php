@@ -47,6 +47,13 @@ class WPR_Templates_Actions {
 	** Save Template Conditions
 	*/
 	public function wpr_save_template_conditions() {
+
+		$nonce = $_POST['nonce'];
+
+		if ( !wp_verify_nonce( $nonce, 'wpr-plugin-options-js')  || !current_user_can( 'manage_options' ) ) {
+		  exit; // Get out of here, the nonce is rotten!
+		}
+
 		$template = isset($_POST['template']) ? sanitize_text_field(wp_unslash($_POST['template'])): false;
 
 		// Header
@@ -161,6 +168,13 @@ class WPR_Templates_Actions {
 	** Import Library Template
 	*/
 	public function wpr_import_library_template() {
+
+		$nonce = $_POST['nonce'];
+
+		if ( !wp_verify_nonce( $nonce, 'wpr-addons-library-frontend-js')  || !current_user_can( 'manage_options' ) ) {
+		  exit; // Get out of here, the nonce is rotten!
+		}
+
         $source = new WPR_Library_Source();
 		$slug = isset($_POST['slug']) ? sanitize_text_field(wp_unslash($_POST['slug'])) : '';
 		$kit = isset($_POST['kit']) ? sanitize_text_field(wp_unslash($_POST['kit'])) : '';
@@ -233,6 +247,16 @@ class WPR_Templates_Actions {
 		if ( strpos($hook, 'wpr-templates-kit') ) {
 			wp_enqueue_style( 'wpr-templates-kit-css', WPR_ADDONS_URL .'assets/css/admin/templates-kit.css', [], $version );
 		    wp_enqueue_script( 'wpr-templates-kit-js', WPR_ADDONS_URL .'assets/js/admin/templates-kit.js', ['jquery', 'updates'], $version );
+
+			wp_localize_script(
+				'wpr-templates-kit-js',
+				'WprTemplatesKitLoc', // This is used in the js file to group all of your scripts together
+				[
+					'ajaxurl' => admin_url( 'admin-ajax.php' ),
+					'resturl' => get_rest_url() . 'wpraddons/v1',
+					'nonce' => wp_create_nonce( 'wpr-templates-kit-js' ),
+				]
+			);
 		}
 
 		if ( strpos($hook, 'wpr-premade-blocks') ) {
