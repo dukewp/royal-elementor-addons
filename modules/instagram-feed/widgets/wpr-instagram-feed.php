@@ -211,6 +211,13 @@ class Wpr_Instagram_Feed extends Widget_Base {
 	
 	public function add_control_lightbox_popup_sharing() {}
 
+	public function add_repeater_args_element_trim_text_by() {
+		return [
+			'word_count' => esc_html__( 'Word Count', 'wpr-addons' ),
+			'pro-lc' => esc_html__( 'Letter Count (Pro)', 'wpr-addons' )
+		];
+	}
+
 	public function add_repeater_args_element_sharing_icon_1() {
 		return [
 			'type' => Controls_Manager::HIDDEN,
@@ -333,21 +340,12 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'description' => esc_html__('Please Note: You just need to enter this once, later it will update automatically')
 			]
 		);
-				
-		$this->add_control(
-			'cache_timeout',
-			[
-				'label' => esc_html__( 'Cache Timeout', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::NUMBER,
-				'default' => 600,
-				'description' => esc_html__('Determine how often you want the feed to be updated')
-			]
-		);
 
 		$this->add_control(
 			'cache_timeout_test',
 			[
 				'label'   => esc_html__( 'Cache Timeout', 'powerpack' ),
+				'description' => esc_html__('Determine how often you want the feed to be updated'),
 				'type'    => Controls_Manager::SELECT,
 				'default' => 'hour',
 				'options' => [
@@ -1017,6 +1015,20 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'element_trim_text_by',
+			[
+				'label' => esc_html__( 'Trim Text By', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'word_count',
+				'options' => $this->add_repeater_args_element_trim_text_by(),
+				'separator' => 'after',
+				'condition' => [
+					'element_select' => [ 'caption' ],
+				]
+			]
+		);
+
+		$repeater->add_control(
 			'element_word_count',
 			[
 				'label' => esc_html__( 'Word Count', 'wpr-addons' ),
@@ -1025,6 +1037,21 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'min' => 1,
 				'condition' => [
 					'element_select' => [ 'caption' ],
+					'element_trim_text_by' => 'word_count'
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'element_letter_count',
+			[
+				'label' => esc_html__( 'Letter Count', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 40,
+				'min' => 1,
+				'condition' => [
+					'element_select' => [ 'caption' ],
+					'element_trim_text_by' => 'letter_count'
 				]
 			]
 		);
@@ -4561,8 +4588,8 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			}
 		}
 
-		if ( get_transient($key) === false || empty(get_transient($key)) ) {
-			// var_dump('new transient generation');
+		if ( get_transient($key) === false || empty(get_transient($key)) || ($settings['instagram_access_token'] !== get_option('wpr_instagram_access_token_to_compare')) ) {
+
 			$limit = wp_is_mobile() ? $settings['limit_mobile'] : $settings['limit'];
 
 			$url = 'https://graph.instagram.com/me/media?fields=id,media_type,media_url,thumbnail_url,permalink,children,username,caption,timestamp&access_token='. $access_token .'&limit='. $limit;
@@ -4583,8 +4610,11 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			}
 
 		} else {
-			// var_dump('using transient for instagram data');
 			$instagram_data = get_transient($key);
+		}
+
+		if ( !get_option('wpr_instagram_access_token_to_compare') || get_option('wpr_instagram_access_token_to_compare') != $settings['instagram_access_token'] ) {
+			update_option('wpr_instagram_access_token_to_compare', $settings['instagram_access_token'] );
 		}
 		
 		return $instagram_data;
@@ -4616,7 +4646,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 	}
 
 	public function refresh_access_token($access_token) {
-		// var_dump('refresh occurs');
 		$url = 'https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token='.$access_token.'';
 		$response = wp_remote_get($url);
 		if(!isset($body)) {
@@ -4703,7 +4732,13 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo '<figcaption class="wpr-insta-feed-caption"><p>'. esc_html(wp_trim_words($result->caption, $settings['element_word_count'])) .'</p></figcaption>';
+			echo  '<figcaption class="wpr-insta-feed-caption"><p>';
+			if ( 'word_count' === $settings['element_trim_text_by'] ) {
+				echo esc_html(wp_trim_words($result->caption, $settings['element_word_count']));
+			} else {
+				echo substr(html_entity_decode($result->caption), 0, $settings['element_letter_count']) .'...';
+			}
+			echo '</p></figcaption>';
 			echo '</div>';
 		echo '</div>';
 	}
@@ -4989,14 +5024,37 @@ class Wpr_Instagram_Feed extends Widget_Base {
     protected function render() {
 		$settings = $this->get_settings_for_display();
 
-		$instagram_settings = [
-			'data-col' => 4
-		];
-
 		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$settings['lightbox_popup_thumbnails'] = '';
 			$settings['lightbox_popup_thumbnails_default'] = '';
 			$settings['lightbox_popup_sharing'] = '';
+		}
+
+		$columns_mobile = isset($settings['columns_mobile']) ? $settings['columns_mobile'] : $settings['columns'];
+		$columns_tablet = isset($settings['columns_tablet']) ? $settings['columns_tablet'] : $settings['columns'];
+		$columns_laptop = isset($settings['columns_laptop']) ? $settings['columns_laptop'] : $settings['columns'];
+		$columns_widescreen = isset($settings['columns_widescreen']) ? $settings['columns_widescreen'] : $settings['columns'];
+
+		$instagram_settings = [
+			'insta_layout_select' => $settings['insta_layout_select'],
+			'columns' => $settings['columns'],
+			'columns_mobile' => $columns_mobile,
+			'columns_mobile_extra' => isset($settings['columns_mobile_extra']) ? $settings['columns_mobile_extra'] : $columns_tablet,
+			'columns_tablet' => $columns_tablet,
+			'columns_tablet_extra' => isset($settings['columns_tablet_extra']) ? $settings['columns_tablet_extra'] : $columns_laptop,
+			'columns_laptop' => $columns_laptop,
+			'columns_widescreen' => $columns_widescreen,
+			'gutter_hr' => $settings['gutter']['size'],
+			'gutter_vr' => $settings['distance_bottom']['size'],
+			// 'animation' => $settings['layout_animation'],
+			// 'animation_duration' => $settings['layout_animation_duration'],
+			// 'animation_delay' => $settings['layout_animation_delay'],
+		];
+
+		if ( 'layout-list' === $settings['insta_layout_select'] ) {
+			$instagram_settings['media_align'] = $settings['layout_list_align'];
+			$instagram_settings['media_width'] = $settings['layout_list_media_width']['size'];
+			$instagram_settings['media_distance'] = $settings['layout_list_media_distance']['size'];
 		}
 
 		$instagram_settings['lightbox'] = [
@@ -5015,6 +5073,16 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			'zoom' => $settings['lightbox_popup_zoom'],
 			'fullScreen' => $settings['lightbox_popup_fullscreen'],
 			'download' => $settings['lightbox_popup_download'],
+		];
+
+		$instagram_settings['test'] = [
+			'limit' => $settings['limit'],
+			'open_in_new_tab' => $settings['open_in_new_tab'],
+			'overlay_post_link' => $settings['overlay_post_link'],
+			'image_effects' => $settings['image_effects'],
+			'image_effects' => $settings['image_effects_size'],
+			'image_effects' => $settings['image_effects_duration'],
+			'insta_feed_elements' => $settings['insta_feed_elements'],
 		];
 		
 		if ( 'layout-carousel' === $settings['insta_layout_select'] ) {
@@ -5072,7 +5140,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			[
 				'class'         => ['wpr-instagram-feed', 'wpr-'. $settings['insta_layout_select']],
 				'data-settings' => wp_json_encode( $instagram_settings ),
-				'data-settings-test' => wp_json_encode( $settings )
 			]
 		);
 
@@ -5080,20 +5147,15 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			$this->add_link_attributes( 'instagram_follow_link', $settings['instagram_follow_link'] );
 		}
 
-		// var_dump($settings['instagram_access_token']);
-		// var_dump(get_transient('wpr_instagram_access_token'. $this->get_ID()));
-
 		if ( get_transient('wpr_instagram_access_token'. $this->get_ID()) && ($settings['instagram_access_token'] == get_option('wpr_instagram_access_token_to_compare')) ) {
-			// var_dump('transient works');
+
 			$access_token = get_transient('wpr_instagram_access_token'. $this->get_ID());
 			$token_expires_in = get_transient('wpr_instagram_access_token_expires_in'. $this->get_ID());
 
-			// $compare_date = strtotime('-'.get_transient('wpr_instagram_access_token_expires_in'. $this->get_ID()).' seconds');
+			$compare_date = strtotime('-'.get_transient('wpr_instagram_access_token_expires_in'. $this->get_ID()).' seconds');
 	
-			// $token_generation_date = strtotime(get_transient('wpr_instagram_access_token_generation_date'. $this->get_ID()));
+			$token_generation_date = strtotime(get_transient('wpr_instagram_access_token_generation_date'. $this->get_ID()));
 		} else {
-
-			// var_dump('settings work');
 			
 			$access_token = $settings['instagram_access_token'];
 
@@ -5102,17 +5164,15 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			}
 
 			$token_expires_in = get_transient('wpr_instagram_access_token_expires_in'. $this->get_ID());
-
-			// $compare_date = strtotime('-'.$settings['instagram_access_token_expires_in'].' seconds');
 			
 			if (!get_transient('wpr_instagram_access_token_generation_date'. $this->get_ID())) {
 				set_transient('wpr_instagram_access_token_generation_date'. $this->get_ID(), date('Y-m-d'), $token_expires_in);
 			}
 
-			// $token_generation_date = strtotime(get_transient('wpr_instagram_access_token_generation_date'. $this->get_ID()));
-		}
+			$compare_date = strtotime('-'.$settings['instagram_access_token_expires_in'].' seconds');
 
-		// var_dump((int) get_option( '_transient_timeout_wpr_instagram_access_token_expires_in'. $this->get_ID(), 0 ) - time());
+			$token_generation_date = strtotime(get_transient('wpr_instagram_access_token_generation_date'. $this->get_ID()));
+		}
 
 		function secondsToTime($seconds) {
 			$dtF = new \DateTime('@0');
@@ -5122,15 +5182,8 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
 		// var_dump(secondsToTime((int) get_option( '_transient_timeout_wpr_instagram_access_token_expires_in'. $this->get_ID(), 0 ) - time()));
 
-		// // var_dump(get_option('wpr_instagram_access_token_to_compare'), $settings['instagram_access_token']);
-
-		// if ( $token_generation_date <= $compare_date  ) {
-		if ( !$token_expires_in || (get_option('wpr_instagram_access_token_to_compare') != $settings['instagram_access_token']) ) {
+		if ( ($token_generation_date <= $compare_date) || (get_option('wpr_instagram_access_token_to_compare') != $settings['instagram_access_token']) ) {
 				$this->refresh_access_token($access_token);
-		}
-
-		if ( !get_option('wpr_instagram_access_token_to_compare') || get_option('wpr_instagram_access_token_to_compare') != $settings['instagram_access_token'] ) {
-			update_option('wpr_instagram_access_token_to_compare', $settings['instagram_access_token'] );
 		}
 
 		if ( '' === $access_token ) {
@@ -5153,66 +5206,67 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			</div>
 		<?php endif; ?>
 
-			<div class="wpr-instagram-feed-cont">
-				<?php
-					if ( 'yes' === $settings['enable_cs_nav'] ) {
-						echo '<div class="wpr-swiper-nav-wrap">';
-							echo '<button class="wpr-swiper-button wpr-swiper-button-prev">';
-								echo Utilities::get_wpr_icon( $settings['cs_nav_arrows'], 'left' );
-							echo '</button>';
-							echo '<button class="wpr-swiper-button wpr-swiper-button-next">';
-								echo Utilities::get_wpr_icon( $settings['cs_nav_arrows'], 'right' );
-							echo '</button>';
-						echo '</div>';
-					}
-					
+		<div class="wpr-instagram-feed-cont">
+			<?php
+			if ( 'yes' === $settings['enable_cs_nav'] ) {
+				echo '<div class="wpr-swiper-nav-wrap">';
+					echo '<button class="wpr-swiper-button wpr-swiper-button-prev">';
+						echo Utilities::get_wpr_icon( $settings['cs_nav_arrows'], 'left' );
+					echo '</button>';
+					echo '<button class="wpr-swiper-button wpr-swiper-button-next">';
+						echo Utilities::get_wpr_icon( $settings['cs_nav_arrows'], 'right' );
+					echo '</button>';
+				echo '</div>';
+			}
+			
 
-					if ( 'yes' === $settings['enable_cs_pag'] ) {
-						echo '<div class="swiper-pagination"></div>';
-					}
-				?>
-				<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'instagram' ) ); ?>>
+			if ( 'yes' === $settings['enable_cs_pag'] ) {
+				echo '<div class="swiper-pagination"></div>';
+			}
+			?>
 
-					<?php foreach($this->call_instagram_api($access_token, $settings) as $result) : ?>
+			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'instagram' ) ); ?>>
 
-						<div class="wpr-insta-feed-content-wrap elementor-clearfix wpr-insta-col-12">
-							<figure>
-								<?php
-									// Content: Above Media
-									echo $this->get_elements_by_location( 'above', $settings, $result );
-								 ?>
-								<div class="wpr-insta-feed-media-wrap <?php echo esc_attr($this->get_image_effect_class( $settings )) ?>" data-overlay-link="<?php echo esc_attr( $settings['overlay_post_link'] ) ?>">
-								<?php if ( 'CAROUSEL_ALBUM' == $result->media_type || 'IMAGE' == $result->media_type ) : ?>
-									<div class="wpr-insta-feed-image-wrap" data-src=<?php echo $result->media_url ?>>
-										<img src=<?php echo $result->media_url  ?> alt="">
-									</div>
-								<?php elseif ($result->media_type == 'VIDEO') : ?>
-									<div class="wpr-insta-feed-image-wrap" data-src=<?php echo $result->thumbnail_url ?>>
-										<img class="wpr-insta-feed-thumb" src=<?php echo $result->thumbnail_url ?> alt="">
-									</div>
-								<?php endif ; ?>
-									<div class="wpr-insta-feed-media-hover wpr-animation-wrap">
-										<?php
-											// Media Overlay
-											$this->render_media_overlay( $settings, $result );
+				<?php foreach($this->call_instagram_api($access_token, $settings) as $result) : ?>
 
-											// Content: Over Media
-											$this->get_elements_by_location( 'over', $settings, $result );
-										?>
-									</div>
+					<div class="wpr-insta-feed-content-wrap elementor-clearfix wpr-insta-col-12">
+						<figure>
+							<?php
+								// Content: Above Media
+								echo $this->get_elements_by_location( 'above', $settings, $result );
+							?>
+							<div class="wpr-insta-feed-media-wrap <?php echo esc_attr($this->get_image_effect_class( $settings )) ?>" data-overlay-link="<?php echo esc_attr( $settings['overlay_post_link'] ) ?>">
+							<?php if ( 'CAROUSEL_ALBUM' == $result->media_type || 'IMAGE' == $result->media_type ) : ?>
+								<div class="wpr-insta-feed-image-wrap" data-src=<?php echo $result->media_url ?>>
+									<img src=<?php echo $result->media_url  ?> alt="">
 								</div>
-								<?php
-									// Content: Below Media
-									echo $this->get_elements_by_location( 'below', $settings, $result );
-								 ?>
-							</figure>
-						</div>
+							<?php elseif ($result->media_type == 'VIDEO') : ?>
+								<div class="wpr-insta-feed-image-wrap" data-src=<?php echo $result->thumbnail_url ?>>
+									<img class="wpr-insta-feed-thumb" src=<?php echo $result->thumbnail_url ?> alt="">
+								</div>
+							<?php endif ; ?>
+								<div class="wpr-insta-feed-media-hover wpr-animation-wrap">
+									<?php
+									// Media Overlay
+									$this->render_media_overlay( $settings, $result );
 
-					<?php endforeach; ?>
-					
-				</div>
+									// Content: Over Media
+									$this->get_elements_by_location( 'over', $settings, $result );
+									?>
+								</div>
+							</div>
+							<?php
+								// Content: Below Media
+								echo $this->get_elements_by_location( 'below', $settings, $result );
+							?>
+						</figure>
+					</div>
+
+				<?php endforeach; ?>
 				
 			</div>
+			
+		</div>
 
 		<?php
 
@@ -5227,9 +5281,9 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					<div class="wpr-instagram-follow-btn-wrap">
 						<a class="wpr-instagram-follow-btn" <?php echo $this->get_render_attribute_string( 'instagram_follow_link' ); ?>>
 							<?php 
-								if ( '' !== $settings['instagram_follow_icon']) {
-									\Elementor\Icons_Manager::render_icon( $settings['instagram_follow_icon'], [ 'aria-hidden' => 'true' ] ); 
-								}
+							if ( '' !== $settings['instagram_follow_icon']) {
+								\Elementor\Icons_Manager::render_icon( $settings['instagram_follow_icon'], [ 'aria-hidden' => 'true' ] ); 
+							}
 							?>
 							<?php echo $settings['instagram_follow_text'] ?>
 						</a>

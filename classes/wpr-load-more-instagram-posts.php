@@ -382,7 +382,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     public function wpr_load_more_instagram_posts_function() {
 		$settings = $_POST['wpr_load_more_settings'];
 		
-		$instagram_token = get_transient('wpr_instagram_access_token'. $_POST['wpr_insta_feed_widget_id']) && ( get_transient('wpr_instagram_access_token'. $_POST['wpr_insta_feed_widget_id']) == $settings['instagram_access_token']) ? get_transient('wpr_instagram_access_token'. $_POST['wpr_insta_feed_widget_id']) : $settings['instagram_access_token'];
+		$instagram_token = get_transient('wpr_instagram_access_token'. $_POST['wpr_insta_feed_widget_id']);
         foreach($this->call_instagram_api($instagram_token, $_POST['wpr_load_more_settings']) as $key=>$result) : ?>
             <?php 
 				if ($key < $_POST['next_post_index']) :
