@@ -131,6 +131,74 @@ class Wpr_Offcanvas extends Widget_Base {
             ]
         );
 
+		$this->add_responsive_control(
+			'offcanvas_box_width',
+			[
+				'label' => esc_html__( 'Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px', '%', 'vw'],
+				'range' => [
+					'px' => [
+						'min' => 50,
+						'max' => 3000,
+					],
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					],
+					'vw' => [
+						'min' => 0,
+						'max' => 100,
+					]
+				],
+				'default' => [
+					'unit' => 'vw',
+					'size' => 30,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-offcanvas-content' => 'width: {{SIZE}}{{UNIT}};',
+					'.wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-content' => 'width: {{SIZE}}{{UNIT}};'
+				],
+				'condition' => [
+					'offcanvas_position' => ['left', 'right', 'middle']
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'offcanvas_box_height',
+			[
+				'label' => esc_html__( 'Height', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px', '%', 'vh'],
+				'range' => [
+					'px' => [
+						'min' => 50,
+						'max' => 3000,
+					],
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					],
+					'vh' => [
+						'min' => 0,
+						'max' => 100,
+					]
+				],
+				'default' => [
+					'unit' => 'vh',
+					'size' => 30,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-offcanvas-content' => 'height: {{SIZE}}{{UNIT}};',
+					'.wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-content' => 'height: {{SIZE}}{{UNIT}};'
+				],
+				'condition' => [
+					'offcanvas_position' => ['top', 'bottom', 'middle']
+				]
+			]
+		);
+
 		$this->add_control(
 			'offcanvas_entrance_animation',
 			[
