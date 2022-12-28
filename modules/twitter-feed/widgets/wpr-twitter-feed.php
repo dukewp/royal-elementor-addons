@@ -4415,7 +4415,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 		}
 
         $token = get_transient('wpr_' . $settings['number_of_posts'] . '_' . $this->get_ID() . '_' . implode("_", $twitter_feed_account_names) . '_tf_token');
-	    $expiration = ! empty('wpr_' . $settings['auto_clear_cache'] ) && ! empty( $settings['twitter_feed_cache_limit'] ) ? absint( $settings['twitter_feed_cache_limit'] ) * MINUTE_IN_SECONDS : DAY_IN_SECONDS;
+	    $expiration = !empty( $settings['auto_clear_cache'] ) && !empty( $settings['twitter_feed_cache_limit'] ) ? absint( $settings['twitter_feed_cache_limit'] ) * MINUTE_IN_SECONDS : DAY_IN_SECONDS;
 	    $cache_key = 'wpr_' . implode("_", $twitter_feed_account_names) . '_' . $expiration . '_' . md5( $settings['twitter_feed_hashtag_name'] . $settings['twitter_feed_consumer_key'] . $settings['twitter_feed_consumer_secret'] ) . '_tf_cache' . '_' . $settings['number_of_posts'];
         $items_array = get_transient( $cache_key );
 
@@ -4477,6 +4477,38 @@ class Wpr_Twitter_Feed extends Widget_Base {
         $header_banner_placeholder = WPR_ADDONS_ASSETS_URL . 'img/placeholder.png';
         $header_banner = $items_array[0][0]['user']['profile_banner_url'] ? $items_array[0][0]['user']['profile_banner_url'] : $header_banner_placeholder;
 
+		$columns_mobile = isset($settings['columns_mobile']) ? $settings['columns_mobile'] : $settings['columns'];
+		$columns_tablet = isset($settings['columns_tablet']) ? $settings['columns_tablet'] : $settings['columns'];
+		$columns_laptop = isset($settings['columns_laptop']) ? $settings['columns_laptop'] : $settings['columns'];
+		$columns_widescreen = isset($settings['columns_widescreen']) ? $settings['columns_widescreen'] : $settings['columns'];
+
+		$twitter_settings = [
+			'layout_select' => $settings['layout_select'],
+			'columns' => $settings['columns'],
+			'columns_mobile' => $columns_mobile,
+			'columns_mobile_extra' => isset($settings['columns_mobile_extra']) ? $settings['columns_mobile_extra'] : $columns_tablet,
+			'columns_tablet' => $columns_tablet,
+			'columns_tablet_extra' => isset($settings['columns_tablet_extra']) ? $settings['columns_tablet_extra'] : $columns_laptop,
+			'columns_laptop' => $columns_laptop,
+			'columns_widescreen' => $columns_widescreen,
+			'gutter_hr' => $settings['gutter']['size'],
+			'gutter_vr' => $settings['distance_bottom']['size'],
+			// 'animation' => $settings['layout_animation'],
+			// 'animation_duration' => $settings['layout_animation_duration'],
+			// 'animation_delay' => $settings['layout_animation_delay'],
+		];
+
+		$twitter_settings['test'] = [
+			'number_of_posts' => $settings['number_of_posts'],
+			'twitter_feed_consumer_key' => $settings['twitter_feed_consumer_key'],
+			'twitter_feed_consumer_secret' => $settings['twitter_feed_consumer_secret'],
+			// 'image_effects' => $settings['image_effects'],
+			// 'image_effects' => $settings['image_effects_size'],
+			// 'image_effects' => $settings['image_effects_duration'],
+			'twitter_accounts' => $settings['twitter_accounts'],
+			'twitter_feed_elements' => $settings['twitter_feed_elements'],
+		];
+
 		if ( 'carousel' === $settings['layout_select'] ) {
 			
 			$navigation = $settings['enable_cs_nav'];
@@ -4531,12 +4563,9 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			'twitter_feed',
 			[
 				'class' => ['wpr-twitter-feed', 'wpr-'. $settings['layout_select']],
-				'data-settings' => $settings['layout_select'] === 'carousel' ? wp_json_encode( $twitter_settings ) : wp_json_encode([]),
-				'data-settings-test' => wp_json_encode( $settings )
+				'data-settings' => wp_json_encode( $twitter_settings ),
 			]
 		);
-
-		// var_dump($items_array);
 
 		if ( $settings['show_header'] ) {
         
