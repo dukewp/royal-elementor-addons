@@ -3091,6 +3091,12 @@
 						listId: mailchimpForm.data( 'list-id' )
 					},
 					success: function(data) {
+						if ( 'yes' == mailchimpForm.data('clear-fields') ) {
+							mailchimpForm.find('input').each(function() {
+								$(this).val('');
+							});
+						}
+
 						mailchimpForm.find('button').text( buttonText );
 
 						if ( 'subscribed' === data.status ) {
@@ -3330,8 +3336,6 @@
 				sliderColumnsMobile = sliderClass.match(/columns--mobile\d/) ? sliderClass.match(/columns--mobile\d/).join().slice(-1) : 1,
 				sliderSlidesToScroll = settings.sliderSlidesToScroll,
 				dataSlideEffect = testimonialCarousel.attr('data-slide-effect');
-
-				console.log(sliderColumnsDesktop, sliderColumnsLaptop, sliderColumnsWideScreen, sliderColumnsMobileExtra, sliderColumnsTabletExtra);
 
 			testimonialCarousel.slick({
 				appendArrows: $scope.find('.wpr-testimonial-controls'),
