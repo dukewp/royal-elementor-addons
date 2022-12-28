@@ -111,7 +111,9 @@ class Plugin {
 		}
 
 		// Custom CSS
-		require WPR_ADDONS_PATH . 'extensions/wpr-custom-css.php';
+		if ( 'on' === get_option('wpr-custom-css', 'on') ) {
+			require WPR_ADDONS_PATH . 'extensions/wpr-custom-css.php';
+		}
 
 		// Mega Menu
 		require WPR_ADDONS_PATH . 'admin/mega-menu.php';
