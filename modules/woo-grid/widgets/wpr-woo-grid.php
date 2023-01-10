@@ -868,6 +868,24 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'default' => [
 					'size' => 20,
 				],
+				'widescreen_default' => [
+					'size' => 20,
+				],
+				'laptop_default' => [
+					'size' => 20,
+				],
+				'tablet_extra_default' => [
+					'size' => 20,
+				],
+				'tablet_default' => [
+					'size' => 20,
+				],
+				'mobile_extra_default' => [
+					'size' => 20,
+				],
+				'mobile_default' => [
+					'size' => 20,
+				],
 				'range' => [
 					'px' => [
 						'min' => 0,
@@ -887,6 +905,24 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'label' => esc_html__( 'Vertical Gutter', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
+					'size' => 30,
+				],
+				'widescreen_default' => [
+					'size' => 30,
+				],
+				'laptop_default' => [
+					'size' => 30,
+				],
+				'tablet_extra_default' => [
+					'size' => 30,
+				],
+				'tablet_default' => [
+					'size' => 30,
+				],
+				'mobile_extra_default' => [
+					'size' => 30,
+				],
+				'mobile_default' => [
 					'size' => 30,
 				],
 				'range' => [
