@@ -100,6 +100,17 @@ class Wpr_Grid extends Widget_Base {
 		return $post_taxonomies;
 	}
 
+	public function add_control_display_scheduled_posts() { 
+		$this->add_control(
+			'display_scheduled_posts',
+			[
+				'label' => sprintf( __( 'Display Only Scheduled Posts %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);	
+	}
+
 	public function add_control_query_randomize() {
 		$this->add_control(
 			'query_randomize',
@@ -931,6 +942,8 @@ class Wpr_Grid extends Widget_Base {
 				]
 			]
 		);
+
+		$this->add_control_display_scheduled_posts();
 
 		$this->add_control_query_randomize();
 
@@ -7980,6 +7993,11 @@ class Wpr_Grid extends Widget_Base {
 			'paged' => $paged,
 			'offset' => $offset
 		];
+
+		// Display Scheduled Posts
+		if ( 'yes' === $settings['display_scheduled_posts'] && wpr_fs()->can_use_premium_code() ) {
+			$args['post_status'] = 'future';
+		}
 
 		// Exclude Items without F/Image
 		if ( 'yes' === $settings['query_exclude_no_images'] ) {
