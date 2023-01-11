@@ -16,7 +16,9 @@ use Elementor\Group_Control_Image_Size;
 use WprAddons\Classes\Utilities;
 use WprAddons\Classes\WPR_Post_Likes;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Magazine_Grid extends Widget_Base {
 	
@@ -55,15 +57,73 @@ class Wpr_Magazine_Grid extends Widget_Base {
     }
 
 	public function add_option_query_source() {
-		$pro_query = [
-			'pro-rl' => 'Related Query (Pro)',
-			'pro-cr' => 'Current Query (Pro)',
-		];
+		$post_types = [];
+		$post_types['post'] = esc_html__( 'Posts', 'wpr-addons' );
+		$post_types['page'] = esc_html__( 'Pages', 'wpr-addons' );
+
+		$custom_post_types = Utilities::get_custom_types_of( 'post', true );
+		foreach( $custom_post_types as $slug => $title ) {
+			if ( 'product' === $slug || 'e-landing-page' === $slug ) {
+				continue;
+			}
+
+			if ( Utilities::is_new_free_user2() ) {
+				$post_types['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Pro)';
+			} else {
+				$post_types[$slug] = esc_html( $title );
+			}
+		}
+
+		$post_types['pro-cr'] = esc_html__( 'Current Query (Pro)', 'wpr-addons' );
+		$post_types['pro-rl'] = esc_html__( 'Related Query (Pro)', 'wpr-addons' );
 		
-		return array_merge(Utilities::get_custom_types_of( 'post', false ), $pro_query);
+		return $post_types;
 	}
 
-	public function add_control_query_randomize() {}
+	public function add_control_query_randomize() {
+		$this->add_control(
+			'query_randomize',
+			[
+				'label' => sprintf( __( 'Randomize Query %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);
+	}
+
+	public function add_control_order_posts() {
+        $this->add_control(
+			'order_posts',
+			[
+				'label' => esc_html__( 'Order By', 'wpr-addons'),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'date',
+				'label_block' => false,
+				'options' => [
+					'date' => esc_html__( 'Date', 'wpr-addons'),
+					'pro-tl' => esc_html__( 'Title (Pro)', 'wpr-addons'),
+					'pro-mf' => esc_html__( 'Last Modified (Pro)', 'wpr-addons'),
+					'pro-d' => esc_html__( 'Post ID', 'wpr-addons' ),
+					'pro-ar' => esc_html__( 'Post Author', 'wpr-addons' ),
+					'pro-cc' => esc_html__( 'Comment Count', 'wpr-addons' )
+				],
+				'condition' => [
+					'query_randomize!' => 'rand',
+				]
+			]
+		);
+	}
+
+	public function add_control_force_responsive_one_column() {
+		$this->add_control(
+			'force_responsive_one_column',
+			[
+				'label' => sprintf( __( 'Force Responsive One Column %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control'
+			]
+		);
+	}
 
 	public function add_option_element_select() {
 		return [
@@ -235,6 +295,13 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			'default' => ''
 		];
 	}
+
+	public function add_repeater_args_element_trim_text_by() {
+		return [
+			'word_count' => esc_html__( 'Word Count', 'wpr-addons' ),
+			'pro-lc' => esc_html__( 'Letter Count (Pro)', 'wpr-addons' )
+		];
+	}
 	
 	public function add_control_overlay_animation_divider() {}
 	
@@ -321,6 +388,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 		// Remove WooCommerce
 		unset( $post_types['product'] );
+		unset( $post_types['e-landing-page'] );
 
 		// Get Available Taxonomies
 		$post_taxonomies = Utilities::get_custom_types_of( 'tax', false );
@@ -357,6 +425,28 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			]
 		);
 
+		$this->add_control_order_posts();
+
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'order_posts', ['pro-tl', 'pro-mf', 'pro-d', 'pro-ar', 'pro-cc'] );
+
+        $this->add_control(
+			'order_direction',
+			[
+				'label' => esc_html__( 'Order', 'wpr-addons'),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'DESC',
+				'label_block' => false,
+				'options' => [
+					'ASC' => esc_html__( 'Ascending', 'wpr-addons'),
+					'DESC' => esc_html__( 'Descending', 'wpr-addons'),
+				],
+				'condition' => [
+					'query_randomize!' => 'rand',
+				]
+			]
+		);
+
 		$this->add_control(
 			'query_tax_selection',
 			[
@@ -374,10 +464,10 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			'query_author',
 			[
 				'label' => esc_html__( 'Authors', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT2,
+				'type' => 'wpr-ajax-select2',
+				'options' => 'ajaxselect2/get_users',
 				'multiple' => true,
 				'label_block' => true,
-				'options' => Utilities::get_users(),
 				'separator' => 'before',
 				'condition' => [
 					'query_source!' => [ 'current', 'related' ],
@@ -399,10 +489,11 @@ class Wpr_Magazine_Grid extends Widget_Base {
 				'query_taxonomy_'. $slug,
 				[
 					'label' => $title,
-					'type' => Controls_Manager::SELECT2,
+					'type' => 'wpr-ajax-select2',
+					'options' => 'ajaxselect2/get_taxonomies',
+					'query_slug' => $slug,
 					'multiple' => true,
 					'label_block' => true,
-					'options' => Utilities::get_terms_by_taxonomy( $slug ),
 					'condition' => [
 						'query_source' => $post_type,
 						'query_selection' => 'dynamic',
@@ -417,10 +508,11 @@ class Wpr_Magazine_Grid extends Widget_Base {
 				'query_exclude_'. $slug,
 				[
 					'label' => esc_html__( 'Exclude ', 'wpr-addons' ) . $title,
-					'type' => Controls_Manager::SELECT2,
+					'type' => 'wpr-ajax-select2',
+					'options' => 'ajaxselect2/get_posts_by_post_type',
+					'query_slug' => $slug,
 					'multiple' => true,
 					'label_block' => true,
-					'options' => Utilities::get_posts_by_post_type( $slug ),
 					'condition' => [
 						'query_source' => $slug,
 						'query_source!' => [ 'current', 'related' ],
@@ -436,10 +528,11 @@ class Wpr_Magazine_Grid extends Widget_Base {
 				'query_manual_'. $slug,
 				[
 					'label' => esc_html__( 'Select ', 'wpr-addons' ) . $title,
-					'type' => Controls_Manager::SELECT2,
+					'type' => 'wpr-ajax-select2',
+					'options' => 'ajaxselect2/get_posts_by_post_type',
+					'query_slug' => $slug,
 					'multiple' => true,
 					'label_block' => true,
-					'options' => Utilities::get_posts_by_post_type( $slug ),
 					'condition' => [
 						'query_source' => $slug,
 						'query_selection' => 'manual',
@@ -576,6 +669,8 @@ class Wpr_Magazine_Grid extends Widget_Base {
 				]
 	        );
 		}
+
+		$this->add_control_force_responsive_one_column();
 
 		$this->add_group_control(
 			Group_Control_Image_Size::get_type(),
@@ -733,6 +828,31 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'show_last_update_date',
+			[
+				'label' => esc_html__( 'Show Last Update Date', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'separator' => 'after',
+				'condition' => [
+					'element_select' => 'date',
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'element_custom_field_info_video_tutorial',
+			[
+				'raw' => esc_html__( 'See how to use Custom Fields in this', 'wpr-addons' ) . sprintf( '<br><a href="%1$s" target="_blank">%2$s <span class="dashicons dashicons-video-alt3"></span></a>', 'https://www.youtube.com/watch?v=9GvpqyHF_Cs', esc_html__( 'Video Tutorial', 'wpr-addons' ) ),
+				'type' => Controls_Manager::RAW_HTML,
+				'separator' => 'after',
+				'condition' => [
+					'element_select' => 'custom-field'
+				]
+			]
+		);
+
+		$repeater->add_control(
 			'element_display',
 			[
 				'label' => esc_html__( 'Display', 'wpr-addons' ),
@@ -848,6 +968,9 @@ class Wpr_Magazine_Grid extends Widget_Base {
 					'h4' => 'H4',
 					'h5' => 'H5',
 					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+					'P' => 'p'
 				],
 				'default' => 'h2',
 				'condition' => [
@@ -869,6 +992,20 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'element_trim_text_by',
+			[
+				'label' => esc_html__( 'Trim Text By', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'word_count',
+				'options' => $this->add_repeater_args_element_trim_text_by(),
+				'separator' => 'after',
+				'condition' => [
+					'element_select' => [ 'title', 'excerpt' ],
+				]
+			]
+		);
+
+		$repeater->add_control(
 			'element_word_count',
 			[
 				'label' => esc_html__( 'Word Count', 'wpr-addons' ),
@@ -877,6 +1014,21 @@ class Wpr_Magazine_Grid extends Widget_Base {
 				'min' => 1,
 				'condition' => [
 					'element_select' => [ 'title', 'excerpt' ],
+					'element_trim_text_by' => 'word_count'
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'element_letter_count',
+			[
+				'label' => esc_html__( 'Letter Count', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 40,
+				'min' => 1,
+				'condition' => [
+					'element_select' => [ 'title', 'excerpt' ],
+					'element_trim_text_by' => 'letter_count'
 				]
 			]
 		);
@@ -1518,8 +1670,14 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'magazine-grid', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'magazine-grid', [
+			'Posts Order',
+			'Custom Post Types Support',
+			'Trim Title & Excerpt By Letter Count',
 			'Random Posts Query',
 			'+6 Magazine Grid Layouts',
 			'Magazine Grid Slider',
@@ -1529,7 +1687,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			'Advanced Post Likes',
 			'Advanced Post Sharing',
 			'Custom Fields Support',
-			'Unlimited Grid Elements Positioning',
+			'Advanced Grid Elements Positioning',
 			'Unlimited Image Overlay Animations',
 			'Image overlay GIF upload option',
 			'Title, Category, Read More Advanced Link Hover Animations',
@@ -1638,9 +1796,21 @@ class Wpr_Magazine_Grid extends Widget_Base {
 				'label' => esc_html__( 'Background', 'wpr-addons' ),
 				'types' => [ 'classic', 'gradient' ],
 				'fields_options' => [
-					'color' => [
-						'default' => '#605BE5',
+					'background' => [
+						'default' => 'gradient',
 					],
+					'color' => [
+						'default' => 'rgba(255, 255, 255, 0)',
+					],
+					'color_stop' => [
+						'default' => [
+							'unit' => '%',
+							'size' => 46,
+						]
+					],
+					'color_b' => [
+						'default' => 'rgba(96, 91, 229, 0.87)',
+					]
 				],
 				'selector' => '{{WRAPPER}} .wpr-grid-media-hover-bg'
 			]
@@ -4721,7 +4891,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		// Get Paged
 		if ( get_query_var( 'paged' ) ) {
 			$paged = get_query_var( 'paged' );
-		} else if ( get_query_var( 'page' ) ) {
+		} elseif ( get_query_var( 'page' ) ) {
 			$paged = get_query_var( 'page' );
 		} else {
 			$paged = 1;
@@ -4735,6 +4905,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 			$settings['slider_enable'] = '';
 			$settings[ 'query_randomize' ] = '';
+			$settings['order_posts'] = 'date';
 		}
 
 		if ( '1-2' === $settings['layout_select'] || '1-1-1' === $settings['layout_select'] ) {
@@ -4755,6 +4926,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		}
 
 		$offset = ( $paged - 1 ) * $query_posts_per_page + $settings[ 'query_offset' ];
+		$query_order_by = '' != $settings['query_randomize'] ? $settings['query_randomize'] : $settings['order_posts'];
 
 		if ( 'yes' === $settings['slider_enable'] ) {
 			$offset = $offset + $query_posts_per_page * $slide_offset;
@@ -4766,7 +4938,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			'tax_query' => $this->get_tax_query_args(),
 			'post__not_in' => $settings[ 'query_exclude_'. $settings[ 'query_source' ] ],
 			'posts_per_page' => $query_posts_per_page,
-			'orderby' => $settings[ 'query_randomize' ],
+			'orderby' => $query_order_by,
 			'author' => $author,
 			'paged' => $paged,
 			'offset' => $offset
@@ -4788,7 +4960,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			$args = [
 				'post_type' => $settings[ 'query_source' ],
 				'post__in' => $post_ids,
-				'orderby' => $settings[ 'query_randomize' ],
+				'orderby' => $query_order_by,
 				'posts_per_page' => $query_posts_per_page,
 				'offset' => $query_posts_per_page * $slide_offset
 			];
@@ -4800,7 +4972,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 			$args = $wp_query->query_vars;
 			$args['posts_per_page'] = $query_posts_per_page;
-			$args['orderby'] = $settings['query_randomize'];
+			$args['orderby'] = $query_order_by;
 		}
 
 		// Related
@@ -4811,9 +4983,13 @@ class Wpr_Magazine_Grid extends Widget_Base {
 				'post__not_in' => [ get_the_ID() ],
 				'ignore_sticky_posts' => 1,
 				'posts_per_page' => $query_posts_per_page,
-				'orderby' => $settings[ 'query_randomize' ],
+				'orderby' => $query_order_by,
 				'offset' => $offset,
 			];
+		}
+
+		if ( 'rand' !== $query_order_by ) {
+			$args['order'] = $settings['order_direction'];
 		}
 
 		return $args;
@@ -4874,8 +5050,8 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		add_filter( 'the_password_form', function () {
 			$output  = '<form action="'. esc_url(home_url( 'wp-login.php?action=postpass' )) .'" method="post">';
 			$output .= '<i class="fas fa-lock"></i>';
-			$output .= '<p>'. get_the_title() .'</p>';
-			$output .= '<input type="password" name="post_password" id="post-'. get_the_id() .'" placeholder="'. esc_html__( 'Type and hit Enter...', 'wpr-addons' ) .'">';
+			$output .= '<p>'. esc_html(get_the_title()) .'</p>';
+			$output .= '<input type="password" name="post_password" id="post-'. esc_attr(get_the_id()) .'" placeholder="'. esc_html__( 'Type and hit Enter...', 'wpr-addons' ) .'">';
 			$output .= '</form>';
 
 			return $output;
@@ -4885,7 +5061,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 			echo '<div class="wpr-cv-outer">';
 				echo '<div class="wpr-cv-inner">';
-					echo get_the_password_form();
+					echo get_the_password_form(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo '</div>';
 			echo '</div>';
 		echo '</div>';
@@ -4904,7 +5080,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 	// Render Media Overlay
 	public function render_media_overlay( $settings ) {
-		echo '<div class="wpr-grid-media-hover-bg '. $this->get_animation_class( $settings, 'overlay' ) .'" data-url="'. esc_url( get_the_permalink( get_the_ID() ) ) .'">';
+		echo '<div class="wpr-grid-media-hover-bg '. esc_attr($this->get_animation_class( $settings, 'overlay' )) .'" data-url="'. esc_url( get_the_permalink( get_the_ID() ) ) .'">';
 
 			if ( wpr_fs()->can_use_premium_code() ) {
 				if ( '' !== $settings['overlay_image']['url'] ) {
@@ -4919,17 +5095,22 @@ class Wpr_Magazine_Grid extends Widget_Base {
 	public function render_post_title( $settings, $class ) {
 		$title_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['title_pointer'];
 		$title_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['title_pointer_animation'];
+		$pointer_item_class = (isset($this->get_settings()['title_pointer']) && 'none' !== $this->get_settings()['title_pointer']) ? 'class="wpr-pointer-item"' : '';
 
 		$class .= ' wpr-pointer-'. $title_pointer;
 		$class .= ' wpr-pointer-line-fx wpr-pointer-fx-'. $title_pointer_animation;
 
-		echo '<'. $settings['element_title_tag'] .' class="'. esc_attr($class) .'">';
+		echo '<'. esc_html($settings['element_title_tag']) .' class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo '<a href="'. esc_url( get_the_permalink() ) .'" class="wpr-pointer-item">';
-					echo wp_trim_words( get_the_title(), $settings['element_word_count'] );
+				echo '<a '. $pointer_item_class .' href="'. esc_url( get_the_permalink() ) .'">';
+				if ( 'word_count' === $settings['element_trim_text_by'] ) {
+					echo esc_html(wp_trim_words( get_the_title(), $settings['element_word_count'] ));
+				} else {
+					echo substr(html_entity_decode(get_the_title()), 0, $settings['element_letter_count']) . '...';
+				}
 				echo '</a>';
 			echo '</div>';
-		echo '</'. $settings['element_title_tag'] .'>';
+		echo '</'. esc_html($settings['element_title_tag']) .'>';
 	}
 
 	// Render Post Content
@@ -4943,7 +5124,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo get_the_content();
+				echo wp_kses_post(get_the_content());
 			echo '</div>';
 		echo '</div>';
 	}
@@ -4959,7 +5140,12 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo '<p>'. wp_trim_words( get_the_excerpt(), $settings['element_word_count'] ) .'</p>';
+				if ( 'word_count' === $settings['element_trim_text_by']) {
+				echo '<p>'. esc_html(wp_trim_words( get_the_excerpt(), $settings['element_word_count'] )) .'</p>';
+				} else {
+				// echo '<p>'. substr(html_entity_decode(get_the_title()), 0, $settings['element_letter_count']) .'...' . '</p>';
+				echo '<p>'. esc_html(implode('', array_slice( str_split(get_the_excerpt()), 0, $settings['element_letter_count'] ))) .'...' .'</p>';
+				}
 			echo '</div>';
 		echo '</div>';
 	}
@@ -4979,7 +5165,11 @@ class Wpr_Magazine_Grid extends Widget_Base {
 				}
 
 				// Date
-				echo apply_filters( 'the_date', get_the_date( '' ), get_option( 'date_format' ), '', '' );
+				if ( 'yes' === $settings['show_last_update_date'] ) {
+					echo esc_html(get_the_modified_time(get_option( 'date_format' )));
+				} else {
+					echo esc_html(apply_filters( 'the_date', get_the_date( '' ), get_option( 'date_format' ), '', '' ));
+				}
 
 				// Icon: After
 				if ( 'after' === $settings['element_extra_icon_pos'] ) {
@@ -5009,7 +5199,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 				}
 
 				// Time
-				echo get_the_time( '' );
+				echo esc_html(get_the_time( '' ));
 
 				// Icon: After
 				if ( 'after' === $settings['element_extra_icon_pos'] ) {
@@ -5046,7 +5236,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 						echo get_avatar( $author_id, $settings['element_avatar_size'] );
 					}
 
-					echo '<span>'. get_the_author_meta( 'display_name', $author_id ) .'</span>';
+					echo '<span>'. esc_html(get_the_author_meta( 'display_name', $author_id )) .'</span>';
 
 				// Icon: After
 				if ( 'after' === $settings['element_extra_icon_pos'] ) {
@@ -5090,7 +5280,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 						echo '<i class="wpr-grid-extra-icon-left '. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
 					}
 
-					echo '<span>'. $text .'</span>';
+					echo '<span>'. esc_html($text) .'</span>';
 
 					// Icon: After
 					if ( 'after' === $settings['element_extra_icon_pos'] ) {
@@ -5114,7 +5304,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo '<a href="'. esc_url( get_the_permalink() ) .'" class="wpr-button-effect '. $read_more_animation .'">';
+				echo '<a href="'. esc_url( get_the_permalink() ) .'" class="wpr-button-effect '. esc_attr($read_more_animation) .'">';
 
 				// Icon: Before
 				if ( 'before' === $settings['element_extra_icon_pos'] ) {
@@ -5145,7 +5335,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 	// Render Post Element Separator
 	public function render_post_element_separator( $settings, $class ) {
-		echo '<div class="'. esc_attr($class) .' '. $settings['element_separator_style'] .'">';
+		echo '<div class="'. esc_attr($class .' '. $settings['element_separator_style']) .'">';
 			echo '<div class="inner-block"><span></span></div>';
 		echo '</div>';
 	}
@@ -5159,6 +5349,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		$tax1_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['tax1_pointer_animation'];
 		$tax2_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['tax2_pointer'];
 		$tax2_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['tax2_pointer_animation'];
+		$pointer_item_class = (isset($this->get_settings()['tax1_pointer']) && 'none' !== $this->get_settings()['tax1_pointer']) || (isset($this->get_settings()['tax2_pointer']) && 'none' !== $this->get_settings()['tax2_pointer']) ? 'class="wpr-pointer-item"' : '';
 
 		// Pointer Class
 		if ( 'wpr-grid-tax-style-1' === $settings['element_tax_style'] ) {
@@ -5169,7 +5360,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			$class .= ' wpr-pointer-line-fx wpr-pointer-fx-'. $tax2_pointer_animation;
 		}
 
-		echo '<div class="'. esc_attr($class) .' '. $settings['element_tax_style'] .'">';
+		echo '<div class="'. esc_attr($class .' '. $settings['element_tax_style']) .'">';
 			echo '<div class="inner-block">';
 				// Text: Before
 				if ( 'before' === $settings['element_extra_text_pos'] ) {
@@ -5182,9 +5373,9 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 				// Taxonomies
 				foreach ( $terms as $term ) {
-					echo '<a href="'. get_term_link( $term->term_id ) .'" class="wpr-pointer-item">'. esc_html( $term->name );
+					echo '<a '. $pointer_item_class .' href="'. esc_url(get_term_link( $term->term_id )) .'">'. esc_html( $term->name );
 						if ( ++$count !== count( $terms ) ) {
-							echo '<span class="tax-sep">'. $settings['element_tax_sep'] .'</span>';
+							echo '<span class="tax-sep">'. esc_html($settings['element_tax_sep']) .'</span>';
 						}
 					echo '</a>';
 				}
@@ -5298,7 +5489,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 						echo '<div class="wpr-cv-container"><div class="wpr-cv-outer"><div class="wpr-cv-inner">';
 					}
 
-					echo '<div class="wpr-grid-media-hover-'. $align .' elementor-clearfix">';
+					echo '<div class="wpr-grid-media-hover-'. esc_attr($align) .' elementor-clearfix">';
 						foreach ( $elements as $data ) {
 							
 							// Get Class
@@ -5318,7 +5509,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 					}
 				}
 			} else {
-				echo '<div class="wpr-grid-item-'. $location .'-content elementor-clearfix">';
+				echo '<div class="wpr-grid-item-'. esc_attr($location) .'-content elementor-clearfix">';
 					foreach ( $locations[$location] as $data ) {
 
 						// Get Class
@@ -5370,7 +5561,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			}
 		}
 
-		echo '<section class="wpr-magazine-grid wpr-mgzn-grid-'. $settings['layout_select'] .' wpr-mgzn-grid-rows-'. $settings['layout_rows_number'] .'">';
+		echo '<section class="wpr-magazine-grid wpr-mgzn-grid-'. esc_attr($settings['layout_select']) .' wpr-mgzn-grid-rows-'. esc_attr($settings['layout_rows_number']) .'">';
 
 		// Loop: Start
 		if ( $posts->have_posts() ) :
@@ -5417,7 +5608,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		// No Posts Found
 		else:
 
-			echo '<h2>'. $settings['query_not_found_text'] .'</h2>';
+			echo '<h2>'. esc_html($settings['query_not_found_text']) .'</h2>';
 
 		// Loop: End
 		endif;
@@ -5443,7 +5634,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		}
 
 		// Grid/Slider Wrap
-		echo '<div class="wpr-magazine-grid-wrap" '. $render_attribute .'  data-slide-effect="'. esc_attr($settings['slider_effect']) .'">';
+		echo '<div class="wpr-magazine-grid-wrap" '. $render_attribute .' data-slide-effect="'. esc_attr($settings['slider_effect']) .'">';
 
 		// Slider
 		if ( 'yes' === $settings['slider_enable'] ) {
@@ -5465,8 +5656,8 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		// Slider Navigation
 		if ( 'yes' === $settings['slider_enable'] ) {
 			echo '<div class="wpr-grid-slider-arrow-container">';
-				echo '<div class="wpr-grid-slider-prev-arrow wpr-grid-slider-arrow" id="wpr-grid-slider-prev-'. $this->get_id() .'">'. Utilities::get_wpr_icon( $settings['slider_nav_icon'], '' ) .'</div>';
-				echo '<div class="wpr-grid-slider-next-arrow wpr-grid-slider-arrow" id="wpr-grid-slider-next-'. $this->get_id() .'">'. Utilities::get_wpr_icon( $settings['slider_nav_icon'], '' ) .'</div>';
+				echo '<div class="wpr-grid-slider-prev-arrow wpr-grid-slider-arrow" id="wpr-grid-slider-prev-'. esc_html($this->get_id()) .'">'. Utilities::get_wpr_icon( $settings['slider_nav_icon'], '' ) .'</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo '<div class="wpr-grid-slider-next-arrow wpr-grid-slider-arrow" id="wpr-grid-slider-next-'. esc_html($this->get_id()) .'">'. Utilities::get_wpr_icon( $settings['slider_nav_icon'], '' ) .'</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo '</div>';
 		}
 

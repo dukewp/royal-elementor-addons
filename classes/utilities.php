@@ -27,18 +27,23 @@ class Utilities {
 			'Advanced Slider' => ['advanced-slider', 'https://royal-elementor-addons.com/elementor-advanced-slider-widget/', '', ''],
 			'Testimonial' => ['testimonial', 'https://royal-elementor-addons.com/elementor-testimonials-slider-widget/', '', ''],
 			'Nav Menu' => ['nav-menu', 'http://royal-elementor-addons.com/elementor-menu-widget/', '', ''],
+			'Mega Menu' => ['mega-menu', 'https://royal-elementor-addons.com/elementor-mega-menu-widget/', '', 'new'],
 			'Onepage Navigation' => ['onepage-nav', 'https://royal-elementor-addons.com/elementor-one-page-navigation-widget/', '', ''],
+			'Data Table' => ['data-table', 'https://royal-elementor-addons.com/elementor-data-table-widget/', '', 'new'],
 			'Pricing Table' => ['pricing-table', 'https://royal-elementor-addons.com/elementor-pricing-table-widget/', '', ''],
 			'Content Toggle' => ['content-toggle', 'https://royal-elementor-addons.com/elementor-content-toggle-widget/', '', ''],
+			'Charts' => ['charts', 'https://royal-elementor-addons.com/elementor-charts-widget/', '', 'new'],
 			'Countdown' => ['countdown', 'https://royal-elementor-addons.com/elementor-countdown-widget/', '', ''],
 			'Progress Bar' => ['progress-bar', 'https://royal-elementor-addons.com/elementor-progress-bar-widget/', '', ''],
 			'Tabs' => ['tabs', 'https://royal-elementor-addons.com/elementor-tabs-widget/', '', ''],
-			'Dual Color Heading' => ['dual-color-heading', '', '', 'new'],
+			'Dual Color Heading' => ['dual-color-heading', 'https://royal-elementor-addons.com/elementor-dual-color-heading-widget/', '', ''],
+			'Image Accordion' => ['image-accordion', 'https://royal-elementor-addons.com/elementor-image-accordion-widget/', '', 'new'],
+			'Advanced Accordion' => ['advanced-accordion', 'https://royal-elementor-addons.com/elementor-advanced-accordion-widget/', '', 'new'],
 			'Advanced Text' => ['advanced-text', 'https://royal-elementor-addons.com/elementor-advanced-text-widget/', '', ''],
-			'Flip Carousel' => ['flip-carousel', '', '', 'new'],
+			'Flip Carousel' => ['flip-carousel', 'https://royal-elementor-addons.com/elementor-flip-carousel-widget/', '', ''],
 			'Flip Box' => ['flip-box', 'https://royal-elementor-addons.com/elementor-flip-box-widget/', '', ''],
 			'Promo Box' => ['promo-box', 'https://royal-elementor-addons.com/elementor-promo-box-widget/', '', ''],
-			'Feature List' => ['feature-list', '', '', 'new'],
+			'Feature List' => ['feature-list', 'https://royal-elementor-addons.com/elementor-feature-list-widget/', '', ''],
 			'Before After' => ['before-after', 'https://royal-elementor-addons.com/elementor-before-after-widget/', '', ''],
 			'Image Hotspots' => ['image-hotspots', 'https://royal-elementor-addons.com/elementor-image-hotspot-widget/', '', ''],
 			'Forms' => ['forms', 'https://royal-elementor-addons.com/elementor-forms-widget/', '', ''],
@@ -51,15 +56,17 @@ class Utilities {
 			'Price List' => ['price-list', 'https://royal-elementor-addons.com/elementor-price-list-widget/', '', ''],
 			'Business Hours' => ['business-hours', 'https://royal-elementor-addons.com/elementor-business-hours-widget/', '', ''],
 			'Sharing Buttons' => ['sharing-buttons', 'https://royal-elementor-addons.com/elementor-social-sharing-buttons-widget/', '', ''],
-			'Search Form' => ['search', 'https://royal-elementor-addons.com/elementor-search-widget/', '', ''],
+			'Search Form (Ajax)' => ['search', 'https://royal-elementor-addons.com/elementor-search-widget/', '', ''],
 			'Back to Top' => ['back-to-top', 'https://royal-elementor-addons.com/elementor-back-to-top-widget/', '', ''],
 			'Phone Call' => ['phone-call', 'https://royal-elementor-addons.com/elementor-phone-call-widget/', '', ''],
 			'Lottie Animations' => ['lottie-animations', 'https://royal-elementor-addons.com/elementor-lottie-animation-widget/', '', ''],
 			'Site Logo' => ['logo', '', '', ''],
 			'Popup Trigger' => ['popup-trigger', '', '', ''],
 			'Taxonomy List' => ['taxonomy-list', '', '', ''],
+			'Page List' => ['page-list', '', '', 'new'],
 			'Template' => ['elementor-template', '', '', ''],
 			'Video Playlist' => ['video-playlist', '', '', ''],
+			'Reading Progress Bar' => ['reading-progress-bar', 'https://royal-elementor-addons.com/elementor-reading-progress-bar-widget/', '', 'new'],
 			// 'Random Image' => ['random-image', '', ''],
 		];
 	}
@@ -67,15 +74,14 @@ class Utilities {
 	/**
 	** Get Enabled Modules
 	*/
-	public static function get_available_modules() {
-		$modules = Utilities::get_registered_modules();
-
+	public static function get_available_modules( $modules ) {
 		foreach ( $modules as $title => $data ) {
 			$slug = $data[0];
 			if ( 'on' !== get_option('wpr-element-'. $slug, 'on') ) {
 				unset($modules[$title]);
 			}
 		}
+
 		return $modules;
 	}
 
@@ -84,16 +90,111 @@ class Utilities {
 	*/
 	public static function get_theme_builder_modules() {
 		return [
-			'post-title',
-			'post-media',
-			'post-content',
-			'post-info',
-			'post-navigation',
-			'post-comments',
-			'author-box',
-			'archive-title',
+			'Post Title' => ['post-title', '', '', ''],
+			'Post Media' => ['post-media', '', '', ''],
+			'Post Content' => ['post-content', '', '', ''],
+			'Post Info' => ['post-info', '', '', ''],
+			'Post Navigation' => ['post-navigation', '', '', ''],
+			'Post Comments' => ['post-comments', '', '', ''],
+			'Author Box' => ['author-box', '', '', ''],
+			'Archive Title' => ['archive-title', '', '', ''],
 		];
 	}
+
+	/**
+	** Get WooCommerce Builder Modules
+	*/
+	public static function get_woocommerce_builder_modules() {
+		return [
+			'Product Title' => ['product-title', '', '', ''],
+			'Product Media' => ['product-media', '', '', ''],
+			'Product Price' => ['product-price', '', '', ''],
+			'Product Add to Cart' => ['product-add-to-cart', '', '', ''],
+			'Product Tabs' => ['product-tabs', '', '', ''],
+			'Product Excerpt' => ['product-excerpt', '', '', ''],
+			'Product Rating' => ['product-rating', '', '', ''],
+			'Product Meta' => ['product-meta', '', '', ''],
+			'Product Sales Badge' => ['product-sales-badge', '', '', ''],
+			'Product Stock' => ['product-stock', '', '', ''],
+			'Product Additional Info' => ['product-additional-information', '', '', ''],
+			'Product Notice' => ['product-notice', '', '', ''],
+			'Product Mini Cart' => ['product-mini-cart', '', '', ''],
+			'Page: Cart' => ['page-cart', '', '', ''],
+			'Page: Checkout ' => ['page-checkout', '', '', ''],
+		];
+	}
+
+	/**
+	** Get Shop Page URL
+	*/
+	public static function get_shop_url( $settings ) {
+		global $wp;
+
+        if ( '' == get_option('permalink_structure' ) ) {
+            $url = remove_query_arg(array('page', 'paged'), add_query_arg($wp->query_string, '', home_url($wp->request)));
+        } else {
+            $url = preg_replace('%\/page/[0-9]+%', '', home_url(trailingslashit($wp->request)));
+        }
+
+		// WPR Filters
+		$url = add_query_arg( 'wprfilters', '', $url );
+
+		// Min/Max.
+		if ( isset( $_GET['min_price'] ) ) {
+			$url = add_query_arg( 'min_price', wc_clean( wp_unslash( $_GET['min_price'] ) ), $url );
+		}
+
+		if ( isset( $_GET['max_price'] ) ) {
+			$url = add_query_arg( 'max_price', wc_clean( wp_unslash( $_GET['max_price'] ) ), $url );
+		}
+
+		// Search
+		if ( isset( $_GET['psearch'] ) ) {
+			$url = add_query_arg( 'psearch', wp_unslash( $_GET['psearch'] ), $url );
+		}
+
+		// Rating
+		if ( isset( $_GET['filter_rating'] ) ) {
+			$url = add_query_arg( 'filter_rating', wp_unslash( $_GET['filter_rating'] ), $url );
+		}
+
+		// Categories
+		if ( isset( $_GET['filter_product_cat'] ) ) {
+			$url = add_query_arg( 'filter_product_cat', wp_unslash( $_GET['filter_product_cat'] ), $url );
+		}
+
+		// Tags
+		if ( isset( $_GET['filter_product_tag'] ) ) {
+			$url = add_query_arg( 'filter_product_tag', wp_unslash( $_GET['filter_product_tag'] ), $url );
+		}
+
+		// All current filters.
+		if ( $_chosen_attributes = WC()->query->get_layered_nav_chosen_attributes() ) { // phpcs:ignore Squiz.PHP.DisallowMultipleAssignments.FoundInControlStructure, WordPress.CodeAnalysis.AssignmentInCondition.Found
+			foreach ( $_chosen_attributes as $name => $data ) {
+				$filter_name = wc_attribute_taxonomy_slug( $name );
+				if ( ! empty( $data['terms'] ) ) {
+					$url = add_query_arg( 'filter_' . $filter_name, implode( ',', $data['terms'] ), $url );
+				}
+
+				if ( !empty($settings) ) {
+					if ( 'or' === $settings['tax_query_type'] || isset($_GET['query_type_' . $filter_name]) ) {
+						$url = add_query_arg( 'query_type_' . $filter_name, 'or', $url );
+					}
+				}
+			}
+		}
+
+		// Sorting
+		if ( isset( $_GET['orderby'] ) ) {
+			$url = add_query_arg( 'orderby', wp_unslash( $_GET['orderby'] ), $url );
+		}
+
+		// Fix URL
+		// $url = str_replace( '%2C', ',', $url );
+		
+		return $url;
+	}
+
 
 	/**
 	** Get Available Custom Post Types or Taxonomies
@@ -123,6 +224,23 @@ class Utilities {
 		return $custom_type_list;
 	}
 
+	
+	/**
+	** Get Available WooCommerce Taxonomies
+	*/
+	public static function get_woo_taxonomies() {
+		$taxonomy_list = [];
+
+		foreach ( get_object_taxonomies( 'product' ) as $taxonomy_data ) {
+			$taxonomy = get_taxonomy( $taxonomy_data );
+			if( $taxonomy->show_ui ) {
+				$taxonomy_list[ $taxonomy_data ] = $taxonomy->label;
+			}
+		}
+
+		return $taxonomy_list;
+	}
+
 
 	/**
 	** Get All Users
@@ -130,11 +248,13 @@ class Utilities {
 	public static function get_users() {
 		$users = [];
 		
-		foreach ( get_users() as $key => $user ) {
-			$users[$user->data->ID] = $user->data->user_nicename;
+		if ( is_admin() ) {
+			foreach ( get_users() as $key => $user ) {
+				$users[$user->data->ID] = $user->data->user_nicename;
+			}
+			
+			wp_reset_postdata();
 		}
-		
-		wp_reset_postdata();
 
 		return $users;
 	}
@@ -187,14 +307,17 @@ class Utilities {
 	** Get Posts of Post Type
 	*/
 	public static function get_posts_by_post_type( $slug ) {
-		$query = get_posts( [ 'post_type' => $slug, 'posts_per_page' => -1 ] );
 		$posts = [];
 
-		foreach ( $query as $post ) {
-			$posts[$post->ID] = $post->post_title;
+		if ( is_admin() ) {
+			$query = get_posts( [ 'post_type' => $slug, 'posts_per_page' => -1 ] );
+
+			foreach ( $query as $post ) {
+				$posts[$post->ID] = $post->post_title;
+			}
+			
+			wp_reset_postdata();
 		}
-		
-		wp_reset_postdata();
 
 		return $posts;
 	}
@@ -221,7 +344,9 @@ class Utilities {
 
 		// Find a Custom Condition
 		foreach( $data as $id => $conditions ) {
+
 			if ( in_array( $page .'/'. $post_id, $conditions) ) {
+
 				$template = $id;
 			} elseif ( in_array( $page .'/all', $conditions) ) {
 				$template = $id;
@@ -239,7 +364,18 @@ class Utilities {
 			}
 		}
 
-		return $template;
+		// tmp remove after 2 months
+		$templates_loop = new \WP_Query([
+			'post_type' => 'wpr_templates',
+			'name' => $template,
+			'posts_per_page' => 1,
+		]);
+		
+		if ( ! $templates_loop->have_posts() ) {
+			return null;
+		} else {
+			return $template;
+		}
 	}
 
 
@@ -303,8 +439,8 @@ class Utilities {
 			return;
 		}
 
-    	// Render Template Content
-		echo $get_elementor_content;
+    	// Render Elementor Template Content
+		echo ''. $get_elementor_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 
@@ -315,7 +451,7 @@ class Utilities {
 		$current_page = get_post(get_the_ID());
 
 		if ( $current_page ) {
-			return strpos($current_page->post_name, 'user-archive') !== false || strpos($current_page->post_name, 'user-single') !== false;
+			return strpos($current_page->post_name, 'user-archive') !== false || strpos($current_page->post_name, 'user-single') !== false || strpos($current_page->post_name, 'user-product') !== false;
 		} else {
 			return false;
 		}
@@ -337,8 +473,48 @@ class Utilities {
 		return $result;
 	}
 
+	/**
+	** Disable Extra Image Sizes
+	*/
+	public static function disable_extra_image_sizes( $new_sizes, $image_meta, $attachment_id ) {
+		$all_attachments = get_option( 'st_attachments', array() );
+
+		// If the cron job is already scheduled, bail.
+		if ( in_array( $attachment_id, $all_attachments, true ) ) {
+			return $new_sizes;
+		}
+
+		$all_attachments[] = $attachment_id;
+
+		update_option( 'st_attachments', $all_attachments, 'no' );
+
+		// Return blank array of sizes to not generate any sizes in this request.
+		return array();
+	}
+
+	/**
+	** Regenerate Extra Image Sizes
+	*/
+	public static function regenerate_extra_image_sizes() {
+		$all_attachments = get_option( 'st_attachments', array() );
+	
+		if ( empty( $all_attachments ) ) {
+			return;
+		}
+	
+		foreach ( $all_attachments as $attachment_id ) {
+			$file = get_attached_file( $attachment_id );
+			if ( false !== $file ) {
+				wp_generate_attachment_metadata( $attachment_id, $file );
+			}
+		}
+		update_option( 'st_attachments', array(), 'no' );
+	}
+
 	// Get Post Sharing Icon
 	public static function get_post_sharing_icon( $args = [] ) {
+
+		$args['url'] = esc_url($args['url']);
 		
 		if ( 'facebook-f' === $args['network'] ) {
 			$sharing_url = 'https://www.facebook.com/sharer.php?u='. $args['url'];
@@ -351,7 +527,7 @@ class Utilities {
 			$network_title = esc_html__( 'LinkedIn', 'wpr-addons' );
 		} elseif ( 'pinterest-p' === $args['network'] ) {
 			// $sharing_url = 'https://www.pinterest.com/pin/find/?url='. $args['url'];
-			$sharing_url = 'https://www.pinterest.com/pin/create/button/?url=' . $args['url'] . '&media=' . $args['image'];
+			$sharing_url = 'https://www.pinterest.com/pin/create/button/?url='. $args['url'] .'&media='. $args['image'];
 			$network_title = esc_html__( 'Pinterest', 'wpr-addons' );
 		} elseif ( 'reddit' === $args['network'] ) {
 			$sharing_url = 'https://reddit.com/submit?url='. $args['url'] .'&title='. $args['title'];
@@ -381,7 +557,7 @@ class Utilities {
 			$sharing_url = 'https://web.skype.com/share?url='. $args['url'];
 			$network_title = esc_html__( 'Skype', 'wpr-addons' );
 		} elseif ( 'whatsapp' === $args['network'] ) {
-			$sharing_url = 'https://api.whatsapp.com/send?text=*'. $args['title'] .'*\n'. $args['text'] .'\n'. $args['url'];
+			$sharing_url = 'https://api.whatsapp.com/send?text=*'. $args['title'] .'*%0a'. $args['text'] .'%0a'. $args['url'];
 			$network_title = esc_html__( 'WhatsApp', 'wpr-addons' );
 		} elseif ( 'telegram' === $args['network'] ) {
 			$sharing_url = 'https://telegram.me/share/url?url='. $args['url'] .'&text='. $args['text'];
@@ -400,7 +576,7 @@ class Utilities {
 			$network_title = '';
 		}
 
-		$sharing_url = 'print' === $args['network'] ? $sharing_url : esc_url( $sharing_url );
+		$sharing_url = 'print' === $args['network'] ? $sharing_url : $sharing_url;
 
 		$output = '';
 
@@ -534,14 +710,14 @@ class Utilities {
 
 		$icons = [
 			// Arrows
-			'svg-angle-1-left' => '<svg '. $style_attr .'version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 283.4 512" style="enable-background:new 0 0 283.4 512;" xml:space="preserve"><g><polygon class="st0" points="54.5,256.3 283.4,485.1 256.1,512.5 0,256.3 0,256.3 27.2,229 256.1,0 283.4,27.4 "/></g></svg>',
-			'svg-angle-2-left' => '<svg '. $style_attr .'version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 303.3 512" style="enable-background:new 0 0 303.3 512;" xml:space="preserve"><g><polygon class="st0" points="94.7,256 303.3,464.6 256,512 47.3,303.4 0,256 47.3,208.6 256,0 303.3,47.4 "/></g></svg>',
-			'svg-angle-3-left' => '<svg '. $style_attr .'version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 291.4 512" style="enable-background:new 0 0 291.4 512;" xml:space="preserve"><g><path class="st0" d="M281.1,451.5c13.8,13.8,13.8,36.3,0,50.1c-13.8,13.8-36.3,13.8-50.1,0L10.4,281C3.5,274.1,0,265.1,0,256c0-9.1,3.5-18.1,10.4-25L231,10.4c13.8-13.8,36.3-13.8,50.1,0c6.9,6.9,10.4,16,10.4,25s-3.5,18.1-10.4,25L85.5,256L281.1,451.5z"/></g></svg>',
-			'svg-angle-4-left' => '<svg '. $style_attr .'version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 259.6 512" style="enable-background:new 0 0 259.6 512;" xml:space="preserve"><g><path class="st0" d="M256.6,18.1L126.2,256.1l130.6,237.6c3.6,5.6,3.9,10.8,0.2,14.9c-0.2,0.2-0.2,0.3-0.3,0.3s-0.3,0.3-0.3,0.3c-3.9,3.9-10.3,3.6-14.2-0.3L2.9,263.6c-2-2.1-3.1-4.7-2.9-7.5c0-2.8,1-5.6,3.1-7.7L242,3.1c4.1-4.1,10.6-4.1,14.6,0l0,0C260.7,7.3,260.5,10.9,256.6,18.1z"/></g></svg>',
-			'svg-arrow-1-left' => '<svg '. $style_attr .'version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 338.4" style="enable-background:new 0 0 512 338.4;" xml:space="preserve"><g><polygon class="st0" points="511.4,183.1 53.4,183.1 188.9,318.7 169.2,338.4 0,169.2 169.2,0 188.9,19.7 53.4,155.3 511.4,155.3 "/></g></svg>',
-			'svg-arrow-2-left' => '<svg '. $style_attr .'version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 320.6" style="enable-background:new 0 0 512 320.6;" xml:space="preserve"><g><polygon class="st0" points="512,184.4 92.7,184.4 194.7,286.4 160.5,320.6 34.3,194.4 34.3,194.4 0,160.2 160.4,0 194.5,34.2 92.7,136 512,136 "/></g></svg>',
-			'svg-arrow-3-left' => '<svg '. $style_attr .'version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 499.6 320.6" style="enable-background:new 0 0 499.6 320.6;" xml:space="preserve"><g><path class="st0" d="M499.6,159.3c0.3,7-2.4,13.2-7,17.9c-4.3,4.3-10.4,7-16.9,7H81.6l95.6,95.6c9.3,9.3,9.3,24.4,0,33.8c-4.6,4.6-10.8,7-16.9,7c-6.1,0-12.3-2.4-16.9-7L6.9,177.2c-9.3-9.3-9.3-24.4,0-33.8l16.9-16.9l0,0L143.3,6.9c9.3-9.3,24.4-9.3,33.8,0c4.6,4.6,7,10.8,7,16.9s-2.4,12.3-7,16.9l-95.6,95.6h393.7C488.3,136.3,499.1,146.4,499.6,159.3z"/></g></svg>',
-			'svg-arrow-4-left' => '<svg '. $style_attr .'version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 499.6 201.3" style="enable-background:new 0 0 499.6 201.3;" xml:space="preserve"><g><polygon class="st0" points="0,101.1 126,0 126,81.6 499.6,81.6 499.6,120.8 126,120.8 126,201.3 "/></g></svg>',
+			'svg-angle-1-left' => '<svg '. $style_attr .'version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 283.4 512" style="enable-background:new 0 0 283.4 512;" xml:space="preserve"><g><polygon class="st0" points="54.5,256.3 283.4,485.1 256.1,512.5 0,256.3 0,256.3 27.2,229 256.1,0 283.4,27.4 "/></g></svg>', // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			'svg-angle-2-left' => '<svg '. $style_attr .'version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 303.3 512" style="enable-background:new 0 0 303.3 512;" xml:space="preserve"><g><polygon class="st0" points="94.7,256 303.3,464.6 256,512 47.3,303.4 0,256 47.3,208.6 256,0 303.3,47.4 "/></g></svg>', // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			'svg-angle-3-left' => '<svg '. $style_attr .'version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 291.4 512" style="enable-background:new 0 0 291.4 512;" xml:space="preserve"><g><path class="st0" d="M281.1,451.5c13.8,13.8,13.8,36.3,0,50.1c-13.8,13.8-36.3,13.8-50.1,0L10.4,281C3.5,274.1,0,265.1,0,256c0-9.1,3.5-18.1,10.4-25L231,10.4c13.8-13.8,36.3-13.8,50.1,0c6.9,6.9,10.4,16,10.4,25s-3.5,18.1-10.4,25L85.5,256L281.1,451.5z"/></g></svg>', // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			'svg-angle-4-left' => '<svg '. $style_attr .'version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 259.6 512" style="enable-background:new 0 0 259.6 512;" xml:space="preserve"><g><path class="st0" d="M256.6,18.1L126.2,256.1l130.6,237.6c3.6,5.6,3.9,10.8,0.2,14.9c-0.2,0.2-0.2,0.3-0.3,0.3s-0.3,0.3-0.3,0.3c-3.9,3.9-10.3,3.6-14.2-0.3L2.9,263.6c-2-2.1-3.1-4.7-2.9-7.5c0-2.8,1-5.6,3.1-7.7L242,3.1c4.1-4.1,10.6-4.1,14.6,0l0,0C260.7,7.3,260.5,10.9,256.6,18.1z"/></g></svg>', // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			'svg-arrow-1-left' => '<svg '. $style_attr .'version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 338.4" style="enable-background:new 0 0 512 338.4;" xml:space="preserve"><g><polygon class="st0" points="511.4,183.1 53.4,183.1 188.9,318.7 169.2,338.4 0,169.2 169.2,0 188.9,19.7 53.4,155.3 511.4,155.3 "/></g></svg>', // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			'svg-arrow-2-left' => '<svg '. $style_attr .'version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 320.6" style="enable-background:new 0 0 512 320.6;" xml:space="preserve"><g><polygon class="st0" points="512,184.4 92.7,184.4 194.7,286.4 160.5,320.6 34.3,194.4 34.3,194.4 0,160.2 160.4,0 194.5,34.2 92.7,136 512,136 "/></g></svg>', // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			'svg-arrow-3-left' => '<svg '. $style_attr .'version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 499.6 320.6" style="enable-background:new 0 0 499.6 320.6;" xml:space="preserve"><g><path class="st0" d="M499.6,159.3c0.3,7-2.4,13.2-7,17.9c-4.3,4.3-10.4,7-16.9,7H81.6l95.6,95.6c9.3,9.3,9.3,24.4,0,33.8c-4.6,4.6-10.8,7-16.9,7c-6.1,0-12.3-2.4-16.9-7L6.9,177.2c-9.3-9.3-9.3-24.4,0-33.8l16.9-16.9l0,0L143.3,6.9c9.3-9.3,24.4-9.3,33.8,0c4.6,4.6,7,10.8,7,16.9s-2.4,12.3-7,16.9l-95.6,95.6h393.7C488.3,136.3,499.1,146.4,499.6,159.3z"/></g></svg>', // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			'svg-arrow-4-left' => '<svg '. $style_attr .'version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 499.6 201.3" style="enable-background:new 0 0 499.6 201.3;" xml:space="preserve"><g><polygon class="st0" points="0,101.1 126,0 126,81.6 499.6,81.6 499.6,120.8 126,120.8 126,201.3 "/></g></svg>', // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		
 			// Blockquote
 			'svg-blockquote-1' => '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 406.1" style="enable-background:new 0 0 512 406.1;" xml:space="preserve"><g><g id="Layer_2_1_" class="st0"><path class="st1" d="M510.6,301.8c0,57.6-46.7,104.3-104.3,104.3c-12.6,0-24.7-2.3-36-6.4c-28.3-9.1-64.7-29.1-82.8-76.3C218.9,145.3,477.7,0.1,477.7,0.1l6.4,12.3c0,0-152.4,85.7-132.8,200.8C421.8,170.3,510.1,220.2,510.6,301.8z"/><path class="st1" d="M234.6,301.8c0,57.6-46.7,104.3-104.3,104.3c-12.6,0-24.7-2.3-36-6.4c-28.3-9.1-64.7-29.1-82.8-76.3C-57.1,145.3,201.8,0.1,201.8,0.1l6.4,12.3c0,0-152.4,85.7-132.8,200.8C145.9,170.3,234.1,220.2,234.6,301.8z"/></g></g></svg>',
@@ -566,47 +742,53 @@ class Utilities {
 	public static function get_wpr_icon( $icon, $dir ) {
 		if ( false !== strpos( $icon, 'svg-' ) ) {
 			return Utilities::get_svg_icon( $icon, $dir );
+
 		} elseif ( false !== strpos( $icon, 'fa-' ) ) {
 			$dir = '' !== $dir ? '-'. $dir : '';
-			return '<i class="'. esc_attr($icon . $dir) .'"></i>';
+			return wp_kses('<i class="'. esc_attr($icon . $dir) .'"></i>', [
+				'i' => [
+					'class' => []
+				]
+			]);
 		} else {
 			return '';
 		}
 	}
-
 
 	/**
 	** Mailchimp AJAX Subscribe
 	*/
 	public static function ajax_mailchimp_subscribe() {
 		// API Key
-        $api_key = sanitize_text_field($_POST['apiKey']);
+        $api_key = isset($_POST['apiKey']) ? sanitize_key($_POST['apiKey']) : '';
         $api_key_sufix = explode( '-', $api_key )[1];
 
         // List ID
-        $list_id = sanitize_text_field($_POST['listId']);
+        $list_id = isset($_POST['listId']) ? sanitize_text_field(wp_unslash($_POST['listId'])) : '';
 
-        // Get Available Fileds
-        wp_parse_str( $_POST['fields'], $fields );
+        // Get Available Fileds (PHPCS - fields are sanitized later on input)
+		$available_fields = isset($_POST['fields']) ? $_POST['fields'] : []; // phpcs:ignore
+        wp_parse_str( $available_fields, $fields );
 
         // Merge Additional Fields
         $merge_fields = array(
-            'FNAME' => ! empty( esc_html($fields['wpr_mailchimp_firstname']) ) ? esc_html($fields['wpr_mailchimp_firstname']) : '',
-            'LNAME' => ! empty( esc_html($fields['wpr_mailchimp_lastname']) ) ? esc_html($fields['wpr_mailchimp_lastname']) : '',
+            'FNAME' => !empty( $fields['wpr_mailchimp_firstname'] ) ? sanitize_text_field($fields['wpr_mailchimp_firstname']) : '',
+            'LNAME' => !empty( $fields['wpr_mailchimp_lastname'] ) ? sanitize_text_field($fields['wpr_mailchimp_lastname']) : '',
+			'PHONE' => !empty ( $fields['wpr_mailchimp_phone_number'] ) ? sanitize_text_field($fields['wpr_mailchimp_phone_number']) : '',
         );
 
         // API URL
-        $api_url = 'https://'. $api_key_sufix .'.api.mailchimp.com/3.0/lists/'. $list_id .'/members/'. md5(strtolower(esc_html($fields['wpr_mailchimp_email'])));
+        $api_url = 'https://'. $api_key_sufix .'.api.mailchimp.com/3.0/lists/'. $list_id .'/members/'. md5(strtolower(sanitize_text_field($fields['wpr_mailchimp_email'])));
 
         // API Args
         $api_args = [
 			'method' => 'PUT',
 			'headers' => [
 				'Content-Type' => 'application/json',
-				'Authorization' => 'apikey ' . $api_key,
+				'Authorization' => 'apikey '. $api_key,
 			],
 			'body' => json_encode([
-				'email_address' => esc_html($fields[ 'wpr_mailchimp_email' ]),
+				'email_address' => sanitize_text_field($fields[ 'wpr_mailchimp_email' ]),
 				'status' => 'subscribed',
 				'merge_fields' => $merge_fields,
 			]),
@@ -650,7 +832,7 @@ class Utilities {
 			 
 			if ( ! empty( $body->lists ) ) {
 				foreach ( $body->lists as $list ) {
-					$mailchimp_list[$list->id] = $list->name .' (' . $list->stats->member_count . ')';
+					$mailchimp_list[$list->id] = $list->name .' ('. $list->stats->member_count .')';
 				}
 			}
 
@@ -711,7 +893,7 @@ class Utilities {
 	public static function wpr_library_buttons( $module, $controls_manager, $tutorial_url = '' ) {
 		if ( empty(get_option('wpr_wl_plugin_links')) ) {
 			if ( '' !== $tutorial_url ) {
-				$tutorial_link = '<a href="'. $tutorial_url .'" target="_blank">'. esc_html__( 'Watch Video Tutorial ', 'wpr-addons' ) .'<span class="dashicons dashicons-video-alt3"></span></a>';
+				$tutorial_link = '<a href="'. esc_url($tutorial_url) .'" target="_blank">'. esc_html__( 'Watch Video Tutorial ', 'wpr-addons' ) .'<span class="dashicons dashicons-video-alt3"></span></a>';
 			} else {
 				$tutorial_link = '';
 			}
@@ -719,7 +901,7 @@ class Utilities {
 			$module->add_control(
 	            'wpr_library_buttons',
 	            [
-					'raw' => '<div><a href="#" target="_blank" data-theme="'. get_template() .'">'. esc_html__( 'Widget Preview', 'wpr-addons' ) .'</a> <a href="#">'. esc_html__( 'Predefined Styles', 'wpr-addons' ) .'</a></div>'. $tutorial_link,
+					'raw' => '<div class='. $module->get_name() .'><a href="#" target="_blank" data-theme="'. esc_attr(get_template()) .'">'. esc_html__( 'Widget Preview', 'wpr-addons' ) .'</a> <a href="#">'. esc_html__( 'Predefined Styles', 'wpr-addons' ) .'</a></div>'. $tutorial_link,
 					'type' => $controls_manager,
 				]
 	        );
@@ -749,19 +931,53 @@ class Utilities {
 	}
 
 	/**
+	** Request Feature Section
+	*/
+	public static function wpr_add_section_request_feature( $module, $raw_html, $tab ) {
+		$module->start_controls_section(
+			'section_request_new_feature',
+			[
+				'label' => __( 'Request Feature', 'wpr-addons' ),
+				'tab' => $tab,
+			]
+		);
+
+		$module->add_control(
+			'request_new_feature',
+			[
+				'type' => $raw_html,
+				'raw' => __( 'Missing an Option, have a New Widget or any kind of Feature Idea? Please share it with us and lets discuss. <a href="https://royaladdons.frill.co/b/6m4d5qm4/feature-ideas" target="_blank">Request New Feature <span class="dashicons dashicons-star-empty"></span></a>', 'wpr-addons' ),
+			]
+		);
+
+		$module->end_controls_section(); // End Controls Section
+	}
+
+	/**
 	** Pro Features List Section
 	*/
-	public static function pro_features_list_section( $module, $controls_manager, $widget, $features ) {
+	public static function pro_features_list_section( $module, $section, $type, $widget, $features ) {
 		if ( wpr_fs()->can_use_premium_code() ) {
 			return;
 		}
 
-		$module->start_controls_section(
-			'pro_features_section',
-			[
-				'label' => 'Pro Features <span class="dashicons dashicons-star-filled"></span>',
-			]
-		);
+		if ( '' === $section ) {
+			$module->start_controls_section(
+				'pro_features_section',
+				[
+					'label' => 'Pro Features <span class="dashicons dashicons-star-filled"></span>',
+				]
+			);			
+		} else {
+			$module->start_controls_section(
+				'pro_features_section',
+				[
+					'label' => 'Pro Features <span class="dashicons dashicons-star-filled"></span>',
+					'tab' => $section,
+				]
+			);
+		}
+
 
 		$list_html = '';
 
@@ -772,7 +988,7 @@ class Utilities {
 		$module->add_control(
 			'pro_features_list',
 			[
-				'type' => $controls_manager,
+				'type' => $type,
 				'raw' => '<ul>'. $list_html .'</ul>
 						  <a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-pro-sec-'. $widget .'-upgrade-pro#purchasepro" target="_blank">Get Pro version</a>',
 				'content_classes' => 'wpr-pro-features-list',
@@ -787,6 +1003,10 @@ class Utilities {
 	*/
 	public static function is_new_free_user() {
 		return !wpr_fs()->can_use_premium_code() && (intval(get_option('royal_elementor_addons_activation_time')) > 1649247746);
+	}
+	
+	public static function is_new_free_user2() {
+		return !wpr_fs()->can_use_premium_code() && (intval(get_option('royal_elementor_addons_activation_time')) > 1670317149);
 	}
 
 }

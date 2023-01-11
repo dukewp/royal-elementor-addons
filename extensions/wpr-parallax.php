@@ -9,7 +9,9 @@ use Elementor\Repeater;
 use Elementor\Utils;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Parallax_Scroll {
 
@@ -61,6 +63,24 @@ class Wpr_Parallax_Scroll {
                 'prefix_class' => 'wpr-jarallax-'
             ]
         );
+
+		// $element->add_control(
+		// 	'parallax_item_bg_size',
+		// 	[
+		// 		'label' => esc_html__( 'Size', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'default' => 'cover',
+		// 		'options' => [
+		// 			'cover' => esc_html__( 'Cover', 'wpr-addons' ),
+		// 			'contain' => esc_html__( 'Contain', 'wpr-addons' ),
+		// 			'auto' => esc_html__( 'Auto', 'wpr-addons' ),
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}}.wpr-jarallax-yes' => 'position: relative; background-size: {{VALUE}}; background-repeat: no-repeat background-blend-mode: darken; background-position: left top;',
+		// 			'{{WRAPPER}} .wpr-jarallax' => 'position: relative; background-size: {{VALUE}}; background-repeat: no-repeat; background-blend-mode: darken; background-position: left top;',
+		// 		],
+		// 	]
+		// );
 
         $element->add_control(
             'speed',
@@ -345,7 +365,6 @@ class Wpr_Parallax_Scroll {
             if ( 'yes' === $settings['wpr_enable_jarallax'] ) { 
                 $element->add_render_attribute( '_wrapper', [
                     'class' => 'wpr-jarallax',
-                    'id' => 'wpr-test-parallax',
                     'speed-data' => $settings['speed'],
                     'bg-image' => $settings['bg_image']['url'],
                     'scroll-effect' => $settings['scroll_effect'],
@@ -362,12 +381,12 @@ class Wpr_Parallax_Scroll {
             if ( $settings['wpr_enable_parallax_hover'] == 'yes' ) {
                  if ( $settings['hover_parallax'] ) {
 
-                    echo '<div class="wpr-parallax-multi-layer" scalar-speed="'. $settings['scalar_speed']['size'] .'" direction="'. $settings['invert_direction'] .'" style="overflow: hidden;">';
+                    echo '<div class="wpr-parallax-multi-layer" scalar-speed="'. esc_attr($settings['scalar_speed']['size']) .'" direction="'. esc_attr($settings['invert_direction']) .'" style="overflow: hidden;">';
 
                     foreach (  $settings['hover_parallax'] as $key => $item ) {
                         if ( $key < 2 || wpr_fs()->can_use_premium_code() ) {
-                            echo '<div data-depth="'. $item['data_depth'] .'" style-top="'. $item['layer_position_vr']['size'] .'%" style-left="'. $item['layer_position_hr']['size'] .'%" class="wpr-parallax-ml-children elementor-repeater-item-' . $item['_id'] . '">';
-                                echo '<img src="' . $item['repeater_bg_image']['url'] . '">';
+                            echo '<div data-depth="'. esc_attr($item['data_depth']) .'" style-top="'. esc_attr($item['layer_position_vr']['size']) .'%" style-left="'. esc_attr($item['layer_position_hr']['size']) .'%" class="wpr-parallax-ml-children elementor-repeater-item-'. esc_attr($item['_id']) .'">';
+                                echo '<img src="'. esc_url($item['repeater_bg_image']['url']) .'">';
                             echo '</div>';
                         }
                     }

@@ -10,7 +10,9 @@ use Elementor\Core\Base\Document;
 use Elementor\Plugin;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Lottie_Animations extends Widget_Base {
 		
@@ -54,7 +56,7 @@ class Wpr_Lottie_Animations extends Widget_Base {
 			]
 		);
 
-		// Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
+		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
 		$this->add_control(
 			'source',
@@ -315,7 +317,6 @@ class Wpr_Lottie_Animations extends Widget_Base {
 			array(
 				'label'       => __( 'Link', 'wpr-addons' ),
 				'type'        => Controls_Manager::URL,
-				'dynamic'     => array( 'active' => true ),
 				'default'     => array(
 					'url' => '#',
 				),
@@ -331,12 +332,13 @@ class Wpr_Lottie_Animations extends Widget_Base {
 		$this->add_control(
 			'existing_link',
 			array(
-				'label'       => __( 'Existing Page', 'wpr-addons' ),
-				'type'        => Controls_Manager::SELECT2,
-				'options'     => $this->get_all_posts(),
-				'multiple'    => false,
+				'label' => __( 'Existing Page', 'wpr-addons' ),
+				'type' => 'wpr-ajax-select2',
+				'options' => 'ajaxselect2/get_posts_by_post_type',
+				'query_slug' => 'page',
+				'multiple' => false,
 				'label_block' => true,
-				'condition'   => array(
+				'condition' => array(
 					'link_switcher'  => 'yes',
 					'link_selection' => 'link',
 				),
@@ -345,6 +347,9 @@ class Wpr_Lottie_Animations extends Widget_Base {
 
 
 		$this->end_controls_section(); // End Controls Section
+
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
 
 		$this->start_controls_section(
 			'lottie_styles',
@@ -447,26 +452,6 @@ class Wpr_Lottie_Animations extends Widget_Base {
 	
 	}
 
-	public function get_all_posts() {
-
-		$all_posts = get_posts(
-			array(
-				'posts_per_page'         => -1,
-				'post_type'              => array( 'page', 'post' ),
-				'update_post_term_cache' => false,
-				'update_post_meta_cache' => false,
-				'fields'                 => array( 'ids' ),
-			)
-		);
-
-		if ( ! empty( $all_posts ) && ! is_wp_error( $all_posts ) ) {
-			foreach ( $all_posts as $post ) {
-				$this->options[ $post->ID ] = strlen( $post->post_title ) > 20 ? substr( $post->post_title, 0, 20 ) . '...' : $post->post_title;
-			}
-		}
-		return $this->options;
-	}
-
 	public function lottie_attributes($settings) {
 		$attributes = [
 			'loop' => $settings['loop'],
@@ -494,11 +479,11 @@ class Wpr_Lottie_Animations extends Widget_Base {
 		}
 
 		$lottie_animation = 'yes' === $settings['link_switcher']
-				? '<a href="'. $lottie_link .'"><div class="wpr-lottie-animations" data-settings="'. esc_attr($this->lottie_attributes($settings)) .'" data-json-url="'. $lottie_json .'"></div></a>'
-				: '<div class="wpr-lottie-animations" data-settings="'. esc_attr($this->lottie_attributes($settings)) .'" data-json-url="'. $lottie_json .'"></div>';
+				? '<a href="'. esc_url($lottie_link) .'"><div class="wpr-lottie-animations" data-settings="'. esc_attr($this->lottie_attributes($settings)) .'" data-json-url="'. esc_url($lottie_json) .'"></div></a>'
+				: '<div class="wpr-lottie-animations" data-settings="'. esc_attr($this->lottie_attributes($settings)) .'" data-json-url="'. esc_url($lottie_json) .'"></div>';
 
 		echo '<div class="wpr-lottie-animations-wrapper">';
-			echo $lottie_animation;
+			echo ''. $lottie_animation; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '</div>';
 	}
 }

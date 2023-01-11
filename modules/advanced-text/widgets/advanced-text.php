@@ -14,7 +14,9 @@ use Elementor\Utils;
 use Elementor\Icons;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Advanced_Text extends Widget_Base {
 		
@@ -401,8 +403,11 @@ class Advanced_Text extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'advanced-text', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'advanced-text', [
 			'Clipped Text Effect',
 			'Examples - <a href="https://royal-elementor-addons.com/elementor-advanced-text-widget/?ref=rea-plugin-panel-pro-sec-advanced-text#clipped1" target="_blank">Clipped effects</a>',
 		] );
@@ -764,11 +769,11 @@ class Advanced_Text extends Widget_Base {
 
 		<span class="wpr-highlighted-text">
 			<?php if ( '' !== $svg_arr[$settings['highlighted_shape']] ) : ?>		
-			<span class="wpr-highlighted-text-inner"><?php echo esc_html( $settings['highlighted_text'] ); ?></span>
+			<span class="wpr-highlighted-text-inner"><?php echo wp_kses_post( $settings['highlighted_text'] ); ?></span>
 
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 150" class="wpr-highlight-<?php echo esc_html( $settings['highlighted_shape'] ); ?>" preserveAspectRatio="none">
-				<?php foreach ( $svg_arr[$settings['highlighted_shape']] as $value ) : ?>	
-				<path d="<?php echo $value; ?>"></path>
+				<?php foreach ( $svg_arr[$settings['highlighted_shape']] as $value ) : ?>
+				<path d="<?php echo esc_attr($value); ?>"></path>
 				<?php endforeach; ?>
 			</svg>
 			<?php endif; ?>
@@ -799,7 +804,7 @@ class Advanced_Text extends Widget_Base {
 		$anim_duration = implode( ',', $anim_duration );
 		
 		
-		$this->add_render_attribute( 'wpr-anim-text', 'class', 'wpr-anim-text wpr-anim-text-type-' . $settings['text_type'] );
+		$this->add_render_attribute( 'wpr-anim-text', 'class', 'wpr-anim-text wpr-anim-text-type-'. $settings['text_type'] );
 
 		$is_anim_letters = in_array( $settings['text_type'], [ 'typing', 'rotate-2', 'rotate-3', 'scale' ] );
 
@@ -854,25 +859,25 @@ class Advanced_Text extends Widget_Base {
 					$this->add_render_attribute( 'text_link', 'nofollow', '' );
 				}
 
-				echo '<a ' . $this->get_render_attribute_string( 'text_link' ) .'>' ;
+				echo '<a '. $this->get_render_attribute_string( 'text_link' ) .'>' ;
 			}
 
 			?>
 		
 			<?php if ( '' !== $settings['prefix_text'] ) : ?>
-				<span class="wpr-advanced-text-preffix"><?php echo $settings['prefix_text']; ?></span>
+				<span class="wpr-advanced-text-preffix"><?php echo wp_kses_post($settings['prefix_text']); ?></span>
 			<?php endif;
 
 			if ( 'animated' === $settings['text_style'] ) {
 				$this->wpr_animated_text();
-			} else if ( 'highlighted' === $settings['text_style'] ) {
+			} elseif ( 'highlighted' === $settings['text_style'] ) {
 				$this->wpr_highlighted_text();
-			} else if ( 'clipped' === $settings['text_style'] ) {
+			} elseif ( 'clipped' === $settings['text_style'] ) {
 				$this->wpr_clipped_text();
 			}
 
 			if ( '' !== $settings['suffix_text'] ) : ?>
-				<span class="wpr-advanced-text-suffix"><?php echo $settings['suffix_text']; ?></span>
+				<span class="wpr-advanced-text-suffix"><?php echo wp_kses_post($settings['suffix_text']); ?></span>
 			<?php endif;
 
 			if ( '' !== $settings['text_link']['url'] ) {

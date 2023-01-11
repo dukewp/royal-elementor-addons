@@ -16,7 +16,9 @@ use Elementor\Utils;
 use Elementor\Icons;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Content_Toggle extends Widget_Base {
 		
@@ -92,23 +94,6 @@ class Wpr_Content_Toggle extends Widget_Base {
 	public function add_section_settings() {}
 
 	protected function register_controls() {
-		
-		$templates_select = [];
-
-		// Get All Templates
-		$templates = get_posts( [
-			'post_type'   => array( 'elementor_library' ),
-			'post_status' => array( 'publish' ),
-			'meta_key' 	  => '_elementor_template_type',
-			'meta_value'  => ['page', 'section'],
-			'numberposts' => -1
-		] );
-
-		if ( ! empty( $templates ) ) {
-			foreach ( $templates as $template ) {
-				$templates_select[$template->ID] = $template->post_title;
-			}
-		}
 
 		// CSS Selectors
 		$css_selector = [
@@ -243,8 +228,9 @@ class Wpr_Content_Toggle extends Widget_Base {
 			'switcher_first_select_template',
 			[
 				'label'	=> esc_html__( 'Select Template', 'wpr-addons' ),
-				'type' => Elementor\Controls_Manager::SELECT2,
-				'options' => $templates_select,
+				'type' => 'wpr-ajax-select2',
+				'options' => 'ajaxselect2/get_elementor_templates',
+				'label_block' => true,
 				'condition' => [
 					'switcher_first_content_type' => 'template',
 					'switcher_style' => ['dual', 'pro-ml'],
@@ -341,8 +327,9 @@ class Wpr_Content_Toggle extends Widget_Base {
 			'switcher_second_select_template',
 			[
 				'label'	=> esc_html__( 'Select Template', 'wpr-addons' ),
-				'type' => Elementor\Controls_Manager::SELECT2,
-				'options' => $templates_select,
+				'type' => 'wpr-ajax-select2',
+				'options' => 'ajaxselect2/get_elementor_templates',
+				'label_block' => true,
 				'condition' => [
 					'switcher_second_content_type' => 'template',
 					'switcher_style' => ['dual', 'pro-ml'],
@@ -359,8 +346,11 @@ class Wpr_Content_Toggle extends Widget_Base {
 		// Section: Settings ---------
 		$this->add_section_settings();
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'content-toggle', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'content-toggle', [
 			'Multi Label Switcher (ex: Monthly, Annually, Lifetime)',
 			'Switcher Label Inside/Outside Positioning',
 		] );
@@ -944,10 +934,10 @@ class Wpr_Content_Toggle extends Widget_Base {
 					'size' => 12,
 				],
 				'selectors' => [
-					'{{WRAPPER}}.wpr-switcher-icon-position-left'. $css_selector['control_container'] .' > .wpr-switcher-inner > .wpr-switcher-label ~ '.$css_selector['control_icon']  => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-switcher-icon-position-left'. $css_selector['control_list'] .' > .wpr-switcher-inner > .wpr-switcher-label ~ '.$css_selector['control_icon']  => 'margin-right: {{SIZE}}{{UNIT}};',
-						'{{WRAPPER}}.wpr-switcher-icon-position-right'. $css_selector['control_container'] .' > .wpr-switcher-inner > .wpr-switcher-label ~ '.$css_selector['control_icon']  => 'margin-left: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-switcher-icon-position-right'. $css_selector['control_list'] .' > .wpr-switcher-inner > .wpr-switcher-label ~ '.$css_selector['control_icon']  => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-switcher-icon-position-left'. $css_selector['control_container'] .' > .wpr-switcher-inner > .wpr-switcher-label ~ '. $css_selector['control_icon']  => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-switcher-icon-position-left'. $css_selector['control_list'] .' > .wpr-switcher-inner > .wpr-switcher-label ~ '. $css_selector['control_icon']  => 'margin-right: {{SIZE}}{{UNIT}};',
+						'{{WRAPPER}}.wpr-switcher-icon-position-right'. $css_selector['control_container'] .' > .wpr-switcher-inner > .wpr-switcher-label ~ '. $css_selector['control_icon']  => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-switcher-icon-position-right'. $css_selector['control_list'] .' > .wpr-switcher-inner > .wpr-switcher-label ~ '. $css_selector['control_icon']  => 'margin-left: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -1126,9 +1116,12 @@ class Wpr_Content_Toggle extends Widget_Base {
 			return '';
 		}
 
-		$edit_link = '<span class="wpr-template-edit-btn" data-permalink="'. get_permalink( $id ) .'">Edit Template</span>';
+		$edit_link = '<span class="wpr-template-edit-btn" data-permalink="'. esc_url(get_permalink( $id )) .'">Edit Template</span>';
+		
+		$type = get_post_meta(get_the_ID(), '_wpr_template_type', true);
+		$has_css = 'internal' === get_option( 'elementor_css_print_method' ) || '' !== $type;
 
-		return Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $id ) . $edit_link;
+		return Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $id, $has_css ) . $edit_link;
 	}
 
 	public function wpr_multi_switcher() {}
@@ -1137,12 +1130,12 @@ class Wpr_Content_Toggle extends Widget_Base {
 	public function wpr_dual_switcher_outer_text() {
 
 		$settings = $this->get_settings();
-
+		
 		?>
 
 		<div class="wpr-switcher-inner wpr-switcher-first">
 			<?php if ( '' !== $settings['switcher_first_label'] ) : ?>
-			<div class="wpr-switcher-label"><?php echo $settings['switcher_first_label']; ?></div>
+			<div class="wpr-switcher-label"><?php echo esc_html($settings['switcher_first_label']); ?></div>
 			<?php endif; ?>
 
 			<?php if ( 'yes' === $settings['switcher_first_show_icon'] && '' !== $settings['switcher_first_icon']['value'] ) : ?>
@@ -1164,7 +1157,7 @@ class Wpr_Content_Toggle extends Widget_Base {
 
 		<div class="wpr-switcher-inner wpr-switcher-second">
 			<?php if ( '' !== $settings['switcher_second_label'] ) : ?>
-			<div class="wpr-switcher-label"><?php echo $settings['switcher_second_label']; ?></div>
+			<div class="wpr-switcher-label"><?php echo esc_html($settings['switcher_second_label']); ?></div>
 			<?php endif; ?>
 
 			<?php if ( 'yes' === $settings['switcher_second_show_icon'] && '' !== $settings['switcher_second_icon']['value'] ) : ?>
@@ -1191,7 +1184,7 @@ class Wpr_Content_Toggle extends Widget_Base {
 					
 					<div class="wpr-switcher-inner wpr-switcher-first">
 						<?php if ( '' !== $settings['switcher_first_label'] ) : ?>
-						<div class="wpr-switcher-label"><?php echo $settings['switcher_first_label']; ?></div>
+						<div class="wpr-switcher-label"><?php echo esc_html($settings['switcher_first_label']); ?></div>
 						<?php endif; ?>
 
 						<?php if ( 'yes' === $settings['switcher_first_show_icon'] && '' !== $settings['switcher_first_icon']['value'] ) : ?>
@@ -1207,7 +1200,7 @@ class Wpr_Content_Toggle extends Widget_Base {
 					
 					<div class="wpr-switcher-inner wpr-switcher-second">
 						<?php if ( '' !== $settings['switcher_second_label'] ) : ?>
-						<div class="wpr-switcher-label"><?php echo $settings['switcher_second_label']; ?></div>
+						<div class="wpr-switcher-label"><?php echo esc_html($settings['switcher_second_label']); ?></div>
 						<?php endif; ?>
 
 						<?php if ( 'yes' === $settings['switcher_second_show_icon'] && '' !== $settings['switcher_second_icon']['value'] ) : ?>
@@ -1264,15 +1257,16 @@ class Wpr_Content_Toggle extends Widget_Base {
 			
 			<div class="wpr-switcher-content" data-switcher="1">
 				<?php 
-				echo '<div class="wpr-switcher-content-inner wpr-anim-size-'. $settings['content_anim_size'] .' wpr-overlay-'. $settings['content_animation'] .'">';
+				echo '<div class="wpr-switcher-content-inner wpr-anim-size-'. esc_attr($settings['content_anim_size']) .' wpr-overlay-'. esc_attr($settings['content_animation']) .'">';
 
 					if ( 'template' === $settings['switcher_first_content_type'] ) {
 
-						echo $this->wpr_switcher_template( $settings['switcher_first_select_template'] );
+						// Render Elementor Template
+						echo ''. $this->wpr_switcher_template( $settings['switcher_first_select_template'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
-					} else if( 'editor' === $settings['switcher_first_content_type'] ) {
+					} elseif( 'editor' === $settings['switcher_first_content_type'] ) {
 
-						echo $settings['switcher_first_content'];
+						echo wp_kses_post($settings['switcher_first_content']);
 					}
 
 				echo '</div>';
@@ -1282,15 +1276,16 @@ class Wpr_Content_Toggle extends Widget_Base {
 
 			<div class="wpr-switcher-content" data-switcher="2">
 				<?php 
-				echo '<div class="wpr-switcher-content-inner wpr-anim-size-'. $settings['content_anim_size'] .' wpr-overlay-'. $settings['content_animation'] .'">';
+				echo '<div class="wpr-switcher-content-inner wpr-anim-size-'. esc_attr($settings['content_anim_size']) .' wpr-overlay-'. esc_attr($settings['content_animation']) .'">';
 
 					if ( 'template' === $settings['switcher_second_content_type'] ) {
 
-						echo $this->wpr_switcher_template( $settings['switcher_second_select_template'] );
+						// Render Elementor Template
+						echo ''. $this->wpr_switcher_template( $settings['switcher_second_select_template'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
-					} else if( 'editor' === $settings['switcher_second_content_type'] ) {
+					} elseif( 'editor' === $settings['switcher_second_content_type'] ) {
 
-						echo $settings['switcher_second_content'];
+						echo wp_kses_post($settings['switcher_second_content']);
 					}
 
 				echo '</div>';

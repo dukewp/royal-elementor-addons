@@ -16,7 +16,9 @@ use Elementor\Utils;
 use Elementor\Icons;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_OnepageNav extends Widget_Base {
 		
@@ -46,9 +48,45 @@ class Wpr_OnepageNav extends Widget_Base {
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
 
-	public function add_section_settings() {}
+	public function add_section_settings() {
+		$this->start_controls_section(
+			'section_settings',
+			[
+				'label' => esc_html__( 'Settings', 'wpr-addons' ),
+			]
+		);
 
-	public function add_control_nav_item_stretch() {}
+		$this->add_control(
+			'nav_item_show_tooltip',
+			[
+				'label' => sprintf( __( 'Show Tooltip %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);
+
+		$this->add_control(
+			'nav_item_highlight',
+			[
+				'label' => sprintf( __( 'Highlight Active Item %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);
+
+		$this->end_controls_section(); // End Controls Section
+	}
+
+	public function add_control_nav_item_stretch() {
+		$this->add_control(
+			'nav_item_stretch',
+			[
+				'label' => sprintf( __( 'Stretch Vertically %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);
+	}
 
 	public function add_condition_nav_item_stretch() {
 		return [];
@@ -222,8 +260,11 @@ class Wpr_OnepageNav extends Widget_Base {
 		// Section: Settings ---------
 		$this->add_section_settings();
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'onepage-nav', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'onepage-nav', [
 			'Highlight Active Nav Icon',
 			'Nav Icon Custom Color',
 			'Nav Icon Advanced Tooltip',
@@ -709,9 +750,9 @@ class Wpr_OnepageNav extends Widget_Base {
 		
 		// Nav Items
 		foreach ( $settings['nav_items'] as $item ) {
-			echo '<div class="wpr-onepage-nav-item elementor-repeater-item-'. $item['_id'] .'">';
-				echo '<a href="#'. $item['nav_item_id'] .'">';
-					echo ( wpr_fs()->can_use_premium_code() && 'yes' === $settings['nav_item_show_tooltip'] ) ? '<span class="wpr-tooltip">'. $item['nav_item_tooltip'] .'</span>' : '';
+			echo '<div class="wpr-onepage-nav-item elementor-repeater-item-'. esc_attr($item['_id']) .'">';
+				echo '<a href="#'. esc_attr($item['nav_item_id']) .'">';
+					echo ( wpr_fs()->can_use_premium_code() && 'yes' === $settings['nav_item_show_tooltip'] ) ? '<span class="wpr-tooltip">'. esc_html($item['nav_item_tooltip']) .'</span>' : '';
 					\Elementor\Icons_Manager::render_icon( $item['nav_item_icon'] );
 				echo '</a>';
 			echo '</div>';

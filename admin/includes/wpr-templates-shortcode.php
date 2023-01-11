@@ -4,7 +4,9 @@ namespace WprAddons\Admin\Includes;
 
 use Elementor;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 /**
  * WPR_Templates_Shortcode setup
@@ -24,41 +26,25 @@ class WPR_Templates_Shortcode {
 			return '';
 		}
 
-		$edit_link = '<span class="wpr-template-edit-btn" data-permalink="'. get_permalink($attributes['id']) .'">Edit Template</span>';
+		$edit_link = '<span class="wpr-template-edit-btn" data-permalink="'. esc_url(get_permalink($attributes['id'])) .'">Edit Template</span>';
+		
+		$type = get_post_meta(get_the_ID(), '_wpr_template_type', true);
+		$has_css = 'internal' === get_option( 'elementor_css_print_method' ) || '' !== $type;
 
-		return Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $attributes['id'], true ) . $edit_link;
+		return Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $attributes['id'], $has_css ) . $edit_link;
 	}
 
 	public function extend_shortcode( $section, $section_id, $args ) {
 		if ( $section->get_name() == 'shortcode' && $section_id == 'section_shortcode' ) {
-			$templates_select = [];
-
-			// Get All Templates
-			$templates = get_posts( [
-				'post_type'   => array( 'elementor_library' ),
-				'post_status' => array( 'publish' ),
-				'meta_key' 	  => '_elementor_template_type',
-				'meta_value'  => ['page', 'section'],
-				'numberposts'  => -1
-			] );
-
-			if ( ! empty( $templates ) ) {
-				foreach ( $templates as $template ) {
-					$templates_select[$template->ID] = $template->post_title;
-				}
-			}
-
 			$section->add_control(
 				'select_template' ,
 				[
-					'label'        => esc_html__( 'Select Template', 'wpr-addons' ),
-					'type'         => Elementor\Controls_Manager::SELECT2,
-					'options'      => $templates_select,
+					'label' => esc_html__( 'Select Template', 'wpr-addons' ),
+					'type' => 'wpr-ajax-select2',
+					'options' => 'ajaxselect2/get_elementor_templates',
+					'label_block' => true,
 				]
 			);
-
-			// Restore original Post Data
-			wp_reset_postdata();
 		}
 	}
 

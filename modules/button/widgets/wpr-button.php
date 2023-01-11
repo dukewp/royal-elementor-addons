@@ -16,7 +16,9 @@ use Elementor\Utils;
 use Elementor\Icons;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Button extends Widget_Base {
 		
@@ -399,11 +401,14 @@ class Wpr_Button extends Widget_Base {
 		// Section: Tooltip ---------
 		$this->add_section_tooltip();
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'button', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'button', [
+			'Advanced Tooltip options',
 			'Advanced Button Styles',
 			'Advanced Hover Animations - Change Text on Hover',
-			'Advanced Tooltip options',
 		] );
 
 		// Styles
@@ -651,10 +656,11 @@ class Wpr_Button extends Widget_Base {
 	}
 
 	protected function render() {
-
-	$settings = $this->get_settings();
-	$btn_element = 'div';
-	$btn_url =  $settings['button_url']['url'];
+		// Get Settings
+		$settings = $this->get_settings();
+		
+		$btn_element = 'div';
+		$btn_url =  $settings['button_url']['url'];
 
 	?>
 	

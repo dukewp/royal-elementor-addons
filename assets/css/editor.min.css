@@ -41,6 +41,16 @@
 	position: relative !important;
 }
 
+.elementor-element--promotion .wpr-icon:after {
+	top: 22px;
+	right: -1px;
+	opacity: 0.7;
+}
+
+#elementor-element--promotion__dialog .dialog-button {
+	text-align: center;
+}
+
 .elementor-control-type-section[class*="elementor-control-wpr_section_"]:after {
     content: 'R';
     display: block;
@@ -78,7 +88,8 @@
 .elementor-control-element_custom_field_wrapper_html,
 .elementor-control-slider_item_bg_size,
 .elementor-control-element_addcart_variable_txt,
-.elementor-control-type {
+.elementor-control-type,
+.elementor-control-show_last_update_date {
 	margin-bottom: 15px;
 }
 
@@ -107,6 +118,7 @@
 .elementor-control-archive_link_transition_duration,
 .elementor-control-post_info_tax_select,
 .elementor-control-post_info_link_wrap,
+.elementor-control-post_info_modified_time,
 .elementor-control-tabs_sharing_custom_colors,
 .elementor-control-post_info_show_avatar,
 .elementor-control-post_info_cf,
@@ -121,8 +133,13 @@
 .elementor-control-filters_transition_duration,
 .elementor-control-pagination_older_text,
 .elementor-control-tooltip_position,
-.elementor-control-post_info_comments_text_1 {
+.elementor-control-post_info_comments_text_1,
+.elementor-control-element_letter_count {
 	padding-top: 15px !important;
+}
+
+.elementor-control-post_info_custom_field_video_tutorial {
+	margin-top: 15px;
 }
 
 .elementor-control-title_pointer_animation + .elementor-control-title_transition_duration,
@@ -136,7 +153,8 @@
 	padding-bottom: 0 !important;
 }
 
-.elementor-control-filters_transition_duration {
+.elementor-control-filters_transition_duration,
+.elementor-control-show_last_update_date {
 	padding-top: 0 !important;
 }
 
@@ -196,13 +214,7 @@
 /* Fix Select Inputs */
 .elementor-control-button_hover_animation .elementor-control-input-wrapper,
 .elementor-control-front_btn_animation .elementor-control-input-wrapper,
-.elementor-control-back_btn_animation .elementor-control-input-wrapper,
-
-.elementor-control-select_template .select2-selection,
-.elementor-control-switcher_first_select_template .select2-selection,
-.elementor-control-switcher_second_select_template .select2-selection,
-.elementor-control-switcher_select_template .select2-selection,
-.elementor-control-slider_select_template .select2-selection {
+.elementor-control-back_btn_animation .elementor-control-input-wrapper {
 	width: 135px !important;
 }
 
@@ -316,6 +328,10 @@
 
 .elementor-control-posts_slider_notice .elementor-control-raw-html {
   font-style: normal !important;
+}
+
+.elementor-control-product_notice_widget_info .elementor-control-raw-html {
+	color: red;
 }
 
 
@@ -486,6 +502,22 @@
 /*--------------------------------------------------------------
 == Widget Preview and Library buttons
 --------------------------------------------------------------*/
+
+.elementor-control-wpr_library_buttons .wpr-forms a:last-child,
+.elementor-control-wpr_library_buttons .wpr-phone-call a:last-child,
+.elementor-control-wpr_library_buttons .wpr-back-to-top a:last-child,
+.elementor-control-wpr_library_buttons .wpr-lottie-animations a:last-child,
+.elementor-control-wpr_library_buttons .wpr-feature-list a:last-child,
+.elementor-control-wpr_library_buttons .wpr-reading-progress-bar a:last-child,
+.elementor-control-wpr_library_buttons .wpr-dual-color-heading a:last-child,
+.elementor-control-wpr_library_buttons .wpr-flip-carousel a:last-child,
+.elementor-control-wpr_library_buttons .wpr-advanced-accordion a:last-child,
+.elementor-control-wpr_library_buttons .wpr-image-accordion a:last-child,
+.elementor-control-wpr_library_buttons .wpr-mega-menu a:last-child,
+.elementor-control-wpr_library_buttons .wpr-charts a:last-child {
+	display: none;
+}
+
 .elementor-control-wpr_library_buttons {
 	height: 60px;
 	padding: 0;
@@ -542,11 +574,18 @@
   right: 20px;
   position: absolute;
   line-height: 20px;
+  font-size: 12px;
 }
 
 .elementor-section-title > a:hover {
   border-color: transparent;
 }
+
+.elementor-section-title > a .dashicons {
+	font-size: 16px;
+	vertical-align: middle;
+}
+
 
 /*--------------------------------------------------------------
 == Apply Changes Button
@@ -669,7 +708,15 @@
 .elementor-control.elementor-control-author_name_links_to_pro_notice,
 .elementor-control.elementor-control-author_title_links_to_pro_notice,
 .elementor-control.elementor-control-comments_form_layout_pro_notice,
-.elementor-control.elementor-control-sharing_repeater_pro_notice {
+.elementor-control.elementor-control-sharing_repeater_pro_notice,
+.elementor-control.elementor-control-mini_cart_style_pro_notice,
+.elementor-control.elementor-control-tabs_position_pro_notice,
+.elementor-control.elementor-control-choose_table_type_pro_notice,
+.elementor-control.elementor-control-accordion_repeater_pro_notice,
+.elementor-control.elementor-control-acc_repeater_pro_notice,
+.elementor-control.elementor-control-data_source_pro_notice,
+.elementor-control.elementor-control-charts_repeater_pro_notice,
+.elementor-control.elementor-control-mob_menu_display_as_pro_notice {
 	padding-bottom: 0 !important;
 }
 
@@ -710,7 +757,13 @@
 .elementor-control-author_name_links_to_pro_notice .wpr-pro-notice,
 .elementor-control-author_title_links_to_pro_notice .wpr-pro-notice,
 .elementor-control-comments_form_layout_pro_notice .wpr-pro-notice,
-.elementor-control-sharing_repeater_pro_notice .wpr-pro-notice {
+.elementor-control-sharing_repeater_pro_notice .wpr-pro-notice,
+.elementor-control-mini_cart_style_pro_notice .wpr-pro-notice,
+.elementor-control-tabs_position_pro_notice .wpr-pro-notice,
+.elementor-control-choose_table_type_pro_notice .wpr-pro-notice,
+.elementor-control-accordion_repeater_pro_notice .wpr-pro-notice,
+.elementor-control.elementor-control-data_source_pro_notice .wpr-pro-notice,
+.elementor-control.elementor-control-mob_menu_display_as_pro_notice .wpr-pro-notice {
 	border-bottom: none !important;
 }
 
@@ -781,6 +834,16 @@
   padding-bottom: 5px !important;
 }
 
+.elementor-control.elementor-control-woo_grid_notice_video_tutorial,
+.elementor-control-show_last_update_date {
+	padding-bottom: 15px !important;
+}
+
+.elementor-control.elementor-control-woo_grid_notice_video_tutorial a {
+	display: inline-block;
+	margin-top: 5px;
+}
+
 .elementor-control[class*="video_tutorial"] a {
   line-height: 16px;
   font-size: 12px;
@@ -788,6 +851,97 @@
 
 .elementor-control[class*="video_tutorial"] a .dashicons {
   font-size: 16px;
+}
+
+/* Pro Control Class */
+.elementor-control.wpr-pro-control label i {
+  color: #aeaeae;
+  font-size: 14px;
+  margin-left: 3px;
+}
+
+.elementor-control.wpr-pro-control .elementor-control-content:before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 9;
+  background: transparent;
+}
+
+.elementor-control.wpr-pro-control .elementor-control-content:after {
+  content: "This option is available in the Pro Version.";
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: 30px;
+  padding: 15px;
+  z-index: 99;
+  margin-top: 10px;
+  font-size: 12px;
+  color: #93003c;
+  background-color: #ffffff;
+  border-radius: 5px;
+  -webkit-box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+          box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+  border: 1px solid #e6e9ec;
+  -webkit-transition: all 0.2s ease-in;
+  -o-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+}
+
+.elementor-repeater-fields .elementor-control.wpr-pro-control .elementor-control-content:after {
+	content: "This is available in the Pro Version.";
+}
+
+.elementor-control.wpr-pro-control.no-distance .elementor-control-content:after {
+	margin: 0;
+}
+
+.elementor-control.wpr-pro-control .elementor-control-content:hover:after {
+  visibility: visible;
+  opacity: 1; 
+}
+
+/*--------------------------------------------------------------
+== Request New Feature
+--------------------------------------------------------------*/
+.elementor-control-section_request_new_feature .elementor-section-toggle,
+.elementor-control-section_request_new_feature .elementor-section-title {
+	color: #1CB4E4;
+	line-height: 20px;
+}
+
+.elementor-control-section_request_new_feature .elementor-section-title .dashicons {
+	line-height: 20px;
+	font-size: 13px;
+}
+
+.elementor-control-request_new_feature {
+	line-height: 20px;
+}
+
+.elementor-control-request_new_feature a {
+	display: block;
+	padding: 10px 15px;
+	border-radius: 3px;
+	margin-top: 15px;
+	text-align: center;
+	text-decoration: none;
+	background-color: #1CB4E4;
+	color: #fff;
+	font-size: 13px;
+	font-weight: 500;
+}
+
+.elementor-control-request_new_feature a:hover {
+	color: #fff;
+	background-color: #1589ad;
+}
+
+.elementor-control-request_new_feature a .dashicons {
+	font-size: 13px;
+	line-height: 18px;
 }
 
 
@@ -810,7 +964,8 @@
           order: 2;
 }
 
-#elementor-panel-category-wpr-theme-builder-widgets {
+#elementor-panel-category-wpr-theme-builder-widgets,
+#elementor-panel-category-wpr-woocommerce-builder-widgets {
   -webkit-box-ordinal-group: 2 !important;
       -ms-flex-order: 1 !important;
           order: 1 !important;

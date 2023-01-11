@@ -15,7 +15,9 @@ use WprAddons\Classes\Utilities;
 use Elementor\Utils;
 use Elementor\Icons;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Testimonial_Carousel extends Widget_Base {
 		
@@ -513,13 +515,6 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 				'max' => 10,
 				'frontend_available' => true,
 				'default' => 2,
-				'widescreen_default' => 2,
-				'laptop_default' => 2,
-				'tablet_extra_default' => 2,
-				'tablet_default' => 1,
-				'mobile_extra_default' => 1,
-				'mobile_default' => 1,
-				'prefix_class' => 'wpr-adv-slides-to-scroll-',
 				'render_type' => 'template',
 			]
 		);
@@ -792,8 +787,11 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'testimonial', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'testimonial', [
 			'Add Unlimited Testimonials',
 			'Columns (Carousel) 1,2,3,4,5,6',
 			'Advanced Social Media Icon options',
@@ -2660,35 +2658,35 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 		
 		<div class="wpr-testimonial-meta-content-wrap">
 			<?php if ( ! empty( $item['testimonial_author'] ) ) : ?>
-				<div class="wpr-testimonial-name"><?php echo esc_html( $item['testimonial_author'] ); ?></div>
+				<div class="wpr-testimonial-name"><?php echo wp_kses_post( $item['testimonial_author'] ); ?></div>
 			<?php endif; ?>
 
 			<?php if ( ! empty( $item['testimonial_job'] ) ) : ?>
-				<div class="wpr-testimonial-job"><?php echo esc_html( $item['testimonial_job'] ); ?></div>
+				<div class="wpr-testimonial-job"><?php echo wp_kses_post( $item['testimonial_job'] ); ?></div>
 			<?php endif; ?>
 
 			<?php
 			if ( ! empty( $item['testimonial_logo_image']['url'] ) ) {
 				
-				$this->add_render_attribute( 'logo_attribute' . $item_count, 'class', 'wpr-testimonial-logo-image elementor-clearfix' );
+				$this->add_render_attribute( 'logo_attribute'. $item_count, 'class', 'wpr-testimonial-logo-image elementor-clearfix' );
 
 				if ( ! empty( $item['testimonial_logo_url']['url'] ) ) {
 
 					$logo_element = 'a';
 
-					$this->add_render_attribute( 'logo_attribute' . $item_count, 'href', $item['testimonial_logo_url']['url'] );
+					$this->add_render_attribute( 'logo_attribute'. $item_count, 'href', $item['testimonial_logo_url']['url'] );
 
 					if ( $item['testimonial_logo_url']['is_external'] ) {
-						$this->add_render_attribute( 'logo_attribute' . $item_count, 'target', '_blank' );
+						$this->add_render_attribute( 'logo_attribute'. $item_count, 'target', '_blank' );
 					}
 
 					if ( $item['testimonial_logo_url']['nofollow'] ) {
-						$this->add_render_attribute( 'logo_attribute' . $item_count, 'nofollow', '' );
+						$this->add_render_attribute( 'logo_attribute'. $item_count, 'nofollow', '' );
 					}
 
 				}
 
-				echo '<'. esc_attr( $logo_element ) .' '. $this->get_render_attribute_string( 'logo_attribute' . $item_count ) .'>';
+				echo '<'. esc_attr( $logo_element ) .' '. $this->get_render_attribute_string( 'logo_attribute'. $item_count ) .'>';
 					echo '<img src="'. esc_url(  $item['testimonial_logo_image']['url'] ) .'" alt="'. esc_attr( $item['testimonial_author'] ) .'">';
 				echo '</'. esc_attr( $logo_element ) .'>';
 
@@ -2715,7 +2713,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 			<?php endif; ?>
 
 			<?php if ( ! empty( $item['testimonial_title'] ) ) : ?>
-				<div class="wpr-testimonial-title"><?php echo esc_html( $item['testimonial_title'] ); ?></div>
+				<div class="wpr-testimonial-title"><?php echo wp_kses_post( $item['testimonial_title'] ); ?></div>
 			<?php endif; ?>
 
 			<?php if ( $settings['rating_position'] === 'top' ) : ?>
@@ -2730,7 +2728,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 					</div>
 					<?php endif; ?>
 
-					<p><?php echo $item['testimonial_content']; ?></p>
+					<p><?php echo wp_kses_post($item['testimonial_content']); ?></p>
 				</div>
 			<?php endif; ?>
 
@@ -2770,11 +2768,11 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 			<div class="wpr-testimonial-rating">
 			<?php for( $i = 1; $i <= $settings['testimonial_rating_scale']; $i++ ) : ?>
 				<?php if ( $i <= $rating_amount ) : ?>
-					<i class="wpr-rating-icon-full"><?php echo $rating_icon; ?></i>
+					<i class="wpr-rating-icon-full"><?php echo esc_html($rating_icon); ?></i>
 				<?php elseif ( $i === $round_rating + 1 && $rating_amount !== $round_rating ) : ?>
-					<i class="wpr-rating-icon-<?php echo ( $rating_amount - $round_rating ) * 10; ?>"><?php echo $rating_icon; ?></i>
+					<i class="wpr-rating-icon-<?php echo esc_attr(( $rating_amount - $round_rating ) * 10); ?>"><?php echo esc_html($rating_icon); ?></i>
 				<?php else : ?>
-					<i class="wpr-rating-icon-empty"><?php echo $rating_icon; ?></i>
+					<i class="wpr-rating-icon-empty"><?php echo esc_html($rating_icon); ?></i>
 				<?php endif; ?>
 	     	<?php endfor; ?>
 
@@ -2816,6 +2814,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 			'pauseOnHover' => $settings['testimonial_pause_on_hover'],
 			'prevArrow' => '#wpr-testimonial-prev-'. $this->get_id(),
 			'nextArrow' => '#wpr-testimonial-next-'. $this->get_id(),
+			'sliderSlidesToScroll' => +$settings['testimonial_slides_to_scroll'],
 		];
 
 		$this->add_render_attribute( 'testimonial-caousel-attribute', [
@@ -2873,8 +2872,12 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 			</div>
 
 			<div class="wpr-testimonial-arrow-container">
-				<div class="wpr-testimonial-prev-arrow wpr-testimonial-arrow" id="<?php echo 'wpr-testimonial-prev-'. $this->get_id(); ?>"><?php echo Utilities::get_wpr_icon( $settings['testimonial_nav_icon'], '' ); ?></div>
-				<div class="wpr-testimonial-next-arrow wpr-testimonial-arrow" id="<?php echo 'wpr-testimonial-next-'. $this->get_id(); ?>"><?php echo Utilities::get_wpr_icon( $settings['testimonial_nav_icon'], '' ); ?></div>
+				<div class="wpr-testimonial-prev-arrow wpr-testimonial-arrow" id="<?php echo 'wpr-testimonial-prev-'. esc_attr($this->get_id()); ?>">
+					<?php echo Utilities::get_wpr_icon( $settings['testimonial_nav_icon'], '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				</div>
+				<div class="wpr-testimonial-next-arrow wpr-testimonial-arrow" id="<?php echo 'wpr-testimonial-next-'. esc_attr($this->get_id()); ?>">
+					<?php echo Utilities::get_wpr_icon( $settings['testimonial_nav_icon'], '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				</div>
 			</div>
 		</div>
 

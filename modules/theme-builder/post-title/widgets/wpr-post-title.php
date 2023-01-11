@@ -11,7 +11,9 @@ use Elementor\Core\Schemes\Typography;
 use Elementor\Core\Schemes\Color;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Post_Title extends Widget_Base {
 	
@@ -28,7 +30,7 @@ class Wpr_Post_Title extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return Utilities::show_theme_buider_widget_on('single') ? [ 'wpr-theme-builder-widgets' ] : ['wpr-theme-builder-widgets'];
+		return Utilities::show_theme_buider_widget_on('single') ? [ 'wpr-theme-builder-widgets' ] : [];
 	}
 
 	public function get_keywords() {
@@ -59,6 +61,9 @@ class Wpr_Post_Title extends Widget_Base {
 					'h4' => 'H4',
 					'h5' => 'H5',
 					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+					'P' => 'p'
 				],
 				'default' => 'h1',
 			]
@@ -93,6 +98,9 @@ class Wpr_Post_Title extends Widget_Base {
         );
 
 		$this->end_controls_section(); // End Controls Section
+
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
 
 		// Styles ====================
 		// Section: Title ------------
@@ -189,9 +197,9 @@ class Wpr_Post_Title extends Widget_Base {
 		// Get Settings
 		$settings = $this->get_settings();
 
-		echo '<'. $settings['post_title_tag'] .' class="wpr-post-title">';
-			echo get_the_title();
-		echo '</'. $settings['post_title_tag'] .'>';
+		echo '<'. esc_attr($settings['post_title_tag']) .' class="wpr-post-title">';
+			echo esc_html(get_the_title());
+		echo '</'. esc_attr($settings['post_title_tag']) .'>';
 
 	}
 	

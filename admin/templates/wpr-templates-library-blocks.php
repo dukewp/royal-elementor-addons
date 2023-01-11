@@ -3,7 +3,9 @@ namespace WprAddons\Admin\Templates;
 use WprAddons\Classes\Utilities;
 use WprAddons\Admin\Templates\WPR_Templates_Data;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 /**
  * WPR_Templates_Library_Blocks setup
@@ -30,11 +32,6 @@ class WPR_Templates_Library_Blocks {
 		?>
 
 		<div class="wpr-tplib-sidebar">
-			<div class="wpr-tplib-search">
-				<input type="text" placeholder="Search Template">
-				<i class="eicon-search"></i>
-			</div>
-
 			<div class="wpr-tplib-filters-wrap">
 				<div class="wpr-tplib-filters">
 					<h3>
@@ -49,25 +46,31 @@ class WPR_Templates_Library_Blocks {
 
 							<?php
 
-							$modules = Utilities::get_available_modules();
+							$modules = Utilities::get_available_modules( Utilities::get_registered_modules() );
 
 							$exclude_widgets = [
 								'logo',
+								'mega-menu',
 								'forms',
 								'phone-call',
 								'back-to-top',
 								'popup-trigger',
 								'lottie-animations',
 								'taxonomy-list',
+								'page-list',
 								'elementor-template',
 								'flip-carousel',
 								'feature-list',
-								'dual-color-heading'
+								'dual-color-heading',
+								'reading-progress-bar',
+								'image-accordion',
+								'advanced-accordion',
+								'charts',
 							];
 							
 							foreach ($modules as $title => $slug) {
 								if ( ! in_array($slug[0], $exclude_widgets) ) {
-									echo '<li data-filter="'. $slug[0] .'">'. $title .'</li>';
+									echo '<li data-filter="'. esc_attr($slug[0]) .'">'. esc_html($title) .'</li>';
 								}
 							}
 
@@ -120,16 +123,16 @@ class WPR_Templates_Library_Blocks {
 				<div class="wpr-tplib-template-wrap<?php echo esc_attr($template_class); ?>">
 					<div class="wpr-tplib-template" data-slug="<?php echo esc_attr($template_slug); ?>" data-filter="<?php echo esc_attr($module_slug); ?>" data-sub-filter="<?php echo esc_attr($template_sub); ?>" data-preview-type="<?php echo esc_attr($preview_type); ?>" data-preview-url="<?php echo esc_attr($preview_url); ?>">
 						<div class="wpr-tplib-template-media">
-							<img src="<?php echo 'https://royal-elementor-addons.com/library/premade-styles/'. $module_slug .'/'.  $template_slug_for_image .'.jpg'; ?>">
+							<img src="<?php echo esc_url('https://royal-elementor-addons.com/library/premade-styles/'. $module_slug .'/'. $template_slug_for_image .'.jpg'); ?>">
 							<div class="wpr-tplib-template-media-overlay">
 								<i class="eicon-eye"></i>
 							</div>
 						</div>
 						<div class="wpr-tplib-template-footer elementor-clearfix">
 							<?php if ( !defined('WPR_ADDONS_PRO_VERSION') && ! wpr_fs()->can_use_premium_code() ) : ?>
-								<h3><?php echo strpos($template_slug, 'pro') ? str_replace('-pro', ' Pro', $template_title) : str_replace('-zzz', ' Pro', $template_title); ?></h3>
+								<h3><?php echo strpos($template_slug, 'pro') ? esc_html(str_replace('-pro', ' Pro', $template_title)) : esc_html(str_replace('-zzz', ' Pro', $template_title)); ?></h3>
 							<?php else : ?>
-								<h3><?php echo strpos($template_slug, 'pro') ? str_replace('-pro', '', $template_title) : str_replace('-zzz', '', $template_title); ?></h3>
+								<h3><?php echo strpos($template_slug, 'pro') ? esc_html(str_replace('-pro', '', $template_title)) : esc_html(str_replace('-zzz', '', $template_title)); ?></h3>
 							<?php endif; ?>
 
 							<?php if ( ( strpos($template_slug, 'pro') && !wpr_fs()->can_use_premium_code() ) || ( strpos($template_slug, 'zzz') ) && !wpr_fs()->can_use_premium_code() ) : ?>

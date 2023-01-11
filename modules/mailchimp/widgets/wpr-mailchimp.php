@@ -11,7 +11,9 @@ use Elementor\Core\Schemes\Color;
 use Elementor\Core\Schemes\Typography;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Mailchimp extends Widget_Base {
 	
@@ -41,7 +43,28 @@ class Wpr_Mailchimp extends Widget_Base {
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
 
-	public function add_control_extra_fields() {}
+	public function add_control_clear_fields_on_submit() {
+		$this->add_control(
+			'clear_fields_on_submit',
+			[
+				'label' => sprintf( __( 'Clear Fields On Submit %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control'
+			]
+		);
+	}
+
+	public function add_control_extra_fields() {
+		$this->add_control(
+			'extra_fields',
+			[
+				'label' => sprintf( __( 'Show Extra Fields %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'separator' => 'before',
+				'classes' => 'wpr-pro-control'
+			]
+		);
+	}
 	
 	public function add_control_name_label() {}
 	
@@ -50,6 +73,8 @@ class Wpr_Mailchimp extends Widget_Base {
 	public function add_control_last_name_label() {}
 	
 	public function add_control_last_name_placeholder() {}
+
+	public function add_control_phone_number_label_and_placeholder() {}
 
 	protected function register_controls() {
 
@@ -97,6 +122,8 @@ class Wpr_Mailchimp extends Widget_Base {
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
+
+		$this->add_control_clear_fields_on_submit();
 
 		$this->add_control(
 			'show_form_header',
@@ -248,11 +275,16 @@ class Wpr_Mailchimp extends Widget_Base {
 
 		$this->add_control_last_name_placeholder();
 
+		$this->add_control_phone_number_label_and_placeholder();
+
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'mailchimp', [
-			'Add Extra Fields - Name & Last Name'
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'mailchimp', [
+			'Add Extra Fields - Name, Last Name & Phone Number'
 		] );
 
 		// Styles ====================
@@ -831,8 +863,8 @@ class Wpr_Mailchimp extends Widget_Base {
 					'size' => 10,
 				],
 				'selectors' => [
-					'{{WRAPPER}}.wpr-mailchimp-layout-vr .wpr-mailchimp-email, {{WRAPPER}}.wpr-mailchimp-layout-vr .wpr-mailchimp-first-name, {{WRAPPER}}.wpr-mailchimp-layout-vr .wpr-mailchimp-last-name' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-mailchimp-layout-hr .wpr-mailchimp-email, {{WRAPPER}}.wpr-mailchimp-layout-hr .wpr-mailchimp-first-name, {{WRAPPER}}.wpr-mailchimp-layout-hr .wpr-mailchimp-last-name' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-mailchimp-layout-vr .wpr-mailchimp-email, {{WRAPPER}}.wpr-mailchimp-layout-vr .wpr-mailchimp-first-name, {{WRAPPER}}.wpr-mailchimp-layout-vr .wpr-mailchimp-last-name, {{WRAPPER}}.wpr-mailchimp-layout-vr .wpr-mailchimp-phone-number' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-mailchimp-layout-hr .wpr-mailchimp-email, {{WRAPPER}}.wpr-mailchimp-layout-hr .wpr-mailchimp-first-name, {{WRAPPER}}.wpr-mailchimp-layout-hr .wpr-mailchimp-last-name, {{WRAPPER}}.wpr-mailchimp-layout-hr .wpr-mailchimp-phone-number' => 'margin-right: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'after'
 			]
@@ -1357,14 +1389,25 @@ class Wpr_Mailchimp extends Widget_Base {
 		// Get Settings
 		$settings = $this->get_settings();
 
+		if ( wpr_fs()->can_use_premium_code() ) {
+			$clear_fields_on_submit = esc_attr($settings['clear_fields_on_submit']);
+		} else {
+			$clear_fields_on_submit = '';
+		}
+
 		?>
 
-		<form class="wpr-mailchimp-form" id="wpr-mailchimp-form-<?php echo esc_attr( $this->get_id() ); ?>" method="POST" data-api-key="<?php echo esc_attr(get_option('wpr_mailchimp_api_key')); ?>" data-list-id="<?php echo esc_attr($settings['maichimp_audience']); ?>">
+		<form class="wpr-mailchimp-form" id="wpr-mailchimp-form-<?php echo esc_attr( $this->get_id() ); ?>" method="POST" data-api-key="<?php echo esc_attr(get_option('wpr_mailchimp_api_key')); ?>" data-list-id="<?php echo esc_attr($settings['maichimp_audience']); ?>" data-clear-fields="<?php echo $clear_fields_on_submit; ?>">
 			<!-- Form Header -->
 			<?php if ( 'yes' === $settings['show_form_header'] ) : ?>
 			<div class="wpr-mailchimp-header">
 				<?php $form_icon = '' !== $settings['form_icon']['value'] ? '<i class="'. esc_attr($settings['form_icon']['value']) .'"></i>' : ''; ?>
-				<h3><?php echo $form_icon; echo esc_html($settings['form_title']); ?></h3>
+				<h3>
+					<?php
+					echo ''. $form_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo esc_html($settings['form_title']);
+					?>
+				</h3>
 				<p><?php echo wp_kses( $settings['form_description'], [ 'br' => [], 'em' => [], 'strong' => [], ] ); ?></p>
 			</div>
 			<?php endif; ?>

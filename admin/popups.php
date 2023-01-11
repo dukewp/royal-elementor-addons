@@ -1,6 +1,8 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 use WprAddons\Admin\Includes\WPR_Templates_Loop;
 use WprAddons\Classes\Utilities;
@@ -18,13 +20,25 @@ function wpr_addons_popups_page() {
 <div class="wrap wpr-settings-page-wrap">
 
 <div class="wpr-settings-page-header">
-    <h1><?php echo Utilities::get_plugin_name(true); ?></h1>
+    <h1><?php echo esc_html(Utilities::get_plugin_name(true)); ?></h1>
     <p><?php esc_html_e( 'The most powerful Elementor Addons in the universe.', 'wpr-addons' ); ?></p>
 
     <!-- Custom Template -->
-    <div class="wpr-user-template">
-        <span><?php esc_html_e( 'Create Template', 'wpr-addons' ); ?></span>
-        <span class="plus-icon">+</span>
+    <div class="wpr-preview-buttons">
+        <div class="wpr-user-template">
+            <span><?php esc_html_e( 'Create Template', 'wpr-addons' ); ?></span>
+            <span class="plus-icon">+</span>
+        </div>
+
+        <a href="https://www.youtube.com/watch?v=TbKTNpuXM68" class="wpr-options-button button" target="_blank" style="padding: 10px 22px;">
+            <?php echo esc_html__( 'How to use Popups', 'wpr-addons' ); ?>
+            <span class="dashicons dashicons-video-alt3"></span>
+        </a>
+
+        <a href="https://royaladdons.frill.co/b/6m4d5qm4/feature-ideas" class="wpr-options-button button" target="_blank" style="padding: 8px 22px;">
+            <?php echo esc_html__( 'Request New Feature', 'wpr-addons' ); ?>
+            <span class="dashicons dashicons-star-empty"></span>
+        </a>
     </div>
 </div>
 
@@ -33,7 +47,7 @@ function wpr_addons_popups_page() {
     <?php
 
     // Active Tab
-    $active_tab = isset( $_GET['tab'] ) ? esc_attr($_GET['tab']) : 'wpr_tab_popups';
+    $active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'wpr_tab_popups';
 
     ?>
 
@@ -48,7 +62,7 @@ function wpr_addons_popups_page() {
 
     <!-- Tabs -->
     <div class="nav-tab-wrapper wpr-nav-tab-wrapper">
-        <a href="?page=wpr-theme-builder&tab=wpr_tab_popups" data-title="popup" class="nav-tab <?php echo $active_tab == 'wpr_tab_popups' ? 'nav-tab-active' : ''; ?>">
+        <a href="?page=wpr-theme-builder&tab=wpr_tab_popups" data-title="popup" class="nav-tab <?php echo ($active_tab == 'wpr_tab_popups') ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Popups', 'wpr-addons' ); ?>
         </a>
     </div>

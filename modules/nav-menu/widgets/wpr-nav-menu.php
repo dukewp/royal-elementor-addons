@@ -11,7 +11,9 @@ use Elementor\Core\Schemes\Typography;
 use Elementor\Widget_Base;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Nav_Menu extends Widget_Base {
 
@@ -586,8 +588,11 @@ class Wpr_Nav_Menu extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'nav-menu', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'nav-menu', [
 			'Vertical Layout',
 			'Advanced Link Hover Effects: Slide, Grow, Drop',
 			'SubMenu Entrance Slide Effect',
@@ -1367,7 +1372,7 @@ class Wpr_Nav_Menu extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'mobile_menu_offset',
 			[
 				'label' => esc_html__( 'Dropdown Offset', 'wpr-addons' ),
@@ -1624,6 +1629,49 @@ class Wpr_Nav_Menu extends Widget_Base {
 		return $classes;
 	}
 
+	public function custom_menu_items( $output, $item, $depth, $args ) {
+		$settings = $this->get_active_settings();
+
+		if ( strpos( $args->menu_class, 'wpr-nav-menu' ) !== false ) {
+			if ( in_array( 'menu-item-has-children', $item->classes ) ) {
+				$item_class = 'wpr-menu-item wpr-pointer-item';
+
+				if ( in_array( 'current-menu-item', $item->classes ) || in_array( 'current-menu-ancestor', $item->classes ) ) {
+					$item_class .= ' wpr-active-menu-item';
+				}
+
+				// Sub Menu Classes
+				if ( $depth > 0 ) {
+					$item_class = 'wpr-sub-menu-item';
+
+					if ( in_array( 'current-menu-item', $item->classes ) || in_array( 'current-menu-ancestor', $item->classes ) ) {
+						$item_class .= ' wpr-active-menu-item';
+					}
+				}
+
+				// Add Sub Menu Icon
+				$output  ='<a href="'. esc_url($item->url) .'" class="'. esc_attr($item_class) .'">'. esc_html($item->title);
+				if ( $depth > 0 ) {
+					if ( 'inline' === $settings['menu_items_submenu_position'] ) {
+						$output .='<i class="wpr-sub-icon fas" aria-hidden="true"></i>';
+					} else {
+						$output .='<i class="wpr-sub-icon fas wpr-sub-icon-rotate" aria-hidden="true"></i>';
+					}
+				} else {
+					if ( 'absolute' === $settings['menu_items_submenu_position'] ) {
+						$output .='<i class="wpr-sub-icon fas wpr-sub-icon-rotate" aria-hidden="true"></i>';
+					} else {
+						$output .='<i class="wpr-sub-icon fas" aria-hidden="true"></i>';
+					}
+				}
+
+				$output .='</a>';		
+			}
+		}
+
+		return $output;
+	}
+
 	protected function render() {
 		$available_menus = $this->get_available_menus();
 	
@@ -1638,50 +1686,13 @@ class Wpr_Nav_Menu extends Widget_Base {
 			'echo' => false,
 			'menu' => $settings['menu_select'],
 			'menu_class' => 'wpr-nav-menu',
-			'menu_id' => 'menu-' . $this->get_nav_menu_index() . '-' . $this->get_id(),
+			'menu_id' => 'menu-'. $this->get_nav_menu_index() .'-'. $this->get_id(),
 			'container' => '',
 			'fallback_cb' => '__return_empty_string',
 		];
 
 		// Custom Menu Items
-		add_filter( 'walker_nav_menu_start_el', function ( $output, $item, $depth, $args ) {
-			$settings = $this->get_active_settings();
-
-			if ( strpos( $args->menu_class, 'wpr-nav-menu' ) !== false ) {
-				if ( in_array( 'menu-item-has-children', $item->classes ) ) {
-					$item_class = 'wpr-menu-item wpr-pointer-item';
-
-					// Sub Menu Classes
-					if ( $depth > 0 ) {
-						$item_class = 'wpr-sub-menu-item';
-
-						if ( in_array( 'current-menu-item', $item->classes ) ) {
-							$item_class .= ' wpr-active-menu-item';
-						}
-					}
-
-					// Add Sub Menu Icon
-					$output  ='<a href="'. esc_url($item->url) .'" class="'. esc_attr($item_class) .'">'. $item->title;
-					if ( $depth > 0 ) {
-						if ( 'inline' === $settings['menu_items_submenu_position'] ) {
-							$output .='<i class="wpr-sub-icon fas" aria-hidden="true"></i>';
-						} else {
-							$output .='<i class="wpr-sub-icon fas wpr-sub-icon-rotate" aria-hidden="true"></i>';
-						}
-					} else {
-						if ( 'absolute' === $settings['menu_items_submenu_position'] ) {
-							$output .='<i class="wpr-sub-icon fas wpr-sub-icon-rotate" aria-hidden="true"></i>';
-						} else {
-							$output .='<i class="wpr-sub-icon fas" aria-hidden="true"></i>';
-						}
-					}
-
-					$output .='</a>';		
-				}
-			}
-
-			return $output;
-		}, 10, 4 );
+		add_filter( 'walker_nav_menu_start_el', [ $this, 'custom_menu_items' ], 10, 4 );
 
 		// Add Custom Filters
 		add_filter( 'nav_menu_link_attributes', [ $this, 'custom_menu_item_classes' ], 10, 4 );
@@ -1692,13 +1703,14 @@ class Wpr_Nav_Menu extends Widget_Base {
 		$menu_html = wp_nav_menu( $args );
 
 		// Generate Mobile Menu HTML
-		$args['menu_id'] 	= 'mobile-menu-' . $this->get_nav_menu_index() . '-' . $this->get_id();
+		$args['menu_id'] 	= 'mobile-menu-'. $this->get_nav_menu_index() .'-'. $this->get_id();
 		$args['menu_class'] = 'wpr-mobile-nav-menu';
 		$moible_menu_html 	= wp_nav_menu( $args );
 
 		// Remove Custom Filters
 		remove_filter( 'nav_menu_link_attributes', [ $this, 'custom_menu_item_classes' ] );
 		remove_filter( 'nav_menu_submenu_css_class', [ $this, 'custom_sub_menu_class' ] );
+		remove_filter( 'walker_nav_menu_start_el', [ $this, 'custom_menu_items' ] );
 		remove_filter( 'nav_menu_item_id', '__return_empty_string' );
 
 		if ( empty( $menu_html ) ) {
@@ -1711,8 +1723,8 @@ class Wpr_Nav_Menu extends Widget_Base {
 		}
 
 		// Main Menu
-		echo '<nav class="wpr-nav-menu-container wpr-nav-menu-'. $settings['menu_layout'] .'" data-trigger="'. esc_attr($settings['menu_items_submenu_trigger']) .'">';
-			echo $menu_html;
+		echo '<nav class="wpr-nav-menu-container wpr-nav-menu-'. esc_attr($settings['menu_layout']) .'" data-trigger="'. esc_attr($settings['menu_items_submenu_trigger']) .'">';
+			echo ''. $menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '</nav>';
 
 		// Mobile Menu
@@ -1726,14 +1738,14 @@ class Wpr_Nav_Menu extends Widget_Base {
 						echo '<span class="wpr-mobile-toggle-line"></span>';
 						echo '<span class="wpr-mobile-toggle-line"></span>';
 					} else {
-						echo '<span class="wpr-mobile-toggle-text">'. $settings['toggle_btn_txt_1'] .'</span>';
-						echo '<span class="wpr-mobile-toggle-text">'. $settings['toggle_btn_txt_2'] .'</span>';
+						echo '<span class="wpr-mobile-toggle-text">'. esc_html($settings['toggle_btn_txt_1']) .'</span>';
+						echo '<span class="wpr-mobile-toggle-text">'. esc_html($settings['toggle_btn_txt_2']) .'</span>';
 					}
 				echo '</div>';
 			echo '</div>';
 
 			// Menu
-			echo $moible_menu_html;
+			echo ''. $moible_menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		echo '</nav>';
 	}

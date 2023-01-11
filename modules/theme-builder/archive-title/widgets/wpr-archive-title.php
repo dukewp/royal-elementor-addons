@@ -11,7 +11,9 @@ use Elementor\Core\Schemes\Typography;
 use Elementor\Core\Schemes\Color;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Archive_Title extends Widget_Base {
 	
@@ -28,7 +30,13 @@ class Wpr_Archive_Title extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return Utilities::show_theme_buider_widget_on('archive') ? [ 'wpr-theme-builder-widgets' ] : [];
+		if ( Utilities::show_theme_buider_widget_on('archive') ) {
+			return [ 'wpr-theme-builder-widgets' ];
+		} elseif ( Utilities::show_theme_buider_widget_on('product_archive') ) {
+			return [ 'wpr-woocommerce-builder-widgets' ];
+		} else {
+			return [];
+		}
 	}
 
 	public function get_keywords() {
@@ -95,6 +103,9 @@ class Wpr_Archive_Title extends Widget_Base {
 					'h4' => 'H4',
 					'h5' => 'H5',
 					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+					'P' => 'p'
 				],
 				'default' => 'h1',
 			]
@@ -113,8 +124,11 @@ class Wpr_Archive_Title extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'archive-title', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'archive-title', [
 			'Show/Hide Taxonomy (Category) Description, also change Color and Typography.',
 		] );
 
@@ -410,22 +424,26 @@ class Wpr_Archive_Title extends Widget_Base {
 		if ( !is_null($tax) ) {
 			$title = isset($tax->post_title) ? $tax->post_title : $tax->name;
 			$description = isset($tax->description) ? $tax->description : '';
+			
+			if ( function_exists('is_shop') && is_shop() ) {
+				$title = $tax->label;
+			}
 
 			if ( '' !== $title ) {
-				echo '<'. $settings['post_title_tag'] .' class="wpr-archive-title">';
-					echo '<span>'. $settings['post_title_before_text'] .'</span>' . $title;
-				echo '</'. $settings['post_title_tag'] .'>';
+				echo '<'. esc_attr($settings['post_title_tag']) .' class="wpr-archive-title">';
+					echo '<span>'. wp_kses_post($settings['post_title_before_text']) .'</span>'. esc_html($title);
+				echo '</'. esc_attr($settings['post_title_tag']) .'>';
 			}
 
 			if ( wpr_fs()->can_use_premium_code() ) {
 				if ( '' !== $description && '' !== $settings['archive_description'] ) {
-					echo '<p class="wpr-archive-description">'. $description .'</p>';
+					echo '<p class="wpr-archive-description">'. wp_kses_post($description) .'</p>';
 				}
 			}
 		} elseif ( is_search() ) {
-			echo '<'. $settings['post_title_tag'] .' class="wpr-archive-title">';
-				echo '<span>'. $settings['post_title_before_text'] .'</span>' . get_search_query();
-			echo '</'. $settings['post_title_tag'] .'>';	
+			echo '<'. esc_attr($settings['post_title_tag']) .' class="wpr-archive-title">';
+				echo '<span>'. esc_html($settings['post_title_before_text']) .'</span>'. esc_html(get_search_query());
+			echo '</'. esc_attr($settings['post_title_tag']) .'>';	
 		}
 
 	}

@@ -17,7 +17,9 @@ use Elementor\Icons;
 use Elementor\Utils;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Content_Ticker extends Widget_Base {
 		
@@ -132,6 +134,41 @@ class Wpr_Content_Ticker extends Widget_Base {
 
 	public function add_section_ticker_items() {}
 
+	public function add_control_query_source () {
+		// Get Available Post Types
+		$this->post_types = [];
+		$this->post_types['post'] = esc_html__( 'Posts', 'wpr-addons' );
+		$this->post_types['page'] = esc_html__( 'Pages', 'wpr-addons' );
+
+		$custom_post_types = Utilities::get_custom_types_of( 'post', true );
+		foreach( $custom_post_types as $slug => $title ) {
+			if ( 'product' === $slug || 'e-landing-page' === $slug ) {
+				continue;
+			}
+
+			if ( Utilities::is_new_free_user2() ) {
+				$this->post_types['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Pro)';
+			} else {
+				$this->post_types[$slug] = esc_html( $title );
+			}
+		}
+
+		$this->post_types['pro-pd'] = 'Products (Pro)';
+		$this->post_types['pro-ft'] = 'Featured (Pro)';
+		$this->post_types['pro-sl'] = 'On Sale (Pro)';
+
+		$this->add_control(
+			'query_source',
+			[
+				'label' => esc_html__( 'Source', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'post',
+				'options' => $this->post_types,
+			]
+		);
+
+	}
+
 	protected function register_controls() {
 
 		// Section: General ----------
@@ -181,27 +218,16 @@ class Wpr_Content_Ticker extends Widget_Base {
 			]
 		);
 
-		// Get Available Post Types
-		$post_types = Utilities::get_custom_types_of( 'post', false );
+		$this->add_control_query_source();
 
-		// Remove WooCommerce
-		unset( $post_types['product'] );
-
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'content-ticker', 'query_source', ['pro-pd', 'pro-ft', 'pro-sl'] );
+		
 		// Get Available Taxonomies
 		$post_taxonomies = Utilities::get_custom_types_of( 'tax', false );
 
 		// Get Available Meta Keys
 		$post_meta_keys = Utilities::get_custom_meta_keys();
-
-		$this->add_control(
-			'query_source',
-			[
-				'label' => esc_html__( 'Source', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'post',
-				'options' => $post_types,
-			]
-		);
 
 		$this->add_control(
 			'query_selection',
@@ -236,10 +262,10 @@ class Wpr_Content_Ticker extends Widget_Base {
 			'query_author',
 			[
 				'label' => esc_html__( 'Authors', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT2,
+				'type' => 'wpr-ajax-select2',
+				'options' => 'ajaxselect2/get_users',
 				'multiple' => true,
 				'label_block' => true,
-				'options' => Utilities::get_users(),
 				'separator' => 'before',
 				'condition' => [
 					'query_source!' => [ 'current', 'related' ],
@@ -261,10 +287,11 @@ class Wpr_Content_Ticker extends Widget_Base {
 				'query_taxonomy_'. $slug,
 				[
 					'label' => $title,
-					'type' => Controls_Manager::SELECT2,
+					'type' => 'wpr-ajax-select2',
+					'options' => 'ajaxselect2/get_taxonomies',
+					'query_slug' => $slug,
 					'multiple' => true,
 					'label_block' => true,
-					'options' => Utilities::get_terms_by_taxonomy( $slug ),
 					'condition' => [
 						'query_source' => $post_type,
 						'query_selection' => 'dynamic',
@@ -274,34 +301,38 @@ class Wpr_Content_Ticker extends Widget_Base {
 		}
 
 		// Exclude
-		foreach ( $post_types as $slug => $title ) {
-			$this->add_control(
-				'query_exclude_'. $slug,
-				[
-					'label' => esc_html__( 'Exclude ', 'wpr-addons' ) . $title,
-					'type' => Controls_Manager::SELECT2,
-					'multiple' => true,
-					'label_block' => true,
-					'options' => Utilities::get_posts_by_post_type( $slug ),
-					'condition' => [
-						'query_source' => $slug,
-						'query_source!' => [ 'current', 'related' ],
-						'query_selection' => 'dynamic',
-					],
-				]
-			);
+		foreach ( $this->post_types as $slug => $title ) {
+			if ( 'featured' !== $slug && 'sale' !== $slug ) {
+				$this->add_control(
+					'query_exclude_'. $slug,
+					[
+						'label' => esc_html__( 'Exclude ', 'wpr-addons' ) . $title,
+						'type' => 'wpr-ajax-select2',
+						'options' => 'ajaxselect2/get_posts_by_post_type',
+						'query_slug' => $slug,
+						'multiple' => true,
+						'label_block' => true,
+						'condition' => [
+							'query_source' => $slug,
+							'query_source!' => [ 'current', 'related' ],
+							'query_selection' => 'dynamic',
+						],
+					]
+				);
+			}
 		}
 
 		// Manual Selection
-		foreach ( $post_types as $slug => $title ) {
+		foreach ( $this->post_types as $slug => $title ) {
 			$this->add_control(
 				'query_manual_'. $slug,
 				[
 					'label' => esc_html__( 'Select ', 'wpr-addons' ) . $title,
-					'type' => Controls_Manager::SELECT2,
+					'type' => 'wpr-ajax-select2',
+					'options' => 'ajaxselect2/get_posts_by_post_type',
+					'query_slug' => $slug,
 					'multiple' => true,
 					'label_block' => true,
-					'options' => Utilities::get_posts_by_post_type( $slug ),
 					'condition' => [
 						'query_source' => $slug,
 						'query_selection' => 'manual',
@@ -1008,9 +1039,13 @@ class Wpr_Content_Ticker extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'content-ticker', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'content-ticker', [
 			'Add Custom Ticker Items (Instead of loading Dynamically)',
+			'Custom Post Types Support',
 			'Marquee Animation - a Smooth Animation with Direction option',
 			'Slider Animation options - Typing, Fade & Vertical Slide',
 			'Heading Icon Type - Animated Circle',
@@ -1774,9 +1809,9 @@ class Wpr_Content_Ticker extends Widget_Base {
 	// Get Taxonomies Related to Post Type
 	public function get_related_taxonomies() {
 		$relations = [];
-		$post_types = Utilities::get_custom_types_of( 'post', false );
+		$this->post_types = Utilities::get_custom_types_of( 'post', false );
 
-		foreach ( $post_types as $slug => $title ) {
+		foreach ( $this->post_types as $slug => $title ) {
 			$relations[$slug] = [];
 
 			foreach ( get_object_taxonomies( $slug ) as $tax ) {
@@ -1792,11 +1827,13 @@ class Wpr_Content_Ticker extends Widget_Base {
 		$settings = $this->get_settings();
 		$author = ! empty( $settings[ 'query_author' ] ) ? implode( ',', $settings[ 'query_author' ] ) : '';
 
+		in_array( $settings[ 'query_source' ], ['pro-pd', 'pro-ft', 'pro-sl'] ) ? $settings[ 'query_source' ] = 'post' : '';
+
 		// Dynamic
 		$args = [
 			'post_type' => $settings[ 'query_source' ],
 			'tax_query' => $this->get_tax_query_args(),
-			'post__not_in' => $settings[ 'query_exclude_'. $settings[ 'query_source' ] ],
+			'post__not_in' => isset($settings[ 'query_exclude_'. $settings[ 'query_source' ] ]) ? $settings[ 'query_exclude_'. $settings[ 'query_source' ] ] : '',
 			'posts_per_page' => $settings['query_posts_per_page'],
 			'orderby' => $settings[ 'post_orderby' ],
 			'order' => $settings[ 'post_order' ],
@@ -1841,6 +1878,38 @@ class Wpr_Content_Ticker extends Widget_Base {
 				'order' => $settings[ 'post_order' ],
 				'offset' => $settings[ 'query_offset' ],
 			];
+		}
+
+		if ( 'featured' === $settings[ 'query_source' ] ) {
+			$args['post_type'] = 'product';
+			$tax_query[] = [
+				'taxonomy' => 'product_visibility',
+				'field'    => 'name',
+				'terms'    => 'featured',
+				'operator' => 'IN', // or 'NOT IN' to exclude feature products
+			];
+			$args['tax_query'] = $tax_query;
+		}
+
+		if ( 'sale' === $settings[ 'query_source' ] ) {
+			$args['post_type'] = 'product';
+			$meta_query[] = [
+				'relation' => 'OR',
+				[ // Simple products type
+					'key'           => '_sale_price',
+					'value'         => 0,
+					'compare'       => '>',
+					'type'          => 'numeric'
+				],
+				[ // Variable products type
+					'key'           => '_min_variation_sale_price',
+					'value'         => 0,
+					'compare'       => '>',
+					'type'          => 'numeric'
+				]
+			];
+
+			$args['meta_query'] = $meta_query;
 		}
 
 		return $args;

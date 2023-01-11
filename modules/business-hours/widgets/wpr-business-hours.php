@@ -16,7 +16,9 @@ use Elementor\Utils;
 use Elementor\Icons;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Business_Hours extends Widget_Base {
 		
@@ -58,8 +60,10 @@ class Wpr_Business_Hours extends Widget_Base {
 
 	public function add_repeater_args_highlight() {
 		return [
-			'type' => Controls_Manager::HIDDEN,
-			'default' => ''
+			'label' => sprintf( __( 'Highlight this Item %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+			'type' => Controls_Manager::SWITCHER,
+			'separator' => 'before',
+			'classes' => 'wpr-pro-control no-distance'
 		];
 	}
 
@@ -77,7 +81,16 @@ class Wpr_Business_Hours extends Widget_Base {
 		];
 	}
 
-	public function add_control_general_even_bg() {}
+	public function add_control_general_even_bg() {
+		$this->add_control(
+			'general_even_bg',
+			[
+				'label' => sprintf( __( 'Enable Even Color %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control'
+			]
+		);	
+	}
 
 	public function add_control_general_even_bg_color() {}
 
@@ -200,8 +213,11 @@ class Wpr_Business_Hours extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'business-hours', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'business-hours', [
 			'List Item Custom Icon options',
 			'List Item Custom Text & Background Color options',
 			'List Item Even/Odd Background Color option',
@@ -574,15 +590,15 @@ class Wpr_Business_Hours extends Widget_Base {
 
 				if (   '' !== $item['day'] || '' !== $item['time'] ) : 
 
-				$this->add_render_attribute( 'hours_item_attribute' . $item_count, 'class', 'wpr-business-hours-item elementor-repeater-item-'.esc_attr( $item['_id'] ) );
+				$this->add_render_attribute( 'hours_item_attribute'. $item_count, 'class', 'wpr-business-hours-item elementor-repeater-item-'.esc_attr( $item['_id'] ) );
 
 				if ( 'yes' === $item['closed'] ) {
-					$this->add_render_attribute( 'hours_item_attribute' . $item_count, 'class', 'wpr-business-hours-item-closed' );
+					$this->add_render_attribute( 'hours_item_attribute'. $item_count, 'class', 'wpr-business-hours-item-closed' );
 				}
 
 				?>
 				
-				<div <?php echo $this->get_render_attribute_string( 'hours_item_attribute' . $item_count ); ?>>
+				<div <?php echo $this->get_render_attribute_string( 'hours_item_attribute'. $item_count ); ?>>
 
 					<?php if ( '' !== $item['day'] ) : ?>	
 					<span class="wpr-business-day">

@@ -16,7 +16,9 @@ use Elementor\Utils;
 use Elementor\Icons;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Price_List extends Widget_Base {
 		
@@ -173,8 +175,11 @@ class Wpr_Price_List extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'price-list', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'price-list', [
 			'Add Images to Menu Items',
 			'Add Custom Links to Menu Items',
 			'Advanced Layout Options',
@@ -848,7 +853,7 @@ class Wpr_Price_List extends Widget_Base {
 						</div>
 						
 						<?php if ( '' !== $item['prlist_description'] ) : ?>
-							<div class="wpr-price-list-description"><?php echo esc_html( $item['prlist_description'] ); ?></div>
+							<div class="wpr-price-list-description"><?php echo wp_kses_post( $item['prlist_description'] ); ?></div>
 						<?php endif; ?>
 					</div>
 

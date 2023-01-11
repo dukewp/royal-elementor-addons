@@ -6,7 +6,11 @@ use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Core\Schemes\Typography;
-if ( ! defined( 'ABSPATH' ) ) exit;
+use WprAddons\Classes\Utilities;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Phone_Call extends Widget_Base {
 			
@@ -48,6 +52,9 @@ class Wpr_Phone_Call extends Widget_Base {
 			'tab' => Controls_Manager::TAB_CONTENT,
 		]
 	);
+
+	Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
+
 	$this->add_control(
 		'telnumber',
 		[
@@ -302,6 +309,8 @@ class Wpr_Phone_Call extends Widget_Base {
 
 	$this->end_controls_section();
 
+	// Section: Request New Feature
+	Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
 
 	// Section Button ------------
 	$this->start_controls_section(
@@ -626,10 +635,10 @@ class Wpr_Phone_Call extends Widget_Base {
 	$settings = $this->get_settings();
 
 		echo '<div class="wpr-pc-wrapper">';
-			echo '<a href="tel:'. $settings['telnumber'] .'" class="wpr-pc-btn">';
+			echo '<a href="tel:'. esc_attr($settings['telnumber']) .'" class="wpr-pc-btn">';
 				echo '<div class="wpr-pc-content">';
 				if ( '' !== $settings['button_text'] && $settings['button_txt_show'] == 'yes' ) {
-					echo '<span class="wpr-pc-text">' . $settings ['button_text'] . '</span>';
+					echo '<span class="wpr-pc-text">'. esc_html($settings ['button_text']) .'</span>';
 				}
 				if ( '' !== $settings['pc_icon']['value'] ) {
 					echo '<span class="wpr-pc-btn-icon">';

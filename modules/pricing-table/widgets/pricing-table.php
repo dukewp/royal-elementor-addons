@@ -14,7 +14,9 @@ use Elementor\Utils;
 use Elementor\Icons;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Pricing_Table extends Widget_Base {
 		
@@ -50,8 +52,9 @@ class Pricing_Table extends Widget_Base {
 
 	public function add_repeater_args_feature_tooltip() {
 		return [
-			'type' => Controls_Manager::HIDDEN,
-			'default' => ''
+			'label' => sprintf( __( 'Show Tooltip %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+			'type' => Controls_Manager::SWITCHER,
+			'classes' => 'wpr-pro-control'
 		];
 	}
 
@@ -71,7 +74,16 @@ class Pricing_Table extends Widget_Base {
 
 	public function add_contro_stack_feature_tooltip_section() {}
 
-	public function add_contro_stack_feature_even_bg() {}
+	public function add_controls_group_feature_even_bg() {
+		$this->add_control(
+			'feature_even_bg',
+			[
+				'label' => sprintf( __( 'Enable Even Color %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);
+	}
 
 	protected function register_controls() {
 
@@ -322,6 +334,18 @@ class Pricing_Table extends Widget_Base {
 				'label' => esc_html__( 'Button Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => 'Button',
+				'condition' => [
+					'type_select' => 'button',
+				],
+			]
+		);
+
+		$repeater->add_control(
+			'btn_id',
+			[
+				'label' => esc_html__( 'Button ID', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'placeholder' => 'button-id',
 				'condition' => [
 					'type_select' => 'button',
 				],
@@ -771,8 +795,7 @@ class Pricing_Table extends Widget_Base {
 				],
 				'condition' => [
 					'badge_style!' => [ 'none', 'cyrcle' ],
-				],	
-			
+				],
 			]
 		);
 
@@ -822,8 +845,11 @@ class Pricing_Table extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'pricing-table', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'pricing-table', [
 			'List Item Advanced Tooltip',
 			'List Item Even/Odd Background Color',
 		] );
@@ -1004,7 +1030,7 @@ class Pricing_Table extends Widget_Base {
 			[
 				'label' => esc_html__( 'Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px' ],
+				'size_units' => [ 'px', '%' ],
 				'range' => [
 					'px' => [
 						'min' => 10,
@@ -1410,7 +1436,7 @@ class Pricing_Table extends Widget_Base {
 			]
 		);
 
-		$this->add_contro_stack_feature_even_bg();
+		$this->add_controls_group_feature_even_bg();
 
 		$this->add_responsive_control(
 			'feature_section_padding',
@@ -2464,7 +2490,7 @@ class Pricing_Table extends Widget_Base {
 
 			if ( $item['type_select'] === 'feature' ) : ?>
 
-			<section class="elementor-repeater-item-<?php echo $item['_id']; ?> wpr-pricing-table-item wpr-pricing-table-<?php echo esc_attr( $item['type_select'] ) . $rep_item_class; ?>">
+			<section class="elementor-repeater-item-<?php echo esc_attr($item['_id']); ?> wpr-pricing-table-item wpr-pricing-table-<?php echo esc_attr( $item['type_select'] . $rep_item_class ); ?>">
 				<div class="wpr-pricing-table-feature-inner">
 					<?php if ( '' !== $item['select_icon']['value'] ) : ?>
 						<i class="wpr-pricing-table-feature-icon <?php echo esc_attr( $item['select_icon']['value'] ); ?>"></i>
@@ -2473,7 +2499,7 @@ class Pricing_Table extends Widget_Base {
 					<span class="wpr-pricing-table-feature-text wpr-pricing-table-ftext-line-<?php echo esc_attr( $item['feature_linethrough'] ); ?>">
 						<span>
 						<?php
-							echo $item['feature_text'];
+							echo wp_kses_post($item['feature_text']);
 
 							if ( 'yes' === $item['feature_tooltip'] && 'yes' === $item['feature_tooltip_show_icon'] ) {
 								echo '&nbsp;&nbsp;<i class="far fa-question-circle"></i>';
@@ -2484,14 +2510,14 @@ class Pricing_Table extends Widget_Base {
 					</span>
 
 					<?php if ( $item['feature_tooltip'] === 'yes' && ! empty( $item['feature_tooltip_text'] ) ) : ?>
-						<div class="wpr-pricing-table-feature-tooltip"><?php echo $item['feature_tooltip_text']; ?></div>						
+						<div class="wpr-pricing-table-feature-tooltip"><?php echo wp_kses_post($item['feature_tooltip_text']); ?></div>						
 					<?php endif; ?>							
 				</div>
 			</section>
 
 			<?php else : ?>
 
-			<div class="elementor-repeater-item-<?php echo $item['_id']; ?> wpr-pricing-table-item wpr-pricing-table-<?php echo esc_attr( $item['type_select'] ) . $rep_item_class; ?>">		
+			<div class="elementor-repeater-item-<?php echo esc_html($item['_id']); ?> wpr-pricing-table-item wpr-pricing-table-<?php echo esc_attr( $item['type_select'] . $rep_item_class ); ?>">		
 			
 			<?php if ( $item['type_select'] === 'heading' ) : ?>
 
@@ -2510,11 +2536,11 @@ class Pricing_Table extends Widget_Base {
 					<?php if ( ! empty( $item['heading_title'] ) || ! empty( $item['heading_sub_title'] ) ) : ?>
 						<div class="wpr-pricing-table-title-wrap">
 							<?php if ( ! empty( $item['heading_title'] ) ) : ?>	
-								<h3 class="wpr-pricing-table-title"><?php echo $item['heading_title']; ?></h3>
+								<h3 class="wpr-pricing-table-title"><?php echo wp_kses_post($item['heading_title']); ?></h3>
 							<?php endif; ?>
 
 							<?php if ( ! empty( $item['heading_sub_title'] ) ) : ?>	
-								<span class="wpr-pricing-table-sub-title"><?php echo $item['heading_sub_title']; ?></span>
+								<span class="wpr-pricing-table-sub-title"><?php echo wp_kses_post($item['heading_sub_title']); ?></span>
 							<?php endif; ?>
 						</div>
 					<?php endif; ?>
@@ -2524,72 +2550,78 @@ class Pricing_Table extends Widget_Base {
 
 				<div class="wpr-pricing-table-price-inner">
 					<?php if ( $item['sale'] === 'yes' && ! empty( $item['old_price'] ) ) : ?>	
-						<span class="wpr-pricing-table-old-price"><?php echo $item['old_price']; ?></span>
+						<span class="wpr-pricing-table-old-price"><?php echo esc_html($item['old_price']); ?></span>
 					<?php endif; ?>
 
 					<?php
 						if ( 'none' !== $item['currency_symbol'] && 'custom' !== $item['currency_symbol'] && $settings['currency_hr_position'] === 'before' ) {
-							echo '<span class="wpr-pricing-table-currency">'. $this->get_currency_symbol($item['currency_symbol']) .'</span>';
+							echo '<span class="wpr-pricing-table-currency">'. esc_html($this->get_currency_symbol($item['currency_symbol'])) .'</span>';
 						} elseif ( 'custom' === $item['currency_symbol'] ) {
 							if ( ! empty( $item['currency'] ) && $settings['currency_hr_position'] === 'before' ) {
-								echo '<span class="wpr-pricing-table-currency">'. $item['currency'] .'</span>';
+								echo '<span class="wpr-pricing-table-currency">'. esc_html($item['currency']) .'</span>';
 							}
 						}
 					?>
 					
 					<?php if ( ! empty( $item['price'] ) ) : ?>	
-						<span class="wpr-pricing-table-main-price"><?php echo $item['price']; ?></span>
+						<span class="wpr-pricing-table-main-price"><?php echo esc_html($item['price']); ?></span>
 					<?php endif; ?>
 
 					<?php if ( ! empty( $item['sub_price'] ) ) : ?>	
-						<span class="wpr-pricing-table-sub-price"><?php echo $item['sub_price']; ?></span>
+						<span class="wpr-pricing-table-sub-price"><?php echo esc_html($item['sub_price']); ?></span>
 					<?php endif; ?>
 
 					<?php
 						if ( 'none' !== $item['currency_symbol'] && 'custom' !== $item['currency_symbol'] && $settings['currency_hr_position'] === 'after' ) {
-							echo '<span class="wpr-pricing-table-currency">'. $this->get_currency_symbol($item['currency_symbol']) .'</span>';
+							echo '<span class="wpr-pricing-table-currency">'. esc_html($this->get_currency_symbol($item['currency_symbol'])) .'</span>';
 						} elseif ( 'custom' === $item['currency_symbol'] ) {
 							if ( ! empty( $item['currency'] ) && $settings['currency_hr_position'] === 'after' ) {
-								echo '<span class="wpr-pricing-table-currency">'. $item['currency'] .'</span>';
+								echo '<span class="wpr-pricing-table-currency">'. esc_html($item['currency']) .'</span>';
 							}
 						}
 					?>
 
 					<?php if ( ! empty( $item['preiod'] ) && $settings['period_hr_position'] === 'beside' ) : ?>	
-						<div class="wpr-pricing-table-preiod"><?php echo $item['preiod']; ?></div>
+						<div class="wpr-pricing-table-preiod"><?php echo esc_html($item['preiod']); ?></div>
 					<?php endif; ?>
 				</div>
 
 				<?php if ( ! empty( $item['preiod'] ) && $settings['period_hr_position'] === 'below' ) : ?>	
-					<div class="wpr-pricing-table-preiod"><?php echo $item['preiod']; ?></div>
+					<div class="wpr-pricing-table-preiod"><?php echo esc_html($item['preiod']); ?></div>
 				<?php endif; ?>
 		
 			<?php elseif ( $item['type_select'] === 'text' && ! empty( $item['text'] ) ) : ?>
 
-				<?php echo $item['text']; ?>
+				<?php echo wp_kses_post($item['text']); ?>
 
 			<?php elseif ( $item['type_select'] === 'button' && ( ! empty( $item['btn_text'] ) || '' !== $item['select_icon']['value'] ) ) :
+				
+				if (  '' !== $item['btn_url']['url'] ) {
+					$this->add_render_attribute( 'btn_attribute'. $item_count, 'href', $item['btn_url']['url'] );
+	
+					if ( $item['btn_url']['is_external'] ) :
+						$this->add_render_attribute( 'btn_attribute'. $item_count, 'target', '_blank' );
+					endif;
+	
+					if ( $item['btn_url']['nofollow'] ) :
+						$this->add_render_attribute( 'btn_attribute'. $item_count, 'nofollow', '' );
+					endif;
+				}
 
-				$this->add_render_attribute( 'btn_attribute'. $item_count, 'href', $item['btn_url']['url'] );
-
-				if ( $item['btn_url']['is_external'] ) :
-					$this->add_render_attribute( 'btn_attribute'. $item_count, 'target', '_blank' );
-				endif;
-
-				if ( $item['btn_url']['nofollow'] ) :
-					$this->add_render_attribute( 'btn_attribute'. $item_count, 'nofollow', '' );
+				if ( '' !== $item['btn_id'] ) :
+					$this->add_render_attribute( 'btn_attribute' . $item_count, 'id', esc_html( $item['btn_id']) );
 				endif;
 
 				?>
 
-				<a class="wpr-pricing-table-btn wpr-button-effect <?php echo $this->get_settings()['btn_animation']; ?>" <?php echo $this->get_render_attribute_string( 'btn_attribute'. $item_count ); ?>>
+				<a class="wpr-pricing-table-btn wpr-button-effect <?php echo esc_html($this->get_settings()['btn_animation']); ?>" <?php echo $this->get_render_attribute_string( 'btn_attribute'. $item_count ); ?>>
 					<span>
 
 						<?php if ( '' !== $item['select_icon']['value'] &&  $item['btn_position'] === 'before' ) : ?>
 						<i class="<?php echo esc_attr( $item['select_icon']['value'] ); ?>"></i>
 						<?php endif; ?>
 
-						<?php echo $item['btn_text']; ?>
+						<?php echo esc_html($item['btn_text']); ?>
 
 						<?php if ( '' !== $item['select_icon']['value'] &&  $item['btn_position'] === 'after' ) : ?>
 						<i class="<?php echo esc_attr( $item['select_icon']['value'] ); ?>"></i>
@@ -2614,14 +2646,14 @@ class Pricing_Table extends Widget_Base {
 
 		if ( $settings['badge_style'] !== 'none' && ! empty( $settings['badge_title'] ) ) :
 
-			$this->add_render_attribute( 'wpr-pricing-table-badge-attr', 'class', 'wpr-pricing-table-badge wpr-pricing-table-badge-'. $settings[ 'badge_style'] );
+			$this->add_render_attribute( 'wpr-pricing-table-badge-attr', 'class', 'wpr-pricing-table-badge wpr-pricing-table-badge-'. esc_attr($settings[ 'badge_style']) );
 			if ( ! empty( $settings['badge_hr_position'] ) ) :
-				$this->add_render_attribute( 'wpr-pricing-table-badge-attr', 'class', 'wpr-pricing-table-badge-'. $settings['badge_hr_position'] );
+				$this->add_render_attribute( 'wpr-pricing-table-badge-attr', 'class', 'wpr-pricing-table-badge-'. esc_attr($settings['badge_hr_position']) );
 			endif;
 			
 			?>
 			<div <?php echo $this->get_render_attribute_string( 'wpr-pricing-table-badge-attr' ); ?>>	
-				<div class="wpr-pricing-table-badge-inner"><?php echo $settings['badge_title']; ?></div>	
+				<div class="wpr-pricing-table-badge-inner"><?php echo esc_html($settings['badge_title']); ?></div>	
 			</div>
 		<?php endif; ?>
 	</div>

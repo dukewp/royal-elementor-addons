@@ -16,7 +16,9 @@ use Elementor\Utils;
 use Elementor\Icons;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Team_Member extends Widget_Base {
 		
@@ -463,8 +465,11 @@ class Wpr_Team_Member extends Widget_Base {
 		// Section: Overlay ---------------
 		$this->add_section_image_overlay();
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'team-member', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'team-member', [
 			'Advanced Layout options - Move Elements over Image (Title, Job, Social Icons, etc...)',
 			'Advanced Image Overlay Hover Animations',
 		] );
@@ -1717,7 +1722,7 @@ class Wpr_Team_Member extends Widget_Base {
 
 			echo '<div class="wpr-member-btn-wrap">';
 				echo '<a '. $this->get_render_attribute_string( 'btn_attribute' ) .'>';
-					echo '<span>'. $settings['member_btn_text'] .'</span>';
+					echo '<span>'. esc_html($settings['member_btn_text']) .'</span>';
 				echo '</a>';
 			echo '</div>';
 
@@ -1747,7 +1752,7 @@ class Wpr_Team_Member extends Widget_Base {
 			<?php
 				if ( '' !== $settings['member_name'] && 'below' === $settings['member_name_location'] ) {
 					echo '<'. esc_attr( $settings['member_name_tag'] ) .' class="wpr-member-name">';
-						echo esc_html( $settings['member_name'] );
+						echo wp_kses_post( $settings['member_name'] );
 					echo '</'. esc_attr( $settings['member_name_tag'] ) .'>';
 				}
 			?>

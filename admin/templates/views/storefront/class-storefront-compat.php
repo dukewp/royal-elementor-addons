@@ -3,7 +3,7 @@
 use WprAddons\Admin\Includes\WPR_Render_Templates;
 
 /**
- * Astra theme compatibility.
+ * Storefront theme compatibility.
  */
 class Wpr_Storefront_Compat {
 
@@ -78,7 +78,8 @@ class Wpr_Storefront_Compat {
 
 		$css .= '</style>';
 
-		echo $css;
+		// Echo plain CSS (no user input or variables)
+		echo ''. $css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**

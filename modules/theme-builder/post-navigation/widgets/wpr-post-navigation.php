@@ -13,7 +13,9 @@ use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Css_Filter;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Post_Navigation extends Widget_Base {
 	
@@ -30,11 +32,32 @@ class Wpr_Post_Navigation extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return Utilities::show_theme_buider_widget_on('single') ? [ 'wpr-theme-builder-widgets' ] : [];
+		if ( Utilities::show_theme_buider_widget_on('single') ) {
+			return [ 'wpr-theme-builder-widgets' ];
+		} elseif ( Utilities::show_theme_buider_widget_on('product_single') ) {
+			return [ 'wpr-woocommerce-builder-widgets' ];
+		} else {
+			return [];
+		}
 	}
 
 	public function get_keywords() {
 		return [ 'navigation', 'arrows', 'pagination' ];
+	}
+
+	public function add_control_display_on_separate_lines() {
+		$this->add_responsive_control(
+			'display_on_separate_lines',
+			[
+				'label' => esc_html__( 'Display on Separate Lines', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'separator' => 'before',
+				'classes' => 'wpr-pro-control',
+				'condition' => [
+					'post_nav_layout' => 'static'
+				],
+			]
+		);
 	}
 
 	public function add_control_post_nav_layout() {
@@ -181,18 +204,24 @@ class Wpr_Post_Navigation extends Widget_Base {
 			]
 		);
 
+		$this->add_control_display_on_separate_lines();
+
 		$this->add_control_post_nav_query();
 
 		$this->end_controls_section();
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'post-navigation', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'post-navigation', [
 			'Set Navigation Query - Force to navigate posts through specific Taxonomy (category).',
 			'Advanced Layout Options - Fixed Left-Right, Fixed Bottom.',
 			'Multiple Navigation Arrows Locations.',
 			'Show/Hide Post Title.',
 			'Show/Hide Post Thumbnail, Show on hover or set as Navigation Label Background.',
 			'Show/Hide Back Button - Set custom link to any page to go back to.',
+			'Display Navigation on Separate Lines'
 		] );
 
 		// Styles ====================
@@ -707,9 +736,9 @@ class Wpr_Post_Navigation extends Widget_Base {
 
 		if ( 'yes' === $settings['post_nav_arrows'] && $location === $settings['post_nav_arrows_loc'] ) {
 			if (  false !== strpos( $settings['post_nav_arrow_icon'], 'svg-' ) ) {
-				echo  '<div class="wpr-posts-navigation-svg-wrapper">' . Utilities::get_wpr_icon( $settings['post_nav_arrow_icon'], $dir ) . '</div>';
+				echo  '<div class="wpr-posts-navigation-svg-wrapper">' . Utilities::get_wpr_icon( $settings['post_nav_arrow_icon'], $dir ) . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			} else {
-				echo  Utilities::get_wpr_icon( $settings['post_nav_arrow_icon'], $dir );
+				echo  Utilities::get_wpr_icon( $settings['post_nav_arrow_icon'], $dir ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 		}
 	}
@@ -724,6 +753,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 			$settings['post_nav_back'] = '';
 			$settings['post_nav_title'] = '';
 		}
+		wp_reset_postdata();
 
 		// Set Query
 		$nav_query = isset($settings['post_nav_query']) ? $settings['post_nav_query'] : 'all';
@@ -764,11 +794,11 @@ class Wpr_Post_Navigation extends Widget_Base {
 		if ( 'yes' === $settings['post_nav_image'] && 'yes' === $settings['post_nav_image_bg'] ) {
 			if ( 'fixed' !== $settings['post_nav_layout'] ) {
 				if ( ! empty($prev_post) ) {
-					$prev_post_bg = ' style="background-image: url('. $prev_image_url .')"';
+					$prev_post_bg = ' style="background-image: url('. esc_url($prev_image_url) .')"';
 				}
 
 				if ( ! empty($next_post) ) {
-					$next_post_bg = ' style="background-image: url('. $next_image_url .')"';
+					$next_post_bg = ' style="background-image: url('. esc_url($next_image_url) .')"';
 				}
 			}
 		}
@@ -788,11 +818,11 @@ class Wpr_Post_Navigation extends Widget_Base {
 				$wrapper_class .= ' wpr-post-nav-bg-images';
 			}
 
-			echo '<div class="wpr-post-navigation-wrap elementor-clearfix '. $wrapper_class .'">';
+			echo '<div class="wpr-post-navigation-wrap elementor-clearfix '. esc_attr($wrapper_class) .'">';
 		}
 
 		// Previous Post
-		echo '<div class="wpr-post-nav-prev '. $layout_class .'"'. $prev_post_bg .'>';
+		echo '<div class="wpr-post-nav-prev '. esc_attr($layout_class) .'"'. $prev_post_bg .'>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			if ( ! empty($prev_post) ) {
 				echo '<a href="'. esc_url( get_permalink($prev_post->ID) ) .'" class="elementor-clearfix">';
 					// Left Arrow
@@ -852,7 +882,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 		}
 
 		// Next Post
-		echo '<div class="wpr-post-nav-next '. $layout_class .'"'. $next_post_bg .'>';
+		echo '<div class="wpr-post-nav-next '. esc_attr($layout_class) .'"'. $next_post_bg .'>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			if ( ! empty($next_post) ) {
 				echo '<a href="'. esc_url( get_permalink($next_post->ID) ) .'" class="elementor-clearfix">';
 					// Label & Title

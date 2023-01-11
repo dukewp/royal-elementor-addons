@@ -17,7 +17,9 @@ use Elementor\Core\Schemes\Typography;
 use WprAddons\Classes\Utilities;
 
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Dual_Color_Heading extends Widget_Base {
 
@@ -46,14 +48,16 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
 
-	protected function register_controls()
-	{
+	protected function register_controls() {
+
 		$this->start_controls_section(
 			'section_content',
 			[
 				'label' => __('Settings', 'wpr-addons'),
 			]
 		);
+
+		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
 		$this->add_control(
 			'dual_heading_tag',
@@ -67,7 +71,9 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 					'h4' => 'H4',
 					'h5' => 'H5',
 					'h6' => 'H6',
-					'div' => 'Div'
+					'div' => 'div',
+					'span' => 'span',
+					'P' => 'p'
 				],
 				'default' => 'h2'
 			]
@@ -192,6 +198,9 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
 
 		$this->start_controls_section(
 			'primary_heading_styles',
@@ -698,19 +707,19 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
         ?>
 			<div class="wpr-dual-heading-wrap">
 				<div class="wpr-dual-title-wrap">
-					<<?php echo $settings['dual_heading_tag']?> class="wpr-dual-title">
+					<<?php echo esc_attr($settings['dual_heading_tag']); ?> class="wpr-dual-title">
 					<?php if (!empty($settings['primary_heading'])) : ?>
-						<span class="first"><?php echo wp_kses($settings['primary_heading'], []); ?></span>
+						<span class="first"><?php echo esc_html($settings['primary_heading']); ?></span>
 					<?php endif; ?>
 					
 					<?php if (!empty($settings['secondary_heading'])) : ?>
-						<span class="second"><?php echo wp_kses($settings['secondary_heading'], []); ?></span>
+						<span class="second"><?php echo esc_html($settings['secondary_heading']); ?></span>
 					<?php endif; ?>
-					</<?php echo $settings['dual_heading_tag']?>>
+					</<?php echo esc_attr($settings['dual_heading_tag']); ?>>
 				</div>
 				
 				<?php if ('yes' == $settings['show_description']) { ?>
-					<div class="wpr-dual-heading-description" <?php echo $this->get_render_attribute_string('description'); ?>><?php echo wp_kses($settings['description'], []); ?></div>
+					<div class="wpr-dual-heading-description" <?php echo $this->get_render_attribute_string('description'); ?>><?php echo esc_html($settings['description']); ?></div>
 				<?php } ?>
 
 				<?php if ('yes' == $settings['show_icon']) { ?>

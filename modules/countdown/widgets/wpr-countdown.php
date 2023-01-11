@@ -16,7 +16,9 @@ use Elementor\Utils;
 use Elementor\Icons;
 use WprAddons\Classes\Utilities;
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 class Wpr_Countdown extends Widget_Base {
 		
@@ -67,7 +69,17 @@ class Wpr_Countdown extends Widget_Base {
 
 	public function add_control_evergreen_show_again_delay() {}
 
-	public function add_control_evergreen_stop_after_date() {}
+	public function add_control_evergreen_stop_after_date() {
+		$this->add_control(
+			'evergreen_stop_after_date',
+			[
+				'label' => sprintf( __( 'Stop Showing after Date %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'separator' => 'before',
+				'classes' => 'wpr-pro-control'
+			]
+		);	
+	}
 
 	public function add_control_evergreen_stop_after_date_select() {}
 
@@ -373,29 +385,13 @@ class Wpr_Countdown extends Widget_Base {
 			]
 		);
 
-		// Get All Templates
-		$templates = get_posts( [
-			'post_type'   => array( 'elementor_library' ),
-			'post_status' => array( 'publish' ),
-			'meta_key' 	  => '_elementor_template_type',
-			'meta_value'  => ['page', 'section'],
-			'numberposts'  => -1
-		] );
-
-		$templates_select = [];
-
-		if ( ! empty( $templates ) ) {
-			foreach ( $templates as $template ) {
-				$templates_select[$template->ID] = $template->post_title;
-			}
-		}
-
 		$this->add_control(
 			'load_template' ,
 			[
 				'label' => esc_html__( 'Select Template', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT2,
-				'options' => $templates_select,
+				'type' => 'wpr-ajax-select2',
+				'options' => 'ajaxselect2/get_elementor_templates',
+				'label_block' => true,
 				'separator' => 'before',
 				'condition' => [
 					'timer_actions' => 'load-template',
@@ -408,8 +404,11 @@ class Wpr_Countdown extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
 		// Section: Pro Features
-		Utilities::pro_features_list_section( $this, Controls_Manager::RAW_HTML, 'countdown', [
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'countdown', [
 			'Evergreen Timer - User Specific Timer',
 			'An evergreen countdown timer is used to display the amount of time a particular user has to avail the offer. This is a great way to create a feeling of scarcity, urgency and exclusivity',
 		] );
@@ -982,9 +981,9 @@ class Wpr_Countdown extends Widget_Base {
 		return json_encode( $actions );
 	}
 
-	public function get_countdown_item( $settings, $item ) {
+	public function render_countdown_item( $settings, $item ) {
 		$html = '<div class="wpr-countdown-item">';
-			$html .= '<span class="wpr-countdown-number wpr-countdown-'. $item .'" data-item="'. esc_attr($item) .'"></span>';
+			$html .= '<span class="wpr-countdown-number wpr-countdown-'. esc_attr($item) .'" data-item="'. esc_attr($item) .'"></span>';
 
 			if ( 'yes' === $settings['show_labels'] ) {
 				if ( 'seconds' !== $item ) {
@@ -993,9 +992,9 @@ class Wpr_Countdown extends Widget_Base {
 						'plural' => $settings['labels_'. $item .'_plural']
 					];
 
-					$html .= '<span class="wpr-countdown-label" data-text="'. esc_attr(json_encode( $labels )) .'">'. $settings['labels_'. $item .'_plural'] .'</span>';
+					$html .= '<span class="wpr-countdown-label" data-text="'. esc_attr(json_encode( $labels )) .'">'. esc_html($settings['labels_'. $item .'_plural']) .'</span>';
 				} else {
-					$html .= '<span class="wpr-countdown-label">'. $settings['labels_'. $item .'_plural'] .'</span>';
+					$html .= '<span class="wpr-countdown-label">'. esc_html($settings['labels_'. $item .'_plural']) .'</span>';
 				}
 			}
 		$html .= '</div>';
@@ -1004,28 +1003,28 @@ class Wpr_Countdown extends Widget_Base {
 			$html .= '<span class="wpr-countdown-separator"><span></span><span></span></span>';
 		}
 
-		return $html;
+		echo ''. $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	public function render_countdown_items( $settings ) {
 		// Days
 		if ( $settings['show_days'] ) {
-			echo $this->get_countdown_item( $settings, 'days' );
+			$this->render_countdown_item( $settings, 'days' );
 		}
 
 		// Hours
 		if ( $settings['show_hours'] ) {
-			echo $this->get_countdown_item( $settings, 'hours' );
+			$this->render_countdown_item( $settings, 'hours' );
 		}
 
 		// Minutes
 		if ( $settings['show_minutes'] ) {
-			echo $this->get_countdown_item( $settings, 'minutes' );
+			$this->render_countdown_item( $settings, 'minutes' );
 		}
 
 		// Seconds
 		if ( $settings['show_seconds'] ) {
-			echo $this->get_countdown_item( $settings, 'seconds' );
+			$this->render_countdown_item( $settings, 'seconds' );
 		}
 	}
 
@@ -1036,7 +1035,8 @@ class Wpr_Countdown extends Widget_Base {
 
 		if ( ! empty( $settings['timer_actions'] ) && ! in_array( 'redirect', $settings['timer_actions'] ) ) {
 			if ( in_array( 'load-template', $settings['timer_actions'] ) ) {
-				echo \Elementor\Plugin::instance()->frontend->get_builder_content( $settings['load_template'], false );
+				// Load Elementor Template
+				echo \Elementor\Plugin::instance()->frontend->get_builder_content( $settings['load_template'], false ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 		}
 	}
@@ -1046,7 +1046,7 @@ class Wpr_Countdown extends Widget_Base {
 		$settings = $this->get_settings();
 		
 		// Render
-		echo '<div class="'. esc_attr($this->get_countdown_class( $settings )) .'"'. $this->get_countdown_attributes( $settings ) .'>';
+		echo '<div class="'. esc_attr($this->get_countdown_class( $settings )) .'"'. $this->get_countdown_attributes( $settings ) .'>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			$this->render_countdown_items( $settings );
 		echo '</div>';
 
