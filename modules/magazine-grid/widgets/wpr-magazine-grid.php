@@ -1796,9 +1796,21 @@ class Wpr_Magazine_Grid extends Widget_Base {
 				'label' => esc_html__( 'Background', 'wpr-addons' ),
 				'types' => [ 'classic', 'gradient' ],
 				'fields_options' => [
-					'color' => [
-						'default' => '#605BE5',
+					'background' => [
+						'default' => 'gradient',
 					],
+					'color' => [
+						'default' => 'rgba(255, 255, 255, 0)',
+					],
+					'color_stop' => [
+						'default' => [
+							'unit' => '%',
+							'size' => 46,
+						]
+					],
+					'color_b' => [
+						'default' => 'rgba(96, 91, 229, 0.87)',
+					]
 				],
 				'selector' => '{{WRAPPER}} .wpr-grid-media-hover-bg'
 			]
