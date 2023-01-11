@@ -755,12 +755,30 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'layout_gutter_hr',
 			[
 				'label' => esc_html__( 'Horizontal Gutter', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
+					'size' => 4,
+				],
+				'widescreen_default' => [
+					'size' => 4,
+				],
+				'laptop_default' => [
+					'size' => 4,
+				],
+				'tablet_extra_default' => [
+					'size' => 4,
+				],
+				'tablet_default' => [
+					'size' => 4,
+				],
+				'mobile_extra_default' => [
+					'size' => 4,
+				],
+				'mobile_default' => [
 					'size' => 4,
 				],
 				'range' => [
@@ -776,12 +794,30 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'layout_gutter_vr',
 			[
 				'label' => esc_html__( 'Vertical Gutter', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
+					'size' => 4,
+				],
+				'widescreen_default' => [
+					'size' => 4,
+				],
+				'laptop_default' => [
+					'size' => 4,
+				],
+				'tablet_extra_default' => [
+					'size' => 4,
+				],
+				'tablet_default' => [
+					'size' => 4,
+				],
+				'mobile_extra_default' => [
+					'size' => 4,
+				],
+				'mobile_default' => [
 					'size' => 4,
 				],
 				'range' => [

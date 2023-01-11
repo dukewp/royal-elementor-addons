@@ -7966,6 +7966,9 @@ class Wpr_Grid extends Widget_Base {
 
 		$query_order_by = '' != $settings['query_randomize'] ? $settings['query_randomize'] : $settings['order_posts'];
 
+		
+		// 'post_status' => 'future', add if necessary
+
 		// Dynamic
 		$args = [
 			'post_type' => $settings[ 'query_source' ],
