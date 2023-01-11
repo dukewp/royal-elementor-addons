@@ -111,7 +111,9 @@ class Plugin {
 		}
 
 		// Custom CSS
-		require WPR_ADDONS_PATH . 'extensions/wpr-custom-css.php';
+		if ( 'on' === get_option('wpr-custom-css', 'on') ) {
+			require WPR_ADDONS_PATH . 'extensions/wpr-custom-css.php';
+		}
 
 		// Mega Menu
 		require WPR_ADDONS_PATH . 'admin/mega-menu.php';
@@ -586,6 +588,14 @@ class Plugin {
 			'white_label',
 			[
 				'logo_url' => !empty(get_option('wpr_wl_plugin_logo')) ? esc_url(wp_get_attachment_image_src(get_option('wpr_wl_plugin_logo'), 'full')[0]) : WPR_ADDONS_ASSETS_URL .'img/logo-40x40.png'
+			]
+		);
+
+		wp_localize_script(
+			'wpr-addons-library-frontend-js',
+			'WprLibFrontLoc',
+			[
+				'nonce' => wp_create_nonce('wpr-addons-library-frontend-js')
 			]
 		);
 

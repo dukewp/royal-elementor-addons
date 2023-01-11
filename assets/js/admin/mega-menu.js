@@ -3,7 +3,7 @@ jQuery(document).ready(function( $ ) {
 
     var WprMegaMenuSettings = {
 
-        getLiveSettings: WprMegaMenuSettingsData,
+        getLiveSettings: WprMegaMenuSettingsData.settingsData,
 
         init: function() {
             WprMegaMenuSettings.initSettingsButtons();
@@ -88,6 +88,7 @@ jQuery(document).ready(function( $ ) {
 				url: ajaxurl,
 				data: {
 					action: 'wpr_create_mega_menu_template',
+                    nonce: WprMegaMenuSettingsData.nonce,
                     item_id: id,
                     item_depth: depth
 				},
@@ -177,6 +178,7 @@ jQuery(document).ready(function( $ ) {
                     url: ajaxurl,
                     data: {
                         action: 'wpr_save_mega_menu_settings',
+                        nonce: WprMegaMenuSettingsData.nonce,
                         item_id: id,
                         item_depth: depth,
                         item_settings: settings

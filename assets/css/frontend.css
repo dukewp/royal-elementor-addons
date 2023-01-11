@@ -4429,14 +4429,23 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     }
     
     .wpr-magazin-grid-one-column-yes .wpr-magazine-grid {
+        -ms-grid-columns: 1fr !important;
         grid-template-columns: 1fr !important;
+        -ms-grid-rows: auto !important;
         grid-template-rows: auto !important;
+    }
+    
+    .wpr-magazin-grid-one-column-yes .wpr-magazine-grid > *:nth-child(1) {
+        -ms-grid-row: 1;
+        -ms-grid-column: 1;
     }
 
     .wpr-magazin-grid-one-column-yes .wpr-magazine-grid  article.wpr-mgzn-grid-item {
-        grid-column-start: auto !important;
+        -ms-grid-column: auto !important;
+            grid-column-start: auto !important;
         grid-column-end: auto !important;
-        grid-row-start: auto !important;
+        -ms-grid-row: auto !important;
+            grid-row-start: auto !important;
         grid-row-end: auto !important;
     }
 }
@@ -4493,6 +4502,8 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
 }
 
 .wpr-sharing-buttons .wpr-sharing-icon {
+    -webkit-transition-property: opacity, border-color;
+    -o-transition-property: opacity, border-color;
     transition-property: opacity, border-color;
     -webkit-transition-timing-function: linear;
     -o-transition-timing-function: linear;
@@ -4501,6 +4512,8 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
 
 .wpr-sharing-buttons .wpr-sharing-icon i,
 .wpr-sharing-buttons .wpr-sharing-icon span {
+    -webkit-transition-property: color, background-color;
+    -o-transition-property: color, background-color;
     transition-property: color, background-color;
     -webkit-transition-timing-function: linear;
     -o-transition-timing-function: linear;
@@ -5829,7 +5842,9 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-mailchimp-first-name label,
 .wpr-mailchimp-first-name input,
 .wpr-mailchimp-last-name label,
-.wpr-mailchimp-last-name input {
+.wpr-mailchimp-last-name input,
+.wpr-mailchimp-phone-number label,
+.wpr-mailchimp-phone-number input {
     display: block;
     width: 100%;
 }
@@ -5853,7 +5868,8 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 .wpr-mailchimp-layout-hr .wpr-mailchimp-email,
 .wpr-mailchimp-layout-hr .wpr-mailchimp-first-name,
-.wpr-mailchimp-layout-hr .wpr-mailchimp-last-name {
+.wpr-mailchimp-layout-hr .wpr-mailchimp-last-name,
+.wpr-mailchimp-layout-hr .wpr-mailchimp-phone-number {
     -webkit-box-flex: 1;
     -ms-flex-positive: 1;
     flex-grow: 1;
