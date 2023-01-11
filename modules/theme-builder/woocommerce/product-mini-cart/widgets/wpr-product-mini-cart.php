@@ -545,11 +545,11 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 		$sub_total = WC()->cart->get_cart_subtotal();
 		$counter_attr = 'data-counter="' . $product_count . '"';
 
-		if ( !is_plugin_active('wpr-addons-pro/wpr-addons-pro.php') ) {
+		if ( !is_plugin_active('wpr-addons-pro/wpr-addons-pro.php') || 'none' == $settings['mini_cart_style'] ) {
 			// global $woocommerce;
 			$cart_url = wc_get_cart_url();
 		} else {
-			$cart_url = '#';
+			$cart_url = '#'; 
 		}
 		?>
 
