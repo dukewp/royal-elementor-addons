@@ -5076,6 +5076,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		];
 
 		$instagram_settings['test'] = [
+			'instagram_access_token' => $settings['instagram_access_token'],
 			'limit' => $settings['limit'],
 			'open_in_new_tab' => $settings['open_in_new_tab'],
 			'overlay_post_link' => $settings['overlay_post_link'],
