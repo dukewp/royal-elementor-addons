@@ -3045,11 +3045,11 @@ class Wpr_Twitter_Feed extends Widget_Base {
 		$this->end_controls_section();
 
 		// Styles ====================
-		// Section: Separator Style 1 
+		// Section: Separator Style 1
 		$this->start_controls_section(
 			'section_style_separator1',
 			[
-				'label' => esc_html__( 'Separator Style 1', 'wpr-addons' ),
+				'label' => esc_html__( 'Separator Style', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 			]
@@ -4502,6 +4502,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			'number_of_posts' => $settings['number_of_posts'],
 			'twitter_feed_consumer_key' => $settings['twitter_feed_consumer_key'],
 			'twitter_feed_consumer_secret' => $settings['twitter_feed_consumer_secret'],
+			'twitter_feed_hashtag_name' => $settings['twitter_feed_hashtag_name'],
 			// 'image_effects' => $settings['image_effects'],
 			// 'image_effects' => $settings['image_effects_size'],
 			// 'image_effects' => $settings['image_effects_duration'],

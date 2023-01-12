@@ -5080,9 +5080,13 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			'limit' => $settings['limit'],
 			'open_in_new_tab' => $settings['open_in_new_tab'],
 			'overlay_post_link' => $settings['overlay_post_link'],
-			'image_effects' => $settings['image_effects'],
-			'image_effects' => $settings['image_effects_size'],
-			'image_effects' => $settings['image_effects_duration'],
+			'image_effects' => isset($settings['image_effects']) ? $settings['image_effects'] : 'none',
+			'image_effects_size' => isset($settings['image_effects_size']) ? $settings['image_effects_size'] : 'none',
+			'image_effects_duration' => isset($settings['image_effects_duration']) ? $settings['image_effects_duration'] : 'none',
+			'overlay_animation' => isset($settings['overlay_animation']) ? $settings['overlay_animation'] : 'none',
+			'overlay_animation_size' => isset($settings['overlay_animation_size']) ? $settings['overlay_animation_size'] : 'none',
+			'overlay_animation_timing' => isset($settings['overlay_animation_timing']) ? $settings['overlay_animation_timing'] : 'none',
+			'overlay_animation_tr' => isset($settings['overlay_animation_tr']) ? $settings['overlay_animation_tr'] : 'none',
 			'insta_feed_elements' => $settings['insta_feed_elements'],
 		];
 		
