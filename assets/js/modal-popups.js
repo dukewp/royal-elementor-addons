@@ -130,7 +130,9 @@
 
 				// Enable Scrollbar
 				if ( '0px' !== popup.find('.wpr-popup-container-inner').css('height') ) {
-					const ps = new PerfectScrollbar(popup.find('.wpr-popup-container-inner')[0]);
+					const ps = new PerfectScrollbar(popup.find('.wpr-popup-container-inner')[0], {
+						suppressScrollX: true
+					});
 				}
 			});
 		}, // End openPopup
@@ -154,6 +156,9 @@
 			// Open Popup
 			popup.addClass( 'wpr-popup-open' ).show();
 			popup.find( '.wpr-popup-container' ).addClass( 'animated '+ settings.popup_animation );
+
+            // goga
+            $(window).trigger('resize');
 
 			// Overlay Fade In
 			$( '.wpr-popup-overlay' ).hide().fadeIn();
@@ -228,6 +233,9 @@
 
 			// Enable Page Scrolling
 			$( 'body' ).css( 'overflow', 'visible' );
+			
+            // goga
+            $(window).trigger('resize');
 		},
 
 		popupTriggerInit: function( popup ) {

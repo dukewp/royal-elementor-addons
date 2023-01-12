@@ -516,6 +516,8 @@ class Utilities {
 
 	// Get Post Sharing Icon
 	public static function get_post_sharing_icon( $args = [] ) {
+
+		$args['url'] = esc_url($args['url']);
 		
 		if ( 'facebook-f' === $args['network'] ) {
 			$sharing_url = 'https://www.facebook.com/sharer.php?u='. $args['url'];
@@ -558,7 +560,7 @@ class Utilities {
 			$sharing_url = 'https://web.skype.com/share?url='. $args['url'];
 			$network_title = esc_html__( 'Skype', 'wpr-addons' );
 		} elseif ( 'whatsapp' === $args['network'] ) {
-			$sharing_url = 'https://api.whatsapp.com/send?text=*'. $args['title'] .'*\n'. $args['text'] .'\n'. $args['url'];
+			$sharing_url = 'https://api.whatsapp.com/send?text=*'. $args['title'] .'*%0a'. $args['text'] .'%0a'. $args['url'];
 			$network_title = esc_html__( 'WhatsApp', 'wpr-addons' );
 		} elseif ( 'telegram' === $args['network'] ) {
 			$sharing_url = 'https://telegram.me/share/url?url='. $args['url'] .'&text='. $args['text'];
@@ -577,12 +579,12 @@ class Utilities {
 			$network_title = '';
 		}
 
-		$sharing_url = 'print' === $args['network'] ? $sharing_url : esc_url( $sharing_url );
+		$sharing_url = 'print' === $args['network'] ? $sharing_url : $sharing_url;
 
 		$output = '';
 
 		if ( '' !== $network_title ) {
-			$output .= '<a href="'. esc_url($sharing_url) .'" class="wpr-sharing-icon wpr-sharing-'. esc_attr( $args['network'] ) .'" title="" target="_blank">';
+			$output .= '<a href="'. $sharing_url .'" class="wpr-sharing-icon wpr-sharing-'. esc_attr( $args['network'] ) .'" title="" target="_blank">';
 				// Tooltip
 				$output .= 'yes' === $args['tooltip'] ? '<span class="wpr-sharing-tooltip wpr-tooltip">'. esc_html( $network_title ) .'</span>' : '';
 				

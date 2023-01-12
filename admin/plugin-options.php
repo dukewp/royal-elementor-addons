@@ -89,6 +89,7 @@ function wpr_register_addons_settings() {
     register_setting('wpr-extension-settings', 'wpr-parallax-background');
     register_setting('wpr-extension-settings', 'wpr-parallax-multi-layer');
     register_setting('wpr-extension-settings', 'wpr-sticky-section');
+    register_setting('wpr-extension-settings', 'wpr-custom-css');
 
     // Element Toggle
     register_setting( 'wpr-elements-settings', 'wpr-element-toggle-all', [ 'default' => 'on' ]  );
@@ -501,6 +502,8 @@ function wpr_addons_settings_page() {
                     } elseif ( 'wpr-sticky-section' === $option_name ) {
                         echo '<br><span>Tip: Edit any Section > Navigate to Advanced tab</span>';
                         echo '<a href="https://www.youtube.com/watch?v=at0CPKtklF0&t=375s" target="_blank">Watch Video Tutorial</a>';
+                    } elseif ( 'wpr-custom-css' === $option_name ) {
+                        echo '<br><span>Tip: Edit any Section > Navigate to Advanced tab</span>';
                     }
 
                     // echo '<a href="https://royal-elementor-addons.com/elementor-particle-effects/?ref=rea-plugin-backend-extentions-prev">'. esc_html('View Extension Demo', 'wpr-addons') .'</a>';
