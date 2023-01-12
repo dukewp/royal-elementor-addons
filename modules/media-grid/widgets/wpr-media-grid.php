@@ -618,7 +618,7 @@ class Wpr_Media_Grid extends Widget_Base {
 			$this->add_control(
 				'query_taxonomy_'. $slug,
 				[
-					'label' => $title,
+					'label' => $tax,
 					'type' => 'wpr-ajax-select2',
 					'options' => 'ajaxselect2/get_taxonomies',
 					'query_slug' => $slug,

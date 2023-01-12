@@ -599,8 +599,8 @@ class WPR_Templates_Data {
 			],
 			'digital-agency-dark-v1' => [
 				'name' => 'Digital Agency Dark',
-				'pages' => ['home','about','services','team','portfolio','blog','contact'],
-				'preview' => ['home','about','services','team','portfolio','blog','contact'],
+				'pages' => ['home','about','services','team','portfolio','contact'],
+				'preview' => ['home','about','services','team','portfolio','contact'],
 				'price' => $is_pro_active ? 'free' : 'free',
 			],
 			'ittech-v1' => [
