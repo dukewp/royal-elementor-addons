@@ -12576,6 +12576,10 @@ flex-grow: 0; */
     padding-left: 40px;
 }
 
+.wpr-taxonomy-list-vertical .wpr-inner-sub-taxonomy-2 {
+    padding-left: 60px;
+}
+
 /*--------------------------------------------------------------
   == Feature List
   --------------------------------------------------------------*/
