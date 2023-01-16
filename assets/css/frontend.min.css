@@ -15650,6 +15650,7 @@ dl.variation dd {
 }
 
 .wpr-offcanvas-content {
+    width: 300px;
     position: absolute;
     background-color: #FFF;
     text-align: center;
@@ -15683,7 +15684,7 @@ dl.variation dd {
     right: 0;
     left: auto;
     height: 100%;
-    width: auto;
+    width: 300px;
     transform: translateX(0) translateY(0);
 }
 

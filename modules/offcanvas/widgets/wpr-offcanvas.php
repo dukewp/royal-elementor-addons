@@ -51,9 +51,199 @@ class Wpr_Offcanvas extends Widget_Base {
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
 
+	public function add_control_offcanvas_position() {
+		$this->add_control(
+            'offcanvas_position',
+            [
+                'label'        => esc_html__('Position', 'wpr-addons'), 
+                'type'         => Controls_Manager::CHOOSE,
+                'label_block'  => false,
+                'default'      => 'right',
+				'render_type' => 'template',
+                'options'      => [
+                    'right' => [
+                        'title' => esc_html__('Right', 'wpr-addons'),
+                        'icon'  => 'eicon-h-align-right',
+                    ],
+                    'pro-lf'  => [
+                        'title' => esc_html__('Left (Pro)', 'wpr-addons'),
+                        'icon'  => 'eicon-h-align-left',
+                    ],
+                    'pro-tp'   => [
+                        'title' => esc_html__('Top (Pro)', 'wpr-addons'),
+                        'icon'  => 'eicon-v-align-top',
+                    ],
+                    'pro-btm'  => [
+                        'title' => esc_html__('Bottom (Pro)', 'wpr-addons'),
+                        'icon'  => 'eicon-v-align-bottom',
+                    ],
+                    'pro-mdl'  => [
+                        'title' => esc_html__('Middle (Pro)', 'wpr-addons'),
+                        'icon'  => 'eicon-v-align-middle',
+                    ],
+				]
+            ]
+        );
+	}
+
+	public function add_responsive_control_offcanvas_box_width() {
+		$this->add_responsive_control(
+			'offcanvas_box_width',
+			[
+				'label' => sprintf( __( 'Width %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SLIDER,
+				'classes' => 'wpr-pro-control',
+				'size_units' => ['px', '%', 'vw'],
+				'range' => [
+					'px' => [
+						'min' => 50,
+						'max' => 3000,
+					],
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					],
+					'vw' => [
+						'min' => 0,
+						'max' => 100,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 300,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-offcanvas-content' => 'width: {{SIZE}}{{UNIT}};',
+					'.wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-content' => 'width: {{SIZE}}{{UNIT}};'
+				],
+				'condition' => [
+					'offcanvas_position' => ['left', 'right', 'middle']
+				]
+			]
+		);
+	}
+
+	public function add_responsive_control_offcanvas_box_height() {
+		$this->add_responsive_control(
+			'offcanvas_box_height',
+			[
+				'label' => sprintf( __( 'Height %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SLIDER,
+				'classes' => 'wpr-pro-control',
+				'size_units' => ['px', '%', 'vh'],
+				'range' => [
+					'px' => [
+						'min' => 50,
+						'max' => 3000,
+					],
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					],
+					'vh' => [
+						'min' => 0,
+						'max' => 100,
+					]
+				],
+				'default' => [
+					'unit' => 'vh',
+					'size' => 30,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-offcanvas-content' => 'height: {{SIZE}}{{UNIT}};',
+					'.wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-content' => 'height: {{SIZE}}{{UNIT}};'
+				],
+				'condition' => [
+					'offcanvas_position' => ['top', 'bottom', 'middle']
+				]
+			]
+		);
+	}
+
+	public function add_control_offcanvas_entrance_animation() {
+		$this->add_control(
+			'offcanvas_entrance_animation',
+			[
+				'label' => esc_html__( 'Entrance Animation', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'render_type' => 'template',
+				'default' => 'fade',
+				'options' => [
+					'fade' => esc_html__( 'Fade', 'wpr-addons' ),
+					'pro-sl' => esc_html__( 'Slide (Pri)', 'wpr-addons' ),
+					'pro-gr' => esc_html__( 'Grow (Pro)', 'wpr-addons' ),
+				],
+				'prefix_class' => 'wpr-offcanvas-entrance-animation-'
+			]
+		);
+	}
+
+	public function add_control_offcanvas_entrance_type() {
+		$this->add_control(
+			'offcanvas_entrance_type',
+			[
+				'label' => esc_html__( 'Entrance Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'render_type' => 'template',
+				'options' => [
+					'cover' => esc_html__( 'Cover', 'wpr-addons' ),
+					'pro-ps' => esc_html__( 'Push (Pro)', 'wpr-addons' ),
+				],
+				'prefix_class' => 'wpr-offcanvas-entrance-type-',
+				'default' => 'cover',
+				'condition' => [
+					'offcanvas_position' => ['top', 'left', 'right'],
+					// 'offcanvas_entrance_animation' => ['slide', 'grow']
+				]
+			]
+		);
+	}
+
+	public function add_control_offcanvas_open_by_default() {
+		$this->add_control(
+			'offcanvas_open_by_default',
+			[
+				'label' => sprintf( __( 'Open by Default %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance',
+				'render_type' => 'template'
+				// 'separator' => 'before',
+			]
+		);
+	}
+
+	public function add_control_offcanvas_reverse_header () {
+		$this->add_control(
+			'offcanvas_reverse_header',
+			[
+				'label' => sprintf( __( 'Reverse Header %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'render_type' => 'template',
+				'classes' => 'wpr-pro-control',
+			]
+		);
+	}
+
+	public function add_control_offcanvas_button_icon() {
+		$this->add_control(
+			'offcanvas_button_icon',
+			[
+				'label' => sprintf( __( 'Select Icon %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::ICONS,
+				'classes' => 'wpr-pro-control',
+				'skin' => 'inline',
+				'label_block' => false,
+				'default' => [
+					'value' => 'fas fa-bars',
+					'library' => 'fa-solid',
+				]
+			]
+		);
+	}
+
 	public function wpr_offcanvas_template( $id ) {
 		if ( empty( $id ) ) {
-		return '';
+			return '';
 		}
 
 		$edit_link = '<span class="wpr-template-edit-btn" data-permalink="'. get_permalink( $id ) .'">Edit Template</span>';
@@ -97,153 +287,26 @@ class Wpr_Offcanvas extends Widget_Base {
 			]
 		);
 
-		// needs to be responsive ?
-		$this->add_control(
-            'offcanvas_position',
-            [
-                'label'        => esc_html__('Position', 'wpr-addons'), 
-                'type'         => Controls_Manager::CHOOSE,
-                'label_block'  => false,
-                'default'      => 'left',
-				'render_type' => 'template',
-                'options'      => [
-                    'top'   => [
-                        'title' => esc_html__('Top', 'wpr-addons'),
-                        'icon'  => 'eicon-v-align-top',
-                    ],
-                    'right' => [
-                        'title' => esc_html__('Right', 'wpr-addons'),
-                        'icon'  => 'eicon-h-align-right',
-                    ],
-                    'left'  => [
-                        'title' => esc_html__('Left', 'wpr-addons'),
-                        'icon'  => 'eicon-h-align-left',
-                    ],
-                    'bottom'  => [
-                        'title' => esc_html__('Bottom', 'wpr-addons'),
-                        'icon'  => 'eicon-v-align-bottom',
-                    ],
-                    'middle'  => [
-                        'title' => esc_html__('Middle', 'wpr-addons'),
-                        'icon'  => 'eicon-v-align-middle',
-                    ],
-				]
-            ]
-        );
+		$this->add_control_offcanvas_position();
 
-		$this->add_responsive_control(
-			'offcanvas_box_width',
-			[
-				'label' => esc_html__( 'Width', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px', '%', 'vw'],
-				'range' => [
-					'px' => [
-						'min' => 50,
-						'max' => 3000,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
-					'vw' => [
-						'min' => 0,
-						'max' => 100,
-					]
-				],
-				'default' => [
-					'unit' => 'vw',
-					'size' => 30,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-offcanvas-content' => 'width: {{SIZE}}{{UNIT}};',
-					'.wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-content' => 'width: {{SIZE}}{{UNIT}};'
-				],
-				'condition' => [
-					'offcanvas_position' => ['left', 'right', 'middle']
-				]
-			]
-		);
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'offcanvas', 'offcanvas_position', ['pro-lf', 'pro-tp', 'pro-btm', 'pro-mdl'] );
 
-		$this->add_responsive_control(
-			'offcanvas_box_height',
-			[
-				'label' => esc_html__( 'Height', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px', '%', 'vh'],
-				'range' => [
-					'px' => [
-						'min' => 50,
-						'max' => 3000,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					],
-					'vh' => [
-						'min' => 0,
-						'max' => 100,
-					]
-				],
-				'default' => [
-					'unit' => 'vh',
-					'size' => 30,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-offcanvas-content' => 'height: {{SIZE}}{{UNIT}};',
-					'.wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-content' => 'height: {{SIZE}}{{UNIT}};'
-				],
-				'condition' => [
-					'offcanvas_position' => ['top', 'bottom', 'middle']
-				]
-			]
-		);
+		$this->add_responsive_control_offcanvas_box_width();
 
-		$this->add_control(
-			'offcanvas_entrance_animation',
-			[
-				'label' => esc_html__( 'Entrance Animation', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'render_type' => 'template',
-				'default' => 'slide',
-				'options' => [
-					'slide' => esc_html__( 'Slide', 'wpr-addons' ),
-					'grow' => esc_html__( 'Grow', 'wpr-addons' ),
-					'fade' => esc_html__( 'Fade', 'wpr-addons' ),
-				],
-				'prefix_class' => 'wpr-offcanvas-entrance-animation-'
-			]
-		);
+		$this->add_responsive_control_offcanvas_box_height();
 
-		// Zukastan ertad gasavlelia conditionebis tema
-		$this->add_control(
-			'offcanvas_entrance_type',
-			[
-				'label' => esc_html__( 'Entrance Type', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'render_type' => 'template',
-				'options' => [
-					'cover' => esc_html__( 'Cover', 'wpr-addons' ),
-					'push' => esc_html__( 'Push', 'wpr-addons' ),
-				],
-				'prefix_class' => 'wpr-offcanvas-entrance-type-',
-				'default' => 'cover',
-				'condition' => [
-					'offcanvas_position' => ['top', 'left', 'right'],
-					// 'offcanvas_entrance_animation' => ['slide', 'grow']
-				]
-			]
-		);
+		$this->add_control_offcanvas_entrance_animation();
 
-		$this->add_control(
-			'offcanvas_open_by_default',
-			[
-				'label' => esc_html__( 'Open by Default', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'render_type' => 'template'
-				// 'separator' => 'before',
-			]
-		);
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'offcanvas', 'offcanvas_entrance_animation', ['pro-sl', 'pro-gr'] );
+
+		$this->add_control_offcanvas_entrance_type();
+
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'offcanvas', 'offcanvas_entrance_type', ['pro-ps'] );
+
+		$this->add_control_offcanvas_open_by_default();
 
 		$this->add_control(
 			'offcanvas_button_heading',
@@ -263,19 +326,7 @@ class Wpr_Offcanvas extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'offcanvas_button_icon',
-			[
-				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
-				'type' => Controls_Manager::ICONS,
-				'skin' => 'inline',
-				'label_block' => false,
-				'default' => [
-					'value' => 'fas fa-bars',
-					'library' => 'fa-solid',
-				]
-			]
-		);
+		$this->add_control_offcanvas_button_icon();
 
 		$this->add_responsive_control(
 			'offcanvas_button_icon_distance',
@@ -559,21 +610,7 @@ class Wpr_Offcanvas extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'offcanvas_reverse_header',
-			[
-				'label' => esc_html__( 'Reverse Header', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'render_type' => 'template',
-				'prefix_class' => 'wpr-offcanvas-reverse-header-',
-				'selectors_dictionary' => [
-					'yes' => 'flex-direction: row-reverse'
-				],
-				'selectors' => [
-					'.wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-header' => '{{VALUE}}',
-				]
-			]
-		);
+		$this->add_control_offcanvas_reverse_header();
 
 		$this->add_control(
 			'offcanvas_close_icon_heading',
@@ -817,6 +854,11 @@ class Wpr_Offcanvas extends Widget_Base {
     protected function render() {
         $settings = $this->get_settings_for_display();
 
+		if ( ! wpr_fs()->can_use_premium_code() ) {
+			$settings['offcanvas_position'] = 'right';
+			$settings['offcanvas_entrance_animation'] = 'fade';
+		}
+
 		$this->add_render_attribute(
 			'offcanvas-wrapper',
 			[
@@ -829,9 +871,11 @@ class Wpr_Offcanvas extends Widget_Base {
 
 		<div <?php echo $this->get_render_attribute_string( 'offcanvas-wrapper' ); ?>>
 			<button class="wpr-offcanvas-trigger">
-				<?php if ( !empty($settings['offcanvas_button_icon']) ) :
+				<?php if ( !empty($settings['offcanvas_button_icon']) && wpr_fs()->can_use_premium_code() ) : 
 					\Elementor\Icons_Manager::render_icon( $settings['offcanvas_button_icon'] );
-				endif; ?>
+				elseif ( ! wpr_fs()->can_use_premium_code() ) : ?>
+					<i class="fas fa-bars"></i>
+				<?php endif; ?>
 				<?php if ( !empty($settings['offcanvas_button_title']) ) : ?>
 					<span><?php echo esc_html($settings['offcanvas_button_title']) ?></span>
 				<?php endif; ?>
