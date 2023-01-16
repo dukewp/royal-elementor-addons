@@ -15652,6 +15652,7 @@ dl.variation dd {
 .wpr-offcanvas-content {
     position: absolute;
     background-color: #FFF;
+    text-align: center;
     overflow: hidden;
 }
 
