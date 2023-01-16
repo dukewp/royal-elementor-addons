@@ -947,7 +947,7 @@ class Wpr_Image_Hotspots extends Widget_Base {
 						}
 
 					}
-					
+
 					?>
 
 					<div <?php echo $this->get_render_attribute_string( 'hotspot_item_attribute'. $item_count ); ?>>
@@ -960,7 +960,7 @@ class Wpr_Image_Hotspots extends Widget_Base {
 
 							<?php if ( '' !== $item['hotspot_icon']['value'] && 'svg' !== $item['hotspot_icon']['library'] ) : ?>
 								<i class="<?php echo esc_attr($item['hotspot_icon']['value']); ?>"></i>
-							<?php elseif ( 'svg' == $item['hotspot_icon']['library'] ) : ?>
+							<?php elseif ( '' !== $item['hotspot_icon']['value'] && 'svg' == $item['hotspot_icon']['library'] ) : ?>
 								<img src="<?php echo $item['hotspot_icon']['value']['url'] ?>">
 							<?php endif; ?>
 
