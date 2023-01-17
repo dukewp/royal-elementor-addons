@@ -167,59 +167,52 @@ class Wpr_Offcanvas extends Widget_Base {
 	}
 
 	public function add_control_offcanvas_entrance_type() {
-		$this->add_control(
-			'offcanvas_entrance_type',
-			[
-				'label' => esc_html__( 'Entrance Type', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'render_type' => 'template',
-				'options' => [
-					'cover' => esc_html__( 'Cover', 'wpr-addons' ),
-					'pro-ps' => esc_html__( 'Push (Pro)', 'wpr-addons' ),
-				],
-				'prefix_class' => 'wpr-offcanvas-entrance-type-',
-				'default' => 'cover',
-				'condition' => [
-					'offcanvas_position' => ['top', 'left', 'right'],
-					// 'offcanvas_entrance_animation' => ['slide', 'grow']
-				]
-			]
-		);
+		// $this->add_control(
+		// 	'offcanvas_entrance_type',
+		// 	[
+		// 		'label' => esc_html__( 'Entrance Type', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'render_type' => 'template',
+		// 		'options' => [
+		// 			'cover' => esc_html__( 'Cover', 'wpr-addons' ),
+		// 			'pro-ps' => esc_html__( 'Push (Pro)', 'wpr-addons' ),
+		// 		],
+		// 		'prefix_class' => 'wpr-offcanvas-entrance-type-',
+		// 		'default' => 'cover',
+		// 		'condition' => [
+		// 			'offcanvas_position' => ['top', 'left', 'right'],
+		// 			// 'offcanvas_entrance_animation' => ['slide', 'grow']
+		// 		]
+		// 	]
+		// );
 	}
 
 	public function add_control_offcanvas_animation_duration() {
 		$this->add_control(
 			'offcanvas_animation_duration',
 			[
-				'label' => esc_html__( 'Animation Duration', 'wpr-addons' ),
+				'label' => sprintf( __( 'Animation Duration %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
 				'type' => Controls_Manager::NUMBER,
 				'default' => 0.6,
 				'min' => 0,
 				'max' => 15,
 				'step' => 0.1,
-				'selectors' => [
-					'.wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-content' => 'animation-duration: {{VALUE}}s !important',
-					'{{WRAPPER}} .wpr-offcanvas-content' => 'animation-duration: {{VALUE}}s !important',
-					'.wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-wrap' => 'animation-duration: {{VALUE}}s !important',
-					'{{WRAPPER}} .wpr-offcanvas-wrap' => 'animation-duration: {{VALUE}}s !important',
-					'.wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-wrap-active' => 'animation-duration: {{VALUE}}s !important',
-					'{{WRAPPER}} .wpr-offcanvas-wrap-active' => 'animation-duration: {{VALUE}}s !important',
-				]
+				'classes' => 'wpr-pro-control'
 			]
 		);
 	}
 
 	public function add_control_offcanvas_open_by_default() {
-		$this->add_control(
-			'offcanvas_open_by_default',
-			[
-				'label' => sprintf( __( 'Open by Default %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
-				'type' => Controls_Manager::SWITCHER,
-				'classes' => 'wpr-pro-control no-distance',
-				'render_type' => 'template'
-				// 'separator' => 'before',
-			]
-		);
+		// $this->add_control(
+		// 	'offcanvas_open_by_default',
+		// 	[
+		// 		'label' => sprintf( __( 'Open by Default %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+		// 		'type' => Controls_Manager::SWITCHER,
+		// 		'classes' => 'wpr-pro-control no-distance',
+		// 		'render_type' => 'template'
+		// 		// 'separator' => 'before',
+		// 	]
+		// );
 	}
 
 	public function add_control_offcanvas_reverse_header () {
@@ -235,20 +228,20 @@ class Wpr_Offcanvas extends Widget_Base {
 	}
 
 	public function add_control_offcanvas_button_icon() {
-		$this->add_control(
-			'offcanvas_button_icon',
-			[
-				'label' => sprintf( __( 'Select Icon %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
-				'type' => Controls_Manager::ICONS,
-				'classes' => 'wpr-pro-control',
-				'skin' => 'inline',
-				'label_block' => false,
-				'default' => [
-					'value' => 'fas fa-bars',
-					'library' => 'fa-solid',
-				]
-			]
-		);
+		// $this->add_control(
+		// 	'offcanvas_button_icon',
+		// 	[
+		// 		'label' => sprintf( __( 'Select Icon %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+		// 		'type' => Controls_Manager::ICONS,
+		// 		'classes' => 'wpr-pro-control',
+		// 		'skin' => 'inline',
+		// 		'label_block' => false,
+		// 		'default' => [
+		// 			'value' => 'fas fa-bars',
+		// 			'library' => 'fa-solid',
+		// 		]
+		// 	]
+		// );
 	}
 
 	public function wpr_offcanvas_template( $id ) {
@@ -626,6 +619,26 @@ class Wpr_Offcanvas extends Widget_Base {
 		);
 
 		$this->add_control_offcanvas_reverse_header();
+
+		$this->add_responsive_control(
+			'offcanvas_header_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'separator' => 'before',
+				'default' => [
+					'top' => 10,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
+				],
+				'size_units' => [ 'px' ],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-offcanvas-header' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'.wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-header' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				],
+			]
+		);
 
 		$this->add_control(
 			'offcanvas_close_icon_heading',

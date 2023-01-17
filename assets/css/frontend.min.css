@@ -15626,6 +15626,10 @@ dl.variation dd {
     right: 10px;
 }
 
+.wpr-offcanvas-body-overflow {
+    overflow: hidden;
+}
+
 .wpr-offcanvas-wrap {
     position: fixed;
     top: 0;
@@ -15654,6 +15658,7 @@ dl.variation dd {
     background-color: #FFF;
     text-align: center;
     overflow: hidden;
+    overflow-y: auto;
 }
 
 .wpr-offcanvas-content .elementor-invisible {
@@ -16246,18 +16251,8 @@ dl.variation dd {
             animation-fill-mode: forwards;  
 }
 
-@keyframes offcanvas-wrap-display {
-    0% {display: none}
-    100% {display: block}
-}
-
 .wpr-offcanvas-wrap-active {
-    -webkit-animation-name: offcanvas-wrap-display;
-            animation-name: offcanvas-wrap-display;
-    -webkit-animation-duration: 0.6s;
-            animation-duration: 0.6s;
-    -webkit-animation-fill-mode: forwards;
-            animation-fill-mode: forwards;  
+    display: block;
 }
 
 /* BADGE ANIMATION */
