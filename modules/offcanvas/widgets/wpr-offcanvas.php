@@ -108,14 +108,6 @@ class Wpr_Offcanvas extends Widget_Base {
 						'max' => 100,
 					]
 				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 300,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-offcanvas-content' => 'width: {{SIZE}}{{UNIT}};',
-					'.wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-content' => 'width: {{SIZE}}{{UNIT}};'
-				],
 				'condition' => [
 					'offcanvas_position' => ['left', 'right', 'middle']
 				]
@@ -148,10 +140,6 @@ class Wpr_Offcanvas extends Widget_Base {
 				'default' => [
 					'unit' => 'vh',
 					'size' => 30,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-offcanvas-content' => 'height: {{SIZE}}{{UNIT}};',
-					'.wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-content' => 'height: {{SIZE}}{{UNIT}};'
 				],
 				'condition' => [
 					'offcanvas_position' => ['top', 'bottom', 'middle']
@@ -863,7 +851,7 @@ class Wpr_Offcanvas extends Widget_Base {
 			'offcanvas-wrapper',
 			[
 				'class' => [ 'wpr-offcanvas-container' ],
-				'data-offcanvas-open' => $settings['offcanvas_open_by_default'],
+				'data-offcanvas-open' => ! wpr_fs()->can_use_premium_code() ? 'no' : $settings['offcanvas_open_by_default'],
 			]
 		);
 
