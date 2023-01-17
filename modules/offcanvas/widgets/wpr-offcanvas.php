@@ -56,31 +56,16 @@ class Wpr_Offcanvas extends Widget_Base {
             'offcanvas_position',
             [
                 'label'        => esc_html__('Position', 'wpr-addons'), 
-                'type'         => Controls_Manager::CHOOSE,
+                'type'         => Controls_Manager::SELECT,
                 'label_block'  => false,
                 'default'      => 'right',
 				'render_type' => 'template',
                 'options'      => [
-                    'right' => [
-                        'title' => esc_html__('Right', 'wpr-addons'),
-                        'icon'  => 'eicon-h-align-right',
-                    ],
-                    'pro-lf'  => [
-                        'title' => esc_html__('Left (Pro)', 'wpr-addons'),
-                        'icon'  => 'eicon-h-align-left',
-                    ],
-                    'pro-tp'   => [
-                        'title' => esc_html__('Top (Pro)', 'wpr-addons'),
-                        'icon'  => 'eicon-v-align-top',
-                    ],
-                    'pro-btm'  => [
-                        'title' => esc_html__('Bottom (Pro)', 'wpr-addons'),
-                        'icon'  => 'eicon-v-align-bottom',
-                    ],
-                    'pro-mdl'  => [
-                        'title' => esc_html__('Middle (Pro)', 'wpr-addons'),
-                        'icon'  => 'eicon-v-align-middle',
-                    ],
+                    'right' => esc_html__('Right', 'wpr-addons'),
+                    'pro-lf'  => esc_html__('Left (Pro)', 'wpr-addons'),
+                    'pro-tp'   => esc_html__('Top (Pro)', 'wpr-addons'),
+                    'pro-btm'  => esc_html__('Bottom (Pro)', 'wpr-addons'),
+                    'pro-mdl'  => esc_html__('Middle (Pro)', 'wpr-addons'),
 				]
             ]
         );
@@ -188,18 +173,18 @@ class Wpr_Offcanvas extends Widget_Base {
 	}
 
 	public function add_control_offcanvas_animation_duration() {
-		$this->add_control(
-			'offcanvas_animation_duration',
-			[
-				'label' => sprintf( __( 'Animation Duration %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 0.6,
-				'min' => 0,
-				'max' => 15,
-				'step' => 0.1,
-				'classes' => 'wpr-pro-control'
-			]
-		);
+		// $this->add_control(
+		// 	'offcanvas_animation_duration',
+		// 	[
+		// 		'label' => sprintf( __( 'Animation Duration %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+		// 		'type' => Controls_Manager::NUMBER,
+		// 		'default' => 0.6,
+		// 		'min' => 0,
+		// 		'max' => 15,
+		// 		'step' => 0.1,
+		// 		'classes' => 'wpr-pro-control'
+		// 	]
+		// );
 	}
 
 	public function add_control_offcanvas_open_by_default() {
@@ -268,6 +253,8 @@ class Wpr_Offcanvas extends Widget_Base {
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
+
+		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
 		$this->add_control(
 			'offcanvas_template',
