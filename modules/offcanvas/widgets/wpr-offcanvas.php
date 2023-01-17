@@ -861,6 +861,9 @@ class Wpr_Offcanvas extends Widget_Base {
 					'{{WRAPPER}} .wpr-offcanvas-wrap' => 'background-color: {{VALUE}};',
 					'.wpr-offcanvas-wrap-{{ID}}' => 'background-color: {{VALUE}};'
 				],
+				'condition' => [
+					'offcanvas_entrance_type!' => 'reveal'
+				]
 			]
 		);
 
