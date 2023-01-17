@@ -15635,7 +15635,7 @@ dl.variation dd {
     max-width: 100%;
     max-height: 100%;
     display: none;
-    z-index: 999;
+    z-index: 9999;
 }
 
 .wpr-offcanvas-wrap-active {
