@@ -5839,11 +5839,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     visibility: visible;
 }
 
-.wpr-offcanvas-container .wpr-template-edit-btn {
-    top: 10px;
-    right: 10px;
-}
-
 
 /*--------------------------------------------------------------
   == Mailchimp
@@ -15625,6 +15620,11 @@ dl.variation dd {
 /*--------------------------------------------------------------
 == Offcanvas
 --------------------------------------------------------------*/
+
+.wpr-offcanvas-container .wpr-template-edit-btn {
+    top: 10px;
+    right: 10px;
+}
 
 .wpr-offcanvas-wrap {
     position: fixed;
