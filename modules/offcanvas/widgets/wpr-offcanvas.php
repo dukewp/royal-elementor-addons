@@ -170,7 +170,7 @@ class Wpr_Offcanvas extends Widget_Base {
 				'default' => 'fade',
 				'options' => [
 					'fade' => esc_html__( 'Fade', 'wpr-addons' ),
-					'pro-sl' => esc_html__( 'Slide (Pri)', 'wpr-addons' ),
+					'pro-sl' => esc_html__( 'Slide (Pro)', 'wpr-addons' ),
 					'pro-gr' => esc_html__( 'Grow (Pro)', 'wpr-addons' ),
 				],
 				'prefix_class' => 'wpr-offcanvas-entrance-animation-'
