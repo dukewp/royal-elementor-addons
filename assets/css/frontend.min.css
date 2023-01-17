@@ -15638,11 +15638,6 @@ dl.variation dd {
     z-index: 9999;
 }
 
-.wpr-offcanvas-wrap-active {
-    display: block;
-    transition-duration: 0.6s;
-}
-
 .wpr-offcanvas-header {
     display: flex;
     justify-content: space-between;
@@ -16245,6 +16240,20 @@ dl.variation dd {
     opacity: 0;
     -webkit-animation-name: offcanvas-fade-out;
             animation-name: offcanvas-fade-out;
+    -webkit-animation-duration: 0.6s;
+            animation-duration: 0.6s;
+    -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;  
+}
+
+@keyframes offcanvas-wrap-display {
+    0% {display: none}
+    100% {display: block}
+}
+
+.wpr-offcanvas-wrap-active {
+    -webkit-animation-name: offcanvas-wrap-display;
+            animation-name: offcanvas-wrap-display;
     -webkit-animation-duration: 0.6s;
             animation-duration: 0.6s;
     -webkit-animation-fill-mode: forwards;

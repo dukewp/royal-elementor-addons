@@ -187,6 +187,28 @@ class Wpr_Offcanvas extends Widget_Base {
 		);
 	}
 
+	public function add_control_offcanvas_animation_duration() {
+		$this->add_control(
+			'offcanvas_animation_duration',
+			[
+				'label' => esc_html__( 'Animation Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.6,
+				'min' => 0,
+				'max' => 15,
+				'step' => 0.1,
+				'selectors' => [
+					'.wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-content' => 'animation-duration: {{VALUE}}s !important',
+					'{{WRAPPER}} .wpr-offcanvas-content' => 'animation-duration: {{VALUE}}s !important',
+					'.wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-wrap' => 'animation-duration: {{VALUE}}s !important',
+					'{{WRAPPER}} .wpr-offcanvas-wrap' => 'animation-duration: {{VALUE}}s !important',
+					'.wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-wrap-active' => 'animation-duration: {{VALUE}}s !important',
+					'{{WRAPPER}} .wpr-offcanvas-wrap-active' => 'animation-duration: {{VALUE}}s !important',
+				]
+			]
+		);
+	}
+
 	public function add_control_offcanvas_open_by_default() {
 		$this->add_control(
 			'offcanvas_open_by_default',
@@ -207,7 +229,7 @@ class Wpr_Offcanvas extends Widget_Base {
 				'label' => sprintf( __( 'Reverse Header %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
 				'type' => Controls_Manager::SWITCHER,
 				'render_type' => 'template',
-				'classes' => 'wpr-pro-control',
+				'classes' => 'wpr-pro-control no-distance',
 			]
 		);
 	}
@@ -291,6 +313,8 @@ class Wpr_Offcanvas extends Widget_Base {
 
 		$this->add_control_offcanvas_entrance_type();
 
+		$this->add_control_offcanvas_animation_duration();
+
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'offcanvas', 'offcanvas_entrance_type', ['pro-ps'] );
 
@@ -368,12 +392,25 @@ class Wpr_Offcanvas extends Widget_Base {
 
         $this->end_controls_section();
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'offcanvas', [
+			'Advanced Positioning',
+			'Advanced Entrance Animations',
+			'Custom Width & Height',
+			'Open Offcanvas by Default',
+			'Trigger Button Icon Select',
+			'Close Offcanvas Icon Positioning'
+		] );
+
 		// Tab: Style ==============
 		// Section: Button ------------
 		$this->start_controls_section(
 			'section_style_offcanvas_button',
 			[
-				'label' => esc_html__( 'Offcanvas Button', 'wpr-addons' ),
+				'label' => esc_html__( 'Button', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -427,6 +464,15 @@ class Wpr_Offcanvas extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'button_box_shadow',
+				'selector' => '{{WRAPPER}} .wpr-offcanvas-trigger',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'button_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-offcanvas-trigger',
 			]
 		);
@@ -487,24 +533,6 @@ class Wpr_Offcanvas extends Widget_Base {
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
-
-		$this->add_control(
-			'button_typography_divider',
-			[
-				'type' => Controls_Manager::DIVIDER,
-				'style' => 'thick',
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => 'button_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-offcanvas-trigger',
-				'separator' => 'before',
-			]
-		);
 
 		$this->add_responsive_control(
 			'button_padding',
@@ -581,8 +609,7 @@ class Wpr_Offcanvas extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-offcanvas-trigger' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'separator' => 'before',
+				]
 			]
 		);
 
@@ -593,7 +620,7 @@ class Wpr_Offcanvas extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_offcanvas_header',
 			[
-				'label' => esc_html__( 'Offcanvas Header', 'wpr-addons' ),
+				'label' => esc_html__( 'Header', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -683,36 +710,15 @@ class Wpr_Offcanvas extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_offcanvas_box',
 			[
-				'label' => esc_html__( 'Offcanvas Wrapper', 'wpr-addons' ),
+				'label' => esc_html__( 'Container', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
-			]
-		);
-
-		$this->add_control(
-			'offcanvas_overlay_style',
-			[
-				'label' => esc_html__( 'Overlay', 'wpr-addons' ),
-				'type' => Controls_Manager::HEADING
-			]
-		);
-
-		$this->add_control(
-			'offcanvas_overlay_color',
-			[
-				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#070707C4',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-offcanvas-wrap' => 'background-color: {{VALUE}};',
-					'.wpr-offcanvas-wrap-{{ID}}' => 'background-color: {{VALUE}};'
-				],
 			]
 		);
 
 		$this->add_control(
 			'offcanvas_box_style',
 			[
-				'label' => esc_html__( 'Wrapper', 'wpr-addons' ),
+				'label' => esc_html__( 'Container', 'wpr-addons' ),
 				'type' => Controls_Manager::HEADING
 			]
 		);
@@ -757,6 +763,7 @@ class Wpr_Offcanvas extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
+				'separator' => 'before',
 				'options' => [
 					'none' => esc_html__( 'None', 'wpr-addons' ),
 					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
@@ -831,6 +838,28 @@ class Wpr_Offcanvas extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-offcanvas-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'.wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				],
+			]
+		);
+
+		$this->add_control(
+			'offcanvas_overlay_style',
+			[
+				'label' => esc_html__( 'Overlay', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'offcanvas_overlay_color',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#070707C4',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-offcanvas-wrap' => 'background-color: {{VALUE}};',
+					'.wpr-offcanvas-wrap-{{ID}}' => 'background-color: {{VALUE}};'
 				],
 			]
 		);
