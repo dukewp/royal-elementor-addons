@@ -38,7 +38,7 @@ class Wpr_Offcanvas extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'offcanvas', 'off canvas', 'sidebar' ];
+		return [ 'offcanvas', 'off canvas', 'sidebar', 'ofcanvas', 'popup' ];
 	}
 
 	public function get_style_depends() {
@@ -254,7 +254,7 @@ class Wpr_Offcanvas extends Widget_Base {
 			]
 		);
 
-		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
+		// Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
 		$this->add_control(
 			'offcanvas_template',
@@ -755,6 +755,22 @@ class Wpr_Offcanvas extends Widget_Base {
 				'name' => 'offcanvas_box_shadow',
 				'label' => esc_html__( 'Box Shadow', 'wpr-addons' ),
 				'selector' => '{{WRAPPER}} .wpr-offcanvas-content, .wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-content',
+				'fields_options' => [
+					'box_shadow_type' =>
+						[ 
+							'default' =>'yes' 
+						],
+					'box_shadow' => [
+						'default' =>
+							[
+								'horizontal' => 0,
+								'vertical' => 0,
+								'blur' => 5,
+								'spread' => 0,
+								'color' => 'rgba(0,0,0,0.1)'
+							]
+					]
+				]
 			]
 		);
 
@@ -856,14 +872,14 @@ class Wpr_Offcanvas extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#070707C4',
+				'default' => '#07070733',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-offcanvas-wrap' => 'background-color: {{VALUE}};',
 					'.wpr-offcanvas-wrap-{{ID}}' => 'background-color: {{VALUE}};'
 				],
-				'condition' => [
-					'offcanvas_entrance_type!' => 'reveal'
-				]
+				// 'condition' => [
+				// 	'offcanvas_entrance_type!' => 'reveal'
+				// ]
 			]
 		);
 
