@@ -4601,6 +4601,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			if(!isset($body)) {
 				return $response['body'];
 			}
+
 			$instagram_data = $body->data;
 
 			$cache_timeout = $this->get_cache_duration();
@@ -4610,6 +4611,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			}
 
 		} else {
+			var_dump('transient works');
 			$instagram_data = get_transient($key);
 		}
 

@@ -12481,6 +12481,10 @@ a.wpr-ajax-img-wrap {
 == Instagram Feed
 --------------------------------------------------------------*/
 
+.wpr-instagram-feed {
+    opacity: 0;
+}
+
 .wpr-instagram-hidden-item {
     opacity: 0 !important;
     overflow: hidden;
