@@ -4611,7 +4611,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			}
 
 		} else {
-			var_dump('transient works');
 			$instagram_data = get_transient($key);
 		}
 
