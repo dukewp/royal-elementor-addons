@@ -4939,9 +4939,21 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					}
 				}
 			} else {
+				$count_elements = 0;
+				$caption_not_empty = true;
+				foreach ( $locations[$location] as $data ) {
+					$count_elements++;
+					if ( 'caption' === $data['element_select'] ) {
+						$caption_not_empty = isset($result->caption);
+					}
+				}
+
+				if ( $count_elements == 1 && !$caption_not_empty ) {
+					return;
+				}
+
 				echo '<div class="wpr-insta-feed-item-'. esc_attr($location) .'-content elementor-clearfix">';
 					foreach ( $locations[$location] as $data ) {
-
 						// Get Class
 						$class  = 'wpr-insta-feed-item-'. $data['element_select'];
 						$class .= ' elementor-repeater-item-'. $data['_id'];
@@ -4958,7 +4970,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 	}
 
 	public function render_insta_feed_pagination($settings) {
-		echo '<div class="wpr-grid-pagination elementor-clearfix wpr-grid-pagination-load-more">';
+		echo '<div class="wpr-grid-pagination wpr-pagination-hidden elementor-clearfix wpr-grid-pagination-load-more">';
 			echo '<button class="wpr-load-more-insta-posts wpr-load-more-btn">';
 				echo esc_html($settings['pagination_load_more_text']);
 			echo '</button>';
@@ -5046,7 +5058,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			'columns_laptop' => $columns_laptop,
 			'columns_widescreen' => $columns_widescreen,
 			'gutter_hr' => $settings['gutter']['size'],
-			'gutter_vr' => $settings['distance_bottom']['size'],
+			'gutter_vr' => isset($settings['distance_bottom']) ? $settings['distance_bottom']['size'] : '',
 			// 'animation' => $settings['layout_animation'],
 			// 'animation_duration' => $settings['layout_animation_duration'],
 			// 'animation_delay' => $settings['layout_animation_delay'],
@@ -5079,6 +5091,8 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		$instagram_settings['test'] = [
 			'instagram_access_token' => $settings['instagram_access_token'],
 			'limit' => $settings['limit'],
+			'limit_mobile' => $settings['limit_mobile'],
+			'is_mobile' => wp_is_mobile() ? 'mobile' : 'other',
 			'open_in_new_tab' => $settings['open_in_new_tab'],
 			'overlay_post_link' => $settings['overlay_post_link'],
 			'image_effects' => isset($settings['image_effects']) ? $settings['image_effects'] : 'none',
@@ -5229,11 +5243,19 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			if ( 'yes' === $settings['enable_cs_pag'] ) {
 				echo '<div class="swiper-pagination"></div>';
 			}
+
+			$posts_count = 0;
 			?>
 
 			<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'instagram' ) ); ?>>
 
-				<?php foreach($this->call_instagram_api($access_token, $settings) as $result) : ?>
+				<?php 
+					foreach($this->call_instagram_api($access_token, $settings) as $result) : 
+
+					if ( wp_is_mobile() && $posts_count > ($settings['limit_mobile'] - 1) ) {
+						break;
+					}
+				?>
 
 					<div class="wpr-insta-feed-content-wrap elementor-clearfix wpr-insta-col-12">
 						<figure>
@@ -5268,7 +5290,10 @@ class Wpr_Instagram_Feed extends Widget_Base {
 						</figure>
 					</div>
 
-				<?php endforeach; ?>
+				<?php
+					$posts_count++;
+					endforeach; 
+				?>
 				
 			</div>
 			

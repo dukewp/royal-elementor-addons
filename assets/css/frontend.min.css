@@ -12481,6 +12481,10 @@ a.wpr-ajax-img-wrap {
 == Instagram Feed
 --------------------------------------------------------------*/
 
+.wpr-pagination-hidden {
+    display: none !important;
+}
+
 .wpr-instagram-feed {
     opacity: 0;
 }
