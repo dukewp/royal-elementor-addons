@@ -24,6 +24,74 @@ class WPR_WooCommerce_Config {
 		add_filter( 'wc_get_template', [ $this, 'rewrite_default_wc_templates' ], 10, 3 );
 
 		add_filter( 'woocommerce_add_to_cart_fragments', [$this, 'wc_refresh_mini_cart_count']);
+		
+		function add_wishlist_to_my_account( $items ) {
+			$items['wishlist'] = __( 'Wishlist', 'wpr-addons' );
+			return $items;
+		}
+		
+		add_filter( 'woocommerce_account_menu_items', 'add_wishlist_to_my_account' );
+
+		function add_wishlist_endpoint() {
+			add_rewrite_endpoint( 'wishlist', EP_ROOT | EP_PAGES );
+		}
+		add_action( 'init', 'add_wishlist_endpoint' );
+		
+		// function wishlist_content() {
+		// 	// echo 'Was It Here ?';
+		// 	if ( ! is_wc_endpoint_url( 'wishlist' ) ) {
+		// 		return;
+		// 	}
+		
+		// 	$wishlist = get_user_meta( get_current_user_id(), 'wishlist', true );
+		// 	if ( ! $wishlist ) {
+		// 		$wishlist = array();
+		// 	}
+		// 	echo '<h3>' . __( 'My Wishlist', 'wpr-addons' ) . '</h3>';
+		// 	echo '<div class="wishlist-products">';
+		// 	foreach ( $wishlist as $product_id ) {
+		// 		$product = wc_get_product( $product_id );
+		// 		var_dump($product);
+		// 		if ( ! $product ) {
+		// 			continue;
+		// 		}
+		// 		echo '<div class="wishlist-product">';
+		// 		echo '<a href="' . $product->get_permalink() . '">' . $product->get_image() . '</a>';
+		// 		echo '<a href="' . $product->get_permalink() . '">' . $product->get_name() . '</a>';
+		// 		echo '<div class="wishlist-product-price">' . $product->get_price_html() . '</div>';
+		// 		echo '<button class="wishlist-remove" data-product-id="' . $product->get_id() . '">Remove from Wishlist</button>';
+		// 		echo '</div>';
+		// 	}
+		// 	echo '</div>';
+		// }
+		// add_action( 'woocommerce_account_wishlist_endpoint', 'wishlist_content' );
+		
+		// function display_wishlist_in_my_account() {
+		// 	if ( ! is_wc_endpoint_url( 'wishlist' ) ) {
+		// 		return;
+		// 	}
+		
+		// 	$wishlist = get_user_meta( get_current_user_id(), 'wishlist', true );
+		// 	if ( ! $wishlist ) {
+		// 		$wishlist = array();
+		// 	}
+		// 	echo '<h3>' . __( 'My Wishlist', 'wpr-addons' ) . '</h3>';
+		// 	echo '<div class="wishlist-products">';
+		// 	foreach ( $wishlist as $product_id ) {
+		// 		$product = wc_get_product( $product_id );
+		// 		if ( ! $product ) {
+		// 			continue;
+		// 		}
+		// 		echo '<div class="wishlist-product">';
+		// 			echo '<a href="' . $product->get_permalink() . '">' . $product->get_image() . '</a>';
+		// 			echo '<a href="' . $product->get_permalink() . '">' . $product->get_name() . '</a>';
+		// 			echo '<div class="wishlist-product-price">' . $product->get_price_html() . '</div>';
+		// 			echo '<button class="wishlist-remove" data-product-id="' . $product->get_id() . '">Remove from Wishlist</button>';
+		// 		echo '</div>';
+		// 	}
+		// 	echo '</div>';
+		// }
+		// add_action( 'woocommerce_account_content', 'display_wishlist_in_my_account' );
 	}
 
 	function wpr_remove_elementor_lightbox( $classes ) {

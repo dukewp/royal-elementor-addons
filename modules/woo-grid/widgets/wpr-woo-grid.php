@@ -250,6 +250,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'price' => esc_html__( 'Price', 'wpr-addons' ),
 			'rating' => esc_html__( 'Rating', 'wpr-addons' ),
 			'add-to-cart' => esc_html__( 'Add to Cart', 'wpr-addons' ),
+			'wishlist-button' => esc_html__( 'Wishlist Button', 'wpr-addons' ),
 			'lightbox' => esc_html__( 'Lightbox', 'wpr-addons' ),
 			'separator' => esc_html__( 'Separator', 'wpr-addons' ),
 			'pro-lk' => esc_html__( 'Likes (Pro)', 'wpr-addons' ),
@@ -7880,6 +7881,47 @@ class Wpr_Woo_Grid extends Widget_Base {
 			echo '</div>';
 		echo '</div>';
 	}
+
+	// Render Add To Cart
+	public function render_product_wishlist_button( $settings, $class ) {
+		global $product;
+
+		// If NOT a Product
+		if ( is_null( $product ) ) {
+			return;
+		}
+		
+		$wishlist = get_user_meta( get_current_user_id(), 'wishlist', true );
+		if ( ! $wishlist ) {
+			$wishlist = array();
+		}
+
+		$button_HTML = '';
+		$page_id = get_queried_object_id();
+
+		// Icon: Before
+		if ( 'before' === $settings['element_extra_icon_pos'] ) {
+			$button_HTML .= '<i class="wpr-grid-extra-icon-left '. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
+		}
+
+		// Icon: After
+		if ( 'after' === $settings['element_extra_icon_pos'] ) {
+			$button_HTML .= '<i class="wpr-grid-extra-icon-right '. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
+		}
+
+		echo '<div class="'. esc_attr($class) .'">';
+			echo '<div class="inner-block">';
+	
+			$remove_button_hidden = !in_array( $product->get_id(), $wishlist ) ? 'wpr-button-hidden' : '';
+			$add_button_hidden = in_array( $product->get_id(), $wishlist ) ? 'wpr-button-hidden' : '';
+	
+			echo '<a href="#" class="wishlist-remove '. $remove_button_hidden .'" data-product-id="' . $product->get_id() . '">Remove from Wishlist</a>';
+			echo '<a href="#" class="wishlist-add '. $add_button_hidden .'" data-product-id="' . $product->get_id() . '">Add to Wishlist</a>';
+
+			echo '</div>';
+		echo '</div>';
+	}
+
 	// Render Rating
 	public function render_product_rating( $settings, $class ) {
 
@@ -8011,6 +8053,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 			case 'add-to-cart':
 				$this->render_product_add_to_cart( $settings, $class );
+				break;
+			case 'wishlist-button':
+				$this->render_product_wishlist_button( $settings, $class );
 				break;
 		}
 

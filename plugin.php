@@ -151,6 +151,9 @@ class Plugin {
 
 		if ( class_exists('WooCommerce') && 'on' === get_option('wpr_override_woo_templates', 'on') ) {
 			require WPR_ADDONS_PATH . 'includes/woocommerce/woocommerce-config.php';
+
+			// Plugin Updaate Notice
+			require WPR_ADDONS_PATH . 'classes/woocommerce/wpr-add-remove-from-wishlist.php';
 		}
 	}
 
@@ -786,6 +789,18 @@ class Plugin {
 					'name' => 'wpr-product-breadcrumbs',
 					'title' => __('Product Breadcrumbs', 'wpr-addons'),
 					'icon' => 'wpr-icon eicon-product-breadcrumbs',
+					'categories' => '["'. $category .'"]',
+				],
+				[
+					'name' => 'wpr-wishlist-button',
+					'title' => __('Wishlist Button', 'wpr-addons'),
+					'icon' => 'wpr-icon eicon-heart',
+					'categories' => '["'. $category .'"]',
+				],
+				[
+					'name' => 'wpr-wishlist',
+					'title' => __('Wishlist', 'wpr-addons'),
+					'icon' => 'wpr-icon eicon-heart',
 					'categories' => '["'. $category .'"]',
 				],
 			];

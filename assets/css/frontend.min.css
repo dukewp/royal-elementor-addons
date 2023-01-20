@@ -13331,6 +13331,11 @@ flex-grow: 0; */
     margin-bottom: 0;
 }
 
+/* Wishlist Button */
+.wpr-button-hidden {
+    display: none;
+}
+
 /* Product Mini Cart */
 .wpr-mini-cart-sidebar-body {
     /* transition-duration: 1s;
