@@ -757,19 +757,19 @@ class Wpr_Twitter_Feed extends Widget_Base {
             ]
         );
 
-        $this->add_control(
-            'clear_cache_control',
-            [
-                'label'       => __( 'Clear Cache', 'wpr-addons' ),
-                'type'        => Controls_Manager::BUTTON,
-                'text'        => __( 'Clear', 'wpr-addons' ),
-                'event'       => 'wpr-clear-cache',
-                'description' => esc_html__( 'Note: This will refresh your feed and fetch the latest data from your Twitter account', 'wpr-addons' ),
-                'condition'   => [
-                    'auto_clear_cache' => 'yes'
-                ]
-            ]
-        );
+        // $this->add_control(
+        //     'clear_cache_control',
+        //     [
+        //         'label'       => __( 'Clear Cache', 'wpr-addons' ),
+        //         'type'        => Controls_Manager::BUTTON,
+        //         'text'        => __( 'Clear', 'wpr-addons' ),
+        //         'event'       => 'wpr-clear-cache',
+        //         'description' => esc_html__( 'Note: This will refresh your feed and fetch the latest data from your Twitter account', 'wpr-addons' ),
+        //         'condition'   => [
+        //             'auto_clear_cache' => 'yes'
+        //         ]
+        //     ]
+        // );
 
         $this->end_controls_section();
 
@@ -828,7 +828,10 @@ class Wpr_Twitter_Feed extends Widget_Base {
 					'{{WRAPPER}}.wpr-twitter-feed-list .wpr-twitter-feed' => 'column-count: {{VALUE}}',
 				],
 				'frontend_available' => true,
-				'render_type' => 'template'
+				'render_type' => 'template',
+				'condition' => [
+					'layout_select!' => 'carousel'
+				]
 			]
 		);
 
@@ -1544,6 +1547,9 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			[
 				'label' => esc_html__( 'Carousel', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
+				'condition' => [
+					'layout_select' => 'carousel'
+				]
 			]
 		);
 
@@ -1560,6 +1566,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				'tablet_default' => 2,
 				'mobile_extra_default' => 1,
 				'mobile_default' => 1,
+				'frontend_available' => true,
 				// 'min' => 1,
 				'condition' => [
 					'layout_select' => 'carousel',
@@ -1829,7 +1836,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				],
 				'range' => [
 					'px' => [
-						'min' => 0,
+						'min' => 5,
 						'max' => 300,
 					],
 				],
@@ -2070,6 +2077,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-tweet' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-twitter-profile-img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} 0 0;',
 				]
 			]
 		);
@@ -2097,7 +2105,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
         $this->end_controls_section();
 
 		// Styles ====================
-		// Section: Title ------------
+		// Section: Username ------------
 		$this->start_controls_section(
 			'section_style_username',
 			[
@@ -2148,7 +2156,15 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-twitter-feed-item-username .inner-block a' => 'border-color: {{VALUE}}',
 				],
-				'separator' => 'after',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'title_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-twitter-feed-item-username a'
 			]
 		);
 
@@ -2222,16 +2238,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 					'{{WRAPPER}} .wpr-twitter-feed-item-username .wpr-pointer-item:before' => 'transition-duration: {{VALUE}}s',
 					'{{WRAPPER}} .wpr-twitter-feed-item-username .wpr-pointer-item:after' => 'transition-duration: {{VALUE}}s',
 				],
-				'separator' => 'after',
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'title_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-twitter-feed-item-username a'
+				'separator' => 'before',
 			]
 		);
 
@@ -3045,6 +3052,229 @@ class Wpr_Twitter_Feed extends Widget_Base {
 		$this->end_controls_section();
 
 		// Styles ====================
+		// Section: Read More ------------
+		$this->start_controls_section(
+			'section_style_read_more',
+			[
+				'label' => esc_html__( 'Read More', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'show_label' => false,
+			]
+		);
+
+		$this->start_controls_tabs( 'tabs_grid_read_more_style' );
+
+		$this->start_controls_tab(
+			'tab_grid_read_more_normal',
+			[
+				'label' => esc_html__( 'Normal', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'read_more_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#1D9BF0',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-twitter-feed-item-read-more .inner-block a' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'read_more_bg_color',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-twitter-feed-item-read-more .inner-block a' => 'background-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'read_more_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-twitter-feed-item-read-more .inner-block a' => 'border-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'read_more_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-twitter-feed-item-read-more a'
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_grid_read_more_hover',
+			[
+				'label' => esc_html__( 'Hover', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'read_more_color_hr',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#54595f',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-twitter-feed-item-read-more .inner-block a:hover' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'read_more_bg_color_hr',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-twitter-feed-item-read-more .inner-block a:hover' => 'background-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'read_more_border_color_hr',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-twitter-feed-item-read-more .inner-block a:hover' => 'border-color: {{VALUE}}',
+				],
+			]
+		);
+
+		// $this->add_control_username_pointer_color_hr();
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		// $this->add_control_username_pointer();
+
+		// $this->add_control_username_pointer_height();
+
+		// $this->add_control_username_pointer_animation();
+
+		$this->add_control(
+			'read_more_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.2,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-twitter-feed-item-read-more .inner-block a' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-twitter-feed-item-read-more .wpr-pointer-item:before' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-twitter-feed-item-read-more .wpr-pointer-item:after' => 'transition-duration: {{VALUE}}s',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'read_more_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-twitter-feed-item-read-more .inner-block a' => 'border-style: {{VALUE}};',
+				],
+				'render_type' => 'template',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'read_more_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-twitter-feed-item-read-more .inner-block a' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'render_type' => 'template',
+				'condition' => [
+					'read_more_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'read_more_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-twitter-feed-item-read-more .inner-block a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'render_type' => 'template',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'read_more_margin',
+			[
+				'label' => esc_html__( 'Margin', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-twitter-feed-item-read-more .inner-block' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'render_type' => 'template',
+			]
+		);
+
+		$this->end_controls_section();
+
+		// Styles ====================
 		// Section: Separator Style 1
 		$this->start_controls_section(
 			'section_style_separator1',
@@ -3620,7 +3850,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 		$this->add_responsive_control(
 			'meta_items_size',
 			[
-				'label' => esc_html__( 'Top Distance', 'wpr-addons' ),
+				'label' => esc_html__( 'Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px' ],
 				'range' => [
@@ -4491,8 +4721,8 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			'columns_tablet_extra' => isset($settings['columns_tablet_extra']) ? $settings['columns_tablet_extra'] : $columns_laptop,
 			'columns_laptop' => $columns_laptop,
 			'columns_widescreen' => $columns_widescreen,
-			'gutter_hr' => $settings['gutter']['size'],
-			'gutter_vr' => $settings['distance_bottom']['size'],
+			'gutter_hr' => isset($settings['gutter']) ? $settings['gutter']['size'] : '',
+			'gutter_vr' => isset($settings['distance_bottom']) ? $settings['distance_bottom']['size'] : '',
 			// 'animation' => $settings['layout_animation'],
 			// 'animation_duration' => $settings['layout_animation_duration'],
 			// 'animation_delay' => $settings['layout_animation_delay'],
@@ -4534,6 +4764,8 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			$delay = isset($settings['twitter_feed_delay']) ? $settings['twitter_feed_delay'] : '';
 			$speed = $settings['twitter_feed_speed'];
 
+			// var_dump($slides_to_show, $slides_to_show_widescreen, $slides_to_show_laptop, $slides_to_show_tablet_extra, $slides_to_show_tablet, $slides_to_show_mobile, $settings['twitter_feed_slides_to_show_mobile'] );
+
 			$twitter_settings['carousel'] = [
 				'wpr_cs_navigation' => $navigation,
 				'wpr_cs_pagination' => $pagination,
@@ -4552,8 +4784,8 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				'wpr_cs_space_between_laptop' => $space_between_laptop,
 				'wpr_cs_space_between_tablet_extra' => $space_between_tablet_extra,
 				'wpr_cs_space_between_tablet' => $space_between_tablet,
-				'wpr_cs_space_between_tablet' => $space_between_mobile_extra,
-				'wpr_cs_space_between_tablet' => $space_between_mobile,
+				'wpr_cs_space_between_mobile_extra' => $space_between_mobile_extra,
+				'wpr_cs_space_between_mobile' => $space_between_mobile,
 				'wpr_cs_delay' => $delay,
 				'wpr_cs_speed' => $speed,
 				// 'enable_on'   => $settings['wpr_enable_equal_height_on'],
@@ -4647,7 +4879,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
         $banner = $item['user']['profile_banner_url'] ? $item['user']['profile_banner_url'] : $banner_placeholder;
         ?>
                 <div class="wpr-tweet elementor-clearfix">
-                        <img src="<?php echo $banner ?>" alt="">
+                        <img class="wpr-twitter-profile-img" src="<?php echo $banner ?>" alt="">
                         <article class="media">
 
                             <?php 

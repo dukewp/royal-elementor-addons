@@ -589,6 +589,44 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			]
 		);
 
+		// $this->add_responsive_control(
+		// 	'insta_feed_slides_to_show',
+		// 	[
+		// 		'label' => esc_html__( 'Slides To Show', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SLIDER,
+		// 		'default' => [
+		// 			'size' => 3,
+		// 		],
+		// 		'widescreen_default' => [
+		// 			'size' => 3,
+		// 		],
+		// 		'laptop_default' => [
+		// 			'size' => 3,
+		// 		],
+		// 		'tablet_extra_default' => [
+		// 			'size' => 2,
+		// 		],
+		// 		'tablet_default' => [
+		// 			'size' => 2,
+		// 		],
+		// 		'mobile_extra_default' => [
+		// 			'size' => 1,
+		// 		],
+		// 		'mobile_default' => [
+		// 			'size' => 1,
+		// 		],
+		// 		// 'range' => [
+		// 		// 	'px' => [
+		// 		// 		'min' => 0,
+		// 		// 		'max' => 100,
+		// 		// 	],
+		// 		// ],
+		// 		'condition' => [
+		// 			'insta_layout_select' => 'layout-carousel',
+		// 		]
+		// 	]
+		// );
+
 		$this->add_responsive_control(
 			'insta_feed_slides_to_show',
 			[
@@ -602,6 +640,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'tablet_default' => 2,
 				'mobile_extra_default' => 1,
 				'mobile_default' => 1,
+				'frontend_available' => true,
 				// 'min' => 1,
 				'condition' => [
 					'insta_layout_select' => 'layout-carousel',
@@ -1583,7 +1622,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			]
 		);
 
-		$this->add_control_overlay_animation_divider();
+		// $this->add_control_overlay_animation_divider();
 
 		$this->end_controls_section(); // End Controls Section
 
@@ -5057,7 +5096,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			'columns_tablet_extra' => isset($settings['columns_tablet_extra']) ? $settings['columns_tablet_extra'] : $columns_laptop,
 			'columns_laptop' => $columns_laptop,
 			'columns_widescreen' => $columns_widescreen,
-			'gutter_hr' => $settings['gutter']['size'],
+			'gutter_hr' => ($settings['gutter']) ? $settings['gutter']['size'] : '',
 			'gutter_vr' => isset($settings['distance_bottom']) ? $settings['distance_bottom']['size'] : '',
 			// 'animation' => $settings['layout_animation'],
 			// 'animation_duration' => $settings['layout_animation_duration'],

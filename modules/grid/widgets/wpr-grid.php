@@ -4131,7 +4131,7 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'name'     => 'date_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-grid-item-date'
+				'selector' => '{{WRAPPER}} .wpr-grid-item-date, {{WRAPPER}} .wpr-grid-item-date span'
 			]
 		);
 

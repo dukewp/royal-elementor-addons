@@ -12356,6 +12356,13 @@ a.wpr-ajax-img-wrap {
 == Twitter Feed
 --------------------------------------------------------------*/
 
+    .wpr-twitter-feed-cont .swiper-pagination-bullets,
+    .wpr-twitter-feed-cont .swiper-pagination-fraction {
+        display: inline-block !important;
+        width: auto !important;
+        transform: translateX(-50%);
+    }
+
     .wpr-twitter-hidden-item {
         opacity: 0 !important;
         overflow: hidden !important;
@@ -12406,6 +12413,13 @@ a.wpr-ajax-img-wrap {
 
     .wpr-tf-statistics {
         text-align: left;
+    }
+
+    @media screen and (max-width: 767px) {
+        .wpr-tf-statistics {
+            display: flex;
+            flex-direction: column;
+        }
     }
 
     .wpr-tf-header-profile-img {
