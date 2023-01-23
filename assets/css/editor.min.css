@@ -164,6 +164,11 @@
 	padding-bottom: 0 !important;
 }
 
+.elementor-control-filters_transition_duration,
+.elementor-control-show_last_update_date {
+	padding-top: 0 !important;
+}
+
 .elementor-control-animation_divider,
 .elementor-control-overlay_divider,
 .elementor-control-slider_item_btn_1_divider,
