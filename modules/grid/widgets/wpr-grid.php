@@ -3115,50 +3115,50 @@ class Wpr_Grid extends Widget_Base {
 		);
 
 		// TEMPORARY - GOGA
-		$this->add_control(
-			'apply_styling_to_media_wrap',
-			[
-				'label' => esc_html__( 'Apply Styles To Media', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-			]
-		);
+		// $this->add_control(
+		// 	'apply_styling_to_media_wrap',
+		// 	[
+		// 		'label' => esc_html__( 'Apply Styles To Media', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SWITCHER,
+		// 	]
+		// );
 
-		$this->add_control(
-			'grid_item_outer_bg_color',
-			[
-				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-item' => 'background-color: {{VALUE}}',
-				],
-				'condition' => [
-					'apply_styling_to_media_wrap' => 'yes'
-				]
-			]
-		);
+		// $this->add_control(
+		// 	'grid_item_outer_bg_color',
+		// 	[
+		// 		'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::COLOR,
+		// 		'default' => '',
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-grid-item' => 'background-color: {{VALUE}}',
+		// 		],
+		// 		'condition' => [
+		// 			'apply_styling_to_media_wrap' => 'yes'
+		// 		]
+		// 	]
+		// );
 
-		$this->add_responsive_control(
-			'grid_item_outer_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 10,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-media-wrap' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'condition' => [
-					'apply_styling_to_media_wrap' => 'yes'
-				],
-				'render_type' => 'template'
-			]
-		);
+		// $this->add_responsive_control(
+		// 	'grid_item_outer_padding',
+		// 	[
+		// 		'label' => esc_html__( 'Padding', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::DIMENSIONS,
+		// 		'size_units' => [ 'px' ],
+		// 		'default' => [
+		// 			'top' => 10,
+		// 			'right' => 0,
+		// 			'bottom' => 0,
+		// 			'left' => 0,
+		// 		],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-grid-media-wrap' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+		// 		],
+		// 		'condition' => [
+		// 			'apply_styling_to_media_wrap' => 'yes'
+		// 		],
+		// 		'render_type' => 'template'
+		// 	]
+		// );
 
 		$this->add_control(
 			'grid_item_bg_color',
