@@ -205,6 +205,7 @@ class Wpr_Offcanvas extends Widget_Base {
 			'offcanvas_reverse_header',
 			[
 				'label' => sprintf( __( 'Reverse Header %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'description' => esc_html__('Reverse Close Icon and Title Locations'),
 				'type' => Controls_Manager::SWITCHER,
 				'render_type' => 'template',
 				'classes' => 'wpr-pro-control no-distance',
@@ -227,6 +228,23 @@ class Wpr_Offcanvas extends Widget_Base {
 		// 		]
 		// 	]
 		// );
+
+		$this->add_control(
+			'offcanvas_button_icon',
+			[
+				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
+				'type' => Controls_Manager::ICONS,
+				'skin' => 'inline',
+				'label_block' => false,
+				'default' => [
+					'value' => 'fas fa-bars',
+					'library' => 'fa-solid',
+				],
+				'condition' => [
+					'offcanvas_show_button_icon' => 'yes'
+				]
+			]
+		);
 	}
 
 	public function wpr_offcanvas_template( $id ) {
@@ -270,10 +288,23 @@ class Wpr_Offcanvas extends Widget_Base {
 		);
 
 		$this->add_control(
+			'offcanvas_show_header_title',
+			[
+				'label' => esc_html__( 'Header Title', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'render_type' => 'template',
+				'default' => 'yes'
+			]
+		);
+
+		$this->add_control(
 			'offcanvas_title', [
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => esc_html__( 'Offcanvas', 'wpr-addons' ),
+				'condition' => [
+					'offcanvas_show_header_title' => 'yes'
+				]
 			]
 		);
 
@@ -310,16 +341,40 @@ class Wpr_Offcanvas extends Widget_Base {
 		);
 
 		$this->add_control(
+			'offcanvas_show_button_title',
+			[
+				'label' => esc_html__( 'Show Title', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'render_type' => 'template',
+				'default' => 'yes'
+			]
+		);
+
+		$this->add_control(
 			'offcanvas_button_title', 
 			[
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => esc_html__( 'Click Here', 'wpr-addons' ),
+				'condition' => [
+					'offcanvas_show_button_title' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control(
+			'offcanvas_show_button_icon',
+			[
+				'label' => esc_html__( 'Show Icon', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'render_type' => 'template',
+				'default' => 'yes'
 			]
 		);
 
 		$this->add_control_offcanvas_button_icon();
 
+		// GOGA - hide if no text
 		$this->add_responsive_control(
 			'offcanvas_button_icon_distance',
 			[
@@ -338,6 +393,11 @@ class Wpr_Offcanvas extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-offcanvas-trigger i' => 'margin-right: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'offcanvas_show_button_icon' => 'yes',
+					'offcanvas_show_button_title' => 'yes',
+					'offcanvas_button_title!' => ''
 				]
 			]
 		);
@@ -382,7 +442,7 @@ class Wpr_Offcanvas extends Widget_Base {
 			'Custom Width & Height',
 			'Open Offcanvas by Default',
 			'Trigger Button Icon Select',
-			'Close Offcanvas Icon Positioning'
+			'Close Icon Positioning'
 		] );
 
 		// Tab: Style ==============
@@ -677,7 +737,10 @@ class Wpr_Offcanvas extends Widget_Base {
 			[
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => Controls_Manager::HEADING,
-				'separator' => 'before'
+				'separator' => 'before',
+				'condition' => [
+					'offcanvas_show_header_title' => 'yes'
+				]
 			]
 		);
 
@@ -691,6 +754,9 @@ class Wpr_Offcanvas extends Widget_Base {
 					'{{WRAPPER}} .wpr-offcanvas-title' => 'color: {{VALUE}};',
 					'.wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-title' => 'color: {{VALUE}};'
 				],
+				'condition' => [
+					'offcanvas_show_header_title' => 'yes'
+				]
 			]
 		);
 
@@ -700,7 +766,10 @@ class Wpr_Offcanvas extends Widget_Base {
 				'name' => 'offcanvas_title',
 				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-offcanvas-title, .wpr-offcanvas-wrap-{{ID}} .wpr-offcanvas-title',
-			]
+				'condition' => [
+					'offcanvas_show_header_title' => 'yes'
+				]
+			],
 		);
 
         $this->end_controls_section();
@@ -907,12 +976,10 @@ class Wpr_Offcanvas extends Widget_Base {
 
 		<div <?php echo $this->get_render_attribute_string( 'offcanvas-wrapper' ); ?>>
 			<button class="wpr-offcanvas-trigger">
-				<?php if ( !empty($settings['offcanvas_button_icon']) && wpr_fs()->can_use_premium_code() ) : 
+				<?php if ( 'yes' === $settings['offcanvas_show_button_icon'] && !empty($settings['offcanvas_button_icon']) ) : 
 					\Elementor\Icons_Manager::render_icon( $settings['offcanvas_button_icon'] );
-				elseif ( ! wpr_fs()->can_use_premium_code() ) : ?>
-					<i class="fas fa-bars"></i>
-				<?php endif; ?>
-				<?php if ( !empty($settings['offcanvas_button_title']) ) : ?>
+				endif; ?>
+				<?php if ( 'yes' === $settings['offcanvas_show_button_title'] && !empty($settings['offcanvas_button_title']) ) : ?>
 					<span><?php echo esc_html($settings['offcanvas_button_title']) ?></span>
 				<?php endif; ?>
 			</button>
@@ -923,7 +990,7 @@ class Wpr_Offcanvas extends Widget_Base {
 						<span class="wpr-close-offcanvas">
 							<i class="fa fa-times" aria-hidden="true"></i>
 						</span>
-						<?php if ( !empty($settings['offcanvas_title']) ) : ?>
+						<?php if ( 'yes' === $settings['offcanvas_show_header_title'] && !empty($settings['offcanvas_title']) ) : ?>
 							<span class="wpr-offcanvas-title"><?php echo esc_html($settings['offcanvas_title']) ?></span>
 						<?php endif; ?>
 					</div>
@@ -931,7 +998,7 @@ class Wpr_Offcanvas extends Widget_Base {
 						if ( !empty($settings['offcanvas_template']) ) {
 							echo $this->wpr_offcanvas_template($settings['offcanvas_template']);
 						} else {
-							echo '<p>Please select a template!</p>';
+							echo '<p>'. esc_html__('Please select a template!') .'</p>';
 						}
 					?>
 				</div>

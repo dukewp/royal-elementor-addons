@@ -73,6 +73,29 @@ class Wpr_Facebook_Feed extends Widget_Base {
     protected function render() {
 		$settings = $this->get_settings_for_display();
 
+		// // Start Posts
+		// // Set the access token
+		// $access_token = "YOUR_ACCESS_TOKEN";
+		
+		// // Make a GET request to the Facebook Graph API using Wordpress HTTP API
+		// $response = wp_remote_get( "https://graph.facebook.com/v7.0/PAGE_ID/posts?access_token=$access_token" );
+		
+		// // Check for errors
+		// if ( is_wp_error( $response ) ) {
+		// 	echo 'Error: ' . $response->get_error_message();
+		// 	exit;
+		// }
+		
+		// // Decode the response
+		// $response = json_decode( wp_remote_retrieve_body( $response ), true );
+		
+		// // Iterate over each post
+		// foreach ( $response['data'] as $post ) {
+		// 	// Display the post on the profile
+		// 	echo "<div class='post'>".$post['message']."</div>";
+		// }
+		// // End posts
+
         echo '<div class="wpr-facebook-feed">';
         
         echo '<a target="_blank" class="wpr-login-to-facebook" href="https://www.facebook.com/v13.0/dialog/oauth?client_id=1184287221975469&redirect_uri=https://reastats.kinsta.cloud/token/social-network-fb.php">Log In</a>';
