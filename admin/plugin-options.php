@@ -531,7 +531,7 @@ function wpr_addons_settings_page() {
 
 } // End wpr_addons_settings_page()
 
-// Add Pro Plugin Link Sub Menu item that will redirect to wp.org
+// // Add Pro Plugin Link Sub Menu item that will redirect to wp.org
 // function wpr_addons_add_pro_plugin_direct_link_page() {
 //     add_submenu_page( 'wpr-addons', 'Pro Plugin Direct Link', 'Pro Plugin Direct Link', 'manage_options', 'wpr-pro-plugin-direct-link', 'wpr_addons_pro_plugin_direct_link', 99 );
 // }
