@@ -3424,7 +3424,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			]
 		);
 
-		$this->start_controls_tabs('cs_nav_tabs',);
+		$this->start_controls_tabs('cs_nav_tabs');
 
 		$this->start_controls_tab(
 			'cs_nav_tab_normal',

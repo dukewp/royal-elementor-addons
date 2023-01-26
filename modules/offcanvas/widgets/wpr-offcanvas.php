@@ -769,7 +769,7 @@ class Wpr_Offcanvas extends Widget_Base {
 				'condition' => [
 					'offcanvas_show_header_title' => 'yes'
 				]
-			],
+			]
 		);
 
         $this->end_controls_section();
