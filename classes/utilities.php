@@ -636,7 +636,7 @@ class Utilities {
 
 		foreach ( $post_types as $post_type_slug => $post_type_name ) {
 			$data[ $post_type_slug ] = [];
-			$posts = get_posts( [ 'post_type' => $post_type_slug ] );
+			$posts = get_posts( [ 'post_type' => $post_type_slug, 'posts_per_page' => -1 ] );
 
 			foreach (  $posts as $key => $post ) {
 				$meta_keys = get_post_custom_keys( $post->ID );
