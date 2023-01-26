@@ -3994,6 +3994,30 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-product-tags .inner-block a' => 'border-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'tags_extra_text_color',
+			[
+				'label'  => esc_html__( 'Extra Text Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#9C9C9C',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-product-tags .inner-block span[class*="wpr-grid-extra-text"]' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'tags_extra_icon_color',
+			[
+				'label'  => esc_html__( 'Extra Icon Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#9C9C9C',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-product-tags .inner-block i[class*="wpr-grid-extra-icon"]' => 'color: {{VALUE}}',
 				],
 				'separator' => 'after',
 			]

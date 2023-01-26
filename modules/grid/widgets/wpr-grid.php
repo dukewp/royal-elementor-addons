@@ -1325,6 +1325,21 @@ class Wpr_Grid extends Widget_Base {
 
 		$this->add_control_layout_slider_nav_hover();
 
+		// $this->add_control(
+		// 	'layout_slider_nav_icon',
+		// 	[
+		// 		'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
+		// 		'type' => 'wpr-arrow-icons',
+		// 		'default' => 'fas fa-angle',
+		// 		'separator' => 'after',
+		// 		'condition' => [
+		// 			'layout_slider_nav' => 'yes',
+		// 			'layout_select' => 'slider',
+		// 		]
+		// 	]
+		// );
+
+		// GOGA - change to new control
 		$this->add_control(
 			'layout_slider_nav_icon',
 			[

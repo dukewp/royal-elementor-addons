@@ -3323,8 +3323,12 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     cursor: pointer;
 }
 
-.wpr-grid-slider-arrow i {
-    display: block;
+
+/* GOGA - it was display block for some reason */
+.wpr-grid-slider-arrow i {    
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     height: 100%;
 }
