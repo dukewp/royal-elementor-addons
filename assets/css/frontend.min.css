@@ -3324,7 +3324,7 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
 }
 
 
-/* GOGA - it was display block for some reason */
+/* GOGA - it was display block for some reason, change it back if necessary */
 .wpr-grid-slider-arrow i {    
     display: flex;
     justify-content: center;
