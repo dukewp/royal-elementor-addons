@@ -2755,8 +2755,6 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				// Slider Background Image
 				$slider_html .= '<div class="wpr-slider-item-bg '. esc_attr($ken_burn_class) .'" style="background-image: url('. esc_url($item_bg_image_url) .')"></div>';
 
-				$slider_html .= '<img class="wpr-test-goga" src="'. esc_url($item_bg_image_url) .'" />';
-
 				$slider_amount = +$settings['slider_amount'];
 
 				// Slider Overlay
