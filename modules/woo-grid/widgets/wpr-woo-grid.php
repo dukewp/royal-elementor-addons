@@ -8424,6 +8424,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 		// Load More / Infinite Scroll
 		} else {
 			echo '<a href="'. esc_url(get_pagenum_link( $paged + 1, true )) .'" class="wpr-load-more-btn" data-e-disable-page-transition>';
+			// echo '<a href="'. esc_url_raw( str_replace( 999999999, '%#%', remove_query_arg( 'add-to-cart', get_pagenum_link( 999999999, false ) ) ) ) .'" class="wpr-load-more-btn" data-e-disable-page-transition>';
+			// echo '<a href="'. esc_url(get_next_posts_page_link()) .'" class="wpr-load-more-btn" data-e-disable-page-transition>';
 				echo esc_html($settings['pagination_load_more_text']);
 			echo '</a>';
 

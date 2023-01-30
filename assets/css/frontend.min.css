@@ -11463,6 +11463,7 @@ a.wpr-ajax-img-wrap {
 
 .wpr-timeline-outer-container {
     position: relative;
+    opacity: 0;
 }
 
 .wpr-vertical {
