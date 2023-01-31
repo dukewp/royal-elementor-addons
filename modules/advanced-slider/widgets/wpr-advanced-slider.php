@@ -761,12 +761,13 @@ class Wpr_Advanced_Slider extends Widget_Base {
 		$this->add_control(
 			'slider_image_type',
 			[
-				'label' => esc_html__( 'Image Type', 'wpr-addons' ),
+				'label' => esc_html__( 'Media Type', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'svg-angle-1-left',
 				'options' =>  [
-					'backgorund' => esc_html__( 'Background', 'wpr-addons' ),
+					'background' => esc_html__( 'Background', 'wpr-addons' ),
 					'image' => esc_html__( 'Image', 'wpr-addons' ),
+					'video' => esc_html__( 'Video', 'wpr-addons' ),
 				]
 			]
 		);
@@ -2773,6 +2774,10 @@ class Wpr_Advanced_Slider extends Widget_Base {
 
 				if ( 'image' == $settings['slider_image_type'] ) {
 					$slider_html .= '<img class="wpr-test-goga" src="'. esc_url($item_bg_image_url) .'" />';
+				}
+
+				if ( 'video' == $settings['slider_image_type'] ) {
+					
 				}
 
 				$slider_amount = +$settings['slider_amount'];
