@@ -758,6 +758,19 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'slider_image_type',
+			[
+				'label' => esc_html__( 'Image Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'svg-angle-1-left',
+				'options' =>  [
+					'backgorund' => esc_html__( 'Background', 'wpr-addons' ),
+					'image' => esc_html__( 'Image', 'wpr-addons' ),
+				]
+			]
+		);
+
 		$this->add_responsive_control(
 			'slider_height',
 			[
@@ -783,6 +796,9 @@ class Wpr_Advanced_Slider extends Widget_Base {
 					'{{WRAPPER}} .wpr-slider-item' => 'height: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
+				'condition' => [
+					'slider_image_type' => 'background'
+				]
 			]
 		);
 
@@ -2755,6 +2771,10 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				// Slider Background Image
 				$slider_html .= '<div class="wpr-slider-item-bg '. esc_attr($ken_burn_class) .'" style="background-image: url('. esc_url($item_bg_image_url) .')"></div>';
 
+				if ( 'image' == $settings['slider_image_type'] ) {
+					$slider_html .= '<img class="wpr-test-goga" src="'. esc_url($item_bg_image_url) .'" />';
+				}
+
 				$slider_amount = +$settings['slider_amount'];
 
 				// Slider Overlay
@@ -2930,7 +2950,8 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			'pauseOnHover' => $settings['slider_pause_on_hover'],
 			'prevArrow' => '#wpr-slider-prev-'. $this->get_id(),
 			'nextArrow' => '#wpr-slider-next-'. $this->get_id(),
-			'vertical' => 'slide_vertical' === $settings['slider_effect'] ? true : false
+			'vertical' => 'slide_vertical' === $settings['slider_effect'] ? true : false,
+			'adaptiveHeight' => true
 		];
 
 		$this->add_render_attribute( 'advanced-slider-attribute', [

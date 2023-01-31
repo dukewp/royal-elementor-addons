@@ -5955,6 +5955,12 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 /*--------------------------------------------------------------
   == Advanced Slider
   --------------------------------------------------------------*/
+.wpr-test-goga {
+    position: relative;
+    width: 100%;
+    height: auto;
+    z-index: 79;
+}
 
 .wpr-advanced-slider-wrap {
     position: relative;
@@ -5962,13 +5968,15 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 .wpr-advanced-slider {
     position: relative;
-    height: 500px;
+    /* height: 500px; */
+    height: auto;
     overflow: hidden;
 }
 
 .wpr-slider-item {
     position: relative;
-    height: 500px;
+    /* height: 500px; */
+    height: auto;
     overflow: hidden;
 }
 
