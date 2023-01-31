@@ -5020,7 +5020,7 @@
 			}
 		}, // End of widgetTaxonomyList
 
-		widgetPostsTimeline: function($scope) { // goback
+		widgetPostsTimeline: function($scope) {
 			var iScrollTarget = $scope.find( '.wpr-timeline-centered' ).length > 0 ? $scope.find( '.wpr-timeline-centered' ) : '',
 			    element = $scope.find('.wpr-timeline-centered').length > 0 ? $scope.find('.wpr-timeline-centered') : '',
 				pagination = $scope.find( '.wpr-grid-pagination' ).length > 0 ? $scope.find( '.wpr-grid-pagination' ) : '',

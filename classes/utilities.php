@@ -67,6 +67,11 @@ class Utilities {
 			'Template' => ['elementor-template', '', '', ''],
 			'Video Playlist' => ['video-playlist', '', '', ''],
 			'Reading Progress Bar' => ['reading-progress-bar', 'https://royal-elementor-addons.com/elementor-reading-progress-bar-widget/', '', 'new'],
+			'Advanced Accordion' => ['advanced-accordion', '', '', 'new'],
+			'Instagram Feed' => ['instagram-feed', '', '', 'new'],
+			'Twitter Feed' => ['twitter-feed', '', '', 'new'],
+			// 'Facebook Feed' => ['facebook-feed', '', '', 'new'],
+			'Offcanvas' => ['offcanvas', 'https://royal-elementor-addons.com/elementor-offcanvas-widget/', '', 'new'],
 			// 'Random Image' => ['random-image', '', ''],
 		];
 	}
@@ -632,7 +637,7 @@ class Utilities {
 
 		foreach ( $post_types as $post_type_slug => $post_type_name ) {
 			$data[ $post_type_slug ] = [];
-			$posts = get_posts( [ 'post_type' => $post_type_slug ] );
+			$posts = get_posts( [ 'post_type' => $post_type_slug, 'posts_per_page' => -1 ] );
 
 			foreach (  $posts as $key => $post ) {
 				$meta_keys = get_post_custom_keys( $post->ID );

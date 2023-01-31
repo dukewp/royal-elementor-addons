@@ -749,6 +749,11 @@ jQuery(document).ready(function( $ ) {
 	
 	});
 
+    // $('a.wpr-authorize-instagram').on('click', function() {
+    //     window.open('https://www.instagram.com/oauth/authorize?client_id=5484217328332432&redirect_uri=https://reastats.kinsta.cloud/token/social-network.php&scope=user_profile,user_media&response_type=code','popup','width=600,height=600'); 
+    //     return false;
+    // });
+
 
 	//TODO: Remove this - only for development
 	// $('.nav-tab-wrapper').after( '<p>'+ $('.nav-tab-wrapper').next('input').val() +'</p>' );

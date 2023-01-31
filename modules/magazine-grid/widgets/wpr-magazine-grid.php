@@ -80,6 +80,17 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		return $post_types;
 	}
 
+	public function add_control_open_links_in_new_tab() {
+		$this->add_control(
+			'open_links_in_new_tab',
+			[
+				'label' => sprintf( __( 'Open Links in New Tab %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);
+	}
+
 	public function add_control_query_randomize() {
 		$this->add_control(
 			'query_randomize',
@@ -672,6 +683,9 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 		$this->add_control_force_responsive_one_column();
 
+		// GOGA - better location
+		$this->add_control_open_links_in_new_tab();
+
 		$this->add_group_control(
 			Group_Control_Image_Size::get_type(),
 			[
@@ -755,12 +769,30 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'layout_gutter_hr',
 			[
 				'label' => esc_html__( 'Horizontal Gutter', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
+					'size' => 4,
+				],
+				'widescreen_default' => [
+					'size' => 4,
+				],
+				'laptop_default' => [
+					'size' => 4,
+				],
+				'tablet_extra_default' => [
+					'size' => 4,
+				],
+				'tablet_default' => [
+					'size' => 4,
+				],
+				'mobile_extra_default' => [
+					'size' => 4,
+				],
+				'mobile_default' => [
 					'size' => 4,
 				],
 				'range' => [
@@ -776,12 +808,30 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'layout_gutter_vr',
 			[
 				'label' => esc_html__( 'Vertical Gutter', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
+					'size' => 4,
+				],
+				'widescreen_default' => [
+					'size' => 4,
+				],
+				'laptop_default' => [
+					'size' => 4,
+				],
+				'tablet_extra_default' => [
+					'size' => 4,
+				],
+				'tablet_default' => [
+					'size' => 4,
+				],
+				'mobile_extra_default' => [
+					'size' => 4,
+				],
+				'mobile_default' => [
 					'size' => 4,
 				],
 				'range' => [
@@ -5096,13 +5146,14 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		$title_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['title_pointer'];
 		$title_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['title_pointer_animation'];
 		$pointer_item_class = (isset($this->get_settings()['title_pointer']) && 'none' !== $this->get_settings()['title_pointer']) ? 'class="wpr-pointer-item"' : '';
+		$open_links_in_new_tab = 'yes' === $this->get_settings()['open_links_in_new_tab'] ? '_blank' : '_self';
 
 		$class .= ' wpr-pointer-'. $title_pointer;
 		$class .= ' wpr-pointer-line-fx wpr-pointer-fx-'. $title_pointer_animation;
 
 		echo '<'. esc_html($settings['element_title_tag']) .' class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo '<a '. $pointer_item_class .' href="'. esc_url( get_the_permalink() ) .'">';
+				echo '<a  target="'. $open_links_in_new_tab .'" '. $pointer_item_class .' href="'. esc_url( get_the_permalink() ) .'">';
 				if ( 'word_count' === $settings['element_trim_text_by'] ) {
 					echo esc_html(wp_trim_words( get_the_title(), $settings['element_word_count'] ));
 				} else {
@@ -5301,10 +5352,11 @@ class Wpr_Magazine_Grid extends Widget_Base {
 	// Render Post Read More
 	public function render_post_read_more( $settings, $class ) {
 		$read_more_animation = ! wpr_fs()->can_use_premium_code() ? 'wpr-button-none' : $this->get_settings()['read_more_animation'];
+		$open_links_in_new_tab = 'yes' === $this->get_settings()['open_links_in_new_tab'] ? '_blank' : '_self';
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo '<a href="'. esc_url( get_the_permalink() ) .'" class="wpr-button-effect '. esc_attr($read_more_animation) .'">';
+				echo '<a target="'. $open_links_in_new_tab .'" href="'. esc_url( get_the_permalink() ) .'" class="wpr-button-effect '. esc_attr($read_more_animation) .'">';
 
 				// Icon: Before
 				if ( 'before' === $settings['element_extra_icon_pos'] ) {
