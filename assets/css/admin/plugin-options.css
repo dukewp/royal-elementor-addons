@@ -674,6 +674,23 @@
   display: none !important;
 }
 
+/* GOGA - conditions overflow the viewport if too many */
+.wpr-conditions-wrap {
+  max-height: 40vh;
+  width: 650px;
+  overflow: visible;
+  overflow-x: visible;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  -webkit-overflow-x: visible;
+  -moz-overflow-x: visible;
+  -ms-overflow-x: visible;
+  overflow-y: auto;
+  -webkit-overflow-y: auto;
+  -moz-overflow-y: auto;
+  -ms-overflow-y: auto;
+}
+
 .wpr-conditions-wrap.blog-posts .singles-condition-select option:nth-child(1),
 .wpr-conditions-wrap.blog-posts .singles-condition-select option:nth-child(2),
 .wpr-conditions-wrap.blog-posts .singles-condition-select option:nth-child(3) {
