@@ -2776,10 +2776,6 @@ class Wpr_Advanced_Slider extends Widget_Base {
 					$slider_html .= '<img class="wpr-test-goga" src="'. esc_url($item_bg_image_url) .'" />';
 				}
 
-				if ( 'video' == $settings['slider_image_type'] ) {
-					
-				}
-
 				$slider_amount = +$settings['slider_amount'];
 
 				// Slider Overlay
