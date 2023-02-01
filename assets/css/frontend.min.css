@@ -13407,6 +13407,8 @@ flex-grow: 0; */
 /*--------------------------------------------------------------
 == Section Extensions
 --------------------------------------------------------------*/
+
+/* Particles */
 .wpr-particle-wrapper {
     position: absolute;
     top: 0;
@@ -13421,6 +13423,7 @@ flex-grow: 0; */
     z-index: -1;
 }
 
+/* Parallax */
 .wpr-jarallax {
     position: relative;
     -webkit-transition: all 0.9s ease-in-out;
@@ -13446,6 +13449,7 @@ flex-grow: 0; */
     width: 100%;
 }
 
+/* Sticky Section */
 .wpr-sticky-section-yes {
     width: 100%;
 }

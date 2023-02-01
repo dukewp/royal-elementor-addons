@@ -5023,6 +5023,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			$args = $wp_query->query_vars;
 			$args['posts_per_page'] = $query_posts_per_page;
 			$args['orderby'] = $query_order_by;
+			$args['offset'] = ( $paged - 1 ) * $query_posts_per_page + intval($settings[ 'query_offset' ]);
 		}
 
 		// Related
