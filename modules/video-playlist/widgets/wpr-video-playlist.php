@@ -183,13 +183,18 @@ class Wpr_Video_Playlist extends Widget_Base {
                 $fullstring = $item_video_src;
 
                 if ('video-youtube' === $item_type) {
-                    $youtube_video_id = $this->get_string_between($fullstring, 'v=', '&');
-                    $item_thumbnail = 'https://img.youtube.com/vi/'. $youtube_video_id .'/default.jpg';
+                    // $youtube_video_id = $this->get_string_between($fullstring, 'v=', '&');
+                    
+                    preg_match('![?&]{1}v=([^&]+)!', $item_video_src, $youtube_video_id );
+                    $item_thumbnail = 'https://img.youtube.com/vi/'. $youtube_video_id[1] .'/default.jpg';
                 } elseif ('video-vimeo' === $item_type) {
                     $item_thumbnail = '';
                 }
                 ?>
-                <li class="wpr-video-playlist-item <?php echo esc_attr($active_class)?>"><img src="<?php echo esc_attr($item_thumbnail) ?>"><a href="<?php echo esc_url($item_video_src) ?>" class="gallery-item-link"><?php echo esc_html($item['playlist_item_title']) ?></a></li>
+                <li class="wpr-video-playlist-item <?php echo esc_attr($active_class)?>">
+                    <img src="<?php echo esc_attr($item_thumbnail) ?>">
+                    <a href="<?php echo esc_url($item_video_src) ?>" class="gallery-item-link"><?php echo esc_html($item['playlist_item_title']) ?></a>
+                </li>
             <?php $item_count++;
             }
 

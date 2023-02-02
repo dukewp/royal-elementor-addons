@@ -6039,6 +6039,29 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     vertical-align: bottom;
 }
 
+.wpr-slider-video {
+  position: relative;
+  padding-bottom: 56.25%;
+  /* 16:9 */
+  /* padding-top: 25px; */
+  height: 0;
+}
+
+.wpr-advanced-slider iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* border: 0; */
+}
+
+/* GOGA - needs prefix class maybe */
+/* .wpr-advanced-slider,
+.wpr-slider-item {
+    height: auto !important;
+} */
+
 
 /* Ken burn Effect */
 
@@ -6348,6 +6371,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     top: 0;
     left: 0;
     z-index: 90;
+    background: #000;
 }
 
 .wpr-slider-video-btn {

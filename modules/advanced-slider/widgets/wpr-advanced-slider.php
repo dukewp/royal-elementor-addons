@@ -378,6 +378,17 @@ class Wpr_Advanced_Slider extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'slider_item_video_controls',
+			[
+				'label' => esc_html__( 'Controls', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'condition' => [
+					'slider_item_link_type' => ['video-youtube', 'video-vimeo'],
+				],
+			]
+		);
+
+		$repeater->add_control(
 			'slider_item_video_start',
 			[
 				'label' => esc_html__( 'Start Time', 'wpr-addons' ),
@@ -763,11 +774,10 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			[
 				'label' => esc_html__( 'Media Type', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => 'svg-angle-1-left',
+				'default' => 'background',
 				'options' =>  [
 					'background' => esc_html__( 'Background', 'wpr-addons' ),
-					'image' => esc_html__( 'Image', 'wpr-addons' ),
-					'video' => esc_html__( 'Video', 'wpr-addons' ),
+					'image' => esc_html__( 'Image', 'wpr-addons' )
 				]
 			]
 		);
@@ -2692,7 +2702,11 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				$btn_attribute_2 = '';
 				$icon_html_2 = $item['slider_item_btn_text_2'];
 				$ken_burn_class = '';
-				$item_bg_image_url = Group_Control_Image_Size::get_attachment_image_src( $item['slider_item_bg_image']['id'], 'slider_image_size', $settings );
+				if( isset($item['slider_item_bg_image']['source']) && $item['slider_item_bg_image']['source'] == 'url' ) {
+					$item_bg_image_url = $item['slider_item_bg_image']['url'];
+				} else {
+					$item_bg_image_url = Group_Control_Image_Size::get_attachment_image_src( $item['slider_item_bg_image']['id'], 'slider_image_size', $settings );
+				}
 
 				$item_video_src = $item['slider_item_video_src'];
 				$item_video_start = $item['slider_item_video_start'];
@@ -2725,11 +2739,27 @@ class Wpr_Advanced_Slider extends Widget_Base {
 
 					if ( $item_type === 'video-youtube' ) {
 
+						
 						preg_match('![?&]{1}v=([^&]+)!', $item_video_src, $item_video_id );
-						$item_video_src = 'https://www.youtube.com/embed/'. $item_video_id[1] .'?controls=0&autoplay=1';
+
+						$item_bg_image_url = 'https://i.ytimg.com/vi_webp/'. $item_video_id[1] .'/maxresdefault.webp';
+						
+						if ( 'yes' === $item['slider_item_video_autoplay'] ) {
+							// GOGA - if there is no way to autoplay with api we need mute=1 for this purpose
+							// $item_video_src = 'https://www.youtube.com/embed/'. $item_video_id[1] .'?autoplay=1&enablejsapi=1';
+							// $item_video_src = 'https://www.youtube.com/embed/'. $item_video_id[1] .'?autoplay=1&mute=1';
+							$item_video_src = 'https://www.youtube.com/embed/'. $item_video_id[1] .'?autoplay=1';
+							// $item_video_src = 'https://www.youtube.com/embed/'. $item_video_id[1] .'?controls=0&autoplay=1';
+						} else {
+							$item_video_src = 'https://www.youtube.com/embed/'. $item_video_id[1] . '?enablejsapi=1';
+						}
 
 						if ( $item['slider_item_video_mute'] === 'yes' ) {
 							$item_video_src .= '&mute=1';
+						}
+
+						if ( $item['slider_item_video_controls'] !== 'yes') {
+							$item_video_src .= '&controls=0';
 						}
 
 						if ( $item['slider_item_video_loop'] === 'yes' ) {
