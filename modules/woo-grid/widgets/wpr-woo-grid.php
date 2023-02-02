@@ -56,6 +56,17 @@ class Wpr_Woo_Grid extends Widget_Base {
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
 
+	public function add_control_open_links_in_new_tab() {
+		$this->add_control(
+			'open_links_in_new_tab',
+			[
+				'label' => sprintf( __( 'Open Links in New Tab %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);
+	}
+
 	public function add_control_query_selection() {
 		$this->add_control(
 			'query_selection',
@@ -987,6 +998,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 				]
 			]
 		);
+
+		$this->add_control_open_links_in_new_tab();
 
 		$this->add_control_layout_animation();
 
@@ -3982,6 +3995,30 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-product-tags .inner-block a' => 'border-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'tags_extra_text_color',
+			[
+				'label'  => esc_html__( 'Extra Text Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#9C9C9C',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-product-tags .inner-block span[class*="wpr-grid-extra-text"]' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'tags_extra_icon_color',
+			[
+				'label'  => esc_html__( 'Extra Icon Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#9C9C9C',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-product-tags .inner-block i[class*="wpr-grid-extra-icon"]' => 'color: {{VALUE}}',
 				],
 				'separator' => 'after',
 			]
@@ -7556,13 +7593,14 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$title_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['title_pointer'];
 		$title_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['title_pointer_animation'];
 		$pointer_item_class = (isset($this->get_settings()['title_pointer']) && 'none' !== $this->get_settings()['title_pointer']) ? 'class="wpr-pointer-item"' : '';
+		$open_links_in_new_tab = 'yes' === $this->get_settings()['open_links_in_new_tab'] ? '_blank' : '_self';
 
 		$class .= ' wpr-pointer-'. $title_pointer;
 		$class .= ' wpr-pointer-line-fx wpr-pointer-fx-'. $title_pointer_animation;
 
 		echo '<'. esc_attr($settings['element_title_tag']) .' class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo '<a '. $pointer_item_class .' href="'. esc_url( get_the_permalink() ) .'">';
+				echo '<a target="'. $open_links_in_new_tab .'"  '. $pointer_item_class .' href="'. esc_url( get_the_permalink() ) .'">';
 				if ( 'word_count' === $settings['element_trim_text_by'] ) {
 					echo esc_html(wp_trim_words( get_the_title(), $settings['element_word_count'] ));
 				} else {
@@ -8431,6 +8469,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 		// Load More / Infinite Scroll
 		} else {
 			echo '<a href="'. esc_url(get_pagenum_link( $paged + 1, true )) .'" class="wpr-load-more-btn" data-e-disable-page-transition>';
+			// echo '<a href="'. esc_url_raw( str_replace( 999999999, '%#%', remove_query_arg( 'add-to-cart', get_pagenum_link( 999999999, false ) ) ) ) .'" class="wpr-load-more-btn" data-e-disable-page-transition>';
+			// echo '<a href="'. esc_url(get_next_posts_page_link()) .'" class="wpr-load-more-btn" data-e-disable-page-transition>';
 				echo esc_html($settings['pagination_load_more_text']);
 			echo '</a>';
 

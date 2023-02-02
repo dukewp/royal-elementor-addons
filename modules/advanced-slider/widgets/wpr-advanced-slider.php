@@ -56,6 +56,23 @@ class Wpr_Advanced_Slider extends Widget_Base {
         // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-advanced-slider-help-btn';
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
+		
+	public function add_control_slider_effect() {
+		$this->add_control(
+			'slider_effect',
+			[
+				'type' => Controls_Manager::SELECT,
+				'label' => esc_html__( 'Effect', 'wpr-addons' ),
+				'default' => 'slide',
+				'options' => [
+					'slide' => esc_html__( 'Slide', 'wpr-addons' ),
+					'sl_vl' => esc_html__( 'Sl Vertical (Pro)', 'wpr-addons' ),
+					'fade' => esc_html__( 'Fade', 'wpr-addons' ),
+				],
+				'separator' => 'before'
+			]
+		);
+	}
 
 	public function add_control_slider_nav_hover() {
 		$this->add_control(
@@ -1012,20 +1029,8 @@ class Wpr_Advanced_Slider extends Widget_Base {
 		$this->add_control_slider_autoplay_duration();
 
 		$this->add_control_slider_pause_on_hover();
-		
-		$this->add_control(
-			'slider_effect',
-			[
-				'type' => Controls_Manager::SELECT,
-				'label' => esc_html__( 'Effect', 'wpr-addons' ),
-				'default' => 'slide',
-				'options' => [
-					'slide' => esc_html__( 'Slide', 'wpr-addons' ),
-					'fade' => esc_html__( 'Fade', 'wpr-addons' ),
-				],
-				'separator' => 'before'
-			]
-		);
+
+		$this->add_control_slider_effect();
 
 		$this->add_control(
 			'slider_effect_duration',
@@ -2907,6 +2912,10 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			$settings['slider_pause_on_hover'] = '';
 		}
 
+		if ( 'sl_vl' === $settings['slider_effect'] ) {
+			$settings['slider_effect'] = 'slide';
+		}
+
 		$slider_is_rtl = is_rtl();
 		$slider_direction = $slider_is_rtl ? 'rtl' : 'ltr';
 
@@ -2921,6 +2930,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			'pauseOnHover' => $settings['slider_pause_on_hover'],
 			'prevArrow' => '#wpr-slider-prev-'. $this->get_id(),
 			'nextArrow' => '#wpr-slider-next-'. $this->get_id(),
+			'vertical' => 'slide_vertical' === $settings['slider_effect'] ? true : false
 		];
 
 		$this->add_render_attribute( 'advanced-slider-attribute', [
