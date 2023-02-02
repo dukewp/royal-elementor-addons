@@ -5955,12 +5955,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 /*--------------------------------------------------------------
   == Advanced Slider
   --------------------------------------------------------------*/
-.wpr-test-goga {
-    position: relative;
-    width: 100%;
-    height: auto;
-    z-index: 79;
-}
 
 .wpr-advanced-slider-wrap {
     position: relative;
@@ -6054,6 +6048,18 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     width: 100%;
     height: 100%;
     /* border: 0; */
+}
+
+.slick-slide .wpr-test-goga {
+    position: relative;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* width: 100%;
+    height: auto; */
+    z-index: 79;
 }
 
 /* GOGA - needs prefix class maybe */

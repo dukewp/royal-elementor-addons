@@ -2129,7 +2129,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 
 		// Styles
 		// Section: Video Icon -------
-	/*	$this->start_controls_section(
+		$this->start_controls_section(
 			'wpr__section_style_slider_video_btn',
 			[
 				'label' => esc_html__( 'Video Icon', 'wpr-addons' ),
@@ -2160,12 +2160,12 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#ffffff',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-slider-video-btn' => 'color: {{VALUE}};border-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-slider-video-btn' => 'color: {{VALUE}}; border-color: {{VALUE}};',
 				],
 			]
-		);*/
+		);
 
-		// $this->end_controls_section();
+		$this->end_controls_section();
 		
 		// Styles
 		// Section: Navigation ---
@@ -2798,12 +2798,12 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				$slider_item_attribute = $this->get_render_attribute_string( 'slider_item'. $item_count );
 
 				$slider_html .= '<div '. $slider_item_attribute .'>';
-			
-				// Slider Background Image
-				$slider_html .= '<div class="wpr-slider-item-bg '. esc_attr($ken_burn_class) .'" style="background-image: url('. esc_url($item_bg_image_url) .')"></div>';
 
 				if ( 'image' == $settings['slider_image_type'] ) {
 					$slider_html .= '<img class="wpr-test-goga" src="'. esc_url($item_bg_image_url) .'" />';
+				} else {
+					// Slider Background Image
+					$slider_html .= '<div class="wpr-slider-item-bg '. esc_attr($ken_burn_class) .'" style="background-image: url('. esc_url($item_bg_image_url) .')"></div>';
 				}
 
 				$slider_amount = +$settings['slider_amount'];
