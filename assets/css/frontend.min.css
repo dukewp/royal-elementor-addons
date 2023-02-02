@@ -13799,6 +13799,14 @@ flex-grow: 0; */
     display: none;
 }
 
+/* Wishlist */
+
+.wishlist-products {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
 /* Product Mini Cart */
 .wpr-mini-cart-sidebar-body {
     /* transition-duration: 1s;

@@ -801,6 +801,12 @@ class Plugin {
 					'categories' => '["'. $category .'"]',
 				],
 				[
+					'name' => 'wpr-wishlist-count',
+					'title' => __('Wishlist Count', 'wpr-addons'),
+					'icon' => 'wpr-icon eicon-heart',
+					'categories' => '["'. $category .'"]',
+				],
+				[
 					'name' => 'wpr-wishlist',
 					'title' => __('Wishlist', 'wpr-addons'),
 					'icon' => 'wpr-icon eicon-heart',

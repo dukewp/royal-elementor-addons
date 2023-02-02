@@ -16,18 +16,56 @@ class WPR_Add_Remove_From_Wishlist {
     ** Constructor
     */
     public function __construct() {
+        // add_action('init', [$this, 'register_wishlist_cpt']);
         add_action( 'wp_ajax_add_to_wishlist',[$this, 'add_to_wishlist'] );
         add_action( 'wp_ajax_nopriv_add_to_wishlist',[$this, 'add_to_wishlist'] );
         add_action( 'wp_ajax_remove_from_wishlist', [$this, 'remove_from_wishlist'] );
         add_action( 'wp_ajax_nopriv_remove_from_wishlist', [$this, 'remove_from_wishlist'] );
     }
 
+    // // Register Post Type
+    // function register_wishlist_cpt() {
+    //     $args = array(
+    //         'label'				  => esc_html__( 'Royal Wishlist', 'wpr-addons' ),
+    //         'public'              => true,
+    //         'publicly_queryable'  => true,
+    //         'rewrite'             => false,
+    //         'show_ui'             => true,
+    //         'show_in_menu'        => true,
+    //         'show_in_nav_menus'   => false,
+    //         'exclude_from_search' => true,
+    //         'capability_type'     => 'post',
+    //         'supports'            => array( 'title', 'editor', 'elementor' ),
+    //         'hierarchical'        => false,
+    //     );
+    
+    //     register_post_type( 'wishlist', $args );
+    // }
+
+    // function register_wishlist_page() {
+    //     $check_page_exist = get_page_by_title('wpr_wishlist', 'OBJECT', 'page');
+    //     // Check if the page already exists
+    //     if(empty($check_page_exist)) {
+    //         $page_id = wp_insert_post(
+    //             array(
+    //             'comment_status' => 'close',
+    //             'ping_status'    => 'close',
+    //             'post_author'    => 1,
+    //             'post_title'     => ucwords('Wishlist'),
+    //             'post_name'      => strtolower(str_replace(' ', '-', trim('wpr_wishlist'))),
+    //             'post_status'    => 'publish',
+    //             'post_type'      => 'page',
+    //             )
+    //         );
+    //     }
+    // }
+
     function add_to_wishlist() {
         if ( ! isset( $_POST['product_id'] ) ) {
             return;
         }
         $product_id = intval( $_POST['product_id'] );
-        $wishlist = get_user_meta( get_current_user_id(), 'wishlist', true );
+        $wishlist = get_user_meta( get_current_user_id(), 'wpr_wishlist', true );
         if ( ! $wishlist ) {
             $wishlist = array();
         }
@@ -36,7 +74,7 @@ class WPR_Add_Remove_From_Wishlist {
             return;
         }
         $wishlist[] = $product_id;
-        update_user_meta( get_current_user_id(), 'wishlist', $wishlist );
+        update_user_meta( get_current_user_id(), 'wpr_wishlist', $wishlist );
         wp_send_json_success();
     }
     
@@ -45,12 +83,12 @@ class WPR_Add_Remove_From_Wishlist {
             return;
         }
         $product_id = intval( $_POST['product_id'] );
-        $wishlist = get_user_meta( get_current_user_id(), 'wishlist', true );
+        $wishlist = get_user_meta( get_current_user_id(), 'wpr_wishlist', true );
         if ( ! $wishlist ) {
             $wishlist = array();
         }
         $wishlist = array_diff( $wishlist, array( $product_id ) );
-        update_user_meta( get_current_user_id(), 'wishlist', $wishlist );
+        update_user_meta( get_current_user_id(), 'wpr_wishlist', $wishlist );
         wp_send_json_success();
     }
 }

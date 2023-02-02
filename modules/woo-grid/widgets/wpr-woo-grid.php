@@ -7929,7 +7929,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			return;
 		}
 		
-		$wishlist = get_user_meta( get_current_user_id(), 'wishlist', true );
+		$wishlist = get_user_meta( get_current_user_id(), 'wpr_wishlist', true );
 		if ( ! $wishlist ) {
 			$wishlist = array();
 		}
