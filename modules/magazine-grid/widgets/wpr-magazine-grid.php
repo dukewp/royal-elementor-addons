@@ -5020,6 +5020,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		if ( 'current' === $settings[ 'query_source' ] ) {
 			global $wp_query;
 
+			// GOGA - offset
 			$args = $wp_query->query_vars;
 			$args['posts_per_page'] = $query_posts_per_page;
 			$args['orderby'] = $query_order_by;
