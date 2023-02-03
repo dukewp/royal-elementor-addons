@@ -41,25 +41,7 @@ class WPR_Add_Remove_From_Wishlist {
     
     //     register_post_type( 'wishlist', $args );
     // }
-
-    // function register_wishlist_page() {
-    //     $check_page_exist = get_page_by_title('wpr_wishlist', 'OBJECT', 'page');
-    //     // Check if the page already exists
-    //     if(empty($check_page_exist)) {
-    //         $page_id = wp_insert_post(
-    //             array(
-    //             'comment_status' => 'close',
-    //             'ping_status'    => 'close',
-    //             'post_author'    => 1,
-    //             'post_title'     => ucwords('Wishlist'),
-    //             'post_name'      => strtolower(str_replace(' ', '-', trim('wpr_wishlist'))),
-    //             'post_status'    => 'publish',
-    //             'post_type'      => 'page',
-    //             )
-    //         );
-    //     }
-    // }
-
+    
     function add_to_wishlist() {
         if ( ! isset( $_POST['product_id'] ) ) {
             return;

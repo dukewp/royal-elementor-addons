@@ -3,6 +3,7 @@
 class WPR_WooCommerce_Config {
 
 	public function __construct() {
+		// add_action('wp_loaded', [$this, 'register_wishlist_page']);
 		add_action('wp_ajax_wpr_addons_add_cart_single_product', [$this, 'add_cart_single_product_ajax']);
 		add_action('wp_ajax_nopriv_wpr_addons_add_cart_single_product', [$this, 'add_cart_single_product_ajax']);
 		
@@ -92,6 +93,24 @@ class WPR_WooCommerce_Config {
 		// 	echo '</div>';
 		// }
 		// add_action( 'woocommerce_account_content', 'display_wishlist_in_my_account' );
+	}
+
+	function register_wishlist_page() {
+		$check_page_exist = get_page_by_title('wpr_wishlist', 'OBJECT', 'page');
+		// Check if the page already exists
+		if(empty($check_page_exist)) {
+			$page_id = wp_insert_post(
+				array(
+				'comment_status' => 'close',
+				'ping_status'    => 'close',
+				'post_author'    => 1,
+				'post_title'     => ucwords('Wishlist'),
+				'post_name'      => strtolower(str_replace(' ', '-', trim('wpr_wishlist'))),
+				'post_status'    => 'publish',
+				'post_type'      => 'page',
+				)
+			);
+		}
 	}
 
 	function wpr_remove_elementor_lightbox( $classes ) {
