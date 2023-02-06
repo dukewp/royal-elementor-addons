@@ -268,7 +268,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			'username' => esc_html__( 'Username', 'wpr-addons' ),
 			'caption' => esc_html__( 'Caption', 'wpr-addons' ),
 			'date' => esc_html__( 'Date', 'wpr-addons' ),
-			'icon' => esc_html__( 'Icon', 'wpr-addons' ),
+			'icon' => esc_html__( 'Instagram Icon', 'wpr-addons' ),
 			'lightbox' => esc_html__( 'Lightbox', 'wpr-addons' ),
 			'pro-shr' => esc_html__( 'Sharing (Pro)', 'wpr-addons' )
 		];
@@ -841,7 +841,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'label' => esc_html__( 'Distance', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
-					'size' => 20,
+					'size' => 0,
 				],
 				'range' => [
 					'px' => [
@@ -1491,6 +1491,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 						'read-more',
 						'separator',
 						'username',
+						'icon'
 					],
 				]
 			]
@@ -1534,6 +1535,8 @@ class Wpr_Instagram_Feed extends Widget_Base {
 						'separator',
 						'likes',
 						'sharing',
+						'icon',
+						'username'
 					],
 				]
 			]

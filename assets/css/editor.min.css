@@ -91,7 +91,8 @@
 .elementor-control-type,
 .elementor-control-show_last_update_date,
 .elementor-control-insta_feed_elements .elementor-control-element_lightbox_overlay,
-.elementor-control-insta_feed_elements .elementor-control-element_avatar_size {
+.elementor-control-insta_feed_elements .elementor-control-element_avatar_size,
+.elementor-control-insta_feed_elements .elementor-control-element-hide_year {
 	margin-bottom: 15px;
 }
 
