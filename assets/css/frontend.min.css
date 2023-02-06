@@ -13394,7 +13394,7 @@ flex-grow: 0; */
 
 .wpr-particle-wrapper canvas {
     position: relative;
-    z-index: -1;
+    z-index: 0;
 }
 
 /* Parallax */
