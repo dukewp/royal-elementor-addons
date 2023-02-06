@@ -26,7 +26,7 @@ class Wpr_Offcanvas extends Widget_Base {
 	}
 
 	public function get_title() {
-		return esc_html__( 'Offcanvas', 'wpr-addons' );
+		return esc_html__( 'Offcanvas Menu', 'wpr-addons' );
 	}
 
 	public function get_icon() {

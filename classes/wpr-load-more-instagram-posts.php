@@ -67,7 +67,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	public function render_post_caption($settings, $class, $result) {
 
-		if ( '' === $result->caption ) {
+		if ( !isset($result->caption) || '' === $result->caption ) {
 			return;
 		}
 
@@ -92,7 +92,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 				}
 
 				// Date
-				echo date(get_option( 'date_format' ), strtotime($result->timestamp));
+				if ( 'yes' === $settings['element_hide_year'] ) {
+					echo date('F j', strtotime($result->timestamp));
+				} else {
+					echo date(get_option( 'date_format' ), strtotime($result->timestamp));
+				}
 
 				// Icon: After
 				if ( 'after' === $settings['element_extra_icon_pos'] ) {
@@ -351,6 +355,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 					}
 				}
 			} else {
+				$count_elements = 0;
+				$caption_not_empty = true;
+				foreach ( $locations[$location] as $data ) {
+					$count_elements++;
+					if ( 'caption' === $data['element_select'] ) {
+						$caption_not_empty = isset($result->caption);
+					}
+				}
+
+				if ( $count_elements == 1 && !$caption_not_empty ) {
+					return;
+				}
+				
 				echo '<div class="wpr-insta-feed-item-'. esc_attr($location) .'-content elementor-clearfix">';
 					foreach ( $locations[$location] as $data ) {
 
