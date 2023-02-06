@@ -634,6 +634,14 @@
 	padding: 5px 0 15px 0 !important;
 }
 
+.elementor-control.elementor-control-limit_pro_notice {
+	padding-bottom: 0 !important;
+}
+
+.wpr-pro-control.elementor-control-open_links_in_new_tab {
+	padding-top: 20px;
+}
+
 .wpr-pro-notice {
 	padding: 20px;
 	border-top: 1px solid #e6e9ec;

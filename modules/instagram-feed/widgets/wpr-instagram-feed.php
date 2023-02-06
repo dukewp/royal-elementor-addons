@@ -51,6 +51,51 @@ class Wpr_Instagram_Feed extends Widget_Base {
     	if ( empty(get_option('wpr_wl_plugin_links')) )
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
+	
+	public function add_controls_group_limit() {
+		$this->add_control(
+			'limit',
+			[
+				'label' => esc_html__( 'Number of Posts', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::NUMBER,
+				'default' => 20,
+				'max' => 6
+			]
+		);
+				
+		$this->add_control(
+			'limit_mobile',
+			[
+				'label' => esc_html__( 'Number of Posts (Mobile)', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::NUMBER,
+				'default' => 2,
+				'max' => 6
+			]
+		);
+	}
+
+	public function add_responsive_control_insta_feed_slides_to_show() {
+		$this->add_responsive_control(
+			'insta_feed_slides_to_show',
+			[
+				'label' => esc_html__( 'Slides To Show', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'separator' => 'before',
+				'default' => 3,
+				'widescreen_default' => 3,
+				'laptop_default' => 3,
+				'tablet_extra_default' => 2,
+				'tablet_default' => 2,
+				'mobile_extra_default' => 1,
+				'mobile_default' => 1,
+				'frontend_available' => true,
+				'max' => 3,
+				'condition' => [
+					'insta_layout_select' => 'layout-carousel',
+				]
+			]
+		);
+	}
 
 	public function add_section_style_sharing() {}
 
@@ -320,10 +365,216 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			'default' => ''
 		];
 	}
-	
-	public function add_control_stack_insta_feed_slider_nav_position() {}
-	
-	public function add_control_insta_feed_slider_dots_hr() {}
+
+	public function add_control_stack_insta_feed_slider_nav_position() {
+		$this->add_control(
+			'insta_feed_slider_nav_position',
+			[
+				'label' => esc_html__( 'Positioning', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'label_block' => false,
+				'default' => 'custom',
+				'options' => [
+					'default' => esc_html__( 'Default', 'wpr-addons' ),
+					'custom' => esc_html__( 'Custom', 'wpr-addons' ),
+				],
+				'prefix_class' => 'wpr-grid-slider-nav-position-',
+			]
+		);
+
+		$this->add_control(
+			'insta_feed_slider_nav_position_default',
+			[
+				'label' => esc_html__( 'Align', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'label_block' => false,
+				'default' => 'top-left',
+				'options' => [
+					'top-left' => esc_html__( 'Top Left', 'wpr-addons' ),
+					'top-center' => esc_html__( 'Top Center', 'wpr-addons' ),
+					'top-right' => esc_html__( 'Top Right', 'wpr-addons' ),
+					'bottom-left' => esc_html__( 'Bottom Left', 'wpr-addons' ),
+					'bottom-center' => esc_html__( 'Bottom Center', 'wpr-addons' ),
+					'bottom-right' => esc_html__( 'Bottom Right', 'wpr-addons' ),
+				],
+				'prefix_class' => 'wpr-grid-slider-nav-align-',
+				'condition' => [
+					'insta_feed_slider_nav_position' => 'default',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'insta_feed_slider_nav_outer_distance',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Outer Distance', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 50,
+				],
+				'selectors' => [
+					'{{WRAPPER}}[class*="wpr-grid-slider-nav-align-top"] .wpr-swiper-nav-wrap' => 'top: {{SIZE}}px;',
+					'{{WRAPPER}}[class*="wpr-grid-slider-nav-align-bottom"] .wpr-swiper-nav-wrap' => 'bottom: {{SIZE}}px;',
+					'{{WRAPPER}}.wpr-grid-slider-nav-align-top-left .wpr-swiper-nav-wrap' => 'left: {{SIZE}}px;',
+					'{{WRAPPER}}.wpr-grid-slider-nav-align-bottom-left .wpr-swiper-nav-wrap' => 'left: {{SIZE}}px;',
+					'{{WRAPPER}}.wpr-grid-slider-nav-align-top-right .wpr-swiper-nav-wrap' => 'right: {{SIZE}}px;',
+					'{{WRAPPER}}.wpr-grid-slider-nav-align-bottom-right .wpr-swiper-nav-wrap' => 'right: {{SIZE}}px;',
+				],
+				'condition' => [
+					'insta_feed_slider_nav_position' => 'default',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'insta_feed_slider_nav_inner_distance',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Inner Distance', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 20,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-swiper-nav-wrap .wpr-swiper-button-prev' => 'margin-right: {{SIZE}}px;',
+				],
+				'condition' => [
+					'insta_feed_slider_nav_position' => 'default',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'insta_feed_slider_nav_position_top',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Vertical Position', 'wpr-addons' ),
+				'size_units' => [ '%', 'px' ],
+				'range' => [
+					'%' => [
+						'min' => -20,
+						'max' => 120,
+					],
+					'px' => [
+						'min' => -200,
+						'max' => 2000,
+					],
+				],
+				'default' => [
+					'unit' => '%',
+					'size' => 50,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-swiper-button' => 'top: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'insta_feed_slider_nav_position' => 'custom',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'insta_feed_slider_nav_position_left',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Left Position', 'wpr-addons' ),
+				'size_units' => [ '%', 'px' ],
+				'range' => [
+					'%' => [
+						'min' => 0,
+						'max' => 120,
+					],
+					'px' => [
+						'min' => 0,
+						'max' => 2000,
+					],
+				],
+				'default' => [
+					'unit' => '%',
+					'size' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-swiper-button-prev' => 'left: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'insta_feed_slider_nav_position' => 'custom',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'insta_feed_slider_nav_position_right',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Right Position', 'wpr-addons' ),
+				'size_units' => [ '%', 'px' ],
+				'range' => [
+					'%' => [
+						'min' => 0,
+						'max' => 120,
+					],
+					'px' => [
+						'min' => 0,
+						'max' => 2000,
+					],
+				],
+				'default' => [
+					'unit' => '%',
+					'size' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-swiper-button-next' => 'right: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'insta_feed_slider_nav_position' => 'custom',
+				],
+			]
+		);		
+	}
+
+	public function add_control_insta_feed_slider_dots_hr() {
+		$this->add_responsive_control(
+			'insta_feed_slider_dots_hr',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Horizontal Position', 'wpr-addons' ),
+				'size_units' => [ '%', 'px' ],
+				'range' => [
+					'%' => [
+						'min' => -20,
+						'max' => 120,
+					],
+					'px' => [
+						'min' => -200,
+						'max' => 2000,
+					],
+				],
+				'default' => [
+					'unit' => '%',
+					'size' => 50,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .swiper-pagination-bullets' => 'left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .swiper-pagination-fraction' => 'left: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+	}
 
 	protected function register_controls() {
 
@@ -383,24 +634,21 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				],
 			]
 		);
-				
-		$this->add_control(
-			'limit',
-			[
-				'label' => esc_html__( 'Number of Posts', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::NUMBER,
-				'default' => 20,
-			]
-		);
-				
-		$this->add_control(
-			'limit_mobile',
-			[
-				'label' => esc_html__( 'Number of Posts (Mobile)', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::NUMBER,
-				'default' => 2,
-			]
-		);
+
+		$this->add_controls_group_limit();
+
+		// GOGA - check url
+		if ( ! wpr_fs()->can_use_premium_code() ) {
+			$this->add_control(
+				'limit_pro_notice',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => 'More than 6 Posts are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-posts-timeline-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+					'content_classes' => 'wpr-pro-notice',
+				]
+			);
+		}
 
         $this->end_controls_section();
 
@@ -653,26 +901,25 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		// 	]
 		// );
 
-		$this->add_responsive_control(
-			'insta_feed_slides_to_show',
-			[
-				'label' => esc_html__( 'Slides To Show', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'separator' => 'before',
-				'default' => 3,
-				'widescreen_default' => 3,
-				'laptop_default' => 3,
-				'tablet_extra_default' => 2,
-				'tablet_default' => 2,
-				'mobile_extra_default' => 1,
-				'mobile_default' => 1,
-				'frontend_available' => true,
-				// 'min' => 1,
-				'condition' => [
-					'insta_layout_select' => 'layout-carousel',
+		$this->add_responsive_control_insta_feed_slides_to_show();
+
+		// GOGA - check url
+		if ( ! wpr_fs()->can_use_premium_code() ) {
+			$this->add_control(
+				'slides_to_show_pro_notice',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => 'More than 3 Slides are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-posts-timeline-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+					'content_classes' => 'wpr-pro-notice',
+					'condition'   => [
+						'insta_layout_select'   => [
+						   'layout-carousel'
+						],
+					]
 				]
-			]
-		);
+			);
+		}
 				
 		$this->add_responsive_control(
 			'insta_feed_space_between',
@@ -4540,6 +4787,14 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
         $key = 'wpr_instagram-feed_'.$this->get_ID(). '_' .md5($settings['cache_timeout_test']);
 
+		if ( !wpr_fs()->can_use_premium_code() && $settings['limit'] > 6 ) {
+			$settings['limit'] = 6;
+		}
+		
+		if ( !wpr_fs()->can_use_premium_code() && $settings['limit_mobile'] > 6 ) {
+			$settings['limit_mobile'] = 6;
+		}
+
 		if ( !get_option('wpr_instagram_posts_limit'. $this->get_ID()) ) {
 			update_option('wpr_instagram_posts_limit'. $this->get_ID(), $settings['limit']);
 		}
@@ -5004,6 +5259,14 @@ class Wpr_Instagram_Feed extends Widget_Base {
     protected function render() {
 		$settings = $this->get_settings_for_display();
 
+		if ( !wpr_fs()->can_use_premium_code() && $settings['limit'] > 6 ) {
+			$settings['limit'] = 6;
+		}
+		
+		if ( !wpr_fs()->can_use_premium_code() && $settings['limit_mobile'] > 6 ) {
+			$settings['limit_mobile'] = 6;
+		}
+
 		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$settings['lightbox_popup_thumbnails'] = '';
 			$settings['lightbox_popup_thumbnails_default'] = '';
@@ -5057,8 +5320,8 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
 		$instagram_settings['test'] = [
 			'instagram_access_token' => $settings['instagram_access_token'],
-			'limit' => $settings['limit'],
-			'limit_mobile' => $settings['limit_mobile'],
+			'limit' => !wpr_fs()->can_use_premium_code() && $settings['limit'] > 6 ? 6 : $settings['limit'],
+			'limit_mobile' => !wpr_fs()->can_use_premium_code() && $settings['limit_mobile'] > 6 ? 6 : $settings['limit_mobile'],
 			'is_mobile' => wp_is_mobile() ? 'mobile' : 'other',
 			'open_in_new_tab' => $settings['open_in_new_tab'],
 			'overlay_post_link' => $settings['overlay_post_link'],
@@ -5102,13 +5365,13 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'wpr_cs_pagination_type' => $pagination_type,
 				'wpr_cs_autoplay' => $autoplay,
 				'wpr_cs_loop' => $loop,
-				'wpr_cs_slides_to_show' => $slides_to_show,
-				'wpr_cs_slides_to_show_widescreen' => $slides_to_show_widescreen,
-				'wpr_cs_slides_to_show_laptop' => $slides_to_show_laptop,
-				'wpr_cs_slides_to_show_tablet_extra' => $slides_to_show_tablet_extra,
-				'wpr_cs_slides_to_show_tablet' => $slides_to_show_tablet,
-				'wpr_cs_slides_to_show_mobile_extra' => $slides_to_show_mobile_extra,
-				'wpr_cs_slides_to_show_mobile' => $slides_to_show_mobile,
+				'wpr_cs_slides_to_show' => !wpr_fs()->can_use_premium_code() && $slides_to_show > 3 ? 3 : $slides_to_show,
+				'wpr_cs_slides_to_show_widescreen' => !wpr_fs()->can_use_premium_code() && $slides_to_show_widescreen > 3 ? 3 :  $slides_to_show_widescreen,
+				'wpr_cs_slides_to_show_laptop' => !wpr_fs()->can_use_premium_code() && $slides_to_show_laptop > 3 ? 3 : $slides_to_show_laptop,
+				'wpr_cs_slides_to_show_tablet_extra' => !wpr_fs()->can_use_premium_code() && $slides_to_show_tablet_extra > 3 ? 3 : $slides_to_show_tablet_extra,
+				'wpr_cs_slides_to_show_tablet' => !wpr_fs()->can_use_premium_code() && $slides_to_show_tablet > 3 ? 3 : $slides_to_show_tablet,
+				'wpr_cs_slides_to_show_mobile_extra' => !wpr_fs()->can_use_premium_code() && $slides_to_show_mobile_extra > 3 ? 3 : $slides_to_show_mobile_extra,
+				'wpr_cs_slides_to_show_mobile' => !wpr_fs()->can_use_premium_code() && $slides_to_show_mobile > 3 ? 3 : $slides_to_show_mobile,
 				'wpr_cs_space_between' => $space_between,
 				'wpr_cs_space_between_widescreen' => $space_between_widescreen,
 				'wpr_cs_space_between_laptop' => $space_between_laptop,
