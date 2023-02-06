@@ -58,7 +58,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			[
 				'label' => esc_html__( 'Number of Posts', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::NUMBER,
-				'default' => 20,
+				'default' => 6,
 				'max' => 6
 			]
 		);
@@ -110,8 +110,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			[
 				'element_select' => 'date',
 				'element_display' => 'inline',
-				'element_extra_text_pos' => 'after',
-				'element_extra_text' => '/',
 				'element_location' => 'below',
 				'element_align_hr' => 'left'
 			],
@@ -1008,6 +1006,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'label' => esc_html__( 'Pagination', 'wpr-addons' ),
 				'render_type' => 'template',
 				'separator' => 'before',
+				'default' => 'yes',
 				'condition' => [
 					'insta_layout_select' => 'layout-carousel'
 				]
@@ -2829,7 +2828,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			[
 				'name'     => 'caption_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-insta-feed-item-caption, {{WRAPPER}} .wpr-insta-feed-item-caption'
+				'selector' => '{{WRAPPER}} .wpr-insta-feed-item-caption, {{WRAPPER}} .wpr-insta-feed-item-caption p, {{WRAPPER}} .wpr-insta-feed-item-caption figcaption'
 			]
 		);
 
@@ -3878,7 +3877,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				],				
 				'default' => [
 					'unit' => 'px',
-					'size' => 25,
+					'size' => 5,
 				],				
 				'mobile_default' => [
 					'unit' => 'px',

@@ -5964,6 +5964,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     position: relative;
     height: 500px;
     overflow: hidden;
+    opacity: 0;
 }
 
 .wpr-slider-item {
