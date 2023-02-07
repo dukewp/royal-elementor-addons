@@ -2467,14 +2467,6 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			]
 		);
 
-		$this->add_group_control(
-			Group_Control_Box_Shadow::get_type(),
-			[
-				'name' => 'account_name_box_shadow',
-				'selector' => '{{WRAPPER}} .wpr-twitter-feed-item-profile-name .inner-block a',
-			]
-		);
-
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
