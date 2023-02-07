@@ -680,7 +680,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				'accounts_repeater_pro_notice',
 				[
 					'type' => Controls_Manager::RAW_HTML,
-					'raw' => 'More than 2 Feeds are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-twitter-feed-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					'raw' => 'More than 2 Profiles are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-twitter-feed-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
 					// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
 					'content_classes' => 'wpr-pro-notice',
 				]
@@ -689,7 +689,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
-				'button_typography_divider',
+				'hashtag_name_divider',
 				[
 					'type' => Controls_Manager::DIVIDER,
 					'style' => 'thick',
@@ -2039,6 +2039,18 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			[
 				'label' => esc_html__( 'Feed', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'feed_item_bg_color',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFFFFF',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-tweet' => 'background-color: {{VALUE}}',
+				],
 			]
 		);
 
@@ -4621,8 +4633,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			echo '</button>';
 
 			echo '<div class="wpr-pagination-loading">';
-				// switch ( $settings['pagination_animation'] ) {
-				switch ( 'loader-1' ) {
+				switch ( $settings['pagination_animation'] ) {
 					case 'loader-1':
 						echo '<div class="wpr-double-bounce">';
 							echo '<div class="wpr-child wpr-double-bounce1"></div>';
