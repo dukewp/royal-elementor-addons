@@ -12514,6 +12514,11 @@ a.wpr-ajax-img-wrap {
 == Instagram Feed
 --------------------------------------------------------------*/
 
+.wpr-token-missing {
+    text-align: center;
+    margin-bottom: 0;
+}
+
 .wpr-pagination-hidden {
     display: none !important;
 }

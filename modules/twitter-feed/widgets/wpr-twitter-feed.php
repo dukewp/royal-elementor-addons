@@ -4879,7 +4879,6 @@ class Wpr_Twitter_Feed extends Widget_Base {
         $banner = $item['user']['profile_banner_url'] ? $item['user']['profile_banner_url'] : $banner_placeholder;
         ?>
                 <div class="wpr-tweet elementor-clearfix">
-                        <img class="wpr-twitter-profile-img" src="<?php echo $banner ?>" alt="">
                         <article class="media">
 
                             <?php 

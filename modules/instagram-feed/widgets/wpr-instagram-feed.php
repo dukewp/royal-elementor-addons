@@ -5464,7 +5464,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		}
 
 		if ( '' === $access_token ) {
-			echo '<p>Please provide instagram access token!</p>';
+			echo '<p class="wpr-token-missing">'. esc_html__('Please click on the Authorize Instagram button to get instagram access token and expiry date!') .'</p>';
 			return;
 		}
 
