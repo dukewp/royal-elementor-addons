@@ -201,6 +201,10 @@
 	border-top: 1px solid #d5dadf;
 }
 
+.elementor-control-show_word_count {
+	padding-top: 0!important;
+}
+
 .elementor-control-twitter_feed_elements .elementor-control-element_show_on {
 	padding-top: 0 !important;
 	border-top: none;

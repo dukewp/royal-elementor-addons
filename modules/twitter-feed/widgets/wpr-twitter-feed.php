@@ -319,7 +319,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo '<a href="'. esc_url('https://twitter.com/KateUpton/status/'. $item['id'] ) .'" class="wpr-button-effect '. esc_attr($read_more_animation) .'">';
+				echo '<a href="'. esc_url('https://twitter.com/'. $item['user']['screen_name'] .'"/status/"'. $item['id'] ) .'" class="wpr-button-effect '. esc_attr($read_more_animation) .'">';
 
 				// // Icon: Before
 				// if ( 'before' === $settings['element_extra_icon_pos'] ) {
@@ -351,7 +351,11 @@ class Wpr_Twitter_Feed extends Widget_Base {
                 echo '<p>';
                     $string = preg_replace("~[[:alpha:]]+://[^<p>[:space:]]+[[:alnum:]/]~", "<a href=\"\\0\">\\0</a>", $item['full_text']);
                     $new_string = preg_replace('/\#([a-z0-9]+)/i', '<a href="https://twitter.com/hashtag/$1?src=hashtag_click">#$1</a>', $string);
-                    echo preg_replace('/\@([a-z0-9]+)/i', '<a href="https://twitter.com/$1">@$1</a>' ,$new_string);
+					if ( isset( $settings['element_word_count'] ) ) {
+						echo wp_trim_words(preg_replace('/\@([a-z0-9]+)/i', '<a href="https://twitter.com/$1">@$1</a>' ,$new_string), $settings['element_word_count']);
+					} else {
+						echo preg_replace('/\@([a-z0-9]+)/i', '<a href="https://twitter.com/$1">@$1</a>' ,$new_string);
+					}
                 echo '</p>';
 			echo '</div>';
 		echo '</div>';
@@ -649,11 +653,11 @@ class Wpr_Twitter_Feed extends Widget_Base {
         $repeater->add_control(
             'twitter_feed_account_name',
             [
-                'label' => esc_html__('Account Name', 'wpr-addons'),
+                'label' => esc_html__('Profile Name', 'wpr-addons'),
                 'type' => Controls_Manager::TEXT,
-                'default' => '@giorgi_karchava',
+                'default' => '@elemntor',
                 'label_block' => false,
-                'description' => esc_html__('Use @ sign with your account name.', 'wpr-addons'),
+                'description' => esc_html__('Use @ sign with your profile name.', 'wpr-addons'),
             ]
         );
 
@@ -664,13 +668,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				'fields' => $repeater->get_controls(),
 				'default' => [
 					[
-						'twitter_feed_account_name' => '@Doutzen',
-                    ],
-					[
-						'twitter_feed_account_name' => '@KateUpton',
-                    ],
-					[
-						'twitter_feed_account_name' => '@KylieJenner',
+						'twitter_feed_account_name' => '@elemntor',
                     ],
 				],
 				'title_field' => '{{{ twitter_feed_account_name }}}',
@@ -679,12 +677,22 @@ class Wpr_Twitter_Feed extends Widget_Base {
 
 		if ( Utilities::is_new_free_user() ) {
 			$this->add_control(
-				'sharing_repeater_pro_notice',
+				'accounts_repeater_pro_notice',
 				[
 					'type' => Controls_Manager::RAW_HTML,
-					'raw' => 'More than 4 Buttons are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-sharing-buttons-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					'raw' => 'More than 2 Feeds are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-twitter-feed-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
 					// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
 					'content_classes' => 'wpr-pro-notice',
+				]
+			);
+		}
+
+		if ( ! wpr_fs()->can_use_premium_code() ) {
+			$this->add_control(
+				'button_typography_divider',
+				[
+					'type' => Controls_Manager::DIVIDER,
+					'style' => 'thick',
 				]
 			);
 		}
@@ -704,10 +712,23 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			[
 				'label' => esc_html__( 'Items Per Page', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
-				'default' => 10,
+				'default' => 6,
 				'min' => 0,
+				'max' => 6
 			]
 		);
+
+		if ( Utilities::is_new_free_user() ) {
+			$this->add_control(
+				'number_of_posts_pro_notice',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => 'More than 6 Posts are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-twitter-feed-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+					'content_classes' => 'wpr-pro-notice',
+				]
+			);
+		}
 
         $this->add_control(
             'twitter_feed_consumer_key',
@@ -911,7 +932,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-tf-header-profile-img' => '{{VALUE}}'
 				],
-				'default' => 'block',
+				'default' => 'inline',
 				'condition' => [
 					'show_header' => 'yes'
 				]
@@ -1148,8 +1169,21 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				'default' => 'h2',
 				'condition' => [
 					'element_select' => 'username',
-				],
-				'separator' => 'after',
+				]
+			]
+		);
+		
+		$repeater->add_control(
+			'show_word_count',
+			[
+				'label' => esc_html__( 'Show Word Count', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'description' => esc_html__('Hashtags and Links won\'t be clickable in case of using this feature'),
+				'return_value' => 'yes',
+				'separator' => 'before',
+				'condition' => [
+					'element_select' => [ 'twit' ]
+				]
 			]
 		);
 
@@ -1160,9 +1194,9 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				'type' => Controls_Manager::NUMBER,
 				'default' => 20,
 				'min' => 1,
-				'separator' => 'after',
 				'condition' => [
-					'element_select' => [ 'twit' ],
+					'show_word_count' => 'yes',
+					'element_select' => [ 'twit' ]
 				]
 			]
 		);
@@ -1439,6 +1473,18 @@ class Wpr_Twitter_Feed extends Widget_Base {
 		// 	]
 		// );
 
+		$repeater->add_control(
+			'element_show_on_divider',
+			[
+				'type' => Controls_Manager::DIVIDER,
+				'style' => 'thick',
+				'condition' => [
+					'element_select' => ['twit', 'username'],
+				],
+			]
+		);
+
+		// GOGA - twitter prefix added for styling reasons
 		$repeater->add_responsive_control(
 			'element_show_on',
 			[
@@ -1479,7 +1525,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 						'element_select' => 'username',
 						'element_location' => 'above',
 						'element_display' => 'inline',
-						'element_align_hr' => 'right'
+						'element_align_hr' => 'left'
 					],
 					[
 						'element_select' => 'profile-name',
@@ -1496,16 +1542,16 @@ class Wpr_Twitter_Feed extends Widget_Base {
 						// 'element_align_hr' => 'left'
 					],
 					[
+						'element_select' => 'twit',
+						'element_location' => 'above',
+					],
+					[
 						'element_select' => 'read-more',
 						// 'element_display' => 'inline',
 						// 'element_extra_text_pos' => 'after',
 						// 'element_extra_text' => '/',
 						'element_location' => 'above',
 						// 'element_align_hr' => 'left'
-					],
-					[
-						'element_select' => 'twit',
-						'element_location' => 'above',
 					],
 					[
 						'element_select' => 'media',
@@ -1794,6 +1840,15 @@ class Wpr_Twitter_Feed extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'twitter-feed', [
+			'Unlimited Number of Accounts',
+			'Unlimited Number of Posts'
+		] );
+
 		// Styles ====================
 		// Section: Slider Navigation -------
 		$this->start_controls_section(
@@ -1802,6 +1857,9 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				'label' => esc_html__( 'Header', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
+				'condition' => [
+					'show_header' => 'yes'
+				]
 			]
 		);
 
@@ -1892,7 +1950,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 		$this->add_control(
 			'header_account_name',
 			[
-				'label' => esc_html__( 'Header Account Name', 'wpr-addons' ),
+				'label' => esc_html__( 'Header Profile Name', 'wpr-addons' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -2164,7 +2222,18 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			[
 				'name'     => 'title_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-twitter-feed-item-username a'
+				'selector' => '{{WRAPPER}} .wpr-twitter-feed-item-username a',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '23',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -2316,7 +2385,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 					'top' => 0,
 					'right' => 0,
 					'bottom' => 0,
-					'left' => 0,
+					'left' => 5,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-twitter-feed-item-username .inner-block' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -2332,7 +2401,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_account_name',
 			[
-				'label' => esc_html__( 'Account Name', 'wpr-addons' ),
+				'label' => esc_html__( 'Profile Name', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'show_label' => false,
 			]
@@ -2496,7 +2565,18 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			[
 				'name'     => 'account_name_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-twitter-feed-item-profile-name a'
+				'selector' => '{{WRAPPER}} .wpr-twitter-feed-item-profile-name a',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size'   => [
+						'default' => [
+							'size' => '15',
+							'unit' => 'px',
+						]
+					]
+				]
 			]
 		);
 
@@ -2541,30 +2621,6 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				'condition' => [
 					'account_name_border_type!' => 'none',
 				],
-			]
-		);
-
-		$this->add_control(
-			'account_name_icon_spacing',
-			[
-				'label' => esc_html__( 'Extra Icon Spacing', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 25,
-					],
-				],				
-				'default' => [
-					'unit' => 'px',
-					'size' => 5,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-twitter-feed-item-profile-name .wpr-grid-extra-icon-left' => 'padding-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-twitter-feed-item-profile-name .wpr-grid-extra-icon-right' => 'padding-left: {{SIZE}}{{UNIT}};',
-				],
-				'separator' => 'before'
 			]
 		);
 
@@ -2704,7 +2760,18 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			[
 				'name'     => 'caption_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-twitter-feed-item-twit'
+				'selector' => '{{WRAPPER}} .wpr-twitter-feed-item-twit',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size'   => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px',
+						]
+					]
+				]
 			]
 		);
 
@@ -2915,7 +2982,18 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			[
 				'name'     => 'date_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-twitter-feed-item-date'
+				'selector' => '{{WRAPPER}} .wpr-twitter-feed-item-date',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '13',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -2962,54 +3040,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				],
 			]
 		);
-
-		$this->add_control(
-			'date_text_spacing',
-			[
-				'label' => esc_html__( 'Extra Text Spacing', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 25,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 5,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-twitter-feed-item-date .wpr-twitter-feed-extra-text-left' => 'padding-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-twitter-feed-item-date .wpr-twitter-feed-extra-text-right' => 'padding-left: {{SIZE}}{{UNIT}};',
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'date_icon_spacing',
-			[
-				'label' => esc_html__( 'Extra Icon Spacing', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 25,
-					],
-				],				
-				'default' => [
-					'unit' => 'px',
-					'size' => 5,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-twitter-feed-item-date .wpr-twitter-feed-extra-icon-left' => 'padding-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-twitter-feed-item-date .wpr-twitter-feed-extra-icon-right' => 'padding-left: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
+		
 		$this->add_responsive_control(
 			'date_padding',
 			[
@@ -3111,7 +3142,18 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			[
 				'name'     => 'read_more_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-twitter-feed-item-read-more a'
+				'selector' => '{{WRAPPER}} .wpr-twitter-feed-item-read-more a',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '14',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -3260,7 +3302,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 0,
+					'top' => 5,
 					'right' => 0,
 					'bottom' => 0,
 					'left' => 0,
@@ -3340,7 +3382,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				],				
 				'default' => [
 					'unit' => 'px',
-					'size' => 2,
+					'size' => 1,
 				],
 				'render_type' => 'template',
 				'selectors' => [
@@ -3861,7 +3903,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				],				
 				'default' => [
 					'unit' => 'px',
-					'size' => 15,
+					'size' => 14,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-twitter-feed-item-comment span' => 'font-size: {{SIZE}}{{UNIT}};',
@@ -3879,7 +3921,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				'size_units' => [ 'px' ],
 				'default' => [
 					'top' => 0,
-					'right' => 8,
+					'right' => 7,
 					'bottom' => 0,
 					'left' => 0,
 				],
@@ -3900,6 +3942,9 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			[
 				'label' => esc_html__( 'Follow Button', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'show_header' => 'yes'
+				]
 			]
 		);
 
@@ -4638,9 +4683,16 @@ class Wpr_Twitter_Feed extends Widget_Base {
     protected function render() {
         $settings = $this->get_settings_for_display();
 
+		if ( !wpr_fs()->can_use_premium_code() && $settings['number_of_posts'] > 6 ) {
+			$settings['number_of_posts'] = 6;
+		}
+
 		$twitter_feed_account_names = [];
 
 		foreach ( $settings['twitter_accounts'] as $key=>$value ) {
+			if ( $key >= 2 && !wpr_fs()->can_use_premium_code() ) {
+				break;
+			}
 			array_push($twitter_feed_account_names, $value['twitter_feed_account_name']);
 		}
 
@@ -4684,6 +4736,11 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			$check_verified_array = [];
 
 			foreach ($settings['twitter_accounts'] as $key=>$value) {
+
+				if ( $key >= 2 && !wpr_fs()->can_use_premium_code() ) {
+					break;
+				}
+
 				array_push($twitter_feed_account_names, $value['twitter_feed_account_name']);
 				$response[$key] = wp_remote_get('https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=' . $value['twitter_feed_account_name'] . '&count='. $settings['number_of_posts'] .'&tweet_mode=extended', [
 					'httpversion' => '1.1',
