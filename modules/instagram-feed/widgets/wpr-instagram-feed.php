@@ -1074,6 +1074,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			'show_pagination',
 			[
 				'label' => esc_html__( 'Show Pagination', 'wpr-addons' ),
+				'description' => esc_html__('Please note that Pagination doesn\'t work in editor', 'wpr-addons'),
 				'type' => Controls_Manager::SWITCHER,
 				'render_type' => 'template',
 				'separator' => 'before',
@@ -5464,7 +5465,9 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		}
 
 		if ( '' === $access_token ) {
-			echo '<p class="wpr-token-missing">'. esc_html__('Please click on the Authorize Instagram button to get instagram access token and expiry date!') .'</p>';
+			if ( current_user_can('administrator') ) {
+				echo '<p class="wpr-token-missing">'. esc_html__('Please click on the Authorize Instagram button to get instagram access token and expiry date!') .'</p>';
+			}
 			return;
 		}
 

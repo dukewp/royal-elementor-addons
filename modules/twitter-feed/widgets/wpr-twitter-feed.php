@@ -675,18 +675,6 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			]
 		);
 
-		if ( Utilities::is_new_free_user() ) {
-			$this->add_control(
-				'accounts_repeater_pro_notice',
-				[
-					'type' => Controls_Manager::RAW_HTML,
-					'raw' => 'More than 2 Profiles are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-twitter-feed-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
-					// 'raw' => 'More than 4 Slides are available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
-					'content_classes' => 'wpr-pro-notice',
-				]
-			);
-		}
-
 		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'hashtag_name_divider',
@@ -818,8 +806,8 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				'options' => [
 					'grid'     => esc_html__('Grid', 'wpr-addons'),
 					'masonry' => esc_html__('Masonry', 'wpr-addons'),
-					'list'     => esc_html__('List Style', 'wpr-addons'),
 					'carousel' => esc_html__('Slider\Carousel', 'wpr-addons'),
+					// 'list'     => esc_html__('List Style', 'wpr-addons'),
 				],
 			]
 		);
@@ -992,6 +980,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			'show_pagination',
 			[
 				'label' => esc_html__( 'Show Pagination', 'wpr-addons' ),
+				'description' => esc_html__('Please note that Pagination doesn\'t work in editor', 'wpr-addons'),
 				'type' => Controls_Manager::SWITCHER,
 				'render_type' => 'template',
 				'separator' => 'before',
@@ -4667,9 +4656,6 @@ class Wpr_Twitter_Feed extends Widget_Base {
 		$twitter_feed_account_names = [];
 
 		foreach ( $settings['twitter_accounts'] as $key=>$value ) {
-			if ( $key >= 2 && !wpr_fs()->can_use_premium_code() ) {
-				break;
-			}
 			array_push($twitter_feed_account_names, $value['twitter_feed_account_name']);
 		}
 
@@ -4713,10 +4699,6 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			$check_verified_array = [];
 
 			foreach ($settings['twitter_accounts'] as $key=>$value) {
-
-				if ( $key >= 2 && !wpr_fs()->can_use_premium_code() ) {
-					break;
-				}
 
 				array_push($twitter_feed_account_names, $value['twitter_feed_account_name']);
 				$response[$key] = wp_remote_get('https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=' . $value['twitter_feed_account_name'] . '&count='. $settings['number_of_posts'] .'&tweet_mode=extended', [

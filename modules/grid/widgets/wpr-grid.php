@@ -111,6 +111,17 @@ class Wpr_Grid extends Widget_Base {
 		);
 	}
 
+	public function add_control_grid_lazy_loading() {
+		$this->add_control(
+			'grid_lazy_loading',
+			[
+				'label' => sprintf( __( 'Lazy Loading %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);
+	}
+
 	public function add_control_display_scheduled_posts() { 
 		$this->add_control(
 			'display_scheduled_posts',
@@ -1201,6 +1212,7 @@ class Wpr_Grid extends Widget_Base {
 			'layout_pagination',
 			[
 				'label' => esc_html__( 'Show Pagination', 'wpr-addons' ),
+				'description' => esc_html__('Please note that Pagination doesn\'t work in editor', 'wpr-addons'),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 				'return_value' => 'yes',
@@ -1212,6 +1224,8 @@ class Wpr_Grid extends Widget_Base {
 		);
 
 		$this->add_control_open_links_in_new_tab();
+		
+		$this->add_control_grid_lazy_loading();
 
 		$this->add_control_layout_animation();
 
@@ -8229,8 +8243,11 @@ class Wpr_Grid extends Widget_Base {
 
 		if ( has_post_thumbnail() ) {
 			echo '<div class="wpr-grid-image-wrap" data-src="'. esc_url( $src ) .'">';
-				// echo '<img src="'. WPR_ADDONS_ASSETS_URL . 'img/icon-256x256.png" alt="'. esc_attr( $alt ) .'" class="wpr-hidden-image wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
-				echo '<img src="'. esc_url( $src ) . '" alt="'. esc_attr( $alt ) .'" class="wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
+				if ( 'yes' == $settings['grid_lazy_loading'] ) {
+					echo '<img src="'. WPR_ADDONS_ASSETS_URL . 'img/icon-256x256.png" alt="'. esc_attr( $alt ) .'" class="wpr-hidden-image wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
+				} else {
+					echo '<img src="'. esc_url( $src ) . '" alt="'. esc_attr( $alt ) .'" class="wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
+				}
 			echo '</div>';
 		}
 	}
