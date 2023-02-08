@@ -2956,31 +2956,6 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'date_extra_text_color',
-			[
-				'label'  => esc_html__( 'Extra Text Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#9C9C9C',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-twitter-feed-item-date .inner-block span[class*="wpr-twitter-feed-extra-text"]' => 'color: {{VALUE}}',
-				],
-			]
-		);
-
-		$this->add_control(
-			'date_extra_icon_color',
-			[
-				'label'  => esc_html__( 'Extra Icon Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#9C9C9C',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-twitter-feed-item-date .inner-block i[class*="wpr-twitter-feed-extra-icon"]' => 'color: {{VALUE}}',
-				],
-				'separator' => 'after',
-			]
-		);
-
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
@@ -3381,7 +3356,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 1,
-						'max' => 100,
+						'max' => 10,
 					],
 				],				
 				'default' => [
@@ -4097,8 +4072,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 					'size' => 25,
 				],
 				'selectors' => [
-					'{{WRAPPER}}.wpr-if-cfb-top .wpr-twitter-follow-btn-wrap' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-if-cfb-bottom .wpr-twitter-follow-btn-wrap' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-twitter-follow-btn-wrap' => 'margin-top: {{SIZE}}{{UNIT}};'
 				],
 				'separator' => 'before'
 			]

@@ -6079,27 +6079,29 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     }
 }
 
-.wpr-advanced-slider .slick-slide.slick-active .wpr-slider-item-bg {
+.wpr-advanced-slider .slick-slide.slick-visible .wpr-slider-item-bg {
     -webkit-animation-timing-function: linear;
     animation-timing-function: linear;
     -webkit-animation-duration: 10s;
     animation-duration: 10s;
 }
 
-.wpr-advanced-slider .slick-slide.slick-active .wpr-slider-item-bg.wpr-ken-burns-in {
+.wpr-advanced-slider .slick-slide.slick-visible .wpr-slider-item-bg.wpr-ken-burns-in {
     -webkit-animation-name: ken-burns-in;
     animation-name: ken-burns-in;
     -webkit-transform: scale(1.3);
     -ms-transform: scale(1.3);
     transform: scale(1.3);
+    /* animation-iteration-count: infinite; */
 }
 
-.wpr-advanced-slider .slick-slide.slick-active .wpr-slider-item-bg.wpr-ken-burns-out {
+.wpr-advanced-slider .slick-slide.slick-visible .wpr-slider-item-bg.wpr-ken-burns-out {
     -webkit-animation-name: ken-burns-out;
     animation-name: ken-burns-out;
     -webkit-transform: scale(1);
     -ms-transform: scale(1);
-    transform: scale(1)
+    transform: scale(1);
+    /* animation-iteration-count: infinite; */
 }
 
 .wpr-ken-burns-in {
