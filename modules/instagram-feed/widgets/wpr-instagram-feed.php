@@ -617,7 +617,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		);
 
 		$this->add_control(
-			'cache_timeout_test',
+			'cache_timeout_select',
 			[
 				'label'   => esc_html__( 'Cache Timeout', 'powerpack' ),
 				'description' => esc_html__('Determine how often you want the feed to be updated'),
@@ -4813,7 +4813,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 	// can't use this variable of class in static function, is it necessary to use static ?
 	public function call_instagram_api($access_token, $settings) {
 
-        $key = 'wpr_instagram-feed_'.$this->get_ID(). '_' .md5($settings['cache_timeout_test']);
+        $key = 'wpr_instagram-feed_'.$this->get_ID(). '_' .md5($settings['cache_timeout_select']);
 
 		if ( !wpr_fs()->can_use_premium_code() && $settings['limit'] > 6 ) {
 			$settings['limit'] = 6;
@@ -4852,7 +4852,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
 			$cache_timeout = $this->get_cache_duration();
 
-			if ( 'none' !== $settings['cache_timeout_test'])  {
+			if ( 'none' !== $settings['cache_timeout_select'])  {
 				set_transient($key, $instagram_data, $cache_timeout);
 			}
 
@@ -4869,7 +4869,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
 	public function get_cache_duration() {
 		$settings = $this->get_settings();
-		$cache_duration = $settings['cache_timeout_test'];
+		$cache_duration = $settings['cache_timeout_select'];
 		$duration = 0;
 
 		switch ( $cache_duration ) {
@@ -5346,7 +5346,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			'download' => $settings['lightbox_popup_download'],
 		];
 
-		$instagram_settings['test'] = [
+		$instagram_settings['insta_load_more_settings'] = [
 			'instagram_access_token' => $settings['instagram_access_token'],
 			'limit' => !wpr_fs()->can_use_premium_code() && $settings['limit'] > 6 ? 6 : $settings['limit'],
 			'limit_mobile' => !wpr_fs()->can_use_premium_code() && $settings['limit_mobile'] > 6 ? 6 : $settings['limit_mobile'],

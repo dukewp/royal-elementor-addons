@@ -4744,7 +4744,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			// 'animation_delay' => $settings['layout_animation_delay'],
 		];
 
-		$twitter_settings['test'] = [
+		$twitter_settings['twitter_load_more_settings'] = [
 			'number_of_posts' => $settings['number_of_posts'],
 			'twitter_feed_consumer_key' => $settings['twitter_feed_consumer_key'],
 			'twitter_feed_consumer_secret' => $settings['twitter_feed_consumer_secret'],
