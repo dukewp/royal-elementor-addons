@@ -1845,7 +1845,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'twitter-feed', [
-			'Unlimited Number of Accounts',
+			'Unlimited Number of Profiles',
 			'Unlimited Number of Posts'
 		] );
 
