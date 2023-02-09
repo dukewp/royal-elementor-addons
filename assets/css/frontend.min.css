@@ -2231,9 +2231,9 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
 == Grid
 --------------------------------------------------------------*/
   
-.wpr-grid-image-wrap img.wpr-hidden-image {
+/* .wpr-grid-image-wrap img.wpr-hidden-image {
     opacity: 0;
-}
+} */
 
 /* GOGA - saidan movitane es opacity linearebi xuivoznaet */
 .wpr-grid-image-wrap img {
@@ -5964,6 +5964,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     position: relative;
     height: 500px;
     overflow: hidden;
+    opacity: 0;
 }
 
 .wpr-slider-item {
@@ -6078,27 +6079,29 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     }
 }
 
-.wpr-advanced-slider .slick-slide.slick-active .wpr-slider-item-bg {
+.wpr-advanced-slider .slick-slide.wpr-slick-visible .wpr-slider-item-bg {
     -webkit-animation-timing-function: linear;
     animation-timing-function: linear;
     -webkit-animation-duration: 10s;
     animation-duration: 10s;
 }
 
-.wpr-advanced-slider .slick-slide.slick-active .wpr-slider-item-bg.wpr-ken-burns-in {
+.wpr-advanced-slider .slick-slide.wpr-slick-visible .wpr-slider-item-bg.wpr-ken-burns-in {
     -webkit-animation-name: ken-burns-in;
     animation-name: ken-burns-in;
     -webkit-transform: scale(1.3);
     -ms-transform: scale(1.3);
     transform: scale(1.3);
+    /* animation-iteration-count: infinite; */
 }
 
-.wpr-advanced-slider .slick-slide.slick-active .wpr-slider-item-bg.wpr-ken-burns-out {
+.wpr-advanced-slider .slick-slide.wpr-slick-visible .wpr-slider-item-bg.wpr-ken-burns-out {
     -webkit-animation-name: ken-burns-out;
     animation-name: ken-burns-out;
     -webkit-transform: scale(1);
     -ms-transform: scale(1);
-    transform: scale(1)
+    transform: scale(1);
+    /* animation-iteration-count: infinite; */
 }
 
 .wpr-ken-burns-in {
@@ -12374,6 +12377,14 @@ a.wpr-ajax-img-wrap {
 == Twitter Feed
 --------------------------------------------------------------*/
 
+    .wpr-twitter-feed-item-username {
+        margin: 0;
+    }
+
+    .wpr-tweet .inner-block {
+        display: inline-block;
+    }
+
     .wpr-twitter-feed-cont .swiper-pagination-bullets,
     .wpr-twitter-feed-cont .swiper-pagination-fraction {
         display: inline-block !important;
@@ -12513,12 +12524,21 @@ a.wpr-ajax-img-wrap {
 == Instagram Feed
 --------------------------------------------------------------*/
 
+.wpr-token-missing {
+    text-align: center;
+    margin-bottom: 0;
+}
+
 .wpr-pagination-hidden {
     display: none !important;
 }
 
 .wpr-instagram-feed {
     opacity: 0;
+}
+
+.wpr-instagram-feed .inner-block {
+    display: inline-block;
 }
 
 .wpr-instagram-hidden-item {
@@ -12592,6 +12612,11 @@ a.wpr-ajax-img-wrap {
     border-top-right-radius: 0 !important;
 }
 
+.wpr-insta-feed-item-username {
+    margin: 0;
+    font-size: 23px;
+}
+
 .wpr-instagram-follow-btn {
     display: inline-block;
     cursor: pointer;
@@ -12601,7 +12626,7 @@ a.wpr-ajax-img-wrap {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%);
+    transform: translateY(-50%) translateX(-50%);
     z-index: 99;
 }
 
@@ -13393,6 +13418,7 @@ flex-grow: 0; */
 
 .wpr-particle-wrapper canvas {
     position: relative;
+    /* z-index: 0; */
     z-index: -1;
 }
 
