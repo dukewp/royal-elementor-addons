@@ -36,7 +36,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'royal', 'instagram feed', 'social' ];
+		return [ 'royal', 'instagram feed', 'social', 'grid' ];
 	}
 
 	public function get_script_depends() {

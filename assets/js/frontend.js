@@ -3483,7 +3483,6 @@
 					slideAnimationOff();
 				},
 				afterChange: function( event, slick, currentSlide ) {
-					console.log('works here');
 					slideAnimationOn();
 					autoplayVideo();
 					$scope.find('.slick-slide').removeClass('wpr-slick-visible');

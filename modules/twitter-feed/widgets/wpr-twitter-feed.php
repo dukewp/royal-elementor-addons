@@ -36,7 +36,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'royal', 'twitter feed', 'social' ];
+		return [ 'royal', 'twitter feed', 'social', 'grid' ];
 	}
 
 	public function get_script_depends() {
