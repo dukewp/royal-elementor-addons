@@ -1,6 +1,4 @@
 <?php
-return false;
-
 	/**
 	 * @package     Freemius
 	 * @copyright   Copyright (c) 2015, Freemius, Inc.
@@ -35,12 +33,12 @@ return false;
 
     $fs = freemius( $VARS['module_id'] );
 
-	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'json2' );
-	fs_enqueue_local_script( 'postmessage', 'nojquery.ba-postmessage.min.js' );
-	fs_enqueue_local_script( 'fs-postmessage', 'postmessage.js' );
-?>
-<?php if ( ! $fs->is_whitelabeled() ) : ?>
+    if ( ! $fs->is_whitelabeled() && ! $fs->apply_filters( 'hide_freemius_powered_by', false ) ) {
+        wp_enqueue_script( 'jquery' );
+        wp_enqueue_script( 'json2' );
+        fs_enqueue_local_script( 'postmessage', 'nojquery.ba-postmessage.min.js' );
+        fs_enqueue_local_script( 'fs-postmessage', 'postmessage.js' );
+    ?>
 <div id="pframe"></div>
 <script type="text/javascript">
 	(function ($) {
@@ -60,4 +58,4 @@ return false;
 		});
 	})(jQuery);
 </script>
-<?php endif ?>
+<?php } ?>

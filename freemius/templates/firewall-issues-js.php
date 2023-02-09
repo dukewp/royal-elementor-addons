@@ -48,12 +48,11 @@
 
 			$( this ).css({'cursor': 'wait'});
 
-			// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
-			$.post( ajaxurl, data, function( response ) {
+			$.post( <?php echo Freemius::ajax_url() ?>, data, function( response ) {
 				if ( 1 == response ) {
 					// Refresh page on success.
 					location.reload();
-				} else if ( 'http' === response.substr( 0, 4 ) ) {
+				} elseif ( 'http' === response.substr( 0, 4 ) ) {
 					// Ping actually worked, redirect.
 					window.location = response;
 				}
