@@ -66,11 +66,11 @@ class Utilities {
 			'Page List' => ['page-list', '', '', 'new'],
 			'Template' => ['elementor-template', '', '', ''],
 			'Reading Progress Bar' => ['reading-progress-bar', 'https://royal-elementor-addons.com/elementor-reading-progress-bar-widget/', '', 'new'],
-			'Advanced Accordion' => ['advanced-accordion', '', '', 'new'],
 			'Instagram Feed' => ['instagram-feed', '', '', 'new'],
 			'Twitter Feed' => ['twitter-feed', '', '', 'new'],
 			// 'Facebook Feed' => ['facebook-feed', '', '', 'new'],
-			'Offcanvas' => ['offcanvas', 'https://royal-elementor-addons.com/elementor-offcanvas-widget/', '', 'new'],
+			'Offcanvas' => ['offcanvas', '', '', 'new'],
+			// https://royal-elementor-addons.com/elementor-offcanvas-widget/
 			// 'Random Image' => ['random-image', '', ''],
 		];
 	}

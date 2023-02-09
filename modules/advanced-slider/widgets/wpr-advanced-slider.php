@@ -213,6 +213,9 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'render_type' => 'template',
 				'frontend_available' => true,
 				'separator' => 'before',
+				'condition' => [
+					'slider_effect!' => 'slide_vertical'
+				]
 			]
 		);
 	}
@@ -229,6 +232,9 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'render_type' => 'template',
 				'frontend_available' => true,
 				'default' => 1,
+				'condition' => [
+					'slider_effect!' => 'slide_vertical'
+				]
 			]
 		);
 	}
@@ -802,6 +808,30 @@ class Wpr_Advanced_Slider extends Widget_Base {
 
 		$this->add_control_slides_to_scroll();
 
+		$this->add_control(
+			'slides_amount_hidden',
+			[
+				'type' => Controls_Manager::HIDDEN,
+				'prefix_class' => 'wpr-adv-slider-columns-',
+				'default' => 1,
+				'condition' => [
+					'slider_effect' => 'slide_vertical'
+				]
+			]
+		);
+
+		$this->add_control(
+			'slides_to_scroll_hidden',
+			[
+				'type' => Controls_Manager::HIDDEN,
+				'prefix_class' => 'wpr-adv-slides-to-scroll-',
+				'default' => 1,
+				'condition' => [
+					'slider_effect' => 'slide_vertical'
+				]
+			]
+		);
+
 		$this->add_responsive_control(
 			'slider_gutter',
 			[
@@ -1104,6 +1134,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'advanced-slider', [
 			'Add Unlimited Slides',
+			'Vertical Sliding',
 			'Elementor Templates Slider option',
 			'Scroll to Section Button',
 			'Ken Burn Effect',
@@ -2755,7 +2786,11 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				// Slider Background Image
 				$slider_html .= '<div class="wpr-slider-item-bg '. esc_attr($ken_burn_class) .'" style="background-image: url('. esc_url($item_bg_image_url) .')"></div>';
 
-				$slider_amount = +$settings['slider_amount'];
+				if ( 'slide_vertical' === $settings['slider_effect'] ) {
+					$slider_amount = 1;
+				} else {
+					$slider_amount = +$settings['slider_amount'];
+				}
 
 				// Slider Overlay
 				$slider_overlay_html = '';

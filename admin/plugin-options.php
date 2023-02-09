@@ -158,6 +158,8 @@ function wpr_addons_settings_page() {
         $active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'wpr_tab_settings';
     } elseif ( empty(get_option('wpr_wl_hide_white_label_tab')) ) {
         $active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'wpr_tab_white_label';
+    } else {
+        $active_tab = $_GET['tab'];
     }
     
 

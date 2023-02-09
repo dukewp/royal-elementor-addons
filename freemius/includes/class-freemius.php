@@ -1499,36 +1499,38 @@
          * @since  2.0.0
          */
         static function _enrich_ajax_url() {
-            $admin_param = is_network_admin() ?
-                '_fs_network_admin' :
-                '_fs_blog_admin';
-            ?>
-            <script type="text/javascript">
-                (function ($) {
-                    $(document).ajaxSend(function (event, jqxhr, settings) {
-                        if (settings.url &&
-                            -1 < settings.url.indexOf('admin-ajax.php') &&
-                            ! ( settings.url.indexOf( '<?php echo $admin_param ?>' ) > 0 )
-                        ) {
-                            if (
-                                'string' === typeof settings.data &&
-                                settings.data.indexOf( 'action=heartbeat' ) > 0
+            if ( get_current_screen()->base !== 'royal-addons_page_wpr-templates-kit' ) {
+                $admin_param = is_network_admin() ?
+                    '_fs_network_admin' :
+                    '_fs_blog_admin';
+                ?>
+                <script type="text/javascript">
+                    (function ($) {
+                        $(document).ajaxSend(function (event, jqxhr, settings) {
+                            if (settings.url &&
+                                -1 < settings.url.indexOf('admin-ajax.php') &&
+                                ! ( settings.url.indexOf( '<?php echo $admin_param ?>' ) > 0 )
                             ) {
-                                return;
+                                if (
+                                    'string' === typeof settings.data &&
+                                    settings.data.indexOf( 'action=heartbeat' ) > 0
+                                ) {
+                                    return;
+                                }
+    
+                                if (settings.url.indexOf('?') > 0) {
+                                    settings.url += '&';
+                                } else {
+                                    settings.url += '?';
+                                }
+    
+                                settings.url += '<?php echo $admin_param ?>=true';
                             }
-
-                            if (settings.url.indexOf('?') > 0) {
-                                settings.url += '&';
-                            } else {
-                                settings.url += '?';
-                            }
-
-                            settings.url += '<?php echo $admin_param ?>=true';
-                        }
-                    });
-                })(jQuery);
-            </script>
-            <?php
+                        });
+                    })(jQuery);
+                </script>
+                <?php
+            }
         }
 
         /**

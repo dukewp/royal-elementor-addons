@@ -1741,6 +1741,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			'Unlimited Image Overlay Animations',
 			'Image overlay GIF upload option',
 			'Title, Category, Read More Advanced Link Hover Animations',
+			'Open Links in New Tab'
 		] );
 		
 		// Styles ====================
