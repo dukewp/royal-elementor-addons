@@ -70,7 +70,8 @@ class Utilities {
 			'Instagram Feed' => ['instagram-feed', '', '', 'new'],
 			'Twitter Feed' => ['twitter-feed', '', '', 'new'],
 			// 'Facebook Feed' => ['facebook-feed', '', '', 'new'],
-			'Offcanvas' => ['offcanvas', 'https://royal-elementor-addons.com/elementor-offcanvas-widget/', '', 'new'],
+			'Offcanvas' => ['offcanvas', '', '', 'new'],
+			// https://royal-elementor-addons.com/elementor-offcanvas-widget/
 			// 'Random Image' => ['random-image', '', ''],
 		];
 	}

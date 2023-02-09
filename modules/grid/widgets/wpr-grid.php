@@ -3174,6 +3174,9 @@ class Wpr_Grid extends Widget_Base {
 			'Grid Category Filter Count',
 			'Grid Item Even/Odd Background Color',
 			'Title, Category, Read More Advanced Link Hover Animations',
+			'Display Scheduled Posts',
+			'Open Links in New Tab',
+			'Lazy Loading'
 		] );
 
 		// Styles ====================
