@@ -138,6 +138,12 @@
 		 * @author Vova Feldman
 		 * @since 2.3.2
 		 */
+
+	if ( ! did_action( 'elementor/loaded' ) ) {
+		wpr_addons_fail_load();
+		// add_action( 'admin_notices', 'wpr_addons_fail_load' );
+		// return;
+	} else {
 		$fs->do_action( 'connect/before' );
 	?>
 	<div id="fs_connect"
@@ -187,6 +193,7 @@
 						);
 					} else {
 						$filter                = 'connect_message';
+
 						$default_optin_message = $is_gdpr_required ?
 							fs_text_inline( 'Never miss an important update - opt in to our security & feature updates notifications, educational content, offers, and non-sensitive diagnostic tracking with %4$s.', 'connect-message', $slug) :
 							fs_text_inline( 'Never miss an important update - opt in to our security and feature updates notifications, and non-sensitive diagnostic tracking with %4$s.', 'connect-message', $slug);
@@ -207,12 +214,12 @@
 						}
 
 						$message = $fs->apply_filters(
-						    $filter,
-                            ($is_network_upgrade_mode ?
-                                '' :
-                                /* translators: %s: name (e.g. Hey John,) */
-                                $hey_x_text . '<br>'
-                            ) .
+							$filter,
+							($is_network_upgrade_mode ?
+								'' :
+								/* translators: %s: name (e.g. Hey John,) */
+								$hey_x_text . '<br>'
+							) .
 							sprintf(
 								esc_html( $default_optin_message ),
 								'<b>' . esc_html( $fs->get_plugin_name() ) . '</b>',
@@ -226,7 +233,7 @@
 							'<a href="' . $site_url . '" target="_blank" rel="noopener noreferrer">' . $site_url . '</a>',
 							$freemius_link,
 							$is_gdpr_required
-						);
+						);	
 					}
 
 					if ( $is_network_upgrade_mode ) {
@@ -490,6 +497,7 @@
 </div>
 <?php
 	}
+}
 ?>
 <script type="text/javascript">
 	(function ($) {
