@@ -38,7 +38,7 @@ class Wpr_Offcanvas extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'offcanvas', 'off canvas', 'sidebar', 'ofcanvas', 'popup' ];
+		return [ 'royal', 'offcanvas', 'off canvas', 'sidebar', 'ofcanvas', 'popup' ];
 	}
 
 	public function get_style_depends() {

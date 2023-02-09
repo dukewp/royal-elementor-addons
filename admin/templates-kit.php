@@ -34,6 +34,8 @@ if ( version_compare( get_bloginfo( 'version' ), '5.1.0', '>=' ) ) {
 */
 function wpr_addons_templates_kit_page() {
 
+    var_dump(get_current_screen()->base = 'royal-addons_page_wpr-templates-kit');
+
 ?>
 
 <div class="wpr-templates-kit-page">
