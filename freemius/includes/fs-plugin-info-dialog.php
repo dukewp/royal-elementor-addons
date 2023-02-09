@@ -222,7 +222,7 @@
                 if ( $this->_fs->is_addon_activated( $selected_addon->id ) ) {
                     $fs_addon              = $this->_fs->get_addon_instance( $selected_addon->id );
                     $current_addon_version = $fs_addon->get_plugin_version();
-                } elseif ( $this->_fs->is_addon_installed( $selected_addon->id ) ) {
+                } else if ( $this->_fs->is_addon_installed( $selected_addon->id ) ) {
                     $addon_plugin_data = get_plugin_data(
                         ( WP_PLUGIN_DIR . '/' . $this->_fs->get_addon_basename( $selected_addon->id ) ),
                         false,
@@ -313,7 +313,7 @@
                     $data->requires     = $latest->requires_platform_version;
                     $data->requires_php = $latest->requires_programming_language_version;
                     $data->tested       = $latest->tested_up_to_version;
-                } elseif ( ! empty( $current_addon_version ) ) {
+                } else if ( ! empty( $current_addon_version ) ) {
                     $data->version = $current_addon_version;
                 } else {
                     // Add dummy version.
@@ -379,18 +379,18 @@
                 $pricing = $plan->pricing[0];
                 if ( isset( $pricing->annual_price ) ) {
                     $billing_cycle = 'annual';
-                } elseif ( isset( $pricing->monthly_price ) ) {
+                } else if ( isset( $pricing->monthly_price ) ) {
                     $billing_cycle = 'monthly';
-                } elseif ( isset( $pricing->lifetime_price ) ) {
+                } else if ( isset( $pricing->lifetime_price ) ) {
                     $billing_cycle = 'lifetime';
                 }
             } else {
                 foreach ( $plan->pricing as $pricing ) {
                     if ( isset( $pricing->annual_price ) ) {
                         $billing_cycle = 'annual';
-                    } elseif ( isset( $pricing->monthly_price ) ) {
+                    } else if ( isset( $pricing->monthly_price ) ) {
                         $billing_cycle = 'monthly';
-                    } elseif ( isset( $pricing->lifetime_price ) ) {
+                    } else if ( isset( $pricing->lifetime_price ) ) {
                         $billing_cycle = 'lifetime';
                     }
 
@@ -416,9 +416,9 @@
             $price_tag = '';
             if ( isset( $pricing->annual_price ) ) {
                 $price_tag = $pricing->annual_price . ( $plan->is_block_features ? ' / year' : '' );
-            } elseif ( isset( $pricing->monthly_price ) ) {
+            } else if ( isset( $pricing->monthly_price ) ) {
                 $price_tag = $pricing->monthly_price . ' / mo';
-            } elseif ( isset( $pricing->lifetime_price ) ) {
+            } else if ( isset( $pricing->lifetime_price ) ) {
                 $price_tag = $pricing->lifetime_price;
             }
 
@@ -593,7 +593,7 @@
                  */
                 $is_free_installed    = $has_installed_version;
                 $is_premium_installed = false;
-            } elseif ( ! $api->has_free_plan ) {
+            } else if ( ! $api->has_free_plan ) {
                 /**
                  * Premium-only add-on.
                  *
@@ -674,7 +674,7 @@
                     if ( $has_installed_version ) {
                         if ( $is_update_available ) {
                             $can_install_free_version_update = true;
-                        } elseif ( ! $is_premium_installed && ! isset( $active_plugins_directories_map[ dirname( $this->status['file'] ) ] ) ) {
+                        } else if ( ! $is_premium_installed && ! isset( $active_plugins_directories_map[ dirname( $this->status['file'] ) ] ) ) {
                             $can_activate_free_version = true;
                         }
                     } else {
@@ -699,7 +699,7 @@
                 if ( ! isset( $active_plugins_directories_map[ dirname( $this->status['file'] ) ] ) ) {
                     if ( $is_premium_installed ) {
                         $can_activate_premium_version = ( ! $is_addon_activated || ! $fs_addon->is_premium() );
-                    } elseif ( $is_free_installed ) {
+                    } else if ( $is_free_installed ) {
                         $can_activate_free_version = ( ! $is_addon_activated );
                     }
                 }
@@ -707,7 +707,7 @@
                 if ( $this->_fs->is_premium() || ! $this->_fs->is_org_repo_compliant() ) {
                     if ( $is_update_available ) {
                         $can_install_premium_version_update = true;
-                    } elseif ( ! $is_premium_installed ) {
+                    } else if ( ! $is_premium_installed ) {
                         $can_install_premium_version = true;
                     }
                 }
@@ -749,7 +749,7 @@
                     $this->status['url'],
                     '_parent'
                 );
-            } elseif ( $can_install_free_version || $can_install_premium_version ) {
+            } else if ( $can_install_free_version || $can_install_premium_version ) {
                 $actions[] = $this->get_cta(
                     ( $can_install_free_version ?
                         fs_esc_html_inline( 'Install Free Version Now', 'install-free-version-now', $api->slug ) :
@@ -1538,7 +1538,7 @@
 
             if ( ! $tested_wp ) {
                 echo '<div class="notice notice-warning"><p>' . '<strong>' . fs_text_inline( 'Warning', 'warning', $api->slug ) . ':</strong> ' . fs_text_inline( 'This plugin has not been tested with your current version of WordPress.', 'not-tested-warning', $api->slug ) . '</p></div>';
-            } elseif ( ! $compatible_wp ) {
+            } else if ( ! $compatible_wp ) {
                 echo '<div class="notice notice-warning"><p>' . '<strong>' . fs_text_inline( 'Warning', 'warning', $api->slug ) . ':</strong> ' . fs_text_inline( 'This plugin has not been marked as compatible with your version of WordPress.', 'not-compatible-warning', $api->slug ) . '</p></div>';
             }
 

@@ -166,15 +166,19 @@
 
             $contents = ob_get_clean();
 
-            $update_button_id_attribute_pos = strpos( $contents, 'id="plugin_update_from_iframe"' );
+            $install_or_update_button_id_attribute_pos = strpos( $contents, 'id="plugin_install_from_iframe"' );
 
-            if ( false !== $update_button_id_attribute_pos ) {
-                $update_button_start_pos = strrpos(
-                    substr( $contents, 0, $update_button_id_attribute_pos ),
+            if ( false === $install_or_update_button_id_attribute_pos ) {
+                $install_or_update_button_id_attribute_pos = strpos( $contents, 'id="plugin_update_from_iframe"' );
+            }
+
+            if ( false !== $install_or_update_button_id_attribute_pos ) {
+                $install_or_update_button_start_pos = strrpos(
+                    substr( $contents, 0, $install_or_update_button_id_attribute_pos ),
                     '<a'
                 );
 
-                $update_button_end_pos = ( strpos( $contents, '</a>', $update_button_id_attribute_pos ) + strlen( '</a>' ) );
+                $install_or_update_button_end_pos = ( strpos( $contents, '</a>', $install_or_update_button_id_attribute_pos ) + strlen( '</a>' ) );
 
                 /**
                  * The part of the contents without the update button.
@@ -182,20 +186,20 @@
                  * @author Leo Fajardo (@leorw)
                  * @since 2.2.5
                  */
-                $modified_contents = substr( $contents, 0, $update_button_start_pos );
+                $modified_contents = substr( $contents, 0, $install_or_update_button_start_pos );
 
-                $update_button = substr( $contents, $update_button_start_pos, ( $update_button_end_pos - $update_button_start_pos ) );
+                $install_or_update_button = substr( $contents, $install_or_update_button_start_pos, ( $install_or_update_button_end_pos - $install_or_update_button_start_pos ) );
 
                 /**
                  * Replace the plugin information dialog's "Install Update Now" button's text and URL. If there's a license,
                  * the text will be "Renew license" and will link to the checkout page with the license's billing cycle
                  * and quota. If there's no license, the text will be "Buy license" and will link to the pricing page.
                  */
-                $update_button = preg_replace(
-                    '/(\<a.+)(id="plugin_update_from_iframe")(.+href=")([^\s]+)(".*\>)(.+)(\<\/a>)/is',
+                $install_or_update_button = preg_replace(
+                    '/(\<a.+)(id="plugin_(install|update)_from_iframe")(.+href=")([^\s]+)(".*\>)(.+)(\<\/a>)/is',
                     is_object( $license ) ?
                         sprintf(
-                            '$1$3%s$5%s$7',
+                            '$1$4%s$6%s$8',
                             $this->_fs->checkout_url(
                                 is_object( $subscription ) ?
                                     ( 1 == $subscription->billing_cycle ? WP_FS__PERIOD_MONTHLY : WP_FS__PERIOD_ANNUALLY ) :
@@ -206,11 +210,11 @@
                             fs_text_inline( 'Renew license', 'renew-license', $this->_fs->get_slug() )
                         ) :
                         sprintf(
-                            '$1$3%s$5%s$7',
+                            '$1$4%s$6%s$8',
                             $this->_fs->pricing_url(),
                             fs_text_inline( 'Buy license', 'buy-license', $this->_fs->get_slug() )
                         ),
-                    $update_button
+                    $install_or_update_button
                 );
 
                 /**
@@ -219,7 +223,7 @@
                  * @author Leo Fajardo (@leorw)
                  * @since 2.2.5
                  */
-                $modified_contents .= $update_button;
+                $modified_contents .= $install_or_update_button;
 
                 /**
                  * Append the remaining part of the contents after the update button.
@@ -227,7 +231,7 @@
                  * @author Leo Fajardo (@leorw)
                  * @since 2.2.5
                  */
-                $modified_contents .= substr( $contents, $update_button_end_pos );
+                $modified_contents .= substr( $contents, $install_or_update_button_end_pos );
 
                 $contents = $modified_contents;
             }
@@ -753,7 +757,7 @@
                  ! is_array( $transient_data->response )
             ) {
                 $transient_data->response = array();
-            } elseif ( ! empty( $transient_data->response[ $basename ] ) ) {
+            } else if ( ! empty( $transient_data->response[ $basename ] ) ) {
                 $version = $is_plugin ?
                     ( ! empty( $transient_data->response[ $basename ]->new_version ) ?
                         $transient_data->response[ $basename ]->new_version :
@@ -838,28 +842,34 @@
          * @return bool|mixed
          */
         static function _fetch_plugin_info_from_repository( $action, $args ) {
-            $url = $http_url = 'http://api.wordpress.org/plugins/info/1.0/';
-            if ( $ssl = wp_http_supports( array( 'ssl' ) ) ) {
+            $url = $http_url = 'http://api.wordpress.org/plugins/info/1.2/';
+            $url = add_query_arg(
+                array(
+                    'action'  => $action,
+                    'request' => $args,
+                ),
+                $url
+            );
+
+            if ( wp_http_supports( array( 'ssl' ) ) ) {
                 $url = set_url_scheme( $url, 'https' );
             }
 
-            $args = array(
-                'timeout' => 15,
-                'body'    => array(
-                    'action'  => $action,
-                    'request' => serialize( $args )
-                )
-            );
-
-            $request = wp_remote_post( $url, $args );
+            // The new endpoint version serves only GET requests.
+            $request = wp_remote_get( $url, array( 'timeout' => 15 ) );
 
             if ( is_wp_error( $request ) ) {
                 return false;
             }
 
-            $res = maybe_unserialize( wp_remote_retrieve_body( $request ) );
+            $res = json_decode( wp_remote_retrieve_body( $request ), true );
 
-            if ( ! is_object( $res ) && ! is_array( $res ) ) {
+            if ( is_array( $res ) ) {
+                // Object casting is required in order to match the info/1.0 format. We are not decoding directly into an object as we need some fields to remain an array (e.g., $res->sections).
+                $res = (object) $res;
+            }
+
+            if ( ! is_object( $res ) || isset( $res->error ) ) {
                 return false;
             }
 
@@ -1034,7 +1044,7 @@
 
                 if ( $this->_fs->is_addon_activated( $addon->id ) ) {
                     $addon_version = $this->_fs->get_addon_instance( $addon->id )->get_plugin_version();
-                } elseif ( $this->_fs->is_addon_installed( $addon->id ) ) {
+                } else if ( $this->_fs->is_addon_installed( $addon->id ) ) {
                     $addon_plugin_data = get_plugin_data(
                         ( WP_PLUGIN_DIR . '/' . $this->_fs->get_addon_basename( $addon->id ) ),
                         false,
@@ -1123,7 +1133,7 @@ if ( !isset($info->error) ) {
 
                     if ( isset( $new_version_readme_data->banners ) ) {
                         $new_version_readme_data->banners = (array) $new_version_readme_data->banners;
-                    } elseif ( isset( $data->banners ) ) {
+                    } else if ( isset( $data->banners ) ) {
                         $new_version_readme_data->banners = $data->banners;
                     }
 
@@ -1470,7 +1480,7 @@ if ( !isset($info->error) ) {
         static function _store_basename_for_source_adjustment( $response, $hook_extra ) {
             if ( isset( $hook_extra['plugin'] ) ) {
                 self::$_upgrade_basename = $hook_extra['plugin'];
-            } elseif ( isset( $hook_extra['theme'] ) ) {
+            } else if ( isset( $hook_extra['theme'] ) ) {
                 self::$_upgrade_basename = $hook_extra['theme'];
             } else {
                 self::$_upgrade_basename = null;
@@ -1510,7 +1520,7 @@ if ( !isset($info->error) ) {
             if ( isset( $upgrader->skin->options['extra'] ) ) {
                 // Set by the auto-install logic.
                 $desired_slug = $upgrader->skin->options['extra']['slug'];
-            } elseif ( ! empty( $basename ) ) {
+            } else if ( ! empty( $basename ) ) {
                 /**
                  * If it doesn't end with ".php", it's a theme.
                  *
@@ -1536,7 +1546,7 @@ if ( !isset($info->error) ) {
                  *
                  * @author Vova Feldman
                  */
-            } elseif ( ! empty( $basename ) ) {
+            } else if ( ! empty( $basename ) ) {
                 $fs = Freemius::get_instance_by_file(
                     $basename,
                     $is_theme ?

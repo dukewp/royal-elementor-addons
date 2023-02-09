@@ -700,7 +700,7 @@
                          * skipping of the connection (i.e., no opt-ins and delegated connections so far).
                          */
                         $options_to_update['is_anonymous_ms'] = true;
-                    } elseif ( $sites_count === $installs_count ) {
+                    } else if ( $sites_count === $installs_count ) {
                         /**
                          * Assume network-level opt-in as the intended action if all actions identified were only opt-ins
                          * (i.e., no delegation and skipping of the connections so far).
@@ -1125,9 +1125,9 @@
                 foreach ( $blogs_status as $blog_id => $status_or_user_id ) {
                     if ( 'skipped' === $status_or_user_id ) {
                         $skips ++;
-                    } elseif ( 'ignored' === $status_or_user_id ) {
+                    } else if ( 'ignored' === $status_or_user_id ) {
                         $ignores ++;
-                    } elseif ( FS_User::is_valid_id( $status_or_user_id ) ) {
+                    } else if ( FS_User::is_valid_id( $status_or_user_id ) ) {
                         $connections ++;
 
                         if ( ! isset( $opted_in_users[ $status_or_user_id ] ) ) {
@@ -1155,11 +1155,11 @@
                     $storage->is_anonymous_ms = $storage->is_anonymous;
 
                     $all_migrated = true;
-                } elseif ( $sites_count == $ignores ) {
+                } else if ( $sites_count == $ignores ) {
                     // Don't do anything, still in activation mode.
 
                     $all_migrated = true;
-                } elseif ( 0 < count( $opted_in_super_admins ) ) {
+                } else if ( 0 < count( $opted_in_super_admins ) ) {
                     // Find the super-admin with the majority of installs.
                     $max_installs_by_super_admin = 0;
                     foreach ( $opted_in_super_admins as $user_id => $true ) {
@@ -1383,7 +1383,7 @@
                          * updating of a .org plugin).
                          */
                         add_filter( 'site_transient_update_plugins', array( 'Freemius', '_remove_fs_updates_from_plugin_install_page' ), 10, 2 );
-                    } elseif ( self::is_plugins_page() || self::is_updates_page() ) {
+                    } else if ( self::is_plugins_page() || self::is_updates_page() ) {
                         /**
                          * On the "Plugins" and "Updates" admin pages, if there are premium or non–org-compliant plugins, modify their details dialog URLs (add a Freemius-specific param) so that the SDK can determine if the plugin information dialog should show information from Freemius.
                          *
@@ -1536,13 +1536,17 @@
             add_action( 'admin_enqueue_scripts', array( &$this, '_enqueue_common_css' ) );
 
             /**
-             * Handle request to reset anonymous mode for `get_reconnect_url()`.
+             * Handle request to reset anonymous mode for `get_reconnect_url()` or reset the pending activation mode.
              *
              * @author Vova Feldman (@svovaf)
              * @since  1.2.1.5
              */
-            if ( fs_request_is_action( 'reset_anonymous_mode' ) &&
-                 $this->get_unique_affix() === fs_request_get( 'fs_unique_affix' )
+            if (
+                (
+                    fs_request_is_action( 'reset_anonymous_mode' ) ||
+                    fs_request_is_action( 'reset_pending_activation_mode' )
+                ) &&
+                $this->get_unique_affix() === fs_request_get( 'fs_unique_affix' )
             ) {
                 add_action( 'admin_init', array( &$this, 'connect_again' ) );
             }
@@ -2067,7 +2071,7 @@
                 );
 
                 $store_option = true;
-            } elseif (
+            } else if (
                 isset( $id_slug_type_path_map[ $module_id ]['slug'] ) &&
                 $slug !== $id_slug_type_path_map[ $module_id ]['slug']
             ) {
@@ -2327,7 +2331,7 @@
             $show_deactivation_feedback_form = ! self::is_deactivation_snoozed();
             if ( $this->has_filter( 'show_deactivation_feedback_form' ) ) {
                 $show_deactivation_feedback_form = $this->apply_filters( 'show_deactivation_feedback_form', true );
-            } elseif ( $this->is_addon() ) {
+            } else if ( $this->is_addon() ) {
                 /**
                  * If the add-on's 'show_deactivation_feedback_form' is not set, try to inherit the value from the parent.
                  */
@@ -2720,7 +2724,7 @@
             $fs = null;
             if ( $plugin_id == $this->get_id() ) {
                 $fs = $this;
-            } elseif ( $this->is_addon_activated( $plugin_id ) ) {
+            } else if ( $this->is_addon_activated( $plugin_id ) ) {
                 $fs = self::get_instance_by_id( $plugin_id );
             }
 
@@ -3316,7 +3320,7 @@
                      ! empty( self::$_plugins_info->no_update[ $basename ]->slug )
                 ) {
                     $slug = self::$_plugins_info->no_update[ $basename ]->slug;
-                } elseif ( isset( self::$_plugins_info->response ) &&
+                } else if ( isset( self::$_plugins_info->response ) &&
                             isset( self::$_plugins_info->response[ $basename ] ) &&
                             ! empty( self::$_plugins_info->response[ $basename ]->slug )
                 ) {
@@ -3790,7 +3794,7 @@
 
                 // Clear SDK reference cache.
                 delete_option( 'fs_active_plugins' );
-            } elseif ( fs_request_is_action( 'clear_updates_data' ) ) {
+            } else if ( fs_request_is_action( 'clear_updates_data' ) ) {
                 check_admin_referer( 'clear_updates_data' );
 
                 if ( ! is_multisite() ) {
@@ -3809,11 +3813,11 @@
 
                     switch_to_blog( $current_blog_id );
                 }
-            } elseif ( fs_request_is_action( 'reset_deactivation_snoozing' ) ) {
+            } else if ( fs_request_is_action( 'reset_deactivation_snoozing' ) ) {
                 check_admin_referer( 'reset_deactivation_snoozing' );
 
                 self::reset_deactivation_snoozing();
-            } elseif ( fs_request_is_action( 'simulate_trial' ) ) {
+            } else if ( fs_request_is_action( 'simulate_trial' ) ) {
                 check_admin_referer( 'simulate_trial' );
 
                 $fs = freemius( fs_request_get( 'module_id' ) );
@@ -3822,13 +3826,13 @@
                 $fs->_storage->install_timestamp = ( time() - WP_FS__TIME_24_HOURS_IN_SEC );
                 // Unset the trial shown timestamp.
                 unset( $fs->_storage->trial_promotion_shown );
-            } elseif ( fs_request_is_action( 'simulate_network_upgrade' ) ) {
+            } else if ( fs_request_is_action( 'simulate_network_upgrade' ) ) {
                 check_admin_referer( 'simulate_network_upgrade' );
 
                 $fs = freemius( fs_request_get( 'module_id' ) );
 
                 self::set_network_upgrade_mode( $fs->_storage );
-            } elseif ( fs_request_is_action( 'delete_install' ) ) {
+            } else if ( fs_request_is_action( 'delete_install' ) ) {
                 check_admin_referer( 'delete_install' );
 
                 self::_delete_site_by_slug(
@@ -3837,11 +3841,11 @@
                     true,
                     fs_request_get( 'blog_id', null )
                 );
-            } elseif ( fs_request_is_action( 'delete_user' ) ) {
+            } else if ( fs_request_is_action( 'delete_user' ) ) {
                 check_admin_referer( 'delete_user' );
 
                 self::delete_user( fs_request_get( 'user_id' ) );
-            } elseif ( fs_request_is_action( 'download_logs' ) ) {
+            } else if ( fs_request_is_action( 'download_logs' ) ) {
                 check_admin_referer( 'download_logs' );
 
                 $download_url = FS_Logger::download_db_logs(
@@ -3853,7 +3857,7 @@
                 }
 
                 fs_redirect( $download_url );
-            } elseif ( fs_request_is_action( 'migrate_options_to_network' ) ) {
+            } else if ( fs_request_is_action( 'migrate_options_to_network' ) ) {
                 check_admin_referer( 'migrate_options_to_network' );
 
                 self::migrate_options_to_network();
@@ -4030,42 +4034,58 @@
         }
 
         /**
-         * @author Vova Feldman (@svovaf)
-         * @since  1.1.7.4
+         * @author Leo Fajardo (@leorw)
+         * @since  2.5.4
          *
-         * @param int|null $blog_id      Since 2.0.0.
-         * @param bool     $is_gdpr_test Since 2.0.2. Perform only the GDPR test.
+         * @param bool $is_update
          *
-         * @return object|false
+         * @return bool
          */
-        private function ping( $blog_id = null, $is_gdpr_test = false ) {
-            if ( WP_FS__SIMULATE_NO_API_CONNECTIVITY ) {
+        private function should_turn_fs_on( $is_update = true ) {
+            if (
+                empty( $this->_plugin->opt_in_moderation ) ||
+                ! is_array( $this->_plugin->opt_in_moderation )
+            ) {
+                return true;
+            }
+
+            $optin_config = $this->_plugin->opt_in_moderation;
+
+            if (
+                WP_FS__IS_LOCALHOST &&
+                ( ! isset( $optin_config['localhost'] ) || false !== $optin_config['localhost'] )
+            ) {
+                return true;
+            }
+
+            $optin_config_key = $is_update ?
+                'updates' :
+                'new';
+
+            if ( ! isset( $optin_config[ $optin_config_key ] ) ) {
+                return true;
+            }
+
+            $visibility_percentage = $optin_config[ $optin_config_key ];
+
+            if ( 0 == $visibility_percentage ) {
                 return false;
             }
 
-            $version = $this->get_plugin_version();
-
-            $is_update = $this->apply_filters( 'is_plugin_update', $this->is_plugin_update() );
-
-            $params = array(
-                'is_update'    => json_encode( $is_update ),
-                'version'      => $version,
-                'sdk'          => $this->version,
-                'is_admin'     => json_encode( is_admin() ),
-                'is_ajax'      => json_encode( self::is_ajax() ),
-                'is_cron'      => json_encode( self::is_cron() ),
-                'is_gdpr_test' => $is_gdpr_test,
-                'is_http'      => json_encode( WP_FS__IS_HTTP_REQUEST ),
-            );
-
-            if ( is_multisite() && function_exists( 'get_network' ) ) {
-                $params['network_uid'] = $this->get_anonymous_network_id();
+            if ( ! is_numeric( $visibility_percentage ) ) {
+                return true;
             }
 
-            return $this->get_api_plugin_scope()->ping(
-                $this->get_anonymous_id( $blog_id ),
-                $params
-            );
+            $min = 1;
+            $max = 100;
+
+            if ( function_exists( 'random_int' ) ) {
+                $random = random_int( $min, $max );
+            } else {
+                $random = rand( $min, $max );
+            }
+
+            return ( $random <= $visibility_percentage );
         }
 
         /**
@@ -4076,7 +4096,7 @@
          *
          * @param bool $flush_if_no_connectivity
          *
-         * @return bool
+         * @return bool|null
          */
         function has_api_connectivity( $flush_if_no_connectivity = false ) {
             $this->_logger->entrance();
@@ -4089,7 +4109,7 @@
                  isset( $this->_storage->connectivity_test ) &&
                  true === $this->_storage->connectivity_test['is_connected']
             ) {
-                unset( $this->_storage->connectivity_test );
+                $this->clear_connectivity_info();
             }
 
             if ( ! $this->should_run_connectivity_test( $flush_if_no_connectivity ) ) {
@@ -4106,36 +4126,47 @@
                 return $this->_has_api_connection;
             }
 
-            $pong         = $this->ping();
-            $is_connected = $this->get_api_plugin_scope()->is_valid_ping( $pong );
+            if (
+                ! empty( $this->_storage->connectivity_test ) &&
+                isset( $this->_storage->connectivity_test['is_active'] )
+            ) {
+                $is_active = $this->_storage->connectivity_test['is_active'];
+            } else {
+                $is_active = $this->should_turn_fs_on( $this->apply_filters( 'is_plugin_update', $this->is_plugin_update() ) );
 
-            if ( ! $is_connected ) {
-                // API failure.
-                $this->_add_connectivity_issue_message( $pong );
+                $this->store_connectivity_info( (object) array( 'is_active' => $is_active ), null );
             }
 
-            if ( $is_connected ) {
-                FS_GDPR_Manager::instance()->store_is_required( $pong->is_gdpr_required );
+            if ( $is_active ) {
+                $this->_is_on = true;
             }
-            
-            $this->store_connectivity_info( $pong, $is_connected );
 
             return $this->_has_api_connection;
+        }
+
+        /**
+         * @author Leo Fajardo (@leorw)
+         * @since 2.5.4
+         */
+        private function clear_connectivity_info() {
+            unset( $this->_storage->connectivity_test );
+
+            FS_Api::clear_force_http_flag();
         }
 
         /**
          * @author Vova Feldman (@svovaf)
          * @since  1.1.7.4
          *
-         * @param object $pong
-         * @param bool   $is_connected
+         * @param object    $pong
+         * @param bool|null $is_connected
          */
         private function store_connectivity_info( $pong, $is_connected ) {
             $this->_logger->entrance();
 
             $version = $this->get_plugin_version();
 
-            if ( ! $is_connected || WP_FS__SIMULATE_FREEMIUS_OFF ) {
+            if ( false === $is_connected || WP_FS__SIMULATE_FREEMIUS_OFF ) {
                 $is_active = false;
             } else {
                 $is_active = ( isset( $pong->is_active ) && true == $pong->is_active );
@@ -4357,379 +4388,6 @@
             $domain = idn_to_ascii( $parts[1] ) . '.';
 
             return ( checkdnsrr( $domain, 'MX' ) || checkdnsrr( $domain, 'A' ) );
-        }
-
-        /**
-         * Generate API connectivity issue message.
-         *
-         * @author Vova Feldman (@svovaf)
-         * @since  1.0.9
-         *
-         * @param mixed $api_result
-         * @param bool  $is_first_failure
-         */
-        function _add_connectivity_issue_message( $api_result, $is_first_failure = true ) {
-            if ( ! $this->is_premium() && $this->_enable_anonymous ) {
-                // Don't add message if it's the free version and can run anonymously.
-                return;
-            }
-
-            if ( ! function_exists( 'wp_nonce_url' ) ) {
-                require_once ABSPATH . 'wp-includes/functions.php';
-            }
-
-            $current_user = self::_get_current_wp_user();
-//			$admin_email = get_option( 'admin_email' );
-            $admin_email = $current_user->user_email;
-
-            // Aliases.
-            $deactivate_plugin_title = $this->esc_html_inline( 'That\'s exhausting, please deactivate', 'deactivate-plugin-title' );
-            $deactivate_plugin_desc  = $this->esc_html_inline( 'We feel your frustration and sincerely apologize for the inconvenience. Hope to see you again in the future.', 'deactivate-plugin-desc' );
-            $install_previous_title  = $this->esc_html_inline( 'Let\'s try your previous version', 'install-previous-title' );
-            $install_previous_desc   = $this->esc_html_inline( 'Uninstall this version and install the previous one.', 'install-previous-desc' );
-            $fix_issue_title         = $this->esc_html_inline( 'Yes - I\'m giving you a chance to fix it', 'fix-issue-title' );
-            $fix_issue_desc          = $this->esc_html_inline( 'We will do our best to whitelist your server and resolve this issue ASAP. You will get a follow-up email to %s once we have an update.', 'fix-issue-desc' );
-            /* translators: %s: product title (e.g. "Awesome Plugin" requires access to...) */
-            $x_requires_access_to_api    = $this->esc_html_inline( '%s requires access to our API.', 'x-requires-access-to-api' );
-            $sysadmin_title              = $this->esc_html_inline( 'I\'m a system administrator', 'sysadmin-title' );
-            $happy_to_resolve_issue_asap = $this->esc_html_inline( 'We are sure it\'s an issue on our side and more than happy to resolve it for you ASAP if you give us a chance.', 'happy-to-resolve-issue-asap' );
-
-            if ( $this->is_premium() ) {
-                /* translators: This string is optionally prepended to 'plugin requires access to our API.' */
-                $x_requires_access_to_api = $this->esc_html_inline( 'For automatic delivery of security & feature updates,', 'requires-api-for' ) . ' ' . $x_requires_access_to_api;
-            }
-
-            $message = false;
-            if ( is_object( $api_result ) &&
-                 isset( $api_result->error ) &&
-                 isset( $api_result->error->code )
-            ) {
-                switch ( $api_result->error->code ) {
-                    case 'curl_missing':
-                        $missing_methods = '';
-                        if ( is_array( $api_result->missing_methods ) &&
-                             ! empty( $api_result->missing_methods )
-                        ) {
-                            foreach ( $api_result->missing_methods as $m ) {
-                                if ( 'curl_version' === $m ) {
-                                    continue;
-                                }
-
-                                if ( ! empty( $missing_methods ) ) {
-                                    $missing_methods .= ', ';
-                                }
-
-                                $missing_methods .= sprintf( '<code>%s</code>', $m );
-                            }
-
-                            if ( ! empty( $missing_methods ) ) {
-                                $missing_methods = sprintf(
-                                    '<br><br><b>%s</b> %s',
-                                    $this->esc_html_inline( 'Disabled method(s):', 'curl-disabled-methods' ),
-                                    $missing_methods
-                                );
-                            }
-                        }
-
-                        $message = sprintf(
-                            $x_requires_access_to_api . ' ' .
-                            $this->esc_html_inline( 'We use PHP cURL library for the API calls, which is a very common library and usually installed and activated out of the box. Unfortunately, cURL is not activated (or disabled) on your server.', 'curl-missing-message' ) . ' ' .
-                            $missing_methods .
-                            ' %s',
-                            '<b>' . $this->get_plugin_name() . '</b>',
-                            sprintf(
-                                '<ol id="fs_firewall_issue_options"><li>%s</li><li>%s</li><li>%s</li></ol>',
-                                sprintf(
-                                    '<a class="fs-resolve" data-type="curl" href="#"><b>%s</b></a>%s',
-                                    $this->get_text_inline( 'I don\'t know what is cURL or how to install it, help me!', 'curl-missing-no-clue-title' ),
-                                    ' - ' . sprintf(
-                                        $this->get_text_inline( 'We\'ll make sure to contact your hosting company and resolve the issue. You will get a follow-up email to %s once we have an update.', 'curl-missing-no-clue-desc' ),
-                                        '<a href="mailto:' . $admin_email . '">' . $admin_email . '</a>'
-                                    )
-                                ),
-                                sprintf(
-                                    '<b>%s</b> - %s',
-                                    $sysadmin_title,
-                                    esc_html( sprintf( $this->get_text_inline( 'Great, please install cURL and enable it in your php.ini file. In addition, search for the \'disable_functions\' directive in your php.ini file and remove any disabled methods starting with \'curl_\'. To make sure it was successfully activated, use \'phpinfo()\'. Once activated, deactivate the %s and reactivate it back again.', 'curl-missing-sysadmin-desc' ), $this->get_module_label( true ) ) )
-                                ),
-                                sprintf(
-                                    '<a href="%s"><b>%s</b></a> - %s',
-                                    wp_nonce_url( 'plugins.php?action=deactivate&amp;plugin=' . $this->_plugin_basename . '&amp;plugin_status=all&amp;paged=1&amp;s=', 'deactivate-plugin_' . $this->_plugin_basename ),
-                                    $deactivate_plugin_title,
-                                    $deactivate_plugin_desc
-                                )
-                            )
-                        );
-                        break;
-                    case 'cloudflare_ddos_protection':
-                        $message = sprintf(
-                            $x_requires_access_to_api . ' ' .
-                            $this->esc_html_inline( 'From unknown reason, CloudFlare, the firewall we use, blocks the connection.', 'cloudflare-blocks-connection-message' ) . ' ' .
-                            $happy_to_resolve_issue_asap .
-                            ' %s',
-                            '<b>' . $this->get_plugin_name() . '</b>',
-                            sprintf(
-                                '<ol id="fs_firewall_issue_options"><li>%s</li><li>%s</li><li>%s</li></ol>',
-                                sprintf(
-                                    '<a class="fs-resolve" data-type="cloudflare" href="#"><b>%s</b></a>%s',
-                                    $fix_issue_title,
-                                    ' - ' . sprintf(
-                                        $fix_issue_desc,
-                                        '<a href="mailto:' . $admin_email . '">' . $admin_email . '</a>'
-                                    )
-                                ),
-                                sprintf(
-                                    '<a href="%s" target="_blank" rel="noopener noreferrer"><b>%s</b></a> - %s',
-                                    sprintf( 'https://wordpress.org/plugins/%s/download/', $this->_slug ),
-                                    $install_previous_title,
-                                    $install_previous_desc
-                                ),
-                                sprintf(
-                                    '<a href="%s"><b>%s</b></a> - %s',
-                                    wp_nonce_url( 'plugins.php?action=deactivate&amp;plugin=' . $this->_plugin_basename . '&amp;plugin_status=all&amp;paged=1&amp;s=' . '', 'deactivate-plugin_' . $this->_plugin_basename ),
-                                    $deactivate_plugin_title,
-                                    $deactivate_plugin_desc
-                                )
-                            )
-                        );
-                        break;
-                    case 'squid_cache_block':
-                        $message = sprintf(
-                            $x_requires_access_to_api . ' ' .
-                            $this->esc_html_inline( 'It looks like your server is using Squid ACL (access control lists), which blocks the connection.', 'squid-blocks-connection-message' ) .
-                            ' %s',
-                            '<b>' . $this->get_plugin_name() . '</b>',
-                            sprintf(
-                                '<ol id="fs_firewall_issue_options"><li>%s</li><li>%s</li><li>%s</li></ol>',
-                                sprintf(
-                                    '<a class="fs-resolve" data-type="squid" href="#"><b>%s</b></a> - %s',
-                                    $this->esc_html_inline( 'I don\'t know what is Squid or ACL, help me!', 'squid-no-clue-title' ),
-                                    sprintf(
-                                        $this->esc_html_inline( 'We\'ll make sure to contact your hosting company and resolve the issue. You will get a follow-up email to %s once we have an update.', 'squid-no-clue-desc' ),
-                                        '<a href="mailto:' . $admin_email . '">' . $admin_email . '</a>'
-                                    )
-                                ),
-                                sprintf(
-                                    '<b>%s</b> - %s',
-                                    $sysadmin_title,
-                                    sprintf(
-                                        $this->esc_html_inline( 'Great, please whitelist the following domains: %s. Once you are done, deactivate the %s and activate it again.', 'squid-sysadmin-desc' ),
-                                        // We use a filter since the plugin might require additional API connectivity.
-                                        '<b>' . implode( ', ', $this->apply_filters( 'api_domains', array(
-                                            'api.freemius.com',
-                                            'wp.freemius.com'
-                                        ) ) ) . '</b>',
-                                        $this->_module_type
-                                    )
-                                ),
-                                sprintf(
-                                    '<a href="%s"><b>%s</b></a> - %s',
-                                    wp_nonce_url( 'plugins.php?action=deactivate&amp;plugin=' . $this->_plugin_basename . '&amp;plugin_status=all&amp;paged=1&amp;s=', 'deactivate-plugin_' . $this->_plugin_basename ),
-                                    $deactivate_plugin_title,
-                                    $deactivate_plugin_desc
-                                )
-                            )
-                        );
-                        break;
-//					default:
-//						$message = $this->get_text_inline( 'connectivity-test-fails-message' );
-//						break;
-                }
-            }
-
-            $message_id = 'failed_connect_api';
-            $type       = 'error';
-
-            $connectivity_test_fails_message = $this->esc_html_inline( 'From unknown reason, the API connectivity test failed.', 'connectivity-test-fails-message' );
-
-            if ( false === $message ) {
-                if ( $is_first_failure ) {
-                    // First attempt failed.
-                    $message = sprintf(
-                        $x_requires_access_to_api . ' ' .
-                        $connectivity_test_fails_message . ' ' .
-                        $this->esc_html_inline( 'It\'s probably a temporary issue on our end. Just to be sure, with your permission, would it be o.k to run another connectivity test?', 'connectivity-test-maybe-temporary' ) . '<br><br>' .
-                        '%s',
-                        '<b>' . $this->get_plugin_name() . '</b>',
-                        sprintf(
-                            '<div id="fs_firewall_issue_options">%s %s</div>',
-                            sprintf(
-                                '<a  class="button button-primary fs-resolve" data-type="retry_ping" href="#">%s</a>',
-                                $this->get_text_inline( 'Yes - do your thing', 'yes-do-your-thing' )
-                            ),
-                            sprintf(
-                                '<a href="%s" class="button">%s</a>',
-                                wp_nonce_url( 'plugins.php?action=deactivate&amp;plugin=' . $this->_plugin_basename . '&amp;plugin_status=all&amp;paged=1&amp;s=', 'deactivate-plugin_' . $this->_plugin_basename ),
-                                $this->get_text_inline( 'No - just deactivate', 'no-deactivate' )
-                            )
-                        )
-                    );
-
-                    $message_id = 'failed_connect_api_first';
-                    $type       = 'promotion';
-                } else {
-                    // Second connectivity attempt failed.
-                    $message = sprintf(
-                        $x_requires_access_to_api . ' ' .
-                        $connectivity_test_fails_message . ' ' .
-                        $happy_to_resolve_issue_asap .
-                        ' %s',
-                        '<b>' . $this->get_plugin_name() . '</b>',
-                        sprintf(
-                            '<ol id="fs_firewall_issue_options"><li>%s</li><li>%s</li><li>%s</li></ol>',
-                            sprintf(
-                                '<a class="fs-resolve" data-type="general" href="#"><b>%s</b></a>%s',
-                                $fix_issue_title,
-                                ' - ' . sprintf(
-                                    $fix_issue_desc,
-                                    '<a href="mailto:' . $admin_email . '">' . $admin_email . '</a>'
-                                )
-                            ),
-                            sprintf(
-                                '<a href="%s" target="_blank" rel="noopener noreferrer"><b>%s</b></a> - %s',
-                                sprintf( 'https://wordpress.org/plugins/%s/download/', $this->_slug ),
-                                $install_previous_title,
-                                $install_previous_desc
-                            ),
-                            sprintf(
-                                '<a href="%s"><b>%s</b></a> - %s',
-                                wp_nonce_url( 'plugins.php?action=deactivate&amp;plugin=' . $this->_plugin_basename . '&amp;plugin_status=all&amp;paged=1&amp;s=', 'deactivate-plugin_' . $this->_plugin_basename ),
-                                $deactivate_plugin_title,
-                                $deactivate_plugin_desc
-                            )
-                        )
-                    );
-                }
-            }
-
-            $this->_admin_notices->add_sticky(
-                $message,
-                $message_id,
-                $this->get_text_x_inline( 'Oops', 'exclamation', 'oops' ) . '...',
-                $type
-            );
-        }
-
-        /**
-         * Handle user request to resolve connectivity issue.
-         * This method will send an email to Freemius API technical staff for resolution.
-         * The email will contain server's info and installed plugins (might be caching issue).
-         *
-         * @author Vova Feldman (@svovaf)
-         * @since  1.0.9
-         */
-        function _email_about_firewall_issue() {
-            check_admin_referer( 'fs_resolve_firewall_issues' );
-
-            if ( ! current_user_can( is_multisite() ? 'manage_options' : 'activate_plugins' ) ) {
-                return;
-            }
-
-            $this->_admin_notices->remove_sticky( 'failed_connect_api' );
-
-            $pong = $this->ping();
-
-            $is_connected = $this->get_api_plugin_scope()->is_valid_ping( $pong );
-
-            if ( $is_connected ) {
-                FS_GDPR_Manager::instance()->store_is_required( $pong->is_gdpr_required );
-
-                $this->store_connectivity_info( $pong, $is_connected );
-
-                echo $this->get_after_plugin_activation_redirect_url();
-                exit;
-            }
-
-            $current_user = self::_get_current_wp_user();
-            $admin_email  = $current_user->user_email;
-
-            $error_type = fs_request_get( 'error_type', 'general' );
-
-            switch ( $error_type ) {
-                case 'squid':
-                    $title = 'Squid ACL Blocking Issue';
-                    break;
-                case 'cloudflare':
-                    $title = 'CloudFlare Blocking Issue';
-                    break;
-                default:
-                    $title = 'API Connectivity Issue';
-                    break;
-            }
-
-            $custom_email_sections = array();
-
-            // Add 'API Error' custom email section.
-            $custom_email_sections['api_error'] = array(
-                'title' => 'API Error',
-                'rows'  => array(
-                    'ping' => array(
-                        'API Error',
-                        is_string( $pong ) ? htmlentities( $pong ) : json_encode( $pong )
-                    ),
-                )
-            );
-
-            // Send email with technical details to resolve API connectivity issues.
-            $this->send_email(
-                'api@freemius.com',                              // recipient
-                $title . ' [' . $this->get_plugin_name() . ']',  // subject
-                $custom_email_sections,
-                array( "Reply-To: $admin_email <$admin_email>" ) // headers
-            );
-
-            $this->_admin_notices->add_sticky(
-                sprintf(
-                    $this->get_text_inline( 'Thank for giving us the chance to fix it! A message was just sent to our technical staff. We will get back to you as soon as we have an update to %s. Appreciate your patience.', 'fix-request-sent-message' ),
-                    '<a href="mailto:' . $admin_email . '">' . $admin_email . '</a>'
-                ),
-                'server_details_sent'
-            );
-
-            // Action was taken, tell that API connectivity troubleshooting should be off now.
-
-            echo "1";
-            exit;
-        }
-
-        /**
-         * Handle connectivity test retry approved by the user.
-         *
-         * @author Vova Feldman (@svovaf)
-         * @since  1.1.7.4
-         */
-        function _retry_connectivity_test() {
-            check_admin_referer( 'fs_retry_connectivity_test' );
-
-            if ( ! current_user_can( is_multisite() ? 'manage_options' : 'activate_plugins' ) ) {
-                return;
-            }
-
-            $this->_admin_notices->remove_sticky( 'failed_connect_api_first' );
-
-            $pong = $this->ping();
-
-            $is_connected = $this->get_api_plugin_scope()->is_valid_ping( $pong );
-
-            if ( $is_connected ) {
-                FS_GDPR_Manager::instance()->store_is_required( $pong->is_gdpr_required );
-
-                $this->store_connectivity_info( $pong, $is_connected );
-
-                echo $this->get_after_plugin_activation_redirect_url();
-            } else {
-                // Add connectivity issue message after 2nd failed attempt.
-                $this->_add_connectivity_issue_message( $pong, false );
-
-                echo "1";
-            }
-
-            exit;
-        }
-
-        static function _add_firewall_issues_javascript() {
-            $params = array();
-            fs_require_once_template( 'firewall-issues-js.php', $params );
         }
 
         #endregion
@@ -4966,6 +4624,36 @@
 
             $this->register_after_settings_parse_hooks();
 
+            /**
+             * If anonymous but there's already a user entity and the user's site is associated with a valid license or trial period, update the anonymous mode accordingly.
+             *
+             * @todo Remove this entire `if` block after several releases as starting from this version, the anonymous mode will already be updated accordingly after a purchase.
+             */
+            if ( $this->is_anonymous() ) {
+                $is_network_level = ( $this->_is_network_active && fs_is_network_admin() );
+
+                if (
+                    ! $is_network_level ||
+                    FS_Site::is_valid_id( $this->_storage->network_install_blog_id )
+                 ) {
+                    if ( $this->is_paying_or_trial() ) {
+                        $this->reset_anonymous_mode( $is_network_level );
+                    }
+                } else {
+                    $network = get_network();
+
+                    if ( is_object( $network ) ) {
+                        $main_blog_id  = $network->site_id;
+                        $first_install = $this->get_install_by_blog_id( $main_blog_id );
+
+                        if ( is_object( $first_install ) ) {
+                            $this->_storage->network_install_blog_id = $main_blog_id;
+                            $this->_storage->network_user_id         = $first_install->user_id;
+                        }
+                    }
+                }
+            }
+
             if ( $this->should_stop_execution() ) {
                 return;
             }
@@ -4976,50 +4664,9 @@
                     $this->_has_api_connection = true;
                     $this->_is_on              = true;
                 } else {
-                    if ( ! $this->has_api_connectivity() ) {
-                        if ( $this->_admin_notices->has_sticky( 'failed_connect_api_first' ) ||
-                             $this->_admin_notices->has_sticky( 'failed_connect_api' )
-                        ) {
-                            if ( ! $this->_enable_anonymous || $this->is_premium() ) {
-                                // If anonymous mode is disabled, add firewall admin-notice message.
-                                add_action( 'admin_footer', array( 'Freemius', '_add_firewall_issues_javascript' ) );
-
-                                $ajax_action_suffix = $this->_slug . ( $this->is_theme() ? ':theme' : '' );
-                                add_action( "wp_ajax_fs_resolve_firewall_issues_{$ajax_action_suffix}", array(
-                                    &$this,
-                                    '_email_about_firewall_issue'
-                                ) );
-
-                                add_action( "wp_ajax_fs_retry_connectivity_test_{$ajax_action_suffix}", array(
-                                    &$this,
-                                    '_retry_connectivity_test'
-                                ) );
-
-                                /**
-                                 * Currently the admin notice manager relies on the module's type and slug. The new AJAX actions manager uses module IDs, hence, consider to replace the if block above with the commented code below after adjusting the admin notices manager to work with module IDs.
-                                 *
-                                 * @author Vova Feldman (@svovaf)
-                                 * @since  2.0.0
-                                 */
-                                /*$this->add_ajax_action( 'resolve_firewall_issues', array(
-                                    &$this,
-                                    '_email_about_firewall_issue'
-                                ) );
-
-                                $this->add_ajax_action( 'retry_connectivity_test', array(
-                                    &$this,
-                                    '_retry_connectivity_test'
-                                ) );*/
-                            }
-                        }
-
+                    if ( false === $this->has_api_connectivity() ) {
                         return;
                     } else {
-                        $this->_admin_notices->remove_sticky( array(
-                            'failed_connect_api_first',
-                            'failed_connect_api',
-                        ) );
-
                         if ( $this->_anonymous_mode ) {
                             // Simulate anonymous mode.
                             $this->_is_anonymous = true;
@@ -5057,7 +4704,7 @@
             if ( $this->has_api_connectivity() ) {
                 if ( self::is_cron() ) {
                     $this->hook_callback_to_sync_cron();
-                } elseif ( $this->is_user_in_admin() ) {
+                } else if ( $this->is_user_in_admin() ) {
                     /**
                      * Schedule daily data sync cron if:
                      *
@@ -5147,7 +4794,7 @@
                         if ( ! $this->_parent->is_registered() && $this->is_registered() ) {
                             // If add-on activated and parent not, automatically install parent for the user.
                             $this->activate_parent_account( $this->_parent );
-                        } elseif (
+                        } else if (
                             $this->_parent->is_registered() &&
                             ! $this->is_registered() &&
                             /**
@@ -5275,17 +4922,17 @@
                     }
 
                     $this->do_action( 'after_init_plugin_registered' );
-                } elseif ( $this->is_anonymous() ) {
+                } else if ( $this->is_anonymous() ) {
                     $this->do_action( 'after_init_plugin_anonymous' );
-                } elseif ( $this->is_pending_activation() ) {
+                } else if ( $this->is_pending_activation() ) {
                     $this->do_action( 'after_init_plugin_pending_activations' );
                 }
             } else {
                 if ( $this->is_registered() ) {
                     $this->do_action( 'after_init_addon_registered' );
-                } elseif ( $this->is_anonymous() ) {
+                } else if ( $this->is_anonymous() ) {
                     $this->do_action( 'after_init_addon_anonymous' );
-                } elseif ( $this->is_pending_activation() ) {
+                } else if ( $this->is_pending_activation() ) {
                     $this->do_action( 'after_init_addon_pending_activations' );
                 }
             }
@@ -5764,6 +5411,7 @@
                 'affiliate_moderation' => $this->get_option( $plugin_info, 'has_affiliation' ),
                 'bundle_id'            => $this->get_option( $plugin_info, 'bundle_id', null ),
                 'bundle_public_key'    => $this->get_option( $plugin_info, 'bundle_public_key', null ),
+                'opt_in_moderation'    => $this->get_option( $plugin_info, 'opt_in', null ),
             ) );
 
             if ( $plugin->is_updated() ) {
@@ -5922,10 +5570,7 @@
                     return true;
                 }
 
-                if ( self::is_ajax() &&
-                     ! $this->_admin_notices->has_sticky( 'failed_connect_api_first' ) &&
-                     ! $this->_admin_notices->has_sticky( 'failed_connect_api' )
-                ) {
+                if ( self::is_ajax() ) {
                     /**
                      * During activation, if running in AJAX mode, unless there's a sticky
                      * connectivity issue notice, don't run Freemius.
@@ -6021,14 +5666,13 @@
                 $this->do_action( 'after_free_version_reactivation' );
 
                 if ( $this->is_paying() && ! $this->is_premium() ) {
-                    $this->_admin_notices->add_sticky(
+                    $this->add_complete_upgrade_instructions_notice(
                         sprintf(
                         /* translators: %s: License type (e.g. you have a professional license) */
                             $this->get_text_inline( 'You have a %s license.', 'you-have-x-license' ),
                             $this->get_plan_title()
-                        ) . $this->get_complete_upgrade_instructions(),
-                        'plan_upgraded',
-                        $this->get_text_x_inline( 'Yee-haw', 'interjection expressing joy or exuberance', 'yee-haw' ) . '!'
+                        ),
+                        'plan_upgraded'
                     );
                 }
             }
@@ -6437,7 +6081,7 @@
             if ( ! isset( $this->_is_anonymous ) ) {
                 if ( $this->is_network_anonymous() ) {
                     $this->_is_anonymous = true;
-                } elseif ( fs_is_network_admin() ) {
+                } else if ( fs_is_network_admin() ) {
                     /**
                      * When not-network-anonymous, yet, running in the network admin, consider as anonymous only when ALL non-delegated sites are set to anonymous.
                      */
@@ -6459,7 +6103,7 @@
                     if ( ! isset( $this->_storage->is_anonymous ) ) {
                         // Not skipped.
                         $this->_is_anonymous = false;
-                    } elseif ( is_bool( $this->_storage->is_anonymous ) ) {
+                    } else if ( is_bool( $this->_storage->is_anonymous ) ) {
                         // For back compatibility, since the variable was boolean before.
                         $this->_is_anonymous = $this->_storage->is_anonymous;
 
@@ -6884,7 +6528,7 @@
                     'daily',
                     $this->get_action_tag( $action_tag )
                 );
-            } elseif ( 'single' === $recurrence ) {
+            } else if ( 'single' === $recurrence ) {
                 // Schedule single cron.
                 wp_schedule_single_event(
                     $start_at,
@@ -7299,31 +6943,87 @@
          * @author Vova Feldman (@svovaf)
          * @since  1.0.7
          *
-         * @param bool|string $email
+         * @param bool|string $email_address
          * @param bool        $is_pending_trial Since 1.2.1.5
          * @param bool        $is_suspicious_email Since 2.5.0 Set to true when there's an indication that email address the user opted in with is fake/dummy/placeholder.
+         * @param bool        $has_upgrade_context Since 2.5.3
+         * @param bool        $support_email_address Since 2.5.3
          */
         function _add_pending_activation_notice(
-            $email = false,
+            $email_address = false,
             $is_pending_trial = false,
-            $is_suspicious_email = false
+            $is_suspicious_email = false,
+            $has_upgrade_context = false,
+            $support_email_address = false
         ) {
-            if ( ! is_string( $email ) ) {
-                $current_user = self::_get_current_wp_user();
-                $email        = $current_user->user_email;
+            if ( ! is_string( $email_address ) ) {
+                $current_user  = self::_get_current_wp_user();
+                $email_address = $current_user->user_email;
+            }
+
+            $formatted_message_args = array(
+                "<b>{$this->get_plugin_name()}</b>",
+                "<b>{$email_address}</b>",
+            );
+
+            if ( ! $has_upgrade_context || ! fs_is_network_admin() ) {
+                /* translators: %3$s: action (e.g.: "start the trial" or "complete the opt-in") */
+                $formatted_message = $this->get_text_inline( 'You should receive a confirmation email for %1$s to your mailbox at %2$s. Please make sure you click the button in that email to %3$s.', 'pending-activation-message' );
+
+                $formatted_message_args[] = $is_pending_trial ?
+                    $this->get_text_inline( 'start the trial', 'start-the-trial' ) :
+                    $this->get_text_inline( 'complete the opt-in', 'complete-the-opt-in' );
+
+                $notice_title = $this->get_text_inline( 'Thanks!', 'thanks' );
+            } else {
+                /* translators: %3$s: What the user is expected to receive via email (e.g.: "the installation instructions" or "a license key") */
+                $formatted_message = $this->get_text_inline( 'You should receive %3$s for %1$s to your mailbox at %2$s in the next 5 minutes.' );
+
+                if ( $this->has_release_on_freemius() ) {
+                    $formatted_message_args[] = $this->get_text_x_inline(
+                        'the installation instructions',
+                        'Part of the message telling the user what they should receive via email.',
+                        'the-installation-instructions-phrase'
+                    );
+                } else {
+                    $formatted_message_args[] = $this->get_text_x_inline(
+                        'a license key',
+                        'Part of the message telling the user what they should receive via email.',
+                        'a-license-key-phrase'
+                    );
+
+                    $formatted_message .= ( ' ' . sprintf(
+                        /* translators: %s: activation link (e.g.: <a>Click here</a>) */
+                        $this->get_text_inline( '%s to activate the license once you get it.', 'license-activation-link-message' ),
+                        sprintf(
+                            '<b><a href="%s">%s</a></b>',
+                            $this->get_activation_url( array(
+                                'fs_action'       => 'reset_pending_activation_mode',
+                                'require_license' => 'true',
+                                'fs_unique_affix' => $this->get_unique_affix(),
+                            ) ),
+                            $this->get_text_x_inline( 'Click here', 'Part of an activation link message.', 'click-here' )
+                        )
+                    ) );
+                }
+
+                $formatted_message_args[] = ( ! empty( $support_email_address ) ) ?
+                    ( "<b>{$support_email_address}</b>" ) :
+                    $this->get_text_x_inline(
+                        "the product's support email address",
+                        'Part of the message that tells the user to check their spam folder for a specific email.',
+                        'product-support-email-address-phrase'
+                    );
+
+                $formatted_message .= ( ' ' . $this->get_text_inline( 'If you didn\'t get the email, try checking your spam folder or search for emails from %4$s.', 'check-spam-folder-message' ) );
+
+                $notice_title = $this->get_text_inline( 'Thanks for upgrading.', 'after-upgrade-thank-you-message' );
             }
 
             $this->_admin_notices->add_sticky(
-                sprintf(
-                    $this->get_text_inline( 'You should receive a confirmation email for %s to your mailbox at %s. Please make sure you click the button in that email to %s.', 'pending-activation-message' ),
-                    '<b>' . $this->get_plugin_name() . '</b>',
-                    '<b>' . $email . '</b>',
-                    ( $is_pending_trial ?
-                        $this->get_text_inline( 'start the trial', 'start-the-trial' ) :
-                        $this->get_text_inline( 'complete the opt-in', 'complete-the-opt-in' ) )
-                ),
+                vsprintf( $formatted_message, $formatted_message_args ),
                 'activation_pending',
-                'Thanks!'
+                $notice_title
             );
         }
 
@@ -7363,7 +7063,7 @@
                     /**
                      * Don't redirect if activating multiple plugins at once (bulk activation).
                      */
-                } elseif (
+                } else if (
                     self::is_deactivation_snoozed() &&
                     (
                         // Either running the free code base.
@@ -7377,7 +7077,7 @@
                     /**
                      * Don't redirect if activating during the deactivation snooze period (aka troubleshooting), unless activating a paid product version that the admin didn't enter its license key yet.
                      */
-                } elseif ( ! $is_migration ) {
+                } else if ( ! $is_migration ) {
                     $this->_redirect_on_activation_hook();
                     return;
                 }
@@ -7993,7 +7693,7 @@
                             'Used to express elation, enthusiasm, or triumph (especially in electronic communication).', 'woot' ) . '!'
                     );
                 }
-            } elseif ( $this->is_anonymous() ) {
+            } else if ( $this->is_anonymous() ) {
                 if ( isset( $this->_storage->is_anonymous_ms ) && $this->_storage->is_anonymous_ms['is'] ) {
                     $plugin_version = $this->_storage->is_anonymous_ms['version'];
                     $network        = true;
@@ -8091,7 +7791,7 @@
             $has_api_connectivity = $this->has_api_connectivity( WP_FS__DEV_MODE || $is_premium_version_activation );
 
             if ( ! $this->_anonymous_mode &&
-                 $has_api_connectivity &&
+                ( false !== $has_api_connectivity ) &&
                  ! $this->_isAutoInstall
             ) {
                 // Store hint that the plugin was just activated to enable auto-redirection to settings.
@@ -8728,9 +8428,9 @@
                     ) );
                 }
             } else {
-                if ( ! $this->has_api_connectivity() ) {
+                if ( false === $this->has_api_connectivity() && ! $this->is_premium() ) {
                     // Reset connectivity test cache.
-                    unset( $this->_storage->connectivity_test );
+                    $this->clear_connectivity_info();
 
                     $storage_keys_for_removal[] = 'connectivity_test';
                 }
@@ -8898,12 +8598,12 @@
                  * Opt-in was network skipped so automatically skip the opt-in for the new site.
                  */
                 $this->skip_site_connection( $blog_id );
-            } elseif ( $this->is_network_delegated_connection() ) {
+            } else if ( $this->is_network_delegated_connection() ) {
                 /**
                  * Opt-in was network delegated so automatically delegate the opt-in for the new site's admin.
                  */
                 $this->delegate_site_connection( $blog_id );
-            } elseif ( $this->is_network_connected() ) {
+            } else if ( $this->is_network_connected() ) {
                 /**
                  * Opt-in was network activated so automatically opt-in with the network user and new site admin.
                  */
@@ -9031,6 +8731,26 @@
         }
 
         /**
+         * @author Leo Fajardo (@leorw)
+         * @since 2.5.3
+         */
+        private function update_license_required_permissions_if_anonymous() {
+            if ( ! $this->is_anonymous() ) {
+                return;
+            }
+
+            $this->reset_anonymous_mode( fs_is_network_admin() );
+
+            FS_Permission_Manager::instance( $this )->update_permissions_tracking_flag( array(
+                'essentials' => true,
+                'events'     => true,
+                'diagnostic' => false,
+                'extensions' => false,
+                'site'       => false,
+            ) );
+        }
+
+        /**
          * This is used to ensure that before redirecting to the opt-in page after resetting the anonymous mode or
          * deleting the account in the network level, the URL of the page to redirect to is correct.
          *
@@ -9054,15 +8774,27 @@
          * @since  1.1.7
          */
         function connect_again() {
-            if ( ! $this->is_anonymous() ) {
+            if ( ! $this->is_anonymous() && ! $this->is_pending_activation() ) {
                 return;
             }
 
-            $this->reset_anonymous_mode( fs_is_network_admin() );
+            if ( $this->is_anonymous() ) {
+                $this->reset_anonymous_mode( fs_is_network_admin() );
+            }
+
+            $activation_url_params = array();
+
+            if ( $this->is_pending_activation() ) {
+                $this->clear_pending_activation_mode();
+
+                if ( fs_request_get_bool( 'require_license' ) ) {
+                    $activation_url_params['require_license'] = true;
+                }
+            }
 
             $this->maybe_set_slug_and_network_menu_exists_flag();
 
-            fs_redirect( $this->get_activation_url() );
+            fs_redirect( $this->get_activation_url( $activation_url_params ) );
         }
 
         /**
@@ -9285,7 +9017,7 @@
                     // Plugin was site level activated.
                     $site_active_plugins_cache->plugins[ $basename ]              = $network_plugins[ $basename ];
                     $site_active_plugins_cache->plugins[ $basename ]['is_active'] = true;
-                } elseif ( isset( $site_active_plugins_cache->plugins[ $basename ] ) &&
+                } else if ( isset( $site_active_plugins_cache->plugins[ $basename ] ) &&
                             ! isset( $site_active_plugins[ $basename ] )
                 ) {
                     // Plugin was site level deactivated.
@@ -9450,7 +9182,7 @@
 
                         unset( $all_themes[ $slug ] );
                         unset( $all_cached_themes->themes[ $slug ] );
-                    } elseif ( $data['is_active'] !== $is_active ||
+                    } else if ( $data['is_active'] !== $is_active ||
                                 $data['version'] !== $all_themes[ $slug ]->version
                     ) {
                         // Plugin activated or deactivated, or version changed.
@@ -9665,7 +9397,7 @@
                              * @since 2.5.1
                              */
                             $skip = ( strtotime( $install_data['registration_date'] ) > strtotime( $clone_subsite_registration_date ) );
-                        } elseif (
+                        } else if (
                             /**
                              * If we already have an install with the same URL as the subsite it's stored in, skip the current subsite. Otherwise, replace the existing install's data with the current subsite's install's data if the URLs match.
                              *
@@ -9735,7 +9467,7 @@
             if ( 0 < count( $installs_data ) && ( $is_common_diff_for_any_site || ! $only_diff ) ) {
                 if ( ! $only_diff ) {
                     $installs_data[] = $common;
-                } elseif ( ! empty( $common_diff_union ) ) {
+                } else if ( ! empty( $common_diff_union ) ) {
                     $installs_data[] = $common_diff_union;
                 }
             }
@@ -10620,7 +10352,7 @@
             if ( ! isset( $this->_plugin_name ) ) {
                 // Name is not yet set.
                 $this->set_name( $premium_suffix );
-            } elseif (
+            } else if (
                 ! empty( $premium_suffix ) &&
                 ( ! is_object( $this->_plugin ) || $this->_plugin->premium_suffix !== $premium_suffix )
             ) {
@@ -11770,7 +11502,7 @@
         function is_trial() {
             $this->_logger->entrance();
 
-            if ( ! $this->is_registered() || ! is_object( $this->_site ) ) {
+            if ( ! $this->is_registered( true ) || ! is_object( $this->_site ) ) {
                 return false;
             }
 
@@ -11884,7 +11616,7 @@
         function is_paying() {
             $this->_logger->entrance();
 
-            if ( ! $this->is_registered() ) {
+            if ( ! $this->is_registered( true ) ) {
                 return false;
             }
 
@@ -12884,7 +12616,7 @@
                 if ( $license->is_whitelabeled ) {
                     // Activated a developer license, data should be hidden.
                     $is_whitelabeled = true;
-                } elseif ( $this->is_registered() && $this->_user->id == $license->user_id ) {
+                } else if ( $this->is_registered() && $this->_user->id == $license->user_id ) {
                     // The account owner activated a regular license key, no need to hide the  data.
                     $is_whitelabeled = false;
                 }
@@ -12931,7 +12663,7 @@
         function is_whitelabeled_by_flag( $ignore_data_debug_mode = false ) {
             if ( true !== $this->_storage->is_whitelabeled ) {
                 return false;
-            } elseif ( $ignore_data_debug_mode ) {
+            } else if ( $ignore_data_debug_mode ) {
                 return true;
             }
 
@@ -12977,7 +12709,7 @@
 
                 if ( ! $this->has_addons() ) {
                     $is_whitelabeled = $is_whitelabeled_flag;
-                } elseif ( $is_whitelabeled_flag ) {
+                } else if ( $is_whitelabeled_flag ) {
                     $is_whitelabeled = true;
                 } else {
                     if ( $this->is_registered() || $this->is_premium() ) {
@@ -13024,7 +12756,7 @@
 
                             if ( is_object( $fs_addon ) ) {
                                 $was_addon_network_activated = $fs_addon->is_network_active();
-                            } elseif ( $is_network_level ) {
+                            } else if ( $is_network_level ) {
                                 $was_addon_network_activated = $addon_storage->get( 'was_plugin_loaded', false, true );
                             }
 
@@ -13260,7 +12992,7 @@
             if ( $current_plan_name === $plan ) {
                 // Exact plan.
                 return true;
-            } elseif ( $exact ) {
+            } else if ( $exact ) {
                 // Required exact, but plans are different.
                 return false;
             }
@@ -13270,7 +13002,7 @@
             for ( $i = 0, $len = count( $this->_plans ); $i < $len; $i ++ ) {
                 if ( $plan === $this->_plans[ $i ]->name ) {
                     $required_plan_order = $i;
-                } elseif ( $current_plan_name === $this->_plans[ $i ]->name ) {
+                } else if ( $current_plan_name === $this->_plans[ $i ]->name ) {
                     $current_plan_order = $i;
                 }
             }
@@ -13338,7 +13070,7 @@
             if ( $trial_plan->name === $plan ) {
                 // Exact plan.
                 return true;
-            } elseif ( $exact ) {
+            } else if ( $exact ) {
                 // Required exact, but plans are different.
                 return false;
             }
@@ -13348,7 +13080,7 @@
             for ( $i = 0, $len = count( $this->_plans ); $i < $len; $i ++ ) {
                 if ( $plan === $this->_plans[ $i ]->name ) {
                     $required_plan_order = $i;
-                } elseif ( $trial_plan->name === $this->_plans[ $i ]->name ) {
+                } else if ( $trial_plan->name === $this->_plans[ $i ]->name ) {
                     $current_plan_order = $i;
                 }
             }
@@ -14235,7 +13967,7 @@
                  * @author Vova Feldman (@svovaf)
                  */
                 $user = $fs->get_parent_instance()->get_current_or_network_user();
-            } elseif ( $fs->is_registered() ) {
+            } else if ( $fs->is_registered() ) {
                 $user = $fs->get_current_or_network_user();
             }
 
@@ -14249,6 +13981,8 @@
             }
 
             if ( is_object( $user ) ) {
+                $result = true;
+
                 if ( $is_network_activation_or_migration && ! $has_valid_blog_id ) {
                     // If no specific blog ID was provided, activate the license for all sites in the network.
                     $blog_2_install_map = array();
@@ -14270,22 +14004,10 @@
 
                     if ( ! empty( $blog_2_install_map ) ) {
                         $result = $fs->activate_license_on_many_installs( $user, $license_key, $blog_2_install_map );
-
-                        if ( true !== $result ) {
-                            $error = FS_Api::is_api_error_object( $result ) ?
-                                $result->error->message :
-                                var_export( $result, true );
-                        }
                     }
 
-                    if ( empty( $error ) && ! empty( $site_ids ) ) {
+                    if ( true === $result && ! empty( $site_ids ) ) {
                         $result = $fs->activate_license_on_many_sites( $user, $license_key, $site_ids );
-
-                        if ( true !== $result ) {
-                            $error = FS_Api::is_api_error_object( $result ) ?
-                                $result->error->message :
-                                var_export( $result, true );
-                        }
                     }
                 } else {
                     if ( $fs->is_registered() ) {
@@ -14311,13 +14033,11 @@
 
                         $api = $fs->get_api_site_scope();
 
-                        $install = $api->call( $fs->add_show_pending( '/' ), 'put', $params );
+                        $result = $api->call( $fs->add_show_pending( '/' ), 'put', $params );
 
-                        if ( FS_Api::is_api_error( $install ) ) {
-                            $error = FS_Api::is_api_error_object( $install ) ?
-                                $install->error->message :
-                                var_export( $install->error, true );
-                        } else {
+                        if ( ! FS_Api::is_api_error( $result ) ) {
+                            $install = $result;
+
                             $fs->reconnect_locally( $has_valid_blog_id );
 
                             if (
@@ -14330,16 +14050,18 @@
                         }
                     } else /* ( $fs->is_addon() && $fs->get_parent_instance()->is_registered() ) */ {
                         $result = $fs->activate_license_on_site( $user, $license_key );
-
-                        if ( true !== $result ) {
-                            $error = FS_Api::is_api_error_object( $result ) ?
-                                $result->error->message :
-                                var_export( $result, true );
-                        }
                     }
                 }
 
-                if ( empty( $error ) ) {
+                if ( true !== $result && ! FS_Api::is_api_result_entity( $result ) ) {
+                    if ( FS_Api::is_blocked( $result ) ) {
+                        $result->error->message = $this->generate_api_blocked_notice_message_from_result( $result );
+                    }
+
+                    $error = FS_Api::is_api_error_object( $result ) ?
+                        $result->error->message :
+                        var_export( $result, true );
+                } else {
                     $fs->network_upgrade_mode_completed();
 
                     $fs->_user = $user;
@@ -14732,7 +14454,7 @@
 
                 if ( in_array( $error->code, array( 'invalid_email', 'no_user' ) ) ) {
                     $error = $this->get_text_inline( "We couldn't find your email address in the system, are you sure it's the right address?", 'email-not-found' );
-                } elseif ( 'no_license' === $error->code ) {
+                } else if ( 'no_license' === $error->code ) {
                     $error = $this->get_text_inline( "We can't see any active licenses associated with that email address, are you sure it's the right address?", 'no-active-licenses' );
                 } else {
                     $error = $error->message;
@@ -14781,7 +14503,7 @@
                      */
                     if ( is_network_admin() ) {
                         preg_match( '#/wp-admin/network/?(.*?)$#i', $_SERVER['PHP_SELF'], $self_matches );
-                    } elseif ( is_user_admin() ) {
+                    } else if ( is_user_admin() ) {
                         preg_match( '#/wp-admin/user/?(.*?)$#i', $_SERVER['PHP_SELF'], $self_matches );
                     } else {
                         preg_match( '#/wp-admin/?(.*?)$#i', $_SERVER['PHP_SELF'], $self_matches );
@@ -14890,7 +14612,7 @@
         private function get_plugin_id_for_affiliate_terms() {
             return $this->has_bundle_context() ?
                 $this->get_bundle_id() :
-                $this->_plugin_id;
+                $this->_plugin->id;
         }
 
         /**
@@ -15030,7 +14752,7 @@
                             $next_page->error->message :
                             var_export( $next_page, true )
                     );
-                } elseif ( $this->is_pending_activation() ) {
+                } else if ( $this->is_pending_activation() ) {
                     self::shoot_ajax_failure( $this->get_text_inline( 'Account is pending activation. Please check your email and click the link to activate your account and then submit the affiliate form again.', 'account-is-pending-activation' ) );
                 }
             }
@@ -15162,7 +14884,11 @@
 
             return sprintf(
                 $this->get_text_inline( '%s to access version %s security & feature updates, and support.', 'x-for-updates-and-support' ),
-                sprintf( '<a href="%s">%s</a>', $url, $purchase_license_text ),
+                sprintf(
+                    '<a href="%s">%s</a>',
+                    $this->apply_filters( 'update_notice_checkout_url', $url ),
+                    $purchase_license_text
+                ),
                 $new_version
             );
         }
@@ -15232,7 +14958,7 @@
              */
             $params = array_merge( $params, $extra );
 
-            return $this->_get_admin_page_url( 'pricing', $params, $network );
+            return $this->apply_filters( 'checkout_url', $this->_get_admin_page_url( 'pricing', $params, $network ) );
         }
 
         /**
@@ -17078,7 +16804,7 @@
 
             if ( is_object( $user ) ) {
                 $this->_user = clone $user;
-            } elseif ( $this->_site ) {
+            } else if ( $this->_site ) {
                 $user = self::_get_user_by_id( $this->_site->user_id );
 
                 if ( ! is_object( $user ) && FS_User::is_valid_id( $this->_storage->prev_user_id ) ) {
@@ -17602,7 +17328,7 @@
             if ( is_string( $license_key ) ) {
                 $filtered_license_key  = $this->apply_filters( 'license_key', $license_key );
                 $params['license_key'] = $filtered_license_key;
-            } elseif ( FS_Plugin_Plan::is_valid_id( $trial_plan_id ) ) {
+            } else if ( FS_Plugin_Plan::is_valid_id( $trial_plan_id ) ) {
                 $params['trial_plan_id'] = $trial_plan_id;
             }
 
@@ -17669,8 +17395,32 @@
 
                 $this->maybe_modify_api_curl_error_message( $result );
 
+                if ( FS_Api::is_blocked( $result ) ) {
+                    $result->error->message = $this->generate_api_blocked_notice_message_from_result( $result );
+                }
+
+                $is_connected = null;
+
+                if ( empty( $license_key ) && $this->is_enable_anonymous() ) {
+                    $this->skip_connection( fs_is_network_admin() );
+
+                    $is_connected = ( ! FS_Api::is_blocked( $result ) );
+                }
+
+                $this->store_connectivity_info(
+                    // This is true since the user is able to access the opt-in/license activation screen.
+                    (object) array( 'is_active' => true ),
+                    $is_connected
+                );
+
                 return $result;
             }
+
+            $this->store_connectivity_info(
+                // This is true since the user is able to access the opt-in/license activation screen.
+                (object) array( 'is_active' => true ),
+                true
+            );
 
             // Module is being uninstalled, don't handle the returned data.
             if ( $is_uninstall ) {
@@ -17704,7 +17454,7 @@
                 return $is_uninstall ?
                     $decoded :
                     $this->apply_filters( 'after_install_failure', $decoded, $params );
-            } elseif ( isset( $decoded->pending_activation ) && $decoded->pending_activation ) {
+            } else if ( isset( $decoded->pending_activation ) && $decoded->pending_activation ) {
                 if ( $is_network ) {
                     $site_ids = array();
                     foreach ( $sites as $site ) {
@@ -17734,7 +17484,7 @@
                     ! empty( $params['trial_plan_id'] ),
                     isset( $decoded->is_suspicious_email ) && $decoded->is_suspicious_email
                 );
-            } elseif ( isset( $decoded->install_secret_key ) ) {
+            } else if ( isset( $decoded->install_secret_key ) ) {
                 return $this->install_with_new_user(
                     $decoded->user_id,
                     $decoded->user_public_key,
@@ -17753,7 +17503,7 @@
                     $decoded->install_secret_key,
                     false
                 );
-            } elseif ( is_array( $decoded->installs ) ) {
+            } else if ( is_array( $decoded->installs ) ) {
                 return $this->install_many_with_new_user(
                     $decoded->user_id,
                     $decoded->user_public_key,
@@ -17880,24 +17630,23 @@
                      ! $this->has_settings_menu()
                 ) {
                     if ( $this->is_paying() ) {
-                        $this->_admin_notices->add_sticky(
+                        $this->add_complete_upgrade_instructions_notice(
                             sprintf(
                                 $this->get_text_inline( 'Your account was successfully activated with the %s plan.', 'activation-with-plan-x-message' ),
                                 $this->get_plan_title()
-                            ) . $this->get_complete_upgrade_instructions(),
-                            'plan_upgraded',
-                            $this->get_text_x_inline( 'Yee-haw', 'interjection expressing joy or exuberance', 'yee-haw' ) . '!'
+                            ),
+                            'plan_upgraded'
                         );
                     } else {
                         $trial_plan = $this->get_trial_plan();
 
-                        $this->_admin_notices->add_sticky(
+                        $this->add_complete_upgrade_instructions_notice(
                             sprintf(
                                 $this->get_text_inline( 'Your trial has been successfully started.', 'trial-started-message' ),
                                 '<i>' . $this->get_plugin_name() . '</i>'
-                            ) . $this->get_complete_upgrade_instructions( $trial_plan->title ),
+                            ),
                             'trial_started',
-                            $this->get_text_x_inline( 'Yee-haw', 'interjection expressing joy or exuberance', 'yee-haw' ) . '!'
+                            $trial_plan->title
                         );
                     }
                 }
@@ -17974,6 +17723,10 @@
                 return;
             }
 
+            $has_pending_activation_confirmation_param = fs_request_has( 'pending_activation' );
+
+            $this->update_license_required_permissions_if_anonymous();
+
             if ( ( $this->is_plugin() && fs_request_is_action( $this->get_unique_affix() . '_activate_new' ) ) ||
                  // @todo This logic should be improved because it's executed on every load of a theme.
                  $this->is_theme()
@@ -18010,13 +17763,15 @@
                             fs_request_get_bool( 'auto_install' )
                         );
                     }
-                } elseif ( fs_request_has( 'pending_activation' ) ) {
+                } else if ( $has_pending_activation_confirmation_param ) {
                     $this->set_pending_confirmation(
                         fs_request_get( 'user_email' ),
                         true,
                         false,
                         false,
-                        fs_request_get_bool( 'is_suspicious_email' )
+                        fs_request_get_bool( 'is_suspicious_email' ),
+                        fs_request_get_bool( 'has_upgrade_context' ),
+                        fs_request_get( 'support_email_address' )
                     );
                 }
             }
@@ -18269,6 +18024,9 @@
          * @param bool        $redirect
          * @param string|bool $license_key      Since 1.2.1.5
          * @param bool        $is_pending_trial Since 1.2.1.5
+         * @param bool        $is_suspicious_email Since 2.5.0
+         * @param bool        $has_upgrade_context Since 2.5.3
+         * @param bool|string $support_email_address Since 2.5.3
          *
          * @return string Since 1.2.1.5 if $redirect is `false`, return the pending activation page.
          */
@@ -18277,22 +18035,32 @@
             $redirect = true,
             $license_key = false,
             $is_pending_trial = false,
-            $is_suspicious_email = false
+            $is_suspicious_email = false,
+            $has_upgrade_context = false,
+            $support_email_address = false
         ) {
-            if ( $this->_ignore_pending_mode ) {
+            $is_network_admin = fs_is_network_admin();
+
+            if ( $this->_ignore_pending_mode && ! $has_upgrade_context ) {
                 /**
                  * If explicitly asked to ignore pending mode, set to anonymous mode
-                 * if require confirmation before finalizing the opt-in.
+                 * if require confirmation before finalizing the opt-in except after completing a purchase (otherwise, in this case, they wouldn't see any notice telling them that they should receive their license key via email).
                  *
                  * @author Vova Feldman
                  * @since  1.2.1.6
                  */
-                $this->skip_connection( fs_is_network_admin() );
+                $this->skip_connection( $is_network_admin );
             } else {
                 // Install must be activated via email since
                 // user with the same email already exist.
                 $this->_storage->is_pending_activation = true;
-                $this->_add_pending_activation_notice( $email, $is_pending_trial, $is_suspicious_email );
+                $this->_add_pending_activation_notice(
+                    $email,
+                    $is_pending_trial,
+                    $is_suspicious_email,
+                    $has_upgrade_context,
+                    $support_email_address
+                );
             }
 
             if ( ! empty( $license_key ) ) {
@@ -18479,7 +18247,7 @@
                 if ( $silent ) {
                     $extra_install_params['ignore_license_owner'] = true;
                 }
-            } elseif ( FS_Plugin_Plan::is_valid_id( $trial_plan_id ) ) {
+            } else if ( FS_Plugin_Plan::is_valid_id( $trial_plan_id ) ) {
                 $extra_install_params['trial_plan_id'] = $trial_plan_id;
             }
 
@@ -18554,6 +18322,14 @@
                 // Already activated.
                 return;
             }
+
+            $permission_ids = FS_Permission_Manager::get_all_permission_ids();
+            $permissions = array();
+            foreach ( $permission_ids as $permission_id ) {
+                $permissions[ $permission_id ] = FS_Permission_Manager::instance( $parent_fs )->is_permission( $permission_id, true );
+            }
+
+            FS_Permission_Manager::instance( $this )->update_permissions_tracking_flag( $permissions );
 
             /**
              * Do not override the `uid` if network-level opt-in since the call to `get_sites_for_network_level_optin()`
@@ -18816,6 +18592,8 @@
             // Sync add-on plans.
             $parent_fs->_sync_plans();
 
+            $parent_fs->update_license_required_permissions_if_anonymous();
+
             $parent_fs->_set_account( $user, $parent_fs->_site );
         }
 
@@ -18878,7 +18656,7 @@
 
             $should_hide_site_admin_settings = $this->apply_filters( 'should_hide_site_admin_settings_on_network_activation_mode', $should_hide_site_admin_settings );
 
-            if ( ( ! $this->has_api_connectivity() && ! $this->is_enable_anonymous() ) ||
+            if ( ( false === $this->has_api_connectivity() && ! $this->is_enable_anonymous() ) ||
                  $should_hide_site_admin_settings
             ) {
                 $this->_menu->remove_menu_item( $should_hide_site_admin_settings );
@@ -18915,7 +18693,7 @@
                      */
                     if ( fs_request_is_action( $this->get_unique_affix() . '_activate_existing' ) ) {
                         add_action( 'load-themes.php', array( &$this, '_install_with_current_user' ) );
-                    } elseif ( fs_request_is_action( $this->get_unique_affix() . '_activate_new' ) ||
+                    } else if ( fs_request_is_action( $this->get_unique_affix() . '_activate_new' ) ||
                                 fs_request_get_bool( 'pending_activation' )
                     ) {
                         add_action( 'load-themes.php', array( &$this, '_install_with_new_user' ) );
@@ -18927,7 +18705,7 @@
                     if ( fs_request_is_action( $this->get_unique_affix() . '_activate_new' ) ) {
                         $this->_install_with_new_user();
                     }
-                } elseif (
+                } else if (
                     fs_request_is_action( 'sync_user' ) &&
                     ( ! $this->has_settings_menu() || $this->show_opt_in_on_themes_page() )
                 ) {
@@ -18982,7 +18760,7 @@
                     $this->_slug,
                     array( &$this, '_connect_page_render' )
                 );
-            } elseif ( $this->_menu->is_top_level() ) {
+            } else if ( $this->_menu->is_top_level() ) {
                 if ( $this->_menu->is_override_exact() ) {
                     // Make sure the current page is matching the activation page.
                     if ( ! $this->is_matching_url( $this->get_activation_url() ) ) {
@@ -19034,7 +18812,7 @@
             if ( false !== $hook ) {
                 if ( fs_request_is_action( $this->get_unique_affix() . '_activate_existing' ) ) {
                     $this->_install_with_current_user();
-                } elseif ( fs_request_is_action( $this->get_unique_affix() . '_activate_new' ) ) {
+                } else if ( fs_request_is_action( $this->get_unique_affix() . '_activate_new' ) ) {
                     $this->_install_with_new_user();
                 }
             }
@@ -19157,7 +18935,7 @@
             ) {
                 // If running a trial promotion, modify the pricing to load the trial.
                 $label = $this->get_text_inline( 'Start Trial', 'start-trial' );
-            } elseif ( $this->is_paying() ) {
+            } else if ( $this->is_paying() ) {
                 $label = $this->get_text_inline( 'Pricing', 'pricing' );
             }
 
@@ -19200,7 +18978,7 @@
                     // Also add action links or submenu items when running in a free .org theme so the tabs will be visible.
                     return true;
                 }
-            } elseif ( $is_activation_mode ) {
+            } else if ( $is_activation_mode ) {
                 // Don't show submenu-items/tabs in activation mode, unless it's a wp.org theme.
                 return false;
             }
@@ -19326,7 +19104,7 @@
                         ) {
                             // If running a trial promotion, modify the pricing to load the trial.
                             $pricing_class = 'trial-mode';
-                        } elseif ( $this->is_paying() ) {
+                        } else if ( $this->is_paying() ) {
                             $pricing_class = '';
                         }
                     }
@@ -20785,7 +20563,7 @@
                     } else {
                         $api_errors[] = $api_result;
                     }
-                } elseif (
+                } else if (
                     is_object( $this->_license ) &&
                     /**
                      * Sync only if the license belongs to the context plugin. `$plugin_id` can be an add-on ID while
@@ -21414,14 +21192,11 @@
                     // Show API message only if not background sync or if paying customer.
                     if ( ! $background || $this->is_paying() ) {
                         // Try to ping API to see if not blocked.
-                        if ( ! FS_Api::test() ) {
+                        if ( FS_Api::is_blocked( $result ) ) {
                             /**
-                             * Failed to ping API - blocked!
-                             *
                              * @author Vova Feldman (@svovaf)
                              * @since  1.1.6 Only show message related to one of the Freemius powered plugins. Once it will be resolved it will fix the issue for all plugins anyways. There's no point to scare users with multiple error messages.
                              */
-
                             if ( ! self::$_global_admin_notices->has_sticky( 'api_blocked' ) ) {
                                 // Add notice immediately if not a background sync.
                                 $add_notice = ( ! $background );
@@ -21445,29 +21220,24 @@
                                 // Add notice instantly for not-background sync and only after 3 failed attempts for background sync.
                                 if ( $add_notice ) {
                                     self::$_global_admin_notices->add(
-                                        sprintf(
-                                            $this->get_text_inline( 'Your server is blocking the access to Freemius\' API, which is crucial for %1$s synchronization. Please contact your host to whitelist %2$s', 'server-blocking-access' ),
-                                            $this->get_plugin_name(),
-                                            '<b>' . implode( ', ', $this->apply_filters( 'api_domains', array(
-                                                'api.freemius.com',
-                                                'wp.freemius.com'
-                                            ) ) ) . '</b>'
-                                        ) . '<br> ' . $this->get_text_inline( 'Error received from the server:', 'server-error-message' ) . var_export( $result->error, true ),
-                                        $this->get_text_x_inline( 'Oops', 'exclamation', 'oops' ) . '...',
+                                        $this->generate_api_blocked_notice_message_from_result( $result ),
+                                        '',
                                         'error',
                                         $background,
                                         'api_blocked'
                                     );
 
+                                    add_action( 'admin_footer', array( 'Freemius', '_add_api_connectivity_notice_handler_js' ) );
+
                                     // Notice was just shown, reset connectivity counter.
                                     delete_transient( '_fs_api_connection_retry_counter' );
                                 }
                             }
-                        } elseif ( is_object( $result ) ) {
+                        } else if ( is_object( $result ) ) {
                             // Authentication params are broken.
                             $this->_admin_notices->add(
                                 $this->get_text_inline( 'It seems like one of the authentication parameters is wrong. Update your Public Key, Secret Key & User ID, and try again.', 'wrong-authentication-param-message' ) . '<br> ' . $this->get_text_inline( 'Error received from the server:', 'server-error-message' ) . var_export( $result->error, true ),
-                                $this->get_text_x_inline( 'Oops', 'exclamation', 'oops' ) . '...',
+                                '',
                                 'error'
                             );
                         }
@@ -21564,7 +21334,7 @@
 
                             $this->_sync_site_subscription( $this->_license );
                         }
-                    } elseif ( $this->_site->is_trial() && ! $site->is_trial() && ! is_numeric( $site->license_id ) ) {
+                    } else if ( $this->_site->is_trial() && ! $site->is_trial() && ! is_numeric( $site->license_id ) ) {
                         // Was in trial, but now trial expired and no license ID.
                         // New trial started.
                         $this->_site = $site;
@@ -21584,7 +21354,7 @@
                             $this->_store_licenses();
 
                             $plan_change = 'cancelled';
-                        } elseif ( $is_free && ( ( ! is_object( $new_license ) || $new_license->is_expired() ) ) ) {
+                        } else if ( $is_free && ( ( ! is_object( $new_license ) || $new_license->is_expired() ) ) ) {
                             // The license is expired, so ignore upgrade method.
                             $this->_site = $site;
                         } else {
@@ -21729,14 +21499,7 @@
                         break;
                     case 'upgraded':
                     case 'activated':
-                        $this->_admin_notices->add_sticky(
-                            ( 'activated' === $plan_change ) ?
-                                $this->get_text_inline( 'Your plan was successfully activated.', 'plan-activated-message' ) :
-                                $this->get_text_inline( 'Your plan was successfully upgraded.', 'plan-upgraded-message' ) .
-                            $this->get_complete_upgrade_instructions(),
-                            'plan_upgraded',
-                            $this->get_text_x_inline( 'Yee-haw', 'interjection expressing joy or exuberance', 'yee-haw' ) . '!'
-                        );
+                        $this->add_after_plan_activation_or_upgrade_instructions_notice( 'upgraded' === $plan_change );
 
                         $this->_admin_notices->remove_sticky( array(
                             'trial_started',
@@ -21798,13 +21561,13 @@
                         $this->_admin_notices->remove_sticky( 'plan_upgraded' );
                         break;
                     case 'trial_started':
-                        $this->_admin_notices->add_sticky(
+                        $this->add_complete_upgrade_instructions_notice(
                             sprintf(
                                 $this->get_text_inline( 'Your trial has been successfully started.', 'trial-started-message' ),
                                 '<i>' . $this->get_plugin_name() . '</i>'
-                            ) . $this->get_complete_upgrade_instructions( $this->get_trial_plan()->title ),
+                            ),
                             'trial_started',
-                            $this->get_text_x_inline( 'Yee-haw', 'interjection expressing joy or exuberance', 'yee-haw' ) . '!'
+                            $this->get_trial_plan()->title
                         );
 
                         $this->_admin_notices->remove_sticky( array(
@@ -21839,6 +21602,42 @@
 
                 $this->do_action( 'after_license_change', $plan_change, $this->get_plan() );
             }
+        }
+
+        /**
+         * @author Leo Fajardo (@leorw)
+         * @since 2.5.4
+         *
+         * @param mixed $result
+         *
+         * @return string
+         */
+        private function generate_api_blocked_notice_message_from_result( $result ) {
+            $api_domains = $this->apply_filters( 'api_domains', array(
+                'api.freemius.com',
+                'wp.freemius.com',
+            ) );
+
+            $api_domains_list_items = '';
+
+            foreach( $api_domains as $api_domain ) {
+                $api_domains_list_items .= "<li>{$api_domain}</li>";
+            }
+            
+            $error_message = sprintf(
+                $this->get_text_inline( 'Your server is blocking the access to Freemius\' API, which is crucial for %1$s synchronization. Please contact your host to whitelist the following domains:%2$s', 'server-blocking-access' ),
+                $this->get_plugin_name(),
+                "<ol>{$api_domains_list_items}</ol><a href='#' class='fs-api-request-error-show-details-link'>" . $this->get_text_inline( 'Show error details', 'show-error-details' ) . " <span class='dashicons dashicons-arrow-down-alt2'></span></a>"
+            );
+
+            $error_message =
+                "<div>{$error_message}</div>" .
+                '<div class="fs-api-request-error-details" style="display: none">' .
+                    '<strong>' . $this->get_text_inline( 'Error received from the server:', 'server-error-message' ) . '</strong><br>' .
+                    $result->error->message .
+                '</div>';
+
+            return $error_message;
         }
 
         /**
@@ -21972,11 +21771,9 @@
             }
 
             if ( ! $background ) {
-                $this->_admin_notices->add_sticky(
-                    $this->get_text_inline( 'Your license was successfully activated.', 'license-activated-message' ) .
-                    $this->get_complete_upgrade_instructions(),
-                    'license_activated',
-                    $this->get_text_x_inline( 'Yee-haw', 'interjection expressing joy or exuberance', 'yee-haw' ) . '!'
+                $this->add_complete_upgrade_instructions_notice(
+                    $this->get_text_inline( 'Your license was successfully activated.', 'license-activated-message' ),
+                    'license_activated'
                 );
             }
 
@@ -22360,7 +22157,7 @@
             $is_premium = null;
             if ( ! $is_addon ) {
                 $is_premium = ( $this->is_premium() || $this->_can_download_premium() );
-            } elseif ( $this->is_addon_activated( $addon_id ) ) {
+            } else if ( $this->is_addon_activated( $addon_id ) ) {
                 $fs_addon   = self::get_instance_by_id( $addon_id );
                 $is_premium = ( $fs_addon->is_premium() || $fs_addon->_can_download_premium() );
             }
@@ -22376,7 +22173,7 @@
 
             if ( $this->has_secret_key() ) {
                 $endpoint = add_query_arg( 'type', 'all', $endpoint );
-            } elseif ( is_object( $this->_site ) && $this->_site->is_beta() ) {
+            } else if ( is_object( $this->_site ) && $this->_site->is_beta() ) {
                 $endpoint = add_query_arg( 'type', 'beta', $endpoint );
             }
 
@@ -22592,7 +22389,7 @@
 
             if ( ! empty( $plugin_id ) ) {
                 $params['plugin_id'] = $plugin_id;
-            } elseif ( $this->is_addon() ) {
+            } else if ( $this->is_addon() ) {
                 $params['plugin_id'] = $this->get_id();
             }
 
@@ -22653,7 +22450,7 @@
                         $this->get_text_inline( 'New', 'new' ) . '!'
                     );
                 }
-            } elseif ( false === $new_version && ! $background ) {
+            } else if ( false === $new_version && ! $background ) {
                 $this->_admin_notices->add(
                     $this->get_text_inline( 'Seems like you got the latest release.', 'you-have-latest' ),
                     $this->get_text_inline( 'You are all good!', 'you-are-good' )
@@ -23353,7 +23150,7 @@
 
                             if ( ! $is_network_action ) {
                                 fs_redirect( $this->get_activation_url() );
-                            } elseif ( is_numeric( $blog_id ) ) {
+                            } else if ( is_numeric( $blog_id ) ) {
                                 $this->switch_to_blog( $this->_storage->network_install_blog_id );
                             }
                         }
@@ -24281,7 +24078,7 @@
 
                         if ( $i < $trial_plans_count - 2 ) {
                             $plans_string .= ', ';
-                        } elseif ( $i == $trial_plans_count - 2 ) {
+                        } else if ( $i == $trial_plans_count - 2 ) {
                             $plans_string .= ' and ';
                         }
                     }
@@ -24634,7 +24431,7 @@
                 if ( ! $this->_is_network_active ) {
                     // Don't add tracking links when browsing the network WP Admin and the plugin is not network active.
                     return;
-                } elseif ( $this->is_network_delegated_connection() ) {
+                } else if ( $this->is_network_delegated_connection() ) {
                     // Don't add tracking links when browsing the network WP Admin and the activation has been delegated to site admins.
                     return;
                 }
@@ -24689,7 +24486,7 @@
                 } else {
                     $link_text_id = $this->get_text_inline( 'Opt In', 'opt-in' );
                 }
-            } elseif ( $this->is_anonymous() || $this->is_activation_mode() ) {
+            } else if ( $this->is_anonymous() || $this->is_activation_mode() ) {
                 /**
                  * Show opt-in link only if skipped or in activation mode.
                  */
@@ -24736,14 +24533,14 @@
 
                 if ( $this->is_activation_mode() ) {
                     $url = $this->get_activation_url();
-                } elseif ( ! empty( $first_time_path ) ) {
+                } else if ( ! empty( $first_time_path ) ) {
                     $url = $first_time_path;
                 } else {
                     $page = '';
                     if ( ! empty( $this->_dynamically_added_top_level_page_hook_name ) ) {
                         if ( $this->is_network_registered() ) {
                             $page = 'account';
-                        } elseif ( $this->is_pending_activation() || $this->is_network_anonymous() ) {
+                        } else if ( $this->is_pending_activation() || $this->is_network_anonymous() ) {
                             $this->maybe_set_slug_and_network_menu_exists_flag();
                         }
                     }
@@ -24968,6 +24765,42 @@
 
         /**
          * @author Leo Fajardo (@leorw)
+         * @since 2.5.3
+         *
+         * @param string $message_before_the_instructions
+         * @param string $message_id
+         * @param string $plan_title
+         */
+        private function add_complete_upgrade_instructions_notice(
+            $message_before_the_instructions,
+            $message_id,
+            $plan_title = ''
+        ) {
+            $this->_admin_notices->add_sticky(
+                $message_before_the_instructions .
+                $this->get_complete_upgrade_instructions( $plan_title ),
+                $message_id,
+                $this->get_text_x_inline( 'Yee-haw', 'interjection expressing joy or exuberance', 'yee-haw' ) . '!'
+            );
+        }
+
+        /**
+         * @author Leo Fajardo (@leorw)
+         * @since 2.5.3
+         *
+         * @param bool $is_upgrade
+         */
+        private function add_after_plan_activation_or_upgrade_instructions_notice( $is_upgrade = true ) {
+            $this->add_complete_upgrade_instructions_notice(
+                $is_upgrade ?
+                    $this->get_text_inline( 'Your plan was successfully upgraded.', 'plan-upgraded-message' ) :
+                    $this->get_text_inline( 'Your plan was successfully activated.', 'plan-activated-message' ),
+                'plan_upgraded'
+            );
+        }
+
+        /**
+         * @author Leo Fajardo (@leorw)
          * @since 2.1.0
          *
          * @param string $url
@@ -25019,25 +24852,21 @@
                     self::enrich_request_for_debug( $url, $request );
                 }
 
-                $response = wp_remote_post( $url, $request );
+                if ( ! isset( $request['method'] ) ) {
+                    $request['method'] = 'POST';
+                }
 
-                if ( $response instanceof WP_Error ) {
-                    if ( 'https://' === substr( $url, 0, 8 ) &&
-                        isset( $response->errors ) &&
-                        isset( $response->errors['http_request_failed'] )
-                    ) {
-                        $http_error = strtolower( $response->errors['http_request_failed'][0] );
+                $response = FS_Api::remote_request( $url, $request );
 
-                        if ( false !== strpos( $http_error, 'ssl' ) ||
-                            false !== strpos( $http_error, 'curl error 35' )
-                        ) {
-                            // Failed due to old version of cURL or Open SSL (SSLv3 is not supported by CloudFlare).
-                            $url = 'http://' . substr( $url, 8 );
+                if (
+                    'https://' === substr( $url, 0, 8 ) &&
+                    FS_Api::is_ssl_error_response( $response )
+                ) {
+                    // Failed due to old version of cURL or Open SSL (SSLv3 is not supported by CloudFlare).
+                    $url = 'http://' . substr( $url, 8 );
 
-                            $request['timeout'] = 15;
-                            $response           = wp_remote_post( $url, $request );
-                        }
-                    }
+                    $request['timeout'] = 15;
+                    $response           = FS_Api::remote_request( $url, $request );
                 }
 
                 if ( false !== $cache_key ) {
@@ -25918,24 +25747,6 @@
 
         /**
          * @author Leo Fajardo (@leorw)
-         * @since 2.1.0
-         *
-         * @return bool
-         */
-        function fetch_and_store_current_user_gdpr_anonymously() {
-            $pong = $this->ping( null, true );
-
-            if ( ! $this->get_api_plugin_scope()->is_valid_ping( $pong ) ) {
-                return false;
-            } else {
-                FS_GDPR_Manager::instance()->store_is_required( $pong->is_gdpr_required );
-
-                return $pong->is_gdpr_required;
-            }
-        }
-
-        /**
-         * @author Leo Fajardo (@leorw)
          * @since  2.1.0
          *
          * @param array $user_plugins
@@ -26296,6 +26107,14 @@
 
         /**
          * @author Leo Fajardo (@leorw)
+         * @since  2.5.4
+         */
+        static function _add_api_connectivity_notice_handler_js() {
+            fs_require_once_template( 'api-connectivity-message-js.php' );
+        }
+
+        /**
+         * @author Leo Fajardo (@leorw)
          * @since  2.1.0
          */
         function _add_gdpr_optin_js() {
@@ -26387,7 +26206,7 @@
                 '/licenses_owners.json?install_ids=' . implode( ',', $install_ids )
             );
 
-            $license_owners = null;
+            $license_owners = array();
 
             if ( $this->is_api_result_object( $response, 'owners' ) ) {
                 $license_owners = $response->owners;

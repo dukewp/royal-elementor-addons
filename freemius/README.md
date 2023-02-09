@@ -222,7 +222,7 @@ Add logic for specified paid plan:
 
             // ... logic related to Professional plan only ...
 
-        } elseif ( my_prefix_fs()->is_plan( 'business' ) ) {
+        } else if ( my_prefix_fs()->is_plan( 'business' ) ) {
 
             // ... logic related to Business plan and higher plans ...
 

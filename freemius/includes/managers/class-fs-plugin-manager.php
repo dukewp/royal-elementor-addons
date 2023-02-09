@@ -125,7 +125,7 @@
 							$this->_module_id = $module->id;
 							$found_module     = true;
 						}
-					} elseif ( $this->_module_id == $module->id ) {
+					} else if ( $this->_module_id == $module->id ) {
 						$found_module = true;
 					}
 

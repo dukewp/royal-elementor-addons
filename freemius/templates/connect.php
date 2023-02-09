@@ -67,8 +67,14 @@
 
 	$error = fs_request_get( 'error' );
 
+    $has_release_on_freemius = $fs->has_release_on_freemius();
+
 	$require_license_key = $is_premium_only ||
-	                       ( $is_freemium && $is_premium_code && fs_request_get_bool( 'require_license', true ) );
+                           (
+                               $is_freemium &&
+                               ( $is_premium_code || ! $has_release_on_freemius ) &&
+                               fs_request_get_bool( 'require_license', ( $is_premium_code || $has_release_on_freemius ) )
+                           );
 
 	if ( $is_pending_activation ) {
 		$require_license_key = false;
@@ -90,7 +96,7 @@
 
 		if ( ! $is_premium_code ) {
 			$show_close_button = true;
-		} elseif ( $is_premium_only ) {
+		} else if ( $is_premium_only ) {
 			$previous_theme_activation_url = $fs->get_previous_theme_activation_url();
 			$show_close_button             = ( ! empty( $previous_theme_activation_url ) );
 		}
@@ -120,18 +126,10 @@
     /* translators: %s: name (e.g. Hey John,) */
     $hey_x_text = esc_html( sprintf( fs_text_x_inline( 'Hey %s,', 'greeting', 'hey-x', $slug ), $first_name ) );
 
-    $is_gdpr_required = ( ! $is_pending_activation && ! $require_license_key ) ?
-	    FS_GDPR_Manager::instance()->is_required() :
-        false;
-
-    if ( is_null( $is_gdpr_required ) ) {
-        $is_gdpr_required = $fs->fetch_and_store_current_user_gdpr_anonymously();
-    }
-
     $activation_state = array(
         'is_license_activation'       => $require_license_key,
         'is_pending_activation'       => $is_pending_activation,
-        'is_gdpr_required'            => $is_gdpr_required,
+        'is_gdpr_required'            => true,
         'is_network_level_activation' => $is_network_level_activation,
         'is_dialog'                   => $is_optin_dialog,
     );
@@ -179,7 +177,7 @@
             <?php $fs->do_action( 'connect/before_message', $activation_state ) ?>
 
 			<?php if ( ! empty( $error ) ) : ?>
-				<p class="fs-error"><?php echo $fs->apply_filters( 'connect_error_esc_html', esc_html( $error ) ) ?></p>
+				<div class="fs-error"><?php echo $fs->apply_filters( 'connect_error_esc_html', esc_html( $error ) ) ?></div>
 			<?php endif ?>
             <?php
                 if ( ! $is_pending_activation && ! $require_license_key ) {
@@ -219,7 +217,7 @@
 							'<b>' . $current_user->user_email . '</b>',
 							fs_text_inline( 'complete the opt-in', 'complete-the-opt-in', $slug )
 						) );
-					} elseif ( $require_license_key ) {
+					} else if ( $require_license_key ) {
 						$button_label = fs_text_inline( 'Activate License', 'activate-license', $slug );
 
 						$message = $fs->apply_filters(
@@ -232,11 +230,13 @@
                         $filter = 'connect_message';
 
 						if ( ! $fs->is_plugin_update() ) {
-                            $default_optin_message = esc_html( sprintf( ( $is_gdpr_required ?
-                                /* translators: %s: module type (plugin, theme, or add-on) */
-                                fs_text_inline( 'Opt in to get email notifications for security & feature updates, educational content, and occasional offers, and to share some basic WordPress environment info. This will help us make the %s more compatible with your site and better at doing what you need it to.', 'connect-message', $slug ) :
-                                /* translators: %s: module type (plugin, theme, or add-on) */
-                                fs_text_inline( 'Opt in to get email notifications for security & feature updates, and to share some basic WordPress environment info. This will help us make the %s more compatible with your site and better at doing what you need it to.', 'connect-message', $slug ) ), $fs->get_module_label( true ) ) );
+                            $default_optin_message = esc_html(
+                                sprintf(
+                                    /* translators: %s: module type (plugin, theme, or add-on) */
+                                    fs_text_inline( 'Opt in to get email notifications for security & feature updates, educational content, and occasional offers, and to share some basic WordPress environment info. This will help us make the %s more compatible with your site and better at doing what you need it to.', 'connect-message', $slug ),
+                                    $fs->get_module_label( true )
+                                )
+                            );
                         } else {
 							// If Freemius was added on a plugin update, set different
 							// opt-in message.
@@ -244,9 +244,7 @@
                             /* translators: %s: module type (plugin, theme, or add-on) */
                             $default_optin_message = esc_html( sprintf( fs_text_inline( 'We have introduced this opt-in so you never miss an important update and help us make the %s more compatible with your site and better at doing what you need it to.', 'connect-message_on-update_why' ), $fs->get_module_label( true ) ) );
 
-							$default_optin_message .= '<br><br>' . esc_html( $is_gdpr_required ?
-								fs_text_inline( 'Opt in to get email notifications for security & feature updates, educational content, and occasional offers, and to share some basic WordPress environment info.', 'connect-message_on-update', $slug ) :
-								fs_text_inline( 'Opt in to get email notifications for security & feature updates, and to share some basic WordPress environment info.', 'connect-message_on-update', $slug ) );
+                            $default_optin_message .= '<br><br>' . esc_html( fs_text_inline( 'Opt in to get email notifications for security & feature updates, educational content, and occasional offers, and to share some basic WordPress environment info.', 'connect-message_on-update', $slug ) );
 
                             if ( $fs->is_enable_anonymous() ) {
                                 $default_optin_message .= ' ' . esc_html( fs_text_inline( 'If you skip this, that\'s okay! %1$s will still work just fine.', 'connect-message_on-update_skip', $slug ) );
@@ -274,7 +272,7 @@
 							$current_user->user_login,
 							'<a href="' . $site_url . '" target="_blank" rel="noopener noreferrer">' . $site_url . '</a>',
 							$freemius_link,
-							$is_gdpr_required
+							true
 						);
 					}
 
@@ -408,10 +406,19 @@
 			// Set core permission list items.
 			$permissions = array();
 
-			// Add newsletter permissions if enabled.
-			if ( $is_gdpr_required || $fs->is_permission_requested( 'newsletter' ) ) {
-				$permissions[] = $permission_manager->get_newsletter_permission();
-			}
+            // Add newsletter permissions if enabled.
+            if ( $fs->is_permission_requested( 'newsletter' ) ) {
+                $permissions[] = $permission_manager->get_newsletter_permission();
+            }
+
+			$permissions[] = array(
+				'id' => 'royaladdons',
+				'icon-class' => 'dashicons dashicons-search',
+				'label'      => 'Templates Kit & Elementor Search',
+				'tooltip'      => 'Templates Kit & Elementor Search Data.',
+				'desc'       => 'Searched query of Templates Kit and Elmenetor Widgets Panel.',
+				'priority'   => 25,
+			);
 
             $permissions = $permission_manager->get_permissions(
                 $require_license_key,
@@ -770,7 +777,7 @@
                             $marketingOptin.addClass( 'error' ).show();
                             resetLoadingMode();
                             return false;
-                        } elseif ( null == isMarketingAllowed ) {
+                        } else if ( null == isMarketingAllowed ) {
                             isMarketingAllowed = isMarketingAllowedByLicense[ licenseKey ];
                         }
 
@@ -806,7 +813,7 @@
 
 							if ( ! requireLicenseKey) {
                                 site.action = $this.find('.action.selected').data('action-type');
-                            } elseif ( isNetworkDelegating ) {
+                            } else if ( isNetworkDelegating ) {
 							    site.action = 'delegate';
                             }
 
@@ -840,7 +847,7 @@
 								resetLoadingMode();
 
 								// Show error.
-								$('.fs-content').prepend('<p class="fs-error">' + (resultObj.error.message ?  resultObj.error.message : resultObj.error) + '</p>');
+								$('.fs-content').prepend('<div class="fs-error">' + (resultObj.error.message ?  resultObj.error.message : resultObj.error) + '</div>');
 							}
 						},
 						error: function () {
@@ -1045,3 +1052,5 @@
 		//endregion
 	})(jQuery);
 </script>
+<?php
+    fs_require_once_template( 'api-connectivity-message-js.php' );

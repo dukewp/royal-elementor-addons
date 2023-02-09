@@ -177,7 +177,7 @@
 
 			if ( 'current' === selectedEmailAddressesOwnershipOption ) {
 			    transferType = 'transfer_to_client';
-            } elseif (
+            } else if (
                 'both' === selectedEmailAddressesOwnershipOption &&
                 'all' === selectedAssetsTransfershipOption
             ) {
@@ -339,7 +339,7 @@
 
 	    if ( ! show ) {
             $modal.find( '.fs-assets-transfership-options' ).hide();
-        } elseif ( 'both' === selectedEmailAddressesOwnershipOption ) {
+        } else if ( 'both' === selectedEmailAddressesOwnershipOption ) {
             $modal.find( '.fs-assets-transfership-options' ).show();
         }
     }

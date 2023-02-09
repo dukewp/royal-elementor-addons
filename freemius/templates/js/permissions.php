@@ -347,7 +347,7 @@
                                 0 === $groupPermissions.filter( '.fs-disabled' ).length )
                             {
                                 allGroupPermissionsUseSameValue = true;
-                            } elseif (
+                            } else if (
                                 ! isEnabled &&
                                 $groupPermissions.length === $groupPermissions.filter( '.fs-disabled' ).length
                             ) {

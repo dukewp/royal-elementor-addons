@@ -121,7 +121,7 @@
             if ( is_multisite() ) {
                 if ( true === $network_level_or_blog_id ) {
                     $key .= ':ms';
-                } elseif ( is_numeric( $network_level_or_blog_id ) && $network_level_or_blog_id > 0 ) {
+                } else if ( is_numeric( $network_level_or_blog_id ) && $network_level_or_blog_id > 0 ) {
                     $key .= ":{$network_level_or_blog_id}";
                 } else {
                     $network_level_or_blog_id = get_current_blog_id();
@@ -138,7 +138,7 @@
                     $autoload
                 );
             } // If load required but not yet loaded, load.
-            elseif ( $load && ! self::$_MANAGERS[ $key ]->is_loaded() ) {
+            else if ( $load && ! self::$_MANAGERS[ $key ]->is_loaded() ) {
                 self::$_MANAGERS[ $key ]->load();
             }
 
@@ -167,7 +167,7 @@
 
             if ( $this->_is_network_storage ) {
                 $this->_options = get_site_option( $option_name );
-            } elseif ( $this->_blog_id > 0 ) {
+            } else if ( $this->_blog_id > 0 ) {
                 $this->_options = get_blog_option( $this->_blog_id, $option_name );
             } else {
                 $this->_options = get_option( $option_name );
@@ -231,7 +231,7 @@
 
             if ( $this->_is_network_storage ) {
                 delete_site_option( $option_name );
-            } elseif ( $this->_blog_id > 0 ) {
+            } else if ( $this->_blog_id > 0 ) {
                 delete_blog_option( $this->_blog_id, $option_name );
             } else {
                 delete_option( $option_name );
@@ -276,7 +276,7 @@
                 $value = isset( $this->_options[ $option ] ) ?
                     $this->_options[ $option ] :
                     $default;
-            } elseif ( is_object( $this->_options ) ) {
+            } else if ( is_object( $this->_options ) ) {
                 $value = isset( $this->_options->{$option} ) ?
                     $this->_options->{$option} :
                     $default;
@@ -349,7 +349,7 @@
 
             if ( is_array( $this->_options ) ) {
                 $this->_options[ $option ] = $copy;
-            } elseif ( is_object( $this->_options ) ) {
+            } else if ( is_object( $this->_options ) ) {
                 $this->_options->{$option} = $copy;
             }
 
@@ -377,7 +377,7 @@
 
                 unset( $this->_options[ $option ] );
 
-            } elseif ( is_object( $this->_options ) ) {
+            } else if ( is_object( $this->_options ) ) {
                 if ( ! isset( $this->_options->{$option} ) ) {
                     return;
                 }
@@ -408,7 +408,7 @@
             // Update DB.
             if ( $this->_is_network_storage ) {
                 update_site_option( $option_name, $this->_options );
-            } elseif ( $this->_blog_id > 0 ) {
+            } else if ( $this->_blog_id > 0 ) {
                 update_blog_option( $this->_blog_id, $option_name, $this->_options );
             } else {
                 update_option( $option_name, $this->_options, $this->_autoload );
@@ -426,7 +426,7 @@
         function get_options_keys() {
             if ( is_array( $this->_options ) ) {
                 return array_keys( $this->_options );
-            } elseif ( is_object( $this->_options ) ) {
+            } else if ( is_object( $this->_options ) ) {
                 return array_keys( get_object_vars( $this->_options ) );
             }
 

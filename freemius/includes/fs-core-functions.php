@@ -197,18 +197,18 @@
 
             if ( is_bool( $val ) ) {
                 return $val;
-            } elseif ( is_numeric( $val ) ) {
+            } else if ( is_numeric( $val ) ) {
                 if ( 1 == $val ) {
                     return true;
-                } elseif ( 0 == $val ) {
+                } else if ( 0 == $val ) {
                     return false;
                 }
-            } elseif ( is_string( $val ) ) {
+            } else if ( is_string( $val ) ) {
                 $val = strtolower( $val );
 
                 if ( 'true' === $val ) {
                     return true;
-                } elseif ( 'false' === $val ) {
+                } else if ( 'false' === $val ) {
                     return false;
                 }
             }
@@ -313,7 +313,7 @@
             }
             if ( ! empty( $_REQUEST['_wp_http_referer'] ) ) {
                 return wp_unslash( $_REQUEST['_wp_http_referer'] );
-            } elseif ( ! empty( $_SERVER['HTTP_REFERER'] ) ) {
+            } else if ( ! empty( $_SERVER['HTTP_REFERER'] ) ) {
                 return wp_unslash( $_SERVER['HTTP_REFERER'] );
             }
 
@@ -413,7 +413,7 @@
                     $confirmation,
                     $title
                 );
-            } elseif ( 'GET' !== strtoupper( $method ) ) {
+            } else if ( 'GET' !== strtoupper( $method ) ) {
                 return sprintf( '<form action="%s" method="%s"><input type="hidden" name="fs_action" value="%s">%s<a href="#" class="%s" onclick="this.parentNode.submit(); return false;">%s</a></form>',
                     freemius( $module_id )->_get_admin_page_url( $page, $params ),
                     $method,
@@ -685,7 +685,7 @@
         function fs_urlencode_rfc3986( $input ) {
             if ( is_array( $input ) ) {
                 return array_map( 'fs_urlencode_rfc3986', $input );
-            } elseif ( is_scalar( $input ) ) {
+            } else if ( is_scalar( $input ) ) {
                 return str_replace( '+', ' ', str_replace( '%7E', '~', rawurlencode( $input ) ) );
             }
 

@@ -90,7 +90,7 @@
 
                 if (0 < $h1.length) {
                     $tabsWrapper.insertAfter($h1);
-                } elseif (0 < $wrap.length) {
+                } else if (0 < $wrap.length) {
                     $wrap.prepend($tabsWrapper);
                 }
 

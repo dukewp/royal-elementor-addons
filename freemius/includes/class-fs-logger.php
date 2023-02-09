@@ -226,11 +226,11 @@
 			     ! empty( $api_result->error->message )
 			) {
 				$message = $api_result->error->message;
-			} elseif ( is_object( $api_result ) ) {
+			} else if ( is_object( $api_result ) ) {
 				$message = var_export( $api_result, true );
-			} elseif ( is_string( $api_result ) ) {
+			} else if ( is_string( $api_result ) ) {
 				$message = $api_result;
-			} elseif ( empty( $api_result ) ) {
+			} else if ( empty( $api_result ) ) {
 				$message = 'Empty API result.';
 			}
 
@@ -384,7 +384,7 @@ KEY `type` (`type` ASC))" );
 			$request_type = 'call';
 			if ( defined( 'DOING_CRON' ) && DOING_CRON ) {
 				$request_type = 'cron';
-			} elseif ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+			} else if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 				$request_type = 'ajax';
 			}
 

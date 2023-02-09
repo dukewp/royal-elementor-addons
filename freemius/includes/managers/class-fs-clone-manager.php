@@ -156,7 +156,7 @@
                         )
                     ) {
                         $this->hide_clone_admin_notices();
-                    } elseif ( ! Freemius::is_cron() && ! Freemius::is_admin_post() ) {
+                    } else if ( ! Freemius::is_cron() && ! Freemius::is_admin_post() ) {
                         $this->try_resolve_clone_automatically();
                         $this->maybe_show_clone_admin_notice();
 
