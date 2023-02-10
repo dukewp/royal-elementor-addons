@@ -514,6 +514,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 	}
 
 	public function add_section_added_to_cart_popup() {}
+
+	public function add_section_added_to_wishlist_popup() {}
 	
 	public function add_section_style_likes() {}
 	
@@ -5188,6 +5190,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$this->add_section_added_to_cart_popup();
 
+		$this->add_section_added_to_wishlist_popup();
+
 		// Styles =======================
 		// Section: Likes ---------------
 		$this->add_section_style_likes();
@@ -7997,12 +8001,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 	
 			$remove_button_hidden = !in_array( $product->get_id(), $wishlist ) ? 'wpr-button-hidden' : '';
 			$add_button_hidden = in_array( $product->get_id(), $wishlist ) ? 'wpr-button-hidden' : '';
-
-			var_dump(implode( ' ', $wishlist_attributes ));
 		
 			// '. implode( ' ', $wishlist_attributes ) .'
-			echo '<a href="#" class="wishlist-remove '. $remove_button_hidden .'" data-product-id="' . $product->get_id() . ' "'. implode( ' ', $wishlist_attributes ) .' >Remove from Wishlist</a>';
-			echo '<a href="#" class="wishlist-add '. $add_button_hidden .'" data-product-id="' . $product->get_id() . '">Add to Wishlist</a>';
+			echo '<a href="#" class="wishlist-add '. $add_button_hidden .'" data-product-id="' . $product->get_id() . '"'. ' ' . implode( ' ', $wishlist_attributes ) .' >Add to Wishlist</a>';
+			echo '<a href="#" class="wishlist-remove '. $remove_button_hidden .'" data-product-id="' . $product->get_id() . '">Remove from Wishlist</a>';
 
 			echo '</div>';
 		echo '</div>';
