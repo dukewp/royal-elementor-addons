@@ -374,7 +374,21 @@ class Wpr_Woo_Grid extends Widget_Base {
 		];
 	}
 
+	public function add_repeater_args_element_show_added_to_wishlist_popup() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
+		];
+	}
+
 	public function add_repeater_args_element_added_to_cart_animation() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
+		];
+	}
+
+	public function add_repeater_args_element_added_to_wishlist_animation() {
 		return [
 			'type' => Controls_Manager::HIDDEN,
 			'default' => ''
@@ -388,7 +402,21 @@ class Wpr_Woo_Grid extends Widget_Base {
 		];
 	}
 
+	public function add_repeater_element_added_to_wishlist_fade_out_in() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
+		];
+	}
+
 	public function add_repeater_element_added_to_cart_animation_duration() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
+		];
+	}
+
+	public function add_repeater_element_added_to_wishlist_animation_duration() {
 		return [
 			'type' => Controls_Manager::HIDDEN,
 			'default' => ''
@@ -1747,11 +1775,19 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$repeater->add_control( 'element_show_added_tc_popup', $this->add_repeater_args_element_show_added_tc_popup() );
 
+		$repeater->add_control( 'element_show_added_to_wishlist_popup', $this->add_repeater_args_element_show_added_to_wishlist_popup() );
+
 		$repeater->add_control( 'element_added_to_cart_animation', $this->add_repeater_args_element_added_to_cart_animation() );
 
+		$repeater->add_control( 'element_added_to_wishlist_animation', $this->add_repeater_args_element_added_to_wishlist_animation() );
+
 		$repeater->add_control( 'element_added_to_cart_fade_out_in', $this->add_repeater_element_added_to_cart_fade_out_in() );
+
+		$repeater->add_control( 'element_added_to_wishlist_fade_out_in', $this->add_repeater_element_added_to_wishlist_fade_out_in() );
 		
 		$repeater->add_control( 'element_added_to_cart_animation_duration', $this->add_repeater_element_added_to_cart_animation_duration() );
+
+		$repeater->add_control( 'element_added_to_wishlist_animation_duration', $this->add_repeater_element_added_to_wishlist_animation_duration() );
 
 		$repeater->add_control(
 			'element_extra_text_pos',
@@ -7936,6 +7972,13 @@ class Wpr_Woo_Grid extends Widget_Base {
 			$wishlist = array();
 		}
 
+		$wishlist_attributes = [
+			'data-atw-popup="'. $settings['element_show_added_to_wishlist_popup']  .'"',
+			'data-atw-animation="'. $settings['element_added_to_wishlist_animation']  .'"',
+			'data-atw-fade-out-in="'. $settings['element_added_to_wishlist_fade_out_in']  .'"',
+			'data-atw-animation-time="'. $settings['element_added_to_wishlist_animation_duration']  .'"'
+		];
+
 		$button_HTML = '';
 		$page_id = get_queried_object_id();
 
@@ -7954,8 +7997,11 @@ class Wpr_Woo_Grid extends Widget_Base {
 	
 			$remove_button_hidden = !in_array( $product->get_id(), $wishlist ) ? 'wpr-button-hidden' : '';
 			$add_button_hidden = in_array( $product->get_id(), $wishlist ) ? 'wpr-button-hidden' : '';
-	
-			echo '<a href="#" class="wishlist-remove '. $remove_button_hidden .'" data-product-id="' . $product->get_id() . '">Remove from Wishlist</a>';
+
+			var_dump(implode( ' ', $wishlist_attributes ));
+		
+			// '. implode( ' ', $wishlist_attributes ) .'
+			echo '<a href="#" class="wishlist-remove '. $remove_button_hidden .'" data-product-id="' . $product->get_id() . ' "'. implode( ' ', $wishlist_attributes ) .' >Remove from Wishlist</a>';
 			echo '<a href="#" class="wishlist-add '. $add_button_hidden .'" data-product-id="' . $product->get_id() . '">Add to Wishlist</a>';
 
 			echo '</div>';
