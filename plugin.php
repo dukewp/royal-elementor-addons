@@ -287,8 +287,8 @@ class Plugin {
 			Plugin::instance()->get_version()
 		);
 
-		// GOGA - development had enqueue instead of register
-		wp_register_style(
+		// GOGA - development had enqueue instead of register (reason found)
+		wp_enqueue_style(
 			'wpr-text-animations-css',
 			WPR_ADDONS_URL . 'assets/css/lib/animations/text-animations'. $this->script_suffix() .'.css',
 			[],
