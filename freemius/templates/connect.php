@@ -153,6 +153,10 @@
 		 * @author Vova Feldman
 		 * @since 2.3.2
 		 */
+
+	if ( ! did_action( 'elementor/loaded' ) ) {
+		wpr_addons_fail_load();
+	} else {
 		$fs->do_action( 'connect/before', $activation_state );
 	?>
 	<div id="fs_connect"
@@ -480,6 +484,7 @@
 		if ( $is_optin_dialog ) { ?>
 </div>
 <?php
+		}
 	}
 ?>
 <script type="text/javascript">
