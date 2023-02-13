@@ -13955,6 +13955,10 @@ flex-grow: 0; */
     display: none;
 }
 
+.wpr-close-wishlist h2 {
+    margin: 0;
+}
+
 .wpr-wishlist-sidebar.wpr-close-btn-yes .wpr-close-wishlist {
     display: -webkit-box;
     display: -ms-flexbox;
