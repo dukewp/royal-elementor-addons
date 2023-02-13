@@ -1,4 +1,6 @@
 <?php
+return;
+
 	/**
 	 * @package     Freemius
 	 * @copyright   Copyright (c) 2015, Freemius, Inc.
