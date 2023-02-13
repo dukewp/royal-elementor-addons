@@ -19769,17 +19769,19 @@
          * @return string
          */
         static function ajax_url( $wrap_with = "'") {
-            if ( fs_is_network_admin() ) {
-                $param_name = '_fs_network_admin';
-            } else {
-                $param_name = '_fs_blog_admin';
+            if ( get_current_screen()->base !== 'royal-addons_page_wpr-templates-kit' ) {
+                if ( fs_is_network_admin() ) {
+                    $param_name = '_fs_network_admin';
+                } else {
+                    $param_name = '_fs_blog_admin';
+                }
+
+                $url = admin_url( 'admin-ajax.php', 'relative' );
+                $url .= ( false === strpos( $url, '?' ) ) ? '?' : '&';
+                $url .= "{$param_name}=true";
+
+                return "{$wrap_with}{$url}{$wrap_with}";
             }
-
-            $url = admin_url( 'admin-ajax.php', 'relative' );
-            $url .= ( false === strpos( $url, '?' ) ) ? '?' : '&';
-            $url .= "{$param_name}=true";
-
-            return "{$wrap_with}{$url}{$wrap_with}";
         }
 
         /**
