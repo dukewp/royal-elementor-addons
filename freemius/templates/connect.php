@@ -484,7 +484,6 @@
 		if ( $is_optin_dialog ) { ?>
 </div>
 <?php
-		}
 	}
 ?>
 <script type="text/javascript">
@@ -1059,3 +1058,4 @@
 </script>
 <?php
     fs_require_once_template( 'api-connectivity-message-js.php' );
+}
