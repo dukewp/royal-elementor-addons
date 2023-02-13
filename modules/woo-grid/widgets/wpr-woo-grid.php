@@ -8004,7 +8004,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		
 			// '. implode( ' ', $wishlist_attributes ) .'
 			echo '<a href="#" class="wishlist-add '. $add_button_hidden .'" data-product-id="' . $product->get_id() . '"'. ' ' . implode( ' ', $wishlist_attributes ) .' >Add to Wishlist</a>';
-			echo '<a href="#" class="wishlist-remove '. $remove_button_hidden .'" data-product-id="' . $product->get_id() . '">Remove from Wishlist</a>';
+			echo '<a href="#" class="wpr-wishlist-remove '. $remove_button_hidden .'" data-product-id="' . $product->get_id() . '">Remove from Wishlist</a>';
 
 			echo '</div>';
 		echo '</div>';

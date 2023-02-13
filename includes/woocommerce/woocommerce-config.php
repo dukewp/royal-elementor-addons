@@ -49,18 +49,18 @@ class WPR_WooCommerce_Config {
 		// 		$wishlist = array();
 		// 	}
 		// 	echo '<h3>' . __( 'My Wishlist', 'wpr-addons' ) . '</h3>';
-		// 	echo '<div class="wishlist-products">';
+		// 	echo '<div class="wpr-wishlist-products">';
 		// 	foreach ( $wishlist as $product_id ) {
 		// 		$product = wc_get_product( $product_id );
 		// 		var_dump($product);
 		// 		if ( ! $product ) {
 		// 			continue;
 		// 		}
-		// 		echo '<div class="wishlist-product">';
+		// 		echo '<div class="wpr-wishlist-product">';
 		// 		echo '<a href="' . $product->get_permalink() . '">' . $product->get_image() . '</a>';
 		// 		echo '<a href="' . $product->get_permalink() . '">' . $product->get_name() . '</a>';
-		// 		echo '<div class="wishlist-product-price">' . $product->get_price_html() . '</div>';
-		// 		echo '<button class="wishlist-remove" data-product-id="' . $product->get_id() . '">Remove from Wishlist</button>';
+		// 		echo '<div class="wpr-wishlist-product-price">' . $product->get_price_html() . '</div>';
+		// 		echo '<button class="wpr-wishlist-remove" data-product-id="' . $product->get_id() . '">Remove from Wishlist</button>';
 		// 		echo '</div>';
 		// 	}
 		// 	echo '</div>';
@@ -77,17 +77,17 @@ class WPR_WooCommerce_Config {
 		// 		$wishlist = array();
 		// 	}
 		// 	echo '<h3>' . __( 'My Wishlist', 'wpr-addons' ) . '</h3>';
-		// 	echo '<div class="wishlist-products">';
+		// 	echo '<div class="wpr-wishlist-products">';
 		// 	foreach ( $wishlist as $product_id ) {
 		// 		$product = wc_get_product( $product_id );
 		// 		if ( ! $product ) {
 		// 			continue;
 		// 		}
-		// 		echo '<div class="wishlist-product">';
+		// 		echo '<div class="wpr-wishlist-product">';
 		// 			echo '<a href="' . $product->get_permalink() . '">' . $product->get_image() . '</a>';
 		// 			echo '<a href="' . $product->get_permalink() . '">' . $product->get_name() . '</a>';
-		// 			echo '<div class="wishlist-product-price">' . $product->get_price_html() . '</div>';
-		// 			echo '<button class="wishlist-remove" data-product-id="' . $product->get_id() . '">Remove from Wishlist</button>';
+		// 			echo '<div class="wpr-wishlist-product-price">' . $product->get_price_html() . '</div>';
+		// 			echo '<button class="wpr-wishlist-remove" data-product-id="' . $product->get_id() . '">Remove from Wishlist</button>';
 		// 		echo '</div>';
 		// 	}
 		// 	echo '</div>';
