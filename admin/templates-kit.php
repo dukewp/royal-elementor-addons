@@ -165,7 +165,7 @@ function wpr_addons_templates_kit_page() {
         <img src="<?php echo esc_url(WPR_ADDONS_ASSETS_URL .'img/not-found.png'); ?>">
         <h1><?php esc_html_e('No Search Results Found.', 'wpr-addons'); ?></h1>
         <p><?php esc_html_e('Cant find a Templates Kit you are looking for?', 'wpr-addons'); ?></p>
-        <a href="https://royal-elementor-addons.com/library/request-new-kit-red.html" target="_blank"><?php esc_html_e('Request Templates Kit.', 'wpr-addons'); ?></a>
+        <a href="https://royal-elementor-addons.com/library/request-new-kit-red.html" target="_blank"><?php esc_html_e('Request Templates Kit', 'wpr-addons'); ?></a>
     </div>
 
 </div>
@@ -774,7 +774,7 @@ function wpr_search_query_results() {
 }
 
 /**
-** Search Query Results
+** Imported Kits
 */
 function wpr_track_imported_kit( $kit ) {
     // Freemius OptIn

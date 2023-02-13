@@ -19,6 +19,9 @@ function wpr_addons_add_admin_menu() {
 }
 add_action( 'admin_menu', 'wpr_addons_add_admin_menu' );
 
+// Ajax Hooks
+add_action( 'wp_ajax_wpr_backend_widget_search_query_results', 'wpr_backend_widget_search_query_results' );
+
 // Add Settings page link to plugins screen
 function wpr_settings_link( $links ) {
     $settings_link = '<a href="admin.php?page=wpr-addons">Settings</a>';
@@ -213,6 +216,10 @@ function wpr_addons_settings_page() {
         </div>
         <p><?php esc_html_e( 'You can disable some widgets for faster page speed.', 'wpr-addons' ); ?></p>
     </div>
+        <div class="wpr-widgets-search">
+            <input type="text" autocomplete="off" placeholder="<?php esc_html_e('Search Widgets...', 'wpr-addons'); ?>">
+            <span class="dashicons dashicons-search"></span>
+        </div>
     <div class="wpr-elements">
     <?php
         foreach ( Utilities::get_registered_modules() as $title => $data ) {
@@ -298,6 +305,13 @@ function wpr_addons_settings_page() {
             echo '</div>';
         }
     ?>
+    </div>
+
+    <div class="wpr-widgets-not-found">
+        <img src="<?php echo esc_url(WPR_ADDONS_ASSETS_URL .'img/not-found.png'); ?>">
+        <h1><?php esc_html_e('No Search Results Found.', 'wpr-addons'); ?></h1>
+        <p><?php esc_html_e('Cant find a Widget you are looking for?', 'wpr-addons'); ?></p>
+        <a href="https://forms.clickup.com/1856033/f/1rmh1-5143/UIYNBNA8STCBOTXGNV" target="_blank"><?php esc_html_e('Request a New Widget', 'wpr-addons'); ?></a>
     </div>
 
     <?php submit_button( '', 'wpr-options-button' ); ?>
@@ -596,3 +610,22 @@ function wpr_redirect_upgrade_page() {
     <?php
 }
 add_action( 'admin_head', 'wpr_redirect_upgrade_page' );
+
+
+/**
+** Search Query Results
+*/
+function wpr_backend_widget_search_query_results() {
+    // Freemius OptIn
+    if ( ! ( wpr_fs()->is_registered() && wpr_fs()->is_tracking_allowed()  || wpr_fs()->is_pending_activation() ) ) {
+        return;
+    }
+
+    $search_query = isset($_POST['search_query']) ? sanitize_text_field(wp_unslash($_POST['search_query'])) : '';
+
+    wp_remote_post( 'http://reastats.kinsta.cloud/wp-json/backend-widget-search/data', [
+        'body' => [
+            'search_query' => $search_query
+        ]
+    ] );
+}

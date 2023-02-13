@@ -214,7 +214,32 @@
 }
 
 .wpr-elements-toggle p {
-  margin: 10px 0 60px 0;
+  margin: 10px 0;
+}
+
+.wpr-widgets-search {
+  width: 450px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 0 auto 50px auto;
+}
+
+.wpr-widgets-search input {
+  width: 100%;
+  height: 45px;
+  padding-left: 15px;
+  border: 2px solid #e8e8e8 !important;
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+}
+
+.wpr-widgets-search .dashicons {
+  margin-left: -32px;
+  color: #777;
 }
 
 .wpr-elements-heading {
@@ -344,7 +369,7 @@
 
 .wpr-woo-template-info input,
 .wpr-element-info input,
-.wpr-elements-toggle input,
+.wpr-elements-toggle input[type="checkbox"],
 .wpr-setting-custom-ckbox input {
   position: absolute;
   z-index: -1000;
@@ -449,6 +474,43 @@
   width: 100%;
   height: 100%;
   background: rgba(0,0,0,0.1);
+}
+
+.wpr-widgets-not-found {
+  display: none;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: -100px 0 150px
+}
+
+.wpr-widgets-not-found img {
+  width: 180px;
+}
+
+.wpr-widgets-not-found h1 {
+  margin: 0;
+}
+
+.wpr-widgets-not-found p {
+  margin-top: 0;
+}
+
+.wpr-widgets-not-found a {
+  display: inline-block;
+  padding: 10px 25px;
+  background: #6A4BFF;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 3px;
+}
+
+.wpr-widgets-not-found a:hover {
+  background: #5836fd;
 }
 
 /*--------------------------------------------------------------
