@@ -1536,6 +1536,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 						'price',
 						'rating',
 						'add-to-cart',
+						'wishlist-button'
 					],
 				],
 				'separator' => 'after'
@@ -1810,6 +1811,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 						'price',
 						'rating',
 						'add-to-cart',
+						'wishlist-button',
 						'excerpt'
 					],
 				]
@@ -1830,6 +1832,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 						'price',
 						'rating',
 						'add-to-cart',
+						'wishlist-button',
 						'excerpt'
 					],
 					'element_extra_text_pos!' => 'none'
@@ -1857,7 +1860,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 						'status',
 						'price',
 						'rating',
-						'excerpt'
+						'excerpt',
+						'wishlist-button'
 					],
 				]
 			]
@@ -1883,9 +1887,70 @@ class Wpr_Woo_Grid extends Widget_Base {
 						'status',
 						'price',
 						'rating',
-						'excerpt'
+						'wishlist-button'
 					],
 					'element_extra_icon_pos!' => 'none'
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'show_icon',
+			[
+				'label' => esc_html__( 'Show Icon', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'separator' => 'before',
+				'condition' => [
+					'element_select' => [
+						'wishlist-button'
+					]
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'show_text',
+			[
+				'label' => esc_html__( 'Show Text', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'condition' => [
+					'element_select' => [
+						'wishlist-button'
+					]
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'add_to_wishlist_text',
+			[
+				'label' => esc_html__( 'Add Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => '',
+				'condition' => [
+					'show_text' => 'yes',
+					'element_select' => [
+						'wishlist-button'
+					]
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'remove_from_wishlist_text',
+			[
+				'label' => esc_html__( 'Remove Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => '',
+				'condition' => [
+					'show_text' => 'yes',
+					'element_select' => [
+						'wishlist-button'
+					]
 				]
 			]
 		);
@@ -5190,6 +5255,457 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$this->add_section_added_to_cart_popup();
 
+		// Tab: Content ==============
+		// Section: Settings ------------
+		$this->start_controls_section(
+			'section_wishlist_button_settings',
+			[
+				'label' => esc_html__( 'Settings', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$this->add_control(
+			'show_text',
+			[
+				'label' => esc_html__( 'Show Text', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes'
+			]
+		);
+
+		$this->add_control(
+			'add_to_wishlist_text',
+			[
+				'label' => esc_html__( 'Add Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => esc_html__('Add to Wishlist'),
+				'condition' => [
+					'show_text' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control(
+			'remove_from_wishlist_text',
+			[
+				'label' => esc_html__( 'Remove Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => esc_html__('Remove from Wishlist'),
+				'condition' => [
+					'show_text' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control(
+			'show_icon',
+			[
+				'label' => esc_html__( 'Show Icon', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes'
+			]
+		);
+
+		$this->end_controls_section();
+
+		// Tab: Style ==============
+		// Section: Button Styles ------------
+		$this->start_controls_section(
+			'section_wishlist_button_styles',
+			[
+				'label' => esc_html__( 'Add to Wishlist', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->start_controls_tabs( 'tabs_btn_styles' );
+
+		$this->start_controls_tab(
+			'tab_btn_normal',
+			[
+				'label' => esc_html__( 'Normal', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'btn_text_color',
+			[
+				'label'  => esc_html__( 'Text Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFF',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wishlist-add span' => 'color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'btn_icon_color',
+			[
+				'label'  => esc_html__( 'Icon Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFF',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wishlist-add i' => 'color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'btn_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605be5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wishlist-add' => 'border-color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_control(
+			'btn_bg_color',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605be5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wishlist-add' => 'background-color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'btn_box_shadow',
+				'selector' => '{{WRAPPER}} .wpr-wishlist-add, {{WRAPPER}} .wpr-wishlist-remove',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'btn_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-wishlist-add span, {{WRAPPER}} .wpr-wishlist-add i, .wpr-wishlist-remove span, {{WRAPPER}} .wpr-wishlist-remove i',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '16',
+							'unit' => 'px',
+						],
+					],
+				]
+			]
+		);
+
+		$this->add_control(
+			'btn_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.5,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wishlist-add' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-wishlist-add span' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-wishlist-add i' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-wishlist-remove' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-wishlist-remove span' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-wishlist-remove i' => 'transition-duration: {{VALUE}}s'
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_btn_hover',
+			[
+				'label' => esc_html__( 'Hover', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'btn_hover_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFF',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wishlist-add:hover i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wishlist-add:hover span' => 'color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_control(
+			'btn_hover_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605be5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wishlist-add:hover' => 'border-color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_control(
+			'btn_hover_bg_color',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605be5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wishlist-add:hover' => 'background-color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'btn_box_shadow_hr',
+				'selector' => '{{WRAPPER}} .wpr-wishlist-add:hover, WRAPPER}} .wpr-wishlist-remove:hover',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_responsive_control(
+			'button_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 7,
+					'right' => 25,
+					'bottom' => 7,
+					'left' => 25,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wishlist-add' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-wishlist-remove' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'button_margin',
+			[
+				'label' => esc_html__( 'Margin', 'wpr-addons' ), 
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 5,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					// '{{WRAPPER}} .wpr-wishlist-add' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					// '{{WRAPPER}} .wpr-wishlist-remove' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-item-wishlist-button .inner-block' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
+			]
+		);
+
+		$this->add_control(
+			'button_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wishlist-add' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .wpr-wishlist-remove' => 'border-style: {{VALUE}};'
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'button_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 2,
+					'right' => 2,
+					'bottom' => 2,
+					'left' => 2,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wishlist-add' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-wishlist-remove' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'button_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'button_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 4,
+					'right' => 4,
+					'bottom' => 4,
+					'left' => 4,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wishlist-add' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-wishlist-remove' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
+			]
+		);
+
+		$this->end_controls_section();
+
+		// Tab: Style ==============
+		// Section: Remove Button Colors ------------
+		$this->start_controls_section(
+			'section_wishlist_remove_btn_colors',
+			[
+				'label' => esc_html__( 'Remove from Wishlist', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->start_controls_tabs( 'tabs_remove_btn_styles' );
+
+		$this->start_controls_tab(
+			'tab_remove_btn_normal',
+			[
+				'label' => esc_html__( 'Normal', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'remove_btn_text_color',
+			[
+				'label'  => esc_html__( 'Text Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFF',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wishlist-remove span' => 'color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'remove_btn_icon_color',
+			[
+				'label'  => esc_html__( 'Icon Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFF',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wishlist-remove i' => 'color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_control(
+			'remove_btn_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FF4F40',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wishlist-remove' => 'border-color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_control(
+			'remove_btn_bg_color',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FF4F40',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wishlist-remove' => 'background-color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_remove_btn_hover',
+			[
+				'label' => esc_html__( 'Hover', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'remove_btn_hover_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFF',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wishlist-remove:hover i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wishlist-remove:hover span' => 'color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_control(
+			'remove_btn_hover_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FF4F40',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wishlist-remove:hover' => 'border-color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_control(
+			'remove_btn_hover_bg_color',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FF4F40',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wishlist-remove:hover' => 'background-color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->end_controls_section();
+
 		$this->add_section_added_to_wishlist_popup();
 
 		// Styles =======================
@@ -7985,15 +8501,22 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$button_HTML = '';
 		$page_id = get_queried_object_id();
+		
+		$add_to_wishlist_content = '';
+		$remove_from_wishlist_content = '';
+		
 
-		// Icon: Before
-		if ( 'before' === $settings['element_extra_icon_pos'] ) {
-			$button_HTML .= '<i class="wpr-grid-extra-icon-left '. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
+		if ( 'yes' === $settings['show_icon'] ) {
+			$add_to_wishlist_content .= '<i class="far fa-heart"></i>';
+			$remove_from_wishlist_content .= '<i class="fas fa-heart"></i>';
 		}
 
-		// Icon: After
-		if ( 'after' === $settings['element_extra_icon_pos'] ) {
-			$button_HTML .= '<i class="wpr-grid-extra-icon-right '. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
+		if ( 'yes' === $settings['show_text'] && '' !== $settings['add_to_wishlist_text'] ) {
+			$add_to_wishlist_content .= ' <span>'. esc_html__($settings['add_to_wishlist_text']) .'</span>';
+		}
+
+		if ( 'yes' === $settings['show_text'] && '' !== $settings['remove_from_wishlist_text'] ) {
+			$remove_from_wishlist_content .= ' <span>'. esc_html__($settings['remove_from_wishlist_text']) .'</span>';
 		}
 
 		echo '<div class="'. esc_attr($class) .'">';
@@ -8003,8 +8526,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 			$add_button_hidden = in_array( $product->get_id(), $wishlist ) ? 'wpr-button-hidden' : '';
 		
 			// '. implode( ' ', $wishlist_attributes ) .'
-			echo '<a href="#" class="wishlist-add '. $add_button_hidden .'" data-product-id="' . $product->get_id() . '"'. ' ' . implode( ' ', $wishlist_attributes ) .' >Add to Wishlist</a>';
-			echo '<a href="#" class="wpr-wishlist-remove '. $remove_button_hidden .'" data-product-id="' . $product->get_id() . '">Remove from Wishlist</a>';
+			echo '<button class="wpr-wishlist-add '. $add_button_hidden .'" data-product-id="' . $product->get_id() . '"'. ' ' . implode( ' ', $wishlist_attributes ) .' >'. $add_to_wishlist_content .'</button>';
+			echo '<button class="wpr-wishlist-remove '. $remove_button_hidden .'" data-product-id="' . $product->get_id() . '">'. $remove_from_wishlist_content .'</button>';
 
 			echo '</div>';
 		echo '</div>';

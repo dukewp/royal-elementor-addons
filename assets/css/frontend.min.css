@@ -13885,19 +13885,34 @@ flex-grow: 0; */
 }
 
 /* Wishlist Button */
+
+.wpr-wishlist-add,
+.wpr-wishlist-remove {
+    display: inline-block;
+}
+
 .wpr-button-hidden {
     display: none;
 }
 
 /* Wishlist */
 
-.wpr-wishlist-products {
+.wpr-wishlist .wpr-wishlist-products {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
 }
 
 /* Wishlist Count */
+
+.wpr-wishlist-empty {
+    margin: 0;
+    text-align: center;
+}
+
+.wpr-wishlist-empty-hidden {
+    display: none;
+}
 
 .wpr-wishlist-wrap {
     position: relative;
@@ -14039,7 +14054,7 @@ flex-grow: 0; */
     padding: 0;
 }
 
-.wpr-wishlist-product {
+.wpr-wishlist .wpr-wishlist-product {
     position: relative;
     display: -ms-grid;
     display: grid;
@@ -14047,6 +14062,10 @@ flex-grow: 0; */
     grid-template-columns: 28% auto;
     width: 100%;
     text-align: left;
+}
+
+.wpr-wishlist .wpr-wishlist-product:last-of-type {
+    margin-bottom: 0 !important;
 }
 
 .wpr-wishlist-wrap .wpr-wishlist-remove {
@@ -14057,6 +14076,7 @@ flex-grow: 0; */
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .wpr-wishlist-wrap .wpr-wishlist-remove:before {
@@ -15848,6 +15868,33 @@ dl.variation dd {
 .wpr-my-account-tab table.shop_table,
 .wpr-my-account-tab .woocommerce-order-downloads {
     margin: 0;
+}
+
+.elementor-widget-wpr-my-account-pro .wpr-wishlist-products td,
+.elementor-widget-wpr-my-account-pro .wpr-wishlist-products th {
+    vertical-align: middle;
+}
+
+.elementor-widget-wpr-my-account-pro .wpr-wishlist-remove {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.elementor-widget-wpr-my-account-pro .wpr-wishlist-remove::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 600 !important;
+    content: '\f00d';
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    text-indent: 0;
 }
 
 @media screen and (max-width: 867px) {

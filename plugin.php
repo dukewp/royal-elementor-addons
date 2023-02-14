@@ -154,8 +154,11 @@ class Plugin {
 		if ( class_exists('WooCommerce') && 'on' === get_option('wpr_override_woo_templates', 'on') ) {
 			require WPR_ADDONS_PATH . 'includes/woocommerce/woocommerce-config.php';
 
-			// Plugin Updaate Notice
+			// Add Remove From Wishlist
 			require WPR_ADDONS_PATH . 'classes/woocommerce/wpr-add-remove-from-wishlist.php';
+
+			// Add Remove From Wishlist
+			require WPR_ADDONS_PATH . 'classes/woocommerce/wpr-update-mini-wishlist.php';
 		}
 	}
 
