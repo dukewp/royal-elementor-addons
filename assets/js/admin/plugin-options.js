@@ -670,32 +670,30 @@ jQuery(document).ready(function( $ ) {
 
 		searchTimeout = setTimeout(function() {
 			searchTimeout = null;
+			let visibleElements = 'none';
 			
 			// Reset
-			$('.wpr-elements-new').remove();
 			$('.wpr-widgets-not-found').hide();
 			$('.submit').show();
 
-			if ( !$('.wpr-elements-new').length ) {
-				$('.wpr-widgets-search').after('<div class="wpr-elements wpr-elements-new"></div>');
-			}
-
 			if ( '' !== val ) {
-				$('.wpr-elements, .wpr-elements-heading').not('.wpr-elements-new').hide();
+				$('.wpr-elements, .wpr-element, .wpr-elements-heading').hide();
+				$('.wpr-widgets-not-found').hide();
 			} else {
-				$('.wpr-elements, .wpr-elements-heading').not('.wpr-elements-new').show();
+				$('.wpr-elements, .wpr-element, .wpr-elements-heading').show();
 			}
 
 			$('.wpr-element').each(function(){
-				let title = $(this).find('h3').text().toLowerCase(),
-					element = $(this).clone();
+				let title = $(this).find('h3').text().toLowerCase();
 
 				if ( -1 !== title.indexOf(val) ) {
-					$('.wpr-elements-new').append(element)
+					$(this).show();
+					$(this).parent().show();
+					visibleElements = 'visible';
 				}
 			});
 
-			if ( !$('.wpr-elements-new').children().length ) {
+			if ( 'none' === visibleElements ) {
 				$('.wpr-widgets-not-found').css('display', 'flex');
 				$('.submit').hide();
 			}
