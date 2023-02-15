@@ -158,6 +158,9 @@ class Plugin {
 			require WPR_ADDONS_PATH . 'classes/woocommerce/wpr-add-remove-from-wishlist.php';
 
 			// Add Remove From Wishlist
+			require WPR_ADDONS_PATH . 'classes/woocommerce/wpr-add-remove-from-compare.php';
+
+			// Add Remove From Wishlist
 			require WPR_ADDONS_PATH . 'classes/woocommerce/wpr-update-mini-wishlist.php';
 		}
 	}
