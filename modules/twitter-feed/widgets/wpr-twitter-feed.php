@@ -1834,7 +1834,6 @@ class Wpr_Twitter_Feed extends Widget_Base {
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'twitter-feed', [
-			'Unlimited Number of Profiles',
 			'Unlimited Number of Posts'
 		] );
 
@@ -4830,9 +4829,9 @@ class Wpr_Twitter_Feed extends Widget_Base {
 							<p class="wpr-tf-header-user-name"><?php echo $items_array[0][0]['user']['name'] ?></p>
 							<p class="wpr-tf-header-user-acc-name"><a href="<?php echo $items_array[0][0]['user']['screen_name'] ?>" target="_blank"><?php echo '@'. $items_array[0][0]['user']['screen_name'] ?></a></p>
 						</div>
-						<span class=""><a href='https://twitter.com/<?php echo $items_array[0][0]['user']['screen_name'] ?>' target="_blank"><span><?php echo $this->format_numbers($items_array[0][0]['user']['statuses_count']) ?></span><span> Tweets</span></a></span>
-						<span class=""><a href='https://twitter.com/<?php echo $items_array[0][0]['user']['screen_name'] ?>/following' target="_blank"><span><?php echo $this->format_numbers($items_array[0][0]['user']['friends_count']) ?></span><span> Following</span></a></span>
-						<span class=""><a href='https://twitter.com/<?php echo $items_array[0][0]['user']['screen_name'] ?>/followers' target="_blank"><span><?php echo $this->format_numbers($items_array[0][0]['user']['followers_count']) ?></span> <span>Followers</span></a></span>
+						<span class=""><a href='https://twitter.com/<?php echo $items_array[0][0]['user']['screen_name'] ?>' target="_blank"><span><?php echo $this->format_numbers($items_array[0][0]['user']['statuses_count']) ?></span><span><?php esc_html__(' Tweets') ?></span></a></span>
+						<span class=""><a href='https://twitter.com/<?php echo $items_array[0][0]['user']['screen_name'] ?>/following' target="_blank"><span><?php echo $this->format_numbers($items_array[0][0]['user']['friends_count']) ?></span><span><?php esc_html__(' Following') ?></span></a></span>
+						<span class=""><a href='https://twitter.com/<?php echo $items_array[0][0]['user']['screen_name'] ?>/followers' target="_blank"><span><?php echo $this->format_numbers($items_array[0][0]['user']['followers_count']) ?></span><span><?php esc_html__(' Followers') ?></span></a></span>
 					</div>
 				</div>
 	
