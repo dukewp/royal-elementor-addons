@@ -734,18 +734,108 @@ class WPR_Templates_Data {
 				'preview' => ['home','about-us','services','pricing','faq','contact'],
 				'price' => $is_pro_active ? 'free' : 'pro',
 			],
+			'cybersecurity-v1' => [
+				'name' => 'Cybersecurity',
+				'pages' => ['home','about','services','pricing','contact'],
+				'preview' => ['home','about-us','services','pricing','contact'],
+				'price' => $is_pro_active ? 'free' : 'pro',
+			],
+			'medical-v1' => [
+				'name' => 'Medical',
+				'pages' => ['home','about','services','doctors','contact'],
+				'preview' => ['home','about-us','service','doctors','contact'],
+				'price' => $is_pro_active ? 'free' : 'pro',
+			],
+			'cryptocurrency-v1' => [
+				'name' => 'Cryptocurrency',
+				'pages' => ['home','about','services','token','pricing','contact'],
+				'preview' => ['home','about-us','services','token','pricing','contact'],
+				'price' => $is_pro_active ? 'free' : 'pro',
+			],
+			'travel-agency-v1' => [
+				'name' => 'Travel agency',
+				'pages' => ['home','gallery','services','reviews','about','contact'],
+				'preview' => ['home','gallery','services','reviews','about','contact'],
+				'price' => $is_pro_active ? 'free' : 'pro',
+			],
+			// 'ittech-v2' => [ // Problem with links
+			// 	'name' => 'IT Tech',
+			// 	'pages' => ['home','about','services','pricing','faq','contact'],
+			// 	'preview' => ['home','about-us','services','pricing','faq','contact'],
+			// 	'price' => $is_pro_active ? 'free' : 'pro',
+			// ],
+			'nft-portfolio-v1' => [
+				'name' => 'NFT',
+				'pages' => ['home','about','roadmap','team','nft','faq','comingsoon'],
+				'preview' => ['home','about','roadmap','team','nft','faq','coming-soon'],
+				'price' => $is_pro_active ? 'free' : 'free',
+			],
+			'construction-v1' => [
+				'name' => 'Construction',
+				'pages' => ['home','about','services','projects','pricing','contact','faq'],
+				'preview' => ['home','about','services','projects','pricing','contact','faq'],
+				'price' => $is_pro_active ? 'free' : 'free',
+			],
+			'photographer-v1' => [
+				'name' => 'Photographer Dark',
+				'pages' => ['home','about','services','portfolio','contact'],
+				'preview' => ['home','about','services','portfolio','contact'],
+				'price' => $is_pro_active ? 'free' : 'free',
+			],
+			'photographer-v2' => [
+				'name' => 'Photographer Light',
+				'pages' => ['home','about','services','portfolio','contact'],
+				'preview' => ['home','about','services','portfolio','contact'],
+				'price' => $is_pro_active ? 'free' : 'free',
+			],
+			'hotel-v1' => [
+				'name' => 'Hotel',
+				'pages' => ['home','dining','rooms','services','history','gallery','contact'],
+				'preview' => ['home','dining','rooms','services','history','gallery','contact'],
+				'price' => $is_pro_active ? 'free' : 'free',
+			],
+			'digitalagency-v2' => [
+				'name' => 'Digital Agency',
+				'pages' => ['home','about','services','contact'],
+				'preview' => ['home','about','services','contact'],
+				'price' => $is_pro_active ? 'free' : 'free',
+			],
+			'fitness-gym-v1' => [
+				'name' => 'Fitness Gym',
+				'pages' => ['home','about','gallery','classes','pricing','gallery','review','trainers','contact','comingsoon'],
+				'preview' => ['home','about','gallery','classes','pricing','gallery','review','trainers','contact','coming-soon'],
+				'price' => $is_pro_active ? 'free' : 'free',
+			],
+			'portfolio-v1' => [
+				'name' => 'Portfolio/CV',
+				'pages' => ['home','about','portfolio','contact'],
+				'preview' => ['home','about','portfolio','contact'],
+				'price' => $is_pro_active ? 'free' : 'free',
+			],
+			'pizza-v1' => [
+				'name' => 'Pizza Restaurant',
+				'pages' => ['home','menu','about','offer','gallery','contact'],
+				'preview' => ['home','menu','about','offer','gallery','contact'],
+				'price' => $is_pro_active ? 'free' : 'free',
+			],
+			'charity-v1' => [
+				'name' => 'Charity',
+				'pages' => ['home','contact','whatwedo','whoweare','partners',],
+				'preview' => ['home','contact','what-we-do','who-wea-re','our-partners',],
+				'price' => $is_pro_active ? 'free' : 'free',
+			],
+			'carwash-v1' => [
+				'name' => 'Carwash',
+				'pages' => ['home','about','services','contact'],
+				'preview' => ['home','about','services','contact'],
+				'price' => $is_pro_active ? 'free' : 'free',
+			],
 			'nature-v1' => [
 				'name' => 'Nature',
 				'pages' => ['home','about','services','projects','contact'],
-				'preview' => ['home','about-us','services','projects','contact'],
+				'preview' => ['home','about','services','projects','contact'],
 				'price' => $is_pro_active ? 'free' : 'free',
 			],
-			// 'fashion-v1' => [
-			// 	'name' => 'Fashion Shop',
-			// 	'pages' => ['home','shop-v1','shop-v2','about','faq','contact'],
-			// 	'preview' => ['home','shop-fashion-v1','shop-v2','about','faq','contact'],
-			// 	'price' => $is_pro_active ? 'free' : 'pro'
-			// ]
 		];
 	}
 
