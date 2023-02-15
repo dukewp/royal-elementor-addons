@@ -52,7 +52,19 @@ class Wpr_Twitter_Feed extends Widget_Base {
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
 	
-	
+	public function add_control_number_of_posts() {
+		$this->add_control(
+			'number_of_posts',
+			[
+				'label' => esc_html__( 'Items Per Page', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 6,
+				'min' => 0,
+				'max' => 6
+			]
+		);
+	}
+
 	public function add_control_stack_twitter_feed_slider_nav_position() {
 		$this->add_control(
 			'twitter_feed_slider_nav_position',
@@ -695,16 +707,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
             ]
         );
 
-		$this->add_control(
-			'number_of_posts',
-			[
-				'label' => esc_html__( 'Items Per Page', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 6,
-				'min' => 0,
-				'max' => 6
-			]
-		);
+		$this->add_control_number_of_posts();
 
 		if ( Utilities::is_new_free_user() ) {
 			$this->add_control(
