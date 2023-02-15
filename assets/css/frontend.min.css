@@ -7710,6 +7710,11 @@ a.wpr-ajax-img-wrap {
     transition: all 200ms;
 }
 
+.wpr-search-input-hidden {
+    opacity: 0;
+    width: 0;
+}
+
 .wpr-search-form-disable-submit-btn-yes .wpr-search-form-submit {
     pointer-events: none;
     cursor: default;
