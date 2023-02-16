@@ -654,7 +654,64 @@ jQuery(document).ready(function( $ ) {
 
 
 	/*
-	** Filters -------------------------
+	** Elements Search --------------------------
+	*/
+	var searchTimeout = null;  
+	$('.wpr-widgets-search').find('input').keyup(function(e) {
+		if ( e.which === 13 ) {
+			return false;
+		}
+
+		var val = $(this).val().toLowerCase();
+
+		if (searchTimeout != null) {
+			clearTimeout(searchTimeout);
+		}
+
+		searchTimeout = setTimeout(function() {
+			searchTimeout = null;
+			let visibleElements = 'none';
+			
+			// Reset
+			$('.wpr-widgets-not-found').hide();
+			$('.submit').show();
+
+			if ( '' !== val ) {
+				$('.wpr-elements, .wpr-element, .wpr-elements-heading').hide();
+				$('.wpr-widgets-not-found').hide();
+			} else {
+				$('.wpr-elements, .wpr-element, .wpr-elements-heading').show();
+			}
+
+			$('.wpr-element').each(function(){
+				let title = $(this).find('h3').text().toLowerCase();
+
+				if ( -1 !== title.indexOf(val) ) {
+					$(this).show();
+					$(this).parent().show();
+					visibleElements = 'visible';
+				}
+			});
+
+			if ( 'none' === visibleElements ) {
+				$('.wpr-widgets-not-found').css('display', 'flex');
+				$('.submit').hide();
+			}
+
+			$.ajax({
+				type: 'POST',
+				url: ajaxurl,
+				data: {
+					action: 'wpr_backend_widget_search_query_results',
+					search_query: val
+				},
+				success: function( response ) {}
+			});
+		}, 1000);  
+	});
+
+	/*
+	** Filters -----------------------------------
 	*/
 	$( '.template-filters ul li span' ).on( 'click', function() {
 		var filter = $(this).parent();
@@ -689,7 +746,7 @@ jQuery(document).ready(function( $ ) {
 
 
 	/*
-	** Settings Tab -------------------------
+	** Settings Tab ------------------------------
 	*/
 
 	// Lightbox Settings
@@ -712,7 +769,7 @@ jQuery(document).ready(function( $ ) {
 
 
 	/*
-	** Image Upload Option -------------------------
+	** Image Upload Option -----------------------
 	*/
 	$('body').on( 'click', '.wpr-setting-custom-img-upload button', function(e){
 		e.preventDefault();
@@ -757,5 +814,80 @@ jQuery(document).ready(function( $ ) {
 
 	//TODO: Remove this - only for development
 	// $('.nav-tab-wrapper').after( '<p>'+ $('.nav-tab-wrapper').next('input').val() +'</p>' );
+
+
+	/*
+	** Free vs Pro Options Dropdown ---------------
+	*/
+	$('.wpr-pro-widgets > ul > li > span').on('click', function() {
+		let options = $(this).parent('li').find('ul'),
+			display = options.css('display');
+
+		// Reset
+		$('.wpr-pro-widgets ul ul').slideUp();
+
+		// Show
+		if ( 'none' === display ) {
+			options.slideDown();
+		} else {
+			options.slideUp();
+		}
+	});
+
+	/*
+	** Free vs Pro Search -------------------------
+	*/
+	var searchTimeoutFP = null;  
+	$('.wpr-free-pro-search').find('input').keyup(function(e) {
+		if ( e.which === 13 ) {
+			return false;
+		}
+
+		var val = $(this).val().toLowerCase();
+
+		if (searchTimeoutFP != null) {
+			clearTimeout(searchTimeoutFP);
+		}
+
+		searchTimeoutFP = setTimeout(function() {
+			searchTimeoutFP = null;
+			let visibleElements = 'none';
+
+			// Reset
+			$('.wpr-feature-not-found').hide();
+			$('.wpr-free-pro-upgrade.last').show();
+
+			if ( '' !== val ) {
+				$('.wpr-free-vs-pro > div > ul > li').hide();
+			} else {
+				$('.wpr-free-vs-pro > div > ul > li').show();
+			}
+
+			$('.wpr-free-vs-pro > div > ul > li').each(function(){
+				let title = $(this).find('span').text().toLowerCase();
+
+				if ( -1 !== title.indexOf(val) ) {
+					$(this).show();
+					$(this).parent().show();
+					visibleElements = 'visible';
+				}
+			});
+
+			if ( 'none' === visibleElements ) {
+				$('.wpr-feature-not-found').css('display', 'flex');
+				$('.wpr-free-pro-upgrade.last').hide();
+			}
+
+			$.ajax({
+				type: 'POST',
+				url: ajaxurl,
+				data: {
+					action: 'wpr_backend_freepro_search_query_results',
+					search_query: val
+				},
+				success: function( response ) {}
+			});
+		}, 1000);  
+	});
 
 }); // end dom ready

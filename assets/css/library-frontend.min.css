@@ -1,6 +1,11 @@
 /*--------------------------------------------------------------
 == Library - Predefined Styles
 --------------------------------------------------------------*/
+.wpr-tplib-popup-overlay * {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 #wpr-library-btn {
     display: -webkit-inline-box;
     display: -ms-inline-flexbox;
@@ -231,6 +236,7 @@
     border: 0;
     border-bottom: 1px solid #efefef;
     font-size: 14px;
+    line-height: 23px;
 }
 
 .wpr-tplib-sidebar .wpr-tplib-search input::-webkit-input-placeholder {
@@ -360,6 +366,7 @@
         flex-wrap: wrap;
     list-style: none;
     padding-left: 0;
+    margin: 0;
 }
 
 .wpr-tplib-filters-list ul li,
