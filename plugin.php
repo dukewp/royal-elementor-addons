@@ -825,6 +825,12 @@ class Plugin {
 					'categories' => '["'. $category .'"]',
 				],
 				[
+					'name' => 'wpr-compare-count',
+					'title' => __('Compare Count', 'wpr-addons'),
+					'icon' => 'wpr-icon eicon-heart',
+					'categories' => '["'. $category .'"]',
+				],
+				[
 					'name' => 'wpr-compare',
 					'title' => __('Compare', 'wpr-addons'),
 					'icon' => 'wpr-icon eicon-heart',
