@@ -1470,7 +1470,7 @@ class Wpr_Product_Media extends Widget_Base {
 		return json_encode( $lightbox_settings );	
 	}
 
-	public function my_remove_lightbox() {	 	 
+	public function wpr_remove_woo_default_lightbox() {	 	 
 	   remove_theme_support( 'wc-product-gallery-lightbox' );	 	 
 	}
 	
@@ -1490,7 +1490,7 @@ class Wpr_Product_Media extends Widget_Base {
 		$post = get_post( $product->get_id() );
 		$gallery_images = $product->get_gallery_image_ids();
 		
-		add_action( 'wp', [$this, 'my_remove_lightbox'], 99 );
+		add_action( 'wp', [$this, 'wpr_remove_woo_default_lightbox'], 99 );
 
 		$this->add_render_attribute(
 			'thumbnails_attributes',
