@@ -262,6 +262,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'rating' => esc_html__( 'Rating', 'wpr-addons' ),
 			'add-to-cart' => esc_html__( 'Add to Cart', 'wpr-addons' ),
 			'wishlist-button' => esc_html__( 'Wishlist Button', 'wpr-addons' ),
+			'compare-button' => esc_html__( 'Compare Button', 'wpr-addons' ),
 			'lightbox' => esc_html__( 'Lightbox', 'wpr-addons' ),
 			'separator' => esc_html__( 'Separator', 'wpr-addons' ),
 			'pro-lk' => esc_html__( 'Likes (Pro)', 'wpr-addons' ),
@@ -1536,7 +1537,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 						'price',
 						'rating',
 						'add-to-cart',
-						'wishlist-button'
+						'wishlist-button',
+						'compare-button'
 					],
 				],
 				'separator' => 'after'
@@ -1812,6 +1814,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 						'rating',
 						'add-to-cart',
 						'wishlist-button',
+						'compare-button',
 						'excerpt'
 					],
 				]
@@ -1833,6 +1836,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 						'rating',
 						'add-to-cart',
 						'wishlist-button',
+						'compare-button',
 						'excerpt'
 					],
 					'element_extra_text_pos!' => 'none'
@@ -1861,7 +1865,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 						'price',
 						'rating',
 						'excerpt',
-						'wishlist-button'
+						'wishlist-button',
+						'compare-button'
 					],
 				]
 			]
@@ -1887,7 +1892,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 						'status',
 						'price',
 						'rating',
-						'wishlist-button'
+						'wishlist-button',
+						'compare-button'
 					],
 					'element_extra_icon_pos!' => 'none'
 				]
@@ -1904,7 +1910,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'separator' => 'before',
 				'condition' => [
 					'element_select' => [
-						'wishlist-button'
+						'wishlist-button',
+						'compare-button'
 					]
 				]
 			]
@@ -1919,7 +1926,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'return_value' => 'yes',
 				'condition' => [
 					'element_select' => [
-						'wishlist-button'
+						'wishlist-button',
+						'compare-button'
 					]
 				]
 			]
@@ -1930,7 +1938,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Add Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => '',
+				'default' => 'Add to Wishlist',
 				'condition' => [
 					'show_text' => 'yes',
 					'element_select' => [
@@ -1941,15 +1949,45 @@ class Wpr_Woo_Grid extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'add_to_compare_text',
+			[
+				'label' => esc_html__( 'Add Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => 'Add to Compare',
+				'condition' => [
+					'show_text' => 'yes',
+					'element_select' => [
+						'compare-button'
+					]
+				]
+			]
+		);
+
+		$repeater->add_control(
 			'remove_from_wishlist_text',
 			[
 				'label' => esc_html__( 'Remove Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => '',
+				'default' => 'Remove from Wishlist',
 				'condition' => [
 					'show_text' => 'yes',
 					'element_select' => [
 						'wishlist-button'
+					]
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'remove_from_compare_text',
+			[
+				'label' => esc_html__( 'Remove Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => 'Remove from Compare',
+				'condition' => [
+					'show_text' => 'yes',
+					'element_select' => [
+						'compare-button'
 					]
 				]
 			]
@@ -5255,60 +5293,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$this->add_section_added_to_cart_popup();
 
-		// Tab: Content ==============
-		// Section: Settings ------------
-		$this->start_controls_section(
-			'section_wishlist_button_settings',
-			[
-				'label' => esc_html__( 'Settings', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_CONTENT,
-			]
-		);
-
-		$this->add_control(
-			'show_text',
-			[
-				'label' => esc_html__( 'Show Text', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes'
-			]
-		);
-
-		$this->add_control(
-			'add_to_wishlist_text',
-			[
-				'label' => esc_html__( 'Add Text', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => esc_html__('Add to Wishlist'),
-				'condition' => [
-					'show_text' => 'yes'
-				]
-			]
-		);
-
-		$this->add_control(
-			'remove_from_wishlist_text',
-			[
-				'label' => esc_html__( 'Remove Text', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => esc_html__('Remove from Wishlist'),
-				'condition' => [
-					'show_text' => 'yes'
-				]
-			]
-		);
-
-		$this->add_control(
-			'show_icon',
-			[
-				'label' => esc_html__( 'Show Icon', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes'
-			]
-		);
-
-		$this->end_controls_section();
-
 		// Tab: Style ==============
 		// Section: Button Styles ------------
 		$this->start_controls_section(
@@ -8533,6 +8517,61 @@ class Wpr_Woo_Grid extends Widget_Base {
 		echo '</div>';
 	}
 
+	// Render Add To Cart
+	public function render_product_compare_button( $settings, $class ) {
+		global $product;
+
+		// If NOT a Product
+		if ( is_null( $product ) ) {
+			return;
+		}
+		
+		$compare = get_user_meta( get_current_user_id(), 'wpr_compare', true );
+		if ( ! $compare ) {
+			$compare = array();
+		}
+
+		$compare_attributes = [
+			// 'data-atw-popup="'. $settings['element_show_added_to_compare_popup']  .'"',
+			// 'data-atw-animation="'. $settings['element_added_to_compare_animation']  .'"',
+			// 'data-atw-fade-out-in="'. $settings['element_added_to_compare_fade_out_in']  .'"',
+			// 'data-atw-animation-time="'. $settings['element_added_to_compare_animation_duration']  .'"'
+		];
+
+		$button_HTML = '';
+		$page_id = get_queried_object_id();
+		
+		$add_to_compare_content = '';
+		$remove_from_compare_content = '';
+		
+
+		if ( 'yes' === $settings['show_icon'] ) {
+			$add_to_compare_content .= '<i class="far fa-heart"></i>';
+			$remove_from_compare_content .= '<i class="fas fa-heart"></i>';
+		}
+
+		if ( 'yes' === $settings['show_text'] && '' !== $settings['add_to_compare_text'] ) {
+			$add_to_compare_content .= ' <span>'. esc_html__($settings['add_to_compare_text']) .'</span>';
+		}
+
+		if ( 'yes' === $settings['show_text'] && '' !== $settings['remove_from_compare_text'] ) {
+			$remove_from_compare_content .= ' <span>'. esc_html__($settings['remove_from_compare_text']) .'</span>';
+		}
+
+		echo '<div class="'. esc_attr($class) .'">';
+			echo '<div class="inner-block">';
+	
+			$remove_button_hidden = !in_array( $product->get_id(), $compare ) ? 'wpr-button-hidden' : '';
+			$add_button_hidden = in_array( $product->get_id(), $compare ) ? 'wpr-button-hidden' : '';
+		
+			// '. implode( ' ', $compare_attributes ) .'
+			echo '<button class="wpr-compare-add '. $add_button_hidden .'" data-product-id="' . $product->get_id() . '"'. ' ' . implode( ' ', $compare_attributes ) .' >'. $add_to_compare_content .'</button>';
+			echo '<button class="wpr-compare-remove '. $remove_button_hidden .'" data-product-id="' . $product->get_id() . '">'. $remove_from_compare_content .'</button>';
+
+			echo '</div>';
+		echo '</div>';
+	}
+
 	// Render Rating
 	public function render_product_rating( $settings, $class ) {
 
@@ -8667,6 +8706,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 				break;
 			case 'wishlist-button':
 				$this->render_product_wishlist_button( $settings, $class );
+				break;
+			case 'compare-button':
+				$this->render_product_compare_button( $settings, $class );
 				break;
 		}
 

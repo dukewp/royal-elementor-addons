@@ -818,6 +818,18 @@ class Plugin {
 					'icon' => 'wpr-icon eicon-heart',
 					'categories' => '["'. $category .'"]',
 				],
+				[
+					'name' => 'wpr-compare-button',
+					'title' => __('Compare Button', 'wpr-addons'),
+					'icon' => 'wpr-icon eicon-heart', // GOGA - new icon needed for compare
+					'categories' => '["'. $category .'"]',
+				],
+				[
+					'name' => 'wpr-compare',
+					'title' => __('Compare', 'wpr-addons'),
+					'icon' => 'wpr-icon eicon-heart',
+					'categories' => '["'. $category .'"]',
+				],
 			];
 		}
 
