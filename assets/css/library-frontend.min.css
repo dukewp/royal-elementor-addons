@@ -317,6 +317,10 @@
     color: #6d7882;
 }
 
+.wpr-tplib-price i {
+    margin-top: 3px;
+}
+
 .wpr-tplib-filters h3,
 .wpr-tplib-price h3 {
     display: -webkit-box;
