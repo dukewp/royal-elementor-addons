@@ -210,12 +210,12 @@
     -webkit-box-pack: justify;
         -ms-flex-pack: justify;
             justify-content: space-between;
-    padding: 30px;
+    padding: 30px 37px 30px;
 }
 
 .wpr-tplib-sidebar .wpr-tplib-search {
     position: relative;
-    width: 210px;
+    width: 250px;
     -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%);
             box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%);
 }
