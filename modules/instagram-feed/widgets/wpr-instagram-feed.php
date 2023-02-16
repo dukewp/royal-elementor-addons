@@ -586,7 +586,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			]
 		);
 
-		// Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
+		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 		
 		$this->add_control(
 			'instagram_access_token_authorize',
