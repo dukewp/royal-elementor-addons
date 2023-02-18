@@ -14138,6 +14138,48 @@ flex-grow: 0; */
     }
 }
 
+/* Product Compare */
+
+
+.wpr-compare {
+    position: absolute;
+    display: none;
+    top: 100%;
+    z-index: 999;
+    background: white;
+    width: 375px;
+    border: 1px solid blanchedalmond;
+}
+
+.wpr-compare-wrap .wpr-compare-text {
+    margin-right: 5px;
+}
+
+.wpr-compare-wrap .fa-heart {
+    position: relative;
+}
+
+.wpr-compare-wrap .wpr-compare-count {
+    position: absolute;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    border-radius: 50%;
+    color: #FFF;
+    background-color: #025AFF;
+    font-size: 12px;
+    width: 18px;
+    height: 18px;
+    bottom: 65%;
+    left: 65%;
+}
+
 /* Product Mini Cart */
 .wpr-mini-cart-sidebar-body {
     /* transition-duration: 1s;
