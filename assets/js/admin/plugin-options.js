@@ -640,6 +640,24 @@ jQuery(document).ready(function( $ ) {
 		}
 	}
 
+	/*
+	** Save Options with Ajax -------------------------
+	*/
+	$('.wpr-settings-page form').submit(function () {
+		var settings =  $(this).serialize();
+
+		$.post( 'options.php', settings ).error(function() {
+			// alert('error');
+		}).success(function() {
+			$('.wpr-settings-saved').stop().fadeIn(500).delay(1000).fadeOut(1000); 
+		});
+
+		return false;    
+	});
+
+	$('.wpr-element').find('input').on( 'change', function() {
+		$('.wpr-settings-page form').submit();
+	});
 
 	/*
 	** Elements Toggle -------------------------
@@ -650,6 +668,8 @@ jQuery(document).ready(function( $ ) {
 		} else {
 			$('.wpr-element').find('input').prop( 'checked', false );
 		}
+
+		$('.wpr-settings-page form').submit();
 	});
 
 
@@ -681,6 +701,7 @@ jQuery(document).ready(function( $ ) {
 				$('.wpr-widgets-not-found').hide();
 			} else {
 				$('.wpr-elements, .wpr-element, .wpr-elements-heading').show();
+				$('.wpr-elements-filters li').first().trigger('click');
 			}
 
 			$('.wpr-element').each(function(){
@@ -711,39 +732,28 @@ jQuery(document).ready(function( $ ) {
 	});
 
 	/*
-	** Filters -----------------------------------
+	** Elements Filters -----------------------------------
 	*/
-	$( '.template-filters ul li span' ).on( 'click', function() {
-		var filter = $(this).parent();
+	$('.wpr-elements-filters li').on('click', function() {
+		let filter = $(this).data('filter');
 
-		// Deny
-		if ( 'back' === filter.data('role') ) return;
+		$('.wpr-elements-toggle').css('visibility', 'hidden');
+		$('.wpr-elements-filters li').removeClass('wpr-active-filter');
+		$(this).addClass('wpr-active-filter');
 
-		// Reset
-		filter.parent().find('li').removeClass('active-filter');
-		$(this).closest('.templates-grid').find('.column-3-wrap').hide();
-
-		// Active Class
-		filter.addClass('active-filter');
-		$(this).closest('.templates-grid').find('.column-3-wrap.'+ filter.data('class')).fadeIn();
-	});
-
-	// Sub Filters
-	$( '.template-filters ul li span' ).on( 'click', function() {
-		var filter = $(this).parent(),
-			role   = filter.data('role');
-
-		if ( 'parent' === role ) {
-			filter.siblings().hide();
-			filter.children('span').hide();
-			filter.find('.sub-filters').show();
-		} else if ( 'back' === role ) {
-			filter.closest('ul').parent().siblings().show();
-			filter.closest('ul').parent().children('span').show();
-			filter.closest('ul').parent().find('.sub-filters').hide();
+		if ( 'all' === filter ) {
+			$('.wpr-elements, .wpr-elements-heading').show();
+			$('.wpr-elements-toggle').css('visibility', 'visible');
+		} else if ( 'theme' === filter ) {
+			$('.wpr-elements, .wpr-elements-heading').hide();
+			$('.wpr-elements-theme').show();
+			$('.wpr-elements-theme').prev('.wpr-elements-heading').show();
+		} else {
+			$('.wpr-elements, .wpr-elements-heading').hide();
+			$('.wpr-elements-woo').show();
+			$('.wpr-elements-woo').prev('.wpr-elements-heading').show();
 		}
 	});
-
 
 	/*
 	** Settings Tab ------------------------------

@@ -144,10 +144,10 @@ function wpr_addons_settings_page() {
             <span class="dashicons dashicons-video-alt3"></span>
         </a>
 
-        <a href="https://royaladdons.frill.co/b/6m4d5qm4/feature-ideas" class="wpr-options-button button" target="_blank">
+        <!-- <a href="https://royaladdons.frill.co/b/6m4d5qm4/feature-ideas" class="wpr-options-button button" target="_blank">
             <?php echo esc_html__( 'Request New Feature', 'wpr-addons' ); ?>
             <span class="dashicons dashicons-star-empty"></span>
-        </a>
+        </a> -->
     </div>
     <?php endif; ?>
 </div>
@@ -220,20 +220,31 @@ function wpr_addons_settings_page() {
 
     ?>
 
-    <div class="wpr-elements-toggle">
-        <div>
-            <h3><?php esc_html_e( 'Toggle all Widgets', 'wpr-addons' ); ?></h3>
-            <input type="checkbox" name="wpr-element-toggle-all" id="wpr-element-toggle-all" <?php checked( get_option('wpr-element-toggle-all', 'on'), 'on', true ); ?>>
-            <label for="wpr-element-toggle-all"></label>
+    <div class="wpr-elements-header">
+        <div class="wpr-widgets-search">
+            <input type="text" autocomplete="off" placeholder="<?php esc_html_e('Search Widgets...', 'wpr-addons'); ?>">
+            <span class="dashicons dashicons-search"></span>
         </div>
-        <p><?php esc_html_e( 'You can disable some widgets for faster page speed.', 'wpr-addons' ); ?></p>
-    </div>
-    <div class="wpr-widgets-search">
-        <input type="text" autocomplete="off" placeholder="<?php esc_html_e('Search Widgets...', 'wpr-addons'); ?>">
-        <span class="dashicons dashicons-search"></span>
+
+        <div class="wpr-elements-toggle">
+            <div>
+                <h3><?php esc_html_e( 'Toggle all Widgets', 'wpr-addons' ); ?></h3>
+                <input type="checkbox" name="wpr-element-toggle-all" id="wpr-element-toggle-all" <?php checked( get_option('wpr-element-toggle-all', 'on'), 'on', true ); ?>>
+                <label for="wpr-element-toggle-all"></label>
+            </div>
+            <p><?php esc_html_e( 'You can disable some widgets for faster page speed.', 'wpr-addons' ); ?></p>
+        </div>
+
+        <div class="wpr-elements-filters">
+            <ul>
+                <li data-filter="all" class="wpr-active-filter"><?php esc_html_e( 'All Widgets', 'wpr-addons' ); ?></li>
+                <li data-filter="theme"><?php esc_html_e( 'Theme Builder', 'wpr-addons' ); ?></li>
+                <li data-filter="woo"><?php esc_html_e( 'WooCommerce', 'wpr-addons' ); ?></li>
+            </ul>
+        </div>
     </div>
 
-    <div class="wpr-elements">
+    <div class="wpr-elements wpr-elements-general">
     <?php
         foreach ( Utilities::get_registered_modules() as $title => $data ) {
             $slug = $data[0];
@@ -257,7 +268,7 @@ function wpr_addons_settings_page() {
         <h3><?php esc_html_e( 'Theme Builder Widgets', 'wpr-addons' ); ?></h3>
         <p><?php esc_html_e( 'Post (CPT) Archive Pages, Post (CPT) Single Pages', 'wpr-addons' ); ?></p>
     </div>
-    <div class="wpr-elements">
+    <div class="wpr-elements wpr-elements-theme">
     <?php
         foreach ( Utilities::get_theme_builder_modules() as $title => $data ) {
             $slug = $data[0];
@@ -284,7 +295,7 @@ function wpr_addons_settings_page() {
             <p class='wpr-install-activate-woocommerce'><span class="dashicons dashicons-info-outline"></span> <?php esc_html_e( 'Install/Activate WooCommerce to use these widgets', 'wpr-addons' ); ?></p>
         <?php endif; ?>
     </div>
-    <div class="wpr-elements">
+    <div class="wpr-elements wpr-elements-woo">
     <?php
         $woocommerce_builder_modules = Utilities::get_woocommerce_builder_modules();
         $premium_woo_modules = [
@@ -333,7 +344,12 @@ function wpr_addons_settings_page() {
         <a href="https://forms.clickup.com/1856033/f/1rmh1-5143/UIYNBNA8STCBOTXGNV" target="_blank"><?php esc_html_e('Request a New Widget', 'wpr-addons'); ?></a>
     </div>
 
-    <?php submit_button( '', 'wpr-options-button' ); ?>
+    <div class="wpr-settings-saved">
+        <span><?php esc_html_e('Options Updated', 'wpr-addons'); ?></span>
+        <span class="dashicons dashicons-yes"></span>
+    </div>
+
+    <?php //submit_button( '', 'wpr-options-button' ); ?>
 
     <?php elseif ( $active_tab == 'wpr_tab_settings' ) : ?>
 
@@ -1190,8 +1206,14 @@ function wpr_addons_settings_page() {
         }
 
         echo '</div>';
-        
-        submit_button( '', 'wpr-options-button' );
+    ?>
+
+        <div class="wpr-settings-saved">
+            <span><?php esc_html_e('Options Updated', 'wpr-addons'); ?></span>
+            <span class="dashicons dashicons-yes"></span>
+        </div>
+
+    <?php
 
     elseif ( $active_tab == 'wpr_tab_white_label' ) :
 
