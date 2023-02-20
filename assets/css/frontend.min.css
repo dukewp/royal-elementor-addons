@@ -14144,10 +14144,24 @@ flex-grow: 0; */
 }
 
 /* Compare Button */
-
 .wpr-compare-add i,
 .wpr-compare-remove i {
     font-family: "Font Awesome 5 Free" !important;
+}
+
+/* Compare Count */
+.wpr-compare-popup.wpr-compare-popup-hidden {
+    display: none;
+}
+.wpr-compare-popup {
+    display: block;
+    position: fixed;
+    width: 80vw;
+    height: 80vh;
+    top: 10vh;
+    left: 10vw;
+    z-index: 99999999999;
+    background-color: dodgerblue;
 }
 
 /* Product Compare */

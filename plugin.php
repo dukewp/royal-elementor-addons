@@ -162,6 +162,9 @@ class Plugin {
 
 			// Add Remove From Wishlist
 			require WPR_ADDONS_PATH . 'classes/woocommerce/wpr-update-mini-wishlist.php';
+
+			// Compare Popup Action
+			require WPR_ADDONS_PATH . 'classes/woocommerce/wpr-compare-popup-action.php';
 		}
 	}
 
@@ -431,7 +434,8 @@ class Plugin {
 			[
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
 				'resturl' => get_rest_url() . 'wpraddons/v1',
-				'nonce' => wp_create_nonce( 'wpr-addons-js' )
+				'nonce' => wp_create_nonce( 'wpr-addons-js' ),
+				'comparePageID' => get_option('wpr_compare_page')
 			]
 		);
 	}
