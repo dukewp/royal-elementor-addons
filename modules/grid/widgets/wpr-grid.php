@@ -126,7 +126,7 @@ class Wpr_Grid extends Widget_Base {
 		$this->add_control(
 			'display_scheduled_posts',
 			[
-				'label' => sprintf( __( 'Display Only Scheduled Posts %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'label' => sprintf( __( 'Display Only Scheduled %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
 				'type' => Controls_Manager::SWITCHER,
 				'classes' => 'wpr-pro-control no-distance'
 			]
@@ -156,9 +156,9 @@ class Wpr_Grid extends Widget_Base {
 					'date' => esc_html__( 'Date', 'wpr-addons'),
 					'pro-tl' => esc_html__( 'Title (Pro)', 'wpr-addons'),
 					'pro-mf' => esc_html__( 'Last Modified (Pro)', 'wpr-addons'),
-					'pro-d' => esc_html__( 'Post ID', 'wpr-addons' ),
-					'pro-ar' => esc_html__( 'Post Author', 'wpr-addons' ),
-					'pro-cc' => esc_html__( 'Comment Count', 'wpr-addons' )
+					'pro-d' => esc_html__( 'Post ID (Pro)', 'wpr-addons' ),
+					'pro-ar' => esc_html__( 'Post Author (Pro)', 'wpr-addons' ),
+					'pro-cc' => esc_html__( 'Comment Count (Pro)', 'wpr-addons' )
 				],
 				'condition' => [
 					'query_randomize!' => 'rand',
@@ -3147,9 +3147,6 @@ class Wpr_Grid extends Widget_Base {
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'grid', [
-			'Posts Order',
-			'Custom Post Types Support',
-			'Trim Title & Excerpt By Letter Count',
 			'Grid Columns 1,2,3,4,5,6',
 			'Masonry Layout',
 			'List Layout Zig-zag',
@@ -3176,7 +3173,10 @@ class Wpr_Grid extends Widget_Base {
 			'Title, Category, Read More Advanced Link Hover Animations',
 			'Display Scheduled Posts',
 			'Open Links in New Tab',
-			'Lazy Loading'
+			'Lazy Loading',
+			'Posts Order',
+			'Custom Post Types Support',
+			'Trim Title & Excerpt By Letter Count'
 		] );
 
 		// Styles ====================
