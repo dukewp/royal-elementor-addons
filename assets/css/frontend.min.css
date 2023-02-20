@@ -13934,6 +13934,11 @@ flex-grow: 0; */
     display: none;
 }
 
+.wpr-wishlist-add i,
+.wpr-wishlist-remove i {
+    font-family: "Font Awesome 5 Free" !important;
+}
+
 /* Wishlist */
 
 .wpr-wishlist .wpr-wishlist-products {
@@ -14138,9 +14143,14 @@ flex-grow: 0; */
     }
 }
 
+/* Compare Button */
+
+.wpr-compare-add i,
+.wpr-compare-remove i {
+    font-family: "Font Awesome 5 Free" !important;
+}
+
 /* Product Compare */
-
-
 .wpr-compare {
     position: absolute;
     display: none;
