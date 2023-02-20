@@ -13907,9 +13907,6 @@ flex-grow: 0; */
 .wpr-compare-table th, .wpr-compare-table td {
      padding: 8px; border: 1px solid #CCC; 
 }
-.wpr-compare-table td {
-     white-space: nowrap; 
-}
 .wpr-compare-table td:first-child {
      position: sticky; left: 0; z-index: 0; background-color: #FFF; 
 }
@@ -14161,7 +14158,26 @@ flex-grow: 0; */
     top: 10vh;
     left: 10vw;
     z-index: 99999999999;
-    background-color: dodgerblue;
+    background-color: white;
+}
+.wpr-compare-popup-inner-wrap {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
+.wpr-close-compare {
+    position: sticky;
+    top: 5px;
+    right: 5px;
+}
+
+.wpr-close-compare::before {
+    font-family: "Font Awesome 5 Free";
+    content: '\f00d';
+    font-weight: 600;
+    cursor: pointer;
 }
 
 /* Product Compare */
