@@ -19,16 +19,23 @@ class WPR_Compare_Popup_Action {
 
     function wpr_get_page_content() {
         $page_id = $_POST['wpr_compare_page_id'];
-        $page = get_post($page_id);
-
-        if ($page) {
-            $content = apply_filters('the_content', $page->post_content);
+        $page = get_post($page_id);  
+        
+        // Check if the page was created with Elementor
+        if (\Elementor\Plugin::$instance->db->is_built_with_elementor($page_id)) {
+            $content = \Elementor\Plugin::$instance->frontend->get_builder_content($page_id);
             wp_send_json_success(array('content' => $content));
         } else {
-            wp_send_json_error(array('message' => 'Page not found'));
-        }
+            $page = get_post($page_id);  
+            if ($page) {
+                $content = apply_filters('the_content', $page->post_content);
+                wp_send_json_success(array('content' => $content));
+            } else {
+                wp_send_json_error(array('message' => 'Page not found'));
+            }
 
-        wp_die();
+            wp_die();
+        }
     }
 }
 
