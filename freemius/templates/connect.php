@@ -141,8 +141,6 @@
 
 	if ( ! did_action( 'elementor/loaded' ) ) {
 		wpr_addons_fail_load();
-		// add_action( 'admin_notices', 'wpr_addons_fail_load' );
-		// return;
 	} else {
 		$fs->do_action( 'connect/before' );
 	?>
