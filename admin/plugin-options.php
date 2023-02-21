@@ -434,7 +434,7 @@ function wpr_addons_settings_page() {
                 <?php
                     $pages = get_pages(); // Get all pages on the site
                     $current_page = get_option( 'wpr_compare_page' ); // Get the current selected page
-                    echo '<label for="wpr_compare_page">Select Compare Page:</label>';
+                    echo '<label for="wpr_compare_page">Select Compare Page</label>';
                     echo '<select name="wpr_compare_page" id="wpr_compare_page" >';
                     
                     foreach ( $pages as $page ) {
@@ -450,7 +450,7 @@ function wpr_addons_settings_page() {
                 <?php
                     $pages = get_pages(); // Get all pages on the site
                     $current_page = get_option( 'wpr_wishlist_page' ); // Get the current selected page
-                    echo '<label for="wpr_wishlist_page">Select Wishlist Page:</label>';
+                    echo '<label for="wpr_wishlist_page">Select Wishlist Page</label>';
                     echo '<select name="wpr_wishlist_page" id="wpr_wishlist_page" >';
                     
                     foreach ( $pages as $page ) {

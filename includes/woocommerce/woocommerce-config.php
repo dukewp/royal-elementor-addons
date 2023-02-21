@@ -26,73 +26,47 @@ class WPR_WooCommerce_Config {
 
 		add_filter( 'woocommerce_add_to_cart_fragments', [$this, 'wc_refresh_mini_cart_count']);
 		
-		function add_wishlist_to_my_account( $items ) {
-			$items['wishlist'] = __( 'Wishlist', 'wpr-addons' );
-			return $items;
-		}
-		
-		add_filter( 'woocommerce_account_menu_items', 'add_wishlist_to_my_account' );
+		add_filter( 'woocommerce_account_menu_items', [$this, 'add_wishlist_to_my_account'] );
 
-		function add_wishlist_endpoint() {
-			add_rewrite_endpoint( 'wishlist', EP_ROOT | EP_PAGES );
+		add_action( 'init', [$this, 'add_wishlist_endpoint'] );
+
+		add_action( 'woocommerce_after_register_post_type', [$this, 'remove_deleted_products_from_compare_and_wishlist'] );
+	}
+
+	function add_wishlist_endpoint() {
+		add_rewrite_endpoint( 'wishlist', EP_ROOT | EP_PAGES );
+	}
+		
+	function add_wishlist_to_my_account( $items ) {
+		$items['wishlist'] = __( 'Wishlist', 'wpr-addons' );
+		return $items;
+	}
+
+	function remove_deleted_products_from_compare_and_wishlist() {
+		$compare = get_user_meta( get_current_user_id(), 'wpr_compare', true );
+		if ( ! $compare ) {
+			$compare = array();
 		}
-		add_action( 'init', 'add_wishlist_endpoint' );
+		foreach ( $compare as $key => $value ) {
+			$product = wc_get_product( $value );
+			if ( ! $product || 'trash' === get_post_status( $value ) ) {
+				$compare = array_diff( $compare, array( $value ) );
+			}
+		}
+		update_user_meta( get_current_user_id(), 'wpr_compare', $compare );
+
 		
-		// function wishlist_content() {
-		// 	// echo 'Was It Here ?';
-		// 	if ( ! is_wc_endpoint_url( 'wishlist' ) ) {
-		// 		return;
-		// 	}
-		
-		// 	$wishlist = get_user_meta( get_current_user_id(), 'wishlist', true );
-		// 	if ( ! $wishlist ) {
-		// 		$wishlist = array();
-		// 	}
-		// 	echo '<h3>' . __( 'My Wishlist', 'wpr-addons' ) . '</h3>';
-		// 	echo '<div class="wpr-wishlist-products">';
-		// 	foreach ( $wishlist as $product_id ) {
-		// 		$product = wc_get_product( $product_id );
-		// 		var_dump($product);
-		// 		if ( ! $product ) {
-		// 			continue;
-		// 		}
-		// 		echo '<div class="wpr-wishlist-product">';
-		// 		echo '<a href="' . $product->get_permalink() . '">' . $product->get_image() . '</a>';
-		// 		echo '<a href="' . $product->get_permalink() . '">' . $product->get_name() . '</a>';
-		// 		echo '<div class="wpr-wishlist-product-price">' . $product->get_price_html() . '</div>';
-		// 		echo '<button class="wpr-wishlist-remove" data-product-id="' . $product->get_id() . '">Remove from Wishlist</button>';
-		// 		echo '</div>';
-		// 	}
-		// 	echo '</div>';
-		// }
-		// add_action( 'woocommerce_account_wishlist_endpoint', 'wishlist_content' );
-		
-		// function display_wishlist_in_my_account() {
-		// 	if ( ! is_wc_endpoint_url( 'wishlist' ) ) {
-		// 		return;
-		// 	}
-		
-		// 	$wishlist = get_user_meta( get_current_user_id(), 'wishlist', true );
-		// 	if ( ! $wishlist ) {
-		// 		$wishlist = array();
-		// 	}
-		// 	echo '<h3>' . __( 'My Wishlist', 'wpr-addons' ) . '</h3>';
-		// 	echo '<div class="wpr-wishlist-products">';
-		// 	foreach ( $wishlist as $product_id ) {
-		// 		$product = wc_get_product( $product_id );
-		// 		if ( ! $product ) {
-		// 			continue;
-		// 		}
-		// 		echo '<div class="wpr-wishlist-product">';
-		// 			echo '<a href="' . $product->get_permalink() . '">' . $product->get_image() . '</a>';
-		// 			echo '<a href="' . $product->get_permalink() . '">' . $product->get_name() . '</a>';
-		// 			echo '<div class="wpr-wishlist-product-price">' . $product->get_price_html() . '</div>';
-		// 			echo '<button class="wpr-wishlist-remove" data-product-id="' . $product->get_id() . '">Remove from Wishlist</button>';
-		// 		echo '</div>';
-		// 	}
-		// 	echo '</div>';
-		// }
-		// add_action( 'woocommerce_account_content', 'display_wishlist_in_my_account' );
+		$wishlist = get_user_meta( get_current_user_id(), 'wpr_wishlist', true );
+		if ( ! $wishlist ) {
+			$wishlist = array();
+		}
+		foreach ( $wishlist as $key => $value ) {
+			$product = wc_get_product( $value );
+			if ( ! $product || 'trash' === get_post_status( $value ) ) {
+				$wishlist = array_diff( $wishlist, array( $value ) );
+			}
+		}
+		update_user_meta( get_current_user_id(), 'wpr_wishlist', $wishlist );
 	}
 
 	function register_wishlist_page() {

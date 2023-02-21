@@ -166,6 +166,9 @@ class Plugin {
 
 			// Compare Popup Action
 			require WPR_ADDONS_PATH . 'classes/woocommerce/wpr-compare-popup-action.php';
+
+			// Add Remove From Compare
+			require WPR_ADDONS_PATH . 'classes/woocommerce/wpr-update-mini-compare.php';
 		}
 	}
 
