@@ -26,7 +26,7 @@ class Wpr_Search extends Widget_Base {
 	}
 
 	public function get_title() {
-		return esc_html__( 'Search (Ajax)', 'wpr-addons' );
+		return esc_html__( 'Search (AJAX)', 'wpr-addons' );
 	}
 
 	public function get_icon() {

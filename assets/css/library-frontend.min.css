@@ -237,6 +237,7 @@
     border-bottom: 1px solid #efefef;
     font-size: 14px;
     line-height: 23px;
+    border-radius: 3px;
 }
 
 .wpr-tplib-sidebar .wpr-tplib-search input::-webkit-input-placeholder {

@@ -558,7 +558,7 @@ function wpr_addons_settings_page() {
 
         <div class="wpr-free-vs-pro-search-wrap">
             <div class="wpr-free-pro-search">
-                <input type="text" autocomplete="off" placeholder="<?php esc_html_e('Search Features...', 'wpr-addons'); ?>">
+                <input type="text" autocomplete="off" placeholder="<?php esc_html_e('Search for Features...', 'wpr-addons'); ?>">
                 <span class="dashicons dashicons-search"></span>
             </div>
 

@@ -126,7 +126,7 @@ class Wpr_Grid extends Widget_Base {
 		$this->add_control(
 			'display_scheduled_posts',
 			[
-				'label' => sprintf( __( 'Display Only Scheduled Posts %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'label' => sprintf( __( 'Display Only Scheduled %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
 				'type' => Controls_Manager::SWITCHER,
 				'classes' => 'wpr-pro-control no-distance'
 			]
