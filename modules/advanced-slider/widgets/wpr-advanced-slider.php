@@ -1000,7 +1000,8 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-slider-description' => 'display:{{VALUE}};',
-				]
+				],
+				'separator' => 'after'
 			]
 		);
 
@@ -1108,6 +1109,17 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'condition' => [
 					'slider_scroll_btn' => 'yes',
 				],
+			]
+		);
+
+		// GOGA - remove if can't be fixed
+		$this->add_control(
+			'slider_loop',
+			[
+				'label' => esc_html__('Loop'),
+				'type' => Controls_Manager::SWITCHER,
+				'render_type' => 'template',
+				'separator' => 'before'
 			]
 		);
 
@@ -2933,9 +2945,9 @@ class Wpr_Advanced_Slider extends Widget_Base {
 
 								// Slider Description
 								if ( $settings['slider_description'] === 'yes' && ! empty( $item['slider_item_description'] ) ) {
-								$slider_html .= '<div class="wpr-slider-description">';	
-									$slider_html .= '<p>'. wp_kses_post($item['slider_item_description']) .'</p>';
-								$slider_html .= '</div>';
+									$slider_html .= '<div class="wpr-slider-description">';	
+										$slider_html .= '<p>'. wp_kses_post($item['slider_item_description']) .'</p>';
+									$slider_html .= '</div>';
 								}
 								
 								// Slider Button Secondary
@@ -3021,7 +3033,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 
 		$slider_options = [
 			'rtl' => $slider_is_rtl,
-			'infinite' => true,
+			'infinite' => ( $settings['slider_loop'] === 'yes' ),
 			'speed' => absint( $settings['slider_effect_duration'] * 1000 ),
 			'arrows'=> true,
 			'dots' 	=> true,
