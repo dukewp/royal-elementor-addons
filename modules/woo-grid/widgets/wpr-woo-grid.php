@@ -8859,7 +8859,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		echo '</div>';
 	}
 
-	// Render Add To Cart
+	// Render Wishlist Button
 	public function render_product_wishlist_button( $settings, $class ) {
 		global $product;
 
@@ -8914,7 +8914,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		echo '</div>';
 	}
 
-	// Render Add To Cart
+	// Render Compare Button
 	public function render_product_compare_button( $settings, $class ) {
 		global $product;
 

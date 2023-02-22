@@ -13936,12 +13936,56 @@ flex-grow: 0; */
     font-family: "Font Awesome 5 Free" !important;
 }
 
-/* Wishlist */
+/* == Wishlist */
+
+.wpr-wishlist-table table {
+    margin: 0;
+}
+
+.wpr-wishlist-table thead th {
+    border-top-style: none !Important;
+}
+
+.wpr-wishlist-table thead th:first-child {
+    border-left-style: none !important;
+}
+
+.wpr-wishlist-table thead th:last-child {
+    border-right-style: none !important;
+}
+
+.wpr-wishlist-table tbody tr td:first-child {
+    border-left-style: none !important;
+}
+
+.wpr-wishlist-table tbody tr td:last-child {
+    border-right-style: none !important;
+}
+
+.wpr-wishlist-table tbody tr:last-child td {
+    border-bottom-style: none !Important;
+}
 
 .wpr-wishlist .wpr-wishlist-products {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+}
+
+.elementor-widget-wpr-wishlist-pro .wpr-wishlist-remove {
+    cursor: pointer;
+}
+
+.elementor-widget-wpr-wishlist-pro .wpr-wishlist-remove:before {
+    font-family: "Font Awesome 5 Free";
+    content: '\f00d';
+    /* position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    text-indent: 0; */
+    font-weight: 600 !important;
 }
 
 /* Wishlist Count */
