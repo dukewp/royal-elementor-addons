@@ -5999,7 +5999,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 .wpr-slider-title *,
 .wpr-slider-sub-title *,
-.wpr-slider-description * {
+.wpr-slider-description p {
     display: inline-block;
 }
 
@@ -6018,7 +6018,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     margin: 0 0 10px 0;
 }
 
-.wpr-slider-description * {
+.wpr-slider-description p {
     padding: 5px 10px 5px 10px;
     margin: 0 0 30px 0;
 }

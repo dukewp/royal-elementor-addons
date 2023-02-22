@@ -502,6 +502,25 @@ class Wpr_Advanced_Slider extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'slider_title_tag',
+			[
+				'label' => esc_html__( 'Title HTML Tag', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => esc_html__( 'H1', 'wpr-addons' ),
+					'h2' => esc_html__( 'H2', 'wpr-addons' ),
+					'h3' => esc_html__( 'H3', 'wpr-addons' ),
+					'h4' => esc_html__( 'H4', 'wpr-addons' ),
+					'h5' => esc_html__( 'H5', 'wpr-addons' ),
+					'h6' => esc_html__( 'H6', 'wpr-addons' )
+				],
+				'condition' => [
+					'slider_show_content' => 'yes',
+				]
+			]
+		);
+
+		$repeater->add_control(
 			'slider_item_title',
 			[
 				'label'  	=> esc_html__( 'Title', 'wpr-addons' ),
@@ -510,6 +529,25 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'condition' => [
 					'slider_show_content' => 'yes',
 				],
+			]
+		);
+
+		$repeater->add_control(
+			'slider_sub_title_tag',
+			[
+				'label' => esc_html__( 'Sub Title HTML Tag', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => esc_html__( 'H1', 'wpr-addons' ),
+					'h2' => esc_html__( 'H2', 'wpr-addons' ),
+					'h3' => esc_html__( 'H3', 'wpr-addons' ),
+					'h4' => esc_html__( 'H4', 'wpr-addons' ),
+					'h5' => esc_html__( 'H5', 'wpr-addons' ),
+					'h6' => esc_html__( 'H6', 'wpr-addons' )
+				],
+				'condition' => [
+					'slider_show_content' => 'yes',
+				]
 			]
 		);
 
@@ -962,29 +1000,6 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-slider-description' => 'display:{{VALUE}};',
-				]
-			]
-		);
-
-		$this->add_control(
-			'slider_description_tag',
-			[
-				'label' => esc_html__( 'Description HTML Tag', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'h1' => esc_html__( 'H1', 'wpr-addons' ),
-					'h2' => esc_html__( 'H2', 'wpr-addons' ),
-					'h3' => esc_html__( 'H3', 'wpr-addons' ),
-					'h4' => esc_html__( 'H4', 'wpr-addons' ),
-					'h5' => esc_html__( 'H5', 'wpr-addons' ),
-					'h6' => esc_html__( 'H6', 'wpr-addons' ),
-					'p' => esc_html__( 'P', 'wpr-addons' ),
-					'div' => esc_html__( 'DIV', 'wpr-addons' ),
-				],
-				'default' => 'p',
-				'separator' => 'after',
-				'condition' => [
-					'slider_description' => 'yes'
 				]
 			]
 		);
@@ -1532,7 +1547,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'type' => Controls_Manager::COLOR,		
 				'default' => '#ffffff',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-slider-description *' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-slider-description p' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -1543,7 +1558,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-slider-description *' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-slider-description p' => 'background-color: {{VALUE}}',
 				],
 				'separator' => 'after',
 			]
@@ -1554,7 +1569,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			[
 				'name'     => 'slider_description_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-slider-description *',
+				'selector' => '{{WRAPPER}} .wpr-slider-description p',
 			]
 		);
 
@@ -1571,7 +1586,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 					'left' => 10,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-slider-description *' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-slider-description p' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -1590,7 +1605,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 					'left' => 0,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-slider-description *' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-slider-description p' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -2897,21 +2912,29 @@ class Wpr_Advanced_Slider extends Widget_Base {
 								//  Slider Title
 								if ( $settings['slider_title'] === 'yes' && ! empty( $item['slider_item_title'] ) ) {
 								$slider_html .= '<div class="wpr-slider-title">';
-									$slider_html .= '<' . $settings['slider_title_tag'] . '>'. wp_kses_post($item['slider_item_title']) .'</'. $settings['slider_title_tag'] .'>';
+									if ( '' !== $item['slider_title_tag'] ) {
+										$slider_html .= '<' . $item['slider_title_tag'] . '>'. wp_kses_post($item['slider_item_title']) .'</'. $item['slider_title_tag'] .'>';
+									} else {
+										$slider_html .= '<' . $settings['slider_title_tag'] . '>'. wp_kses_post($item['slider_item_title']) .'</'. $settings['slider_title_tag'] .'>';
+									}
 								$slider_html .= '</div>';
 								}	
 								
 								// Slider Sub Title
 								if ( $settings['slider_sub_title'] === 'yes' && ! empty( $item['slider_item_sub_title'] ) ) {
 								$slider_html .= '<div class="wpr-slider-sub-title">';
-									$slider_html .= '<' . $settings['slider_sub_title_tag'] . '>'. wp_kses_post($item['slider_item_sub_title']) .'</' . $settings['slider_sub_title_tag'] . '>';
+									if ( '' !== $item['slider_sub_title_tag'] ) {
+										$slider_html .= '<' . $item['slider_sub_title_tag'] . '>'. wp_kses_post($item['slider_item_sub_title']) .'</' . $item['slider_sub_title_tag'] . '>';
+									} else {
+										$slider_html .= '<' . $settings['slider_sub_title_tag'] . '>'. wp_kses_post($item['slider_item_sub_title']) .'</' . $settings['slider_sub_title_tag'] . '>';
+									}
 								$slider_html .= '</div>';
 								}							
 
 								// Slider Description
 								if ( $settings['slider_description'] === 'yes' && ! empty( $item['slider_item_description'] ) ) {
 								$slider_html .= '<div class="wpr-slider-description">';	
-									$slider_html .= '<' . $settings['slider_description_tag'] . '>'. wp_kses_post($item['slider_item_description']) .'</' . $settings['slider_description_tag'] . '>';
+									$slider_html .= '<p>'. wp_kses_post($item['slider_item_description']) .'</p>';
 								$slider_html .= '</div>';
 								}
 								
