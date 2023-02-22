@@ -522,7 +522,7 @@ function wpr_addons_settings_page() {
                 <span class="dashicons dashicons-search"></span>
             </div>
 
-            <a href="#" target="_blank" class="button wpr-free-pro-upgrade">
+            <a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-freevsprotab-pro#purchasepro" target="_blank" class="button wpr-free-pro-upgrade">
                 <span><?php echo esc_html__( 'Upgrade to Pro', 'wpr-addons' ); ?></span>
                 <span class="dashicons dashicons-smiley"></span>
             </a>
@@ -1112,10 +1112,10 @@ function wpr_addons_settings_page() {
             <img src="<?php echo esc_url(WPR_ADDONS_ASSETS_URL .'img/not-found.png'); ?>">
             <h1><?php esc_html_e('No Search Results Found.', 'wpr-addons'); ?></h1>
             <p><?php esc_html_e('Cant find a Feature you are looking for?', 'wpr-addons'); ?></p>
-            <a href="#" target="_blank"><?php esc_html_e('Request a New Feature', 'wpr-addons'); ?></a>
+            <a href="https://forms.clickup.com/1856033/f/1rmh1-5163/J9WM6WHSQRNJF37CMB" target="_blank"><?php esc_html_e('Request a New Feature', 'wpr-addons'); ?></a>
         </div>
 
-        <a href="#" target="_blank" class="button last wpr-free-pro-upgrade">
+        <a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-freevsprotab-pro#purchasepro" target="_blank" class="button last wpr-free-pro-upgrade">
             <span><?php echo esc_html__( 'Upgrade to Pro', 'wpr-addons' ); ?></span>
             <span class="dashicons dashicons-smiley"></span>
         </a>
