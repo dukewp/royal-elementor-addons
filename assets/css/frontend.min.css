@@ -5998,8 +5998,8 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 .wpr-slider-title *,
-.wpr-slider-sub-title h3,
-.wpr-slider-description p {
+.wpr-slider-sub-title *,
+.wpr-slider-description * {
     display: inline-block;
 }
 
@@ -6012,13 +6012,13 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     margin: 0 0 2px 0;
 }
 
-.wpr-slider-sub-title h3 {
+.wpr-slider-sub-title * {
     font-size: 16px;
     padding: 5px 10px 5px 10px;
     margin: 0 0 10px 0;
 }
 
-.wpr-slider-description p {
+.wpr-slider-description * {
     padding: 5px 10px 5px 10px;
     margin: 0 0 30px 0;
 }
