@@ -487,7 +487,8 @@ class Plugin {
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
 				'resturl' => get_rest_url() . 'wpraddons/v1',
 				'nonce' => wp_create_nonce( 'wpr-addons-js' ),
-				'comparePageID' => get_option('wpr_compare_page')
+				'comparePageID' => get_option('wpr_compare_page'),
+				'scriptPath' => WPR_ADDONS_URL . 'assets/js/frontend'. $this->script_suffix() .'.js',
 			]
 		);
 	}
