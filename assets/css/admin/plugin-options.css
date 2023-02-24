@@ -1470,7 +1470,7 @@ input.wpr-user-template-title:focus {
 }
 
 /* Disable Notices */
-.notice:not(.wpr-plugin-update-notice),
+/* .notice:not(.wpr-plugin-update-notice), */
 div.fs-notice.updated, div.fs-notice.success {
   display: none !important;
 }

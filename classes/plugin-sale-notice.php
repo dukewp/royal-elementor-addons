@@ -7,10 +7,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class WprPluginSaleNotice {
     public function __construct() {
-        // delete_option('wpr_plugin_sale_dismiss_notice');
+        // delete_option('wpr_plugin_sale_dismiss_notice'); // uncomment for testing
         
         $this->past_date = strtotime( '-2 days' );
         $this->install_date = get_option('royal_elementor_addons_activation_time_for_sale');
+        $this->remind_me_later = get_option('wpr_sale_remind_me_later');
         // add_action( 'admin_init', [$this, 'render_notice'] ); // uncomment for testing
 
         if ( current_user_can('administrator') ) {
@@ -24,10 +25,14 @@ class WprPluginSaleNotice {
         }
 
         add_action( 'wp_ajax_wpr_plugin_sale_dismiss_notice', [$this, 'wpr_plugin_sale_dismiss_notice'] );
+        add_action( 'wp_ajax_wpr_sale_remind_me_later', [$this, 'wpr_sale_remind_me_later'] );
     }
 
     public function render_notice() {
         if ( $this->past_date >= $this->install_date ) {
+            if ( get_option('wpr_sale_remind_me_later') && !($this->past_date >= $this->remind_me_later) ) {
+                return;
+            }
             add_action( 'admin_notices', [$this, 'render_plugin_sale_notice' ]);
         }
     }
@@ -35,9 +40,12 @@ class WprPluginSaleNotice {
     public function wpr_plugin_sale_dismiss_notice() {
         add_option( 'wpr_plugin_sale_dismiss_notice', true );
     }
+    
+    public function wpr_sale_remind_me_later() {
+        update_option( 'wpr_sale_remind_me_later', absint(intval(strtotime('now'))) );
+    }
 
     public function render_plugin_sale_notice() {
-
         if ( is_admin() ) {
             echo '<div class="notice wpr-plugin-sale-notice is-dismissible">
                         <div class="wpr-plugin-sale-notice-logo">
@@ -71,6 +79,7 @@ class WprPluginSaleNotice {
                             <br>
                             <div>
                                 <a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-salebanner-upgrade-pro#purchasepro" target="_blank" class="wpr-upgrade-to-pro-button button button-secondary">Upgrade to Pro <span class="dashicons dashicons-arrow-right-alt"></span></a>
+                                <a target="#" target="_blank" class="wpr-upgrade-to-pro-button button button-secondary wpr-remind-later">Remind Me Later</a>
                             </div>
                         </div>
                         <div class="image-wrap"><img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/sale-banner.png"></div>
@@ -132,15 +141,26 @@ class WprPluginSaleNotice {
                 }, 900 );
             }
 
-            jQuery(document).on( 'click', '.wpr-plugin-sale-notice .notice-dismiss', function() {
-                jQuery(document).find('.wpr-plugin-sale-notice').slideUp();
-                jQuery.post({
-                    url: ajaxurl,
-                    data: {
-                        action: 'wpr_plugin_sale_dismiss_notice',
-                    }
+                jQuery(document).on( 'click', '.wpr-plugin-sale-notice .notice-dismiss', function() {
+                    jQuery(document).find('.wpr-plugin-sale-notice').slideUp();
+                    jQuery.post({
+                        url: ajaxurl,
+                        data: {
+                            action: 'wpr_plugin_sale_dismiss_notice',
+                        }
+                    });
                 });
-              }); 
+                
+                jQuery(document).on( 'click', '.wpr-plugin-sale-notice .wpr-remind-later', function(e) {
+                    e.preventDefault();
+                    jQuery(document).find('.wpr-plugin-sale-notice').slideUp();
+                    jQuery.post({
+                        url: ajaxurl,
+                        data: {
+                            action: 'wpr_sale_remind_me_later',
+                        }
+                    });
+                }); 
             });
         </script>
 
