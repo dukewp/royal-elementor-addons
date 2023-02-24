@@ -126,7 +126,7 @@ class Plugin {
 			require WPR_ADDONS_PATH . 'classes/plugin-update-notice.php';
 			
 			// Plugin Sale Notice
-			// require WPR_ADDONS_PATH . 'classes/plugin-sale-notice.php';
+			require WPR_ADDONS_PATH . 'classes/plugin-sale-notice.php';
 			
 			// Rating Notice 
 			require WPR_ADDONS_PATH . 'classes/rating-notice.php';

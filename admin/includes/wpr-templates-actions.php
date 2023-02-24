@@ -342,10 +342,10 @@ class WPR_Templates_Actions {
 				return;
 			}
 
-			// Send Search Query
+			// Templates Library Import Template
 		    wp_remote_post( 'https://reastats.kinsta.cloud/wp-json/templates-library-import/data', [
 		        'body' => [
-		            'imported_template' => $data['kit'] .'-'. $data['template']
+		            'imported_template' => $data['kit'] .'-'. $data['template'] . ' *'. WPR_ADDONS_VERSION .'*'
 		        ]
 		    ] );
 		} );

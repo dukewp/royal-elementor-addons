@@ -737,13 +737,13 @@ jQuery(document).ready(function( $ ) {
 	$('.wpr-elements-filters li').on('click', function() {
 		let filter = $(this).data('filter');
 
-		$('.wpr-elements-toggle').css('visibility', 'hidden');
+		$('.wpr-elements-toggle').hide();
 		$('.wpr-elements-filters li').removeClass('wpr-active-filter');
 		$(this).addClass('wpr-active-filter');
 
 		if ( 'all' === filter ) {
 			$('.wpr-elements, .wpr-elements-heading').show();
-			$('.wpr-elements-toggle').css('visibility', 'visible');
+			$('.wpr-elements-toggle').show();
 		} else if ( 'theme' === filter ) {
 			$('.wpr-elements, .wpr-elements-heading').hide();
 			$('.wpr-elements-theme').show();
