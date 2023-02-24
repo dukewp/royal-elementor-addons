@@ -9,7 +9,7 @@ class WprPluginSaleNotice {
     public function __construct() {
         // delete_option('wpr_plugin_sale_dismiss_notice'); // uncomment for testing
         
-        $this->past_date = strtotime( '-2 seconds' );
+        $this->past_date = strtotime( '-2 days' );
         $this->install_date = get_option('royal_elementor_addons_activation_time_for_sale');
         $this->remind_me_later = get_option('wpr_sale_remind_me_later');
         // add_action( 'admin_init', [$this, 'render_notice'] ); // uncomment for testing
@@ -73,7 +73,7 @@ class WprPluginSaleNotice {
                             </ul>
                             <p>
                                 Hurry up! Upgrade within the <strong>next 24 hours</strong> and get a 
-                                <strong>40% Discount</strong>.<br><br>
+                                <strong>20% Discount</strong>.<br><br>
                                 Use Promo Code: &nbsp;&nbsp;&nbsp;<strong style="border: 1px dashed #C3C4C7;padding: 2px 10px;">REAFLASH40</strong>
                             </p>
                             <br>
