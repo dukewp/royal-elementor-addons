@@ -30,6 +30,7 @@ class WprPluginSaleNotice {
     }
 
     public function render_notice() {
+        // add_action( 'admin_notices', [$this, 'render_plugin_sale_notice' ]); // uncomment for testing
         if ( $this->past_date >= $this->install_date ) {
             if ( get_option('wpr_sale_remind_me_later') && !($this->past_date_rml >= $this->remind_me_later) ) {
                 return;
@@ -225,11 +226,12 @@ class WprPluginSaleNotice {
             }
             
             .wpr-plugin-sale-notice .wpr-upgrade-to-pro-button {
-              border: 2px solid #6a4bff4f;
-              color: #6A4BFF;
-              padding: 5px 25px;
-              font-weight: bold;
-              letter-spacing: 0.3px;
+                border: 2px solid #e4e4e4;
+                color: #9f9c9c;
+                background-color: #fff;
+                padding: 5px 25px;
+                font-weight: bold;
+                letter-spacing: 0.3px;
             }
             
             .wpr-plugin-sale-notice .wpr-upgrade-to-pro-button:hover {
@@ -242,6 +244,7 @@ class WprPluginSaleNotice {
               border: 2px solid #6A4BFF;
               color: #ffffff;
               background-color: #6A4BFF;
+              text-transform: uppercase;
             }
 
             .wpr-plugin-sale-notice .wpr-upgrade-to-pro-button .dashicons {
