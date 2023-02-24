@@ -247,7 +247,7 @@
 					sectionID = $scope.data('id'),
 					particlesJSON = ! WprElements.editorCheck() ? $scope.attr('data-wpr-particles') : $scope.find('.wpr-particle-wrapper').attr('data-wpr-particles-editor');
 
-				if ( 'section' === elementType && undefined !== particlesJSON ) {
+				if ( ('section' === elementType || 'container' === elementType) && undefined !== particlesJSON ) {
 					// Frontend
 					if ( ! WprElements.editorCheck() ) {
 						$scope.prepend('<div class="wpr-particle-wrapper" id="wpr-particle-'+ sectionID +'"></div>');
@@ -259,6 +259,7 @@
 						}, 500);
 					// Editor
 					} else {
+						console.log('works particles here');
 						if ( $scope.hasClass('wpr-particle-yes') ) {
 							particlesJS( 'wpr-particle-'+ sectionID, $scope.find('.wpr-particle-wrapper').attr('particle-source') == 'wpr_particle_json_custom' ? JSON.parse(particlesJSON) : modifyJSON(particlesJSON));
 	
@@ -3686,6 +3687,7 @@
 							// wpr_ajax_search_img_size: $scope.find('.wpr-search-form-input').attr('ajax-search-img-size')
 						},
 						success: function(data) {
+							$scope.closest('section').addClass('wpr-section-z-index');
 							if ( $scope.find('.wpr-data-fetch ul').html() === '' ) {
 								$scope.find( '.wpr-pagination-loading' ).hide();
 								$scope.find('.wpr-data-fetch ul').html( data );
@@ -3712,6 +3714,7 @@
 									if (data.includes('wpr-no-results')) {
 										$scope.find('.wpr-ajax-search-pagination').css('display', 'none');
 										$scope.find('.wpr-data-fetch ul').html('');
+										$scope.closest('section').removeClass('wpr-section-z-index');
 									} else {
 										$scope.find('.wpr-ajax-search-pagination').css('display', 'flex');
 									}
@@ -3768,6 +3771,7 @@
 								setTimeout(function() {
 									$scope.find('.wpr-data-fetch ul').html('');
 									$scope.find('.wpr-no-results').remove();
+									$scope.closest('section').removeClass('wpr-section-z-index');
 								}, 600);
 								postsOffset = 0;
 							}
@@ -3811,6 +3815,7 @@
 					setTimeout(function() {
 						$scope.find('.wpr-data-fetch ul').html('');
 						$scope.find('.wpr-no-results').remove();
+						$scope.closest('section').removeClass('wpr-section-z-index');
 					}, 400);
 					postsOffset = 0;
 				});
@@ -3823,6 +3828,7 @@
 							setTimeout(function() {
 								$scope.find('.wpr-data-fetch ul').html('');
 								$scope.find('.wpr-no-results').remove();
+								$scope.closest('section').removeClass('wpr-section-z-index');
 							}, 400);
 							postsOffset = 0;
 						}
@@ -7213,7 +7219,7 @@
 					}
 				});
 
-				if ( 0 !== $scope.hasClass('wpr-mini-cart-sidebar').length ) {
+				if ( $scope.hasClass('wpr-mini-cart-sidebar') ) {
 					if ( $('#wpadminbar').length ) {
 						$scope.find('.wpr-mini-cart').css({
 							// 'top': $('#wpadminbar').css('height'),
@@ -7242,41 +7248,43 @@
 				}
 
 				if ( $scope.find('.wpr-mini-cart').length ) {
-					$scope.find('.wpr-mini-cart-toggle-btn').on('click', function(e) {
-						e.stopPropagation();
-						e.preventDefault();
-						if ( 'none' === $scope.find('.wpr-mini-cart').css("display") ) {
-							if ( $scope.hasClass('wpr-mini-cart-slide') ) {
-								$scope.find('.wpr-mini-cart').slideDown(animationSpeed);
-							} else {
-								$scope.find('.wpr-mini-cart').fadeIn(animationSpeed);
-							}
-							if ( $scope.hasClass('wpr-mini-cart-sidebar') ) {
-								$scope.find('.wpr-shopping-cart-wrap').fadeIn(animationSpeed);
-								// $scope.find('.widget_shopping_cart_content').addClass('wpr-mini-cart-slide-in');
-								$scope.find('.wpr-shopping-cart-inner-wrap').addClass('wpr-mini-cart-slide-in');
-								$scope.find('.wpr-mini-cart-slide-in').css('animation-speed', animationSpeed);
-								$('body').addClass('wpr-mini-cart-sidebar-body');
-							}
-							setTimeout(function() {
-								// $scope.find('.widget_shopping_cart_content').removeClass('wpr-mini-cart-slide-in');
-								$scope.find('.wpr-shopping-cart-inner-wrap').removeClass('wpr-mini-cart-slide-in');
-								if ( $scope.hasClass('wpr-mini-cart-sidebar') ) {
-									$scope.find('.wpr-woo-mini-cart').trigger('resize');
+					if ( $scope.hasClass('wpr-mini-cart-sidebar') || $scope.hasClass('wpr-mini-cart-dropdown') ) {
+						$scope.find('.wpr-mini-cart-toggle-btn').on('click', function(e) {
+							e.stopPropagation();
+							e.preventDefault();
+							if ( 'none' === $scope.find('.wpr-mini-cart').css("display") ) {
+								if ( $scope.hasClass('wpr-mini-cart-slide') ) {
+									$scope.find('.wpr-mini-cart').slideDown(animationSpeed);
+								} else {
+									$scope.find('.wpr-mini-cart').fadeIn(animationSpeed);
 								}
-							}, animationSpeed + 100);
-						} else {
-							if ( $scope.hasClass('wpr-mini-cart-slide') ) {
-								$scope.find('.wpr-mini-cart').slideUp(animationSpeed);
+								if ( $scope.hasClass('wpr-mini-cart-sidebar') ) {
+									$scope.find('.wpr-shopping-cart-wrap').fadeIn(animationSpeed);
+									// $scope.find('.widget_shopping_cart_content').addClass('wpr-mini-cart-slide-in');
+									$scope.find('.wpr-shopping-cart-inner-wrap').addClass('wpr-mini-cart-slide-in');
+									$scope.find('.wpr-mini-cart-slide-in').css('animation-speed', animationSpeed);
+									$('body').addClass('wpr-mini-cart-sidebar-body');
+								}
+								setTimeout(function() {
+									// $scope.find('.widget_shopping_cart_content').removeClass('wpr-mini-cart-slide-in');
+									$scope.find('.wpr-shopping-cart-inner-wrap').removeClass('wpr-mini-cart-slide-in');
+									if ( $scope.hasClass('wpr-mini-cart-sidebar') ) {
+										$scope.find('.wpr-woo-mini-cart').trigger('resize');
+									}
+								}, animationSpeed + 100);
 							} else {
-								$scope.find('.wpr-mini-cart').fadeOut(animationSpeed);
+								if ( $scope.hasClass('wpr-mini-cart-slide') ) {
+									$scope.find('.wpr-mini-cart').slideUp(animationSpeed);
+								} else {
+									$scope.find('.wpr-mini-cart').fadeOut(animationSpeed);
+								}
 							}
-						}
-					});
+						});
+					}
 				}
 
 				var mutationObserver = new MutationObserver(function(mutations) {
-					if (  0 !== $scope.hasClass('wpr-mini-cart-sidebar').length ) {
+					if (  $scope.hasClass('wpr-mini-cart-sidebar') ) {
 						closeSideBar();
 
 						// if ( $scope.find('.wpr-mini-cart').data('close-cart-heading') ) {
