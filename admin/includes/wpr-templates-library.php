@@ -8,9 +8,9 @@ use WprAddons\Admin\Includes\WPR_Render_Templates;
 use WprAddons\Admin\Includes\WPR_Templates_Shortcode;
 use WprAddons\Admin\Includes\WPR_Templates_Modal_Popups;
 use WprAddons\Admin\Includes\WPR_Templates_Actions;
-use WprAddons\Admin\Templates\WPR_Templates_Library_Blocks;
-use WprAddons\Admin\Templates\WPR_Templates_Library_Pages;
-use WprAddons\Admin\Templates\WPR_Templates_Library_Popups;
+use WprAddons\Admin\Templates\Library\WPR_Templates_Library_Blocks;
+use WprAddons\Admin\Templates\Library\WPR_Templates_Library_Pages;
+use WprAddons\Admin\Templates\Library\WPR_Templates_Library_Popups;
 use WprAddons\Classes\Utilities;
 
 /**

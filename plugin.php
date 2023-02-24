@@ -123,13 +123,13 @@ class Plugin {
 		// Admin Files
 		if ( is_admin() ) {
 			// Plugin Updaate Notice
-			require WPR_ADDONS_PATH . 'classes/plugin-update-notice.php';
+			require WPR_ADDONS_PATH . 'admin/notices/plugin-update-notice.php';
 			
 			// Plugin Sale Notice
-			require WPR_ADDONS_PATH . 'classes/plugin-sale-notice.php';
+			require WPR_ADDONS_PATH . 'admin/notices/plugin-sale-notice.php';
 			
 			// Rating Notice 
-			require WPR_ADDONS_PATH . 'classes/rating-notice.php';
+			require WPR_ADDONS_PATH . 'admin/notices/rating-notice.php';
 
 			// Plugin Options
 			require WPR_ADDONS_PATH . 'admin/plugin-options.php';
