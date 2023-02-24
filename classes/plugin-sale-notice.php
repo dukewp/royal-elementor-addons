@@ -44,19 +44,23 @@ class WprPluginSaleNotice {
                             <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/logo-128x128.png">
                         </div>
                         <div>
-                            <h3><span>Flash Sale</span><br> Royal Elementor Addons Pro</h3>
+                            <h3><span>Flash Sale</span><br> Get Royal Elementor Addons Pro</h3>
                             <ul>
+                                <li>
+                                    <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/check-mark.png">
+                                    50+ Designer Made Templates Kit
+                                </li>
+                                <li>
+                                    <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/check-mark.png">
+                                    80+ Advanced Elementor Widgets
+                                </li>
                                 <li>
                                     <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/check-mark.png">
                                     Advanced Theme Builder
                                 </li>
                                 <li>
                                     <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/check-mark.png">
-                                    20+ Designer Made Templates Kit
-                                </li>
-                                <li>
-                                    <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/check-mark.png">
-                                    35+ Advanced Elementor Widgets
+                                    Advanced WooCommerce Builder
                                 </li>
                                 <li>
                                     <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/check-mark.png">
@@ -65,8 +69,8 @@ class WprPluginSaleNotice {
                             </ul>
                             <p>
                                 Hurry up! Upgrade within the <strong>next 24 hours</strong> and get a 
-                                <strong>40% Discount</strong>.<br><br>
-                                Use Promo Code: &nbsp;&nbsp;&nbsp;<strong style="border: 1px dashed #C3C4C7;padding: 2px 10px;">REAFLASH40</strong>
+                                <strong>20% Discount</strong>.<br><br>
+                                Use Promo Code: &nbsp;&nbsp;&nbsp;<strong style="border: 1px dashed #C3C4C7;padding: 2px 10px;">REAFLASH20</strong>
                             </p>
                             <br>
                             <div>
@@ -184,6 +188,7 @@ class WprPluginSaleNotice {
             }
 
             .wpr-plugin-sale-notice ul li {
+                font-size: 14px;
             }
 
             .wpr-plugin-sale-notice ul img {
@@ -204,6 +209,7 @@ class WprPluginSaleNotice {
                 padding: 5px 25px;
                 font-weight: bold;
                 letter-spacing: 0.3px;
+                text-transform: uppercase;
             }
             
             .wpr-plugin-sale-notice .wpr-upgrade-to-pro-button:hover {
@@ -230,13 +236,15 @@ class WprPluginSaleNotice {
               pointer-events: none;
             }
 
-            .wpr-plugin-sale-notice .image-wrap img {
-              
+            @media screen and (max-width: 1366px) {
+                .wpr-plugin-sale-notice .image-wrap img {
+                  zoom: 0.8;
+                }
             }
 
             @media screen and (max-width: 1366px) {
                 .wpr-plugin-sale-notice .image-wrap img {
-                  zoom: 0.9;
+                  zoom: 0.7;
                 }
             }
         </style>";

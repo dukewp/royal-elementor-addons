@@ -543,7 +543,7 @@ function wpr_addons_settings_page() {
                     <li><span>Magazine Grid/Slider Widget</span></li>
                     <li><span>Basic Timeline Widget</span></li>
                     <li><span>Basic Slider Widget</span></li>
-                    <li><span>Offcanvas Menu</span></li>
+                    <li><span>Offcanvas Content</span></li>
                     <li><span>Instagram Feed</span></li>
                     <li><span>Twitter Feed</span></li>
                     <li><span>Basic Data Table</span></li>
