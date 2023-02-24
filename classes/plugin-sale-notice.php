@@ -9,7 +9,7 @@ class WprPluginSaleNotice {
     public function __construct() {
         // delete_option('wpr_plugin_sale_dismiss_notice'); // uncomment for testing
         
-        $this->past_date = strtotime( '-2 days' );
+        $this->past_date = strtotime( '-2 seconds' );
         $this->install_date = get_option('royal_elementor_addons_activation_time_for_sale');
         $this->remind_me_later = get_option('wpr_sale_remind_me_later');
         // add_action( 'admin_init', [$this, 'render_notice'] ); // uncomment for testing
@@ -219,14 +219,20 @@ class WprPluginSaleNotice {
             }
             
             .wpr-plugin-sale-notice .wpr-upgrade-to-pro-button {
-              border: 2px solid #6A4BFF;
+              border: 2px solid #6a4bff4f;
               color: #6A4BFF;
-                padding: 5px 25px;
-                font-weight: bold;
-                letter-spacing: 0.3px;
+              padding: 5px 25px;
+              font-weight: bold;
+              letter-spacing: 0.3px;
             }
             
             .wpr-plugin-sale-notice .wpr-upgrade-to-pro-button:hover {
+              border: 2px solid #6a4bff4f;
+              color: #6A4BFF;
+              background: #f6f7f7;
+            }
+            
+            .wpr-plugin-sale-notice .wpr-upgrade-to-pro-button:first-child {
               border: 2px solid #6A4BFF;
               color: #ffffff;
               background-color: #6A4BFF;
