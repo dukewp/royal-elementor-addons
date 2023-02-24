@@ -3892,6 +3892,22 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'button_transition',
+			[
+				'label' => esc_html__( 'Transition', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 1,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-instagram-follow-btn' => '-webkit-transition: all {{VALUE}}s ease; transition: all {{VALUE}}s ease;',
+				],
+				'separator' => 'after'
+			]
+		);
+
 		$this->add_responsive_control(
 			'button_distance_from_feed',
 			[
