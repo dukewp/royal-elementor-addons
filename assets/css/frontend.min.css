@@ -267,6 +267,10 @@ template {
     margin: 0 auto;
   }*/
 
+/* Section Z Index */
+.wpr-section-z-index {
+    z-index: 999 !important;
+}
 
 /* Hidden Element */
 .wpr-hidden-element {
