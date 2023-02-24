@@ -1360,21 +1360,17 @@ input.wpr-user-template-title:focus {
   padding: 0 25px !important;
 }
 
-#fs_connect .fs-permissions {
-  margin-top: 20px !important;
-}
-
 #fs_connect .fs-permissions>.fs-trigger {
   -webkit-box-shadow: none !important;
           box-shadow: none !important;
 }
 
-#fs_connect .fs-permissions.fs-open ul {
-  margin: 30px 20px !important;
+.fs-trigger.wp-core-ui {
+  opacity: 0.6;
 }
 
-#fs_connect .fs-permissions ul li {
-  margin-bottom: 20px !important;
+#fs_connect .fs-permissions.fs-open ul {
+  margin: 30px 20px !important;
 }
 
 #fs_connect .fs-permissions ul li .fs-permission-description span {
