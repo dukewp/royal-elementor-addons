@@ -90,12 +90,16 @@ class Plugin {
 		require WPR_ADDONS_PATH . 'admin/includes/wpr-templates-library.php';
 
 		// Post Likes
-		require WPR_ADDONS_PATH . 'classes/wpr-post-likes.php';
+		require WPR_ADDONS_PATH . 'classes/modules/wpr-post-likes.php';
 
 		// Ajax Search
-		require WPR_ADDONS_PATH . 'classes/wpr-ajax-search.php';
-		require WPR_ADDONS_PATH . 'classes/wpr-load-more-instagram-posts.php';
-		require WPR_ADDONS_PATH . 'classes/wpr-load-more-tweets.php';
+		require WPR_ADDONS_PATH . 'classes/modules/wpr-ajax-search.php';
+
+		// Instagram
+		require WPR_ADDONS_PATH . 'classes/modules/wpr-load-more-instagram-posts.php';
+
+		// Twitter
+		require WPR_ADDONS_PATH . 'classes/modules/wpr-load-more-tweets.php';
 
 		// Particles
 		if ( 'on' === get_option('wpr-particles', 'on') ) {//TODO: make this check automatic(loop through) for all extensions
