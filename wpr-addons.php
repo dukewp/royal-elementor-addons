@@ -7,8 +7,8 @@
  * Version: 1.3.65
  * License: GPLv3
  * Author URI: https://royal-elementor-addons.com/
- * Elementor tested up to: 3.11.0
- * Elementor Pro tested up to: 3.11.0
+ * Elementor tested up to: 3.11.2
+ * Elementor Pro tested up to: 3.11.2
  *
  * Text Domain: wpr-addons
 */
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'WPR_ADDONS_VERSION', '1.3.63' );
+define( 'WPR_ADDONS_VERSION', '1.3.65' );
 
 define( 'WPR_ADDONS__FILE__', __FILE__ );
 define( 'WPR_ADDONS_PLUGIN_BASE', plugin_basename( WPR_ADDONS__FILE__ ) );
