@@ -10,6 +10,7 @@ class WprPluginSaleNotice {
         // delete_option('wpr_plugin_sale_dismiss_notice'); // uncomment for testing
         
         $this->past_date = strtotime( '-2 days' );
+        $this->past_date_rml = strtotime( '-15 days' );
         $this->install_date = get_option('royal_elementor_addons_activation_time_for_sale');
         $this->remind_me_later = get_option('wpr_sale_remind_me_later');
         // add_action( 'admin_init', [$this, 'render_notice'] ); // uncomment for testing
@@ -30,7 +31,7 @@ class WprPluginSaleNotice {
 
     public function render_notice() {
         if ( $this->past_date >= $this->install_date ) {
-            if ( get_option('wpr_sale_remind_me_later') && !($this->past_date >= $this->remind_me_later) ) {
+            if ( get_option('wpr_sale_remind_me_later') && !($this->past_date_rml >= $this->remind_me_later) ) {
                 return;
             }
             add_action( 'admin_notices', [$this, 'render_plugin_sale_notice' ]);
