@@ -53,7 +53,7 @@ class WprPluginUpdateNotice {
                                 <li><a target="_blank" href="https://royal-elementor-addons.com/elementor-image-accordion-widget/?ref=rea-plugin-backend-update-notice">Image Accordion</a></li>
                             </ul>
                         </div>
-                        <div class="image-wrap"><img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/new-theme-builder.png"></div>
+                        <div class="image-wrap"><img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'img/new-theme-builder.png"></div>
                         <canvas id="wpr-notice-confetti"></canvas>
                 </div>';
         }
