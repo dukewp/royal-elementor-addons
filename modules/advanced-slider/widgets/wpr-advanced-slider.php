@@ -213,6 +213,9 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'render_type' => 'template',
 				'frontend_available' => true,
 				'separator' => 'before',
+				'condition' => [
+					'slider_effect!' => 'slide_vertical'
+				]
 			]
 		);
 	}
@@ -229,6 +232,9 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'render_type' => 'template',
 				'frontend_available' => true,
 				'default' => 1,
+				'condition' => [
+					'slider_effect!' => 'slide_vertical'
+				]
 			]
 		);
 	}
@@ -507,6 +513,25 @@ class Wpr_Advanced_Slider extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'slider_title_tag',
+			[
+				'label' => esc_html__( 'Title HTML Tag', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => esc_html__( 'H1', 'wpr-addons' ),
+					'h2' => esc_html__( 'H2', 'wpr-addons' ),
+					'h3' => esc_html__( 'H3', 'wpr-addons' ),
+					'h4' => esc_html__( 'H4', 'wpr-addons' ),
+					'h5' => esc_html__( 'H5', 'wpr-addons' ),
+					'h6' => esc_html__( 'H6', 'wpr-addons' )
+				],
+				'condition' => [
+					'slider_show_content' => 'yes',
+				]
+			]
+		);
+
+		$repeater->add_control(
 			'slider_item_title',
 			[
 				'label'  	=> esc_html__( 'Title', 'wpr-addons' ),
@@ -515,6 +540,25 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'condition' => [
 					'slider_show_content' => 'yes',
 				],
+			]
+		);
+
+		$repeater->add_control(
+			'slider_sub_title_tag',
+			[
+				'label' => esc_html__( 'Sub Title HTML Tag', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => esc_html__( 'H1', 'wpr-addons' ),
+					'h2' => esc_html__( 'H2', 'wpr-addons' ),
+					'h3' => esc_html__( 'H3', 'wpr-addons' ),
+					'h4' => esc_html__( 'H4', 'wpr-addons' ),
+					'h5' => esc_html__( 'H5', 'wpr-addons' ),
+					'h6' => esc_html__( 'H6', 'wpr-addons' )
+				],
+				'condition' => [
+					'slider_show_content' => 'yes',
+				]
 			]
 		);
 
@@ -829,6 +873,30 @@ class Wpr_Advanced_Slider extends Widget_Base {
 
 		$this->add_control_slides_to_scroll();
 
+		$this->add_control(
+			'slides_amount_hidden',
+			[
+				'type' => Controls_Manager::HIDDEN,
+				'prefix_class' => 'wpr-adv-slider-columns-',
+				'default' => 1,
+				'condition' => [
+					'slider_effect' => 'slide_vertical'
+				]
+			]
+		);
+
+		$this->add_control(
+			'slides_to_scroll_hidden',
+			[
+				'type' => Controls_Manager::HIDDEN,
+				'prefix_class' => 'wpr-adv-slides-to-scroll-',
+				'default' => 1,
+				'condition' => [
+					'slider_effect' => 'slide_vertical'
+				]
+			]
+		);
+
 		$this->add_responsive_control(
 			'slider_gutter',
 			[
@@ -921,6 +989,26 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'slider_sub_title_tag',
+			[
+				'label' => esc_html__( 'Sub Title HTML Tag', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => esc_html__( 'H1', 'wpr-addons' ),
+					'h2' => esc_html__( 'H2', 'wpr-addons' ),
+					'h3' => esc_html__( 'H3', 'wpr-addons' ),
+					'h4' => esc_html__( 'H4', 'wpr-addons' ),
+					'h5' => esc_html__( 'H5', 'wpr-addons' ),
+					'h6' => esc_html__( 'H6', 'wpr-addons' )
+				],
+				'default' => 'h3',
+				'condition' => [
+					'slider_sub_title' => 'yes'
+				]
+			]
+		);
+
 		$this->add_responsive_control(
 			'slider_description',
 			[
@@ -940,7 +1028,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-slider-description' => 'display:{{VALUE}};',
 				],
-				'separator' => 'after',
+				'separator' => 'after'
 			]
 		);
 
@@ -1051,6 +1139,17 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			]
 		);
 
+		// GOGA - remove if can't be fixed
+		$this->add_control(
+			'slider_loop',
+			[
+				'label' => esc_html__('Loop'),
+				'type' => Controls_Manager::SWITCHER,
+				'render_type' => 'template',
+				'separator' => 'before'
+			]
+		);
+
 		$this->add_control_slider_autoplay();
 
 		$this->add_control_slider_autoplay_duration();
@@ -1131,6 +1230,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'advanced-slider', [
 			'Add Unlimited Slides',
+			'Vertical Sliding',
 			'Elementor Templates Slider option',
 			'Scroll to Section Button',
 			'Ken Burn Effect',
@@ -1403,7 +1503,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#ffffff',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-slider-sub-title h3' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-slider-sub-title *' => 'color: {{VALUE}}',
 				],
 			]
 		);
@@ -1414,7 +1514,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-slider-sub-title h3' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-slider-sub-title *' => 'background-color: {{VALUE}}',
 				],
 				'separator' => 'after',
 			]
@@ -1425,7 +1525,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			[
 				'name'     => 'slider_sub_title_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-slider-sub-title h3',
+				'selector' => '{{WRAPPER}} .wpr-slider-sub-title *',
 			]
 		);
 
@@ -1442,7 +1542,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 					'left' => 10,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-slider-sub-title h3' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-slider-sub-title *' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -1461,7 +1561,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 					'left' => 0,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-slider-sub-title h3' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-slider-sub-title *' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -2806,7 +2906,11 @@ class Wpr_Advanced_Slider extends Widget_Base {
 					$slider_html .= '<div class="wpr-slider-item-bg '. esc_attr($ken_burn_class) .'" style="background-image: url('. esc_url($item_bg_image_url) .')"></div>';
 				}
 
-				$slider_amount = +$settings['slider_amount'];
+				if ( 'slide_vertical' === $settings['slider_effect'] ) {
+					$slider_amount = 1;
+				} else {
+					$slider_amount = +$settings['slider_amount'];
+				}
 
 				// Slider Overlay
 				$slider_overlay_html = '';
@@ -2871,22 +2975,30 @@ class Wpr_Advanced_Slider extends Widget_Base {
 								//  Slider Title
 								if ( $settings['slider_title'] === 'yes' && ! empty( $item['slider_item_title'] ) ) {
 								$slider_html .= '<div class="wpr-slider-title">';
-									$slider_html .= '<' . $settings['slider_title_tag'] . '>'. wp_kses_post($item['slider_item_title']) .'</'. $settings['slider_title_tag'] .'>';
+									if ( '' !== $item['slider_title_tag'] ) {
+										$slider_html .= '<' . $item['slider_title_tag'] . '>'. wp_kses_post($item['slider_item_title']) .'</'. $item['slider_title_tag'] .'>';
+									} else {
+										$slider_html .= '<' . $settings['slider_title_tag'] . '>'. wp_kses_post($item['slider_item_title']) .'</'. $settings['slider_title_tag'] .'>';
+									}
 								$slider_html .= '</div>';
 								}	
 								
 								// Slider Sub Title
 								if ( $settings['slider_sub_title'] === 'yes' && ! empty( $item['slider_item_sub_title'] ) ) {
 								$slider_html .= '<div class="wpr-slider-sub-title">';
-									$slider_html .= '<h3>'. wp_kses_post($item['slider_item_sub_title']) .'</h3>';
+									if ( '' !== $item['slider_sub_title_tag'] ) {
+										$slider_html .= '<' . $item['slider_sub_title_tag'] . '>'. wp_kses_post($item['slider_item_sub_title']) .'</' . $item['slider_sub_title_tag'] . '>';
+									} else {
+										$slider_html .= '<' . $settings['slider_sub_title_tag'] . '>'. wp_kses_post($item['slider_item_sub_title']) .'</' . $settings['slider_sub_title_tag'] . '>';
+									}
 								$slider_html .= '</div>';
 								}							
 
 								// Slider Description
 								if ( $settings['slider_description'] === 'yes' && ! empty( $item['slider_item_description'] ) ) {
-								$slider_html .= '<div class="wpr-slider-description">';	
-									$slider_html .= '<p>'. wp_kses_post($item['slider_item_description']) .'</p>';
-								$slider_html .= '</div>';
+									$slider_html .= '<div class="wpr-slider-description">';	
+										$slider_html .= '<p>'. wp_kses_post($item['slider_item_description']) .'</p>';
+									$slider_html .= '</div>';
 								}
 								
 								// Slider Button Secondary
@@ -2972,7 +3084,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 
 		$slider_options = [
 			'rtl' => $slider_is_rtl,
-			'infinite' => true,
+			'infinite' => ( $settings['slider_loop'] === 'yes' ),
 			'speed' => absint( $settings['slider_effect_duration'] * 1000 ),
 			'arrows'=> true,
 			'dots' 	=> true,

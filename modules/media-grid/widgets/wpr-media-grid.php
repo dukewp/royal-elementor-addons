@@ -79,9 +79,9 @@ class Wpr_Media_Grid extends Widget_Base {
 					'date' => esc_html__( 'Date', 'wpr-addons'),
 					'pro-tl' => esc_html__( 'Title (Pro)', 'wpr-addons'),
 					'pro-mf' => esc_html__( 'Last Modified (Pro)', 'wpr-addons'),
-					'pro-d' => esc_html__( 'Post ID', 'wpr-addons' ),
-					'pro-ar' => esc_html__( 'Post Author', 'wpr-addons' ),
-					'pro-cc' => esc_html__( 'Comment Count', 'wpr-addons' )
+					'pro-d' => esc_html__( 'Post ID (Pro)', 'wpr-addons' ),
+					'pro-ar' => esc_html__( 'Post Author (Pro)', 'wpr-addons' ),
+					'pro-cc' => esc_html__( 'Comment Count (Pro)', 'wpr-addons' )
 				],
 				'condition' => [
 					'query_randomize!' => 'rand',
@@ -861,6 +861,7 @@ class Wpr_Media_Grid extends Widget_Base {
 			'layout_pagination',
 			[
 				'label' => esc_html__( 'Show Pagination', 'wpr-addons' ),
+				'description' => esc_html__('Please note that Pagination doesn\'t work in editor', 'wpr-addons'),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 				'return_value' => 'yes',
@@ -2562,7 +2563,6 @@ class Wpr_Media_Grid extends Widget_Base {
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'media-grid', [
-			'Posts Order',
 			'Grid Columns 1,2,3,4,5,6,7,8',
 			'Masonry Layout',
 			'Random Images Query',
@@ -2585,6 +2585,7 @@ class Wpr_Media_Grid extends Widget_Base {
 			'Grid Category Filter Count',
 			'Grid Item Even/Odd Background Color',
 			'Title & Category Advanced Link Hover Animations',
+			'Image Order'
 		] );
 		
 		// Styles ====================

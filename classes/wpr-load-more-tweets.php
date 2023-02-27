@@ -382,6 +382,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         $items_array = [];
 
         foreach ($settings['twitter_accounts'] as $key=>$value) {
+          
             $response[$key] = wp_remote_get('https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=' . $value['twitter_feed_account_name'] . '&count='. ($settings['number_of_posts'] + $_POST['next_post_index']) .'&tweet_mode=extended', [
               'httpversion' => '1.1',
               'blocking' => true,
@@ -397,7 +398,8 @@ if ( ! defined( 'ABSPATH' ) ) {
             if ( ! empty( $response[$key]['response'] ) && $response[$key]['response']['code'] == 200 ) {
               $items_array[] = json_decode( wp_remote_retrieve_body( $response[$key] ), true );
             }
-          } foreach ( $items_array as $key=>$items ) :
+          } 
+            foreach ( $items_array as $key=>$items ) :
     
             if ($settings['twitter_feed_hashtag_name']) {
               $hashtag_names = explode(',', str_replace(' ', '', $settings['twitter_feed_hashtag_name']));
@@ -420,6 +422,10 @@ if ( ! defined( 'ABSPATH' ) ) {
             }
         
                   foreach ( $items as $key=>$item) :
+                
+                    if ( $key >= 6 && !wpr_fs()->can_use_premium_code() ) {
+                      break;
+                    }
       
                     if ($key < $_POST['next_post_index']) :
                       continue; 

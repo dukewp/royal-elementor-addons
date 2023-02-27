@@ -26,7 +26,7 @@ class Wpr_Offcanvas extends Widget_Base {
 	}
 
 	public function get_title() {
-		return esc_html__( 'Offcanvas', 'wpr-addons' );
+		return esc_html__( 'Off-Canvas Content', 'wpr-addons' );
 	}
 
 	public function get_icon() {
@@ -38,7 +38,7 @@ class Wpr_Offcanvas extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'offcanvas', 'off canvas', 'sidebar', 'ofcanvas', 'popup' ];
+		return [ 'royal', 'offcanvas', 'menu', 'nav', 'content', 'off canvas', 'sidebar', 'ofcanvas', 'popup' ];
 	}
 
 	public function get_style_depends() {
@@ -267,12 +267,12 @@ class Wpr_Offcanvas extends Widget_Base {
 		$this->start_controls_section(
 			'section_offcanvas_content',
 			[
-				'label' => esc_html__( 'Content', 'wpr-addons' ),
+				'label' => 'Content  <a href="#" onclick="window.open(\'https://www.youtube.com/watch?v=fQnbH2oiSYw\',\'_blank\').focus()">Video Tutorial <span class="dashicons dashicons-video-alt3"></span></a>',
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
 
-		// Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
+		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
 		$this->add_control(
 			'offcanvas_template',

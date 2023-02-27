@@ -111,11 +111,22 @@ class Wpr_Grid extends Widget_Base {
 		);
 	}
 
+	public function add_control_grid_lazy_loading() {
+		$this->add_control(
+			'grid_lazy_loading',
+			[
+				'label' => sprintf( __( 'Lazy Loading %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);
+	}
+
 	public function add_control_display_scheduled_posts() { 
 		$this->add_control(
 			'display_scheduled_posts',
 			[
-				'label' => sprintf( __( 'Display Only Scheduled Posts %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'label' => sprintf( __( 'Display Only Scheduled %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
 				'type' => Controls_Manager::SWITCHER,
 				'classes' => 'wpr-pro-control no-distance'
 			]
@@ -145,9 +156,9 @@ class Wpr_Grid extends Widget_Base {
 					'date' => esc_html__( 'Date', 'wpr-addons'),
 					'pro-tl' => esc_html__( 'Title (Pro)', 'wpr-addons'),
 					'pro-mf' => esc_html__( 'Last Modified (Pro)', 'wpr-addons'),
-					'pro-d' => esc_html__( 'Post ID', 'wpr-addons' ),
-					'pro-ar' => esc_html__( 'Post Author', 'wpr-addons' ),
-					'pro-cc' => esc_html__( 'Comment Count', 'wpr-addons' )
+					'pro-d' => esc_html__( 'Post ID (Pro)', 'wpr-addons' ),
+					'pro-ar' => esc_html__( 'Post Author (Pro)', 'wpr-addons' ),
+					'pro-cc' => esc_html__( 'Comment Count (Pro)', 'wpr-addons' )
 				],
 				'condition' => [
 					'query_randomize!' => 'rand',
@@ -1201,6 +1212,7 @@ class Wpr_Grid extends Widget_Base {
 			'layout_pagination',
 			[
 				'label' => esc_html__( 'Show Pagination', 'wpr-addons' ),
+				'description' => esc_html__('Please note that Pagination doesn\'t work in editor', 'wpr-addons'),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
 				'return_value' => 'yes',
@@ -1212,6 +1224,8 @@ class Wpr_Grid extends Widget_Base {
 		);
 
 		$this->add_control_open_links_in_new_tab();
+		
+		$this->add_control_grid_lazy_loading();
 
 		$this->add_control_layout_animation();
 
@@ -3133,9 +3147,6 @@ class Wpr_Grid extends Widget_Base {
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'grid', [
-			'Posts Order',
-			'Custom Post Types Support',
-			'Trim Title & Excerpt By Letter Count',
 			'Grid Columns 1,2,3,4,5,6',
 			'Masonry Layout',
 			'List Layout Zig-zag',
@@ -3160,6 +3171,12 @@ class Wpr_Grid extends Widget_Base {
 			'Grid Category Filter Count',
 			'Grid Item Even/Odd Background Color',
 			'Title, Category, Read More Advanced Link Hover Animations',
+			'Display Scheduled Posts',
+			'Open Links in New Tab',
+			'Lazy Loading',
+			'Posts Order',
+			'Custom Post Types Support',
+			'Trim Title & Excerpt By Letter Count'
 		] );
 
 		// Styles ====================
@@ -8229,7 +8246,11 @@ class Wpr_Grid extends Widget_Base {
 
 		if ( has_post_thumbnail() ) {
 			echo '<div class="wpr-grid-image-wrap" data-src="'. esc_url( $src ) .'">';
-				echo '<img src="'. WPR_ADDONS_ASSETS_URL . 'img/icon-256x256.png" alt="'. esc_attr( $alt ) .'" class="wpr-hidden-image wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
+				if ( 'yes' == $settings['grid_lazy_loading'] ) {
+					echo '<img src="'. WPR_ADDONS_ASSETS_URL . 'img/icon-256x256.png" alt="'. esc_attr( $alt ) .'" class="wpr-hidden-image wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
+				} else {
+					echo '<img src="'. esc_url( $src ) . '" alt="'. esc_attr( $alt ) .'" class="wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
+				}
 			echo '</div>';
 		}
 	}

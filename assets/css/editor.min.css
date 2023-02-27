@@ -91,7 +91,8 @@
 .elementor-control-type,
 .elementor-control-show_last_update_date,
 .elementor-control-insta_feed_elements .elementor-control-element_lightbox_overlay,
-.elementor-control-insta_feed_elements .elementor-control-element_avatar_size {
+.elementor-control-insta_feed_elements .elementor-control-element_avatar_size,
+.elementor-control-insta_feed_elements .elementor-control-element-hide_year {
 	margin-bottom: 15px;
 }
 
@@ -198,6 +199,10 @@
 .elementor-control-element_show_on {
 	padding-top: 15px !important;
 	border-top: 1px solid #d5dadf;
+}
+
+.elementor-control-show_word_count {
+	padding-top: 0!important;
 }
 
 .elementor-control-twitter_feed_elements .elementor-control-element_show_on {
@@ -531,7 +536,9 @@
 .elementor-control-wpr_library_buttons .wpr-image-accordion a:last-child,
 .elementor-control-wpr_library_buttons .wpr-mega-menu a:last-child,
 .elementor-control-wpr_library_buttons .wpr-charts a:last-child,
-.elementor-control-wpr_library_buttons .wpr-offcanvas a:last-child {
+.elementor-control-wpr_library_buttons .wpr-offcanvas a:last-child,
+.elementor-control-wpr_library_buttons .wpr-instagram-feed a:last-child,
+.elementor-control-wpr_library_buttons .wpr-twitter-feed a:last-child {
 	display: none;
 }
 
@@ -632,6 +639,14 @@
 
 .elementor-control[class*="pro_notice"] {
 	padding: 5px 0 15px 0 !important;
+}
+
+.elementor-control.elementor-control-limit_pro_notice {
+	padding-bottom: 0 !important;
+}
+
+.wpr-pro-control.elementor-control-open_links_in_new_tab {
+	padding-top: 20px;
 }
 
 .wpr-pro-notice {
