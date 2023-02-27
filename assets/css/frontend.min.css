@@ -14112,9 +14112,11 @@ flex-grow: 0; */
     border: 1px solid blanchedalmond;
 }
 
-.wpr-view-wishlist {
+.wpr-view-wishlist,
+.wpr-view-wishlist .wpr-wishlist-text {
     display: block;
     width: 100%;
+    padding: 0;
 }
 
 .wpr-wishlist-wrap .wpr-wishlist-text {
