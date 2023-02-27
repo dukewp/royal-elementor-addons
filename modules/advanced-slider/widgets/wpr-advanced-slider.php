@@ -1119,7 +1119,8 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'label' => esc_html__('Loop'),
 				'type' => Controls_Manager::SWITCHER,
 				'render_type' => 'template',
-				'separator' => 'before'
+				'separator' => 'before',
+				'default' => 'yes'
 			]
 		);
 
