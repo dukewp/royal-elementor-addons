@@ -1112,18 +1112,6 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			]
 		);
 
-		// GOGA - remove if can't be fixed
-		$this->add_control(
-			'slider_loop',
-			[
-				'label' => esc_html__('Loop'),
-				'type' => Controls_Manager::SWITCHER,
-				'render_type' => 'template',
-				'separator' => 'before',
-				'default' => 'yes'
-			]
-		);
-
 		$this->add_control_slider_autoplay();
 
 		$this->add_control_slider_autoplay_duration();
@@ -3034,7 +3022,6 @@ class Wpr_Advanced_Slider extends Widget_Base {
 
 		$slider_options = [
 			'rtl' => $slider_is_rtl,
-			'infinite' => ( $settings['slider_loop'] === 'yes' ),
 			'speed' => absint( $settings['slider_effect_duration'] * 1000 ),
 			'arrows'=> true,
 			'dots' 	=> true,
