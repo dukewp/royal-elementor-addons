@@ -237,3 +237,31 @@ function royal_elementor_addons_deactivate() {
 
 // hook already exists with template kits notice
 register_deactivation_hook( __FILE__, 'royal_elementor_addons_deactivate' );
+
+// disable Cloudflare Rocket Loader for certain scripts
+
+// add_filter( 'script_loader_tag', 'cfrocketloader_ignore_script', 10, 3 );
+
+// function cfrocketloader_ignore_script( $tag, $handle, $src )
+// {
+// 	var_dump($handle);
+// 	// if ( 'abc' === $handle || 'lmn' === $handle || 'xyz' === $handle ) 
+// 	// {
+// 	// 	return str_replace( "src='", "data-cfasync='false' src='", $tag );
+// 	// }
+// 	// else
+// 	// {
+// 	// 	return $tag;
+// 	// }
+// }
+
+
+
+function wpse_script_loader_tag( $tag, $handle ) {
+    if ( 'jquery-core' !== $handle && 'jquery-migrate' !== $handle && 'wpr-addons-js' !== $handle ) {
+        return $tag;
+    }
+
+    return str_replace( ' src', ' data-cfasync="false" src', $tag );
+}
+add_filter( 'script_loader_tag', 'wpse_script_loader_tag', 10, 2 );

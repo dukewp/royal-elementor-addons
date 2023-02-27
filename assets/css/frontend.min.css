@@ -13990,6 +13990,13 @@ flex-grow: 0; */
     left: 65%;
 }
 
+.wpr-compare-toggle-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+}
+
 /* == Wishlist Button */
 
 .wpr-wishlist-add,
@@ -14283,9 +14290,7 @@ flex-grow: 0; */
     font-weight: 600 !important;
 }
 
-/* Compare Count */
-
-
+/* == Compare Count */
 @-webkit-keyframes compare-popup-grow-in-align-middle {
     0% {-webkit-transform: scale(0) translateX(-50%) translateY(-50%);transform: scale(0) translateX(-50%) translateY(-50%); -webkit-transform-origin: top left; transform-origin: top left;}
     100% {-webkit-transform: scale(1) translateX(-50%) translateY(-50%);transform: scale(1) translateX(-50%) translateY(-50%); -webkit-transform-origin: top left; transform-origin: top left;}
@@ -14346,8 +14351,49 @@ flex-grow: 0; */
             animation-fill-mode: forwards;  
 }
 
+@-webkit-keyframes compare-fade-in {
+    0% {opacity: 0}
+    100% {opacity: 1}
+}
+
+@keyframes compare-fade-in {
+    0% {opacity: 0}
+    100% {opacity: 1}
+}
+
+@-webkit-keyframes compare-fade-out {
+    0% {opacity: 1}
+    100% {opacity: 0}
+}
+
+@keyframes compare-fade-out {
+    0% {opacity: 1}
+    100% {opacity: 0}
+}
+
+.wpr-compare-fade-in {
+    opacity: 1;
+    -webkit-animation-name: compare-fade-in;
+            animation-name: compare-fade-in;
+    -webkit-animation-duration: 0.6s;
+            animation-duration: 0.6s;
+    -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;  
+}
+
+.wpr-compare-fade-out {
+    opacity: 0;
+    -webkit-animation-name: compare-fade-out;
+            animation-name: compare-fade-out;
+    -webkit-animation-duration: 0.6s;
+            animation-duration: 0.6s;
+    -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;  
+}
+
 .wpr-compare-bg.wpr-compare-popup-hidden {
     display: none;
+    opacity: 0;
 }
 .wpr-compare-bg {
     display: block;
@@ -14366,6 +14412,7 @@ flex-grow: 0; */
     height: 80vh;
     top: 50%;
     left: 50%;
+    transform: translate(-50%, -50%);
     /* top: 10vh;
     left: 10vw; */
     background-color: white;
@@ -14393,7 +14440,7 @@ flex-grow: 0; */
     top: 5px;
     right: 5px;
     padding: 10px;
-    z-index: 1;
+    z-index: 2;
 }
 
 .wpr-close-compare::before {
