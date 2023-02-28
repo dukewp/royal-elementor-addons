@@ -19782,7 +19782,7 @@
 
                 return "{$wrap_with}{$url}{$wrap_with}";
             } else {
-                $url = admin_url( 'admin-ajax.php', 'relative' );
+                $url = admin_url( 'admin-ajax.php' );
                 return "{$wrap_with}{$url}{$wrap_with}";
             }
         }
