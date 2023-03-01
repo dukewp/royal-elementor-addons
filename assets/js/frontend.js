@@ -259,7 +259,6 @@
 						}, 500);
 					// Editor
 					} else {
-						console.log('works particles here');
 						if ( $scope.hasClass('wpr-particle-yes') ) {
 							particlesJS( 'wpr-particle-'+ sectionID, $scope.find('.wpr-particle-wrapper').attr('particle-source') == 'wpr_particle_json_custom' ? JSON.parse(particlesJSON) : modifyJSON(particlesJSON));
 	

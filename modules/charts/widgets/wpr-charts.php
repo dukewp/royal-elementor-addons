@@ -108,9 +108,6 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label'       => __( 'Separator', 'wpr-addons' ),
 				'type'        => Controls_Manager::TEXT,
-				'dynamic' => [
-					'active' => true,
-				],
 				'default' => ',',
 				'label_block' => true,
 				'condition'   => [
@@ -140,7 +137,9 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label'       => __( 'Upload CSV File', 'wpr-addons' ),
 				'type'        => \Elementor\Controls_Manager::MEDIA,
-				'dynamic'     => ['active' => true],
+				'dynamic'     => ['
+					active' => true,
+				],
 				'media_type'  => [],
 				'label_block' => true,
 				'condition'   => [

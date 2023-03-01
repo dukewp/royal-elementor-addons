@@ -110,7 +110,8 @@ class Wpr_Page_List extends Widget_Base {
 		);
 
 		$repeater->add_control(
-			'page_list_item_title', [
+			'page_list_item_title', 
+			[
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'dynamic' => [
@@ -126,7 +127,8 @@ class Wpr_Page_List extends Widget_Base {
 		);
 
 		$repeater->add_control(
-			'page_list_item_sub_title', [
+			'page_list_item_sub_title', 
+			[
 				'label' => esc_html__( 'Sub Title', 'wpr-addons' ),
 				'label_block' => true,
 				'type' => \Elementor\Controls_Manager::TEXT,
