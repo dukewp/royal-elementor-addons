@@ -301,6 +301,9 @@ class Wpr_Offcanvas extends Widget_Base {
 			'offcanvas_title', [
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'Offcanvas', 'wpr-addons' ),
 				'condition' => [
 					'offcanvas_show_header_title' => 'yes'
@@ -355,6 +358,9 @@ class Wpr_Offcanvas extends Widget_Base {
 			[
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'Click Here', 'wpr-addons' ),
 				'condition' => [
 					'offcanvas_show_button_title' => 'yes'

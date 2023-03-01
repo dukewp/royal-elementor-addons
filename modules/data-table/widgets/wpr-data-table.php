@@ -356,6 +356,9 @@ class Wpr_Data_Table extends Widget_Base {
 			'table_th', [
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'Table Title' , 'wpr-addons' ),
 				'label_block' => true
 			]
@@ -432,6 +435,9 @@ class Wpr_Data_Table extends Widget_Base {
 			[
 				'label' => esc_html__( 'Image', 'wpr-addons'),
 				'type' => Controls_Manager::MEDIA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'condition' => [
 					'header_icon_type'	=> 'image'
 				]
@@ -616,6 +622,9 @@ class Wpr_Data_Table extends Widget_Base {
 			[
 				'label' => esc_html__( 'Content', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXTAREA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'Content' , 'wpr-addons' ),
 				'show_label' => true,
 				'separator' => 'before',
@@ -630,6 +639,9 @@ class Wpr_Data_Table extends Widget_Base {
 			[
 				'label' => esc_html__( 'Content URL', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::URL,
+				'dynamic' => [
+					'active' => true,
+				],
 				'placeholder' => esc_html__( 'https://your-link.com', 'wpr-addons' ),
 				'show_external' => true,
 				'default' => [
@@ -716,6 +728,9 @@ class Wpr_Data_Table extends Widget_Base {
 			[
 				'label' => esc_html__( 'Image', 'wpr-addons'),
 				'type' => Controls_Manager::MEDIA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'condition' => [
 					'td_icon' => 'yes',
 					'td_icon_type!'	=> ['none', 'icon']

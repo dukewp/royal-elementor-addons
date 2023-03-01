@@ -150,6 +150,9 @@ class Wpr_Progress_Bar extends Widget_Base {
 			[
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Title',
 				'separator' => 'before',
 			]
@@ -178,6 +181,9 @@ class Wpr_Progress_Bar extends Widget_Base {
 			[
 				'label' => esc_html__( 'Subtitle', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => '',
 				'separator' => 'before',
 			]
@@ -230,6 +236,9 @@ class Wpr_Progress_Bar extends Widget_Base {
 			[
 				'label' => esc_html__( 'Counter Prefix', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => '',
 				'condition' => [
 					'counter_switcher' => 'yes',
@@ -242,6 +251,9 @@ class Wpr_Progress_Bar extends Widget_Base {
 			[
 				'label' => esc_html__( 'Counter Suffix', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => '%',
 				'condition' => [
 					'counter_switcher' => 'yes',

@@ -137,6 +137,9 @@ class Wpr_Post_Info extends Widget_Base {
 			[
 				'label' => esc_html__( 'No Comments', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => ' No Comments',
 				'condition' => [
 					'post_info_select' => 'comments',
@@ -149,6 +152,9 @@ class Wpr_Post_Info extends Widget_Base {
 			[
 				'label' => esc_html__( 'One Comment', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => ' Comment',
 				'condition' => [
 					'post_info_select' => 'comments',
@@ -161,6 +167,9 @@ class Wpr_Post_Info extends Widget_Base {
 			[
 				'label' => esc_html__( 'Multiple Comments', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => ' Comments',
 				'separator' => 'after',
 				'condition' => [
@@ -207,6 +216,9 @@ class Wpr_Post_Info extends Widget_Base {
 			[
 				'label' => esc_html__( 'Separator', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => ', ',
 				'separator' => 'after',
 				'condition' => [
@@ -290,6 +302,9 @@ class Wpr_Post_Info extends Widget_Base {
 			[
 				'label' => esc_html__( 'Button Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Click Me',
 				'condition' => [
 					'post_info_select' => 'custom-field',
@@ -328,6 +343,9 @@ class Wpr_Post_Info extends Widget_Base {
 				'description' => 'Insert <strong>*cf_value*</strong> to dislpay your Custom Field.',
 				'placeholder'=> 'For Ex: <span>*cf_value*</span>',
 				'type' => Controls_Manager::TEXTAREA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'condition' => [
 					'post_info_select' => 'custom-field',
 					'post_info_cf_wrapper' => 'yes',
@@ -364,6 +382,9 @@ class Wpr_Post_Info extends Widget_Base {
 			[
 				'label' => esc_html__( 'Extra Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => '',
 			]
 		);

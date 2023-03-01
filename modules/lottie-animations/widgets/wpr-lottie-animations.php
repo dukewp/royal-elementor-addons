@@ -76,6 +76,9 @@ class Wpr_Lottie_Animations extends Widget_Base {
 			[
 				'label'       => __( 'Animation JSON URL', 'wpr-addons' ),
 				'type'        => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default'	  => 'https://assets3.lottiefiles.com/packages/lf20_ghs9bkkc.json',
 				'description' => 'Get JSON code URL from <a href="https://lottiefiles.com/" target="_blank">here</a>',
 				'label_block' => true,
@@ -317,6 +320,9 @@ class Wpr_Lottie_Animations extends Widget_Base {
 			array(
 				'label'       => __( 'Link', 'wpr-addons' ),
 				'type'        => Controls_Manager::URL,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default'     => array(
 					'url' => '#',
 				),
@@ -438,10 +444,10 @@ class Wpr_Lottie_Animations extends Widget_Base {
 
 		$this->add_group_control(
 			Group_Control_Css_Filter::get_type(),
-			array(
+			[
 				'name'     => 'hover_css_filters',
 				'selector' => '{{WRAPPER}} .wpr-lottie-animations:hover',
-			)
+			]
 		);
 
 		$this->end_controls_tab();

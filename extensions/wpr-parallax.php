@@ -135,6 +135,9 @@ class Wpr_Parallax_Scroll {
             [
                 'label' => __( 'Choose Image', 'wpr-addons' ),
                 'type' => Controls_Manager::MEDIA,
+				'dynamic' => [
+					'active' => true,
+				],
                 'default' => [
                     'url' => Utils::get_placeholder_image_src(),
                 ],
@@ -224,6 +227,9 @@ class Wpr_Parallax_Scroll {
             [
                 'label' => __( 'Choose Image', 'wpr-addons' ),
                 'type' => Controls_Manager::MEDIA,
+				// 'dynamic' => [
+				// 	'active' => true,
+				// ],
                 'default' => [
                     'url' => Utils::get_placeholder_image_src(),
                 ],

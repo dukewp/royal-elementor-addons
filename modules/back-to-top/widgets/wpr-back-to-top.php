@@ -292,6 +292,9 @@ class Wpr_Back_To_Top extends Widget_Base {
 		[
 			'label' => esc_html__( 'Text', 'wpr-addons' ),
 			'type' => Controls_Manager::TEXT,
+			'dynamic' => [
+				'active' => true,
+			],
 			'default' => 'Scroll To Top',
 			'condition' => [
 			'button_txt_show' => 'yes',

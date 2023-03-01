@@ -141,6 +141,9 @@ class Wpr_Flip_Box extends Widget_Base {
 			[
 				'label' => esc_html__( 'Image', 'wpr-addons' ),
 				'type' => Controls_Manager::MEDIA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'condition' => [
 					'front_icon_type' => 'image',
 				],
@@ -180,6 +183,9 @@ class Wpr_Flip_Box extends Widget_Base {
 			[
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' =>  esc_html__( 'Frontend Content', 'wpr-addons' ),
 				'separator' => 'before',
 			]
@@ -205,6 +211,9 @@ class Wpr_Flip_Box extends Widget_Base {
 			[
 				'label' => esc_html__( 'Frontend Button', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Click Me',
 				'condition' => [
 					'front_trigger' => 'btn',
@@ -255,6 +264,9 @@ class Wpr_Flip_Box extends Widget_Base {
 			[
 				'label' => esc_html__( 'Image', 'wpr-addons' ),
 				'type' => Controls_Manager::MEDIA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'condition' => [
 					'back_icon_type' => 'image',
 				],
@@ -294,6 +306,9 @@ class Wpr_Flip_Box extends Widget_Base {
 			[
 				'label' => esc_html__( 'Backend Content', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Title',
 				'separator' => 'before',
 			]
@@ -318,6 +333,9 @@ class Wpr_Flip_Box extends Widget_Base {
 			'back_link',
 			[
 				'type' => Controls_Manager::URL,
+				'dynamic' => [
+					'active' => true,
+				],
 				'label' => esc_html__( 'Link', 'wpr-addons' ),
 				'placeholder' => esc_html__( 'https://your-link.com', 'wpr-addons' ),
 				'default' => [
@@ -335,6 +353,9 @@ class Wpr_Flip_Box extends Widget_Base {
 			[
 				'label' => esc_html__( 'Button Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Backend Button',
 				'separator' => 'before',
 				'condition' => [

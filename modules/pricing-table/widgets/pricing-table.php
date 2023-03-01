@@ -134,6 +134,9 @@ class Pricing_Table extends Widget_Base {
 			[
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Awesome Title',
 				'condition' => [
 					'type_select' => 'heading',
@@ -146,6 +149,9 @@ class Pricing_Table extends Widget_Base {
 			[
 				'label' => esc_html__( 'Sub Title', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Subtitle text',
 				'condition' => [
 					'type_select' => 'heading',
@@ -176,6 +182,9 @@ class Pricing_Table extends Widget_Base {
 			[
 				'label' => esc_html__( 'Image', 'wpr-addons' ),
 				'type' => Controls_Manager::MEDIA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'condition' => [
 					'type_select' => 'heading',
 					'heading_icon_type' => 'image',
@@ -188,6 +197,9 @@ class Pricing_Table extends Widget_Base {
 			[
 				'label' => '',
 				'type' => Controls_Manager::TEXTAREA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' =>'Text Element',
 				'condition' => [
 					'type_select' => 'text',
@@ -200,6 +212,9 @@ class Pricing_Table extends Widget_Base {
 			[
 				'label' => esc_html__( 'Price', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => '59',
 				'condition' => [
 					'type_select' => 'price',
@@ -212,6 +227,9 @@ class Pricing_Table extends Widget_Base {
 			[
 				'label' => esc_html__( 'Sub Price', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => '99',
 				'condition' => [
 					'type_select' => 'price',
@@ -257,6 +275,9 @@ class Pricing_Table extends Widget_Base {
 			[
 				'label' => esc_html__( 'Currency', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => '$',
 				'condition' => [
 					'type_select' => 'price',
@@ -281,6 +302,9 @@ class Pricing_Table extends Widget_Base {
 			[
 				'label' => esc_html__( 'Old Price', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => '55',
 				'condition' => [
 					'type_select' => 'price',
@@ -294,6 +318,9 @@ class Pricing_Table extends Widget_Base {
 			[
 				'label' => esc_html__( 'Period', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => '/Month',
 				'condition' => [
 					'type_select' => 'price',
@@ -306,6 +333,9 @@ class Pricing_Table extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Awesome Feature',
 				'condition' => [
 					'type_select' => 'feature',
@@ -333,6 +363,9 @@ class Pricing_Table extends Widget_Base {
 			[
 				'label' => esc_html__( 'Button Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Button',
 				'condition' => [
 					'type_select' => 'button',
@@ -345,6 +378,9 @@ class Pricing_Table extends Widget_Base {
 			[
 				'label' => esc_html__( 'Button ID', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'placeholder' => 'button-id',
 				'condition' => [
 					'type_select' => 'button',
@@ -356,6 +392,9 @@ class Pricing_Table extends Widget_Base {
 			'btn_url',
 			[
 				'type' => Controls_Manager::URL,
+				'dynamic' => [
+					'active' => true,
+				],
 				'placeholder' => esc_html__( 'https://your-link.com', 'wpr-addons' ),
 				'show_label' => false,
 				'condition' => [
@@ -665,6 +704,9 @@ class Pricing_Table extends Widget_Base {
 			[
 				'label' => esc_html__( ' Title', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Sale',
 				'condition' => [
 					'badge_style!' => 'none',

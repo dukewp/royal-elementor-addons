@@ -669,6 +669,9 @@ class Wpr_Twitter_Feed extends Widget_Base {
             [
                 'label' => esc_html__('Profile Name', 'wpr-addons'),
                 'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
                 'default' => '@elemntor',
                 'label_block' => false,
                 'description' => esc_html__('Use @ sign with your profile name.', 'wpr-addons'),
@@ -704,6 +707,9 @@ class Wpr_Twitter_Feed extends Widget_Base {
             [
                 'label' => esc_html__('Hashtag Name', 'wpr-addons'),
                 'type' => Controls_Manager::TEXTAREA,
+				'dynamic' => [
+					'active' => true,
+				],
                 'label_block' => true,
                 'description' => esc_html__('Enter comma-separated list and remove # sign from your hashtag name', 'wpr-addons'),
             ]
@@ -728,6 +734,9 @@ class Wpr_Twitter_Feed extends Widget_Base {
             [
                 'label' => esc_html__('Consumer Key', 'wpr-addons'),
                 'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
                 'label_block' => false,
                 'default' => 'sOmRR0YaKwg0eyv4hIiEsu5pH',
                 'description' => '<a href="https://apps.twitter.com/app/" target="_blank">Get Consumer Key.</a> Create a new app or select existing app and grab the <b>consumer key.</b>',
@@ -739,6 +748,9 @@ class Wpr_Twitter_Feed extends Widget_Base {
             [
                 'label' => esc_html__('Consumer Secret', 'wpr-addons'),
                 'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
                 'label_block' => false,
                 'default' => 'Gi4doRTttrEWUuGgjfWTPb0pkxRroBOijN6iNJHtNn2N8uEb47',
                 'description' => '<a href="https://apps.twitter.com/app/" target="_blank">Get Consumer Secret.</a> Create a new app or select existing app and grab the <b>consumer secret.</b>',
@@ -1200,6 +1212,9 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			[
 				'label' => esc_html__( 'Read More Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Read More',
 				'condition' => [
 					'element_select' => [ 'read-more' ],
@@ -1771,6 +1786,9 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			[
 				'label' => esc_html__( 'Load More Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Load More',
 			]
 		);
@@ -1780,6 +1798,9 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			[
 				'label' => esc_html__( 'Finish Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'End of Content.',
 			]
 		);

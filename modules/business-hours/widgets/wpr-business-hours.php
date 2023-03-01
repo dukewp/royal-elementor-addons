@@ -121,6 +121,9 @@ class Wpr_Business_Hours extends Widget_Base {
 			[
 				'label' => esc_html__( 'Day', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Monday',
 			]
 		);
@@ -132,6 +135,9 @@ class Wpr_Business_Hours extends Widget_Base {
 			[
 				'label' => esc_html__( 'Time', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => '08:00 AM - 05:00 PM',
 				'separator' => 'before'
 			]
@@ -158,6 +164,9 @@ class Wpr_Business_Hours extends Widget_Base {
 			[
 				'label' => esc_html__( 'Closed Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Closed',
 				'condition' => [
 					'closed' => 'yes',

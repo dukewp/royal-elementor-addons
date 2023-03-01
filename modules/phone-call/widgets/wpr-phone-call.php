@@ -60,6 +60,9 @@ class Wpr_Phone_Call extends Widget_Base {
 		[
 			'label' => esc_html__( 'Phone Number', 'wpr-addons' ),
 			'type' => Controls_Manager::TEXT,
+			'dynamic' => [
+				'active' => true,
+			],
 			'default' => '123456789',
 		]
 	);
@@ -300,6 +303,9 @@ class Wpr_Phone_Call extends Widget_Base {
 		[
 			'label' => esc_html__( 'Text', 'wpr-addons' ),
 			'type' => Controls_Manager::TEXT,
+			'dynamic' => [
+				'active' => true,
+			],
 			'default' => 'Call Now',
 			'condition' => [
 				'button_txt_show' => 'yes',

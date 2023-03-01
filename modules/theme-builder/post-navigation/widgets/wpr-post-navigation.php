@@ -163,6 +163,9 @@ class Wpr_Post_Navigation extends Widget_Base {
 			[
 				'label' => esc_html__( 'Previous Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Previous Post',
 				'condition' => [
 					'post_nav_labels' => 'yes',
@@ -176,6 +179,9 @@ class Wpr_Post_Navigation extends Widget_Base {
 			[
 				'label' => esc_html__( 'Next Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Next Post',
 				'condition' => [
 					'post_nav_labels' => 'yes',

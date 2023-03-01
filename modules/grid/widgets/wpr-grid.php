@@ -957,6 +957,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Not Found Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'No Posts Found!',
 				'condition' => [
 					'query_selection' => 'dynamic',
@@ -1747,6 +1750,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Read More Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Read More',
 				'condition' => [
 					'element_select' => [ 'read-more' ],
@@ -1760,6 +1766,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Separator', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => ', ',
 				'condition' => [
 					'element_select!' => [
@@ -1819,6 +1828,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'No Comments', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'No Comments',
 				'condition' => [
 					'element_select' => [ 'comments' ],
@@ -1831,6 +1843,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'One Comment', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Comment',
 				'condition' => [
 					'element_select' => [ 'comments' ],
@@ -1843,6 +1858,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Multiple Comments', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Comments',
 				'condition' => [
 					'element_select' => [ 'comments' ],
@@ -2014,6 +2032,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Extra Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => '',
 				'condition' => [
 					'element_select!' => [
@@ -2729,6 +2750,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( '"All" Filter Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'All Post',
 				'condition' => [
 					'filters_all' => 'yes',
@@ -2754,6 +2778,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Separator', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => '',
 				'separator' => 'before',
 			]
@@ -2871,6 +2898,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Older Posts Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Older Posts',
 				'condition' => [
 					'pagination_type' => 'default',
@@ -2883,6 +2913,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Newer Posts Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Newer Posts',
 				'condition' => [
 					'pagination_type' => 'default',
@@ -2930,6 +2963,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Prev Page Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Previous Page',
 				'condition' => [
 					'pagination_type' => 'numbered',
@@ -2943,6 +2979,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Next Page Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Next Page',
 				'condition' => [
 					'pagination_type' => 'numbered',
@@ -2992,6 +3031,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'First Page Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'First Page',
 				'condition' => [
 					'pagination_type' => 'numbered',
@@ -3005,6 +3047,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Last Page Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Last Page',
 				'condition' => [
 					'pagination_type' => 'numbered',
@@ -3067,6 +3112,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Load More Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Load More',
 				'condition' => [
 					'pagination_type' => 'load-more',
@@ -3079,6 +3127,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Finish Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'End of Content.',
 				'condition' => [
 					'pagination_type' => [ 'load-more', 'infinite-scroll' ],

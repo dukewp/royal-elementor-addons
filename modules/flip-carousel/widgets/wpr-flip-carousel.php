@@ -86,6 +86,9 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'label' => __( 'Choose Image', 'wpr-addons' ),
 				'type' => Controls_Manager::MEDIA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => [
 					'url' => WPR_ADDONS_ASSETS_URL . 'img/logo-slider-450x450.png',
 				],
@@ -97,6 +100,9 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'label' => esc_html__( 'Image Caption', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Image Caption',
 				'description' => 'Show/Hide Image Caption from Settings tab.'
 				// 'condition' => [
@@ -120,6 +126,9 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'label' => __( 'Link', 'plugin-domain' ),
 				'type' => Controls_Manager::URL,
+				'dynamic' => [
+					'active' => true,
+				],
 				'placeholder' => __( 'https://your-link.com', 'wpr-addons' ),
 				'show_external' => true,
 				'default' => [

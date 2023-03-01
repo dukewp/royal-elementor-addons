@@ -85,6 +85,9 @@ class Wpr_Page_Cart extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'placeholder' => esc_html__( 'Update Cart', 'wpr-addons' ),
 				'default' => esc_html__( 'Update Cart', 'wpr-addons' ),
 			]
@@ -104,6 +107,9 @@ class Wpr_Page_Cart extends Widget_Base {
 			[
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'placeholder' => esc_html__( 'Cart Totals', 'wpr-addons' ),
 				'default' => esc_html__( 'Cart Totals', 'wpr-addons' ),
 			]
@@ -172,6 +178,9 @@ class Wpr_Page_Cart extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'placeholder' => esc_html__( 'Proceed to Checkout', 'wpr-addons' ),
 				'default' => esc_html__( 'Proceed to Checkout', 'wpr-addons' ),
 			]
@@ -228,6 +237,9 @@ class Wpr_Page_Cart extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'placeholder' => esc_html__( 'Update', 'wpr-addons' ),
 				'default' => esc_html__( 'Update', 'wpr-addons' ),
 			]
@@ -273,6 +285,9 @@ class Wpr_Page_Cart extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'placeholder' => esc_html__( 'Apply coupon', 'wpr-addons' ),
 				'default' => esc_html__( 'Apply coupon', 'wpr-addons' ),
 			]

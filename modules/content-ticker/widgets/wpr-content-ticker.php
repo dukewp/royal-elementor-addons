@@ -435,6 +435,9 @@ class Wpr_Content_Ticker extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Hot News',
 			]
 		);
@@ -704,6 +707,9 @@ class Wpr_Content_Ticker extends Widget_Base {
 			[
 				'label' => esc_html__( 'Link', 'wpr-addons' ),
 				'type' => Controls_Manager::URL,
+				'dynamic' => [
+					'active' => true,
+				],
 				'placeholder' => esc_html__( 'https://www.your-link.com', 'wpr-addons' ),
 				'separator' => 'before',
 				

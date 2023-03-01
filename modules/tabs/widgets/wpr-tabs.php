@@ -141,6 +141,9 @@ class Wpr_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Label', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Tab 1',
 			]
 		);
@@ -165,6 +168,9 @@ class Wpr_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Upload Image', 'wpr-addons' ),
 				'type' => Controls_Manager::MEDIA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'condition' => [
 					'tab_icon_type' => 'image',
 				],

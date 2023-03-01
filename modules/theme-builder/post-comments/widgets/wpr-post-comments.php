@@ -113,6 +113,9 @@ class Wpr_Post_Comments extends Widget_Base {
 			[
 				'label' => esc_html__( 'One Comment', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Comment',
 				'condition' => [
 					'section_title' => 'yes'
@@ -125,6 +128,9 @@ class Wpr_Post_Comments extends Widget_Base {
 			[
 				'label' => esc_html__( 'Multiple Comments', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Comments',
 				'condition' => [
 					'section_title' => 'yes'
@@ -239,6 +245,9 @@ class Wpr_Post_Comments extends Widget_Base {
 			[
 				'label' => esc_html__( 'Section Title', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Leave a Reply',
 				'condition' => [
 					'section_title' => 'yes'
@@ -279,6 +288,9 @@ class Wpr_Post_Comments extends Widget_Base {
 			[
 				'label' => esc_html__( 'Submit Button Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Submit',
 				'separator' => 'before',
 			]

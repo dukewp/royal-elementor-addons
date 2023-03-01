@@ -967,6 +967,9 @@ class Wpr_Search extends Widget_Base {
 			[
 				'label' => esc_html__( 'View Results', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'View Results', 'wpr-addons' ),
                 'condition' => [
 					'show_view_result_btn' => 'yes',
@@ -1023,6 +1026,9 @@ class Wpr_Search extends Widget_Base {
 			[
 				'label' => esc_html__( 'Placeholder', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'Search...', 'wpr-addons' ),
 				'separator' => 'before',
 			]
@@ -1033,6 +1039,9 @@ class Wpr_Search extends Widget_Base {
 			[
 				'label' => esc_html__( 'Aria Label', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'Search', 'wpr-addons' ),
 				'separator' => 'before',
 			]
@@ -1101,6 +1110,9 @@ class Wpr_Search extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Go',
 				'condition' => [
 					'search_btn_type' => 'text',

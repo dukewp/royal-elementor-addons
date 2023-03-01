@@ -116,6 +116,9 @@ class Wpr_Before_After extends Widget_Base {
 			[
 				'label' => esc_html__( 'Upload Image 1', 'wpr-addons' ),
 				'type' => Controls_Manager::MEDIA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => [
 					'url' => Utils::get_placeholder_image_src(),
 				],
@@ -127,6 +130,9 @@ class Wpr_Before_After extends Widget_Base {
 			[
 				'label' => esc_html__( 'Upload Image 2', 'wpr-addons' ),
 				'type' => Controls_Manager::MEDIA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => [
 					'url' => Utils::get_placeholder_image_src(),
 				],
@@ -191,6 +197,9 @@ class Wpr_Before_After extends Widget_Base {
 			[
 				'label' => esc_html__( 'Image 1 Label', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'After',
 				'placeholder'=> esc_html__( 'After', 'wpr-addons' ),
 				'separator' => 'before',
@@ -205,6 +214,9 @@ class Wpr_Before_After extends Widget_Base {
 			[
 				'label' => esc_html__( 'Image 2 Label', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Before',
 				'placeholder'=> esc_html__( 'Before', 'wpr-addons' ),
 				'condition' => [
