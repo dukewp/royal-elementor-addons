@@ -4784,8 +4784,6 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			$delay = isset($settings['twitter_feed_delay']) ? $settings['twitter_feed_delay'] : '';
 			$speed = $settings['twitter_feed_speed'];
 
-			// var_dump($slides_to_show, $slides_to_show_widescreen, $slides_to_show_laptop, $slides_to_show_tablet_extra, $slides_to_show_tablet, $slides_to_show_mobile, $settings['twitter_feed_slides_to_show_mobile'] );
-
 			$twitter_settings['carousel'] = [
 				'wpr_cs_navigation' => $navigation,
 				'wpr_cs_pagination' => $pagination,
