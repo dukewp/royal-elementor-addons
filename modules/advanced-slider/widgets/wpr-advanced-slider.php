@@ -2873,12 +2873,16 @@ class Wpr_Advanced_Slider extends Widget_Base {
 							$item_video_src .= '&muted=1';
 						}
 
+						if ( $item['slider_item_video_controls'] !== 'yes') {
+							$item_video_src .= '&controls=0';
+						}
+
 						if ( $item['slider_item_video_loop'] === 'yes' ) {
 							$item_video_src .= '&loop=1';
 						} elseif ( ! empty( $item_video_start ) ) {
 							$item_video_src .= '&#t='. gmdate( 'H', $item_video_start ) .'h'. gmdate( 'i', $item_video_start ) .'m'. gmdate( 's', $item_video_start ) .'s';
 						}
-
+						
 					}
 
 					$this->add_render_attribute( 'slider_item'. $item_count, 'data-video-src', $item_video_src );
