@@ -50,30 +50,27 @@ class WprPluginSaleNotice {
     public function render_plugin_sale_notice() {
         if ( is_admin() ) {
             echo '<div class="notice wpr-plugin-sale-notice is-dismissible">
-                        <div class="wpr-plugin-sale-notice-logo">
-                            <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/logo-128x128.png">
-                        </div>
                         <div>
-                            <h3><span>Flash Sale</span><br> Get Royal Elementor Addons Pro</h3>
+                            <h3><span>Flash Sale</span><br> Royal Elementor Addons Pro</h3>
                             <ul>
                                 <li>
-                                    <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/check-mark.png">
+                                    <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'img/check-mark.png">
                                     50+ Designer Made Templates Kit
                                 </li>
                                 <li>
-                                    <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/check-mark.png">
+                                    <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'img/check-mark.png">
                                     80+ Advanced Elementor Widgets
                                 </li>
                                 <li>
-                                    <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/check-mark.png">
+                                    <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'img/check-mark.png">
                                     Advanced Theme Builder
                                 </li>
                                 <li>
-                                    <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/check-mark.png">
+                                    <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'img/check-mark.png">
                                     Advanced WooCommerce Builder
                                 </li>
                                 <li>
-                                    <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/check-mark.png">
+                                    <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'img/check-mark.png">
                                     Advanced Popup Builder
                                 </li>
                             </ul>
@@ -88,7 +85,7 @@ class WprPluginSaleNotice {
                                 <a target="#" target="_blank" class="wpr-upgrade-to-pro-button button button-secondary wpr-remind-later">Remind Me Later</a>
                             </div>
                         </div>
-                        <div class="image-wrap"><img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/sale-banner.png"></div>
+                        <div class="image-wrap"><img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'img/sale-banner-20.png"></div>
                         <canvas id="wpr-notice-confetti"></canvas>
                 </div>';
         }
@@ -265,9 +262,9 @@ class WprPluginSaleNotice {
               pointer-events: none;
             }
 
-            @media screen and (max-width: 1366px) {
+            @media screen and (max-width: 1400px) {
                 .wpr-plugin-sale-notice .image-wrap img {
-                  zoom: 0.8;
+                  zoom: 0.9;
                 }
             }
 
