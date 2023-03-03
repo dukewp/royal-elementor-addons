@@ -13884,6 +13884,11 @@ flex-grow: 0; */
 }
 
 /* == Compare */
+.wpr-compare-empty {
+    text-align: center;
+    margin: 0;
+}
+
 .wpr-compare-products {
     overflow-x: auto;
 }
