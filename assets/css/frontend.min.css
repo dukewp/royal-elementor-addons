@@ -15215,6 +15215,23 @@ dl.variation dd {
     width: 100%;
 }
 
+.elementor-widget-wpr-product-add-to-cart a.added_to_cart,
+.elementor-widget-wpr-product-add-to-cart button.single_add_to_cart_button {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.wpr-product-add-to-cart  a.added_to_cart  {
+    text-align: center;
+}
+
+.wpr-product-add-to-cart .available-on-backorder,
+.wpr-product-add-to-cart .out-of-stock,
+.wpr-product-add-to-cart .in-stock {
+    display: none;
+}
+
 /* External/Afiiliate button */
 .woocommerce-grouped-product-list-item a.button {
     display: -webkit-inline-box;
@@ -15238,16 +15255,6 @@ dl.variation dd {
 /* Rating */
 .wpr-product-rating .wpr-woo-rating i:before {
     content: '\002605' !important;
-}
-
-.wpr-product-add-to-cart  a.added_to_cart  {
-    text-align: center;
-}
-
-.wpr-product-add-to-cart .available-on-backorder,
-.wpr-product-add-to-cart .out-of-stock,
-.wpr-product-add-to-cart .in-stock {
-    display: none;
 }
 
 /*--------------------------------------------------------------
