@@ -132,7 +132,7 @@ class WPR_Templates_Data {
 					'theme-builder' => false,
 					'woo-builder' => false,
 					'off-canvas' => false,
-					'price' => $is_pro_active ? 'free' : 'pro',
+					'price' => $is_pro_active ? 'free' : 'free',
 					'label' => '',
 					'priority' => 20,
 				],

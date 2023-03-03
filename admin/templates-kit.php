@@ -365,7 +365,8 @@ function download_template( $kit, $file ) {
     if ( !validate_template($kit) ) {
         wp_send_json_error([
             'error' => esc_html__('Error: Import File validation failed.', 'wpr-addons'),
-            'help' => esc_html__('Please contact Customer Support and send this Error.', 'wpr-addons')
+            'help' => esc_html__('Please contact Customer Support and send this Error.', 'wpr-addons'),
+            'code' => 404
         ]);
         return false;
     }
@@ -392,7 +393,7 @@ function download_template( $kit, $file ) {
         if ( is_wp_error( $tmp_file ) ) {
             wp_send_json_error([
                 'error' => esc_html__('Error: Import File download failed.', 'wpr-addons'),
-                'help' => esc_html__('Please contact Customer Support and send this Error.', 'wpr-addons')
+                'help' => esc_html__('Please contact Customer Support and send this Error.', 'wpr-addons'),
             ]);
             return false;
         }
