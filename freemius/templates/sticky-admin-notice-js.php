@@ -14,6 +14,7 @@
 	}
 ?>
 <script type="text/javascript" >
+	<?php if ( get_current_screen()->base !== 'royal-addons_page_wpr-templates-kit' ) : ?>
 	jQuery( document ).ready(function( $ ) {
 		$( '.fs-notice.fs-sticky .fs-close' ).click(function() {
 			var
@@ -29,8 +30,7 @@
 					message_id: id
 				};
 
-				// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
-				$.post( ajaxurl, data, function( response ) {
+				$.post( <?php echo Freemius::ajax_url() ?>, data, function( response ) {
 
 				});
 
@@ -38,4 +38,5 @@
 			});
 		});
 	});
+	<?php endif; ?>
 </script>

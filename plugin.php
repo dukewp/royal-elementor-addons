@@ -127,7 +127,7 @@ class Plugin {
 			require WPR_ADDONS_PATH . 'classes/plugin-update-notice.php';
 			
 			// Plugin Sale Notice
-			// require WPR_ADDONS_PATH . 'classes/plugin-sale-notice.php';
+			require WPR_ADDONS_PATH . 'classes/plugin-sale-notice.php';
 			
 			// Rating Notice 
 			require WPR_ADDONS_PATH . 'classes/rating-notice.php';
@@ -487,7 +487,8 @@ class Plugin {
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
 				'resturl' => get_rest_url() . 'wpraddons/v1',
 				'nonce' => wp_create_nonce( 'wpr-addons-js' ),
-				'comparePageID' => get_option('wpr_compare_page')
+				'comparePageID' => get_option('wpr_compare_page'),
+				'chooseQuantityText' => esc_html__('Please select the required number of items.')
 			]
 		);
 	}

@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use WprAddons\Admin\Includes\WPR_Templates_Loop;
 use WprAddonsPro\Admin\Wpr_White_Label;
+use WprAddonsPro\Classes\Pro_Modules;
 use WprAddons\Classes\Utilities;
 use WprAddons\Admin\Templates\WPR_Templates_Data;
 
@@ -113,10 +114,12 @@ function wpr_register_addons_settings() {
         register_setting( 'wpr-elements-settings', 'wpr-element-'. $slug, [ 'default' => 'on' ] );
     }
 
+    $woo_modules = Utilities::get_woocommerce_builder_modules();
+    $woo_modules_pro = (wpr_fs()->can_use_premium_code() && defined( 'WPR_ADDONS_PRO_VERSION' )) ? Pro_Modules::get_woocommerce_builder_modules() : [];
 
     // WooCommerce Builder
-    foreach ( Utilities::get_woocommerce_builder_modules() as $title => $data ) {
-        $slug = $data[0];
+    foreach ( array_merge($woo_modules, $woo_modules_pro) as $title => $data ) {
+        $slug = is_array($data) ? $data[0] : $data;
         register_setting( 'wpr-elements-settings', 'wpr-element-'. $slug, [ 'default' => 'on' ] );
     }
 
@@ -130,7 +133,7 @@ function wpr_addons_settings_page() {
 
 <div class="wpr-settings-page-header">
     <h1><?php echo esc_html(Utilities::get_plugin_name(true)); ?></h1>
-    <p><?php esc_html_e( 'The most powerful Elementor Addons in the universe.', 'wpr-addons' ); ?></p>
+    <p><?php esc_html_e( 'The most powerful Elementor Addon in the universe.', 'wpr-addons' ); ?></p>
 
     <?php if ( empty(get_option('wpr_wl_plugin_links')) ) : ?>
     <div class="wpr-preview-buttons">
@@ -342,11 +345,6 @@ function wpr_addons_settings_page() {
         <h1><?php esc_html_e('No Search Results Found.', 'wpr-addons'); ?></h1>
         <p><?php esc_html_e('Cant find a Widget you are looking for?', 'wpr-addons'); ?></p>
         <a href="https://forms.clickup.com/1856033/f/1rmh1-5143/UIYNBNA8STCBOTXGNV" target="_blank"><?php esc_html_e('Request a New Widget', 'wpr-addons'); ?></a>
-    </div>
-
-    <div class="wpr-settings-saved">
-        <span><?php esc_html_e('Options Updated', 'wpr-addons'); ?></span>
-        <span class="dashicons dashicons-yes"></span>
     </div>
 
     <?php //submit_button( '', 'wpr-options-button' ); ?>
@@ -562,7 +560,7 @@ function wpr_addons_settings_page() {
                 <span class="dashicons dashicons-search"></span>
             </div>
 
-            <a href="#" target="_blank" class="button wpr-free-pro-upgrade">
+            <a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-freevsprotab-pro#purchasepro" target="_blank" class="button wpr-free-pro-upgrade">
                 <span><?php echo esc_html__( 'Upgrade to Pro', 'wpr-addons' ); ?></span>
                 <span class="dashicons dashicons-smiley"></span>
             </a>
@@ -583,7 +581,7 @@ function wpr_addons_settings_page() {
                     <li><span>Magazine Grid/Slider Widget</span></li>
                     <li><span>Basic Timeline Widget</span></li>
                     <li><span>Basic Slider Widget</span></li>
-                    <li><span>Offcanvas Menu</span></li>
+                    <li><span>Offcanvas Content</span></li>
                     <li><span>Instagram Feed</span></li>
                     <li><span>Twitter Feed</span></li>
                     <li><span>Basic Data Table</span></li>
@@ -1152,10 +1150,10 @@ function wpr_addons_settings_page() {
             <img src="<?php echo esc_url(WPR_ADDONS_ASSETS_URL .'img/not-found.png'); ?>">
             <h1><?php esc_html_e('No Search Results Found.', 'wpr-addons'); ?></h1>
             <p><?php esc_html_e('Cant find a Feature you are looking for?', 'wpr-addons'); ?></p>
-            <a href="#" target="_blank"><?php esc_html_e('Request a New Feature', 'wpr-addons'); ?></a>
+            <a href="https://forms.clickup.com/1856033/f/1rmh1-5163/J9WM6WHSQRNJF37CMB" target="_blank"><?php esc_html_e('Request a New Feature', 'wpr-addons'); ?></a>
         </div>
 
-        <a href="#" target="_blank" class="button last wpr-free-pro-upgrade">
+        <a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-freevsprotab-pro#purchasepro" target="_blank" class="button last wpr-free-pro-upgrade">
             <span><?php echo esc_html__( 'Upgrade to Pro', 'wpr-addons' ); ?></span>
             <span class="dashicons dashicons-smiley"></span>
         </a>
@@ -1208,10 +1206,7 @@ function wpr_addons_settings_page() {
         echo '</div>';
     ?>
 
-        <div class="wpr-settings-saved">
-            <span><?php esc_html_e('Options Updated', 'wpr-addons'); ?></span>
-            <span class="dashicons dashicons-yes"></span>
-        </div>
+
 
     <?php
 
@@ -1221,6 +1216,10 @@ function wpr_addons_settings_page() {
 
     endif; ?>
 
+    <div class="wpr-settings-saved">
+        <span><?php esc_html_e('Options Updated', 'wpr-addons'); ?></span>
+        <span class="dashicons dashicons-yes"></span>
+    </div>
 </form>
 </div>
 

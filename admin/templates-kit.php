@@ -785,7 +785,7 @@ function wpr_track_imported_kit( $kit ) {
     
     wp_remote_post( 'http://reastats.kinsta.cloud/wp-json/templates-kit-import/data', [
         'body' => [
-            'imported_kit' => $kit
+            'imported_kit' => $kit . ' *'. WPR_ADDONS_VERSION .'*'
         ]
     ] );
 }

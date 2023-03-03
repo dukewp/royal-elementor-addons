@@ -247,7 +247,7 @@
 					sectionID = $scope.data('id'),
 					particlesJSON = ! WprElements.editorCheck() ? $scope.attr('data-wpr-particles') : $scope.find('.wpr-particle-wrapper').attr('data-wpr-particles-editor');
 
-				if ( 'section' === elementType && undefined !== particlesJSON ) {
+				if ( ('section' === elementType || 'container' === elementType) && undefined !== particlesJSON ) {
 					// Frontend
 					if ( ! WprElements.editorCheck() ) {
 						$scope.prepend('<div class="wpr-particle-wrapper" id="wpr-particle-'+ sectionID +'"></div>');
@@ -257,6 +257,10 @@
 						setTimeout(function() {
 							window.dispatchEvent(new Event('resize'));
 						}, 500);
+
+						setTimeout(function() {
+							window.dispatchEvent(new Event('resize'));
+						}, 1500);
 					// Editor
 					} else {
 						if ( $scope.hasClass('wpr-particle-yes') ) {
@@ -267,6 +271,10 @@
 							setTimeout(function() {
 								window.dispatchEvent(new Event('resize'));
 							}, 500);
+
+							setTimeout(function() {
+								window.dispatchEvent(new Event('resize'));
+							}, 1500);
 						} else {
 							$scope.find('.wpr-particle-wrapper').remove();
 						}
@@ -2846,13 +2854,14 @@
 				localStorage.setItem( 'WprCountDownSettings', JSON.stringify( settings ) );
 			}
 
-			// Init on Load
-			initCountDown();
-
 			// Start CountDown
 			if ( ! WprElements.editorCheck() ) { //tmp
-				countDownInterval = setInterval( initCountDown, 1000 );
+				// Init on Load
+				initCountDown();
 			}
+
+			// Start CountDown
+			countDownInterval = setInterval( initCountDown, 1000 );
 
 			function initCountDown() {
 				var timeLeft = endTime - new Date();
@@ -3686,6 +3695,7 @@
 							// wpr_ajax_search_img_size: $scope.find('.wpr-search-form-input').attr('ajax-search-img-size')
 						},
 						success: function(data) {
+							$scope.closest('section').addClass('wpr-section-z-index');
 							if ( $scope.find('.wpr-data-fetch ul').html() === '' ) {
 								$scope.find( '.wpr-pagination-loading' ).hide();
 								$scope.find('.wpr-data-fetch ul').html( data );
@@ -3712,6 +3722,7 @@
 									if (data.includes('wpr-no-results')) {
 										$scope.find('.wpr-ajax-search-pagination').css('display', 'none');
 										$scope.find('.wpr-data-fetch ul').html('');
+										$scope.closest('section').removeClass('wpr-section-z-index');
 									} else {
 										$scope.find('.wpr-ajax-search-pagination').css('display', 'flex');
 									}
@@ -3768,6 +3779,7 @@
 								setTimeout(function() {
 									$scope.find('.wpr-data-fetch ul').html('');
 									$scope.find('.wpr-no-results').remove();
+									$scope.closest('section').removeClass('wpr-section-z-index');
 								}, 600);
 								postsOffset = 0;
 							}
@@ -3811,6 +3823,7 @@
 					setTimeout(function() {
 						$scope.find('.wpr-data-fetch ul').html('');
 						$scope.find('.wpr-no-results').remove();
+						$scope.closest('section').removeClass('wpr-section-z-index');
 					}, 400);
 					postsOffset = 0;
 				});
@@ -3823,6 +3836,7 @@
 							setTimeout(function() {
 								$scope.find('.wpr-data-fetch ul').html('');
 								$scope.find('.wpr-no-results').remove();
+								$scope.closest('section').removeClass('wpr-section-z-index');
 							}, 400);
 							postsOffset = 0;
 						}
@@ -5790,8 +5804,6 @@
 					var aboveLaptopResp = +elementorFrontend.config.responsive.breakpoints.laptop.value + 1;
 					var wideScreenResp = +elementorFrontend.config.responsive.breakpoints.widescreen.value;
 
-					console.log(sliderSettings);
-
 					swiperLoader(swiperSlider, {
 						hashNavigation: sliderSettings.wpr_cs_navigation === 'yes' ? true : false,
 						autoplay: sliderSettings.wpr_cs_autoplay === 'yes' ? {
@@ -5872,7 +5884,6 @@
 				var pagination = $scope.find( '.wpr-grid-pagination' ); // Isotope Layout
 
 				if ( $scope.hasClass('wpr-insta-feed-layout-full-width') ) {
-					console.log(loadMoreSettings.limit, $scope.find('.wpr-insta-feed-content-wrap').length);
 					if ( loadMoreSettings.limit > $scope.find('.wpr-insta-feed-content-wrap').length ) {
 						$scope.find('.wpr-layout-full-width').css('grid-template-columns', "repeat("+ $scope.find('.wpr-insta-feed-content-wrap').length +", minmax(0, 1fr))");
 					}
@@ -7122,7 +7133,7 @@
 					jQuery('input[name="update_cart"]').removeAttr('disabled');
 				}
 			});
-		
+			
 			// minus
 			qtyInput.on('click', 'i:'+minusIconChild, function() {
 				if ( parseInt(jQuery(this).next('.quantity').find('input.qty').val(), 10) > 0 && qtyLayout == 'both' ) {
@@ -7149,6 +7160,10 @@
 				e.preventDefault();
 			
 				let $form = $( this ).closest('form');
+
+				var $variationForm = $form.closest('.variations_form');
+
+				let isGrouped = $form.hasClass('grouped_form');
 			
 				if ( ! $form[0].checkValidity() ) {
 					$form[0].reportValidity();
@@ -7159,38 +7174,91 @@
 				let $thisBtn = $( this ),
 					product_id = $thisBtn.val() || '',
 					cartFormData = $form.serialize();
+				
+				if (isGrouped) {
+					let nonZero = false;
+					$scope.find('.woocommerce-grouped-product-list-item__quantity').find('input').each(function() {
+						if ($(this).val() > 0 ) {
+							nonZero = true;
+						}
+					});
+
+					if ( !nonZero ) {
+						// The grouped product does not have the required number of items selected
+						alert(WprConfig.chooseQuantityText);
+						return;
+					}
+				}
 			
 				$.ajax( {
 					type: 'POST',
 					url: WprConfig.ajaxurl,
 					data: 'action=wpr_addons_add_cart_single_product&add-to-cart=' + product_id + '&' + cartFormData,
 					beforeSend: function () {
+						if ( $variationForm.length > 0 && ! $variationForm.find('.variations select').val() ) {
+							// Do not trigger added_to_cart event if options are not selected for variable product
+							return;
+						} 
+						if ( $thisBtn.hasClass('disabled') ) {
+							return
+						}
+
 						$thisBtn.removeClass( 'added' ).addClass( 'loading' );
 					},
 					complete: function () {
+						if ( $variationForm.length > 0 && ! $variationForm.find('.variations select').val() ) {
+							// Do not trigger added_to_cart event if options are not selected for variable product
+							return;
+						} 
+
+						if ( $thisBtn.hasClass('disabled') ) {
+							return
+						}
+
 						$thisBtn.addClass( 'added' ).removeClass( 'loading' );
 					},
 					success: function ( response ) {
+
+						// GOGA - remove later
+						if (response.notices && response.notices.length > 0) {
+
+							// The selected variation is low in stock, display a warning message
+							if (response.notices[0].type === 'wc_low_stock') {
+								alert('Only ' + response.notices[0].message + ' left in stock!');
+							} else {
+								alert(response.notices[0].message);
+							}
+						}
+
 						if ( response.error && response.product_url ) {
 							window.location = response.product_url;
-			
 							return;
 						}
-			
-						setTimeout( function () {
-							$thisBtn.removeClass( 'added' );
-						}, 1000 );
-			
-						$( document.body ).trigger( 'wc_fragment_refresh' );
-						$( document.body ).trigger( 'added_to_cart', [ response.fragments, response.cart_hash, $thisBtn ] );
 			
 						if ( typeof wc_add_to_cart_params === 'undefined' ) {
 							return false;
 						}
+			
+						if ( $variationForm.length > 0 && ! $variationForm.find('.variations select').val() ) {
+							// Do not trigger added_to_cart event if options are not selected for variable product
+							return;
+						}
+						
+						if ( $thisBtn.hasClass('disabled') ) {
+							return;
+						}
 
-						var currentCartCount = parseInt($('.wpr-mini-cart-icon-count').text());
-						var updatedCartCount = parseInt($scope.find('.wpr-quantity-wrapper .qty').val());
-						$('.wpr-mini-cart-icon-count').text(currentCartCount + updatedCartCount);
+						$( document.body ).trigger( 'wc_fragment_refresh' );
+						$( document.body ).trigger( 'added_to_cart', [ response.fragments, response.cart_hash, $thisBtn ] );
+
+						setTimeout( function () {
+							$thisBtn.removeClass( 'added' );
+							$( document.body ).trigger( 'wc_fragment_refresh' );
+							$( document.body ).trigger( 'added_to_cart', [ response.fragments, response.cart_hash, $thisBtn ] );
+							var currentCartCount = parseInt($('.wpr-mini-cart-icon-count').text());
+							var updatedCartCount = parseInt($scope.find('.wpr-quantity-wrapper .qty').val());
+							$('.wpr-mini-cart-icon-count').text(currentCartCount + updatedCartCount);
+						}, 1000 );
 					},
 				} );
 			}
@@ -7213,7 +7281,7 @@
 					}
 				});
 
-				if ( 0 !== $scope.hasClass('wpr-mini-cart-sidebar').length ) {
+				if ( $scope.hasClass('wpr-mini-cart-sidebar') ) {
 					if ( $('#wpadminbar').length ) {
 						$scope.find('.wpr-mini-cart').css({
 							// 'top': $('#wpadminbar').css('height'),
@@ -7242,41 +7310,43 @@
 				}
 
 				if ( $scope.find('.wpr-mini-cart').length ) {
-					$scope.find('.wpr-mini-cart-toggle-btn').on('click', function(e) {
-						e.stopPropagation();
-						e.preventDefault();
-						if ( 'none' === $scope.find('.wpr-mini-cart').css("display") ) {
-							if ( $scope.hasClass('wpr-mini-cart-slide') ) {
-								$scope.find('.wpr-mini-cart').slideDown(animationSpeed);
-							} else {
-								$scope.find('.wpr-mini-cart').fadeIn(animationSpeed);
-							}
-							if ( $scope.hasClass('wpr-mini-cart-sidebar') ) {
-								$scope.find('.wpr-shopping-cart-wrap').fadeIn(animationSpeed);
-								// $scope.find('.widget_shopping_cart_content').addClass('wpr-mini-cart-slide-in');
-								$scope.find('.wpr-shopping-cart-inner-wrap').addClass('wpr-mini-cart-slide-in');
-								$scope.find('.wpr-mini-cart-slide-in').css('animation-speed', animationSpeed);
-								$('body').addClass('wpr-mini-cart-sidebar-body');
-							}
-							setTimeout(function() {
-								// $scope.find('.widget_shopping_cart_content').removeClass('wpr-mini-cart-slide-in');
-								$scope.find('.wpr-shopping-cart-inner-wrap').removeClass('wpr-mini-cart-slide-in');
-								if ( $scope.hasClass('wpr-mini-cart-sidebar') ) {
-									$scope.find('.wpr-woo-mini-cart').trigger('resize');
+					if ( $scope.hasClass('wpr-mini-cart-sidebar') || $scope.hasClass('wpr-mini-cart-dropdown') ) {
+						$scope.find('.wpr-mini-cart-toggle-btn').on('click', function(e) {
+							e.stopPropagation();
+							e.preventDefault();
+							if ( 'none' === $scope.find('.wpr-mini-cart').css("display") ) {
+								if ( $scope.hasClass('wpr-mini-cart-slide') ) {
+									$scope.find('.wpr-mini-cart').slideDown(animationSpeed);
+								} else {
+									$scope.find('.wpr-mini-cart').fadeIn(animationSpeed);
 								}
-							}, animationSpeed + 100);
-						} else {
-							if ( $scope.hasClass('wpr-mini-cart-slide') ) {
-								$scope.find('.wpr-mini-cart').slideUp(animationSpeed);
+								if ( $scope.hasClass('wpr-mini-cart-sidebar') ) {
+									$scope.find('.wpr-shopping-cart-wrap').fadeIn(animationSpeed);
+									// $scope.find('.widget_shopping_cart_content').addClass('wpr-mini-cart-slide-in');
+									$scope.find('.wpr-shopping-cart-inner-wrap').addClass('wpr-mini-cart-slide-in');
+									$scope.find('.wpr-mini-cart-slide-in').css('animation-speed', animationSpeed);
+									$('body').addClass('wpr-mini-cart-sidebar-body');
+								}
+								setTimeout(function() {
+									// $scope.find('.widget_shopping_cart_content').removeClass('wpr-mini-cart-slide-in');
+									$scope.find('.wpr-shopping-cart-inner-wrap').removeClass('wpr-mini-cart-slide-in');
+									if ( $scope.hasClass('wpr-mini-cart-sidebar') ) {
+										$scope.find('.wpr-woo-mini-cart').trigger('resize');
+									}
+								}, animationSpeed + 100);
 							} else {
-								$scope.find('.wpr-mini-cart').fadeOut(animationSpeed);
+								if ( $scope.hasClass('wpr-mini-cart-slide') ) {
+									$scope.find('.wpr-mini-cart').slideUp(animationSpeed);
+								} else {
+									$scope.find('.wpr-mini-cart').fadeOut(animationSpeed);
+								}
 							}
-						}
-					});
+						});
+					}
 				}
 
 				var mutationObserver = new MutationObserver(function(mutations) {
-					if (  0 !== $scope.hasClass('wpr-mini-cart-sidebar').length ) {
+					if (  $scope.hasClass('wpr-mini-cart-sidebar') ) {
 						closeSideBar();
 
 						// if ( $scope.find('.wpr-mini-cart').data('close-cart-heading') ) {
