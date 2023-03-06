@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * WPR_Update_Mini_Wishlist setup
+ * WPR_Compare_Popup_Action setup
  *
  * @since 1.0
  */
