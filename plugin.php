@@ -426,7 +426,8 @@ class Plugin {
 			[
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
 				'resturl' => get_rest_url() . 'wpraddons/v1',
-				'nonce' => wp_create_nonce( 'wpr-addons-js' )
+				'nonce' => wp_create_nonce( 'wpr-addons-js' ),
+				'chooseQuantityText' => esc_html__('Please select the required number of items.')
 			]
 		);
 	}

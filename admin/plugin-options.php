@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use WprAddons\Admin\Includes\WPR_Templates_Loop;
 use WprAddonsPro\Admin\Wpr_White_Label;
+use WprAddonsPro\Classes\Pro_Modules;
 use WprAddons\Classes\Utilities;
 use WprAddons\Admin\Templates\Library\WPR_Templates_Data;
 
@@ -111,10 +112,12 @@ function wpr_register_addons_settings() {
         register_setting( 'wpr-elements-settings', 'wpr-element-'. $slug, [ 'default' => 'on' ] );
     }
 
+    $woo_modules = Utilities::get_woocommerce_builder_modules();
+    $woo_modules_pro = (wpr_fs()->can_use_premium_code() && defined( 'WPR_ADDONS_PRO_VERSION' )) ? Pro_Modules::get_woocommerce_builder_modules() : [];
 
     // WooCommerce Builder
-    foreach ( Utilities::get_woocommerce_builder_modules() as $title => $data ) {
-        $slug = $data[0];
+    foreach ( array_merge($woo_modules, $woo_modules_pro) as $title => $data ) {
+        $slug = is_array($data) ? $data[0] : $data;
         register_setting( 'wpr-elements-settings', 'wpr-element-'. $slug, [ 'default' => 'on' ] );
     }
 
@@ -336,11 +339,6 @@ function wpr_addons_settings_page() {
         <a href="https://forms.clickup.com/1856033/f/1rmh1-5143/UIYNBNA8STCBOTXGNV" target="_blank"><?php esc_html_e('Request a New Widget', 'wpr-addons'); ?></a>
     </div>
 
-    <div class="wpr-settings-saved">
-        <span><?php esc_html_e('Options Updated', 'wpr-addons'); ?></span>
-        <span class="dashicons dashicons-yes"></span>
-    </div>
-
     <?php //submit_button( '', 'wpr-options-button' ); ?>
 
     <?php elseif ( $active_tab == 'wpr_tab_settings' ) : ?>
@@ -543,7 +541,7 @@ function wpr_addons_settings_page() {
                     <li><span>Magazine Grid/Slider Widget</span></li>
                     <li><span>Basic Timeline Widget</span></li>
                     <li><span>Basic Slider Widget</span></li>
-                    <li><span>Offcanvas Menu</span></li>
+                    <li><span>Offcanvas Content</span></li>
                     <li><span>Instagram Feed</span></li>
                     <li><span>Twitter Feed</span></li>
                     <li><span>Basic Data Table</span></li>
@@ -1168,10 +1166,7 @@ function wpr_addons_settings_page() {
         echo '</div>';
     ?>
 
-        <div class="wpr-settings-saved">
-            <span><?php esc_html_e('Options Updated', 'wpr-addons'); ?></span>
-            <span class="dashicons dashicons-yes"></span>
-        </div>
+
 
     <?php
 
@@ -1181,6 +1176,10 @@ function wpr_addons_settings_page() {
 
     endif; ?>
 
+    <div class="wpr-settings-saved">
+        <span><?php esc_html_e('Options Updated', 'wpr-addons'); ?></span>
+        <span class="dashicons dashicons-yes"></span>
+    </div>
 </form>
 </div>
 

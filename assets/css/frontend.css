@@ -267,6 +267,10 @@ template {
     margin: 0 auto;
   }*/
 
+/* Section Z Index */
+.wpr-section-z-index {
+    z-index: 999 !important;
+}
 
 /* Hidden Element */
 .wpr-hidden-element {
@@ -2234,16 +2238,6 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
 /* .wpr-grid-image-wrap img.wpr-hidden-image {
     opacity: 0;
 } */
-
-/* GOGA - saidan movitane es opacity linearebi xuivoznaet */
-.wpr-grid-image-wrap img {
-    opacity: 1;
-    -webkit-transition: opacity 1s linear;
-    -o-transition: opacity 1s linear;
-    transition: opacity 1s linear;
-    display: block;
-    width: 100%;
-}
 
 .wpr-hide-items-before-append {
     opacity: 0;
@@ -5998,7 +5992,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 .wpr-slider-title *,
-.wpr-slider-sub-title h3,
+.wpr-slider-sub-title *,
 .wpr-slider-description p {
     display: inline-block;
 }
@@ -6012,7 +6006,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     margin: 0 0 2px 0;
 }
 
-.wpr-slider-sub-title h3 {
+.wpr-slider-sub-title * {
     font-size: 16px;
     padding: 5px 10px 5px 10px;
     margin: 0 0 10px 0;

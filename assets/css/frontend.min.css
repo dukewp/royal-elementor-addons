@@ -267,6 +267,10 @@ template {
     margin: 0 auto;
   }*/
 
+/* Section Z Index */
+.wpr-section-z-index {
+    z-index: 999 !important;
+}
 
 /* Hidden Element */
 .wpr-hidden-element {
@@ -2234,16 +2238,6 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
 /* .wpr-grid-image-wrap img.wpr-hidden-image {
     opacity: 0;
 } */
-
-/* GOGA - saidan movitane es opacity linearebi xuivoznaet */
-.wpr-grid-image-wrap img {
-    opacity: 1;
-    -webkit-transition: opacity 1s linear;
-    -o-transition: opacity 1s linear;
-    transition: opacity 1s linear;
-    display: block;
-    width: 100%;
-}
 
 .wpr-hide-items-before-append {
     opacity: 0;
@@ -15221,6 +15215,23 @@ dl.variation dd {
     width: 100%;
 }
 
+.elementor-widget-wpr-product-add-to-cart a.added_to_cart,
+.elementor-widget-wpr-product-add-to-cart button.single_add_to_cart_button {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.wpr-product-add-to-cart  a.added_to_cart  {
+    text-align: center;
+}
+
+.wpr-product-add-to-cart .available-on-backorder,
+.wpr-product-add-to-cart .out-of-stock,
+.wpr-product-add-to-cart .in-stock {
+    display: none;
+}
+
 /* External/Afiiliate button */
 .woocommerce-grouped-product-list-item a.button {
     display: -webkit-inline-box;
@@ -15244,16 +15255,6 @@ dl.variation dd {
 /* Rating */
 .wpr-product-rating .wpr-woo-rating i:before {
     content: '\002605' !important;
-}
-
-.wpr-product-add-to-cart  a.added_to_cart  {
-    text-align: center;
-}
-
-.wpr-product-add-to-cart .available-on-backorder,
-.wpr-product-add-to-cart .out-of-stock,
-.wpr-product-add-to-cart .in-stock {
-    display: none;
 }
 
 /*--------------------------------------------------------------

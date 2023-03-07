@@ -19781,6 +19781,9 @@
                 $url .= "{$param_name}=true";
 
                 return "{$wrap_with}{$url}{$wrap_with}";
+            } else {
+                $url = admin_url( 'admin-ajax.php' );
+                return "{$wrap_with}{$url}{$wrap_with}";
             }
         }
 
