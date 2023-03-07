@@ -453,4 +453,4 @@ if ( ! defined( 'ABSPATH' ) ) {
     }
  }
 
- new WPR_Load_More_Instagram_Posts;
+ new WPR_Load_More_Instagram_Posts();

@@ -96,6 +96,7 @@ class Plugin {
 		require WPR_ADDONS_PATH . 'classes/wpr-ajax-search.php';
 		require WPR_ADDONS_PATH . 'classes/wpr-load-more-instagram-posts.php';
 		require WPR_ADDONS_PATH . 'classes/wpr-load-more-tweets.php';
+		require WPR_ADDONS_PATH . 'classes/wpr-send-email.php';
 
 		// Particles
 		if ( 'on' === get_option('wpr-particles', 'on') ) {//TODO: make this check automatic(loop through) for all extensions
