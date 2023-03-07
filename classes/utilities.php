@@ -69,9 +69,7 @@ class Utilities {
 			'Template' => ['elementor-template', '', '', ''],
 			'Reading Progress Bar' => ['reading-progress-bar', 'https://royal-elementor-addons.com/elementor-reading-progress-bar-widget/', '', ''],
 			'Twitter Feed' => ['twitter-feed', 'https://royal-elementor-addons.com/elementor-twitter-feed-widget/', '', 'new'],
-			// 'Facebook Feed' => ['facebook-feed', '', '', 'new'],
-			// https://royal-elementor-addons.com/elementor-offcanvas-widget/
-			// 'Random Image' => ['random-image', '', ''],
+			'Form Builder' => ['Form Builder', '', '', 'new']
 		];
 	}
 
