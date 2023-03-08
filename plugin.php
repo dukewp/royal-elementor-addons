@@ -94,9 +94,14 @@ class Plugin {
 
 		// Ajax Search
 		require WPR_ADDONS_PATH . 'classes/wpr-ajax-search.php';
+
+		// Load More
 		require WPR_ADDONS_PATH . 'classes/wpr-load-more-instagram-posts.php';
 		require WPR_ADDONS_PATH . 'classes/wpr-load-more-tweets.php';
+
+		// Form Builder
 		require WPR_ADDONS_PATH . 'classes/wpr-send-email.php';
+		require WPR_ADDONS_PATH . 'classes/wpr-submissions-cpt.php';
 
 		// Particles
 		if ( 'on' === get_option('wpr-particles', 'on') ) {//TODO: make this check automatic(loop through) for all extensions

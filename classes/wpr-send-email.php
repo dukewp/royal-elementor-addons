@@ -32,17 +32,19 @@ if ( ! defined( 'ABSPATH' ) ) {
         $to = 'geobeatnic@gmail.com';
         $subject = 'New form submission';
         $body = "Message Body";
+        $headers = array('Content-Type: text/html; charset=UTF-8');
       
         // Send email using wp_mail() function
-        $sent = wp_mail( $to, $subject, $body );
+        $sent = wp_mail( $to, $subject, $body, $headers );
       
         if ( $sent ) {
-            return 'Success wpr';
+            $response = 'Message sent successfully';
         } else {
-            return 'Error wpr';
+            $response = 'Message could not be sent';
         }
-      
-        wp_die();
+
+        // Return response to AJAX request
+        wp_send_json( $response );
     }
  }
 

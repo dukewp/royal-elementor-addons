@@ -237,3 +237,14 @@ function royal_elementor_addons_deactivate() {
 
 // hook already exists with template kits notice
 register_deactivation_hook( __FILE__, 'royal_elementor_addons_deactivate' );
+
+add_action('init', 'wpr_submissions');
+
+function wpr_submissions() {
+	$args = array(
+		'show_in_menu' => 'wpr-addons',
+		'label'        => 'Submissions',
+		'public'       => true
+	);
+	register_post_type( 'wpr_submissions', $args );
+}
