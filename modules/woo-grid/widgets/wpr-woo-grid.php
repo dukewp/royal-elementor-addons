@@ -7156,7 +7156,11 @@ class Wpr_Woo_Grid extends Widget_Base {
 		} else {
 			$paged = 1;
 		}
-
+		
+		if ( gettype($settings['query_offset']) !== 'integer' ) {
+			$settings[ 'query_offset' ] = 0;
+		}
+		
 		$offset = ( $paged - 1 ) * $settings['query_posts_per_page'] + $settings[ 'query_offset' ];
 
 		// Dynamic
