@@ -7157,7 +7157,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			$paged = 1;
 		}
 		
-		if ( gettype($settings['query_offset']) !== 'integer' ) {
+		if ( empty($settings['query_offset']) ) {
 			$settings[ 'query_offset' ] = 0;
 		}
 		
