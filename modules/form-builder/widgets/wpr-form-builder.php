@@ -8,6 +8,7 @@ use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
+use Elementor\Group_Control_Border;
 use Elementor\Core\Schemes\Color;
 use Elementor\Core\Schemes\Typography;
 use Elementor\Repeater;
@@ -52,7 +53,7 @@ class Wpr_Form_Builder extends Widget_Base {
 	}
 
 	public function get_label() {
-		return esc_html__( 'Email', 'elementor-pro' );
+		return esc_html__( 'Email', 'wpr-addons' );
 	}
 
 	public static function get_site_domain() {
@@ -74,12 +75,12 @@ class Wpr_Form_Builder extends Widget_Base {
 		$widget->add_control(
 			$this->get_control_id( 'email_to' ),
 			[
-				'label' => esc_html__( 'To', 'elementor-pro' ),
+				'label' => esc_html__( 'To', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => get_option( 'admin_email' ),
 				'placeholder' => get_option( 'admin_email' ),
 				'label_block' => true,
-				'title' => esc_html__( 'Separate emails with commas', 'elementor-pro' ),
+				'title' => esc_html__( 'Separate emails with commas', 'wpr-addons' ),
 				'render_type' => 'none',
 				'dynamic' => [
 					'active' => true,
@@ -88,12 +89,12 @@ class Wpr_Form_Builder extends Widget_Base {
 		);
 
 		/* translators: %s: Site title. */
-		$default_message = sprintf( esc_html__( 'New message from "%s"', 'elementor-pro' ), get_option( 'blogname' ) );
+		$default_message = sprintf( esc_html__( 'New message from "%s"', 'wpr-addons' ), get_option( 'blogname' ) );
 
 		$widget->add_control(
 			$this->get_control_id( 'email_subject' ),
 			[
-				'label' => esc_html__( 'Subject', 'elementor-pro' ),
+				'label' => esc_html__( 'Subject', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => $default_message,
 				'placeholder' => $default_message,
@@ -108,13 +109,13 @@ class Wpr_Form_Builder extends Widget_Base {
 		$widget->add_control(
 			$this->get_control_id( 'email_content' ),
 			[
-				'label' => esc_html__( 'Message', 'elementor-pro' ),
+				'label' => esc_html__( 'Message', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXTAREA,
 				'default' => '[all-fields]',
 				'placeholder' => '[all-fields]',
 				'description' => sprintf(
 					/* translators: %s: The [all-fields] shortcode. */
-					esc_html__( 'By default, all form fields are sent via %s shortcode. To customize sent fields, copy the shortcode that appears inside each field and paste it above.', 'elementor-pro' ),
+					esc_html__( 'By default, all form fields are sent via %s shortcode. To customize sent fields, copy the shortcode that appears inside each field and paste it above.', 'wpr-addons' ),
 					'<code>[all-fields]</code>'
 				),
 				'render_type' => 'none',
@@ -129,7 +130,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		$widget->add_control(
 			$this->get_control_id( 'email_from' ),
 			[
-				'label' => esc_html__( 'From Email', 'elementor-pro' ),
+				'label' => esc_html__( 'From Email', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => 'email@' . $site_domain,
 				'render_type' => 'none',
@@ -142,7 +143,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		$widget->add_control(
 			$this->get_control_id( 'email_from_name' ),
 			[
-				'label' => esc_html__( 'From Name', 'elementor-pro' ),
+				'label' => esc_html__( 'From Name', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => get_bloginfo( 'name' ),
 				'render_type' => 'none',
@@ -155,7 +156,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		$widget->add_control(
 			$this->get_control_id( 'email_reply_to' ),
 			[
-				'label' => esc_html__( 'Reply-To', 'elementor-pro' ),
+				'label' => esc_html__( 'Reply-To', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'' => '',
@@ -167,10 +168,10 @@ class Wpr_Form_Builder extends Widget_Base {
 		$widget->add_control(
 			$this->get_control_id( 'email_to_cc' ),
 			[
-				'label' => esc_html__( 'Cc', 'elementor-pro' ),
+				'label' => esc_html__( 'Cc', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => '',
-				'title' => esc_html__( 'Separate emails with commas', 'elementor-pro' ),
+				'title' => esc_html__( 'Separate emails with commas', 'wpr-addons' ),
 				'render_type' => 'none',
 				'dynamic' => [
 					'active' => true,
@@ -181,10 +182,10 @@ class Wpr_Form_Builder extends Widget_Base {
 		$widget->add_control(
 			$this->get_control_id( 'email_to_bcc' ),
 			[
-				'label' => esc_html__( 'Bcc', 'elementor-pro' ),
+				'label' => esc_html__( 'Bcc', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => '',
-				'title' => esc_html__( 'Separate emails with commas', 'elementor-pro' ),
+				'title' => esc_html__( 'Separate emails with commas', 'wpr-addons' ),
 				'render_type' => 'none',
 				'dynamic' => [
 					'active' => true,
@@ -195,7 +196,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		$widget->add_control(
 			$this->get_control_id( 'form_metadata' ),
 			[
-				'label' => esc_html__( 'Meta Data', 'elementor-pro' ),
+				'label' => esc_html__( 'Meta Data', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT2,
 				'multiple' => true,
 				'label_block' => true,
@@ -209,12 +210,12 @@ class Wpr_Form_Builder extends Widget_Base {
 					'credit',
 				],
 				'options' => [
-					'date' => esc_html__( 'Date', 'elementor-pro' ),
-					'time' => esc_html__( 'Time', 'elementor-pro' ),
-					'page_url' => esc_html__( 'Page URL', 'elementor-pro' ),
-					'user_agent' => esc_html__( 'User Agent', 'elementor-pro' ),
-					'remote_ip' => esc_html__( 'Remote IP', 'elementor-pro' ),
-					'credit' => esc_html__( 'Credit', 'elementor-pro' ),
+					'date' => esc_html__( 'Date', 'wpr-addons' ),
+					'time' => esc_html__( 'Time', 'wpr-addons' ),
+					'page_url' => esc_html__( 'Page URL', 'wpr-addons' ),
+					'user_agent' => esc_html__( 'User Agent', 'wpr-addons' ),
+					'remote_ip' => esc_html__( 'Remote IP', 'wpr-addons' ),
+					'credit' => esc_html__( 'Credit', 'wpr-addons' ),
 				],
 				'render_type' => 'none',
 			]
@@ -223,13 +224,13 @@ class Wpr_Form_Builder extends Widget_Base {
 		$widget->add_control(
 			$this->get_control_id( 'email_content_type' ),
 			[
-				'label' => esc_html__( 'Send As', 'elementor-pro' ),
+				'label' => esc_html__( 'Send As', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'html',
 				'render_type' => 'none',
 				'options' => [
-					'html' => esc_html__( 'HTML', 'elementor-pro' ),
-					'plain' => esc_html__( 'Plain', 'elementor-pro' ),
+					'html' => esc_html__( 'HTML', 'wpr-addons' ),
+					'plain' => esc_html__( 'Plain', 'wpr-addons' ),
 				],
 			]
 		);
@@ -779,14 +780,14 @@ class Wpr_Form_Builder extends Widget_Base {
 		$this->start_controls_section(
 			'section_buttons',
 			[
-				'label' => esc_html__( 'Buttons', 'elementor-pro' ),
+				'label' => esc_html__( 'Buttons', 'wpr-addons' ),
 			]
 		);
 
 		$this->add_control(
 			'button_size',
 			[
-				'label' => esc_html__( 'Size', 'elementor-pro' ),
+				'label' => esc_html__( 'Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'sm',
 				'options' => self::get_button_sizes(),
@@ -796,10 +797,10 @@ class Wpr_Form_Builder extends Widget_Base {
 		$this->add_responsive_control(
 			'button_width',
 			[
-				'label' => esc_html__( 'Column Width', 'elementor-pro' ),
+				'label' => esc_html__( 'Column Width', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'' => esc_html__( 'Default', 'elementor-pro' ),
+					'' => esc_html__( 'Default', 'wpr-addons' ),
 					'100' => '100%',
 					'80' => '80%',
 					'75' => '75%',
@@ -821,23 +822,23 @@ class Wpr_Form_Builder extends Widget_Base {
 		$this->add_responsive_control(
 			'button_align',
 			[
-				'label' => esc_html__( 'Alignment', 'elementor-pro' ),
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'start' => [
-						'title' => esc_html__( 'Left', 'elementor-pro' ),
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
 						'icon' => 'eicon-text-align-left',
 					],
 					'center' => [
-						'title' => esc_html__( 'Center', 'elementor-pro' ),
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
 						'icon' => 'eicon-text-align-center',
 					],
 					'end' => [
-						'title' => esc_html__( 'Right', 'elementor-pro' ),
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
 						'icon' => 'eicon-text-align-right',
 					],
 					'stretch' => [
-						'title' => esc_html__( 'Justified', 'elementor-pro' ),
+						'title' => esc_html__( 'Justified', 'wpr-addons' ),
 						'icon' => 'eicon-text-align-justify',
 					],
 				],
@@ -849,7 +850,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		$this->add_control(
 			'heading_steps_buttons',
 			[
-				'label' => esc_html__( 'Step Buttons', 'elementor-pro' ),
+				'label' => esc_html__( 'Step Buttons', 'wpr-addons' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -858,37 +859,37 @@ class Wpr_Form_Builder extends Widget_Base {
 		$this->add_control(
 			'step_next_label',
 			[
-				'label' => esc_html__( 'Next', 'elementor-pro' ),
+				'label' => esc_html__( 'Next', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
 				'dynamic' => [
 					'active' => true,
 				],
 				'frontend_available' => true,
 				'render_type' => 'none',
-				'default' => esc_html__( 'Next', 'elementor-pro' ),
-				'placeholder' => esc_html__( 'Next', 'elementor-pro' ),
+				'default' => esc_html__( 'Next', 'wpr-addons' ),
+				'placeholder' => esc_html__( 'Next', 'wpr-addons' ),
 			]
 		);
 
 		$this->add_control(
 			'step_previous_label',
 			[
-				'label' => esc_html__( 'Previous', 'elementor-pro' ),
+				'label' => esc_html__( 'Previous', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
 				'dynamic' => [
 					'active' => true,
 				],
 				'frontend_available' => true,
 				'render_type' => 'none',
-				'default' => esc_html__( 'Previous', 'elementor-pro' ),
-				'placeholder' => esc_html__( 'Previous', 'elementor-pro' ),
+				'default' => esc_html__( 'Previous', 'wpr-addons' ),
+				'placeholder' => esc_html__( 'Previous', 'wpr-addons' ),
 			]
 		);
 
 		$this->add_control(
 			'heading_submit_button',
 			[
-				'label' => esc_html__( 'Submit Button', 'elementor-pro' ),
+				'label' => esc_html__( 'Submit Button', 'wpr-addons' ),
 				'type' => Controls_Manager::HEADING,
 			]
 		);
@@ -896,10 +897,10 @@ class Wpr_Form_Builder extends Widget_Base {
 		$this->add_control(
 			'button_text',
 			[
-				'label' => esc_html__( 'Submit', 'elementor-pro' ),
+				'label' => esc_html__( 'Submit', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
-				'default' => esc_html__( 'Send', 'elementor-pro' ),
-				'placeholder' => esc_html__( 'Send', 'elementor-pro' ),
+				'default' => esc_html__( 'Send', 'wpr-addons' ),
+				'placeholder' => esc_html__( 'Send', 'wpr-addons' ),
 				'dynamic' => [
 					'active' => true,
 				],
@@ -909,7 +910,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		$this->add_control(
 			'selected_button_icon',
 			[
-				'label' => esc_html__( 'Icon', 'elementor-pro' ),
+				'label' => esc_html__( 'Icon', 'wpr-addons' ),
 				'type' => Controls_Manager::ICONS,
 				'skin' => 'inline',
 				'label_block' => false,
@@ -919,12 +920,12 @@ class Wpr_Form_Builder extends Widget_Base {
 		$this->add_control(
 			'button_icon_align',
 			[
-				'label' => esc_html__( 'Icon Position', 'elementor-pro' ),
+				'label' => esc_html__( 'Icon Position', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'left',
 				'options' => [
-					'left' => esc_html__( 'Before', 'elementor-pro' ),
-					'right' => esc_html__( 'After', 'elementor-pro' ),
+					'left' => esc_html__( 'Before', 'wpr-addons' ),
+					'right' => esc_html__( 'After', 'wpr-addons' ),
 				],
 				'condition' => [
 					'selected_button_icon[value]!' => '',
@@ -935,7 +936,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		$this->add_control(
 			'button_icon_indent',
 			[
-				'label' => esc_html__( 'Icon Spacing', 'elementor-pro' ),
+				'label' => esc_html__( 'Icon Spacing', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -955,11 +956,11 @@ class Wpr_Form_Builder extends Widget_Base {
 		$this->add_control(
 			'button_css_id',
 			[
-				'label' => esc_html__( 'Button ID', 'elementor-pro' ),
+				'label' => esc_html__( 'Button ID', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => '',
-				'title' => esc_html__( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'elementor-pro' ),
-				'description' => esc_html__( 'Please make sure the ID is unique and not used elsewhere on the page this form is displayed. This field allows `A-z 0-9` & underscore chars without spaces.', 'elementor-pro' ),
+				'title' => esc_html__( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'wpr-addons' ),
+				'description' => esc_html__( 'Please make sure the ID is unique and not used elsewhere on the page this form is displayed. This field allows `A-z 0-9` & underscore chars without spaces.', 'wpr-addons' ),
 				'separator' => 'before',
 				'dynamic' => [
 					'active' => true,
@@ -972,7 +973,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		$this->start_controls_section(
 			'section_integration',
 			[
-				'label' => esc_html__( 'Actions After Submit', 'elementor-pro' ),
+				'label' => esc_html__( 'Actions After Submit', 'wpr-addons' ),
 			]
 		);
 
@@ -1004,29 +1005,510 @@ class Wpr_Form_Builder extends Widget_Base {
 		$this->add_control(
 			'submit_actions',
 			[
-				'label' => esc_html__( 'Add Action', 'elementor-pro' ),
+				'label' => esc_html__( 'Add Action', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT2,
 				'multiple' => true,
 				'options' => $actions_options,
 				'render_type' => 'none',
 				'label_block' => true,
 				'default' => $default_submit_actions,
-				'description' => esc_html__( 'Add actions that will be performed after a visitor submits the form (e.g. send an email notification). Choosing an action will add its setting below.', 'elementor-pro' ),
+				'description' => esc_html__( 'Add actions that will be performed after a visitor submits the form (e.g. send an email notification). Choosing an action will add its setting below.', 'wpr-addons' ),
 			]
 		);
 
 		$this->end_controls_section();
 
 		$this->register_settings_section_email($this);
+
+		$this->start_controls_section(
+			'section_form_style',
+			[
+				'label' => esc_html__( 'Form', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'column_gap',
+			[
+				'label' => esc_html__( 'Horizontal Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 10,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 60,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .elementor-field-group' => 'padding-right: calc( {{SIZE}}{{UNIT}}/2 ); padding-left: calc( {{SIZE}}{{UNIT}}/2 );',
+					'{{WRAPPER}} .elementor-form-fields-wrapper' => 'margin-left: calc( -{{SIZE}}{{UNIT}}/2 ); margin-right: calc( -{{SIZE}}{{UNIT}}/2 );',
+				],
+			]
+		);
+
+		$this->add_control(
+			'row_gap',
+			[
+				'label' => esc_html__( 'Vertical Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 10,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 60,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .elementor-field-group' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .elementor-field-group.recaptcha_v3-bottomleft, {{WRAPPER}} .elementor-field-group.recaptcha_v3-bottomright' => 'margin-bottom: 0;',
+					'{{WRAPPER}} .elementor-form-fields-wrapper' => 'margin-bottom: -{{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'heading_label',
+			[
+				'label' => esc_html__( 'Label', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'label_spacing',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 0,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 60,
+					],
+				],
+				'selectors' => [
+					'body.rtl {{WRAPPER}} .elementor-labels-inline .elementor-field-group > label' => 'padding-left: {{SIZE}}{{UNIT}};',
+					// for the label position = inline option
+					'body:not(.rtl) {{WRAPPER}} .elementor-labels-inline .elementor-field-group > label' => 'padding-right: {{SIZE}}{{UNIT}};',
+					// for the label position = inline option
+					'body {{WRAPPER}} .elementor-labels-above .elementor-field-group > label' => 'padding-bottom: {{SIZE}}{{UNIT}};',
+					// for the label position = above option
+				],
+			]
+		);
+
+		$this->add_control(
+			'label_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .elementor-field-group > label, {{WRAPPER}} .elementor-field-subgroup label' => 'color: {{VALUE}};',
+				]
+			]
+		);
+
+		$this->add_control(
+			'mark_required_color',
+			[
+				'label' => esc_html__( 'Mark Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .elementor-mark-required .elementor-field-label:after' => 'color: {{COLOR}};',
+				],
+				'condition' => [
+					'mark_required' => 'yes',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'label_typography',
+				'selector' => '{{WRAPPER}} .elementor-field-group > label'
+			]
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_field_style',
+			[
+				'label' => esc_html__( 'Field', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'field_text_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .elementor-field-group .elementor-field' => 'color: {{VALUE}};',
+				]
+			]
+		);
+
+		$this->add_control(
+			'field_background_color',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} .elementor-field-group:not(.elementor-field-type-upload) .elementor-field:not(.elementor-select-wrapper)' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .elementor-field-group .elementor-select-wrapper select' => 'background-color: {{VALUE}};',
+				]
+			]
+		);
+		
+		$this->add_control(
+			'field_border_color',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .elementor-field-group:not(.elementor-field-type-upload) .elementor-field:not(.elementor-select-wrapper)' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .elementor-field-group .elementor-select-wrapper select' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .elementor-field-group .elementor-select-wrapper::before' => 'color: {{VALUE}};',
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'field_typography',
+				'selector' => '{{WRAPPER}} .elementor-field-group .elementor-field, {{WRAPPER}} .elementor-field-subgroup label'
+			]
+		);
+
+		$this->add_control(
+			'field_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'placeholder' => '1',
+				'size_units' => [ 'px', '%', 'em' ],
+				'selectors' => [
+					'{{WRAPPER}} .elementor-field-group:not(.elementor-field-type-upload) .elementor-field:not(.elementor-select-wrapper)' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .elementor-field-group .elementor-select-wrapper select' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'field_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em' ],
+				'selectors' => [
+					'{{WRAPPER}} .elementor-field-group:not(.elementor-field-type-upload) .elementor-field:not(.elementor-select-wrapper)' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .elementor-field-group .elementor-select-wrapper select' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_button_style',
+			[
+				'label' => esc_html__( 'Buttons', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'button_typography',
+				'selector' => '{{WRAPPER}} .elementor-button',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Border::get_type(), [
+				'name' => 'button_border',
+				'selector' => '{{WRAPPER}} .elementor-button',
+				'exclude' => [
+					'color',
+				],
+			]
+		);
+
+		$this->start_controls_tabs( 'tabs_button_style' );
+
+		$this->start_controls_tab(
+			'tab_button_normal',
+			[
+				'label' => esc_html__( 'Normal', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'heading_next_submit_button',
+			[
+				'label' => esc_html__( 'Next & Submit Button', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+			]
+		);
+
+		$this->add_control(
+			'button_background_color',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .e-form__buttons__wrapper__button-next' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .elementor-button[type="submit"]' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'button_text_color',
+			[
+				'label' => esc_html__( 'Text Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} .e-form__buttons__wrapper__button-next' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .elementor-button[type="submit"]' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .elementor-button[type="submit"] svg *' => 'fill: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'button_border_color',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .e-form__buttons__wrapper__button-next' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .elementor-button[type="submit"]' => 'border-color: {{VALUE}};',
+				],
+				'condition' => [
+					'button_border_border!' => '',
+				],
+			]
+		);
+
+		$this->add_control(
+			'heading_previous_button',
+			[
+				'label' => esc_html__( 'Previous Button', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+			]
+		);
+
+		$this->add_control(
+			'previous_button_background_color',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .e-form__buttons__wrapper__button-previous' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'previous_button_text_color',
+			[
+				'label' => esc_html__( 'Text Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} .e-form__buttons__wrapper__button-previous' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'previous_button_border_color',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .e-form__buttons__wrapper__button-previous' => 'border-color: {{VALUE}};',
+				],
+				'condition' => [
+					'button_border_border!' => '',
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_button_hover',
+			[
+				'label' => esc_html__( 'Hover', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'heading_next_submit_button_hover',
+			[
+				'label' => esc_html__( 'Next & Submit Button', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+			]
+		);
+
+		$this->add_control(
+			'button_background_hover_color',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .e-form__buttons__wrapper__button-next:hover' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .elementor-button[type="submit"]:hover' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'button_hover_color',
+			[
+				'label' => esc_html__( 'Text Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} .e-form__buttons__wrapper__button-next:hover' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .elementor-button[type="submit"]:hover' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .elementor-button[type="submit"]:hover svg *' => 'fill: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'button_hover_border_color',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .e-form__buttons__wrapper__button-next:hover' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .elementor-button[type="submit"]:hover' => 'border-color: {{VALUE}};',
+				],
+				'condition' => [
+					'button_border_border!' => '',
+				],
+			]
+		);
+
+		$this->add_control(
+			'heading_previous_button_hover',
+			[
+				'label' => esc_html__( 'Previous Button', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+			]
+		);
+
+		$this->add_control(
+			'previous_button_background_color_hover',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .e-form__buttons__wrapper__button-previous:hover' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'previous_button_text_color_hover',
+			[
+				'label' => esc_html__( 'Text Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} .e-form__buttons__wrapper__button-previous:hover' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'previous_button_border_color_hover',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .e-form__buttons__wrapper__button-previous:hover' => 'border-color: {{VALUE}};',
+				],
+				'condition' => [
+					'button_border_border!' => '',
+				],
+			]
+		);
+
+		$this->add_control(
+			'button_hover_animation',
+			[
+				'label' => esc_html__( 'Animation', 'wpr-addons' ),
+				'type' => Controls_Manager::HOVER_ANIMATION,
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_control(
+			'button_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em' ],
+				'selectors' => [
+					'{{WRAPPER}} .elementor-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'button_text_padding',
+			[
+				'label' => esc_html__( 'Text Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', '%' ],
+				'selectors' => [
+					'{{WRAPPER}} .elementor-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->end_controls_section();
     }
 
 	public static function get_button_sizes() {
 		return [
-			'xs' => esc_html__( 'Extra Small', 'elementor-pro' ),
-			'sm' => esc_html__( 'Small', 'elementor-pro' ),
-			'md' => esc_html__( 'Medium', 'elementor-pro' ),
-			'lg' => esc_html__( 'Large', 'elementor-pro' ),
-			'xl' => esc_html__( 'Extra Large', 'elementor-pro' ),
+			'xs' => esc_html__( 'Extra Small', 'wpr-addons' ),
+			'sm' => esc_html__( 'Small', 'wpr-addons' ),
+			'md' => esc_html__( 'Medium', 'wpr-addons' ),
+			'lg' => esc_html__( 'Large', 'wpr-addons' ),
+			'xl' => esc_html__( 'Extra Large', 'wpr-addons' ),
 		];
 	}
 
@@ -1430,7 +1912,7 @@ class Wpr_Form_Builder extends Widget_Base {
 							<?php if ( ! empty( $instance['button_icon'] ) || ! empty( $instance['selected_button_icon'] ) ) : ?>
 								<span <?php echo $this->get_render_attribute_string( 'icon-align' ); ?>>
 									<?php if ( empty( $instance['button_text'] ) ) : ?>
-										<span class="elementor-screen-only"><?php echo esc_html__( 'Submit', 'elementor-pro' ); ?></span>
+										<span class="elementor-screen-only"><?php echo esc_html__( 'Submit', 'wpr-addons' ); ?></span>
 									<?php endif; ?>
 								</span>
 							<?php endif; ?>
