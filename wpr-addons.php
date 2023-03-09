@@ -238,13 +238,52 @@ function royal_elementor_addons_deactivate() {
 // hook already exists with template kits notice
 register_deactivation_hook( __FILE__, 'royal_elementor_addons_deactivate' );
 
+
+// SUBMISSIONS CPT
 add_action('init', 'wpr_submissions');
 
+// function wpr_submissions() {
+// 	$args = array(
+// 		'show_in_menu' => 'wpr-addons',
+// 		'label'        => 'Submissions',
+// 		'public'       => true
+// 	);
+// 	register_post_type( 'wpr_submissions', $args );
+// }
+
+// Define the callback function to register the meta box
+function my_custom_meta_box() {
+    add_meta_box(
+        'submitter_email',
+        'Email',
+        'my_meta_box_callback',
+        'wpr_submissions',
+        'normal',
+        'default'
+    );
+}
+
+// Define the callback function to display the meta box contents
+function my_meta_box_callback( $post ) {
+    // Display the form field for the custom meta field
+    echo '<label for="my_meta_field">Submitter Email:</label>';
+    echo '<input type="text" id="submitter_email" name="submitter_email" value="' . esc_attr( get_post_meta( $post->ID, 'submitter_email', true ) ) . '">';
+}
+
 function wpr_submissions() {
-	$args = array(
+	$args = [
+		'labels' => [
+			'name' => __( 'Submissions' ),
+			'singular_name' => __( 'Submission' )
+		],
 		'show_in_menu' => 'wpr-addons',
-		'label'        => 'Submissions',
-		'public'       => true
-	);
-	register_post_type( 'wpr_submissions', $args );
+		'public' => false,
+		'show_ui' => true,
+		'capability_type' => 'post',
+		'hierarchical' => false,
+		'supports' => array( 'title', 'editor', 'author' ),
+		'register_meta_box_cb' => 'my_custom_meta_box'
+	];
+	
+    register_post_type( 'wpr_submissions', $args);	
 }

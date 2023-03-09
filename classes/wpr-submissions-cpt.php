@@ -32,6 +32,8 @@ if ( ! defined( 'ABSPATH' ) ) {
         );
         
         $post_id = wp_insert_post( $new );
+
+        update_post_meta($post_id, 'submitter_email', $_POST['email']);
         
         if( $post_id ){
             echo "Post successfully published!";

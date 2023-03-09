@@ -1240,6 +1240,37 @@ function wpr_addons_add_upgrade_menu() {
 }
 add_action( 'admin_menu', 'wpr_addons_add_upgrade_menu', 99 );
 
+// CPT Submissions page
+function wpr_display_form_submissions() {
+    $form_submissions = get_posts( array(
+        'post_type' => 'wpr_submissions',
+        'posts_per_page' => -1
+    ));
+
+    echo '<h2>Submissions</h2>';
+    echo '<ul>';
+
+    foreach ( $form_submissions as $form_submission ) {
+        echo '<li>' . $form_submission->post_content . '</li>';
+    }
+
+    echo '</ul>';
+}
+
+function wpr_add_form_submissions_page() {
+    add_submenu_page(
+        'wpr-addons',
+        'Submissions',
+        'Submissions',
+        'manage_options',
+        'wpr-submissions',
+        'wpr_display_form_submissions',
+		99
+    );
+}
+
+add_action( 'admin_menu', 'wpr_add_form_submissions_page', 99 );
+
 function wpr_addons_upgrade_page() {}
 
 function wpr_redirect_upgrade_page() {
