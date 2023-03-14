@@ -362,6 +362,15 @@ function wpr_import_templates_kit() {
 function download_template( $kit, $file ) {
     $file = ! $file ? 'main' : $file;
 
+    if ( !validate_template($kit) ) {
+        wp_send_json_error([
+            'error' => esc_html__('Error: Import File validation failed.', 'wpr-addons'),
+            'help' => esc_html__('Please contact Customer Support and send this Error.', 'wpr-addons'),
+            'code' => 404
+        ]);
+        return false;
+    }
+
     // Avoid Cache
     $randomNum = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 7);
 
@@ -384,7 +393,7 @@ function download_template( $kit, $file ) {
         if ( is_wp_error( $tmp_file ) ) {
             wp_send_json_error([
                 'error' => esc_html__('Error: Import File download failed.', 'wpr-addons'),
-                'help' => esc_html__('Please contact Customer Support and send this Error.', 'wpr-addons')
+                'help' => esc_html__('Please contact Customer Support and send this Error.', 'wpr-addons'),
             ]);
             return false;
         }
@@ -422,6 +431,49 @@ function download_template( $kit, $file ) {
 
     // Success.
     return $local_file['file'];
+}
+
+/**
+** Validate Template
+*/
+function validate_template( $kit ) {
+    // Avoid Cache
+    $randomNum = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 7);
+
+    $remote_file_url = 'https://royal-elementor-addons.com/library/validate-templates.json?='. $randomNum;
+
+    $tmp_file = download_url( $remote_file_url );
+
+    $file_args = [
+        'name'     => 'validate-templates.json',
+        'tmp_name' => $tmp_file,
+        'error'    => 0,
+        'size'     => filesize( $tmp_file ),
+    ];
+
+    $defaults = array(
+        'test_form' => false,
+        'test_size' => true,
+        'test_upload' => true,
+        'mimes'  => [
+            'xml'  => 'text/xml',
+            'json' => 'text/plain',
+        ],
+        'wp_handle_sideload' => 'upload',
+    );
+
+    $local_file = wp_handle_sideload( $file_args, $defaults );
+
+    if ( isset( $local_file['error'] ) ) {
+        return false;
+    }
+
+    $tmps = json_decode(file_get_contents($local_file['file']));
+
+    // Delete Import File
+    unlink( $local_file['file'] );
+
+    return in_array($kit, $tmps) && !wpr_fs()->can_use_premium_code() ? false : true;
 }
 
 /**
