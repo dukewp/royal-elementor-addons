@@ -12,8 +12,10 @@ jQuery(document).ready(function( $ ) {
 
 	// Current Tab
 	var currentTab = $('.nav-tab-active').attr( 'data-title' );
-		currentTab = currentTab.trim().toLowerCase(),
-		currentTab = currentTab.replace(' ', '_');
+		if ( currentTab ) {
+			currentTab = currentTab.trim().toLowerCase(),
+			currentTab = currentTab.replace(' ', '_');
+		}
 
 	/*
 	** Get Active Filter -------------------------
@@ -630,7 +632,7 @@ jQuery(document).ready(function( $ ) {
 	** Highlight Templates with Active Conditions --------
 	*/
 	if ( $('body').hasClass('royal-addons_page_wpr-theme-builder') || $('body').hasClass('royal-addons_page_wpr-popups') ) {
-		if ( 'my_templates' !== currentTab ) {
+		if ( currentTab && 'my_templates' !== currentTab ) {
 			var conditions = $( '#wpr_'+ currentTab +'_conditions' ).val(),
 				conditions = ('' === conditions || '[]' === conditions) ? {} : JSON.parse(conditions);
 

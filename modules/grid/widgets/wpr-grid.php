@@ -8060,6 +8060,10 @@ class Wpr_Grid extends Widget_Base {
 		if ( 'slider' === $settings['layout_select'] ) {
 			$paged = 1;
 		}
+		
+		if ( empty($settings['query_offset']) ) {
+			$settings[ 'query_offset' ] = 0;
+		}
 
 		$offset = ( $paged - 1 ) * intval($settings['query_posts_per_page']) + intval($settings[ 'query_offset' ]);
 
