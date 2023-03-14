@@ -6473,7 +6473,7 @@ class Wpr_Media_Grid extends Widget_Base {
 
 	// Main Query Args
 	public function get_main_query_args() {
-		$settings = $this->get_settings();
+		$settings = $this->get_settings_for_display();
 		$author = ! empty( $settings[ 'query_author' ] ) ? implode( ',', $settings[ 'query_author' ] ) : '';
 
 		// Get Paged
@@ -7514,7 +7514,6 @@ class Wpr_Media_Grid extends Widget_Base {
 		$settings = $this->get_settings();
 		// Get Posts
 		$posts = new \WP_Query( $this->get_main_query_args() );
-
 
 		// Loop: Start
 		if ( $posts->have_posts() ) :
