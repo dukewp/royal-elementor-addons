@@ -142,6 +142,9 @@ class Wpr_Progress_Bar extends Widget_Base {
 				'default' => 70,
 				'min' => 0,
 				'step' => 1,
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
@@ -1307,7 +1310,7 @@ class Wpr_Progress_Bar extends Widget_Base {
 
 	protected function render() {
 		// Get Settings
-		$settings = $this->get_settings();
+		$settings = $this->get_settings_for_display();
 
 		$prbar_counter_persent = round( ( $settings['counter_value'] / $settings['max_value'] ) * 100 );
 

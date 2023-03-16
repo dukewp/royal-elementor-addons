@@ -560,7 +560,7 @@ class Wpr_Media_Grid extends Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'default' => 'dynamic',
 				'options' => [
-					'dynamic' => esc_html__( 'Dynamic', 'wpr-addons' ),
+					'dynamic' => esc_html__( 'Auto', 'wpr-addons' ),
 					'manual' => esc_html__( 'Manual', 'wpr-addons' ),
 				],
 			]
@@ -654,13 +654,13 @@ class Wpr_Media_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Add Images', 'wpr-addons' ),
 				'type' => Controls_Manager::GALLERY,
+				'separator' => 'before',
 				'dynamic' => [
 					'active' => true,
 				],
 				'condition' => [
 					'query_selection' => 'manual',
 				],
-				'separator' => 'before',
 			]
 		);
 
@@ -6512,7 +6512,7 @@ class Wpr_Media_Grid extends Widget_Base {
 
 	// Main Query Args
 	public function get_main_query_args() {
-		$settings = $this->get_settings();
+		$settings = $this->get_settings_for_display();
 		$author = ! empty( $settings[ 'query_author' ] ) ? implode( ',', $settings[ 'query_author' ] ) : '';
 
 		// Get Paged
@@ -7554,7 +7554,6 @@ class Wpr_Media_Grid extends Widget_Base {
 		// Get Posts
 		$posts = new \WP_Query( $this->get_main_query_args() );
 
-
 		// Loop: Start
 		if ( $posts->have_posts() ) :
 
@@ -7583,6 +7582,10 @@ class Wpr_Media_Grid extends Widget_Base {
 			// if ( Utilities::is_new_free_user() && $post_index > 12 ) {
 			// 	return;
 			// }
+
+			if ( ! wp_attachment_is( 'image', get_the_ID() ) ) {
+				continue;
+			}
 
 			// Post Class
 			$post_class = implode( ' ', get_post_class( 'wpr-grid-item elementor-clearfix', get_the_ID() ) );
