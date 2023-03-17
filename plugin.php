@@ -90,14 +90,16 @@ class Plugin {
 		require WPR_ADDONS_PATH . 'admin/includes/wpr-templates-library.php';
 
 		// Post Likes
-		require WPR_ADDONS_PATH . 'classes/wpr-post-likes.php';
+		require WPR_ADDONS_PATH . 'classes/modules/wpr-post-likes.php';
 
 		// Ajax Search
-		require WPR_ADDONS_PATH . 'classes/wpr-ajax-search.php';
+		require WPR_ADDONS_PATH . 'classes/modules/wpr-ajax-search.php';
 
-		// Load More
-		require WPR_ADDONS_PATH . 'classes/wpr-load-more-instagram-posts.php';
-		require WPR_ADDONS_PATH . 'classes/wpr-load-more-tweets.php';
+		// Instagram
+		require WPR_ADDONS_PATH . 'classes/modules/wpr-load-more-instagram-posts.php';
+
+		// Twitter
+		require WPR_ADDONS_PATH . 'classes/modules/wpr-load-more-tweets.php';
 
 		// Form Builder
 		require WPR_ADDONS_PATH . 'classes/wpr-send-email.php';
@@ -129,13 +131,13 @@ class Plugin {
 		// Admin Files
 		if ( is_admin() ) {
 			// Plugin Updaate Notice
-			require WPR_ADDONS_PATH . 'classes/plugin-update-notice.php';
+			require WPR_ADDONS_PATH . 'admin/notices/plugin-update-notice.php';
 			
 			// Plugin Sale Notice
-			require WPR_ADDONS_PATH . 'classes/plugin-sale-notice.php';
+			require WPR_ADDONS_PATH . 'admin/notices/plugin-sale-notice.php';
 			
 			// Rating Notice 
-			require WPR_ADDONS_PATH . 'classes/rating-notice.php';
+			require WPR_ADDONS_PATH . 'admin/notices/rating-notice.php';
 
 			// Plugin Options
 			require WPR_ADDONS_PATH . 'admin/plugin-options.php';

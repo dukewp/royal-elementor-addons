@@ -1667,11 +1667,11 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'options' => [
 					'solid' => [
 						'title' => esc_html__( 'Solid', 'wpr-addons' ),
-						'icon' => 'fa fa-star',
+						'icon' => 'eicon-star',
 					],
 					'outline' => [
 						'title' => esc_html__( 'Outline', 'wpr-addons' ),
-						'icon' => 'fa fa-star-o',
+						'icon' => 'eicon-star-o',
 					],
 				],
 				'default' => 'outline',

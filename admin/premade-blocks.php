@@ -4,8 +4,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use WprAddons\Admin\Templates\WPR_Templates_Data;
-use WprAddons\Admin\Templates\WPR_Templates_Library_Blocks;
+use WprAddons\Admin\Templates\Library\WPR_Templates_Data;
+use WprAddons\Admin\Templates\Library\WPR_Templates_Library_Blocks;
 use WprAddons\Classes\Utilities;
 use Elementor\Plugin;
 

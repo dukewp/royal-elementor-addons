@@ -1,5 +1,7 @@
 <?php 
-namespace WprAddons\Classes;
+namespace WprAddons\Admin\Notices;
+
+use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
