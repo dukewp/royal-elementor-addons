@@ -1588,6 +1588,257 @@ class Wpr_Form_Builder extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_step_style',
+			[
+				'label' => esc_html__( 'Step', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->start_controls_tabs( 'tabs_step_style' );
+
+		$this->start_controls_tab(
+			'tab_step_normal',
+			[
+				'label' => esc_html__( 'Normal', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'step_background_color',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605be5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step' => 'background-color: {{VALUE}};'
+				],
+			]
+		);
+
+		$this->add_control(
+			'step_border_color',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605be5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step' => 'border-color: {{VALUE}};'
+				]
+			]
+		);
+
+		// $this->add_control(
+		// 	'heading_previous_button',
+		// 	[
+		// 		'label' => esc_html__( 'Previous Button', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::HEADING,
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'previous_button_background_color',
+		// 	[
+		// 		'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::COLOR,
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .e-form__buttons__wrapper__button-previous' => 'background-color: {{VALUE}};',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'previous_button_text_color',
+		// 	[
+		// 		'label' => esc_html__( 'Text Color', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::COLOR,
+		// 		'default' => '#ffffff',
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .e-form__buttons__wrapper__button-previous' => 'color: {{VALUE}};',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'previous_button_border_color',
+		// 	[
+		// 		'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::COLOR,
+		// 		'default' => '',
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .e-form__buttons__wrapper__button-previous' => 'border-color: {{VALUE}};',
+		// 		],
+		// 		'condition' => [
+		// 			'button_border_border!' => '',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_group_control(
+		// 	Group_Control_Typography::get_type(),
+		// 	[
+		// 		'name' => 'button_typography',
+		// 		'selector' => '{{WRAPPER}} .wpr-button',
+		// 	]
+		// );
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_te_hover',
+			[
+				'label' => esc_html__( 'Hover', 'wpr-addons' ),
+			]
+		);
+
+		// $this->add_control(
+		// 	'heading_next_submit_button_hover',
+		// 	[
+		// 		'label' => esc_html__( 'Next & Submit Button', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::HEADING,
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'button_background_hover_color',
+		// 	[
+		// 		'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::COLOR,
+		// 		'default' => '',
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .e-form__buttons__wrapper__button-next:hover' => 'background-color: {{VALUE}};',
+		// 			'{{WRAPPER}} .wpr-button[type="submit"]:hover' => 'background-color: {{VALUE}};',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'button_hover_color',
+		// 	[
+		// 		'label' => esc_html__( 'Text Color', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::COLOR,
+		// 		'default' => '#ffffff',
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .e-form__buttons__wrapper__button-next:hover' => 'color: {{VALUE}};',
+		// 			'{{WRAPPER}} .wpr-button[type="submit"]:hover' => 'color: {{VALUE}};',
+		// 			'{{WRAPPER}} .wpr-button[type="submit"]:hover svg *' => 'fill: {{VALUE}};',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'button_hover_border_color',
+		// 	[
+		// 		'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::COLOR,
+		// 		'default' => '',
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .e-form__buttons__wrapper__button-next:hover' => 'border-color: {{VALUE}};',
+		// 			'{{WRAPPER}} .wpr-button[type="submit"]:hover' => 'border-color: {{VALUE}};',
+		// 		],
+		// 		'condition' => [
+		// 			'button_border_border!' => '',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'heading_previous_button_hover',
+		// 	[
+		// 		'label' => esc_html__( 'Previous Button', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::HEADING,
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'previous_button_background_color_hover',
+		// 	[
+		// 		'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::COLOR,
+		// 		'default' => '',
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .e-form__buttons__wrapper__button-previous:hover' => 'background-color: {{VALUE}};',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'previous_button_text_color_hover',
+		// 	[
+		// 		'label' => esc_html__( 'Text Color', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::COLOR,
+		// 		'default' => '#ffffff',
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .e-form__buttons__wrapper__button-previous:hover' => 'color: {{VALUE}};',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'previous_button_border_color_hover',
+		// 	[
+		// 		'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::COLOR,
+		// 		'default' => '',
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .e-form__buttons__wrapper__button-previous:hover' => 'border-color: {{VALUE}};',
+		// 		],
+		// 		'condition' => [
+		// 			'button_border_border!' => '',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'button_hover_animation',
+		// 	[
+		// 		'label' => esc_html__( 'Animation', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::HOVER_ANIMATION,
+		// 	]
+		// );
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		// $this->add_group_control(
+		// 	Group_Control_Border::get_type(), [
+		// 		'name' => 'button_border',
+		// 		'selector' => '{{WRAPPER}} .wpr-button',
+		// 		'exclude' => [
+		// 			'color',
+		// 		],
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'button_border_radius',
+		// 	[
+		// 		'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::DIMENSIONS,
+		// 		'size_units' => [ 'px', '%', 'em' ],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+		// 		],
+		// 		'separator' => 'before',
+		// 	]
+		// );
+
+		// $this->add_control(
+		// 	'button_text_padding',
+		// 	[
+		// 		'label' => esc_html__( 'Text Padding', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::DIMENSIONS,
+		// 		'size_units' => [ 'px', 'em', '%' ],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .wpr-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+		// 		],
+		// 	]
+		// );
+
+		$this->end_controls_section();
     }
 
 	private function add_required_attribute( $element ) {
