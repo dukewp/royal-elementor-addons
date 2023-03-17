@@ -24,16 +24,16 @@ if ( ! defined( 'ABSPATH' ) ) {
     }
 
     public function add_to_submissions() {
-        $new = array(
-            'post_title' => $_POST['title'],
-            'post_content' => $_POST['content'],
+
+        $new = [
             'post_status' => 'publish',
             'post_type' => 'wpr_submissions'
-        );
+        ];
         
         $post_id = wp_insert_post( $new );
-
-        update_post_meta($post_id, 'submitter_email', $_POST['email']);
+        foreach ( $_POST['mail_content'] as $key => $value ) {
+            update_post_meta($post_id, $key, $value[1]);
+        }
         
         if( $post_id ){
             echo "Post successfully published!";

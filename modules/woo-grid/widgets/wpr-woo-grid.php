@@ -259,6 +259,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'product_tag' => esc_html__( 'Tags', 'wpr-addons' ),
 			'status' => esc_html__( 'Status', 'wpr-addons' ),
 			'price' => esc_html__( 'Price', 'wpr-addons' ),
+			'pro-sd' => esc_html__( 'Sale Dates', 'wpr-addons' ),
 			'rating' => esc_html__( 'Rating', 'wpr-addons' ),
 			'add-to-cart' => esc_html__( 'Add to Cart', 'wpr-addons' ),
 			'lightbox' => esc_html__( 'Lightbox', 'wpr-addons' ),
@@ -1296,7 +1297,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'woo-grid', 'element_select', ['pro-lk', 'pro-shr'] );
+		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'woo-grid', 'element_select', ['pro-lk', 'pro-shr', 'pro-sd'] );
 
 		$repeater->add_control(
 			'element_location',
@@ -1506,6 +1507,40 @@ class Wpr_Woo_Grid extends Widget_Base {
 						'rating',
 						'add-to-cart',
 					],
+				],
+				'separator' => 'after'
+			]
+		);
+
+		$repeater->add_control(
+			'element_sale_dates_layout',
+			[
+				'label' => esc_html__( 'Layout', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'inline',
+				'options' => [
+					'inline' => esc_html__( 'Inline', 'wpr-addons' ),
+					'block' => esc_html__( 'Block', 'wpr-addons' ),
+				],
+				'condition' => [
+					'element_select' => [
+						'sale_dates',
+					]
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'element_sale_dates_sep',
+			[
+				'label' => esc_html__( 'Separator', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => ' - ',
+				'condition' => [
+					'element_select' => [
+						'sale_dates',
+					],
+					'element_sale_dates_layout' => 'inline'
 				],
 				'separator' => 'after'
 			]
@@ -1769,6 +1804,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 						'separator',
 						'status',
 						'price',
+						'sale_dates',
 						'rating',
 						'add-to-cart',
 						'excerpt'
@@ -1789,11 +1825,72 @@ class Wpr_Woo_Grid extends Widget_Base {
 						'separator',
 						'status',
 						'price',
+						'sale_dates',
 						'rating',
 						'add-to-cart',
 						'excerpt'
 					],
 					'element_extra_text_pos!' => 'none'
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'show_sale_starts_date',
+			[
+				'label' => esc_html__( 'Sale Starts Date', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'condition' => [
+					'element_select' => [
+						'sale_dates'
+					]
+				],
+			]
+		);
+
+		$repeater->add_control(
+			'element_sale_starts_text',
+			[
+				'label' => esc_html__( 'Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => '',
+				'condition' => [
+					'element_select' => [
+						'sale_dates'
+					],
+					'show_sale_starts_date' => 'yes'
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'show_sale_ends_date',
+			[
+				'label' => esc_html__( 'Sale Ends Date', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'condition' => [
+					'element_select' => [
+						'sale_dates'
+					]
+				],
+			]
+		);
+
+		$repeater->add_control(
+			'element_sale_ends_text',
+			[
+				'label' => esc_html__( 'Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => '',
+				'condition' => [
+					'element_select' => [
+						'sale_dates'
+					],
+					'show_sale_ends_date' => 'yes'
 				]
 			]
 		);
@@ -1817,6 +1914,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 						'sharing',
 						'status',
 						'price',
+						'sale_dates',
 						'rating',
 						'excerpt'
 					],
@@ -4851,6 +4949,178 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
+		$this->end_controls_section();
+
+		// Styles ====================
+		// Section: Sale Dates ------------
+		$this->start_controls_section(
+			'section_style_product_sale_dates',
+			[
+				'label' => esc_html__( 'Sale Dates', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'show_label' => false,
+			]
+		);
+		
+		$this->add_control(
+			'product_sale_dates_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#9C9C9C',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-item-sale_dates .inner-block > span' => 'color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->add_control(
+			'product_sale_dates_old_color',
+			[
+				'label'  => esc_html__( 'Text Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#9C9C9C',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-item-sale_dates .inner-block span.wpr-grid-extra-text-left' => 'color: {{VALUE}} !important',
+				],
+			]
+		);
+		
+		$this->add_control(
+			'product_sale_dates_bg_color',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-item-sale_dates .inner-block > span' => 'background-color: {{VALUE}}',
+				],
+			]
+		);
+		
+		$this->add_control(
+			'product_sale_dates_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-item-sale_dates .inner-block > span.wpr-sale-dates' => 'border-color: {{VALUE}}',
+				],
+				'separator' => 'after'
+			]
+		);
+		
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'product_sale_dates_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-grid-item-sale_dates .inner-block > .wpr-sale-dates'
+			]
+		);
+		
+		$this->add_control(
+			'product_sale_dates_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-item-sale_dates .inner-block > .wpr-sale-dates' => 'border-style: {{VALUE}};',
+				],
+				'separator' => 'before',
+			]
+		);
+		
+		$this->add_control(
+			'product_sale_dates_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-item-sale_dates .inner-block > .wpr-sale-dates' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'product_sale_dates_border_type!' => 'none',
+				],
+				'render_type' => 'template'
+			]
+		);
+		
+		$this->add_responsive_control(
+			'product_sale_dates_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-item-sale_dates .inner-block > .wpr-sale-dates' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'render_type' => 'template',
+				'separator' => 'before',
+			]
+		);
+		
+		$this->add_responsive_control(
+			'product_sale_dates_margin',
+			[
+				'label' => esc_html__( 'Margin', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-item-sale_dates .inner-block > .wpr-sale-dates' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'render_type' => 'template',
+			]
+		);
+		
+		$this->add_control(
+			'product_sale_dates_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-item-sale_dates .inner-block > .wpr-sale-dates' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'after',
+			]
+		);
+		
 		$this->end_controls_section();
 
 		// Styles ====================
@@ -7997,7 +8267,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 			echo '<span>'. wp_kses_post($product->get_price_html()) .'</span>';
 			$sale_price_dates_to    = ( $date = get_post_meta( $product->get_id(), '_sale_price_dates_to', true ) ) ? date_i18n( 'Y-m-d', $date ) : '';
-			var_dump( get_post_meta( $product->get_id(), '_sale_price_dates_to', true ));
 			echo $sale_price_dates_to;
 
 			echo '</div>';
@@ -8005,9 +8274,65 @@ class Wpr_Woo_Grid extends Widget_Base {
 	}
 
 
+	public function render_product_sale_dates( $settings, $class ) {
+
+		global $product;
+
+		// If NOT a Product
+		if ( is_null( $product ) ) {
+			return;
+		}
+
+		// $sale_price_dates_from  = ( $date = get_post_meta( $product->get_id(), '_sale_price_dates_from', true ) ) ? date_i18n( 'Y-m-d', $date ) : '';
+		// $sale_price_dates_to  = ( $date = get_post_meta( $product->get_id(), '_sale_price_dates_to', true ) ) ? date_i18n( 'Y-m-d', $date ) : '';
+		$sale_price_dates_from  = ( $date = get_post_meta( $product->get_id(), '_sale_price_dates_from', true ) ) ? date_i18n(get_option('date_format'), $date ) : '';
+		$sale_price_dates_to  = ( $date = get_post_meta( $product->get_id(), '_sale_price_dates_to', true ) ) ? date_i18n(get_option('date_format'), $date ) : '';
+		
+		if ( ( 'yes' == $settings['show_sale_starts_date'] && !empty($sale_price_dates_from) ) || ( 'yes' == $settings['show_sale_ends_date'] && !empty($sale_price_dates_to) ) ) {
+			echo '<div class="'. esc_attr($class) .'">';
+				echo '<div class="inner-block">';
+
+					echo '<span class="wpr-sale-dates">';
+		
+						// Text: Before
+						if ( '' !== $settings['element_sale_starts_text'] && !empty($sale_price_dates_from) ) {
+							echo '<span class="wpr-grid-extra-text-left">'. esc_html( $settings['element_sale_starts_text'] ) .'</span> ';
+						}
+						
+						if ( !empty($sale_price_dates_from) ) {
+							echo  '<span>'. $sale_price_dates_from .'</span>';
+						}
+
+
+						if ( !empty($settings['element_sale_dates_sep']) && 'inline' == $settings['element_sale_dates_layout'] ) {
+							if ( !empty($sale_price_dates_from) && !empty($sale_price_dates_to) ) {
+								echo $settings['element_sale_dates_sep'];
+							}
+						}
+
+						if ( 'block' == $settings['element_sale_dates_layout'] && !empty($sale_price_dates_form) && !empty($sale_price_dates_to) ) {
+							echo '<br>';
+						}
+		
+						// Text: Before
+						if ( '' !== $settings['element_sale_ends_text'] && !empty($sale_price_dates_to) ) {
+							echo '<span class="wpr-grid-extra-text-left">'. esc_html( $settings['element_sale_ends_text'] ) .'</span> ';
+						}
+
+						if ( !empty($sale_price_dates_to) ) {
+							echo  '<span>'. $sale_price_dates_to .'</span>';
+						}
+
+					echo '</span>';
+	
+				echo '</div>';
+			echo '</div>';
+		}
+	}
+
 	// Get Elements
 	public function get_elements( $type, $settings, $class, $post_id ) {
-		if ( 'pro-lk' == $type || 'pro-shr' == $type ) {
+		if ( 'pro-lk' == $type || 'pro-shr' == $type || 'pro-sd' == $type ) {
 			$type = 'title';
 		}
 
@@ -8050,6 +8375,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 			case 'price':
 				$this->render_product_price( $settings, $class );
+				break;
+
+			case 'sale_dates':
+				$this->render_product_sale_dates( $settings, $class );
 				break;
 
 			case 'rating':

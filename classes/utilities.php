@@ -346,17 +346,15 @@ class Utilities {
 
 		// Find a Custom Condition
 		foreach( $data as $id => $conditions ) {
-
 			if ( in_array( $page .'/'. $post_id, $conditions) ) {
-
 				$template = $id;
-			} elseif ( in_array( $page .'/all', $conditions) ) {
+			} elseif ( in_array( $page .'/all', $conditions) && !in_array( $page .'/'. $post_id, $conditions) ) {
 				$template = $id;
-			} elseif ( in_array( $page, $conditions) ) {
+			} elseif ( in_array( $page, $conditions)  && !in_array( $page .'/'. $post_id, $conditions)  ) {
 				$template = $id;
 			}
 		}
-
+		
 		// If a Custom NOT Found, use Global
 		if ( is_null($template) ) {
 			foreach( $data as $id => $conditions ) {
@@ -374,10 +372,12 @@ class Utilities {
 		]);
 		
 		if ( ! $templates_loop->have_posts() ) {
-			return null;
+			$template = null;
 		} else {
-			return $template;
+			$template = $template;
 		}
+
+		return $template;
 	}
 
 

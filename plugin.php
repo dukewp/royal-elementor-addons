@@ -101,10 +101,6 @@ class Plugin {
 		// Twitter
 		require WPR_ADDONS_PATH . 'classes/modules/wpr-load-more-tweets.php';
 
-		// Form Builder
-		require WPR_ADDONS_PATH . 'classes/wpr-send-email.php';
-		require WPR_ADDONS_PATH . 'classes/wpr-submissions-cpt.php';
-
 		// Particles
 		if ( 'on' === get_option('wpr-particles', 'on') ) {//TODO: make this check automatic(loop through) for all extensions
 			require WPR_ADDONS_PATH . 'extensions/wpr-particles.php';
@@ -127,6 +123,12 @@ class Plugin {
 
 		// Mega Menu
 		require WPR_ADDONS_PATH . 'admin/mega-menu.php';
+
+
+		// Form Builder
+		require WPR_ADDONS_PATH . 'classes/wpr-send-email.php';
+		require WPR_ADDONS_PATH . 'classes/wpr-submissions-cpt.php';
+		require WPR_ADDONS_PATH . 'admin/form-builder-submissions.php';
 
 		// Admin Files
 		if ( is_admin() ) {
@@ -431,7 +433,8 @@ class Plugin {
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
 				'resturl' => get_rest_url() . 'wpraddons/v1',
 				'nonce' => wp_create_nonce( 'wpr-addons-js' ),
-				'chooseQuantityText' => esc_html__('Please select the required number of items.')
+				'chooseQuantityText' => esc_html__('Please select the required number of items.'),
+				'site_key' => get_option('wpr_recaptcha_vs_site_key')
 			]
 		);
 	}
@@ -805,8 +808,15 @@ class Plugin {
 
         return $config;
     }
+	
+	public function wpr_enqueue_recaptcha_script() {
+		$site_key = get_option('wpr_recaptcha_v3_site_key');
+		wp_enqueue_script('google-recaptcha', 'https://www.google.com/recaptcha/api.js?render=' . $site_key, array(), null, true);
+	}
 
 	protected function add_actions() {
+		add_action('wp_enqueue_scripts', [$this, 'wpr_enqueue_recaptcha_script']);
+
 		// Register Widgets
 		add_action( 'elementor/init', [ $this, 'elementor_init' ] );
 

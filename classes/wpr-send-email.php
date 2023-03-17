@@ -5,7 +5,6 @@ use Elementor\Utils;
 use Elementor\Group_Control_Image_Size;
 use WprAddons\Classes\Utilities;
 
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -24,14 +23,19 @@ if ( ! defined( 'ABSPATH' ) ) {
     }
 
     public function send_email() {
-        // $name = $_POST['name'];
-        // $email = $_POST['email'];
-        // $message = $_POST['message'];
-      
-        // Set up email parameters
+        
+        $message_body = [];
+        
+        var_dump($_POST['mail_content']);
+        foreach ( $_POST['mail_content'] as $key => $value ) {
+            $message_body[] = $value[2] . ': ' . $value[1];
+        }
+
+        // $to = $_POST['email_to'];
         $to = 'geobeatnic@gmail.com';
-        $subject = 'New form submission';
-        $body = "Message Body";
+        // $subject = $_POST['email_subject'];
+        $subject = 'New Test Mail';
+        $body = implode("<br>", $message_body);
         $headers = array('Content-Type: text/html; charset=UTF-8');
       
         // Send email using wp_mail() function
