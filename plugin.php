@@ -797,7 +797,27 @@ class Plugin {
         return $config;
     }
 
+	// move these to better place
+	// remove reload script from editor.min.js
+	// check theme builder blog post singles as well
+	public function register_wc_hooks() {
+		wc()->frontend_includes();
+	}
+
+	public function maybe_init_cart() {
+		$has_cart = is_a( WC()->cart, 'WC_Cart' );
+
+		if ( ! $has_cart ) {
+			$session_class = apply_filters( 'woocommerce_session_handler', 'WC_Session_Handler' );
+			WC()->session = new $session_class();
+			WC()->session->init();
+			WC()->cart = new \WC_Cart();
+			WC()->customer = new \WC_Customer( get_current_user_id(), true );
+		}
+	}
+
 	protected function add_actions() {
+
 		// Register Widgets
 		add_action( 'elementor/init', [ $this, 'elementor_init' ] );
 
@@ -838,6 +858,9 @@ class Plugin {
 
 		// Promote Premium Widgets
         add_filter('elementor/editor/localize_settings', [$this, 'promote_premium_widgets']);
+		
+		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'maybe_init_cart' ] );
+		add_action( 'init', [ $this, 'register_wc_hooks' ], 5 );
 	}
 
 	/**
