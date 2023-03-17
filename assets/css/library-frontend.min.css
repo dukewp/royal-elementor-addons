@@ -362,6 +362,10 @@
     border-radius: 3px;
 }
 
+.wpr-tplib-filters-list {
+    right: 0;
+}
+
 .wpr-tplib-filters-list ul,
 .wpr-tplib-price-list ul {
     display: -webkit-box;
