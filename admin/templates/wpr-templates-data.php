@@ -13,6 +13,20 @@ class WPR_Templates_Data {
 		$is_woo_active = is_plugin_active('woocommerce/woocommerce.php') ? 'true' : 'false';
 
 		return [
+			'dynamic' => [
+				'v1' => [
+					'name' => 'Dynamic Test',
+					'pages' => 'home,',
+					'plugins' => '',
+					'tags' => 'shop shopping woo-commerce woocommerce estore ecommerce product online eshopping market reseller ecommerce shop',
+					'theme-builder' => false,
+					'woo-builder' => true,
+					'off-canvas' => false,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'label' => '',
+					'priority' => 1,
+				],
+			],
 			'grocery-store' => [
 				'v1' => [
 					'name' => 'Grocery Store',

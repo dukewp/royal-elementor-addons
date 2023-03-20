@@ -653,12 +653,13 @@ class WP_Import extends WP_Importer {
 		foreach ( $this->posts as $post ) {
 			$post = apply_filters( 'wp_import_post_data_raw', $post );
 
-			if ( ! post_type_exists( $post['post_type'] ) ) {
-				/* translators: 1: Post title, 2: Post type. */
-				$this->output['errors'][] = sprintf( esc_html__( 'Failed to import %1$s: Invalid post type %2$s', 'wpr-addons' ), $post['post_title'], $post['post_type'] );
-				do_action( 'wp_import_post_exists', $post );
-				continue;
-			}
+			// Disabled by Duke
+			// if ( ! post_type_exists( $post['post_type'] ) ) {
+			// 	/* translators: 1: Post title, 2: Post type. */
+			// 	$this->output['errors'][] = sprintf( esc_html__( 'Failed to import %1$s: Invalid post type %2$s', 'wpr-addons' ), $post['post_title'], $post['post_type'] );
+			// 	do_action( 'wp_import_post_exists', $post );
+			// 	continue;
+			// }
 
 			if ( isset( $this->processed_posts[ $post['post_id'] ] ) && ! empty( $post['post_id'] ) ) {
 				continue;
