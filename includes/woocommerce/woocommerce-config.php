@@ -1,4 +1,5 @@
 <?php
+use WprAddons\Classes\Utilities;
 
 class WPR_WooCommerce_Config {
 
@@ -24,10 +25,22 @@ class WPR_WooCommerce_Config {
 		add_filter( 'wc_get_template', [ $this, 'rewrite_default_wc_templates' ], 10, 3 );
 
 		add_filter( 'woocommerce_add_to_cart_fragments', [$this, 'wc_refresh_mini_cart_count']);
+
+		// Fix Theme Builder issues
+		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'maybe_init_cart' ] );
+		add_action( 'init', [ $this, 'register_wc_hooks' ], 5 );
+
+		// var_dump($_GET['action']);
+		if ( is_admin() ) {
+			$template = isset($_GET['post']) ? sanitize_text_field(wp_unslash($_GET['post'])) : '';
+
+			if ( $template_type = Utilities::get_wpr_template_type($template) ) {
+				add_action( 'init', [ $this, 'register_wc_hooks' ], 5 );
+			}
+		}
 	}
 
 	function wpr_remove_elementor_lightbox( $classes ) {
-	
 		$classes[] = 'wpr-no-lightbox';
 	
 		// Return classes
@@ -112,7 +125,22 @@ class WPR_WooCommerce_Config {
 
 		return $located;
 	}
+	
+	public function register_wc_hooks() {
+		wc()->frontend_includes();
+	}
 
+	public function maybe_init_cart() {
+		$has_cart = is_a( WC()->cart, 'WC_Cart' );
+
+		if ( ! $has_cart ) {
+			$session_class = apply_filters( 'woocommerce_session_handler', 'WC_Session_Handler' );
+			WC()->session = new $session_class();
+			WC()->session->init();
+			WC()->cart = new \WC_Cart();
+			WC()->customer = new \WC_Customer( get_current_user_id(), true );
+		}
+	}
 }
 
 new WPR_WooCommerce_Config();
