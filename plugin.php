@@ -798,7 +798,6 @@ class Plugin {
     }
 
 	protected function add_actions() {
-
 		// Register Widgets
 		add_action( 'elementor/init', [ $this, 'elementor_init' ] );
 
