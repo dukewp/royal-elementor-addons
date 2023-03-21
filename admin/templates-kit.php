@@ -522,9 +522,12 @@ function setup_wpr_templates( $kit ) {
     $kit_name = substr($kit, 0, strripos($kit, '-v'));
     $kit_version = substr($kit, (strripos($kit, '-v') + 1), strlen($kit));
     $get_available_kits = WPR_Templates_Data::get_available_kits();
+    $get_custom_types = $get_available_kits[$kit_name][$kit_version]['custom-types'];
     $has_theme_builder = $get_available_kits[$kit_name][$kit_version]['theme-builder'];
     $has_woo_builder = $get_available_kits[$kit_name][$kit_version]['woo-builder'];
     $has_off_canvas = $get_available_kits[$kit_name][$kit_version]['off-canvas'];
+    $custom_type_archive_conditions = [];
+    $custom_type_single_conditions = [];
 
     // Set Home & Blog Pages
     $home_page = get_page_by_path('home-'. $kit);
@@ -545,10 +548,40 @@ function setup_wpr_templates( $kit ) {
     update_option('wpr_footer_conditions', '{"user-footer-'. $kit .'-footer":["global"]}');
     update_post_meta( Utilities::get_template_id('user-footer-'. $kit), 'wpr_footer_show_on_canvas', 'true' );
 
+    // Custom Post Types & Taxonomies
+    if ( isset($get_custom_types) ) {
+        foreach ($get_custom_types as $label => $slug) {
+            if ( substr_count( $slug,'_') > 1 ) {
+                $custom_type_archive_conditions[] = '"user-archive-'. $kit .'-'. $label .'":["archive/'. $slug .'/all"]';
+            } else {
+                $custom_type_archive_conditions[] = '"user-archive-'. $kit .'-'. $label .'":["archive/'. $slug .'"]';
+                $custom_type_single_conditions[] = '"user-single-'. $kit .'-'. $label .'":["single/'. $slug.'/all"]';
+            }
+        }
+        
+        $custom_type_archive_conditions = implode(',',$custom_type_archive_conditions);
+        $custom_type_single_conditions = implode(',',$custom_type_single_conditions);
+
+        if ( get_option('permalink_structure') !== '/%postname%/' ) {
+            // Set permalink structure to post name
+            update_option('permalink_structure', '/%postname%/');
+        }
+    
+        // Flush rewrite rules
+        global $wp_rewrite;
+        $wp_rewrite->flush_rules();
+    }
+
     // Theme Builder
     if ( $has_theme_builder ) {
-        update_option('wpr_archive_conditions', '{"user-archive-'. $kit .'-blog":["archive/posts"],"user-archive-'. $kit .'-author":["archive/author"],"user-archive-'. $kit .'-date":["archive/date"],"user-archive-'. $kit .'-category-tag":["archive/categories/all","archive/tags/all"],"user-archive-'. $kit .'-search":["archive/search"]}');
-        update_option('wpr_single_conditions', '{"user-single-'. $kit .'-404":["single/page_404"],"user-single-'. $kit .'-post":["single/posts/all"],"user-single-'. $kit .'-page":["single/pages/all"]}');
+        $custom_type_archive_conditions = isset($get_custom_types) ? ','. $custom_type_archive_conditions : '';
+        $custom_type_single_conditions = isset($get_custom_types) ? ','. $custom_type_single_conditions : '';
+
+        update_option('wpr_archive_conditions', '{"user-archive-'. $kit .'-blog":["archive/posts"],"user-archive-'. $kit .'-author":["archive/author"],"user-archive-'. $kit .'-date":["archive/date"],"user-archive-'. $kit .'-category-tag":["archive/categories/all","archive/tags/all"],"user-archive-'. $kit .'-search":["archive/search"]'. $custom_type_archive_conditions .'}');
+        update_option('wpr_single_conditions', '{"user-single-'. $kit .'-404":["single/page_404"],"user-single-'. $kit .'-post":["single/posts/all"],"user-single-'. $kit .'-page":["single/pages/all"]'. $custom_type_single_conditions .'}');
+    } elseif ( isset($get_custom_types) ) {
+        update_option('wpr_archive_conditions', '{'. $custom_type_archive_conditions .'}');
+        update_option('wpr_single_conditions', '{'. $custom_type_single_conditions .'}');
     }
 
     // WooCommerce Builder

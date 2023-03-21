@@ -191,9 +191,9 @@ class WP_Import extends WP_Importer {
 
 		wp_suspend_cache_invalidation( true );
 		$imported_summary = [
-			'categories' => $this->process_categories(),
-			'tags' => $this->process_tags(),
-			'terms' => $this->process_terms(),
+			// 'categories' => $this->process_categories(),
+			// 'tags' => $this->process_tags(),
+			// 'terms' => $this->process_terms(),
 			'posts' => $this->process_posts(),
 		];
 		wp_suspend_cache_invalidation( false );
@@ -653,13 +653,12 @@ class WP_Import extends WP_Importer {
 		foreach ( $this->posts as $post ) {
 			$post = apply_filters( 'wp_import_post_data_raw', $post );
 
-			// Disabled by Duke
-			// if ( ! post_type_exists( $post['post_type'] ) ) {
-			// 	/* translators: 1: Post title, 2: Post type. */
-			// 	$this->output['errors'][] = sprintf( esc_html__( 'Failed to import %1$s: Invalid post type %2$s', 'wpr-addons' ), $post['post_title'], $post['post_type'] );
-			// 	do_action( 'wp_import_post_exists', $post );
-			// 	continue;
-			// }
+			if ( ! post_type_exists( $post['post_type'] ) ) {
+				/* translators: 1: Post title, 2: Post type. */
+				$this->output['errors'][] = sprintf( esc_html__( 'Failed to import %1$s: Invalid post type %2$s', 'wpr-addons' ), $post['post_title'], $post['post_type'] );
+				do_action( 'wp_import_post_exists', $post );
+				continue;
+			}
 
 			if ( isset( $this->processed_posts[ $post['post_id'] ] ) && ! empty( $post['post_id'] ) ) {
 				continue;
@@ -1362,7 +1361,24 @@ class WP_Import extends WP_Importer {
 		return $key;
 	}
 
+	// By Duke
+	function register_tmp_post_types() {
+		// Register custom post type
+		register_post_type('wpr_portfolio', array(
+			'public' => true,
+			'has_archive' => true,
+			'supports' => array('title', 'editor', 'thumbnail')
+		));
+	
+		// Register custom taxonomy
+		register_taxonomy('wpr_portfolio_cats', 'wpr_portfolio', array(
+			'public' => true,
+			'hierarchical' => true
+		));
+	}
+
 	public function run() {
+		$this->register_tmp_post_types();
 		$this->import( $this->requested_file_path );
 
 		return $this->output;

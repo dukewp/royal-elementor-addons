@@ -24,6 +24,7 @@ class WPR_Templates_Data {
 					'off-canvas' => false,
 					'price' => $is_pro_active ? 'free' : 'free',
 					'label' => '',
+					'custom-types' => ['portfolio' => 'wpr_portfolio', 'portfolio-category' => 'wpr_portfolio_cats'],
 					'priority' => 1,
 				],
 			],
