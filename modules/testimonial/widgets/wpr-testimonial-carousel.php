@@ -346,6 +346,9 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 				'max' => 10,
 				'step' => 0.1,
 				'default' => 4.5,
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 

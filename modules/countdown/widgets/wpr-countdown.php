@@ -114,6 +114,9 @@ class Wpr_Countdown extends Widget_Base {
 					esc_html__( 'Date set according to your timezone: %s.', 'wpr-addons' ),
 					Utils::get_timezone_string()
 				),
+				'dynamic' => [
+					'active' => true,
+				],
 				'separator' => 'before',
 				'condition' => [
 					'countdown_type' => 'due-date',

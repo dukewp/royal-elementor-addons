@@ -127,9 +127,6 @@ class Wpr_OnepageNav extends Widget_Base {
 			[
 				'label' => esc_html__( 'Section ID', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
-				'dynamic' => [
-					'active' => true,
-				],
 				'default' => 'section-one',
 			]
 		);

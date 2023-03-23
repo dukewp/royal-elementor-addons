@@ -443,7 +443,13 @@ function wpr_reset_previous_import() {
             'wpr_mega_menu',
             'wpr_templates',
             'elementor_library',
-            'attachment'
+            'attachment',
+
+            'acf-post-type',
+            'acf-taxonomy',
+            'acf-field-group',
+
+            'wpr_portfolio'
         ],
         'post_status' => 'any',
         'posts_per_page' => '-1',
@@ -549,7 +555,7 @@ function setup_wpr_templates( $kit ) {
     update_post_meta( Utilities::get_template_id('user-footer-'. $kit), 'wpr_footer_show_on_canvas', 'true' );
 
     // Custom Post Types & Taxonomies
-    if ( isset($get_custom_types) ) {
+    if ( isset($get_custom_types) && wpr_fs()->is_plan( 'expert' ) ) {
         foreach ($get_custom_types as $label => $slug) {
             if ( substr_count( $slug,'_') > 1 ) {
                 $custom_type_archive_conditions[] = '"user-archive-'. $kit .'-'. $label .'":["archive/'. $slug .'/all"]';

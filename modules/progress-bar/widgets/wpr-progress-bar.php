@@ -131,6 +131,9 @@ class Wpr_Progress_Bar extends Widget_Base {
 				'min' => 0,
 				'step' => 1,
 				'separator' => 'before',
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
