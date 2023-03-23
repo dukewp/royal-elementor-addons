@@ -362,15 +362,6 @@ function wpr_import_templates_kit() {
 function download_template( $kit, $file ) {
     $file = ! $file ? 'main' : $file;
 
-    if ( !validate_template($kit) ) {
-        wp_send_json_error([
-            'error' => esc_html__('Error: Import File validation failed.', 'wpr-addons'),
-            'help' => esc_html__('Please contact Customer Support and send this Error.', 'wpr-addons'),
-            'code' => 404
-        ]);
-        return false;
-    }
-
     // Avoid Cache
     $randomNum = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 7);
 
