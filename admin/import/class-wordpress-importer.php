@@ -191,9 +191,9 @@ class WP_Import extends WP_Importer {
 
 		wp_suspend_cache_invalidation( true );
 		$imported_summary = [
-			// 'categories' => $this->process_categories(),
-			// 'tags' => $this->process_tags(),
-			// 'terms' => $this->process_terms(),
+			'categories' => $this->process_categories(),
+			'tags' => $this->process_tags(),
+			'terms' => $this->process_terms(),
 			'posts' => $this->process_posts(),
 		];
 		wp_suspend_cache_invalidation( false );
