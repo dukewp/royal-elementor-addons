@@ -2319,6 +2319,10 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     z-index: 2;
 }
 
+.wpr-magazine-grid-wrap {
+    opacity: 0;
+}
+
 .wpr-grid .wpr-cv-container,
 .wpr-magazine-grid .wpr-cv-container {
     z-index: 1;

@@ -8067,6 +8067,12 @@ class Wpr_Grid extends Widget_Base {
 
 		$offset = ( $paged - 1 ) * intval($settings['query_posts_per_page']) + intval($settings[ 'query_offset' ]);
 
+		if ( empty($settings['query_posts_per_page']) ) {
+			if ( !('slider' === $settings['layout_select'] && Utilities::is_new_free_user()) ) {
+				$settings['query_posts_per_page'] = 999;
+			}
+		}
+
 		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$settings[ 'query_randomize' ] = '';
 			$settings['order_posts'] = 'date';
