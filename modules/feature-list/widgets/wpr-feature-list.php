@@ -377,6 +377,9 @@ class Wpr_Feature_List extends Widget_Base {
 				'label' => esc_html__( 'Choose Image', 'plugin-name' ),
 				'type' => \Elementor\Controls_Manager::MEDIA,
 				'skin' => 'inline',
+				'dynamic' => [
+					'active' => true,
+				],
 				'condition' => [
 					'feature_list_media_type' => 'image'
 				]

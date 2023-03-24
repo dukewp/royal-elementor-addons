@@ -148,6 +148,9 @@ class Wpr_Dual_Button extends Widget_Base {
 				'label' => esc_html__( 'Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => 'Button 1',
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 

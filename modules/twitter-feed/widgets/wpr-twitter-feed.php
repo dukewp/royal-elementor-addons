@@ -60,7 +60,10 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				'type' => Controls_Manager::NUMBER,
 				'default' => 6,
 				'min' => 0,
-				'max' => 6
+				'max' => 6,
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 	}
