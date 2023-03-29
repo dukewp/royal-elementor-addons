@@ -15033,6 +15033,10 @@ dl.variation dd {
          box-sizing: border-box;
 }
 
+.woocommerce .wpr-product-add-to-cart a.added_to_cart {
+    padding: 0;
+}
+
 .woocommerce div.product .wpr-product-add-to-cart form.cart,
 .woocommerce div.product .wpr-product-add-to-cart form.cart .variations {
     margin: 0;
