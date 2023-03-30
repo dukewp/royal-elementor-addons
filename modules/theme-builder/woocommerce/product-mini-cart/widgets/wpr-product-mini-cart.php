@@ -589,7 +589,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 		$this->add_render_attribute(
 			'mini_cart_attributes',
 			[
-				'data-animation' => wpr_fs()->can_use_premium_code() ? $settings['mini_cart_entrance_speed'] : ''
+				'data-animation' => (wpr_fs()->can_use_premium_code() && isset($settings['mini_cart_entrance_speed'])) ? $settings['mini_cart_entrance_speed'] : ''
 			]
 		);
 

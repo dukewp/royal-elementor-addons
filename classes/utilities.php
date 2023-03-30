@@ -934,6 +934,25 @@ class Utilities {
         );
 	}
 
+	public static function upgrade_expert_notice( $module, $controls_manager, $widget, $option, $condition = [] ) {
+		if ( wpr_fs()->is_plan( 'expert' ) ) {
+			return;
+		}
+
+		$module->add_control(
+            $option .'_expert_notice',
+            [
+				'raw' => 'This option is available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-'. $widget .'-upgrade-expert#purchasepro" target="_blank">Expert version</a></strong>',
+				// 'raw' => 'This option is available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+				'type' => $controls_manager,
+				'content_classes' => 'wpr-pro-notice',
+				'condition' => [
+					$option => $condition,
+				]
+			]
+        );
+	}
+
 	/**
 	** Request Feature Section
 	*/

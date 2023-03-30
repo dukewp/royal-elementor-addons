@@ -44,7 +44,7 @@ class Wpr_Post_Info extends Widget_Base {
 			'comments' => esc_html__( 'Comments', 'wpr-addons' ),
 			'author' => esc_html__( 'Author', 'wpr-addons' ),
 			'taxonomy' => esc_html__( 'Taxonomy', 'wpr-addons' ),
-			'pro-cf' => esc_html__( 'Custom Field (Pro)', 'wpr-addons' ),
+			'pro-cf' => esc_html__( 'Custom Field (Expert)', 'wpr-addons' ),
 		];
 	}
 
@@ -108,7 +108,7 @@ class Wpr_Post_Info extends Widget_Base {
 		$repeater->add_control(
 			'post_info_custom_field_video_tutorial',
 			[
-				'raw' => esc_html__( 'See how to use Custom Fields in this', 'wpr-addons' ) . sprintf( '<br><a href="%1$s" target="_blank">%2$s <span class="dashicons dashicons-video-alt3"></span></a>', 'https://www.youtube.com/watch?v=9GvpqyHF_Cs', esc_html__( 'Video Tutorial', 'wpr-addons' ) ),
+				'raw' => esc_html__( 'Watch Custom Fields ', 'wpr-addons' ) . sprintf( '<a href="%1$s" target="_blank">%2$s <span class="dashicons dashicons-video-alt3"></span></a>', 'https://www.youtube.com/watch?v=9GvpqyHF_Cs', esc_html__( 'Video Tutorial', 'wpr-addons' ) ),
 				'type' => Controls_Manager::RAW_HTML,
 				'separator' => 'after',
 				'condition' => [
@@ -117,7 +117,7 @@ class Wpr_Post_Info extends Widget_Base {
 			]
 		);
 
-		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'post-info', 'post_info_select', ['pro-cf'] );
+		Utilities::upgrade_expert_notice( $repeater, Controls_Manager::RAW_HTML, 'post-info', 'post_info_select', ['pro-cf'] );
 
 		$repeater->add_control(
 			'post_info_modified_time',
@@ -258,6 +258,7 @@ class Wpr_Post_Info extends Widget_Base {
 			]
 		);
 
+		if ( wpr_fs()->is_plan( 'expert' ) ) {
 		$repeater->add_control(
 			'post_info_cf',
 			[
@@ -365,6 +366,7 @@ class Wpr_Post_Info extends Widget_Base {
 				]
 			]
 		);
+		}
 
 		$repeater->add_control(
 			'post_info_extra_icon',
@@ -414,7 +416,7 @@ class Wpr_Post_Info extends Widget_Base {
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'post-info', [
-			'Display and Style Custom Fields in and Advanced way.',
+			'Display and Style Custom Fields in and Advanced way (Expert).',
 			'Query Custom Post Type Taxonomies (categories).'
 		] );
 

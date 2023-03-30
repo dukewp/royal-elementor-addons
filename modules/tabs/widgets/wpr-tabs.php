@@ -68,7 +68,7 @@ class Wpr_Tabs extends Widget_Base {
             'default' => 'editor',
             'options' => [
                 'editor' => esc_html__( 'Editor', 'wpr-addons' ),
-                'acf' => esc_html__( 'Custom Field', 'wpr-addons' ),
+                'pro-cf' => esc_html__( 'Custom Field (Expert)', 'wpr-addons' ),
                 'pro-tmp' => esc_html__( 'Elementor Template (Pro)', 'wpr-addons' ),
             ],
 			'separator' => 'before',
@@ -198,6 +198,7 @@ class Wpr_Tabs extends Widget_Base {
 
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'tabs', 'tab_content_type', ['pro-tmp'] );
+		Utilities::upgrade_expert_notice( $repeater, Controls_Manager::RAW_HTML, 'tabs', 'tab_content_type', ['pro-cf'] );
 
 		// Get Available Meta Keys
 		$post_meta_keys = Utilities::get_custom_meta_keys();

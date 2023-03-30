@@ -149,7 +149,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			'separator' => esc_html__( 'Separator', 'wpr-addons' ),
 			'pro-lk' => esc_html__( 'Likes (Pro)', 'wpr-addons' ),
 			'pro-shr' => esc_html__( 'Sharing (Pro)', 'wpr-addons' ),
-			'pro-cf' => esc_html__( 'Custom Field (Pro)', 'wpr-addons' ),
+			'pro-cf' => esc_html__( 'Custom Field (Expert)', 'wpr-addons' ),
 		];
 	}
 
@@ -866,9 +866,6 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 		$element_select = $this->add_option_element_select();
 
-		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'magazine-grid', 'element_select', ['pro-lk', 'pro-shr', 'pro-cf']);
-
 		$repeater->add_control(
 			'element_select',
 			[
@@ -896,14 +893,18 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		$repeater->add_control(
 			'element_custom_field_info_video_tutorial',
 			[
-				'raw' => esc_html__( 'See how to use Custom Fields in this', 'wpr-addons' ) . sprintf( '<br><a href="%1$s" target="_blank">%2$s <span class="dashicons dashicons-video-alt3"></span></a>', 'https://www.youtube.com/watch?v=9GvpqyHF_Cs', esc_html__( 'Video Tutorial', 'wpr-addons' ) ),
+				'raw' => esc_html__( 'Watch Custom Fields ', 'wpr-addons' ) . sprintf( '<a href="%1$s" target="_blank">%2$s <span class="dashicons dashicons-video-alt3"></span></a>', 'https://www.youtube.com/watch?v=9GvpqyHF_Cs', esc_html__( 'Video Tutorial', 'wpr-addons' ) ),
 				'type' => Controls_Manager::RAW_HTML,
 				'separator' => 'after',
 				'condition' => [
-					'element_select' => 'custom-field'
+					'element_select' => ['custom-field', 'pro-cf']
 				]
 			]
 		);
+
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'magazine-grid', 'element_select', ['pro-lk', 'pro-shr']);
+		Utilities::upgrade_expert_notice( $repeater, Controls_Manager::RAW_HTML, 'magazine-grid', 'element_select', ['pro-cf'] );
 
 		$repeater->add_control(
 			'element_display',
@@ -1754,15 +1755,15 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			'Magazine Grid Slider Advanced Pagination Positioning',
 			'Advanced Post Likes',
 			'Advanced Post Sharing',
-			'Custom Fields Support',
 			'Advanced Grid Elements Positioning',
 			'Unlimited Image Overlay Animations',
 			'Image overlay GIF upload option',
 			'Title, Category, Read More Advanced Link Hover Animations',
 			'Open Links in New Tab',
 			'Posts Order',
-			'Custom Post Types Support',
-			'Trim Title & Excerpt By Letter Count'
+			'Trim Title & Excerpt By Letter Count',
+			'Custom Fields Support (Expert)',
+			'Custom Post Types Support (Expert)',
 		] );
 		
 		// Styles ====================
