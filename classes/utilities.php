@@ -920,10 +920,12 @@ class Utilities {
 			return;
 		}
 
+		$url = 'https://royal-elementor-addons.com/?ref=rea-plugin-panel-'. $widget .'-upgrade-pro#purchasepro';
+
 		$module->add_control(
             $option .'_pro_notice',
             [
-				'raw' => 'This option is available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-'. $widget .'-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+				'raw' => 'This option is available<br> in the <strong><a href="'. $url .'" target="_blank">Pro version</a></strong> and above.',
 				// 'raw' => 'This option is available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
 				'type' => $controls_manager,
 				'content_classes' => 'wpr-pro-notice',
@@ -939,10 +941,12 @@ class Utilities {
 			return;
 		}
 
+		$url = 'https://royal-elementor-addons.com/?ref=rea-plugin-panel-'. $widget .'-upgrade-expert#purchasepro';
+
 		$module->add_control(
             $option .'_expert_notice',
             [
-				'raw' => 'This option is available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-'. $widget .'-upgrade-expert#purchasepro" target="_blank">Expert version</a></strong>',
+				'raw' => 'This option is available<br> in the <strong><a href="'. $url .'" target="_blank">Expert version</a></strong>',
 				// 'raw' => 'This option is available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
 				'type' => $controls_manager,
 				'content_classes' => 'wpr-pro-notice',
@@ -1030,6 +1034,14 @@ class Utilities {
 	
 	public static function is_new_free_user2() {
 		return !wpr_fs()->can_use_premium_code() && (intval(get_option('royal_elementor_addons_activation_time')) > 1670317149);
+	}
+
+	public static function is_old_pro_user_or_expert() {
+		return wpr_fs()->is_plan( 'expert' ) || (wpr_fs()->is_plan( 'pro' ) && (intval(get_option('royal_elementor_addons_pro_activation_time')) < 1680264265));
+	}
+
+	public static function is_new_pro_user() {
+		return wpr_fs()->is_plan( 'pro' ) && (intval(get_option('royal_elementor_addons_pro_activation_time')) > 1680264265);
 	}
 
 }

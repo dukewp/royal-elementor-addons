@@ -775,6 +775,20 @@ class Wpr_Grid extends Widget_Base {
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'query_source', ['pro-rl'] );
 
+		if ( !wpr_fs()->can_use_premium_code() || Utilities::is_new_pro_user() ) {
+			$this->add_control(
+				'query_source_cpt_pro_notice',
+				[
+					'raw' => 'This option is available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-grid-upgrade-expert#purchasepro" target="_blank">Expert version</a></strong>',
+					'type' => Controls_Manager::RAW_HTML,
+					'content_classes' => 'wpr-pro-notice',
+					'condition' => [
+						'query_source!' => ['post','page','related','current','pro-rl'],
+					]
+				]
+			);
+		}
+
 		$this->add_control(
 			'query_selection',
 			[
@@ -825,6 +839,20 @@ class Wpr_Grid extends Widget_Base {
 				],
 			]
 		);
+
+		if ( !wpr_fs()->can_use_premium_code() || Utilities::is_new_pro_user() ) {
+			$this->add_control(
+				'query_tax_selection_pro_notice',
+				[
+					'raw' => 'This option is available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-grid-upgrade-expert#purchasepro" target="_blank">Expert version</a></strong>',
+					'type' => Controls_Manager::RAW_HTML,
+					'content_classes' => 'wpr-pro-notice',
+					'condition' => [
+						'query_tax_selection!' => ['category','post_tag'],
+					]
+				]
+			);
+		}
 
 		$this->add_control(
 			'query_author',
@@ -1507,7 +1535,6 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'raw' => esc_html__( 'Watch Custom Fields ', 'wpr-addons' ) . sprintf( '<a href="%1$s" target="_blank">%2$s <span class="dashicons dashicons-video-alt3"></span></a>', 'https://www.youtube.com/watch?v=9GvpqyHF_Cs', esc_html__( 'Video Tutorial', 'wpr-addons' ) ),
 				'type' => Controls_Manager::RAW_HTML,
-				'separator' => 'after',
 				'condition' => [
 					'element_select' => ['custom-field', 'pro-cf']
 				]
@@ -2704,9 +2731,22 @@ class Wpr_Grid extends Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'options' => $post_taxonomies,
 				'default' => 'category',
-				'separator' => 'after',
 			]
 		);
+
+		if ( !wpr_fs()->can_use_premium_code() || Utilities::is_new_pro_user() ) {
+			$this->add_control(
+				'filters_select_pro_notice',
+				[
+					'raw' => 'This option is available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-grid-upgrade-expert#purchasepro" target="_blank">Expert version</a></strong>',
+					'type' => Controls_Manager::RAW_HTML,
+					'content_classes' => 'wpr-pro-notice',
+					'condition' => [
+						'filters_select!' => ['category','post_tag'],
+					]
+				]
+			);
+		}
 
 		$this->add_control(
 			'filters_linkable',

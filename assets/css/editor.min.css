@@ -146,6 +146,12 @@
 	margin-top: 15px;
 }
 
+.elementor-control-element_custom_field_video_tutorial,
+.elementor-control-element_custom_field_info_video_tutorial,
+.elementor-control-post_info_custom_field_video_tutorial {
+	text-align: center !important;
+}
+
 .elementor-control-title_pointer_animation + .elementor-control-title_transition_duration,
 .elementor-control-tax1_pointer_animation + .elementor-control-tax1_transition_duration,
 .elementor-control-tax2_pointer_animation + .elementor-control-tax2_transition_duration,

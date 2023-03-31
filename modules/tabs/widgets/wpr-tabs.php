@@ -203,20 +203,22 @@ class Wpr_Tabs extends Widget_Base {
 		// Get Available Meta Keys
 		$post_meta_keys = Utilities::get_custom_meta_keys();
 
-		$repeater->add_control(
-			'tab_custom_field',
-			[
-				'label' => esc_html__( 'Select Custom Field', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT2,
-				'label_block' => true,
-				'default' => 'default',
-				'description' => '<strong>Note:</strong> This option only accepts String(Text) or Numeric Custom Field Values.',
-				'options' => $post_meta_keys[1],
-				'condition' => [
-					'tab_content_type' => 'acf'
-				],
-			]
-		);
+		if ( Utilities::is_old_pro_user_or_expert() ) {
+			$repeater->add_control(
+				'tab_custom_field',
+				[
+					'label' => esc_html__( 'Select Custom Field', 'wpr-addons' ),
+					'type' => Controls_Manager::SELECT2,
+					'label_block' => true,
+					'default' => 'default',
+					'description' => '<strong>Note:</strong> This option only accepts String(Text) or Numeric Custom Field Values.',
+					'options' => $post_meta_keys[1],
+					'condition' => [
+						'tab_content_type' => 'acf'
+					],
+				]
+			);
+		}
 
 		$repeater->add_control(
 			'tab_content',

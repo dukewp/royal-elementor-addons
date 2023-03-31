@@ -110,7 +110,6 @@ class Wpr_Post_Info extends Widget_Base {
 			[
 				'raw' => esc_html__( 'Watch Custom Fields ', 'wpr-addons' ) . sprintf( '<a href="%1$s" target="_blank">%2$s <span class="dashicons dashicons-video-alt3"></span></a>', 'https://www.youtube.com/watch?v=9GvpqyHF_Cs', esc_html__( 'Video Tutorial', 'wpr-addons' ) ),
 				'type' => Controls_Manager::RAW_HTML,
-				'separator' => 'after',
 				'condition' => [
 					'post_info_select' => 'custom-field'
 				]
@@ -258,7 +257,7 @@ class Wpr_Post_Info extends Widget_Base {
 			]
 		);
 
-		if ( wpr_fs()->is_plan( 'expert' ) ) {
+		if ( Utilities::is_old_pro_user_or_expert() ) {
 		$repeater->add_control(
 			'post_info_cf',
 			[
