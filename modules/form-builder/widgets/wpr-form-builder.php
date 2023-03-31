@@ -41,6 +41,10 @@ class Wpr_Form_Builder extends Widget_Base {
 		return [ 'royal', 'cf7', 'contact form 7', 'caldera forms', 'ninja forms', 'wpforms', 'wp forms' ];
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-loading-animations-css' ];
+	}
+
     public function get_custom_help_url() {
     	if ( empty(get_option('wpr_wl_plugin_links')) )
         // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-forms-help-btn';
@@ -64,7 +68,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		$widget->start_controls_section(
 			$this->get_control_id( 'section_submissions' ),
 			[
-				'label' => esc_html__( 'Submissions', 'elementor-pro' ),
+				'label' => esc_html__( 'Submissions', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
 				'condition' => [
 					'submit_actions' => 'submissions',
@@ -243,6 +247,7 @@ class Wpr_Form_Builder extends Widget_Base {
 					'date' => esc_html__( 'Date', 'wpr-addons' ),
 					'time' => esc_html__( 'Time', 'wpr-addons' ),
 					'page_url' => esc_html__( 'Page URL', 'wpr-addons' ),
+					'page_title' => esc_html__( 'Page Title', 'wpr-addons' ),
 					'user_agent' => esc_html__( 'User Agent', 'wpr-addons' ),
 					'remote_ip' => esc_html__( 'Remote IP', 'wpr-addons' ),
 					'credit' => esc_html__( 'Credit', 'wpr-addons' ),
@@ -268,6 +273,151 @@ class Wpr_Form_Builder extends Widget_Base {
 		$widget->end_controls_section();
 	}
 
+	public function register_settings_section_redirect( $widget ) {
+		$widget->start_controls_section(
+			'section_redirect',
+			[
+				'label' => esc_html__( 'Redirect', 'wpr-addons' ),
+				'condition' => [
+					'submit_actions' => 'redirect',
+				],
+			]
+		);
+
+		$widget->add_control(
+			'redirect_to',
+			[
+				'label' => esc_html__( 'Redirect To', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true
+				],
+				'placeholder' => esc_html__( 'https://your-link.com', 'wpr-addons' ),
+				'label_block' => true
+			]
+		);
+
+		$widget->end_controls_section();
+	}
+
+	public function register_settings_section_mailchimp() {
+
+		// Tab: Content ==============
+		// Section: Settings ----------
+		$this->start_controls_section(
+			'section_mailchimp',
+			[
+				'label' => esc_html__( 'Mailchimp', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+				'condition' => [
+					'submit_actions' => 'mailchimp'
+				]
+			]
+		);
+
+		$this->add_control(
+			'maichimp_audience',
+			[
+				'label' => esc_html__( 'Select Audience', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'def',
+				// 'render_type' => 'template',
+				'options' => Utilities::get_mailchimp_lists(),
+			]
+		);
+
+		// If we build it, needs further logic
+		$this->add_control(
+			'mailchimp_groups',
+			[
+				'label' => esc_html__( 'Groups', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT2,
+				'multiple' => true,
+				'options' => Utilities::get_mailchimp_groups(),
+				// 'render_type' => 'template',
+				'label_block' => true,
+			]
+		);
+
+		if ( '' == get_option('wpr_mailchimp_api_key') ) {
+			$this->add_control(
+				'mailchimp_key_notice',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => sprintf( __( 'Navigate to <strong><a href="%s" target="_blank">Dashboard > %s > Integrations</a></strong> to set up <strong>MailChimp API Key</strong>.', 'wpr-addons' ), admin_url( 'admin.php?page=wpr-addons&tab=wpr_tab_settings' ), Utilities::get_plugin_name() ),
+					'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				]
+			);
+		}
+
+		$this->add_control(
+			'mailchimp_fields',
+			[
+				'label' => esc_html__( 'Fields', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'email_field',
+			[
+				'label' => esc_html__( 'Email', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => []
+			]
+		);
+
+		$this->add_control(
+			'first_name_field',
+			[
+				'label' => esc_html__( 'First Name', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => []
+			]
+		);
+
+		$this->add_control(
+			'last_name_field',
+			[
+				'label' => esc_html__( 'Last Name', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => []
+			]
+		);
+
+		// Doesn't work even in other plugins that I've checked
+		// $this->add_control(
+		// 	'address_field',
+		// 	[
+		// 		'label' => esc_html__( 'Address', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'options' => []
+		// 	]
+		// );
+
+		$this->add_control(
+			'phone_field',
+			[
+				'label' => esc_html__( 'Phone', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => []
+			]
+		);
+
+		$this->add_control(
+			'birthday_field',
+			[
+				'label' => esc_html__( 'Birthday', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => []
+			]
+		);
+
+		$this->end_controls_section();
+
+	}
+	
 	protected function register_controls() {
 
 		$this->start_controls_section(
@@ -329,6 +479,21 @@ class Wpr_Form_Builder extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'field_sub_label',
+			[
+				'label' => esc_html__( 'Sub Label', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => '',
+				'dynamic' => [
+					'active' => true,
+				],
+				'condition' => [
+					'field_type' => 'step'
+				]
+			]
+		);
+
+		$repeater->add_control(
 			'previous_button_text',
 			[
 				'label' => esc_html__( 'Previous Button', 'wpr-addons' ),
@@ -367,6 +532,24 @@ class Wpr_Form_Builder extends Widget_Base {
 						],
 					],
 				],
+			]
+		);
+
+		$repeater->add_control(
+			'step_icon',
+			[
+				'label' => esc_html__( 'Icon', 'wpr-addons' ),
+				'type' => Controls_Manager::ICONS,
+				'skin' => 'inline',
+				'label_block' => false,
+				'separator' => 'before',
+				'default' => [
+					'value' => 'far fa-edit',
+					'library' => 'regular'
+				],
+				'condition' => [
+					'field_type' => 'step'
+				]
 			]
 		);
 
@@ -895,7 +1078,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
-					'start' => [
+					'left' => [
 						'title' => esc_html__( 'Left', 'wpr-addons' ),
 						'icon' => 'eicon-text-align-left',
 					],
@@ -907,13 +1090,11 @@ class Wpr_Form_Builder extends Widget_Base {
 						'title' => esc_html__( 'Right', 'wpr-addons' ),
 						'icon' => 'eicon-text-align-right',
 					],
-					'stretch' => [
-						'title' => esc_html__( 'Justified', 'wpr-addons' ),
-						'icon' => 'eicon-text-align-justify',
-					],
 				],
-				'default' => 'stretch',
-				'prefix_class' => 'elementor%s-button-align-',
+				'default' => 'center',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-button' => 'text-align: {{VALUE}}'
+				]
 			]
 		);
 
@@ -1047,17 +1228,15 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
-		$actions = [
+		$actions_options = [
 			'submissions' => 'Submission',
-			'email' => 'Email'
+			'email' => 'Email',
+			'redirect' => 'Redirect',
+			'mailchimp' => 'Mailchimp',
+			'webhook' => 'Webhook',
+			'popup' => 'Popup'
 		];
 		// $actions = Module::instance()->actions_registrar->get();
-
-		$actions_options = [];
-
-		foreach ( $actions as $key => $action ) {
-			$actions_options[ $key ] = $action;
-		}
 
 		$default_submit_actions = [ 'email' ];
 
@@ -1092,6 +1271,116 @@ class Wpr_Form_Builder extends Widget_Base {
 
 		$this->register_settings_section_email($this);
 
+		$this->register_settings_section_redirect($this);
+
+		$this->register_settings_section_mailchimp();
+
+		$this->start_controls_section(
+			'section_form_step_settings',
+			[
+				'label' => esc_html__( 'Step', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT
+			]
+		);
+
+		$this->add_control(
+			'step_type',
+			[
+				'label' => esc_html__( 'Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'frontend_available' => true,
+				'options' => [
+					'none' => 'None',
+					'text' => 'Text',
+					'icon' => 'Icon',
+					'number' => 'Number',
+					'progress_bar' => 'Progress Bar',
+					'number_text' => 'Number & Text',
+					'icon_text' => 'Icon & Text',
+				],
+				'default' => 'number_text',
+			]
+		);
+
+		$this->add_control(
+			'step_content_layout',
+			[
+				'label' => esc_html__( 'Content Layout', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'frontend_available' => true,
+				'options' => [
+					'horizontal' => 'Horizontal',
+					'vertical' => 'Vertical',
+				],
+				'default' => 'vertical',
+				'prefix_class' => 'wpr-step-content-layout-'
+			]
+		);
+
+		$this->add_control(
+			'show_separator',
+			[
+				'label' => esc_html__( 'Separator', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+			]
+		);
+
+		$this->add_responsive_control(
+			'step_box_align',
+			[
+				'label' => esc_html__( 'Box Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'flex-start' => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'flex-end' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				'default' => 'left',
+				'selectors' => [
+					'{{WRAPPER}}.wpr-step-content-layout-vertical .wpr-step' => 'align-items: {{VALUE}}',
+					'{{WRAPPER}}.wpr-step-content-layout-horizontal .wpr-step' => 'justify-content: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'step_align',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'left' => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				'default' => 'left',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step' => 'text-align: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->end_controls_section();
+
 		$this->start_controls_section(
 			'section_form_style',
 			[
@@ -1116,6 +1405,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-field-group' => 'padding-right: calc( {{SIZE}}{{UNIT}}/2 ); padding-left: calc( {{SIZE}}{{UNIT}}/2 );',
+					'{{WRAPPER}} .wpr-form-fields-wrap' => 'margin-left: calc( -{{SIZE}}{{UNIT}}/2 ); margin-right: calc( -{{SIZE}}{{UNIT}}/2 );',
 				],
 			]
 		);
@@ -1343,7 +1633,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#605be5',
 				'selectors' => [
-					'{{WRAPPER}} .e-form__buttons__wrapper__button-next' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-step-next' => 'background-color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-button[type="submit"]' => 'background-color: {{VALUE}};',
 				],
 			]
@@ -1356,9 +1646,10 @@ class Wpr_Form_Builder extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#ffffff',
 				'selectors' => [
-					'{{WRAPPER}} .e-form__buttons__wrapper__button-next' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-step-next' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-button[type="submit"]' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .wpr-button[type="submit"] svg *' => 'fill: {{VALUE}};',
+					'{{WRAPPER}} .wpr-double-bounce .wpr-child' => 'background-color: {{VALUE}} !important;',
+					'{{WRAPPER}} .wpr-button[type="submit"] svg *' => 'fill: {{VALUE}};'
 				],
 			]
 		);
@@ -1370,7 +1661,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
-					'{{WRAPPER}} .e-form__buttons__wrapper__button-next' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-step-next' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-button[type="submit"]' => 'border-color: {{VALUE}};',
 				],
 				'condition' => [
@@ -1392,8 +1683,9 @@ class Wpr_Form_Builder extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#605be5',
 				'selectors' => [
-					'{{WRAPPER}} .e-form__buttons__wrapper__button-previous' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-step-prev' => 'background-color: {{VALUE}};',
 				],
 			]
 		);
@@ -1405,7 +1697,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#ffffff',
 				'selectors' => [
-					'{{WRAPPER}} .e-form__buttons__wrapper__button-previous' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-step-prev' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -1417,7 +1709,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
-					'{{WRAPPER}} .e-form__buttons__wrapper__button-previous' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-step-prev' => 'border-color: {{VALUE}};',
 				],
 				'condition' => [
 					'button_border_border!' => '',
@@ -1457,7 +1749,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
-					'{{WRAPPER}} .e-form__buttons__wrapper__button-next:hover' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-step-next:hover' => 'background-color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-button[type="submit"]:hover' => 'background-color: {{VALUE}};',
 				],
 			]
@@ -1470,7 +1762,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#ffffff',
 				'selectors' => [
-					'{{WRAPPER}} .e-form__buttons__wrapper__button-next:hover' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-step-next:hover' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-button[type="submit"]:hover' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-button[type="submit"]:hover svg *' => 'fill: {{VALUE}};',
 				],
@@ -1484,7 +1776,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
-					'{{WRAPPER}} .e-form__buttons__wrapper__button-next:hover' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-step-next:hover' => 'border-color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-button[type="submit"]:hover' => 'border-color: {{VALUE}};',
 				],
 				'condition' => [
@@ -1508,7 +1800,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
-					'{{WRAPPER}} .e-form__buttons__wrapper__button-previous:hover' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-step-prev:hover' => 'background-color: {{VALUE}};',
 				],
 			]
 		);
@@ -1520,7 +1812,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#ffffff',
 				'selectors' => [
-					'{{WRAPPER}} .e-form__buttons__wrapper__button-previous:hover' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-step-prev:hover' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -1532,7 +1824,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
-					'{{WRAPPER}} .e-form__buttons__wrapper__button-previous:hover' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-step-prev:hover' => 'border-color: {{VALUE}};',
 				],
 				'condition' => [
 					'button_border_border!' => '',
@@ -1540,13 +1832,13 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'button_hover_animation',
-			[
-				'label' => esc_html__( 'Animation', 'wpr-addons' ),
-				'type' => Controls_Manager::HOVER_ANIMATION,
-			]
-		);
+		// $this->add_control(
+		// 	'button_hover_animation',
+		// 	[
+		// 		'label' => esc_html__( 'Animation', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::HOVER_ANIMATION,
+		// 	]
+		// );
 
 		$this->end_controls_tab();
 
@@ -1587,6 +1879,34 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'buttons_distance',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px', '%'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 500,
+					],
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					]
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 15,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step-prev' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-step-prev:not(:first-of-type)' => 'margin-left: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -1607,7 +1927,19 @@ class Wpr_Form_Builder extends Widget_Base {
 		);
 
 		$this->add_control(
-			'step_background_color',
+			'step_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#222',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step i' => 'color: {{VALUE}};',
+				]
+			]
+		);
+
+		$this->add_control(
+			'step_bg_color',
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
@@ -1630,213 +1962,595 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
-		// $this->add_control(
-		// 	'heading_previous_button',
-		// 	[
-		// 		'label' => esc_html__( 'Previous Button', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::HEADING,
-		// 	]
-		// );
+		$this->end_controls_tab();
 
-		// $this->add_control(
-		// 	'previous_button_background_color',
-		// 	[
-		// 		'label' => esc_html__( 'Background Color', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::COLOR,
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .e-form__buttons__wrapper__button-previous' => 'background-color: {{VALUE}};',
-		// 		],
-		// 	]
-		// );
+		$this->start_controls_tab(
+			'tab_step_active',
+			[
+				'label' => esc_html__( 'Active', 'wpr-addons' ),
+			]
+		);
 
-		// $this->add_control(
-		// 	'previous_button_text_color',
-		// 	[
-		// 		'label' => esc_html__( 'Text Color', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::COLOR,
-		// 		'default' => '#ffffff',
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .e-form__buttons__wrapper__button-previous' => 'color: {{VALUE}};',
-		// 		],
-		// 	]
-		// );
+		$this->add_control(
+			'step_color_active',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#222',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step.wpr-step-active i' => 'color: {{VALUE}};',
+				]
+			]
+		);
 
-		// $this->add_control(
-		// 	'previous_button_border_color',
-		// 	[
-		// 		'label' => esc_html__( 'Border Color', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::COLOR,
-		// 		'default' => '',
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .e-form__buttons__wrapper__button-previous' => 'border-color: {{VALUE}};',
-		// 		],
-		// 		'condition' => [
-		// 			'button_border_border!' => '',
-		// 		],
-		// 	]
-		// );
+		$this->add_control(
+			'step_bg_color_active',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605be5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step.wpr-step-active' => 'background-color: {{VALUE}};',
+				]
+			]
+		);
 
-		// $this->add_group_control(
-		// 	Group_Control_Typography::get_type(),
-		// 	[
-		// 		'name' => 'button_typography',
-		// 		'selector' => '{{WRAPPER}} .wpr-button',
-		// 	]
-		// );
+		$this->add_control(
+			'step_border_color_active',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605be5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step.wpr-step-active' => 'border-color: {{VALUE}};'
+				]
+			]
+		);
 
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
-			'tab_te_hover',
+			'tab_step_finished',
 			[
-				'label' => esc_html__( 'Hover', 'wpr-addons' ),
+				'label' => esc_html__( 'Finished', 'wpr-addons' ),
 			]
 		);
 
-		// $this->add_control(
-		// 	'heading_next_submit_button_hover',
-		// 	[
-		// 		'label' => esc_html__( 'Next & Submit Button', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::HEADING,
-		// 	]
-		// );
+		$this->add_control(
+			'step_color_finish',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#222',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step.wpr-step-finish i' => 'color: {{VALUE}};',
+				]
+			]
+		);
 
-		// $this->add_control(
-		// 	'button_background_hover_color',
-		// 	[
-		// 		'label' => esc_html__( 'Background Color', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::COLOR,
-		// 		'default' => '',
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .e-form__buttons__wrapper__button-next:hover' => 'background-color: {{VALUE}};',
-		// 			'{{WRAPPER}} .wpr-button[type="submit"]:hover' => 'background-color: {{VALUE}};',
-		// 		],
-		// 	]
-		// );
+		$this->add_control(
+			'step_bg_color_finish',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605be5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step.wpr-step-finish' => 'background-color: {{VALUE}};',
+				]
+			]
+		);
 
-		// $this->add_control(
-		// 	'button_hover_color',
-		// 	[
-		// 		'label' => esc_html__( 'Text Color', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::COLOR,
-		// 		'default' => '#ffffff',
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .e-form__buttons__wrapper__button-next:hover' => 'color: {{VALUE}};',
-		// 			'{{WRAPPER}} .wpr-button[type="submit"]:hover' => 'color: {{VALUE}};',
-		// 			'{{WRAPPER}} .wpr-button[type="submit"]:hover svg *' => 'fill: {{VALUE}};',
-		// 		],
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'button_hover_border_color',
-		// 	[
-		// 		'label' => esc_html__( 'Border Color', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::COLOR,
-		// 		'default' => '',
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .e-form__buttons__wrapper__button-next:hover' => 'border-color: {{VALUE}};',
-		// 			'{{WRAPPER}} .wpr-button[type="submit"]:hover' => 'border-color: {{VALUE}};',
-		// 		],
-		// 		'condition' => [
-		// 			'button_border_border!' => '',
-		// 		],
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'heading_previous_button_hover',
-		// 	[
-		// 		'label' => esc_html__( 'Previous Button', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::HEADING,
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'previous_button_background_color_hover',
-		// 	[
-		// 		'label' => esc_html__( 'Background Color', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::COLOR,
-		// 		'default' => '',
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .e-form__buttons__wrapper__button-previous:hover' => 'background-color: {{VALUE}};',
-		// 		],
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'previous_button_text_color_hover',
-		// 	[
-		// 		'label' => esc_html__( 'Text Color', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::COLOR,
-		// 		'default' => '#ffffff',
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .e-form__buttons__wrapper__button-previous:hover' => 'color: {{VALUE}};',
-		// 		],
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'previous_button_border_color_hover',
-		// 	[
-		// 		'label' => esc_html__( 'Border Color', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::COLOR,
-		// 		'default' => '',
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .e-form__buttons__wrapper__button-previous:hover' => 'border-color: {{VALUE}};',
-		// 		],
-		// 		'condition' => [
-		// 			'button_border_border!' => '',
-		// 		],
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'button_hover_animation',
-		// 	[
-		// 		'label' => esc_html__( 'Animation', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::HOVER_ANIMATION,
-		// 	]
-		// );
+		$this->add_control(
+			'step_border_color_finish',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605be5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step.wpr-step-finish' => 'border-color: {{VALUE}};'
+				]
+			]
+		);
 
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
 
-		// $this->add_group_control(
-		// 	Group_Control_Border::get_type(), [
-		// 		'name' => 'button_border',
-		// 		'selector' => '{{WRAPPER}} .wpr-button',
-		// 		'exclude' => [
-		// 			'color',
-		// 		],
-		// 	]
-		// );
+		$this->add_responsive_control(
+			'step_wrap_distance',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 15,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step-wrap' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_responsive_control(
+			'step_wrap_gutter',
+			[
+				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 25
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 5
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step-sep' => 'margin-left: {{SIZE}}{{UNIT}}; margin-right: {{SIZE}}{{UNIT}}',
+					'{{WRAPPER}} .wpr-separator-off .wpr-step:not(:last-of-type)' => 'margin-right: {{SIZE}}{{UNIT}}'
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'step_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'solid',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step' => 'border-style: {{VALUE}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'step_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'step_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'step_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em' ],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'step_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', '%' ],
+				'default' => [
+					'unit' => 'px',
+					'top' => 10,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
+				],
+				'selectors' => [
+					// '{{WRAPPER}}.wpr-step-content-layout-horizontal .wpr-step' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-step' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}}' => '--wpr-steps-padding: {{TOP}}{{UNIT}};'
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'step_icon_size',
+			[
+				'label' => esc_html__( 'Icon Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 12,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step' => 'font-size: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'step_inner_styles',
+			[
+				'label' => esc_html__( 'Step Inner', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->start_controls_tabs( 'tabs_step_inner_style' );
+
+		$this->start_controls_tab(
+			'tab_step_inner_normal',
+			[
+				'label' => esc_html__( 'Normal', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'step_inner_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#222',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step-content i' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-step-content' => 'color: {{VALUE}};'
+				]
+			]
+		);
+
+		$this->add_control(
+			'step_inner_bg_color',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605be5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step-content' => 'background-color: {{VALUE}};'
+				],
+			]
+		);
+
+		$this->add_control(
+			'step_inner_border_color',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605be5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step-content' => 'border-color: {{VALUE}};'
+				]
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_step_inner_active',
+			[
+				'label' => esc_html__( 'Active', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'step_inner_color_active',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#222',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step-active .wpr-step-content i' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-step-active .wpr-step-content' => 'color: {{VALUE}};'
+				]
+			]
+		);
+
+		$this->add_control(
+			'step_inner_bg_color_active',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605be5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step.wpr-step-active .wpr-step-content' => 'background-color: {{VALUE}};',
+				]
+			]
+		);
+
+		$this->add_control(
+			'step_inner_border_color_active',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605be5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step.wpr-step-active .wpr-step-content' => 'border-color: {{VALUE}};'
+				]
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_step_inner_finish',
+			[
+				'label' => esc_html__( 'Finish', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'step_inner_color_finish',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#222',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step-finish .wpr-step-content i' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-step-finish .wpr-step-content' => 'color: {{VALUE}};'
+				]
+			]
+		);
+
+		$this->add_control(
+			'step_inner_bg_color_finish',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605be5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step.wpr-step-finish .wpr-step-content' => 'background-color: {{VALUE}};',
+				]
+			]
+		);
+
+		$this->add_control(
+			'step_inner_border_color_finish',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605be5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step.wpr-step-finish .wpr-step-content' => 'border-color: {{VALUE}};'
+				]
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_control(
+			'step_inner_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'solid',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step-content' => 'border-style: {{VALUE}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'step_inner_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step-content' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'condition' => [
+					'step_inner_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'step_inner_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em' ],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step-content' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
 
 		// $this->add_control(
-		// 	'button_border_radius',
+		// 	'step_inner_padding',
 		// 	[
-		// 		'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::DIMENSIONS,
-		// 		'size_units' => [ 'px', '%', 'em' ],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-		// 		],
-		// 		'separator' => 'before',
-		// 	]
-		// );
-
-		// $this->add_control(
-		// 	'button_text_padding',
-		// 	[
-		// 		'label' => esc_html__( 'Text Padding', 'wpr-addons' ),
+		// 		'label' => esc_html__( 'Padding', 'wpr-addons' ),
 		// 		'type' => Controls_Manager::DIMENSIONS,
 		// 		'size_units' => [ 'px', 'em', '%' ],
+		// 		'default' => [
+		// 			'unit' => 'px',
+		// 			'top' => 10,
+		// 			'right' => 10,
+		// 			'bottom' => 10,
+		// 			'left' => 10,
+		// 		],
 		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+		// 			'{{WRAPPER}} .wpr-step-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 		// 		],
 		// 	]
 		// );
+
+		$this->add_responsive_control(
+			'step_inner_padding',
+			[
+				'label' => esc_html__( 'Box Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 200,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 20,
+				],
+				'selectors' => [
+					'{{WRAPPER}}' => '--wpr-steps-indicator-padding: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_responsive_control(
+			'step_divider_height',
+			[
+				'label' => esc_html__( 'Divider Height', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 2,
+				],
+				'selectors' => [
+					'{{WRAPPER}}' => '--wpr-steps-divider-width: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_responsive_control(
+			'step_label_distance',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 5,
+				],
+				'selectors' => [
+					'{{WRAPPER}}.wpr-step-content-layout-horizontal .wpr-step-label' => 'margin-left: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'step_main_label',
+			[
+				'label' => esc_html__( 'Main Label', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'main_label_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step-main-label' => 'color: {{VALUE}};',
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'main_label_typography',
+				'selector' => '{{WRAPPER}} .wpr-step-main-label'
+			]
+		);
+
+		$this->add_control(
+			'step_sub_label',
+			[
+				'label' => esc_html__( 'Sub Label', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'sub_label_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step-sub-label' => 'color: {{VALUE}};',
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'sub_label_typography',
+				'selector' => '{{WRAPPER}} .wpr-step-sub-label'
+			]
+		);
 
 		$this->end_controls_section();
     }
@@ -2066,7 +2780,33 @@ class Wpr_Form_Builder extends Widget_Base {
 	}
 
 	protected function render() {
+		global $post;
 		$instance = $this->get_settings_for_display();
+
+		update_option('wpr_email_to_'. $this->get_id(), $instance['email_to']);
+		update_option('wpr_email_subject_'. $this->get_id(), $instance['email_subject']);
+		update_option('wpr_cc_header_'. $this->get_id(), $instance['email_to_cc']);
+		update_option('wpr_meta_keys_'. $this->get_id(), $instance['form_metadata']);
+		update_option('wpr_referrer_'. $this->get_id(), home_url( $_SERVER['REQUEST_URI'] ));
+		update_option('wpr_referrer_title_'. $this->get_id(), get_the_title($post->ID));
+
+		$emailField      = isset($instance['email_field']) ? $instance['email_field'] : '';
+		$firstNameField  = isset($instance['first_name_field']) ? $instance['first_name_field'] : '';
+		$lastNameField   = isset($instance['last_name_field']) ? $instance['last_name_field'] : '';
+		$addressField    = isset($instance['address_field']) ? $instance['address_field'] : '';
+		$phoneField      = isset($instance['phone_field']) ? $instance['phone_field'] : '';
+		$birthdayField   = isset($instance['birthday_field']) ? $instance['birthday_field'] : '';
+		$groupId 	     = isset($instance['mailchimp_groups']) ? $instance['mailchimp_groups'] : '';
+
+		$fieldsArray = [
+			'email_field' => $emailField,
+			'first_name_field' => $firstNameField,
+			'last_name_field' => $lastNameField,
+			'address_field' => $addressField,
+			'phone_field' => $phoneField,
+			'birthday_field' => $birthdayField,
+			'group_id' =>  $groupId
+		];
 
 		$this->add_render_attribute(
 			[
@@ -2079,22 +2819,21 @@ class Wpr_Form_Builder extends Widget_Base {
 				'submit-group' => [
 					'class' => [
 						'wpr-field-group',
-						'wpr-column',
-						'wpr-form-field-type-submit',
-					],
-					'data-actions' => [
-						json_encode($instance['submit_actions'])
-					]
-				],
-				'submit-group-2' => [
-					'class' => [
-						'wpr-field-group',
-						'wpr-column',
 						'wpr-stp-btns-wrap',
+						'wpr-column',
 						'wpr-form-field-type-submit',
 					],
 					'data-actions' => [
 						json_encode($instance['submit_actions'])
+					],
+					'data-redirect-url' => [
+						in_array('redirect', $instance['submit_actions']) ? $instance['redirect_to'] : ''
+					],
+					'data-mailchimp-fields' => [
+						json_encode($fieldsArray)
+					],
+					'data-list-id'=> [
+						isset($instance['maichimp_audience']) ? esc_attr($instance['maichimp_audience']) : ''
 					]
 				],
 				'button' => [
@@ -2117,6 +2856,9 @@ class Wpr_Form_Builder extends Widget_Base {
 		if ( ! empty( $instance['form_name'] ) ) {
 			$this->add_render_attribute( 'form', 'name', $instance['form_name'] );
 		}
+
+		$this->add_render_attribute( 'form', 'page', get_post()->post_title );
+		$this->add_render_attribute( 'form', 'page_id', get_post()->ID );
 
 		if ( ! empty( $instance['button_css_id'] ) ) {
 			$this->add_render_attribute( 'button', 'id', $instance['button_css_id'] );
@@ -2145,21 +2887,61 @@ class Wpr_Form_Builder extends Widget_Base {
 				<?php
 				$step_count1 = 0;
 				$step_exists = '';
+				$step_icon = [];
+				$step_label = [];
+				$step_sub_label = [];
+
 				foreach ( $instance['form_fields'] as $key => $value ) {
 					if ( 'step' === $value['field_type'] ) {
 						$step_exists = 'exists';
 						$step_count1++;
+						
+						ob_start();
+							\Elementor\Icons_Manager::render_icon( $value['step_icon'], [ 'aria-hidden' => 'true' ] );
+						$step_icon[] = ob_get_clean();
+
+						$step_label[] = '<span class="wpr-step-main-label">'. $value['field_label'] .'</span>';
+
+						$step_sub_label[] = '<span class="wpr-step-sub-label">'. $value['field_sub_label'] .'</span>';
 					}
 				}
 				
 				// Circles which indicates the steps of the form:
-				echo '<div class="wpr-step-wrap">';
-					$i = 0; 
-					while( $i < $step_count1 ) :
-						echo '<span class="wpr-step"></span>';
-						echo '<span class="wpr-step-sep"></span>';
-						$i++; 
-					endwhile;
+
+				$step_wrap_class ='yes' !== $instance['show_separator'] ? 'wpr-step-wrap wpr-separator-off' : 'wpr-step-wrap';
+
+				echo '<div class="'. $step_wrap_class .'">';
+					if ( 'progress_bar' == $instance['step_type'] ) {
+
+					} else {
+						$i = 0;
+
+						while( $i < $step_count1 ) :
+						
+							if ( 'none' == $instance['step_type'] ) {
+								$step_html = '<span class="wpr-step"></span>';
+							} else if ( 'text' == $instance['step_type'] ) {
+								$step_html = '<span class="wpr-step"><span class="wpr-step-content">'. $step_label[$i] .'</span></span>';
+							} else if ( 'icon' == $instance['step_type'] ) {
+								$step_html = '<span class="wpr-step"><span class="wpr-step-content">'. $step_icon[$i] .'</span></span>';
+							} else if ( 'number' == $instance['step_type'] ) {
+								$step_html = '<span class="wpr-step"><span class="wpr-step-content">'. $i + 1 .'</span></span>';
+							} else if ( 'number_text' == $instance['step_type'] ) {
+								$step_html = '<span class="wpr-step"><span class="wpr-step-content">'. $i + 1 .'</span><span class="wpr-step-label">'. $step_label[$i] . $step_sub_label[$i] .'</span></span>';
+							} else if ( 'icon_text' == $instance['step_type'] ) {
+								$step_html = '<span class="wpr-step"><span class="wpr-step-content">'. $step_icon[$i] .'</span><span class="wpr-step-label">'. $step_label[$i] . $step_sub_label[$i] .'</span></span>';
+							}
+	
+							echo $step_html;
+							// echo '<span class="wpr-step">'. $step_html .'</span>';
+
+							if ( 'yes' == $instance['show_separator'] ) {
+								echo '<span class="wpr-step-sep"></span>';
+							}
+
+							$i++; 
+						endwhile;
+					}
 				echo '</div>';
 
 				$step_count = 0;
@@ -2244,7 +3026,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				endforeach;
 				
 				if ( 'exists' === $step_exists ) {
-						echo '<div '. $this->get_render_attribute_string( 'submit-group-2' ) .'>';
+						echo '<div '. $this->get_render_attribute_string( 'submit-group' ) .'>';
 							if ( 2 <= $step_count ) {
 								echo '<button type="button" class="wpr-step-prev">Previous</button>';
 							}
@@ -2253,12 +3035,12 @@ class Wpr_Form_Builder extends Widget_Base {
 									if ( ! empty( $instance['button_icon'] ) || ! empty( $instance['selected_button_icon'] ) ) :
 										echo '<span '. $this->get_render_attribute_string( 'icon-align' ) .'>';
 											if ( empty( $instance['button_text'] ) ) :
-												echo '<span class="elementor-screen-only">'. esc_html__( 'Submit', 'wpr-addons' ) .'</span>';
+												echo '<span>'. esc_html__( 'Submit', 'wpr-addons' ) .'</span>';
 											endif;
 										echo '</span>';
 									endif;
 									if ( ! empty( $instance['button_text'] ) ) :
-										echo '<span class="elementor-button-text"> '. $this->print_unescaped_setting( 'button_text' ) .'</span>';
+										echo '<span> '. $this->print_unescaped_setting( 'button_text' ) .'</span>';
 									endif;
 								echo '</span>';
 								echo '<div class="wpr-double-bounce wpr-loader-hidden">';
@@ -2280,8 +3062,13 @@ class Wpr_Form_Builder extends Widget_Base {
 									</span>
 								<?php endif; ?>
 								<?php if ( ! empty( $instance['button_text'] ) ) : ?>
-									<span class="elementor-button-text"><?php echo $this->print_unescaped_setting( 'button_text' ); ?></span>
+									<span><?php echo $this->print_unescaped_setting( 'button_text' ); ?></span>
 								<?php endif; ?>
+								
+								<div class="wpr-double-bounce wpr-loader-hidden">
+									<div class="wpr-child wpr-double-bounce1"></div>
+									<div class="wpr-child wpr-double-bounce2"></div>
+								</div>
 							</span>
 						</button>
 					</div>

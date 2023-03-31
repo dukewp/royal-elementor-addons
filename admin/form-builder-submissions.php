@@ -1,63 +1,295 @@
 <?php
+use WprAddons\Plugin;
 
-// SUBMISSIONS CPT
-add_action('init', 'wpr_submissions');
-
-// function wpr_submissions() {
-// 	$args = array(
-// 		'show_in_menu' => 'wpr-addons',
-// 		'label'        => 'Submissions',
-// 		'public'       => true
-// 	);
-// 	register_post_type( 'wpr_submissions', $args );
-// }
-
-// Define the callback function to register the meta box
-function my_custom_meta_box() {
-	$args = new WP_Query([
-		'post_type' => 'wpr_submissions'
-	]);
-	foreach ( $args as $arg ) {
-
-        add_meta_box(
-            'wpr_submission_fields',
-            'Royal Submissions',
-            'my_meta_box_callback',
-            'wpr_submissions',
-            'normal',
-            'default'
-        );
-	}
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
 }
 
-// Define the callback function to display the meta box contents
-function my_meta_box_callback( $post, $metabox ) {
-    foreach (get_post_meta($post->ID) as $key => $value ) {
-        
-        $prefix = "form_field-";
-        $key_title = ucfirst(str_replace($prefix, "", $key));
-        
-        echo '<label for="my_meta_field">'.  $key_title .': </label>';
-        echo '<input style="display: block;" type="text" id="'. $key .'" name="submitter_email" value="'. $value[0] .'">';
+
+class Wpr_Form_Submissions {
+    public function __construct() {
+        // SUBMISSIONS CPT
+        add_action('admin_enqueue_scripts',[$this, 'enqueue_submissions_script']);
+        add_action('init', [$this, 'wpr_submissions']);
+        add_filter('manage_wpr_submissions_posts_columns', [$this, 'wpr_submissions_custom_columns']);
+        add_action('manage_wpr_submissions_posts_custom_column', [$this, 'wpr_submissions_custom_column_content'], 10, 2);
+        add_filter('manage_edit-wpr_submissions_sortable_columns', [$this, 'wpr_submissions_sortable_columns']);
+        add_action('wp_ajax_wpr_submissions_update_read_status', [$this, 'wpr_submissions_update_read_status']);
+        add_action('current_screen', [$this, 'wpr_submissions_mark_as_read']);
+        add_filter('post_row_actions', [$this, 'wpr_submissions_row_actions'], 10, 2);
+        add_action('current_screen', [$this, 'wpr_submissions_remove_bulk_edit_filter']);
+        // add_action('pre_get_posts', 'wpr_submissions_orderby');
     }
 
-    // Display the form field for the custom meta field
+    public function enqueue_submissions_script($hook) {
+        // Replace 'wpr_submissions' with your custom post type's slug
+        $post_type = 'wpr_submissions';
+    
+        // Check if the current page is the custom post type's edit or add new page
+        if ( $hook == 'post.php' || $hook == 'post-new.php' || $hook == 'edit.php' ) {
+            global $post;
+    
+            // Check if the current post type is the desired one
+            if (isset($post) && $post->post_type === $post_type) {
+                // Get Plugin Version
+                $version = Plugin::instance()->get_version();
+                // enqueue CSS
+                wp_enqueue_style( 'wpr-submissions-css', WPR_ADDONS_URL .'assets/css/admin/wpr-submissions.css', [], $version );
+    
+                // enqueue JS
+                wp_enqueue_script( 'wpr-submissions-js', WPR_ADDONS_URL .'assets/js/admin/wpr-submissions.js', ['jquery'], $version );
+    
+                wp_localize_script(
+                    'wpr-submissions-js',
+                    'WprSubmissions', // This is used in the js file to group all of your scripts together
+                    [
+                        'ajaxurl' => admin_url( 'admin-ajax.php' ),
+                        'resturl' => get_rest_url() . 'wpraddons/v1',
+                        'nonce' => wp_create_nonce( 'wpr-submissions-js' ),
+                    ]
+                );
+            }
+        }
+    }
+    
+    // Define the callback function to register the meta box
+    public function wpr_submissions_meta_box() {
+        $args = new WP_Query([
+            'post_type' => 'wpr_submissions'
+        ]);
+        foreach ( $args as $arg ) {
+    
+            add_meta_box(
+                'wpr_submission_fields',
+                'Royal Submissions',
+                [$this, 'wpr_meta_box_callback'],
+                'wpr_submissions',
+                'normal',
+                'default'
+            );
+        }
+    }
+    
+    // Define the callback function to display the meta box contents
+    public function wpr_meta_box_callback( $post, $metabox ) {
+        foreach (get_post_meta($post->ID) as $key => $value ) {
+    
+            echo '<div class="wpr-submissions-wrap">';
+                if ( is_serialized($value[0]) ) {
+                    $value = unserialize($value[0]);
+                
+                    $prefix = "form_field-";
+                    $key_title = ucfirst(str_replace($prefix, "", $key));
+                    
+                    if ( 'textarea' == $value[0] ) {
+                        echo '<label for="'. $key .'">'.  $key_title .': </label>';
+                        echo '<textarea style="display: block;"  id="'. $key .'">'. $value[1] .'</textarea>';
+                    } else {
+                        if ( $value[0] === 'radio' || $value[0] === 'checkbox' ) {
+                            $value[0] = 'text';
+                        }
+                        echo '<label for="'. $key .'">'.  $key_title .': </label>';
+                        echo '<input style="display: block;" type="'. $value[0] .'" id="'. $key .'" name="submitter_email" value="'. $value[1] .'">';
+                    }
+                } elseif ( str_contains($key, '_action_') ) {
+                    echo '<span>'. $key .'</span><br>';
+                    echo '<span>'. $value[0] .'</span>';
+                } else {
+                    $prefix = "form_field-";
+                    $key_title = ucfirst(str_replace($prefix, "", $key));
+                    
+                    echo '<label for="'. $key .'">'.  $key_title .': </label>';
+                    echo '<input style="display: block;" type="text" id="'. $key .'" name="submitter_email" value="'. $value[0] .'">';
+                }
+            echo '</div>';
+        }
+    
+        // Display the form field for the custom meta field
+    }
+    
+    public function wpr_submissions() {
+        $args = [
+            'labels' => [
+                'name' => __( 'Submissions' ),
+                'singular_name' => __( 'Submission' )
+            ],
+            'show_in_menu' => 'wpr-addons',
+            'public' => false,
+            'show_ui' => true,
+            'capability_type' => 'post',
+            'hierarchical' => false,
+            'rewrite' => array('slug' => 'wpr_submissions'),
+            'supports' => array( '' ),
+            'register_meta_box_cb' => [$this, 'wpr_submissions_meta_box']
+        ];
+        
+        register_post_type( 'wpr_submissions', $args);
+    }
+    
+    public function wpr_submissions_custom_columns($columns) {
+        // Remove the default columns
+        unset($columns['title']);
+        unset($columns['author']);
+        unset($columns['categories']);
+        unset($columns['date']);
+    
+        // Add new custom columns
+        $columns['main'] = __('Main', 'wpr-addons');
+        $columns['action_status'] = __('Action Status', 'wpr-addons');
+        $columns['form_id'] = __('Form', 'wpr-addons');
+        $columns['page'] = __('Page', 'wpr-addons');
+        $columns['post_id'] = __('ID', 'wpr-addons');
+        $columns['read_status'] = __('Read Status');
+        $columns['date'] = __('Date', 'wpr-addons');
+    
+        return $columns;
+    }
+    
+   public function wpr_submissions_sortable_columns($columns) {
+        $columns['read_status'] = 'read_status';
+        return $columns;
+    }
+    
+    public function wpr_submissions_custom_column_content($column, $post_id) {
+        $submission = get_post($post_id);
+        $submission_meta = get_post_meta($post_id);
+        $action_status = 'success';
+    
+        foreach ($submission_meta as $key => $value) {
+            // var_dump($key);
+            if ( str_contains($key, 'form_field-email') ) {
+                $email_key = $key;
+            }
+
+            if ( str_contains($key, '_action_') ) {
+                if ( 'error' == $value[0] ) {
+                    $action_status = 'error';
+                }
+            }
+        }
+    
+        switch ($column) {
+            case 'main':
+                echo get_post_meta($post_id, $email_key, true)[1];
+                break;
+    
+            case 'action_status':
+                // Replace 'custom_categories_key' with the post meta key
+                echo $action_status;
+                break;
+
+            case 'form_id':
+                echo '<a href="'. admin_url('post.php?post=' . get_post_meta($post_id, 'wpr_form_page_id', true) . '&action=elementor') .'" target="_blank">';
+                    echo get_post_meta($post_id, 'wpr_form_name', true);
+                echo '</a>';
+                break;
+            
+            case 'page':
+                echo '<a href="'. get_permalink( get_post_meta($post_id, 'wpr_form_page_id', true)) .'" target="_blank">';
+                    echo get_post_meta($post_id, 'wpr_form_page', true);
+                echo '</a>';
+                break;
+    
+            case 'post_id':
+                // Replace 'custom_date_key' with the post meta key
+                echo $submission->ID;
+                break;
+
+            case 'read_status':
+                $read_status = get_post_meta($post_id, 'wpr_submission_read_status', true);
+    
+                if ($read_status == '1') {
+                    echo '<span class="wpr-button wpr-submission-read">'. __('Read') .'</span>';
+                } else {
+                    echo '<span class="wpr-button wpr-submission-unread">'. __('Unread') .'</span>';
+                }
+                break;
+    
+            case 'custom_date':
+                // Replace 'custom_date_key' with the post meta key
+                echo get_post_meta($post_id, 'custom_date_key', true);
+                break;
+        }
+    }
+    
+    public function wpr_submissions_update_read_status() {
+        if (!isset($_POST['post_id']) || !isset($_POST['read_status']) || !wp_verify_nonce($_POST['nonce'], 'wpr-submissions-js')) {
+            wp_send_json_error('Invalid request');
+        }
+    
+        $post_id = intval($_POST['post_id']);
+        $read_status = $_POST['read_status'] === '1' ? '1' : '0';
+    
+        update_post_meta($post_id, 'wpr_submission_read_status', $read_status);
+    
+        wp_send_json_success();
+    }
+
+    public function wpr_submissions_mark_as_read($screen) {
+        if (is_admin()) {
+            $screen = get_current_screen();
+    
+            // Check if the current screen is the post editor for 'wpr_submissions'
+            if ($screen && $screen->base == 'post' && $screen->post_type == 'wpr_submissions') {
+                if (isset($_GET['post']) && !empty($_GET['post'])) {
+                    $post_id = intval($_GET['post']);
+                    $post = get_post($post_id);
+                    var_dump(get_post_meta($post_id));
+    
+                    // Update the post's read status to '1' (read)
+                    update_post_meta($post_id, 'wpr_submission_read_status', '1');
+                }
+            }
+        }
+    }
+
+    public function wpr_submissions_row_actions($actions, $post) {
+        // Check if the current post type is 'wpr_submissions'
+        if ($post->post_type === 'wpr_submissions') {
+            // Remove the 'Edit' and 'Quick Edit' actions
+            unset($actions['edit']);
+            unset($actions['inline hide-if-no-js']);
+    
+            // Add a custom action
+            $actions['view'] = sprintf(
+                '<a href="%s" title="%s">%s</a>',
+                esc_url(admin_url('post.php?post=' . $post->ID . '&action=edit')),
+                __('View', 'wpr-addons'),
+                __('View', 'wpr-addons')
+            );
+        }
+    
+        return $actions;
+    }
+    
+    public function wpr_submissions_remove_bulk_edit($actions) {
+        // Remove the 'edit' action from bulk actions
+        unset($actions['edit']);
+        return $actions;
+    }
+    
+    public function wpr_submissions_remove_bulk_edit_filter() {
+        $screen = get_current_screen();
+    
+        // Check if the current screen is the 'wpr_submissions' list page
+        if ($screen->id === 'edit-wpr_submissions') {
+            // Apply the filter to remove the 'Edit' option from bulk actions
+            add_filter('bulk_actions-' . $screen->id, [$this, 'wpr_submissions_remove_bulk_edit']);
+        }
+    }
+    
+    // public function wpr_submissions_orderby($query) {
+    //     if (!is_admin() || !$query->is_main_query()) {
+    //         return;
+    //     }
+    
+    //     $orderby = $query->get('orderby');
+    
+    //     if ('read_status' == $orderby) {
+    //         $query->set('meta_key', 'wpr_submission_read_status');
+    //         $query->set('orderby', 'meta_value_num');
+    //     }
+    // }
 }
 
-function wpr_submissions() {
-	$args = [
-		'labels' => [
-			'name' => __( 'Submissions' ),
-			'singular_name' => __( 'Submission' )
-		],
-		// 'show_in_menu' => 'wpr-addons',
-		'public' => false,
-		'show_ui' => true,
-		'capability_type' => 'post',
-		'hierarchical' => false,
-		'supports' => array( 'title', 'editor', 'author' ),
-		'register_meta_box_cb' => 'my_custom_meta_box'
-	];
-	
-    register_post_type( 'wpr_submissions', $args);	
-}
+new Wpr_Form_Submissions();

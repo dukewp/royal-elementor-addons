@@ -1,0 +1,30 @@
+#wpr_submission_fields .wpr-submissions-wrap {
+	margin-bottom: 10px;
+}
+
+.wpr-submissions-wrap {
+    width: 50%;
+}
+
+.wpr-submissions-wrap * {
+    width: 100%;
+}
+
+.wpr-submissions-wrap label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.wpr-submission-read {
+    opacity: 0.5;
+}
+
+.wpr-submission-read,
+.wpr-submission-unread {
+    cursor: pointer;
+}
+
+.wpr-submission-unread-column,
+.wpr-submission-unread {
+    font-weight: bold;
+}

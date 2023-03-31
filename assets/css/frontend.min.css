@@ -15224,6 +15224,7 @@ dl.variation dd {
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
+    padding: 0;
 }
 
 .wpr-product-add-to-cart  a.added_to_cart  {
@@ -16840,14 +16841,6 @@ dl.variation dd {
     flex-wrap: wrap;
 }
 
-.wpr-step-wrap {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 10px;
-}
-
 .wpr-form-fields-wrap.wpr-labels-above .wpr-field-group .wpr-field-sub-group, 
 .wpr-form-fields-wrap.wpr-labels-above .wpr-field-group>.wpr-select-wrap, 
 .wpr-form-fields-wrap.wpr-labels-above .wpr-field-group>input, 
@@ -16957,8 +16950,14 @@ dl.variation dd {
   flex-wrap: wrap;
 }
 
+.wpr-form-field-option {
+    display: inline-flex;
+    align-items: center;
+}
+
 .wpr-field-sub-group .wpr-form-field-option label {
   display: inline-block;
+  margin-left: 5px;
 }
 
 .wpr-field-sub-group.wpr-inline-sub-group .wpr-form-field-option {
@@ -17005,6 +17004,18 @@ dl.variation dd {
     display: flex;
 }
 
+.wpr-step-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.wpr-step-content-layout-vertical .wpr-step-wrap {
+    align-items: flex-start;
+}
+
 /* Hide all steps by default: */
 .wpr-step-tab {
     width: 100%;
@@ -17016,14 +17027,21 @@ dl.variation dd {
   
 /* Make circles that indicate the steps of the form: */
 .wpr-step {
-    height: 15px;
-    width: 15px;
-    margin: 0 2px;
     background-color: #bbbbbb;
     border: none;  
     border-radius: 50%;
-    display: inline-block;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     opacity: 0.5;
+}
+
+.wpr-step-content-layout-vertical .wpr-step {
+    flex-direction: column;
+}
+
+.wpr-separator-off .wpr-step {
+    flex: 1;
 }
 
 .wpr-step.wpr-step-active {
@@ -17033,6 +17051,24 @@ dl.variation dd {
 /* Mark the steps that are finished and valid: */
 .wpr-step.wpr-step-finish {
     background-color: #04AA6D;
+}
+
+.wpr-step-content {
+    width: var(--wpr-steps-indicator-padding, 30px);
+    height: var(--wpr-steps-indicator-padding, 30px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* line-height: 1; */
+}
+
+.wpr-step-content-layout-vertical .wpr-step-label {
+    width: 100%;
+}
+
+.wpr-step-main-label,
+.wpr-step-sub-label {
+    display: block;
 }
 
 .wpr-form-field-type-step {
@@ -17065,9 +17101,17 @@ dl.variation dd {
     display: none;
 }
 
-.wpr-step-sep {
-    height: 2px;
-    background: lightgray;
+.wpr-step-content-layout-vertical .wpr-step-sep {
+    background-color: lightgrey;
+    height: var(--wpr-steps-divider-width, 1px);
+    margin-top: calc(var(--wpr-steps-indicator-padding, 30px) / 2 - var(--wpr-steps-divider-width, 1px) / 2 + var(--wpr-steps-padding));
+    /* top: calc(var(--wpr-steps-indicator-padding, 30px) / 2 - var(--wpr-steps-divider-width, 1px) / 2); */
+    /* transform: translateY(-50%); */
+}
+
+.wpr-step-content-layout-horizontal .wpr-step-sep {
+    background-color: lightgrey;
+    height: var(--wpr-steps-divider-width, 1px);
     top: 50%;
     transform: translateY(-50%);
 }

@@ -126,8 +126,9 @@ class Plugin {
 
 
 		// Form Builder
-		require WPR_ADDONS_PATH . 'classes/wpr-send-email.php';
-		require WPR_ADDONS_PATH . 'classes/wpr-submissions-cpt.php';
+		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-actions-status.php';
+		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-send-email.php';
+		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-submissions-cpt.php';
 		require WPR_ADDONS_PATH . 'admin/form-builder-submissions.php';
 
 		// Admin Files
@@ -213,6 +214,10 @@ class Plugin {
 	public function register_ajax_hooks() {
         add_action( 'wp_ajax_mailchimp_subscribe', [new Utilities, 'ajax_mailchimp_subscribe'] );
         add_action( 'wp_ajax_nopriv_mailchimp_subscribe', [new Utilities, 'ajax_mailchimp_subscribe'] );
+
+		// For form builder
+        add_action( 'wp_ajax_wpr_form_builder_mailchimp', [new Utilities, 'ajax_wpr_form_builder_mailchimp'] );
+        add_action( 'wp_ajax_nopriv_wpr_form_builder_mailchimp', [new Utilities, 'ajax_wpr_form_builder_mailchimp'] );
 	}
 
 	public function mega_menu_ajax_loading() {
@@ -434,7 +439,7 @@ class Plugin {
 				'resturl' => get_rest_url() . 'wpraddons/v1',
 				'nonce' => wp_create_nonce( 'wpr-addons-js' ),
 				'chooseQuantityText' => esc_html__('Please select the required number of items.'),
-				'site_key' => get_option('wpr_recaptcha_vs_site_key')
+				'site_key' => get_option('wpr_recaptcha_v3_site_key')
 			]
 		);
 	}
