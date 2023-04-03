@@ -8,6 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 class WPR_Templates_Data {
 	public static function get_available_kits() {
 		$is_pro_active = wpr_fs()->can_use_premium_code() && defined('WPR_ADDONS_PRO_VERSION');
+		$is_expert = $is_pro_active && wpr_fs()->is_plan( 'expert' );
 		$is_cf7_active = is_plugin_active('contact-form-7/wp-contact-form-7.php') ? 'true' : 'false';
 		$is_mla_active = is_plugin_active('media-library-assistant/index.php') ? 'true' : 'false';
 		$is_woo_active = is_plugin_active('woocommerce/woocommerce.php') ? 'true' : 'false';
@@ -268,6 +269,7 @@ class WPR_Templates_Data {
 					'woo-builder' => false,
 					'off-canvas' => false,
 					'price' => $is_pro_active ? 'free' : 'pro',
+					'expert' => $is_expert ? 'free' : 'expert',
 					'label' => 'new',
 					'priority' => 1,
 				],

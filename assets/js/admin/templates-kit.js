@@ -383,6 +383,8 @@ jQuery(document).ready(function( $ ) {
 				$('.wpr-templates-kit-single').find('.import-kit').attr('data-kit-id', kit.data('kit-id'));
 			}
 
+			console.log($('.wpr-templates-kit-grid').find('.grid-item[data-kit-id="'+ kit.data('kit-id') +'"]').data('expert'));
+
 			// Set Active Template ID by Default // TODO: Disable Single Template import for now
 			// WprTemplatesKit.setActiveTemplateID(singleGrid.children().first());
 
