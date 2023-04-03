@@ -257,7 +257,7 @@ class Wpr_Post_Info extends Widget_Base {
 			]
 		);
 
-		if ( Utilities::is_old_pro_user_or_expert() ) {
+		if ( wpr_fs()->is_plan( 'expert' ) ) {
 		$repeater->add_control(
 			'post_info_cf',
 			[

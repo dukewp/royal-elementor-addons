@@ -205,9 +205,11 @@ function wpr_addons_settings_page() {
         <?php endif; ?>
 
         <?php // White Label
-            echo !empty(get_option('wpr_wl_hide_white_label_tab')) ? '<div style="display: none;">' : '<div>';
-                do_action('wpr_white_label_tab');
-            echo '</div>';
+            if ( wpr_fs()->is_plan( 'expert' ) ) {
+                echo !empty(get_option('wpr_wl_hide_white_label_tab')) ? '<div style="display: none;">' : '<div>';
+                        do_action('wpr_white_label_tab');
+                echo '</div>';
+            }
         ?>
     </div>
 
@@ -1172,7 +1174,9 @@ function wpr_addons_settings_page() {
 
     elseif ( $active_tab == 'wpr_tab_white_label' ) :
 
-        do_action('wpr_white_label_tab_content');
+        if ( wpr_fs()->is_plan( 'expert' ) ) {
+            do_action('wpr_white_label_tab_content');
+        }
 
     endif; ?>
 

@@ -203,7 +203,7 @@ class Wpr_Tabs extends Widget_Base {
 		// Get Available Meta Keys
 		$post_meta_keys = Utilities::get_custom_meta_keys();
 
-		if ( Utilities::is_old_pro_user_or_expert() ) {
+		if ( wpr_fs()->is_plan( 'expert' ) ) {
 			$repeater->add_control(
 				'tab_custom_field',
 				[

@@ -775,7 +775,7 @@ class Wpr_Grid extends Widget_Base {
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'query_source', ['pro-rl'] );
 
-		if ( !wpr_fs()->can_use_premium_code() || Utilities::is_new_pro_user() ) {
+		if ( !wpr_fs()->is_plan( 'expert' ) ) {
 			$this->add_control(
 				'query_source_cpt_pro_notice',
 				[
@@ -840,7 +840,7 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
-		if ( !wpr_fs()->can_use_premium_code() || Utilities::is_new_pro_user() ) {
+		if ( !wpr_fs()->is_plan( 'expert' ) ) {
 			$this->add_control(
 				'query_tax_selection_pro_notice',
 				[
@@ -2734,7 +2734,7 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
-		if ( !wpr_fs()->can_use_premium_code() || Utilities::is_new_pro_user() ) {
+		if ( !wpr_fs()->is_plan( 'expert' ) ) {
 			$this->add_control(
 				'filters_select_pro_notice',
 				[

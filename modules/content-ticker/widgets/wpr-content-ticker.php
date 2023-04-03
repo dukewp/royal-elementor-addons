@@ -153,9 +153,9 @@ class Wpr_Content_Ticker extends Widget_Base {
 			}
 		}
 
-		$this->post_types['pro-pd'] = 'Products (Pro)';
-		$this->post_types['pro-ft'] = 'Featured (Pro)';
-		$this->post_types['pro-sl'] = 'On Sale (Pro)';
+		$this->post_types['pro-pd'] = 'Products (Expert)';
+		$this->post_types['pro-ft'] = 'Featured (Expert)';
+		$this->post_types['pro-sl'] = 'On Sale (Expert)';
 
 		$this->add_control(
 			'query_source',
@@ -222,7 +222,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'content-ticker', 'query_source', ['pro-pd', 'pro-ft', 'pro-sl'] );
 
-		if ( !wpr_fs()->can_use_premium_code() || Utilities::is_new_pro_user() ) {
+		if ( !wpr_fs()->is_plan( 'expert' ) ) {
 			$this->add_control(
 				'query_source_cpt_pro_notice',
 				[
