@@ -153,9 +153,9 @@ class Wpr_Content_Ticker extends Widget_Base {
 			}
 		}
 
-		$this->post_types['pro-pd'] = 'Products (Expert)';
-		$this->post_types['pro-ft'] = 'Featured (Expert)';
-		$this->post_types['pro-sl'] = 'On Sale (Expert)';
+		$this->post_types['pro-pd'] = 'Products (Pro)';
+		$this->post_types['pro-ft'] = 'Featured (Pro)';
+		$this->post_types['pro-sl'] = 'On Sale (Pro)';
 
 		$this->add_control(
 			'query_source',
@@ -230,7 +230,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 					'type' => Controls_Manager::RAW_HTML,
 					'content_classes' => 'wpr-pro-notice',
 					'condition' => [
-						'query_source!' => ['post','page'],
+						'query_source!' => ['post','page','pro-pd', 'pro-ft', 'pro-sl'],
 					]
 				]
 			);

@@ -859,7 +859,13 @@ class Wpr_Search extends Widget_Base {
 
 		foreach ( $search_post_type as $key => $value ) {
 			if ( 'all' != $key ) {
-				$search_post_type[$key] = $value .' (Pro)';
+				$search_post_type['pro-'. $key] = $value .' (Pro)';
+
+				if ( 'all' != $key && 'post' != $key && 'page' != $key && 'product' != $key && 'e-landing-page' != $key && !wpr_fs()->is_plan( 'expert' ) ) {
+					$search_post_type['pro-'. $key] = $value .' (Expert)';
+				}
+
+				unset($search_post_type[$key]);
 			}
 		}
 
@@ -993,14 +999,18 @@ class Wpr_Search extends Widget_Base {
 
 		$this->add_control_search_query();
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'search', 'search_query', ['pro-post', 'pro-page', 'pro-product', 'pro-product', 'pro-e-landing-page'] );
+
+		if ( !wpr_fs()->is_plan( 'expert' ) ) {
 			$this->add_control(
-				'search_pro_notice',
+				'search_query_exp_pro_notice',
 				[
+					'raw' => 'This option is available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-grid-upgrade-expert#purchasepro" target="_blank">Expert version</a></strong>',
 					'type' => Controls_Manager::RAW_HTML,
-					'raw' => '<span style="color:#2a2a2a;">Search Query</span> and <span style="color:#2a2a2a;">Ajax Search</span> options are fully supported<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-search-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
-					// 'raw' => '<span style="color:#2a2a2a;">Search Query</span> option is fully supported<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
 					'content_classes' => 'wpr-pro-notice',
+					'condition' => [
+						'search_query!' => ['all','post','page','product','e-landing-page','pro-post', 'pro-page', 'pro-product', 'pro-product', 'pro-e-landing-page'],
+					]
 				]
 			);
 		}

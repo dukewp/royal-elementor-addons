@@ -125,7 +125,7 @@ function wpr_addons_templates_kit_page() {
     </div>
 
     <div class="wpr-templates-kit-single">
-        <?php if ( wpr_fs()->is_plan( 'expert' ) ) : ?>
+        <?php if ( !wpr_fs()->is_plan( 'expert' ) ) : ?>
         <div class="wpr-templates-kit-expert-notice">
             <p>
                 <span class="dashicons dashicons-warning"></span>
