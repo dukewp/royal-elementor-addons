@@ -2962,6 +2962,11 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     to {opacity: 0;  -webkit-transform: perspective(600px) rotateX(90deg);  transform: perspective(600px) rotateX(90deg)}
 }
 
+.wpr-fade-to {
+    opacity: 0.6;
+}
+
+.wpr-added-to-compare-popup,
 .wpr-added-to-wishlist-popup,
 .wpr-added-to-cart-popup {
     position: fixed;
@@ -2972,6 +2977,7 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     z-index: 99999;
 }
 
+.wpr-added-to-compare-popup.wpr-added-to-compare-slide-in-left,
 .wpr-added-to-wishlist-popup.wpr-added-to-wishlist-slide-in-left,
 .wpr-added-to-cart-popup.wpr-added-to-cart-slide-in-left {
     -webkit-animation-name: added-tc-popup-animation-slide-in-left !important;
@@ -2982,6 +2988,7 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
             animation-fill-mode: forwards;
 }
 
+.wpr-added-to-compare-popup.wpr-added-to-compare-slide-out-left,
 .wpr-added-to-wishlist-popup.wpr-added-to-wishlist-slide-out-left,
 .wpr-added-to-cart-popup.wpr-added-to-cart-slide-out-left {
     -webkit-animation-name: added-tc-popup-animation-slide-out-left !important;
@@ -2992,6 +2999,7 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
             animation-fill-mode: forwards;
 }
 
+.wpr-added-to-compare-popup.wpr-added-to-compare-scale-up,
 .wpr-added-to-wishlist-popup.wpr-added-to-wishlist-scale-up,
 .wpr-added-to-cart-popup.wpr-added-to-cart-scale-up {
     -webkit-animation-name: added-tc-popup-animation-scale-up !important;
@@ -3002,6 +3010,7 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
             animation-fill-mode: forwards;
 }
 
+.wpr-added-to-compare-popup.wpr-added-to-compare-scale-down,
 .wpr-added-to-wishlist-popup.wpr-added-to-wishlist-scale-down,
 .wpr-added-to-cart-popup.wpr-added-to-cart-scale-down {
     -webkit-animation-name: added-tc-popup-animation-scale-down !important;
@@ -3012,6 +3021,7 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
             animation-fill-mode: forwards;
 }
 
+.wpr-added-to-compare-popup.wpr-added-to-compare-fade,
 .wpr-added-to-wishlist-popup.wpr-added-to-wishlist-fade,
 .wpr-added-to-cart-popup.wpr-added-to-cart-fade {
     -webkit-animation-name: added-tc-popup-animation-fade !important;
@@ -3022,6 +3032,7 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
             animation-fill-mode: forwards;
 }
 
+.wpr-added-to-compare-popup.wpr-added-to-compare-fade-out,
 .wpr-added-to-wishlist-popup.wpr-added-to-wishlist-fade-out,
 .wpr-added-to-cart-popup.wpr-added-to-cart-fade-out {
     -webkit-animation-name: added-tc-popup-animation-fade-out !important;
@@ -3032,7 +3043,8 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
             animation-fill-mode: forwards;
 }
 
-.wpr-atw-popup-top .wpr-added-to-wishlist-popup.wpr-added-to-wishlist-skew,
+.wpr-atc-popup-top .wpr-added-to-compare-popup.wpr-added-to-wishlist-skew,
+.wpr-atc-popup-top .wpr-added-to-wishlist-popup.wpr-added-to-wishlist-skew,
 .wpr-atc-popup-top .wpr-added-to-cart-popup.wpr-added-to-cart-skew {
     -webkit-transform-origin: center top 0;
         -ms-transform-origin: center top 0;
@@ -3045,7 +3057,8 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
             animation-fill-mode: forwards;
 }
 
-.wpr-atw-popup-top .wpr-added-to-wishlist-popup.wpr-added-to-wishlist-skew-off,
+.wpr-atc-popup-top .wpr-added-to-compare-popup.wpr-added-to-compare-skew-off,
+.wpr-atc-popup-top .wpr-added-to-wishlist-popup.wpr-added-to-wishlist-skew-off,
 .wpr-atc-popup-top .wpr-added-to-cart-popup.wpr-added-to-cart-skew-off {
     -webkit-transform-origin: center top 0;
         -ms-transform-origin: center top 0;
@@ -3058,7 +3071,8 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
             animation-fill-mode: forwards;
 }
 
-.wpr-atw-popup-bottom .wpr-added-to-wishlist-popup.wpr-added-to-wishlist-skew,
+.wpr-atc-popup-bottom .wpr-added-to-compare-popup.wpr-added-to-compare-skew,
+.wpr-atc-popup-bottom .wpr-added-to-wishlist-popup.wpr-added-to-wishlist-skew,
 .wpr-atc-popup-bottom .wpr-added-to-cart-popup.wpr-added-to-cart-skew {
     -webkit-transform-origin: center bottom 0;
         -ms-transform-origin: center bottom 0;
@@ -3071,7 +3085,8 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
             animation-fill-mode: forwards;
 }
 
-.wpr-atw-popup-bottom .wpr-added-to-wishlist-popup.wpr-added-to-wishlist-skew-off,
+.wpr-atc-popup-bottom .wpr-added-to-compare-popup.wpr-added-to-compare-skew-off,
+.wpr-atc-popup-bottom .wpr-added-to-wishlist-popup.wpr-added-to-wishlist-skew-off,
 .wpr-atc-popup-bottom .wpr-added-to-cart-popup.wpr-added-to-cart-skew-off {
     -webkit-transform-origin: center bottom 0;
         -ms-transform-origin: center bottom 0;
@@ -3084,7 +3099,8 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
             animation-fill-mode: forwards;
 }
 
-.wpr-atw-popup-top .wpr-added-to-wishlist-popup,
+.wpr-atc-popup-top .wpr-added-to-compare-popup,
+.wpr-atc-popup-top .wpr-added-to-wishlist-popup,
 .wpr-atc-popup-top .wpr-added-to-cart-popup {
     -webkit-animation-name: added-tc-popup-animation;
             animation-name: added-tc-popup-animation;
@@ -3094,7 +3110,8 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
             animation-fill-mode: forwards;
 }
 
-.wpr-atw-popup-top .wpr-added-to-wishlist-popup-hide,
+.wpr-atc-popup-top .wpr-added-to-compare-popup-hide,
+.wpr-atc-popup-top .wpr-added-to-wishlist-popup-hide,
 .wpr-atc-popup-top .wpr-added-to-cart-popup-hide {
     -webkit-animation-name: added-tc-popup-animation-hide;
             animation-name: added-tc-popup-animation-hide;
@@ -3104,7 +3121,8 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
             animation-fill-mode: forwards;
 }
 
-.wpr-atw-popup-bottom .wpr-added-to-wishlist-popup,
+.wpr-atc-popup-bottom .wpr-added-to-compare-popup,
+.wpr-atc-popup-bottom .wpr-added-to-wishlist-popup,
 .wpr-atc-popup-bottom .wpr-added-to-cart-popup {
     -webkit-animation-name: added-tc-popup-animation-bottom;
             animation-name: added-tc-popup-animation-bottom;
@@ -3114,7 +3132,8 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
             animation-fill-mode: forwards;
 }
 
-.wpr-atw-popup-bottom .wpr-added-to-wishlist-popup-hide,
+.wpr-atc-popup-bottom .wpr-added-to-compare-popup-hide,
+.wpr-atc-popup-bottom .wpr-added-to-wishlist-popup-hide,
 .wpr-atc-popup-bottom .wpr-added-to-cart-popup-hide {
     -webkit-animation-name: added-tc-popup-animation-hide-bottom;
             animation-name: added-tc-popup-animation-hide-bottom;
@@ -3124,18 +3143,22 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
             animation-fill-mode: forwards;
 }
 
-.wpr-atws-popup-top .wpr-added-to-wishlist-popup,
+/* GOGA - why atws */
+.wpr-atc-popup-top .wpr-added-to-compare-popup,
+.wpr-atc-popup-top .wpr-added-to-wishlist-popup,
 .wpr-atc-popup-top .wpr-added-to-cart-popup {
     top: 0;
     right: 0;
 }
 
-.wpr-atw-popup-bottom .wpr-added-to-wishlist-popup,
+.wpr-atc-popup-bottom .wpr-added-to-compare-popup,
+.wpr-atc-popup-bottom .wpr-added-to-wishlist-popup,
 .wpr-atc-popup-bottom .wpr-added-to-cart-popup {
     bottom: 0;
     right: 0;
 }
 
+.wpr-added-tcompare-title,
 .wpr-added-tw-title,
 .wpr-added-tc-title {
     -webkit-box-flex: 1;
@@ -3143,16 +3166,19 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
             flex: 1;
 }
 
+.wpr-added-tcompare-title a,
 .wpr-added-tw-title a,
 .wpr-added-tc-title a {
     display: inline;
 }
 
+.wpr-added-tcompare-title p,
 .wpr-added-tw-title p,
 .wpr-added-tc-title p {
     margin: 0;
 }
 
+.wpr-added-tcomp-popup-img img,
 .wpr-added-tw-popup-img img,
 .wpr-added-tc-popup-img img {
     width: 100%;
@@ -13997,6 +14023,7 @@ flex-grow: 0; */
 .wpr-wishlist-add,
 .wpr-wishlist-remove {
     display: inline-block;
+    background-color: white;
 }
 
 .wpr-button-hidden {
@@ -16995,7 +17022,7 @@ dl.variation dd {
     -webkit-animation-duration: 0.6s;
             animation-duration: 0.6s;
     -webkit-animation-fill-mode: forwards;
-            animation-fill-mode: forwards;  
+            animation-fill-mode: forwards;
 }
 
 @-webkit-keyframes offcanvas-slide-in-align-top {

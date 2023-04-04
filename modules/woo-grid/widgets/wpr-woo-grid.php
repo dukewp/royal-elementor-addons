@@ -382,42 +382,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		];
 	}
 
-	public function add_repeater_args_element_added_to_cart_animation() {
-		return [
-			'type' => Controls_Manager::HIDDEN,
-			'default' => ''
-		];
-	}
-
-	public function add_repeater_args_element_added_to_wishlist_animation() {
-		return [
-			'type' => Controls_Manager::HIDDEN,
-			'default' => ''
-		];
-	}
-
-	public function add_repeater_element_added_to_cart_fade_out_in() {
-		return [
-			'type' => Controls_Manager::HIDDEN,
-			'default' => ''
-		];
-	}
-
-	public function add_repeater_element_added_to_wishlist_fade_out_in() {
-		return [
-			'type' => Controls_Manager::HIDDEN,
-			'default' => ''
-		];
-	}
-
-	public function add_repeater_element_added_to_cart_animation_duration() {
-		return [
-			'type' => Controls_Manager::HIDDEN,
-			'default' => ''
-		];
-	}
-
-	public function add_repeater_element_added_to_wishlist_animation_duration() {
+	public function add_repeater_args_element_show_added_to_compare_popup() {
 		return [
 			'type' => Controls_Manager::HIDDEN,
 			'default' => ''
@@ -515,8 +480,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 	}
 
 	public function add_section_added_to_cart_popup() {}
-
-	public function add_section_added_to_wishlist_popup() {}
 	
 	public function add_section_style_likes() {}
 	
@@ -1782,17 +1745,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$repeater->add_control( 'element_show_added_to_wishlist_popup', $this->add_repeater_args_element_show_added_to_wishlist_popup() );
 
-		$repeater->add_control( 'element_added_to_cart_animation', $this->add_repeater_args_element_added_to_cart_animation() );
-
-		$repeater->add_control( 'element_added_to_wishlist_animation', $this->add_repeater_args_element_added_to_wishlist_animation() );
-
-		$repeater->add_control( 'element_added_to_cart_fade_out_in', $this->add_repeater_element_added_to_cart_fade_out_in() );
-
-		$repeater->add_control( 'element_added_to_wishlist_fade_out_in', $this->add_repeater_element_added_to_wishlist_fade_out_in() );
-		
-		$repeater->add_control( 'element_added_to_cart_animation_duration', $this->add_repeater_element_added_to_cart_animation_duration() );
-
-		$repeater->add_control( 'element_added_to_wishlist_animation_duration', $this->add_repeater_element_added_to_wishlist_animation_duration() );
+		$repeater->add_control( 'element_show_added_to_compare_popup', $this->add_repeater_args_element_show_added_to_compare_popup() );
 
 		$repeater->add_control(
 			'element_extra_text_pos',
@@ -5291,8 +5244,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$this->end_controls_section();
 
-		$this->add_section_added_to_cart_popup();
-
 		// Tab: Style ==============
 		// Section: Button Styles ------------
 		$this->start_controls_section(
@@ -5313,25 +5264,14 @@ class Wpr_Woo_Grid extends Widget_Base {
 		);
 
 		$this->add_control(
-			'btn_text_color',
+			'btn_color',
 			[
-				'label'  => esc_html__( 'Text Color', 'wpr-addons' ),
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
+				'default' => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wishlist-add span' => 'color: {{VALUE}}',
-				]
-			]
-		);
-
-		$this->add_control(
-			'btn_icon_color',
-			[
-				'label'  => esc_html__( 'Icon Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-wishlist-add i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wishlist-add i' => 'color: {{VALUE}}'
 				]
 			]
 		);
@@ -5341,7 +5281,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605be5',
+				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wishlist-add' => 'border-color: {{VALUE}}'
 				]
@@ -5353,7 +5293,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605be5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wishlist-add' => 'background-color: {{VALUE}}'
 				]
@@ -5422,7 +5361,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
+				'default' => '#FF4400',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wishlist-add:hover i' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-wishlist-add:hover span' => 'color: {{VALUE}}'
@@ -5435,7 +5374,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605be5',
+				'default' => '#FF4400',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wishlist-add:hover' => 'border-color: {{VALUE}}'
 				]
@@ -5447,7 +5386,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605be5',
+				'default' => '#FFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wishlist-add:hover' => 'background-color: {{VALUE}}'
 				]
@@ -5464,6 +5403,56 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$this->end_controls_tab();
 
+		$this->start_controls_tab(
+			'tab_remove_btn',
+			[
+				'label' => esc_html__( 'Remove', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'remove_btn_text_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FF4400',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wishlist-remove span' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wishlist-remove i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wishlist-remove:hover span' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wishlist-remove:hover i' => 'color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_control(
+			'remove_btn_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FF4F40',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wishlist-remove' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wishlist-remove:hover' => 'border-color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_control(
+			'remove_btn_bg_color',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFF',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-wishlist-remove' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wishlist-remove:hover' => 'background-color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->end_controls_tab();
+
 		$this->end_controls_tabs();
 
 		$this->add_responsive_control(
@@ -5473,10 +5462,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 7,
-					'right' => 25,
-					'bottom' => 7,
-					'left' => 25,
+					'top' => 5,
+					'right' => 15,
+					'bottom' => 5,
+					'left' => 15,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wishlist-add' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -5519,7 +5508,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
 					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
 				],
-				'default' => 'none',
+				'default' => 'solid',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wishlist-add' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} .wpr-wishlist-remove' => 'border-style: {{VALUE}};'
@@ -5557,10 +5546,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 4,
-					'right' => 4,
-					'bottom' => 4,
-					'left' => 4,
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wishlist-add' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -5570,127 +5559,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 		);
 
 		$this->end_controls_section();
-
-		// Tab: Style ==============
-		// Section: Remove Button Colors ------------
-		$this->start_controls_section(
-			'section_wishlist_remove_btn_colors',
-			[
-				'label' => esc_html__( 'Remove from Wishlist', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-			]
-		);
-
-		$this->start_controls_tabs( 'tabs_remove_btn_styles' );
-
-		$this->start_controls_tab(
-			'tab_remove_btn_normal',
-			[
-				'label' => esc_html__( 'Normal', 'wpr-addons' ),
-			]
-		);
-
-		$this->add_control(
-			'remove_btn_text_color',
-			[
-				'label'  => esc_html__( 'Text Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-wishlist-remove span' => 'color: {{VALUE}}',
-				]
-			]
-		);
-
-		$this->add_control(
-			'remove_btn_icon_color',
-			[
-				'label'  => esc_html__( 'Icon Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-wishlist-remove i' => 'color: {{VALUE}}',
-				]
-			]
-		);
-
-		$this->add_control(
-			'remove_btn_border_color',
-			[
-				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#FF4F40',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-wishlist-remove' => 'border-color: {{VALUE}}'
-				]
-			]
-		);
-
-		$this->add_control(
-			'remove_btn_bg_color',
-			[
-				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#FF4F40',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-wishlist-remove' => 'background-color: {{VALUE}}'
-				]
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->start_controls_tab(
-			'tab_remove_btn_hover',
-			[
-				'label' => esc_html__( 'Hover', 'wpr-addons' ),
-			]
-		);
-
-		$this->add_control(
-			'remove_btn_hover_color',
-			[
-				'label'  => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-wishlist-remove:hover i' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-wishlist-remove:hover span' => 'color: {{VALUE}}'
-				]
-			]
-		);
-
-		$this->add_control(
-			'remove_btn_hover_border_color',
-			[
-				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#FF4F40',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-wishlist-remove:hover' => 'border-color: {{VALUE}}'
-				]
-			]
-		);
-
-		$this->add_control(
-			'remove_btn_hover_bg_color',
-			[
-				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#FF4F40',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-wishlist-remove:hover' => 'background-color: {{VALUE}}'
-				]
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->end_controls_tabs();
-
-		$this->end_controls_section();
-
-		$this->add_section_added_to_wishlist_popup();
 		
 		// Tab: Style ==============
 		// Section: Button Styles ------------
@@ -5714,23 +5582,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$this->add_control(
 			'comp_btn_text_color',
 			[
-				'label'  => esc_html__( 'Text Color', 'wpr-addons' ),
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
+				'default' => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-compare-add span' => 'color: {{VALUE}}',
-				]
-			]
-		);
-
-		$this->add_control(
-			'comp_btn_icon_color',
-			[
-				'label'  => esc_html__( 'Icon Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-compare-add i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-compare-add i' => 'color: {{VALUE}}'
 				]
 			]
 		);
@@ -5740,7 +5597,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605be5',
+				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-compare-add' => 'border-color: {{VALUE}}'
 				]
@@ -5752,7 +5609,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605be5',
+				'default' => '#FFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-compare-add' => 'background-color: {{VALUE}}'
 				]
@@ -5821,7 +5678,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
+				'default' => '#FF4400',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-compare-add:hover i' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-compare-add:hover span' => 'color: {{VALUE}}'
@@ -5834,7 +5691,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605be5',
+				'default' => '#FF4400',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-compare-add:hover' => 'border-color: {{VALUE}}'
 				]
@@ -5846,7 +5703,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605be5',
+				'default' => '#FFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-compare-add:hover' => 'background-color: {{VALUE}}'
 				]
@@ -5863,6 +5720,56 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$this->end_controls_tab();
 
+		$this->start_controls_tab(
+			'comp_tab_remove_btn',
+			[
+				'label' => esc_html__( 'Remove', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'comp_remove_btn_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FF4400',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-compare-remove span' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-compare-remove i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-compare-remove:hover span' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-compare-remove:hover i' => 'color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_control(
+			'comp_remove_btn_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FF4F40',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-compare-remove' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-compare-remove:hover' => 'border-color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->add_control(
+			'comp_remove_btn_bg_color',
+			[
+				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFF',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-compare-remove' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-compare-remove:hover' => 'background-color: {{VALUE}}'
+				]
+			]
+		);
+
+		$this->end_controls_tab();
+
 		$this->end_controls_tabs();
 
 		$this->add_responsive_control(
@@ -5872,10 +5779,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 7,
-					'right' => 25,
-					'bottom' => 7,
-					'left' => 25,
+					'top' => 5,
+					'right' => 15,
+					'bottom' => 5,
+					'left' => 15,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-compare-add' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -5918,7 +5825,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
 					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
 				],
-				'default' => 'none',
+				'default' => 'solid',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-compare-add' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} .wpr-compare-remove' => 'border-style: {{VALUE}};'
@@ -5956,10 +5863,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 4,
-					'right' => 4,
-					'bottom' => 4,
-					'left' => 4,
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-compare-add' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -5970,124 +5877,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$this->end_controls_section();
 
-		// Tab: Style ==============
-		// Section: Remove Button Colors ------------
-		$this->start_controls_section(
-			'section_compare_remove_btn_colors',
-			[
-				'label' => esc_html__( 'Remove from Compare', 'wpr-addons' ),
-				'tab' => Controls_Manager::TAB_STYLE,
-			]
-		);
-
-		$this->start_controls_tabs( 'comp_tabs_remove_btn_styles' );
-
-		$this->start_controls_tab(
-			'comp_tab_remove_btn_normal',
-			[
-				'label' => esc_html__( 'Normal', 'wpr-addons' ),
-			]
-		);
-
-		$this->add_control(
-			'comp_remove_btn_text_color',
-			[
-				'label'  => esc_html__( 'Text Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-compare-remove span' => 'color: {{VALUE}}',
-				]
-			]
-		);
-
-		$this->add_control(
-			'comp_remove_btn_icon_color',
-			[
-				'label'  => esc_html__( 'Icon Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-compare-remove i' => 'color: {{VALUE}}',
-				]
-			]
-		);
-
-		$this->add_control(
-			'comp_remove_btn_border_color',
-			[
-				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#FF4F40',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-compare-remove' => 'border-color: {{VALUE}}'
-				]
-			]
-		);
-
-		$this->add_control(
-			'comp_remove_btn_bg_color',
-			[
-				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#FF4F40',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-compare-remove' => 'background-color: {{VALUE}}'
-				]
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->start_controls_tab(
-			'comp_tab_remove_btn_hover',
-			[
-				'label' => esc_html__( 'Hover', 'wpr-addons' ),
-			]
-		);
-
-		$this->add_control(
-			'comp_remove_btn_hover_color',
-			[
-				'label'  => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-compare-remove:hover i' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-compare-remove:hover span' => 'color: {{VALUE}}'
-				]
-			]
-		);
-
-		$this->add_control(
-			'comp_remove_btn_hover_border_color',
-			[
-				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#FF4F40',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-compare-remove:hover' => 'border-color: {{VALUE}}'
-				]
-			]
-		);
-
-		$this->add_control(
-			'comp_remove_btn_hover_bg_color',
-			[
-				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '#FF4F40',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-compare-remove:hover' => 'background-color: {{VALUE}}'
-				]
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->end_controls_tabs();
-
-		$this->end_controls_section();
+		$this->add_section_added_to_cart_popup();
 
 		// Styles =======================
 		// Section: Likes ---------------
@@ -8811,9 +8601,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'data-product_id="'. esc_attr($product->get_id()) .'"',
 			'data-product_sku="'. esc_attr($product->get_sku()) .'"',
 			'data-atc-popup="'. $settings['element_show_added_tc_popup']  .'"',
-			'data-atc-animation="'. $settings['element_added_to_cart_animation']  .'"',
-			'data-atc-fade-out-in="'. $settings['element_added_to_cart_fade_out_in']  .'"',
-			'data-atc-animation-time="'. $settings['element_added_to_cart_animation_duration']  .'"'
+			'data-atc-animation="'. $this->get_settings_for_display()['popup_notification_animation']  .'"',
+			'data-atc-fade-out-in="'. $this->get_settings_for_display()['popup_notification_fade_out_in']  .'"',
+			'data-atc-animation-time="'. $this->get_settings_for_display()['popup_notification_animation_duration']  .'"'
 		];
 
 		$button_HTML = '';
@@ -8875,9 +8665,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$wishlist_attributes = [
 			'data-atw-popup="'. $settings['element_show_added_to_wishlist_popup']  .'"',
-			'data-atw-animation="'. $settings['element_added_to_wishlist_animation']  .'"',
-			'data-atw-fade-out-in="'. $settings['element_added_to_wishlist_fade_out_in']  .'"',
-			'data-atw-animation-time="'. $settings['element_added_to_wishlist_animation_duration']  .'"'
+			'data-atw-animation="'. $this->get_settings_for_display()['popup_notification_animation']  .'"',
+			'data-atw-fade-out-in="'. $this->get_settings_for_display()['popup_notification_fade_out_in']  .'"',
+			'data-atw-animation-time="'. $this->get_settings_for_display()['popup_notification_animation_duration']  .'"'
 		];
 
 		$button_HTML = '';
@@ -8929,10 +8719,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 		}
 
 		$compare_attributes = [
-			// 'data-atw-popup="'. $settings['element_show_added_to_compare_popup']  .'"',
-			// 'data-atw-animation="'. $settings['element_added_to_compare_animation']  .'"',
-			// 'data-atw-fade-out-in="'. $settings['element_added_to_compare_fade_out_in']  .'"',
-			// 'data-atw-animation-time="'. $settings['element_added_to_compare_animation_duration']  .'"'
+			'data-atcompare-popup="'. $settings['element_show_added_to_compare_popup']  .'"',
+			'data-atcompare-animation="'. $this->get_settings_for_display()['popup_notification_animation']  .'"',
+			'data-atcompare-fade-out-in="'. $this->get_settings_for_display()['popup_notification_fade_out_in']  .'"',
+			'data-atcompare-animation-time="'. $this->get_settings_for_display()['popup_notification_animation_duration']  .'"'
 		];
 
 		$button_HTML = '';
@@ -8943,8 +8733,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 		
 
 		if ( 'yes' === $settings['show_icon'] ) {
-			$add_to_compare_content .= '<i class="fas fa-yin-yang"></i>';
-			$remove_from_compare_content .= '<i class="fas fa-yin-yang"></i>';
+			$add_to_compare_content .= '<i class="fas fa-exchange-alt"></i>';
+			$remove_from_compare_content .= '<i class="fas fa-exchange-alt"></i>';
 		}
 
 		if ( 'yes' === $settings['show_text'] && '' !== $settings['add_to_compare_text'] ) {
