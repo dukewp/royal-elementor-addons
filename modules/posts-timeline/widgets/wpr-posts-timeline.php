@@ -1335,7 +1335,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'query_source', ['pro-rl', 'pro-cr'] );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'posts-timeline', 'timeline_post_types', ['pro-rl'] );
 
 		if ( !wpr_fs()->is_plan( 'expert' ) ) {
 			$this->add_control(
@@ -1345,7 +1345,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'type' => Controls_Manager::RAW_HTML,
 					'content_classes' => 'wpr-pro-notice',
 					'condition' => [
-						'query_source!' => ['post','page','related','current','pro-rl'],
+						'timeline_post_types!' => ['post','page','related','current','pro-rl'],
 					]
 				]
 			);

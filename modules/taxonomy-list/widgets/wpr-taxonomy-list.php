@@ -40,12 +40,22 @@ class Wpr_Taxonomy_List extends Widget_Base {
 	public function add_section_style_toggle_icon() {}
 
 	public function get_post_taxonomies() {
-		return [
-			'category' => esc_html__( 'Categories', 'wpr-addons' ),
-			'post_tag' => esc_html__( 'Tags', 'wpr-addons' ),
-			'product_cat' => esc_html__( 'Product Categories', 'wpr-addons' ),
-			'product_tag' => esc_html__( 'Product Tags', 'wpr-addons' ),
-		];
+		$post_taxonomies = [];
+		$post_taxonomies['category'] = esc_html__( 'Categories', 'wpr-addons' );
+		$post_taxonomies['post_tag'] = esc_html__( 'Tags', 'wpr-addons' );
+		$post_taxonomies['product_cat'] = esc_html__( 'Product Categories', 'wpr-addons' );
+		$post_taxonomies['product_tag'] = esc_html__( 'Product Tags', 'wpr-addons' );
+
+		$custom_post_taxonomies = Utilities::get_custom_types_of( 'tax', true );
+		foreach( $custom_post_taxonomies as $slug => $title ) {
+			if ( 'product_tag' === $slug || 'product_cat' === $slug ) {
+				continue;
+			}
+
+			$post_taxonomies['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Expert)';
+		}
+
+		return $post_taxonomies;
 	}
 
 	public function add_controls_group_sub_category_filters() {
@@ -106,6 +116,20 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				'options' => $this->get_post_taxonomies(),
 			]
 		);
+
+		if ( !wpr_fs()->is_plan( 'expert' ) ) {
+			$this->add_control(
+				'query_tax_selection_pro_notice',
+				[
+					'raw' => 'This option is available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-grid-upgrade-expert#purchasepro" target="_blank">Expert version</a></strong>',
+					'type' => Controls_Manager::RAW_HTML,
+					'content_classes' => 'wpr-pro-notice',
+					'condition' => [
+						'query_tax_selection!' => ['category','post_tag','product_cat','product_tag'],
+					]
+				]
+			);
+		}
 
 		$this->add_control(
 			'query_hide_empty',
@@ -518,6 +542,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 		$icon_wrapper = !empty($settings['tax_list_icon']) ? '<span>'. $icon .'</span>' : '';
 
 		// 	'hide_empty' => 'yes' === $settings['query_hide_empty']
+		$settings['query_tax_selection'] = str_contains($settings['query_tax_selection'], 'pro-') ? 'category' : $settings['query_tax_selection'];
 		
          echo '<ul class="wpr-taxonomy-list" data-show-on-click="'. $settings['show_sub_categories_on_click'] .'">';
 		$terms = get_terms( $settings['query_tax_selection'], [ 'hide_empty' => 'yes' === $settings['query_hide_empty'], 'parent' => 0, 'child_of' => 0 ] );
