@@ -39,16 +39,30 @@ class WPR_Update_Mini_Wishlist {
     
     //     register_post_type( 'wishlist', $args );
     // }
+
+	// Add two new functions for handling cookies
+	public function get_wishlist_from_cookie() {
+		if (isset($_COOKIE['wpr_wishlist'])) {
+			return json_decode(stripslashes($_COOKIE['wpr_wishlist']), true);
+		}
+		return array();
+	}
     
     function update_mini_wishlist() {
         if ( ! isset( $_POST['product_id'] ) ) {
             return;
         }
         $product_id = intval( $_POST['product_id'] );
+        $user_id = get_current_user_id();
 
-        $wishlist = get_user_meta( get_current_user_id(), 'wpr_wishlist', true );
-        if ( ! $wishlist ) {
-            $wishlist = array();
+        
+        if ($user_id > 0) {
+            $wishlist = get_user_meta($user_id, 'wpr_wishlist', true);
+            if (!$wishlist) {
+                $wishlist = array();
+            }
+        } else {
+            $wishlist = $this->get_wishlist_from_cookie();
         }
 
         $product = wc_get_product( $product_id );

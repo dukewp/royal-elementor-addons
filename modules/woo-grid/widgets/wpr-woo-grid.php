@@ -8649,6 +8649,14 @@ class Wpr_Woo_Grid extends Widget_Base {
 		echo '</div>';
 	}
 
+	// Add two new functions for handling cookies
+	public function get_wishlist_from_cookie() {
+		if (isset($_COOKIE['wpr_wishlist'])) {
+			return json_decode(stripslashes($_COOKIE['wpr_wishlist']), true);
+		}
+		return array();
+	}
+
 	// Render Wishlist Button
 	public function render_product_wishlist_button( $settings, $class ) {
 		global $product;
@@ -8657,13 +8665,21 @@ class Wpr_Woo_Grid extends Widget_Base {
 		if ( is_null( $product ) ) {
 			return;
 		}
+
+        $user_id = get_current_user_id();
 		
-		$wishlist = get_user_meta( get_current_user_id(), 'wpr_wishlist', true );
+		if ($user_id > 0) {
+			$wishlist = get_user_meta( get_current_user_id(), 'wpr_wishlist', true );
+		} else {
+			$wishlist = $this->get_wishlist_from_cookie();
+		}
+		
 		if ( ! $wishlist ) {
 			$wishlist = array();
 		}
 
 		$wishlist_attributes = [
+			'data-wishlist-url' => get_option('wpr_wishlist_page') ? get_option('wpr_wishlist_page') : '',
 			'data-atw-popup="'. $settings['element_show_added_to_wishlist_popup']  .'"',
 			'data-atw-animation="'. $this->get_settings_for_display()['popup_notification_animation']  .'"',
 			'data-atw-fade-out-in="'. $this->get_settings_for_display()['popup_notification_fade_out_in']  .'"',
@@ -8703,6 +8719,14 @@ class Wpr_Woo_Grid extends Widget_Base {
 			echo '</div>';
 		echo '</div>';
 	}
+	
+	// Add two new functions for handling cookies
+	public function get_compare_from_cookie() {
+		if (isset($_COOKIE['wpr_compare'])) {
+			return json_decode(stripslashes($_COOKIE['wpr_compare']), true);
+		}
+		return array();
+	}
 
 	// Render Compare Button
 	public function render_product_compare_button( $settings, $class ) {
@@ -8712,13 +8736,21 @@ class Wpr_Woo_Grid extends Widget_Base {
 		if ( is_null( $product ) ) {
 			return;
 		}
+
+        $user_id = get_current_user_id();
 		
-		$compare = get_user_meta( get_current_user_id(), 'wpr_compare', true );
-		if ( ! $compare ) {
-			$compare = array();
+		if ($user_id > 0) {
+			$compare = get_user_meta(  $user_id, 'wpr_compare', true );
+		
+			if ( ! $compare ) {
+				$compare = array();
+			}
+		} else {
+			$compare = $this->get_compare_from_cookie();
 		}
 
 		$compare_attributes = [
+			'data-compare-url' => get_option('wpr_compare_page') ? get_option('wpr_compare_page') : '',
 			'data-atcompare-popup="'. $settings['element_show_added_to_compare_popup']  .'"',
 			'data-atcompare-animation="'. $this->get_settings_for_display()['popup_notification_animation']  .'"',
 			'data-atcompare-fade-out-in="'. $this->get_settings_for_display()['popup_notification_fade_out_in']  .'"',

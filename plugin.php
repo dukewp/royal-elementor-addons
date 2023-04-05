@@ -488,6 +488,9 @@ class Plugin {
 				'resturl' => get_rest_url() . 'wpraddons/v1',
 				'nonce' => wp_create_nonce( 'wpr-addons-js' ),
 				'comparePageID' => get_option('wpr_compare_page'),
+				'comparePageURL' => get_permalink(get_option('wpr_compare_page')),
+				'wishlistPageID' => get_option('wpr_wishlist_page'),
+				'wishlistPageURL' => get_permalink(get_option('wpr_wishlist_page')),
 				'chooseQuantityText' => esc_html__('Please select the required number of items.')
 			]
 		);
@@ -864,8 +867,8 @@ class Plugin {
 					'categories' => '["'. $category .'"]',
 				],
 				[
-					'name' => 'wpr-wishlist-count',
-					'title' => __('Wishlist Count', 'wpr-addons'),
+					'name' => 'wpr-mini-wishlist',
+					'title' => __('Mini Wishlist', 'wpr-addons'),
 					'icon' => 'wpr-icon eicon-heart',
 					'categories' => '["'. $category .'"]',
 				],
@@ -882,8 +885,8 @@ class Plugin {
 					'categories' => '["'. $category .'"]',
 				],
 				[
-					'name' => 'wpr-compare-count',
-					'title' => __('Compare Count', 'wpr-addons'),
+					'name' => 'wpr-mini-compare',
+					'title' => __('Mini Compare', 'wpr-addons'),
 					'icon' => 'wpr-icon eicon-heart',
 					'categories' => '["'. $category .'"]',
 				],

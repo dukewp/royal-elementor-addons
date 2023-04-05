@@ -1,6 +1,8 @@
 <?php
 namespace WprAddons\Classes;
 
+use WprAddons\Classes\Utilities;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -47,16 +49,42 @@ class WPR_Add_Remove_From_Wishlist {
             return;
         }
         $product_id = intval( $_POST['product_id'] );
-        $wishlist = get_user_meta( get_current_user_id(), 'wpr_wishlist', true );
-        if ( ! $wishlist ) {
-            $wishlist = array();
+        $user_id = get_current_user_id();
+        
+        // if ( ! $wishlist ) {
+        //     $wishlist = array();
+        // }
+        // if ( in_array( $product_id, $wishlist ) ) {
+        //     wp_send_json_error( array( 'message' => esc_html__('Product is already in wishlist.') ) );
+        //     return;
+        // }
+        // $wishlist[] = $product_id;
+        // update_user_meta( get_current_user_id(), 'wpr_wishlist', $wishlist );
+        
+        // NEW CODE
+        if ($user_id > 0) {
+            $wishlist = get_user_meta( get_current_user_id(), 'wpr_wishlist', true );
+            $wishlist = get_user_meta($user_id, 'wpr_wishlist', true);
+            if (!$wishlist) {
+                $wishlist = array();
+            }
+        } else {
+            $wishlist = $this->get_wishlist_from_cookie();
         }
-        if ( in_array( $product_id, $wishlist ) ) {
-            wp_send_json_error( array( 'message' => esc_html__('Product is already in wishlist.') ) );
+    
+        if (in_array($product_id, $wishlist)) {
+            wp_send_json_error(array('message' => esc_html__('Product is already in wishlist.')));
             return;
         }
+    
         $wishlist[] = $product_id;
-        update_user_meta( get_current_user_id(), 'wpr_wishlist', $wishlist );
+    
+        if ($user_id > 0) {
+            update_user_meta($user_id, 'wpr_wishlist', $wishlist);
+        } else {
+            $this->set_wishlist_to_cookie($wishlist);
+        }
+
         wp_send_json_success();
     }
     
@@ -65,13 +93,44 @@ class WPR_Add_Remove_From_Wishlist {
             return;
         }
         $product_id = intval( $_POST['product_id'] );
-        $wishlist = get_user_meta( get_current_user_id(), 'wpr_wishlist', true );
-        if ( ! $wishlist ) {
-            $wishlist = array();
+        $user_id = get_current_user_id();
+
+        if ($user_id > 0) {
+            $wishlist = get_user_meta($user_id, 'wpr_wishlist', true);
+            if (!$wishlist) {
+                $wishlist = array();
+            }
+        } else {
+            $wishlist = $this->get_wishlist_from_cookie();
         }
-        $wishlist = array_diff( $wishlist, array( $product_id ) );
-        update_user_meta( get_current_user_id(), 'wpr_wishlist', $wishlist );
+    
+        $wishlist = array_diff($wishlist, array($product_id));
+    
+        if ($user_id > 0) {
+            update_user_meta($user_id, 'wpr_wishlist', $wishlist);
+        } else {
+            $this->set_wishlist_to_cookie($wishlist);
+        }
+    
+        // $wishlist = get_user_meta( get_current_user_id(), 'wpr_wishlist', true );
+        // if ( ! $wishlist ) {
+        //     $wishlist = array();
+        // }
+        // $wishlist = array_diff( $wishlist, array( $product_id ) );
+        // update_user_meta( get_current_user_id(), 'wpr_wishlist', $wishlist );
+
         wp_send_json_success();
+    }
+    
+    function get_wishlist_from_cookie() {
+        if (isset($_COOKIE['wpr_wishlist'])) {
+            return json_decode(stripslashes($_COOKIE['wpr_wishlist']), true);
+        }
+        return array();
+    }
+    
+    function set_wishlist_to_cookie($wishlist) {
+        setcookie('wpr_wishlist', json_encode($wishlist), time() + (86400 * 10), '/'); // Expires in 7 days
     }
 }
 

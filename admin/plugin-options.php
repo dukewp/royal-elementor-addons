@@ -307,10 +307,10 @@ function wpr_addons_settings_page() {
 			'Page My Account' => ['page-my-account-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-myacc-widgets-pro#purchasepro', '', 'pro'],
 			'Woo Category Grid' => ['woo-category-grid-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
 			'Wishlist Button' => ['wishlist-button-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
-			'Wishlist Count' => ['wishlist-count-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
+			'Mini Wishlist' => ['mini-wishlist-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
 			'Wishlist' => ['wishlist-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
 			'Compare Button' => ['compare-button-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
-			'Compare Count' => ['compare-count-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
+			'Mini Compare' => ['mini-compare-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
 			'Compare' => ['compare-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
         ];
 

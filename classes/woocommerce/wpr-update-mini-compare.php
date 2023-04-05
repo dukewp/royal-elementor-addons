@@ -39,16 +39,30 @@ class WPR_Update_Mini_Compare {
     
     //     register_post_type( 'compare', $args );
     // }
+
+	// Add two new functions for handling cookies
+	public function get_compare_from_cookie() {
+		if (isset($_COOKIE['wpr_compare'])) {
+			return json_decode(stripslashes($_COOKIE['wpr_compare']), true);
+		}
+		return array();
+	}
     
     function update_mini_compare() {
         if ( ! isset( $_POST['product_id'] ) ) {
             return;
         }
         $product_id = intval( $_POST['product_id'] );
+        $user_id = get_current_user_id();
 
-        $compare = get_user_meta( get_current_user_id(), 'wpr_compare', true );
-        if ( ! $compare ) {
-            $compare = array();
+        
+        if ($user_id > 0) {
+            $compare = get_user_meta($user_id, 'wpr_compare', true);
+            if (!$compare) {
+                $compare = array();
+            }
+        } else {
+            $compare = $this->get_compare_from_cookie();
         }
 
         $product = wc_get_product( $product_id );

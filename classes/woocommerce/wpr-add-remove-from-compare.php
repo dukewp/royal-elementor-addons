@@ -24,9 +24,9 @@ class WPR_Add_Remove_From_Compare {
     }
 
     // // Register Post Type
-    // function register_wishlist_cpt() {
+    // function register_compare_cpt() {
     //     $args = array(
-    //         'label'				  => esc_html__( 'Royal Wishlist', 'wpr-addons' ),
+    //         'label'				  => esc_html__( 'Royal compare', 'wpr-addons' ),
     //         'public'              => true,
     //         'publicly_queryable'  => true,
     //         'rewrite'             => false,
@@ -39,7 +39,7 @@ class WPR_Add_Remove_From_Compare {
     //         'hierarchical'        => false,
     //     );
     
-    //     register_post_type( 'wishlist', $args );
+    //     register_post_type( 'compare', $args );
     // }
     
     function add_to_compare() {
@@ -47,16 +47,43 @@ class WPR_Add_Remove_From_Compare {
             return;
         }
         $product_id = intval( $_POST['product_id'] );
-        $compare = get_user_meta( get_current_user_id(), 'wpr_compare', true );
-        if ( ! $compare ) {
-            $compare = array();
+        $user_id = get_current_user_id();
+
+        // $compare = get_user_meta( get_current_user_id(), 'wpr_compare', true );
+        // if ( ! $compare ) {
+        //     $compare = array();
+        // }
+        // if ( in_array( $product_id, $compare ) ) {
+        //     wp_send_json_error( array( 'message' => esc_html__('Product is already in Compare.') ) );
+        //     return;
+        // }
+        // $compare[] = $product_id;
+        // update_user_meta( get_current_user_id(), 'wpr_compare', $compare );
+        
+        
+        // NEW CODE
+        if ($user_id > 0) {
+            $compare = get_user_meta($user_id, 'wpr_compare', true);
+            if (!$compare) {
+                $compare = array();
+            }
+        } else {
+            $compare = $this->get_compare_from_cookie();
         }
-        if ( in_array( $product_id, $compare ) ) {
-            wp_send_json_error( array( 'message' => esc_html__('Product is already in Compare.') ) );
+    
+        if (in_array($product_id, $compare)) {
+            wp_send_json_error(array('message' => esc_html__('Product is already in compare.')));
             return;
         }
+    
         $compare[] = $product_id;
-        update_user_meta( get_current_user_id(), 'wpr_compare', $compare );
+    
+        if ($user_id > 0) {
+            update_user_meta($user_id, 'wpr_compare', $compare);
+        } else {
+            $this->set_compare_to_cookie($compare);
+        }
+
         wp_send_json_success();
     }
     
@@ -65,13 +92,45 @@ class WPR_Add_Remove_From_Compare {
             return;
         }
         $product_id = intval( $_POST['product_id'] );
-        $compare = get_user_meta( get_current_user_id(), 'wpr_compare', true );
-        if ( ! $compare ) {
-            $compare = array();
+        
+        $user_id = get_current_user_id();
+
+        if ($user_id > 0) {
+            $compare = get_user_meta($user_id, 'wpr_compare', true);
+            if (!$compare) {
+                $compare = array();
+            }
+        } else {
+            $compare = $this->get_compare_from_cookie();
         }
-        $compare = array_diff( $compare, array( $product_id ) );
-        update_user_meta( get_current_user_id(), 'wpr_compare', $compare );
+    
+        $compare = array_diff($compare, array($product_id));
+    
+        if ($user_id > 0) {
+            update_user_meta($user_id, 'wpr_compare', $compare);
+        } else {
+            $this->set_compare_to_cookie($compare);
+        }
+
+        // $compare = get_user_meta( get_current_user_id(), 'wpr_compare', true );
+        // if ( ! $compare ) {
+        //     $compare = array();
+        // }
+        // $compare = array_diff( $compare, array( $product_id ) );
+        // update_user_meta( get_current_user_id(), 'wpr_compare', $compare );
+
         wp_send_json_success();
+    }
+    
+    function get_compare_from_cookie() {
+        if (isset($_COOKIE['wpr_compare'])) {
+            return json_decode(stripslashes($_COOKIE['wpr_compare']), true);
+        }
+        return array();
+    }
+    
+    function set_compare_to_cookie($compare) {
+        setcookie('wpr_compare', json_encode($compare), time() + (86400 * 10), '/'); // Expires in 7 days
     }
 }
 

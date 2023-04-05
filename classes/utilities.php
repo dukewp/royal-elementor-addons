@@ -1001,6 +1001,14 @@ class Utilities {
 
 		$module->end_controls_section();
 	}
+	
+	// Add two new functions for handling cookies
+	public static function get_wishlist_from_cookie() {
+		if (isset($_COOKIE['wpr_wishlist'])) {
+			return json_decode(stripslashes($_COOKIE['wpr_wishlist']), true);
+		}
+		return array();
+	}
 
 	/**
 	** Check for New Free Users
