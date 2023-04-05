@@ -1005,6 +1005,10 @@
   display: none !important;
 }
 
+.wpr-condition-popup select {
+  text-transform: capitalize;
+}
+
 /* GOGA - conditions overflow the viewport if too many */
 .wpr-conditions-wrap {
   max-height: 40vh;

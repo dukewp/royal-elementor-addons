@@ -68,7 +68,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			}
 
 			if ( Utilities::is_new_free_user2() ) {
-				$post_types['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Pro)';
+				$post_types['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Expert)';
 			} else {
 				$post_types[$slug] = esc_html( $title );
 			}
@@ -419,6 +419,20 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'magazine-grid', 'query_source', ['pro-rl', 'pro-cr'] );
+
+		if ( !wpr_fs()->is_plan( 'expert' ) ) {
+			$this->add_control(
+				'query_source_cpt_pro_notice',
+				[
+					'raw' => 'This option is available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-grid-upgrade-expert#purchasepro" target="_blank">Expert version</a></strong>',
+					'type' => Controls_Manager::RAW_HTML,
+					'content_classes' => 'wpr-pro-notice',
+					'condition' => [
+						'query_source!' => ['post','page','related','current','pro-rl','pro-cr'],
+					]
+				]
+			);
+		}
 
 		$this->add_control(
 			'query_selection',
