@@ -46,6 +46,12 @@ class Wpr_Form_Submissions {
                         'ajaxurl' => admin_url( 'admin-ajax.php' ),
                         'resturl' => get_rest_url() . 'wpraddons/v1',
                         'nonce' => wp_create_nonce( 'wpr-submissions-js' ),
+                        'form_name' => get_post_meta($post->ID, 'wpr_form_name', true),
+                        'form_id' => get_post_meta($post->ID, 'wpr_form_id', true),
+                        'form_page' => get_post_meta($post->ID, 'wpr_form_page', true),
+                        'form_page_id' => get_post_meta($post->ID, 'wpr_form_page_id', true),
+                        'form_agent' => get_post_meta($post->ID, 'wpr_user_agent', true),
+                        'agent_ip' => get_post_meta($post->ID, 'wpr_user_ip', true),
                     ]
                 );
             }
@@ -73,7 +79,13 @@ class Wpr_Form_Submissions {
     // Define the callback function to display the meta box contents
     public function wpr_meta_box_callback( $post, $metabox ) {
         foreach (get_post_meta($post->ID) as $key => $value ) {
-    
+
+            $exclude = ['wpr_form_id', 'wpr_form_name', 'wpr_form_page', 'wpr_form_page_id', 'wpr_user_agent', 'wpr_user_ip', 'wpr_submission_read_status', '_edit_lock'];
+
+            if (in_array( $key ,$exclude )) {
+                continue;
+            }
+
             echo '<div class="wpr-submissions-wrap">';
                 if ( is_serialized($value[0]) ) {
                     $value = unserialize($value[0]);
@@ -170,7 +182,13 @@ class Wpr_Form_Submissions {
     
         switch ($column) {
             case 'main':
-                echo get_post_meta($post_id, $email_key, true)[1];
+                // Link to view
+                echo sprintf(
+                    '<a href="%s" title="%s">%s</a>',
+                    esc_url(admin_url('post.php?post=' . $post_id . '&action=edit')),
+                    __('View', 'wpr-addons'),
+                    __(get_post_meta($post_id, $email_key, true)[1], 'wpr-addons')
+                );
                 break;
     
             case 'action_status':
@@ -234,7 +252,6 @@ class Wpr_Form_Submissions {
                 if (isset($_GET['post']) && !empty($_GET['post'])) {
                     $post_id = intval($_GET['post']);
                     $post = get_post($post_id);
-                    var_dump(get_post_meta($post_id));
     
                     // Update the post's read status to '1' (read)
                     update_post_meta($post_id, 'wpr_submission_read_status', '1');

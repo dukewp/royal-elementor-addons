@@ -25,7 +25,6 @@ if ( ! defined( 'ABSPATH' ) ) {
         
         $message_body = [];
         
-        var_dump($_POST['form_content']);
         foreach ( $_POST['form_content'] as $key => $value ) {
             $message_body[] = trim($value[2]) . ': ' . $value[1];
         }
@@ -75,7 +74,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				case 'remote_ip':
 					$meta_fields['remote_ip'] = [
 						'title' => esc_html__( 'Remote IP', 'wpr-addons' ),
-						'value' => $this->get_client_ip(),
+						'value' => Utilities::get_client_ip(),
 					];
 					break;
                     
@@ -122,41 +121,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 			));
         }
     }
-
-	public static function get_client_ip() {
-		$server_ip_keys = [
-			'HTTP_CLIENT_IP',
-			'HTTP_X_FORWARDED_FOR',
-			'HTTP_X_FORWARDED',
-			'HTTP_X_CLUSTER_CLIENT_IP',
-			'HTTP_FORWARDED_FOR',
-			'HTTP_FORWARDED',
-			'REMOTE_ADDR',
-		];
-
-		foreach ( $server_ip_keys as $key ) {
-			$value = self::_unstable_get_super_global_value( $_SERVER, $key );
-			if ( $value && filter_var( $value, FILTER_VALIDATE_IP ) ) {
-				return $value;
-			}
-		}
-
-		// Fallback local ip.
-		return '127.0.0.1';
-	}
-
-	public static function _unstable_get_super_global_value( $super_global, $key ) {
-		if ( ! isset( $super_global[ $key ] ) ) {
-			return null;
-		}
-
-		if ( $_FILES === $super_global ) {
-			$super_global[ $key ]['name'] = sanitize_file_name( $super_global[ $key ]['name'] );
-			return $super_global[ $key ];
-		}
-
-		return wp_kses_post_deep( wp_unslash( $super_global[ $key ] ) );
-	}
  }
 
  new WPR_Send_Email();

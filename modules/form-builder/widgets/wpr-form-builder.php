@@ -85,7 +85,7 @@ class Wpr_Form_Builder extends Widget_Base {
 						'View Submissions in Royal Addons > <a href="%s" target="_blank">Submissions</a>',
 						'wpr-addons'
 					),
-					self_admin_url( 'admin.php?page=wpr_submissions' )
+					self_admin_url( 'edit.php?post_type=wpr_submissions' )
 				),
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 			]
@@ -1233,8 +1233,8 @@ class Wpr_Form_Builder extends Widget_Base {
 			'email' => 'Email',
 			'redirect' => 'Redirect',
 			'mailchimp' => 'Mailchimp',
-			'webhook' => 'Webhook',
-			'popup' => 'Popup'
+			// 'webhook' => 'Webhook',
+			// 'popup' => 'Popup'
 		];
 		// $actions = Module::instance()->actions_registrar->get();
 
@@ -1405,6 +1405,8 @@ class Wpr_Form_Builder extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-field-group' => 'padding-right: calc( {{SIZE}}{{UNIT}}/2 ); padding-left: calc( {{SIZE}}{{UNIT}}/2 );',
+					'{{WRAPPER}} .wpr-step-wrap' => 'padding-left: calc( -{{SIZE}}{{UNIT}}/2 ); padding-right: calc( -{{SIZE}}{{UNIT}}/2 );',
+					'{{WRAPPER}} .wpr-stp-btns-wrap' => 'padding-right: calc( {{SIZE}}{{UNIT}}/2 ); padding-left: calc( {{SIZE}}{{UNIT}}/2 );',
 					'{{WRAPPER}} .wpr-form-fields-wrap' => 'margin-left: calc( -{{SIZE}}{{UNIT}}/2 ); margin-right: calc( -{{SIZE}}{{UNIT}}/2 );',
 				],
 			]
@@ -1943,7 +1945,6 @@ class Wpr_Form_Builder extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605be5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-step' => 'background-color: {{VALUE}};'
 				],
@@ -1988,7 +1989,6 @@ class Wpr_Form_Builder extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605be5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-step.wpr-step-active' => 'background-color: {{VALUE}};',
 				]
@@ -2000,7 +2000,6 @@ class Wpr_Form_Builder extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605be5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-step.wpr-step-active' => 'border-color: {{VALUE}};'
 				]
@@ -2033,7 +2032,6 @@ class Wpr_Form_Builder extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605be5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-step.wpr-step-finish' => 'background-color: {{VALUE}};',
 				]
@@ -2045,7 +2043,6 @@ class Wpr_Form_Builder extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#605be5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-step.wpr-step-finish' => 'border-color: {{VALUE}};'
 				]
@@ -2881,10 +2878,8 @@ class Wpr_Form_Builder extends Widget_Base {
 				// `queried_id` may be different from `post_id` on Single theme builder templates.
 				?>
 				<input type="hidden" name="queried_id" value="<?php echo get_the_ID(); ?>"/>
-			<?php } ?>
-
-			<div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
-				<?php
+			<?php } 
+			
 				$step_count1 = 0;
 				$step_exists = '';
 				$step_icon = [];
@@ -2909,7 +2904,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				// Circles which indicates the steps of the form:
 
 				$step_wrap_class ='yes' !== $instance['show_separator'] ? 'wpr-step-wrap wpr-separator-off' : 'wpr-step-wrap';
-
+				
 				echo '<div class="'. $step_wrap_class .'">';
 					if ( 'progress_bar' == $instance['step_type'] ) {
 
@@ -2931,7 +2926,7 @@ class Wpr_Form_Builder extends Widget_Base {
 							} else if ( 'icon_text' == $instance['step_type'] ) {
 								$step_html = '<span class="wpr-step"><span class="wpr-step-content">'. $step_icon[$i] .'</span><span class="wpr-step-label">'. $step_label[$i] . $step_sub_label[$i] .'</span></span>';
 							}
-	
+
 							echo $step_html;
 							// echo '<span class="wpr-step">'. $step_html .'</span>';
 
@@ -2943,6 +2938,10 @@ class Wpr_Form_Builder extends Widget_Base {
 						endwhile;
 					}
 				echo '</div>';
+			?>
+
+			<div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
+				<?php
 
 				$step_count = 0;
 				$form_fields_length = sizeof($instance['form_fields']);
@@ -2957,14 +2956,14 @@ class Wpr_Form_Builder extends Widget_Base {
 					
 					if ( 'step' === $item['field_type'] )  {
 						if ( 0 === $step_count ) {
-							echo '<div class="wpr-step-tab wpr-step-tab-hidden wpr-form-fields-wrap">';
+							echo '<div class="wpr-step-tab wpr-step-tab-hidden">';
 						} else {
 								echo '<div class="wpr-stp-btns-wrap">';
 									echo '<button type="button" class="wpr-step-prev">'. $item['previous_button_text'] .'</button>';
 									echo '<button type="button" class="wpr-step-next">'. $item['next_button_text'] .'</button>';
 								echo '</div>';
 							echo '</div>';
-							echo '<div class="wpr-step-tab wpr-step-tab-hidden wpr-form-fields-wrap">';
+							echo '<div class="wpr-step-tab wpr-step-tab-hidden">';
 						}
 						$step_count++;
 					}
@@ -3013,10 +3012,10 @@ class Wpr_Form_Builder extends Widget_Base {
 							case 'date':
 							case 'time':
 								$this->add_render_attribute( 'input' . $item_index, 'class', 'wpr-form-field-textual' );
-								?>
-									<input size="1" <?php echo $this->get_render_attribute_string( 'input' . $item_index ); ?>>
-								<?php
+								echo '<input size="1 "'. $this->get_render_attribute_string( 'input' . $item_index ) .'>';
 								break;
+							case 'step':
+								echo '<input type="hidden" class="wpr-step-input" id=form-field-'. $item['custom_id'] .' value='. $item['field_label'] .'>';
 							default:
 								$field_type = $item['field_type'];
 						endswitch;
@@ -3064,12 +3063,11 @@ class Wpr_Form_Builder extends Widget_Base {
 								<?php if ( ! empty( $instance['button_text'] ) ) : ?>
 									<span><?php echo $this->print_unescaped_setting( 'button_text' ); ?></span>
 								<?php endif; ?>
-								
-								<div class="wpr-double-bounce wpr-loader-hidden">
-									<div class="wpr-child wpr-double-bounce1"></div>
-									<div class="wpr-child wpr-double-bounce2"></div>
-								</div>
-							</span>
+							</span>	
+							<div class="wpr-double-bounce wpr-loader-hidden">
+								<div class="wpr-child wpr-double-bounce1"></div>
+								<div class="wpr-child wpr-double-bounce2"></div>
+							</div>
 						</button>
 					</div>
 				<?php } ?>

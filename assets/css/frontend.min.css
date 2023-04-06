@@ -17018,6 +17018,8 @@ dl.variation dd {
 
 /* Hide all steps by default: */
 .wpr-step-tab {
+    display: flex;
+    flex-wrap: wrap;
     width: 100%;
 }
 
@@ -17027,9 +17029,7 @@ dl.variation dd {
   
 /* Make circles that indicate the steps of the form: */
 .wpr-step {
-    background-color: #bbbbbb;
     border: none;  
-    border-radius: 50%;
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -17046,11 +17046,6 @@ dl.variation dd {
 
 .wpr-step.wpr-step-active {
     opacity: 1;
-}
-
-/* Mark the steps that are finished and valid: */
-.wpr-step.wpr-step-finish {
-    background-color: #04AA6D;
 }
 
 .wpr-step-content {
