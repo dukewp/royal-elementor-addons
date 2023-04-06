@@ -230,7 +230,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 					'type' => Controls_Manager::RAW_HTML,
 					'content_classes' => 'wpr-pro-notice',
 					'condition' => [
-						'query_source!' => ['post','page','pro-pd', 'pro-ft', 'pro-sl'],
+						'query_source!' => ['post','page','pro-pd', 'pro-ft', 'pro-sl', 'product', 'featured', 'sale'],
 					]
 				]
 			);
