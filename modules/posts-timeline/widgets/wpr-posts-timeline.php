@@ -2251,12 +2251,12 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'posts-timeline', [
 			'Add Unlimited Custom Timeline Items',
-			'Custom Post Types Support',
 			'Unlimited Slides to Show option',
 			'Carousel Autoplay and Autoplay Speed',
 			'Unlimited Posts Per Page option',
 			'Advanced Pagination - Load More Button or Infinite Scroll options',
 			'Advanced Entrance Animation Options',
+			'Custom Post Types Support (Expert)',
 		] );
 
 		$this->start_controls_section(

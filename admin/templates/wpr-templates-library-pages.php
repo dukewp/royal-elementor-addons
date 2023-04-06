@@ -29,10 +29,11 @@ class WPR_Templates_Library_Pages {
 	*/
 	public static function render_library_templates_pages() {
 		$kits = WPR_Templates_Data::get_available_kits_for_pages();
-		
+		$license = !wpr_fs()->can_use_premium_code() ? 'free' : 'premium';
+
 		?>
 
-		<div class="wpr-tplib-sidebar">
+		<div class="wpr-tplib-sidebar" data-license="<?php echo esc_attr($license); ?>">
 			<div class="wpr-tplib-price" data-filter="mixed">
 				<h3>
 					<span><?php esc_html_e( 'Mixed', 'wpr-addons' ); ?></span>
