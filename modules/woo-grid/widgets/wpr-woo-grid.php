@@ -1893,7 +1893,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::TEXT,
 				'default' => 'Add to Wishlist',
 				'condition' => [
-					'show_text' => 'yes',
 					'element_select' => [
 						'wishlist-button'
 					]
@@ -1908,7 +1907,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::TEXT,
 				'default' => 'Add to Compare',
 				'condition' => [
-					'show_text' => 'yes',
 					'element_select' => [
 						'compare-button'
 					]
@@ -1923,7 +1921,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::TEXT,
 				'default' => 'Remove from Wishlist',
 				'condition' => [
-					'show_text' => 'yes',
 					'element_select' => [
 						'wishlist-button'
 					]
@@ -1938,7 +1935,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::TEXT,
 				'default' => 'Remove from Compare',
 				'condition' => [
-					'show_text' => 'yes',
 					'element_select' => [
 						'compare-button'
 					]
@@ -8689,6 +8685,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$button_HTML = '';
 		$page_id = get_queried_object_id();
 		
+		$button_add_title = '';
+		$button_add_wishlist = '';
 		$add_to_wishlist_content = '';
 		$remove_from_wishlist_content = '';
 		
@@ -8698,11 +8696,14 @@ class Wpr_Woo_Grid extends Widget_Base {
 			$remove_from_wishlist_content .= '<i class="fas fa-heart"></i>';
 		}
 
-		if ( 'yes' === $settings['show_text'] && '' !== $settings['add_to_wishlist_text'] ) {
+		if ( 'yes' === $settings['show_text'] ) {
 			$add_to_wishlist_content .= ' <span>'. esc_html__($settings['add_to_wishlist_text']) .'</span>';
+		} else {
+			$button_add_title = 'title="'. $settings['add_to_wishlist_text'] .'"';
+			$button_remove_title = 'title="'. $settings['remove_from_wishlist_text'] .'"';
 		}
 
-		if ( 'yes' === $settings['show_text'] && '' !== $settings['remove_from_wishlist_text'] ) {
+		if ( 'yes' === $settings['show_text'] ) {
 			$remove_from_wishlist_content .= ' <span>'. esc_html__($settings['remove_from_wishlist_text']) .'</span>';
 		}
 
@@ -8713,8 +8714,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 			$add_button_hidden = in_array( $product->get_id(), $wishlist ) ? 'wpr-button-hidden' : '';
 		
 			// '. implode( ' ', $wishlist_attributes ) .'
-			echo '<button class="wpr-wishlist-add '. $add_button_hidden .'" data-product-id="' . $product->get_id() . '"'. ' ' . implode( ' ', $wishlist_attributes ) .' >'. $add_to_wishlist_content .'</button>';
-			echo '<button class="wpr-wishlist-remove '. $remove_button_hidden .'" data-product-id="' . $product->get_id() . '">'. $remove_from_wishlist_content .'</button>';
+			echo '<button class="wpr-wishlist-add '. $add_button_hidden .'" '. $button_add_title .' data-product-id="' . $product->get_id() . '"'. ' ' . implode( ' ', $wishlist_attributes ) .' >'. $add_to_wishlist_content .'</button>';
+			echo '<button class="wpr-wishlist-remove '. $remove_button_hidden .'" '. $button_remove_title .' data-product-id="' . $product->get_id() . '">'. $remove_from_wishlist_content .'</button>';
 
 			echo '</div>';
 		echo '</div>';
@@ -8762,6 +8763,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 		
 		$add_to_compare_content = '';
 		$remove_from_compare_content = '';
+		$button_add_title = '';
+		$button_remove_title = '';
 		
 
 		if ( 'yes' === $settings['show_icon'] ) {
@@ -8769,11 +8772,14 @@ class Wpr_Woo_Grid extends Widget_Base {
 			$remove_from_compare_content .= '<i class="fas fa-exchange-alt"></i>';
 		}
 
-		if ( 'yes' === $settings['show_text'] && '' !== $settings['add_to_compare_text'] ) {
+		if ( 'yes' === $settings['show_text'] ) {
 			$add_to_compare_content .= ' <span>'. esc_html__($settings['add_to_compare_text']) .'</span>';
+		} else {
+			$button_add_title = 'title="'. $settings['add_to_compare_text'] .'"';
+			$button_remove_title = 'title="'. $settings['remove_from_compare_text'] .'"';
 		}
 
-		if ( 'yes' === $settings['show_text'] && '' !== $settings['remove_from_compare_text'] ) {
+		if ( 'yes' === $settings['show_text'] ) {
 			$remove_from_compare_content .= ' <span>'. esc_html__($settings['remove_from_compare_text']) .'</span>';
 		}
 
@@ -8784,8 +8790,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 			$add_button_hidden = in_array( $product->get_id(), $compare ) ? 'wpr-button-hidden' : '';
 		
 			// '. implode( ' ', $compare_attributes ) .'
-			echo '<button class="wpr-compare-add '. $add_button_hidden .'" data-product-id="' . $product->get_id() . '"'. ' ' . implode( ' ', $compare_attributes ) .' >'. $add_to_compare_content .'</button>';
-			echo '<button class="wpr-compare-remove '. $remove_button_hidden .'" data-product-id="' . $product->get_id() . '">'. $remove_from_compare_content .'</button>';
+			echo '<button class="wpr-compare-add '. $add_button_hidden .'" '. $button_add_title .' data-product-id="' . $product->get_id() . '"'. ' ' . implode( ' ', $compare_attributes ) .' >'. $add_to_compare_content .'</button>';
+			echo '<button class="wpr-compare-remove '. $remove_button_hidden .'" '. $button_remove_title .' data-product-id="' . $product->get_id() . '">'. $remove_from_compare_content .'</button>';
 
 			echo '</div>';
 		echo '</div>';

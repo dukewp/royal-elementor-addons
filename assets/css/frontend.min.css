@@ -267,6 +267,16 @@ template {
     margin: 0 auto;
   }*/
 
+.wpr-body-overflow-hidden {
+    overflow: hidden;
+}
+
+.wpr-inline-flex-center {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /* Section Z Index */
 .wpr-section-z-index {
     z-index: 999 !important;
