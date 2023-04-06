@@ -14022,6 +14022,8 @@ flex-grow: 0; */
 }
 
 .wpr-compare-toggle-btn {
+    display: inline-block;
+    cursor: pointer;
     white-space: nowrap;
 }
 
@@ -14304,6 +14306,12 @@ flex-grow: 0; */
     transform: translateY(-50%);
     text-indent: 0;
     font-weight: 600 !important;
+}
+
+.wpr-wishlist-separator {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
 }
 
 @media screen and (max-width: 768px) {
