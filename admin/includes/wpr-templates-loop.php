@@ -256,7 +256,7 @@ class WPR_Templates_Loop {
 											continue;
 										}
 
-										if ( wpr_fs()->is_plan( 'expert' ) || 'product' !== $key ) {
+										if ( wpr_fs()->is_plan( 'expert' ) || 'product' === $key ) {
 											echo '<option value="'. esc_attr($key) .'" class="custom-type-ids">'. esc_html($value) .'</option>';
 										} else {
 											echo '<option value="pro-'. esc_attr(substr($key, 0, 3)) .'" class="custom-type-ids">'. esc_html($value) .' (Expert)</option>';
