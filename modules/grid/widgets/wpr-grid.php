@@ -1183,7 +1183,7 @@ class Wpr_Grid extends Widget_Base {
 				],
 				'condition' => [
 					'layout_select' => [ 'fitRows', 'masonry', 'list' ],
-				],
+				]
 			]
 		);
 
