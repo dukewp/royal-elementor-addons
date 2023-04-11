@@ -1086,11 +1086,21 @@ class Wpr_Search extends Widget_Base {
 		);
 
 		$this->add_control(
+			'open_search_input_on_btn_click',
+			[
+				'label' => esc_html__( 'Open Search on Click', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'condition' => [
+					'search_btn' => 'yes',
+				]
+			]
+		);
+
+		$this->add_control(
 			'search_btn_disable_click',
 			[
 				'label' => esc_html__( 'Disable Button Click', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'prefix_class' => 'wpr-search-form-disable-submit-btn-',
 				'condition' => [
 					'search_btn_style' => 'inner',
 					'search_btn' => 'yes',
@@ -1748,11 +1758,13 @@ class Wpr_Search extends Widget_Base {
 		// Get Settings
 		$settings = $this->get_settings();
 
+		$hidden_input = 'yes' === $settings['open_search_input_on_btn_click'] ? 'wpr-search-input-hidden' : '';
+
 		$this->add_render_attribute(
 			'input', [
+				'class' => 'wpr-search-form-input '. $hidden_input .'',
 				'placeholder' => $settings['search_placeholder'],
 				'aria-label' => $settings['search_aria_label'],
-				'class' => 'wpr-search-form-input',
 				'type' => 'search',
 				'name' => 's',
 				'title' => esc_html__( 'Search', 'wpr-addons' ),

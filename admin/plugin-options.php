@@ -59,6 +59,8 @@ function wpr_register_addons_settings() {
     register_setting( 'wpr-settings', 'wpr_woo_shop_ppp' );
     register_setting( 'wpr-settings', 'wpr_woo_shop_cat_ppp' );
     register_setting( 'wpr-settings', 'wpr_woo_shop_tag_ppp' );
+    register_setting( 'wpr-settings', 'wpr_compare_page' );
+    register_setting( 'wpr-settings', 'wpr_wishlist_page' );
 
     // Integrations
     register_setting( 'wpr-settings', 'wpr_google_map_api_key' );
@@ -306,6 +308,12 @@ function wpr_addons_settings_page() {
 			'Product Breadcrumbs' => ['product-breadcrumbs-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-breadcru-widgets-pro#purchasepro', '', 'pro'],
 			'Page My Account' => ['page-my-account-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-myacc-widgets-pro#purchasepro', '', 'pro'],
 			'Woo Category Grid' => ['woo-category-grid-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
+			'Wishlist Button' => ['wishlist-button-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
+			'Mini Wishlist' => ['mini-wishlist-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
+			'Wishlist' => ['wishlist-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
+			'Compare Button' => ['compare-button-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
+			'Mini Compare' => ['mini-compare-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
+			'Compare' => ['compare-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
         ];
 
         foreach ( array_merge($woocommerce_builder_modules, $premium_woo_modules) as $title => $data ) {
@@ -420,6 +428,38 @@ function wpr_addons_settings_page() {
                 </div>
                 <input type="checkbox" name="wpr_enable_woo_flexslider_navigation" id="wpr_enable_woo_flexslider_navigation" <?php echo checked( get_option('wpr_enable_woo_flexslider_navigation', 'on'), 'on', false ); ?>>
                 <label for="wpr_enable_woo_flexslider_navigation"></label>
+            </div>
+
+            <div class="wpr-woo-template-info wpr-compare-wishlist">
+                <?php
+                    $pages = get_pages(); // Get all pages on the site
+                    $current_page = get_option( 'wpr_compare_page' ); // Get the current selected page
+                    echo '<label for="wpr_compare_page">Select Compare Page</label>';
+                    echo '<select name="wpr_compare_page" id="wpr_compare_page" >';
+                    
+                    foreach ( $pages as $page ) {
+                        $selected = ( $current_page == $page->ID ) ? 'selected="selected"' : '';
+                        echo '<option value="' . $page->ID . '" ' . $selected . '>' . $page->post_title . '</option>';
+                    }
+                    
+                    echo '</select>';
+                ?>
+            </div>
+
+            <div class="wpr-woo-template-info wpr-compare-wishlist">
+                <?php
+                    $pages = get_pages(); // Get all pages on the site
+                    $current_page = get_option( 'wpr_wishlist_page' ); // Get the current selected page
+                    echo '<label for="wpr_wishlist_page">Select Wishlist Page</label>';
+                    echo '<select name="wpr_wishlist_page" id="wpr_wishlist_page" >';
+                    
+                    foreach ( $pages as $page ) {
+                        $selected = ( $current_page == $page->ID ) ? 'selected="selected"' : '';
+                        echo '<option value="' . $page->ID . '" ' . $selected . '>' . $page->post_title . '</option>';
+                    }
+                    
+                    echo '</select>';
+                ?>
             </div>
             
         </div>

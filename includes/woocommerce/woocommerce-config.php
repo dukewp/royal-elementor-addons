@@ -4,6 +4,7 @@ use WprAddons\Classes\Utilities;
 class WPR_WooCommerce_Config {
 
 	public function __construct() {
+		// add_action('wp_loaded', [$this, 'register_wishlist_page']);
 		add_action('wp_ajax_wpr_addons_add_cart_single_product', [$this, 'add_cart_single_product_ajax']);
 		add_action('wp_ajax_nopriv_wpr_addons_add_cart_single_product', [$this, 'add_cart_single_product_ajax']);
 		
@@ -36,6 +37,66 @@ class WPR_WooCommerce_Config {
 			if ( $template_type = Utilities::get_wpr_template_type($template) ) {
 				add_action( 'init', [ $this, 'register_wc_hooks' ], 5 );
 			}
+		}
+		
+		add_filter( 'woocommerce_account_menu_items', [$this, 'add_wishlist_to_my_account'] );
+
+		add_action( 'init', [$this, 'add_wishlist_endpoint'] );
+
+		add_action( 'woocommerce_after_register_post_type', [$this, 'remove_deleted_products_from_compare_and_wishlist'] );
+	}
+
+	function add_wishlist_endpoint() {
+		add_rewrite_endpoint( 'wishlist', EP_ROOT | EP_PAGES );
+	}
+		
+	function add_wishlist_to_my_account( $items ) {
+		$items['wishlist'] = __( 'Wishlist', 'wpr-addons' );
+		return $items;
+	}
+
+	function remove_deleted_products_from_compare_and_wishlist() {
+		$compare = get_user_meta( get_current_user_id(), 'wpr_compare', true );
+		if ( ! $compare ) {
+			$compare = array();
+		}
+		foreach ( $compare as $key => $value ) {
+			$product = wc_get_product( $value );
+			if ( ! $product || 'trash' === get_post_status( $value ) ) {
+				$compare = array_diff( $compare, array( $value ) );
+			}
+		}
+		update_user_meta( get_current_user_id(), 'wpr_compare', $compare );
+
+		
+		$wishlist = get_user_meta( get_current_user_id(), 'wpr_wishlist', true );
+		if ( ! $wishlist ) {
+			$wishlist = array();
+		}
+		foreach ( $wishlist as $key => $value ) {
+			$product = wc_get_product( $value );
+			if ( ! $product || 'trash' === get_post_status( $value ) ) {
+				$wishlist = array_diff( $wishlist, array( $value ) );
+			}
+		}
+		update_user_meta( get_current_user_id(), 'wpr_wishlist', $wishlist );
+	}
+
+	function register_wishlist_page() {
+		$check_page_exist = get_page_by_title('wpr_wishlist', 'OBJECT', 'page');
+		// Check if the page already exists
+		if(empty($check_page_exist)) {
+			$page_id = wp_insert_post(
+				array(
+				'comment_status' => 'close',
+				'ping_status'    => 'close',
+				'post_author'    => 1,
+				'post_title'     => ucwords('Wishlist'),
+				'post_name'      => strtolower(str_replace(' ', '-', trim('wpr_wishlist'))),
+				'post_status'    => 'publish',
+				'post_type'      => 'page',
+				)
+			);
 		}
 	}
 
