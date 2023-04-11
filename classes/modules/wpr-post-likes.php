@@ -1,5 +1,5 @@
 <?php
-namespace WprAddons\Classes;
+namespace WprAddons\Classes\Modules;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.

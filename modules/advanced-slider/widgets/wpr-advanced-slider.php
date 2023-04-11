@@ -523,6 +523,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 					'h5' => esc_html__( 'H5', 'wpr-addons' ),
 					'h6' => esc_html__( 'H6', 'wpr-addons' )
 				],
+				'default' => 'h2',
 				'condition' => [
 					'slider_show_content' => 'yes',
 				]
@@ -557,6 +558,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 					'h5' => esc_html__( 'H5', 'wpr-addons' ),
 					'h6' => esc_html__( 'H6', 'wpr-addons' )
 				],
+				'default' => 'h3',
 				'condition' => [
 					'slider_show_content' => 'yes',
 				]

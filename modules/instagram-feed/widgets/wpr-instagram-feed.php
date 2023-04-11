@@ -5504,8 +5504,6 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		// 	return $dtF->diff($dtT)->format('%a days, %h hours, %i minutes and %s seconds');
 		// }
 
-		// var_dump(secondsToTime((int) get_option( '_transient_timeout_wpr_instagram_access_token_expires_in'. $this->get_ID(), 0 ) - time()));
-
 		if ( ($token_generation_date <= $compare_date) || (get_option('wpr_instagram_access_token_to_compare'. $this->get_ID()) != $settings['instagram_access_token']) ) {
 				$this->refresh_access_token($access_token);
 		}
