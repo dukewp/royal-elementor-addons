@@ -1848,10 +1848,13 @@ class Wpr_Data_Table extends Widget_Base {
 	protected function wpr_parse_csv_to_table($filename, $settings, $custom_pagination, $sorting_icon ) {
 
 		$handle = fopen($filename, "r");
+		
+		// Determine the delimiter
+		$delimiter = $this->detect_csv_delimiter($filename);
 		//display header row if true
 		echo '<table class="wpr-append-to-scope wpr-data-table">';
 		if ( 'yes' === $settings['display_header'] ) {
-			$csvcontents = fgetcsv($handle);
+			$csvcontents = fgetcsv($handle, 0, $delimiter);
 			echo '<thead><tr class="wpr-table-head-row wpr-table-row">';
 			foreach ($csvcontents as $headercolumn) {
 				echo "<th class='wpr-table-th wpr-table-text'>$headercolumn  $sorting_icon</th>";
@@ -1863,7 +1866,7 @@ class Wpr_Data_Table extends Widget_Base {
 		// displaying contents
 		$countRows = 0;
 		$oddEven = '';
-		while ($csvcontents = fgetcsv($handle)) {
+		while ($csvcontents = fgetcsv($handle, 0, $delimiter)) {
 				$countRows++;
 				$oddEven = $countRows % 2 == 0 ? 'wpr-even' : 'wpr-odd';
 				echo '<tr class="wpr-table-row  '. esc_attr($oddEven) .'">';
@@ -1881,6 +1884,30 @@ class Wpr_Data_Table extends Widget_Base {
 		} 
 
 		fclose($handle);
+	}
+
+	protected function detect_csv_delimiter($filename) {
+		$delimiters = [',', ';'];
+		$counts = [];
+		$maxCount = 0;
+		$bestDelimiter = ',';
+	
+		$handle = fopen($filename, "r");
+		$firstLine = fgets($handle);
+		fclose($handle);
+	
+		foreach ($delimiters as $delimiter) {
+			$counts[$delimiter] = count(str_getcsv($firstLine, $delimiter));
+		}
+	
+		foreach ($counts as $delimiter => $count) {
+			if ($count > $maxCount) {
+				$maxCount = $count;
+				$bestDelimiter = $delimiter;
+			}
+		}
+	
+		return $bestDelimiter;
 	}
 
 	public function render_th_icon($item) {

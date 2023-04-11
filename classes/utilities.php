@@ -559,7 +559,15 @@ class Utilities {
 			$sharing_url = 'https://web.skype.com/share?url='. $args['url'];
 			$network_title = esc_html__( 'Skype', 'wpr-addons' );
 		} elseif ( 'whatsapp' === $args['network'] ) {
-			$sharing_url = 'https://api.whatsapp.com/send?text=*'. $args['title'] .'*%0a'. $args['text'] .'%0a'. $args['url'];
+			if ( 'yes' === $args['show_whatsapp_title'] && 'yes' == $args['show_whatsapp_excerpt'] ) {
+				$sharing_url = 'https://api.whatsapp.com/send?text=*'. $args['title'] .'*%0a'. wp_strip_all_tags($args['text']) .'%0a'. $args['url'];
+			} else if ( 'yes' === $args['show_whatsapp_title'] ) {
+				$sharing_url = 'https://api.whatsapp.com/send?text=*'. $args['title'] .'*%0a'. $args['url'];
+			} else if ( 'yes' === $args['show_whatsapp_excerpt'] ) {
+				$sharing_url = 'https://api.whatsapp.com/send?text=*'. wp_strip_all_tags($args['text']) .'%0a'. $args['url'];
+			} else {
+				$sharing_url = 'https://api.whatsapp.com/send?text='. $args['url'];
+			}
 			$network_title = esc_html__( 'WhatsApp', 'wpr-addons' );
 		} elseif ( 'telegram' === $args['network'] ) {
 			$sharing_url = 'https://telegram.me/share/url?url='. $args['url'] .'&text='. $args['text'];

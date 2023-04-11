@@ -2319,6 +2319,10 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     z-index: 2;
 }
 
+.wpr-magazine-grid-wrap {
+    opacity: 0;
+}
+
 .wpr-grid .wpr-cv-container,
 .wpr-magazine-grid .wpr-cv-container {
     z-index: 1;
@@ -15031,6 +15035,10 @@ dl.variation dd {
  padding: 0;
  -webkit-box-sizing: border-box;
          box-sizing: border-box;
+}
+
+.woocommerce .wpr-product-add-to-cart a.added_to_cart {
+    padding: 0;
 }
 
 .woocommerce div.product .wpr-product-add-to-cart form.cart,
