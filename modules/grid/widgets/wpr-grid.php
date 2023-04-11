@@ -8060,8 +8060,18 @@ class Wpr_Grid extends Widget_Base {
 		if ( 'slider' === $settings['layout_select'] ) {
 			$paged = 1;
 		}
+		
+		if ( empty($settings['query_offset']) ) {
+			$settings[ 'query_offset' ] = 0;
+		}
 
 		$offset = ( $paged - 1 ) * intval($settings['query_posts_per_page']) + intval($settings[ 'query_offset' ]);
+
+		if ( empty($settings['query_posts_per_page']) ) {
+			if ( !('slider' === $settings['layout_select'] && Utilities::is_new_free_user()) ) {
+				$settings['query_posts_per_page'] = 999;
+			}
+		}
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$settings[ 'query_randomize' ] = '';

@@ -1,5 +1,5 @@
 <?php
-namespace WprAddons\Admin\Templates;
+namespace WprAddons\Admin\Templates\Library;
 
 use WprAddons\Plugin;
 

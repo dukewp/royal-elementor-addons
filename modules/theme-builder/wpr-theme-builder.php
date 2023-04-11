@@ -252,6 +252,10 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 				$args = [ 'post_type' => 'post' ];
 				break;
 
+			case 'product_archive/products':
+				$args = ['post_type' => 'product'];
+				break;
+
 			case 'archive/author':
 				$args = [ 'author' => $settings['preview_archive_author'] ];
 				break;

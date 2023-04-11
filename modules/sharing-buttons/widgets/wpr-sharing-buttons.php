@@ -124,6 +124,30 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 
 		$repeater->add_control( 'sharing_custom_label', $this->add_repeater_args_sharing_custom_label() );
 
+		$repeater->add_control(
+			'show_whatsapp_title',
+			[
+				'label' => esc_html__( 'Show Title', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'separator' => 'before',
+				'default' => 'yes',
+				'condition' => [
+					'sharing_icon' => 'fab fa-whatsapp'
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'show_whatsapp_excerpt',
+			[
+				'label' => esc_html__( 'Show Excerpt', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'condition' => [
+					'sharing_icon' => 'fab fa-whatsapp'
+				]
+			]
+		);
+
 		$this->add_control(
 			'sharing_buttons',
 			[
@@ -707,8 +731,13 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 				'url' => esc_url( get_the_permalink() ),
 				'title' => esc_html( get_the_title() ),
 				'text' => esc_html( get_the_excerpt() ),
-				'image' => esc_url( get_the_post_thumbnail_url() ),
+				'image' => esc_url( get_the_post_thumbnail_url() )
 			];
+
+			if ( isset($button['show_whatsapp_excerpt']) && isset($button['show_whatsapp_title']) ) {
+				$args['show_whatsapp_title'] = $button['show_whatsapp_title'];
+				$args['show_whatsapp_excerpt'] = $button['show_whatsapp_excerpt'];
+			}
 
 			echo '<div class="elementor-grid-item">';
 				echo Utilities::get_post_sharing_icon( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
