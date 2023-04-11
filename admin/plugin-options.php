@@ -309,12 +309,12 @@ function wpr_addons_settings_page() {
 			'Product Breadcrumbs' => ['product-breadcrumbs-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-breadcru-widgets-pro#purchasepro', '', 'pro'],
 			'Page My Account' => ['page-my-account-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-myacc-widgets-pro#purchasepro', '', 'pro'],
 			'Woo Category Grid' => ['woo-category-grid-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
-			'Wishlist Button' => ['wishlist-button-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
-			'Mini Wishlist' => ['mini-wishlist-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
-			'Wishlist' => ['wishlist-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
-			'Compare Button' => ['compare-button-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
-			'Mini Compare' => ['mini-compare-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
-			'Compare' => ['compare-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
+			'Wishlist Button' => ['wishlist-button-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-wishlist-btn-widgets-expert#purchasepro', '', 'expert'],
+			'Mini Wishlist' => ['mini-wishlist-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-wishlist-mini-widgets-expert#purchasepro', '', 'expert'],
+			'Wishlist' => ['wishlist-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-wishlist-widgets-expert#purchasepro', '', 'expert'],
+			'Compare Button' => ['compare-button-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-compare-btn-widgets-expert#purchasepro', '', 'expert'],
+			'Mini Compare' => ['mini-compare-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-compare-mini-widgets-expert#purchasepro', '', 'expert'],
+			'Compare' => ['compare-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-compare-widgets-expert#purchasepro', '', 'expert'],
         ];
 
         foreach ( array_merge($woocommerce_builder_modules, $premium_woo_modules) as $title => $data ) {
@@ -325,7 +325,13 @@ function wpr_addons_settings_page() {
             $class = ('pro' === $data[3] && !wpr_fs()->can_use_premium_code()) ? 'wpr-pro-element' : '';
             $default_value = class_exists( 'WooCommerce' ) ? 'on' : 'off';
 
-            if ( 'wpr-pro-element' === $class ) {
+            if ( 'pro' === $data[3] && !wpr_fs()->can_use_premium_code() ) {
+                $class = 'wpr-pro-element';
+            } elseif ( 'expert' === $data[3] && !wpr_fs()->is_plan( 'expert' ) ) {
+                $class = 'wpr-expert-element';
+            }
+
+            if ( 'wpr-pro-element' === $class || 'wpr-expert-element' === $class ) {
                 $default_value = 'off';
                 $reff = '';
             }

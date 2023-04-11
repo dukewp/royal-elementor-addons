@@ -512,7 +512,8 @@
   letter-spacing: 1px;
 }
 
-.wpr-pro-element:before {
+.wpr-pro-element:before,
+.wpr-expert-element:before {
   content: 'PRO';
   position: absolute;
   top: -10px;
@@ -527,7 +528,12 @@
   letter-spacing: 1px;
 }
 
-.wpr-pro-element > a {
+.wpr-expert-element:before {
+  content: 'EXPERT';
+}
+
+.wpr-pro-element > a,
+.wpr-expert-element > a {
   display: block;
   position: absolute;
   top: 0;

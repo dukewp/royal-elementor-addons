@@ -848,9 +848,10 @@ class Plugin {
 	}
 
     public function promote_premium_widgets($config) {
+		$config['promotionWidgets'] = [];
+		$category = Utilities::is_theme_builder_template() ? 'wpr-woocommerce-builder-widgets' : 'wpr-premium-widgets';
+
 		if ( ! wpr_fs()->can_use_premium_code() ) {
-			$category = Utilities::is_theme_builder_template() ? 'wpr-woocommerce-builder-widgets' : 'wpr-premium-widgets';
-			
 			$config['promotionWidgets'] = [
 				[
 					'name' => 'wpr-woo-category-grid',
@@ -876,6 +877,11 @@ class Plugin {
 					'icon' => 'wpr-icon eicon-product-breadcrumbs',
 					'categories' => '["'. $category .'"]',
 				],
+			];
+		}
+		
+		if ( !wpr_fs()->is_plan( 'expert' ) ) {
+			$expert_widgets = [
 				[
 					'name' => 'wpr-wishlist-button',
 					'title' => __('Wishlist Button', 'wpr-addons'),
@@ -913,6 +919,8 @@ class Plugin {
 					'categories' => '["'. $category .'"]',
 				],
 			];
+
+			$config['promotionWidgets'] = array_merge( $config['promotionWidgets'], $expert_widgets );
 		}
 
         return $config;
