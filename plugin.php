@@ -125,6 +125,13 @@ class Plugin {
 		// Mega Menu
 		require WPR_ADDONS_PATH . 'admin/mega-menu.php';
 
+
+		// Form Builder
+		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-actions-status.php';
+		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-send-email.php';
+		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-submissions-cpt.php';
+		require WPR_ADDONS_PATH . 'admin/form-builder-submissions.php';
+
 		// Admin Files
 		if ( is_admin() ) {
 			// Plugin Updaate Notice
@@ -223,6 +230,10 @@ class Plugin {
 	public function register_ajax_hooks() {
         add_action( 'wp_ajax_mailchimp_subscribe', [new Utilities, 'ajax_mailchimp_subscribe'] );
         add_action( 'wp_ajax_nopriv_mailchimp_subscribe', [new Utilities, 'ajax_mailchimp_subscribe'] );
+
+		// For form builder
+        add_action( 'wp_ajax_wpr_form_builder_mailchimp', [new Utilities, 'ajax_wpr_form_builder_mailchimp'] );
+        add_action( 'wp_ajax_nopriv_wpr_form_builder_mailchimp', [new Utilities, 'ajax_wpr_form_builder_mailchimp'] );
 	}
 
 	public function mega_menu_ajax_loading() {
@@ -495,7 +506,8 @@ class Plugin {
 				'comparePageURL' => get_permalink(get_option('wpr_compare_page')),
 				'wishlistPageID' => get_option('wpr_wishlist_page'),
 				'wishlistPageURL' => get_permalink(get_option('wpr_wishlist_page')),
-				'chooseQuantityText' => esc_html__('Please select the required number of items.')
+				'chooseQuantityText' => esc_html__('Please select the required number of items.'),
+				'site_key' => get_option('wpr_recaptcha_v3_site_key')
 			]
 		);
 	}
@@ -905,8 +917,15 @@ class Plugin {
 
         return $config;
     }
+	
+	public function wpr_enqueue_recaptcha_script() {
+		$site_key = get_option('wpr_recaptcha_v3_site_key');
+		wp_enqueue_script('google-recaptcha', 'https://www.google.com/recaptcha/api.js?render=' . $site_key, array(), null, true);
+	}
 
 	protected function add_actions() {
+		add_action('wp_enqueue_scripts', [$this, 'wpr_enqueue_recaptcha_script']);
+
 		// Register Widgets
 		add_action( 'elementor/init', [ $this, 'elementor_init' ] );
 

@@ -99,4 +99,4 @@ if ( ! defined( 'ABSPATH' ) ) {
     }
  }
 
- new WPR_Ajax_Search;
+ new WPR_Ajax_Search();

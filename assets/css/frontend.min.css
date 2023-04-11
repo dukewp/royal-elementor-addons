@@ -3566,6 +3566,10 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     font-weight: 600 !important;
 }
 
+.wpr-sale-dates {
+    display: inline-block;
+}
+
 /* Defaults */
 .elementor-widget-wpr-grid .wpr-grid-media-hover-bg,
 .elementor-widget-wpr-media-grid .wpr-grid-media-hover-bg,
@@ -15871,6 +15875,7 @@ dl.variation dd {
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
+    padding: 0;
 }
 
 .wpr-product-add-to-cart  a.added_to_cart  {
@@ -17503,6 +17508,298 @@ dl.variation dd {
 }
 
 .wpr-offcanvas-wrap-active {
+}
+
+/*--------------------------------------------------------------
+== Form Builder
+--------------------------------------------------------------*/
+
+.wpr-form-fields-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.wpr-form-fields-wrap.wpr-labels-above .wpr-field-group .wpr-field-sub-group, 
+.wpr-form-fields-wrap.wpr-labels-above .wpr-field-group>.wpr-select-wrap, 
+.wpr-form-fields-wrap.wpr-labels-above .wpr-field-group>input, 
+.wpr-form-fields-wrap.wpr-labels-above .wpr-field-group>textarea,
+.wpr-field-group .wpr-button {
+    flex-basis: 100%;
+    max-width: 100%;
+}
+
+.wpr-form-fields-wrap.wpr-labels-inline > .wpr-field-group > input,
+.wpr-form-fields-wrap.wpr-labels-inline > .wpr-field-group .wpr-select-wrap {
+    flex-grow: 1;
+}
+
+.wpr-field-group {
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.wpr-field-group.wpr-form-field-type-submit {
+  align-items: flex-end;
+}
+
+.wpr-field-group .wpr-form-field-textual {
+  width: 100%;
+  max-width: 100%;
+  border: 1px solid #818a91;
+  background-color: transparent;
+  color: #373a3c;
+  vertical-align: middle;
+  flex-grow: 1;
+}
+
+.wpr-field-group .wpr-form-field-textual:focus {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1) inset;
+  outline: 0;
+}
+
+.wpr-field-group .wpr-form-field-textual::-webkit-input-placeholder {
+  color: inherit;
+  font-family: inherit;
+  opacity: 0.6;
+}
+
+.wpr-field-group .wpr-form-field-textual:-ms-input-placeholder {
+  color: inherit;
+  font-family: inherit;
+  opacity: 0.6;
+}
+
+.wpr-field-group .wpr-form-field-textual::-moz-placeholder {
+  color: inherit;
+  font-family: inherit;
+  opacity: 0.6;
+}
+
+.wpr-field-group .wpr-form-field-textual:-moz-placeholder {
+  color: inherit;
+  font-family: inherit;
+  opacity: 0.6;
+}
+
+.wpr-field-group .wpr-form-field-textual::placeholder {
+  color: inherit;
+  font-family: inherit;
+  opacity: 0.6;
+}
+
+.wpr-field-group .wpr-select-wrap {
+  display: flex;
+  position: relative;
+  width: 100%;
+}
+
+.wpr-field-group .wpr-select-wrap select {
+  appearance: none;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+  font-style: inherit;
+  text-transform: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  flex-basis: 100%;
+  padding-right: 20px;
+}
+
+.wpr-field-group .wpr-select-wrap:before {
+  content: "\e92a";
+  font-family: "eicons";
+  font-size: 15px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  pointer-events: none;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+.wpr-field-group.wpr-form-field-type-select-multiple .wpr-select-wrap:before {
+  content: "";
+}
+
+.wpr-field-sub-group {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.wpr-form-field-option {
+    display: inline-flex;
+    align-items: center;
+}
+
+.wpr-field-sub-group .wpr-form-field-option label {
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.wpr-field-sub-group.wpr-inline-sub-group .wpr-form-field-option {
+  padding-right: 10px;
+}
+
+.wpr-field-sub-group:not(.wpr-inline-sub-group) .wpr-form-field-option {
+  flex-basis: 100%;
+}
+
+.wpr-form-field-type-checkbox .wpr-field-sub-group .wpr-form-field-option input,
+.wpr-form-field-type-checkbox .wpr-field-sub-group .wpr-form-field-option label,
+.wpr-form-field-type-radio .wpr-field-sub-group .wpr-form-field-option input,
+.wpr-form-field-type-radio .wpr-field-sub-group .wpr-form-field-option label,
+.wpr-form-field-type-acceptance .wpr-field-sub-group .wpr-form-field-option input,
+.wpr-form-field-type-acceptance .wpr-field-sub-group .wpr-form-field-option label {
+  display: inline;
+}
+
+.wpr-form-field-type-hidden {
+  display: none;
+}
+
+.wpr-form-field-type-html {
+  display: inline-block;
+}
+
+.wpr-form-field-type-recaptcha_v3 .wpr-form-field-label {
+  display: none;
+}
+
+.wpr-form-field-type-recaptcha_v3 .grecaptcha-badge {
+  z-index: 1;
+}
+
+.wpr-required-mark .wpr-form-field-label:after {
+    content: "*";
+    color: red;
+    padding-left: 0.2em;
+}
+.wpr-column {
+    position: relative;
+    min-height: 1px;
+    display: flex;
+}
+
+.wpr-step-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.wpr-step-content-layout-vertical .wpr-step-wrap {
+    align-items: flex-start;
+}
+
+/* Hide all steps by default: */
+.wpr-step-tab {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.wpr-step-tab-hidden {
+    display: none;
+}
+  
+/* Make circles that indicate the steps of the form: */
+.wpr-step {
+    border: none;  
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.5;
+}
+
+.wpr-step-content-layout-vertical .wpr-step {
+    flex-direction: column;
+}
+
+.wpr-separator-off .wpr-step {
+    flex: 1;
+}
+
+.wpr-step.wpr-step-active {
+    opacity: 1;
+}
+
+.wpr-step-content {
+    width: var(--wpr-steps-indicator-padding, 30px);
+    height: var(--wpr-steps-indicator-padding, 30px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* line-height: 1; */
+}
+
+.wpr-step-content-layout-vertical .wpr-step-label {
+    width: 100%;
+}
+
+.wpr-step-main-label,
+.wpr-step-sub-label {
+    display: block;
+}
+
+.wpr-form-field-type-step {
+    display: none;
+}
+
+.wpr-form-field-type-hidden {
+    display: none;
+}
+
+.wpr-form-field-type-recaptcha-v3 {
+    display: none;
+}
+
+.wpr-stp-btns-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.wpr-step-prev,
+.wpr-step-next,
+.wpr-step-sep,
+.wpr-stp-btns-wrap .wpr-button {
+    flex: 1;
+}
+
+.wpr-step-sep:last-of-type {
+    display: none;
+}
+
+.wpr-step-content-layout-vertical .wpr-step-sep {
+    background-color: lightgrey;
+    height: var(--wpr-steps-divider-width, 1px);
+    margin-top: calc(var(--wpr-steps-indicator-padding, 30px) / 2 - var(--wpr-steps-divider-width, 1px) / 2 + var(--wpr-steps-padding));
+    /* top: calc(var(--wpr-steps-indicator-padding, 30px) / 2 - var(--wpr-steps-divider-width, 1px) / 2); */
+    /* transform: translateY(-50%); */
+}
+
+.wpr-step-content-layout-horizontal .wpr-step-sep {
+    background-color: lightgrey;
+    height: var(--wpr-steps-divider-width, 1px);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.wpr-form .wpr-double-bounce {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.wpr-loader-hidden {
+    display: none !important;
+}
+
+.wpr-form .wpr-double-bounce .wpr-child {
+    background-color: white;
 }
 
 /* BADGE ANIMATION */

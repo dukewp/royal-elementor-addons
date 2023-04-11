@@ -65,6 +65,7 @@ function wpr_register_addons_settings() {
     // Integrations
     register_setting( 'wpr-settings', 'wpr_google_map_api_key' );
     register_setting( 'wpr-settings', 'wpr_mailchimp_api_key' );
+    register_setting( 'wpr-settings', 'wpr_recaptcha_v3_site_key' );
 
     // Lightbox
     register_setting( 'wpr-settings', 'wpr_lb_bg_color' );
@@ -485,6 +486,16 @@ function wpr_addons_settings_page() {
                 </h4>
 
                 <input type="text" name="wpr_mailchimp_api_key" id="wpr_mailchimp_api_key" value="<?php echo esc_attr(get_option('wpr_mailchimp_api_key')); ?>">
+            </div>
+
+            <div class="wpr-setting">
+                <h4>
+                    <span><?php esc_html_e( 'reCAPTCHA Site Key', 'wpr-addons' ); ?></span>
+                    <br>
+                    <a href="https://www.google.com/recaptcha/admin/create" target="_blank"><?php esc_html_e( 'How to get reCAPTCHA Site Key?', 'wpr-addons' ); ?></a>
+                </h4>
+
+                <input type="text" name="wpr_recaptcha_v3_site_key" id="wpr_recaptcha_v3_site_key" value="<?php echo esc_attr(get_option('wpr_recaptcha_v3_site_key')); ?>">
             </div>
         </div>
 
@@ -1273,6 +1284,8 @@ function wpr_addons_settings_page() {
 
 // Add Support Sub Menu item that will redirect to wp.org
 function wpr_addons_add_support_menu() {
+    // GOGA - ZUKA
+    add_submenu_page( 'wpr-addons',  Utilities::get_plugin_name(), Utilities::get_plugin_name(), 'manage_options', 'wpr-addons', 'wpr_addons_settings_page', 1 );
     add_submenu_page( 'wpr-addons', 'Support', 'Support', 'manage_options', 'wpr-support', 'wpr_addons_support_page', 99 );
 }
 add_action( 'admin_menu', 'wpr_addons_add_support_menu', 99 );
@@ -1297,6 +1310,65 @@ function wpr_addons_add_upgrade_menu() {
     add_submenu_page( 'wpr-addons', 'Upgrade', 'Upgrade', 'manage_options', 'wpr-upgrade', 'wpr_addons_upgrade_page', 99 );
 }
 add_action( 'admin_menu', 'wpr_addons_add_upgrade_menu', 99 );
+
+// CPT Submissions page
+// function wpr_display_form_submissions() {
+//     $form_submissions = get_posts( array(
+//         'post_type' => 'wpr_submissions',
+//         'posts_per_page' => -1
+//     ));
+
+//     echo '<h2>Submissions</h2>';
+//     echo '<ul>';
+
+//     foreach ( $form_submissions as $form_submission ) {
+//         echo '<li>' . $form_submission->post_content . '</li>';
+//     }
+
+//     echo '</ul>';
+// }
+
+// function wpr_add_form_submissions_page() {
+//     add_submenu_page(
+//         'wpr-addons',
+//         'Submissions',
+//         'Submissions',
+//         'manage_options',
+//         'wpr-submissions',
+//         'wpr_display_form_submissions',
+// 		99
+//     );
+// }
+
+// add_action( 'admin_menu', 'wpr_add_form_submissions_page', 99 );
+
+function reorder_wpr_submissions_submenu() {
+    global $submenu;
+
+    $parent_slug = 'wpr-addons';
+    $submenu_slug = 'edit.php?post_type=wpr_submissions';
+    $desired_position = 7; // Change this to adjust the position of the submenu item
+
+    if (isset($submenu[$parent_slug])) {
+        $submenu_items = $submenu[$parent_slug];
+        $found_key = null;
+
+        foreach ($submenu_items as $key => $item) {
+            if ($item[2] === $submenu_slug) {
+                $found_key = $key;
+                break;
+            }
+        }
+
+        if ($found_key !== null) {
+            $item_to_move = $submenu[$parent_slug][$found_key];
+            unset($submenu[$parent_slug][$found_key]);
+            array_splice($submenu[$parent_slug], $desired_position - 1, 0, [$item_to_move]);
+        }
+    }
+}
+
+add_action('admin_menu', 'reorder_wpr_submissions_submenu', 999);
 
 function wpr_addons_upgrade_page() {}
 
