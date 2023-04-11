@@ -744,6 +744,7 @@
           flex-direction: column;
   max-width: 1004px;
   margin: 25px;
+  /* overflow-x: scroll; */
 }
 
 .wpr-free-vs-pro-search-wrap {
@@ -854,7 +855,8 @@
 }
 
 .wpr-free-widgets,
-.wpr-pro-widgets {
+.wpr-pro-widgets,
+.wpr-expert-widgets {
   -ms-flex-negative: 0;
       flex-shrink: 0;
 }
@@ -864,17 +866,25 @@
   border-bottom-color: #9586FE;
 }
 
-.wpr-pro-widgets header h3 {
+.wpr-expert-widgets header {
+  background: #f44;
+  border-bottom-color: #FF8B8B;
+}
+
+.wpr-pro-widgets header h3,
+.wpr-expert-widgets header h3 {
   color: #fff;
   font-weight: 500;
 }
 
-.wpr-pro-widgets header .dashicons {
+.wpr-pro-widgets header .dashicons,
+.wpr-expert-widgets header .dashicons {
   display: none;
   color: #fff;
 }
 
-.wpr-pro-widgets header span {
+.wpr-pro-widgets header span,
+.wpr-expert-widgets header span {
   color: #FFFFFF;
 }
 
@@ -890,7 +900,7 @@
 }
 
 .wpr-free-widgets {
-  width: 400px;
+  width: 33%;
   border: 1px solid #E8E8E8;
   border-right: 0;
   border-radius: 5px 0 0 5px;
@@ -901,8 +911,14 @@
 }
 
 .wpr-pro-widgets {
-  width: 600px;
+  width: 33%;
   border: 1px solid #7865FF;
+  border-left: 0;
+}
+
+.wpr-expert-widgets {
+  width: 33%;
+  border: 1px solid #f44;
   border-left: 0;
   border-radius: 0 5px 5px 0;
 }
@@ -910,6 +926,15 @@
 .wpr-pro-widgets > ul > li {
   color: #fff;
   background: #7865FF;
+}
+
+.wpr-expert-widgets > ul > li {
+  color: #fff;
+  background: #FF5959;
+}
+
+.wpr-expert-widgets > ul > li:nth-child(2n) {
+  background-color: #f44;
 }
 
 .wpr-pro-widgets > ul > li > span {

@@ -1106,6 +1106,20 @@ function wpr_addons_settings_page() {
                     </li>
                 </ul>
             </div>
+
+            <div class="wpr-expert-widgets">
+                <header>
+                    <span class="dashicons dashicons-star-filled"></span>
+                    <h3><?php echo esc_html__( 'Expert Version', 'wpr-addons' ); ?></h3>
+                    <span><?php echo esc_html__( 'Advanced Functionality', 'wpr-addons' ); ?></span>
+                </header>
+                <ul>
+                    <li>Dynamic Tags</li>
+                    <li>Advanced Custom Fields</li>
+                    <li>Advanced Blablalba</li>
+                    <li>Advanced Shmla Shmla</li>
+                </ul>
+            </div>
         </div>
 
         <div class="wpr-feature-not-found">
