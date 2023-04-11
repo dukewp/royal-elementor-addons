@@ -1048,7 +1048,6 @@ pre.xdebug-var-dump {
   left: 300px;
 }
 
-
 /*--------------------------------------------------------------
 == Authorize Instagram
 --------------------------------------------------------------*/
@@ -1085,4 +1084,12 @@ pre.xdebug-var-dump {
 
 .elementor-control-instagram_access_token_authorize a:hover {
 	color: #fff;
+}
+
+/*--------------------------------------------------------------
+== Form Builder
+--------------------------------------------------------------*/
+
+.wpr-step-editor-bg {
+	background: red !important;
 }

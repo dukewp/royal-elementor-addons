@@ -5010,6 +5010,10 @@ class Wpr_Magazine_Grid extends Widget_Base {
 				$query_posts_per_page = 4 * intval($settings['layout_rows_number']);
 			}
 		}
+		
+		if ( empty($settings['query_offset']) ) {
+			$settings[ 'query_offset' ] = 0;
+		}
 
 		$offset = ( $paged - 1 ) * $query_posts_per_page + $settings[ 'query_offset' ];
 		$query_order_by = '' != $settings['query_randomize'] ? $settings['query_randomize'] : $settings['order_posts'];

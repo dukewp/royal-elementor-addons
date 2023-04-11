@@ -6523,6 +6523,10 @@ class Wpr_Media_Grid extends Widget_Base {
 		} else {
 			$paged = 1;
 		}
+		
+		if ( empty($settings['query_offset']) ) {
+			$settings[ 'query_offset' ] = 0;
+		}
 
 		$offset = ( $paged - 1 ) * $settings['query_posts_per_page'] + $settings[ 'query_offset' ];
 

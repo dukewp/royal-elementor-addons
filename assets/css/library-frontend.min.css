@@ -395,6 +395,19 @@
     width: 120px;
 }
 
+.wpr-tplib-filters-list {
+    right: 0;
+    width: 100%;
+}
+
+.wpr-tplib-filters-list ul {
+    flex-direction: column
+}
+
+.wpr-tplib-filters-list ul li {
+    width: 100%;
+}
+
 .wpr-tplib-price-list {
     width: 120px;
     padding: 10px;

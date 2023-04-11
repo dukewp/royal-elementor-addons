@@ -69,9 +69,7 @@ class Utilities {
 			'Template' => ['elementor-template', '', '', ''],
 			'Reading Progress Bar' => ['reading-progress-bar', 'https://royal-elementor-addons.com/elementor-reading-progress-bar-widget/', '', ''],
 			'Twitter Feed' => ['twitter-feed', 'https://royal-elementor-addons.com/elementor-twitter-feed-widget/', '', 'new'],
-			// 'Facebook Feed' => ['facebook-feed', '', '', 'new'],
-			// https://royal-elementor-addons.com/elementor-offcanvas-widget/
-			// 'Random Image' => ['random-image', '', ''],
+			'Form Builder' => ['Form Builder', '', '', 'new']
 		];
 	}
 
@@ -348,17 +346,15 @@ class Utilities {
 
 		// Find a Custom Condition
 		foreach( $data as $id => $conditions ) {
-
 			if ( in_array( $page .'/'. $post_id, $conditions) ) {
-
 				$template = $id;
-			} elseif ( in_array( $page .'/all', $conditions) ) {
+			} elseif ( in_array( $page .'/all', $conditions) && !in_array( $page .'/'. $post_id, $conditions) ) {
 				$template = $id;
-			} elseif ( in_array( $page, $conditions) ) {
+			} elseif ( in_array( $page, $conditions)  && !in_array( $page .'/'. $post_id, $conditions)  ) {
 				$template = $id;
 			}
 		}
-
+		
 		// If a Custom NOT Found, use Global
 		if ( is_null($template) ) {
 			foreach( $data as $id => $conditions ) {
@@ -376,10 +372,12 @@ class Utilities {
 		]);
 		
 		if ( ! $templates_loop->have_posts() ) {
-			return null;
+			$template = null;
 		} else {
-			return $template;
+			$template = $template;
 		}
+
+		return $template;
 	}
 
 
@@ -561,7 +559,15 @@ class Utilities {
 			$sharing_url = 'https://web.skype.com/share?url='. $args['url'];
 			$network_title = esc_html__( 'Skype', 'wpr-addons' );
 		} elseif ( 'whatsapp' === $args['network'] ) {
-			$sharing_url = 'https://api.whatsapp.com/send?text=*'. $args['title'] .'*%0a'. $args['text'] .'%0a'. $args['url'];
+			if ( 'yes' === $args['show_whatsapp_title'] && 'yes' == $args['show_whatsapp_excerpt'] ) {
+				$sharing_url = 'https://api.whatsapp.com/send?text=*'. $args['title'] .'*%0a'. wp_strip_all_tags($args['text']) .'%0a'. $args['url'];
+			} else if ( 'yes' === $args['show_whatsapp_title'] ) {
+				$sharing_url = 'https://api.whatsapp.com/send?text=*'. $args['title'] .'*%0a'. $args['url'];
+			} else if ( 'yes' === $args['show_whatsapp_excerpt'] ) {
+				$sharing_url = 'https://api.whatsapp.com/send?text=*'. wp_strip_all_tags($args['text']) .'%0a'. $args['url'];
+			} else {
+				$sharing_url = 'https://api.whatsapp.com/send?text='. $args['url'];
+			}
 			$network_title = esc_html__( 'WhatsApp', 'wpr-addons' );
 		} elseif ( 'telegram' === $args['network'] ) {
 			$sharing_url = 'https://telegram.me/share/url?url='. $args['url'] .'&text='. $args['text'];
@@ -762,6 +768,88 @@ class Utilities {
 	/**
 	** Mailchimp AJAX Subscribe
 	*/
+	public static function ajax_wpr_form_builder_mailchimp() {
+		// API Key
+        $api_key = get_option('wpr_mailchimp_api_key') ? get_option('wpr_mailchimp_api_key') : '';
+
+        $api_key_sufix = explode( '-', $api_key )[1];
+
+        // // List ID
+        $list_id = isset($_POST['listId']) ? sanitize_text_field(wp_unslash($_POST['listId'])) : '';
+
+        // // Get Available Fileds (PHPCS - fields are sanitized later on input)
+		$fields = isset($_POST['form_data']) ? $_POST['form_data'] : []; // phpcs:ignore
+        // wp_parse_str( $available_fields, $fields );
+			// 'ADDRESS' => [
+			// 	'addr1' => !empty ( $fields['address_field'] ) ? sanitize_text_field($fields['address_field']) : '',
+			// 	'addr2' => '', // You can add a second address line if needed
+			// 	'city' => '',  // Add city information
+			// 	'state' => '', // Add state information
+			// 	'zip' => '',   // Add zip code information
+			// 	'country' => '',
+			// ],
+
+			// 'id' => $fields['group_id'],
+			// 'groups' => $fields['group_name']
+
+        // Merge Additional Fields
+        $merge_fields = [
+            'FNAME' => !empty( $fields['first_name_field'] ) ? sanitize_text_field($fields['first_name_field']) : '',
+            'LNAME' => !empty( $fields['last_name_field'] ) ? sanitize_text_field($fields['last_name_field']) : '',
+			'PHONE' => !empty ( $fields['phone_field'] ) ? sanitize_text_field($fields['phone_field']) : '',
+			'ADDRESS' => !empty ( $fields['address_field'] ) ? sanitize_text_field($fields['address_field']) : '',
+			'BIRTHDAY' => !empty ( $fields['birthday_field'] ) ? sanitize_text_field($fields['birthday_field']) : '',
+			// 'GROUPS' => [
+			// 	[
+			// 		'id' =>'923892178f',
+			// 		'groups' => ['Reading']
+			// 	]
+			// ]
+		];
+
+        // API URL
+        $api_url = 'https://'. $api_key_sufix .'.api.mailchimp.com/3.0/lists/'. $list_id .'/members/'. md5(strtolower(sanitize_text_field($fields['email_field'])));
+
+        // API Args
+        $api_args = [
+			'method' => 'PUT',
+			'headers' => [
+				'Content-Type' => 'application/json',
+				'Authorization' => 'apikey '. $api_key,
+			],
+			'body' => json_encode([
+				'email_address' => sanitize_text_field($fields[ 'email_field' ]),
+				'status' => 'subscribed',
+				'merge_fields' => $merge_fields,
+			]),
+        ];
+
+        // Send Request
+        $request = wp_remote_post( $api_url, $api_args );
+
+		if ( ! is_wp_error($request) ) {
+			$request = json_decode( wp_remote_retrieve_body($request) );
+
+			// Set Status
+			if ( ! empty($request) ) {
+				if ($request->status == 'subscribed') {
+
+				wp_send_json_success(array(
+					'action' => 'wpr_form_builder_mailchimp',
+					'status' => 'subscribed'
+				));
+
+				} else {
+					wp_send_json([ 'status' => $request->title ]);
+				}
+			}
+		}
+	}
+
+
+	/**
+	** Mailchimp AJAX Subscribe
+	*/
 	public static function ajax_mailchimp_subscribe() {
 		// API Key
         $api_key = isset($_POST['apiKey']) ? sanitize_key($_POST['apiKey']) : '';
@@ -842,6 +930,39 @@ class Utilities {
 
 			return $mailchimp_list;
 		}
+	}
+
+	// Needs further logic
+	public static function get_mailchimp_groups() {
+		$groups_array = ['def' => 'Select Group'];
+		foreach (self::get_mailchimp_lists() as $key => $value ) {
+			if ( 'def' === $key ) {
+				continue;
+			}
+			$audience = $key; // How to get settin
+			$api_key = get_option('wpr_mailchimp_api_key');
+			$url = 'https://'. substr( $api_key, strpos( $api_key, '-' ) + 1 ) .'.api.mailchimp.com/3.0/lists/'.$audience.'/interest-categories';
+			$args = [ 'headers' => [ 'Authorization' => 'Basic ' . base64_encode( 'user:'. $api_key ) ] ];
+			
+			$response = wp_remote_get( $url, $args );
+	
+			foreach ( json_decode($response['body'])->categories as $key => $value ) {
+				$group_name = $value->title;
+				$group_id = $value->id;
+				$url = 'https://'. substr( $api_key, strpos( $api_key, '-' ) + 1 ) .'.api.mailchimp.com/3.0/lists/'.$audience.'/interest-categories/'. $value->id .'/interests';
+				$args = [ 'headers' => [ 'Authorization' => 'Basic ' . base64_encode( 'user:'. $api_key ) ] ];
+				
+				$response = wp_remote_get( $url, $args );
+				
+				foreach (json_decode($response['body'])->interests as $key => $value ) {
+					// var_dump($group_name, $group_id);
+					// var_dump($group_name, $group_id, $value->id, $value->name);
+					$groups_array[$value->id] = $value->name;
+				}
+			}
+		}
+
+		return $groups_array;
 	}
 
 	/**
@@ -1023,6 +1144,51 @@ class Utilities {
 		);
 
 		$module->end_controls_section();
+	}
+	
+	// Add two new functions for handling cookies
+	public static function get_wishlist_from_cookie() {
+		if (isset($_COOKIE['wpr_wishlist'])) {
+			return json_decode(stripslashes($_COOKIE['wpr_wishlist']), true);
+		}
+		return array();
+	}
+
+	// Client IP for form submission
+	public static function get_client_ip() {
+		$server_ip_keys = [
+			'HTTP_CLIENT_IP',
+			'HTTP_X_FORWARDED_FOR',
+			'HTTP_X_FORWARDED',
+			'HTTP_X_CLUSTER_CLIENT_IP',
+			'HTTP_FORWARDED_FOR',
+			'HTTP_FORWARDED',
+			'REMOTE_ADDR',
+		];
+
+		foreach ( $server_ip_keys as $key ) {
+			$value = self::_unstable_get_super_global_value( $_SERVER, $key );
+			if ( $value && filter_var( $value, FILTER_VALIDATE_IP ) ) {
+				return $value;
+			}
+		}
+
+		// Fallback local ip.
+		return '127.0.0.1';
+	}
+
+	// For get_client_ip
+	public static function _unstable_get_super_global_value( $super_global, $key ) {
+		if ( ! isset( $super_global[ $key ] ) ) {
+			return null;
+		}
+
+		if ( $_FILES === $super_global ) {
+			$super_global[ $key ]['name'] = sanitize_file_name( $super_global[ $key ]['name'] );
+			return $super_global[ $key ];
+		}
+
+		return wp_kses_post_deep( wp_unslash( $super_global[ $key ] ) );
 	}
 
 	/**

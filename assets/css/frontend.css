@@ -2239,16 +2239,6 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     opacity: 0;
 } */
 
-/* GOGA - saidan movitane es opacity linearebi xuivoznaet */
-.wpr-grid-image-wrap img {
-    opacity: 1;
-    -webkit-transition: opacity 1s linear;
-    -o-transition: opacity 1s linear;
-    transition: opacity 1s linear;
-    display: block;
-    width: 100%;
-}
-
 .wpr-hide-items-before-append {
     opacity: 0;
 }

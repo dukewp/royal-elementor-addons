@@ -4,7 +4,7 @@
  * Description: The only plugin you need for Elementor page builder.
  * Plugin URI: https://royal-elementor-addons.com/
  * Author: WP Royal
- * Version: 1.3.65
+ * Version: 1.3.66
  * License: GPLv3
  * Author URI: https://royal-elementor-addons.com/
  * Elementor tested up to: 3.11.2
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'WPR_ADDONS_VERSION', '1.3.65' );
+define( 'WPR_ADDONS_VERSION', '1.3.66' );
 
 define( 'WPR_ADDONS__FILE__', __FILE__ );
 define( 'WPR_ADDONS_PLUGIN_BASE', plugin_basename( WPR_ADDONS__FILE__ ) );
@@ -237,3 +237,31 @@ function royal_elementor_addons_deactivate() {
 
 // hook already exists with template kits notice
 register_deactivation_hook( __FILE__, 'royal_elementor_addons_deactivate' );
+
+// disable Cloudflare Rocket Loader for certain scripts
+
+// add_filter( 'script_loader_tag', 'cfrocketloader_ignore_script', 10, 3 );
+
+// function cfrocketloader_ignore_script( $tag, $handle, $src )
+// {
+// 	var_dump($handle);
+// 	// if ( 'abc' === $handle || 'lmn' === $handle || 'xyz' === $handle ) 
+// 	// {
+// 	// 	return str_replace( "src='", "data-cfasync='false' src='", $tag );
+// 	// }
+// 	// else
+// 	// {
+// 	// 	return $tag;
+// 	// }
+// }
+
+
+
+function wpse_script_loader_tag( $tag, $handle ) {
+    if ( 'jquery-core' !== $handle && 'jquery-migrate' !== $handle && 'wpr-addons-js' !== $handle ) {
+        return $tag;
+    }
+
+    return str_replace( ' src', ' data-cfasync="false" src', $tag );
+}
+add_filter( 'script_loader_tag', 'wpse_script_loader_tag', 10, 2 );

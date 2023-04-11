@@ -1,7 +1,7 @@
 <?php
-namespace WprAddons\Admin\Templates;
+namespace WprAddons\Admin\Templates\Library;
 use WprAddons\Classes\Utilities;
-use WprAddons\Admin\Templates\WPR_Templates_Data;
+use WprAddons\Admin\Templates\Library\WPR_Templates_Data;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.

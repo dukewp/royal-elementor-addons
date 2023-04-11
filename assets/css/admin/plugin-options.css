@@ -335,6 +335,28 @@
   width: 100%;
 }
 
+.wpr-woo-template-info.wpr-compare-wishlist {
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.wpr-compare-wishlist label {
+  display: block !important;
+  width: auto !important;
+  background: none !important;
+  font-size: 1em !important;
+  font-weight: 600 !important;
+  margin: 0;
+}
+
+.wpr-compare-wishlist select {
+  display: block !important;
+  min-width: 100% !important;  
+  border: 1px solid #e8e8e8;
+  width: 100%;
+  padding: 5px 15px;
+}
+
 .wpr-woo-template-info {
   display: -webkit-box;
   display: -ms-flexbox;

@@ -8,7 +8,7 @@ use WprAddons\Admin\Includes\WPR_Templates_Loop;
 use WprAddonsPro\Admin\Wpr_White_Label;
 use WprAddonsPro\Classes\Pro_Modules;
 use WprAddons\Classes\Utilities;
-use WprAddons\Admin\Templates\WPR_Templates_Data;
+use WprAddons\Admin\Templates\Library\WPR_Templates_Data;
 
 // Register Menus
 function wpr_addons_add_admin_menu() {
@@ -59,10 +59,13 @@ function wpr_register_addons_settings() {
     register_setting( 'wpr-settings', 'wpr_woo_shop_ppp' );
     register_setting( 'wpr-settings', 'wpr_woo_shop_cat_ppp' );
     register_setting( 'wpr-settings', 'wpr_woo_shop_tag_ppp' );
+    register_setting( 'wpr-settings', 'wpr_compare_page' );
+    register_setting( 'wpr-settings', 'wpr_wishlist_page' );
 
     // Integrations
     register_setting( 'wpr-settings', 'wpr_google_map_api_key' );
     register_setting( 'wpr-settings', 'wpr_mailchimp_api_key' );
+    register_setting( 'wpr-settings', 'wpr_recaptcha_v3_site_key' );
 
     // Lightbox
     register_setting( 'wpr-settings', 'wpr_lb_bg_color' );
@@ -306,6 +309,12 @@ function wpr_addons_settings_page() {
 			'Product Breadcrumbs' => ['product-breadcrumbs-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-breadcru-widgets-pro#purchasepro', '', 'pro'],
 			'Page My Account' => ['page-my-account-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-myacc-widgets-pro#purchasepro', '', 'pro'],
 			'Woo Category Grid' => ['woo-category-grid-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
+			'Wishlist Button' => ['wishlist-button-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
+			'Mini Wishlist' => ['mini-wishlist-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
+			'Wishlist' => ['wishlist-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
+			'Compare Button' => ['compare-button-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
+			'Mini Compare' => ['mini-compare-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
+			'Compare' => ['compare-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
         ];
 
         foreach ( array_merge($woocommerce_builder_modules, $premium_woo_modules) as $title => $data ) {
@@ -421,6 +430,38 @@ function wpr_addons_settings_page() {
                 <input type="checkbox" name="wpr_enable_woo_flexslider_navigation" id="wpr_enable_woo_flexslider_navigation" <?php echo checked( get_option('wpr_enable_woo_flexslider_navigation', 'on'), 'on', false ); ?>>
                 <label for="wpr_enable_woo_flexslider_navigation"></label>
             </div>
+
+            <div class="wpr-woo-template-info wpr-compare-wishlist">
+                <?php
+                    $pages = get_pages(); // Get all pages on the site
+                    $current_page = get_option( 'wpr_compare_page' ); // Get the current selected page
+                    echo '<label for="wpr_compare_page">Select Compare Page</label>';
+                    echo '<select name="wpr_compare_page" id="wpr_compare_page" >';
+                    
+                    foreach ( $pages as $page ) {
+                        $selected = ( $current_page == $page->ID ) ? 'selected="selected"' : '';
+                        echo '<option value="' . $page->ID . '" ' . $selected . '>' . $page->post_title . '</option>';
+                    }
+                    
+                    echo '</select>';
+                ?>
+            </div>
+
+            <div class="wpr-woo-template-info wpr-compare-wishlist">
+                <?php
+                    $pages = get_pages(); // Get all pages on the site
+                    $current_page = get_option( 'wpr_wishlist_page' ); // Get the current selected page
+                    echo '<label for="wpr_wishlist_page">Select Wishlist Page</label>';
+                    echo '<select name="wpr_wishlist_page" id="wpr_wishlist_page" >';
+                    
+                    foreach ( $pages as $page ) {
+                        $selected = ( $current_page == $page->ID ) ? 'selected="selected"' : '';
+                        echo '<option value="' . $page->ID . '" ' . $selected . '>' . $page->post_title . '</option>';
+                    }
+                    
+                    echo '</select>';
+                ?>
+            </div>
             
         </div>
 
@@ -445,6 +486,16 @@ function wpr_addons_settings_page() {
                 </h4>
 
                 <input type="text" name="wpr_mailchimp_api_key" id="wpr_mailchimp_api_key" value="<?php echo esc_attr(get_option('wpr_mailchimp_api_key')); ?>">
+            </div>
+
+            <div class="wpr-setting">
+                <h4>
+                    <span><?php esc_html_e( 'reCAPTCHA Site Key', 'wpr-addons' ); ?></span>
+                    <br>
+                    <a href="https://www.google.com/recaptcha/admin/create" target="_blank"><?php esc_html_e( 'How to get reCAPTCHA Site Key?', 'wpr-addons' ); ?></a>
+                </h4>
+
+                <input type="text" name="wpr_recaptcha_v3_site_key" id="wpr_recaptcha_v3_site_key" value="<?php echo esc_attr(get_option('wpr_recaptcha_v3_site_key')); ?>">
             </div>
         </div>
 
@@ -1238,6 +1289,8 @@ function wpr_addons_settings_page() {
 
 // Add Support Sub Menu item that will redirect to wp.org
 function wpr_addons_add_support_menu() {
+    // GOGA - ZUKA
+    add_submenu_page( 'wpr-addons',  Utilities::get_plugin_name(), Utilities::get_plugin_name(), 'manage_options', 'wpr-addons', 'wpr_addons_settings_page', 1 );
     add_submenu_page( 'wpr-addons', 'Support', 'Support', 'manage_options', 'wpr-support', 'wpr_addons_support_page', 99 );
 }
 add_action( 'admin_menu', 'wpr_addons_add_support_menu', 99 );
@@ -1262,6 +1315,65 @@ function wpr_addons_add_upgrade_menu() {
     add_submenu_page( 'wpr-addons', 'Upgrade', 'Upgrade', 'manage_options', 'wpr-upgrade', 'wpr_addons_upgrade_page', 99 );
 }
 add_action( 'admin_menu', 'wpr_addons_add_upgrade_menu', 99 );
+
+// CPT Submissions page
+// function wpr_display_form_submissions() {
+//     $form_submissions = get_posts( array(
+//         'post_type' => 'wpr_submissions',
+//         'posts_per_page' => -1
+//     ));
+
+//     echo '<h2>Submissions</h2>';
+//     echo '<ul>';
+
+//     foreach ( $form_submissions as $form_submission ) {
+//         echo '<li>' . $form_submission->post_content . '</li>';
+//     }
+
+//     echo '</ul>';
+// }
+
+// function wpr_add_form_submissions_page() {
+//     add_submenu_page(
+//         'wpr-addons',
+//         'Submissions',
+//         'Submissions',
+//         'manage_options',
+//         'wpr-submissions',
+//         'wpr_display_form_submissions',
+// 		99
+//     );
+// }
+
+// add_action( 'admin_menu', 'wpr_add_form_submissions_page', 99 );
+
+function reorder_wpr_submissions_submenu() {
+    global $submenu;
+
+    $parent_slug = 'wpr-addons';
+    $submenu_slug = 'edit.php?post_type=wpr_submissions';
+    $desired_position = 7; // Change this to adjust the position of the submenu item
+
+    if (isset($submenu[$parent_slug])) {
+        $submenu_items = $submenu[$parent_slug];
+        $found_key = null;
+
+        foreach ($submenu_items as $key => $item) {
+            if ($item[2] === $submenu_slug) {
+                $found_key = $key;
+                break;
+            }
+        }
+
+        if ($found_key !== null) {
+            $item_to_move = $submenu[$parent_slug][$found_key];
+            unset($submenu[$parent_slug][$found_key]);
+            array_splice($submenu[$parent_slug], $desired_position - 1, 0, [$item_to_move]);
+        }
+    }
+}
+
+add_action('admin_menu', 'reorder_wpr_submissions_submenu', 999);
 
 function wpr_addons_upgrade_page() {}
 
