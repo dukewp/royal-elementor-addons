@@ -523,7 +523,7 @@ function wpr_addons_settings_page() {
             </div>
 
             <a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-freevsprotab-pro#purchasepro" target="_blank" class="button wpr-free-pro-upgrade">
-                <span><?php echo esc_html__( 'Upgrade to Pro', 'wpr-addons' ); ?></span>
+                <span><?php echo esc_html__( 'Get Premium', 'wpr-addons' ); ?></span>
                 <span class="dashicons dashicons-smiley"></span>
             </a>
         </div>
@@ -1114,10 +1114,15 @@ function wpr_addons_settings_page() {
                     <span><?php echo esc_html__( 'Advanced Functionality', 'wpr-addons' ); ?></span>
                 </header>
                 <ul>
-                    <li>Dynamic Tags</li>
-                    <li>Advanced Custom Fields</li>
-                    <li>Advanced Blablalba</li>
-                    <li>Advanced Shmla Shmla</li>
+                    <li>Free and Pro Functionality Included</li>
+                    <li>Ability to build Dynamic Websites</li>
+                    <li>Dynamic Tags for All Widgets</li>
+                    <li>Extended Custom Field Options</li>
+                    <li>Custom Post Type Generator</li>
+                    <li>Custom Taxonomy Generator</li>
+                    <li>WooCommerce Wishlist Widget</li>
+                    <li>WooCommerce Compare Widget</li>
+                    <li>And More is Comming Soon...</li>
                 </ul>
             </div>
         </div>
@@ -1130,7 +1135,7 @@ function wpr_addons_settings_page() {
         </div>
 
         <a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-freevsprotab-pro#purchasepro" target="_blank" class="button last wpr-free-pro-upgrade">
-            <span><?php echo esc_html__( 'Upgrade to Pro', 'wpr-addons' ); ?></span>
+            <span><?php echo esc_html__( 'Get Premium', 'wpr-addons' ); ?></span>
             <span class="dashicons dashicons-smiley"></span>
         </a>
 
