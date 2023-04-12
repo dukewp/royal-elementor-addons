@@ -130,7 +130,7 @@ class Plugin {
 		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-actions-status.php';
 		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-send-email.php';
 		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-submissions-cpt.php';
-		require WPR_ADDONS_PATH . 'admin/form-builder-submissions.php';
+		require WPR_ADDONS_PATH . 'admin/form-submissions.php';
 
 		// Admin Files
 		if ( is_admin() ) {
