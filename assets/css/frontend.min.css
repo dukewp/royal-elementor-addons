@@ -12280,7 +12280,7 @@ a.wpr-ajax-img-wrap {
     color: #7A7A7A;
 }
 
-.wpr-wrapper span.wpr-title {
+.wpr-wrapper .wpr-title {
     font-size: 20px;
     font-weight: 600;
 }
@@ -12306,7 +12306,7 @@ a.wpr-ajax-img-wrap {
     color: #7A7A7A;
 }
 
-.wpr-wrapper a.wpr-title {
+.wpr-wrapper .wpr-title {
     font-size: 24px;
     font-weight: bold;
 }
