@@ -346,6 +346,13 @@ jQuery(document).ready(function( $ ) {
 			$('.wpr-templates-kit-single').show();
 			$('.wpr-templates-kit-logo').find('.back-btn').css('display', 'flex');
 			$('.wpr-templates-kit-single .preview-demo').attr('href', 'https://demosites.royal-elementor-addons.com/'+ kit.data('kit-id') +'?ref=rea-plugin-backend-templates');
+
+			
+			if ( true === kit.data('expert') ) {
+				$('.wpr-templates-kit-expert-notice').show();
+			} else {
+				$('.wpr-templates-kit-expert-notice').hide();
+			}
 		},
 
 		renderImportPage: function( kit ) {
