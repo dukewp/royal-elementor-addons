@@ -423,7 +423,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		$this->start_controls_section(
 			'section_form_fields',
 			[
-				'label' => esc_html__( 'Form Fields', 'wpr-addons' ),
+				'label' => esc_html__( 'Fields', 'wpr-addons' ),
 			]
 		);
 
@@ -431,23 +431,23 @@ class Wpr_Form_Builder extends Widget_Base {
 
 		$field_types = [
 			'text' => esc_html__( 'Text', 'wpr-addons' ),
-			'email' => esc_html__( 'Email', 'wpr-addons' ),
 			'textarea' => esc_html__( 'Textarea', 'wpr-addons' ),
+			'email' => esc_html__( 'Email', 'wpr-addons' ),
 			'url' => esc_html__( 'URL', 'wpr-addons' ),
+			'number' => esc_html__( 'Number', 'wpr-addons' ),
 			'tel' => esc_html__( 'Tel', 'wpr-addons' ),
 			'radio' => esc_html__( 'Radio', 'wpr-addons' ),
 			'select' => esc_html__( 'Select', 'wpr-addons' ),
 			'checkbox' => esc_html__( 'Checkbox', 'wpr-addons' ),
 			'acceptance' => esc_html__( 'Acceptance', 'wpr-addons' ),
-			'number' => esc_html__( 'Number', 'wpr-addons' ),
 			'date' => esc_html__( 'Date', 'wpr-addons' ),
 			'time' => esc_html__( 'Time', 'wpr-addons' ),
 			'upload' => esc_html__( 'File Upload', 'wpr-addons' ),
 			'password' => esc_html__( 'Password', 'wpr-addons' ),
 			'html' => esc_html__( 'HTML', 'wpr-addons' ),
+			'recaptcha-v3' => esc_html__( 'reCAPTCHA V3', 'wpr-addons'),
 			'hidden' => esc_html__( 'Hidden', 'wpr-addons' ),
 			'step' => esc_html__( 'Step', 'wpr-addons' ),
-			'recaptcha-v3' => esc_html__( 'reCAPTCHA V3', 'wpr-addons')
 		];
 
 		$repeater->start_controls_tabs( 'form_fields_tabs' );
@@ -925,7 +925,7 @@ class Wpr_Form_Builder extends Widget_Base {
 			[
 				'label' => esc_html__( 'ID', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
-				'description' => esc_html__( 'Please make sure the ID is unique and not used elsewhere in this form. This field allows `A-z 0-9` & underscore chars without spaces.', 'wpr-addons' ),
+				'description' => esc_html__( 'Element ID should be unique and not used elsewhere in this widget.', 'wpr-addons' ),
 				'default' => '',
 				'render_type' => 'none',
 				'required' => true,
@@ -949,16 +949,6 @@ class Wpr_Form_Builder extends Widget_Base {
 		$repeater->end_controls_tab();
 
 		$repeater->end_controls_tabs();
-
-		$this->add_control(
-			'form_name',
-			[
-				'label' => esc_html__( 'Form Name', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => esc_html__( 'New Form', 'wpr-addons' ),
-				'placeholder' => esc_html__( 'Form Name', 'wpr-addons' ),
-			]
-		);
 
 		$this->add_control(
 			'form_fields',
@@ -994,33 +984,6 @@ class Wpr_Form_Builder extends Widget_Base {
 					],
 				],
 				'title_field' => '{{{ field_label }}}',
-			]
-		);
-
-		$this->add_control(
-			'show_labels',
-			[
-				'label' => esc_html__( 'Label', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Show', 'wpr-addons' ),
-				'label_off' => esc_html__( 'Hide', 'wpr-addons' ),
-				'return_value' => 'true',
-				'default' => 'true',
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'mark_required',
-			[
-				'label' => esc_html__( 'Required Mark', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Show', 'wpr-addons' ),
-				'label_off' => esc_html__( 'Hide', 'wpr-addons' ),
-				'default' => '',
-				'condition' => [
-					'show_labels!' => '',
-				],
 			]
 		);
 
@@ -1211,7 +1174,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'type' => Controls_Manager::TEXT,
 				'default' => '',
 				'title' => esc_html__( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'wpr-addons' ),
-				'description' => esc_html__( 'Please make sure the ID is unique and not used elsewhere on the page this form is displayed. This field allows `A-z 0-9` & underscore chars without spaces.', 'wpr-addons' ),
+				'description' => esc_html__( 'Element ID should be unique and not used elsewhere in this widget', 'wpr-addons' ),
 				'separator' => 'before',
 				'dynamic' => [
 					'active' => true,
@@ -1221,10 +1184,58 @@ class Wpr_Form_Builder extends Widget_Base {
 
 		$this->end_controls_section();
 
+		
+		$this->start_controls_section(
+			'section_form_settings',
+			[
+				'label' => esc_html__( 'Settings', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT
+			]
+		);
+
+		$this->add_control(
+			'form_name',
+			[
+				'label' => esc_html__( 'Form Name', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => esc_html__( 'New Form', 'wpr-addons' ),
+				'placeholder' => esc_html__( 'Form Name', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'show_labels',
+			[
+				'label' => esc_html__( 'Show Field Labels', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Show', 'wpr-addons' ),
+				'label_off' => esc_html__( 'Hide', 'wpr-addons' ),
+				'return_value' => 'true',
+				'default' => 'true',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'mark_required',
+			[
+				'label' => esc_html__( 'Show Required Mark', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Show', 'wpr-addons' ),
+				'label_off' => esc_html__( 'Hide', 'wpr-addons' ),
+				'default' => '',
+				'condition' => [
+					'show_labels!' => '',
+				],
+			]
+		);
+
+		$this->end_controls_section();
+
 		$this->start_controls_section(
 			'section_integration',
 			[
-				'label' => esc_html__( 'Submit Actions', 'wpr-addons' ),
+				'label' => esc_html__( 'Actions', 'wpr-addons' ),
 			]
 		);
 
@@ -1278,7 +1289,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		$this->start_controls_section(
 			'section_form_step_settings',
 			[
-				'label' => esc_html__( 'Step', 'wpr-addons' ),
+				'label' => esc_html__( 'Steps', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_CONTENT
 			]
 		);
@@ -1623,7 +1634,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		$this->add_control(
 			'heading_next_submit_button',
 			[
-				'label' => esc_html__( 'Next & Submit Button', 'wpr-addons' ),
+				'label' => esc_html__( 'Submit Button, Next Button', 'wpr-addons' ),
 				'type' => Controls_Manager::HEADING,
 			]
 		);
@@ -1853,6 +1864,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'exclude' => [
 					'color',
 				],
+				'separator' => 'before',
 			]
 		);
 
@@ -1865,7 +1877,6 @@ class Wpr_Form_Builder extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
-				'separator' => 'before',
 			]
 		);
 
