@@ -281,6 +281,7 @@ class WPR_Templates_Data {
 					'woo-builder' => false,
 					'off-canvas' => false,
 					'price' => $is_pro_active ? 'free' : 'pro',
+					'expert' => $is_expert ? 'free' : 'expert',
 					'label' => '',
 					'priority' => 2,
 				],
