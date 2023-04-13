@@ -3205,6 +3205,20 @@ class Wpr_Woo_Grid extends Widget_Base {
 		);
 
 		$this->add_control(
+			'grid_item_styles_selector',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'inner' => esc_html__( 'Inner Elements', 'wpr-addons' ),
+					'wrapper' => esc_html__( 'Wrapper', 'wpr-addons' )
+				],
+				'default' => 'inner',
+				'prefix_class' => 'wpr-item-styles-'
+			]
+		);
+
+		$this->add_control(
 			'grid_item_bg_color',
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
@@ -3213,7 +3227,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-item-above-content' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-grid-item-below-content' => 'background-color: {{VALUE}}',
-				],
+					'{{WRAPPER}}.wpr-item-styles-wrapper .wpr-grid-item' => 'background-color: {{VALUE}}'
+				]
 			]
 		);
 
@@ -3224,9 +3239,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#E8E8E8',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-item-above-content' => 'border-color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-grid-item-below-content' => 'border-color: {{VALUE}}',
-				],
+					'{{WRAPPER}}.wpr-item-styles-inner .wpr-grid-item-above-content' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-item-styles-inner .wpr-grid-item-below-content' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-item-styles-wrapper .wpr-grid-item' => 'border-color: {{VALUE}}'
+				]
 			]
 		);
 
@@ -3249,8 +3265,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 				],
 				'default' => 'none',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-item-above-content' => 'border-style: {{VALUE}};',
-					'{{WRAPPER}} .wpr-grid-item-below-content' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}}.wpr-item-styles-inner .wpr-grid-item-above-content' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}}.wpr-item-styles-inner .wpr-grid-item-below-content' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}}.wpr-item-styles-wrapper .wpr-grid-item' => 'border-style: {{VALUE}}'
 				],
 				'separator' => 'before',
 			]
@@ -3269,8 +3286,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'left' => 1,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-item-above-content' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-grid-item-below-content' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-item-styles-inner .wpr-grid-item-above-content' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-item-styles-inner .wpr-grid-item-below-content' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-item-styles-wrapper .wpr-grid-item' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 				'condition' => [
 					'grid_item_border_type!' => 'none',
@@ -3294,6 +3312,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-item-above-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-grid-item-below-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-item-styles-wrapper .wpr-grid-item' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 				'render_type' => 'template'
 			]

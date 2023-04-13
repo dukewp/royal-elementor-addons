@@ -130,6 +130,7 @@ class Plugin {
 		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-actions-status.php';
 		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-send-email.php';
 		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-submissions-cpt.php';
+		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-subscribe-mailchimp.php';
 		require WPR_ADDONS_PATH . 'admin/form-submissions.php';
 
 		// Admin Files
@@ -230,10 +231,6 @@ class Plugin {
 	public function register_ajax_hooks() {
         add_action( 'wp_ajax_mailchimp_subscribe', [new Utilities, 'ajax_mailchimp_subscribe'] );
         add_action( 'wp_ajax_nopriv_mailchimp_subscribe', [new Utilities, 'ajax_mailchimp_subscribe'] );
-
-		// For form builder
-        add_action( 'wp_ajax_wpr_form_builder_mailchimp', [new Utilities, 'ajax_wpr_form_builder_mailchimp'] );
-        add_action( 'wp_ajax_nopriv_wpr_form_builder_mailchimp', [new Utilities, 'ajax_wpr_form_builder_mailchimp'] );
 	}
 
 	public function mega_menu_ajax_loading() {

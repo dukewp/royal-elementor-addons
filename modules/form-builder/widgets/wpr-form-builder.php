@@ -1224,7 +1224,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		$this->start_controls_section(
 			'section_integration',
 			[
-				'label' => esc_html__( 'Actions After Submit', 'wpr-addons' ),
+				'label' => esc_html__( 'Submit Actions', 'wpr-addons' ),
 			]
 		);
 
