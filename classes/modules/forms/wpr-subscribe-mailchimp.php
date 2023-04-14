@@ -59,8 +59,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			'BIRTHDAY' => !empty ( $fields['birthday_field'] ) ? sanitize_text_field($fields['birthday_field']) : '',
 			// 'GROUPS' => [
 			// 	[
-			// 		'id' =>'923892178f',
-			// 		'groups' => ['Reading']
+			// 		'id' => $fields['group_id']
 			// 	]
 			// ]
 		];
@@ -98,12 +97,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 					));
 
 				} else {
-					wp_send_json_success([ 
+					wp_send_json_error([ 
 						'action' => 'wpr_form_builder_mailchimp',
 						'status' => $request->title
 					]);
 				}
 			}
+		} else {
+
+			wp_send_json_error([ 
+				'action' => 'wpr_form_builder_mailchimp',
+				'request' => $request
+			]);
 		}
 	}
  }

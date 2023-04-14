@@ -114,7 +114,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				'status' => 'success'
 			));
         } else {
-			wp_send_json_success(array(
+			wp_send_json_error(array(
 				'action' => 'wpr_form_builder_email',
 				'message' => 'Message could not be sent',
 				'status' => 'error'

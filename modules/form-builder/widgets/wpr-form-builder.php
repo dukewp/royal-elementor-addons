@@ -140,25 +140,6 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
-		$widget->add_control(
-			$this->get_control_id( 'email_content' ),
-			[
-				'label' => esc_html__( 'Message', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXTAREA,
-				'default' => '[all-fields]',
-				'placeholder' => '[all-fields]',
-				'description' => sprintf(
-					/* translators: %s: The [all-fields] shortcode. */
-					esc_html__( 'By default, all form fields are sent via %s shortcode. To customize sent fields, copy the shortcode that appears inside each field and paste it above.', 'wpr-addons' ),
-					'<code>[all-fields]</code>'
-				),
-				'render_type' => 'none',
-				'dynamic' => [
-					'active' => true,
-				],
-			]
-		);
-
 		$site_domain = $this->get_site_domain();
 
 		$widget->add_control(
@@ -463,6 +444,15 @@ class Wpr_Form_Builder extends Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'options' => $field_types,
 				'default' => 'text',
+			]
+		);
+		
+		$repeater->add_control(
+			'field_step_notice',
+			[
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => esc_html__('Please ensure that you create the step before the first item as well'),
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 			]
 		);
 
@@ -935,17 +925,6 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
-		$shortcode_template = '{{ view.container.settings.get( \'custom_id\' ) }}';
-		$repeater->add_control(
-			'shortcode',
-			[
-				'label' => esc_html__( 'Shortcode', 'wpr-addons' ),
-				'type' => Controls_Manager::RAW_HTML,
-				'classes' => 'forms-field-shortcode',
-				'raw' => '<input class="elementor-form-field-shortcode" value=\'[field id="' . $shortcode_template . '"]\' readonly />',
-			]
-		);
-
 		$repeater->end_controls_tab();
 
 		$repeater->end_controls_tabs();
@@ -1251,17 +1230,6 @@ class Wpr_Form_Builder extends Widget_Base {
 
 		$default_submit_actions = [ 'email' ];
 
-		/**
-		 * Default submit actions.
-		 *
-		 * Filters the list of submit actions pre deffined by Elementor forms.
-		 *
-		 * By default, only one submit action is set by Elementor forms, an 'email'
-		 * action. This hook allows developers to alter those submit action.
-		 *
-		 * @param array $default_submit_actions A list of default submit actions.
-		 */
-
 		$this->add_control(
 			'submit_actions',
 			[
@@ -1522,6 +1490,15 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
+		$this->start_controls_tabs( 'tabs_fields_style' );
+
+		$this->start_controls_tab(
+			'tab_fields_normal',
+			[
+				'label' => esc_html__( 'Normal', 'wpr-addons' ),
+			]
+		);
+
 		$this->add_control(
 			'field_text_color',
 			[
@@ -1566,6 +1543,102 @@ class Wpr_Form_Builder extends Widget_Base {
 				'selector' => '{{WRAPPER}} .wpr-field-group .wpr-form-field, {{WRAPPER}} .wpr-field-sub-group label'
 			]
 		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_fields_focus',
+			[
+				'label' => esc_html__( 'Focus', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'field_text_color_focus',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-field-group .wpr-form-field:focus' => 'color: {{VALUE}};',
+				]
+			]
+		);
+
+		$this->add_control(
+			'field_background_color_focus',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-field-group:not(.wpr-form-field-type-upload) .wpr-form-field:not(.wpr-select-wrap):focus' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-field-group .wpr-select-wrap select:focus' => 'background-color: {{VALUE}};',
+				]
+			]
+		);
+		
+		$this->add_control(
+			'field_border_color_focus',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-field-group:not(.wpr-form-field-type-upload) .wpr-form-field:not(.wpr-select-wrap)' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-field-group .wpr-select-wrap select:focus' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-field-group .wpr-select-wrap::before' => 'color: {{VALUE}};',
+				]
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_fields_error',
+			[
+				'label' => esc_html__( 'Error', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'field_text_color_error',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-field-group .wpr-form-field.wpr-form-error' => 'color: {{VALUE}};',
+				]
+			]
+		);
+
+		$this->add_control(
+			'field_background_color_error',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-field-group:not(.wpr-form-field-type-upload) .wpr-form-field:not(.wpr-select-wrap).wpr-form-error' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-field-group .wpr-select-wrap select.wpr-form-error' => 'background-color: {{VALUE}};',
+				]
+			]
+		);
+		
+		$this->add_control(
+			'field_border_color_error',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-field-group:not(.wpr-form-field-type-upload) .wpr-form-field:not(.wpr-select-wrap)' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-field-group .wpr-select-wrap select.wpr-form-error' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-field-group .wpr-select-wrap::before' => 'color: {{VALUE}};',
+				]
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
 
 		$this->add_control(
 			'field_border_width',
@@ -2805,6 +2878,8 @@ class Wpr_Form_Builder extends Widget_Base {
 		$phoneField      = isset($instance['phone_field']) ? $instance['phone_field'] : '';
 		$birthdayField   = isset($instance['birthday_field']) ? $instance['birthday_field'] : '';
 		$groupId 	     = isset($instance['mailchimp_groups']) ? $instance['mailchimp_groups'] : '';
+
+		var_dump($groupId, Utilities::get_mailchimp_groups());
 
 		$fieldsArray = [
 			'email_field' => $emailField,
