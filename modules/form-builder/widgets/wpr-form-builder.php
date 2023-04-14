@@ -1629,8 +1629,8 @@ class Wpr_Form_Builder extends Widget_Base {
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-field-group:not(.wpr-form-field-type-upload) .wpr-form-field:not(.wpr-select-wrap)' => 'border-color: {{VALUE}};',
-					'{{WRAPPER}} .wpr-field-group .wpr-select-wrap select.wpr-form-error' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-field-group:not(.wpr-form-field-type-upload) .wpr-form-field:not(.wpr-select-wrap).wpr-form-error' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-field-group .wpr-select-wrap select' => 'border-color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-field-group .wpr-select-wrap::before' => 'color: {{VALUE}};',
 				]
 			]
@@ -2879,8 +2879,6 @@ class Wpr_Form_Builder extends Widget_Base {
 		$birthdayField   = isset($instance['birthday_field']) ? $instance['birthday_field'] : '';
 		$groupId 	     = isset($instance['mailchimp_groups']) ? $instance['mailchimp_groups'] : '';
 
-		var_dump($groupId, Utilities::get_mailchimp_groups());
-
 		$fieldsArray = [
 			'email_field' => $emailField,
 			'first_name_field' => $firstNameField,
@@ -2998,7 +2996,7 @@ class Wpr_Form_Builder extends Widget_Base {
 						$i = 0;
 
 						while( $i < $step_count1 ) :
-						
+
 							if ( 'none' == $instance['step_type'] ) {
 								$step_html = '<span class="wpr-step"></span>';
 							} else if ( 'text' == $instance['step_type'] ) {
