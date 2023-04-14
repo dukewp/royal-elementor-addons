@@ -451,8 +451,8 @@ class Wpr_Form_Builder extends Widget_Base {
 			'field_step_notice',
 			[
 				'type' => Controls_Manager::RAW_HTML,
-				'raw' => esc_html__('Please ensure that you create the step before the first item as well'),
-				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				'raw' => esc_html__('Step should be a First element of fields group. Ex: Step 1 followed by Field 1, Field 2. Step 2 followed by Field 3, Field 4.'),
+				'content_classes' => 'elementor-panel-alert',
 			]
 		);
 
@@ -3008,7 +3008,7 @@ class Wpr_Form_Builder extends Widget_Base {
 							} else if ( 'number' == $instance['step_type'] ) {
 								$step_html = '<span class="wpr-step"><span class="wpr-step-content">'. $i + 1 .'</span></span>';
 							} else if ( 'number_text' == $instance['step_type'] ) {
-								$step_html = '<span class="wpr-step"><span class="wpr-step-content">'. $i + 1 .'</span><span class="wpr-step-label">'. $step_label[$i] . $step_sub_label[$i] .'</span></span>';
+								$step_html = '<span class="wpr-step"><span class="wpr-step-content"></span><span class="wpr-step-label">'. $step_label[$i] . $step_sub_label[$i] .'</span></span>';
 							} else if ( 'icon_text' == $instance['step_type'] ) {
 								$step_html = '<span class="wpr-step"><span class="wpr-step-content">'. $step_icon[$i] .'</span><span class="wpr-step-label">'. $step_label[$i] . $step_sub_label[$i] .'</span></span>';
 							}
