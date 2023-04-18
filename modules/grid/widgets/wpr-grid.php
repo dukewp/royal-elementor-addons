@@ -8273,8 +8273,6 @@ class Wpr_Grid extends Widget_Base {
 	// Render Post Thumbnail
 	public function render_post_thumbnail( $settings ) {
 		$id = get_post_thumbnail_id();
-
-		var_dump($settings['secondary_img_on_hover']);
 		
 		$src = Group_Control_Image_Size::get_attachment_image_src( $id, 'layout_image_crop', $settings );
 		$src2 = Group_Control_Image_Size::get_attachment_image_src( get_post_meta(get_the_ID(), '_secondary_image_id')[0], 'layout_image_crop', $settings );

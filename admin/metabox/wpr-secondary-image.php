@@ -61,7 +61,6 @@ function secondary_image_save ( $post_id ) {
 
 
 function wpdocs_selectively_enqueue_admin_script( $hook ) {
-    var_dump($hook);
     if ( 'post.php' != $hook ) {
         return;
     }
