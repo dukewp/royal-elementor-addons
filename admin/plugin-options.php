@@ -124,7 +124,7 @@ function wpr_register_addons_settings() {
     // Image Metaboxes
     $post_types = Utilities::get_custom_types_of( 'post', false );
     foreach ( $post_types as $key => $value ) {
-        if ( 'page' == $key || 'e-landing-page' === $key ) {
+        if ( 'page' !== $key && 'e-landing-page' !== $key ) {
             register_setting( 'wpr-settings', 'wpr_meta_secondary_image_'. $key );
         }
     }

@@ -150,6 +150,9 @@ class Plugin {
 			// Theme Builder
 			require WPR_ADDONS_PATH . 'admin/popups.php';
 
+			// Secondary Image
+			require WPR_ADDONS_PATH . 'admin/metabox/wpr-secondary-image.php';
+
 			// Hide Theme Notice
 			// TODO: Remove this and fix with Transients
 			add_action( 'admin_enqueue_scripts', [ $this, 'hide_theme_notice' ] );

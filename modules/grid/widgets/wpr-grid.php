@@ -100,6 +100,17 @@ class Wpr_Grid extends Widget_Base {
 		return $post_taxonomies;
 	}
 
+	public function add_control_secondary_img_on_hover() {
+		$this->add_control(
+			'secondary_img_on_hover',
+			[
+				'label' => sprintf( __( 'Secondary Img on Hover %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);
+	}
+
 	public function add_control_open_links_in_new_tab() {
 		$this->add_control(
 			'open_links_in_new_tab',
@@ -2439,6 +2450,8 @@ class Wpr_Grid extends Widget_Base {
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
+
+		$this->add_control_secondary_img_on_hover();
 
 		$this->add_control_image_effects();
 
@@ -8260,15 +8273,23 @@ class Wpr_Grid extends Widget_Base {
 	// Render Post Thumbnail
 	public function render_post_thumbnail( $settings ) {
 		$id = get_post_thumbnail_id();
+
+		var_dump($settings['secondary_img_on_hover']);
+		
 		$src = Group_Control_Image_Size::get_attachment_image_src( $id, 'layout_image_crop', $settings );
+		$src2 = Group_Control_Image_Size::get_attachment_image_src( get_post_meta(get_the_ID(), '_secondary_image_id')[0], 'layout_image_crop', $settings );
+
 		$alt = '' === wp_get_attachment_caption( $id ) ? get_the_title() : wp_get_attachment_caption( $id );
 
 		if ( has_post_thumbnail() ) {
-			echo '<div class="wpr-grid-image-wrap" data-src="'. esc_url( $src ) .'">';
+			echo '<div class="wpr-grid-image-wrap" data-src="'. esc_url( $src ) .'" data-img-on-hover="'. $settings['secondary_img_on_hover'] .'"  data-src-secondary="'. esc_url( $src2 ) .'">';
 				if ( 'yes' == $settings['grid_lazy_loading'] ) {
 					echo '<img src="'. WPR_ADDONS_ASSETS_URL . 'img/icon-256x256.png" alt="'. esc_attr( $alt ) .'" class="wpr-hidden-image wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
 				} else {
 					echo '<img src="'. esc_url( $src ) . '" alt="'. esc_attr( $alt ) .'" class="wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
+					if ( 'yes' == $settings['secondary_img_on_hover'] ) {
+						echo '<img src="'. esc_url( $src2 ) . '" alt="'. esc_attr( $alt ) .'" class="wpr-hidden-img wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
+					}
 				}
 			echo '</div>';
 		}
