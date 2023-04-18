@@ -585,7 +585,6 @@ class Wpr_Form_Builder extends Widget_Base {
 							'name' => 'field_type',
 							'operator' => '!in',
 							'value' => [
-								'checkbox',
 								'recaptcha',
 								'recaptcha_v3',
 								'hidden',
@@ -1506,6 +1505,8 @@ class Wpr_Form_Builder extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-field-group .wpr-form-field' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-field-group input[type="radio"]' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-field-group input[type="checkbox"]' => 'color: {{VALUE}};'
 				]
 			]
 		);
@@ -1560,6 +1561,8 @@ class Wpr_Form_Builder extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-field-group .wpr-form-field:focus' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-field-group input[type="radio"]:focus' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-field-group input[type="checkbox"]:focus' => 'color: {{VALUE}};'
 				]
 			]
 		);
@@ -1606,6 +1609,8 @@ class Wpr_Form_Builder extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-field-group .wpr-form-field.wpr-form-error' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-field-group input[type="radio"].wpr-form-error' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-field-group input[type="checkbox"].wpr-form-error' => 'color: {{VALUE}};'
 				]
 			]
 		);
