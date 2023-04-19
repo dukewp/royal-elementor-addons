@@ -453,6 +453,9 @@ class Wpr_Form_Builder extends Widget_Base {
 				'type' => Controls_Manager::RAW_HTML,
 				'raw' => esc_html__('Step should be a First element of fields group. Ex: Step 1 followed by Field 1, Field 2. Step 2 followed by Field 3, Field 4.'),
 				'content_classes' => 'elementor-panel-alert',
+				'condition' => [
+					'field_type' => 'step'
+				]
 			]
 		);
 
@@ -492,15 +495,9 @@ class Wpr_Form_Builder extends Widget_Base {
 				'dynamic' => [
 					'active' => true,
 				],
-				'terms' => [
-					[
-						'name' => 'field_type',
-						'operator' => 'in',
-						'value' => [
-							'step'
-						],
-					],
-				],
+				'condition' => [
+					'field_type' => 'step'
+				]
 			]
 		);
 
@@ -513,15 +510,9 @@ class Wpr_Form_Builder extends Widget_Base {
 				'dynamic' => [
 					'active' => true,
 				],
-				'terms' => [
-					[
-						'name' => 'field_type',
-						'operator' => 'in',
-						'value' => [
-							'step'
-						],
-					],
-				],
+				'condition' => [
+					'field_type' => 'step'
+				]
 			]
 		);
 
@@ -1635,8 +1626,8 @@ class Wpr_Form_Builder extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-field-group:not(.wpr-form-field-type-upload) .wpr-form-field:not(.wpr-select-wrap).wpr-form-error' => 'border-color: {{VALUE}};',
-					'{{WRAPPER}} .wpr-field-group .wpr-select-wrap select' => 'border-color: {{VALUE}};',
-					'{{WRAPPER}} .wpr-field-group .wpr-select-wrap::before' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-field-group .wpr-select-wrap select.wpr-form-error' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-field-group .wpr-select-wrap.wpr-form-error-wrap::before' => 'color: {{VALUE}};',
 				]
 			]
 		);
@@ -2722,8 +2713,16 @@ class Wpr_Form_Builder extends Widget_Base {
 		?>
 		<div <?php $this->print_render_attribute_string( 'select-wrapper' . $i ); ?>>
 			<select <?php $this->print_render_attribute_string( 'select' . $i ); ?>>
+			
+				<option value=''>
+					<?php
+						// PHPCS - $option_label is already escaped
+						echo esc_html__('None'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
+					?>
+				</option>
+
 				<?php
-				foreach ( $options as $key => $option ) {
+				foreach ( $options as $key => $option ) :
 					$option_id = $item['custom_id'] . $key;
 					$option_value = esc_attr( $option );
 					$option_label = esc_html( $option );
@@ -2740,10 +2739,12 @@ class Wpr_Form_Builder extends Widget_Base {
 					if ( ! empty( $item['field_value'] ) && in_array( $option_value, explode( ',', $item['field_value'] ) ) ) {
 						$this->add_render_attribute( $option_id, 'selected', 'selected' );
 					} ?>
-					<option <?php $this->print_render_attribute_string( $option_id ); ?>><?php
+					<option <?php $this->print_render_attribute_string( $option_id ); ?>>
+					<?php
 						// PHPCS - $option_label is already escaped
-						echo $option_label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></option>
-				<?php } ?>
+						echo $option_label; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					</option>
+				<?php endforeach; ?>
 			</select>
 		</div>
 		<?php
@@ -2781,7 +2782,7 @@ class Wpr_Form_Builder extends Widget_Base {
 					$this->add_render_attribute( $element_id, 'checked', 'checked' );
 				}
 
-				if ( $item['required'] && 'radio' === $type ) {
+				if ( $item['required'] && ('radio' === $type || 'checkbox' === $type) ) {
 					$this->add_required_attribute( $element_id );
 				}
 
@@ -2957,7 +2958,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		}
 
 		?>
-		<form class="wpr-form" method="post" <?php echo $this->get_render_attribute_string( 'form' ); ?>>
+		<form class="wpr-form" method="post" <?php echo $this->get_render_attribute_string( 'form' ); ?> novalidate>
 			<input type="hidden" name="post_id" value="<?php // PHPCS - the method Utils::get_current_post_id is safe.
 				echo get_the_ID(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"/>
 			<input type="hidden" name="form_id" value="<?php echo esc_attr( $this->get_id() ); ?>"/>
