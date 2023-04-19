@@ -17694,6 +17694,21 @@ dl.variation dd {
     margin-bottom: 10px;
 }
 
+.wpr-step-progress {
+    width: 100%;
+    height: auto;
+    background-color: black;
+}
+
+.wpr-step-progress-fill {
+    width: 0;
+    height: auto;
+    background-color: red;
+    text-align: right;
+    color: white;
+    padding-right: 10px;
+}
+
 .wpr-step-content-layout-vertical .wpr-step-wrap {
     align-items: flex-start;
 }

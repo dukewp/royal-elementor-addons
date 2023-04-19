@@ -638,7 +638,7 @@ class Plugin {
 		wp_enqueue_script(
 			'wpr-addons-editor-js',
 			WPR_ADDONS_URL . 'assets/js/editor'. $this->script_suffix() .'.js',
-			[ 'jquery' ],
+			[ 'jquery', 'wp-i18n' ],
 			Plugin::instance()->get_version(),
 			true
 		);

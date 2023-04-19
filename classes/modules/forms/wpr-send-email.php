@@ -87,6 +87,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 			}
 		}
 
+		$content_type = get_option('wpr_email_content_type'. $_POST['wpr_form_id']);
+
+		$line_break = 'html' === $content_type ? '<br>' : "\n";
+
         $email_meta = [];
 
         foreach( $meta_fields as $key => $value ) {
@@ -95,14 +99,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 
         $to = get_option('wpr_email_to_'. $_POST['wpr_form_id']);
         $subject = get_option('wpr_email_subject_'. $_POST['wpr_form_id']);
-        $body = implode("<br>", $message_body) . '<br>' . '---' . '<br>' . '<br>' . implode("<br>", $email_meta);
+        $body = implode($line_break, $message_body) . $line_break . '---' . $line_break . $line_break . implode($line_break, $email_meta);
 
 		$cc_header = '';
-		if ( ! empty( get_option('wpr_cc_header_'. $_POST['wpr_form_id']) ) ) {
+		if ( !empty( get_option('wpr_cc_header_'. $_POST['wpr_form_id']) ) ) {
 			$cc_header = 'Cc: ' . get_option('wpr_cc_header_'. $_POST['wpr_form_id']);
 		}
-
-        $headers = array('Content-Type: text/html; charset=UTF-8', $cc_header);
+		
+		if ( !empty( get_option('wpr_reply_to_'. $_POST['wpr_form_id']) ) ) {
+			$reply_to = 'Reply-To: ' . get_option('wpr_reply_to_'. $_POST['wpr_form_id']);
+		}
+		
+		$headers = array('Content-Type: text/'. $content_type .'; charset=UTF-8', $cc_header, $reply_to);
       
         // Send email using wp_mail() function
         $sent = wp_mail( $to, $subject, $body, $headers);

@@ -122,6 +122,7 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
+		// maybe esc_html not necessary
 		/* translators: %s: Site title. */
 		$default_message = sprintf( esc_html__( 'New message from "%s"', 'wpr-addons' ), get_option( 'blogname' ) );
 
@@ -708,7 +709,7 @@ class Wpr_Form_Builder extends Widget_Base {
 					'size' => 100,
 				],
 				'selectors' => [
-					'{{WRAPPER}} {{CURRENT_ITEM}}' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} {{CURRENT_ITEM}}' => 'width: {{SIZE}}%;',
 				],
 				'conditions' => [
 					'terms' => [
@@ -999,6 +1000,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-field-group.wpr-form-field-type-submit' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-stp-btns-wrap' => 'width: {{SIZE}}{{UNIT}};'
 				],
 				'frontend_available' => true,
 			]
@@ -1130,8 +1132,8 @@ class Wpr_Form_Builder extends Widget_Base {
 					'selected_button_icon[value]!' => '',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-button .elementor-align-icon-right' => 'margin-left: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-button .elementor-align-icon-left' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-button .wpr-align-icon-right' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-button .wpr-align-icon-left' => 'margin-right: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -1743,7 +1745,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-step-next' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-step-next' => 'border-color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-button[type="submit"]' => 'border-color: {{VALUE}};',
 				],
 				'condition' => [
@@ -1929,7 +1931,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Border::get_type(), [
 				'name' => 'button_border',
-				'selector' => '{{WRAPPER}} .wpr-button',
+				'selector' => '{{WRAPPER}} .wpr-button, {{WRAPPER}} .wpr-step-prev, {{WRAPPER}} .wpr-step-next',
 				'exclude' => [
 					'color',
 				],
@@ -1945,6 +1947,8 @@ class Wpr_Form_Builder extends Widget_Base {
 				'size_units' => [ 'px', '%', 'em' ],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-step-prev' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-step-next' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 			]
 		);
@@ -1957,35 +1961,9 @@ class Wpr_Form_Builder extends Widget_Base {
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-step-prev' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-step-next' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'buttons_distance',
-			[
-				'label' => esc_html__( 'Distance', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px', '%'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 500,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					]
-				],				
-				'default' => [
-					'unit' => 'px',
-					'size' => 15,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-step-prev' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-step-prev:not(:first-of-type)' => 'margin-left: {{SIZE}}{{UNIT}};',
-				],
-				'separator' => 'before'
 			]
 		);
 
@@ -2528,29 +2506,6 @@ class Wpr_Form_Builder extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'step_divider_height',
-			[
-				'label' => esc_html__( 'Divider Height', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],				
-				'default' => [
-					'unit' => 'px',
-					'size' => 2,
-				],
-				'selectors' => [
-					'{{WRAPPER}}' => '--wpr-steps-divider-width: {{SIZE}}{{UNIT}};',
-				],
-				'separator' => 'before'
-			]
-		);
-
-		$this->add_responsive_control(
 			'step_label_distance',
 			[
 				'label' => esc_html__( 'Distance', 'wpr-addons' ),
@@ -2570,6 +2525,77 @@ class Wpr_Form_Builder extends Widget_Base {
 					'{{WRAPPER}}.wpr-step-content-layout-horizontal .wpr-step-label' => 'margin-left: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before'
+			]
+		);
+
+		$this->add_responsive_control(
+			'buttons_distance',
+			[
+				'label' => esc_html__( 'Buttons Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px', '%'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 500,
+					],
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					]
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 15,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step-prev' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-step-prev:not(:first-of-type)' => 'margin-left: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'step_divider',
+			[
+				'label' => esc_html__( 'Divider', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'step_divider_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#222333',
+				'selectors' => [
+					'{{WRAPPER}}.wpr-step-content-layout-vertical .wpr-step-sep' => 'background-color: {{VALUE}};',
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'step_divider_height',
+			[
+				'label' => esc_html__( 'Divider Height', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 2,
+				],
+				'selectors' => [
+					'{{WRAPPER}}' => '--wpr-steps-divider-width: {{SIZE}}{{UNIT}};',
+				]
 			]
 		);
 
@@ -2806,7 +2832,7 @@ class Wpr_Form_Builder extends Widget_Base {
 					],
 				],
 				'input' . $i => [
-					'type' => $item['field_type'],
+					'type' => ('acceptance' === $item['field_type']) ? 'checkbox' : (('upload' === $item['field_type']) ? 'file' :  $item['field_type']),
 					'name' => $this->get_attribute_name( $item ),
 					'id' => $this->get_attribute_id( $item ),
 					'class' => [
@@ -2866,13 +2892,65 @@ class Wpr_Form_Builder extends Widget_Base {
 		}
 	}
 
+	private function render_form_icon( $settings ) { ?>
+		<span <?php echo $this->get_render_attribute_string( 'icon-align' ); ?>>
+			<?php Icons_Manager::render_icon( $settings['selected_button_icon'], [ 'aria-hidden' => 'true' ] );  ?>
+			<?php if ( empty( $instance['button_text'] ) ) : ?>
+				<span class="elementor-screen-only"><?php echo esc_html__( 'Submit', 'wpr-addons' ); ?></span>
+			<?php endif; ?>
+		</span>
+	<?php }
+
+	public function render_submit_button($instance) {
+		// echo '<button type="submit" '.  $this->get_render_attribute_string( 'button' ) .'>';
+		// 	echo '<span '. $this->get_render_attribute_string( 'content-wrapper' ) .'>';
+		// 		if ( ! empty( $instance['button_icon'] ) || ! empty( $instance['selected_button_icon'] ) ) :
+		// 			echo '<span '. $this->get_render_attribute_string( 'icon-align' ) .'>';
+		// 				if ( empty( $instance['button_text'] ) ) :
+		// 					// remove class if possible
+		// 					echo '<span  class="elementor-screen-only">'. esc_html__( 'Submit', 'wpr-addons' ) .'</span>';
+		// 				endif;
+		// 			echo '</span>';
+		// 		endif;
+		// 		if ( ! empty( $instance['button_text'] ) ) :
+		// 			echo '<span> '. $this->print_unescaped_setting( 'button_text' ) .'</span>';
+		// 		endif;
+		// 	echo '</span>';
+		// 	echo '<div class="wpr-double-bounce wpr-loader-hidden">';
+		// 		echo '<div class="wpr-child wpr-double-bounce1"></div>';
+		// 		echo '<div class="wpr-child wpr-double-bounce2"></div>';
+		// 	echo '</div>';
+		// echo '</button>';
+		?>
+			<button type="submit" <?php echo $this->get_render_attribute_string( 'button' ); ?>>
+				<span <?php echo $this->get_render_attribute_string( 'content-wrapper' ); ?>>
+					<?php if ( !empty( $instance['selected_button_icon'] ) && 'left' === $instance['button_icon_align'] ) : ?>
+						<?php $this->render_form_icon($instance); ?>
+					<?php endif; ?>
+					<?php if ( ! empty( $instance['button_text'] ) ) : ?>
+						<span><?php echo $this->print_unescaped_setting( 'button_text' ); ?></span>
+					<?php endif; ?>
+					<?php if ( !empty( $instance['selected_button_icon'] ) && 'right' === $instance['button_icon_align'] ) : ?>
+						<?php $this->render_form_icon($instance); ?>
+					<?php endif; ?>
+				</span>	
+				<div class="wpr-double-bounce wpr-loader-hidden">
+					<div class="wpr-child wpr-double-bounce1"></div>
+					<div class="wpr-child wpr-double-bounce2"></div>
+				</div>
+			</button>
+		<?php 
+	}
+
 	protected function render() {
 		global $post;
 		$instance = $this->get_settings_for_display();
 
+		update_option('wpr_email_content_type_'. $this->get_id(), $instance['email_content_type']);
 		update_option('wpr_email_to_'. $this->get_id(), $instance['email_to']);
 		update_option('wpr_email_subject_'. $this->get_id(), $instance['email_subject']);
 		update_option('wpr_cc_header_'. $this->get_id(), $instance['email_to_cc']);
+		update_option('wpr_reply_to_'. $this->get_id(), $instance['email_reply_to']);
 		update_option('wpr_meta_keys_'. $this->get_id(), $instance['form_metadata']);
 		update_option('wpr_referrer_'. $this->get_id(), home_url( $_SERVER['REQUEST_URI'] ));
 		update_option('wpr_referrer_title_'. $this->get_id(), get_the_title($post->ID));
@@ -2929,7 +3007,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'icon-align' => [
 					'class' => [
 						empty( $instance['button_icon_align'] ) ? '' :
-							'elementor-align-icon-' . $instance['button_icon_align'],
+							'wpr-align-icon-' . $instance['button_icon_align'],
 						'elementor-button-icon',
 					],
 				],
@@ -2997,7 +3075,9 @@ class Wpr_Form_Builder extends Widget_Base {
 				
 				echo '<div class="'. $step_wrap_class .'">';
 					if ( 'progress_bar' == $instance['step_type'] ) {
-
+						echo '<div class="wpr-step-progress">';
+							echo '<div class="wpr-step-progress-fill"></div>';
+						echo '</div>';
 					} else {
 						$i = 0;
 
@@ -3012,7 +3092,7 @@ class Wpr_Form_Builder extends Widget_Base {
 							} else if ( 'number' == $instance['step_type'] ) {
 								$step_html = '<span class="wpr-step"><span class="wpr-step-content">'. $i + 1 .'</span></span>';
 							} else if ( 'number_text' == $instance['step_type'] ) {
-								$step_html = '<span class="wpr-step"><span class="wpr-step-content"></span><span class="wpr-step-label">'. $step_label[$i] . $step_sub_label[$i] .'</span></span>';
+								$step_html = '<span class="wpr-step"><span class="wpr-step-content">'. $i + 1 .'</span><span class="wpr-step-label">'. $step_label[$i] . $step_sub_label[$i] .'</span></span>';
 							} else if ( 'icon_text' == $instance['step_type'] ) {
 								$step_html = '<span class="wpr-step"><span class="wpr-step-content">'. $step_icon[$i] .'</span><span class="wpr-step-label">'. $step_label[$i] . $step_sub_label[$i] .'</span></span>';
 							}
@@ -3104,8 +3184,13 @@ class Wpr_Form_Builder extends Widget_Base {
 								$this->add_render_attribute( 'input' . $item_index, 'class', 'wpr-form-field-textual' );
 								echo '<input size="1 "'. $this->get_render_attribute_string( 'input' . $item_index ) .'>';
 								break;
+							case 'acceptance':
+							case 'upload':
+								echo '<input size="1 "'. $this->get_render_attribute_string( 'input' . $item_index ) .'>';
+								break;
 							case 'step':
 								echo '<input type="hidden" class="wpr-step-input" id=form-field-'. $item['custom_id'] .' value='. $item['field_label'] .'>';
+								break;
 							default:
 								$field_type = $item['field_type'];
 						endswitch;
@@ -3119,49 +3204,19 @@ class Wpr_Form_Builder extends Widget_Base {
 							if ( 2 <= $step_count ) {
 								echo '<button type="button" class="wpr-step-prev">Previous</button>';
 							}
-							echo '<button type="submit" '.  $this->get_render_attribute_string( 'button' ) .'>';
-								echo '<span '. $this->get_render_attribute_string( 'content-wrapper' ) .'>';
-									if ( ! empty( $instance['button_icon'] ) || ! empty( $instance['selected_button_icon'] ) ) :
-										echo '<span '. $this->get_render_attribute_string( 'icon-align' ) .'>';
-											if ( empty( $instance['button_text'] ) ) :
-												echo '<span>'. esc_html__( 'Submit', 'wpr-addons' ) .'</span>';
-											endif;
-										echo '</span>';
-									endif;
-									if ( ! empty( $instance['button_text'] ) ) :
-										echo '<span> '. $this->print_unescaped_setting( 'button_text' ) .'</span>';
-									endif;
-								echo '</span>';
-								echo '<div class="wpr-double-bounce wpr-loader-hidden">';
-									echo '<div class="wpr-child wpr-double-bounce1"></div>';
-									echo '<div class="wpr-child wpr-double-bounce2"></div>';
-								echo '</div>';
-							echo '</button>';
+
+							echo $this->render_submit_button($instance);
+
 						echo '</div>';
 					echo '</div>';
-				} else { ?>
-					<div <?php echo $this->get_render_attribute_string( 'submit-group' ); ?>>
-						<button type="submit" <?php echo $this->get_render_attribute_string( 'button' ); ?>>
-							<span <?php echo $this->get_render_attribute_string( 'content-wrapper' ); ?>>
-								<?php if ( ! empty( $instance['button_icon'] ) || ! empty( $instance['selected_button_icon'] ) ) : ?>
-									<span <?php echo $this->get_render_attribute_string( 'icon-align' ); ?>>
-										<?php if ( empty( $instance['button_text'] ) ) : ?>
-											<span class="elementor-screen-only"><?php echo esc_html__( 'Submit', 'wpr-addons' ); ?></span>
-										<?php endif; ?>
-									</span>
-								<?php endif; ?>
-								<?php if ( ! empty( $instance['button_text'] ) ) : ?>
-									<span><?php echo $this->print_unescaped_setting( 'button_text' ); ?></span>
-								<?php endif; ?>
-							</span>	
-							<div class="wpr-double-bounce wpr-loader-hidden">
-								<div class="wpr-child wpr-double-bounce1"></div>
-								<div class="wpr-child wpr-double-bounce2"></div>
-							</div>
-						</button>
-					</div>
-				<?php } ?>
+				} else {
+					echo '<div '. $this->get_render_attribute_string( 'submit-group' ) .'>';
 
+						$this->render_submit_button($instance); 
+
+					echo '</div>';
+				} ?>
+				
 			</div>
 		</form>
 		<?php
