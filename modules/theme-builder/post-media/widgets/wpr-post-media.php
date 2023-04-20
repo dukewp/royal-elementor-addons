@@ -1530,6 +1530,8 @@ class Wpr_Post_Media extends Widget_Base {
 		
 		// Render Image
 		if ( has_post_thumbnail() ) {
+			$alt = get_post_meta($id, '_wp_attachment_image_alt', true);
+
 			echo '<div class="wpr-featured-media-image" data-src="'. esc_url( $src ) .'">';
 				if ( 'yes' === $show_caption && '' !== $caption ) {
 					echo '<div class="wpr-featured-media-caption">';
@@ -1537,7 +1539,7 @@ class Wpr_Post_Media extends Widget_Base {
 					echo '</div>';
 				}
 
-				echo '<img src="'. esc_url( $src ) .'" alt="'. esc_attr( $caption ) .'">';
+				echo '<img src="'. esc_url( $src ) .'" alt="'. esc_attr( $alt ) .'">';
 			echo '</div>';
 		}
 	}
