@@ -3514,7 +3514,7 @@ class Wpr_Grid extends Widget_Base {
 				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-image-wrap' => 'border-color: {{VALUE}}',
-				],
+				]
 			]
 		);
 
@@ -3534,7 +3534,7 @@ class Wpr_Grid extends Widget_Base {
 				'default' => 'none',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-image-wrap' => 'border-style: {{VALUE}};',
-				],
+				]
 			]
 		);
 

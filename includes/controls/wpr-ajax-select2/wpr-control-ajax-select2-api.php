@@ -34,7 +34,7 @@ class Wpr_Control_Ajax_Select2_Api {
 			'post_type' => 'elementor_library',
 			'post_status' => 'publish',
 			'meta_key' => '_elementor_template_type',
-			'meta_value' => ['page', 'section'],
+			'meta_value' => ['page', 'section', 'container'],
 			'numberposts' => 15
 		];
 		
