@@ -129,6 +129,7 @@ class Plugin {
 		// Form Builder
 		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-actions-status.php';
 		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-send-email.php';
+		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-file-upload.php';
 		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-submissions-cpt.php';
 		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-subscribe-mailchimp.php';
 		require WPR_ADDONS_PATH . 'admin/form-submissions.php';
