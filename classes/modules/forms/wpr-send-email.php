@@ -87,7 +87,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			}
 		}
 
-		$content_type = get_option('wpr_email_content_type'. $_POST['wpr_form_id']);
+		$content_type = get_option('wpr_email_content_type_'. $_POST['wpr_form_id']);
 
 		$line_break = 'html' === $content_type ? '<br>' : "\n";
 
@@ -111,6 +111,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		}
 		
 		$headers = array('Content-Type: text/'. $content_type .'; charset=UTF-8', $cc_header, $reply_to);
+		// $headers = array('Content-Type: text/'. $content_type .'; charset=UTF-8', $cc_header);
       
         // Send email using wp_mail() function
         $sent = wp_mail( $to, $subject, $body, $headers);

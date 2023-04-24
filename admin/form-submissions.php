@@ -96,6 +96,10 @@ class Wpr_Form_Submissions {
                     if ( 'textarea' == $value[0] ) {
                         echo '<label for="'. $key .'">'.  $key_title .': </label>';
                         echo '<textarea style="display: block;"  id="'. $key .'">'. $value[1] .'</textarea>';
+                    } elseif ( 'file' == $value[0] ) {
+                        var_dump($value[0]);
+                        echo '<label for="'. $key .'">'.  $key_title .': </label>';
+                        echo '<a style="display: block;" id="'. $key .'" target="_blank" href="'. $value[1] .'">'. $value[1] .'</a>';
                     } else {
                         if ( $value[0] === 'radio' || $value[0] === 'checkbox' ) {
                             $value[0] = 'text';

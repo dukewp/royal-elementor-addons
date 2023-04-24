@@ -49,12 +49,14 @@ if ( ! defined( 'ABSPATH' ) ) {
                 'action' => 'wpr_form_builder_submissions',
                 'post_id' => $post_id,
                 'message' => 'Post created successfully',
+				'status' => 'success'
             ));
         } else {
             wp_send_json_success(array(
                 'action' => 'wpr_form_builder_submissions',
                 'post_id' => $post_id,
                 'message' => 'Something Went Wrong',
+				'status' => 'error'
             ));
         }
     }
