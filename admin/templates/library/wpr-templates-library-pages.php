@@ -67,14 +67,14 @@ class WPR_Templates_Library_Pages {
 		wp_die();
 	}
 
-		/**
-	** Template Library Popup
+	/**
+	** Template Library Grid Items
 	*/
 	public static function render_library_templates_pages_grid_items() {
 		$kits = WPR_Templates_Data::get_available_kits_for_pages();
 
 		$page = isset($_POST['page']) ? intval($_POST['page']) : 1;
-		$kits_per_page = 2;
+		$kits_per_page = 10;
 		
 		$start = ($page - 1) * $kits_per_page;
 		$end = $start + $kits_per_page;
