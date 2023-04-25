@@ -185,6 +185,30 @@ class Wpr_Media_Grid extends Widget_Base {
 			]
 		);
 	}
+
+	public function add_control_layout_slider_rows() {
+		$this->add_control(
+			'layout_slider_rows',
+			[
+				'label' => esc_html__( 'Rows (Carousel)', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'label_block' => false,
+				'default' => 1,
+				'classes' => 'wpr-pro-control no-distance',
+				'options' => [
+					1 => esc_html__( 'One', 'wpr-addons' ),
+					1 => esc_html__( 'Two (Pro)', 'wpr-addons' ),
+					1 => esc_html__( 'Three (Pro)', 'wpr-addons' ),
+				],
+				'frontend_available' => true,
+				'render_type' => 'template',
+				'separator' => 'before',
+				'condition' => [
+					'layout_select' => 'slider',
+				],
+			]
+		);
+	}
 	
 	public function add_control_layout_slider_nav_hover() {
 		$this->add_control(
@@ -917,6 +941,8 @@ class Wpr_Media_Grid extends Widget_Base {
 
 		$this->add_control_layout_slider_amount();
 
+		$this->add_control_layout_slider_rows();
+
 		$this->add_control(
 			'layout_slides_to_scroll',
 			[
@@ -951,13 +977,17 @@ class Wpr_Media_Grid extends Widget_Base {
 				],			
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid .slick-slide' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-grid-slider-rows-2 .wpr-grid .wpr-grid-item' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-grid-slider-rows-3 .wpr-grid .wpr-grid-item' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-grid .slick-list' => 'margin-left: -{{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-grid-slider-rows-2 .wpr-grid .slick-list' => 'margin-bottom: -{{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-grid-slider-rows-3 .wpr-grid .slick-list' => 'margin-bottom: -{{SIZE}}{{UNIT}};'
 				],
 				'render_type' => 'template',
 				'condition' => [
 					'layout_slider_amount!' => '1',
 					'layout_select' => 'slider',
-				],
+				]
 			]
 		);
 
@@ -7515,6 +7545,7 @@ class Wpr_Media_Grid extends Widget_Base {
 			'prevArrow' => '#wpr-grid-slider-prev-'. $this->get_id(),
 			'nextArrow' => '#wpr-grid-slider-next-'. $this->get_id(),
 			'sliderSlidesToScroll' => +$settings['layout_slides_to_scroll'],
+			'sliderRows' => isset($settings['layout_slider_rows']) ? $settings['layout_slider_rows'] : 1
 		];
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {
@@ -7539,7 +7570,7 @@ class Wpr_Media_Grid extends Widget_Base {
 			'share' => $settings['lightbox_popup_sharing'],
 			'zoom' => $settings['lightbox_popup_zoom'],
 			'fullScreen' => $settings['lightbox_popup_fullscreen'],
-			'download' => $settings['lightbox_popup_download'],
+			'download' => $settings['lightbox_popup_download']
 		];
 
 		if ( $settings['layout_slider_amount'] === 1 && $settings['layout_slider_effect'] === 'fade' ) {

@@ -403,7 +403,7 @@ class Wpr_Form_Builder extends Widget_Base {
 	protected function register_controls() {
 
 		$this->start_controls_section(
-			'section_form_builder_fields',
+			'section_form_fields',
 			[
 				'label' => esc_html__( 'Fields', 'wpr-addons' ),
 			]
@@ -432,9 +432,9 @@ class Wpr_Form_Builder extends Widget_Base {
 			'step' => esc_html__( 'Step', 'wpr-addons' ),
 		];
 
-		$repeater->start_controls_tabs( 'form_builder_fields_tabs' );
+		$repeater->start_controls_tabs( 'form_fields_tabs' );
 
-		$repeater->start_controls_tab( 'form_builder_fields_content_tab', [
+		$repeater->start_controls_tab( 'form_fields_content_tab', [
 			'label' => esc_html__( 'Content', 'wpr-addons' ),
 		] );
 
@@ -859,7 +859,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		$repeater->end_controls_tab();
 
 		$repeater->start_controls_tab(
-			'form_builder_fields_advanced_tab',
+			'form_fields_advanced_tab',
 			[
 				'label' => esc_html__( 'Advanced', 'wpr-addons' ),
 				'condition' => [
@@ -921,7 +921,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		$repeater->end_controls_tabs();
 
 		$this->add_control(
-			'form_builder_fields',
+			'form_fields',
 			[
 				// 'type' => Fields_Repeater::CONTROL_TYPE,
 				'type' => Controls_Manager::REPEATER,
@@ -962,7 +962,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'fields_to_show_pro_notice',
 				[
 					'type' => Controls_Manager::RAW_HTML,
-					'raw' => 'More than 4 Fields (Excluding Steps) are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-form-builder-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					'raw' => 'More than 3 Fields (Excluding Steps) are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-form-builder-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
 					'content_classes' => 'wpr-pro-notice'
 				]
 			);
@@ -2675,7 +2675,7 @@ class Wpr_Form_Builder extends Widget_Base {
 	}
 
 	public function get_attribute_name( $item ) {
-		return "form_builder_fields[{$item['custom_id']}]";
+		return "form_fields[{$item['custom_id']}]";
 	}
 
 	public function get_attribute_id( $item ) {
@@ -2831,7 +2831,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		return $html;
 	}	
 	
-	protected function form_builder_fields_render_attributes( $i, $instance, $item ) {
+	protected function form_fields_render_attributes( $i, $instance, $item ) {
 		$this->add_render_attribute(
 			[
 				'field-group' . $i => [
@@ -2956,7 +2956,7 @@ class Wpr_Form_Builder extends Widget_Base {
 	protected function render() {
 		global $post;
 		$instance = $this->get_settings_for_display();
-		$form_builder_fields_length = sizeof($instance['form_builder_fields']);
+		$form_fields_length = sizeof($instance['form_fields']);
 
 		
 		$upload_dir = wp_upload_dir();
@@ -3078,7 +3078,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				$step_label = [];
 				$step_sub_label = [];
 
-				foreach ( $instance['form_builder_fields'] as $key => $value ) {
+				foreach ( $instance['form_fields'] as $key => $value ) {
 					if ( 'step' === $value['field_type'] ) {
 						$step_exists = 'exists';
 						$step_count1++;
@@ -3139,7 +3139,7 @@ class Wpr_Form_Builder extends Widget_Base {
 
 				$step_count = 0;
 				$field_count = 0;
-				foreach ( $instance['form_builder_fields'] as $item_index => $item ) :
+				foreach ( $instance['form_fields'] as $item_index => $item ) :
 					if ( 'step' !== $item['field_type'] ) {
 						$field_count++;
 						if ( !wpr_fs()->can_use_premium_code() && 3 < $field_count  ) {
@@ -3147,7 +3147,7 @@ class Wpr_Form_Builder extends Widget_Base {
 						}
 					}
 
-					$this->form_builder_fields_render_attributes( $item_index, $instance, $item );
+					$this->form_fields_render_attributes( $item_index, $instance, $item );
 
 					$print_label = ! in_array( $item['field_type'], [ 'hidden', 'html', 'step' ], true );
 
