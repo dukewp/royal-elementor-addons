@@ -395,16 +395,16 @@
     width: 120px;
 }
 
-.wpr-tplib-filters-list {
+.wpr-tplib-search + .wpr-tplib-filters-wrap .wpr-tplib-filters-list {
     right: 0;
     width: 100%;
 }
 
-.wpr-tplib-filters-list ul {
+.wpr-tplib-search + .wpr-tplib-filters-wrap .wpr-tplib-filters-list ul {
     flex-direction: column
 }
 
-.wpr-tplib-filters-list ul li {
+.wpr-tplib-search + .wpr-tplib-filters-wrap .wpr-tplib-filters-list ul li {
     width: 100%;
 }
 
