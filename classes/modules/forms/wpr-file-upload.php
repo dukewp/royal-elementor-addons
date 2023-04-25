@@ -24,9 +24,15 @@ if ( ! defined( 'ABSPATH' ) ) {
         // Check if a file is uploaded.
         if (isset($_FILES['uploaded_file'])) {
             $file = $_FILES['uploaded_file'];
+
+			// valid file type?
+			if ( !$this->file_validity(  $file ) ) {
+                wp_send_json_error(array(
+                    'message' => 'File type is not valid.'
+                ));
+			}
     
             // Set the upload directory.
-		
             $upload_dir = wp_upload_dir();
             $upload_path = $upload_dir['basedir'] . '/wpr-addons/forms';
 
@@ -52,6 +58,68 @@ if ( ! defined( 'ABSPATH' ) ) {
             'message' => 'No file was uploaded.'
         ));
     }
+
+	// private function file_validity( $field, $file ) {
+	private function file_validity( $file ) {
+		// File type validation
+		// if ( empty( $field['file_types'] ) ) {
+		// 	$field['file_types'] = 'jpg,jpeg,png,gif,pdf,doc,docx,ppt,pptx,odt,avi,ogg,m4a,mov,mp3,mp4,mpg,wav,wmv';
+		// }
+
+		$f_extension = pathinfo( $file['name'], PATHINFO_EXTENSION );
+		// $allowed_file_types = explode( ',', $field['file_types'] );
+		$allowed_file_types = explode( ',', 'jpg,jpeg,png,gif,pdf,doc,docx,ppt,pptx,odt,avi,ogg,m4a,mov,mp3,mp4,mpg,wav,wmv' );
+		$allowed_file_types = array_map( 'trim', $allowed_file_types );
+		$allowed_file_types = array_map( 'strtolower', $allowed_file_types );
+
+		$f_extension = strtolower( $f_extension );
+
+		return ( in_array( $f_extension, $allowed_file_types ) && !in_array( $f_extension, $this->get_exclusion_list() ) );
+	}
+
+    private function get_exclusion_list() {
+		static $exclusionlist = false;
+		if ( ! $exclusionlist ) {
+			$exclusionlist = [
+				'php',
+				'php3',
+				'php4',
+				'php5',
+				'php6',
+				'phps',
+				'php7',
+				'phtml',
+				'shtml',
+				'pht',
+				'swf',
+				'html',
+				'asp',
+				'aspx',
+				'cmd',
+				'csh',
+				'bat',
+				'htm',
+				'hta',
+				'jar',
+				'exe',
+				'com',
+				'js',
+				'lnk',
+				'htaccess',
+				'htpasswd',
+				'phtml',
+				'ps1',
+				'ps2',
+				'py',
+				'rb',
+				'tmp',
+				'cgi',
+				'svg',
+			];
+		}
+
+		return $exclusionlist;
+	}
  }
 
  new WPR_File_Upload();

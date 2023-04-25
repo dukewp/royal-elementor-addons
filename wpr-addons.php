@@ -255,13 +255,11 @@ register_deactivation_hook( __FILE__, 'royal_elementor_addons_deactivate' );
 // 	// }
 // }
 
-
-
-function wpse_script_loader_tag( $tag, $handle ) {
-    if ( 'jquery-core' !== $handle && 'jquery-migrate' !== $handle && 'wpr-addons-js' !== $handle ) {
+function wpr_script_loader_tag( $tag, $handle ) {
+    if ( 'jquery-core' !== $handle && 'jquery-migrate' !== $handle && 'wpr-addons-js' !== $handle && 'wpr-isotope' !== $handle ) {
         return $tag;
     }
 
     return str_replace( ' src', ' data-cfasync="false" src', $tag );
 }
-add_filter( 'script_loader_tag', 'wpse_script_loader_tag', 10, 2 );
+add_filter( 'script_loader_tag', 'wpr_script_loader_tag', 10, 2 );

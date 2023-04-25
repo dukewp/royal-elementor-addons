@@ -590,6 +590,17 @@ class Wpr_Form_Builder extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'allow_multiple_upload',
+			[
+				'label' => esc_html__( 'Multiple', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'condition' => [
+					'field_type' => 'upload'
+				],
+			]
+		);
+
+		$repeater->add_control(
 			'field_options',
 			[
 				'label' => esc_html__( 'Options', 'wpr-addons' ),
@@ -2958,17 +2969,6 @@ class Wpr_Form_Builder extends Widget_Base {
 		$instance = $this->get_settings_for_display();
 		$form_fields_length = sizeof($instance['form_fields']);
 
-		
-		$upload_dir = wp_upload_dir();
-		$upload_path = $upload_dir['path'] . DIRECTORY_SEPARATOR;
-		
-		$wp_upload_dir = wp_upload_dir();
-		$path = $wp_upload_dir['basedir'] . '/wpr-addons/forms';
-
-		var_dump($path);
-
-		var_dump($upload_path);
-
 		var_dump($instance['email_reply_to']);
 		update_option('wpr_email_content_type_'. $this->get_id(), $instance['email_content_type']);
 		update_option('wpr_email_to_'. $this->get_id(), $instance['email_to']);
@@ -3214,6 +3214,7 @@ class Wpr_Form_Builder extends Widget_Base {
 								break;
 							case 'acceptance':
 							case 'upload':
+								var_dump($item['allow_multiple_upload']);
 								echo '<input size="1 "'. $this->get_render_attribute_string( 'input' . $item_index ) .'>';
 								break;
 							case 'step':
