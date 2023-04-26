@@ -22,7 +22,7 @@ class Wpr_Form_Submissions {
     }
 
     public function enqueue_submissions_script($hook) {
-        // Replace 'wpr_submissions' with your custom post type's slug
+        
         $post_type = 'wpr_submissions';
     
         // Check if the current page is the custom post type's edit or add new page
@@ -97,9 +97,10 @@ class Wpr_Form_Submissions {
                         echo '<label for="'. $key .'">'.  $key_title .': </label>';
                         echo '<textarea style="display: block;"  id="'. $key .'">'. $value[1] .'</textarea>';
                     } elseif ( 'file' == $value[0] ) {
-                        var_dump($value[0]);
                         echo '<label for="'. $key .'">'.  $key_title .': </label>';
-                        echo '<a style="display: block;" id="'. $key .'" target="_blank" href="'. $value[1] .'">'. $value[1] .'</a>';
+                        foreach ( $value[1] as $index => $file ) {
+                            echo '<a style="display: block;" id="'. $key . '_' . $index .'" target="_blank" href="'. $file .'">'. $file .'</a>';
+                        }
                     } else {
                         if ( $value[0] === 'radio' || $value[0] === 'checkbox' ) {
                             $value[0] = 'text';
@@ -174,7 +175,7 @@ class Wpr_Form_Submissions {
         foreach ($submission_meta as $key => $value) {
             // var_dump($key);
             if ( str_contains($key, 'form_field-email') ) {
-                $email_key = $key;
+                $main_key = $key;
             }
 
             if ( str_contains($key, '_action_') ) {
@@ -191,7 +192,7 @@ class Wpr_Form_Submissions {
                     '<a href="%s" title="%s">%s</a>',
                     esc_url(admin_url('post.php?post=' . $post_id . '&action=edit')),
                     __('View', 'wpr-addons'),
-                    __(get_post_meta($post_id, $email_key, true)[1], 'wpr-addons')
+                    __(get_post_meta($post_id, $main_key, true)[1], 'wpr-addons')
                 );
                 break;
     

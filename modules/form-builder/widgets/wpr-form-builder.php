@@ -174,10 +174,22 @@ class Wpr_Form_Builder extends Widget_Base {
 			[
 				'label' => esc_html__( 'Reply-To', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
+				'default' => 'email@' . $site_domain,
+				'render_type' => 'template',
 				'options' => [
 					'' => '',
 				],
 				'render_type' => 'none',
+			]
+		);
+
+		$widget->add_control(
+			$this->get_control_id( 'email_reply_to_alt' ),
+			[
+				'label' => esc_html__( 'Reply To Alt', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => 'email@' . $site_domain,
+				'render_type' => 'none'
 			]
 		);
 
@@ -2969,7 +2981,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		$instance = $this->get_settings_for_display();
 		$form_fields_length = sizeof($instance['form_fields']);
 
-		var_dump($instance['email_reply_to']);
+		var_dump('Reply To', $instance['email_reply_to']);
 		update_option('wpr_email_content_type_'. $this->get_id(), $instance['email_content_type']);
 		update_option('wpr_email_to_'. $this->get_id(), $instance['email_to']);
 		update_option('wpr_email_subject_'. $this->get_id(), $instance['email_subject']);
@@ -3214,7 +3226,9 @@ class Wpr_Form_Builder extends Widget_Base {
 								break;
 							case 'acceptance':
 							case 'upload':
-								var_dump($item['allow_multiple_upload']);
+								if ( 'yes' === $item['allow_multiple_upload'] ) {
+									$this->add_render_attribute( 'input' . $item_index, 'multiple', 'multiple' );
+								}
 								echo '<input size="1 "'. $this->get_render_attribute_string( 'input' . $item_index ) .'>';
 								break;
 							case 'step':

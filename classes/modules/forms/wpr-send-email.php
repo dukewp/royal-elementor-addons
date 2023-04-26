@@ -26,7 +26,11 @@ if ( ! defined( 'ABSPATH' ) ) {
         $message_body = [];
         
         foreach ( $_POST['form_content'] as $key => $value ) {
-            $message_body[] = trim($value[2]) . ': ' . $value[1];
+			if ( is_array($value[1]) ) {
+				$message_body[] = trim($value[2]) . ': ' . implode("\n", $value[1]);
+			} else {
+				$message_body[] = trim($value[2]) . ': ' . $value[1];
+			}
         }
 
         $meta_keys = get_option('wpr_meta_keys_'. $_POST['wpr_form_id']);
@@ -99,7 +103,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
         $to = get_option('wpr_email_to_'. $_POST['wpr_form_id']);
         $subject = get_option('wpr_email_subject_'. $_POST['wpr_form_id']);
-        $body = implode($line_break, $message_body) . $line_break . '---' . $line_break . $line_break . implode($line_break, $email_meta);
+        $body = implode($line_break, $message_body) . $line_break . '-----' . $line_break . implode($line_break, $email_meta);
 
 		$cc_header = '';
 		if ( !empty( get_option('wpr_cc_header_'. $_POST['wpr_form_id']) ) ) {
