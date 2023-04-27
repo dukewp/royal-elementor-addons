@@ -2714,13 +2714,16 @@ class Wpr_Form_Builder extends Widget_Base {
 		);
 
 		$this->add_control(
-			'step_divider_color',
+			'step_progress_fill_color',
 			[
 				'label' => esc_html__( 'Text Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#FFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-step-progress-fill' => 'color: {{VALUE}};',
+				],
+				'condition' => [
+					'step_type' => 'progress_bar'
 				]
 			]
 		);
