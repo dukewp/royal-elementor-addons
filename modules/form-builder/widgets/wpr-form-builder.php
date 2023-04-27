@@ -1050,6 +1050,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-stp-btns-wrap' => '{{VALUE}}',
+					'{{WRAPPER}} .wpr-step-tab:first-of-type .wpr-step-next' => '{{VALUE}}',
 				]
 			]
 		);
@@ -2612,7 +2613,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 50,
+						'max' => 25,
 					],
 				],				
 				'default' => [
@@ -2649,9 +2650,9 @@ class Wpr_Form_Builder extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'buttons_distance',
+			'buttons_width',
 			[
-				'label' => esc_html__( 'Buttons Distance', 'wpr-addons' ),
+				'label' => esc_html__( 'Buttons Width', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => ['px', '%'],
 				'range' => [
@@ -2669,8 +2670,9 @@ class Wpr_Form_Builder extends Widget_Base {
 					'size' => 15,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-step-prev' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-step-prev:not(:first-of-type)' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-step-prev' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-step-next' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-step-tab .wpr-button' => 'width: {{SIZE}}{{UNIT}};'
 				],
 				'separator' => 'before'
 			]
@@ -2763,7 +2765,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 100,
+						'max' => 10,
 					],
 				],				
 				'default' => [

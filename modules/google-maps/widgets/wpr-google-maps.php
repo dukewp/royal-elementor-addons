@@ -637,6 +637,10 @@ class Wpr_Google_Maps extends Widget_Base {
 
 		echo '<div class="wpr-google-map" '. $attributes .'></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
+		if ( current_user_can('manage_options') && '' == get_option('wpr_google_map_api_key') ) {
+			echo '<p class="wpr-api-key-missing">Please go to plugin <a href='. admin_url( 'admin.php?page=wpr-addons&tab=wpr_tab_settings' ) .' target="_blank">Settings</a> and Insert Google Map API Key in order to make Google Maps work</p>';
+		}
+
 	}
 	
 }

@@ -5006,6 +5006,15 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     max-width: none !important;
 }
 
+.wpr-api-key-missing {
+    color: red;
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.wpr-api-key-missing a {
+    font-weight: bold;
+}
 
 /*--------------------------------------------------------------
   == Forms
@@ -17781,11 +17790,16 @@ dl.variation dd {
     margin-bottom: 5px;
 }
 
-.wpr-step-prev,
-.wpr-step-next,
+/* .wpr-step-prev,
+.wpr-step-next, */
 .wpr-step-sep,
 .wpr-stp-btns-wrap .wpr-button {
     flex: 1;
+}
+
+.wpr-step-tab .wpr-stp-btns-wrap .wpr-button {
+    flex: 0 1 auto;
+    flex-basis: auto;
 }
 
 .wpr-step-sep:last-of-type {
