@@ -1322,7 +1322,10 @@ class Wpr_Form_Builder extends Widget_Base {
 					'vertical' => 'Vertical',
 				],
 				'default' => 'vertical',
-				'prefix_class' => 'wpr-step-content-layout-'
+				'prefix_class' => 'wpr-step-content-layout-',
+				'condition' => [
+					'step_type!' => 'progress_bar'
+				]
 			]
 		);
 
@@ -1402,6 +1405,74 @@ class Wpr_Form_Builder extends Widget_Base {
 		);
 
 		$this->add_control(
+			'label_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-field-group > label, {{WRAPPER}} .wpr-field-sub-group label' => 'color: {{VALUE}};',
+				]
+			]
+		);
+
+		$this->add_control(
+			'mark_required_color',
+			[
+				'label' => esc_html__( 'Mark Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-required-mark .wpr-form-field-label:after' => 'color: {{COLOR}};',
+				],
+				'condition' => [
+					'mark_required' => 'yes',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'label_typography',
+				'selector' => '{{WRAPPER}} .wpr-field-group > label'
+			]
+		);
+
+		$this->add_control(
+			'label_spacing',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'default' => [
+					'size' => 0,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 60,
+					],
+				],
+				'selectors' => [
+					'body.rtl {{WRAPPER}} .wpr-labels-inline .wpr-field-group > label' => 'padding-left: {{SIZE}}{{UNIT}};',
+					// for the label position = inline option
+					'body:not(.rtl) {{WRAPPER}} .wpr-labels-inline .wpr-field-group > label' => 'padding-right: {{SIZE}}{{UNIT}};',
+					// for the label position = inline option
+					'body {{WRAPPER}} .wpr-labels-above .wpr-field-group > label' => 'padding-bottom: {{SIZE}}{{UNIT}};',
+					// for the label position = above option
+				],
+			]
+		);
+
+		$this->add_control(
+			'heading_label',
+			[
+				'label' => esc_html__( 'Inputs', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
 			'column_gap',
 			[
 				'label' => esc_html__( 'Horizontal Distance', 'wpr-addons' ),
@@ -1442,74 +1513,6 @@ class Wpr_Form_Builder extends Widget_Base {
 					'{{WRAPPER}} .wpr-field-group:not(.wpr-stp-btns-wrap)' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-field-group.recaptcha_v3-bottomleft, {{WRAPPER}} .wpr-field-group.recaptcha_v3-bottomright' => 'margin-bottom: 0;',
 				],
-			]
-		);
-
-		$this->add_control(
-			'heading_label',
-			[
-				'label' => esc_html__( 'Label', 'wpr-addons' ),
-				'type' => Controls_Manager::HEADING,
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'label_spacing',
-			[
-				'label' => esc_html__( 'Distance', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'default' => [
-					'size' => 0,
-				],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 60,
-					],
-				],
-				'selectors' => [
-					'body.rtl {{WRAPPER}} .wpr-labels-inline .wpr-field-group > label' => 'padding-left: {{SIZE}}{{UNIT}};',
-					// for the label position = inline option
-					'body:not(.rtl) {{WRAPPER}} .wpr-labels-inline .wpr-field-group > label' => 'padding-right: {{SIZE}}{{UNIT}};',
-					// for the label position = inline option
-					'body {{WRAPPER}} .wpr-labels-above .wpr-field-group > label' => 'padding-bottom: {{SIZE}}{{UNIT}};',
-					// for the label position = above option
-				],
-			]
-		);
-
-		$this->add_control(
-			'label_color',
-			[
-				'label' => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-field-group > label, {{WRAPPER}} .wpr-field-sub-group label' => 'color: {{VALUE}};',
-				]
-			]
-		);
-
-		$this->add_control(
-			'mark_required_color',
-			[
-				'label' => esc_html__( 'Mark Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => '',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-required-mark .wpr-form-field-label:after' => 'color: {{COLOR}};',
-				],
-				'condition' => [
-					'mark_required' => 'yes',
-				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => 'label_typography',
-				'selector' => '{{WRAPPER}} .wpr-field-group > label'
 			]
 		);
 
