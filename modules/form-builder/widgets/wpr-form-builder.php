@@ -433,7 +433,6 @@ class Wpr_Form_Builder extends Widget_Base {
 			'radio' => esc_html__( 'Radio', 'wpr-addons' ),
 			'select' => esc_html__( 'Select', 'wpr-addons' ),
 			'checkbox' => esc_html__( 'Checkbox', 'wpr-addons' ),
-			'acceptance' => esc_html__( 'Acceptance', 'wpr-addons' ),
 			'date' => esc_html__( 'Date', 'wpr-addons' ),
 			'time' => esc_html__( 'Time', 'wpr-addons' ),
 			'upload' => esc_html__( 'File Upload', 'wpr-addons' ),
@@ -1038,14 +1037,19 @@ class Wpr_Form_Builder extends Widget_Base {
 						'title' => esc_html__( 'Center', 'wpr-addons' ),
 						'icon' => 'eicon-text-align-center',
 					],
-					'end' => [
+					'right' => [
 						'title' => esc_html__( 'Right', 'wpr-addons' ),
 						'icon' => 'eicon-text-align-right',
 					],
 				],
 				'default' => 'center',
+				'selectors_dictionary' => [
+					'left' => 'margin-left: 0; margin-right: auto;',
+					'center' => 'margin-left: auto; margin-right: auto;',
+					'right' => 'margin-left: auto; margin-right: 0;'
+				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-button' => 'text-align: {{VALUE}}'
+					'{{WRAPPER}} .wpr-stp-btns-wrap' => '{{VALUE}}',
 				]
 			]
 		);
@@ -1311,7 +1315,7 @@ class Wpr_Form_Builder extends Widget_Base {
 			'step_content_layout',
 			[
 				'label' => esc_html__( 'Content Layout', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
+				'type' => Controls_Manager::HIDDEN,
 				'frontend_available' => true,
 				'options' => [
 					'horizontal' => 'Horizontal',
@@ -1328,6 +1332,9 @@ class Wpr_Form_Builder extends Widget_Base {
 				'label' => esc_html__( 'Separator', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
+				'condition' => [
+					'step_type!' => 'progress_bar'
+				]
 			]
 		);
 
@@ -1432,7 +1439,7 @@ class Wpr_Form_Builder extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-field-group' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-field-group:not(.wpr-stp-btns-wrap)' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-field-group.recaptcha_v3-bottomleft, {{WRAPPER}} .wpr-field-group.recaptcha_v3-bottomright' => 'margin-bottom: 0;',
 				],
 			]
@@ -1714,6 +1721,53 @@ class Wpr_Form_Builder extends Widget_Base {
 					'{{WRAPPER}} .wpr-field-group:not(.wpr-form-field-type-upload) .wpr-form-field:not(.wpr-select-wrap)' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-field-group .wpr-select-wrap select' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
+			]
+		);
+
+		$this->add_control(
+			'radio_and_checkbox_distance',
+			[
+				'label' => esc_html__( 'Radio & Checkbox', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+			]
+		);
+
+		$this->add_control(
+			'radion_&_checkbox_padding',
+			[
+				'label' => esc_html__( 'Margin', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%', 'em' ],
+				'default' => [
+					'size' => 0,
+					'unit' => 'px'
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-form-field-option' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'radion_&_checkbox_gutter',
+			[
+				'label' => esc_html__( 'Inner Gutter', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 5,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-form-field-option label' => 'margin-left: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before'
 			]
 		);
 
@@ -3224,7 +3278,6 @@ class Wpr_Form_Builder extends Widget_Base {
 								$this->add_render_attribute( 'input' . $item_index, 'class', 'wpr-form-field-textual' );
 								echo '<input size="1 "'. $this->get_render_attribute_string( 'input' . $item_index ) .'>';
 								break;
-							case 'acceptance':
 							case 'upload':
 								if ( 'yes' === $item['allow_multiple_upload'] ) {
 									$this->add_render_attribute( 'input' . $item_index, 'multiple', 'multiple' );

@@ -17639,11 +17639,6 @@ dl.variation dd {
 
 .wpr-field-sub-group .wpr-form-field-option label {
   display: inline-block;
-  margin-left: 5px;
-}
-
-.wpr-field-sub-group.wpr-inline-sub-group .wpr-form-field-option {
-  padding-right: 10px;
 }
 
 .wpr-field-sub-group:not(.wpr-inline-sub-group) .wpr-form-field-option {
