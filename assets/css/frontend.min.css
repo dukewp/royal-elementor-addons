@@ -17732,6 +17732,10 @@ dl.variation dd {
     flex-direction: column;
 }
 
+.wpr-step-content-layout-horizontal .wpr-step {
+    flex-direction: row;
+}
+
 .wpr-separator-off .wpr-step {
     flex: 1;
 }
@@ -17800,7 +17804,6 @@ dl.variation dd {
     background-color: lightgrey;
     height: var(--wpr-steps-divider-width, 1px);
     top: 50%;
-    transform: translateY(-50%);
 }
 
 .wpr-form .wpr-double-bounce {

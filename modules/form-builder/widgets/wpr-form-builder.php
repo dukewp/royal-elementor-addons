@@ -1315,7 +1315,7 @@ class Wpr_Form_Builder extends Widget_Base {
 			'step_content_layout',
 			[
 				'label' => esc_html__( 'Content Layout', 'wpr-addons' ),
-				'type' => Controls_Manager::HIDDEN,
+				'type' => Controls_Manager::SELECT,
 				'frontend_available' => true,
 				'options' => [
 					'horizontal' => 'Horizontal',
@@ -2075,13 +2075,23 @@ class Wpr_Form_Builder extends Widget_Base {
 		);
 
 		$this->add_control(
-			'step_color',
+			'main_label_color',
 			[
-				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'label' => esc_html__( 'Label Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#222',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-step i' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-step-main-label' => 'color: {{VALUE}};',
+				]
+			]
+		);
+
+		$this->add_control(
+			'sub_label_color',
+			[
+				'label' => esc_html__( 'Sub Label Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step-sub-label' => 'color: {{VALUE}};',
 				]
 			]
 		);
@@ -2119,13 +2129,23 @@ class Wpr_Form_Builder extends Widget_Base {
 		);
 
 		$this->add_control(
-			'step_color_active',
+			'main_label_color_active',
 			[
-				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'label' => esc_html__( 'Label Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#222',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-step.wpr-step-active i' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-step.wpr-step-active .wpr-step-main-label' => 'color: {{VALUE}};',
+				]
+			]
+		);
+
+		$this->add_control(
+			'sub_label_color_active',
+			[
+				'label' => esc_html__( 'Sub Label Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step.wpr-step-active .wpr-step-sub-label' => 'color: {{VALUE}};',
 				]
 			]
 		);
@@ -2162,13 +2182,23 @@ class Wpr_Form_Builder extends Widget_Base {
 		);
 
 		$this->add_control(
-			'step_color_finish',
+			'main_label_color_finish',
 			[
-				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'label' => esc_html__( 'Label Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#222',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-step.wpr-step-finish i' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-step.wpr-step-finish .wpr-step-main-label' => 'color: {{VALUE}};',
+				]
+			]
+		);
+
+		$this->add_control(
+			'sub_label_color_finish',
+			[
+				'label' => esc_html__( 'Sub Label Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step.wpr-step-finish .wpr-step-sub-label' => 'color: {{VALUE}};',
 				]
 			]
 		);
@@ -2322,33 +2352,10 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'step_icon_size',
-			[
-				'label' => esc_html__( 'Icon Size', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 50,
-					],
-				],				
-				'default' => [
-					'unit' => 'px',
-					'size' => 12,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-step' => 'font-size: {{SIZE}}{{UNIT}};',
-				],
-				'separator' => 'before'
-			]
-		);
-
 		$this->add_control(
 			'step_inner_styles',
 			[
-				'label' => esc_html__( 'Step Inner', 'wpr-addons' ),
+				'label' => esc_html__( 'Step Indicator', 'wpr-addons' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -2594,6 +2601,28 @@ class Wpr_Form_Builder extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
+			'step_icon_size',
+			[
+				'label' => esc_html__( 'Icon Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 12,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step' => 'font-size: {{SIZE}}{{UNIT}};',
+				]
+			]
+		);
+
+		$this->add_responsive_control(
 			'step_label_distance',
 			[
 				'label' => esc_html__( 'Distance', 'wpr-addons' ),
@@ -2650,6 +2679,21 @@ class Wpr_Form_Builder extends Widget_Base {
 				'label' => esc_html__( 'Divider', 'wpr-addons' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
+				'condition' => [
+					'step_type!' => 'progress_bar'
+				]
+			]
+		);
+
+		$this->add_control(
+			'step_progressbar',
+			[
+				'label' => esc_html__( 'Progressbar', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+				'condition' => [
+					'step_type' => 'progress_bar'
+				]
 			]
 		);
 
@@ -2660,7 +2704,46 @@ class Wpr_Form_Builder extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#222333',
 				'selectors' => [
-					'{{WRAPPER}}.wpr-step-content-layout-vertical .wpr-step-sep' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-step-sep' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-step-progress' => 'background-color: {{VALUE}};',
+				]
+			]
+		);
+
+		$this->add_control(
+			'step_divider_color',
+			[
+				'label' => esc_html__( 'Text Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFF',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step-progress-fill' => 'color: {{VALUE}};',
+				]
+			]
+		);
+
+		$this->add_control(
+			'step_progress_fill_color',
+			[
+				'label' => esc_html__( 'Fill Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605be5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step-progress-fill' => 'background-color: {{VALUE}};',
+				],
+				'condition' => [
+					'step_type' => 'progress_bar'
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'step_percent_typo',
+				'selector' => '{{WRAPPER}} .wpr-step-progress-fill',
+				'condition' => [
+					'step_type' => 'progress_bar'
 				]
 			]
 		);
@@ -2682,7 +2765,61 @@ class Wpr_Form_Builder extends Widget_Base {
 					'size' => 2,
 				],
 				'selectors' => [
-					'{{WRAPPER}}' => '--wpr-steps-divider-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}' => '--wpr-steps-divider-width: {{SIZE}}{{UNIT}};'
+				],
+				'condition' => [
+					'step_type!' => 'progress_bar'
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'step_progress_text_distance',
+			[
+				'label' => esc_html__( 'Text Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step-progress-fill' => 'padding-right: {{SIZE}}{{UNIT}};'
+				],
+				'condition' => [
+					'step_type' => 'progress_bar'
+				]
+			]
+		);
+
+		$this->add_responsive_control(
+			'step_progress_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step-progress' => 'border-radius: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-step-progress-fill' => 'border-radius: {{SIZE}}{{UNIT}};'
+				],
+				'condition' => [
+					'step_type' => 'progress_bar'
 				]
 			]
 		);
@@ -2693,17 +2830,6 @@ class Wpr_Form_Builder extends Widget_Base {
 				'label' => esc_html__( 'Main Label', 'wpr-addons' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'main_label_color',
-			[
-				'label' => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-step-main-label' => 'color: {{VALUE}};',
-				]
 			]
 		);
 
@@ -2721,17 +2847,6 @@ class Wpr_Form_Builder extends Widget_Base {
 				'label' => esc_html__( 'Sub Label', 'wpr-addons' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'sub_label_color',
-			[
-				'label' => esc_html__( 'Color', 'wpr-addons' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .wpr-step-sub-label' => 'color: {{VALUE}};',
-				]
 			]
 		);
 
@@ -3035,7 +3150,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		$instance = $this->get_settings_for_display();
 		$form_fields_length = sizeof($instance['form_fields']);
 
-		var_dump('Reply To', $instance['email_reply_to']);
+		// var_dump('Reply To', $instance['email_reply_to']);
 		update_option('wpr_email_content_type_'. $this->get_id(), $instance['email_content_type']);
 		update_option('wpr_email_to_'. $this->get_id(), $instance['email_to']);
 		update_option('wpr_email_subject_'. $this->get_id(), $instance['email_subject']);
