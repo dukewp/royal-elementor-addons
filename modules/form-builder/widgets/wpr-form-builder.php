@@ -2714,7 +2714,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		);
 
 		$this->add_control(
-			'step_progress_fill_color',
+			'step_progress_text_color',
 			[
 				'label' => esc_html__( 'Text Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
