@@ -120,6 +120,8 @@ if ( ! defined( 'ABSPATH' ) ) {
         // Send email using wp_mail() function
         $sent = wp_mail( $to, $subject, $body, $headers);
       
+		error_log(print_r($sent, true));
+
         if ( $sent ) {
 			wp_send_json_success(array(
 				'action' => 'wpr_form_builder_email',
@@ -130,7 +132,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 			wp_send_json_error(array(
 				'action' => 'wpr_form_builder_email',
 				'message' => 'Message could not be sent',
-				'status' => 'error'
+				'status' => 'error',
+				'detais' => $sent
 			));
         }
     }
