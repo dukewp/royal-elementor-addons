@@ -1041,7 +1041,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				],				
 				'default' => [
 					'unit' => 'px',
-					'size' => 15,
+					'size' => 150,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-step-prev' => 'width: {{SIZE}}{{UNIT}};',
