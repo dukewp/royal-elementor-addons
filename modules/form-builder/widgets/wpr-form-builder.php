@@ -443,12 +443,6 @@ class Wpr_Form_Builder extends Widget_Base {
 			'step' => esc_html__( 'Step', 'wpr-addons' ),
 		];
 
-		$repeater->start_controls_tabs( 'form_fields_tabs' );
-
-		$repeater->start_controls_tab( 'form_fields_content_tab', [
-			'label' => esc_html__( 'Content', 'wpr-addons' ),
-		] );
-
 		$repeater->add_control(
 			'field_type',
 			[
@@ -569,6 +563,54 @@ class Wpr_Form_Builder extends Widget_Base {
 						],
 					],
 				],
+				'dynamic' => [
+					'active' => true,
+				],
+			]
+		);
+
+		$repeater->add_control(
+			'field_value',
+			[
+				'label' => esc_html__( 'Default Value', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => '',
+				'dynamic' => [
+					'active' => true,
+				],
+				'conditions' => [
+					'terms' => [
+						[
+							'name' => 'field_type',
+							'operator' => 'in',
+							'value' => [
+								'text',
+								'email',
+								'textarea',
+								'url',
+								'tel',
+								'radio',
+								'select',
+								'number',
+								'date',
+								'time',
+								'hidden',
+							],
+						],
+					],
+				],
+			]
+		);
+
+		$repeater->add_control(
+			'custom_id',
+			[
+				'label' => esc_html__( 'ID', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'description' => esc_html__( 'Element ID should be unique and not used elsewhere in this widget.', 'wpr-addons' ),
+				'default' => '',
+				'render_type' => 'none',
+				'required' => true,
 				'dynamic' => [
 					'active' => true,
 				],
@@ -750,44 +792,6 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
-		// $repeater->add_responsive_control( 
-		// 	'width',
-		// 	[
-		// 		'label' => esc_html__( 'Column Width', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SELECT,
-		// 		'options' => [
-		// 			'' => esc_html__( 'Default', 'wpr-addons' ),
-		// 			'100' => '100%',
-		// 			'80' => '80%',
-		// 			'75' => '75%',
-		// 			'70' => '70%',
-		// 			'66' => '66%',
-		// 			'60' => '60%',
-		// 			'50' => '50%',
-		// 			'40' => '40%',
-		// 			'33' => '33%',
-		// 			'30' => '30%',
-		// 			'25' => '25%',
-		// 			'20' => '20%',
-		// 		],
-		// 		'default' => '100',
-		// 		'conditions' => [
-		// 			'terms' => [
-		// 				[
-		// 					'name' => 'field_type',
-		// 					'operator' => '!in',
-		// 					'value' => [
-		// 						'hidden',
-		// 						'recaptcha',
-		// 						'recaptcha_v3',
-		// 						'step',
-		// 					],
-		// 				],
-		// 			],
-		// 		],
-		// 	]
-		// );
-
 		$repeater->add_control(
 			'rows',
 			[
@@ -877,70 +881,6 @@ class Wpr_Form_Builder extends Widget_Base {
 				'title' => esc_html__( 'Add your custom class WITHOUT the dot. e.g: my-class', 'wpr-addons' ),
 			]
 		);
-
-		$repeater->end_controls_tab();
-
-		$repeater->start_controls_tab(
-			'form_fields_advanced_tab',
-			[
-				'label' => esc_html__( 'Advanced', 'wpr-addons' ),
-				'condition' => [
-					'field_type!' => 'html',
-				],
-			]
-		);
-
-		$repeater->add_control(
-			'field_value',
-			[
-				'label' => esc_html__( 'Default Value', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => '',
-				'dynamic' => [
-					'active' => true,
-				],
-				'conditions' => [
-					'terms' => [
-						[
-							'name' => 'field_type',
-							'operator' => 'in',
-							'value' => [
-								'text',
-								'email',
-								'textarea',
-								'url',
-								'tel',
-								'radio',
-								'select',
-								'number',
-								'date',
-								'time',
-								'hidden',
-							],
-						],
-					],
-				],
-			]
-		);
-
-		$repeater->add_control(
-			'custom_id',
-			[
-				'label' => esc_html__( 'ID', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'description' => esc_html__( 'Element ID should be unique and not used elsewhere in this widget.', 'wpr-addons' ),
-				'default' => '',
-				'render_type' => 'none',
-				'required' => true,
-				'dynamic' => [
-					'active' => true,
-				],
-			]
-		);
-
-		$repeater->end_controls_tab();
-
-		$repeater->end_controls_tabs();
 
 		$this->add_control(
 			'form_fields',

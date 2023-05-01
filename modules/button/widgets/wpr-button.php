@@ -702,7 +702,7 @@ class Wpr_Button extends Widget_Base {
 			
 			<span class="wpr-button-content">
 				<?php if ( '' !== $settings['button_text'] ) : ?>
-					<span class="wpr-button-text"><?php echo esc_html( $settings['button_text'] ); ?></span>
+					<span class="wpr-button-text"><?php echo esc_html__( $settings['button_text'] ); ?></span>
 				<?php endif; ?>
 				
 				<?php if ( '' !== $settings['select_icon']['value'] ) : ?>
