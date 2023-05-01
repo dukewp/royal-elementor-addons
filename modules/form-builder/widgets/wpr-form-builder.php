@@ -169,24 +169,24 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
+		// $widget->add_control(
+		// 	$this->get_control_id( 'email_reply_to' ),
+		// 	[
+		// 		'label' => esc_html__( 'Reply-To', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'default' => 'email@' . $site_domain,
+		// 		'render_type' => 'template',
+		// 		'options' => [
+		// 			'' => '',
+		// 		],
+		// 		'render_type' => 'none',
+		// 	]
+		// );
+
 		$widget->add_control(
 			$this->get_control_id( 'email_reply_to' ),
 			[
-				'label' => esc_html__( 'Reply-To', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'email@' . $site_domain,
-				'render_type' => 'template',
-				'options' => [
-					'' => '',
-				],
-				'render_type' => 'none',
-			]
-		);
-
-		$widget->add_control(
-			$this->get_control_id( 'email_reply_to_alt' ),
-			[
-				'label' => esc_html__( 'Reply To Alt', 'wpr-addons' ),
+				'label' => esc_html__( 'Reply To', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => 'email@' . $site_domain,
 				'render_type' => 'none'
@@ -617,7 +617,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'label' => esc_html__( 'Options', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXTAREA,
 				'default' => '',
-				'description' => esc_html__( 'Enter each option in a separate line. To differentiate between label and value, separate them with a pipe char ("|"). For example: First Name|f_name', 'wpr-addons' ),
+				'description' => esc_html__( 'Insert options in separate lines. For different label/values separate them with a pipe char ("|"). Like: First Option|f_option', 'wpr-addons' ),
 				'conditions' => [
 					'terms' => [
 						[
@@ -1337,7 +1337,8 @@ class Wpr_Form_Builder extends Widget_Base {
 					'number_text' => 'Number & Text',
 					'icon_text' => 'Icon & Text',
 				],
-				'default' => 'number_text',
+				'prefix_class' => 'wpr-step-type-',
+				'default' => 'number_text'
 			]
 		);
 
@@ -1354,7 +1355,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'default' => 'vertical',
 				'prefix_class' => 'wpr-step-content-layout-',
 				'condition' => [
-					'step_type!' => 'progress_bar'
+					'step_type!' => ['progress_bar', 'none']
 				]
 			]
 		);
@@ -1394,6 +1395,9 @@ class Wpr_Form_Builder extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}}.wpr-step-content-layout-vertical .wpr-step' => 'align-items: {{VALUE}}',
 					'{{WRAPPER}}.wpr-step-content-layout-horizontal .wpr-step' => 'justify-content: {{VALUE}}'
+				],
+				'condition' => [
+					'step_type!' => ['progress_bar', 'none']
 				]
 			]
 		);
@@ -1420,6 +1424,9 @@ class Wpr_Form_Builder extends Widget_Base {
 				'default' => 'left',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-step' => 'text-align: {{VALUE}}'
+				],
+				'condition' => [
+					'step_type!' => ['progress_bar', 'none']
 				]
 			]
 		);
@@ -3165,6 +3172,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		update_option('wpr_email_to_'. $this->get_id(), $instance['email_to']);
 		update_option('wpr_email_subject_'. $this->get_id(), $instance['email_subject']);
 		update_option('wpr_cc_header_'. $this->get_id(), $instance['email_to_cc']);
+		update_option('wpr_bcc_header_'. $this->get_id(), $instance['email_to_bcc']);
 		update_option('wpr_reply_to_'. $this->get_id(), $instance['email_reply_to']);
 		update_option('wpr_meta_keys_'. $this->get_id(), $instance['form_metadata']);
 		update_option('wpr_referrer_'. $this->get_id(), home_url( $_SERVER['REQUEST_URI'] ));

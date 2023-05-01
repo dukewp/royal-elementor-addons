@@ -109,18 +109,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 		if ( !empty( get_option('wpr_cc_header_'. $_POST['wpr_form_id']) ) ) {
 			$cc_header = 'Cc: ' . get_option('wpr_cc_header_'. $_POST['wpr_form_id']);
 		}
+
+		$bcc_header = '';
+		if ( !empty( get_option('wpr_bcc_header_'. $_POST['wpr_form_id']) ) ) {
+			$bcc_header = 'Bcc: ' . get_option('wpr_bcc_header_'. $_POST['wpr_form_id']);
+		}
 		
 		if ( !empty( get_option('wpr_reply_to_'. $_POST['wpr_form_id']) ) ) {
 			$reply_to = 'Reply-To: ' . get_option('wpr_reply_to_'. $_POST['wpr_form_id']);
 		}
 		
-		$headers = array('Content-Type: text/'. $content_type .'; charset=UTF-8', $cc_header, $reply_to);
+		$headers = array('Content-Type: text/'. $content_type .'; charset=UTF-8', $cc_header, $bcc_header, $reply_to);
 		// $headers = array('Content-Type: text/'. $content_type .'; charset=UTF-8', $cc_header);
       
         // Send email using wp_mail() function
         $sent = wp_mail( $to, $subject, $body, $headers);
-      
-		error_log(print_r($sent, true));
 
         if ( $sent ) {
 			wp_send_json_success(array(
@@ -133,7 +136,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				'action' => 'wpr_form_builder_email',
 				'message' => 'Message could not be sent',
 				'status' => 'error',
-				'detais' => $sent
+				'details' => $sent
 			));
         }
     }

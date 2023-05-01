@@ -50,8 +50,12 @@ class Wpr_Form_Submissions {
                         'form_id' => get_post_meta($post->ID, 'wpr_form_id', true),
                         'form_page' => get_post_meta($post->ID, 'wpr_form_page', true),
                         'form_page_id' => get_post_meta($post->ID, 'wpr_form_page_id', true),
+                        'form_page_url' =>  get_permalink( get_post_meta($post->ID, 'wpr_form_page_id', true)),
+                        'form_page_editor' => admin_url('post.php?post=' . get_post_meta($post->ID, 'wpr_form_page_id', true) . '&action=elementor'),
                         'form_agent' => get_post_meta($post->ID, 'wpr_user_agent', true),
                         'agent_ip' => get_post_meta($post->ID, 'wpr_user_ip', true),
+                        'post_created' => date('F j, Y g:i a', strtotime($post->post_date)),
+                        'post_updated' => date('F j, Y g:i a', strtotime($post->post_modified)),
                     ]
                 );
             }
@@ -78,6 +82,7 @@ class Wpr_Form_Submissions {
     
     // Define the callback function to display the meta box contents
     public function wpr_meta_box_callback( $post, $metabox ) {
+        echo '<button class="wpr-edit-submissions button button-primary">'. esc_html__('Edit', 'wpr-addons') .'</button>';
         foreach (get_post_meta($post->ID) as $key => $value ) {
 
             $exclude = ['wpr_form_id', 'wpr_form_name', 'wpr_form_page', 'wpr_form_page_id', 'wpr_user_agent', 'wpr_user_ip', 'wpr_submission_read_status', '_edit_lock'];
@@ -88,34 +93,40 @@ class Wpr_Form_Submissions {
 
             echo '<div class="wpr-submissions-wrap">';
                 if ( is_serialized($value[0]) ) {
-                    $value = unserialize($value[0]);
                 
                     $prefix = "form_field-";
                     $key_title = ucfirst(str_replace($prefix, "", $key));
+
+                    if ($value[0]) {
+                        $value = unserialize($value[0]);
+                    }
                     
-                    if ( 'textarea' == $value[0] ) {
-                        echo '<label for="'. $key .'">'.  $key_title .': </label>';
-                        echo '<textarea style="display: block;"  id="'. $key .'">'. $value[1] .'</textarea>';
+                    if ( str_contains($key, '_action_') ) {
+                        $prefix = '_action_wpr_form_builder_';
+                        echo '<label>'. ucfirst(substr($key, strpos($key, $prefix) + strlen($prefix))) .'</label>';
+                        echo '<p class="notice notice-'. $value['status'] .'">'. ucfirst($value['message']) .'</p>';
                     } elseif ( 'file' == $value[0] ) {
-                        echo '<label for="'. $key .'">'.  $key_title .': </label>';
-                        foreach ( $value[1] as $index => $file ) {
-                            echo '<a style="display: block;" id="'. $key . '_' . $index .'" target="_blank" href="'. $file .'">'. $file .'</a>';
+                        echo '<label for="'. $key .'">'.  $key_title .' </label>';
+                        if ( is_array($value[1]) ) {
+                            foreach ( $value[1] as $index => $file ) {
+                                echo '<a style="display: block;" id="'. $key . '_' . $index .'" target="_blank" href="'. $file .'">'. $file .'</a>';
+                            }
                         }
+                    } elseif ( 'textarea' == $value[0] ) {
+                        echo '<label for="'. $key .'">'.  $key_title .' </label>';
+                        echo '<textarea style="display: block;"  id="'. $key .'">'. $value[1] .'</textarea>';
                     } else {
                         if ( $value[0] === 'radio' || $value[0] === 'checkbox' ) {
                             $value[0] = 'text';
                         }
-                        echo '<label for="'. $key .'">'.  $key_title .': </label>';
+                        echo '<label for="'. $key .'">'.  $key_title .' </label>';
                         echo '<input style="display: block;" type="'. $value[0] .'" id="'. $key .'" name="submitter_email" value="'. $value[1] .'">';
                     }
-                } elseif ( str_contains($key, '_action_') ) {
-                    echo '<span>'. $key .'</span><br>';
-                    echo '<span>'. $value[0] .'</span>';
                 } else {
                     $prefix = "form_field-";
                     $key_title = ucfirst(str_replace($prefix, "", $key));
                     
-                    echo '<label for="'. $key .'">'.  $key_title .': </label>';
+                    echo '<label for="'. $key .'">'.  $key_title .' </label>';
                     echo '<input style="display: block;" type="text" id="'. $key .'" name="submitter_email" value="'. $value[0] .'">';
                 }
             echo '</div>';

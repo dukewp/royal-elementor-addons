@@ -79,14 +79,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 					wp_send_json_success(array(
 						'action' => 'wpr_form_builder_mailchimp',
-						'status' => 'subscribed',
+						'status' => 'success',
+						'message' => 'Mailchimp subscription was successful',
 						'groups' => $group_ids
 					));
 
 				} else {
 					wp_send_json_error([ 
 						'action' => 'wpr_form_builder_mailchimp',
-						'status' => $request->title
+						'status' => $request->title,
+						'message' => 'Mailchimp subscription failed'
 					]);
 				}
 			}

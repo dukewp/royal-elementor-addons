@@ -26,9 +26,15 @@ if ( ! defined( 'ABSPATH' ) ) {
         $post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
         $action_name = isset($_POST['action_name']) ? sanitize_text_field($_POST['action_name']) : '';
         $status = isset($_POST['status']) ? sanitize_text_field($_POST['status']) : '';
+        $message = isset($_POST['message']) ? sanitize_text_field($_POST['message']) : '';
+
+        $meta_value = [
+            'status' => $status,
+            'message' => $message
+        ];
 
         if ($post_id && $action_name && $status) {
-            update_post_meta($post_id, '_action_' . $action_name, $status);
+            update_post_meta($post_id, '_action_' . $action_name, $meta_value);
             wp_send_json_success('Post meta updated successfully');
         } else {
             wp_send_json_error('Invalid data provided');

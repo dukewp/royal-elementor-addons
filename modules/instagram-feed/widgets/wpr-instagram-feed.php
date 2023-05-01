@@ -4882,7 +4882,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
 		if ( get_transient($key) === false || empty(get_transient($key)) || ($settings['instagram_access_token'] !== get_option('wpr_instagram_access_token_to_compare'. $this->get_ID())) ) {
 
-			$limit = wp_is_mobile() ? $settings['limit_mobile'] : $settings['limit'];
+			$limit = !empty($settings['limit']) ? $settings['limit'] : 10;
 
 			$url = 'https://graph.instagram.com/me/media?fields=id,media_type,media_url,thumbnail_url,permalink,children,username,caption,timestamp&access_token='. $access_token .'&limit='. $limit;
 

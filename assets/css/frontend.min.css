@@ -17717,6 +17717,10 @@ dl.variation dd {
     align-items: flex-start;
 }
 
+.wpr-step-type-none .wpr-step-wrap {
+    align-items: center;
+}
+
 /* Hide all steps by default: */
 .wpr-step-tab {
     display: flex;
@@ -17806,12 +17810,13 @@ dl.variation dd {
     display: none;
 }
 
-.wpr-step-content-layout-vertical .wpr-step-sep {
-    background-color: lightgrey;
+.wpr-step-sep {
     height: var(--wpr-steps-divider-width, 1px);
+    background-color: lightgrey;
+}
+
+.wpr-step-content-layout-vertical:not(.wpr-step-type-none) .wpr-step-sep {
     margin-top: calc(var(--wpr-steps-indicator-padding, 30px) / 2 - var(--wpr-steps-divider-width, 1px) / 2 + var(--wpr-steps-padding));
-    /* top: calc(var(--wpr-steps-indicator-padding, 30px) / 2 - var(--wpr-steps-divider-width, 1px) / 2); */
-    /* transform: translateY(-50%); */
 }
 
 .wpr-step-content-layout-horizontal .wpr-step-sep {
