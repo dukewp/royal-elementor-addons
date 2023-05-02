@@ -10941,6 +10941,18 @@ a.wpr-ajax-img-wrap {
     flex-direction: column;
 }
 
+@media screen and (max-width: 767px) {
+    .wpr-tabs-responsive-yes.wpr-tabs-position-left>.elementor-widget-container>.wpr-tabs,
+    .wpr-tabs-responsive-yes.wpr-tabs-position-right>.elementor-widget-container>.wpr-tabs {
+        flex-direction: column;
+    }
+
+    .wpr-tabs-responsive-yes.wpr-tabs-position-left>.elementor-widget-container>.wpr-tabs>.wpr-tabs-wrap,
+    .wpr-tabs-responsive-yes.wpr-tabs-position-right>.elementor-widget-container>.wpr-tabs>.wpr-tabs-wrap {
+        width: 100%;
+    }
+}
+
 
 /* Tabs Position */
 
