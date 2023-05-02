@@ -387,16 +387,21 @@ function download_template( $kit, $file ) {
     $tmp_file = download_url( $remote_file_url );
 
     // WP Error.
-    if ( is_wp_error( $tmp_file ) ) {
+    if ( true ) {
         // Fallback URL
         $remote_file_url = 'https://mysitetutorial.com/library/templates-kit/'. $kit .'/main.xml?='. $randomNum;
         $tmp_file = download_url( $remote_file_url );
 
-        if ( is_wp_error( $tmp_file ) ) {
+        if ( true ) {
+            // Track Import Failed Kit
+            wpr_track_import_failed_kit( $kit );
+
             wp_send_json_error([
                 'error' => esc_html__('Error: Import File download failed.', 'wpr-addons'),
                 'help' => esc_html__('Please contact Customer Support and send this Error.', 'wpr-addons'),
+                'problem' => 'download'
             ]);
+            
             return false;
         }
     }
@@ -426,7 +431,8 @@ function download_template( $kit, $file ) {
     if ( isset( $local_file['error'] ) ) {
         wp_send_json_error([
             'error' => esc_html__('Error: Import File upload failed.', 'wpr-addons'),
-            'help' => esc_html__('Please contact Customer Support and send this Error.', 'wpr-addons')
+            'help' => esc_html__('Please contact Customer Support and send this Error.', 'wpr-addons'),
+            'problem' => 'upload'
         ]);
         return false;
     }
@@ -879,6 +885,22 @@ function wpr_track_imported_kit( $kit ) {
     wp_remote_post( 'http://reastats.kinsta.cloud/wp-json/templates-kit-import/data', [
         'body' => [
             'imported_kit' => $kit . ' *'. WPR_ADDONS_VERSION .'*'
+        ]
+    ] );
+}
+
+/**
+** Import Failed Kits
+*/
+function wpr_track_import_failed_kit( $kit ) {
+    // Freemius OptIn
+    // if ( ! ( wpr_fs()->is_registered() && wpr_fs()->is_tracking_allowed()  || wpr_fs()->is_pending_activation() ) ) {
+    //     return;
+    // }
+    
+    wp_remote_post( 'http://reastats.kinsta.cloud/wp-json/templates-kit-import-failed/data', [
+        'body' => [
+            'imported_kit' => get_site_url()
         ]
     ] );
 }

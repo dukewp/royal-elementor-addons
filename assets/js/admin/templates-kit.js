@@ -245,6 +245,7 @@ jQuery(document).ready(function( $ ) {
 									if ( undefined !== response.success) {
 										// console.log(response.data);
 										$('.progress-wrap, .wpr-import-help').addClass('import-error');
+										$('.wpr-import-help a').attr('href', $('.wpr-import-help a').attr('href') + '-xml-'+ response.data['problem'] +'-failed');
 										$('.progress-wrap').find('strong').html(response.data['error'] +'<br><span>'+ response.data['help'] +'<span>');
 										$('.wpr-import-help a').html('Contact Support <span class="dashicons dashicons-email"></span>');
 
