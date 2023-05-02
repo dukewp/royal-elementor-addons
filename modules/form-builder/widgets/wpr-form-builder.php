@@ -169,22 +169,22 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
-		// $widget->add_control(
-		// 	$this->get_control_id( 'email_reply_to' ),
-		// 	[
-		// 		'label' => esc_html__( 'Reply-To', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SELECT,
-		// 		'default' => 'email@' . $site_domain,
-		// 		'render_type' => 'template',
-		// 		'options' => [
-		// 			'' => '',
-		// 		],
-		// 		'render_type' => 'none',
-		// 	]
-		// );
-
 		$widget->add_control(
 			$this->get_control_id( 'email_reply_to' ),
+			[
+				'label' => esc_html__( 'Reply-To', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'email@' . $site_domain,
+				'render_type' => 'template',
+				'options' => [
+					'' => '',
+				],
+				'render_type' => 'none',
+			]
+		);
+
+		$widget->add_control(
+			$this->get_control_id( 'email_reply_to_alt' ),
 			[
 				'label' => esc_html__( 'Reply To', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
@@ -614,6 +614,17 @@ class Wpr_Form_Builder extends Widget_Base {
 				'dynamic' => [
 					'active' => true,
 				],
+			]
+		);
+
+		$shortcode_template = '{{ view.container.settings.get( \'custom_id\' ) }}';
+		$repeater->add_control(
+			'shortcode',
+			[
+				'label' => esc_html__( 'Shortcode', 'wpr-addons' ),
+				'type' => Controls_Manager::RAW_HTML,
+				'classes' => 'forms-field-shortcode',
+				'raw' => '<input class="wpr-form-field-shortcode" value=\'[field id="' . $shortcode_template . '"]\' readonly />',
 			]
 		);
 
@@ -1813,6 +1824,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
+					'{{WRAPPER}} .wpr-step-prev' => 'border-color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-step-next' => 'border-color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-button[type="submit"]' => 'border-color: {{VALUE}};',
 				],
@@ -3117,6 +3129,8 @@ class Wpr_Form_Builder extends Widget_Base {
 		update_option('wpr_meta_keys_'. $this->get_id(), $instance['form_metadata']);
 		update_option('wpr_referrer_'. $this->get_id(), home_url( $_SERVER['REQUEST_URI'] ));
 		update_option('wpr_referrer_title_'. $this->get_id(), get_the_title($post->ID));
+
+		var_dump(get_option('wpr_email_subject_'. $this->get_id()));
 
 		$emailField      = isset($instance['email_field']) ? $instance['email_field'] : '';
 		$firstNameField  = isset($instance['first_name_field']) ? $instance['first_name_field'] : '';
