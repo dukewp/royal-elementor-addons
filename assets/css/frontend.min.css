@@ -5006,6 +5006,15 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     max-width: none !important;
 }
 
+.wpr-api-key-missing {
+    color: red;
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.wpr-api-key-missing a {
+    font-weight: bold;
+}
 
 /*--------------------------------------------------------------
   == Forms
@@ -10930,6 +10939,18 @@ a.wpr-ajax-img-wrap {
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
+}
+
+@media screen and (max-width: 767px) {
+    .wpr-tabs-responsive-yes.wpr-tabs-position-left>.elementor-widget-container>.wpr-tabs,
+    .wpr-tabs-responsive-yes.wpr-tabs-position-right>.elementor-widget-container>.wpr-tabs {
+        flex-direction: column;
+    }
+
+    .wpr-tabs-responsive-yes.wpr-tabs-position-left>.elementor-widget-container>.wpr-tabs>.wpr-tabs-wrap,
+    .wpr-tabs-responsive-yes.wpr-tabs-position-right>.elementor-widget-container>.wpr-tabs>.wpr-tabs-wrap {
+        width: 100%;
+    }
 }
 
 
@@ -17708,6 +17729,10 @@ dl.variation dd {
     align-items: flex-start;
 }
 
+.wpr-step-type-none .wpr-step-wrap {
+    align-items: center;
+}
+
 /* Hide all steps by default: */
 .wpr-step-tab {
     display: flex;
@@ -17781,23 +17806,29 @@ dl.variation dd {
     margin-bottom: 5px;
 }
 
-.wpr-step-prev,
-.wpr-step-next,
+/* .wpr-step-prev,
+.wpr-step-next, */
 .wpr-step-sep,
 .wpr-stp-btns-wrap .wpr-button {
     flex: 1;
+}
+
+.wpr-step-tab .wpr-stp-btns-wrap .wpr-button {
+    flex: 0 1 auto;
+    flex-basis: auto;
 }
 
 .wpr-step-sep:last-of-type {
     display: none;
 }
 
-.wpr-step-content-layout-vertical .wpr-step-sep {
-    background-color: lightgrey;
+.wpr-step-sep {
     height: var(--wpr-steps-divider-width, 1px);
+    background-color: lightgrey;
+}
+
+.wpr-step-content-layout-vertical:not(.wpr-step-type-none) .wpr-step-sep {
     margin-top: calc(var(--wpr-steps-indicator-padding, 30px) / 2 - var(--wpr-steps-divider-width, 1px) / 2 + var(--wpr-steps-padding));
-    /* top: calc(var(--wpr-steps-indicator-padding, 30px) / 2 - var(--wpr-steps-divider-width, 1px) / 2); */
-    /* transform: translateY(-50%); */
 }
 
 .wpr-step-content-layout-horizontal .wpr-step-sep {

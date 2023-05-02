@@ -169,24 +169,24 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
+		// $widget->add_control(
+		// 	$this->get_control_id( 'email_reply_to' ),
+		// 	[
+		// 		'label' => esc_html__( 'Reply-To', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'default' => 'email@' . $site_domain,
+		// 		'render_type' => 'template',
+		// 		'options' => [
+		// 			'' => '',
+		// 		],
+		// 		'render_type' => 'none',
+		// 	]
+		// );
+
 		$widget->add_control(
 			$this->get_control_id( 'email_reply_to' ),
 			[
-				'label' => esc_html__( 'Reply-To', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'email@' . $site_domain,
-				'render_type' => 'template',
-				'options' => [
-					'' => '',
-				],
-				'render_type' => 'none',
-			]
-		);
-
-		$widget->add_control(
-			$this->get_control_id( 'email_reply_to_alt' ),
-			[
-				'label' => esc_html__( 'Reply To Alt', 'wpr-addons' ),
+				'label' => esc_html__( 'Reply To', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => 'email@' . $site_domain,
 				'render_type' => 'none'
@@ -443,12 +443,6 @@ class Wpr_Form_Builder extends Widget_Base {
 			'step' => esc_html__( 'Step', 'wpr-addons' ),
 		];
 
-		$repeater->start_controls_tabs( 'form_fields_tabs' );
-
-		$repeater->start_controls_tab( 'form_fields_content_tab', [
-			'label' => esc_html__( 'Content', 'wpr-addons' ),
-		] );
-
 		$repeater->add_control(
 			'field_type',
 			[
@@ -576,6 +570,54 @@ class Wpr_Form_Builder extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'field_value',
+			[
+				'label' => esc_html__( 'Default Value', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => '',
+				'dynamic' => [
+					'active' => true,
+				],
+				'conditions' => [
+					'terms' => [
+						[
+							'name' => 'field_type',
+							'operator' => 'in',
+							'value' => [
+								'text',
+								'email',
+								'textarea',
+								'url',
+								'tel',
+								'radio',
+								'select',
+								'number',
+								'date',
+								'time',
+								'hidden',
+							],
+						],
+					],
+				],
+			]
+		);
+
+		$repeater->add_control(
+			'custom_id',
+			[
+				'label' => esc_html__( 'ID', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'description' => esc_html__( 'Element ID should be unique and not used elsewhere in this widget.', 'wpr-addons' ),
+				'default' => '',
+				'render_type' => 'none',
+				'required' => true,
+				'dynamic' => [
+					'active' => true,
+				],
+			]
+		);
+
+		$repeater->add_control(
 			'required',
 			[
 				'label' => esc_html__( 'Required', 'wpr-addons' ),
@@ -617,7 +659,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'label' => esc_html__( 'Options', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXTAREA,
 				'default' => '',
-				'description' => esc_html__( 'Enter each option in a separate line. To differentiate between label and value, separate them with a pipe char ("|"). For example: First Name|f_name', 'wpr-addons' ),
+				'description' => esc_html__( 'Insert options in separate lines. For different label/values separate them with a pipe char ("|"). Like: First Option|f_option', 'wpr-addons' ),
 				'conditions' => [
 					'terms' => [
 						[
@@ -750,44 +792,6 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
-		// $repeater->add_responsive_control( 
-		// 	'width',
-		// 	[
-		// 		'label' => esc_html__( 'Column Width', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SELECT,
-		// 		'options' => [
-		// 			'' => esc_html__( 'Default', 'wpr-addons' ),
-		// 			'100' => '100%',
-		// 			'80' => '80%',
-		// 			'75' => '75%',
-		// 			'70' => '70%',
-		// 			'66' => '66%',
-		// 			'60' => '60%',
-		// 			'50' => '50%',
-		// 			'40' => '40%',
-		// 			'33' => '33%',
-		// 			'30' => '30%',
-		// 			'25' => '25%',
-		// 			'20' => '20%',
-		// 		],
-		// 		'default' => '100',
-		// 		'conditions' => [
-		// 			'terms' => [
-		// 				[
-		// 					'name' => 'field_type',
-		// 					'operator' => '!in',
-		// 					'value' => [
-		// 						'hidden',
-		// 						'recaptcha',
-		// 						'recaptcha_v3',
-		// 						'step',
-		// 					],
-		// 				],
-		// 			],
-		// 		],
-		// 	]
-		// );
-
 		$repeater->add_control(
 			'rows',
 			[
@@ -878,70 +882,6 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
-		$repeater->end_controls_tab();
-
-		$repeater->start_controls_tab(
-			'form_fields_advanced_tab',
-			[
-				'label' => esc_html__( 'Advanced', 'wpr-addons' ),
-				'condition' => [
-					'field_type!' => 'html',
-				],
-			]
-		);
-
-		$repeater->add_control(
-			'field_value',
-			[
-				'label' => esc_html__( 'Default Value', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => '',
-				'dynamic' => [
-					'active' => true,
-				],
-				'conditions' => [
-					'terms' => [
-						[
-							'name' => 'field_type',
-							'operator' => 'in',
-							'value' => [
-								'text',
-								'email',
-								'textarea',
-								'url',
-								'tel',
-								'radio',
-								'select',
-								'number',
-								'date',
-								'time',
-								'hidden',
-							],
-						],
-					],
-				],
-			]
-		);
-
-		$repeater->add_control(
-			'custom_id',
-			[
-				'label' => esc_html__( 'ID', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'description' => esc_html__( 'Element ID should be unique and not used elsewhere in this widget.', 'wpr-addons' ),
-				'default' => '',
-				'render_type' => 'none',
-				'required' => true,
-				'dynamic' => [
-					'active' => true,
-				],
-			]
-		);
-
-		$repeater->end_controls_tab();
-
-		$repeater->end_controls_tabs();
-
 		$this->add_control(
 			'form_fields',
 			[
@@ -1024,6 +964,34 @@ class Wpr_Form_Builder extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
+			'buttons_width',
+			[
+				'label' => esc_html__( 'Step Buttons Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px', '%'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 500,
+					],
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					]
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 150,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step-prev' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-step-next' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-step-tab .wpr-button' => 'width: {{SIZE}}{{UNIT}};'
+				],
+			]
+		);
+
+		$this->add_responsive_control(
 			'button_align',
 			[
 				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
@@ -1050,7 +1018,9 @@ class Wpr_Form_Builder extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-stp-btns-wrap' => '{{VALUE}}',
-				]
+					'{{WRAPPER}} .wpr-step-tab:first-of-type .wpr-step-next' => '{{VALUE}}',
+				],
+				'separator' => 'before'
 			]
 		);
 
@@ -1307,7 +1277,8 @@ class Wpr_Form_Builder extends Widget_Base {
 					'number_text' => 'Number & Text',
 					'icon_text' => 'Icon & Text',
 				],
-				'default' => 'number_text',
+				'prefix_class' => 'wpr-step-type-',
+				'default' => 'number_text'
 			]
 		);
 
@@ -1324,7 +1295,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'default' => 'vertical',
 				'prefix_class' => 'wpr-step-content-layout-',
 				'condition' => [
-					'step_type!' => 'progress_bar'
+					'step_type!' => ['progress_bar', 'none']
 				]
 			]
 		);
@@ -1364,6 +1335,9 @@ class Wpr_Form_Builder extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}}.wpr-step-content-layout-vertical .wpr-step' => 'align-items: {{VALUE}}',
 					'{{WRAPPER}}.wpr-step-content-layout-horizontal .wpr-step' => 'justify-content: {{VALUE}}'
+				],
+				'condition' => [
+					'step_type!' => ['progress_bar', 'none']
 				]
 			]
 		);
@@ -1390,6 +1364,9 @@ class Wpr_Form_Builder extends Widget_Base {
 				'default' => 'left',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-step' => 'text-align: {{VALUE}}'
+				],
+				'condition' => [
+					'step_type!' => ['progress_bar', 'none']
 				]
 			]
 		);
@@ -2612,7 +2589,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 50,
+						'max' => 25,
 					],
 				],				
 				'default' => [
@@ -2643,34 +2620,6 @@ class Wpr_Form_Builder extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}}.wpr-step-content-layout-horizontal .wpr-step-label' => 'margin-left: {{SIZE}}{{UNIT}};',
-				],
-				'separator' => 'before'
-			]
-		);
-
-		$this->add_responsive_control(
-			'buttons_distance',
-			[
-				'label' => esc_html__( 'Buttons Distance', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px', '%'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 500,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-					]
-				],				
-				'default' => [
-					'unit' => 'px',
-					'size' => 15,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-step-prev' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-step-prev:not(:first-of-type)' => 'margin-left: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before'
 			]
@@ -2763,7 +2712,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 100,
+						'max' => 10,
 					],
 				],				
 				'default' => [
@@ -3156,11 +3105,14 @@ class Wpr_Form_Builder extends Widget_Base {
 		$instance = $this->get_settings_for_display();
 		$form_fields_length = sizeof($instance['form_fields']);
 
+		var_dump($instance['mailchimp_groups']);
+
 		// var_dump('Reply To', $instance['email_reply_to']);
 		update_option('wpr_email_content_type_'. $this->get_id(), $instance['email_content_type']);
 		update_option('wpr_email_to_'. $this->get_id(), $instance['email_to']);
 		update_option('wpr_email_subject_'. $this->get_id(), $instance['email_subject']);
 		update_option('wpr_cc_header_'. $this->get_id(), $instance['email_to_cc']);
+		update_option('wpr_bcc_header_'. $this->get_id(), $instance['email_to_bcc']);
 		update_option('wpr_reply_to_'. $this->get_id(), $instance['email_reply_to']);
 		update_option('wpr_meta_keys_'. $this->get_id(), $instance['form_metadata']);
 		update_option('wpr_referrer_'. $this->get_id(), home_url( $_SERVER['REQUEST_URI'] ));

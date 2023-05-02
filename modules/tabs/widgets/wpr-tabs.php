@@ -334,6 +334,15 @@ class Wpr_Tabs extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'tabs_invert_responsive',
+			[
+				'label' => esc_html__( 'Invert on Mobile', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'prefix_class' => 'wpr-tabs-responsive-',
+			]
+		);
+
 		$this->add_control_tabs_hr_position();
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {
@@ -426,12 +435,16 @@ class Wpr_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Label Width', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
+				'size_units' => ['px', '%'],
 				'range' => [
 					'px' => [
 						'min' => 0,
 						'max' => 600,
 					],
+					'%' => [
+						'min' => 10,
+						'max' => 100
+					]
 				],
 				'default' => [
 					'unit' => 'px',
@@ -440,7 +453,7 @@ class Wpr_Tabs extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} '. $css_selector['control_list'] => 'min-width: {{SIZE}}{{UNIT}};',
 				],
-				'separator' => 'before',
+				'separator' => 'before'
 			]
 		);
 

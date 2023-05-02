@@ -451,7 +451,8 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-active .wpr-toggle-icon i' => 'transform: rotate({{SIZE}}deg); transform-origin: center;'
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-active .wpr-toggle-icon i' => 'transform: rotate({{SIZE}}deg); transform-origin: center;',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-active .wpr-toggle-icon svg' => 'transform: rotate({{SIZE}}deg); transform-origin: center;'
 				]
 			]
 		);

@@ -37,18 +37,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
         // // Get Available Fileds (PHPCS - fields are sanitized later on input)
 		$fields = isset($_POST['form_data']) ? $_POST['form_data'] : []; // phpcs:ignore
-        // wp_parse_str( $available_fields, $fields );
-			// 'ADDRESS' => [
-			// 	'addr1' => !empty ( $fields['address_field'] ) ? sanitize_text_field($fields['address_field']) : '',
-			// 	'addr2' => '', // You can add a second address line if needed
-			// 	'city' => '',  // Add city information
-			// 	'state' => '', // Add state information
-			// 	'zip' => '',   // Add zip code information
-			// 	'country' => '',
-			// ],
 
-			// 'id' => $fields['group_id'],
-			// 'groups' => $fields['group_name']
+		$group_ids = isset($fields['group_id']) ? array_map('sanitize_text_field', array_map('trim', explode(',', wp_unslash($fields['group_id'])))) : [];
 
         // Merge Additional Fields
         $merge_fields = [
@@ -57,11 +47,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 			'PHONE' => !empty ( $fields['phone_field'] ) ? sanitize_text_field($fields['phone_field']) : '',
 			'ADDRESS' => !empty ( $fields['address_field'] ) ? sanitize_text_field($fields['address_field']) : '',
 			'BIRTHDAY' => !empty ( $fields['birthday_field'] ) ? sanitize_text_field($fields['birthday_field']) : '',
-			// 'GROUPS' => [
-			// 	[
-			// 		'id' => $fields['group_id']
-			// 	]
-			// ]
 		];
 
         // API URL
@@ -78,6 +63,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				'email_address' => sanitize_text_field($fields[ 'email_field' ]),
 				'status' => 'subscribed',
 				'merge_fields' => $merge_fields,
+				'interests' => self::group_ids_to_interests_array($group_ids)
 			]),
         ];
 
@@ -93,13 +79,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 					wp_send_json_success(array(
 						'action' => 'wpr_form_builder_mailchimp',
-						'status' => 'subscribed'
+						'status' => 'success',
+						'message' => 'Mailchimp subscription was successful',
+						'groups' => $group_ids
 					));
 
 				} else {
 					wp_send_json_error([ 
 						'action' => 'wpr_form_builder_mailchimp',
-						'status' => $request->title
+						'status' => $request->title,
+						'message' => 'Mailchimp subscription failed'
 					]);
 				}
 			}
@@ -111,6 +100,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 			]);
 		}
 	}
+
+	public static function group_ids_to_interests_array($group_ids) {
+		$interests_array = [];
+	
+		foreach ($group_ids as $group_id) {
+			$interests_array[$group_id] = true;
+		}
+	
+		return $interests_array;
+	}
+	
  }
 
  new WPR_Subscribe_Mailchimp();
