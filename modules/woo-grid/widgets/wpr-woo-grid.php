@@ -14,7 +14,7 @@ use Elementor\Core\Schemes\Typography;
 use Elementor\Repeater;
 use Elementor\Group_Control_Image_Size;
 use WprAddons\Classes\Utilities;
-use WprAddons\Classes\WPR_Post_Likes;
+use WprAddons\Classes\Modules\WPR_Post_Likes;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -2007,7 +2007,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Show Text', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
 				'return_value' => 'yes',
 				'condition' => [
 					'element_select' => [
@@ -5857,7 +5856,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
 					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
 				],
-				'default' => 'solid',
+				'default' => 'none',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wishlist-add' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} .wpr-wishlist-remove' => 'border-style: {{VALUE}};'
@@ -6174,7 +6173,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
 					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
 				],
-				'default' => 'solid',
+				'default' => 'none',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-compare-add' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} .wpr-compare-remove' => 'border-style: {{VALUE}};'
