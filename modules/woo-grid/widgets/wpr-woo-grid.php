@@ -1803,6 +1803,17 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$repeater->add_control( 'element_show_added_to_compare_popup', $this->add_repeater_args_element_show_added_to_compare_popup() );
 
 		$repeater->add_control(
+			'element_open_links_in_new_tab',
+			[
+				'label' => esc_html__( 'Open Links in New Tab', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'condition' => [
+					'element_select' => ['wishlist-button', 'compare-button']
+				]
+			]
+		);
+
+		$repeater->add_control(
 			'element_extra_text_pos',
 			[
 				'label' => esc_html__( 'Extra Text Display', 'wpr-addons' ),
@@ -9025,14 +9036,15 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'data-atw-popup="'. $settings['element_show_added_to_wishlist_popup']  .'"',
 			'data-atw-animation="'. $this->get_settings_for_display()['popup_notification_animation']  .'"',
 			'data-atw-fade-out-in="'. $this->get_settings_for_display()['popup_notification_fade_out_in']  .'"',
-			'data-atw-animation-time="'. $this->get_settings_for_display()['popup_notification_animation_duration']  .'"'
+			'data-atw-animation-time="'. $this->get_settings_for_display()['popup_notification_animation_duration']  .'"',
+			'data-open-in-new-tab="'. $settings['element_open_links_in_new_tab'] .'"'
 		];
 
 		$button_HTML = '';
 		$page_id = get_queried_object_id();
 		
 		$button_add_title = '';
-		$button_add_wishlist = '';
+		$button_remove_title = '';
 		$add_to_wishlist_content = '';
 		$remove_from_wishlist_content = '';
 		
@@ -9101,7 +9113,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'data-atcompare-popup="'. $settings['element_show_added_to_compare_popup']  .'"',
 			'data-atcompare-animation="'. $this->get_settings_for_display()['popup_notification_animation']  .'"',
 			'data-atcompare-fade-out-in="'. $this->get_settings_for_display()['popup_notification_fade_out_in']  .'"',
-			'data-atcompare-animation-time="'. $this->get_settings_for_display()['popup_notification_animation_duration']  .'"'
+			'data-atcompare-animation-time="'. $this->get_settings_for_display()['popup_notification_animation_duration']  .'"',
+			'data-open-in-new-tab="'. $settings['element_open_links_in_new_tab'] .'"'
 		];
 
 		$button_HTML = '';
