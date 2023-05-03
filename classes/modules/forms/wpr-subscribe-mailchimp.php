@@ -81,14 +81,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 						'action' => 'wpr_form_builder_mailchimp',
 						'status' => 'success',
 						'message' => 'Mailchimp subscription was successful',
-						'groups' => $group_ids
+						'request' => $request
 					));
 
 				} else {
 					wp_send_json_error([ 
 						'action' => 'wpr_form_builder_mailchimp',
-						'status' => $request->title,
-						'message' => 'Mailchimp subscription failed'
+						'status' => 'error',
+						'message' => 'Mailchimp subscription failed',
+						'request' => $request
 					]);
 				}
 			}
@@ -96,6 +97,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			wp_send_json_error([ 
 				'action' => 'wpr_form_builder_mailchimp',
+				'status' => 'error',
+				'message' => 'Mailchimp subscription failed',
 				'request' => $request
 			]);
 		}

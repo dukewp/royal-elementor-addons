@@ -263,7 +263,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'rating' => esc_html__( 'Rating', 'wpr-addons' ),
 			'add-to-cart' => esc_html__( 'Add to Cart', 'wpr-addons' ),
 			'pro-ws' => esc_html__( 'Wishlist Button (Expert)', 'wpr-addons' ),
-			'compare-button' => esc_html__( 'Compare Button', 'wpr-addons' ),
+			'pro-cm' => esc_html__( 'Compare Button (Expert)', 'wpr-addons' ),
 			'lightbox' => esc_html__( 'Lightbox', 'wpr-addons' ),
 			'separator' => esc_html__( 'Separator', 'wpr-addons' ),
 			'pro-lk' => esc_html__( 'Likes (Pro)', 'wpr-addons' ),
@@ -1299,6 +1299,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'woo-grid', 'element_select', ['pro-lk', 'pro-shr', 'pro-sd'] );
+
+		Utilities::upgrade_expert_notice( $repeater, Controls_Manager::RAW_HTML, 'grid', 'element_select', ['pro-ws', 'pro-cm'] );
 
 		$repeater->add_control(
 			'element_location',
@@ -9279,7 +9281,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 	// Get Elements
 	public function get_elements( $type, $settings, $class, $post_id ) {
-		if ( 'pro-lk' == $type || 'pro-shr' == $type || 'pro-sd' == $type ) {
+		if ( 'pro-lk' == $type || 'pro-shr' == $type || 'pro-sd' == $type || 'pro-ws' == $type || 'pro-cm' == $type ) {
 			$type = 'title';
 		}
 

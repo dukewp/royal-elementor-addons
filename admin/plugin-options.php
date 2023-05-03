@@ -503,7 +503,7 @@ function wpr_addons_settings_page() {
                 <h4>
                     <span><?php esc_html_e( 'reCAPTCHA Site Key', 'wpr-addons' ); ?></span>
                     <br>
-                    <a href="https://www.google.com/recaptcha/admin/create" target="_blank"><?php esc_html_e( 'How to get reCAPTCHA Site Key?', 'wpr-addons' ); ?></a>
+                    <a href="https://www.google.com/recaptcha/intro/v3.html" target="_blank"><?php esc_html_e( 'How to get reCAPTCHA Site Key?', 'wpr-addons' ); ?></a>
                 </h4>
 
                 <input type="text" name="wpr_recaptcha_v3_site_key" id="wpr_recaptcha_v3_site_key" value="<?php echo esc_attr(get_option('wpr_recaptcha_v3_site_key')); ?>">

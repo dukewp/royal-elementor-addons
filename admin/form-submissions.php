@@ -84,6 +84,7 @@ class Wpr_Form_Submissions {
     public function wpr_meta_box_callback( $post, $metabox ) {
         echo '<button class="wpr-edit-submissions button button-primary">'. esc_html__('Edit', 'wpr-addons') .'</button>';
         foreach (get_post_meta($post->ID) as $key => $value ) {
+            var_dump($key);
 
             $exclude = ['wpr_form_id', 'wpr_form_name', 'wpr_form_page', 'wpr_form_page_id', 'wpr_user_agent', 'wpr_user_ip', 'wpr_submission_read_status', '_edit_lock'];
 
@@ -120,14 +121,14 @@ class Wpr_Form_Submissions {
                             $value[0] = 'text';
                         }
                         echo '<label for="'. $key .'">'.  $key_title .' </label>';
-                        echo '<input style="display: block;" type="'. $value[0] .'" id="'. $key .'" name="submitter_email" value="'. $value[1] .'">';
+                        echo '<input style="display: block;" type="'. $value[0] .'" id="'. $key .'" value="'. $value[1] .'">';
                     }
                 } else {
                     $prefix = "form_field-";
                     $key_title = ucfirst(str_replace($prefix, "", $key));
                     
                     echo '<label for="'. $key .'">'.  $key_title .' </label>';
-                    echo '<input style="display: block;" type="text" id="'. $key .'" name="submitter_email" value="'. $value[0] .'">';
+                    echo '<input style="display: block;" type="text" id="'. $key .'" value="'. $value[0] .'">';
                 }
             echo '</div>';
         }
@@ -190,7 +191,7 @@ class Wpr_Form_Submissions {
             }
 
             if ( str_contains($key, '_action_') ) {
-                if ( 'error' == $value[0] ) {
+                if (  str_contains($value[0], 'error') ) {
                     $action_status = 'error';
                 }
             }

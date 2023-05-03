@@ -24,14 +24,34 @@ if ( ! defined( 'ABSPATH' ) ) {
     public function send_email() {
         
         $message_body = [];
-        
-        foreach ( $_POST['form_content'] as $key => $value ) {
-			if ( is_array($value[1]) ) {
-				$message_body[] = trim($value[2]) . ': ' . implode("\n", $value[1]);
-			} else {
-				$message_body[] = trim($value[2]) . ': ' . $value[1];
+    
+		$email_fields = get_option('wpr_email_fields_' . $_POST['wpr_form_id']);
+		
+		if ($email_fields === '[all-fields]') {
+			foreach ( $_POST['form_content'] as $key => $value ) {
+				if ( is_array($value[1]) ) {
+					$message_body[] = trim($value[2]) . ': ' . implode("\n", $value[1]);
+				} else {
+					$message_body[] = trim($value[2]) . ': ' . $value[1];
+				}
 			}
-        }
+		} else {
+			preg_match_all('/field id="([^"]+)"/', $email_fields, $matches);
+			$field_ids = $matches[1];
+
+			foreach ( $_POST['form_content'] as $key => $value ) {
+				$key_parts = explode('-', $key);
+				$last_part = end($key_parts);
+
+				if (in_array($last_part, $field_ids)) {
+					if ( is_array($value[1]) ) {
+						$message_body[] = trim($value[2]) . ': ' . implode("\n", $value[1]);
+					} else {
+						$message_body[] = trim($value[2]) . ': ' . $value[1];
+					}
+				}
+			}
+		}
 
 		// public function replace_setting_shortcodes( $setting, $urlencode = false ) {
 		// 	// Shortcode can be `[field id="fds21fd"]` or `[field title="Email" id="fds21fd"]`, multiple shortcodes are allowed
@@ -153,13 +173,14 @@ if ( ! defined( 'ABSPATH' ) ) {
         if ( $sent ) {
 			wp_send_json_success(array(
 				'action' => 'wpr_form_builder_email',
-				'message' => 'Message Sent Successfully',
-				'status' => 'success'
+				'message' => esc_html__('Message sent successfully'),
+				'status' => 'success',
+				'details' => $sent
 			));
         } else {
 			wp_send_json_error(array(
 				'action' => 'wpr_form_builder_email',
-				'message' => 'Message could not be sent',
+				'message' => esc_html__('Message could not be sent'),
 				'status' => 'error',
 				'details' => $sent
 			));
