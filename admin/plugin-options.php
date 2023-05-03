@@ -66,6 +66,8 @@ function wpr_register_addons_settings() {
     register_setting( 'wpr-settings', 'wpr_google_map_api_key' );
     register_setting( 'wpr-settings', 'wpr_mailchimp_api_key' );
     register_setting( 'wpr-settings', 'wpr_recaptcha_v3_site_key' );
+    register_setting( 'wpr-settings', 'wpr_recaptcha_v3_secret_key' );
+    register_setting( 'wpr-settings', 'wpr_recaptcha_v3_score' );
 
     // Lightbox
     register_setting( 'wpr-settings', 'wpr_lb_bg_color' );
@@ -503,6 +505,25 @@ function wpr_addons_settings_page() {
 
                 <input type="text" name="wpr_recaptcha_v3_site_key" id="wpr_recaptcha_v3_site_key" value="<?php echo esc_attr(get_option('wpr_recaptcha_v3_site_key')); ?>">
             </div>
+
+            <div class="wpr-setting">
+                <h4>
+                    <span><?php esc_html_e( 'reCAPTCHA Secret Key', 'wpr-addons' ); ?></span>
+                    <br>
+                </h4>
+
+                <input type="text" name="wpr_recaptcha_v3_secret_key" id="wpr_recaptcha_v3_secret_key" value="<?php echo esc_attr(get_option('wpr_recaptcha_v3_secret_key')); ?>">
+            </div>
+
+            <div class="wpr-setting">
+                <h4>
+                    <span><?php esc_html_e( 'Score Threshold', 'wpr-addons' ); ?></span>
+                    <br>
+                </h4>
+
+                <input type="number" name="wpr_recaptcha_v3_score" id="wpr_recaptcha_v3_score" placeholder="0.5" step="0.1" min="0" max="1" value="<?php echo esc_attr(get_option('wpr_recaptcha_v3_score')); ?>">
+            </div>
+            
         </div>
 
         <div class="wpr-settings-group">

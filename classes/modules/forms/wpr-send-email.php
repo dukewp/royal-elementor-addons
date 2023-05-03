@@ -33,6 +33,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 			}
         }
 
+		// public function replace_setting_shortcodes( $setting, $urlencode = false ) {
+		// 	// Shortcode can be `[field id="fds21fd"]` or `[field title="Email" id="fds21fd"]`, multiple shortcodes are allowed
+		// 	return preg_replace_callback( '/(\[field[^]]*id="(\w+)"[^]]*\])/', function( $matches ) use ( $urlencode ) {
+		// 		$value = '';
+	   
+		// 		if ( isset( $this->fields[ $matches[2] ] ) ) {
+		// 			$value = $this->fields[ $matches[2] ]['value'];
+		// 		}
+	   
+		// 		if ( $urlencode ) {
+		// 			$value = urlencode( $value );
+		// 		}
+		// 		return $value;
+		// 	}, $setting );
+		// }
+
         $meta_keys = get_option('wpr_meta_keys_'. $_POST['wpr_form_id']);
         $meta_fields = [];
 
@@ -103,6 +119,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 
         $to = get_option('wpr_email_to_'. $_POST['wpr_form_id']);
         $subject = get_option('wpr_email_subject_'. $_POST['wpr_form_id']);
+		
+		$subject = preg_replace_callback(
+			'/\[field id="(\w+)"\]/',
+			function ($matches) {
+				return $this->get_field_value($matches[1]);
+			},
+			$subject
+		);
+
         $body = implode($line_break, $message_body) . $line_break . '-----' . $line_break . implode($line_break, $email_meta);
 
 		$cc_header = '';
@@ -140,6 +165,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 			));
         }
     }
+	
+	public function get_field_value($field_id) {
+		foreach ($_POST['form_content'] as $key => $field) {
+			$key_parts = explode('-', $key);
+			$last_part = end($key_parts);
+	
+			if ($last_part === $field_id) {
+				return $field[1];
+			}
+		}
+		return ''; // Return an empty string if the field id is not found
+	}
  }
 
  new WPR_Send_Email();

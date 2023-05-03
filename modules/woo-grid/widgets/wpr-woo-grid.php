@@ -9043,8 +9043,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 		if ( 'yes' === $settings['show_text'] ) {
 			$add_to_wishlist_content .= ' <span>'. esc_html__($settings['add_to_wishlist_text']) .'</span>';
 		} else {
-			$button_add_title = 'title="'. $settings['add_to_wishlist_text'] .'"';
-			$button_remove_title = 'title="'. $settings['remove_from_wishlist_text'] .'"';
+			$button_add_title = 'title="'. esc_html__($settings['add_to_wishlist_text']) .'"';
+			$button_remove_title = 'title="'. esc_html__($settings['remove_from_wishlist_text']) .'"';
 		}
 
 		if ( 'yes' === $settings['show_text'] ) {
@@ -9119,8 +9119,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 		if ( 'yes' === $settings['show_text'] ) {
 			$add_to_compare_content .= ' <span>'. esc_html__($settings['add_to_compare_text']) .'</span>';
 		} else {
-			$button_add_title = 'title="'. $settings['add_to_compare_text'] .'"';
-			$button_remove_title = 'title="'. $settings['remove_from_compare_text'] .'"';
+			$button_add_title = 'title="'. esc_html__($settings['add_to_compare_text']) .'"';
+			$button_remove_title = 'title="'. esc_html__($settings['remove_from_compare_text']) .'"';
 		}
 
 		if ( 'yes' === $settings['show_text'] ) {
