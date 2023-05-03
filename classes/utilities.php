@@ -19,16 +19,17 @@ class Utilities {
 	*/
 	public static function get_registered_modules() {
 		return [
-			'Post Grid' => ['grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-portfolio-grid', ''],
-			'WooCommerce Grid' => ['woo-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-woo-grid', ''],
-			'Image Grid' => ['media-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-gallery-grid', ''],
-			'Magazine Grid' => ['magazine-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-magazine-grid', ''],
+			'Post Grid/Slider/Carousel' => ['grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-portfolio-grid', ''],
+			'WooCommerce Grid/Slider/Carousel' => ['woo-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-woo-grid', ''],
+			'Image Grid/Slider/Carousel' => ['media-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-gallery-grid', ''],
+			'Magazine Grid/Slider' => ['magazine-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-magazine-grid', ''],
 			'Posts/Story Timeline' => ['posts-timeline', 'https://royal-elementor-addons.com/elementor-timeline-widget/', '', ''],
 			'Advanced Slider' => ['advanced-slider', 'https://royal-elementor-addons.com/elementor-advanced-slider-widget/', '', ''],
 			'Off-Canvas Content' => ['offcanvas', 'https://royal-elementor-addons.com/elementor-offcanvas-menu-widget/', '', 'new'],
 			'Testimonial' => ['testimonial', 'https://royal-elementor-addons.com/elementor-testimonials-slider-widget/', '', ''],
 			'Nav Menu' => ['nav-menu', 'http://royal-elementor-addons.com/elementor-menu-widget/', '', ''],
 			'Mega Menu' => ['mega-menu', 'https://royal-elementor-addons.com/elementor-mega-menu-widget/', '', 'new'],
+			'Form Builder' => ['Form Builder', '', '', 'new'],
 			'Onepage Navigation' => ['onepage-nav', 'https://royal-elementor-addons.com/elementor-one-page-navigation-widget/', '', ''],
 			'Instagram Feed' => ['instagram-feed', 'https://royal-elementor-addons.com/elementor-instagram-feed-widget/', '', 'new'],
 			'Data Table' => ['data-table', 'https://royal-elementor-addons.com/elementor-data-table-widget/', '', ''],
@@ -48,7 +49,7 @@ class Utilities {
 			'Feature List' => ['feature-list', 'https://royal-elementor-addons.com/elementor-feature-list-widget/', '', ''],
 			'Before After' => ['before-after', 'https://royal-elementor-addons.com/elementor-before-after-widget/', '', ''],
 			'Image Hotspots' => ['image-hotspots', 'https://royal-elementor-addons.com/elementor-image-hotspot-widget/', '', ''],
-			'Forms' => ['forms', 'https://royal-elementor-addons.com/elementor-forms-widget/', '', ''],
+			'Form Styler' => ['forms', 'https://royal-elementor-addons.com/elementor-forms-widget/', '', ''],
 			'MailChimp' => ['mailchimp', 'https://royal-elementor-addons.com/elementor-mailchimp-subscription-widget/', '', ''],
 			'Content Ticker' => ['content-ticker', 'https://royal-elementor-addons.com/elementor-content-ticker-widget/', '', ''],
 			'Button' => ['button', 'https://royal-elementor-addons.com/elementor-button-widget/', '', ''],
@@ -69,7 +70,6 @@ class Utilities {
 			'Template' => ['elementor-template', '', '', ''],
 			'Reading Progress Bar' => ['reading-progress-bar', 'https://royal-elementor-addons.com/elementor-reading-progress-bar-widget/', '', ''],
 			'Twitter Feed' => ['twitter-feed', 'https://royal-elementor-addons.com/elementor-twitter-feed-widget/', '', 'new'],
-			'Form Builder' => ['Form Builder', '', '', 'new']
 		];
 	}
 

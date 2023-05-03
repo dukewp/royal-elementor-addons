@@ -275,6 +275,7 @@ function wpr_addons_settings_page() {
     <div class="wpr-elements-heading">
         <h3><?php esc_html_e( 'Theme Builder Widgets', 'wpr-addons' ); ?></h3>
         <p><?php esc_html_e( 'Post (CPT) Archive Pages, Post (CPT) Single Pages', 'wpr-addons' ); ?></p>
+        <a href="https://youtu.be/cwkhwO_rPuo?t=743" target="_blank"><?php esc_html_e( 'How to use Theme Builder Widgets', 'wpr-addons' ); ?></a>
     </div>
     <div class="wpr-elements wpr-elements-theme">
     <?php
@@ -302,21 +303,22 @@ function wpr_addons_settings_page() {
         <?php if (!class_exists('WooCommerce')) : ?>
             <p class='wpr-install-activate-woocommerce'><span class="dashicons dashicons-info-outline"></span> <?php esc_html_e( 'Install/Activate WooCommerce to use these widgets', 'wpr-addons' ); ?></p>
         <?php endif; ?>
+        <a href="https://youtu.be/f_3tNiBC3dw?t=238" target="_blank"><?php esc_html_e( 'How to use WooCommerce Builder Widgets', 'wpr-addons' ); ?></a>
     </div>
     <div class="wpr-elements wpr-elements-woo">
     <?php
         $woocommerce_builder_modules = Utilities::get_woocommerce_builder_modules();
         $premium_woo_modules = [
-			'Product Filters' => ['product-filters-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-prodfilter-widgets-pro#purchasepro', '', 'pro'],
-			'Product Breadcrumbs' => ['product-breadcrumbs-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-breadcru-widgets-pro#purchasepro', '', 'pro'],
-			'Page My Account' => ['page-my-account-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-myacc-widgets-pro#purchasepro', '', 'pro'],
-			'Woo Category Grid' => ['woo-category-grid-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-pro#purchasepro', '', 'pro'],
-			'Wishlist Button' => ['wishlist-button-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-wishlist-btn-widgets-expert#purchasepro', '', 'expert'],
-			'Mini Wishlist' => ['mini-wishlist-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-wishlist-mini-widgets-expert#purchasepro', '', 'expert'],
-			'Wishlist' => ['wishlist-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-wishlist-widgets-expert#purchasepro', '', 'expert'],
-			'Compare Button' => ['compare-button-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-compare-btn-widgets-expert#purchasepro', '', 'expert'],
-			'Mini Compare' => ['mini-compare-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-compare-mini-widgets-expert#purchasepro', '', 'expert'],
-			'Compare' => ['compare-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-compare-widgets-expert#purchasepro', '', 'expert'],
+			'Product Filters' => ['product-filters-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-prodfilter-widgets-upgrade-pro#purchasepro', '', 'pro'],
+			'Product Breadcrumbs' => ['product-breadcrumbs-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-breadcru-widgets-upgrade-pro#purchasepro', '', 'pro'],
+			'Page My Account' => ['page-my-account-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-myacc-widgets-upgrade-pro#purchasepro', '', 'pro'],
+			'Woo Category Grid' => ['woo-category-grid-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-catgrid-widgets-upgrade-pro#purchasepro', '', 'pro'],
+			'Wishlist Button' => ['wishlist-button-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-wishlist-btn-widgets-upgrade-expert#purchasepro', '', 'expert'],
+			'Mini Wishlist' => ['mini-wishlist-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-wishlist-mini-widgets-upgrade-expert#purchasepro', '', 'expert'],
+			'Wishlist' => ['wishlist-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-wishlist-widgets-upgrade-expert#purchasepro', '', 'expert'],
+			'Compare Button' => ['compare-button-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-compare-btn-widgets-upgrade-expert#purchasepro', '', 'expert'],
+			'Mini Compare' => ['mini-compare-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-compare-mini-widgets-upgrade-expert#purchasepro', '', 'expert'],
+			'Compare' => ['compare-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-woo-compare-widgets-upgrade-expert#purchasepro', '', 'expert'],
         ];
 
         foreach ( array_merge($woocommerce_builder_modules, $premium_woo_modules) as $title => $data ) {

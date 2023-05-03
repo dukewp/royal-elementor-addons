@@ -1399,6 +1399,10 @@ input.wpr-user-template-title:focus {
   padding: 25px 20px 35px 20px !important;
 }
 
+#fs_connect .fs-content h2 {
+  text-transform: capitalize;
+}
+
 #fs_connect .fs-visual {
   background: transparent !important;
 }
@@ -1424,6 +1428,7 @@ input.wpr-user-template-title:focus {
 #fs_connect .fs-actions {
   border-top: 1px solid #F2F2F2 !important;
   background: #F2F2F2 !important;
+  padding: 20px !important;
 }
 
 #fs_connect .fs-actions .button {
@@ -1467,6 +1472,10 @@ input.wpr-user-template-title:focus {
 #fs_connect.require-license-key .fs-terms,
 #fs_connect .fs-freemium-licensing,
 #license_issues_link {
+  display: none !important;
+}
+
+.fs-terms {
   display: none !important;
 }
 
