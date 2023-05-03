@@ -895,7 +895,7 @@ class Plugin {
 				],
 				[
 					'name' => 'wpr-wishlist',
-					'title' => __('Wishlist', 'wpr-addons'),
+					'title' => __('Wishlist Table', 'wpr-addons'),
 					'icon' => 'wpr-icon eicon-heart',
 					'categories' => '["'. $category .'"]',
 				],
@@ -913,7 +913,7 @@ class Plugin {
 				],
 				[
 					'name' => 'wpr-compare',
-					'title' => __('Compare', 'wpr-addons'),
+					'title' => __('Compare Table', 'wpr-addons'),
 					'icon' => 'wpr-icon eicon-heart',
 					'categories' => '["'. $category .'"]',
 				],
