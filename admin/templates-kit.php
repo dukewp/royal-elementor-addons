@@ -387,12 +387,12 @@ function download_template( $kit, $file ) {
     $tmp_file = download_url( $remote_file_url );
 
     // WP Error.
-    if ( true ) {
+    if ( is_wp_error( $tmp_file ) ) {
         // Fallback URL
         $remote_file_url = 'https://mysitetutorial.com/library/templates-kit/'. $kit .'/main.xml?='. $randomNum;
         $tmp_file = download_url( $remote_file_url );
 
-        if ( true ) {
+        if ( is_wp_error( $tmp_file ) ) {
             // Track Import Failed Kit
             wpr_track_import_failed_kit( $kit );
 
