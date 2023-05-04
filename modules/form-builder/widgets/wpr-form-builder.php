@@ -2936,6 +2936,14 @@ class Wpr_Form_Builder extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'wpr-form-builder', [
+			'Unlimited number of fields'
+		] );
     }
 
 	private function add_required_attribute( $element ) {
