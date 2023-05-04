@@ -418,9 +418,6 @@ span.wpr-woo-builder-label {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -437,9 +434,18 @@ span.wpr-woo-builder-label {
   padding: 5px 25px !important;
 }
 
+.wpr-templates-kit-single .preview-demo {
+  margin-right: auto;
+}
+
 .wpr-templates-kit-single .preview-demo .dashicons {
   font-size: 14px;
   line-height: 28px;
+}
+
+.wpr-templates-kit-single .import-tutorial-link {
+  text-decoration: none;
+  align-self: center;
 }
 
 .wpr-templates-kit-single .import-kit,
