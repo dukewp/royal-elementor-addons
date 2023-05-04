@@ -21,9 +21,23 @@ if ( ! defined( 'ABSPATH' ) ) {
     }
     
     public function handle_file_upload() {
+        // Get the max_file_size value from the file_size control.
+        $max_file_size = isset($_POST['max_file_size']) ? floatval($_POST['max_file_size']) : 0; // Replace this with the value from the file_size control.
+        if ($max_file_size <= 0) {
+            $max_file_size = wp_max_upload_size() / pow(1024, 2); //MB
+        }
+
         // Check if a file is uploaded.
         if (isset($_FILES['uploaded_file'])) {
-            $file = $_FILES['uploaded_file'];
+            $file = $_FILES['uploaded_file'];  
+			
+			// Check if the uploaded file size exceeds the allowed limit.
+            if ($file['size'] > $max_file_size * 1024 * 1024) {
+                wp_send_json_error(array(
+					'cause' => 'filesize',
+                    'message' => 'File size exceeds the allowed limit.'
+                ));
+            }
 
 			// valid file type?
 			if ( !$this->file_validity(  $file ) ) {
@@ -31,31 +45,33 @@ if ( ! defined( 'ABSPATH' ) ) {
                     'message' => 'File type is not valid.'
                 ));
 			}
-    
-            // Set the upload directory.
-            $upload_dir = wp_upload_dir();
-            $upload_path = $upload_dir['basedir'] . '/wpr-addons/forms';
+			
+			if ( 'submit' == $_POST['triggering_event'] ) {
+				// Set the upload directory.
+				$upload_dir = wp_upload_dir();
+				$upload_path = $upload_dir['basedir'] . '/wpr-addons/forms';
 
-            wp_mkdir_p( $upload_path );
-    
-            // Generate a unique file name.
-            $filename = wp_unique_filename($upload_path, $file['name']);
-    
-            // Move the uploaded file to the uploads directory.
-            if (move_uploaded_file($file['tmp_name'], $upload_path . '/' . $filename)) {
-                // Return the uploaded file's URL.
-                wp_send_json_success(array(
-                    'url' => $upload_dir['baseurl'] . '/wpr-addons/forms/' . $filename
-                ));
-            } else {
-                wp_send_json_error(array(
-                    'message' => 'Failed to upload the file.'
-                ));
-            }
+				wp_mkdir_p( $upload_path );
+		
+				// Generate a unique file name.
+				$filename = wp_unique_filename($upload_path, $file['name']);
+		
+				// Move the uploaded file to the uploads directory.
+				if (move_uploaded_file($file['tmp_name'], $upload_path . '/' . $filename)) {
+					// Return the uploaded file's URL.
+					wp_send_json_success(array(
+						'url' => $upload_dir['baseurl'] . '/wpr-addons/forms/' . $filename
+					));
+				} else {
+					wp_send_json_error(array(
+						'message' => 'Failed to upload the file.'
+					));
+				}
+			}
         }
     
         wp_send_json_error(array(
-            'message' => 'No file was uploaded.'
+            'message' => esc_html__('No file was uploaded.')
         ));
     }
 

@@ -15911,6 +15911,10 @@ dl.variation dd {
     padding: 0;
 }
 
+.wpr-product-add-to-cart button.loading:after {
+    top: auto !important;
+}
+
 .wpr-product-add-to-cart  a.added_to_cart  {
     text-align: center;
 }

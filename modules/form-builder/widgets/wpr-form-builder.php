@@ -144,12 +144,12 @@ class Wpr_Form_Builder extends Widget_Base {
 		$widget->add_control(
 			$this->get_control_id( 'email_content' ),
 			[
-				'label' => esc_html__( 'Message', 'elementor-pro' ),
+				'label' => esc_html__( 'Message', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXTAREA,
 				'default' => '[all-fields]',
 				'placeholder' => '[all-fields]',
 				'description' => sprintf(
-					esc_html__( 'By default, all form fields are sent via %s shortcode. To customize sent fields, copy the shortcode that appears inside each field and paste it above.', 'wpr-addons' ),
+					esc_html__( 'By default, form sends all fields. To modify this behaviour, copy the shortcode you wish from fields and paste it instead of %s.', 'wpr-addons' ),
 					'<code>[all-fields]</code>'
 				),
 				'render_type' => 'none',
@@ -665,6 +665,23 @@ class Wpr_Form_Builder extends Widget_Base {
 				'condition' => [
 					'field_type' => 'upload'
 				],
+			]
+		);
+
+		$max_file_size = wp_max_upload_size() / pow( 1024, 2 ); //MB
+
+		$repeater->add_control(
+			'file_size',
+			[
+				'label' => esc_html__( 'File Size (MB)', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'min' => 1,
+				'max' => $max_file_size,
+				'step' => 1,
+				'description' => esc_html__( 'Max upload size allowed is '. $max_file_size .'MB. Please contact your hosting to increase it.', 'wpr-addons' ),
+				'condition' => [
+					'field_type' => 'upload'
+				]
 			]
 		);
 
@@ -3475,6 +3492,16 @@ class Wpr_Form_Builder extends Widget_Base {
 							case 'upload':
 								if ( 'yes' === $item['allow_multiple_upload'] ) {
 									$this->add_render_attribute( 'input' . $item_index, 'multiple', 'multiple' );
+								}
+
+								if ( !empty( $item['file_size'] ) ) {
+									$this->add_render_attribute(
+										'input' . $item_index,
+										[
+											'data-maxfs' => $item['file_size'],  //MB
+											'data-maxfs-notice' => esc_html__( 'File size is more than allowed.', 'wpr-addons' ),
+										]
+									);
 								}
 								echo '<input size="1 "'. $this->get_render_attribute_string( 'input' . $item_index ) .'>';
 								break;
