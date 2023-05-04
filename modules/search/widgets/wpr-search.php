@@ -925,7 +925,7 @@ class Wpr_Search extends Widget_Base {
 		$this->add_control(
 			'exclude_posts_without_thumbnail',
 			[
-				'label' => esc_html__( 'Exclude Results w/o Thumbnails', 'wpr-addons' ),
+				'label' => esc_html__( 'Exclude Results without Thumbnails', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'render_type' => 'template',
                 'condition' => [
