@@ -10781,6 +10781,10 @@ a.wpr-ajax-img-wrap {
     overflow: hidden;
 }
 
+.wpr-ticker-marquee .wpr-ticker-item {
+    float: left;
+}
+
 .wpr-ticker-marquee .js-marquee {
     display: -moz-flex;
     display: -ms-flex;
