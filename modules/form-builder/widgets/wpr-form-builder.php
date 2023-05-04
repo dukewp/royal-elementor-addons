@@ -141,6 +141,24 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
+		$widget->add_control(
+			$this->get_control_id( 'email_content' ),
+			[
+				'label' => esc_html__( 'Message', 'elementor-pro' ),
+				'type' => Controls_Manager::TEXTAREA,
+				'default' => '[all-fields]',
+				'placeholder' => '[all-fields]',
+				'description' => sprintf(
+					esc_html__( 'By default, all form fields are sent via %s shortcode. To customize sent fields, copy the shortcode that appears inside each field and paste it above.', 'wpr-addons' ),
+					'<code>[all-fields]</code>'
+				),
+				'render_type' => 'none',
+				'dynamic' => [
+					'active' => true,
+				],
+			]
+		);
+
 		$site_domain = $this->get_site_domain();
 
 		$widget->add_control(
@@ -1174,6 +1192,58 @@ class Wpr_Form_Builder extends Widget_Base {
 				'type' => Controls_Manager::TEXT,
 				'default' => esc_html__( 'New Form', 'wpr-addons' ),
 				'placeholder' => esc_html__( 'Form Name', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
+			'form_id',
+			[
+				'label' => esc_html__( 'Form ID', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'placeholder' => 'form_id',
+				'description' => esc_html__( 'Form ID should be unique and shouldn\'t contain spaces', 'wpr-addons' ),
+				'separator' => 'after',
+				'dynamic' => [
+					'active' => true,
+				],
+			]
+		);
+
+		$this->add_control(
+			'success_message',
+			[
+				'label' => esc_html__( 'Success Message', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => esc_html__('Submission successful', 'wpr-addons'),
+				'placeholder' => esc_html__('Submission successful', 'wpr-addons'),
+				'label_block' => true,
+				'frontend_available' => true,
+				// 'condition' => [
+				// 	'custom_messages!' => '',
+				// ],
+				'render_type' => 'none',
+				'dynamic' => [
+					'active' => true,
+				],
+			]
+		);
+
+		$this->add_control(
+			'error_message',
+			[
+				'label' => esc_html__( 'Form Error', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => esc_html__('Submission failed', 'wpr-addons'),
+				'placeholder' => esc_html__('Submission failed', 'wpr-addons'),
+				'label_block' => true,
+				'frontend_available' => true,
+				// 'condition' => [
+				// 	'custom_messages!' => '',
+				// ],
+				'render_type' => 'none',
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
@@ -2826,6 +2896,54 @@ class Wpr_Form_Builder extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_results_style',
+			[
+				'label' => esc_html__( 'Results', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'results_typography',
+				'selector' => '{{WRAPPER}} .wpr-submit-success, {{WRAPPER}} .wpr-submit-error'
+			]
+		);
+
+		$this->add_control(
+			'success_result_color',
+			[
+				'label' => esc_html__( 'Success Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-submit-success' => 'color: {{COLOR}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'error_message_color',
+			[
+				'label' => esc_html__( 'Error Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-submit-error' => 'color: {{COLOR}};',
+				],
+			]
+		);
+
+		$this->end_controls_section();
+
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
+
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'wpr-form-builder', [
+			'Unlimited number of fields'
+		] );
     }
 
 	private function add_required_attribute( $element ) {
@@ -3115,14 +3233,15 @@ class Wpr_Form_Builder extends Widget_Base {
 	protected function render() {
 		global $post;
 		$instance = $this->get_settings_for_display();
+		
 		$form_fields_length = sizeof($instance['form_fields']);
-
-		var_dump($instance['mailchimp_groups']);
+		$thisId = $this->get_id();
 
 		// var_dump('Reply To', $instance['email_reply_to']);
 		update_option('wpr_email_content_type_'. $this->get_id(), $instance['email_content_type']);
 		update_option('wpr_email_to_'. $this->get_id(), $instance['email_to']);
 		update_option('wpr_email_subject_'. $this->get_id(), $instance['email_subject']);
+		update_option('wpr_email_fields_'. $this->get_id(), $instance['email_content']);
 		update_option('wpr_cc_header_'. $this->get_id(), $instance['email_to_cc']);
 		update_option('wpr_bcc_header_'. $this->get_id(), $instance['email_to_bcc']);
 		update_option('wpr_reply_to_'. $this->get_id(), $instance['email_reply_to']);
@@ -3130,7 +3249,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		update_option('wpr_referrer_'. $this->get_id(), home_url( $_SERVER['REQUEST_URI'] ));
 		update_option('wpr_referrer_title_'. $this->get_id(), get_the_title($post->ID));
 
-		var_dump(get_option('wpr_email_subject_'. $this->get_id()));
+		var_dump(get_option('wpr_email_fields_'. $this->get_id()));
 
 		$emailField      = isset($instance['email_field']) ? $instance['email_field'] : '';
 		$firstNameField  = isset($instance['first_name_field']) ? $instance['first_name_field'] : '';

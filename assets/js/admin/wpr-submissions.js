@@ -25,15 +25,32 @@ jQuery(document).ready(function($) {
                 }
             },
         });
-    });
+    });    
+    
+    $('<input>').attr({
+        type: 'hidden',
+        id: 'wpr_submission_changes',
+        name: 'wpr_submission_changes',
+    }).appendTo('#post');
+
+    let changes = {};
 
     $('.wpr-submissions-wrap').each(function() {
         $(this).children().eq(1).attr('readonly', true);
+      
+        $(this).find('input, textarea').on('change', function () {
+            let key = $(this).attr('id');
+            let value = $(this).val();
+
+            changes[key] = value; // Store the changes in the changes object
+            $('#wpr_submission_changes').val(JSON.stringify(changes));
+        });
     });
 
     $('.wpr-edit-submissions').on('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
+        $('#wpr_submission_changes').val('');
         let thisButton = $(this);
         $('.wpr-submissions-wrap').each(function() {
             if ( $(this).children().eq(1).attr('readonly') ) {
@@ -50,25 +67,7 @@ jQuery(document).ready(function($) {
 
     // Check if the post type is wpr_submissions
     if ($('#postbox-container-1').find('#submitdiv').length > 0) {
-        
-        // $.ajax({
-        //     url: WprSubmissions.ajaxurl,
-        //     type: 'POST',
-        //     data: {
-        //         action: 'wpr_submissions_meta',
-        //         nonce: WprSubmissions.nonce,
-        //     },
-        //     success: function(response) {
-        //         console.log(response);
-        //         if (response.success) {
-        //             console.log(response);
-        //             // Add a new field to the submit box
-        //             $('<div class="misc-pub-section">Your Custom Field: <span id="your-custom-field">Your Custom Value</span></div>').insertBefore('#major-publishing-actions');
-        //         }
-        //     },
-        // });
 
-        
         // Access the variables
         var form_name = WprSubmissions.form_name;
         var form_id = WprSubmissions.form_id;

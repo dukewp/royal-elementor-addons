@@ -14,7 +14,7 @@ use Elementor\Core\Schemes\Typography;
 use Elementor\Repeater;
 use Elementor\Group_Control_Image_Size;
 use WprAddons\Classes\Utilities;
-use WprAddons\Classes\WPR_Post_Likes;
+use WprAddons\Classes\Modules\WPR_Post_Likes;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -263,7 +263,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'rating' => esc_html__( 'Rating', 'wpr-addons' ),
 			'add-to-cart' => esc_html__( 'Add to Cart', 'wpr-addons' ),
 			'pro-ws' => esc_html__( 'Wishlist Button (Expert)', 'wpr-addons' ),
-			'compare-button' => esc_html__( 'Compare Button', 'wpr-addons' ),
+			'pro-cm' => esc_html__( 'Compare Button (Expert)', 'wpr-addons' ),
 			'lightbox' => esc_html__( 'Lightbox', 'wpr-addons' ),
 			'separator' => esc_html__( 'Separator', 'wpr-addons' ),
 			'pro-lk' => esc_html__( 'Likes (Pro)', 'wpr-addons' ),
@@ -1300,6 +1300,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'woo-grid', 'element_select', ['pro-lk', 'pro-shr', 'pro-sd'] );
 
+		Utilities::upgrade_expert_notice( $repeater, Controls_Manager::RAW_HTML, 'grid', 'element_select', ['pro-ws', 'pro-cm'] );
+
 		$repeater->add_control(
 			'element_location',
 			[
@@ -1801,6 +1803,17 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$repeater->add_control( 'element_show_added_to_compare_popup', $this->add_repeater_args_element_show_added_to_compare_popup() );
 
 		$repeater->add_control(
+			'element_open_links_in_new_tab',
+			[
+				'label' => esc_html__( 'Open Links in New Tab', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'condition' => [
+					'element_select' => ['wishlist-button', 'compare-button']
+				]
+			]
+		);
+
+		$repeater->add_control(
 			'element_extra_text_pos',
 			[
 				'label' => esc_html__( 'Extra Text Display', 'wpr-addons' ),
@@ -1994,7 +2007,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Show Text', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
 				'return_value' => 'yes',
 				'condition' => [
 					'element_select' => [
@@ -5844,7 +5856,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
 					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
 				],
-				'default' => 'solid',
+				'default' => 'none',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wishlist-add' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} .wpr-wishlist-remove' => 'border-style: {{VALUE}};'
@@ -6161,7 +6173,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
 					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
 				],
-				'default' => 'solid',
+				'default' => 'none',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-compare-add' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} .wpr-compare-remove' => 'border-style: {{VALUE}};'
@@ -9023,14 +9035,15 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'data-atw-popup="'. $settings['element_show_added_to_wishlist_popup']  .'"',
 			'data-atw-animation="'. $this->get_settings_for_display()['popup_notification_animation']  .'"',
 			'data-atw-fade-out-in="'. $this->get_settings_for_display()['popup_notification_fade_out_in']  .'"',
-			'data-atw-animation-time="'. $this->get_settings_for_display()['popup_notification_animation_duration']  .'"'
+			'data-atw-animation-time="'. $this->get_settings_for_display()['popup_notification_animation_duration']  .'"',
+			'data-open-in-new-tab="'. $settings['element_open_links_in_new_tab'] .'"'
 		];
 
 		$button_HTML = '';
 		$page_id = get_queried_object_id();
 		
 		$button_add_title = '';
-		$button_add_wishlist = '';
+		$button_remove_title = '';
 		$add_to_wishlist_content = '';
 		$remove_from_wishlist_content = '';
 		
@@ -9099,7 +9112,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'data-atcompare-popup="'. $settings['element_show_added_to_compare_popup']  .'"',
 			'data-atcompare-animation="'. $this->get_settings_for_display()['popup_notification_animation']  .'"',
 			'data-atcompare-fade-out-in="'. $this->get_settings_for_display()['popup_notification_fade_out_in']  .'"',
-			'data-atcompare-animation-time="'. $this->get_settings_for_display()['popup_notification_animation_duration']  .'"'
+			'data-atcompare-animation-time="'. $this->get_settings_for_display()['popup_notification_animation_duration']  .'"',
+			'data-open-in-new-tab="'. $settings['element_open_links_in_new_tab'] .'"'
 		];
 
 		$button_HTML = '';
@@ -9279,7 +9293,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 	// Get Elements
 	public function get_elements( $type, $settings, $class, $post_id ) {
-		if ( 'pro-lk' == $type || 'pro-shr' == $type || 'pro-sd' == $type ) {
+		if ( 'pro-lk' == $type || 'pro-shr' == $type || 'pro-sd' == $type || 'pro-ws' == $type || 'pro-cm' == $type ) {
 			$type = 'title';
 		}
 
