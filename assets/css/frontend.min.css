@@ -14081,6 +14081,10 @@ flex-grow: 0; */
     font-family: "Font Awesome 5 Free" !important;
 }
 
+.wpr-wishlist-remove i {
+    font-weight: 900 !important;
+}
+
 /* == Wishlist */
 
 .wpr-wishlist-products {

@@ -190,20 +190,6 @@ class Wpr_Form_Builder extends Widget_Base {
 		$widget->add_control(
 			$this->get_control_id( 'email_reply_to' ),
 			[
-				'label' => esc_html__( 'Reply-To', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'email@' . $site_domain,
-				'render_type' => 'template',
-				'options' => [
-					'' => '',
-				],
-				'render_type' => 'none',
-			]
-		);
-
-		$widget->add_control(
-			$this->get_control_id( 'email_reply_to_alt' ),
-			[
 				'label' => esc_html__( 'Reply To', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => 'email@' . $site_domain,
@@ -3244,6 +3230,8 @@ class Wpr_Form_Builder extends Widget_Base {
 		update_option('wpr_email_fields_'. $this->get_id(), $instance['email_content']);
 		update_option('wpr_cc_header_'. $this->get_id(), $instance['email_to_cc']);
 		update_option('wpr_bcc_header_'. $this->get_id(), $instance['email_to_bcc']);
+		update_option('wpr_email_from_'. $this->get_id(), $instance['email_from']);
+		update_option('wpr_email_from_name_'. $this->get_id(), $instance['email_from_name']);
 		update_option('wpr_reply_to_'. $this->get_id(), $instance['email_reply_to']);
 		update_option('wpr_meta_keys_'. $this->get_id(), $instance['form_metadata']);
 		update_option('wpr_referrer_'. $this->get_id(), home_url( $_SERVER['REQUEST_URI'] ));

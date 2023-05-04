@@ -164,8 +164,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$reply_to = 'Reply-To: ' . get_option('wpr_reply_to_'. $_POST['wpr_form_id']);
 		}
 		
-		$headers = array('Content-Type: text/'. $content_type .'; charset=UTF-8', $cc_header, $bcc_header, $reply_to);
-		// $headers = array('Content-Type: text/'. $content_type .'; charset=UTF-8', $cc_header);
+		$email_from = sprintf( 'From: %s <%s>' . "\r\n", get_option('wpr_email_from_name_'. $_POST['wpr_form_id']), get_option('wpr_email_from_'. $_POST['wpr_form_id']) );
+		
+		$headers = array('Content-Type: text/'. $content_type .'; charset=UTF-8', $email_from, $cc_header, $bcc_header, $reply_to);
       
         // Send email using wp_mail() function
         $sent = wp_mail( $to, $subject, $body, $headers);
