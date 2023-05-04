@@ -34,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         ];
         
         $post_id = wp_insert_post( $new );
-        foreach ( $_POST['form_content'] as $key => $value ) {
+        foreach ($_POST['form_content'] as $key => $value ) {
             update_post_meta($post_id, $key, [$value[0], $value[1]]);
         }
 
@@ -50,7 +50,8 @@ if ( ! defined( 'ABSPATH' ) ) {
                 'action' => 'wpr_form_builder_submissions',
                 'post_id' => $post_id,
                 'message' => 'Post created successfully',
-				'status' => 'success'
+				'status' => 'success',
+                'content' => $_POST['form_content']
             ));
         } else {
             wp_send_json_success(array(

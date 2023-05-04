@@ -84,7 +84,6 @@ class Wpr_Form_Submissions {
     public function wpr_meta_box_callback( $post, $metabox ) {
         echo '<button class="wpr-edit-submissions button button-primary">'. esc_html__('Edit', 'wpr-addons') .'</button>';
         foreach (get_post_meta($post->ID) as $key => $value ) {
-            var_dump($key);
 
             $exclude = ['wpr_form_id', 'wpr_form_name', 'wpr_form_page', 'wpr_form_page_id', 'wpr_user_agent', 'wpr_user_ip', 'wpr_submission_read_status', '_edit_lock'];
 

@@ -686,6 +686,18 @@ class Wpr_Form_Builder extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'file_types',
+			[
+				'label' => esc_html__( 'File Types', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'description' => esc_html__( 'Enter the comma separated file types to allow.', 'wpr-addons' ),
+				'condition' => [
+					'field_type' => 'upload',
+				]
+			]
+		);
+
+		$repeater->add_control(
 			'field_options',
 			[
 				'label' => esc_html__( 'Options', 'wpr-addons' ),
@@ -3503,6 +3515,16 @@ class Wpr_Form_Builder extends Widget_Base {
 										]
 									);
 								}
+
+								if ( !empty( $item['file_types'] )) {
+									$this->add_render_attribute(
+										'input' . $item_index,
+										[
+											'data-allft' => $item['file_types']
+										]
+									);
+								}
+
 								echo '<input size="1 "'. $this->get_render_attribute_string( 'input' . $item_index ) .'>';
 								break;
 							case 'step':

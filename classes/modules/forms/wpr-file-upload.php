@@ -35,6 +35,10 @@ if ( ! defined( 'ABSPATH' ) ) {
             if ($file['size'] > $max_file_size * 1024 * 1024) {
                 wp_send_json_error(array(
 					'cause' => 'filesize',
+					'sizes' => [
+						$max_file_size * 1024 * 1024,
+						$file['size']
+					],
                     'message' => 'File size exceeds the allowed limit.'
                 ));
             }
@@ -42,11 +46,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 			// valid file type?
 			if ( !$this->file_validity(  $file ) ) {
                 wp_send_json_error(array(
-                    'message' => 'File type is not valid.'
+					'cause' => 'filetype',
+                    'message' => esc_html__('File type is not valid.')
                 ));
 			}
 			
-			if ( 'submit' == $_POST['triggering_event'] ) {
+			if ( 'click' == $_POST['triggering_event'] ) {
 				// Set the upload directory.
 				$upload_dir = wp_upload_dir();
 				$upload_path = $upload_dir['basedir'] . '/wpr-addons/forms';
@@ -64,27 +69,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 					));
 				} else {
 					wp_send_json_error(array(
-						'message' => 'Failed to upload the file.'
+						'message' => esc_html__('Failed to upload the file.')
 					));
 				}
+			} else {
+				wp_send_json_success(array(
+					'message' => esc_html__('File validation passed')
+				));
 			}
         }
     
-        wp_send_json_error(array(
-            'message' => esc_html__('No file was uploaded.')
-        ));
+		if ( 'click' == $_POST['triggering_event'] ) {
+			wp_send_json_error(array(
+				'message' => esc_html__('No file was uploaded.'),
+				'files' => $_FILES['uploaded_file']
+			));
+		}
     }
 
 	// private function file_validity( $field, $file ) {
 	private function file_validity( $file ) {
 		// File type validation
-		// if ( empty( $field['file_types'] ) ) {
-		// 	$field['file_types'] = 'jpg,jpeg,png,gif,pdf,doc,docx,ppt,pptx,odt,avi,ogg,m4a,mov,mp3,mp4,mpg,wav,wmv';
-		// }
+		if ( empty( $_POST['allowed_file_types'] ) ) {
+			$allowed_file_types = 'jpg,jpeg,png,gif,pdf,doc,docx,ppt,pptx,odt,avi,ogg,m4a,mov,mp3,mp4,mpg,wav,wmv';
+		} else {
+			$allowed_file_types = $_POST['allowed_file_types'];
+		}
 
 		$f_extension = pathinfo( $file['name'], PATHINFO_EXTENSION );
-		// $allowed_file_types = explode( ',', $field['file_types'] );
-		$allowed_file_types = explode( ',', 'jpg,jpeg,png,gif,pdf,doc,docx,ppt,pptx,odt,avi,ogg,m4a,mov,mp3,mp4,mpg,wav,wmv' );
+		$allowed_file_types = explode( ',', $allowed_file_types );
 		$allowed_file_types = array_map( 'trim', $allowed_file_types );
 		$allowed_file_types = array_map( 'strtolower', $allowed_file_types );
 
