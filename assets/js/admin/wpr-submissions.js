@@ -1,4 +1,6 @@
 jQuery(document).ready(function($) {
+    $('.page-title-action').remove();
+    
     $('body').on('click', '.column-read_status', function() {
         const post_id = $(this).parent().attr('id').replace('post-', '');
         const read_status = $(this).text() === 'Read' ? '0' : '1';

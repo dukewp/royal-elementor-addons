@@ -127,13 +127,13 @@ class Plugin {
 
 
 		// Form Builder
+		// TODO:: ommit if form builder turned off
 		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-recaptcha-handler.php';
 		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-actions-status.php';
 		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-send-email.php';
 		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-file-upload.php';
 		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-submissions-cpt.php';
 		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-subscribe-mailchimp.php';
-		require WPR_ADDONS_PATH . 'admin/form-submissions.php';
 
 		// Admin Files
 		if ( is_admin() ) {
@@ -148,6 +148,11 @@ class Plugin {
 
 			// Plugin Options
 			require WPR_ADDONS_PATH . 'admin/plugin-options.php';
+
+			// Form Submissions
+        	if ( wpr_fs()->can_use_premium_code() ) {
+				// require WPR_ADDONS_PATH . 'admin/form-submissions.php';
+			}
 
 			// Templates Kit
 			require WPR_ADDONS_PATH . 'admin/templates-kit.php';

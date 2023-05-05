@@ -17874,3 +17874,17 @@ dl.variation dd {
         opacity: 1
     }
 }
+
+/*--------------------------------------------------------------
+== Post breadcrumbs
+--------------------------------------------------------------*/
+
+.wpr-breadcrumbs {
+    display: inline-flex;
+    list-style-type: none;
+    padding: 0;
+}
+
+.wpr-breadcrumbs li:not(:last-of-type) {
+    margin-right: 4px;
+}

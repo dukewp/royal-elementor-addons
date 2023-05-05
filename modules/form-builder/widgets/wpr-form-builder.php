@@ -64,6 +64,17 @@ class Wpr_Form_Builder extends Widget_Base {
 		return str_ireplace( 'www.', '', parse_url( home_url(), PHP_URL_HOST ) );
 	}
 
+	public function submit_action_args() {
+		$actions_options = [
+			'email' => 'Email',
+			'redirect' => 'Redirect',
+			'pro-sb' => 'Submission (Pro)',
+			'pro-mch' => 'Mailchimp (Pro)'
+		];
+
+		return $actions_options;
+	}
+
 	public function register_settings_section_submissions( $widget ) {
 		$widget->start_controls_section(
 			$this->get_control_id( 'section_submissions' ),
@@ -968,7 +979,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'fields_to_show_pro_notice',
 				[
 					'type' => Controls_Manager::RAW_HTML,
-					'raw' => 'More than 3 Fields (Excluding Steps) are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-form-builder-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					'raw' => __('More than 3 Fields (Excluding Steps) are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-form-builder-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>'),
 					'content_classes' => 'wpr-pro-notice'
 				]
 			);
@@ -1313,15 +1324,6 @@ class Wpr_Form_Builder extends Widget_Base {
 				'label' => esc_html__( 'Actions', 'wpr-addons' ),
 			]
 		);
-
-		$actions_options = [
-			'submissions' => 'Submission',
-			'email' => 'Email',
-			'redirect' => 'Redirect',
-			'mailchimp' => 'Mailchimp',
-			// 'webhook' => 'Webhook',
-			// 'popup' => 'Popup'
-		];
 		// $actions = Module::instance()->actions_registrar->get();
 
 		$default_submit_actions = [ 'email' ];
@@ -1332,14 +1334,25 @@ class Wpr_Form_Builder extends Widget_Base {
 				'label' => esc_html__( 'Add Action', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT2,
 				'multiple' => true,
-				'options' => $actions_options,
+				'options' => $this->submit_action_args(),
 				'render_type' => 'none',
 				'label_block' => true,
 				'default' => $default_submit_actions,
-				'description' => esc_html__( 'Add actions that will be performed after a visitor submits the form (e.g. send an email notification). Choosing an action will add its setting below.', 'wpr-addons' ),
+				'description' => esc_html__( 'Select actions to be executed following a user\'s form submission (e.g., send an email notification). Upon choosing an action, its settings will appear below.', 'wpr-addons' ),
 			]
 		);
 
+		if ( ! wpr_fs()->can_use_premium_code() ) {
+			$this->add_control(
+				'submit_actions_notice',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => __('<strong>Submission</strong> and <strong>Mailchimp</strong> actions are only available <br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-form-builder-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>'),
+					'content_classes' => 'wpr-pro-notice'
+				]
+			);
+		}
+		
 		$this->end_controls_section();
 
 		$this->register_settings_section_submissions($this);
@@ -2957,7 +2970,8 @@ class Wpr_Form_Builder extends Widget_Base {
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'wpr-form-builder', [
-			'Unlimited number of fields'
+			'Unlimited number of fields',
+			'Submission and mailchimp actions'
 		] );
     }
 
@@ -3286,6 +3300,13 @@ class Wpr_Form_Builder extends Widget_Base {
 			'group_id' =>  $groupId
 		];
 
+		var_dump($instance['submit_actions']);
+		$submit_actions = array_filter($instance['submit_actions'], function($value) {
+			return $value !== 'pro-sb' && $value !== 'pro-mch';
+		});
+		$submit_actions = array_values($submit_actions);
+		var_dump($submit_actions);
+
 		$this->add_render_attribute(
 			[
 				'wrapper' => [
@@ -3302,10 +3323,10 @@ class Wpr_Form_Builder extends Widget_Base {
 						'wpr-form-field-type-submit',
 					],
 					'data-actions' => [
-						json_encode($instance['submit_actions'])
+						json_encode($submit_actions)
 					],
 					'data-redirect-url' => [
-						in_array('redirect', $instance['submit_actions']) ? $instance['redirect_to'] : ''
+						in_array('redirect', $submit_actions) ? $instance['redirect_to'] : ''
 					],
 					'data-mailchimp-fields' => [
 						json_encode($fieldsArray)

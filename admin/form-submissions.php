@@ -8,17 +8,45 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Wpr_Form_Submissions {
     public function __construct() {
-        // SUBMISSIONS CPT
-        add_action('admin_enqueue_scripts',[$this, 'enqueue_submissions_script']);
-        add_action('init', [$this, 'wpr_submissions']);
-        add_filter('manage_wpr_submissions_posts_columns', [$this, 'wpr_submissions_custom_columns']);
-        add_action('manage_wpr_submissions_posts_custom_column', [$this, 'wpr_submissions_custom_column_content'], 10, 2);
-        add_filter('manage_edit-wpr_submissions_sortable_columns', [$this, 'wpr_submissions_sortable_columns']);
-        add_action('wp_ajax_wpr_submissions_update_read_status', [$this, 'wpr_submissions_update_read_status']);
-        add_action('current_screen', [$this, 'wpr_submissions_mark_as_read']);
-        add_filter('post_row_actions', [$this, 'wpr_submissions_row_actions'], 10, 2);
-        add_action('current_screen', [$this, 'wpr_submissions_remove_bulk_edit_filter']);
-        // add_action('pre_get_posts', 'wpr_submissions_orderby');
+            // SUBMISSIONS CPT
+
+            add_action('admin_enqueue_scripts',[$this, 'enqueue_submissions_script']);
+            add_action('init', [$this, 'wpr_submissions']);
+            add_action('admin_menu', [$this, 'reorder_wpr_submissions_submenu'], 999);
+            add_filter('manage_wpr_submissions_posts_columns', [$this, 'wpr_submissions_custom_columns']);
+            add_action('manage_wpr_submissions_posts_custom_column', [$this, 'wpr_submissions_custom_column_content'], 10, 2);
+            add_filter('manage_edit-wpr_submissions_sortable_columns', [$this, 'wpr_submissions_sortable_columns']);
+            add_action('wp_ajax_wpr_submissions_update_read_status', [$this, 'wpr_submissions_update_read_status']);
+            add_action('current_screen', [$this, 'wpr_submissions_mark_as_read']);
+            add_filter('post_row_actions', [$this, 'wpr_submissions_row_actions'], 10, 2);
+            add_action('current_screen', [$this, 'wpr_submissions_remove_bulk_edit_filter']);
+            // add_action('pre_get_posts', 'wpr_submissions_orderby');
+    }
+
+    public function reorder_wpr_submissions_submenu() {
+        global $submenu;
+    
+        $parent_slug = 'wpr-addons';
+        $submenu_slug = 'edit.php?post_type=wpr_submissions';
+        $desired_position = 7; // Change this to adjust the position of the submenu item
+    
+        if (isset($submenu[$parent_slug])) {
+            $submenu_items = $submenu[$parent_slug];
+            $found_key = null;
+    
+            foreach ($submenu_items as $key => $item) {
+                if ($item[2] === $submenu_slug) {
+                    $found_key = $key;
+                    break;
+                }
+            }
+    
+            if ($found_key !== null) {
+                $item_to_move = $submenu[$parent_slug][$found_key];
+                unset($submenu[$parent_slug][$found_key]);
+                array_splice($submenu[$parent_slug], $desired_position - 1, 0, [$item_to_move]);
+            }
+        }
     }
 
     public function enqueue_submissions_script($hook) {
