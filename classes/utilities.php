@@ -957,7 +957,6 @@ class Utilities {
 	*/
 	public static function upgrade_pro_notice( $module, $controls_manager, $widget, $option, $condition = [] ) {
 		if ( wpr_fs()->can_use_premium_code() ) {
-			var_dump('alskdjfljlkj');
 			return;
 		}
 

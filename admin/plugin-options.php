@@ -255,18 +255,36 @@ function wpr_addons_settings_page() {
 
     <div class="wpr-elements wpr-elements-general">
     <?php
-        foreach ( Utilities::get_registered_modules() as $title => $data ) {
+        $modules = Utilities::get_registered_modules();
+        $premium_modules = [
+			'Breadcrumbs' => ['breadcrumbs-pro', 'https://royal-elementor-addons.com/elementor-breadcrumbs-pro-widget', '', 'pro'],
+        ];
+        foreach ( array_merge($modules, $premium_modules) as $title => $data ) {
             $slug = $data[0];
             $url  = $data[1];
             $reff = '?ref=rea-plugin-backend-elements-widget-prev'. $data[2];
             $class = 'new' === $data[3] ? ' wpr-new-element' : '';
+            $default_value = 'on';
+            $link_text = esc_html__('View Widget Demo', 'wpr-addons');
 
-            echo '<div class="wpr-element'. esc_attr($class) .'">';
+            if ( 'pro' === $data[3] && !wpr_fs()->can_use_premium_code() ) {
+                $class = 'wpr-pro-element';
+            } elseif ( 'expert' === $data[3] && !wpr_fs()->is_plan( 'expert' ) ) {
+                $class = 'wpr-expert-element';
+            }
+
+            if ( 'wpr-pro-element' === $class || 'wpr-expert-element' === $class ) {
+                $default_value = 'off';
+                $link_text = '';
+                $reff = '';
+            }
+
+            echo '<div class="wpr-element '. esc_attr($class) .'">';
                 echo '<div class="wpr-element-info">';
                     echo '<h3>'. esc_html($title) .'</h3>';
-                    echo '<input type="checkbox" name="wpr-element-'. esc_attr($slug) .'" id="wpr-element-'. esc_attr($slug) .'" '. checked( get_option('wpr-element-'. $slug, 'on'), 'on', false ) .'>';
+                    echo '<input type="checkbox" name="wpr-element-'. esc_attr($slug) .'" id="wpr-element-'. esc_attr($slug) .'" '. checked( get_option('wpr-element-'. $slug, $default_value), 'on', false ) .'>';
                     echo '<label for="wpr-element-'. esc_attr($slug) .'"></label>';
-                    echo ( '' !== $url && empty(get_option('wpr_wl_plugin_links')) ) ? '<a href="'. esc_url($url . $reff) .'" target="_blank">'. esc_html__('View Widget Demo', 'wpr-addons') .'</a>' : '';
+                    echo ( '' !== $url && empty(get_option('wpr_wl_plugin_links')) ) ? '<a href="'. esc_url($url . $reff) .'" target="_blank">'. $link_text .'</a>' : '';
                 echo '</div>';
             echo '</div>';
         }

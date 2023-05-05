@@ -149,11 +149,6 @@ class Plugin {
 			// Plugin Options
 			require WPR_ADDONS_PATH . 'admin/plugin-options.php';
 
-			// Form Submissions
-        	if ( wpr_fs()->can_use_premium_code() ) {
-				// require WPR_ADDONS_PATH . 'admin/form-submissions.php';
-			}
-
 			// Templates Kit
 			require WPR_ADDONS_PATH . 'admin/templates-kit.php';
 
@@ -177,10 +172,10 @@ class Plugin {
 			// Add Remove From Wishlist
 			require WPR_ADDONS_PATH . 'classes/woocommerce/wpr-add-remove-from-wishlist.php';
 
-			// Add Remove From Wishlist
+			// Add Remove From Compare
 			require WPR_ADDONS_PATH . 'classes/woocommerce/wpr-add-remove-from-compare.php';
 
-			// Add Remove From Wishlist
+			// Update Mini Wishlist
 			require WPR_ADDONS_PATH . 'classes/woocommerce/wpr-update-mini-wishlist.php';
 
 			// Compare Popup Action
@@ -880,6 +875,12 @@ class Plugin {
 				[
 					'name' => 'wpr-product-breadcrumbs',
 					'title' => __('Product Breadcrumbs', 'wpr-addons'),
+					'icon' => 'wpr-icon eicon-product-breadcrumbs',
+					'categories' => '["'. $category .'"]',
+				],
+				[
+					'name' => 'wpr-breadcrumbs',
+					'title' => __('Post Breadcrumbs', 'wpr-addons'),
 					'icon' => 'wpr-icon eicon-product-breadcrumbs',
 					'categories' => '["'. $category .'"]',
 				],
