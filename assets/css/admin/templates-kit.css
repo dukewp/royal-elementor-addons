@@ -734,4 +734,8 @@ div.fs-notice.updated, div.fs-notice.success {
   .wpr-templates-kit-search input {
     width: 350px;
   }
+
+  .wpr-templates-kit-expert-notice {
+    text-align: center;
+  }
 }

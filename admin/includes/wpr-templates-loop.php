@@ -354,6 +354,16 @@ class WPR_Templates_Loop {
 										<option value="tags" class="custom-ids"><?php esc_html_e( 'Post Tags', 'wpr-addons' ); ?></option>
 									</optgroup>
 									<optgroup label="<?php esc_html_e( 'Custom Post Type Archives', 'wpr-addons' ); ?>">
+										<?php // Custom Post Types
+											$custom_post_types = Utilities::get_custom_types_of( 'post', true );
+											foreach ($custom_post_types as $key => $value) {
+												if ( 'product' === $key || 'e-landing-page' === $key ) {
+													continue;
+												}
+
+												echo '<option value="'. esc_attr(substr($key, 0, 3)) .'" class="custom-type-ids">'. esc_html($value) .' (Expert)</option>';
+											}
+										?>
 										<?php // Custom Taxonomies
 											$custom_taxonomies = Utilities::get_custom_types_of( 'tax', true );
 											foreach ($custom_taxonomies as $key => $value) {

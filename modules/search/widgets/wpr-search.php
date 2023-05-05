@@ -1168,7 +1168,8 @@ class Wpr_Search extends Widget_Base {
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'search', [
-			'Custom Search Query - Only Posts, Pages or Custom Post Types',
+			'Custom Search Query - Only Posts or Pages',
+			'Custom Search Query - Only Custom Post Types (Expert)',
 			'More than 2 Results in Ajax Search',
 			'Ajax Search Results Pagination (Load More)'
 		] );
