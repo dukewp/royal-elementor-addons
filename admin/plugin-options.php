@@ -204,7 +204,7 @@ function wpr_addons_settings_page() {
         </a>
         <?php endif; ?>
         
-        <?php if ( empty(get_option('wpr_wl_hide_free_pro_tab')) ) : ?>
+        <?php if ( empty(get_option('wpr_wl_hide_free_pro_tab')) && !wpr_fs()->is_plan( 'expert' ) ) : ?>
         <a href="?page=wpr-addons&tab=wpr_tab_free_pro" data-title="Settings" class="nav-tab <?php echo ($active_tab == 'wpr_tab_free_pro') ? 'nav-tab-active' : ''; ?>">
             <?php esc_html_e( 'Free vs Pro', 'wpr-addons' ); ?>
         </a>
@@ -442,6 +442,7 @@ function wpr_addons_settings_page() {
                 <label for="wpr_enable_woo_flexslider_navigation"></label>
             </div>
 
+            <?php if ( wpr_fs()->is_plan( 'expert' ) ) : ?>
             <div class="wpr-woo-template-info wpr-compare-wishlist">
                 <?php
                     $pages = get_pages(); // Get all pages on the site
@@ -473,6 +474,7 @@ function wpr_addons_settings_page() {
                     echo '</select>';
                 ?>
             </div>
+            <?php endif; ?>
             
         </div>
 
@@ -593,7 +595,7 @@ function wpr_addons_settings_page() {
         </div>
 
     
-    <?php elseif ( $active_tab == 'wpr_tab_free_pro' ) : ?>
+    <?php elseif ( $active_tab == 'wpr_tab_free_pro' && !wpr_fs()->is_plan( 'expert' ) ) : ?>
 
         <div class="wpr-free-vs-pro-wrap">
 
@@ -1138,17 +1140,6 @@ function wpr_addons_settings_page() {
                             <li>Multilayer Parallax</li>
                         </ul>
                     </li>
-                    <li><span>White Label Branding </span>
-                        <ul>
-                            <li>This feature allows you to customize Royal elementor Addons with your personal branding:</li>
-                            <li>Change Plugin Name</li>
-                            <li>Change Plugin Description</li>
-                            <li>Change Developer / Agency</li>
-                            <li>Change Website URL</li>
-                            <li>Change Menu Label</li>
-                            <li>And other custom branding related settings</li>
-                        </ul>
-                    </li>
                     <li><span>Premium Template Kit Library - View Demo</span>
                         <ul>
                             <li>Access to All Premium Template Kit Library. Ready to use Sites which can be imported in one click in a few seconds.</li>
@@ -1185,6 +1176,7 @@ function wpr_addons_settings_page() {
                             <li>Templates Kit, Widgets and any other setting and Extension Doesn't require Elementor PRO</li>
                         </ul>
                     </li>
+                    <li>And More is Comming Soon...</li>
                 </ul>
             </div>
 
@@ -1203,6 +1195,7 @@ function wpr_addons_settings_page() {
                     <li>Custom Taxonomy Generator</li>
                     <li>WooCommerce Wishlist Widget</li>
                     <li>WooCommerce Compare Widget</li>
+                    <li>White Label Branding</li>
                     <li>And More is Comming Soon...</li>
                 </ul>
             </div>

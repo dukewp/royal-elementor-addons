@@ -1093,3 +1093,7 @@ pre.xdebug-var-dump {
 .wpr-step-editor-bg {
 	background: #e73cf6 !important;
 }
+
+#e-notice-bar {
+	display: none !important;
+}

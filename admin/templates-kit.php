@@ -129,7 +129,7 @@ function wpr_addons_templates_kit_page() {
         <div class="wpr-templates-kit-expert-notice">
             <p>
                 <span class="dashicons dashicons-warning"></span>
-                <strong>Important Notice:</strong> This Demo includes certain <strong>Expert Features</strong>. While you can still import this Template Kit with a <strong>Pro Plan</strong>, you'll need an <strong>Expert Plan</strong> to fully access all Expert options. Please visit our website for more <a href="#">details on the Expert Plan</a>.
+                <strong>Important Notice:</strong> This Demo includes certain <strong>Expert Features</strong>. While you can still import this Template Kit with a <strong>Pro Plan</strong>, you'll need an <strong>Expert Plan</strong> to fully access all Expert options. Please visit our website for more <a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-templates-upgrade-expert#purchasepro" target="_blank">details on the Expert Plan</a>.
             </p>
         </div>
         <?php endif; ?>
