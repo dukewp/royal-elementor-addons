@@ -3266,7 +3266,6 @@ class Wpr_Form_Builder extends Widget_Base {
 		$form_fields_length = sizeof($instance['form_fields']);
 		$thisId = $this->get_id();
 
-		// var_dump('Reply To', $instance['email_reply_to']);
 		update_option('wpr_email_content_type_'. $this->get_id(), $instance['email_content_type']);
 		update_option('wpr_email_to_'. $this->get_id(), $instance['email_to']);
 		update_option('wpr_email_subject_'. $this->get_id(), $instance['email_subject']);
@@ -3279,8 +3278,6 @@ class Wpr_Form_Builder extends Widget_Base {
 		update_option('wpr_meta_keys_'. $this->get_id(), $instance['form_metadata']);
 		update_option('wpr_referrer_'. $this->get_id(), home_url( $_SERVER['REQUEST_URI'] ));
 		update_option('wpr_referrer_title_'. $this->get_id(), get_the_title($post->ID));
-
-		var_dump(get_option('wpr_email_fields_'. $this->get_id()));
 
 		$emailField      = isset($instance['email_field']) ? $instance['email_field'] : '';
 		$firstNameField  = isset($instance['first_name_field']) ? $instance['first_name_field'] : '';
@@ -3300,12 +3297,10 @@ class Wpr_Form_Builder extends Widget_Base {
 			'group_id' =>  $groupId
 		];
 
-		var_dump($instance['submit_actions']);
 		$submit_actions = array_filter($instance['submit_actions'], function($value) {
 			return $value !== 'pro-sb' && $value !== 'pro-mch';
 		});
 		$submit_actions = array_values($submit_actions);
-		var_dump($submit_actions);
 
 		$this->add_render_attribute(
 			[
