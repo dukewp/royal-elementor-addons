@@ -17551,6 +17551,10 @@ dl.variation dd {
 == Form Builder
 --------------------------------------------------------------*/
 
+.wpr-submit-error {
+    margin: 0;
+}
+
 .wpr-form-fields-wrap {
     display: flex;
     flex-wrap: wrap;
