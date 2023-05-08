@@ -135,7 +135,7 @@ class Wpr_Form_Builder extends Widget_Base {
 
 		// maybe esc_html not necessary
 		/* translators: %s: Site title. */
-		$default_message = sprintf( esc_html__( 'New message from "%s"', 'wpr-addons' ), get_option( 'blogname' ) );
+		$default_message = sprintf( esc_html__( 'New message from %s', 'wpr-addons' ), get_option( 'blogname' ) );
 
 		$widget->add_control(
 			$this->get_control_id( 'email_subject' ),
