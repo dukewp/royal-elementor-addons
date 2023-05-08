@@ -22,6 +22,12 @@ if ( ! defined( 'ABSPATH' ) ) {
     }
 
     public function send_email() {
+
+        $nonce = $_POST['nonce'];
+
+        if ( !wp_verify_nonce( $nonce, 'wpr-addons-js' ) ) {
+            return; // Get out of here, the nonce is rotten!
+        }
         
         $message_body = [];
     

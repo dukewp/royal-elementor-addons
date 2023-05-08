@@ -28,6 +28,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
     public function add_to_submissions() {
 
+        $nonce = $_POST['nonce'];
+
+        if ( !wp_verify_nonce( $nonce, 'wpr-addons-js' ) ) {
+            return; // Get out of here, the nonce is rotten!
+        }
+
         $new = [
             'post_status' => 'publish',
             'post_type' => 'wpr_submissions'

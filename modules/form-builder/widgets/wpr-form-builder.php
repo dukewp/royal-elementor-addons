@@ -618,7 +618,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		);
 
 		$repeater->add_control(
-			'custom_id',
+			'field_id',
 			[
 				'label' => esc_html__( 'ID', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
@@ -632,14 +632,15 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
-		$shortcode_template = '{{ view.container.settings.get( \'custom_id\' ) }}';
+		$shortcode_value = '{{ view.container.settings.get( \'field_id\' ) }}';
+		
 		$repeater->add_control(
 			'shortcode',
 			[
 				'label' => esc_html__( 'Shortcode', 'wpr-addons' ),
 				'type' => Controls_Manager::RAW_HTML,
 				'classes' => 'forms-field-shortcode',
-				'raw' => '<input class="wpr-form-field-shortcode" value=\'[field id="' . $shortcode_template . '"]\' readonly />',
+				'raw' => '<input class="wpr-form-field-shortcode" value=\'[field id="' . $shortcode_value . '"]\' readonly />',
 			]
 		);
 
@@ -945,7 +946,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'fields' => $repeater->get_controls(),
 				'default' => [
 					[
-						'custom_id' => 'name',
+						'field_id' => 'name',
 						'field_type' => 'text',
 						'field_label' => esc_html__( 'Name', 'wpr-addons' ),
 						'placeholder' => esc_html__( 'Name', 'wpr-addons' ),
@@ -955,7 +956,7 @@ class Wpr_Form_Builder extends Widget_Base {
 						],
 					],
 					[
-						'custom_id' => 'email',
+						'field_id' => 'email',
 						'field_type' => 'email',
 						'required' => 'true',
 						'field_label' => esc_html__( 'Email', 'wpr-addons' ),
@@ -963,7 +964,7 @@ class Wpr_Form_Builder extends Widget_Base {
 						'width' => '100',
 					],
 					[
-						'custom_id' => 'message',
+						'field_id' => 'message',
 						'field_type' => 'textarea',
 						'field_label' => esc_html__( 'Message', 'wpr-addons' ),
 						'placeholder' => esc_html__( 'Message', 'wpr-addons' ),
@@ -2981,11 +2982,11 @@ class Wpr_Form_Builder extends Widget_Base {
 	}
 
 	public function get_attribute_name( $item ) {
-		return "form_fields[{$item['custom_id']}]";
+		return "form_fields[{$item['field_id']}]";
 	}
 
 	public function get_attribute_id( $item ) {
-		 $id_suffix = !empty($item['custom_id']) ? $item['custom_id'] : $item['field_type'];
+		 $id_suffix = !empty($item['field_id']) ? $item['field_id'] : $item['field_type'];
 		return 'form-field-' . $id_suffix;
 	}
 
@@ -3047,6 +3048,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		}
 
 		$options = preg_split( "/\\r\\n|\\r|\\n/", $item['field_options'] );
+		// var_dump($options);
 
 		if ( ! $options ) {
 			return '';
@@ -3056,17 +3058,10 @@ class Wpr_Form_Builder extends Widget_Base {
 		?>
 		<div <?php $this->print_render_attribute_string( 'select-wrapper' . $i ); ?>>
 			<select <?php $this->print_render_attribute_string( 'select' . $i ); ?>>
-			
-				<option value=''>
-					<?php
-						// PHPCS - $option_label is already escaped
-						echo esc_html__('None'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
-					?>
-				</option>
 
 				<?php
 				foreach ( $options as $key => $option ) :
-					$option_id = $item['custom_id'] . $key;
+					$option_id = $item['field_id'] . $key;
 					$option_value = esc_attr( $option );
 					$option_label = esc_html( $option );
 
@@ -3102,7 +3097,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		if ( $options ) {
 			$html .= '<div class="wpr-field-sub-group ' . esc_attr( $item['css_classes'] ) . ' ' . $item['inline_list'] . '">';
 			foreach ( $options as $key => $option ) {
-				$element_id = ($item['custom_id'] ? $item['custom_id'] : $item['field_type']) . $key;
+				$element_id = ($item['field_id'] ? $item['field_id'] : $item['field_type']) . $key;
 				$html_id = $this->get_attribute_id( $item ) . '-' . $key;
 				$option_label = $option;
 				$option_value = $option;
@@ -3129,7 +3124,7 @@ class Wpr_Form_Builder extends Widget_Base {
 					$this->add_required_attribute( $element_id );
 				}
 
-				$html .= '<span class="wpr-form-field-option" data-key="'. $item['custom_id'] .'"><input ' . $this->get_render_attribute_string( $element_id ) . '> <label for="' . $html_id . '">'. $option_label .'</label></span>';
+				$html .= '<span class="wpr-form-field-option" data-key="'. $item['field_id'] .'"><input ' . $this->get_render_attribute_string( $element_id ) . '> <label for="' . $html_id . '">'. $option_label .'</label></span>';
 			}
 			$html .= '</div>';
 		}
@@ -3145,7 +3140,7 @@ class Wpr_Form_Builder extends Widget_Base {
 						'wpr-form-field-type-' . $item['field_type'],
 						'wpr-field-group',
 						'wpr-column',
-						'wpr-field-group-' . $item['custom_id'],
+						'wpr-field-group-' . $item['field_id'],
 					],
 				],
 				'input' . $i => [
@@ -3544,7 +3539,7 @@ class Wpr_Form_Builder extends Widget_Base {
 								echo '<input size="1 "'. $this->get_render_attribute_string( 'input' . $item_index ) .'>';
 								break;
 							case 'step':
-								echo '<input type="hidden" class="wpr-step-input" id=form-field-'. $item['custom_id'] .' value='. $item['field_label'] .'>';
+								echo '<input type="hidden" class="wpr-step-input" id=form-field-'. $item['field_id'] .' value='. $item['field_label'] .'>';
 								break;
 							default:
 								$field_type = $item['field_type'];
