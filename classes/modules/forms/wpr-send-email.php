@@ -22,6 +22,12 @@ if ( ! defined( 'ABSPATH' ) ) {
     }
 
     public function send_email() {
+
+        $nonce = $_POST['nonce'];
+
+        if ( !wp_verify_nonce( $nonce, 'wpr-addons-js' ) ) {
+            return; // Get out of here, the nonce is rotten!
+        }
         
         $message_body = [];
     
@@ -176,14 +182,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 				'action' => 'wpr_form_builder_email',
 				'message' => esc_html__('Message sent successfully'),
 				'status' => 'success',
-				'details' => $sent
+				'details' => json_encode($message_body)
 			));
         } else {
 			wp_send_json_error(array(
 				'action' => 'wpr_form_builder_email',
 				'message' => esc_html__('Message could not be sent'),
 				'status' => 'error',
-				'details' => $sent
+				'details' => json_encode($message_body)
 			));
         }
     }

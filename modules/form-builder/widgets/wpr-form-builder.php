@@ -64,6 +64,17 @@ class Wpr_Form_Builder extends Widget_Base {
 		return str_ireplace( 'www.', '', parse_url( home_url(), PHP_URL_HOST ) );
 	}
 
+	public function submit_action_args() {
+		$actions_options = [
+			'email' => 'Email',
+			'redirect' => 'Redirect',
+			'pro-sb' => 'Submission (Pro)',
+			'pro-mch' => 'Mailchimp (Pro)'
+		];
+
+		return $actions_options;
+	}
+
 	public function register_settings_section_submissions( $widget ) {
 		$widget->start_controls_section(
 			$this->get_control_id( 'section_submissions' ),
@@ -607,7 +618,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		);
 
 		$repeater->add_control(
-			'custom_id',
+			'field_id',
 			[
 				'label' => esc_html__( 'ID', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
@@ -621,14 +632,15 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
-		$shortcode_template = '{{ view.container.settings.get( \'custom_id\' ) }}';
+		$shortcode_value = '{{ view.container.settings.get( \'field_id\' ) }}';
+		
 		$repeater->add_control(
 			'shortcode',
 			[
 				'label' => esc_html__( 'Shortcode', 'wpr-addons' ),
 				'type' => Controls_Manager::RAW_HTML,
 				'classes' => 'forms-field-shortcode',
-				'raw' => '<input class="wpr-form-field-shortcode" value=\'[field id="' . $shortcode_template . '"]\' readonly />',
+				'raw' => '<input class="wpr-form-field-shortcode" value=\'[field id="' . $shortcode_value . '"]\' readonly />',
 			]
 		);
 
@@ -934,7 +946,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'fields' => $repeater->get_controls(),
 				'default' => [
 					[
-						'custom_id' => 'name',
+						'field_id' => 'name',
 						'field_type' => 'text',
 						'field_label' => esc_html__( 'Name', 'wpr-addons' ),
 						'placeholder' => esc_html__( 'Name', 'wpr-addons' ),
@@ -944,7 +956,7 @@ class Wpr_Form_Builder extends Widget_Base {
 						],
 					],
 					[
-						'custom_id' => 'email',
+						'field_id' => 'email',
 						'field_type' => 'email',
 						'required' => 'true',
 						'field_label' => esc_html__( 'Email', 'wpr-addons' ),
@@ -952,7 +964,7 @@ class Wpr_Form_Builder extends Widget_Base {
 						'width' => '100',
 					],
 					[
-						'custom_id' => 'message',
+						'field_id' => 'message',
 						'field_type' => 'textarea',
 						'field_label' => esc_html__( 'Message', 'wpr-addons' ),
 						'placeholder' => esc_html__( 'Message', 'wpr-addons' ),
@@ -968,7 +980,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'fields_to_show_pro_notice',
 				[
 					'type' => Controls_Manager::RAW_HTML,
-					'raw' => 'More than 3 Fields (Excluding Steps) are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-form-builder-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					'raw' => __('More than 3 Fields (Excluding Steps) are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-form-builder-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>'),
 					'content_classes' => 'wpr-pro-notice'
 				]
 			);
@@ -1313,15 +1325,6 @@ class Wpr_Form_Builder extends Widget_Base {
 				'label' => esc_html__( 'Actions', 'wpr-addons' ),
 			]
 		);
-
-		$actions_options = [
-			'submissions' => 'Submission',
-			'email' => 'Email',
-			'redirect' => 'Redirect',
-			'mailchimp' => 'Mailchimp',
-			// 'webhook' => 'Webhook',
-			// 'popup' => 'Popup'
-		];
 		// $actions = Module::instance()->actions_registrar->get();
 
 		$default_submit_actions = [ 'email' ];
@@ -1332,14 +1335,25 @@ class Wpr_Form_Builder extends Widget_Base {
 				'label' => esc_html__( 'Add Action', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT2,
 				'multiple' => true,
-				'options' => $actions_options,
+				'options' => $this->submit_action_args(),
 				'render_type' => 'none',
 				'label_block' => true,
 				'default' => $default_submit_actions,
-				'description' => esc_html__( 'Add actions that will be performed after a visitor submits the form (e.g. send an email notification). Choosing an action will add its setting below.', 'wpr-addons' ),
+				'description' => esc_html__( 'Select actions to be executed following a user\'s form submission (e.g., send an email notification). Upon choosing an action, its settings will appear below.', 'wpr-addons' ),
 			]
 		);
 
+		if ( ! wpr_fs()->can_use_premium_code() ) {
+			$this->add_control(
+				'submit_actions_notice',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => __('<strong>Submission</strong> and <strong>Mailchimp</strong> actions are only available <br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-form-builder-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>'),
+					'content_classes' => 'wpr-pro-notice'
+				]
+			);
+		}
+		
 		$this->end_controls_section();
 
 		$this->register_settings_section_submissions($this);
@@ -2957,7 +2971,8 @@ class Wpr_Form_Builder extends Widget_Base {
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'wpr-form-builder', [
-			'Unlimited number of fields'
+			'Unlimited number of fields',
+			'Submission and mailchimp actions'
 		] );
     }
 
@@ -2967,11 +2982,11 @@ class Wpr_Form_Builder extends Widget_Base {
 	}
 
 	public function get_attribute_name( $item ) {
-		return "form_fields[{$item['custom_id']}]";
+		return "form_fields[{$item['field_id']}]";
 	}
 
 	public function get_attribute_id( $item ) {
-		 $id_suffix = !empty($item['custom_id']) ? $item['custom_id'] : $item['field_type'];
+		 $id_suffix = !empty($item['field_id']) ? $item['field_id'] : $item['field_type'];
 		return 'form-field-' . $id_suffix;
 	}
 
@@ -3033,6 +3048,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		}
 
 		$options = preg_split( "/\\r\\n|\\r|\\n/", $item['field_options'] );
+		// var_dump($options);
 
 		if ( ! $options ) {
 			return '';
@@ -3042,17 +3058,10 @@ class Wpr_Form_Builder extends Widget_Base {
 		?>
 		<div <?php $this->print_render_attribute_string( 'select-wrapper' . $i ); ?>>
 			<select <?php $this->print_render_attribute_string( 'select' . $i ); ?>>
-			
-				<option value=''>
-					<?php
-						// PHPCS - $option_label is already escaped
-						echo esc_html__('None'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
-					?>
-				</option>
 
 				<?php
 				foreach ( $options as $key => $option ) :
-					$option_id = $item['custom_id'] . $key;
+					$option_id = $item['field_id'] . $key;
 					$option_value = esc_attr( $option );
 					$option_label = esc_html( $option );
 
@@ -3088,7 +3097,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		if ( $options ) {
 			$html .= '<div class="wpr-field-sub-group ' . esc_attr( $item['css_classes'] ) . ' ' . $item['inline_list'] . '">';
 			foreach ( $options as $key => $option ) {
-				$element_id = ($item['custom_id'] ? $item['custom_id'] : $item['field_type']) . $key;
+				$element_id = ($item['field_id'] ? $item['field_id'] : $item['field_type']) . $key;
 				$html_id = $this->get_attribute_id( $item ) . '-' . $key;
 				$option_label = $option;
 				$option_value = $option;
@@ -3115,7 +3124,7 @@ class Wpr_Form_Builder extends Widget_Base {
 					$this->add_required_attribute( $element_id );
 				}
 
-				$html .= '<span class="wpr-form-field-option"><input ' . $this->get_render_attribute_string( $element_id ) . '> <label for="' . $html_id . '">'. $option_label .'</label></span>';
+				$html .= '<span class="wpr-form-field-option" data-key="'. $item['field_id'] .'"><input ' . $this->get_render_attribute_string( $element_id ) . '> <label for="' . $html_id . '">'. $option_label .'</label></span>';
 			}
 			$html .= '</div>';
 		}
@@ -3131,7 +3140,7 @@ class Wpr_Form_Builder extends Widget_Base {
 						'wpr-form-field-type-' . $item['field_type'],
 						'wpr-field-group',
 						'wpr-column',
-						'wpr-field-group-' . $item['custom_id'],
+						'wpr-field-group-' . $item['field_id'],
 					],
 				],
 				'input' . $i => [
@@ -3252,7 +3261,6 @@ class Wpr_Form_Builder extends Widget_Base {
 		$form_fields_length = sizeof($instance['form_fields']);
 		$thisId = $this->get_id();
 
-		// var_dump('Reply To', $instance['email_reply_to']);
 		update_option('wpr_email_content_type_'. $this->get_id(), $instance['email_content_type']);
 		update_option('wpr_email_to_'. $this->get_id(), $instance['email_to']);
 		update_option('wpr_email_subject_'. $this->get_id(), $instance['email_subject']);
@@ -3265,8 +3273,6 @@ class Wpr_Form_Builder extends Widget_Base {
 		update_option('wpr_meta_keys_'. $this->get_id(), $instance['form_metadata']);
 		update_option('wpr_referrer_'. $this->get_id(), home_url( $_SERVER['REQUEST_URI'] ));
 		update_option('wpr_referrer_title_'. $this->get_id(), get_the_title($post->ID));
-
-		var_dump(get_option('wpr_email_fields_'. $this->get_id()));
 
 		$emailField      = isset($instance['email_field']) ? $instance['email_field'] : '';
 		$firstNameField  = isset($instance['first_name_field']) ? $instance['first_name_field'] : '';
@@ -3286,6 +3292,11 @@ class Wpr_Form_Builder extends Widget_Base {
 			'group_id' =>  $groupId
 		];
 
+		$submit_actions = array_filter($instance['submit_actions'], function($value) {
+			return $value !== 'pro-sb' && $value !== 'pro-mch';
+		});
+		$submit_actions = array_values($submit_actions);
+
 		$this->add_render_attribute(
 			[
 				'wrapper' => [
@@ -3302,10 +3313,10 @@ class Wpr_Form_Builder extends Widget_Base {
 						'wpr-form-field-type-submit',
 					],
 					'data-actions' => [
-						json_encode($instance['submit_actions'])
+						json_encode($submit_actions)
 					],
 					'data-redirect-url' => [
-						in_array('redirect', $instance['submit_actions']) ? $instance['redirect_to'] : ''
+						in_array('redirect', $submit_actions) ? $instance['redirect_to'] : ''
 					],
 					'data-mailchimp-fields' => [
 						json_encode($fieldsArray)
@@ -3528,7 +3539,7 @@ class Wpr_Form_Builder extends Widget_Base {
 								echo '<input size="1 "'. $this->get_render_attribute_string( 'input' . $item_index ) .'>';
 								break;
 							case 'step':
-								echo '<input type="hidden" class="wpr-step-input" id=form-field-'. $item['custom_id'] .' value='. $item['field_label'] .'>';
+								echo '<input type="hidden" class="wpr-step-input" id=form-field-'. $item['field_id'] .' value='. $item['field_label'] .'>';
 								break;
 							default:
 								$field_type = $item['field_type'];

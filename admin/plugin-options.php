@@ -255,18 +255,36 @@ function wpr_addons_settings_page() {
 
     <div class="wpr-elements wpr-elements-general">
     <?php
-        foreach ( Utilities::get_registered_modules() as $title => $data ) {
+        $modules = Utilities::get_registered_modules();
+        $premium_modules = [
+			'Breadcrumbs' => ['breadcrumbs-pro', 'https://royal-elementor-addons.com/elementor-breadcrumbs-pro-widget', '', 'pro'],
+        ];
+        foreach ( array_merge($modules, $premium_modules) as $title => $data ) {
             $slug = $data[0];
             $url  = $data[1];
             $reff = '?ref=rea-plugin-backend-elements-widget-prev'. $data[2];
             $class = 'new' === $data[3] ? ' wpr-new-element' : '';
+            $default_value = 'on';
+            $link_text = esc_html__('View Widget Demo', 'wpr-addons');
 
-            echo '<div class="wpr-element'. esc_attr($class) .'">';
+            if ( 'pro' === $data[3] && !wpr_fs()->can_use_premium_code() ) {
+                $class = 'wpr-pro-element';
+            } elseif ( 'expert' === $data[3] && !wpr_fs()->is_plan( 'expert' ) ) {
+                $class = 'wpr-expert-element';
+            }
+
+            if ( 'wpr-pro-element' === $class || 'wpr-expert-element' === $class ) {
+                $default_value = 'off';
+                $link_text = '';
+                $reff = '';
+            }
+
+            echo '<div class="wpr-element '. esc_attr($class) .'">';
                 echo '<div class="wpr-element-info">';
                     echo '<h3>'. esc_html($title) .'</h3>';
-                    echo '<input type="checkbox" name="wpr-element-'. esc_attr($slug) .'" id="wpr-element-'. esc_attr($slug) .'" '. checked( get_option('wpr-element-'. $slug, 'on'), 'on', false ) .'>';
+                    echo '<input type="checkbox" name="wpr-element-'. esc_attr($slug) .'" id="wpr-element-'. esc_attr($slug) .'" '. checked( get_option('wpr-element-'. $slug, $default_value), 'on', false ) .'>';
                     echo '<label for="wpr-element-'. esc_attr($slug) .'"></label>';
-                    echo ( '' !== $url && empty(get_option('wpr_wl_plugin_links')) ) ? '<a href="'. esc_url($url . $reff) .'" target="_blank">'. esc_html__('View Widget Demo', 'wpr-addons') .'</a>' : '';
+                    echo ( '' !== $url && empty(get_option('wpr_wl_plugin_links')) ) ? '<a href="'. esc_url($url . $reff) .'" target="_blank">'. $link_text .'</a>' : '';
                 echo '</div>';
             echo '</div>';
         }
@@ -1312,8 +1330,6 @@ function wpr_addons_settings_page() {
 
 // Add Support Sub Menu item that will redirect to wp.org
 function wpr_addons_add_support_menu() {
-    // GOGA - ZUKA
-    add_submenu_page( 'wpr-addons',  Utilities::get_plugin_name(), Utilities::get_plugin_name(), 'manage_options', 'wpr-addons', 'wpr_addons_settings_page', 1 );
     add_submenu_page( 'wpr-addons', 'Support', 'Support', 'manage_options', 'wpr-support', 'wpr_addons_support_page', 99 );
 }
 add_action( 'admin_menu', 'wpr_addons_add_support_menu', 99 );
@@ -1338,65 +1354,6 @@ function wpr_addons_add_upgrade_menu() {
     add_submenu_page( 'wpr-addons', 'Upgrade', 'Upgrade', 'manage_options', 'wpr-upgrade', 'wpr_addons_upgrade_page', 99 );
 }
 add_action( 'admin_menu', 'wpr_addons_add_upgrade_menu', 99 );
-
-// CPT Submissions page
-// function wpr_display_form_submissions() {
-//     $form_submissions = get_posts( array(
-//         'post_type' => 'wpr_submissions',
-//         'posts_per_page' => -1
-//     ));
-
-//     echo '<h2>Submissions</h2>';
-//     echo '<ul>';
-
-//     foreach ( $form_submissions as $form_submission ) {
-//         echo '<li>' . $form_submission->post_content . '</li>';
-//     }
-
-//     echo '</ul>';
-// }
-
-// function wpr_add_form_submissions_page() {
-//     add_submenu_page(
-//         'wpr-addons',
-//         'Submissions',
-//         'Submissions',
-//         'manage_options',
-//         'wpr-submissions',
-//         'wpr_display_form_submissions',
-// 		99
-//     );
-// }
-
-// add_action( 'admin_menu', 'wpr_add_form_submissions_page', 99 );
-
-function reorder_wpr_submissions_submenu() {
-    global $submenu;
-
-    $parent_slug = 'wpr-addons';
-    $submenu_slug = 'edit.php?post_type=wpr_submissions';
-    $desired_position = 7; // Change this to adjust the position of the submenu item
-
-    if (isset($submenu[$parent_slug])) {
-        $submenu_items = $submenu[$parent_slug];
-        $found_key = null;
-
-        foreach ($submenu_items as $key => $item) {
-            if ($item[2] === $submenu_slug) {
-                $found_key = $key;
-                break;
-            }
-        }
-
-        if ($found_key !== null) {
-            $item_to_move = $submenu[$parent_slug][$found_key];
-            unset($submenu[$parent_slug][$found_key]);
-            array_splice($submenu[$parent_slug], $desired_position - 1, 0, [$item_to_move]);
-        }
-    }
-}
-
-add_action('admin_menu', 'reorder_wpr_submissions_submenu', 999);
 
 function wpr_addons_upgrade_page() {}
 

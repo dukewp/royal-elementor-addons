@@ -27,6 +27,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	** Mailchimp AJAX Subscribe
 	*/
 	public static function wpr_form_builder_mailchimp() {
+
+        $nonce = $_POST['nonce'];
+
+        if ( !wp_verify_nonce( $nonce, 'wpr-addons-js' ) ) {
+            return; // Get out of here, the nonce is rotten!
+        }
+		
 		// API Key
         $api_key = get_option('wpr_mailchimp_api_key') ? get_option('wpr_mailchimp_api_key') : '';
 

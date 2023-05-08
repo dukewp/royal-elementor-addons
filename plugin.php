@@ -127,13 +127,13 @@ class Plugin {
 
 
 		// Form Builder
+		// TODO:: ommit if form builder turned off
 		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-recaptcha-handler.php';
 		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-actions-status.php';
 		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-send-email.php';
 		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-file-upload.php';
 		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-submissions-cpt.php';
 		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-subscribe-mailchimp.php';
-		require WPR_ADDONS_PATH . 'admin/form-submissions.php';
 
 		// Admin Files
 		if ( is_admin() ) {
@@ -172,10 +172,10 @@ class Plugin {
 			// Add Remove From Wishlist
 			require WPR_ADDONS_PATH . 'classes/woocommerce/wpr-add-remove-from-wishlist.php';
 
-			// Add Remove From Wishlist
+			// Add Remove From Compare
 			require WPR_ADDONS_PATH . 'classes/woocommerce/wpr-add-remove-from-compare.php';
 
-			// Add Remove From Wishlist
+			// Update Mini Wishlist
 			require WPR_ADDONS_PATH . 'classes/woocommerce/wpr-update-mini-wishlist.php';
 
 			// Compare Popup Action
@@ -875,6 +875,12 @@ class Plugin {
 				[
 					'name' => 'wpr-product-breadcrumbs',
 					'title' => __('Product Breadcrumbs', 'wpr-addons'),
+					'icon' => 'wpr-icon eicon-product-breadcrumbs',
+					'categories' => '["'. $category .'"]',
+				],
+				[
+					'name' => 'wpr-breadcrumbs',
+					'title' => __('Post Breadcrumbs', 'wpr-addons'),
 					'icon' => 'wpr-icon eicon-product-breadcrumbs',
 					'categories' => '["'. $category .'"]',
 				],

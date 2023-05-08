@@ -29,7 +29,7 @@ class Utilities {
 			'Testimonial' => ['testimonial', 'https://royal-elementor-addons.com/elementor-testimonials-slider-widget/', '', ''],
 			'Nav Menu' => ['nav-menu', 'http://royal-elementor-addons.com/elementor-menu-widget/', '', ''],
 			'Mega Menu' => ['mega-menu', 'https://royal-elementor-addons.com/elementor-mega-menu-widget/', '', 'new'],
-			'Form Builder' => ['Form Builder', '', '', 'new'],
+			'Form Builder' => ['form-builder', 'https://royal-elementor-addons.com/elementor-form-builder-widget/', '', 'new'],
 			'Onepage Navigation' => ['onepage-nav', 'https://royal-elementor-addons.com/elementor-one-page-navigation-widget/', '', ''],
 			'Instagram Feed' => ['instagram-feed', 'https://royal-elementor-addons.com/elementor-instagram-feed-widget/', '', 'new'],
 			'Data Table' => ['data-table', 'https://royal-elementor-addons.com/elementor-data-table-widget/', '', ''],
@@ -69,7 +69,7 @@ class Utilities {
 			'Page List' => ['page-list', '', '', ''],
 			'Template' => ['elementor-template', '', '', ''],
 			'Reading Progress Bar' => ['reading-progress-bar', 'https://royal-elementor-addons.com/elementor-reading-progress-bar-widget/', '', ''],
-			'Twitter Feed' => ['twitter-feed', 'https://royal-elementor-addons.com/elementor-twitter-feed-widget/', '', 'new'],
+			'Twitter Feed' => ['twitter-feed', 'https://royal-elementor-addons.com/elementor-twitter-feed-widget/', '', 'new']
 		];
 	}
 
@@ -329,6 +329,12 @@ class Utilities {
 	** Get Library Template ID
 	*/
 	public static function get_template_id( $slug ) {
+
+		// GOGA - temporary fix
+		if ( $slug == NULL ) {
+			$slug = '';
+		}
+
 		$template = get_page_by_path( $slug, OBJECT, 'wpr_templates' );
 
         return isset( $template->ID ) ? $template->ID : false;

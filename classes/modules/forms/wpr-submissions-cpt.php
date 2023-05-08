@@ -28,6 +28,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
     public function add_to_submissions() {
 
+        $nonce = $_POST['nonce'];
+
+        if ( !wp_verify_nonce( $nonce, 'wpr-addons-js' ) ) {
+            return; // Get out of here, the nonce is rotten!
+        }
+
         $new = [
             'post_status' => 'publish',
             'post_type' => 'wpr_submissions'
@@ -35,7 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         
         $post_id = wp_insert_post( $new );
         foreach ($_POST['form_content'] as $key => $value ) {
-            update_post_meta($post_id, $key, [$value[0], $value[1]]);
+            update_post_meta($post_id, $key, [$value[0], $value[1], $value[2]]);
         }
 
         update_post_meta($post_id, 'wpr_form_name', $_POST['form_name']);

@@ -21,25 +21,6 @@ class WPR_Update_Mini_Wishlist {
         add_action( 'wp_ajax_nopriv_update_mini_wishlist',[$this, 'update_mini_wishlist'] );
     }
 
-    // // Register Post Type
-    // function register_wishlist_cpt() {
-    //     $args = array(
-    //         'label'				  => esc_html__( 'Royal Wishlist', 'wpr-addons' ),
-    //         'public'              => true,
-    //         'publicly_queryable'  => true,
-    //         'rewrite'             => false,
-    //         'show_ui'             => true,
-    //         'show_in_menu'        => true,
-    //         'show_in_nav_menus'   => false,
-    //         'exclude_from_search' => true,
-    //         'capability_type'     => 'post',
-    //         'supports'            => array( 'title', 'editor', 'elementor' ),
-    //         'hierarchical'        => false,
-    //     );
-    
-    //     register_post_type( 'wishlist', $args );
-    // }
-
 	// Add two new functions for handling cookies
 	public function get_wishlist_from_cookie() {
 		if (isset($_COOKIE['wpr_wishlist'])) {
