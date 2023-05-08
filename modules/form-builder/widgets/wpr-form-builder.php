@@ -640,7 +640,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'label' => esc_html__( 'Shortcode', 'wpr-addons' ),
 				'type' => Controls_Manager::RAW_HTML,
 				'classes' => 'forms-field-shortcode',
-				'raw' => '<input class="wpr-form-field-shortcode" value=\'[field id="' . $shortcode_value . '"]\' readonly />',
+				'raw' => '<input class="wpr-form-field-shortcode" value=\'[id="' . $shortcode_value . '"]\' readonly />',
 			]
 		);
 
@@ -1731,10 +1731,12 @@ class Wpr_Form_Builder extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#CB3030',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-field-group .wpr-form-field.wpr-form-error' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-field-group input[type="radio"].wpr-form-error' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .wpr-field-group input[type="checkbox"].wpr-form-error' => 'color: {{VALUE}};'
+					'{{WRAPPER}} .wpr-field-group input[type="checkbox"].wpr-form-error' => 'color: {{VALUE}};',
+					// '{{WRAPPER}} .wpr-field-group .wpr-form-field-label' => 'color: {{VALUE}};'
 				]
 			]
 		);
@@ -1757,6 +1759,7 @@ class Wpr_Form_Builder extends Widget_Base {
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#CB3030',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-field-group:not(.wpr-form-field-type-upload) .wpr-form-field:not(.wpr-select-wrap).wpr-form-error' => 'border-color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-field-group .wpr-select-wrap select.wpr-form-error' => 'border-color: {{VALUE}};',
