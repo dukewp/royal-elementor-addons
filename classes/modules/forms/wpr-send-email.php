@@ -180,14 +180,14 @@ if ( ! defined( 'ABSPATH' ) ) {
         if ( $sent ) {
 			wp_send_json_success(array(
 				'action' => 'wpr_form_builder_email',
-				// 'message' => esc_html__('Message sent successfully (Visible only to admin)'),
+				'message' => esc_html__('Message sent successfully'),
 				'status' => 'success',
 				'details' => json_encode($message_body)
 			));
         } else {
 			wp_send_json_error(array(
 				'action' => 'wpr_form_builder_email',
-				// 'message' => esc_html__('Message could not be sent (Visible only to admin)'),
+				'message' => esc_html__('Message could not be sent'),
 				'status' => 'error',
 				'details' => json_encode($message_body)
 			));

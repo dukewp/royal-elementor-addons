@@ -628,7 +628,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'required' => true,
 				'dynamic' => [
 					'active' => true,
-				],
+				]
 			]
 		);
 
@@ -640,7 +640,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'label' => esc_html__( 'Shortcode', 'wpr-addons' ),
 				'type' => Controls_Manager::RAW_HTML,
 				'classes' => 'forms-field-shortcode',
-				'raw' => '<input class="wpr-form-field-shortcode" value=\'[id="' . $shortcode_value . '"]\' readonly />',
+				'raw' => '<input class="wpr-form-field-shortcode" value=\'[id="' . $shortcode_value . '"]\' readonly />'
 			]
 		);
 
@@ -658,7 +658,7 @@ class Wpr_Form_Builder extends Widget_Base {
 							'operator' => '!in',
 							'value' => [
 								'recaptcha',
-								'recaptcha_v3',
+								'recaptcha-v3',
 								'hidden',
 								'html',
 								'step',
@@ -839,7 +839,7 @@ class Wpr_Form_Builder extends Widget_Base {
 							'value' => [
 								'hidden',
 								'recaptcha',
-								'recaptcha_v3',
+								'recaptcha-v3',
 								'step',
 							],
 						],
@@ -906,27 +906,27 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
-		$repeater->add_control(
-			'recaptcha_badge', [
-				'label' => esc_html__( 'Badge', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'bottomright',
-				'options' => [
-					'bottomright' => esc_html__( 'Bottom Right', 'wpr-addons' ),
-					'bottomleft' => esc_html__( 'Bottom Left', 'wpr-addons' ),
-					'inline' => esc_html__( 'Inline', 'wpr-addons' ),
-				],
-				'description' => esc_html__( 'To view the validation badge, switch to preview mode', 'wpr-addons' ),
-				'conditions' => [
-					'terms' => [
-						[
-							'name' => 'field_type',
-							'value' => 'recaptcha_v3',
-						],
-					],
-				],
-			]
-		);
+		// $repeater->add_control(
+		// 	'recaptcha_badge', [
+		// 		'label' => esc_html__( 'Badge', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'default' => 'bottomright',
+		// 		'options' => [
+		// 			'bottomright' => esc_html__( 'Bottom Right', 'wpr-addons' ),
+		// 			'bottomleft' => esc_html__( 'Bottom Left', 'wpr-addons' ),
+		// 			'inline' => esc_html__( 'Inline', 'wpr-addons' ),
+		// 		],
+		// 		'description' => esc_html__( 'To view the validation badge, switch to preview mode', 'wpr-addons' ),
+		// 		'conditions' => [
+		// 			'terms' => [
+		// 				[
+		// 					'name' => 'field_type',
+		// 					'value' => 'recaptcha-v3',
+		// 				],
+		// 			],
+		// 		],
+		// 	]
+		// );
 
 		$repeater->add_control(
 			'css_classes',
@@ -1598,7 +1598,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-field-group:not(.wpr-stp-btns-wrap)' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-field-group.recaptcha_v3-bottomleft, {{WRAPPER}} .wpr-field-group.recaptcha_v3-bottomright' => 'margin-bottom: 0;',
+					'{{WRAPPER}} .wpr-field-group.recaptcha-v3-bottomleft, {{WRAPPER}} .wpr-field-group.recaptcha-v3-bottomright' => 'margin-bottom: 0;',
 				],
 			]
 		);
@@ -1793,6 +1793,13 @@ class Wpr_Form_Builder extends Widget_Base {
 				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em' ],
+				'default' => [
+					'top' => 3,
+					'right' => 3,
+					'bottom' => 3,
+					'left' => 3,
+					'unit' => 'px'
+				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-field-group:not(.wpr-form-field-type-upload) .wpr-form-field:not(.wpr-select-wrap)' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-field-group .wpr-select-wrap select' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -1807,7 +1814,10 @@ class Wpr_Form_Builder extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em' ],
 				'default' => [
-					'size' => 10,
+					'top' => 5,
+					'right' => 5,
+					'bottom' => 5,
+					'left' => 5,
 					'unit' => 'px'
 				],
 				'selectors' => [
@@ -1832,7 +1842,10 @@ class Wpr_Form_Builder extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em' ],
 				'default' => [
-					'size' => 0,
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
 					'unit' => 'px'
 				],
 				'selectors' => [
