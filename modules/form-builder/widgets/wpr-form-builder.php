@@ -38,7 +38,7 @@ class Wpr_Form_Builder extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'royal', 'cf7', 'contact form 7', 'caldera forms', 'ninja forms', 'wpforms', 'wp forms' ];
+		return [ 'royal', 'cf7', 'contact form 7', 'caldera forms', 'ninja forms', 'wpforms', 'wp forms', 'email', 'mail' ];
 	}
 
 	public function get_style_depends() {
