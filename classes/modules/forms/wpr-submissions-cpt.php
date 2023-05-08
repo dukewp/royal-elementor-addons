@@ -55,7 +55,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             wp_send_json_success(array(
                 'action' => 'wpr_form_builder_submissions',
                 'post_id' => $post_id,
-                'message' => 'Post created successfully',
+                // 'message' => esc_html__('Submission created successfully  (Only visible to admin)'),
 				'status' => 'success',
                 'content' => $_POST['form_content']
             ));
@@ -63,7 +63,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             wp_send_json_success(array(
                 'action' => 'wpr_form_builder_submissions',
                 'post_id' => $post_id,
-                'message' => 'Something Went Wrong',
+                // 'message' => esc_html__('Submit action failed (Only visible to admin)'),
 				'status' => 'error'
             ));
         }

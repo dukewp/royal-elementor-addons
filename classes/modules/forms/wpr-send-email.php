@@ -42,7 +42,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				}
 			}
 		} else {
-			preg_match_all('/field id="([^"]+)"/', $email_fields, $matches);
+			preg_match_all('/id="([^"]+)"/', $email_fields, $matches);
 			$field_ids = $matches[1];
 
 			foreach ( $_POST['form_content'] as $key => $value ) {
@@ -60,7 +60,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		}
 
 		// public function replace_setting_shortcodes( $setting, $urlencode = false ) {
-		// 	// Shortcode can be `[field id="fds21fd"]` or `[field title="Email" id="fds21fd"]`, multiple shortcodes are allowed
+		// 	// Shortcode can be `[id="fds21fd"]` or `[field title="Email" id="fds21fd"]`, multiple shortcodes are allowed
 		// 	return preg_replace_callback( '/(\[field[^]]*id="(\w+)"[^]]*\])/', function( $matches ) use ( $urlencode ) {
 		// 		$value = '';
 	   
@@ -147,7 +147,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         $subject = get_option('wpr_email_subject_'. $_POST['wpr_form_id']);
 		
 		$subject = preg_replace_callback(
-			'/\[field id="(\w+)"\]/',
+			'/\[id="(\w+)"\]/',
 			function ($matches) {
 				return $this->get_field_value($matches[1]);
 			},
@@ -180,14 +180,14 @@ if ( ! defined( 'ABSPATH' ) ) {
         if ( $sent ) {
 			wp_send_json_success(array(
 				'action' => 'wpr_form_builder_email',
-				'message' => esc_html__('Message sent successfully'),
+				// 'message' => esc_html__('Message sent successfully (Visible only to admin)'),
 				'status' => 'success',
 				'details' => json_encode($message_body)
 			));
         } else {
 			wp_send_json_error(array(
 				'action' => 'wpr_form_builder_email',
-				'message' => esc_html__('Message could not be sent'),
+				// 'message' => esc_html__('Message could not be sent (Visible only to admin)'),
 				'status' => 'error',
 				'details' => json_encode($message_body)
 			));

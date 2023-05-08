@@ -87,7 +87,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					wp_send_json_success(array(
 						'action' => 'wpr_form_builder_mailchimp',
 						'status' => 'success',
-						'message' => 'Mailchimp subscription was successful',
+						// 'message' => 'Mailchimp subscription was successful (Visible only to admin)',
 						'request' => $request
 					));
 
@@ -95,7 +95,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					wp_send_json_error([ 
 						'action' => 'wpr_form_builder_mailchimp',
 						'status' => 'error',
-						'message' => 'Mailchimp subscription failed',
+						// 'message' => 'Mailchimp subscription failed (Visible only to admin)',
 						'request' => $request
 					]);
 				}
