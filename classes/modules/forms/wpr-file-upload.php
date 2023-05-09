@@ -21,8 +21,15 @@ if ( ! defined( 'ABSPATH' ) ) {
     }
     
     public function handle_file_upload() {
+		
+		if (!isset($_POST['wpr_addons_nonce']) || !wp_verify_nonce($_POST['wpr_addons_nonce'], 'wpr-addons-js')) {
+			wp_send_json_error(array(
+				'message' => esc_html__('Security check failed.'),
+			));
+		}
+
         // Get the max_file_size value from the file_size control.
-        $max_file_size = isset($_POST['max_file_size']) ? floatval($_POST['max_file_size']) : 0; // Replace this with the value from the file_size control.
+        $max_file_size = isset($_POST['max_file_size']) ? floatval(sanitize_text_field($_POST['max_file_size'])) : 0; // Replace this with the value from the file_size control.
         if ($max_file_size <= 0) {
             $max_file_size = wp_max_upload_size() / pow(1024, 2); //MB
         }

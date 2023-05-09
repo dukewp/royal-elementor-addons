@@ -247,10 +247,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'default' => [
 					'date',
 					'time',
-					'page_url',
-					'user_agent',
-					'remote_ip',
-					'credit',
+					'credit'
 				],
 				'options' => [
 					'date' => esc_html__( 'Date', 'wpr-addons' ),
@@ -980,7 +977,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'fields_to_show_pro_notice',
 				[
 					'type' => Controls_Manager::RAW_HTML,
-					'raw' => __('More than 3 Fields (Excluding Steps) are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-form-builder-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>'),
+					'raw' => __('More than 3 Fields (Excluding Steps) are<br>available in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-form-builder-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>'),
 					'content_classes' => 'wpr-pro-notice'
 				]
 			);
@@ -1378,14 +1375,15 @@ class Wpr_Form_Builder extends Widget_Base {
 				'label' => esc_html__( 'Type', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'frontend_available' => true,
+				'render_type' => 'template',
 				'options' => [
 					'none' => 'None',
-					'text' => 'Text',
+					'text' => 'Label',
 					'icon' => 'Icon',
 					'number' => 'Number',
 					'progress_bar' => 'Progress Bar',
-					'number_text' => 'Number & Text',
-					'icon_text' => 'Icon & Text',
+					'number_text' => 'Number & Label',
+					'icon_text' => 'Icon & Label',
 				],
 				'prefix_class' => 'wpr-step-type-',
 				'default' => 'number_text'
@@ -1441,7 +1439,7 @@ class Wpr_Form_Builder extends Widget_Base {
 						'icon' => 'eicon-text-align-right',
 					],
 				],
-				'default' => 'left',
+				'default' => 'center',
 				'selectors' => [
 					'{{WRAPPER}}.wpr-step-content-layout-vertical .wpr-step' => 'align-items: {{VALUE}}',
 					'{{WRAPPER}}.wpr-step-content-layout-horizontal .wpr-step' => 'justify-content: {{VALUE}}'
@@ -1471,7 +1469,7 @@ class Wpr_Form_Builder extends Widget_Base {
 						'icon' => 'eicon-text-align-right',
 					],
 				],
-				'default' => 'left',
+				'default' => 'center',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-step' => 'text-align: {{VALUE}}'
 				],
@@ -1494,7 +1492,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		$this->add_control(
 			'label_color',
 			[
-				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'label' => esc_html__( 'Label Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-field-group > label, {{WRAPPER}} .wpr-field-sub-group label' => 'color: {{VALUE}};',
@@ -1710,7 +1708,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .wpr-field-group:not(.wpr-form-field-type-upload) .wpr-form-field:not(.wpr-select-wrap)' => 'border-color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-field-group:not(.wpr-form-field-type-upload) .wpr-form-field:not(.wpr-select-wrap):focus' => 'border-color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-field-group .wpr-select-wrap select:focus' => 'border-color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-field-group .wpr-select-wrap::before' => 'color: {{VALUE}};',
 				]
@@ -1814,10 +1812,10 @@ class Wpr_Form_Builder extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em' ],
 				'default' => [
-					'top' => 5,
+					'top' => 6,
 					'right' => 5,
-					'bottom' => 5,
-					'left' => 5,
+					'bottom' => 7,
+					'left' => 10,
 					'unit' => 'px'
 				],
 				'selectors' => [
@@ -2572,7 +2570,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		$this->add_control(
 			'step_inner_color_finish',
 			[
-				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'label' => esc_html__( 'Color (Labels, Icon, Number)', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#222',
 				'selectors' => [
@@ -2725,9 +2723,12 @@ class Wpr_Form_Builder extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-step' => 'font-size: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'step_type' => ['icon', 'icon_text']
 				]
 			]
-		);
+		); 
 
 		$this->add_responsive_control(
 			'step_label_distance',
@@ -2747,8 +2748,12 @@ class Wpr_Form_Builder extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}}.wpr-step-content-layout-horizontal .wpr-step-label' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-step-content-layout-vertical .wpr-step-label' => 'margin-top: {{SIZE}}{{UNIT}};'
 				],
-				'separator' => 'before'
+				'separator' => 'before',
+				'condition' => [
+					'step_type' => ['number_text', 'icon_text']
+				]
 			]
 		);
 
@@ -2919,7 +2924,18 @@ class Wpr_Form_Builder extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'main_label_typography',
-				'selector' => '{{WRAPPER}} .wpr-step-main-label'
+				'selector' => '{{WRAPPER}} .wpr-step-main-label',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '12',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -2936,7 +2952,52 @@ class Wpr_Form_Builder extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'sub_label_typography',
-				'selector' => '{{WRAPPER}} .wpr-step-sub-label'
+				'selector' => '{{WRAPPER}} .wpr-step-sub-label',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '12',
+							'unit' => 'px',
+						],
+					]
+				]
+			]
+		);
+
+		$this->add_control(
+			'step_number_heading',
+			[
+				'label' => esc_html__( 'Number', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+				'condition' => [
+					'step_type' => ['number', 'number_text']
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'step_number',
+				'selector' => '{{WRAPPER}} .wpr-step-number',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '12',
+							'unit' => 'px',
+						],
+					]
+				],
+				'condition' => [
+					'step_type' => ['number', 'number_text']
+				]
 			]
 		);
 
@@ -2954,7 +3015,18 @@ class Wpr_Form_Builder extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'results_typography',
-				'selector' => '{{WRAPPER}} .wpr-submit-success, {{WRAPPER}} .wpr-submit-error'
+				'selector' => '{{WRAPPER}} .wpr-submit-success, {{WRAPPER}} .wpr-submit-error',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '12',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 
@@ -2963,8 +3035,9 @@ class Wpr_Form_Builder extends Widget_Base {
 			[
 				'label' => esc_html__( 'Success Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#30CBCB',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-submit-success' => 'color: {{COLOR}};',
+					'{{WRAPPER}} .wpr-submit-success' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -2974,8 +3047,9 @@ class Wpr_Form_Builder extends Widget_Base {
 			[
 				'label' => esc_html__( 'Error Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#CB3030',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-submit-error' => 'color: {{COLOR}};',
+					'{{WRAPPER}} .wpr-submit-error' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -3064,7 +3138,6 @@ class Wpr_Form_Builder extends Widget_Base {
 		}
 
 		$options = preg_split( "/\\r\\n|\\r|\\n/", $item['field_options'] );
-		// var_dump($options);
 
 		if ( ! $options ) {
 			return '';
@@ -3426,13 +3499,13 @@ class Wpr_Form_Builder extends Widget_Base {
 							if ( 'none' == $instance['step_type'] ) {
 								$step_html = '<span class="wpr-step"></span>';
 							} else if ( 'text' == $instance['step_type'] ) {
-								$step_html = '<span class="wpr-step"><span class="wpr-step-content">'. $step_label[$i] .'</span></span>';
+								$step_html = '<span class="wpr-step"><span class="wpr-step-content">'. $step_label[$i] . $step_sub_label[$i] .'</span></span>';
 							} else if ( 'icon' == $instance['step_type'] ) {
 								$step_html = '<span class="wpr-step"><span class="wpr-step-content">'. $step_icon[$i] .'</span></span>';
 							} else if ( 'number' == $instance['step_type'] ) {
-								$step_html = '<span class="wpr-step"><span class="wpr-step-content">'. $i + 1 .'</span></span>';
+								$step_html = '<span class="wpr-step"><span class="wpr-step-content"><span class="wpr-step-number">'. $i + 1 .'</span></span></span>';
 							} else if ( 'number_text' == $instance['step_type'] ) {
-								$step_html = '<span class="wpr-step"><span class="wpr-step-content">'. $i + 1 .'</span><span class="wpr-step-label">'. $step_label[$i] . $step_sub_label[$i] .'</span></span>';
+								$step_html = '<span class="wpr-step"><span class="wpr-step-content"><span class="wpr-step-number">'. $i + 1 .'</span></span><span class="wpr-step-label">'. $step_label[$i] . $step_sub_label[$i] .'</span></span>';
 							} else if ( 'icon_text' == $instance['step_type'] ) {
 								$step_html = '<span class="wpr-step"><span class="wpr-step-content">'. $step_icon[$i] .'</span><span class="wpr-step-label">'. $step_label[$i] . $step_sub_label[$i] .'</span></span>';
 							}

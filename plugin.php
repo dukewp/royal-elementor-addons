@@ -127,13 +127,8 @@ class Plugin {
 
 
 		// Form Builder
-		// TODO:: ommit if form builder turned off
-		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-recaptcha-handler.php';
-		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-actions-status.php';
-		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-send-email.php';
-		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-file-upload.php';
-		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-submissions-cpt.php';
-		require WPR_ADDONS_PATH . 'classes/modules/forms/wpr-subscribe-mailchimp.php';
+		// TODO:: ommit if form builder turned off if possible
+		require WPR_ADDONS_PATH . 'classes/modules/wpr-form-handlers.php';
 
 		// Admin Files
 		if ( is_admin() ) {

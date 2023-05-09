@@ -17739,6 +17739,7 @@ dl.variation dd {
     text-align: right;
     color: white;
     padding-right: 10px;
+    transition: width 0.5s;
 }
 
 .wpr-step-content-layout-vertical .wpr-step-wrap {
@@ -17789,6 +17790,7 @@ dl.variation dd {
     width: var(--wpr-steps-indicator-padding, 30px);
     height: var(--wpr-steps-indicator-padding, 30px);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     /* line-height: 1; */

@@ -21,8 +21,6 @@ if ( ! defined( 'ABSPATH' ) ) {
     public function __construct() {
         add_action('wp_ajax_wpr_form_builder_submissions' , [$this, 'add_to_submissions']);
         add_action('wp_ajax_nopriv_wpr_form_builder_submissions',[$this, 'add_to_submissions']);
-        // add_action('wp_ajax_wpr_submissions_meta' , [$this, 'submissions_meta']);
-        // add_action('wp_ajax_nopriv_wpr_submissions_meta',[$this, 'submissions_meta']);
        add_action('save_post', [$this, 'update_submissions_post_meta']);
     }
 
@@ -44,10 +42,15 @@ if ( ! defined( 'ABSPATH' ) ) {
             update_post_meta($post_id, $key, [$value[0], $value[1], $value[2]]);
         }
 
-        update_post_meta($post_id, 'wpr_form_name', $_POST['form_name']);
-        update_post_meta($post_id, 'wpr_form_id', $_POST['form_id']);
-        update_post_meta($post_id, 'wpr_form_page', $_POST['form_page']);
-        update_post_meta($post_id, 'wpr_form_page_id', $_POST['form_page_id']);
+        $sanitized_form_name = sanitize_text_field($_POST['form_name']);
+        $sanitized_form_id = sanitize_text_field($_POST['form_id']);
+        $sanitized_form_page = sanitize_text_field($_POST['form_page']);
+        $sanitized_form_page_id = sanitize_text_field($_POST['form_page_id']);
+    
+        update_post_meta($post_id, 'wpr_form_name', $sanitized_form_name);
+        update_post_meta($post_id, 'wpr_form_id', $sanitized_form_id);
+        update_post_meta($post_id, 'wpr_form_page', $sanitized_form_page);
+        update_post_meta($post_id, 'wpr_form_page_id', $sanitized_form_page_id);
         update_post_meta($post_id, 'wpr_user_agent', sanitize_textarea_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ));
         update_post_meta($post_id, 'wpr_user_ip', Utilities::get_client_ip());
         
