@@ -1255,7 +1255,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		$this->add_control(
 			'error_message',
 			[
-				'label' => esc_html__( 'Form Error', 'wpr-addons' ),
+				'label' => esc_html__( 'Error Message', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => esc_html__('Submission failed', 'wpr-addons'),
 				'placeholder' => esc_html__('Submission failed', 'wpr-addons'),
@@ -1494,6 +1494,7 @@ class Wpr_Form_Builder extends Widget_Base {
 			[
 				'label' => esc_html__( 'Label Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#7a7a7a',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-field-group > label, {{WRAPPER}} .wpr-field-sub-group label' => 'color: {{VALUE}};',
 				]
@@ -1505,7 +1506,7 @@ class Wpr_Form_Builder extends Widget_Base {
 			[
 				'label' => esc_html__( 'Mark Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '',
+				'default' => '#CB3030',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-required-mark .wpr-form-field-label:after' => 'color: {{COLOR}};',
 				],
@@ -1625,6 +1626,7 @@ class Wpr_Form_Builder extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#7a7a7a',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-field-group .wpr-form-field' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-field-group input[type="radio"]' => 'color: {{VALUE}};',
@@ -1681,6 +1683,7 @@ class Wpr_Form_Builder extends Widget_Base {
 			[
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#7a7a7a',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-field-group .wpr-form-field:focus' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-field-group input[type="radio"]:focus' => 'color: {{VALUE}};',
@@ -2184,6 +2187,7 @@ class Wpr_Form_Builder extends Widget_Base {
 			[
 				'label' => esc_html__( 'Label Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#7a7a7a',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-step-main-label' => 'color: {{VALUE}};',
 				]
@@ -2195,6 +2199,7 @@ class Wpr_Form_Builder extends Widget_Base {
 			[
 				'label' => esc_html__( 'Sub Label Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#7a7a7a',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-step-sub-label' => 'color: {{VALUE}};',
 				]
@@ -2238,6 +2243,7 @@ class Wpr_Form_Builder extends Widget_Base {
 			[
 				'label' => esc_html__( 'Label Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#7a7a7a',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-step.wpr-step-active .wpr-step-main-label' => 'color: {{VALUE}};',
 				]
@@ -2249,6 +2255,7 @@ class Wpr_Form_Builder extends Widget_Base {
 			[
 				'label' => esc_html__( 'Sub Label Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#7a7a7a',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-step.wpr-step-active .wpr-step-sub-label' => 'color: {{VALUE}};',
 				]
@@ -2291,6 +2298,7 @@ class Wpr_Form_Builder extends Widget_Base {
 			[
 				'label' => esc_html__( 'Label Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#7a7a7a',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-step.wpr-step-finish .wpr-step-main-label' => 'color: {{VALUE}};',
 				]
@@ -2302,6 +2310,7 @@ class Wpr_Form_Builder extends Widget_Base {
 			[
 				'label' => esc_html__( 'Sub Label Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#7a7a7a',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-step.wpr-step-finish .wpr-step-sub-label' => 'color: {{VALUE}};',
 				]

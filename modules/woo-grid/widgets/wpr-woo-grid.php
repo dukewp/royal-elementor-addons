@@ -8947,6 +8947,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$add_to_cart_animation = ! wpr_fs()->can_use_premium_code() ? 'wpr-button-none' : $this->get_settings()['add_to_cart_animation'];
 
+		$popup_notification_animation = isset($this->get_settings_for_display()['popup_notification_animation']) ? $this->get_settings_for_display()['popup_notification_animation'] : '';
+		$popup_notification_fade_out_in = isset($this->get_settings_for_display()['popup_notification_fade_out_in']) ? $this->get_settings_for_display()['popup_notification_fade_out_in'] : '';
+		$popup_notification_animation_duration = isset($this->get_settings_for_display()['popup_notification_animation_duration']) ? $this->get_settings_for_display()['popup_notification_animation_duration'] : '';
+
 		$attributes = [
 			'rel="nofollow"',
 			'class="'. esc_attr($button_class) .' wpr-button-effect '. esc_attr($add_to_cart_animation) .' '. (!$product->is_in_stock() && 'simple' === $product->get_type() ? 'wpr-atc-not-clickable' : '').'"',
@@ -8954,9 +8958,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'data-product_id="'. esc_attr($product->get_id()) .'"',
 			'data-product_sku="'. esc_attr($product->get_sku()) .'"',
 			'data-atc-popup="'. $settings['element_show_added_tc_popup']  .'"',
-			'data-atc-animation="'. $this->get_settings_for_display()['popup_notification_animation']  .'"',
-			'data-atc-fade-out-in="'. $this->get_settings_for_display()['popup_notification_fade_out_in']  .'"',
-			'data-atc-animation-time="'. $this->get_settings_for_display()['popup_notification_animation_duration']  .'"'
+			'data-atc-animation="'. $popup_notification_animation  .'"',
+			'data-atc-fade-out-in="'. $popup_notification_fade_out_in  .'"',
+			'data-atc-animation-time="'. $popup_notification_animation_duration  .'"'
 		];
 
 		$button_HTML = '';
@@ -9031,12 +9035,16 @@ class Wpr_Woo_Grid extends Widget_Base {
 			$wishlist = array();
 		}
 
+		$popup_notification_animation = isset($this->get_settings_for_display()['popup_notification_animation']) ? $this->get_settings_for_display()['popup_notification_animation'] : '';
+		$popup_notification_fade_out_in = isset($this->get_settings_for_display()['popup_notification_fade_out_in']) ? $this->get_settings_for_display()['popup_notification_fade_out_in'] : '';
+		$popup_notification_animation_duration = isset($this->get_settings_for_display()['popup_notification_animation_duration']) ? $this->get_settings_for_display()['popup_notification_animation_duration'] : '';
+
 		$wishlist_attributes = [
 			'data-wishlist-url' => get_option('wpr_wishlist_page') ? get_option('wpr_wishlist_page') : '',
 			'data-atw-popup="'. $settings['element_show_added_to_wishlist_popup']  .'"',
-			'data-atw-animation="'. $this->get_settings_for_display()['popup_notification_animation']  .'"',
-			'data-atw-fade-out-in="'. $this->get_settings_for_display()['popup_notification_fade_out_in']  .'"',
-			'data-atw-animation-time="'. $this->get_settings_for_display()['popup_notification_animation_duration']  .'"',
+			'data-atw-animation="'. $popup_notification_animation  .'"',
+			'data-atw-fade-out-in="'. $popup_notification_fade_out_in  .'"',
+			'data-atw-animation-time="'. $popup_notification_animation_duration  .'"',
 			'data-open-in-new-tab="'. $settings['element_open_links_in_new_tab'] .'"'
 		];
 
@@ -9108,12 +9116,16 @@ class Wpr_Woo_Grid extends Widget_Base {
 			$compare = $this->get_compare_from_cookie();
 		}
 
+		$popup_notification_animation = isset($this->get_settings_for_display()['popup_notification_animation']) ? $this->get_settings_for_display()['popup_notification_animation'] : '';
+		$popup_notification_fade_out_in = isset($this->get_settings_for_display()['popup_notification_fade_out_in']) ? $this->get_settings_for_display()['popup_notification_fade_out_in'] : '';
+		$popup_notification_animation_duration = isset($this->get_settings_for_display()['popup_notification_animation_duration']) ? $this->get_settings_for_display()['popup_notification_animation_duration'] : '';
+
 		$compare_attributes = [
 			'data-compare-url' => get_option('wpr_compare_page') ? get_option('wpr_compare_page') : '',
 			'data-atcompare-popup="'. $settings['element_show_added_to_compare_popup']  .'"',
-			'data-atcompare-animation="'. $this->get_settings_for_display()['popup_notification_animation']  .'"',
-			'data-atcompare-fade-out-in="'. $this->get_settings_for_display()['popup_notification_fade_out_in']  .'"',
-			'data-atcompare-animation-time="'. $this->get_settings_for_display()['popup_notification_animation_duration']  .'"',
+			'data-atcompare-animation="'. $popup_notification_animation  .'"',
+			'data-atcompare-fade-out-in="'. $popup_notification_fade_out_in  .'"',
+			'data-atcompare-animation-time="'. $popup_notification_animation_duration  .'"',
 			'data-open-in-new-tab="'. $settings['element_open_links_in_new_tab'] .'"'
 		];
 
