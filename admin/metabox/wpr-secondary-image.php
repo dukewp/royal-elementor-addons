@@ -12,7 +12,7 @@ function secondary_image_add_metabox () {
         $meta_option = get_option( 'wpr_meta_secondary_image_' . $key );
 
         if ( 'page' !== $key && 'e-landing-page' !== $key && $meta_option === 'on' ) {
-            add_meta_box( 'secondaryimagediv', __( 'Secondary Image', 'wpr-addons' ), 'secondary_image_metabox', $key, 'side', 'low');
+            add_meta_box( 'wpr-secondary-image', __( 'Secondary Image', 'wpr-addons' ), 'secondary_image_metabox', $key, 'side', 'low');
         }
     }
 }

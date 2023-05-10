@@ -26,8 +26,8 @@ jQuery(document).ready(function ($) {
         file_frame.on('select', function () {
             var attachment = file_frame.state().get('selection').first().toJSON();
             jQuery("#" + field_id).val(attachment.id);
-            jQuery("#secondaryimagediv img").attr('src', attachment.url);
-            jQuery('#secondaryimagediv img').show();
+            jQuery("#wpr-secondary-image img").attr('src', attachment.url);
+            jQuery('#wpr-secondary-image img').show();
             jQuery('#' + button_id).attr('id', 'remove_secondary_image_button');
             jQuery('#remove_secondary_image_button').text('Remove secondary image');
         });
@@ -36,16 +36,16 @@ jQuery(document).ready(function ($) {
         file_frame.open();
     };
 
-    jQuery('#secondaryimagediv').on('click', '#upload_secondary_image_button', function (event) {
+    jQuery('#wpr-secondary-image').on('click', '#upload_secondary_image_button', function (event) {
         event.preventDefault();
         jQuery.fn.upload_secondary_image(jQuery(this));
     });
 
-    jQuery('#secondaryimagediv').on('click', '#remove_secondary_image_button', function (event) {
+    jQuery('#wpr-secondary-image').on('click', '#remove_secondary_image_button', function (event) {
         event.preventDefault();
         jQuery('#upload_secondary_image').val('');
-        jQuery('#secondaryimagediv img').attr('src', '');
-        jQuery('#secondaryimagediv img').hide();
+        jQuery('#wpr-secondary-image img').attr('src', '');
+        jQuery('#wpr-secondary-image img').hide();
         jQuery(this).attr('id', 'upload_secondary_image_button');
         jQuery('#upload_secondary_image_button').text('Set secondary image');
     });
