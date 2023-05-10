@@ -2342,6 +2342,11 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     z-index: 1;
 }
 
+.wpr-magazine-grid:before,
+.wpr-magazine-grid:after {
+    content: none;
+}
+
 .wpr-grid-item-display-block {
     clear: both;
 }
