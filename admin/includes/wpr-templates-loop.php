@@ -196,7 +196,8 @@ class WPR_Templates_Loop {
 								<?php elseif ( 'wpr_tab_product_archive' === $active_tab ): ?>
 									<option value="products"><?php esc_html_e( 'Products Archive', 'wpr-addons' ); ?></option>
 									<option value="product_cat" class="custom-type-ids"><?php esc_html_e( 'Products Categories', 'wpr-addons' ); ?></option>
-									<option value="product_tag" class="custom-type-ids"><?php esc_html_e( 'Products Tags', 'wpr-addons' ); ?></option>								
+									<option value="product_tag" class="custom-type-ids"><?php esc_html_e( 'Products Tags', 'wpr-addons' ); ?></option>					
+									<option value="product_search"><?php esc_html_e( 'Products Search', 'wpr-addons' ); ?></option>									
 								<?php endif; ?>
 							<?php endif; ?>
 						</select>
@@ -294,7 +295,8 @@ class WPR_Templates_Loop {
 								<?php elseif ( 'wpr_tab_product_archive' === $active_tab ): ?>
 									<option value="products"><?php esc_html_e( 'Products Archive', 'wpr-addons' ); ?></option>
 									<option value="product_cat" class="custom-type-ids"><?php esc_html_e( 'Products Categories (Pro)', 'wpr-addons' ); ?></option>
-									<option value="product_tag" class="custom-type-ids"><?php esc_html_e( 'Products Tags (Pro)', 'wpr-addons' ); ?></option>						
+									<option value="product_tag" class="custom-type-ids"><?php esc_html_e( 'Products Tags (Pro)', 'wpr-addons' ); ?></option>					
+									<option value="product_search"><?php esc_html_e( 'Products Search (Pro)', 'wpr-addons' ); ?></option>					
 								<?php endif; ?>
 							<?php endif; ?>
 						</select>

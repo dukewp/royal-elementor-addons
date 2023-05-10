@@ -263,7 +263,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
             Group_Control_Typography::get_type(),
             [
                 'name' => 'title_typography',
-                'label' => __( 'Typography', 'my-plugin-domain' ),
+                'label' => __( 'Typography', 'wpr-addons' ),
                 'scheme' => Typography::TYPOGRAPHY_3,
                 'selector' => '{{WRAPPER}} .wpr-mini-cart-toggle-btn, {{WRAPPER}} .wpr-mini-cart-icon-count',
 				'fields_options' => [
@@ -274,11 +274,8 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 						'default' => [
 							'size' => '13',
 							'unit' => 'px',
-						],
+						]
 					]
-				],
-				'condition' => [
-					'toggle_text!' => 'none'
 				]
             ]
         );

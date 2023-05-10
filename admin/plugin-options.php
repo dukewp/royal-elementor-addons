@@ -120,6 +120,14 @@ function wpr_register_addons_settings() {
         $slug = is_array($data) ? $data[0] : $data;
         register_setting( 'wpr-elements-settings', 'wpr-element-'. $slug, [ 'default' => 'on' ] );
     }
+    
+    // Image Metaboxes
+    $post_types = Utilities::get_custom_types_of( 'post', false );
+    foreach ( $post_types as $key => $value ) {
+        if ( 'page' !== $key && 'e-landing-page' !== $key ) {
+            register_setting( 'wpr-settings', 'wpr_meta_secondary_image_'. $key );
+        }
+    }
 
 }
 
@@ -420,6 +428,33 @@ function wpr_addons_settings_page() {
                 <label for="wpr_enable_woo_flexslider_navigation"></label>
             </div>
             
+        </div>
+            
+
+        <div class="wpr-settings-group wpr-settings-group-meta">
+            <h3 class="wpr-settings-group-title"><?php esc_html_e( 'Metabox', 'wpr-addons' ); ?></h3>
+
+            <?php
+                $post_types = Utilities::get_custom_types_of( 'post', false );
+                foreach ( $post_types as $key => $value ) {
+                    if ( 'page' == $key || 'e-landing-page' === $key ) {
+                        continue;
+                    }
+                    ?>
+                        <div class="wpr-woo-template-info">
+                            <div class="wpr-woo-template-title">
+                                <h4><?php echo $value; ?></h4>
+                            </div>
+                            <input type="checkbox" name="wpr_meta_secondary_image_<?php echo $key ?>" id="wpr_meta_secondary_image_<?php echo $key ?>" <?php echo checked( get_option('wpr_meta_secondary_image'. $key, 'on'), 'on', false ); ?>>
+                            <label for="wpr_meta_secondary_image_<?php echo $key ?>"></label>
+                        </div>
+                    <?php
+                }
+            ?>
+            
+            <!-- <div class="wpr-settings-group-inner"> -->
+
+            <!-- </div> -->
         </div>
 
         <div class="wpr-settings-group">

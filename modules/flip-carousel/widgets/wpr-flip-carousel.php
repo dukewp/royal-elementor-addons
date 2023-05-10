@@ -1182,7 +1182,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				} if (WPR_ADDONS_ASSETS_URL . 'img/logo-slider-450x450.png' === $element['image']['url']) {
 					$flip_slide_image = '<img src="'. esc_url($element['image']['url']) .'" />';
 				} else {
-					$flip_slide_image = '<img src="'.  Group_Control_Image_Size::get_attachment_image_src( $element['image']['id'], 'flip_carousel_image_size', $settings ) .'" />';
+					$flip_slide_image = '<img alt="'. $element['image']['alt'] .'" src="'.  Group_Control_Image_Size::get_attachment_image_src( $element['image']['id'], 'flip_carousel_image_size', $settings ) .'" />';
 				}
 
 				if ( 'yes' === $settings['enable_figcaption'] ) {
