@@ -433,6 +433,8 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
+		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
+
 		$repeater = new Repeater();
 
 		$field_types = [

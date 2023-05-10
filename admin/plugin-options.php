@@ -257,9 +257,9 @@ function wpr_addons_settings_page() {
     <?php
         $modules = Utilities::get_registered_modules();
         $premium_modules = [
-			'Breadcrumbs' => ['breadcrumbs-pro', 'https://royal-elementor-addons.com/elementor-breadcrumb-pro-widget-examples/', '', 'pro'],
-			// 'Breadcrumbs' => ['breadcrumbs-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-breadcrumbs-widgets-upgrade-pro#purchasepro', '', 'pro'],
+			'Breadcrumbs' => ['breadcrumbs-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-breadcrumbs-widgets-upgrade-pro#purchasepro', '', 'pro'],
         ];
+
         foreach ( array_merge($modules, $premium_modules) as $title => $data ) {
             $slug = $data[0];
             $url  = $data[1];
@@ -278,6 +278,10 @@ function wpr_addons_settings_page() {
                 $default_value = 'off';
                 $link_text = '';
                 $reff = '';
+            }
+
+            if ( 'breadcrumbs-pro' == $data[0] && wpr_fs()->can_use_premium_code() ) {
+                $url = '';
             }
 
             echo '<div class="wpr-element '. esc_attr($class) .'">';

@@ -40,8 +40,8 @@ class Utilities {
 			'Progress Bar' => ['progress-bar', 'https://royal-elementor-addons.com/elementor-progress-bar-widget/', '', ''],
 			'Tabs' => ['tabs', 'https://royal-elementor-addons.com/elementor-tabs-widget/', '', ''],
 			'Dual Color Heading' => ['dual-color-heading', 'https://royal-elementor-addons.com/elementor-dual-color-heading-widget/', '', ''],
-			'Image Accordion' => ['image-accordion', 'https://royal-elementor-addons.com/elementor-image-accordion-widget/', '', 'new'],
-			'Advanced Accordion' => ['advanced-accordion', 'https://royal-elementor-addons.com/elementor-advanced-accordion-widget/', '', 'new'],
+			'Image Accordion' => ['image-accordion', 'https://royal-elementor-addons.com/elementor-image-accordion-widget/', '', ''],
+			'Advanced Accordion' => ['advanced-accordion', 'https://royal-elementor-addons.com/elementor-advanced-accordion-widget/', '', ''],
 			'Advanced Text' => ['advanced-text', 'https://royal-elementor-addons.com/elementor-advanced-text-widget/', '', ''],
 			'Flip Carousel' => ['flip-carousel', 'https://royal-elementor-addons.com/elementor-flip-carousel-widget/', '', ''],
 			'Flip Box' => ['flip-box', 'https://royal-elementor-addons.com/elementor-flip-box-widget/', '', ''],
@@ -69,7 +69,7 @@ class Utilities {
 			'Page List' => ['page-list', '', '', ''],
 			'Template' => ['elementor-template', '', '', ''],
 			'Reading Progress Bar' => ['reading-progress-bar', 'https://royal-elementor-addons.com/elementor-reading-progress-bar-widget/', '', ''],
-			'Twitter Feed' => ['twitter-feed', 'https://royal-elementor-addons.com/elementor-twitter-feed-widget/', '', 'new']
+			'Twitter Feed' => ['twitter-feed', 'https://royal-elementor-addons.com/elementor-twitter-feed-widget/', '', '']
 		];
 	}
 
