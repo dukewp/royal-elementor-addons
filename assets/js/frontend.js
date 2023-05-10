@@ -892,111 +892,136 @@
 			
 			// GOGA - remove extra code before update
 			$(document).ready(function(){
-				// // Get all the links with the class "nav-link"
-				// var $navLinks = $scope.find( '.wpr-onepage-nav-item' ),
-				// 	scrollSpeed = parseInt( $scope.find('.wpr-onepage-nav').attr( 'data-speed' ), 10 ),
-				// 	sections = $( '.elementor-section' );
+				// Get all the links with the class "nav-link"
+				var $navLinks = $scope.find( '.wpr-onepage-nav-item' ),
+					scrollSpeed = parseInt( $scope.find('.wpr-onepage-nav').attr( 'data-speed' ), 10 ),
+					// sections = $( '.elementor-section' );
+					getSections = [];
+					$navLinks.each(function() {
+						getSections.push($($(this).find('a').attr('href')));
+					});
 
-				// var currentUrl = window.location.href;
-				// var sectionId = currentUrl.split("#")[1];
-				
-				// // Check if the URL contains a section id
-				// if(sectionId) {
-				// 	// Get the section element
-				// 	var $section = $("#" + sectionId);
-				
-				// 	// Get the offset position of the section
-				// 	var sectionPos = $section.offset().top;
-				
-				// 	// Smoothly scroll to the section
-				// 	$('html, body').animate({
-				// 	scrollTop: sectionPos
-				// 	}, scrollSpeed);
-				// }
+					sections = $(getSections);
 
-				// $navLinks.each(function() {
-				// 	if(currentUrl.indexOf($(this).find('a').attr('href')) !== -1){
-				// 		$(this).addClass('wpr-onepage-active-item');
-				// 	}
-				// });
+				var currentUrl = window.location.href;
+				var sectionId = currentUrl.split("#")[1];
+				
+				// Check if the URL contains a section id
+				if(sectionId) {
+					// Get the section element
+					var $section = $("#" + sectionId);
+				
+					// Get the offset position of the section
+					var sectionPos = $section.offset().top;
+				
+					// Smoothly scroll to the section
+					$('html, body').animate({
+					scrollTop: sectionPos
+					}, scrollSpeed);
+				}
+
+				$navLinks.each(function() {
+					if(currentUrl.indexOf($(this).find('a').attr('href')) !== -1){
+						$(this).addClass('wpr-onepage-active-item');
+					}
+				});
 			
-				// // Iterate over each link
-				// $navLinks.each(function() {
-				// // Add a click event to each link
-				// $(this).click(function(event) {
-				// 	event.preventDefault();
-				// 	// Remove the active class from all links
-				// 	$navLinks.removeClass('wpr-onepage-active-item');
-				// 	// Add the active class to the clicked link
-				// 	$(this).addClass('wpr-onepage-active-item');
-				// 	// Get the id of the section the link points to
-				// 	var sectionId = $(this).find('a').attr('href');
-				// 	// Get the section element
-				// 	var $section = $(sectionId);
-				// 	// Get the offset position of the section
-				// 	var sectionPos = $section.offset().top;
-				// 	// Smoothly scroll to the section
-				// 	$('html, body').animate({
-				// 		scrollTop: sectionPos
-				// 	}, scrollSpeed);
-				// });
-				// });
+				// Iterate over each link
+				$navLinks.each(function() {
+					// Add a click event to each link
+					$(this).click(function(event) {
+						event.preventDefault();
+						// Remove the active class from all links
+						$navLinks.removeClass('wpr-onepage-active-item');
+						// Add the active class to the clicked link
+						$(this).addClass('wpr-onepage-active-item');
+						// Get the id of the section the link points to
+						var sectionId = $(this).find('a').attr('href');
+						// Get the section element
+						var $section = $(sectionId);
+						// Get the offset position of the section
+						var sectionPos = $section.offset().top;
+						// Smoothly scroll to the section
+						$('html, body').animate({
+							scrollTop: sectionPos
+						}, scrollSpeed);
+					});
+				});
 			
-				// $(window).on("scroll", function() {
-				// 	// Get the current scroll position
-				// 	var scrollPos = $(this).scrollTop();
+				$(window).on("scroll", function() {
+					// Get the current scroll position
+					var scrollPos = $(this).scrollTop();
 				
-				// 	// Iterate over each section
-				// 	sections.each(function() {
-				// 	// Get the offset position of the section
-				// 	var sectionPos = $(this).offset().top;
-				// 	// Get the height of the section
-				// 	var sectionHeight = sectionPos + $(this).outerHeight();
-				
-				// 	// Check if the section is in view
-				// 	  if (scrollPos >= sectionPos - 50 && scrollPos < sectionPos + sectionHeight - 50) {
-				// 	// if ( scrollPos >= sectionPos && scrollPos < sectionPos + sectionHeight ) {
-				// 		// Get the id of the section
-				// 		var sectionId = "#" + $(this).attr("id");
-				
-				// 		// Remove the active class from all links
-				// 		$navLinks.removeClass("wpr-onepage-active-item");
-				
-				// 		// Add the active class to the corresponding link
-				// 		$navLinks.filter(function(){
-				// 			return $(this).find('a[href=' + sectionId + ']').length;
-				// 		}).addClass("wpr-onepage-active-item");
-				// 	}
-				// 	});
-				// });
-				
-						// Old Code
-						$scope.find( '.wpr-onepage-nav-item' ).on( 'click', function(event) {
-							event.preventDefault();
-
-							var section = $( $(this).find( 'a' ).attr( 'href' ) ),
-								scrollSpeed = parseInt( $(this).parent().attr( 'data-speed' ), 10 );
-
-							if (section) {
-								$( 'html, body' ).animate({ scrollTop: section.offset().top }, scrollSpeed );
-							}
-							// $( 'body' ).animate({ scrollTop: section.offset().top }, scrollSpeed );
-
-							// Active Class
-							getSectionOffset( $(window).scrollTop() );
-						});
-
-						// Trigger Fake Scroll
-						if ( 'yes' === $scope.find( '.wpr-onepage-nav' ).attr( 'data-highlight' ) ) {
-							setTimeout(function() {
-								$(window).scroll();
-							}, 10 );
+					// Iterate over each section
+					sections.each(function() {
+						// Get the offset position of the section
+						var sectionPos = $(this).offset().top;
+						// Get the height of the section
+						var sectionHeight = sectionPos + $(this).outerHeight();
+					
+						// Check if the section is in view
+						if (scrollPos >= sectionPos - 50 && scrollPos < sectionPos + sectionHeight - 50) {
+						// if ( scrollPos >= sectionPos && scrollPos < sectionPos + sectionHeight ) {
+							// Get the id of the section
+							var sectionId = "#" + $(this).attr("id");
+					
+							// Remove the active class from all links
+							$navLinks.removeClass("wpr-onepage-active-item");
+					
+							// Add the active class to the corresponding link
+							$navLinks.filter(function(){
+								return $(this).find('a[href=' + sectionId + ']').length;
+							}).addClass("wpr-onepage-active-item");
 						}
+					});
+				});
+				
+						// // Old Code
+						// $scope.find( '.wpr-onepage-nav-item' ).on( 'click', function(event) {
+						// 	event.preventDefault();
+
+						// 	var section = $( $(this).find( 'a' ).attr( 'href' ) ),
+						// 		scrollSpeed = parseInt( $(this).parent().attr( 'data-speed' ), 10 );
+
+						// 	if (section) {
+						// 		$( 'html, body' ).animate({ scrollTop: section.offset().top }, scrollSpeed );
+						// 	}
+						// 	// $( 'body' ).animate({ scrollTop: section.offset().top }, scrollSpeed );
+
+						// 	// Active Class
+						// 	getSectionOffset( $(window).scrollTop() );
+						// });
+
+						// // Trigger Fake Scroll
+						// if ( 'yes' === $scope.find( '.wpr-onepage-nav' ).attr( 'data-highlight' ) ) {
+						// 	setTimeout(function() {
+						// 		$(window).scroll();
+						// 	}, 10 );
+						// }
 						
-						// Active Class
-						$(window).scroll(function() {
-							getSectionOffset( $(this).scrollTop() );
-						});
+						// // Active Class
+						// $(window).scroll(function() {
+						// 	getSectionOffset( $(this).scrollTop() );
+						// });
+
+						// // // Get Offset
+						// // function getSectionOffset( scrollTop ) {
+						// // 	if ( 'yes' !== $scope.find( '.wpr-onepage-nav' ).attr( 'data-highlight' ) ) {
+						// // 		return;
+						// // 	}
+						// // 	// Reset Active
+						// // 	$scope.find( '.wpr-onepage-nav-item' ).children( 'a' ).removeClass( 'wpr-onepage-active-item' );
+			
+						// // 	// Set Active
+						// // 	$( '.elementor-section' ).each(function() {
+						// // 		var secOffTop = $(this).offset().top,
+						// // 			secOffBot = secOffTop + $(this).outerHeight();
+			
+						// // 		if ( scrollTop >= secOffTop && scrollTop < secOffBot ) {
+						// // 			$scope.find( '.wpr-onepage-nav-item' ).children( 'a[href="#'+ $(this).attr('id') +'"]' ).addClass( 'wpr-onepage-active-item' );
+						// // 		}
+						// // 	});
+						// // }
 
 						// // Get Offset
 						// function getSectionOffset( scrollTop ) {
@@ -1004,37 +1029,18 @@
 						// 		return;
 						// 	}
 						// 	// Reset Active
-						// 	$scope.find( '.wpr-onepage-nav-item' ).children( 'a' ).removeClass( 'wpr-onepage-active-item' );
-			
+						// 	$scope.find( '.wpr-onepage-nav' ).find( 'a' ).removeClass( 'wpr-onepage-active-item' );
+
 						// 	// Set Active
 						// 	$( '.elementor-section' ).each(function() {
 						// 		var secOffTop = $(this).offset().top,
 						// 			secOffBot = secOffTop + $(this).outerHeight();
-			
+
 						// 		if ( scrollTop >= secOffTop && scrollTop < secOffBot ) {
-						// 			$scope.find( '.wpr-onepage-nav-item' ).children( 'a[href="#'+ $(this).attr('id') +'"]' ).addClass( 'wpr-onepage-active-item' );
+						// 			$scope.find( '.wpr-onepage-nav' ).find( 'a[href="#'+ $(this).attr('id') +'"]' ).addClass( 'wpr-onepage-active-item' );
 						// 		}
 						// 	});
 						// }
-
-						// Get Offset
-						function getSectionOffset( scrollTop ) {
-							if ( 'yes' !== $scope.find( '.wpr-onepage-nav' ).attr( 'data-highlight' ) ) {
-								return;
-							}
-							// Reset Active
-							$scope.find( '.wpr-onepage-nav' ).find( 'a' ).removeClass( 'wpr-onepage-active-item' );
-
-							// Set Active
-							$( '.elementor-section' ).each(function() {
-								var secOffTop = $(this).offset().top,
-									secOffBot = secOffTop + $(this).outerHeight();
-
-								if ( scrollTop >= secOffTop && scrollTop < secOffBot ) {
-									$scope.find( '.wpr-onepage-nav' ).find( 'a[href="#'+ $(this).attr('id') +'"]' ).addClass( 'wpr-onepage-active-item' );
-								}
-							});
-						}
 
 			});
 
@@ -1241,19 +1247,21 @@
 							if ( 'load-more' === settings.pagination_type ) {
 								pagination.find( '.wpr-load-more-btn' ).fadeIn();
 
-								if ( '*' !== $scope.find('.wpr-active-filter').attr('data-filter') ) {
-									let dataFilterClass = $scope.find('.wpr-active-filter').attr('data-filter').substring(1);
-									items.each(function() {
-										if ( !$(this).hasClass(dataFilterClass) ) {
-											loadedItems = false;
-										} else {
-											loadedItems = true;
-											return false;
+								if ( $scope.find('.wpr-grid-filters').length ) {
+									if ( '*' !== $scope.find('.wpr-active-filter').attr('data-filter') ) {
+										let dataFilterClass = $scope.find('.wpr-active-filter').attr('data-filter').substring(1);
+										items.each(function() {
+											if ( !$(this).hasClass(dataFilterClass) ) {
+												loadedItems = false;
+											} else {
+												loadedItems = true;
+												return false;
+											}
+										});
+			
+										if ( !loadedItems ) {
+											$scope.find( '.wpr-grid' ).infiniteScroll( 'loadNextPage' );
 										}
-									});
-		
-									if ( !loadedItems ) {
-										$scope.find( '.wpr-grid' ).infiniteScroll( 'loadNextPage' );
 									}
 								}
 							}
@@ -1630,6 +1638,42 @@
 
 			// Media Hover Link
 			function mediaHoverLink() {
+				// console.log(iGrid.find('.wpr-grid-media-wrap').find('img').length);
+				if ( 'yes' === $scope.find('.wpr-grid-image-wrap').data('img-on-hover') ) {
+					var img;
+					var thisImgSrc;
+					iGrid.find('.wpr-grid-media-wrap').on('mouseover', function() {
+						img = $(this).find( 'img' );
+						thisImgSrc = img.attr('src');
+
+						let secondaryImg = $(this).find('.wpr-grid-image-wrap').data('src-secondary');
+
+						if ( isValidHttpUrl(secondaryImg) ) {
+							img.attr( 'src', secondaryImg );
+						}
+	
+						// $(this).find('img:first-of-type').addClass('wpr-hidden-img');
+						// $(this).find('img:nth-of-type(2)').removeClass('wpr-hidden-img');
+					});
+	
+					iGrid.find('.wpr-grid-media-wrap').on('mouseleave', function() {
+						img.attr('src', thisImgSrc);
+	
+						// $(this).find('img:nth-of-type(2)').addClass('wpr-hidden-img');
+						// $(this).find('img:first-of-type').removeClass('wpr-hidden-img');
+					});
+				}
+				
+				function isValidHttpUrl(string) {
+					let url;
+					try {
+					  url = new URL(string);
+					} catch (_) {
+					  return false;
+					}
+					return url.protocol === "http:" || url.protocol === "https:";
+				}
+
 				if ( 'yes' === iGrid.find( '.wpr-grid-media-wrap' ).attr( 'data-overlay-link' ) && ! WprElements.editorCheck() ) {
 					iGrid.find( '.wpr-grid-media-wrap' ).css('cursor', 'pointer');
 
@@ -1860,6 +1904,7 @@
 					contWidth = grid.width() + gutterHr - 0.3,
 					// viewportWidth = $( 'body' ).prop( 'clientWidth' ),
 					viewportWidth = $(window).outerWidth(),
+					defaultLayout,
 					transDuration = 400;
 
 				// Get Responsive Columns
@@ -2112,6 +2157,7 @@
 				}
 
 				// Set Layout
+				defaultLayout = layout;
 				if ( 'list' === layout ) {
 					layout = 'fitRows';
 				}
@@ -2125,18 +2171,41 @@
 				var iGrid = grid.isotopewpr({
 					layoutMode: layout,
 					masonry: {
-						comlumnWidth: contWidth / columns,
+						// columnWidth: contWidth / columns,
 						gutter: gutterHr
 					},
 					fitRows: {
-						comlumnWidth: contWidth / columns,
+						// columnWidth: contWidth / columns,
 						gutter: gutterHr
 					},
 					transitionDuration: transDuration,
   					percentPosition: true
 				});
 
+				if ( defaultLayout == 'fitRows' ) {
+					console.log(layout);
+					setTallestHeight();
+				}
+
 				// return iGrid;//tmp
+			}
+				
+			function setTallestHeight() {
+				var tallestHeight = 0;
+			  
+				// Iterate through all elements with the specified class
+				$scope.find('.wpr-grid-item').each(function() {
+				  // Get the current element's height
+				  var currentHeight = $(this).height();
+			  
+				  // Update the tallestHeight variable if the current element's height is greater
+				  if (currentHeight > tallestHeight) {
+					tallestHeight = currentHeight;
+				  }
+				});
+			  
+				// Set the tallestHeight to all elements with the same class
+				$scope.find('.wpr-grid-item').height(tallestHeight);
 			}
 
 			function lazyLoadObserver() {
@@ -2340,6 +2409,10 @@
 					fade: 'fade' === dataSlideEffect ? true : false
 				});
 			}
+
+			$(document).ready(function() {
+				iGrid.css('opacity', 1);
+			});
 
 			var iGridLength = iGrid.find('.wpr-mgzn-grid-item').length;
 
@@ -2856,9 +2929,9 @@
 
 			// Start CountDown
 			if ( ! WprElements.editorCheck() ) { //tmp
-				// Init on Load
-				initCountDown();
 			}
+			// Init on Load
+			initCountDown();
 
 			// Start CountDown
 			countDownInterval = setInterval( initCountDown, 1000 );
@@ -6580,6 +6653,13 @@
 			var accordionTrigger = $scope.find('.wpr-advanced-accordion').data('accordion-trigger');
 			var interactionSpeed = +$scope.find('.wpr-advanced-accordion').data('interaction-speed') * 1000;
 
+			// ?active_panel=panel-index#your-id
+			var activeTabIndexFromLocation = window.location.href.indexOf("active_panel=");
+
+			if (activeTabIndexFromLocation > -1) {
+				activeIndex = +window.location.href.substring(activeTabIndexFromLocation,  window.location.href.lastIndexOf("#")).replace("active_panel=", '') - 1;
+			}
+
 			if ('click' === accordionTrigger) {
 
 				if ( accordionType == 'accordion' ) {
@@ -7153,7 +7233,9 @@
 			});
 
 			if ( 'yes' === $scope.find('.wpr-product-add-to-cart').data('ajax-add-to-cart') ) {
-				$scope.find('.single_add_to_cart_button').on('click', ajaxAddToCart);
+				if ( !$('div[data-elementor-type="wpr-theme-builder"]').hasClass('product-type-external') ) {
+					$scope.find('.single_add_to_cart_button').on('click', ajaxAddToCart);
+				}
 			}
 
 			function ajaxAddToCart(e) {
@@ -7253,8 +7335,6 @@
 
 						setTimeout( function () {
 							$thisBtn.removeClass( 'added' );
-							$( document.body ).trigger( 'wc_fragment_refresh' );
-							$( document.body ).trigger( 'added_to_cart', [ response.fragments, response.cart_hash, $thisBtn ] );
 							var currentCartCount = parseInt($('.wpr-mini-cart-icon-count').text());
 							var updatedCartCount = parseInt($scope.find('.wpr-quantity-wrapper .qty').val());
 							$('.wpr-mini-cart-icon-count').text(currentCartCount + updatedCartCount);
