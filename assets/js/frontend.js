@@ -910,7 +910,7 @@
 						getSections.push($($(this).find('a').attr('href')));
 					});
 
-					var sections = $(getSections);
+				var sections = $(getSections);
 
 				var currentUrl = window.location.href;
 				var sectionId = currentUrl.split("#")[1];
@@ -1680,6 +1680,42 @@
 
 			// Media Hover Link
 			function mediaHoverLink() {
+				// console.log(iGrid.find('.wpr-grid-media-wrap').find('img').length);
+				if ( 'yes' === $scope.find('.wpr-grid-image-wrap').data('img-on-hover') ) {
+					var img;
+					var thisImgSrc;
+					iGrid.find('.wpr-grid-media-wrap').on('mouseover', function() {
+						img = $(this).find( 'img' );
+						thisImgSrc = img.attr('src');
+
+						let secondaryImg = $(this).find('.wpr-grid-image-wrap').data('src-secondary');
+
+						if ( isValidHttpUrl(secondaryImg) ) {
+							img.attr( 'src', secondaryImg );
+						}
+	
+						// $(this).find('img:first-of-type').addClass('wpr-hidden-img');
+						// $(this).find('img:nth-of-type(2)').removeClass('wpr-hidden-img');
+					});
+	
+					iGrid.find('.wpr-grid-media-wrap').on('mouseleave', function() {
+						img.attr('src', thisImgSrc);
+	
+						// $(this).find('img:nth-of-type(2)').addClass('wpr-hidden-img');
+						// $(this).find('img:first-of-type').removeClass('wpr-hidden-img');
+					});
+				}
+				
+				function isValidHttpUrl(string) {
+					let url;
+					try {
+					  url = new URL(string);
+					} catch (_) {
+					  return false;
+					}
+					return url.protocol === "http:" || url.protocol === "https:";
+				}
+
 				if ( 'yes' === iGrid.find( '.wpr-grid-media-wrap' ).attr( 'data-overlay-link' ) && ! WprElements.editorCheck() ) {
 					iGrid.find( '.wpr-grid-media-wrap' ).css('cursor', 'pointer');
 
@@ -1913,6 +1949,7 @@
 					contWidth = grid.width() + gutterHr - 0.3,
 					// viewportWidth = $( 'body' ).prop( 'clientWidth' ),
 					viewportWidth = $(window).outerWidth(),
+					defaultLayout,
 					transDuration = 400;
 
 				// Get Responsive Columns
@@ -2165,6 +2202,7 @@
 				}
 
 				// Set Layout
+				defaultLayout = layout;
 				if ( 'list' === layout ) {
 					layout = 'fitRows';
 				}
@@ -2178,11 +2216,11 @@
 				var iGrid = grid.isotopewpr({
 					layoutMode: layout,
 					masonry: {
-						comlumnWidth: contWidth / columns,
+						// columnWidth: contWidth / columns,
 						gutter: gutterHr
 					},
 					fitRows: {
-						comlumnWidth: contWidth / columns,
+						// columnWidth: contWidth / columns,
 						gutter: gutterHr
 					},
 					transitionDuration: transDuration,
@@ -2197,6 +2235,24 @@
 				}
 
 				// return iGrid;//tmp
+			}
+				
+			function setTallestHeight() {
+				var tallestHeight = 0;
+			  
+				// Iterate through all elements with the specified class
+				$scope.find('.wpr-grid-item').each(function() {
+				  // Get the current element's height
+				  var currentHeight = $(this).height();
+			  
+				  // Update the tallestHeight variable if the current element's height is greater
+				  if (currentHeight > tallestHeight) {
+					tallestHeight = currentHeight;
+				  }
+				});
+			  
+				// Set the tallestHeight to all elements with the same class
+				$scope.find('.wpr-grid-item').height(tallestHeight);
 			}
 
 			// Find the tallest grid-item

@@ -455,7 +455,7 @@ class Wpr_Page_List extends Widget_Base {
 				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-page-list-item' => 'border-color: {{VALUE}}',
-				],
+				]
 			]
 		);
 
@@ -470,7 +470,8 @@ class Wpr_Page_List extends Widget_Base {
 				'step' => 0.1,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-page-list-item' => 'transition-duration: {{VALUE}}s',
-				],
+					'{{WRAPPER}} .wpr-page-list-item a' => 'transition-duration: {{VALUE}}s'
+				]
 			]
 		);
 

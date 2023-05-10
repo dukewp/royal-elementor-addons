@@ -7379,6 +7379,15 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'active_styles_notice',
+			[
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => esc_html__('Apply active filter styles from the hover tab.', 'wpr-addons'),
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info'
+			]
+		);
+
 		$this->start_controls_tabs( 'tabs_grid_filters_style' );
 
 		$this->start_controls_tab(
