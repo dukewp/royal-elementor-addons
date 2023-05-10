@@ -329,6 +329,11 @@ class Utilities {
 	** Get Library Template ID
 	*/
 	public static function get_template_id( $slug ) {
+
+		// GOGA - remove
+		if ( $slug == NULL ) {
+			$slug = '';
+		}
 		
 		$template = get_page_by_path( $slug, OBJECT, 'wpr_templates' );
 
