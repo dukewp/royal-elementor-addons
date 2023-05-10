@@ -679,7 +679,6 @@ function wpr_addons_settings_page() {
                     <li><span>9 Premade Popup Templates</span></li>
                     <li><span>Particle Effects</span></li>
                     <li><span>Parallax Effect</span></li>
-                    <li><span>No White Label Branding</span></li>
                     <li><span>Free Templates Kit Library</span></li>
                     <li><span>Theme Builder</span></li>
                     <li><span>WooCommerce Shop Builder  </span></li>
@@ -1194,7 +1193,6 @@ function wpr_addons_settings_page() {
                             <li>Templates Kit, Widgets and any other setting and Extension Doesn't require Elementor PRO</li>
                         </ul>
                     </li>
-                    <li>And More is Comming Soon...</li>
                 </ul>
             </div>
 
