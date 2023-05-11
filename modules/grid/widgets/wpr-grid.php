@@ -3345,7 +3345,7 @@ class Wpr_Grid extends Widget_Base {
 		$this->add_control(
 			'grid_item_styles_selector',
 			[
-				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'label' => esc_html__( 'Apply Styles To', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'inner' => esc_html__( 'Inner Elements', 'wpr-addons' ),
