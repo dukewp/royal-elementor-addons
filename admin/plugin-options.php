@@ -519,12 +519,13 @@ function wpr_addons_settings_page() {
                     if ( 'page' == $key || 'e-landing-page' === $key ) {
                         continue;
                     }
+                    var_dump(get_option('wpr_meta_secondary_image_'. $key));
                     ?>
                         <div class="wpr-woo-template-info">
                             <div class="wpr-woo-template-title">
                                 <h4><?php echo $value; ?></h4>
                             </div>
-                            <input type="checkbox" name="wpr_meta_secondary_image_<?php echo $key ?>" id="wpr_meta_secondary_image_<?php echo $key ?>" <?php echo checked( get_option('wpr_meta_secondary_image'. $key, 'on'), 'on', false ); ?>>
+                            <input type="checkbox" name="wpr_meta_secondary_image_<?php echo $key ?>" id="wpr_meta_secondary_image_<?php echo $key ?>" <?php echo checked( get_option('wpr_meta_secondary_image_'. $key, 'on'), 'on', false ); ?>>
                             <label for="wpr_meta_secondary_image_<?php echo $key ?>"></label>
                         </div>
                     <?php

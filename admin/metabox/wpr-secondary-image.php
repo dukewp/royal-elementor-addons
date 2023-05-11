@@ -20,7 +20,7 @@ function secondary_image_add_metabox () {
 function secondary_image_metabox ( $post ) {
     global $content_width, $_wp_additional_image_sizes;
 
-    $image_id = get_post_meta( $post->ID, '_secondary_image_id', true );
+    $image_id = get_post_meta( $post->ID, 'wpr_secondary_image_id', true );
 
     $old_content_width = $content_width;
     $content_width = 254;
@@ -36,7 +36,7 @@ function secondary_image_metabox ( $post ) {
         if ( ! empty( $thumbnail_html ) ) {
             $content = $thumbnail_html;
             $content .= '<p class="hide-if-no-js"><a href="javascript:;" id="remove_secondary_image_button" >' . esc_html__( 'Remove secondary image', 'text-domain' ) . '</a></p>';
-            $content .= '<input type="hidden" id="upload_secondary_image" name="_secondary_cover_image" value="' . esc_attr( $image_id ) . '" />';
+            $content .= '<input type="hidden" id="upload_secondary_image" name="wpr_secondary_cover_image" value="' . esc_attr( $image_id ) . '" />';
         }
 
         $content_width = $old_content_width;
@@ -44,7 +44,7 @@ function secondary_image_metabox ( $post ) {
 
         $content = '<img src="" style="width:' . esc_attr( $content_width ) . 'px;height:auto;border:0;display:none;" />';
         $content .= '<p class="hide-if-no-js"><a title="' . esc_attr__( 'Set secondary image', 'text-domain' ) . '" href="javascript:;" id="upload_secondary_image_button" id="set-secondary-image" data-uploader_title="' . esc_attr__( 'Choose an image', 'text-domain' ) . '" data-uploader_button_text="' . esc_attr__( 'Set secondary image', 'text-domain' ) . '">' . esc_html__( 'Set secondary image', 'text-domain' ) . '</a></p>';
-        $content .= '<input type="hidden" id="upload_secondary_image" name="_secondary_cover_image" value="" />';
+        $content .= '<input type="hidden" id="upload_secondary_image" name="wpr_secondary_cover_image" value="" />';
 
     }
 
@@ -53,9 +53,9 @@ function secondary_image_metabox ( $post ) {
 
 add_action( 'save_post', 'secondary_image_save', 10, 1 );
 function secondary_image_save ( $post_id ) {
-    if( isset( $_POST['_secondary_cover_image'] ) ) {
-        $image_id = (int) $_POST['_secondary_cover_image'];
-        update_post_meta( $post_id, '_secondary_image_id', $image_id );
+    if( isset( $_POST['wpr_secondary_cover_image'] ) ) {
+        $image_id = (int) $_POST['wpr_secondary_cover_image'];
+        update_post_meta( $post_id, 'wpr_secondary_image_id', $image_id );
     }
 }
 
@@ -69,4 +69,5 @@ function wpdocs_selectively_enqueue_admin_script( $hook ) {
     // enqueue JS
     wp_enqueue_script( 'wpr-secondary-image-js', WPR_ADDONS_URL .'assets/js/admin/metabox/secondary-image.js', ['jquery'], $version );
 }
+
 add_action( 'admin_enqueue_scripts', 'wpdocs_selectively_enqueue_admin_script' );

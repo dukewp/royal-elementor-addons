@@ -56,6 +56,17 @@ class Wpr_Woo_Grid extends Widget_Base {
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
 
+	public function add_control_secondary_img_on_hover() {
+		$this->add_control(
+			'secondary_img_on_hover',
+			[
+				'label' => sprintf( __( 'Secondary Img on Hover %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);
+	}
+
 	public function add_control_open_links_in_new_tab() {
 		$this->add_control(
 			'open_links_in_new_tab',
@@ -2438,6 +2449,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
+
+		$this->add_control_secondary_img_on_hover();
 
 		$this->add_control_image_effects();
 
@@ -8658,10 +8671,19 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$id = get_post_thumbnail_id();
 		$src = Group_Control_Image_Size::get_attachment_image_src( $id, 'layout_image_crop', $settings );
 		$alt = '' === wp_get_attachment_caption( $id ) ? get_the_title() : wp_get_attachment_caption( $id );
+		
+		if ( get_post_meta(get_the_ID(), 'wpr_secondary_image_id') && !empty(get_post_meta(get_the_ID(), 'wpr_secondary_image_id')) ) {
+			$src2 = Group_Control_Image_Size::get_attachment_image_src( get_post_meta(get_the_ID(), 'wpr_secondary_image_id')[0], 'layout_image_crop', $settings );
+		} else {
+			$src2 = '';
+		}
 
 		if ( has_post_thumbnail() ) {
-			echo '<div class="wpr-grid-image-wrap" data-src="'. esc_url( $src ) .'">';
+			echo '<div class="wpr-grid-image-wrap" data-src="'. esc_url( $src ) .'"  data-img-on-hover="'. $settings['secondary_img_on_hover'] .'" data-src-secondary="'. esc_url( $src2 ) .'">';
 				echo '<img src="'. esc_url( $src ) .'" alt="'. esc_attr( $alt ) .'" class="wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
+				if ( 'yes' == $settings['secondary_img_on_hover'] ) {
+					echo '<img src="'. esc_url( $src2 ) . '" alt="'. esc_attr( $alt ) .'" class="wpr-hidden-img wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
+				}
 			echo '</div>';
 		}
 	}

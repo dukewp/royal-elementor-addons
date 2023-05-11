@@ -3514,9 +3514,9 @@ class Wpr_Form_Builder extends Widget_Base {
 							} else if ( 'icon' == $instance['step_type'] ) {
 								$step_html = '<span class="wpr-step"><span class="wpr-step-content">'. $step_icon[$i] .'</span></span>';
 							} else if ( 'number' == $instance['step_type'] ) {
-								$step_html = '<span class="wpr-step"><span class="wpr-step-content"><span class="wpr-step-number">'. $i + 1 .'</span></span></span>';
+								$step_html = '<span class="wpr-step"><span class="wpr-step-content"><span class="wpr-step-number">'. ($i + 1) .'</span></span></span>';
 							} else if ( 'number_text' == $instance['step_type'] ) {
-								$step_html = '<span class="wpr-step"><span class="wpr-step-content"><span class="wpr-step-number">'. $i + 1 .'</span></span><span class="wpr-step-label">'. $step_label[$i] . $step_sub_label[$i] .'</span></span>';
+								$step_html = '<span class="wpr-step"><span class="wpr-step-content"><span class="wpr-step-number">'. ($i + 1) .'</span></span><span class="wpr-step-label">'. $step_label[$i] . $step_sub_label[$i] .'</span></span>';
 							} else if ( 'icon_text' == $instance['step_type'] ) {
 								$step_html = '<span class="wpr-step"><span class="wpr-step-content">'. $step_icon[$i] .'</span><span class="wpr-step-label">'. $step_label[$i] . $step_sub_label[$i] .'</span></span>';
 							}
