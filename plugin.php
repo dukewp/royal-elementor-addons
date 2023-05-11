@@ -912,19 +912,19 @@ class Plugin {
 				[
 					'name' => 'wpr-compare-button',
 					'title' => __('Compare Button', 'wpr-addons'),
-					'icon' => 'wpr-icon eicon-heart', // GOGA - new icon needed for compare
+					'icon' => 'wpr-icon eicon-exchange', // GOGA - new icon needed for compare
 					'categories' => '["'. $category .'"]',
 				],
 				[
 					'name' => 'wpr-mini-compare',
 					'title' => __('Mini Compare', 'wpr-addons'),
-					'icon' => 'wpr-icon eicon-heart',
+					'icon' => 'wpr-icon eicon-exchange',
 					'categories' => '["'. $category .'"]',
 				],
 				[
 					'name' => 'wpr-compare',
 					'title' => __('Compare Table', 'wpr-addons'),
-					'icon' => 'wpr-icon eicon-heart',
+					'icon' => 'wpr-icon eicon-exchange',
 					'categories' => '["'. $category .'"]',
 				],
 			];

@@ -270,7 +270,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'product_tag' => esc_html__( 'Tags', 'wpr-addons' ),
 			'status' => esc_html__( 'Status', 'wpr-addons' ),
 			'price' => esc_html__( 'Price', 'wpr-addons' ),
-			'pro-sd' => esc_html__( 'Sale Dates', 'wpr-addons' ),
+			'pro-sd' => esc_html__( 'Sale Dates (Pro)', 'wpr-addons' ),
 			'rating' => esc_html__( 'Rating', 'wpr-addons' ),
 			'add-to-cart' => esc_html__( 'Add to Cart', 'wpr-addons' ),
 			'pro-ws' => esc_html__( 'Wishlist Button (Expert)', 'wpr-addons' ),
