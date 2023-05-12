@@ -9048,6 +9048,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 	// Render Wishlist Button
 	public function render_product_wishlist_button( $settings, $class ) {
 		global $product;
+		
+		if ( !wpr_fs()->is_plan( 'expert' ) ) {
+			return;
+		}
 
 		// If NOT a Product
 		if ( is_null( $product ) ) {
@@ -9129,6 +9133,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 	// Render Compare Button
 	public function render_product_compare_button( $settings, $class ) {
 		global $product;
+		
+		if ( !wpr_fs()->is_plan( 'expert' ) ) {
+			return;
+		}
 
 		// If NOT a Product
 		if ( is_null( $product ) ) {
@@ -9394,10 +9402,14 @@ class Wpr_Woo_Grid extends Widget_Base {
 				$this->render_product_add_to_cart( $settings, $class );
 				break;
 			case 'wishlist-button':
-				$this->render_product_wishlist_button( $settings, $class );
+				if ( wpr_fs()->is_plan( 'expert' ) ) {
+					$this->render_product_wishlist_button( $settings, $class );
+				}
 				break;
 			case 'compare-button':
-				$this->render_product_compare_button( $settings, $class );
+				if ( wpr_fs()->is_plan( 'expert' ) ) {
+					$this->render_product_compare_button( $settings, $class );
+				}
 				break;
 		}
 

@@ -1098,7 +1098,7 @@ class Wpr_Post_Info extends Widget_Base {
 		$this->render_extra_icon_text( $settings );
 
 		// Wrap with Link
-		if ( 'yes' === $settings['post_info_link_wrap'] ) {
+		if ( isset($settings['post_info_link_wrap']) && 'yes' === $settings['post_info_link_wrap'] ) {
 			echo '<a href="'. esc_url( get_day_link( get_post_time( 'Y' ), get_post_time( 'm' ), get_post_time( 'j' ) ) ) .'">';
 		}
 
@@ -1111,7 +1111,7 @@ class Wpr_Post_Info extends Widget_Base {
 		}
 
 		// Wrap with Link
-		if ( 'yes' === $settings['post_info_link_wrap'] ) {
+		if ( isset($settings['post_info_link_wrap']) && 'yes' === $settings['post_info_link_wrap'] ) {
 			echo '</a>';
 		}
 	}
@@ -1145,14 +1145,14 @@ class Wpr_Post_Info extends Widget_Base {
 			}
 
 			// Wrap with Link
-			if ( 'yes' === $settings['post_info_link_wrap'] ) {
+			if ( isset($settings['post_info_link_wrap']) && 'yes' === $settings['post_info_link_wrap'] ) {
 				echo '<a href="'. esc_url( get_comments_link() ) .'">';
 			}
 
 			// Comments
 			echo '<span> '. esc_html($text) .'</span>';
 
-			if ( 'yes' === $settings['post_info_link_wrap'] ) {
+			if ( isset($settings['post_info_link_wrap']) && 'yes' === $settings['post_info_link_wrap'] ) {
 				echo '</a>';
 			}
 		}
@@ -1166,7 +1166,7 @@ class Wpr_Post_Info extends Widget_Base {
 		$this->render_extra_icon_text( $settings );
 		
 		// Wrap with Link
-		if ( 'yes' === $settings['post_info_link_wrap'] ) {
+		if ( isset($settings['post_info_link_wrap']) && 'yes' === $settings['post_info_link_wrap'] ) {
 			echo '<a href="'. esc_url( get_author_posts_url( $author_id ) ) .'">';
 		}
 
@@ -1176,7 +1176,7 @@ class Wpr_Post_Info extends Widget_Base {
 
 			echo '<span>'. esc_html(get_the_author_meta( 'display_name', $author_id )) .'</span>';
 
-		if ( 'yes' === $settings['post_info_link_wrap'] ) {
+		if ( isset($settings['post_info_link_wrap']) && 'yes' === $settings['post_info_link_wrap'] ) {
 			echo '</a>';
 		}
 	}
@@ -1191,7 +1191,7 @@ class Wpr_Post_Info extends Widget_Base {
 		
 		// Taxonomies
 		foreach ( $terms as $term ) {
-			if ( 'yes' === $settings['post_info_link_wrap'] ) {
+			if ( isset($settings['post_info_link_wrap']) && 'yes' === $settings['post_info_link_wrap'] ) {
 				echo '<a href="'. esc_url(get_term_link( $term->term_id )) .'">';
 					// Term Name
 					echo esc_html( $term->name );

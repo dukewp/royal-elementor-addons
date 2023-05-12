@@ -512,7 +512,6 @@ function wpr_addons_settings_page() {
 
         <div class="wpr-settings-group wpr-settings-group-meta">
             <h3 class="wpr-settings-group-title"><?php esc_html_e( 'Metabox', 'wpr-addons' ); ?></h3>
-            <p class="wpr-settings-group-description"><?php esc_html_e( 'Adds secondary featured image metabox to post types', 'wpr-addons' ); ?></p>
 
             <?php
                 $post_types = Utilities::get_custom_types_of( 'post', false );
@@ -532,6 +531,7 @@ function wpr_addons_settings_page() {
                     <?php
                 }
             ?>
+            <p class="wpr-settings-group-description"><?php esc_html_e( 'Adds secondary featured image metabox to post types', 'wpr-addons' ); ?></p>
             
             <!-- <div class="wpr-settings-group-inner"> -->
 

@@ -411,6 +411,11 @@
   float: right;
 }
 
+.wpr-settings-group-description {
+  margin-top: 10px;
+}
+
+.wpr-settings-group-description,
 .wpr-woo-template-info span,
 .wpr-element-info span {
   display: block;
