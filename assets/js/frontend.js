@@ -6678,7 +6678,7 @@
 					}				
 				}
 	
-				// Remove if not necessary - GOGA
+				// GOGA - Remove if not necessary
 				$scope.find('.elementor-widget-wrap').removeClass('e-swiper-container');
 	
 				function instaFeedCarousel() {
