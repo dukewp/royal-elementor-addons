@@ -1242,7 +1242,7 @@ function wpr_addons_settings_page() {
                 <header>
                     <span class="dashicons dashicons-star-filled"></span>
                     <h3><?php echo esc_html__( 'Expert Version', 'wpr-addons' ); ?></h3>
-                    <span><?php echo esc_html__( 'Advanced Functionality', 'wpr-addons' ); ?></span>
+                    <span><?php echo esc_html__( 'Top-tier Functionality', 'wpr-addons' ); ?></span>
                 </header>
                 <ul>
                     <li>Free and Pro Functionality Included</li>
