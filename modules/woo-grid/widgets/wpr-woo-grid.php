@@ -5655,6 +5655,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#FFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wishlist-add' => 'background-color: {{VALUE}}'
 				]

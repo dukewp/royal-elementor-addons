@@ -1180,8 +1180,11 @@
 					initialItems = filteredItems.length;
 				});
 
+				// iGrid.imagesLoaded().progress( function( instance, image ) {
+				// });
+
 				// Grid Images Loaded
-				iGrid.imagesLoaded().progress( function( instance, image ) {
+				iGrid.imagesLoaded(function() {
 					if ( '1' !== iGrid.css( 'opacity' ) ) {
 						iGrid.css( 'opacity', '1' );
 					}
@@ -1189,6 +1192,9 @@
 					setTimeout(function() {
 						iGrid.addClass( 'grid-images-loaded' );
 					}, 500 );
+
+					// Equal Heights
+					setEqualHeight(settings);
 				});
 
 				// Infinite Scroll / Load More
@@ -2233,47 +2239,23 @@
 					transitionDuration: transDuration,
   					percentPosition: true
 				});
-
-				if ( 'fitRows' === defaultLayout && columns > 1 ) {
-					let gridItems = iGrid.children('article'),
-						maxHeight = getMaxHeight(iGrid.children('article'));
-					
-					setEqualHeight(gridItems, maxHeight);
-				}
-
-				// return iGrid;//tmp
-			}
-				
-			function setTallestHeight() {
-				var tallestHeight = 0;
-			  
-				// Iterate through all elements with the specified class
-				$scope.find('.wpr-grid-item').each(function() {
-				  // Get the current element's height
-				  var currentHeight = $(this).height();
-			  
-				  // Update the tallestHeight variable if the current element's height is greater
-				  if (currentHeight > tallestHeight) {
-					tallestHeight = currentHeight;
-				  }
-				});
-			  
-				// Set the tallestHeight to all elements with the same class
-				$scope.find('.wpr-grid-item').height(tallestHeight);
-			}
-
-			// Find the tallest grid-item
-			function getMaxHeight(items) {
-				return Math.max.apply(null, items.map(function(item) {
-					return $(this).outerHeight();
-				}));
 			}
 
 			// Set equal height to all grid-items
-			function setEqualHeight(items, maxHeight) {
-				items.each(function() {
-					$(this).css('height', maxHeight + 'px');
-				});
+			function setEqualHeight( settings ) {
+				let iGrid = $scope.find( '.wpr-grid' ),
+					items = iGrid.children('article'),
+					columns = Math.floor(iGrid.outerWidth() / items.outerWidth());
+
+				if ( 'fitRows' === settings.layout && columns > 1 ) {
+					let maxHeight = Math.max.apply(null, items.map(function(item) {
+						return $(this).outerHeight();
+					}));
+
+					items.each(function() {
+						$(this).css('height', maxHeight + 'px');
+					});
+				}
 			}
 
 			function lazyLoadObserver() {
@@ -3088,10 +3070,6 @@
 				var slideCount = 0;
 	
 				$scope.find('.wpr-thumbnail-slider-next-arrow').on('click', function() {
-					console.log(
-						slideCount + thumbsToScroll,
-						$scope.find('.flex-control-nav li').length - 1
-						);
 						// var currTrans =  $scope.find('.flex-control-nav').css('transform') != 'none' ? $scope.find('.flex-control-nav').css('transform').split(/[()]/)[1] : 0;
 						// posx = currTrans ? currTrans.split(',')[4] : 0;
 						if ( (slideCount + thumbsToScroll) < $scope.find('.flex-control-nav li').length - 1 ) {
@@ -4807,8 +4785,6 @@
 
 			if (activeTabIndexFromLocation > -1) {
 				activeTabIndex = +window.location.href.substring(activeTabIndexFromLocation,  window.location.href.lastIndexOf("#")).replace("active_tab=", '') - 1;
-
-				console.log(activeTabIndex);
 			}
 
 				$tabList.eq( activeTabIndex ).addClass( 'wpr-tab-active' );
@@ -7684,6 +7660,10 @@
 			// 		}
 			// 	});
 			// });
+			
+			if ( !($scope.find('.wpr-compare-count').length > 0 && 0 == $scope.find('.wpr-compare-count').text()) ) {
+				$scope.find('.wpr-compare-count').css('display', 'inline-flex');
+			}
 
 			// WITH AJAX
 			if ( $scope.hasClass('wpr-compare-style-popup') ) {
@@ -7750,7 +7730,6 @@
 	
 				$scope.find('.wpr-compare-bg').click(function(e) {
 					if ( !e.target.classList.value.includes('wpr-compare-popup') && !e.target.closest('.wpr-compare-popup') ) {
-						console.log($(this));
 						var thisTarget = $(this);
 						$scope.find('.wpr-compare-popup').removeClass('wpr-compare-fade-in').addClass('wpr-compare-fade-out');
 						$scope.find('.wpr-compare-bg').removeClass('wpr-compare-fade-in').addClass('wpr-compare-fade-out');
@@ -7773,6 +7752,12 @@
 					},
 					success: function(response) {
 						$scope.find('.wpr-compare-count').text(response.compare_count);
+						
+						if ( response.compare_count == 0 ) {
+							$scope.find('.wpr-compare-count').css('display', 'none');
+						} else {
+							$scope.find('.wpr-compare-count').css('display', 'inline-flex');
+						}
 					}
 				});
 			});
@@ -7787,6 +7772,7 @@
 					},
 					success: function(response) {
 						$scope.find('.wpr-compare-count').text(response.compare_count);
+						$scope.find('.wpr-compare-count').css('display', 'inline-flex');
 					}
 				});
 			});
@@ -8032,7 +8018,6 @@
 								});
 							
 								return Promise.all(updateMetaPromises).then(() => {
-									console.log(responsesArray);
 									if (responsesArray.includes('error')) {
 										$scope.find('form').append('<p class="wpr-submit-error">'+ $scope.data('settings').error_message +'</p>');
 									} else {
@@ -8099,8 +8084,7 @@
 							}
 						}
 					}
-					
-					console.log(data);
+
 					return $.ajax({
 						type: 'POST',
 						url: WprConfig.ajaxurl,
@@ -8292,8 +8276,6 @@
 			  
 				// Create an array to store the upload promises
 				let uploadPromises = [];
-
-				console.log(thisInput, files, eventType, maxFileSize, allowedFileTypes);
 			  
 				for (let i = 0; i < files.length; i++) {
 				  var fileInput = files[i];
@@ -8698,6 +8680,10 @@
 
 		widgetMiniWishlist: function($scope) {
 			
+			if ( !($scope.find('.wpr-wishlist-count').length > 0 && 0 == $scope.find('.wpr-wishlist-count').text()) ) {
+				$scope.find('.wpr-wishlist-count').css('display', 'inline-flex');
+			}
+			
 			function wishlistRemoveHandler() {
 				$scope.find('.wpr-wishlist-remove').click(function(e) {
 					e.preventDefault();
@@ -8741,7 +8727,9 @@
 						if ( $scope.find('.wpr-wishlist-products').find('li[data-product-id='+ response.product_id +']').length == 0 ) {
 							$scope.find('.wpr-wishlist-products').append('<li class="wpr-wishlist-product" data-product-id="'+ response.product_id +'"><a class="wpr-wishlist-product-img" href="'+ response.product_url +'">'+ response.product_image +'</a><div><a href="'+ response.product_url +'">'+ response.product_title +'</a><div class="wpr-wishlist-product-price">'+ response.product_price +'</div></div><span class="wpr-wishlist-remove" data-product-id="'+ response.product_id +'"></span></li>');
 						}
+
 						$scope.find('.wpr-wishlist-count').text(response.wishlist_count);
+						$scope.find('.wpr-wishlist-count').css('display', 'inline-flex');
 					}
 				});
 			});
@@ -8757,12 +8745,16 @@
 					},
 					success: function(response) {
 						$scope.find('.wpr-wishlist-count').text(response.wishlist_count);
+						
+						if ( response.wishlist_count == 0 ) {
+							$scope.find('.wpr-wishlist-count').css('display', 'none');
+						} else {
+							$scope.find('.wpr-wishlist-count').css('display', 'inline-flex');
+						}
 					}
 				});
 			});
 			$scope.find('.wpr-wishlist').css({"display": "none"});
-		
-			// $( document.body ).trigger( 'wc_fragment_refresh' );
 
 			var animationSpeed = $scope.find('.wpr-wishlist-wrap').data('animation');
 
