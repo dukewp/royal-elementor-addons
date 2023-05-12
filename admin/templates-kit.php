@@ -138,10 +138,10 @@ function wpr_addons_templates_kit_page() {
 
         <footer class="action-buttons-wrap">
             <a href="https://royal-elementor-addons.com/" class="preview-demo button" target="_blank"><?php esc_html_e('Preview Demo', 'wpr-addons'); ?> <span class="dashicons dashicons-external"></span></a>
-            <a href="#" class="import-tutorial-link" target="_blank"><span class="dashicons dashicons-video-alt3"></span> <?php esc_html_e('How to Import Single Pages?', 'wpr-addons'); ?></a>
+            <a href="https://www.youtube.com/watch?v=G47y0zA-tFg" class="import-tutorial-link" target="_blank"><span class="dashicons dashicons-video-alt3"></span> <?php esc_html_e('How to Import Single Pages?', 'wpr-addons'); ?></a>
 
             <div class="import-template-buttons">
-                <?php
+            <?php
                     echo '<button class="import-kit button">'. esc_html__('Import Templates Kit', 'wpr-addons') .' <span class="dashicons dashicons-download"></span></button>';
                     echo '<a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-templates-upgrade-pro#purchasepro" class="get-access button" target="_blank">'. esc_html__('Get Access', 'wpr-addons') .' <span class="dashicons dashicons-external"></span></a>';
                 ?>
