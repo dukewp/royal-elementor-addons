@@ -910,7 +910,7 @@
 						getSections.push($($(this).find('a').attr('href')));
 					});
 
-				var sections = $(getSections);
+					var sections = $(getSections);
 
 				var currentUrl = window.location.href;
 				var sectionId = currentUrl.split("#")[1];
@@ -1684,26 +1684,33 @@
 				if ( 'yes' === $scope.find('.wpr-grid-image-wrap').data('img-on-hover') ) {
 					var img;
 					var thisImgSrc;
+					let secondaryImg;
 					iGrid.find('.wpr-grid-media-wrap').on('mouseover', function() {
-						img = $(this).find( 'img' );
-						thisImgSrc = img.attr('src');
-
-						let secondaryImg = $(this).find('.wpr-grid-image-wrap').data('src-secondary');
-
-						if ( isValidHttpUrl(secondaryImg) ) {
-							img.attr( 'src', secondaryImg );
-						}
-	
-						// $(this).find('img:first-of-type').addClass('wpr-hidden-img');
-						// $(this).find('img:nth-of-type(2)').removeClass('wpr-hidden-img');
-					});
-	
-					iGrid.find('.wpr-grid-media-wrap').on('mouseleave', function() {
-						img.attr('src', thisImgSrc);
-	
-						// $(this).find('img:nth-of-type(2)').addClass('wpr-hidden-img');
-						// $(this).find('img:first-of-type').removeClass('wpr-hidden-img');
-					});
+							// img = $(this).find( 'img' );
+							// thisImgSrc = img.attr('src');
+							
+							// secondaryImg = $(this).find('.wpr-grid-image-wrap').data('src-secondary');
+							
+							// if ( isValidHttpUrl(secondaryImg) ) {
+							// 	img.attr( 'src', secondaryImg );
+							// }
+							
+							if ( $(this).find('img:nth-of-type(2)').attr('src') !== undefined && $(this).find('img:nth-of-type(2)').attr('src') !== '' ) {
+								$(this).find('img:first-of-type').addClass('wpr-hidden-img');
+								$(this).find('img:nth-of-type(2)').removeClass('wpr-hidden-img');
+							}
+						});
+		
+						iGrid.find('.wpr-grid-media-wrap').on('mouseleave', function() {
+							// if ( secondaryImg == img.attr('src') ) {
+							// 	img.attr('src', thisImgSrc);
+							// }
+		
+							if ( $(this).find('img:nth-of-type(2)').attr('src') !== undefined && $(this).find('img:nth-of-type(2)').attr('src') !== '' ) {
+								$(this).find('img:nth-of-type(2)').addClass('wpr-hidden-img');
+								$(this).find('img:first-of-type').removeClass('wpr-hidden-img');
+							}
+						});
 				}
 				
 				function isValidHttpUrl(string) {
@@ -2283,7 +2290,7 @@
 						});
 					}, {});
 					
-					$scope.find('.wpr-grid-image-wrap img').each(function() {
+					$scope.find('.wpr-grid-image-wrap img:first-of-type').each(function() {
 						lazyLoadObserver.observe($(this)[0]);
 					});
 				}, 100);
@@ -4040,23 +4047,23 @@
 				}
 			} );
 
-			if ( $scope.find('.wpr-search-input-hidden') ) {
-				$scope.find('.wpr-search-form-submit').on('click', function(e) {
-					e.preventDefault();
-					if ($scope.find('input').hasClass('wpr-search-input-hidden')) {
-						$scope.find('input').removeClass('wpr-search-input-hidden');
-					} else {
-						$scope.find('input').addClass('wpr-search-input-hidden');
-						$scope.find('.wpr-search-form-input').val('');
-						$scope.find('.wpr-data-fetch').slideUp(200);
-						setTimeout(function() {
-							$scope.find('.wpr-data-fetch ul').html('');
-							$scope.find('.wpr-no-results').remove();
-						}, 400);
-						postsOffset = 0;
-					}
-				});
-			}
+			// if ( $scope.find('.wpr-search-input-hidden') ) {
+			// 	$scope.find('.wpr-search-form-submit').on('click', function(e) {
+			// 		e.preventDefault();
+			// 		if ($scope.find('input').hasClass('wpr-search-input-hidden')) {
+			// 			$scope.find('input').removeClass('wpr-search-input-hidden');
+			// 		} else {
+			// 			$scope.find('input').addClass('wpr-search-input-hidden');
+			// 			$scope.find('.wpr-search-form-input').val('');
+			// 			$scope.find('.wpr-data-fetch').slideUp(200);
+			// 			setTimeout(function() {
+			// 				$scope.find('.wpr-data-fetch ul').html('');
+			// 				$scope.find('.wpr-no-results').remove();
+			// 			}, 400);
+			// 			postsOffset = 0;
+			// 		}
+			// 	});
+			// }
 
 			var prevData;
 			var searchTimeout = null;
@@ -6678,7 +6685,7 @@
 					}				
 				}
 	
-				// GOGA - Remove if not necessary
+				// Remove if not necessary - GOGA
 				$scope.find('.elementor-widget-wrap').removeClass('e-swiper-container');
 	
 				function instaFeedCarousel() {

@@ -233,6 +233,10 @@ function royal_elementor_addons_deactivate() {
 	if ( get_option('wpr_plugin_update_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version']) ) {
 		delete_option('wpr_plugin_update_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version']);
 	}
+
+	if ( get_option('wpr_pro_features_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version']) ) {
+		delete_option('wpr_pro_features_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version']);
+	}
 }
 
 // hook already exists with template kits notice

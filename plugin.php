@@ -132,6 +132,9 @@ class Plugin {
 
 		// Admin Files
 		if ( is_admin() ) {
+			// Pro Features Notice
+			require WPR_ADDONS_PATH . 'admin/notices/pro-features-notice.php';
+
 			// Plugin Updaate Notice
 			require WPR_ADDONS_PATH . 'admin/notices/plugin-update-notice.php';
 			
@@ -360,7 +363,7 @@ class Plugin {
 			Plugin::instance()->get_version()
 		);
 
-		// GOGA - development had enqueue instead of register (reason found)
+		// GOGA - enqueue instead of register (because of animations)
 		wp_enqueue_style(
 			'wpr-text-animations-css',
 			WPR_ADDONS_URL . 'assets/css/lib/animations/text-animations'. $this->script_suffix() .'.css',

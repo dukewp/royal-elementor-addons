@@ -11,6 +11,7 @@
 }
 
 .wpr-settings-page-header {
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1560,7 +1561,7 @@ input.wpr-user-template-title:focus {
 }
 
 /* Disable Notices */
-.notice:not(.wpr-plugin-update-notice):not(.wpr-plugin-sale-notice),
+.notice:not(.wpr-plugin-update-notice):not(.wpr-plugin-sale-notice):not(.wpr-pro-features-notice),
 div.fs-notice.updated, div.fs-notice.success {
   display: none !important;
 }
