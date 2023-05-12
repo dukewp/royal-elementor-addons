@@ -462,6 +462,8 @@ jQuery(document).ready(function( $ ) {
 				current.find(inputIDs).hide();
 			}
 
+			console.log(value);
+
 			// Show/Hide Expert Notice
 			if ( 0 === value.indexOf('pro-') ) {
 				$('.wpr-expert-notice').show();
