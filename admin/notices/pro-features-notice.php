@@ -19,7 +19,7 @@ class WprProFeaturesNotice {
             }
         }
 
-        if ( is_admin() ) {
+        if ( is_admin() && !get_option('wpr_pro_features_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version']) ) {
             add_action( 'admin_head', [$this, 'enqueue_scripts' ] );
         }
 
