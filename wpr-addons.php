@@ -250,3 +250,19 @@ function wpr_script_loader_tag( $tag, $handle ) {
     return str_replace( ' src', ' data-cfasync="false" src', $tag );
 }
 add_filter( 'script_loader_tag', 'wpr_script_loader_tag', 10, 2 );
+
+function exclude_wpr_scripts_from_wp_optimize( $excluded_handles ) {
+    // Replace 'my-script-handle' with the handle of the script you want to exclude.
+    $excluded_handles[] = 'wpr-addons-js';
+
+    return $excluded_handles;
+}
+add_filter( 'wpo_minify_excluded_js_handles', 'exclude_wpr_scripts_from_wp_optimize' );
+
+function exclude_wpr_styles_from_wp_optimize( $excluded_handles ) {
+    // Replace 'my-style-handle' with the handle of the style you want to exclude.
+    $excluded_handles[] = 'wpr-addons-css';
+
+    return $excluded_handles;
+}
+add_filter( 'wpo_minify_excluded_css_handles', 'exclude_wpr_styles_from_wp_optimize' );
