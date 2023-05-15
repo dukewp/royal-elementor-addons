@@ -51,11 +51,11 @@ class WprProFeaturesNotice {
                                 <li><strong>Advanced Custom Fields (Extended)</strong></li>
                                 <li><strong>Custom Post Type Generator</strong></li>
                                 <li><strong>Custom Taxonomy Generator</strong></li>
-                                <li><a target="_blank" href="https://demosites.royal-elementor-addons.com/fashion-v2/">Product Wishlist (WooCommerce)</a></li>
-                                <li><a target="_blank" href="https://demosites.royal-elementor-addons.com/fashion-v2/">Product Compare (WooCommerce)</a></li>
+                                <li><a target="_blank" href="https://demosites.royal-elementor-addons.com/fashion-v2/?ref=rea-plugin-backend-expertnoticebanner-woo-compare">Product Wishlist (WooCommerce)</a></li>
+                                <li><a target="_blank" href="https://demosites.royal-elementor-addons.com/fashion-v2/?ref=rea-plugin-backend-expertnoticebanner-woo-wishlist">Product Compare (WooCommerce)</a></li>
                             </ul>
 
-                            <a href="#" traget="_blank">Upgrade to Expert</a>
+                            <a href="https://royal-elementor-addons.com/#purchasepro?ref=rea-plugin-backend-expertnoticebanner-checkbtn-upgrade-expert#purchasepro" traget="_blank">Upgrade to Expert</a>
                         </div>
                         <canvas id="wpr-notice-confetti"></canvas>';
             echo '</div>';
@@ -198,17 +198,21 @@ class WprProFeaturesNotice {
 
             .wpr-pro-features-notice p {
               margin-top: 10px;
-              margin-bottom: 15px;
+              margin-bottom: 25px;
               font-size: 14px;
             }
             
+            .wpr-pro-features-notice ul li {
+                font-size: 16px;
+            }
+            
             .wpr-pro-features-notice ul a {
-            display: block;
-            text-decoration: none;
+                display: block;
+                text-decoration: none;
             }
             
             .wpr-pro-features-notice ul li:last-child a:after {
-            display: none;
+                display: none;
             }
 
             .wpr-new-widgets-list + a {
@@ -219,7 +223,7 @@ class WprProFeaturesNotice {
                 background: #6A4BFF;
                 padding: 5px 18px 7px;
                 border-radius: 3px;
-                margin-top: 10px;
+                margin-top: 30px;
                 font-weight: 500;
                 letter-spacing: 0.3px;
             }
