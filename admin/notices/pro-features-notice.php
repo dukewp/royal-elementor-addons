@@ -155,7 +155,7 @@ class WprProFeaturesNotice {
 
             .wpr-pro-features-notice {
                 position: absolute !important;
-                top: 30%;
+                top: 35%;
                 left: 50%;
                 transform: translateX(-50%);
                 width: 410px;
