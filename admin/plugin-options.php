@@ -1245,15 +1245,15 @@ function wpr_addons_settings_page() {
                     <span><?php echo esc_html__( 'Top-tier Functionality', 'wpr-addons' ); ?></span>
                 </header>
                 <ul>
-                    <li>Free and Pro Functionality Included</li>
-                    <li>Ability to build Dynamic Websites</li>
-                    <li>Dynamic Tags for All Widgets</li>
-                    <li>Extended Custom Field Options</li>
-                    <li>Custom Post Type Generator</li>
-                    <li>Custom Taxonomy Generator</li>
-                    <li>WooCommerce Wishlist Widget</li>
-                    <li>WooCommerce Compare Widget</li>
-                    <li>White Label Branding</li>
+                    <li><span>Free and Pro Functionality Included</span></li>
+                    <li><span>Ability to build Dynamic Websites</span></li>
+                    <li><span>Dynamic Tags for All Widgets</span></li>
+                    <li><span>Extended Custom Field Options</span></li>
+                    <li><span>Custom Post Type Generator</span></li>
+                    <li><span>Custom Taxonomy Generator</span></li>
+                    <li><span>WooCommerce Wishlist Widget</span></li>
+                    <li><span>WooCommerce Compare Widget</span></li>
+                    <li><span>White Label Branding</span></li>
                     <li>And More is Comming Soon...</li>
                 </ul>
             </div>
