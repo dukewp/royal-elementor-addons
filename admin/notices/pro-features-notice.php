@@ -68,6 +68,13 @@ class WprProFeaturesNotice {
     }
     
     public static function enqueue_scripts() {
+        global $current_screen;
+
+        
+        if ( !(is_admin() && 'toplevel_page_wpr-addons' == $current_screen->id) ) {
+            return;
+        }
+
         // Load Confetti
         wp_enqueue_script( 'wpr-confetti-js', WPR_ADDONS_URL .'assets/js/admin/lib/confetti/confetti.min.js', ['jquery'] );
 
