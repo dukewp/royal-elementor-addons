@@ -9,21 +9,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class WprProFeaturesNotice {
     public function __construct() {
+        if ( isset($_GET['page']) && 'wpr-addons' === $_GET['page'] && !wpr_fs()->is_plan( 'expert' ) ) {
 
-        if ( current_user_can('administrator') ) {
+            if ( current_user_can('administrator') ) {
 
-            // delete_option('wpr_pro_features_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version']);
+                // delete_option('wpr_pro_features_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version']);
 
-            if ( !get_option('wpr_pro_features_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version']) ) {
-                add_action( 'admin_init', [$this, 'render_notice'] );
+                if ( !get_option('wpr_pro_features_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version']) ) {
+                    add_action( 'admin_init', [$this, 'render_notice'] );
+                }
             }
-        }
 
-        if ( is_admin() && !get_option('wpr_pro_features_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version']) ) {
-            add_action( 'admin_head', [$this, 'enqueue_scripts' ] );
-        }
+            if ( is_admin() && !get_option('wpr_pro_features_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version']) ) {
+                add_action( 'admin_head', [$this, 'enqueue_scripts' ] );
+            }
 
-        add_action( 'wp_ajax_wpr_pro_features_dismiss_notice', [$this, 'wpr_pro_features_dismiss_notice'] );
+            add_action( 'wp_ajax_wpr_pro_features_dismiss_notice', [$this, 'wpr_pro_features_dismiss_notice'] );
+        }
     }
 
     public function render_notice() {
@@ -35,8 +37,6 @@ class WprProFeaturesNotice {
     }
 
     public function render_pro_features_notice() {
-        global $current_screen;
-
         if ( is_admin() ) {
             echo '<div class="wpr-pro-features-notice-wrap">';
             echo '<div class="notice wpr-pro-features-notice is-dismissible">
@@ -44,17 +44,19 @@ class WprProFeaturesNotice {
                             <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'/img/logo-128x128.png">
                         </div>
                         <div>
-                            <h3><span>New Features</span><br>Pro Features Notice</h3>
-                            <p>We are excited to announce that we have added new Widgets, Template Kits, and other Elementor<br> features to enhance your website building experience. Stay tuned for the weekly updates!</p>
+                            <h3><span>Big Update</span><br>Dynamic Content</h3>
+                            <p>We are happy to announce that <strong>Royal Elementor Addons Expert</strong> version now supports <strong>Dynamic Content</strong> wich includes:</p>
                             <ul class="wpr-new-widgets-list">
-                                <li><a target="_blank" href="https://royal-elementor-addons.com/elementor-mega-menu-widget/?ref=rea-plugin-backend-update-notice">Mega Menu</a></li>
-                                <li><a target="_blank" href="https://royal-elementor-addons.com/elementor-offcanvas-menu-widget/?ref=rea-plugin-backend-update-notice">Off-Canvas Content</a></li>
-                                <li><a target="_blank" href="https://royal-elementor-addons.com/elementor-instagram-feed-widget/?ref=rea-plugin-backend-update-notice">Instagram Feed</a></li>
-                                <li><a target="_blank" href="https://royal-elementor-addons.com/elementor-twitter-feed-widget/?ref=rea-plugin-backend-update-notice">Twitter Feed</a></li>
-                                <li><a target="_blank" href="https://royal-elementor-addons.com/elementor-image-accordion-widget/?ref=rea-plugin-backend-update-notice">Image Accordion</a></li>
+                                <li><strong>Dynamic Tags (Elementor)</strong></li>
+                                <li><strong>Advanced Custom Fields (Extended)</strong></li>
+                                <li><strong>Custom Post Type Generator</strong></li>
+                                <li><strong>Custom Taxonomy Generator</strong></li>
+                                <li><a target="_blank" href="https://demosites.royal-elementor-addons.com/fashion-v2/">Product Wishlist (WooCommerce)</a></li>
+                                <li><a target="_blank" href="https://demosites.royal-elementor-addons.com/fashion-v2/">Product Compare (WooCommerce)</a></li>
                             </ul>
+
+                            <a href="#" traget="_blank">Upgrade to Expert</a>
                         </div>
-                        <div class="image-wrap"><img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'img/new-theme-builder.png"></div>
                         <canvas id="wpr-notice-confetti"></canvas>';
             echo '</div>';
             echo '</div>';
@@ -154,9 +156,9 @@ class WprProFeaturesNotice {
             .wpr-pro-features-notice {
                 position: absolute !important;
                 top: 20%;
-                left: 20%;
-                height: 60%;
-                width: 60%;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 410px;
                 display: flex !important;
                 align-items: center;
                 margin-top: 20px;
@@ -178,7 +180,7 @@ class WprProFeaturesNotice {
             }
 
             .wpr-pro-features-notice h3 {
-                font-size: 36px;
+                font-size: 32px;
                 margin-top: 0;
                 margin-bottom: 20px;
             }
@@ -198,32 +200,29 @@ class WprProFeaturesNotice {
               margin-bottom: 15px;
               font-size: 14px;
             }
-
-            .wpr-pro-features-notice ul {
-                display: flex;
-            }
             
             .wpr-pro-features-notice ul a {
             display: block;
             text-decoration: none;
             }
             
-            .wpr-pro-features-notice ul li a:after {
-            content: ' ';
-            display: inline-block;
-            position: relative;
-            top: -2px;
-            width: 5px;
-            height: 5px;
-            margin-left: 12px;
-            margin-right: 12px;
-            background-color: #e0e0e0;
-            transform: rotate(45deg);
-            }
-            
             .wpr-pro-features-notice ul li:last-child a:after {
             display: none;
             }
+
+            .wpr-new-widgets-list + a {
+                display: inline-block;
+                text-decoration: none;
+                text-transform: uppercase;
+                color: #fff;
+                background: #6A4BFF;
+                padding: 5px 18px 7px;
+                border-radius: 3px;
+                margin-top: 10px;
+                font-weight: 500;
+                letter-spacing: 0.3px;
+            }
+
             .wpr-get-started-button.button-primary {
             background-color: #6A4BFF;
             }
