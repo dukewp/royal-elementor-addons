@@ -3257,6 +3257,7 @@ class Wpr_Grid extends Widget_Base {
 			'Masonry Layout',
 			'List Layout Zig-zag',
 			'Posts Slider Columns (Carousel) 1,2,3,4,5,6',
+			'Secondary Featured Image',
 			'Related Posts Query, Current Page Query, Random Posts Query',
 			'Infinite Scrolling Pagination',
 			'Post Slider Autoplay options',

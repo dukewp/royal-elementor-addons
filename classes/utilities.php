@@ -19,7 +19,7 @@ class Utilities {
 	*/
 	public static function get_registered_modules() {
 		return [
-			'Post Grid/Slider/Carousel' => ['grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-portfolio-grid', ''],
+			'Post Grid/Slider/Carousel' => ['grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-blog-grid', ''],
 			'WooCommerce Grid/Slider/Carousel' => ['woo-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-woo-grid', ''],
 			'Image Grid/Slider/Carousel' => ['media-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-gallery-grid', ''],
 			'Magazine Grid/Slider' => ['magazine-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-magazine-grid', ''],

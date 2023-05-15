@@ -133,7 +133,7 @@ class Plugin {
 		// Admin Files
 		if ( is_admin() ) {
 			// Pro Features Notice
-			require WPR_ADDONS_PATH . 'admin/notices/pro-features-notice.php';
+			// require WPR_ADDONS_PATH . 'admin/notices/pro-features-notice.php';
 
 			// Plugin Updaate Notice
 			require WPR_ADDONS_PATH . 'admin/notices/plugin-update-notice.php';
