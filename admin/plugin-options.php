@@ -149,7 +149,7 @@ function wpr_addons_settings_page() {
 
     <?php if ( empty(get_option('wpr_wl_plugin_links')) ) : ?>
     <div class="wpr-preview-buttons">
-        <a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-plugin-prev-btn#widgets" target="_blank" class="button wpr-options-button">
+        <a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-plugin-prev-btn" target="_blank" class="button wpr-options-button">
             <span><?php echo esc_html__( 'View Plugin Demo', 'wpr-addons' ); ?></span>
             <span class="dashicons dashicons-external"></span>
         </a>

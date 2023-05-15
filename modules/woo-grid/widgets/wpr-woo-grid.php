@@ -3196,6 +3196,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'Grid Columns 1,2,3,4,5,6',
 			'Masonry Layout',
 			'Products Slider Columns (Carousel) 1,2,3,4,5,6',
+			'Secondary Featured Image',
 			'Current Page Query, Random Products Query',
 			'Infinite Scrolling Pagination',
 			'Products Slider Autoplay options',
