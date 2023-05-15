@@ -741,7 +741,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 					'active' => true,
 				],
                 'label_block' => false,
-                'default' => 'sOmRR0YaKwg0eyv4hIiEsu5pH',
+                'default' => '',
                 'description' => '<a href="https://apps.twitter.com/app/" target="_blank">Get Consumer Key.</a> Create a new app or select existing app and grab the <b>consumer key.</b>',
             ]
         );
@@ -755,7 +755,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 					'active' => true,
 				],
                 'label_block' => false,
-                'default' => 'Gi4doRTttrEWUuGgjfWTPb0pkxRroBOijN6iNJHtNn2N8uEb47',
+                'default' => '',
                 'description' => '<a href="https://apps.twitter.com/app/" target="_blank">Get Consumer Secret.</a> Create a new app or select existing app and grab the <b>consumer secret.</b>',
             ]
         );
