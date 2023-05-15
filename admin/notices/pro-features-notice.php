@@ -9,7 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class WprProFeaturesNotice {
     public function __construct() {
-        if ( isset($_GET['page']) && 'wpr-addons' === $_GET['page'] && !wpr_fs()->is_plan( 'expert' ) ) {
+
+        if ( !wpr_fs()->is_plan( 'expert' ) ) {
 
             if ( current_user_can('administrator') ) {
 
@@ -34,10 +35,13 @@ class WprProFeaturesNotice {
     
     public function wpr_pro_features_dismiss_notice() {
         add_option( 'wpr_pro_features_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version'], true );
+        return 'responsetext';
     }
 
     public function render_pro_features_notice() {
-        if ( is_admin() ) {
+        global $current_screen;
+
+        if ( is_admin() && 'toplevel_page_wpr-addons' == $current_screen->id ) {
             echo '<div class="wpr-pro-features-notice-wrap">';
             echo '<div class="notice wpr-pro-features-notice is-dismissible">
                         <div class="wpr-pro-features-notice-logo">
@@ -64,6 +68,13 @@ class WprProFeaturesNotice {
     }
     
     public static function enqueue_scripts() {
+        global $current_screen;
+
+        
+        if ( !(is_admin() && 'toplevel_page_wpr-addons' == $current_screen->id) ) {
+            return;
+        }
+
         // Load Confetti
         wp_enqueue_script( 'wpr-confetti-js', WPR_ADDONS_URL .'assets/js/admin/lib/confetti/confetti.min.js', ['jquery'] );
 
@@ -125,15 +136,14 @@ class WprProFeaturesNotice {
 
                 jQuery(document).find('.wpr-pro-features-notice-wrap').fadeOut();
                 jQuery(document).find('.wpr-pro-features-notice').slideUp();
-                console.log('works update dismiss');
                 jQuery.post({
                     url: ajaxurl,
                     data: {
                         action: 'wpr_pro_features_dismiss_notice',
                     }
                 });
-              }); 
-            });
+            }); 
+        });
         </script>
 
         <style>
