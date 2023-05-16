@@ -55,8 +55,8 @@ class WprProFeaturesNotice {
                                 <li><strong>Advanced Custom Fields (Extended)</strong></li>
                                 <li><strong>Custom Post Type Generator</strong></li>
                                 <li><strong>Custom Taxonomy Generator</strong></li>
-                                <li><a target="_blank" href="https://demosites.royal-elementor-addons.com/fashion-v2/?ref=rea-plugin-backend-expertnoticebanner-woo-compare">Product Wishlist (WooCommerce)</a></li>
-                                <li><a target="_blank" href="https://demosites.royal-elementor-addons.com/fashion-v2/?ref=rea-plugin-backend-expertnoticebanner-woo-wishlist">Product Compare (WooCommerce)</a></li>
+                                <li><a target="_blank" href="https://demosites.royal-elementor-addons.com/fashion-v2/shop-fashion-v2/?ref=rea-plugin-backend-expertnoticebanner-woo-compare">Product Wishlist (WooCommerce)</a></li>
+                                <li><a target="_blank" href="https://demosites.royal-elementor-addons.com/fashion-v2/shop-fashion-v2/?ref=rea-plugin-backend-expertnoticebanner-woo-wishlist">Product Compare (WooCommerce)</a></li>
                             </ul>
 
                             <a href="https://royal-elementor-addons.com/#purchasepro?ref=rea-plugin-backend-expertnoticebanner-checkbtn-upgrade-expert#purchasepro" traget="_blank">Upgrade to Expert</a>
