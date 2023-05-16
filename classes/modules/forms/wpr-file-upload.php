@@ -21,6 +21,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     }
     
     public function handle_file_upload() {
+		$email_fields = get_option('wpr_email_fields_' . $_POST['wpr_form_id']);
+		var_dump($email_fields);
 		
 		if (!isset($_POST['wpr_addons_nonce']) || !wp_verify_nonce($_POST['wpr_addons_nonce'], 'wpr-addons-js')) {
 			wp_send_json_error(array(
