@@ -531,7 +531,7 @@ function wpr_addons_settings_page() {
                     <?php
                 }
             ?>
-            <p class="wpr-settings-group-description"><?php esc_html_e( 'Adds secondary featured image metabox to post types', 'wpr-addons' ); ?></p>
+            <p class="wpr-settings-group-description"><?php esc_html_e( 'Add secondary Featured image metabox to post types.', 'wpr-addons' ); ?></p>
             
             <!-- <div class="wpr-settings-group-inner"> -->
 

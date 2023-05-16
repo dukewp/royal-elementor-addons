@@ -60,7 +60,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$this->add_control(
 			'secondary_img_on_hover',
 			[
-				'label' => sprintf( __( 'Secondary Img on Hover %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'label' => sprintf( __( '2nd Image on Hover %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
 				'type' => Controls_Manager::SWITCHER,
 				'classes' => 'wpr-pro-control no-distance'
 			]
@@ -2458,7 +2458,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::RAW_HTML,
 				'raw' => __( '<ul><li><a href="https://youtu.be/-Xfbtkl4fkQ" target="_blank" style="color: #93003c;"><strong>Watch Video Tutorial <span class="dashicons dashicons-video-alt3"></strong></a></li></ul>', 'wpr-addons' ),
 				'separator' => 'after',
-				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				// 'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 			]
 		);
 
