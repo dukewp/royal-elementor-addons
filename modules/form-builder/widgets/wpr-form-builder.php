@@ -1631,8 +1631,8 @@ class Wpr_Form_Builder extends Widget_Base {
 				'default' => '#7a7a7a',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-field-group .wpr-form-field' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .wpr-field-group input[type="radio"]' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .wpr-field-group input[type="checkbox"]' => 'color: {{VALUE}};'
+					'{{WRAPPER}} .wpr-field-group input[type="radio"] + label' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-field-group input[type="checkbox"] + label' => 'color: {{VALUE}};'
 				]
 			]
 		);
@@ -1715,7 +1715,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-field-group:not(.wpr-form-field-type-upload) .wpr-form-field:not(.wpr-select-wrap):focus' => 'border-color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-field-group .wpr-select-wrap select:focus' => 'border-color: {{VALUE}};',
-					'{{WRAPPER}} .wpr-field-group .wpr-select-wrap::before' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-field-group .wpr-select-wrap:focus-within::before' => 'color: {{VALUE}};',
 				]
 			]
 		);
@@ -2003,7 +2003,7 @@ class Wpr_Form_Builder extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'button_typography',
-				'selector' => '{{WRAPPER}} .wpr-button',
+				'selector' => '{{WRAPPER}} .wpr-button, {{WRAPPER}} .wpr-step-prev, {{WRAPPER}} .wpr-step-next',
 			]
 		);
 
@@ -3061,6 +3061,33 @@ class Wpr_Form_Builder extends Widget_Base {
 				'default' => '#CB3030',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-submit-error' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'finish_message_align',
+			[
+				'label' => esc_html__( 'Alignment', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'left' => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				'default' => 'center',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-submit-success' => 'text-align: {{VALUE}}',
+					'{{WRAPPER}} .wpr-submit-error' => 'text-align: {{VALUE}}'
 				],
 			]
 		);
