@@ -385,6 +385,10 @@ function download_template( $kit, $file ) {
         require_once ABSPATH . 'wp-admin/includes/file.php';
     }
 
+    if ( !vts( $kit ) ) {
+        return;
+    }
+
     $tmp_file = download_url( $remote_file_url );
 
     // WP Error.
@@ -445,16 +449,16 @@ function download_template( $kit, $file ) {
 /**
 ** Validate Template
 */
-function validate_template( $kit ) {
+function vts( $kit ) {
     // Avoid Cache
     $randomNum = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 7);
 
-    $remote_file_url = 'https://royal-elementor-addons.com/library/validate-templates.json?='. $randomNum;
+    $remote_file_url = 'https://royal-elementor-addons.com/library/vts.json?='. $randomNum;
 
     $tmp_file = download_url( $remote_file_url );
 
     $file_args = [
-        'name'     => 'validate-templates.json',
+        'name'     => 'vts.json',
         'tmp_name' => $tmp_file,
         'error'    => 0,
         'size'     => filesize( $tmp_file ),

@@ -479,6 +479,20 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
+		if ( '' == get_option('wpr_recaptcha_v3_site_key') ) {
+			$repeater->add_control(
+				'recaptcha_key_notice',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => sprintf( __( 'Navigate to <strong><a href="%s" target="_blank">Dashboard > %s > Integrations</a></strong> to set up <strong>reCaptcha Site Key</strong>.', 'wpr-addons' ), admin_url( 'admin.php?page=wpr-addons&tab=wpr_tab_settings' ), Utilities::get_plugin_name() ),
+					'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+					'condition' => [
+						'field_type' => 'recaptcha-v3'
+					]
+				]
+			);
+		}
+
 		$repeater->add_control(
 			'field_label',
 			[
@@ -3521,8 +3535,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				}
 				
 				// Circles which indicates the steps of the form:
-
-				$step_wrap_class ='yes' !== $instance['show_separator'] ? 'wpr-step-wrap wpr-separator-off' : 'wpr-step-wrap';
+				$step_wrap_class  = 'yes' !== $instance['show_separator'] ? 'wpr-step-wrap wpr-separator-off' : 'wpr-step-wrap';
 				
 				echo '<div class="'. $step_wrap_class .'">';
 					if ( 'progress_bar' == $instance['step_type'] ) {
@@ -3532,12 +3545,12 @@ class Wpr_Form_Builder extends Widget_Base {
 					} else {
 						$i = 0;
 
-						while( $i < $step_count1 ) :
+						while ( $i < $step_count1 ) :
 
 							if ( 'none' == $instance['step_type'] ) {
 								$step_html = '<span class="wpr-step"></span>';
 							} else if ( 'text' == $instance['step_type'] ) {
-								$step_html = '<span class="wpr-step"><span class="wpr-step-content">'. $step_label[$i] . $step_sub_label[$i] .'</span></span>';
+								$step_html = '<span class="wpr-step">'. $step_label[$i] . $step_sub_label[$i] .'</span>';
 							} else if ( 'icon' == $instance['step_type'] ) {
 								$step_html = '<span class="wpr-step"><span class="wpr-step-content">'. $step_icon[$i] .'</span></span>';
 							} else if ( 'number' == $instance['step_type'] ) {
