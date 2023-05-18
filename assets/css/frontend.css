@@ -17883,7 +17883,7 @@ dl.variation dd {
 }
 
 .wpr-step-tab-hidden {
-    display: none;
+    display: none !important;
 }
   
 /* Make circles that indicate the steps of the form: */
