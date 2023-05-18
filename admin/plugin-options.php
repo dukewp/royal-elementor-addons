@@ -1419,6 +1419,10 @@ function wpr_backend_widget_search_query_results() {
         return;
     }
 
+    if ( strpos($_SERVER['SERVER_NAME'],'instawp') || strpos($_SERVER['SERVER_NAME'],'tastewp') ) {
+		return;
+	}
+
     $search_query = isset($_POST['search_query']) ? sanitize_text_field(wp_unslash($_POST['search_query'])) : '';
 
     wp_remote_post( 'http://reastats.kinsta.cloud/wp-json/backend-widget-search/data', [
@@ -1434,6 +1438,10 @@ function wpr_backend_freepro_search_query_results() {
         return;
     }
 
+    if ( strpos($_SERVER['SERVER_NAME'],'instawp') || strpos($_SERVER['SERVER_NAME'],'tastewp') ) {
+		return;
+	}
+    
     $search_query = isset($_POST['search_query']) ? sanitize_text_field(wp_unslash($_POST['search_query'])) : '';
 
     wp_remote_post( 'http://reastats.kinsta.cloud/wp-json/backend-freepro-search/data', [
