@@ -1089,48 +1089,47 @@ class Wpr_Form_Builder extends Widget_Base {
 					'{{WRAPPER}} .wpr-stp-btns-wrap' => '{{VALUE}}',
 					'{{WRAPPER}} .wpr-step-tab:first-of-type .wpr-step-next' => '{{VALUE}}',
 				],
-				'separator' => 'before'
 			]
 		);
 
-		$this->add_control(
-			'heading_steps_buttons',
-			[
-				'label' => esc_html__( 'Step Buttons', 'wpr-addons' ),
-				'type' => Controls_Manager::HEADING,
-				'separator' => 'before',
-			]
-		);
+		// $this->add_control(
+		// 	'heading_steps_buttons',
+		// 	[
+		// 		'label' => esc_html__( 'Step Buttons', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::HEADING,
+		// 		'separator' => 'before',
+		// 	]
+		// );
 
-		$this->add_control(
-			'step_next_label',
-			[
-				'label' => esc_html__( 'Next', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'dynamic' => [
-					'active' => true,
-				],
-				'frontend_available' => true,
-				'render_type' => 'none',
-				'default' => esc_html__( 'Next', 'wpr-addons' ),
-				'placeholder' => esc_html__( 'Next', 'wpr-addons' ),
-			]
-		);
+		// $this->add_control(
+		// 	'step_next_label',
+		// 	[
+		// 		'label' => esc_html__( 'Next', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::TEXT,
+		// 		'dynamic' => [
+		// 			'active' => true,
+		// 		],
+		// 		'frontend_available' => true,
+		// 		'render_type' => 'none',
+		// 		'default' => esc_html__( 'Next', 'wpr-addons' ),
+		// 		'placeholder' => esc_html__( 'Next', 'wpr-addons' ),
+		// 	]
+		// );
 
-		$this->add_control(
-			'step_previous_label',
-			[
-				'label' => esc_html__( 'Previous', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'dynamic' => [
-					'active' => true,
-				],
-				'frontend_available' => true,
-				'render_type' => 'none',
-				'default' => esc_html__( 'Previous', 'wpr-addons' ),
-				'placeholder' => esc_html__( 'Previous', 'wpr-addons' ),
-			]
-		);
+		// $this->add_control(
+		// 	'step_previous_label',
+		// 	[
+		// 		'label' => esc_html__( 'Previous', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::TEXT,
+		// 		'dynamic' => [
+		// 			'active' => true,
+		// 		],
+		// 		'frontend_available' => true,
+		// 		'render_type' => 'none',
+		// 		'default' => esc_html__( 'Previous', 'wpr-addons' ),
+		// 		'placeholder' => esc_html__( 'Previous', 'wpr-addons' ),
+		// 	]
+		// );
 
 		$this->add_control(
 			'heading_submit_button',

@@ -1118,16 +1118,16 @@ class Utilities {
 		return !wpr_fs()->can_use_premium_code() && (intval(get_option('royal_elementor_addons_activation_time')) > 1649247746);
 	}
 	
-	public static function is_new_free_user2() {
-		return !wpr_fs()->can_use_premium_code() && (intval(get_option('royal_elementor_addons_activation_time')) > 1670317149);
-	}
+	// public static function is_new_free_user2() {
+	// 	return !wpr_fs()->can_use_premium_code() && (intval(get_option('royal_elementor_addons_activation_time')) > 1670317149);
+	// }
 
-	public static function is_old_pro_user_or_expert() {
-		return wpr_fs()->is_plan( 'expert' ) || (wpr_fs()->is_plan( 'pro' ) && (intval(get_option('royal_elementor_addons_pro_activation_time')) < 1680264265));
-	}
+	// public static function is_old_pro_user_or_expert() {
+	// 	return wpr_fs()->is_plan( 'expert' ) || (wpr_fs()->is_plan( 'pro' ) && (intval(get_option('royal_elementor_addons_pro_activation_time')) < 1680264265));
+	// }
 
-	public static function is_new_pro_user() {
-		return wpr_fs()->is_plan( 'pro' ) && (intval(get_option('royal_elementor_addons_pro_activation_time')) > 1680264265);
-	}
+	// public static function is_new_pro_user() {
+	// 	return wpr_fs()->is_plan( 'pro' ) && (intval(get_option('royal_elementor_addons_pro_activation_time')) > 1680264265);
+	// }
 
 }
