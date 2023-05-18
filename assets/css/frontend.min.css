@@ -17638,7 +17638,8 @@ dl.variation dd {
 }
 
 .wpr-form-fields-wrap .wpr-form-field:focus {
-    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+            box-shadow: none !important;
 }
 
 .wpr-form-fields-wrap.wpr-labels-above .wpr-field-group .wpr-field-sub-group, 
