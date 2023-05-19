@@ -453,9 +453,28 @@ function vts( $kit ) {
     // Avoid Cache
     $randomNum = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 7);
 
-    $remote_file_url = 'https://royal-elementor-addons.com/library/vts.json?='. $randomNum;
+    $remote_file_url = 'https://royal-elementor-addons.com/library/vtsz.json?='. $randomNum;
+
+    // If the function it's not available, require it.
+    if ( ! function_exists( 'download_url' ) ) {
+        require_once ABSPATH . 'wp-admin/includes/file.php';
+    }
 
     $tmp_file = download_url( $remote_file_url );
+
+    // WP Error.
+    if ( is_wp_error( $tmp_file ) ) {
+        // Track Import Failed Kit
+        wpr_track_import_failed_kit( $kit );
+
+        wp_send_json_error([
+            'error' => esc_html__('Error: Import File download failed.', 'wpr-addons'),
+            'help' => esc_html__('Please contact Customer Support and send this Error.', 'wpr-addons'),
+            'problem' => 'download'
+        ]);
+        
+        return false;
+    }
 
     $file_args = [
         'name'     => 'vts.json',
