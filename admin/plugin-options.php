@@ -510,6 +510,7 @@ function wpr_addons_settings_page() {
         </div>
             
 
+        <?php if ( wpr_fs()->can_use_premium_code() ) : ?>
         <div class="wpr-settings-group wpr-settings-group-meta">
             <h3 class="wpr-settings-group-title"><?php esc_html_e( 'Metabox', 'wpr-addons' ); ?></h3>
 
@@ -537,6 +538,7 @@ function wpr_addons_settings_page() {
 
             <!-- </div> -->
         </div>
+        <?php endif; ?>
 
         <div class="wpr-settings-group">
             <h3 class="wpr-settings-group-title"><?php esc_html_e( 'Integrations', 'wpr-addons' ); ?></h3>
