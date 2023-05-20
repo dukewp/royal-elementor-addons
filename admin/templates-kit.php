@@ -672,6 +672,19 @@ function setup_wpr_templates( $kit ) {
         // Update Options
         update_option( 'woocommerce_queue_flush_rewrite_rules', 'yes' );
 
+        // Set Wishlist and Compare
+        $wishlist_page = get_page_by_path('wishlist-'. $kit, OBJECT, 'page');
+        $compare_page = get_page_by_path('compare-'. $kit, OBJECT, 'page');
+
+        if ( $wishlist_page ) {
+            update_option('wpr_wishlist_page', $wishlist_page->ID);
+        }
+
+        if ( $compare_page ) {
+            update_option('wpr_compare_page', $compare_page->ID);
+        }
+        
+
         // Enable Elementor Builder for WooCommerce CPT
         // $cpt_support = get_option( 'elementor_cpt_support' );
 		
