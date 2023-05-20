@@ -1099,13 +1099,11 @@
 					}, 1000 );
 				}
 
-				// Remove load if necessary
-
-				// $( window ).on( 'load', function() {
-				// 	setTimeout(function() {
-				// 		isotopeLayout( settings );
-				// 	}, 100 );
-				// });
+				$( window ).on( 'load', function() {
+					setTimeout(function() {
+						isotopeLayout( settings );
+					}, 100 );
+				});
 
 				$(document).ready(function() {
 					setTimeout(function() {

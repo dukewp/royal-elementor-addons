@@ -1097,3 +1097,17 @@ pre.xdebug-var-dump {
 #e-notice-bar {
 	display: none !important;
 }
+
+.elementor-panel .elementor-control.forms-field-shortcode .elementor-control-raw-html {
+	width: 55%;
+}
+
+.elementor-panel .elementor-control.forms-field-shortcode .elementor-control-title {
+	width: 45%;
+}
+
+.elementor-panel .elementor-control.forms-field-shortcode .elementor-control-content {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}

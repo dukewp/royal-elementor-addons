@@ -1050,6 +1050,13 @@ class WPR_Templates_Data {
 				'v8-pro' => ['type' => 'iframe', 'url' => 'woocommerce-grid/v8/'],
 				'v9-pro' => ['type' => 'iframe', 'url' => 'woocommerce-grid/v9/'],
 			],
+			'form-builder' => [
+				'v1' => ['type' => 'iframe', 'url' => 'form-builder/v1/'],
+				'v2' => ['type' => 'iframe', 'url' => 'form-builder/v2/'],
+				'v3-pro' => ['type' => 'iframe', 'url' => 'form-builder/v3/'],
+				'v4-pro' => ['type' => 'iframe', 'url' => 'form-builder/v4/'],
+				'v5-pro' => ['type' => 'iframe', 'url' => 'form-builder/v5/'],
+			],
 			'media-grid' => [
 				'v1' => ['type' => 'iframe', 'url' => 'image-grid/v1/'],
 				'v2' => ['type' => 'iframe', 'url' => 'image-grid/v2/'],

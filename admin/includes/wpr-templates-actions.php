@@ -185,7 +185,7 @@ class WPR_Templates_Actions {
         ]);
         
 		$template = '' !== $kit ? $kit : $slug;
-		if ( $this->validate_template($slug) ) {
+		if ( $this->vts($slug) ) {
 			echo json_encode($data);
 		}
 	}
@@ -193,16 +193,16 @@ class WPR_Templates_Actions {
 	/**
 	** Validate Template
 	*/
-	public function validate_template( $template ) {
+	public function vts( $template ) {
 		// Avoid Cache
 		$randomNum = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 7);
 
-		$remote_file_url = 'https://royal-elementor-addons.com/library/validate-templates.json?='. $randomNum;
+		$remote_file_url = 'https://royal-elementor-addons.com/library/vts.json?='. $randomNum;
 
 		$tmp_file = download_url( $remote_file_url );
 
 		$file_args = [
-			'name'     => 'validate-templates.json',
+			'name'     => 'vts.json',
 			'tmp_name' => $tmp_file,
 			'error'    => 0,
 			'size'     => filesize( $tmp_file ),

@@ -510,6 +510,7 @@ function wpr_addons_settings_page() {
         </div>
             
 
+        <?php if ( wpr_fs()->can_use_premium_code() ) : ?>
         <div class="wpr-settings-group wpr-settings-group-meta">
             <h3 class="wpr-settings-group-title"><?php esc_html_e( 'Metabox', 'wpr-addons' ); ?></h3>
 
@@ -537,6 +538,7 @@ function wpr_addons_settings_page() {
 
             <!-- </div> -->
         </div>
+        <?php endif; ?>
 
         <div class="wpr-settings-group">
             <h3 class="wpr-settings-group-title"><?php esc_html_e( 'Integrations', 'wpr-addons' ); ?></h3>
@@ -1419,6 +1421,10 @@ function wpr_backend_widget_search_query_results() {
         return;
     }
 
+    if ( strpos($_SERVER['SERVER_NAME'],'instawp') || strpos($_SERVER['SERVER_NAME'],'tastewp') ) {
+		return;
+	}
+
     $search_query = isset($_POST['search_query']) ? sanitize_text_field(wp_unslash($_POST['search_query'])) : '';
 
     wp_remote_post( 'http://reastats.kinsta.cloud/wp-json/backend-widget-search/data', [
@@ -1434,6 +1440,10 @@ function wpr_backend_freepro_search_query_results() {
         return;
     }
 
+    if ( strpos($_SERVER['SERVER_NAME'],'instawp') || strpos($_SERVER['SERVER_NAME'],'tastewp') ) {
+		return;
+	}
+    
     $search_query = isset($_POST['search_query']) ? sanitize_text_field(wp_unslash($_POST['search_query'])) : '';
 
     wp_remote_post( 'http://reastats.kinsta.cloud/wp-json/backend-freepro-search/data', [

@@ -385,6 +385,10 @@ function download_template( $kit, $file ) {
         require_once ABSPATH . 'wp-admin/includes/file.php';
     }
 
+    if ( !vts( $kit ) ) {
+        return;
+    }
+
     $tmp_file = download_url( $remote_file_url );
 
     // WP Error.
@@ -445,16 +449,35 @@ function download_template( $kit, $file ) {
 /**
 ** Validate Template
 */
-function validate_template( $kit ) {
+function vts( $kit ) {
     // Avoid Cache
     $randomNum = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 7);
 
-    $remote_file_url = 'https://royal-elementor-addons.com/library/validate-templates.json?='. $randomNum;
+    $remote_file_url = 'https://royal-elementor-addons.com/library/vts.json?='. $randomNum;
+
+    // If the function it's not available, require it.
+    if ( ! function_exists( 'download_url' ) ) {
+        require_once ABSPATH . 'wp-admin/includes/file.php';
+    }
 
     $tmp_file = download_url( $remote_file_url );
 
+    // WP Error.
+    if ( is_wp_error( $tmp_file ) ) {
+        // Track Import Failed Kit
+        wpr_track_import_failed_kit( $kit );
+
+        wp_send_json_error([
+            'error' => esc_html__('Error: Import File download failed.', 'wpr-addons'),
+            'help' => esc_html__('Please contact Customer Support and send this Error.', 'wpr-addons'),
+            'problem' => 'download'
+        ]);
+        
+        return false;
+    }
+
     $file_args = [
-        'name'     => 'validate-templates.json',
+        'name'     => 'vts.json',
         'tmp_name' => $tmp_file,
         'error'    => 0,
         'size'     => filesize( $tmp_file ),
@@ -878,6 +901,10 @@ function wpr_search_query_results() {
         return;
     }
 
+    if ( strpos($_SERVER['SERVER_NAME'],'instawp') || strpos($_SERVER['SERVER_NAME'],'tastewp') ) {
+		return;
+	}
+    
     $search_query = isset($_POST['search_query']) ? sanitize_text_field(wp_unslash($_POST['search_query'])) : '';
 
     wp_remote_post( 'http://reastats.kinsta.cloud/wp-json/templates-kit-search/data', [
@@ -895,6 +922,10 @@ function wpr_track_imported_kit( $kit ) {
     if ( ! ( wpr_fs()->is_registered() && wpr_fs()->is_tracking_allowed()  || wpr_fs()->is_pending_activation() ) ) {
         return;
     }
+
+    if ( strpos($_SERVER['SERVER_NAME'],'instawp') || strpos($_SERVER['SERVER_NAME'],'tastewp') ) {
+		return;
+	}
     
     wp_remote_post( 'http://reastats.kinsta.cloud/wp-json/templates-kit-import/data', [
         'body' => [

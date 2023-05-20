@@ -5638,7 +5638,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				continue;
 			}
 
-			if ( Utilities::is_new_free_user2() ) {
+			if ( !wpr_fs()->can_use_premium_code() ) {
 				$post_types['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Expert)';
 			} else {
 				$post_types[$slug] = esc_html( $title );

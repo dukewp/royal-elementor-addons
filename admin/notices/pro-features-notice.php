@@ -163,13 +163,13 @@ class WprProFeaturesNotice {
                 opacity: 0;
             }
 
-            .wpr-pro-features-notice {
+            .wpr-settings-page-header .wpr-pro-features-notice.notice {
+                display: flex !important;
                 position: absolute !important;
                 top: 30%;
                 left: 50%;
                 transform: translateX(-50%);
                 width: 410px;
-                display: flex !important;
                 align-items: center;
                 margin-top: 20px;
                 margin-bottom: 20px;
