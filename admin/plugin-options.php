@@ -681,6 +681,7 @@ function wpr_addons_settings_page() {
                     <span><?php echo esc_html__( 'Basic Functionality', 'wpr-addons' ); ?></span>
                 </header>
                 <ul>
+                    <li><span>Basic Support</span></li>
                     <li><span>Mega Menu</span></li>
                     <li><span>Post Grid/Slider/Carousel Widget</span></li>
                     <li><span>Woocommerce Grid/Slider/Carousel Widget</span></li>
@@ -737,6 +738,7 @@ function wpr_addons_settings_page() {
                     <span><?php echo esc_html__( 'Advanced Functionality', 'wpr-addons' ); ?></span>
                 </header>
                 <ul>
+                    <li><span>Priority Support</span></li>
                     <li><span>Advanced Mega Menu</span>
                         <ul>
                             <li>Load SubMenu Items with Ajax</li>
@@ -755,7 +757,7 @@ function wpr_addons_settings_page() {
                     <li><span>Advanced Post Grid/Slider/Carousel Widget</span>
                         <ul>
                             <li>Grid Columns 1,2,3,4,5,6</li>
-                            <li>Custom Post Types Support</li>
+                            <li>Custom Post Types Support (Expert)</li>
                             <li>Masonry Layout</li>
                             <li>List Layout Zig-zag</li>
                             <li>Posts Slider Columns (Carousel) 1,2,3,4,5,6</li>
@@ -845,7 +847,7 @@ function wpr_addons_settings_page() {
                     <li><span>Advanced Magazine Grid/Slider Widget</span>
                         <ul>
                             <li>Random Posts Query</li>
-                            <li>Custom Post Types Support</li>
+                            <li>Custom Post Types Support (Expert)</li>
                             <li>+6 Magazine Grid Layouts</li>
                             <li>Magazine Grid Slider</li>
                             <li>Magazine Grid Slider Autoplay options</li>
@@ -866,7 +868,7 @@ function wpr_addons_settings_page() {
                     <li><span>Advanced Timeline Widget</span>
                         <ul>
                             <li>Add Unlimited Custom Timeline Items</li>
-                            <li>Custom Post Types Support</li>
+                            <li>Custom Post Types Support (Expert)</li>
                             <li>Advanced Pagination - Load More Button or Infinite Scroll options</li>
                             <li>Unlimited Slides to Show option</li>
                             <li>Carousel Autoplay and Autoplay Speed</li>
@@ -1027,7 +1029,7 @@ function wpr_addons_settings_page() {
                     <li><span>Advanced Content Ticker Widget</span>
                         <ul>
                             <li>Add Custom Ticker Items (Instead of loading Dynamically)</li>
-                            <li>Custom Post Types Support</li>
+                            <li>Custom Post Types Support (Expert)</li>
                             <li>Query Shop Products, On Sale products and Featured products (Instead of loading Dynamically)</li>
                             <li>Marquee Animation - a Smooth Animation with Direction option</li>
                             <li>Slider Animation options - Typing, Fade & Vertical Slide</li>
@@ -1123,7 +1125,7 @@ function wpr_addons_settings_page() {
                     <li><span>Advanced Search Widget (Ajax)</span>
                         <ul>
                             <li>More than 2 Results in Ajax Search</li>
-                            <li>Custom Search Query - Only Posts, Pages or Custom Post Types</li>
+                            <li>Custom Search Query - Only Posts, Pages or Custom Post Types (Expert)</li>
                             <li>Ajax Search Results Pagination (Load More)</li>
                         </ul>
                     </li>
@@ -1211,7 +1213,7 @@ function wpr_addons_settings_page() {
                             <li>Advanced Conditions: create multiple Theme Builder templates and set custom conditions. You choose where and how your Header, Footer or other templates appear.</li>
                             <li>Premium premade Template Kits.</li>
                             <li>Advanced Theme Builder widgets: Archive Title, Single Post Navigation, Post Comments, Author Box, etc...</li>
-                            <li>Custom Post Type Support</li>
+                            <li>Custom Post Type Support (Expert)</li>
                         </ul>
                     </li>
                     <li><span>Advanced WooCommerce Shop Builder</span>
@@ -1229,7 +1231,7 @@ function wpr_addons_settings_page() {
                             <li>Add to cart popup effect. Displays a small popup banner on left/right corner of the screen with the text "XXX item was added to Cart - View Cart".</li>
                             <li>Vertical single product tabs layout.</li>
                             <li>Product Breadcrumbs - Display Product, Post, Page, Categories addresses to make navigation much easier.</li>
-                            <li>Custom Post Type Support for Woo Grid/Slider/Carousel.</li>
+                            <li>Custom Post Type Support (Expert)</li>
                         </ul>
                     </li>
                     <li><span>Elementor Pro Not Required</span>
@@ -1247,6 +1249,7 @@ function wpr_addons_settings_page() {
                     <span><?php echo esc_html__( 'Top-tier Functionality', 'wpr-addons' ); ?></span>
                 </header>
                 <ul>
+                    <li><span>Dedicated Support</span></li>
                     <li><span>Free and Pro Functionality Included</span></li>
                     <li><span>Ability to build Dynamic Websites</span></li>
                     <li><span>Dynamic Tags for All Widgets</span></li>

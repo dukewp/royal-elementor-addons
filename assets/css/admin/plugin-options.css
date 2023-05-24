@@ -1024,6 +1024,10 @@
   margin-bottom: 0;
 }
 
+.wpr-free-vs-pro .wpr-pro-widgets ul li:first-child span:after {
+  display: none;
+}
+
 /*--------------------------------------------------------------
 == Conditions
 --------------------------------------------------------------*/
