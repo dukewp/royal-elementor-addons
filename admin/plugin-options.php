@@ -758,6 +758,7 @@ function wpr_addons_settings_page() {
                         <ul>
                             <li>Grid Columns 1,2,3,4,5,6</li>
                             <li>Custom Post Types Support (Expert)</li>
+                            <li>Secondary Featured Image on Hover</li>
                             <li>Masonry Layout</li>
                             <li>List Layout Zig-zag</li>
                             <li>Posts Slider Columns (Carousel) 1,2,3,4,5,6</li>
