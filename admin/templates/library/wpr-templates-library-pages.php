@@ -54,6 +54,8 @@ class WPR_Templates_Library_Pages {
 			</div>
 		</div>
 
+<div class="wpr-tplib-template-gird-loading">Loading...</div>
+
 		<div class="wpr-tplib-template-gird elementor-clearfix">
 			<div class="wpr-tplib-template-gird-inner">
 
@@ -74,7 +76,7 @@ class WPR_Templates_Library_Pages {
 		$kits = WPR_Templates_Data::get_available_kits_for_pages();
 
 		$page = isset($_POST['page']) ? intval($_POST['page']) : 1;
-		$kits_per_page = 30; // should be set to 10
+		$kits_per_page = 10; // should be set to 10
 		
 		$start = ($page - 1) * $kits_per_page;
 		$end = $start + $kits_per_page;
