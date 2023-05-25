@@ -114,6 +114,7 @@ class Utilities {
 			'Product Add to Cart' => ['product-add-to-cart', '', '', ''],
 			'Product Tabs' => ['product-tabs', '', '', ''],
 			'Product Excerpt' => ['product-excerpt', '', '', ''],
+			'Product Description' => ['product-description', '', '', ''],
 			'Product Rating' => ['product-rating', '', '', ''],
 			'Product Meta' => ['product-meta', '', '', ''],
 			'Product Sales Badge' => ['product-sales-badge', '', '', ''],
