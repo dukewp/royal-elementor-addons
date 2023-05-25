@@ -54,8 +54,6 @@ class WPR_Templates_Library_Pages {
 			</div>
 		</div>
 
-<div class="wpr-tplib-template-gird-loading">Loading...</div>
-
 		<div class="wpr-tplib-template-gird elementor-clearfix">
 			<div class="wpr-tplib-template-gird-inner">
 
@@ -63,6 +61,8 @@ class WPR_Templates_Library_Pages {
 
 			</div>
 		</div>
+
+<div class="wpr-tplib-template-gird-loading">Loading...</div>
 		
 		<?php
 
