@@ -651,6 +651,79 @@
     width: calc(33.3%);
 }
 
+.wpr-tplib-template-gird-loading {
+    text-align: center;
+}
+
+.wpr-tplib-template-gird-loading .wpr-wave {
+  width: 50px;
+  height: 25px;
+  text-align: center;
+  margin: 0 auto;
+  font-size: 0;
+}
+
+.wpr-wave .wpr-rect {
+  height: 100%;
+  width: 4px;
+  margin-right: 2px;
+  display: inline-block;
+  -webkit-animation: wpr-waveStretchDelay 1.2s infinite ease-in-out;
+  animation: wpr-waveStretchDelay 1.2s infinite ease-in-out;
+  background-color: gray;
+}
+
+.wpr-wave .wpr-rect1 {
+  -webkit-animation-delay: -1.2s;
+  animation-delay: -1.2s;
+}
+
+.wpr-wave .wpr-rect2 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+
+.wpr-wave .wpr-rect3 {
+  -webkit-animation-delay: -1s;
+  animation-delay: -1s;
+}
+
+.wpr-wave .wpr-rect4 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+
+.wpr-wave .wpr-rect5 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+
+@-webkit-keyframes wpr-waveStretchDelay {
+  0%,
+  40%,
+  100% {
+    -webkit-transform: scaleY(0.4);
+    transform: scaleY(0.4);
+  }
+  20% {
+    -webkit-transform: scaleY(1);
+    transform: scaleY(1);
+  }
+}
+
+@keyframes wpr-waveStretchDelay {
+  0%,
+  40%,
+  100% {
+    -webkit-transform: scaleY(0.4);
+    transform: scaleY(0.4);
+  }
+  20% {
+    -webkit-transform: scaleY(1);
+    transform: scaleY(1);
+  }
+}
+
 
 /* Elementor Loader */
 .wpr-tplib-loader {

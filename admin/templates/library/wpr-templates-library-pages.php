@@ -57,12 +57,19 @@ class WPR_Templates_Library_Pages {
 		<div class="wpr-tplib-template-gird elementor-clearfix">
 			<div class="wpr-tplib-template-gird-inner">
 
-				<?php WPR_Templates_Library_Pages::render_library_templates_pages_grid_items(); ?>
+				<?php //WPR_Templates_Library_Pages::render_library_templates_pages_grid_items(); ?>
 
 			</div>
-		</div>
 
-<div class="wpr-tplib-template-gird-loading">Loading...</div>
+		<div class="wpr-tplib-template-gird-loading">
+			<div class="wpr-wave">
+				<div class="wpr-rect wpr-rect1"></div>
+				<div class="wpr-rect wpr-rect2"></div>
+				<div class="wpr-rect wpr-rect3"></div>
+				<div class="wpr-rect wpr-rect4"></div>
+				<div class="wpr-rect wpr-rect5"></div>
+			</div>
+		</div>
 		
 		<?php
 
