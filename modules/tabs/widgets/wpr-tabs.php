@@ -539,12 +539,13 @@ class Wpr_Tabs extends Widget_Base {
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'tabs', [
 			'Add Unlimited Tabs',
 			'Tab Content Type - Elementor Template',
+			'Tab Content Type - Custom Fields (Expert)',
 			'Custom Tab Colors',
 			'Tab Label Align',
 			'Swich Tabs on Hover option',
 			'Set Active Tab by Default',
 			'Advanced Tab Content Animations',
-			'Tabs Autoplay option',
+			'Tabs Autoplay option'
 		] );
 		
 		// Styles

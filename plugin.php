@@ -184,6 +184,9 @@ class Plugin {
 
 			// Add Remove From Compare
 			require WPR_ADDONS_PATH . 'classes/woocommerce/wpr-update-mini-compare.php';
+
+			// Count Wishlist Items
+			require WPR_ADDONS_PATH . 'classes/woocommerce/wpr-count-wishlist-items.php';
 		}
 	}
 
