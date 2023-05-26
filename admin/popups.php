@@ -9,7 +9,7 @@ use WprAddons\Classes\Utilities;
 
 // Register Menus
 function wpr_addons_add_popups_menu() {
-	add_submenu_page( 'wpr-addons', 'Popups', 'Popups', 'manage_options', 'wpr-popups', 'wpr_addons_popups_page' );
+	add_submenu_page( 'wpr-addons', 'Popup Builder', 'Popup Builder', 'manage_options', 'wpr-popups', 'wpr_addons_popups_page' );
 }
 add_action( 'admin_menu', 'wpr_addons_add_popups_menu' );
 
