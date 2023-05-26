@@ -122,10 +122,11 @@ class WPR_Templates_Library_Blocks {
 					}
 
 					$template_slug_for_image = strpos($template_slug, 'zzz') ? substr($template_slug, 0, -4) : $template_slug;
+					$data_template_title = false !== strpos($title, 'Form Builder') ? $template_title . ' contact' : $template_title;
 
 			?>
 
-				<div class="wpr-tplib-template-wrap<?php echo esc_attr($template_class); ?>" data-title="<?php echo esc_attr(strtolower($template_title)); ?>">
+				<div class="wpr-tplib-template-wrap<?php echo esc_attr($template_class); ?>" data-title="<?php echo esc_attr(strtolower($data_template_title)); ?>">
 					<div class="wpr-tplib-template" data-slug="<?php echo esc_attr($template_slug); ?>" data-filter="<?php echo esc_attr($module_slug); ?>" data-sub-filter="<?php echo esc_attr($template_sub); ?>" data-preview-type="<?php echo esc_attr($preview_type); ?>" data-preview-url="<?php echo esc_attr($preview_url); ?>">
 						<div class="wpr-tplib-template-media">
 							<img src="<?php echo esc_url('https://royal-elementor-addons.com/library/premade-styles/'. $module_slug .'/'. $template_slug_for_image .'.jpg'); ?>">
