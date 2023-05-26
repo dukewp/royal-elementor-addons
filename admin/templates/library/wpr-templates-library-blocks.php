@@ -122,6 +122,8 @@ class WPR_Templates_Library_Blocks {
 					}
 
 					$template_slug_for_image = strpos($template_slug, 'zzz') ? substr($template_slug, 0, -4) : $template_slug;
+
+					// Fix Form Builder for Search
 					$data_template_title = false !== strpos($title, 'Form Builder') ? $template_title . ' contact' : $template_title;
 
 			?>
