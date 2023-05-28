@@ -52,6 +52,23 @@ class WPR_Count_Wishlist_Compare_Items {
         $product_data = [];
 
        $product_data['wishlist_count'] = sizeof($wishlist);
+       $new_product_array = [];
+            
+        foreach ($wishlist as $product_id) {
+            $product = wc_get_product($product_id);
+
+            if ($product) {
+                $new_product_array[] = [
+                    'product_id' => $product_id,
+                    'product_image' => $product->get_image(),
+                    'product_title' => $product->get_title(),
+                    'product_url' => $product->get_permalink(),
+                    'product_price' => $product->get_price_html(),
+                ];
+            }
+        }
+
+        $product_data['wishlist_items'] = $new_product_array;
 
        wp_send_json($product_data);
 
