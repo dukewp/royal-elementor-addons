@@ -52,6 +52,7 @@ class WPR_Update_Mini_Compare {
         if ( ! isset( $_POST['product_id'] ) ) {
             return;
         }
+        
         $product_id = intval( $_POST['product_id'] );
         $user_id = get_current_user_id();
 

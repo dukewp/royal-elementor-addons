@@ -6,11 +6,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * WPR_Count_Wishlist_Items setup
+ * WPR_Count_Wishlist_Compare_Items setup
  *
  * @since 1.0
  */
-class WPR_Count_Wishlist_Items { 
+class WPR_Count_Wishlist_Compare_Items { 
 
     /**
     ** Constructor
@@ -18,6 +18,8 @@ class WPR_Count_Wishlist_Items {
     public function __construct() {
         add_action( 'wp_ajax_count_wishlist_items',[$this, 'count_wishlist_items'] );
         add_action( 'wp_ajax_nopriv_count_wishlist_items',[$this, 'count_wishlist_items'] );
+        add_action( 'wp_ajax_count_compare_items',[$this, 'count_compare_items'] );
+        add_action( 'wp_ajax_nopriv_count_compare_items',[$this, 'count_compare_items'] );
     }
 
 	// Add two new functions for handling cookies
@@ -27,6 +29,13 @@ class WPR_Count_Wishlist_Items {
 		}
 		return array();
 	}
+    
+    function get_compare_from_cookie() {
+        if (isset($_COOKIE['wpr_compare'])) {
+            return json_decode(stripslashes($_COOKIE['wpr_compare']), true);
+        }
+        return array();
+    }
     
     function count_wishlist_items() {
         $user_id = get_current_user_id();
@@ -43,11 +52,32 @@ class WPR_Count_Wishlist_Items {
         $product_data = [];
 
        $product_data['wishlist_count'] = sizeof($wishlist);
-       $wishlist_count = sizeof($wishlist);
+
+       wp_send_json($product_data);
+
+       wp_die();
+    }
+    
+    function count_compare_items() {
+        $user_id = get_current_user_id();
+        
+        if ($user_id > 0) {
+            $compare = get_user_meta($user_id, 'wpr_compare', true);
+            if (!$compare) {
+                $compare = array();
+            }
+        } else {
+            $compare = $this->get_compare_from_cookie();
+        }
+
+        $product_data = [];
+
+       $product_data['compare_count'] = sizeof($compare);
+
        wp_send_json($product_data);
 
        wp_die();
     }
 }
 
-new WPR_Count_Wishlist_Items();
+new WPR_Count_Wishlist_Compare_Items();
