@@ -1899,7 +1899,8 @@ class Wpr_Form_Builder extends Widget_Base {
 					'size' => 5,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-form-field-option label:before' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-form-field-option label' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-custom-styles-yes .wpr-form-field-option label:before' => 'margin-right: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before'
 			]
@@ -1924,6 +1925,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'label' => esc_html__( 'Use Custom Styles', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
+				'prefix_class' => 'wpr-custom-styles-'
 			]
 		);
 
