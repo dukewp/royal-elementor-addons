@@ -123,7 +123,6 @@ class Wpr_Form_Builder extends Widget_Base {
 				'label' => esc_html__( 'To', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => get_option( 'admin_email' ),
-				'placeholder' => get_option( 'admin_email' ),
 				'label_block' => true,
 				'title' => esc_html__( 'Separate emails with commas', 'wpr-addons' ),
 				'render_type' => 'none',
@@ -3240,7 +3239,8 @@ class Wpr_Form_Builder extends Widget_Base {
 	}
 
 	public function get_attribute_id( $item ) {
-		 $id_suffix = !empty($item['field_id']) ? $item['field_id'] : $item['field_type'];
+		//  $id_suffix = !empty($item['field_id']) ? $item['field_id'] : $item['field_type'];
+		 $id_suffix = !empty($item['field_id']) ? $item['field_id'] : $item['_id'];
 		return 'form-field-' . $id_suffix;
 	}
 

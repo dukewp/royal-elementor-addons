@@ -962,7 +962,7 @@ class Plugin {
 		// Register Mega Menu Route
 		$this->register_megamenu_route();
 
-		$this->register_compare_custom_routes();
+		// $this->register_compare_custom_routes();
 
 		// Register Custom Controls
 		add_action( 'elementor/controls/controls_registered', [ $this, 'register_custom_controls' ] );

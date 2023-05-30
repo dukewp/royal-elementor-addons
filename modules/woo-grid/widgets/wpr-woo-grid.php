@@ -1308,6 +1308,19 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
+		$repeater->add_control(
+			'wishlist_compare_video_tutorial',
+			[
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => __( '<ul><li><a href="https://www.youtube.com/watch?v=wis1rQTn1tg" target="_blank" style="color: #93003c;"><strong>Watch Video Tutorial <span class="dashicons dashicons-video-alt3"></strong></a></li></ul>', 'wpr-addons' ),
+				'separator' => 'after',
+				// 'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				'condition' => [
+					'element_select' => ['wishlist-button', 'compare-button']
+				]
+			]
+		);
+
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'woo-grid', 'element_select', ['pro-lk', 'pro-shr', 'pro-sd'] );
 
