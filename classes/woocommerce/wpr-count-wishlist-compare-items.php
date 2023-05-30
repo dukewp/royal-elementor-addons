@@ -53,6 +53,12 @@ class WPR_Count_Wishlist_Compare_Items {
 
        $product_data['wishlist_count'] = sizeof($wishlist);
        $wishlist_product_array = [];
+
+        $settings = [
+            'element_addcart_simple_txt' => isset($_POST['element_addcart_simple_txt']) ? $_POST['element_addcart_simple_txt'] : '', 
+            'element_addcart_grouped_txt' => isset($_POST['element_addcart_grouped_txt']) ? $_POST['element_addcart_grouped_txt'] : '', 
+            'element_addcart_variable_txt' => isset($_POST['element_addcart_variable_txt']) ? $_POST['element_addcart_grouped_txt'] : ''
+        ];
             
         foreach ($wishlist as $product_id) {
             $product = wc_get_product($product_id);
@@ -64,6 +70,8 @@ class WPR_Count_Wishlist_Compare_Items {
                     'product_title' => $product->get_title(),
                     'product_url' => $product->get_permalink(),
                     'product_price' => $product->get_price_html(),
+                    'product_stock' => $product->get_stock_status() == 'instock' ? esc_html__('In Stock') : esc_html__('Out of Stock'),
+                    'product_atc' => $this->render_product_add_to_cart($settings, $product)
                 ];
             }
         }
