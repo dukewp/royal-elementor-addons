@@ -3750,7 +3750,7 @@ class Wpr_Form_Builder extends Widget_Base {
 								echo $this->make_radio_checkbox_field( $item, $item_index, $item['field_type'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 								break;
 							case 'recaptcha-v3':
-								echo '<input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response" />';
+								echo '<input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response" data-site-key="'. get_option('wpr_recaptcha_v3_site_key') .'" />';
 							case 'text':
 							case 'email':
 							case 'url':
