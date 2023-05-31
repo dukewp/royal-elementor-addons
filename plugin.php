@@ -941,15 +941,8 @@ class Plugin {
 
         return $config;
     }
-	
-	public function wpr_enqueue_recaptcha_script() {
-		$site_key = get_option('wpr_recaptcha_v3_site_key');
-		wp_enqueue_script('google-recaptcha', 'https://www.google.com/recaptcha/api.js?render=' . $site_key, array(), null, true);
-	}
 
 	protected function add_actions() {
-		add_action('wp_enqueue_scripts', [$this, 'wpr_enqueue_recaptcha_script']);
-
 		// Register Widgets
 		add_action( 'elementor/init', [ $this, 'elementor_init' ] );
 
