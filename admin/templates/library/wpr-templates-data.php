@@ -852,10 +852,10 @@ class WPR_Templates_Data {
 			// 	'preview' => ['home',],
 			// 	'price' => $is_pro_active ? 'free' : 'pro',
 			// ],
-			'digital-marketing-agency-v2' => [
+			'digital-marketing-agency-v3' => [
 				'name' => 'Digital Marketing Agency',
-				'pages' => ['home','seo','social','web','email','blog','about','team','contact','pricing1','pricing2','pricing3','casestudy'],
-				'preview' => ['home','search-engine-optimization','social-media-marketing','web-design','email-marketing','blog','about-us','our-team','contact','price-pack-v1','price-pack-v2','price-pack-v3','case-study'],
+				'pages' => ['home','services','portfolio','blog','about','contact'],
+				'preview' => ['home','services','portfolio','blog','about','contact'],
 				'price' => $is_pro_active ? 'free' : 'pro',
 			],
 			'nature-v1' => [
@@ -864,10 +864,10 @@ class WPR_Templates_Data {
 				'preview' => ['home','about','services','projects','contact'],
 				'price' => $is_pro_active ? 'free' : 'free',
 			],
-			'digital-marketing-agency-v3' => [
+			'digital-marketing-agency-v2' => [
 				'name' => 'Digital Marketing Agency',
-				'pages' => ['home','services','portfolio','blog','about','contact'],
-				'preview' => ['home','services','portfolio','blog','about','contact'],
+				'pages' => ['home','seo','social','web','email','blog','about','team','contact','pricing1','pricing2','pricing3','casestudy'],
+				'preview' => ['home','search-engine-optimization','social-media-marketing','web-design','email-marketing','blog','about-us','our-team','contact','price-pack-v1','price-pack-v2','price-pack-v3','case-study'],
 				'price' => $is_pro_active ? 'free' : 'pro',
 			],
 			'fashion-v2' => [
