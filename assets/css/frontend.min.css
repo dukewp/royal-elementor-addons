@@ -13980,6 +13980,10 @@ flex-grow: 0; */
 }
 
 /* == Compare */
+.wpr-compare-placeholder {
+    opacity: 0;
+}
+
 .wpr-compare-empty {
     text-align: center;
     margin: 0;
@@ -13992,6 +13996,10 @@ flex-grow: 0; */
 .wpr-compare-table {
     margin: 0;
     border-collapse: collapse;
+}
+
+.wpr-comapre-table-wrap {
+    min-height: 1px;
 }
 
 .wpr-compare-table a {

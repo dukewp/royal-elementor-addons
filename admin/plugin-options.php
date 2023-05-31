@@ -336,6 +336,8 @@ function wpr_addons_settings_page() {
             <p class='wpr-install-activate-woocommerce'><span class="dashicons dashicons-info-outline"></span> <?php esc_html_e( 'Install/Activate WooCommerce to use these widgets', 'wpr-addons' ); ?></p>
         <?php endif; ?>
         <a href="https://youtu.be/f_3tNiBC3dw?t=238" target="_blank"><?php esc_html_e( 'How to use WooCommerce Builder Widgets', 'wpr-addons' ); ?></a>
+        <br><br>
+        <a href="https://www.youtube.com/watch?v=wis1rQTn1tg" target="_blank"><?php esc_html_e( 'How to use Wishlist & Compare', 'wpr-addons' ); ?></a>
     </div>
     <div class="wpr-elements wpr-elements-woo">
     <?php
@@ -505,6 +507,10 @@ function wpr_addons_settings_page() {
                     echo '</select>';
                 ?>
             </div>
+            
+            <h4>
+                <a href="https://youtu.be/wis1rQTn1tg?t=97" target="_blank"><?php esc_html_e( 'How to use Wishlist & Compare pages', 'wpr-addons' ); ?></a>
+            </h4>
             <?php endif; ?>
             
         </div>
