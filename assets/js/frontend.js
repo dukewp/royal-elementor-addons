@@ -7859,6 +7859,7 @@
 						},
 						success: function(response) {
 							$scope.find('.wpr-compare-popup-inner-wrap').html(response.data.content);
+							WprElements.widgetCompare($scope);
 							
 							$scope.find('.wpr-compare-remove').click(function(e) {
 								e.preventDefault();
