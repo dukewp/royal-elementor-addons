@@ -125,12 +125,18 @@ class WPR_Add_Remove_From_Compare {
     function get_compare_from_cookie() {
         if (isset($_COOKIE['wpr_compare'])) {
             return json_decode(stripslashes($_COOKIE['wpr_compare']), true);
+        } else if ( isset($_COOKIE['wpr_compare_'. get_current_blog_id() .'']) ) {
+            return json_decode(stripslashes($_COOKIE['wpr_compare_'. get_current_blog_id() .'']), true);
         }
         return array();
     }
     
     function set_compare_to_cookie($compare) {
-        setcookie('wpr_compare', json_encode($compare), time() + (86400 * 10), '/'); // Expires in 7 days
+        if ( is_multisite() ) {
+            setcookie('wpr_compare_'. get_current_blog_id() .'', json_encode($compare), time() + (86400 * 10), '/'); // Expires in 7 days
+        } else {
+            setcookie('wpr_compare', json_encode($compare), time() + (86400 * 10), '/'); // Expires in 7 days
+        }
     }
 }
 

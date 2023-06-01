@@ -23,10 +23,12 @@ class WPR_Update_Mini_Wishlist {
 
 	// Add two new functions for handling cookies
 	public function get_wishlist_from_cookie() {
-		if (isset($_COOKIE['wpr_wishlist'])) {
-			return json_decode(stripslashes($_COOKIE['wpr_wishlist']), true);
-		}
-		return array();
+        if (isset($_COOKIE['wpr_wishlist'])) {
+            return json_decode(stripslashes($_COOKIE['wpr_wishlist']), true);
+        } else if ( isset($_COOKIE['wpr_wishlist_'. get_current_blog_id() .'']) ) {
+            return json_decode(stripslashes($_COOKIE['wpr_wishlist_'. get_current_blog_id() .'']), true);
+        }
+        return array();
 	}
     
     function update_mini_wishlist() {

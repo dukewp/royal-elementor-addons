@@ -1068,12 +1068,14 @@ class Utilities {
 	}
 	
 	// Add two new functions for handling cookies
-	public static function get_wishlist_from_cookie() {
-		if (isset($_COOKIE['wpr_wishlist'])) {
-			return json_decode(stripslashes($_COOKIE['wpr_wishlist']), true);
-		}
-		return array();
-	}
+    public function get_wishlist_from_cookie() {
+        if (isset($_COOKIE['wpr_wishlist'])) {
+            return json_decode(stripslashes($_COOKIE['wpr_wishlist']), true);
+        } else if ( isset($_COOKIE['wpr_wishlist_'. get_current_blog_id() .'']) ) {
+            return json_decode(stripslashes($_COOKIE['wpr_wishlist_'. get_current_blog_id() .'']), true);
+        }
+        return array();
+    }
 
 	// Client IP for form submission
 	public static function get_client_ip() {

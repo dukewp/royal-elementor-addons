@@ -89,12 +89,18 @@ class WPR_Add_Remove_From_Wishlist {
     function get_wishlist_from_cookie() {
         if (isset($_COOKIE['wpr_wishlist'])) {
             return json_decode(stripslashes($_COOKIE['wpr_wishlist']), true);
+        } else if ( isset($_COOKIE['wpr_wishlist_'. get_current_blog_id() .'']) ) {
+            return json_decode(stripslashes($_COOKIE['wpr_wishlist_'. get_current_blog_id() .'']), true);
         }
         return array();
     }
     
     function set_wishlist_to_cookie($wishlist) {
-        setcookie('wpr_wishlist', json_encode($wishlist), time() + (86400 * 10), '/'); // Expires in 7 days
+        if ( is_multisite() ) {
+            setcookie('wpr_wishlist_'. get_current_blog_id() .'', json_encode($wishlist), time() + (86400 * 10), '/'); // Expires in 7 days
+        } else {
+            setcookie('wpr_wishlist', json_encode($wishlist), time() + (86400 * 10), '/'); // Expires in 7 days
+        }
     }
 }
 
