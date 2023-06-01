@@ -2210,6 +2210,19 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
+		$repeater->add_control(
+			'element_animation_disable_mobile',
+			[
+				'label' => esc_html__( 'Disable on Mobile/Tablet', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'condition' => [
+					'element_animation!' => 'none',
+					'element_location' => 'over' 
+				],
+			]
+		);
+
 		$repeater->add_responsive_control(
 			'element_show_on',
 			[
@@ -8625,6 +8638,13 @@ class Wpr_Woo_Grid extends Widget_Base {
 	// Get Animation Class
 	public function get_animation_class( $data, $object ) {
 		$class = '';
+
+		// Disable Animation on Mobile
+		if ( 'overlay' !== $object ) {
+			if ( 'yes' === $data[$object .'_animation_disable_mobile'] && wp_is_mobile() ) {
+				return $class;
+			}
+		}
 
 		// Animation Class
 		if ( 'none' !== $data[ $object .'_animation'] ) {
