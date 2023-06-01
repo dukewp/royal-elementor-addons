@@ -13585,6 +13585,10 @@ flex-grow: 0; */
     transition: all 0.9s ease-in-out;
 }
 
+.elementor-editor-active .wpr-jarallax {
+    position: absolute;
+}
+
 .wpr-parallax-multi-layer {
     position: absolute;
     top: 0;
@@ -13976,6 +13980,10 @@ flex-grow: 0; */
 }
 
 /* == Compare */
+.wpr-compare-placeholder {
+    opacity: 0;
+}
+
 .wpr-compare-empty {
     text-align: center;
     margin: 0;
@@ -13988,6 +13996,10 @@ flex-grow: 0; */
 .wpr-compare-table {
     margin: 0;
     border-collapse: collapse;
+}
+
+.wpr-comapre-table-wrap {
+    min-height: 1px;
 }
 
 .wpr-compare-table a {
@@ -17627,6 +17639,13 @@ dl.variation dd {
 
 .wpr-submit-error {
     margin: 0;
+    position: absolute;
+    top: 100%;
+}
+
+.wpr-field-group .wpr-submit-error {
+    position: absolute;
+    top: 100%;
 }
 
 .wpr-form-fields-wrap {
@@ -17797,6 +17816,67 @@ dl.variation dd {
 .wpr-form-field-type-acceptance .wpr-field-sub-group .wpr-form-field-option input,
 .wpr-form-field-type-acceptance .wpr-field-sub-group .wpr-form-field-option label {
   display: inline;
+}
+
+.wpr-custom-styles-yes .wpr-form-field-type-checkbox input,
+.wpr-custom-styles-yes .wpr-form-field-type-radio input {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+.wpr-custom-styles-yes .wpr-form-field-type-radio .wpr-form-field-option label,
+.wpr-custom-styles-yes .wpr-form-field-type-checkbox .wpr-form-field-option label {
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+
+.wpr-custom-styles-yes .wpr-form-field-type-checkbox .wpr-form-field-option label::before {
+  content: "" !important;
+  left: 0;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.wpr-custom-styles-yes .wpr-form-field-type-checkbox .wpr-form-field-option.wpr-checked label::before {
+  content: "\2713" !important;
+}
+
+.wpr-custom-styles-yes .wpr-form-field-type-radio .wpr-form-field-option label::before {
+    content: "" !important;
+    left: 0;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    border: 1px solid black;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+.wpr-custom-styles-yes .wpr-form-field-type-radio .wpr-form-field-option.wpr-checked label::before {
+    content: "⬤" !important;
 }
 
 .wpr-form-field-type-hidden {

@@ -1456,10 +1456,12 @@
 				}
 			}
 			
+			checkWishlistAndCompare();
 			addRemoveCompare();
 			addRemoveWishlist();
 	
 			var mutationObserver = new MutationObserver(function(mutations) {
+				// checkWishlistAndCompare();
 				addRemoveCompare();
 				addRemoveWishlist();
 			});
@@ -2441,6 +2443,58 @@
 					iGrid.lightGallery( settings.lightbox );
 				});
 
+			}
+
+			function checkWishlistAndCompare() {
+				if ( iGrid.find('.wpr-wishlist-add').length ) {
+					iGrid.find('.wpr-wishlist-add').each(function() {
+						var wishlistBtn = $(this);
+						$.ajax({
+							url: WprConfig.ajaxurl,
+							type: 'POST',
+							data: {
+								action: 'check_product_in_wishlist',
+								product_id: wishlistBtn.data('product-id')
+							},
+							success: function(response) {
+								if ( true == response ) {
+									if ( !wishlistBtn.hasClass('wpr-button-hidden') ) {
+										wishlistBtn.addClass('wpr-button-hidden');
+									}
+
+									if ( wishlistBtn.next().hasClass('wpr-button-hidden') ) {
+										wishlistBtn.next().removeClass('wpr-button-hidden');
+									}
+								}
+							}
+						});
+					});
+				}
+
+				if ( iGrid.find('.wpr-compare-add').length ) {
+					iGrid.find('.wpr-compare-add').each(function() {
+						var compareBtn = $(this);
+						$.ajax({
+							url: WprConfig.ajaxurl,
+							type: 'POST',
+							data: {
+								action: 'check_product_in_compare',
+								product_id: compareBtn.data('product-id')
+							},
+							success: function(response) {
+								if ( true == response ) {
+									if ( !compareBtn.hasClass('wpr-button-hidden') ) {
+										compareBtn.addClass('wpr-button-hidden');
+									}
+
+									if ( compareBtn.next().hasClass('wpr-button-hidden') ) {
+										compareBtn.next().removeClass('wpr-button-hidden');
+									}
+								}
+							}
+						});
+					});
+				}
 			}
 
 			function addRemoveCompare() {
@@ -7476,9 +7530,80 @@
 
 		widgetWishlist: function($scope) {
 
-			$scope.find('.wpr-wishlist-remove').click(function(e) {
+			$.ajax({
+				url: WprConfig.ajaxurl,
+				type: 'POST',
+				data: {
+					action: 'count_wishlist_items',
+					element_addcart_simple_txt: $scope.find('.wpr-wishlist-products').attr('element_addcart_simple_txt'),
+					element_addcart_grouped_txt: $scope.find('.wpr-wishlist-products').attr('element_addcart_grouped_txt'),
+					element_addcart_variable_txt: $scope.find('.wpr-wishlist-products').attr('element_addcart_variable_txt')
+				},
+				success: function(response) { 
+					// Get all elements with the class 'wpr-wishlist-product' and their product IDs
+					var productElements = $scope.find('.wpr-wishlist-product');
+					var productIds = productElements.map(function() {
+						return $(this).data('product-id');
+					}).get();
+					
+					// Filter out the items in the response that match the product IDs
+					var newWishlistItems = response.wishlist_items.filter(function(item) {
+						return !productIds.includes(item.product_id);
+					});
+
+					// Convert the wishlist_items to an array of product_ids for easier searching
+					var wishlistProductIds = response.wishlist_items.map(function(item) {
+						return item.product_id;
+					});
+
+					productElements.each(function() {
+						var productId = $(this).data('product-id');
+					
+						// If the product ID is not in the wishlistProductIds array, remove the element
+						if (!wishlistProductIds.includes(productId)) {
+						$(this).remove();
+						}
+					});
+
+					newWishlistItems.forEach(function(item) {
+						var html = '<tr class="wpr-wishlist-product" data-product-id="' + item.product_id + '">';
+							html += '<td><span class="wpr-wishlist-remove" data-product-id="' + item.product_id + '"></span></td>';
+							html += '<td><a class="wpr-wishlist-img-wrap" href="' + item.product_url + '">' + item.product_image + '</a></td>';
+							html += '<td><a class="wpr-wishlist-product-name" href="' + item.product_url + '">' + item.product_title + '</a></td>';
+							html += '<td><div class="wpr-wishlist-product-price">' + item.product_price + '</div></td>';
+							html += '<td><div class="wpr-wishlist-product-status">' + item.product_stock + '</div></td>';
+							html += '<td><div class="wpr-wishlist-product-atc">' + item.product_atc + '</div></td>';
+						html += '</tr>';
+						$scope.find('.wpr-wishlist-products tbody').append(html);
+					});
+
+					if ( 0 < +response.wishlist_count ) {
+						if ( $scope.find('.wpr-wishlist-products').hasClass('wpr-wishlist-empty-hidden') ) {
+							$scope.find('.wpr-wishlist-products').removeClass('wpr-wishlist-empty-hidden');
+						}
+
+						if ( !$scope.find('.wpr-wishlist-empty').hasClass('wpr-wishlist-empty-hidden') ) {
+							$scope.find('.wpr-wishlist-empty').addClass('wpr-wishlist-empty-hidden');
+						}
+					} else {
+						if ( !$scope.find('.wpr-wishlist-products').hasClass('wpr-wishlist-empty-hidden') ) {
+							$scope.find('.wpr-wishlist-products').addClass('wpr-wishlist-empty-hidden');
+						}
+
+						if ( $scope.find('.wpr-wishlist-empty').hasClass('wpr-wishlist-empty-hidden') ) {
+							$scope.find('.wpr-wishlist-empty').removeClass('wpr-wishlist-empty-hidden');
+						}
+					}
+				},
+				error: function(error) {
+					console.log(error);
+				}
+			});
+
+			$scope.on('click', '.wpr-wishlist-remove', function(e) {
 				e.preventDefault();
 				var product_id = $(this).data('product-id');
+
 				$.ajax({
 					url: WprConfig.ajaxurl,
 					type: 'POST',
@@ -7486,10 +7611,23 @@
 						action: 'remove_from_wishlist',
 						product_id: product_id
 					},
-					success: function() {
+					success: function(response) {
+						if ( 1 === $scope.find('.wpr-wishlist-product').length ) {	
+							if ( !$scope.find('.wpr-wishlist-products').hasClass('wpr-wishlist-empty-hidden') ) {
+								$scope.find('.wpr-wishlist-products').addClass('wpr-wishlist-empty-hidden');
+							}
+
+							if ( $scope.find('.wpr-wishlist-empty').hasClass('wpr-wishlist-empty-hidden') ) {
+								$scope.find('.wpr-wishlist-empty').removeClass('wpr-wishlist-empty-hidden');
+							}
+						}
+
            				$scope.find('.wpr-wishlist-product[data-product-id="' + product_id + '"]').remove();
 						WprElements.changeActionTargetProductId(product_id);
-						$(document).trigger('removed_from_wishlist');
+						$(document).trigger('removed_from_wishlist');	
+					},
+					error: function(error) {
+						console.log(error);
 					}
 				});
 			});
@@ -7506,7 +7644,26 @@
 
 		widgetWishlistButton: function($scope) {
 
-			// $(document).ready(function() {
+				$.ajax({
+					url: WprConfig.ajaxurl,
+					type: 'POST',
+					data: {
+						action: 'check_product_in_wishlist',
+						product_id: $scope.find('.wpr-wishlist-add').data('product-id')
+					},
+					success: function(response) {
+						if ( true == response ) {
+							if ( !$scope.find('.wpr-wishlist-add').hasClass('wpr-button-hidden') ) {
+								$scope.find('.wpr-wishlist-add').addClass('wpr-button-hidden');
+							}
+
+							if ( $scope.find('.wpr-wishlist-remove').hasClass('wpr-button-hidden') ) {
+								$scope.find('.wpr-wishlist-remove').removeClass('wpr-button-hidden');
+							}
+						}
+					}
+				});
+
 				$scope.find('.wpr-wishlist-add').click(function(e) {
 					e.preventDefault();
 					var product_id = $(this).data('product-id');
@@ -7562,12 +7719,30 @@
 					$scope.find('.wpr-wishlist-add[data-product-id="' + actionTargetProductId + '"]').show();
 					$scope.find('.wpr-wishlist-add[data-product-id="' + actionTargetProductId + '"]').fadeTo(500, 1);
 				});
-
-			// });
 		
 		}, // end widgetWishlistButton
 
 		widgetCompareButton: function($scope) {
+
+			$.ajax({
+				url: WprConfig.ajaxurl,
+				type: 'POST',
+				data: {
+					action: 'check_product_in_compare',
+					product_id: $scope.find('.wpr-compare-add').data('product-id')
+				},
+				success: function(response) {
+					if ( true == response ) {
+						if ( !$scope.find('.wpr-compare-add').hasClass('wpr-button-hidden') ) {
+							$scope.find('.wpr-compare-add').addClass('wpr-button-hidden');
+						}
+
+						if ( $scope.find('.wpr-compare-remove').hasClass('wpr-button-hidden') ) {
+							$scope.find('.wpr-compare-remove').removeClass('wpr-button-hidden');
+						}
+					}
+				}
+			});
 
 			// $(document).ready(function() {
 				$scope.find('.wpr-compare-add').click(function(e) {
@@ -7740,6 +7915,28 @@
 
 			}
 
+			$.ajax({
+				url: WprConfig.ajaxurl,
+				type: 'POST',
+				data: {
+					action: 'count_compare_items',
+				},
+				success: function(response) {
+					if ( $scope.find('.wpr-compare-count').css('display') == 'none' && 0 < response.compare_count ) {
+						$scope.find('.wpr-compare-count').text(response.compare_count);
+						$scope.find('.wpr-compare-count').css('display', 'inline-flex');
+					} else if ( 0 == response.compare_count ) {
+						$scope.find('.wpr-compare-count').css('display', 'none');
+						$scope.find('.wpr-compare-count').text(response.compare_count);
+					} else {
+						$scope.find('.wpr-compare-count').text(response.compare_count);
+					}
+				},
+				error: function(error) {
+					console.log(error);
+				}
+			});
+
 			$(document).on('removed_from_compare', function() {
 				$.ajax({
 					url: WprConfig.ajaxurl,
@@ -7777,7 +7974,28 @@
 		}, // end widgetMiniCompare
 
 		widgetCompare: function($scope) {
-			$scope.find('.wpr-compare-remove').click(function(e) {
+			$.ajax({
+				url: WprConfig.ajaxurl,
+				type: 'POST',
+				data: {
+					action: 'count_compare_items',
+					remove_text: $scope.find('.wpr-compare-table-wrap').attr('remove_from_compare_text'),
+					compare_empty_text: $scope.find('.wpr-compare-table-wrap').attr('compare_empty_text'),
+					element_addcart_simple_txt: $scope.find('.wpr-compare-table-wrap').attr('element_addcart_simple_txt'),
+					element_addcart_grouped_txt: $scope.find('.wpr-compare-table-wrap').attr('element_addcart_grouped_txt'),
+					element_addcart_variable_txt: $scope.find('.wpr-compare-table-wrap').attr('element_addcart_variable_txt')
+				},
+				success: function(response) {
+					if ( true ) {
+						$scope.find('.wpr-compare-table-wrap').html(response.compare_table);
+					}
+				},
+				error: function(error) {
+					console.log(error);
+				}
+			});
+
+			$scope.on('click', '.wpr-compare-remove', function(e) {
 				e.preventDefault();
 				var productID = $(this).data('product-id');
 			
@@ -7816,6 +8034,12 @@
 
 			var fileUrl = {};
 
+			if ( $('body').find('.wpr-form-field-type-recaptcha-v3') ) {
+					var script = document.createElement('script');
+					script.src = 'https://www.google.com/recaptcha/api.js?render='+ $scope.find('#g-recaptcha-response').data('site-key') +'';
+					document.body.appendChild(script);
+			}
+
 			var currentTab = 0; // Current tab is set to be the first tab (0)
 			if ( 0 < $scope.find('.wpr-step-tab').length ) {
 				showTab(currentTab); // Display the current tab
@@ -7843,6 +8067,30 @@
 			});
 
 			$scope.find('input, select, textarea').each(function() {
+				$(this).on('change', function() {
+					var $this = $(this);
+					if ('checkbox' == $this.attr('type')) {
+						var $option = $this.closest('.wpr-form-field-option');
+						if ($option.hasClass('wpr-checked')) {
+							$option.removeClass('wpr-checked');
+						} else {
+							$option.addClass('wpr-checked');
+						}
+					} else if ('radio' == $this.attr('type')) {
+						// Find all radio buttons in the same group
+						var name = $this.attr('name');
+						var $group = $('input[type="radio"][name="' + name + '"]');
+				
+						// Remove 'wpr-checked' from all options in the group
+						$group.closest('.wpr-form-field-option').removeClass('wpr-checked');
+				
+						// Add 'wpr-checked' to the selected option
+						if ($this.is(':checked')) {
+							$this.closest('.wpr-form-field-option').addClass('wpr-checked');
+						}
+					}
+				});
+
 				$(this).on('input change keyup', function(e) {
 					if ( $(this).closest('.wpr-select-wrap').length > 0 ) {
 						$(this).closest('.wpr-select-wrap').removeClass('wpr-form-error-wrap');
@@ -8020,6 +8268,8 @@
 										$scope.find('form').append('<p class="wpr-submit-error">'+ $scope.data('settings').error_message +'</p>');
 									} else {
 										$scope.find('form').append('<p class="wpr-submit-success">'+ $scope.data('settings').success_message +'</p>');
+										$scope.find('button').attr('disabled', true);
+										$scope.find('button').css('opacity', 0.6);
 									}
 								});
 							// }
@@ -8453,7 +8703,11 @@
 
 				if (valid) {
 					$scope.find(".wpr-step").eq(currentTab).addClass("wpr-step-finish");
-				}
+				} else {
+                    if ( $scope.find(".wpr-step").eq(currentTab).hasClass('wpr-step-finish') ) {
+                        $scope.find(".wpr-step").eq(currentTab).removeClass('wpr-step-finish');
+                    }
+                }
 
 				return valid;
 			}
@@ -8464,6 +8718,10 @@
 				$step.removeClass("wpr-step-active");
 				//... and adds the "active" class on the current step:
 				$step.eq(n).addClass("wpr-step-active");
+
+                if ( $scope.find('.wpr-step-active').hasClass('wpr-step-finish') ) {
+                    $scope.find('.wpr-step-active').removeClass('wpr-step-finish');
+                }
 
 				const stepTabs = $scope.find('.wpr-step-tab');
 				const progressBarFill = $scope.find('.wpr-step-progress-fill');
@@ -8680,6 +8938,8 @@
 			
 			if ( !($scope.find('.wpr-wishlist-count').length > 0 && 0 == $scope.find('.wpr-wishlist-count').text()) ) {
 				$scope.find('.wpr-wishlist-count').css('display', 'inline-flex');
+			} else {
+
 			}
 			
 			function wishlistRemoveHandler() {
@@ -8711,6 +8971,56 @@
 			mutationObserver.observe($scope[0], {
 				childList: true,
 				subtree: true,
+			});
+
+			$.ajax({
+				url: WprConfig.ajaxurl,
+				type: 'POST',
+				data: {
+					action: 'count_wishlist_items',
+				},
+				success: function(response) {
+					if ( $scope.find('.wpr-wishlist-count').css('display') == 'none' && 0 < response.wishlist_count ) {
+						$scope.find('.wpr-wishlist-count').text(response.wishlist_count);
+						$scope.find('.wpr-wishlist-count').css('display', 'inline-flex');
+					} else if ( 0 == response.wishlist_count ) {
+						$scope.find('.wpr-wishlist-count').css('display', 'none');
+						$scope.find('.wpr-wishlist-count').text(response.wishlist_count);
+					} else {
+						$scope.find('.wpr-wishlist-count').text(response.wishlist_count);
+					}
+
+					if ( true ) {
+						// Get all elements with the class 'wpr-wishlist-product' and their product IDs
+						var productElements = $scope.find('.wpr-wishlist-product');
+						var productIds = productElements.map(function() {
+						  return $(this).data('product-id');
+						}).get();
+						
+						// Filter out the items in the response that match the product IDs
+						var newWishlistItems = response.wishlist_items.filter(function(item) {
+						  return !productIds.includes(item.product_id);
+						});
+
+						// Convert the wishlist_items to an array of product_ids for easier searching
+						var wishlistProductIds = response.wishlist_items.map(function(item) {
+							return item.product_id;
+						});
+
+						productElements.each(function() {
+						  var productId = $(this).data('product-id');
+						
+						  // If the product ID is not in the wishlistProductIds array, remove the element
+						  if (!wishlistProductIds.includes(productId)) {
+							$(this).remove();
+						  }
+						});
+
+						newWishlistItems.forEach(function(item) {
+							$scope.find('.wpr-wishlist-products').append('<li class="wpr-wishlist-product" data-product-id="'+ item.product_id +'"><a class="wpr-wishlist-product-img" href="'+ item.product_url +'">'+ item.product_image +'</a><div><a href="'+ item.product_url +'">'+ item.product_title +'</a><div class="wpr-wishlist-product-price">'+ item.product_price +'</div></div><span class="wpr-wishlist-remove" data-product-id="'+ item.product_id +'"></span></li>');
+						});
+					}
+				}
 			});
 
 			$(document).on('added_to_wishlist', function() {
@@ -8832,10 +9142,6 @@
 			var mutationObserver = new MutationObserver(function(mutations) {
 				if (  0 !== $scope.hasClass('wpr-wishlist-sidebar').length ) {
 					closeSideBar();
-
-					// if ( $scope.find('.wpr-mini-cart').data('close-cart-heading') ) {
-					// 	$scope.find('.wpr-close-cart h2').text($scope.find('.wpr-mini-cart').data('close-cart-heading').replace(/-/g, ' '));
-					// }
 				}
 				
 				$scope.find('.wpr-wishlist-product').on('click', '.wpr-wishlist-remove', function() {
