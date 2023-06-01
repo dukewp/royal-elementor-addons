@@ -1402,10 +1402,19 @@ add_action( 'admin_head', 'wpr_redirect_support_page' );
 
 // Add Upgrade Sub Menu item that will redirect to royal-elementor-addons.com
 function wpr_addons_add_upgrade_menu() {
-    if ( defined('WPR_ADDONS_PRO_VERSION') ) return;
-    add_submenu_page( 'wpr-addons', 'Upgrade', 'Upgrade', 'manage_options', 'wpr-upgrade', 'wpr_addons_upgrade_page', 99 );
+    if ( defined('WPR_ADDONS_PRO_VERSION') && !wpr_fs()->can_use_premium_code() ) return;
+
+    if ( wpr_fs()->is_plan( 'expert' ) ) return;
+
+    if ( !wpr_fs()->can_use_premium_code() ) {
+        $label = 'Upgrade';
+    } else if ( wpr_fs()->is_plan( 'pro' ) ) {
+        $label = 'Upgrade to Expert';
+    }
+
+    add_submenu_page( 'wpr-addons', $label, $label, 'manage_options', 'wpr-upgrade', 'wpr_addons_upgrade_page', 999 );
 }
-add_action( 'admin_menu', 'wpr_addons_add_upgrade_menu', 99 );
+add_action( 'admin_menu', 'wpr_addons_add_upgrade_menu', 999999999999 );
 
 function wpr_addons_upgrade_page() {}
 
@@ -1413,7 +1422,8 @@ function wpr_redirect_upgrade_page() {
     ?>
     <script type="text/javascript">
         jQuery(document).ready( function($) {
-            $( 'ul#adminmenu a[href*="page=wpr-upgrade"]' ).attr('href', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-menu-upgrade-pro#purchasepro').attr( 'target', '_blank' );
+            let ref = 'Upgrade to Expert' == $( 'ul#adminmenu a[href*="page=wpr-upgrade"]' ).text() ? 'expert' : 'pro';
+            $( 'ul#adminmenu a[href*="page=wpr-upgrade"]' ).attr('href', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-menu-upgrade-'+ ref +'#purchasepro').attr( 'target', '_blank' );
             $( 'ul#adminmenu a[href*="#purchasepro"]' ).css('color', 'greenyellow');
         });
     </script>
