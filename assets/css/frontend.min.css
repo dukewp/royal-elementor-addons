@@ -17887,6 +17887,10 @@ dl.variation dd {
   display: inline-block;
 }
 
+.wpr-form-field-label {
+    text-align: left;
+}
+
 .wpr-form-field-type-recaptcha_v3 .wpr-form-field-label {
   display: none;
 }
