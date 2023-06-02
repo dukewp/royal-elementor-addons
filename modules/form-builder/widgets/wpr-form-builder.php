@@ -865,7 +865,7 @@ class Wpr_Form_Builder extends Widget_Base {
 			[
 				'label' => esc_html__( 'Rows', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
-				'default' => 4,
+				'default' => 7,
 				'conditions' => [
 					'terms' => [
 						[
@@ -1628,6 +1628,33 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'labels_align',
+			[
+				'label' => esc_html__( 'Align Labels', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'flex-start' => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'flex-end' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				'default' => 'flex-start',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-field-group' => 'justify-content: {{VALUE}}'
+				],
+				'separator' => 'before'
+			]
+		);
+
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -1850,6 +1877,8 @@ class Wpr_Form_Builder extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-field-group:not(.wpr-form-field-type-upload) .wpr-form-field:not(.wpr-select-wrap)' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-field-group .wpr-select-wrap select' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-field-group input[type="date"]::before' => 'right: {{RIGHT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-field-group input[type="time"]::before' => 'right: {{RIGHT}}{{UNIT}};',
 				],
 			]
 		);
