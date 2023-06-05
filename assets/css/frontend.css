@@ -17656,6 +17656,36 @@ dl.variation dd {
         flex-wrap: wrap;
 }
 
+.wpr-form-fields-wrap input[type="date"],
+.wpr-form-fields-wrap input[type="time"] {
+    position: relative;
+}
+
+.wpr-form-fields-wrap input[type="date"]::-webkit-calendar-picker-indicator,
+.wpr-form-fields-wrap input[type="time"]::-webkit-calendar-picker-indicator {
+    display: none;
+}
+
+.wpr-form-fields-wrap input[type="date"]::before,
+.wpr-form-fields-wrap input[type="time"]::before {
+    font-family: "Font Awesome 5 Free" !important; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 16px; /* Adjust this value as needed */
+    height: 16px; /* Adjust this value as needed */
+    pointer-events: none;
+}
+
+.wpr-form-fields-wrap input[type="date"]::before {
+    content: '\f073';
+}
+
+.wpr-form-fields-wrap input[type="time"]::before {
+    content: '\f017';
+}
+
 .wpr-form-fields-wrap .wpr-form-field:focus {
     -webkit-box-shadow: none !important;
             box-shadow: none !important;
@@ -17885,6 +17915,10 @@ dl.variation dd {
 
 .wpr-form-field-type-html {
   display: inline-block;
+}
+
+.wpr-form-field-label {
+    text-align: left;
 }
 
 .wpr-form-field-type-recaptcha_v3 .wpr-form-field-label {
