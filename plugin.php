@@ -167,8 +167,10 @@ class Plugin {
 			add_action( 'admin_enqueue_scripts', [ $this, 'hide_theme_notice' ] );
 		}
 
-		if ( class_exists('WooCommerce') && 'on' === get_option('wpr_override_woo_templates', 'on') ) {
-			require WPR_ADDONS_PATH . 'includes/woocommerce/woocommerce-config.php';
+		if ( class_exists('WooCommerce') ) {
+			 if ( 'on' === get_option('wpr_override_woo_templates', 'on') ) {
+				 require WPR_ADDONS_PATH . 'includes/woocommerce/woocommerce-config.php';
+			 }
 
 			// Add Remove From Wishlist
 			require WPR_ADDONS_PATH . 'classes/woocommerce/wpr-add-remove-from-wishlist.php';

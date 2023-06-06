@@ -14006,6 +14006,11 @@ flex-grow: 0; */
     display: inline-block;
 }
 
+.wpr-compare-table th,
+.wpr-compare-table td {
+    background-clip: padding-box;
+}
+
 .wpr-compare-table th {
      position: sticky; left: 0; z-index: 1; background-color: #FFF; 
 }
