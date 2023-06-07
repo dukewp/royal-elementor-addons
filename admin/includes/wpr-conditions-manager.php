@@ -31,6 +31,7 @@ class WPR_Conditions_Manager {
 
 	        	// Single Pages
 				if ( !is_null( \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $conditions ) ) ) {
+                    $conditions['caller'] = ['header-footer'];
 					$template = \WprAddonsPro\Classes\Pro_Modules::single_templates_conditions( $conditions );
 				}
 
