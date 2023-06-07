@@ -16964,6 +16964,16 @@ dl.variation dd {
 == Offcanvas
 --------------------------------------------------------------*/
 
+.wpr-offcanvas-content::-webkit-scrollbar {
+    width: 4px;
+    background-color: transparent;
+}
+
+.wpr-offcanvas-content::-webkit-scrollbar-thumb {
+    /* border-left: 6px solid transparent; */
+    border-left: 3px solid black;
+}
+
 .wpr-offcanvas-container .wpr-template-edit-btn {
     top: 10px;
     right: 10px;
