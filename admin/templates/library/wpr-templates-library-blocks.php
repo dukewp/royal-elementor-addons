@@ -1,7 +1,7 @@
 <?php
-namespace WprAddons\Admin\Templates;
+namespace WprAddons\Admin\Templates\Library;
 use WprAddons\Classes\Utilities;
-use WprAddons\Admin\Templates\WPR_Templates_Data;
+use WprAddons\Admin\Templates\Library\WPR_Templates_Data;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -28,10 +28,11 @@ class WPR_Templates_Library_Blocks {
 	** Template Library Popup
 	*/
 	public static function render_library_templates_blocks() {
+		$license = !wpr_fs()->can_use_premium_code() ? 'free' : 'premium';
 
 		?>
 
-		<div class="wpr-tplib-sidebar">
+		<div class="wpr-tplib-sidebar" data-license="<?php echo esc_attr($license); ?>">
 			<div class="wpr-tplib-filters-wrap">
 				<div class="wpr-tplib-filters">
 					<h3>
@@ -122,9 +123,17 @@ class WPR_Templates_Library_Blocks {
 
 					$template_slug_for_image = strpos($template_slug, 'zzz') ? substr($template_slug, 0, -4) : $template_slug;
 
+					// Add Extra Keywords for Search
+					$data_template_title = $template_title;
+					if ( false !== strpos($title, 'Form Builder') ) {
+						$data_template_title .= ' contact';
+					} else if ( false !== strpos($title, 'Nav Menu') ) {
+						$data_template_title .= ' header';
+					}
+
 			?>
 
-				<div class="wpr-tplib-template-wrap<?php echo esc_attr($template_class); ?>" data-title="<?php echo esc_attr(strtolower($template_title)); ?>">
+				<div class="wpr-tplib-template-wrap<?php echo esc_attr($template_class); ?>" data-title="<?php echo esc_attr(strtolower($data_template_title)); ?>">
 					<div class="wpr-tplib-template" data-slug="<?php echo esc_attr($template_slug); ?>" data-filter="<?php echo esc_attr($module_slug); ?>" data-sub-filter="<?php echo esc_attr($template_sub); ?>" data-preview-type="<?php echo esc_attr($preview_type); ?>" data-preview-url="<?php echo esc_attr($preview_url); ?>">
 						<div class="wpr-tplib-template-media">
 							<img src="<?php echo esc_url('https://royal-elementor-addons.com/library/premade-styles/'. $module_slug .'/'. $template_slug_for_image .'.jpg'); ?>">

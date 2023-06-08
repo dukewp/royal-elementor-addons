@@ -14,7 +14,7 @@ use Elementor\Core\Schemes\Typography;
 use Elementor\Repeater;
 use Elementor\Group_Control_Image_Size;
 use WprAddons\Classes\Utilities;
-use WprAddons\Classes\WPR_Post_Likes;
+use WprAddons\Classes\Modules\WPR_Post_Likes;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -67,8 +67,8 @@ class Wpr_Magazine_Grid extends Widget_Base {
 				continue;
 			}
 
-			if ( Utilities::is_new_free_user2() ) {
-				$post_types['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Pro)';
+			if ( !wpr_fs()->can_use_premium_code() ) {
+				$post_types['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Expert)';
 			} else {
 				$post_types[$slug] = esc_html( $title );
 			}
@@ -149,7 +149,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			'separator' => esc_html__( 'Separator', 'wpr-addons' ),
 			'pro-lk' => esc_html__( 'Likes (Pro)', 'wpr-addons' ),
 			'pro-shr' => esc_html__( 'Sharing (Pro)', 'wpr-addons' ),
-			'pro-cf' => esc_html__( 'Custom Field (Pro)', 'wpr-addons' ),
+			'pro-cf' => esc_html__( 'Custom Field (Expert)', 'wpr-addons' ),
 		];
 	}
 
@@ -420,6 +420,20 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'magazine-grid', 'query_source', ['pro-rl', 'pro-cr'] );
 
+		if ( !wpr_fs()->is_plan( 'expert' ) ) {
+			$this->add_control(
+				'query_source_cpt_pro_notice',
+				[
+					'raw' => 'This option is available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-grid-upgrade-expert#purchasepro" target="_blank">Expert version</a></strong>',
+					'type' => Controls_Manager::RAW_HTML,
+					'content_classes' => 'wpr-pro-notice',
+					'condition' => [
+						'query_source!' => ['post','page','related','current','pro-rl','pro-cr'],
+					]
+				]
+			);
+		}
+
 		$this->add_control(
 			'query_selection',
 			[
@@ -571,6 +585,9 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Not Found Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'No Posts Found!',
 				'condition' => [
 					'query_selection' => 'dynamic',
@@ -584,7 +601,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		$this->add_control(
 			'query_exclude_no_images',
 			[
-				'label' => esc_html__( 'Exclude Items w/o Thumbnail', 'wpr-addons' ),
+				'label' => esc_html__( 'Exclude Items without Thumbnail', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'label_block' => false
@@ -863,9 +880,6 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 		$element_select = $this->add_option_element_select();
 
-		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'magazine-grid', 'element_select', ['pro-lk', 'pro-shr', 'pro-cf']);
-
 		$repeater->add_control(
 			'element_select',
 			[
@@ -893,14 +907,17 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		$repeater->add_control(
 			'element_custom_field_info_video_tutorial',
 			[
-				'raw' => esc_html__( 'See how to use Custom Fields in this', 'wpr-addons' ) . sprintf( '<br><a href="%1$s" target="_blank">%2$s <span class="dashicons dashicons-video-alt3"></span></a>', 'https://www.youtube.com/watch?v=9GvpqyHF_Cs', esc_html__( 'Video Tutorial', 'wpr-addons' ) ),
+				'raw' => esc_html__( 'Watch Custom Fields ', 'wpr-addons' ) . sprintf( '<a href="%1$s" target="_blank">%2$s <span class="dashicons dashicons-video-alt3"></span></a>', 'https://www.youtube.com/watch?v=9GvpqyHF_Cs', esc_html__( 'Video Tutorial', 'wpr-addons' ) ),
 				'type' => Controls_Manager::RAW_HTML,
-				'separator' => 'after',
 				'condition' => [
-					'element_select' => 'custom-field'
+					'element_select' => ['custom-field', 'pro-cf']
 				]
 			]
 		);
+
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'magazine-grid', 'element_select', ['pro-lk', 'pro-shr']);
+		Utilities::upgrade_expert_notice( $repeater, Controls_Manager::RAW_HTML, 'magazine-grid', 'element_select', ['pro-cf'] );
 
 		$repeater->add_control(
 			'element_display',
@@ -1115,6 +1132,9 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Read More Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Read More',
 				'condition' => [
 					'element_select' => [ 'read-more' ],
@@ -1128,6 +1148,9 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Separator', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => ', ',
 				'condition' => [
 					'element_select!' => [
@@ -1185,6 +1208,9 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'No Comments', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'No Comments',
 				'condition' => [
 					'element_select' => [ 'comments' ],
@@ -1197,6 +1223,9 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'One Comment', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Comment',
 				'condition' => [
 					'element_select' => [ 'comments' ],
@@ -1209,6 +1238,9 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Multiple Comments', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Comments',
 				'condition' => [
 					'element_select' => [ 'comments' ],
@@ -1305,6 +1337,9 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Extra Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => '',
 				'condition' => [
 					'element_select!' => [
@@ -1733,15 +1768,15 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			'Magazine Grid Slider Advanced Pagination Positioning',
 			'Advanced Post Likes',
 			'Advanced Post Sharing',
-			'Custom Fields Support',
 			'Advanced Grid Elements Positioning',
 			'Unlimited Image Overlay Animations',
 			'Image overlay GIF upload option',
 			'Title, Category, Read More Advanced Link Hover Animations',
 			'Open Links in New Tab',
 			'Posts Order',
-			'Custom Post Types Support',
-			'Trim Title & Excerpt By Letter Count'
+			'Trim Title & Excerpt By Letter Count',
+			'Custom Fields Support (Expert)',
+			'Custom Post Types Support (Expert)',
 		] );
 		
 		// Styles ====================
@@ -4974,6 +5009,10 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			} elseif ( '4-h' === $settings['layout_select'] ) {
 				$query_posts_per_page = 4 * intval($settings['layout_rows_number']);
 			}
+		}
+		
+		if ( empty($settings['query_offset']) ) {
+			$settings[ 'query_offset' ] = 0;
 		}
 
 		$offset = ( $paged - 1 ) * $query_posts_per_page + $settings[ 'query_offset' ];

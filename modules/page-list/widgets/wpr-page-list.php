@@ -110,9 +110,13 @@ class Wpr_Page_List extends Widget_Base {
 		);
 
 		$repeater->add_control(
-			'page_list_item_title', [
+			'page_list_item_title', 
+			[
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'New Page' , 'wpr-addons' ),
 				'label_block' => true,
 				'separator' => 'before',
@@ -123,10 +127,14 @@ class Wpr_Page_List extends Widget_Base {
 		);
 
 		$repeater->add_control(
-			'page_list_item_sub_title', [
+			'page_list_item_sub_title', 
+			[
 				'label' => esc_html__( 'Sub Title', 'wpr-addons' ),
 				'label_block' => true,
 				'type' => \Elementor\Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'New Page Sub Title' , 'wpr-addons' ),
 			]
 		);
@@ -136,6 +144,9 @@ class Wpr_Page_List extends Widget_Base {
 			[
 				'label' => esc_html__( 'Title Link', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::URL,
+				'dynamic' => [
+					'active' => true,
+				],
 				'placeholder' => esc_html__( 'https://your-link.com', 'wpr-addons' ),
 				'default' => [
 					'url' => '',
@@ -204,6 +215,9 @@ class Wpr_Page_List extends Widget_Base {
 			'page_list_item_badge_text', [
 				'label' => esc_html__( 'Badge Text', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'Badge' , 'wpr-addons' ),
                 'condition' => [
                     'show_page_list_item_badge' => 'yes'
@@ -441,7 +455,7 @@ class Wpr_Page_List extends Widget_Base {
 				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-page-list-item' => 'border-color: {{VALUE}}',
-				],
+				]
 			]
 		);
 
@@ -456,7 +470,8 @@ class Wpr_Page_List extends Widget_Base {
 				'step' => 0.1,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-page-list-item' => 'transition-duration: {{VALUE}}s',
-				],
+					'{{WRAPPER}} .wpr-page-list-item a' => 'transition-duration: {{VALUE}}s'
+				]
 			]
 		);
 

@@ -103,6 +103,9 @@ class Wpr_Image_Hotspots extends Widget_Base {
 			[
 				'label' => esc_html__( 'Image', 'wpr-addons' ),
 				'type' => Controls_Manager::MEDIA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => [
 					'url' => Utils::get_placeholder_image_src(),
 				],
@@ -158,6 +161,9 @@ class Wpr_Image_Hotspots extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'separator' => 'before',
 			]
 		);
@@ -229,9 +235,11 @@ class Wpr_Image_Hotspots extends Widget_Base {
 			[
 				'label' => esc_html__( 'Link', 'wpr-addons' ),
 				'type' => Controls_Manager::URL,
+				'dynamic' => [
+					'active' => true,
+				],
 				'placeholder' => esc_html__( 'https://www.your-link.com', 'wpr-addons' ),
 				'separator' => 'before',
-				
 			]
 		);
 
@@ -355,6 +363,43 @@ class Wpr_Image_Hotspots extends Widget_Base {
 					'tada' => esc_html__( 'Tada', 'wpr-addons' ),
 				],
 				'render_type' => 'template',
+			]
+		);
+
+		$this->add_control(
+			'hotspot_origin',
+			[
+				'type' => Controls_Manager::SELECT,
+				'label' => esc_html__( 'Origin', 'wpr-addons' ),
+				'description' => esc_html__('Defines where the point is located relative to hotspot item', 'wpr-addons'),
+				'default' => 'top-left',
+				'options' => [
+					'top-left' => esc_html__( 'Top Left', 'wpr-addons' ),
+					'top-right' => esc_html__( 'Top Right', 'wpr-addons' ),
+					'top-center' => esc_html__( 'Top Center', 'wpr-addons' ),
+					'center' => esc_html__( 'Center', 'wpr-addons' ),
+					'center-left' => esc_html__( 'Center Left', 'wpr-addons' ),
+					'center-right' => esc_html__( 'Center Right', 'wpr-addons' ),
+					'bottom-left' => esc_html__( 'Bottom Left', 'wpr-addons' ),
+					'bottom-right' => esc_html__( 'Bottom Right', 'wpr-addons' ),
+					'bottom-center' => esc_html__( 'Bottom Center', 'wpr-addons' )
+				],
+				'selectors_dictionary' => [
+					'top-left' => '',
+					'top-right' => 'transform: translate(-100%, 0);',
+					'top-center' => 'transform: translate(-50%, 0);',
+					'center' => 'transform: translate(-50%, -50%);',
+					'center-left' => 'transform: translate(0, -50%);',
+					'center-right' => 'transform: translate(-100%, -50%);',
+					'bottom-left' => 'transform: translate(0, -100%);',
+					'bottom-right' => 'transform: translate(-100%, -100%);',
+					'bottom-center' => 'transform: translate(-50%, -100%);'
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-hotspot-item' => '{{VALUE}}',
+				],
+				'separator' => 'before'
+				// 'render_type' => 'template',
 			]
 		);
 

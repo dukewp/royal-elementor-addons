@@ -44,7 +44,7 @@ class Wpr_Post_Info extends Widget_Base {
 			'comments' => esc_html__( 'Comments', 'wpr-addons' ),
 			'author' => esc_html__( 'Author', 'wpr-addons' ),
 			'taxonomy' => esc_html__( 'Taxonomy', 'wpr-addons' ),
-			'pro-cf' => esc_html__( 'Custom Field (Pro)', 'wpr-addons' ),
+			'pro-cf' => esc_html__( 'Custom Field (Expert)', 'wpr-addons' ),
 		];
 	}
 
@@ -108,16 +108,15 @@ class Wpr_Post_Info extends Widget_Base {
 		$repeater->add_control(
 			'post_info_custom_field_video_tutorial',
 			[
-				'raw' => esc_html__( 'See how to use Custom Fields in this', 'wpr-addons' ) . sprintf( '<br><a href="%1$s" target="_blank">%2$s <span class="dashicons dashicons-video-alt3"></span></a>', 'https://www.youtube.com/watch?v=9GvpqyHF_Cs', esc_html__( 'Video Tutorial', 'wpr-addons' ) ),
+				'raw' => esc_html__( 'Watch Custom Fields ', 'wpr-addons' ) . sprintf( '<a href="%1$s" target="_blank">%2$s <span class="dashicons dashicons-video-alt3"></span></a>', 'https://www.youtube.com/watch?v=9GvpqyHF_Cs', esc_html__( 'Video Tutorial', 'wpr-addons' ) ),
 				'type' => Controls_Manager::RAW_HTML,
-				'separator' => 'after',
 				'condition' => [
 					'post_info_select' => 'custom-field'
 				]
 			]
 		);
 
-		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'post-info', 'post_info_select', ['pro-cf'] );
+		Utilities::upgrade_expert_notice( $repeater, Controls_Manager::RAW_HTML, 'post-info', 'post_info_select', ['pro-cf'] );
 
 		$repeater->add_control(
 			'post_info_modified_time',
@@ -137,6 +136,9 @@ class Wpr_Post_Info extends Widget_Base {
 			[
 				'label' => esc_html__( 'No Comments', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => ' No Comments',
 				'condition' => [
 					'post_info_select' => 'comments',
@@ -149,6 +151,9 @@ class Wpr_Post_Info extends Widget_Base {
 			[
 				'label' => esc_html__( 'One Comment', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => ' Comment',
 				'condition' => [
 					'post_info_select' => 'comments',
@@ -161,6 +166,9 @@ class Wpr_Post_Info extends Widget_Base {
 			[
 				'label' => esc_html__( 'Multiple Comments', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => ' Comments',
 				'separator' => 'after',
 				'condition' => [
@@ -207,6 +215,9 @@ class Wpr_Post_Info extends Widget_Base {
 			[
 				'label' => esc_html__( 'Separator', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => ', ',
 				'separator' => 'after',
 				'condition' => [
@@ -246,6 +257,7 @@ class Wpr_Post_Info extends Widget_Base {
 			]
 		);
 
+		if ( wpr_fs()->is_plan( 'expert' ) ) {
 		$repeater->add_control(
 			'post_info_cf',
 			[
@@ -290,6 +302,9 @@ class Wpr_Post_Info extends Widget_Base {
 			[
 				'label' => esc_html__( 'Button Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Click Me',
 				'condition' => [
 					'post_info_select' => 'custom-field',
@@ -328,6 +343,9 @@ class Wpr_Post_Info extends Widget_Base {
 				'description' => 'Insert <strong>*cf_value*</strong> to dislpay your Custom Field.',
 				'placeholder'=> 'For Ex: <span>*cf_value*</span>',
 				'type' => Controls_Manager::TEXTAREA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'condition' => [
 					'post_info_select' => 'custom-field',
 					'post_info_cf_wrapper' => 'yes',
@@ -347,6 +365,7 @@ class Wpr_Post_Info extends Widget_Base {
 				]
 			]
 		);
+		}
 
 		$repeater->add_control(
 			'post_info_extra_icon',
@@ -364,6 +383,9 @@ class Wpr_Post_Info extends Widget_Base {
 			[
 				'label' => esc_html__( 'Extra Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => '',
 			]
 		);
@@ -393,7 +415,7 @@ class Wpr_Post_Info extends Widget_Base {
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'post-info', [
-			'Display and Style Custom Fields in and Advanced way.',
+			'Display and Style Custom Fields in and Advanced way (Expert).',
 			'Query Custom Post Type Taxonomies (categories).'
 		] );
 
@@ -1076,7 +1098,7 @@ class Wpr_Post_Info extends Widget_Base {
 		$this->render_extra_icon_text( $settings );
 
 		// Wrap with Link
-		if ( 'yes' === $settings['post_info_link_wrap'] ) {
+		if ( isset($settings['post_info_link_wrap']) && 'yes' === $settings['post_info_link_wrap'] ) {
 			echo '<a href="'. esc_url( get_day_link( get_post_time( 'Y' ), get_post_time( 'm' ), get_post_time( 'j' ) ) ) .'">';
 		}
 
@@ -1089,7 +1111,7 @@ class Wpr_Post_Info extends Widget_Base {
 		}
 
 		// Wrap with Link
-		if ( 'yes' === $settings['post_info_link_wrap'] ) {
+		if ( isset($settings['post_info_link_wrap']) && 'yes' === $settings['post_info_link_wrap'] ) {
 			echo '</a>';
 		}
 	}
@@ -1123,14 +1145,14 @@ class Wpr_Post_Info extends Widget_Base {
 			}
 
 			// Wrap with Link
-			if ( 'yes' === $settings['post_info_link_wrap'] ) {
+			if ( isset($settings['post_info_link_wrap']) && 'yes' === $settings['post_info_link_wrap'] ) {
 				echo '<a href="'. esc_url( get_comments_link() ) .'">';
 			}
 
 			// Comments
 			echo '<span> '. esc_html($text) .'</span>';
 
-			if ( 'yes' === $settings['post_info_link_wrap'] ) {
+			if ( isset($settings['post_info_link_wrap']) && 'yes' === $settings['post_info_link_wrap'] ) {
 				echo '</a>';
 			}
 		}
@@ -1144,7 +1166,7 @@ class Wpr_Post_Info extends Widget_Base {
 		$this->render_extra_icon_text( $settings );
 		
 		// Wrap with Link
-		if ( 'yes' === $settings['post_info_link_wrap'] ) {
+		if ( isset($settings['post_info_link_wrap']) && 'yes' === $settings['post_info_link_wrap'] ) {
 			echo '<a href="'. esc_url( get_author_posts_url( $author_id ) ) .'">';
 		}
 
@@ -1154,7 +1176,7 @@ class Wpr_Post_Info extends Widget_Base {
 
 			echo '<span>'. esc_html(get_the_author_meta( 'display_name', $author_id )) .'</span>';
 
-		if ( 'yes' === $settings['post_info_link_wrap'] ) {
+		if ( isset($settings['post_info_link_wrap']) && 'yes' === $settings['post_info_link_wrap'] ) {
 			echo '</a>';
 		}
 	}
@@ -1169,7 +1191,7 @@ class Wpr_Post_Info extends Widget_Base {
 		
 		// Taxonomies
 		foreach ( $terms as $term ) {
-			if ( 'yes' === $settings['post_info_link_wrap'] ) {
+			if ( isset($settings['post_info_link_wrap']) && 'yes' === $settings['post_info_link_wrap'] ) {
 				echo '<a href="'. esc_url(get_term_link( $term->term_id )) .'">';
 					// Term Name
 					echo esc_html( $term->name );

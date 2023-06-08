@@ -1,5 +1,5 @@
 <?php
-namespace WprAddons\Classes;
+namespace WprAddons\Classes\Modules;
 
 use Elementor\Utils;
 use Elementor\Group_Control_Image_Size;
@@ -453,4 +453,4 @@ if ( ! defined( 'ABSPATH' ) ) {
     }
  }
 
- new WPR_Load_More_Instagram_Posts;
+ new WPR_Load_More_Instagram_Posts();

@@ -68,7 +68,7 @@ class Wpr_Tabs extends Widget_Base {
             'default' => 'editor',
             'options' => [
                 'editor' => esc_html__( 'Editor', 'wpr-addons' ),
-                'acf' => esc_html__( 'Custom Field', 'wpr-addons' ),
+                'pro-cf' => esc_html__( 'Custom Field (Expert)', 'wpr-addons' ),
                 'pro-tmp' => esc_html__( 'Elementor Template (Pro)', 'wpr-addons' ),
             ],
 			'separator' => 'before',
@@ -141,6 +141,9 @@ class Wpr_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Label', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Tab 1',
 			]
 		);
@@ -165,6 +168,9 @@ class Wpr_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Upload Image', 'wpr-addons' ),
 				'type' => Controls_Manager::MEDIA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'condition' => [
 					'tab_icon_type' => 'image',
 				],
@@ -192,24 +198,27 @@ class Wpr_Tabs extends Widget_Base {
 
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'tabs', 'tab_content_type', ['pro-tmp'] );
+		Utilities::upgrade_expert_notice( $repeater, Controls_Manager::RAW_HTML, 'tabs', 'tab_content_type', ['pro-cf'] );
 
 		// Get Available Meta Keys
 		$post_meta_keys = Utilities::get_custom_meta_keys();
 
-		$repeater->add_control(
-			'tab_custom_field',
-			[
-				'label' => esc_html__( 'Select Custom Field', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT2,
-				'label_block' => true,
-				'default' => 'default',
-				'description' => '<strong>Note:</strong> This option only accepts String(Text) or Numeric Custom Field Values.',
-				'options' => $post_meta_keys[1],
-				'condition' => [
-					'tab_content_type' => 'acf'
-				],
-			]
-		);
+		if ( wpr_fs()->is_plan( 'expert' ) ) {
+			$repeater->add_control(
+				'tab_custom_field',
+				[
+					'label' => esc_html__( 'Select Custom Field', 'wpr-addons' ),
+					'type' => Controls_Manager::SELECT2,
+					'label_block' => true,
+					'default' => 'default',
+					'description' => '<strong>Note:</strong> This option only accepts String(Text) or Numeric Custom Field Values.',
+					'options' => $post_meta_keys[1],
+					'condition' => [
+						'tab_content_type' => 'acf'
+					],
+				]
+			);
+		}
 
 		$repeater->add_control(
 			'tab_content',
@@ -325,6 +334,15 @@ class Wpr_Tabs extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'tabs_invert_responsive',
+			[
+				'label' => esc_html__( 'Invert on Mobile', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'prefix_class' => 'wpr-tabs-responsive-',
+			]
+		);
+
 		$this->add_control_tabs_hr_position();
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {
@@ -417,12 +435,16 @@ class Wpr_Tabs extends Widget_Base {
 			[
 				'label' => esc_html__( 'Label Width', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
+				'size_units' => ['px', '%'],
 				'range' => [
 					'px' => [
 						'min' => 0,
 						'max' => 600,
 					],
+					'%' => [
+						'min' => 10,
+						'max' => 100
+					]
 				],
 				'default' => [
 					'unit' => 'px',
@@ -431,7 +453,7 @@ class Wpr_Tabs extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} '. $css_selector['control_list'] => 'min-width: {{SIZE}}{{UNIT}};',
 				],
-				'separator' => 'before',
+				'separator' => 'before'
 			]
 		);
 
@@ -517,12 +539,13 @@ class Wpr_Tabs extends Widget_Base {
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'tabs', [
 			'Add Unlimited Tabs',
 			'Tab Content Type - Elementor Template',
+			'Tab Content Type - Custom Fields (Expert)',
 			'Custom Tab Colors',
 			'Tab Label Align',
 			'Swich Tabs on Hover option',
 			'Set Active Tab by Default',
 			'Advanced Tab Content Animations',
-			'Tabs Autoplay option',
+			'Tabs Autoplay option'
 		] );
 		
 		// Styles

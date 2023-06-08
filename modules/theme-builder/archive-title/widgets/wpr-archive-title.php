@@ -116,6 +116,9 @@ class Wpr_Archive_Title extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text Before Title', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => '',
 			]
 		);

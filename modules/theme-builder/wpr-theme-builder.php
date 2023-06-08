@@ -39,6 +39,7 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 		$default_archives = [
 			'archive/posts' => esc_html__( 'Posts Archive', 'wpr-addons' ),
 			'product_archive/products' => esc_html__( 'Products Archive', 'wpr-addons' ),
+			'product_archive/product_search' => esc_html__('Products Search', 'wpr-addons'),
 			'archive/author' => esc_html__( 'Author Archive', 'wpr-addons' ),
 			'archive/date' => esc_html__( 'Date Archive', 'wpr-addons' ),
 			'archive/search' => esc_html__( 'Search Results', 'wpr-addons' ),
@@ -98,6 +99,8 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 					$query = 'product_cat';
 				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'product_archive/product_tag/all', $id) ) {
 					$query = 'product_tag';
+				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'product_archive/product_search') ) {
+					$query = 'product_archive/product_search';
 				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/categories', $id) ) {
 					$query = 'category';
 				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/tags', $id) ) {
@@ -250,6 +253,10 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 		switch ( $source ) {
 			case 'archive/posts':
 				$args = [ 'post_type' => 'post' ];
+				break;
+
+			case 'product_archive/products':
+				$args = ['post_type' => 'product'];
 				break;
 
 			case 'archive/author':

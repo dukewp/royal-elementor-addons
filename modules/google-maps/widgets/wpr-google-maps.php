@@ -124,6 +124,9 @@ class Wpr_Google_Maps extends Widget_Base {
 				'label' => esc_html__( 'Custom Style', 'wpr-addons' ),
 				'description' => esc_html__( 'Get custom map style code from <a href="https://snazzymaps.com/explore" target="_blank">Snazzy Maps</a> or <a href="https://mapstyle.withgoogle.com/" target="_blank">GM Styling Wizard</a> and copy/paste in this field.', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXTAREA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'condition' => [
 					'gm_color_scheme' => 'custom',
 				]
@@ -191,9 +194,6 @@ class Wpr_Google_Maps extends Widget_Base {
 
 		$this->end_controls_section(); // End Controls Section
 
-		// Section: Request New Feature
-		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
-
 		// Tab: Content ==============
 		// Section: Locations --------
 		$this->start_controls_section(
@@ -220,6 +220,9 @@ class Wpr_Google_Maps extends Widget_Base {
 			[
 				'label' => esc_html__( 'Latitude', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
@@ -228,6 +231,9 @@ class Wpr_Google_Maps extends Widget_Base {
 			[
 				'label' => esc_html__( 'Longtitude', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
@@ -252,6 +258,9 @@ class Wpr_Google_Maps extends Widget_Base {
 				'label' => esc_html__( 'Location Title', 'wpr-addons' ),
 				'label_block' => true,
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'condition' => [
 					'gm_show_info_window!' => 'none',
 				]
@@ -263,6 +272,9 @@ class Wpr_Google_Maps extends Widget_Base {
 			[
 				'label' => esc_html__( 'Location Description', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXTAREA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'condition' => [
 					'gm_show_info_window!' => 'none',
 				]
@@ -318,6 +330,9 @@ class Wpr_Google_Maps extends Widget_Base {
 			[
 				'label' => esc_html__( 'Upload Marker Icon', 'wpr-addons' ),
 				'type' => Controls_Manager::MEDIA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'condition' => [
 					'gm_custom_marker' => 'yes',
 				]
@@ -429,6 +444,9 @@ class Wpr_Google_Maps extends Widget_Base {
 		);
 
 		$this->end_controls_section(); // End Controls Section
+
+		// Section: Request New Feature
+		Utilities::wpr_add_section_request_feature( $this, Controls_Manager::RAW_HTML, '' );
 
 		// Styles ====================
 		// Section: Info Window ------
@@ -618,6 +636,10 @@ class Wpr_Google_Maps extends Widget_Base {
 		$attributes .= ' data-controls="'. esc_attr( json_encode($this->get_map_controls( $settings )) ) .'"';
 
 		echo '<div class="wpr-google-map" '. $attributes .'></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+		if ( current_user_can('manage_options') && '' == get_option('wpr_google_map_api_key') ) {
+			echo '<p class="wpr-api-key-missing">Please go to plugin <a href='. admin_url( 'admin.php?page=wpr-addons&tab=wpr_tab_settings' ) .' target="_blank">Settings</a> and Insert Google Map API Key in order to make Google Maps work</p>';
+		}
 
 	}
 	

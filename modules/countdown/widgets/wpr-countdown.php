@@ -123,6 +123,9 @@ class Wpr_Countdown extends Widget_Base {
 					esc_html__( 'Date set according to your timezone: %s.', 'wpr-addons' ),
 					Utils::get_timezone_string()
 				),
+				'dynamic' => [
+					'active' => true,
+				],
 				'separator' => 'before',
 				'condition' => [
 					'countdown_type' => 'due-date',
@@ -237,6 +240,9 @@ class Wpr_Countdown extends Widget_Base {
 			[
 				'label' => esc_html__( 'Day', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Day',
 				'condition' => [
 					'show_labels' => 'yes',
@@ -249,6 +255,9 @@ class Wpr_Countdown extends Widget_Base {
 			[
 				'label' => esc_html__( 'Days', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Days',
 				'condition' => [
 					'show_labels' => 'yes',
@@ -261,6 +270,9 @@ class Wpr_Countdown extends Widget_Base {
 			[
 				'label' => esc_html__( 'Hour', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Hour',
 				'condition' => [
 					'show_labels' => 'yes',
@@ -273,6 +285,9 @@ class Wpr_Countdown extends Widget_Base {
 			[
 				'label' => esc_html__( 'Hours', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Hours',
 				'condition' => [
 					'show_labels' => 'yes',
@@ -285,6 +300,9 @@ class Wpr_Countdown extends Widget_Base {
 			[
 				'label' => esc_html__( 'Minute', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Minute',
 				'condition' => [
 					'show_labels' => 'yes',
@@ -297,6 +315,9 @@ class Wpr_Countdown extends Widget_Base {
 			[
 				'label' => esc_html__( 'Minutes', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Minutes',
 				'condition' => [
 					'show_labels' => 'yes',
@@ -309,6 +330,9 @@ class Wpr_Countdown extends Widget_Base {
 			[
 				'label' => esc_html__( 'Seconds', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Seconds',
 				'condition' => [
 					'show_labels' => 'yes',
@@ -359,6 +383,9 @@ class Wpr_Countdown extends Widget_Base {
 				'label' => esc_html__( 'CSS Selector to Hide Element', 'wpr-addons' ),
 				'label_block' => true,
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => '',
 				'separator' => 'before',
 				'condition' => [
@@ -386,6 +413,9 @@ class Wpr_Countdown extends Widget_Base {
 				'label' => esc_html__( 'Redirect URL', 'wpr-addons' ),
 				'label_block' => true,
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => '',
 				'separator' => 'before',
 				'condition' => [

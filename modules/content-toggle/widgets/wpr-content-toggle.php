@@ -156,6 +156,9 @@ class Wpr_Content_Toggle extends Widget_Base {
 			[
 				'label' => esc_html__( 'Label', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Annual',
 				'condition' => [
 					'switcher_style' => ['dual', 'pro-ml'],
@@ -255,6 +258,9 @@ class Wpr_Content_Toggle extends Widget_Base {
 			[
 				'label' => esc_html__( 'Label', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Lifetime',
 				'condition' => [
 					'switcher_style' => ['dual', 'pro-ml'],

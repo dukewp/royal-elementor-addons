@@ -163,6 +163,9 @@ class Wpr_Post_Navigation extends Widget_Base {
 			[
 				'label' => esc_html__( 'Previous Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Previous Post',
 				'condition' => [
 					'post_nav_labels' => 'yes',
@@ -176,6 +179,9 @@ class Wpr_Post_Navigation extends Widget_Base {
 			[
 				'label' => esc_html__( 'Next Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Next Post',
 				'condition' => [
 					'post_nav_labels' => 'yes',
@@ -842,7 +848,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 							if ( 'yes' === $settings['post_nav_labels'] ) {
 								echo '<span>';
 									$this->render_arrow_by_location( $settings, 'label', 'left' );
-									echo esc_html( $settings['post_nav_prev_text'] );
+									echo esc_html__( $settings['post_nav_prev_text'] );
 								echo '</span>';
 							}
 
@@ -891,7 +897,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 							// Next Label
 							if ( 'yes' === $settings['post_nav_labels'] ) {
 								echo '<span>';
-									echo esc_html( $settings['post_nav_next_text'] );
+									echo esc_html__( $settings['post_nav_next_text'] );
 									$this->render_arrow_by_location( $settings, 'label', 'right' );
 								echo '</span>';
 							}

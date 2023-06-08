@@ -86,6 +86,9 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'label' => __( 'Choose Image', 'wpr-addons' ),
 				'type' => Controls_Manager::MEDIA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => [
 					'url' => WPR_ADDONS_ASSETS_URL . 'img/logo-slider-450x450.png',
 				],
@@ -97,6 +100,9 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'label' => esc_html__( 'Image Caption', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Image Caption',
 				'description' => 'Show/Hide Image Caption from Settings tab.'
 				// 'condition' => [
@@ -120,6 +126,9 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'label' => __( 'Link', 'plugin-domain' ),
 				'type' => Controls_Manager::URL,
+				'dynamic' => [
+					'active' => true,
+				],
 				'placeholder' => __( 'https://your-link.com', 'wpr-addons' ),
 				'show_external' => true,
 				'default' => [
@@ -1182,7 +1191,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				} if (WPR_ADDONS_ASSETS_URL . 'img/logo-slider-450x450.png' === $element['image']['url']) {
 					$flip_slide_image = '<img src="'. esc_url($element['image']['url']) .'" />';
 				} else {
-					$flip_slide_image = '<img src="'.  Group_Control_Image_Size::get_attachment_image_src( $element['image']['id'], 'flip_carousel_image_size', $settings ) .'" />';
+					$flip_slide_image = '<img alt="'. $element['image']['alt'] .'" src="'.  Group_Control_Image_Size::get_attachment_image_src( $element['image']['id'], 'flip_carousel_image_size', $settings ) .'" />';
 				}
 
 				if ( 'yes' === $settings['enable_figcaption'] ) {

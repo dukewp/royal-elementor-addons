@@ -113,6 +113,9 @@ class Wpr_Product_Media extends Widget_Base {
 			'product_media_sales_badge_text',
 			[
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'label' => esc_html__( 'Sale Badge Text', 'wpr-addons' ),
 				'default' => 'Sale!',
 				'separator' => 'after',

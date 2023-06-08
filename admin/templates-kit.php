@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use WprAddons\Admin\Templates\WPR_Templates_Data;
+use WprAddons\Admin\Templates\Library\WPR_Templates_Data;
 use WprAddons\Classes\Utilities;
 use Elementor\Plugin;
 
@@ -97,11 +97,13 @@ function wpr_addons_templates_kit_page() {
             uasort($sorted_kits, function ($item1, $item2) {
                 if ($item1['priority'] == $item2['priority']) return 0;
                 return $item1['priority'] < $item2['priority'] ? -1 : 1;
-            });
+            });           
 
             // Loop
             foreach ($sorted_kits as $kit_id => $data) {
-                echo '<div class="grid-item" data-kit-id="'. esc_attr($kit_id) .'" data-tags="'. esc_attr($data['tags']) .'" data-plugins="'. esc_attr($data['plugins']) .'" data-pages="'. esc_attr($data['pages']) .'" data-price="'. esc_attr($data['price']) .'">';
+                $is_expert = isset($data['expert']) && 'expert' === $data['expert'] ? 'true' : 'false';
+
+                echo '<div class="grid-item" data-kit-id="'. esc_attr($kit_id) .'" data-tags="'. esc_attr($data['tags']) .'" data-plugins="'. esc_attr($data['plugins']) .'" data-pages="'. esc_attr($data['pages']) .'" data-price="'. esc_attr($data['price']) .'" data-expert="'. esc_attr($is_expert) .'">';
                     echo '' !== $data['label'] ? '<span class="label label-'. esc_attr($data['label']) .'">'. esc_html($data['label']) .'</span>' : '';
                     echo '<div class="image-wrap">';
                         echo '<img src="'. esc_url('https://royal-elementor-addons.com/library/templates-kit/'. $kit_id .'/home.jpg') .'">';
@@ -123,15 +125,25 @@ function wpr_addons_templates_kit_page() {
     </div>
 
     <div class="wpr-templates-kit-single">
+        <?php if ( !wpr_fs()->is_plan( 'expert' ) ) : ?>
+        <div class="wpr-templates-kit-expert-notice">
+            <p>
+                <span class="dashicons dashicons-warning"></span>
+                <strong>Important Notice:</strong> This Demo includes certain <strong>Expert Features</strong>. While you can still import this Template Kit with a <strong>Pro Plan</strong>, you'll need an <strong>Expert Plan</strong> to fully access all Expert options. Please visit our website for more <a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-templates-upgrade-expert#purchasepro" target="_blank">details on the Expert Plan</a>.
+            </p>
+        </div>
+        <?php endif; ?>
+        
         <div class="wpr-templates-kit-grid single-grid"></div>
 
         <footer class="action-buttons-wrap">
             <a href="https://royal-elementor-addons.com/" class="preview-demo button" target="_blank"><?php esc_html_e('Preview Demo', 'wpr-addons'); ?> <span class="dashicons dashicons-external"></span></a>
+            <a href="https://www.youtube.com/watch?v=G47y0zA-tFg" class="import-tutorial-link" target="_blank"><span class="dashicons dashicons-video-alt3"></span> <?php esc_html_e('How to Import Single Pages?', 'wpr-addons'); ?></a>
 
             <div class="import-template-buttons">
-                <?php
+            <?php
                     echo '<button class="import-kit button">'. esc_html__('Import Templates Kit', 'wpr-addons') .' <span class="dashicons dashicons-download"></span></button>';
-                    echo '<a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-templates-upgrade-pro#purchasepro" class="get-access button" target="_blank">'. esc_html__('Get Access', 'wpr-addons') .' <span class="dashicons dashicons-external"></span></a>';
+                    echo '<a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-templates-upgrade-pro#purchasepro" class="get-access button" target="_blank">'. esc_html__('Upgrade to PRO', 'wpr-addons') .' <span class="dashicons dashicons-external"></span></a>';
                 ?>
                 <button class="import-template button"><?php printf( esc_html__( 'Import %s Template', 'wpr-addons' ), '<strong></strong>' ); ?></button>
                 
@@ -373,6 +385,10 @@ function download_template( $kit, $file ) {
         require_once ABSPATH . 'wp-admin/includes/file.php';
     }
 
+    if ( !vts( $kit ) ) {
+        return;
+    }
+
     $tmp_file = download_url( $remote_file_url );
 
     // WP Error.
@@ -382,10 +398,15 @@ function download_template( $kit, $file ) {
         $tmp_file = download_url( $remote_file_url );
 
         if ( is_wp_error( $tmp_file ) ) {
+            // Track Import Failed Kit
+            wpr_track_import_failed_kit( $kit );
+
             wp_send_json_error([
                 'error' => esc_html__('Error: Import File download failed.', 'wpr-addons'),
-                'help' => esc_html__('Please contact Customer Support and send this Error.', 'wpr-addons')
+                'help' => esc_html__('Please contact Customer Support and send this Error.', 'wpr-addons'),
+                'problem' => 'download'
             ]);
+            
             return false;
         }
     }
@@ -415,13 +436,76 @@ function download_template( $kit, $file ) {
     if ( isset( $local_file['error'] ) ) {
         wp_send_json_error([
             'error' => esc_html__('Error: Import File upload failed.', 'wpr-addons'),
-            'help' => esc_html__('Please contact Customer Support and send this Error.', 'wpr-addons')
+            'help' => esc_html__('Please contact Customer Support and send this Error.', 'wpr-addons'),
+            'problem' => 'upload'
         ]);
         return false;
     }
 
     // Success.
     return $local_file['file'];
+}
+
+/**
+** Validate Template
+*/
+function vts( $kit ) {
+    // Avoid Cache
+    $randomNum = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 7);
+
+    $remote_file_url = 'https://royal-elementor-addons.com/library/vts.json?='. $randomNum;
+
+    // If the function it's not available, require it.
+    if ( ! function_exists( 'download_url' ) ) {
+        require_once ABSPATH . 'wp-admin/includes/file.php';
+    }
+
+    $tmp_file = download_url( $remote_file_url );
+
+    // WP Error.
+    if ( is_wp_error( $tmp_file ) ) {
+        // Track Import Failed Kit
+        wpr_track_import_failed_kit( $kit );
+
+        wp_send_json_error([
+            'error' => esc_html__('Error: Import File download failed.', 'wpr-addons'),
+            'help' => esc_html__('Please contact Customer Support and send this Error.', 'wpr-addons'),
+            'problem' => 'download'
+        ]);
+        
+        return false;
+    }
+
+    $file_args = [
+        'name'     => 'vts.json',
+        'tmp_name' => $tmp_file,
+        'error'    => 0,
+        'size'     => filesize( $tmp_file ),
+    ];
+
+    $defaults = array(
+        'test_form' => false,
+        'test_size' => true,
+        'test_upload' => true,
+        'mimes'  => [
+            'xml'  => 'text/xml',
+            'json' => 'text/plain',
+        ],
+        'wp_handle_sideload' => 'upload',
+    );
+
+    $local_file = wp_handle_sideload( $file_args, $defaults );
+
+    if ( isset( $local_file['error'] ) ) {
+        return false;
+    }
+
+    $tmps = json_decode(file_get_contents($local_file['file']));
+
+    // Delete Import File
+    unlink( $local_file['file'] );
+
+    return in_array($kit, $tmps) && !wpr_fs()->can_use_premium_code() ? false : true;
 }
 
 /**
@@ -443,7 +527,13 @@ function wpr_reset_previous_import() {
             'wpr_mega_menu',
             'wpr_templates',
             'elementor_library',
-            'attachment'
+            'attachment',
+
+            'acf-post-type',
+            'acf-taxonomy',
+            'acf-field-group',
+
+            'wpr_portfolio'
         ],
         'post_status' => 'any',
         'posts_per_page' => '-1',
@@ -522,9 +612,12 @@ function setup_wpr_templates( $kit ) {
     $kit_name = substr($kit, 0, strripos($kit, '-v'));
     $kit_version = substr($kit, (strripos($kit, '-v') + 1), strlen($kit));
     $get_available_kits = WPR_Templates_Data::get_available_kits();
+    $get_custom_types = $get_available_kits[$kit_name][$kit_version]['custom-types'];
     $has_theme_builder = $get_available_kits[$kit_name][$kit_version]['theme-builder'];
     $has_woo_builder = $get_available_kits[$kit_name][$kit_version]['woo-builder'];
     $has_off_canvas = $get_available_kits[$kit_name][$kit_version]['off-canvas'];
+    $custom_type_archive_conditions = [];
+    $custom_type_single_conditions = [];
 
     // Set Home & Blog Pages
     $home_page = get_page_by_path('home-'. $kit);
@@ -545,10 +638,40 @@ function setup_wpr_templates( $kit ) {
     update_option('wpr_footer_conditions', '{"user-footer-'. $kit .'-footer":["global"]}');
     update_post_meta( Utilities::get_template_id('user-footer-'. $kit), 'wpr_footer_show_on_canvas', 'true' );
 
+    // Custom Post Types & Taxonomies
+    if ( isset($get_custom_types) && wpr_fs()->is_plan( 'expert' ) ) {
+        foreach ($get_custom_types as $label => $slug) {
+            if ( substr_count( $slug,'_') > 1 ) {
+                $custom_type_archive_conditions[] = '"user-archive-'. $kit .'-'. $label .'":["archive/'. $slug .'/all"]';
+            } else {
+                $custom_type_archive_conditions[] = '"user-archive-'. $kit .'-'. $label .'":["archive/'. $slug .'"]';
+                $custom_type_single_conditions[] = '"user-single-'. $kit .'-'. $label .'":["single/'. $slug.'/all"]';
+            }
+        }
+        
+        $custom_type_archive_conditions = implode(',',$custom_type_archive_conditions);
+        $custom_type_single_conditions = implode(',',$custom_type_single_conditions);
+
+        if ( get_option('permalink_structure') !== '/%postname%/' ) {
+            // Set permalink structure to post name
+            update_option('permalink_structure', '/%postname%/');
+        }
+    
+        // Flush rewrite rules
+        global $wp_rewrite;
+        $wp_rewrite->flush_rules();
+    }
+
     // Theme Builder
     if ( $has_theme_builder ) {
-        update_option('wpr_archive_conditions', '{"user-archive-'. $kit .'-blog":["archive/posts"],"user-archive-'. $kit .'-author":["archive/author"],"user-archive-'. $kit .'-date":["archive/date"],"user-archive-'. $kit .'-category-tag":["archive/categories/all","archive/tags/all"],"user-archive-'. $kit .'-search":["archive/search"]}');
-        update_option('wpr_single_conditions', '{"user-single-'. $kit .'-404":["single/page_404"],"user-single-'. $kit .'-post":["single/posts/all"],"user-single-'. $kit .'-page":["single/pages/all"]}');
+        $custom_type_archive_conditions = isset($get_custom_types) ? ','. $custom_type_archive_conditions : '';
+        $custom_type_single_conditions = isset($get_custom_types) ? ','. $custom_type_single_conditions : '';
+
+        update_option('wpr_archive_conditions', '{"user-archive-'. $kit .'-blog":["archive/posts"],"user-archive-'. $kit .'-author":["archive/author"],"user-archive-'. $kit .'-date":["archive/date"],"user-archive-'. $kit .'-category-tag":["archive/categories/all","archive/tags/all"],"user-archive-'. $kit .'-search":["archive/search"]'. $custom_type_archive_conditions .'}');
+        update_option('wpr_single_conditions', '{"user-single-'. $kit .'-404":["single/page_404"],"user-single-'. $kit .'-post":["single/posts/all"],"user-single-'. $kit .'-page":["single/pages/all"]'. $custom_type_single_conditions .'}');
+    } elseif ( isset($get_custom_types) ) {
+        update_option('wpr_archive_conditions', '{'. $custom_type_archive_conditions .'}');
+        update_option('wpr_single_conditions', '{'. $custom_type_single_conditions .'}');
     }
 
     // WooCommerce Builder
@@ -571,6 +694,19 @@ function setup_wpr_templates( $kit ) {
 
         // Update Options
         update_option( 'woocommerce_queue_flush_rewrite_rules', 'yes' );
+
+        // Set Wishlist and Compare
+        $wishlist_page = get_page_by_path('wishlist-'. $kit, OBJECT, 'page');
+        $compare_page = get_page_by_path('compare-'. $kit, OBJECT, 'page');
+
+        if ( $wishlist_page ) {
+            update_option('wpr_wishlist_page', $wishlist_page->ID);
+        }
+
+        if ( $compare_page ) {
+            update_option('wpr_compare_page', $compare_page->ID);
+        }
+        
 
         // Enable Elementor Builder for WooCommerce CPT
         // $cpt_support = get_option( 'elementor_cpt_support' );
@@ -765,6 +901,10 @@ function wpr_search_query_results() {
         return;
     }
 
+    if ( strpos($_SERVER['SERVER_NAME'],'instawp') || strpos($_SERVER['SERVER_NAME'],'tastewp') ) {
+		return;
+	}
+    
     $search_query = isset($_POST['search_query']) ? sanitize_text_field(wp_unslash($_POST['search_query'])) : '';
 
     wp_remote_post( 'http://reastats.kinsta.cloud/wp-json/templates-kit-search/data', [
@@ -782,10 +922,30 @@ function wpr_track_imported_kit( $kit ) {
     if ( ! ( wpr_fs()->is_registered() && wpr_fs()->is_tracking_allowed()  || wpr_fs()->is_pending_activation() ) ) {
         return;
     }
+
+    if ( strpos($_SERVER['SERVER_NAME'],'instawp') || strpos($_SERVER['SERVER_NAME'],'tastewp') ) {
+		return;
+	}
     
     wp_remote_post( 'http://reastats.kinsta.cloud/wp-json/templates-kit-import/data', [
         'body' => [
             'imported_kit' => $kit . ' *'. WPR_ADDONS_VERSION .'*'
+        ]
+    ] );
+}
+
+/**
+** Import Failed Kits
+*/
+function wpr_track_import_failed_kit( $kit ) {
+    // Freemius OptIn
+    // if ( ! ( wpr_fs()->is_registered() && wpr_fs()->is_tracking_allowed()  || wpr_fs()->is_pending_activation() ) ) {
+    //     return;
+    // }
+    
+    wp_remote_post( 'http://reastats.kinsta.cloud/wp-json/templates-kit-import-failed/data', [
+        'body' => [
+            'imported_kit' => get_site_url()
         ]
     ] );
 }

@@ -143,6 +143,9 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 			[
 				'label' => esc_html__( 'Element Selector', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => '',
 				'condition' => [
 					'popup_trigger' => 'element-scroll',
@@ -169,6 +172,9 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 			[
 				'label' => esc_html__( 'Element Selector', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => '',
 				'condition' => [
 					'popup_trigger' => 'custom',

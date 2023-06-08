@@ -1,4 +1,5 @@
 <?php
+use WprAddons\Classes\Utilities;
 
 class WPR_WooCommerce_Config {
 
@@ -24,10 +25,63 @@ class WPR_WooCommerce_Config {
 		add_filter( 'wc_get_template', [ $this, 'rewrite_default_wc_templates' ], 10, 3 );
 
 		add_filter( 'woocommerce_add_to_cart_fragments', [$this, 'wc_refresh_mini_cart_count']);
+
+		// Fix Theme Builder issues
+		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'maybe_init_cart' ] );
+		add_action( 'init', [ $this, 'register_wc_hooks' ], 5 );
+
+		if ( is_admin() ) {
+			$template = isset($_GET['post']) ? sanitize_text_field(wp_unslash($_GET['post'])) : '';
+
+			if ( $template_type = Utilities::get_wpr_template_type($template) ) {
+				add_action( 'init', [ $this, 'register_wc_hooks' ], 5 );
+			}
+		}
+		
+		add_action( 'init', [$this, 'add_wishlist_endpoint'] );
+
+		add_filter( 'woocommerce_account_menu_items', [$this, 'add_wishlist_to_my_account'] );
+
+		add_action( 'woocommerce_after_register_post_type', [$this, 'remove_deleted_products_from_compare_and_wishlist'] );
+	}
+
+	function add_wishlist_endpoint() {
+		add_rewrite_endpoint( 'wishlist', EP_ROOT | EP_PAGES );
+	}
+		
+	function add_wishlist_to_my_account( $items ) {
+		$items['wishlist'] = __( 'Wishlist', 'wpr-addons' );
+		return $items;
+	}
+
+	function remove_deleted_products_from_compare_and_wishlist() {
+		$compare = get_user_meta( get_current_user_id(), 'wpr_compare', true );
+		if ( ! $compare ) {
+			$compare = array();
+		}
+		foreach ( $compare as $key => $value ) {
+			$product = wc_get_product( $value );
+			if ( ! $product || 'trash' === get_post_status( $value ) ) {
+				$compare = array_diff( $compare, array( $value ) );
+			}
+		}
+		update_user_meta( get_current_user_id(), 'wpr_compare', $compare );
+
+		
+		$wishlist = get_user_meta( get_current_user_id(), 'wpr_wishlist', true );
+		if ( ! $wishlist ) {
+			$wishlist = array();
+		}
+		foreach ( $wishlist as $key => $value ) {
+			$product = wc_get_product( $value );
+			if ( ! $product || 'trash' === get_post_status( $value ) ) {
+				$wishlist = array_diff( $wishlist, array( $value ) );
+			}
+		}
+		update_user_meta( get_current_user_id(), 'wpr_wishlist', $wishlist );
 	}
 
 	function wpr_remove_elementor_lightbox( $classes ) {
-	
 		$classes[] = 'wpr-no-lightbox';
 	
 		// Return classes
@@ -112,7 +166,22 @@ class WPR_WooCommerce_Config {
 
 		return $located;
 	}
+	
+	public function register_wc_hooks() {
+		wc()->frontend_includes();
+	}
 
+	public function maybe_init_cart() {
+		$has_cart = is_a( WC()->cart, 'WC_Cart' );
+
+		if ( ! $has_cart ) {
+			$session_class = apply_filters( 'woocommerce_session_handler', 'WC_Session_Handler' );
+			WC()->session = new $session_class();
+			WC()->session->init();
+			WC()->cart = new \WC_Cart();
+			WC()->customer = new \WC_Customer( get_current_user_id(), true );
+		}
+	}
 }
 
 new WPR_WooCommerce_Config();

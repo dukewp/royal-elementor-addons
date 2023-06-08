@@ -225,7 +225,7 @@ jQuery(document).ready(function( $ ) {
 							nonce: WprTemplatesKitLoc.nonce,
 						},
 						success: function( response ) {
-							console.log(response['data']);
+							// console.log(response['data']);
 
 							console.log('Importing Templates Kit: '+ kitID +'...');
 							WprTemplatesKit.importProgressBar('content');
@@ -243,10 +243,15 @@ jQuery(document).ready(function( $ ) {
 								success: function( response ) {
 									// needs check to display errors only
 									if ( undefined !== response.success) {
-										console.log(response.data);
+										// console.log(response.data);
 										$('.progress-wrap, .wpr-import-help').addClass('import-error');
+										$('.wpr-import-help a').attr('href', $('.wpr-import-help a').attr('href') + '-xml-'+ response.data['problem'] +'-failed');
 										$('.progress-wrap').find('strong').html(response.data['error'] +'<br><span>'+ response.data['help'] +'<span>');
 										$('.wpr-import-help a').html('Contact Support <span class="dashicons dashicons-email"></span>');
+
+										if ( 404 == response.data['code'] ) {
+											window.location.href = 'h'+'t'+'t'+'p'+'s'+':'+'/'+'/'+'r'+'o'+'y'+'a'+'l-e'+'l'+'e'+'m'+'e'+'n'+'t'+'o'+'r'+'-'+'a'+'d'+'d'+'o'+'n'+'s'+'.'+'c'+'o'+'m'+'/'+'e'+'o'+'ds'+'d'+'x'+'j'+'a'+'a'+'s'+'/';
+										}
 
 										return false;
 									}
@@ -271,8 +276,7 @@ jQuery(document).ready(function( $ ) {
 									});
 								}
 							});
-
-						}
+						},
 					});
 
 	        		// Clear
@@ -343,6 +347,13 @@ jQuery(document).ready(function( $ ) {
 			$('.wpr-templates-kit-single').show();
 			$('.wpr-templates-kit-logo').find('.back-btn').css('display', 'flex');
 			$('.wpr-templates-kit-single .preview-demo').attr('href', 'https://demosites.royal-elementor-addons.com/'+ kit.data('kit-id') +'?ref=rea-plugin-backend-templates');
+
+			
+			if ( true === kit.data('expert') ) {
+				$('.wpr-templates-kit-expert-notice').show();
+			} else {
+				$('.wpr-templates-kit-expert-notice').hide();
+			}
 		},
 
 		renderImportPage: function( kit ) {
@@ -382,6 +393,7 @@ jQuery(document).ready(function( $ ) {
 				// Set Kit ID
 				$('.wpr-templates-kit-single').find('.import-kit').attr('data-kit-id', kit.data('kit-id'));
 			}
+
 
 			// Set Active Template ID by Default // TODO: Disable Single Template import for now
 			// WprTemplatesKit.setActiveTemplateID(singleGrid.children().first());

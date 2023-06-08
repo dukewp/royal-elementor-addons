@@ -138,6 +138,9 @@ class Wpr_Mailchimp extends Widget_Base {
 			[
 				'label' => esc_html__( 'Form Title', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Join the family!',
 				'condition' => [
 					'show_form_header' => 'yes',
@@ -150,6 +153,9 @@ class Wpr_Mailchimp extends Widget_Base {
 			[
 				'label' => esc_html__( 'Form Description', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXTAREA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Sign up for a Newsletter.',
 				'condition' => [
 					'show_form_header' => 'yes',
@@ -202,6 +208,9 @@ class Wpr_Mailchimp extends Widget_Base {
 			[
 				'label' => esc_html__( 'Email Label', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Email',
 				'separator' => 'before',
 			]
@@ -212,6 +221,9 @@ class Wpr_Mailchimp extends Widget_Base {
 			[
 				'label' => esc_html__( 'Email Placeholder', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'sample@mail.com',
 			]
 		);
@@ -233,6 +245,9 @@ class Wpr_Mailchimp extends Widget_Base {
 			[
 				'label' => esc_html__( 'Button Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Subscribe',
 			]
 		);
@@ -242,6 +257,9 @@ class Wpr_Mailchimp extends Widget_Base {
 			[
 				'label' => esc_html__( 'Button Loading Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Subscribing...',
 				'separator' => 'after'
 			]
@@ -252,6 +270,9 @@ class Wpr_Mailchimp extends Widget_Base {
 			[
 				'label' => esc_html__( 'Success Message', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'You have been successfully Subscribed!',
 			]
 		);
@@ -261,6 +282,9 @@ class Wpr_Mailchimp extends Widget_Base {
 			[
 				'label' => esc_html__( 'Error Message', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Ops! Something went wrong, please try again.',
 			]
 		);

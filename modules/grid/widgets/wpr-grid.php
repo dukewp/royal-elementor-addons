@@ -66,8 +66,8 @@ class Wpr_Grid extends Widget_Base {
 				continue;
 			}
 
-			if ( Utilities::is_new_free_user2() ) {
-				$post_types['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Pro)';
+			if ( !wpr_fs()->can_use_premium_code() ) {
+				$post_types['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Expert)';
 			} else {
 				$post_types[$slug] = esc_html( $title );
 			}
@@ -90,14 +90,25 @@ class Wpr_Grid extends Widget_Base {
 				continue;
 			}
 
-			if ( Utilities::is_new_free_user2() ) {
-				$post_taxonomies['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Pro)';
+			if ( !wpr_fs()->can_use_premium_code() ) {
+				$post_taxonomies['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Expert)';
 			} else {
 				$post_taxonomies[$slug] = esc_html( $title );
 			}
 		}
 
 		return $post_taxonomies;
+	}
+
+	public function add_control_secondary_img_on_hover() {
+		$this->add_control(
+			'secondary_img_on_hover',
+			[
+				'label' => sprintf( __( '2nd Image on Hover %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'classes' => 'wpr-pro-control no-distance'
+			]
+		);
 	}
 
 	public function add_control_open_links_in_new_tab() {
@@ -196,6 +207,7 @@ class Wpr_Grid extends Widget_Base {
 					'slider' => esc_html__( 'Slider / Carousel', 'wpr-addons' ),
 					'pro-ms' => esc_html__( 'Masonry - Unlimited Height (Pro)', 'wpr-addons' ),
 				],
+				'render_type' => 'template'
 			]
 		);
 	}
@@ -361,7 +373,7 @@ class Wpr_Grid extends Widget_Base {
 			'separator' => esc_html__( 'Separator', 'wpr-addons' ),
 			'pro-lk' => esc_html__( 'Likes (Pro)', 'wpr-addons' ),
 			'pro-shr' => esc_html__( 'Sharing (Pro)', 'wpr-addons' ),
-			'pro-cf' => esc_html__( 'Custom Field (Pro)', 'wpr-addons' ),
+			'pro-cf' => esc_html__( 'Custom Field (Expert)', 'wpr-addons' ),
 		];
 	}
 
@@ -775,6 +787,20 @@ class Wpr_Grid extends Widget_Base {
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'query_source', ['pro-rl'] );
 
+		if ( !wpr_fs()->is_plan( 'expert' ) ) {
+			$this->add_control(
+				'query_source_cpt_pro_notice',
+				[
+					'raw' => 'This option is available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-grid-upgrade-expert#purchasepro" target="_blank">Expert version</a></strong>',
+					'type' => Controls_Manager::RAW_HTML,
+					'content_classes' => 'wpr-pro-notice',
+					'condition' => [
+						'query_source!' => ['post','page','related','current','pro-rl'],
+					]
+				]
+			);
+		}
+
 		$this->add_control(
 			'query_selection',
 			[
@@ -825,6 +851,20 @@ class Wpr_Grid extends Widget_Base {
 				],
 			]
 		);
+
+		if ( !wpr_fs()->is_plan( 'expert' ) ) {
+			$this->add_control(
+				'query_tax_selection_pro_notice',
+				[
+					'raw' => 'This option is available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-grid-upgrade-expert#purchasepro" target="_blank">Expert version</a></strong>',
+					'type' => Controls_Manager::RAW_HTML,
+					'content_classes' => 'wpr-pro-notice',
+					'condition' => [
+						'query_tax_selection!' => ['category','post_tag'],
+					]
+				]
+			);
+		}
 
 		$this->add_control(
 			'query_author',
@@ -957,6 +997,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Not Found Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'No Posts Found!',
 				'condition' => [
 					'query_selection' => 'dynamic',
@@ -972,7 +1015,7 @@ class Wpr_Grid extends Widget_Base {
 		$this->add_control(
 			'query_exclude_no_images',
 			[
-				'label' => esc_html__( 'Exclude Items w/o Thumbnail', 'wpr-addons' ),
+				'label' => esc_html__( 'Exclude Items without Thumbnail', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'label_block' => false
@@ -1183,7 +1226,7 @@ class Wpr_Grid extends Widget_Base {
 				],
 				'condition' => [
 					'layout_select' => [ 'fitRows', 'masonry', 'list' ],
-				],
+				]
 			]
 		);
 
@@ -1502,17 +1545,17 @@ class Wpr_Grid extends Widget_Base {
 		$repeater->add_control(
 			'element_custom_field_video_tutorial',
 			[
-				'raw' => esc_html__( 'See how to use Custom Fields in this', 'wpr-addons' ) . sprintf( '<br><a href="%1$s" target="_blank">%2$s <span class="dashicons dashicons-video-alt3"></span></a>', 'https://www.youtube.com/watch?v=9GvpqyHF_Cs', esc_html__( 'Video Tutorial', 'wpr-addons' ) ),
+				'raw' => esc_html__( 'Watch Custom Fields ', 'wpr-addons' ) . sprintf( '<a href="%1$s" target="_blank">%2$s <span class="dashicons dashicons-video-alt3"></span></a>', 'https://www.youtube.com/watch?v=9GvpqyHF_Cs', esc_html__( 'Video Tutorial', 'wpr-addons' ) ),
 				'type' => Controls_Manager::RAW_HTML,
-				'separator' => 'after',
 				'condition' => [
-					'element_select' => 'custom-field'
+					'element_select' => ['custom-field', 'pro-cf']
 				]
 			]
 		);
 
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'grid', 'element_select', ['pro-lk', 'pro-shr', 'pro-cf'] );
+		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'grid', 'element_select', ['pro-lk', 'pro-shr'] );
+		Utilities::upgrade_expert_notice( $repeater, Controls_Manager::RAW_HTML, 'grid', 'element_select', ['pro-cf'] );
 
 		$repeater->add_control(
 			'element_location',
@@ -1747,6 +1790,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Read More Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Read More',
 				'condition' => [
 					'element_select' => [ 'read-more' ],
@@ -1760,6 +1806,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Separator', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => ', ',
 				'condition' => [
 					'element_select!' => [
@@ -1819,6 +1868,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'No Comments', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'No Comments',
 				'condition' => [
 					'element_select' => [ 'comments' ],
@@ -1831,6 +1883,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'One Comment', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Comment',
 				'condition' => [
 					'element_select' => [ 'comments' ],
@@ -1843,6 +1898,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Multiple Comments', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Comments',
 				'condition' => [
 					'element_select' => [ 'comments' ],
@@ -2014,6 +2072,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Extra Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => '',
 				'condition' => [
 					'element_select!' => [
@@ -2182,6 +2243,19 @@ class Wpr_Grid extends Widget_Base {
 				'label' => esc_html__( 'Animation Transparency', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
+				'return_value' => 'yes',
+				'condition' => [
+					'element_animation!' => 'none',
+					'element_location' => 'over' 
+				],
+			]
+		);
+
+		$repeater->add_control(
+			'element_animation_disable_mobile',
+			[
+				'label' => esc_html__( 'Disable on Mobile/Tablet', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'condition' => [
 					'element_animation!' => 'none',
@@ -2440,6 +2514,18 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
+		$this->add_control_secondary_img_on_hover();
+
+		$this->add_control(
+			'secondary_img_notice_video_tutorial',
+			[
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => __( '<ul><li><a href="https://youtu.be/-Xfbtkl4fkQ" target="_blank" style="color: #93003c;"><strong>Watch Video Tutorial <span class="dashicons dashicons-video-alt3"></strong></a></li></ul>', 'wpr-addons' ),
+				'separator' => 'after',
+				// 'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+			]
+		);
+
 		$this->add_control_image_effects();
 
 		// Upgrade to Pro Notice
@@ -2682,9 +2768,22 @@ class Wpr_Grid extends Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'options' => $post_taxonomies,
 				'default' => 'category',
-				'separator' => 'after',
 			]
 		);
+
+		if ( !wpr_fs()->is_plan( 'expert' ) ) {
+			$this->add_control(
+				'filters_select_pro_notice',
+				[
+					'raw' => 'This option is available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-grid-upgrade-expert#purchasepro" target="_blank">Expert version</a></strong>',
+					'type' => Controls_Manager::RAW_HTML,
+					'content_classes' => 'wpr-pro-notice',
+					'condition' => [
+						'filters_select!' => ['category','post_tag'],
+					]
+				]
+			);
+		}
 
 		$this->add_control(
 			'filters_linkable',
@@ -2729,6 +2828,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( '"All" Filter Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'All Post',
 				'condition' => [
 					'filters_all' => 'yes',
@@ -2754,6 +2856,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Separator', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => '',
 				'separator' => 'before',
 			]
@@ -2871,6 +2976,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Older Posts Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Older Posts',
 				'condition' => [
 					'pagination_type' => 'default',
@@ -2883,6 +2991,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Newer Posts Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Newer Posts',
 				'condition' => [
 					'pagination_type' => 'default',
@@ -2930,6 +3041,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Prev Page Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Previous Page',
 				'condition' => [
 					'pagination_type' => 'numbered',
@@ -2943,6 +3057,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Next Page Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Next Page',
 				'condition' => [
 					'pagination_type' => 'numbered',
@@ -2992,6 +3109,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'First Page Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'First Page',
 				'condition' => [
 					'pagination_type' => 'numbered',
@@ -3005,6 +3125,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Last Page Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Last Page',
 				'condition' => [
 					'pagination_type' => 'numbered',
@@ -3067,6 +3190,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Load More Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Load More',
 				'condition' => [
 					'pagination_type' => 'load-more',
@@ -3079,6 +3205,9 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Finish Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'End of Content.',
 				'condition' => [
 					'pagination_type' => [ 'load-more', 'infinite-scroll' ],
@@ -3151,6 +3280,7 @@ class Wpr_Grid extends Widget_Base {
 			'Masonry Layout',
 			'List Layout Zig-zag',
 			'Posts Slider Columns (Carousel) 1,2,3,4,5,6',
+			'Secondary Featured Image',
 			'Related Posts Query, Current Page Query, Random Posts Query',
 			'Infinite Scrolling Pagination',
 			'Post Slider Autoplay options',
@@ -3158,7 +3288,6 @@ class Wpr_Grid extends Widget_Base {
 			'Post Slider Advanced Pagination Positioning',
 			'Advanced Post Likes',
 			'Advanced Post Sharing',
-			'Custom Fields Support',
 			'Advanced Grid Loading Animations (Fade in & Slide Up)',
 			'Advanced Grid Elements Positioning',
 			'Unlimited Image Overlay Animations',
@@ -3175,8 +3304,9 @@ class Wpr_Grid extends Widget_Base {
 			'Open Links in New Tab',
 			'Lazy Loading',
 			'Posts Order',
-			'Custom Post Types Support',
-			'Trim Title & Excerpt By Letter Count'
+			'Trim Title & Excerpt By Letter Count',
+			'Custom Fields Support (Expert)',
+			'Custom Post Types Support (Expert)',
 		] );
 
 		// Styles ====================
@@ -3237,6 +3367,20 @@ class Wpr_Grid extends Widget_Base {
 		// );
 
 		$this->add_control(
+			'grid_item_styles_selector',
+			[
+				'label' => esc_html__( 'Apply Styles To', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'inner' => esc_html__( 'Inner Elements', 'wpr-addons' ),
+					'wrapper' => esc_html__( 'Wrapper', 'wpr-addons' )
+				],
+				'default' => 'inner',
+				'prefix_class' => 'wpr-item-styles-'
+			]
+		);
+
+		$this->add_control(
 			'grid_item_bg_color',
 			[
 				'label'  => esc_html__( 'Background Color', 'wpr-addons' ),
@@ -3245,6 +3389,8 @@ class Wpr_Grid extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-item-above-content' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-grid-item-below-content' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid[data-settings*="fitRows"] .wpr-grid-item' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-item-styles-wrapper .wpr-grid-item' => 'background-color: {{VALUE}}'
 				],
 			]
 		);
@@ -3258,8 +3404,9 @@ class Wpr_Grid extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#E8E8E8',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-item-above-content' => 'border-color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-grid-item-below-content' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-item-styles-inner .wpr-grid-item-above-content' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-item-styles-inner .wpr-grid-item-below-content' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}}.wpr-item-styles-wrapper .wpr-grid-item' => 'border-color: {{VALUE}}'
 				],
 			]
 		);
@@ -3281,8 +3428,9 @@ class Wpr_Grid extends Widget_Base {
 				],
 				'default' => 'none',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-item-above-content' => 'border-style: {{VALUE}};',
-					'{{WRAPPER}} .wpr-grid-item-below-content' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}}.wpr-item-styles-inner .wpr-grid-item-above-content' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}}.wpr-item-styles-inner .wpr-grid-item-below-content' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}}.wpr-item-styles-wrapper .wpr-grid-item' => 'border-style: {{VALUE}}'
 				],
 				'separator' => 'before',
 			]
@@ -3301,8 +3449,9 @@ class Wpr_Grid extends Widget_Base {
 					'left' => 1,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-item-above-content' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-grid-item-below-content' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-item-styles-inner .wpr-grid-item-above-content' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-item-styles-inner .wpr-grid-item-below-content' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-item-styles-wrapper .wpr-grid-item' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 				'condition' => [
 					'grid_item_border_type!' => 'none',
@@ -3326,6 +3475,27 @@ class Wpr_Grid extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-item-above-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-grid-item-below-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-item-styles-wrapper .wpr-grid-item' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				],
+				'render_type' => 'template'
+			]
+		);
+
+		// GOGA - maybe better to set separate padding control
+		$this->add_responsive_control(
+			'grid_item_wrap_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 10,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}}.wpr-item-styles-wrapper .wpr-grid-item' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 				'render_type' => 'template'
 			]
@@ -3381,7 +3551,7 @@ class Wpr_Grid extends Widget_Base {
 				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-image-wrap' => 'border-color: {{VALUE}}',
-				],
+				]
 			]
 		);
 
@@ -3401,7 +3571,7 @@ class Wpr_Grid extends Widget_Base {
 				'default' => 'none',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-image-wrap' => 'border-style: {{VALUE}};',
-				],
+				]
 			]
 		);
 
@@ -7193,6 +7363,15 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'active_styles_notice',
+			[
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => esc_html__('Apply active filter styles from the hover tab.', 'wpr-addons'),
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info'
+			]
+		);
+
 		$this->start_controls_tabs( 'tabs_grid_filters_style' );
 
 		$this->start_controls_tab(
@@ -8060,8 +8239,18 @@ class Wpr_Grid extends Widget_Base {
 		if ( 'slider' === $settings['layout_select'] ) {
 			$paged = 1;
 		}
+		
+		if ( empty($settings['query_offset']) ) {
+			$settings[ 'query_offset' ] = 0;
+		}
 
 		$offset = ( $paged - 1 ) * intval($settings['query_posts_per_page']) + intval($settings[ 'query_offset' ]);
+
+		if ( empty($settings['query_posts_per_page']) ) {
+			if ( !('slider' === $settings['layout_select'] && Utilities::is_new_free_user()) ) {
+				$settings['query_posts_per_page'] = 999;
+			}
+		}
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$settings[ 'query_randomize' ] = '';
@@ -8173,6 +8362,13 @@ class Wpr_Grid extends Widget_Base {
 	public function get_animation_class( $data, $object ) {
 		$class = '';
 
+		// Disable Animation on Mobile
+		if ( 'overlay' !== $object ) {
+			if ( 'yes' === $data[$object .'_animation_disable_mobile'] && wp_is_mobile() ) {
+				return $class;
+			}
+		}
+
 		// Animation Class
 		if ( 'none' !== $data[ $object .'_animation'] ) {
 			$class .= ' wpr-'. $object .'-'. $data[ $object .'_animation'];
@@ -8241,15 +8437,29 @@ class Wpr_Grid extends Widget_Base {
 	// Render Post Thumbnail
 	public function render_post_thumbnail( $settings ) {
 		$id = get_post_thumbnail_id();
+		
 		$src = Group_Control_Image_Size::get_attachment_image_src( $id, 'layout_image_crop', $settings );
+		
+		if ( get_post_meta(get_the_ID(), 'wpr_secondary_image_id') && !empty(get_post_meta(get_the_ID(), 'wpr_secondary_image_id')) ) {
+			$src2 = Group_Control_Image_Size::get_attachment_image_src( get_post_meta(get_the_ID(), 'wpr_secondary_image_id')[0], 'layout_image_crop', $settings );
+		} else {
+			$src2 = '';
+		}
+
 		$alt = '' === wp_get_attachment_caption( $id ) ? get_the_title() : wp_get_attachment_caption( $id );
 
 		if ( has_post_thumbnail() ) {
-			echo '<div class="wpr-grid-image-wrap" data-src="'. esc_url( $src ) .'">';
+			echo '<div class="wpr-grid-image-wrap" data-src="'. esc_url( $src ) .'" data-img-on-hover="'. $settings['secondary_img_on_hover'] .'"  data-src-secondary="'. esc_url( $src2 ) .'">';
 				if ( 'yes' == $settings['grid_lazy_loading'] ) {
 					echo '<img src="'. WPR_ADDONS_ASSETS_URL . 'img/icon-256x256.png" alt="'. esc_attr( $alt ) .'" class="wpr-hidden-image wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
+					if ( 'yes' == $settings['secondary_img_on_hover'] ) {
+						echo '<img src="'. esc_url( $src2 ) . '" alt="'. esc_attr( $alt ) .'" class="wpr-hidden-img wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
+					}
 				} else {
 					echo '<img src="'. esc_url( $src ) . '" alt="'. esc_attr( $alt ) .'" class="wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
+					if ( 'yes' == $settings['secondary_img_on_hover'] ) {
+						echo '<img src="'. esc_url( $src2 ) . '" alt="'. esc_attr( $alt ) .'" class="wpr-hidden-img wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
+					}
 				}
 			echo '</div>';
 		}

@@ -87,27 +87,44 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'icon',
-			[
-				'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'none' => esc_html__( 'None', 'wpr-addons' ),
-					'cart-light' => esc_html__( 'Cart Light', 'wpr-addons' ),
-					'cart-medium' => esc_html__( 'Cart Medium', 'wpr-addons' ),
-					'cart-solid' => esc_html__( 'Cart Solid', 'wpr-addons' ),
-					'basket-light' => esc_html__( 'Basket Light', 'wpr-addons' ),
-					'basket-medium' => esc_html__( 'Basket Medium', 'wpr-addons' ),
-					'basket-solid' => esc_html__( 'Basket Solid', 'wpr-addons' ),
-					'bag-light' => esc_html__( 'Bag Light', 'wpr-addons' ),
-					'bag-medium' => esc_html__( 'Bag Medium', 'wpr-addons' ),
-					'bag-solid' => esc_html__( 'Bag Solid', 'wpr-addons' )
-				],
-				'default' => 'cart-medium',
-				'prefix_class' => 'wpr-toggle-icon-',
-			]
-		);
+		if ( \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_font_icon_svg' ) ) {
+			$this->add_control(
+				'select_icon',
+				[
+					'label' => esc_html__('Select Icon', 'wpr-addons'),
+					'type' => Controls_Manager::ICONS,
+					'skin' => 'inline',
+					'label_block' => false,
+					'exclude' => ['svg'],
+					'default' => [
+						'value' => 'fas fa-shopping-cart',
+						'library' => 'solid',
+					]
+				]
+			);
+		} else {
+			$this->add_control(
+				'icon',
+				[
+					'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
+					'type' => Controls_Manager::SELECT,
+					'options' => [
+						'none' => esc_html__( 'None', 'wpr-addons' ),
+						'cart-light' => esc_html__( 'Cart Light', 'wpr-addons' ),
+						'cart-medium' => esc_html__( 'Cart Medium', 'wpr-addons' ),
+						'cart-solid' => esc_html__( 'Cart Solid', 'wpr-addons' ),
+						'basket-light' => esc_html__( 'Basket Light', 'wpr-addons' ),
+						'basket-medium' => esc_html__( 'Basket Medium', 'wpr-addons' ),
+						'basket-solid' => esc_html__( 'Basket Solid', 'wpr-addons' ),
+						'bag-light' => esc_html__( 'Bag Light', 'wpr-addons' ),
+						'bag-medium' => esc_html__( 'Bag Medium', 'wpr-addons' ),
+						'bag-solid' => esc_html__( 'Bag Solid', 'wpr-addons' )
+					],
+					'default' => 'cart-medium',
+					'prefix_class' => 'wpr-toggle-icon-',
+				]
+			);
+		}
 
 		$this->add_control(
 			'toggle_text',
@@ -128,6 +145,9 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'placeholder' => esc_html__( 'Cart', 'wpr-addons' ),
 				'default' => esc_html__( 'Cart', 'wpr-addons' ),
 				'condition' => [
@@ -263,7 +283,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
             Group_Control_Typography::get_type(),
             [
                 'name' => 'title_typography',
-                'label' => __( 'Typography', 'my-plugin-domain' ),
+                'label' => __( 'Typography', 'wpr-addons' ),
                 'scheme' => Typography::TYPOGRAPHY_3,
                 'selector' => '{{WRAPPER}} .wpr-mini-cart-toggle-btn, {{WRAPPER}} .wpr-mini-cart-icon-count',
 				'fields_options' => [
@@ -274,11 +294,8 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 						'default' => [
 							'size' => '13',
 							'unit' => 'px',
-						],
+						]
 					]
-				],
-				'condition' => [
-					'toggle_text!' => 'none'
 				]
             ]
         );
@@ -544,6 +561,11 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 		$product_count = WC()->cart->get_cart_contents_count();
 		$sub_total = WC()->cart->get_cart_subtotal();
 		$counter_attr = 'data-counter="' . $product_count . '"';
+		if ( \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_font_icon_svg' ) ) {
+			$icon_class = $settings['select_icon']['value'];
+		} else {
+			$icon_class = 'eicon';
+		}
 
 		if ( !is_plugin_active('wpr-addons-pro/wpr-addons-pro.php') || 'none' == $settings['mini_cart_style'] ) {
 			// global $woocommerce;
@@ -567,7 +589,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 						<?php } 
 				endif; ?>
 				<span class="wpr-mini-cart-btn-icon" <?php echo $counter_attr; ?>>
-					<i class="eicon">
+					<i class="<?php echo $icon_class ?>">
                         <span class="wpr-mini-cart-icon-count <?php echo $product_count ? '' : 'wpr-mini-cart-icon-count-hidden'; ?>"><span><?php echo $product_count ?></span></span>
                     </i>
 				</span>
@@ -586,7 +608,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 		$this->add_render_attribute(
 			'mini_cart_attributes',
 			[
-				'data-animation' => wpr_fs()->can_use_premium_code() ? $settings['mini_cart_entrance_speed'] : ''
+				'data-animation' => (wpr_fs()->can_use_premium_code() && isset($settings['mini_cart_entrance_speed'])) ? $settings['mini_cart_entrance_speed'] : ''
 			]
 		);
 

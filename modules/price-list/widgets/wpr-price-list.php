@@ -86,6 +86,9 @@ class Wpr_Price_List extends Widget_Base {
 			[
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Sweet Cakes',
 			]
 		);
@@ -95,6 +98,9 @@ class Wpr_Price_List extends Widget_Base {
 			[
 				'label' => esc_html__( 'Price', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => '$30',
 			]
 		);
@@ -104,6 +110,9 @@ class Wpr_Price_List extends Widget_Base {
 			[
 				'label' => esc_html__( 'Old Price', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => '',
 			]
 		);
@@ -113,6 +122,9 @@ class Wpr_Price_List extends Widget_Base {
 			[
 				'label'   	=> esc_html__( 'Description', 'wpr-addons' ),
 				'type'    	=> Controls_Manager::TEXTAREA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Lorem ipsum dolor sit amet, mea ei viderer probatus consequuntur, sonet vocibus lobortis has ad. Eos erant indoctum an, dictas invidunt est ex, et sea consulatu torquatos. Best pricing list widget.',
 			]
 		);

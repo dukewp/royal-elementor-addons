@@ -1,5 +1,5 @@
 <?php
-namespace WprAddons\Classes;
+namespace WprAddons\Classes\Modules;
 
 use Elementor\Utils;
 use Elementor\Group_Control_Image_Size;
@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         $nonce = $_POST['nonce'];
 
         if ( !wp_verify_nonce( $nonce, 'wpr-addons-js' ) ) {
-        return; // Get out of here, the nonce is rotten!
+            return; // Get out of here, the nonce is rotten!
         }
 
 		$all_post_types = [];
@@ -99,4 +99,4 @@ if ( ! defined( 'ABSPATH' ) ) {
     }
  }
 
- new WPR_Ajax_Search;
+ new WPR_Ajax_Search();

@@ -530,6 +530,9 @@ class Wpr_Nav_Menu extends Widget_Base {
 			[
 				'label' => esc_html__( 'Toggle Open Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'Menu', 'wpr-addons' ),
 				'condition' => [
 					'mob_menu_display!' => 'none',
@@ -543,6 +546,9 @@ class Wpr_Nav_Menu extends Widget_Base {
 			[
 				'label' => esc_html__( 'Toggle Close Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'Close', 'wpr-addons' ),
 				'condition' => [
 					'mob_menu_display!' => 'none',

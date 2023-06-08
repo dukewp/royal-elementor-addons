@@ -148,6 +148,9 @@ class Wpr_Dual_Button extends Widget_Base {
 				'label' => esc_html__( 'Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => 'Button 1',
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
@@ -155,6 +158,9 @@ class Wpr_Dual_Button extends Widget_Base {
 			'button_a_url',
 			[
 				'type' => Controls_Manager::URL,
+				'dynamic' => [
+					'active' => true,
+				],
 				'placeholder' => esc_html__( 'https://your-link.com', 'wpr-addons' ),
 				'default' => [
 					'url' => '#link',
@@ -232,6 +238,9 @@ class Wpr_Dual_Button extends Widget_Base {
 			[
 				'label' => esc_html__( 'Effect Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Go 1',
 				'condition' => [
 					'button_a_hover_animation' => ['wpr-button-winona','wpr-button-rayen-left','wpr-button-rayen-right']
@@ -305,6 +314,9 @@ class Wpr_Dual_Button extends Widget_Base {
 			[
 				'label' => esc_html__( 'Button ID', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'title' => esc_html__( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'wpr-addons' ),
 				'description' => esc_html__( 'Please make sure the ID is unique and not used elsewhere on the page this button is displayed. This field allows <code>A-z 0-9</code> & underscore chars without spaces.', 'wpr-addons' ),
 				'label_block' => false,
@@ -420,6 +432,9 @@ class Wpr_Dual_Button extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Button 2',
 			]
 		);
@@ -428,6 +443,9 @@ class Wpr_Dual_Button extends Widget_Base {
 			'button_b_url',
 			[
 				'type' => Controls_Manager::URL,
+				'dynamic' => [
+					'active' => true,
+				],
 				'label' => esc_html__( 'Link', 'wpr-addons' ),
 				'placeholder' => esc_html__( 'https://your-link.com', 'wpr-addons' ),
 				'show_label' => false,
@@ -506,6 +524,9 @@ class Wpr_Dual_Button extends Widget_Base {
 			[
 				'label' => esc_html__( 'Effect Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Go',
 				'condition' => [
 					'button_b_hover_animation' => ['wpr-button-winona','wpr-button-rayen-left','wpr-button-rayen-right']
@@ -579,6 +600,9 @@ class Wpr_Dual_Button extends Widget_Base {
 			[
 				'label' => esc_html__( 'Button ID', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'title' => esc_html__( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'wpr-addons' ),
 				'description' => esc_html__( 'Please make sure the ID is unique and not used elsewhere on the page this button is displayed. This field allows <code>A-z 0-9</code> & underscore chars without spaces.', 'wpr-addons' ),
 				'label_block' => false,

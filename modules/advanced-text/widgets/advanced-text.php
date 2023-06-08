@@ -258,6 +258,9 @@ class Advanced_Text extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'label_block' => true,
 				'default' => '|',
 				'condition' => [
@@ -294,6 +297,9 @@ class Advanced_Text extends Widget_Base {
 			[
 				'label' => esc_html__( 'Prefix Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'label_block' => true,
 				'default' => esc_html__( 'We are Creating the', 'wpr-addons' ),
 				'placeholder' => esc_html__( 'Enter your text', 'wpr-addons' ),
@@ -306,6 +312,9 @@ class Advanced_Text extends Widget_Base {
 			[
 				'label' => esc_html__( 'Animated Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXTAREA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'placeholder' => esc_html__( 'Enter each word in a separate line', 'wpr-addons' ),
 				'default' => "Best Websites\nAmazing Plugins",
 				'rows' => 5,
@@ -322,6 +331,9 @@ class Advanced_Text extends Widget_Base {
 			[
 				'label' => esc_html__( 'Highlight Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'label_block' => true,
 				'default' => esc_html__( 'Best Websites', 'wpr-addons' ),
 				'placeholder' => esc_html__( 'Enter your text', 'wpr-addons' ),
@@ -336,6 +348,9 @@ class Advanced_Text extends Widget_Base {
 			[
 				'label' => esc_html__( 'Suffix Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( '', 'wpr-addons' ),
 				'label_block' => true,
 			]
@@ -345,6 +360,9 @@ class Advanced_Text extends Widget_Base {
 			'text_link',
 			[
 				'type' => Controls_Manager::URL,
+				'dynamic' => [
+					'active' => true,
+				],
 				'label' => esc_html__( 'Link', 'wpr-addons' ),
 				'placeholder' => esc_html__( 'https://your-link.com', 'wpr-addons' ),
 				'separator' => 'before',

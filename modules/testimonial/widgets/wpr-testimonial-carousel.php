@@ -252,6 +252,9 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 			[
 				'label' => esc_html__( 'Author', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'John Doe',
 			]
 		);
@@ -261,6 +264,9 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 			[
 				'label' => esc_html__( 'Job', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Sony CEO',
 			]
 		);
@@ -270,6 +276,9 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 			[
 				'label' => esc_html__( 'Author Image', 'wpr-addons' ),
 				'type' => Controls_Manager::MEDIA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => [
 					'url' => Utils::get_placeholder_image_src(),
 				],
@@ -281,6 +290,9 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 			[
 				'label' => esc_html__( 'Company Logo', 'wpr-addons' ),
 				'type' => Controls_Manager::MEDIA,
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
@@ -289,6 +301,9 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 			[
 				'label' => esc_html__( 'Logo URL', 'wpr-addons' ),
 				'type' => Controls_Manager::URL,
+				'dynamic' => [
+					'active' => true,
+				],
 				'placeholder' => esc_html__( 'https://www.your-link.com', 'wpr-addons' ),
 				'conditions' => [
 					'terms' => [
@@ -315,6 +330,9 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 			[
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Awesome Theme',
 			]
 		);
@@ -328,6 +346,9 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 				'max' => 10,
 				'step' => 0.1,
 				'default' => 4.5,
+				'dynamic' => [
+					'active' => true,
+				],
 			]
 		);
 
@@ -345,6 +366,9 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 			[
 				'label' => esc_html__( 'Date', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => '7 Days Ago',
 			]
 		);

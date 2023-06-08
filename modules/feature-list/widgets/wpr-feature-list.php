@@ -377,6 +377,9 @@ class Wpr_Feature_List extends Widget_Base {
 				'label' => esc_html__( 'Choose Image', 'plugin-name' ),
 				'type' => \Elementor\Controls_Manager::MEDIA,
 				'skin' => 'inline',
+				'dynamic' => [
+					'active' => true,
+				],
 				'condition' => [
 					'feature_list_media_type' => 'image'
 				]
@@ -387,6 +390,9 @@ class Wpr_Feature_List extends Widget_Base {
 			'list_title', [
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'List Title' , 'wpr-addons' ),
 				'separator' => 'before',
 				'label_block' => true,
@@ -398,6 +404,9 @@ class Wpr_Feature_List extends Widget_Base {
 			[
 				'label' => esc_html__( 'Title Link', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::URL,
+				'dynamic' => [
+					'active' => true,
+				],
 				'placeholder' => esc_html__( 'https://your-link.com', 'wpr-addons' ),
 				'default' => [
 					'url' => '',
@@ -414,9 +423,12 @@ class Wpr_Feature_List extends Widget_Base {
 			[
 				'label' => esc_html__( 'Content', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::TEXTAREA,
-				'rows' => 10,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'List Content', 'wpr-addons' ),
 				'placeholder' => esc_html__( 'Type your description here', 'wpr-addons' ),
+				'rows' => 10,
 			]
 		);
 

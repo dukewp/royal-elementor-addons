@@ -56,6 +56,9 @@ class Wpr_Product_Stock extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'placeholder' => esc_html__( 'In Stock', 'wpr-addons' ),
 				'default' => esc_html__( 'In Stock', 'wpr-addons' ),
 			]
@@ -127,6 +130,9 @@ class Wpr_Product_Stock extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'placeholder' => esc_html__( 'Out of Stock', 'wpr-addons' ),
 				'default' => esc_html__( 'Out of Stock', 'wpr-addons' ),
 			]
@@ -170,6 +176,9 @@ class Wpr_Product_Stock extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'placeholder' => esc_html__( 'On Backorder', 'wpr-addons' ),
 				'default' => esc_html__( 'On Backorder', 'wpr-addons' ),
 			]

@@ -208,6 +208,9 @@ class Wpr_Author_Box extends Widget_Base {
 			[
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Writer & Blogger',
 				'condition' => [
 					'author_title' => 'yes',
@@ -259,6 +262,9 @@ class Wpr_Author_Box extends Widget_Base {
 			[
 				'label' => esc_html__( 'Posts Link Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'All Posts',
 				'condition' => [
 					'author_posts_link' => [ 'yes' ],

@@ -184,7 +184,53 @@ class WPR_Templates_Actions {
 			'kit_id' => $kit
         ]);
         
-        echo json_encode($data);
+		$template = '' !== $kit ? $kit : $slug;
+		if ( $this->vts($slug) ) {
+			echo json_encode($data);
+		}
+	}
+
+	/**
+	** Validate Template
+	*/
+	public function vts( $template ) {
+		// Avoid Cache
+		$randomNum = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 7);
+
+		$remote_file_url = 'https://royal-elementor-addons.com/library/vts.json?='. $randomNum;
+
+		$tmp_file = download_url( $remote_file_url );
+
+		$file_args = [
+			'name'     => 'vts.json',
+			'tmp_name' => $tmp_file,
+			'error'    => 0,
+			'size'     => filesize( $tmp_file ),
+		];
+
+		$defaults = array(
+			'test_form' => false,
+			'test_size' => true,
+			'test_upload' => true,
+			'mimes'  => [
+				'xml'  => 'text/xml',
+				'json' => 'text/plain',
+			],
+			'wp_handle_sideload' => 'upload',
+		);
+
+		$local_file = wp_handle_sideload( $file_args, $defaults );
+
+		if ( isset( $local_file['error'] ) ) {
+			return false;
+		}
+
+		$tmps = json_decode(file_get_contents($local_file['file']));
+
+		// Delete Import File
+		unlink( $local_file['file'] );
+
+		return in_array($template, $tmps) && !wpr_fs()->can_use_premium_code() ? false : true;
 	}
 
 	/**

@@ -439,6 +439,9 @@ class Wpr_Image_Accordion extends Widget_Base {
 			[
 				'label' => esc_html__( 'Image', 'wpr-addons' ),
 				'type' => Controls_Manager::MEDIA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'render_type' => 'template',
 				'default' => [
 					'url' => WPR_ADDONS_ASSETS_URL . 'img/logo-slider-450x450.png',
@@ -514,6 +517,9 @@ class Wpr_Image_Accordion extends Widget_Base {
 			'accordion_item_title', [
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'Item 1 Title' , 'wpr-addons' ),
 				'label_block' => true,
 				'separator' => 'before'
@@ -524,6 +530,9 @@ class Wpr_Image_Accordion extends Widget_Base {
 			'accordion_item_description', [
 				'label' => esc_html__( 'Description', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::TEXTAREA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'Lorem ipsum dolos ave nita' , 'wpr-addons' ),
 				'label_block' => true
 			]
@@ -534,6 +543,9 @@ class Wpr_Image_Accordion extends Widget_Base {
 			[
 				'label' => esc_html__( 'Button Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Button'
 			]
 		);
@@ -542,7 +554,10 @@ class Wpr_Image_Accordion extends Widget_Base {
 			'accordion_btn_url',
 			[
 				'label' => esc_html__( 'Button URL', 'wpr-addons' ),
-				'type' => Controls_Manager::URL
+				'type' => Controls_Manager::URL,
+				'dynamic' => [
+					'active' => true,
+				]
 			]
 		);
 		
@@ -768,6 +783,9 @@ class Wpr_Image_Accordion extends Widget_Base {
 			[
 				'label' => esc_html__( 'Extra Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => '',
 				'condition' => [
 					'element_select!' => [

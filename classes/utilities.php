@@ -19,16 +19,17 @@ class Utilities {
 	*/
 	public static function get_registered_modules() {
 		return [
-			'Post Grid' => ['grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-portfolio-grid', ''],
-			'WooCommerce Grid' => ['woo-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-woo-grid', ''],
-			'Image Grid' => ['media-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-gallery-grid', ''],
-			'Magazine Grid' => ['magazine-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-magazine-grid', ''],
+			'Post Grid/Slider/Carousel' => ['grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-blog-grid', ''],
+			'WooCommerce Grid/Slider/Carousel' => ['woo-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-woo-grid', ''],
+			'Image Grid/Slider/Carousel' => ['media-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-gallery-grid', ''],
+			'Magazine Grid/Slider' => ['magazine-grid', 'https://royal-elementor-addons.com/elementor-grid-widget-examples/', '#filter:category-magazine-grid', ''],
 			'Posts/Story Timeline' => ['posts-timeline', 'https://royal-elementor-addons.com/elementor-timeline-widget/', '', ''],
 			'Advanced Slider' => ['advanced-slider', 'https://royal-elementor-addons.com/elementor-advanced-slider-widget/', '', ''],
 			'Off-Canvas Content' => ['offcanvas', 'https://royal-elementor-addons.com/elementor-offcanvas-menu-widget/', '', 'new'],
 			'Testimonial' => ['testimonial', 'https://royal-elementor-addons.com/elementor-testimonials-slider-widget/', '', ''],
 			'Nav Menu' => ['nav-menu', 'http://royal-elementor-addons.com/elementor-menu-widget/', '', ''],
 			'Mega Menu' => ['mega-menu', 'https://royal-elementor-addons.com/elementor-mega-menu-widget/', '', 'new'],
+			'Form Builder' => ['form-builder', 'https://royal-elementor-addons.com/elementor-form-builder-widget/', '', 'new'],
 			'Onepage Navigation' => ['onepage-nav', 'https://royal-elementor-addons.com/elementor-one-page-navigation-widget/', '', ''],
 			'Instagram Feed' => ['instagram-feed', 'https://royal-elementor-addons.com/elementor-instagram-feed-widget/', '', 'new'],
 			'Data Table' => ['data-table', 'https://royal-elementor-addons.com/elementor-data-table-widget/', '', ''],
@@ -39,8 +40,8 @@ class Utilities {
 			'Progress Bar' => ['progress-bar', 'https://royal-elementor-addons.com/elementor-progress-bar-widget/', '', ''],
 			'Tabs' => ['tabs', 'https://royal-elementor-addons.com/elementor-tabs-widget/', '', ''],
 			'Dual Color Heading' => ['dual-color-heading', 'https://royal-elementor-addons.com/elementor-dual-color-heading-widget/', '', ''],
-			'Image Accordion' => ['image-accordion', 'https://royal-elementor-addons.com/elementor-image-accordion-widget/', '', 'new'],
-			'Advanced Accordion' => ['advanced-accordion', 'https://royal-elementor-addons.com/elementor-advanced-accordion-widget/', '', 'new'],
+			'Image Accordion' => ['image-accordion', 'https://royal-elementor-addons.com/elementor-image-accordion-widget/', '', ''],
+			'Advanced Accordion' => ['advanced-accordion', 'https://royal-elementor-addons.com/elementor-advanced-accordion-widget/', '', ''],
 			'Advanced Text' => ['advanced-text', 'https://royal-elementor-addons.com/elementor-advanced-text-widget/', '', ''],
 			'Flip Carousel' => ['flip-carousel', 'https://royal-elementor-addons.com/elementor-flip-carousel-widget/', '', ''],
 			'Flip Box' => ['flip-box', 'https://royal-elementor-addons.com/elementor-flip-box-widget/', '', ''],
@@ -48,7 +49,7 @@ class Utilities {
 			'Feature List' => ['feature-list', 'https://royal-elementor-addons.com/elementor-feature-list-widget/', '', ''],
 			'Before After' => ['before-after', 'https://royal-elementor-addons.com/elementor-before-after-widget/', '', ''],
 			'Image Hotspots' => ['image-hotspots', 'https://royal-elementor-addons.com/elementor-image-hotspot-widget/', '', ''],
-			'Forms' => ['forms', 'https://royal-elementor-addons.com/elementor-forms-widget/', '', ''],
+			'Form Styler' => ['forms', 'https://royal-elementor-addons.com/elementor-forms-widget/', '', ''],
 			'MailChimp' => ['mailchimp', 'https://royal-elementor-addons.com/elementor-mailchimp-subscription-widget/', '', ''],
 			'Content Ticker' => ['content-ticker', 'https://royal-elementor-addons.com/elementor-content-ticker-widget/', '', ''],
 			'Button' => ['button', 'https://royal-elementor-addons.com/elementor-button-widget/', '', ''],
@@ -68,13 +69,11 @@ class Utilities {
 			'Page List' => ['page-list', '', '', ''],
 			'Template' => ['elementor-template', '', '', ''],
 			'Video Playlist' => ['video-playlist', '', '', ''],
-			'Reading Progress Bar' => ['reading-progress-bar', 'https://royal-elementor-addons.com/elementor-reading-progress-bar-widget/', '', 'new'],
-			'Advanced Accordion' => ['advanced-accordion', '', '', 'new'],
-			'Instagram Feed' => ['instagram-feed', '', '', 'new'],
-			'Twitter Feed' => ['twitter-feed', '', '', 'new'],
 			// 'Facebook Feed' => ['facebook-feed', '', '', 'new'],
 			// https://royal-elementor-addons.com/elementor-offcanvas-widget/
 			// 'Random Image' => ['random-image', '', ''],
+			'Reading Progress Bar' => ['reading-progress-bar', 'https://royal-elementor-addons.com/elementor-reading-progress-bar-widget/', '', ''],
+			'Twitter Feed' => ['twitter-feed', 'https://royal-elementor-addons.com/elementor-twitter-feed-widget/', '', '']
 		];
 	}
 
@@ -119,6 +118,7 @@ class Utilities {
 			'Product Add to Cart' => ['product-add-to-cart', '', '', ''],
 			'Product Tabs' => ['product-tabs', '', '', ''],
 			'Product Excerpt' => ['product-excerpt', '', '', ''],
+			'Product Description' => ['product-description', '', '', ''],
 			'Product Rating' => ['product-rating', '', '', ''],
 			'Product Meta' => ['product-meta', '', '', ''],
 			'Product Sales Badge' => ['product-sales-badge', '', '', ''],
@@ -334,6 +334,7 @@ class Utilities {
 	** Get Library Template ID
 	*/
 	public static function get_template_id( $slug ) {
+		
 		$template = get_page_by_path( $slug, OBJECT, 'wpr_templates' );
 
         return isset( $template->ID ) ? $template->ID : false;
@@ -351,17 +352,15 @@ class Utilities {
 
 		// Find a Custom Condition
 		foreach( $data as $id => $conditions ) {
-
 			if ( in_array( $page .'/'. $post_id, $conditions) ) {
-
 				$template = $id;
-			} elseif ( in_array( $page .'/all', $conditions) ) {
+			} elseif ( in_array( $page .'/all', $conditions) && !in_array( $page .'/'. $post_id, $conditions) ) {
 				$template = $id;
-			} elseif ( in_array( $page, $conditions) ) {
+			} elseif ( in_array( $page, $conditions)  && !in_array( $page .'/'. $post_id, $conditions)  ) {
 				$template = $id;
 			}
 		}
-
+		
 		// If a Custom NOT Found, use Global
 		if ( is_null($template) ) {
 			foreach( $data as $id => $conditions ) {
@@ -379,10 +378,12 @@ class Utilities {
 		]);
 		
 		if ( ! $templates_loop->have_posts() ) {
-			return null;
+			$template = null;
 		} else {
-			return $template;
+			$template = $template;
 		}
+
+		return $template;
 	}
 
 
@@ -564,7 +565,15 @@ class Utilities {
 			$sharing_url = 'https://web.skype.com/share?url='. $args['url'];
 			$network_title = esc_html__( 'Skype', 'wpr-addons' );
 		} elseif ( 'whatsapp' === $args['network'] ) {
-			$sharing_url = 'https://api.whatsapp.com/send?text=*'. $args['title'] .'*%0a'. $args['text'] .'%0a'. $args['url'];
+			if ( 'yes' === $args['show_whatsapp_title'] && 'yes' == $args['show_whatsapp_excerpt'] ) {
+				$sharing_url = 'https://api.whatsapp.com/send?text=*'. $args['title'] .'*%0a'. wp_strip_all_tags($args['text']) .'%0a'. $args['url'];
+			} else if ( 'yes' === $args['show_whatsapp_title'] ) {
+				$sharing_url = 'https://api.whatsapp.com/send?text=*'. $args['title'] .'*%0a'. $args['url'];
+			} else if ( 'yes' === $args['show_whatsapp_excerpt'] ) {
+				$sharing_url = 'https://api.whatsapp.com/send?text=*'. wp_strip_all_tags($args['text']) .'%0a'. $args['url'];
+			} else {
+				$sharing_url = 'https://api.whatsapp.com/send?text='. $args['url'];
+			}
 			$network_title = esc_html__( 'WhatsApp', 'wpr-addons' );
 		} elseif ( 'telegram' === $args['network'] ) {
 			$sharing_url = 'https://telegram.me/share/url?url='. $args['url'] .'&text='. $args['text'];
@@ -762,6 +771,7 @@ class Utilities {
 		}
 	}
 
+	
 	/**
 	** Mailchimp AJAX Subscribe
 	*/
@@ -847,6 +857,39 @@ class Utilities {
 		}
 	}
 
+	// Needs further logic
+	public static function get_mailchimp_groups() {
+		$groups_array = ['def' => 'Select Group'];
+		foreach (self::get_mailchimp_lists() as $key => $value ) {
+			if ( 'def' === $key ) {
+				continue;
+			}
+			$audience = $key; // How to get settin
+			$api_key = get_option('wpr_mailchimp_api_key');
+			$url = 'https://'. substr( $api_key, strpos( $api_key, '-' ) + 1 ) .'.api.mailchimp.com/3.0/lists/'.$audience.'/interest-categories';
+			$args = [ 'headers' => [ 'Authorization' => 'Basic ' . base64_encode( 'user:'. $api_key ) ] ];
+			
+			$response = wp_remote_get( $url, $args );
+	
+			foreach ( json_decode($response['body'])->categories as $key => $value ) {
+				$group_name = $value->title;
+				$group_id = $value->id;
+				$url = 'https://'. substr( $api_key, strpos( $api_key, '-' ) + 1 ) .'.api.mailchimp.com/3.0/lists/'.$audience.'/interest-categories/'. $value->id .'/interests';
+				$args = [ 'headers' => [ 'Authorization' => 'Basic ' . base64_encode( 'user:'. $api_key ) ] ];
+				
+				$response = wp_remote_get( $url, $args );
+				
+				foreach (json_decode($response['body'])->interests as $key => $value ) {
+					// var_dump($group_name, $group_id);
+					// var_dump($group_name, $group_id, $value->id, $value->name);
+					$groups_array[$value->id] = $value->name;
+				}
+			}
+		}
+
+		return $groups_array;
+	}
+
 	/**
 	** WPR Animation Timings
 	*/
@@ -923,10 +966,33 @@ class Utilities {
 			return;
 		}
 
+		$url = 'https://royal-elementor-addons.com/?ref=rea-plugin-panel-'. $widget .'-upgrade-pro#purchasepro';
+
 		$module->add_control(
             $option .'_pro_notice',
             [
-				'raw' => 'This option is available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-'. $widget .'-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+				'raw' => 'This option is available<br> in the <strong><a href="'. $url .'" target="_blank">Pro version</a></strong> and above.',
+				// 'raw' => 'This option is available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
+				'type' => $controls_manager,
+				'content_classes' => 'wpr-pro-notice',
+				'condition' => [
+					$option => $condition,
+				]
+			]
+        );
+	}
+
+	public static function upgrade_expert_notice( $module, $controls_manager, $widget, $option, $condition = [] ) {
+		if ( wpr_fs()->is_plan( 'expert' ) ) {
+			return;
+		}
+
+		$url = 'https://royal-elementor-addons.com/?ref=rea-plugin-panel-'. $widget .'-upgrade-expert#purchasepro';
+
+		$module->add_control(
+            $option .'_expert_notice',
+            [
+				'raw' => 'This option is available<br> in the <strong><a href="'. $url .'" target="_blank">Expert version</a></strong>',
 				// 'raw' => 'This option is available<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
 				'type' => $controls_manager,
 				'content_classes' => 'wpr-pro-notice',
@@ -1004,6 +1070,53 @@ class Utilities {
 
 		$module->end_controls_section();
 	}
+	
+	// Add two new functions for handling cookies
+    public function get_wishlist_from_cookie() {
+        if (isset($_COOKIE['wpr_wishlist'])) {
+            return json_decode(stripslashes($_COOKIE['wpr_wishlist']), true);
+        } else if ( isset($_COOKIE['wpr_wishlist_'. get_current_blog_id() .'']) ) {
+            return json_decode(stripslashes($_COOKIE['wpr_wishlist_'. get_current_blog_id() .'']), true);
+        }
+        return array();
+    }
+
+	// Client IP for form submission
+	public static function get_client_ip() {
+		$server_ip_keys = [
+			'HTTP_CLIENT_IP',
+			'HTTP_X_FORWARDED_FOR',
+			'HTTP_X_FORWARDED',
+			'HTTP_X_CLUSTER_CLIENT_IP',
+			'HTTP_FORWARDED_FOR',
+			'HTTP_FORWARDED',
+			'REMOTE_ADDR',
+		];
+
+		foreach ( $server_ip_keys as $key ) {
+			$value = self::_unstable_get_super_global_value( $_SERVER, $key );
+			if ( $value && filter_var( $value, FILTER_VALIDATE_IP ) ) {
+				return $value;
+			}
+		}
+
+		// Fallback local ip.
+		return '127.0.0.1';
+	}
+
+	// For get_client_ip
+	public static function _unstable_get_super_global_value( $super_global, $key ) {
+		if ( ! isset( $super_global[ $key ] ) ) {
+			return null;
+		}
+
+		if ( $_FILES === $super_global ) {
+			$super_global[ $key ]['name'] = sanitize_file_name( $super_global[ $key ]['name'] );
+			return $super_global[ $key ];
+		}
+
+		return wp_kses_post_deep( wp_unslash( $super_global[ $key ] ) );
+	}
 
 	/**
 	** Check for New Free Users
@@ -1012,8 +1125,16 @@ class Utilities {
 		return !wpr_fs()->can_use_premium_code() && (intval(get_option('royal_elementor_addons_activation_time')) > 1649247746);
 	}
 	
-	public static function is_new_free_user2() {
-		return !wpr_fs()->can_use_premium_code() && (intval(get_option('royal_elementor_addons_activation_time')) > 1670317149);
-	}
+	// public static function is_new_free_user2() {
+	// 	return !wpr_fs()->can_use_premium_code() && (intval(get_option('royal_elementor_addons_activation_time')) > 1670317149);
+	// }
+
+	// public static function is_old_pro_user_or_expert() {
+	// 	return wpr_fs()->is_plan( 'expert' ) || (wpr_fs()->is_plan( 'pro' ) && (intval(get_option('royal_elementor_addons_pro_activation_time')) < 1680264265));
+	// }
+
+	// public static function is_new_pro_user() {
+	// 	return wpr_fs()->is_plan( 'pro' ) && (intval(get_option('royal_elementor_addons_pro_activation_time')) > 1680264265);
+	// }
 
 }

@@ -859,7 +859,13 @@ class Wpr_Search extends Widget_Base {
 
 		foreach ( $search_post_type as $key => $value ) {
 			if ( 'all' != $key ) {
-				$search_post_type[$key] = $value .' (Pro)';
+				$search_post_type['pro-'. $key] = $value .' (Pro)';
+
+				if ( 'all' != $key && 'post' != $key && 'page' != $key && 'product' != $key && 'e-landing-page' != $key && !wpr_fs()->is_plan( 'expert' ) ) {
+					$search_post_type['pro-'. $key] = $value .' (Expert)';
+				}
+
+				unset($search_post_type[$key]);
 			}
 		}
 
@@ -919,7 +925,7 @@ class Wpr_Search extends Widget_Base {
 		$this->add_control(
 			'exclude_posts_without_thumbnail',
 			[
-				'label' => esc_html__( 'Exclude Results w/o Thumbnails', 'wpr-addons' ),
+				'label' => esc_html__( 'Exclude Results without Thumbnails', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'render_type' => 'template',
                 'condition' => [
@@ -967,6 +973,9 @@ class Wpr_Search extends Widget_Base {
 			[
 				'label' => esc_html__( 'View Results', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'View Results', 'wpr-addons' ),
                 'condition' => [
 					'show_view_result_btn' => 'yes',
@@ -990,14 +999,18 @@ class Wpr_Search extends Widget_Base {
 
 		$this->add_control_search_query();
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'search', 'search_query', ['pro-post', 'pro-page', 'pro-product', 'pro-product', 'pro-e-landing-page'] );
+
+		if ( !wpr_fs()->is_plan( 'expert' ) ) {
 			$this->add_control(
-				'search_pro_notice',
+				'search_query_exp_pro_notice',
 				[
+					'raw' => 'This option is available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-grid-upgrade-expert#purchasepro" target="_blank">Expert version</a></strong>',
 					'type' => Controls_Manager::RAW_HTML,
-					'raw' => '<span style="color:#2a2a2a;">Search Query</span> and <span style="color:#2a2a2a;">Ajax Search</span> options are fully supported<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-search-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
-					// 'raw' => '<span style="color:#2a2a2a;">Search Query</span> option is fully supported<br> in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong>',
 					'content_classes' => 'wpr-pro-notice',
+					'condition' => [
+						'search_query!' => ['all','post','page','product','e-landing-page','pro-post', 'pro-page', 'pro-product', 'pro-product', 'pro-e-landing-page'],
+					]
 				]
 			);
 		}
@@ -1023,6 +1036,9 @@ class Wpr_Search extends Widget_Base {
 			[
 				'label' => esc_html__( 'Placeholder', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'Search...', 'wpr-addons' ),
 				'separator' => 'before',
 			]
@@ -1033,6 +1049,9 @@ class Wpr_Search extends Widget_Base {
 			[
 				'label' => esc_html__( 'Aria Label', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'Search', 'wpr-addons' ),
 				'separator' => 'before',
 			]
@@ -1066,12 +1085,22 @@ class Wpr_Search extends Widget_Base {
 			]
 		);
 
+		// $this->add_control(
+		// 	'open_search_input_on_btn_click',
+		// 	[
+		// 		'label' => esc_html__( 'Open Search on Click', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SWITCHER,
+		// 		'condition' => [
+		// 			'search_btn' => 'yes',
+		// 		]
+		// 	]
+		// );
+
 		$this->add_control(
 			'search_btn_disable_click',
 			[
 				'label' => esc_html__( 'Disable Button Click', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'prefix_class' => 'wpr-search-form-disable-submit-btn-',
 				'condition' => [
 					'search_btn_style' => 'inner',
 					'search_btn' => 'yes',
@@ -1101,6 +1130,9 @@ class Wpr_Search extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Go',
 				'condition' => [
 					'search_btn_type' => 'text',
@@ -1136,7 +1168,8 @@ class Wpr_Search extends Widget_Base {
 
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'search', [
-			'Custom Search Query - Only Posts, Pages or Custom Post Types',
+			'Custom Search Query - Only Posts or Pages',
+			'Custom Search Query - Only Custom Post Types (Expert)',
 			'More than 2 Results in Ajax Search',
 			'Ajax Search Results Pagination (Load More)'
 		] );
@@ -1726,11 +1759,14 @@ class Wpr_Search extends Widget_Base {
 		// Get Settings
 		$settings = $this->get_settings();
 
+		// $hidden_input = 'yes' === $settings['open_search_input_on_btn_click'] ? 'wpr-search-input-hidden' : '';
+		$hidden_input = '';
+
 		$this->add_render_attribute(
 			'input', [
+				'class' => 'wpr-search-form-input',
 				'placeholder' => $settings['search_placeholder'],
 				'aria-label' => $settings['search_aria_label'],
-				'class' => 'wpr-search-form-input',
 				'type' => 'search',
 				'name' => 's',
 				'title' => esc_html__( 'Search', 'wpr-addons' ),

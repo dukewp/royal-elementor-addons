@@ -1361,7 +1361,24 @@ class WP_Import extends WP_Importer {
 		return $key;
 	}
 
+	// By Duke
+	function register_tmp_post_types() {
+		// Register custom post type
+		register_post_type('wpr_portfolio', array(
+			'public' => true,
+			'has_archive' => true,
+			'supports' => array('title', 'editor', 'thumbnail')
+		));
+	
+		// Register custom taxonomy
+		register_taxonomy('wpr_portfolio_cats', 'wpr_portfolio', array(
+			'public' => true,
+			'hierarchical' => true
+		));
+	}
+
 	public function run() {
+		$this->register_tmp_post_types();
 		$this->import( $this->requested_file_path );
 
 		return $this->output;

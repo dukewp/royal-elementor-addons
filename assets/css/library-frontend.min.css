@@ -395,6 +395,19 @@
     width: 120px;
 }
 
+.wpr-tplib-search + .wpr-tplib-filters-wrap .wpr-tplib-filters-list {
+    right: 0;
+    width: 100%;
+}
+
+.wpr-tplib-search + .wpr-tplib-filters-wrap .wpr-tplib-filters-list ul {
+    flex-direction: column
+}
+
+.wpr-tplib-search + .wpr-tplib-filters-wrap .wpr-tplib-filters-list ul li {
+    width: 100%;
+}
+
 .wpr-tplib-price-list {
     width: 120px;
     padding: 10px;
@@ -456,6 +469,10 @@
 .wpr-tplib-pro-wrap:not(.wpr-tplib-pro-active):before {
     content: 'Pro';
     background: #6A4BFF;
+}
+
+.wpr-tplib-sidebar[data-license="premium"] + .wpr-tplib-template-gird .wpr-tplib-template-wrap:before {
+    display: none !important;
 }
 
 @media screen and ( max-width: 1364px ) {
@@ -632,6 +649,79 @@
             flex-direction: column;
     position: relative;
     width: calc(33.3%);
+}
+
+.wpr-tplib-template-gird-loading {
+    text-align: center;
+}
+
+.wpr-tplib-template-gird-loading .wpr-wave {
+  width: 50px;
+  height: 25px;
+  text-align: center;
+  margin: 0 auto;
+  font-size: 0;
+}
+
+.wpr-wave .wpr-rect {
+  height: 100%;
+  width: 4px;
+  margin-right: 2px;
+  display: inline-block;
+  -webkit-animation: wpr-waveStretchDelay 1.2s infinite ease-in-out;
+  animation: wpr-waveStretchDelay 1.2s infinite ease-in-out;
+  background-color: gray;
+}
+
+.wpr-wave .wpr-rect1 {
+  -webkit-animation-delay: -1.2s;
+  animation-delay: -1.2s;
+}
+
+.wpr-wave .wpr-rect2 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+
+.wpr-wave .wpr-rect3 {
+  -webkit-animation-delay: -1s;
+  animation-delay: -1s;
+}
+
+.wpr-wave .wpr-rect4 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+
+.wpr-wave .wpr-rect5 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+
+@-webkit-keyframes wpr-waveStretchDelay {
+  0%,
+  40%,
+  100% {
+    -webkit-transform: scaleY(0.4);
+    transform: scaleY(0.4);
+  }
+  20% {
+    -webkit-transform: scaleY(1);
+    transform: scaleY(1);
+  }
+}
+
+@keyframes wpr-waveStretchDelay {
+  0%,
+  40%,
+  100% {
+    -webkit-transform: scaleY(0.4);
+    transform: scaleY(0.4);
+  }
+  20% {
+    -webkit-transform: scaleY(1);
+    transform: scaleY(1);
+  }
 }
 
 

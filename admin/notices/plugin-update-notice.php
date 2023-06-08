@@ -1,5 +1,7 @@
 <?php 
-namespace WprAddons\Classes;
+namespace WprAddons\Admin\Notices;
+
+use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
@@ -46,10 +48,10 @@ class WprPluginUpdateNotice {
                             <h3><span>New Features</span><br> Introducing New Widgets</h3>
                             <p>We are excited to announce that we have added new Widgets, Template Kits, and other Elementor<br> features to enhance your website building experience. Stay tuned for the weekly updates!</p>
                             <ul class="wpr-new-widgets-list">
+                                <li><a target="_blank" href="https://royal-elementor-addons.com/elementor-form-builder-widget/?ref=rea-plugin-backend-update-notice">Form Builder</a></li>
                                 <li><a target="_blank" href="https://royal-elementor-addons.com/elementor-mega-menu-widget/?ref=rea-plugin-backend-update-notice">Mega Menu</a></li>
                                 <li><a target="_blank" href="https://royal-elementor-addons.com/elementor-offcanvas-menu-widget/?ref=rea-plugin-backend-update-notice">Off-Canvas Content</a></li>
                                 <li><a target="_blank" href="https://royal-elementor-addons.com/elementor-instagram-feed-widget/?ref=rea-plugin-backend-update-notice">Instagram Feed</a></li>
-                                <li><a target="_blank" href="https://royal-elementor-addons.com/elementor-twitter-feed-widget/?ref=rea-plugin-backend-update-notice">Twitter Feed</a></li>
                                 <li><a target="_blank" href="https://royal-elementor-addons.com/elementor-image-accordion-widget/?ref=rea-plugin-backend-update-notice">Image Accordion</a></li>
                             </ul>
                         </div>

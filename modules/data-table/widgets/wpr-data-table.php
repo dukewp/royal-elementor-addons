@@ -356,6 +356,9 @@ class Wpr_Data_Table extends Widget_Base {
 			'table_th', [
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'Table Title' , 'wpr-addons' ),
 				'label_block' => true
 			]
@@ -432,6 +435,9 @@ class Wpr_Data_Table extends Widget_Base {
 			[
 				'label' => esc_html__( 'Image', 'wpr-addons'),
 				'type' => Controls_Manager::MEDIA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'condition' => [
 					'header_icon_type'	=> 'image'
 				]
@@ -616,6 +622,9 @@ class Wpr_Data_Table extends Widget_Base {
 			[
 				'label' => esc_html__( 'Content', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXTAREA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'Content' , 'wpr-addons' ),
 				'show_label' => true,
 				'separator' => 'before',
@@ -630,6 +639,9 @@ class Wpr_Data_Table extends Widget_Base {
 			[
 				'label' => esc_html__( 'Content URL', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::URL,
+				'dynamic' => [
+					'active' => true,
+				],
 				'placeholder' => esc_html__( 'https://your-link.com', 'wpr-addons' ),
 				'show_external' => true,
 				'default' => [
@@ -716,6 +728,9 @@ class Wpr_Data_Table extends Widget_Base {
 			[
 				'label' => esc_html__( 'Image', 'wpr-addons'),
 				'type' => Controls_Manager::MEDIA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'condition' => [
 					'td_icon' => 'yes',
 					'td_icon_type!'	=> ['none', 'icon']
@@ -1848,10 +1863,13 @@ class Wpr_Data_Table extends Widget_Base {
 	protected function wpr_parse_csv_to_table($filename, $settings, $custom_pagination, $sorting_icon ) {
 
 		$handle = fopen($filename, "r");
+		
+		// Determine the delimiter
+		$delimiter = $this->detect_csv_delimiter($filename);
 		//display header row if true
 		echo '<table class="wpr-append-to-scope wpr-data-table">';
 		if ( 'yes' === $settings['display_header'] ) {
-			$csvcontents = fgetcsv($handle);
+			$csvcontents = fgetcsv($handle, 0, $delimiter);
 			echo '<thead><tr class="wpr-table-head-row wpr-table-row">';
 			foreach ($csvcontents as $headercolumn) {
 				echo "<th class='wpr-table-th wpr-table-text'>$headercolumn  $sorting_icon</th>";
@@ -1863,7 +1881,7 @@ class Wpr_Data_Table extends Widget_Base {
 		// displaying contents
 		$countRows = 0;
 		$oddEven = '';
-		while ($csvcontents = fgetcsv($handle)) {
+		while ($csvcontents = fgetcsv($handle, 0, $delimiter)) {
 				$countRows++;
 				$oddEven = $countRows % 2 == 0 ? 'wpr-even' : 'wpr-odd';
 				echo '<tr class="wpr-table-row  '. esc_attr($oddEven) .'">';
@@ -1881,6 +1899,30 @@ class Wpr_Data_Table extends Widget_Base {
 		} 
 
 		fclose($handle);
+	}
+
+	protected function detect_csv_delimiter($filename) {
+		$delimiters = [',', ';'];
+		$counts = [];
+		$maxCount = 0;
+		$bestDelimiter = ',';
+	
+		$handle = fopen($filename, "r");
+		$firstLine = fgets($handle);
+		fclose($handle);
+	
+		foreach ($delimiters as $delimiter) {
+			$counts[$delimiter] = count(str_getcsv($firstLine, $delimiter));
+		}
+	
+		foreach ($counts as $delimiter => $count) {
+			if ($count > $maxCount) {
+				$maxCount = $count;
+				$bestDelimiter = $delimiter;
+			}
+		}
+	
+		return $bestDelimiter;
 	}
 
 	public function render_th_icon($item) {

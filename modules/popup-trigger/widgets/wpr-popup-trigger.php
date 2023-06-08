@@ -148,6 +148,9 @@ class Wpr_Popup_Trigger extends Widget_Base {
 			'popup_trigger_redirect_url',
 			[
 				'type' => Controls_Manager::URL,
+				'dynamic' => [
+					'active' => true,
+				],
 				'condition' => [
 					'popup_trigger_redirect' => 'yes',
 					'popup_trigger_type!' => 'back'
@@ -160,6 +163,9 @@ class Wpr_Popup_Trigger extends Widget_Base {
 			[
 				'label' => esc_html__( 'Button Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Close Popup',
 				'separator' => 'before'
 			]

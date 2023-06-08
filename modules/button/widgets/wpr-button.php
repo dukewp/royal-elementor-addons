@@ -97,6 +97,9 @@ class Wpr_Button extends Widget_Base {
 			[
 				'label' => esc_html__( 'Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Click here',
 			]
 		);
@@ -105,6 +108,9 @@ class Wpr_Button extends Widget_Base {
 			'button_url',
 			[
 				'type' => Controls_Manager::URL,
+				'dynamic' => [
+					'active' => true,
+				],
 				'placeholder' => esc_html__( 'https://your-link.com', 'wpr-addons' ),
 				'default' => [
 					'url' => '#link',
@@ -182,6 +188,9 @@ class Wpr_Button extends Widget_Base {
 			[
 				'label' => esc_html__( 'Effect Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Go',
 				'condition' => [
 					'button_hover_animation' => ['wpr-button-winona','wpr-button-rayen-left','wpr-button-rayen-right']
@@ -284,6 +293,9 @@ class Wpr_Button extends Widget_Base {
 			[
 				'label' => esc_html__( 'Button ID', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'title' => esc_html__( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'wpr-addons' ),
 				'description' => esc_html__( 'Please make sure the ID is unique and not used elsewhere on the page this button is displayed. This field allows <code>A-z 0-9</code> & underscore chars without spaces.', 'wpr-addons' ),
 				'label_block' => false,
@@ -690,7 +702,7 @@ class Wpr_Button extends Widget_Base {
 			
 			<span class="wpr-button-content">
 				<?php if ( '' !== $settings['button_text'] ) : ?>
-					<span class="wpr-button-text"><?php echo esc_html( $settings['button_text'] ); ?></span>
+					<span class="wpr-button-text"><?php echo esc_html__( $settings['button_text'] ); ?></span>
 				<?php endif; ?>
 				
 				<?php if ( '' !== $settings['select_icon']['value'] ) : ?>

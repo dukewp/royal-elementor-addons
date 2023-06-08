@@ -301,6 +301,9 @@ class Wpr_Offcanvas extends Widget_Base {
 			'offcanvas_title', [
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'Offcanvas', 'wpr-addons' ),
 				'condition' => [
 					'offcanvas_show_header_title' => 'yes'
@@ -355,6 +358,9 @@ class Wpr_Offcanvas extends Widget_Base {
 			[
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'Click Here', 'wpr-addons' ),
 				'condition' => [
 					'offcanvas_show_button_title' => 'yes'
@@ -949,6 +955,50 @@ class Wpr_Offcanvas extends Widget_Base {
 				// 'condition' => [
 				// 	'offcanvas_entrance_type!' => 'reveal'
 				// ]
+			]
+		);
+
+		$this->add_control(
+			'offcanvas_scrollbar_heading',
+			[
+				'label' => esc_html__( 'Scrollbar', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'offcanvas_scrollbar_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-offcanvas-content::-webkit-scrollbar-thumb' => 'border-left-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'scrollbar_width',
+			[
+				'label' => esc_html__( 'Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 10,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 3,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-offcanvas-content::-webkit-scrollbar-thumb' => 'border-left-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-offcanvas-content::-webkit-scrollbar' => 'width: calc({{SIZE}}{{UNIT}} + 3px);',
+				]
 			]
 		);
 

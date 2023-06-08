@@ -121,6 +121,9 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label'       => __( 'Remote URL', 'wpr-addons' ),
 				'type'        => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'label_block' => true,
 				'condition'   => [
 					'data_source' => 'csv',
@@ -134,7 +137,9 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label'       => __( 'Upload CSV File', 'wpr-addons' ),
 				'type'        => \Elementor\Controls_Manager::MEDIA,
-				'dynamic'     => ['active' => true],
+				'dynamic'     => ['
+					active' => true,
+				],
 				'media_type'  => [],
 				'label_block' => true,
 				'condition'   => [
@@ -381,6 +386,9 @@ class Wpr_Charts extends Widget_Base {
 			'charts_labels_data', [
 				'label'       => esc_html__('Data Labels', 'wpr-addons'),
 				'type'        => Controls_Manager::TEXTAREA,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default'     => esc_html__('January, February, March', 'wpr-addons'),
 				'description' => esc_html__('Enter the comma-separated list of values (Used only with custom data source)', 'wpr-addons'),
 				'label_block' => true,
@@ -410,6 +418,9 @@ class Wpr_Charts extends Widget_Base {
 			'chart_data_label', [
 				'label'       => esc_html__('Label', 'wpr-addons'),
 				'type'        => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default'     => esc_html__('Label #1', 'wpr-addons'),
 				'label_block' => true,
 			]
@@ -419,6 +430,9 @@ class Wpr_Charts extends Widget_Base {
 			'chart_data_set', [
 				'label'       => esc_html__('Data', 'wpr-addons'),
 				'type'        => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default'     => '10,23,15',
 				'label_block' => true,
 				'description' => esc_html__("Only works with custom charts. Enter comma separated data values (Shouldn't Exceed number of values provided in Data Labels option).", 'wpr-addons'),
@@ -716,6 +730,9 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'placeholder' => esc_html__( 'X-Axis', 'wpr-addons' ),
 				'default' => esc_html__('X-Axis', 'wpr-addons'),
 				'condition' => [
@@ -807,6 +824,9 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'placeholder' => esc_html__( 'Y-Axis', 'wpr-addons' ),
 				'default' => esc_html__('Y-Axis', 'wpr-addons'),
 				'condition' => [
@@ -954,6 +974,9 @@ class Wpr_Charts extends Widget_Base {
 			[
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'placeholder' => esc_html__( 'To Be Applied', 'wpr-addons' ),
 				'default' => esc_html__('To Be Applied', 'wpr-addons'),
 				'condition' => [

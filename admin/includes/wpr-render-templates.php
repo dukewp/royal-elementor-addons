@@ -208,7 +208,8 @@ class WPR_Render_Templates {
 
 		// Load Header Template CSS File
 		$heder_conditions = json_decode( get_option('wpr_header_conditions', '[]'), true );
-		$header_template_id = Utilities::get_template_id(WPR_Conditions_Manager::header_footer_display_conditions($heder_conditions));
+		$heder_template = WPR_Conditions_Manager::header_footer_display_conditions($heder_conditions);
+		$header_template_id = !is_null($heder_template) ? Utilities::get_template_id($heder_template) : false;
 
 		if ( false !== $header_template_id ) {
 			if ( class_exists( '\Elementor\Core\Files\CSS\Post' ) ) {
@@ -222,7 +223,8 @@ class WPR_Render_Templates {
 
 		// Load Footer Template CSS File
 		$footer_conditions = json_decode( get_option('wpr_footer_conditions', '[]'), true );
-		$footer_template_id = Utilities::get_template_id(WPR_Conditions_Manager::header_footer_display_conditions($footer_conditions));
+		$footer_template = WPR_Conditions_Manager::header_footer_display_conditions($footer_conditions);
+		$footer_template_id = !is_null($footer_template) ? Utilities::get_template_id($footer_template) : false;
 
 		if ( false !== $footer_template_id ) {
 			if ( class_exists( '\Elementor\Core\Files\CSS\Post' ) ) {
@@ -235,7 +237,8 @@ class WPR_Render_Templates {
 		}
 
 		// Load Canvas Content Template CSS File
-		$canvas_template_id = Utilities::get_template_id(WPR_Conditions_Manager::canvas_page_content_display_conditions());
+		$canvas_conditions = WPR_Conditions_Manager::canvas_page_content_display_conditions();
+		$canvas_template_id = !empty($canvas_conditions) ? Utilities::get_template_id($canvas_conditions) : false;
 
 		if ( false !== $canvas_template_id ) {
 			if ( class_exists( '\Elementor\Core\Files\CSS\Post' ) ) {

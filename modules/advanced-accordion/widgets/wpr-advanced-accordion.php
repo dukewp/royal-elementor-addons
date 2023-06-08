@@ -97,6 +97,9 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			'accordion_title', [
 				'label' => esc_html__( 'Title', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'Acc Item Title' , 'wpr-addons' ),
 			]
 		);
@@ -298,6 +301,9 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			[
 				'label' => esc_html__( 'Placeholder', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => esc_html__( 'Search...', 'wpr-addons' ),
 				'condition' => [
 					'show_acc_search' => 'yes'
@@ -445,7 +451,8 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-active .wpr-toggle-icon i' => 'transform: rotate({{SIZE}}deg); transform-origin: center;'
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-active .wpr-toggle-icon i' => 'transform: rotate({{SIZE}}deg); transform-origin: center;',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-active .wpr-toggle-icon svg' => 'transform: rotate({{SIZE}}deg); transform-origin: center;'
 				]
 			]
 		);

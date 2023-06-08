@@ -14,7 +14,7 @@ use Elementor\Core\Schemes\Typography;
 use Elementor\Repeater;
 use Elementor\Group_Control_Image_Size;
 use WprAddons\Classes\Utilities;
-use WprAddons\Classes\WPR_Post_Likes;
+use WprAddons\Classes\Modules\WPR_Post_Likes;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -176,6 +176,30 @@ class Wpr_Media_Grid extends Widget_Base {
 					'pro-6' => esc_html__( 'Six (Pro)', 'wpr-addons' ),
 				],
 				'prefix_class' => 'wpr-grid-slider-columns-%s',
+				'frontend_available' => true,
+				'render_type' => 'template',
+				'separator' => 'before',
+				'condition' => [
+					'layout_select' => 'slider',
+				],
+			]
+		);
+	}
+
+	public function add_control_layout_slider_rows() {
+		$this->add_control(
+			'layout_slider_rows',
+			[
+				'label' => esc_html__( 'Rows (Carousel)', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'label_block' => false,
+				'default' => 1,
+				'classes' => 'wpr-pro-control no-distance',
+				'options' => [
+					1 => esc_html__( 'One', 'wpr-addons' ),
+					1 => esc_html__( 'Two (Pro)', 'wpr-addons' ),
+					1 => esc_html__( 'Three (Pro)', 'wpr-addons' ),
+				],
 				'frontend_available' => true,
 				'render_type' => 'template',
 				'separator' => 'before',
@@ -560,7 +584,7 @@ class Wpr_Media_Grid extends Widget_Base {
 				'type' => Controls_Manager::SELECT,
 				'default' => 'dynamic',
 				'options' => [
-					'dynamic' => esc_html__( 'Dynamic', 'wpr-addons' ),
+					'dynamic' => esc_html__( 'Auto', 'wpr-addons' ),
 					'manual' => esc_html__( 'Manual', 'wpr-addons' ),
 				],
 			]
@@ -654,10 +678,13 @@ class Wpr_Media_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Add Images', 'wpr-addons' ),
 				'type' => Controls_Manager::GALLERY,
+				'separator' => 'before',
+				'dynamic' => [
+					'active' => true,
+				],
 				'condition' => [
 					'query_selection' => 'manual',
 				],
-				'separator' => 'before',
 			]
 		);
 
@@ -689,6 +716,9 @@ class Wpr_Media_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Not Found Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'No Images Found!',
 				'condition' => [
 					'query_selection' => 'dynamic',
@@ -911,6 +941,8 @@ class Wpr_Media_Grid extends Widget_Base {
 
 		$this->add_control_layout_slider_amount();
 
+		$this->add_control_layout_slider_rows();
+
 		$this->add_control(
 			'layout_slides_to_scroll',
 			[
@@ -945,13 +977,17 @@ class Wpr_Media_Grid extends Widget_Base {
 				],			
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid .slick-slide' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-grid-slider-rows-2 .wpr-grid .wpr-grid-item' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-grid-slider-rows-3 .wpr-grid .wpr-grid-item' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-grid .slick-list' => 'margin-left: -{{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-grid-slider-rows-2 .wpr-grid .slick-list' => 'margin-bottom: -{{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-grid-slider-rows-3 .wpr-grid .slick-list' => 'margin-bottom: -{{SIZE}}{{UNIT}};'
 				],
 				'render_type' => 'template',
 				'condition' => [
 					'layout_slider_amount!' => '1',
 					'layout_select' => 'slider',
-				],
+				]
 			]
 		);
 
@@ -1318,6 +1354,9 @@ class Wpr_Media_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Separator', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => ', ',
 				'condition' => [
 					'element_select!' => [
@@ -1447,6 +1486,9 @@ class Wpr_Media_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Extra Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => '',
 				'condition' => [
 					'element_select!' => [
@@ -2145,6 +2187,9 @@ class Wpr_Media_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( '"All" Filter Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'All Photos',
 				'condition' => [
 					'filters_all' => 'yes',
@@ -2170,6 +2215,9 @@ class Wpr_Media_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Separator', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => '',
 				'separator' => 'before',
 			]
@@ -2287,6 +2335,9 @@ class Wpr_Media_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Older Posts Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Older Posts',
 				'condition' => [
 					'pagination_type' => 'default',
@@ -2299,6 +2350,9 @@ class Wpr_Media_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Newer Posts Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Newer Posts',
 				'condition' => [
 					'pagination_type' => 'default',
@@ -2346,6 +2400,9 @@ class Wpr_Media_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Prev Page Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Previous Page',
 				'condition' => [
 					'pagination_type' => 'numbered',
@@ -2359,6 +2416,9 @@ class Wpr_Media_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Next Page Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Next Page',
 				'condition' => [
 					'pagination_type' => 'numbered',
@@ -2408,6 +2468,9 @@ class Wpr_Media_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'First Page Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'First Page',
 				'condition' => [
 					'pagination_type' => 'numbered',
@@ -2421,6 +2484,9 @@ class Wpr_Media_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Last Page Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Last Page',
 				'condition' => [
 					'pagination_type' => 'numbered',
@@ -2483,6 +2549,9 @@ class Wpr_Media_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Load More Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'Load More',
 				'condition' => [
 					'pagination_type' => 'load-more',
@@ -2495,6 +2564,9 @@ class Wpr_Media_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Finish Text', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
 				'default' => 'End of Content.',
 				'condition' => [
 					'pagination_type' => [ 'load-more', 'infinite-scroll' ],
@@ -5689,6 +5761,15 @@ class Wpr_Media_Grid extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'active_styles_notice',
+			[
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => esc_html__('Apply active filter styles from the hover tab.', 'wpr-addons'),
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info'
+			]
+		);
+
 		$this->start_controls_tabs( 'tabs_grid_filters_style' );
 
 		$this->start_controls_tab(
@@ -6470,7 +6551,7 @@ class Wpr_Media_Grid extends Widget_Base {
 
 	// Main Query Args
 	public function get_main_query_args() {
-		$settings = $this->get_settings();
+		$settings = $this->get_settings_for_display();
 		$author = ! empty( $settings[ 'query_author' ] ) ? implode( ',', $settings[ 'query_author' ] ) : '';
 
 		// Get Paged
@@ -6481,7 +6562,11 @@ class Wpr_Media_Grid extends Widget_Base {
 		} else {
 			$paged = 1;
 		}
-
+		
+		if ( empty($settings['query_offset']) ) {
+			$settings[ 'query_offset' ] = 0;
+		}
+		
 		$offset = ( $paged - 1 ) * $settings['query_posts_per_page'] + $settings[ 'query_offset' ];
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {
@@ -7469,6 +7554,7 @@ class Wpr_Media_Grid extends Widget_Base {
 			'prevArrow' => '#wpr-grid-slider-prev-'. $this->get_id(),
 			'nextArrow' => '#wpr-grid-slider-next-'. $this->get_id(),
 			'sliderSlidesToScroll' => +$settings['layout_slides_to_scroll'],
+			'sliderRows' => isset($settings['layout_slider_rows']) ? $settings['layout_slider_rows'] : 1
 		];
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {
@@ -7493,7 +7579,7 @@ class Wpr_Media_Grid extends Widget_Base {
 			'share' => $settings['lightbox_popup_sharing'],
 			'zoom' => $settings['lightbox_popup_zoom'],
 			'fullScreen' => $settings['lightbox_popup_fullscreen'],
-			'download' => $settings['lightbox_popup_download'],
+			'download' => $settings['lightbox_popup_download']
 		];
 
 		if ( $settings['layout_slider_amount'] === 1 && $settings['layout_slider_effect'] === 'fade' ) {
@@ -7511,7 +7597,6 @@ class Wpr_Media_Grid extends Widget_Base {
 		$settings = $this->get_settings();
 		// Get Posts
 		$posts = new \WP_Query( $this->get_main_query_args() );
-
 
 		// Loop: Start
 		if ( $posts->have_posts() ) :
@@ -7541,6 +7626,10 @@ class Wpr_Media_Grid extends Widget_Base {
 			// if ( Utilities::is_new_free_user() && $post_index > 12 ) {
 			// 	return;
 			// }
+
+			if ( ! wp_attachment_is( 'image', get_the_ID() ) ) {
+				continue;
+			}
 
 			// Post Class
 			$post_class = implode( ' ', get_post_class( 'wpr-grid-item elementor-clearfix', get_the_ID() ) );
