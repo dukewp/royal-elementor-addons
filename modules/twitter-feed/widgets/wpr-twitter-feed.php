@@ -742,7 +742,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				],
                 'label_block' => false,
                 'default' => '',
-                'description' => '<a href="https://apps.twitter.com/app/" target="_blank">Get Consumer Key.</a> Create a new app or select existing app and grab the <b>consumer key.</b>',
+                'description' => '<a href="https://developer.twitter.com/en/docs/authentication/oauth-1-0a/api-key-and-secret" target="_blank">Get Consumer Key.</a> Create a new app or select existing app and grab the <b>consumer key.</b>',
             ]
         );
 
@@ -756,7 +756,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				],
                 'label_block' => false,
                 'default' => '',
-                'description' => '<a href="https://apps.twitter.com/app/" target="_blank">Get Consumer Secret.</a> Create a new app or select existing app and grab the <b>consumer secret.</b>',
+                'description' => '<a href="https://developer.twitter.com/en/docs/authentication/oauth-1-0a/api-key-and-secret" target="_blank">Get Consumer Secret.</a> Create a new app or select existing app and grab the <b>consumer secret.</b>',
             ]
         );
 
@@ -4676,6 +4676,11 @@ class Wpr_Twitter_Feed extends Widget_Base {
 
     protected function render() {
         $settings = $this->get_settings_for_display();
+
+		if ( empty($settings['twitter_feed_consumer_key']) || empty($settings['twitter_feed_consumer_secret']) ) {
+			echo '<p class="wpr-token-missing">'. esc_html__('Please insert Consumer and Secret Keys in respective fields') .'</p>';
+			return;
+		}
 
 		if ( !wpr_fs()->can_use_premium_code() && $settings['number_of_posts'] > 6 ) {
 			$settings['number_of_posts'] = 6;

@@ -6566,7 +6566,7 @@ class Wpr_Media_Grid extends Widget_Base {
 		if ( empty($settings['query_offset']) ) {
 			$settings[ 'query_offset' ] = 0;
 		}
-
+		
 		$offset = ( $paged - 1 ) * $settings['query_posts_per_page'] + $settings[ 'query_offset' ];
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {

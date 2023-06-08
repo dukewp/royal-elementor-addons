@@ -15,14 +15,14 @@ class Wpr_Particles {
 
 	public function __construct() {
 		add_action( 'elementor/element/section/section_background/after_section_end', [ $this, 'register_controls' ], 10 );
-		add_action( 'elementor/section/print_template', [ $this, '_print_template' ], 10, 2 );
 		add_action( 'elementor/frontend/section/before_render', [ $this, '_before_render' ], 10, 1 );
+		add_action( 'elementor/section/print_template', [ $this, '_print_template' ], 10, 2 );
         add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 
         // FLEXBOX
         add_action( 'elementor/element/container/section_layout/after_section_end', [$this, 'register_controls'], 10 );
-        add_action( 'elementor/container/print_template', [ $this, '_print_template' ], 10, 2 );
         add_action( 'elementor/frontend/container/before_render', [$this, '_before_render'], 10, 1 );
+        add_action( 'elementor/container/print_template', [ $this, '_print_template' ], 10, 2 );
 	}
 
 	public function register_controls( $element ) {

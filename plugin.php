@@ -387,13 +387,13 @@ class Plugin {
 		// Posts Timeline
 		wp_register_style( 
 			'wpr-aos-css', 
-			WPR_ADDONS_URL  . 'assets/css/lib/aos/aos'. $this->script_suffix() .'.css',
+			WPR_ADDONS_URL  . 'assets/css/lib/aos/aos.min.css',
 			[]
 		);
 
 		wp_register_style(
 			'wpr-flipster-css',
-			WPR_ADDONS_URL . 'assets/css/lib/flipster/jquery.flipster'. $this->script_suffix() .'.css',
+			WPR_ADDONS_URL . 'assets/css/lib/flipster/jquery.flipster.min.css',
 			[],
 			Plugin::instance()->get_version()
 		);
@@ -462,13 +462,13 @@ class Plugin {
 		
 		wp_enqueue_style( 
 			'wpr-aos-css', 
-			WPR_ADDONS_URL  . 'assets/css/lib/aos/aos'. $this->script_suffix() .'.css',
+			WPR_ADDONS_URL  . 'assets/css/lib/aos/aos.min.css',
 			[]
 		);
 
 		wp_enqueue_style(
 			'wpr-flipster-css',
-			WPR_ADDONS_URL . 'assets/css/lib/flipster/jquery.flipster'. $this->script_suffix() .'.css',
+			WPR_ADDONS_URL . 'assets/css/lib/flipster/jquery.flipster.min.css',
 			[],
 			Plugin::instance()->get_version()
 		);
@@ -528,7 +528,7 @@ class Plugin {
 
 		wp_register_script(
 			'wpr-infinite-scroll',
-			WPR_ADDONS_URL . 'assets/js/lib/infinite-scroll/infinite-scroll'. $this->script_suffix() .'.js',
+			WPR_ADDONS_URL . 'assets/js/lib/infinite-scroll/infinite-scroll.min.js',
 			[
 				'jquery',
 			],
@@ -602,7 +602,7 @@ class Plugin {
 
 		wp_register_script(
 			'wpr-lottie-animations',
-			WPR_ADDONS_URL . 'assets/js/lib/lottie/lottie'. $this->script_suffix() .'.js',
+			WPR_ADDONS_URL . 'assets/js/lib/lottie/lottie.min.js',
 			[],
 			'5.8.0',
 			true
@@ -618,7 +618,7 @@ class Plugin {
 		
 		wp_register_script(
 			'wpr-aos-js',
-			 WPR_ADDONS_URL  . 'assets/js/lib/aos/aos'. $this->script_suffix() .'.js',
+			 WPR_ADDONS_URL  . 'assets/js/lib/aos/aos.min.js',
 			 [], 
 			 null, 
 			 true
@@ -626,7 +626,7 @@ class Plugin {
 		
 		wp_register_script(
 			'wpr-charts',
-			WPR_ADDONS_URL . 'assets/js/lib/charts/charts'. $this->script_suffix() .'.js',
+			WPR_ADDONS_URL . 'assets/js/lib/charts/charts.min.js',
 			[],
 			'3.7.0',
 			true
@@ -634,7 +634,7 @@ class Plugin {
 
 		wp_register_script(
 			'wpr-flipster',
-			WPR_ADDONS_URL . 'assets/js/lib/flipster/jquery.flipster'. $this->script_suffix() .'.js',
+			WPR_ADDONS_URL . 'assets/js/lib/flipster/jquery.flipster.min.js',
 			[],
 			'2.0',
 			true
