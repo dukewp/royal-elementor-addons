@@ -15,6 +15,7 @@ use Elementor\Core\Schemes\Typography;
 use Elementor\Utils;
 use Elementor\Icons;
 use Elementor\Icons_Manager;
+use Elementor\Modules\DynamicTags\Module as TagsModule;
 use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -340,6 +341,27 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'show_label' => false,
 				'condition' => [
 					'slider_item_link_type' => 'custom',
+				],
+			]
+		);
+
+		$repeater->add_control(
+			'hosted_url',
+			[
+				'label' => esc_html__( 'Choose File', 'elementor' ),
+				'type' => Controls_Manager::MEDIA,
+				'dynamic' => [
+					'active' => true,
+					'categories' => [
+						TagsModule::MEDIA_CATEGORY,
+					],
+				],
+				'media_type' => 'video',
+				'condition' => [
+					'slider_item_link_type' => 'custom',
+				],
+				'ai' => [
+					'active' => false,
 				],
 			]
 		);
@@ -2788,6 +2810,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 		}
 		
 		foreach ( $settings['slider_items'] as $key => $item ) {
+
 			if ( ! wpr_fs()->can_use_premium_code() && $key === 4 ) {
 				break;
 			}
@@ -2855,6 +2878,11 @@ class Wpr_Advanced_Slider extends Widget_Base {
 
 				$this->add_render_attribute( 'slider_item'. $item_count, 'class', 'wpr-slider-item elementor-repeater-item-'. $item['_id'] );
 
+				if ( $item_type === 'custom' ) {
+					$item_video_src = $item['hosted_url']['url'];
+					$this->add_render_attribute( 'slider_item'. $item_count, 'data-video-src', $item_video_src );
+				}
+
 				if ( strpos( $item_type, 'video' ) !== false && ! empty( $item_video_src ) ) {
 
 					$this->add_render_attribute( 'slider_item'. $item_count, 'class', 'wpr-slider-video-item' );
@@ -2918,6 +2946,8 @@ class Wpr_Advanced_Slider extends Widget_Base {
 							$item_video_src .= '&#t='. gmdate( 'H', $item_video_start ) .'h'. gmdate( 'i', $item_video_start ) .'m'. gmdate( 's', $item_video_start ) .'s';
 						}
 						
+					} elseif ( $item_type === '' ) {
+
 					}
 
 					$this->add_render_attribute( 'slider_item'. $item_count, 'data-video-src', $item_video_src );
@@ -2928,7 +2958,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				$slider_html .= '<div '. $slider_item_attribute .'>';
 
 				if ( 'image' == $settings['slider_image_type'] ) {
-					$slider_html .= '<img class="wpr-test-goga" src="'. esc_url($item_bg_image_url) .'" />';
+					$slider_html .= '<img class="wpr-slider-img" src="'. esc_url($item_bg_image_url) .'" />';
 				} else {
 					// Slider Background Image
 					$slider_html .= '<div class="wpr-slider-item-bg '. esc_attr($ken_burn_class) .'" style="background-image: url('. esc_url($item_bg_image_url) .')"></div>';
@@ -2994,7 +3024,8 @@ class Wpr_Advanced_Slider extends Widget_Base {
 							$slider_html .= '<div class="wpr-slider-content">';
 
 								//  Video Icon
-								if ( strpos( $item_type, 'video' ) !== false && $item['slider_item_video_autoplay'] !== 'yes' ) {
+								var_dump($item_type);
+								if ( (($item_type == 'custom' && isset($item['hosted_url']) && !empty($item['hosted_url'])) || strpos( $item_type, 'video' ) !== false) && $item['slider_item_video_autoplay'] !== 'yes' ) {
 									$slider_html .= '<div class="wpr-slider-video-btn">';
 										$slider_html .= '<i class="fas fa-play"></i>';
 									$slider_html .= '</div>';

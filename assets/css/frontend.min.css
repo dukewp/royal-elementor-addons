@@ -6146,7 +6146,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     /* border: 0; */
 }
 
-.slick-slide .wpr-test-goga {
+.slick-slide .wpr-slider-img {
     position: relative;
     display: block;
     top: 0;
