@@ -881,6 +881,21 @@ class Wpr_Search extends Widget_Base {
 		);
 	}
 
+	public function add_control_select_category() {
+		$this->add_control(
+			'select_category',
+			[
+				'label' => esc_html__( 'Select Category (Pro)', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'separator' => 'before',
+				'classes' => 'wpr-pro-control'
+			]
+		);
+	}
+
+	public function add_control_all_cat_text() {
+	}
+
 	public function add_control_ajax_search() {
 		$this->add_control(
 			'ajax_search',
@@ -936,6 +951,21 @@ class Wpr_Search extends Widget_Base {
 		);
 	}
 
+	public function add_control_show_description() {
+		$this->add_control(
+			'show_description',
+			[
+				'label' => esc_html__( 'Show Description', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'render_type' => 'template',
+                'condition' => [
+                    'ajax_search' => 'yes'
+                ]
+			]
+		);
+	}
+
 	public function add_control_number_of_words_in_excerpt() {
         $this->add_control(
             'number_of_words_in_excerpt',
@@ -947,7 +977,8 @@ class Wpr_Search extends Widget_Base {
                 'default' => 30,
                 'render_type' => 'template',
                 'condition' => [
-                    'ajax_search' => 'yes'
+                    'ajax_search' => 'yes',
+					'show_description' => 'yes'
                 ]
             ]
         );
@@ -985,6 +1016,23 @@ class Wpr_Search extends Widget_Base {
 		);
 	}
 
+	public function add_control_no_results_text() {
+		$this->add_control(
+			'no_results_text',
+			[
+				'label' => esc_html__( 'No Resulsts Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
+				'default' => esc_html__( 'No Results Found', 'wpr-addons' ),
+                'condition' => [
+                    'ajax_search' => 'yes'
+                ]
+			]
+		);
+	}
+
 	protected function register_controls() {
 		
 		// Section: Search -----------
@@ -1015,6 +1063,10 @@ class Wpr_Search extends Widget_Base {
 			);
 		}
 
+		$this->add_control_select_category();
+
+		$this->add_control_all_cat_text();
+
 		$this->add_control_ajax_search();
 
 		$this->add_control_number_of_results();
@@ -1028,8 +1080,12 @@ class Wpr_Search extends Widget_Base {
 		$this->add_control_show_view_result_btn();
 
 		$this->add_control_view_result_text();
+		
+		$this->add_control_show_description();
 
 		$this->add_control_number_of_words_in_excerpt();
+
+		$this->add_control_no_results_text();
 
 		$this->add_control(
 			'search_placeholder',
@@ -1433,6 +1489,170 @@ class Wpr_Search extends Widget_Base {
 		$this->end_controls_section();
 
 		// Styles
+		// Section: Select ------------
+		$this->start_controls_section(
+			'section_style_select',
+			[
+				'label' => esc_html__( 'Select', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'select_category' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'select_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#333333',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-category-select' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'select_bg_color',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#ffffff',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-category-select' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'select_border_color',
+			[
+				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-category-select' => 'border-color: {{VALUE}};'
+				],
+			]
+		);
+
+		$this->add_control(
+			'select_heading',
+			[
+				'label' => esc_html__( 'Select', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'select_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-category-select',
+			]
+		);
+
+		$this->add_control(
+			'options_heading',
+			[
+				'label' => esc_html__( 'Options', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'options_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-category-select option',
+			]
+		);
+
+		$this->add_control(
+			'select_border_size',
+			[
+				'label' => esc_html__( 'Border Size', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'size_units' => [ 'px', ],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-category-select' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'select_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'default' => [
+					'top' => 2,
+					'right' => 2,
+					'bottom' => 2,
+					'left' => 2,
+				],
+				'size_units' => [ 'px', '%' ],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-category-select' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'after',
+			]
+		);
+
+		$this->add_responsive_control(
+			'select_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'default' => [
+					'top' => 15,
+					'right' => 15,
+					'bottom' => 15,
+					'left' => 15,
+				],
+				'size_units' => [ 'px', ],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-category-select' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'select_width',
+			[
+				'label' => esc_html__( 'Select Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px', '%'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 200,
+					],
+				],
+				'default' => [
+					'unit' => '%',
+					'size' => 15,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-category-select' => 'width: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->end_controls_section();
+
+		// Styles
 		// Section: Button ------------
 		$this->start_controls_section(
 			'section_style_btn',
@@ -1774,10 +1994,12 @@ class Wpr_Search extends Widget_Base {
 				'wpr-query-type' => $settings['search_query'],
 				'number-of-results' => isset($settings['number_of_results']) && wpr_fs()->can_use_premium_code() ? $settings['number_of_results'] : 2,
 				'ajax-search' => isset($settings['ajax_search']) ? $settings['ajax_search'] : '',
+				'show-description' => isset($settings['show_description']) ? $settings['show_description'] : '',
 				'number-of-words' => isset($settings['number_of_words_in_excerpt']) ? $settings['number_of_words_in_excerpt'] : '',
 				'show-ajax-thumbnails' => isset($settings['show_ajax_thumbnails']) ? $settings['show_ajax_thumbnails'] : '',
 				'show-view-result-btn' => isset($settings['show_view_result_btn']) ? $settings['show_view_result_btn'] : '',
-				'view-result-text' => isset($settings['show_ajax_thumbnails']) ? $settings['view_result_text'] : '',
+				'view-result-text' => isset($settings['view_result_text']) ? $settings['view_result_text'] : '',
+				'no-results' => isset($settings['no_results_text']) ? esc_html__($settings['no_results_text']) : '',
 				'exclude-without-thumb' => isset($settings['exclude_posts_without_thumbnail']) ? $settings['exclude_posts_without_thumbnail'] : '',
 				'link-target' => isset($settings['ajax_search_link_target']) && ( 'yes' === $settings['ajax_search_link_target'] ) ? '_blank'  : '_self',
 				// 'ajax-search-img-size' => isset($settings['ajax_search_img_size']) ? $settings['ajax_search_img_size'] : ''

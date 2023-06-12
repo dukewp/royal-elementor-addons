@@ -35,6 +35,17 @@ if ( ! defined( 'ABSPATH' ) ) {
         foreach(  Utilities::get_custom_types_of( 'post', false ) as $key=>$value ) {
             array_push($all_post_types, $key);
         }
+        
+        $tax_query = '';
+        if ($_POST['wpr_category'] != '0') {
+            $tax_query = array(
+                array(
+                    'taxonomy' => $_POST['wpr_query_type'] == 'product' ? $_POST['wpr_query_type'] . '_cat' : 'category',
+                    'field'    => 'term_id',
+                    'terms'    => sanitize_text_field($_POST['wpr_category']),
+                ),
+            );
+        }
 
         $the_query = new \WP_Query( 
             [
@@ -44,7 +55,8 @@ if ( ! defined( 'ABSPATH' ) ) {
                 'offset' => sanitize_text_field($_POST['wpr_search_results_offset']),
                 'meta_query' => 'yes' === sanitize_text_field($_POST['wpr_exclude_without_thumb']) ? [
                     ['key' => '_thumbnail_id']
-                ] : ''
+                ] : '',
+                'tax_query' => $tax_query,
             ]
         );
         
@@ -75,7 +87,11 @@ if ( ! defined( 'ABSPATH' ) ) {
                     endif ; ?>
                     <div class="wpr-ajax-search-content">
                         <a target="<?php echo esc_attr($_POST['wpr_ajax_search_link_target']) ?>" class="wpr-ajax-title" href="<?php echo esc_url( the_permalink() ); ?>"><?php the_title();?></a>
-                        <p class="wpr-ajax-desc"><a target="<?php echo esc_attr($_POST['wpr_ajax_search_link_target']) ?>" href="<?php echo esc_url( the_permalink() ); ?>"><?php echo wp_trim_words(get_the_content(), sanitize_text_field($_POST['wpr_number_of_words'])); ?></a></p>
+
+                        <?php if ( sanitize_text_field($_POST['wpr_show_description']) == 'yes' ) : ?>
+                            <p class="wpr-ajax-desc"><a target="<?php echo esc_attr($_POST['wpr_ajax_search_link_target']) ?>" href="<?php echo esc_url( the_permalink() ); ?>"><?php echo wp_trim_words(get_the_content(), sanitize_text_field($_POST['wpr_number_of_words'])); ?></a></p>
+                        <?php endif; ?>
+
                         <?php if ( sanitize_text_field($_POST['wpr_show_view_result_btn']) ) : ?>
                             <a target="<?php echo esc_attr($_POST['wpr_ajax_search_link_target']) ?>" class="wpr-view-result" href="<?php echo esc_url( the_permalink() ); ?>"><?php echo sanitize_text_field($_POST['wpr_view_result_text']) ?></a>
                         <?php endif; ?>
@@ -90,7 +106,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         else :
             if (0 < sanitize_text_field($_POST['wpr_search_results_offset'])) {
             } else {
-                echo '<p class="wpr-no-results">'.esc_html__('No Results Found', 'wpr-addons').'</p>';
+                echo '<p class="wpr-no-results">'. sanitize_text_field($_POST['wpr_no_results']) .'</p>';
             }
 
         endif;

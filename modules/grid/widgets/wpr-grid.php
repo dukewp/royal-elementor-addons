@@ -8305,9 +8305,29 @@ class Wpr_Grid extends Widget_Base {
 		if ( 'current' === $settings[ 'query_source' ] ) {
 			global $wp_query;
 
+			$tax_query = [];
+
 			$args = $wp_query->query_vars;
 			$args['orderby'] = $query_order_by;
 			$args['offset'] = ( $paged - 1 ) * intval(get_option('posts_per_page')) + intval($settings[ 'query_offset' ]);
+			
+			if ( isset($_GET['category']) ) {
+				
+				if ( $_GET['category'] != '0' ) {
+					// Get category from URL
+					$category = sanitize_text_field($_GET['category']);
+				
+					array_push( $tax_query, [
+						'taxonomy' => 'category',
+						'field' => 'id',
+						'terms' => $category
+					] );
+				}
+			}
+
+			if ( !empty($tax_query) ) {
+				$args['tax_query'] = $tax_query;
+			}
 		}
 
 		// Related

@@ -398,7 +398,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'label' => esc_html__( 'Loop', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'condition' => [
-					'slider_item_link_type' => ['video-youtube', 'video-vimeo'],
+					'slider_item_link_type' => ['video-youtube', 'video-vimeo','video-media'],
 				],
 			]
 		);
@@ -409,7 +409,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'label' => esc_html__( 'Mute', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'condition' => [
-					'slider_item_link_type' => ['video-youtube', 'video-vimeo'],
+					'slider_item_link_type' => ['video-youtube', 'video-vimeo', 'video-media'],
 				],
 			]
 		);
@@ -420,7 +420,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'label' => esc_html__( 'Controls', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'condition' => [
-					'slider_item_link_type' => ['video-youtube', 'video-vimeo'],
+					'slider_item_link_type' => ['video-youtube', 'video-vimeo', 'video-media'],
 				],
 			]
 		);
@@ -2947,6 +2947,13 @@ class Wpr_Advanced_Slider extends Widget_Base {
 						
 					} elseif ( $item_type === 'video-media' ) {
 							$item_video_src = $item['hosted_url']['url'];
+							$item_video_mute = $item['slider_item_video_mute'] === 'yes' ? 'muted' : '';
+							$item_video_loop = $item['slider_item_video_loop'] === 'yes' ? 'loop' : '';
+							$item_video_controls = $item['slider_item_video_controls'] === 'yes' ? 'controls' : '';
+
+							$this->add_render_attribute( 'slider_item'. $item_count, 'data-video-mute', $item_video_mute );
+							$this->add_render_attribute( 'slider_item'. $item_count, 'data-video-loop', $item_video_loop );
+							$this->add_render_attribute( 'slider_item'. $item_count, 'data-video-controls', $item_video_controls );
 					}
 
 					$this->add_render_attribute( 'slider_item'. $item_count, 'data-video-src', $item_video_src );

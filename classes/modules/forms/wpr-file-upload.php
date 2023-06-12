@@ -22,7 +22,6 @@ if ( ! defined( 'ABSPATH' ) ) {
     
     public function handle_file_upload() {
 		$email_fields = get_option('wpr_email_fields_' . $_POST['wpr_form_id']);
-		var_dump($email_fields);
 		
 		if (!isset($_POST['wpr_addons_nonce']) || !wp_verify_nonce($_POST['wpr_addons_nonce'], 'wpr-addons-js')) {
 			wp_send_json_error(array(
@@ -100,7 +99,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	private function file_validity( $file ) {
 		// File type validation
 		if ( empty( $_POST['allowed_file_types'] ) ) {
-			$allowed_file_types = 'jpg,jpeg,png,gif,pdf,doc,docx,ppt,pptx,odt,avi,ogg,m4a,mov,mp3,mp4,mpg,wav,wmv';
+			$allowed_file_types = 'jpg,jpeg,png,gif,pdf,doc,docx,ppt,pptx,odt,avi,ogg,m4a,mov,mp3,mp4,mpg,wav,wmv,txt';
 		} else {
 			$allowed_file_types = $_POST['allowed_file_types'];
 		}

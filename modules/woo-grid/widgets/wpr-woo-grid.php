@@ -8578,13 +8578,27 @@ class Wpr_Woo_Grid extends Widget_Base {
 		} else {
 			$settings = $this->get_settings();
 
-			foreach ( get_object_taxonomies( 'product' ) as $tax ) {
-				if ( ! empty($settings[ 'query_taxonomy_'. $tax ]) ) {
+			if ( isset($_GET['category']) ) {
+				
+				if ( $_GET['category'] != '0' ) {
+					// Get category from URL
+					$category = sanitize_text_field($_GET['category']);
+				
 					array_push( $tax_query, [
-						'taxonomy' => $tax,
+						'taxonomy' => 'product_cat',
 						'field' => 'id',
-						'terms' => $settings[ 'query_taxonomy_'. $tax ]
+						'terms' => $category
 					] );
+				}
+			} else {
+				foreach ( get_object_taxonomies( 'product' ) as $tax ) {
+					if ( ! empty($settings[ 'query_taxonomy_'. $tax ]) ) {
+						array_push( $tax_query, [
+							'taxonomy' => $tax,
+							'field' => 'id',
+							'terms' => $settings[ 'query_taxonomy_'. $tax ]
+						] );
+					}
 				}
 			}
 		}
