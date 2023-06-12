@@ -358,7 +358,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				],
 				'media_type' => 'video',
 				'condition' => [
-					'slider_item_link_type' => 'custom',
+					'slider_item_link_type' => 'video-media',
 				],
 				'ai' => [
 					'active' => false,
@@ -387,7 +387,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'label' => esc_html__( 'Autoplay', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'condition' => [
-					'slider_item_link_type' => ['video-youtube', 'video-vimeo'],
+					'slider_item_link_type' => ['video-youtube', 'video-vimeo', 'video-media'],
 				],
 			]
 		);
@@ -2859,6 +2859,10 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				$item_video_start = $item['slider_item_video_start'];
 				$item_video_end = $item['slider_item_video_end'];
 
+				if ( $item_type === 'video-media' ) {
+					$item_video_src = $item['hosted_url']['url'];
+				}
+
 				if ( '' !== $item['slider_item_btn_icon_1']['value'] ) {
 					ob_start();
 					Icons_Manager::render_icon( $item['slider_item_btn_icon_1'], [ 'aria-hidden' => 'true' ] );
@@ -2877,11 +2881,6 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				}
 
 				$this->add_render_attribute( 'slider_item'. $item_count, 'class', 'wpr-slider-item elementor-repeater-item-'. $item['_id'] );
-
-				if ( $item_type === 'custom' ) {
-					$item_video_src = $item['hosted_url']['url'];
-					$this->add_render_attribute( 'slider_item'. $item_count, 'data-video-src', $item_video_src );
-				}
 
 				if ( strpos( $item_type, 'video' ) !== false && ! empty( $item_video_src ) ) {
 
@@ -2946,8 +2945,8 @@ class Wpr_Advanced_Slider extends Widget_Base {
 							$item_video_src .= '&#t='. gmdate( 'H', $item_video_start ) .'h'. gmdate( 'i', $item_video_start ) .'m'. gmdate( 's', $item_video_start ) .'s';
 						}
 						
-					} elseif ( $item_type === '' ) {
-
+					} elseif ( $item_type === 'video-media' ) {
+							$item_video_src = $item['hosted_url']['url'];
 					}
 
 					$this->add_render_attribute( 'slider_item'. $item_count, 'data-video-src', $item_video_src );
@@ -3024,8 +3023,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 							$slider_html .= '<div class="wpr-slider-content">';
 
 								//  Video Icon
-								var_dump($item_type);
-								if ( (($item_type == 'custom' && isset($item['hosted_url']) && !empty($item['hosted_url'])) || strpos( $item_type, 'video' ) !== false) && $item['slider_item_video_autoplay'] !== 'yes' ) {
+								if ( strpos( $item_type, 'video' ) !== false && $item['slider_item_video_autoplay'] !== 'yes' ) {
 									$slider_html .= '<div class="wpr-slider-video-btn">';
 										$slider_html .= '<i class="fas fa-play"></i>';
 									$slider_html .= '</div>';
