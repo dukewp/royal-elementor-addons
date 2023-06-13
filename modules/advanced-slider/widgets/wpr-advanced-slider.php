@@ -307,7 +307,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'type' => Controls_Manager::MEDIA,
 				'dynamic' => [
 					'active' => true,
-				]
+				],
 			]
 		);
 
@@ -325,10 +325,25 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-slider-item-bg' => 'background-size: {{VALUE}}',
 				],
+				// 'conditions' => [
+				// 	'slider_content_type' => 'custom'
+				// ]
 			]
 		);
 
 		$repeater->add_control( 'slider_item_link_type', $this->add_repeater_args_slider_item_link_type() );
+
+		$repeater->add_control(
+			'vimeo_notice',
+			[
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => 'Please Upload Background Image',
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				'condition' => [
+					'slider_item_link_type' => 'video-vimeo'
+				]
+			]
+		);
 
 		$repeater->add_control(
 			'slider_item_bg_image_url',
@@ -358,6 +373,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				],
 				'media_type' => 'video',
 				'condition' => [
+					'slider_content_type' => 'custom',
 					'slider_item_link_type' => 'video-media',
 				],
 				'ai' => [
@@ -376,6 +392,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				],
 				'placeholder' => esc_html__( 'https://www.your-link.com', 'wpr-addons' ),
 				'condition' => [
+					'slider_content_type' => 'custom',
 					'slider_item_link_type' => ['video-youtube', 'video-vimeo'],
 				],
 			]
@@ -387,6 +404,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'label' => esc_html__( 'Autoplay', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'condition' => [
+					'slider_content_type' => 'custom',
 					'slider_item_link_type' => ['video-youtube', 'video-vimeo', 'video-media'],
 				],
 			]
@@ -398,6 +416,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'label' => esc_html__( 'Loop', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'condition' => [
+					'slider_content_type' => 'custom',
 					'slider_item_link_type' => ['video-youtube', 'video-vimeo','video-media'],
 				],
 			]
@@ -409,6 +428,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'label' => esc_html__( 'Mute', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'condition' => [
+					'slider_content_type' => 'custom',
 					'slider_item_link_type' => ['video-youtube', 'video-vimeo', 'video-media'],
 				],
 			]
@@ -420,6 +440,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'label' => esc_html__( 'Controls', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'condition' => [
+					'slider_content_type' => 'custom',
 					'slider_item_link_type' => ['video-youtube', 'video-vimeo', 'video-media'],
 				],
 			]
@@ -434,6 +455,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'description' => esc_html__( 'Specify a start time (in seconds)', 'wpr-addons' ),
 				'frontend_available' => true,
 				'condition' => [
+					'slider_content_type' => 'custom',
 					'slider_item_link_type' => ['video-youtube', 'video-vimeo'],
 					'slider_item_video_loop!' => 'yes',
 				],
@@ -449,6 +471,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'description' => esc_html__( 'Specify an end time (in seconds)', 'wpr-addons' ),
 				'frontend_available' => true,
 				'condition' => [
+					'slider_content_type' => 'custom',
 					'slider_item_link_type' => 'video-youtube',
 					'slider_item_video_loop!' => 'yes',
 				],
@@ -473,6 +496,9 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'label' => esc_html__( 'Background Overlay', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
+				'condition' => [
+					'slider_content_type' => 'custom'
+				]
 			]
 		);
 
@@ -487,6 +513,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				],
 				'condition' => [
 					'slider_item_overlay' => 'yes',
+					'slider_content_type' => 'custom'
 				],
 			]
 		);
@@ -520,6 +547,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				],
 				'condition' => [
 					'slider_item_overlay' => 'yes',
+					'slider_content_type' => 'custom'
 				],
 			]
 		);
@@ -2988,7 +3016,11 @@ class Wpr_Advanced_Slider extends Widget_Base {
 
 				// Slider Content Attributes
 				$this->add_render_attribute( 'slider_container'. $item_count, 'class', 'wpr-cv-container' );	
-				$this->add_render_attribute( 'slider_outer'. $item_count, 'class', 'wpr-cv-outer' );	
+				$this->add_render_attribute( 'slider_outer'. $item_count, 'class', 'wpr-cv-outer' );
+
+				if ( $settings['slider_effect'] != 'fade' ) {
+					$settings['slider_content_animation'] = 'none';
+				}
 
 				if ( $settings['slider_content_animation'] !== 'none' ) {
 					if ( $slider_amount === 1 ) {

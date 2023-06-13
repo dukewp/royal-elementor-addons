@@ -6129,12 +6129,16 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     vertical-align: bottom;
 }
 
-.wpr-slider-video {
+.wpr-slider-video:not(.wpr-custom-video) {
   position: relative;
   padding-bottom: 56.25%;
   /* 16:9 */
   /* padding-top: 25px; */
   height: 0;
+}
+
+.wpr-custom-video video {
+    height: 100%;
 }
 
 .wpr-advanced-slider iframe {
