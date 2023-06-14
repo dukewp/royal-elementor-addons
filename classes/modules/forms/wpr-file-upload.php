@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     }
     
     public function handle_file_upload() {
-		$email_fields = get_option('wpr_email_fields_' . $_POST['wpr_form_id']);
+		// $email_fields = get_option('wpr_email_fields_' . $_POST['wpr_form_id']); remove if necessary
 		
 		if (!isset($_POST['wpr_addons_nonce']) || !wp_verify_nonce($_POST['wpr_addons_nonce'], 'wpr-addons-js')) {
 			wp_send_json_error(array(
@@ -88,6 +88,12 @@ if ( ! defined( 'ABSPATH' ) ) {
         }
     
 		if ( 'click' == $_POST['triggering_event'] ) {
+			// Folder not being created during interaction was causing issues
+			$upload_dir = wp_upload_dir();
+			$upload_path = $upload_dir['basedir'] . '/wpr-addons/forms';
+
+			wp_mkdir_p( $upload_path );
+
 			wp_send_json_error(array(
 				'message' => esc_html__('No file was uploaded.'),
 				'files' => $_FILES['uploaded_file']

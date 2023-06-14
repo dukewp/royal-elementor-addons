@@ -43,10 +43,19 @@ class WPR_WooCommerce_Config {
 		add_filter( 'woocommerce_account_menu_items', [$this, 'add_wishlist_to_my_account'] );
 
 		add_action( 'woocommerce_after_register_post_type', [$this, 'remove_deleted_products_from_compare_and_wishlist'] );
+		add_filter( 'woocommerce_quantity_input_args', [$this, 'wpr_custom_quantity_step'], 10, 2 );
 	}
 
 	function add_wishlist_endpoint() {
 		add_rewrite_endpoint( 'wishlist', EP_ROOT | EP_PAGES );
+	}
+
+	function wpr_custom_quantity_step( $args, $product ) {
+		$args['input_value'] = 8; // Start from this value
+		$args['max_value'] = 80;  // Maximum value
+		$args['min_value'] = 8;   // Minimum value
+		$args['step'] = 8;        // Increment/decrement by this value
+		return $args;
 	}
 		
 	function add_wishlist_to_my_account( $items ) {
