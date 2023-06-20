@@ -58,6 +58,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 
         // API URL
         $api_url = 'https://'. $api_key_sufix .'.api.mailchimp.com/3.0/lists/'. $list_id .'/members/'. md5(strtolower(sanitize_text_field($fields['email_field'])));
+		
+		$api_body = [
+			'email_address' => sanitize_text_field($fields[ 'email_field' ]),
+			'status' => 'subscribed',
+			'merge_fields' => $merge_fields
+		];
+			
+		if ( !empty($group_ids) ) {
+			$api_body['interests'] = self::group_ids_to_interests_array($group_ids);
+		}
 
         // API Args
         $api_args = [
@@ -66,12 +76,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				'Content-Type' => 'application/json',
 				'Authorization' => 'apikey '. $api_key,
 			],
-			'body' => json_encode([
-				'email_address' => sanitize_text_field($fields[ 'email_field' ]),
-				'status' => 'subscribed',
-				'merge_fields' => $merge_fields,
-				'interests' => self::group_ids_to_interests_array($group_ids)
-			]),
+			'body' => json_encode($api_body),
         ];
 
         // Send Request
@@ -113,7 +118,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	public static function group_ids_to_interests_array($group_ids) {
 		$interests_array = [];
-	
+		
 		foreach ($group_ids as $group_id) {
 			$interests_array[$group_id] = true;
 		}

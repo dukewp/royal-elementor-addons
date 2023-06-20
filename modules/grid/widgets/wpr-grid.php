@@ -8259,6 +8259,8 @@ class Wpr_Grid extends Widget_Base {
 
 		$query_order_by = '' != $settings['query_randomize'] ? $settings['query_randomize'] : $settings['order_posts'];
 
+		$query_order_by = 'meta_value';
+
 		// Dynamic
 		$args = [
 			'post_type' => $settings[ 'query_source' ],
@@ -8270,6 +8272,8 @@ class Wpr_Grid extends Widget_Base {
 			'paged' => $paged,
 			'offset' => $offset
 		];
+
+		$args['meta_key'] = 'episode';
 
 		// Display Scheduled Posts
 		if ( 'yes' === $settings['display_scheduled_posts'] && wpr_fs()->can_use_premium_code() ) {
@@ -8471,14 +8475,14 @@ class Wpr_Grid extends Widget_Base {
 		if ( has_post_thumbnail() ) {
 			echo '<div class="wpr-grid-image-wrap" data-src="'. esc_url( $src ) .'" data-img-on-hover="'. $settings['secondary_img_on_hover'] .'"  data-src-secondary="'. esc_url( $src2 ) .'">';
 				if ( 'yes' == $settings['grid_lazy_loading'] ) {
-					echo '<img src="'. WPR_ADDONS_ASSETS_URL . 'img/icon-256x256.png" alt="'. esc_attr( $alt ) .'" class="wpr-hidden-image wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
+					echo '<img data-no-lazy="1" src="'. WPR_ADDONS_ASSETS_URL . 'img/icon-256x256.png" alt="'. esc_attr( $alt ) .'" class="wpr-hidden-image wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
 					if ( 'yes' == $settings['secondary_img_on_hover'] ) {
-						echo '<img src="'. esc_url( $src2 ) . '" alt="'. esc_attr( $alt ) .'" class="wpr-hidden-img wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
+						echo '<img data-no-lazy="1" src="'. esc_url( $src2 ) . '" alt="'. esc_attr( $alt ) .'" class="wpr-hidden-img wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
 					}
 				} else {
-					echo '<img src="'. esc_url( $src ) . '" alt="'. esc_attr( $alt ) .'" class="wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
+					echo '<img data-no-lazy="1" src="'. esc_url( $src ) . '" alt="'. esc_attr( $alt ) .'" class="wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
 					if ( 'yes' == $settings['secondary_img_on_hover'] ) {
-						echo '<img src="'. esc_url( $src2 ) . '" alt="'. esc_attr( $alt ) .'" class="wpr-hidden-img wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
+						echo '<img data-no-lazy="1" src="'. esc_url( $src2 ) . '" alt="'. esc_attr( $alt ) .'" class="wpr-hidden-img wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
 					}
 				}
 			echo '</div>';
@@ -8491,7 +8495,7 @@ class Wpr_Grid extends Widget_Base {
 
 			if ( wpr_fs()->can_use_premium_code() ) {
 				if ( '' !== $settings['overlay_image']['url'] ) {
-					echo '<img src="'. esc_url( $settings['overlay_image']['url'] ) .'">';
+					echo '<img data-no-lazy="1" src="'. esc_url( $settings['overlay_image']['url'] ) .'">';
 				}
 			}
 
