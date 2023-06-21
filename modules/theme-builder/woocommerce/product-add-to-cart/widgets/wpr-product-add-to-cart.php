@@ -1791,7 +1791,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 		$this->add_control(
 			'variation_availability_color_out_of_stock',
 			[
-				'label'  => esc_html__( 'Out Of Stock Color', 'wpr-addons' ),
+				'label'  => esc_html__( 'Out of Stock Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#FF4F40',
 				'selectors' => [

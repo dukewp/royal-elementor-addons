@@ -178,6 +178,9 @@ class Wpr_Grid extends Widget_Base {
 		);
 	}
 
+	public function add_control_order_posts_by_acf($meta) {
+	}
+
 	public function add_control_query_slides_to_show() {
 		$this->add_control(
 			'query_slides_to_show',
@@ -818,6 +821,8 @@ class Wpr_Grid extends Widget_Base {
 		);
 
 		$this->add_control_order_posts();
+
+		$this->add_control_order_posts_by_acf( $post_meta_keys[1] );
 
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'order_posts', ['pro-tl', 'pro-mf', 'pro-d', 'pro-ar', 'pro-cc'] );
@@ -8259,8 +8264,6 @@ class Wpr_Grid extends Widget_Base {
 
 		$query_order_by = '' != $settings['query_randomize'] ? $settings['query_randomize'] : $settings['order_posts'];
 
-		$query_order_by = 'meta_value';
-
 		// Dynamic
 		$args = [
 			'post_type' => $settings[ 'query_source' ],
@@ -8273,7 +8276,9 @@ class Wpr_Grid extends Widget_Base {
 			'offset' => $offset
 		];
 
-		$args['meta_key'] = 'episode';
+		if ( $query_order_by == 'meta_value' ) {
+			$args['meta_key'] = $settings['order_posts_by_acf'];
+		}
 
 		// Display Scheduled Posts
 		if ( 'yes' === $settings['display_scheduled_posts'] && wpr_fs()->can_use_premium_code() ) {
