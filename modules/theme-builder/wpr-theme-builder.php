@@ -177,10 +177,10 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 				'preview_single_'. $slug,
 				[
 					'label' => 'Select '. $title,
-					'type' => Controls_Manager::SELECT2,
+					'type' => 'wpr-ajax-select2',
 					'label_block' => true,
 					'default' => !empty($latest_post) ? $latest_post[0]->ID : '',
-					'options' => Utilities::get_posts_by_post_type( $slug ),
+					'options' => 'ajaxselect2/get_posts_by_post_type',
 					'separator' => 'before',
 					'condition' => [
 						'preview_source' => $slug,
