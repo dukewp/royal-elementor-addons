@@ -133,7 +133,7 @@ class Wpr_Product_Description extends Widget_Base {
             echo '</div>';
         } else {
             echo '<div class="wpr-product-description">';
-                echo '<p>'. esc_html__('Product not found') .'</p>';
+                echo '<p>'. esc_html__('Product not found', 'wpr-addons') .'</p>';
             echo '</div>';
         }
     }

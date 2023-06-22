@@ -49,8 +49,8 @@ class Wpr_Product_Rating extends Widget_Base {
 				'label' => esc_html__( 'Layout', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'flex' => esc_html__('Horizontal'),
-					'block' => esc_html__('Vertical'),
+					'flex' => esc_html__('Horizontal', 'wpr-addons'),
+					'block' => esc_html__('Vertical', 'wpr-addons'),
 				],
                 'prefix_class' => 'wpr-product-rating-',
                 'selectors' => [

@@ -150,15 +150,15 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'fields' => $repeater->get_controls(),
 				'default' => [
 					[
-						'element_select' => esc_html__('title'),
+						'element_select' => esc_html__('title', 'wpr-addons'),
 						'image' => WPR_ADDONS_ASSETS_URL . 'img/logo-slider-450x450.png'
 					],
 					[
-						'element_select' => esc_html__('title'),
+						'element_select' => esc_html__('title', 'wpr-addons'),
 						'image' => WPR_ADDONS_ASSETS_URL . 'img/logo-slider-450x450.png'
 					],
 					[
-						'element_select' => esc_html__('title'),
+						'element_select' => esc_html__('title', 'wpr-addons'),
 						'image' => WPR_ADDONS_ASSETS_URL . 'img/logo-slider-450x450.png'
 					],
 				],

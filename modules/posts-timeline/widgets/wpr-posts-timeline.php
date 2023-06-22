@@ -196,11 +196,11 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'type' => \Elementor\Controls_Manager::SELECT,
 				'default' => 'centered',
 				'options'=>[
-					'centered'=> esc_html__('Zig-Zag'),
-					'one-sided'=> esc_html__('Line Left'),
-					'one-sided-left'=> esc_html__('Line Right'),
-					'horizontal-bottom'=> esc_html__('Line Top - Carousel'),
-					'horizontal'=> esc_html__('Line Bottom - Carousel'),
+					'centered'=> esc_html__('Zig-Zag', 'wpr-addons'),
+					'one-sided'=> esc_html__('Line Left', 'wpr-addons'),
+					'one-sided-left'=> esc_html__('Line Right', 'wpr-addons'),
+					'horizontal-bottom'=> esc_html__('Line Top - Carousel', 'wpr-addons'),
+					'horizontal'=> esc_html__('Line Bottom - Carousel', 'wpr-addons'),
 				],
 				'render_type' => 'template',
 			]
@@ -213,9 +213,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'type' => \Elementor\Controls_Manager::SELECT,
 				'default' => 'image-top',
 				'options'=>[
-					'image-top' => esc_html__('Top'),
-					'image-bottom' => esc_html__('Bottom'),
-					// 'background' => esc_html__('Background'),
+					'image-top' => esc_html__('Top', 'wpr-addons'),
+					'image-bottom' => esc_html__('Bottom', 'wpr-addons'),
+					// 'background' => esc_html__('Background', 'wpr-addons'),
 				],
 			]
 		);
@@ -2576,7 +2576,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => esc_html__( 'Container Padding', 'wpr-addons' ),
 				'type' => Controls_Manager::DIMENSIONS,
-				'description' => esc_html__('Apply this option to fix Box Shadow issue.'),
+				'description' => esc_html__('Apply this option to fix Box Shadow issue.', 'wpr-addons'),
 				'size_units' => [ 'px' ],
 				'devices' => [ 'desktop', 'tablet', 'mobile' ],
 				'default' => [

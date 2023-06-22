@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		
 		if (!isset($_POST['wpr_addons_nonce']) || !wp_verify_nonce($_POST['wpr_addons_nonce'], 'wpr-addons-js')) {
 			wp_send_json_error(array(
-				'message' => esc_html__('Security check failed.'),
+				'message' => esc_html__('Security check failed.', 'wpr-addons'),
 			));
 		}
 
@@ -55,7 +55,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			if ( !$this->file_validity(  $file ) ) {
                 wp_send_json_error(array(
 					'cause' => 'filetype',
-                    'message' => esc_html__('File type is not valid.')
+                    'message' => esc_html__('File type is not valid.', 'wpr-addons')
                 ));
 			}
 			
@@ -77,12 +77,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 					));
 				} else {
 					wp_send_json_error(array(
-						'message' => esc_html__('Failed to upload the file.')
+						'message' => esc_html__('Failed to upload the file.', 'wpr-addons')
 					));
 				}
 			} else {
 				wp_send_json_success(array(
-					'message' => esc_html__('File validation passed')
+					'message' => esc_html__('File validation passed', 'wpr-addons')
 				));
 			}
         }
@@ -95,7 +95,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			wp_mkdir_p( $upload_path );
 
 			wp_send_json_error(array(
-				'message' => esc_html__('No file was uploaded.'),
+				'message' => esc_html__('No file was uploaded.', 'wpr-addons'),
 				'files' => $_FILES['uploaded_file']
 			));
 		}

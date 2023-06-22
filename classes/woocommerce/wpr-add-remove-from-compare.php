@@ -54,7 +54,7 @@ class WPR_Add_Remove_From_Compare {
         //     $compare = array();
         // }
         // if ( in_array( $product_id, $compare ) ) {
-        //     wp_send_json_error( array( 'message' => esc_html__('Product is already in Compare.') ) );
+        //     wp_send_json_error( array( 'message' => esc_html__('Product is already in Compare.', 'wpr-addons') ) );
         //     return;
         // }
         // $compare[] = $product_id;
@@ -72,7 +72,7 @@ class WPR_Add_Remove_From_Compare {
         }
     
         if (in_array($product_id, $compare)) {
-            wp_send_json_error(array('message' => esc_html__('Product is already in compare.')));
+            wp_send_json_error(array('message' => esc_html__('Product is already in compare.', 'wpr-addons')));
             return;
         }
     

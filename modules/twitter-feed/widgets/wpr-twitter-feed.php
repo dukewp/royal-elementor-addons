@@ -391,7 +391,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				// }
 
                 // echo wp_date(get_option( 'date_format' ), strtotime($item['created_at'])) 
-                echo human_time_diff(strtotime($item['created_at'])) .' '. esc_html__('ago');
+                echo human_time_diff(strtotime($item['created_at'])) .' '. esc_html__('ago', 'wpr-addons');
 
 				// Icon: After
 				// if ( 'after' === $settings['element_extra_icon_pos'] ) {
@@ -930,8 +930,8 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				'label' => esc_html__( 'Header Info Style', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'inline' => esc_html__('Inline'),
-					'block' => esc_html__('Block'),
+					'inline' => esc_html__('Inline', 'wpr-addons'),
+					'block' => esc_html__('Block', 'wpr-addons'),
 				],
 				'selectors_dictionary' => [
 					'inline' => 'display: flex;',
@@ -4678,7 +4678,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
         $settings = $this->get_settings_for_display();
 
 		if ( empty($settings['twitter_feed_consumer_key']) || empty($settings['twitter_feed_consumer_secret']) ) {
-			echo '<p class="wpr-token-missing">'. esc_html__('Please insert Consumer and Secret Keys in respective fields') .'</p>';
+			echo '<p class="wpr-token-missing">'. esc_html__('Please insert Consumer and Secret Keys in respective fields', 'wpr-addons') .'</p>';
 			return;
 		}
 
@@ -4861,9 +4861,9 @@ class Wpr_Twitter_Feed extends Widget_Base {
 							<p class="wpr-tf-header-user-name"><?php echo $items_array[0][0]['user']['name'] ?></p>
 							<p class="wpr-tf-header-user-acc-name"><a href="<?php echo $items_array[0][0]['user']['screen_name'] ?>" target="_blank"><?php echo '@'. $items_array[0][0]['user']['screen_name'] ?></a></p>
 						</div>
-						<span class=""><a href='https://twitter.com/<?php echo $items_array[0][0]['user']['screen_name'] ?>' target="_blank"><span><?php echo $this->format_numbers($items_array[0][0]['user']['statuses_count']) ?></span><span><?php esc_html__(' Tweets') ?></span></a></span>
-						<span class=""><a href='https://twitter.com/<?php echo $items_array[0][0]['user']['screen_name'] ?>/following' target="_blank"><span><?php echo $this->format_numbers($items_array[0][0]['user']['friends_count']) ?></span><span><?php esc_html__(' Following') ?></span></a></span>
-						<span class=""><a href='https://twitter.com/<?php echo $items_array[0][0]['user']['screen_name'] ?>/followers' target="_blank"><span><?php echo $this->format_numbers($items_array[0][0]['user']['followers_count']) ?></span><span><?php esc_html__(' Followers') ?></span></a></span>
+						<span class=""><a href='https://twitter.com/<?php echo $items_array[0][0]['user']['screen_name'] ?>' target="_blank"><span><?php echo $this->format_numbers($items_array[0][0]['user']['statuses_count']) ?></span><span><?php esc_html__(' Tweets', 'wpr-addons') ?></span></a></span>
+						<span class=""><a href='https://twitter.com/<?php echo $items_array[0][0]['user']['screen_name'] ?>/following' target="_blank"><span><?php echo $this->format_numbers($items_array[0][0]['user']['friends_count']) ?></span><span><?php esc_html__(' Following', 'wpr-addons') ?></span></a></span>
+						<span class=""><a href='https://twitter.com/<?php echo $items_array[0][0]['user']['screen_name'] ?>/followers' target="_blank"><span><?php echo $this->format_numbers($items_array[0][0]['user']['followers_count']) ?></span><span><?php esc_html__(' Followers', 'wpr-addons') ?></span></a></span>
 					</div>
 				</div>
 	

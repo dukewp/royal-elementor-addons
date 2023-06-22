@@ -205,7 +205,7 @@ class Wpr_Offcanvas extends Widget_Base {
 			'offcanvas_reverse_header',
 			[
 				'label' => sprintf( __( 'Reverse Header %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
-				'description' => esc_html__('Reverse Close Icon and Title Locations'),
+				'description' => esc_html__('Reverse Close Icon and Title Locations', 'wpr-addons'),
 				'type' => Controls_Manager::SWITCHER,
 				'render_type' => 'template',
 				'classes' => 'wpr-pro-control no-distance',
@@ -1048,7 +1048,7 @@ class Wpr_Offcanvas extends Widget_Base {
 						if ( !empty($settings['offcanvas_template']) ) {
 							echo $this->wpr_offcanvas_template($settings['offcanvas_template']);
 						} else {
-							echo '<p>'. esc_html__('Please select a template!') .'</p>';
+							echo '<p>'. esc_html__('Please select a template!', 'wpr-addons') .'</p>';
 						}
 					?>
 				</div>

@@ -513,13 +513,13 @@ class Plugin {
 				'comparePageURL' => get_permalink(get_option('wpr_compare_page')),
 				'wishlistPageID' => get_option('wpr_wishlist_page'),
 				'wishlistPageURL' => get_permalink(get_option('wpr_wishlist_page')),
-				'chooseQuantityText' => esc_html__('Please select the required number of items.'),
+				'chooseQuantityText' => esc_html__('Please select the required number of items.', 'wpr-addons'),
 				'site_key' => get_option('wpr_recaptcha_v3_site_key'),
 				'is_admin' => current_user_can('manage_options'),
-				'input_empty' => esc_html__('Please fill out this field'),
-				'select_empty' => esc_html__('Nothing selected'),
-				'file_empty' => esc_html__('Please upload a file'),
-				'recaptcha_error' => esc_html__('Recaptcha Error')
+				'input_empty' => esc_html__('Please fill out this field', 'wpr-addons'),
+				'select_empty' => esc_html__('Nothing selected', 'wpr-addons'),
+				'file_empty' => esc_html__('Please upload a file', 'wpr-addons'),
+				'recaptcha_error' => esc_html__('Recaptcha Error', 'wpr-addons')
 			]
 		);
 	}

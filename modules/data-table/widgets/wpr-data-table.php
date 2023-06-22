@@ -378,7 +378,7 @@ class Wpr_Data_Table extends Widget_Base {
 		$repeater->add_control(
 			'header_icon_type',
 			[
-				'label' => esc_html__('Media Type'),
+				'label' => esc_html__('Media Type', 'wpr-addons'),
 				'type' => Controls_Manager::SELECT,
 				'label_block' => false,
 				'default' => 'icon',
@@ -395,7 +395,7 @@ class Wpr_Data_Table extends Widget_Base {
 		$repeater->add_control(
 			'header_icon_position',
 			[
-				'label' => esc_html__('Media Position'),
+				'label' => esc_html__('Media Position', 'wpr-addons'),
 				'type' => Controls_Manager::SELECT,
 				'label_block' => false,
 				'default' => 'left',
@@ -671,7 +671,7 @@ class Wpr_Data_Table extends Widget_Base {
 		$repeater->add_control(
 			'td_icon_type',
 			[
-				'label' => esc_html__('Media Type'),
+				'label' => esc_html__('Media Type', 'wpr-addons'),
 				'type' => Controls_Manager::SELECT,
 				'label_block' => false,
 				'default' => 'icon',
@@ -688,7 +688,7 @@ class Wpr_Data_Table extends Widget_Base {
 		$repeater->add_control(
 			'td_icon_position',
 			[
-				'label' => esc_html__('Media Position'),
+				'label' => esc_html__('Media Position', 'wpr-addons'),
 				'type' => Controls_Manager::SELECT,
 				'label_block' => false,
 				'default' => 'left',

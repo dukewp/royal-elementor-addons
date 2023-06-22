@@ -618,7 +618,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					'active' => true,
 				],
 				'label_block' => true,
-				'description' => esc_html__('Please Note: You just need to enter this once, later it will update automatically')
+				'description' => esc_html__('Please Note: You just need to enter this once, later it will update automatically', 'wpr-addons')
 			]
 		);
 
@@ -626,7 +626,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			'cache_timeout_select',
 			[
 				'label'   => esc_html__( 'Cache Timeout', 'powerpack' ),
-				'description' => esc_html__('Determine how often you want the feed to be updated'),
+				'description' => esc_html__('Determine how often you want the feed to be updated', 'wpr-addons'),
 				'type'    => Controls_Manager::SELECT,
 				'default' => 'hour',
 				'options' => [
@@ -5510,7 +5510,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
 		if ( '' === $access_token ) {
 			if ( current_user_can('administrator') ) {
-				echo '<p class="wpr-token-missing">'. esc_html__('Please click on the Authorize Instagram button to get instagram access token and expiry date!') .'</p>';
+				echo '<p class="wpr-token-missing">'. esc_html__('Please click on the Authorize Instagram button to get instagram access token and expiry date!', 'wpr-addons') .'</p>';
 			}
 			return;
 		}

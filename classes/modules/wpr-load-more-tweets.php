@@ -88,7 +88,7 @@ if ( ! defined( 'ABSPATH' ) ) {
           // }
   
                   // echo wp_date(get_option( 'date_format' ), strtotime($item['created_at'])) 
-                  echo human_time_diff(strtotime($item['created_at'])) .' '. esc_html__('ago');
+                  echo human_time_diff(strtotime($item['created_at'])) .' '. esc_html__('ago', 'wpr-addons');
   
           // Icon: After
           // if ( 'after' === $settings['element_extra_icon_pos'] ) {

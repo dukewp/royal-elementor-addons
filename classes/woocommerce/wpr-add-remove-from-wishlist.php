@@ -44,7 +44,7 @@ class WPR_Add_Remove_From_Wishlist {
         }
     
         if (in_array($product_id, $wishlist)) {
-            wp_send_json_error(array('message' => esc_html__('Product is already in wishlist.')));
+            wp_send_json_error(array('message' => esc_html__('Product is already in wishlist.', 'wpr-addons')));
             return;
         }
     

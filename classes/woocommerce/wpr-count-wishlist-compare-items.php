@@ -74,7 +74,7 @@ class WPR_Count_Wishlist_Compare_Items {
                     'product_title' => $product->get_title(),
                     'product_url' => $product->get_permalink(),
                     'product_price' => $product->get_price_html(),
-                    'product_stock' => $product->get_stock_status() == 'instock' ? esc_html__('In Stock') : esc_html__('Out of Stock'),
+                    'product_stock' => $product->get_stock_status() == 'instock' ? esc_html__('In Stock', 'wpr-addons') : esc_html__('Out of Stock', 'wpr-addons'),
                     'product_atc' => $this->render_product_add_to_cart($settings, $product)
                 ];
             }
@@ -154,21 +154,21 @@ class WPR_Count_Wishlist_Compare_Items {
                 if ( ! $product ) {
                     continue;
                 }
-                echo '<th data-product-id="' . $product->get_id() . '"><button class="wpr-compare-remove" data-product-id="' . $product->get_id() . '">'. esc_html__($settings['remove_from_compare_text']) .'</button></th>';
+                echo '<th data-product-id="' . $product->get_id() . '"><button class="wpr-compare-remove" data-product-id="' . $product->get_id() . '">'. esc_html__($settings['remove_from_compare_text'], 'wpr-addons') .'</button></th>';
             }
             echo '</tr>';
             
             // Create the remaining rows of the table
             $table_data = array(
-                ['label' => esc_html__('Image'), 'type' => 'image'],
-                ['label' => esc_html__('Name'), 'type' => 'text'],
-                ['label' => esc_html__('Rating'), 'type' => 'text'],
-                ['label' => esc_html__('Description'), 'type' => 'text'],
-                ['label' => esc_html__('Price'), 'type' => 'text'],
-                ['label' => esc_html__('SKU'), 'type' => 'text'],
-                ['label' => esc_html__('Stock Status'), 'type' => 'text'],
-                ['label' => esc_html__('Dimensions'), 'type' => 'text'],
-                ['label' => esc_html__('Weight'), 'type' => 'text']
+                ['label' => esc_html__('Image', 'wpr-addons'), 'type' => 'image'],
+                ['label' => esc_html__('Name', 'wpr-addons'), 'type' => 'text'],
+                ['label' => esc_html__('Rating', 'wpr-addons'), 'type' => 'text'],
+                ['label' => esc_html__('Description', 'wpr-addons'), 'type' => 'text'],
+                ['label' => esc_html__('Price', 'wpr-addons'), 'type' => 'text'],
+                ['label' => esc_html__('SKU', 'wpr-addons'), 'type' => 'text'],
+                ['label' => esc_html__('Stock Status', 'wpr-addons'), 'type' => 'text'],
+                ['label' => esc_html__('Dimensions', 'wpr-addons'), 'type' => 'text'],
+                ['label' => esc_html__('Weight', 'wpr-addons'), 'type' => 'text']
             );
 
             
@@ -216,7 +216,7 @@ class WPR_Count_Wishlist_Compare_Items {
                                 $this->render_product_rating($product);
                             } else if ( strtolower($row['label']) == 'stock status' ) {
 					            $stock_status = $product->get_stock_status();
-                                echo $stock_status == 'instock' ? esc_html__('In Stock') : esc_html__('Out of Stock');
+                                echo $stock_status == 'instock' ? esc_html__('In Stock', 'wpr-addons') : esc_html__('Out of Stock', 'wpr-addons');
                             } else if ( strtolower($row['label']) == 'dimensions' ) {
 
 								if ( $product->has_dimensions() ) {

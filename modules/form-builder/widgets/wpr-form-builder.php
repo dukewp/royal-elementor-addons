@@ -470,7 +470,7 @@ class Wpr_Form_Builder extends Widget_Base {
 			'field_step_notice',
 			[
 				'type' => Controls_Manager::RAW_HTML,
-				'raw' => esc_html__('Step should be a First element of fields group. Ex: Step 1 followed by Field 1, Field 2. Step 2 followed by Field 3, Field 4.'),
+				'raw' => esc_html__('Step should be a First element of fields group. Ex: Step 1 followed by Field 1, Field 2. Step 2 followed by Field 3, Field 4.', 'wpr-addons'),
 				'content_classes' => 'elementor-panel-alert',
 				'condition' => [
 					'field_type' => 'step'
