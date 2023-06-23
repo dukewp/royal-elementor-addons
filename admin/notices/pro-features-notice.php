@@ -83,6 +83,9 @@ class WprProFeaturesNotice {
         <script>
         jQuery( document ).ready( function($) {
 
+            $('html, body').animate({
+                scrollTop: 0
+            }, 'slow');
             $('body').addClass('wpr-pro-features-body');
             $(document).find('.wpr-pro-features-notice-wrap').css('opacity', 1);
 

@@ -6744,6 +6744,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-pricing-table-feature {
     position: relative;
     font-size: 15px;
+    padding: 0;
 }
 
 .wpr-pricing-table-feature-inner {
