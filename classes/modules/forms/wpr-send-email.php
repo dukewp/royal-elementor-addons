@@ -31,7 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         
         $message_body = [];
     
-		$email_fields = get_option('wpr_email_fields_' . $_POST['wpr_form_id']);
+		$email_fields = trim(get_option('wpr_email_fields_' . $_POST['wpr_form_id']));
 		
 		if ($email_fields === '[all-fields]') {
 			foreach ( $_POST['form_content'] as $key => $value ) {
