@@ -3605,7 +3605,8 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
 
 .elementor-widget-wpr-grid .wpr-grid-item-title,
 .elementor-widget-wpr-woo-grid .wpr-grid-item-title,
-.elementor-widget-wpr-woo-category-grid-pro .wpr-grid-item-title {
+.elementor-widget-wpr-woo-category-grid-pro .wpr-grid-item-title,
+.elementor-widget-wpr-category-grid-pro .wpr-grid-item-title {
     font-size: 21px;
     font-weight: 700;
     line-height: 23px;

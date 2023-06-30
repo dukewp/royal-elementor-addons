@@ -3406,7 +3406,7 @@ class Wpr_Form_Builder extends Widget_Base {
 					$this->add_required_attribute( $element_id );
 				}
 
-				$html .= '<span class="wpr-form-field-option" data-key="'. $item['field_id'] .'"><input ' . $this->get_render_attribute_string( $element_id ) . '> <label for="' . $html_id . '">'. $option_label .'</label></span>';
+				$html .= '<span class="wpr-form-field-option" data-key="form-field-'. $item['field_id'] .'"><input ' . $this->get_render_attribute_string( $element_id ) . '> <label for="' . $html_id . '">'. $option_label .'</label></span>';
 			}
 			$html .= '</div>';
 		}

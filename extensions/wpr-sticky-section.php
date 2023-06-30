@@ -25,11 +25,16 @@ class Wpr_Sticky_Section {
 		add_action( 'elementor/element/section/section_background/after_section_end', [ $this, 'register_controls' ], 10 );
 		add_action( 'elementor/section/print_template', [ $this, '_print_template' ], 10, 2 );
 		add_action( 'elementor/frontend/section/before_render', [ $this, '_before_render' ], 10, 1 );
+
+        // FLEXBOX
+        add_action('elementor/element/container/section_layout/after_section_end', [$this, 'register_controls'], 10);
+        add_action( 'elementor/container/print_template', [ $this, '_print_template' ], 10, 2 );
+        add_action('elementor/frontend/container/before_render', [$this, '_before_render'], 10, 1);
     }
 
     public function register_controls( $element ) {
 
-		if ( ( 'section' === $element->get_name() ) ) {
+		if ( ( 'section' === $element->get_name() || 'container' === $element->get_name() ) ) {
 
 			$element->start_controls_section (
 				'wpr_section_sticky_section',

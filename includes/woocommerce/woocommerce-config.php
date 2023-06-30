@@ -39,8 +39,10 @@ class WPR_WooCommerce_Config {
 		}
 		
 		add_action( 'init', [$this, 'add_wishlist_endpoint'] );
-
-		add_filter( 'woocommerce_account_menu_items', [$this, 'add_wishlist_to_my_account'] );
+		
+		if ( 'on' == get_option('wpr_add_wishlist_to_my_account', 'on') ) {
+			add_filter( 'woocommerce_account_menu_items', [$this, 'add_wishlist_to_my_account'] );
+		}
 
 		add_action( 'woocommerce_after_register_post_type', [$this, 'remove_deleted_products_from_compare_and_wishlist'] );
 		add_filter( 'woocommerce_quantity_input_args', [$this, 'wpr_custom_quantity_step'], 10, 2 );

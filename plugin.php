@@ -866,6 +866,12 @@ class Plugin {
 		if ( ! wpr_fs()->can_use_premium_code() ) {
 			$config['promotionWidgets'] = [
 				[
+					'name' => 'wpr-category-grid',
+					'title' => __('Category Grid', 'wpr-addons'),
+					'icon' => 'wpr-icon eicon-gallery-grid',
+					'categories' => '["'. $category .'"]',
+				],
+				[
 					'name' => 'wpr-woo-category-grid',
 					'title' => __('Woo Category Grid', 'wpr-addons'),
 					'icon' => 'wpr-icon eicon-gallery-grid',

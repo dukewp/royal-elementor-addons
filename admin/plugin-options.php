@@ -56,6 +56,7 @@ function wpr_register_addons_settings() {
     register_setting( 'wpr-settings', 'wpr_override_woo_templates' );
     register_setting( 'wpr-settings', 'wpr_enable_product_image_zoom' );
     register_setting( 'wpr-settings', 'wpr_enable_woo_flexslider_navigation' );
+    register_setting( 'wpr-settings', 'wpr_add_wishlist_to_my_account' );
     register_setting( 'wpr-settings', 'wpr_woo_shop_ppp' );
     register_setting( 'wpr-settings', 'wpr_woo_shop_cat_ppp' );
     register_setting( 'wpr-settings', 'wpr_woo_shop_tag_ppp' );
@@ -391,7 +392,7 @@ function wpr_addons_settings_page() {
         <img src="<?php echo esc_url(WPR_ADDONS_ASSETS_URL .'img/not-found.png'); ?>">
         <h1><?php esc_html_e('No Search Results Found.', 'wpr-addons'); ?></h1>
         <p><?php esc_html_e('Cant find a Widget you are looking for?', 'wpr-addons'); ?></p>
-        <a href="https://forms.clickup.com/1856033/f/1rmh1-5143/UIYNBNA8STCBOTXGNV" target="_blank"><?php esc_html_e('Request a New Widget', 'wpr-addons'); ?></a>
+        <a href="https://royaladdons.frill.co/b/6m4d5qm4/feature-ideas" target="_blank"><?php esc_html_e('Request a New Widget', 'wpr-addons'); ?></a>
     </div>
 
     <?php //submit_button( '', 'wpr-options-button' ); ?>
@@ -476,6 +477,16 @@ function wpr_addons_settings_page() {
             </div>
 
             <?php if ( wpr_fs()->is_plan( 'expert' ) ) : ?>
+            
+            <div class="wpr-woo-template-info">
+                <div class="wpr-woo-template-title">
+                    <h4>Add Wishlist To My Account</h4>
+                    <span>Adds wishlist menu item to my account widget</span>
+                </div>
+                <input type="checkbox" name="wpr_add_wishlist_to_my_account" id="wpr_add_wishlist_to_my_account" <?php echo checked( get_option('wpr_add_wishlist_to_my_account', 'on'), 'on', false ); ?>>
+                <label for="wpr_add_wishlist_to_my_account"></label>
+            </div>
+
             <div class="wpr-woo-template-info wpr-compare-wishlist">
                 <?php
                     $pages = get_pages(); // Get all pages on the site

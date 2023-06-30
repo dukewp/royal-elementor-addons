@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     public function __construct() {
         add_action('wp_ajax_wpr_form_builder_submissions' , [$this, 'add_to_submissions']);
         add_action('wp_ajax_nopriv_wpr_form_builder_submissions',[$this, 'add_to_submissions']);
-       add_action('save_post', [$this, 'update_submissions_post_meta']);
+        add_action('save_post', [$this, 'update_submissions_post_meta']);
     }
 
     public function add_to_submissions() {

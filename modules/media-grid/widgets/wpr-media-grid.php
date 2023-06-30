@@ -6688,7 +6688,7 @@ class Wpr_Media_Grid extends Widget_Base {
 		$src = Group_Control_Image_Size::get_attachment_image_src( $id, 'layout_image_crop', $settings );
 		$alt = '' === wp_get_attachment_caption( $id ) ? get_the_title() : wp_get_attachment_caption( $id );
 
-		echo '<div class="wpr-grid-image-wrap" data-src="'. esc_url( $src ) .'">';
+		echo '<div class="wpr-grid-image-wrap" data-src="'. esc_url( wp_get_attachment_url( $id ) ) .'">';
 			echo '<img src="'. esc_url( $src ) .'" alt="'. esc_attr( $alt ) .'" class="wpr-anim-timing-'. esc_html($settings[ 'image_effects_animation_timing']) .'">';
 		echo '</div>';
 	}
@@ -6898,6 +6898,10 @@ class Wpr_Media_Grid extends Widget_Base {
 							$lightbox_source = $video_url;
 						}
 					}
+				}
+
+				if ( $lightbox_source == false ) {
+					$lightbox_source = wp_get_attachment_url( $post_id );
 				}
 
 				// Lightbox Button
