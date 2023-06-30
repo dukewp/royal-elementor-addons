@@ -5025,7 +5025,7 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
 
 .wpr-api-key-missing {
     color: red;
-    font-size: 20px;
+    font-size: 13px;
     margin-top: 10px;
 }
 
@@ -6058,14 +6058,16 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 .wpr-advanced-slider {
     position: relative;
-    height: 500px;
+    /* height: 500px; */
+    height: auto;
     overflow: hidden;
     opacity: 0;
 }
 
 .wpr-slider-item {
     position: relative;
-    height: 500px;
+    /* height: 500px; */
+    height: auto;
     overflow: hidden;
 }
 
@@ -6127,6 +6129,45 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-slider-scroll-btn svg {
     vertical-align: bottom;
 }
+
+.wpr-slider-video:not(.wpr-custom-video) {
+  position: relative;
+  padding-bottom: 56.25%;
+  /* 16:9 */
+  /* padding-top: 25px; */
+  height: 0;
+}
+
+.wpr-custom-video video {
+    height: 100%;
+}
+
+.wpr-advanced-slider iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* border: 0; */
+}
+
+.slick-slide .wpr-slider-img {
+    position: relative;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* width: 100%;
+    height: auto; */
+    z-index: 79;
+}
+
+/* GOGA - needs prefix class maybe */
+/* .wpr-advanced-slider,
+.wpr-slider-item {
+    height: auto !important;
+} */
 
 
 /* Ken burn Effect */
@@ -6439,6 +6480,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     top: 0;
     left: 0;
     z-index: 90;
+    background: #000;
 }
 
 .wpr-slider-video-btn {
@@ -6703,6 +6745,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-pricing-table-feature {
     position: relative;
     font-size: 15px;
+    padding: 0;
 }
 
 .wpr-pricing-table-feature-inner {
@@ -14007,6 +14050,11 @@ flex-grow: 0; */
     display: inline-block;
 }
 
+.wpr-compare-table th,
+.wpr-compare-table td {
+    background-clip: padding-box;
+}
+
 .wpr-compare-table th {
      position: sticky; left: 0; z-index: 1; background-color: #FFF; 
 }
@@ -16959,6 +17007,16 @@ dl.variation dd {
 /*--------------------------------------------------------------
 == Offcanvas
 --------------------------------------------------------------*/
+
+.wpr-offcanvas-content::-webkit-scrollbar {
+    width: 4px;
+    background-color: transparent;
+}
+
+.wpr-offcanvas-content::-webkit-scrollbar-thumb {
+    /* border-left: 6px solid transparent; */
+    border-left: 3px solid black;
+}
 
 .wpr-offcanvas-container .wpr-template-edit-btn {
     top: 10px;

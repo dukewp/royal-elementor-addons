@@ -13277,25 +13277,6 @@ flex-grow: 0; */
 }
 
 /*--------------------------------------------------------------
-  == Video Playlist
-  --------------------------------------------------------------*/
-
-  .wpr-video-playlist-wrap {
-    display: flex;
-    width: 100%;
-    overflow: hidden;
-  }
-
-  .wpr-video-playlist-item-active {
-      width: 70%;
-  }
-  .wpr-video-playlist-items {
-      width: 30%;
-      list-style-type: none;
-      cursor: pointer;
-  }
-
-/*--------------------------------------------------------------
   == Feature List
   --------------------------------------------------------------*/
   

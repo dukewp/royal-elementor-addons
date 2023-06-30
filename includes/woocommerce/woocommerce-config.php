@@ -45,7 +45,8 @@ class WPR_WooCommerce_Config {
 		}
 
 		add_action( 'woocommerce_after_register_post_type', [$this, 'remove_deleted_products_from_compare_and_wishlist'] );
-		add_filter( 'woocommerce_quantity_input_args', [$this, 'wpr_custom_quantity_step'], 10, 2 );
+		// GOGA - max & min issue
+		// add_filter( 'woocommerce_quantity_input_args', [$this, 'wpr_custom_quantity_step'], 10, 2 );
 	}
 
 	function add_wishlist_endpoint() {

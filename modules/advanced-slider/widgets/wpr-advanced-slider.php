@@ -307,7 +307,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'type' => Controls_Manager::MEDIA,
 				'dynamic' => [
 					'active' => true,
-				],
+				]
 			]
 		);
 
