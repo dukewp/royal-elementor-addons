@@ -17728,9 +17728,15 @@ dl.variation dd {
 .wpr-form-fields-wrap input[type="date"]::before,
 .wpr-form-fields-wrap input[type="time"]::before {
     font-family: "Font Awesome 5 Free" !important; 
+    display: -webkit-box; 
+    display: -ms-flexbox; 
     display: flex;
-    justify-content: center;
-    align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     position: absolute;
     width: 16px; /* Adjust this value as needed */
     height: 16px; /* Adjust this value as needed */
