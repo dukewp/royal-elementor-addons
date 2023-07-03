@@ -1396,7 +1396,7 @@ class Wpr_Search extends Widget_Base {
 			[
 				'name' => 'input_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-search-form-input',
+				'selector' => '{{WRAPPER}} .wpr-search-form-input, {{WRAPPER}} .wpr-category-select',
 			]
 		);
 
@@ -1482,6 +1482,7 @@ class Wpr_Search extends Widget_Base {
 				'size_units' => [ 'px', ],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-search-form-input' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					// '{{WRAPPER}} .wpr-category-select' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -1538,23 +1539,6 @@ class Wpr_Search extends Widget_Base {
 		);
 
 		$this->add_control(
-			'select_heading',
-			[
-				'label' => esc_html__( 'Select', 'wpr-addons' ),
-				'type' => Controls_Manager::HEADING,
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name' => 'select_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-category-select',
-			]
-		);
-
-		$this->add_control(
 			'options_heading',
 			[
 				'label' => esc_html__( 'Options', 'wpr-addons' ),
@@ -1562,12 +1546,26 @@ class Wpr_Search extends Widget_Base {
 			]
 		);
 
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
+		$this->add_responsive_control(
+			'option_font_size',
 			[
-				'name' => 'options_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-category-select option',
+				'label' => esc_html__( 'Font Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px', '%'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 200,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 12,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-category-select option' => 'font-size: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
 			]
 		);
 
@@ -1606,24 +1604,6 @@ class Wpr_Search extends Widget_Base {
 					'{{WRAPPER}} .wpr-category-select' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'after',
-			]
-		);
-
-		$this->add_responsive_control(
-			'select_padding',
-			[
-				'label' => esc_html__( 'Padding', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'default' => [
-					'top' => 15,
-					'right' => 15,
-					'bottom' => 15,
-					'left' => 15,
-				],
-				'size_units' => [ 'px', ],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-category-select' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
 			]
 		);
 

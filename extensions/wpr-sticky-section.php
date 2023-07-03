@@ -243,7 +243,7 @@ class Wpr_Sticky_Section {
     }
 
     public function _print_template( $template, $widget ) {
-		if ( $widget->get_name() !== 'section' ) {
+		if ( $widget->get_name() !== 'section' && $widget->get_name() !== 'container' ) {
 			return $template;
 		}
 
