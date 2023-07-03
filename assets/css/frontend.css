@@ -6135,7 +6135,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
   padding-bottom: 56.25%;
   /* 16:9 */
   /* padding-top: 25px; */
-  height: 0;
+  /* height: 0; */
 }
 
 .wpr-custom-video video {
