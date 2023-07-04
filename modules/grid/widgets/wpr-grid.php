@@ -2836,7 +2836,7 @@ class Wpr_Grid extends Widget_Base {
 				'dynamic' => [
 					'active' => true,
 				],
-				'default' => 'All Post',
+				'default' => 'All Posts',
 				'condition' => [
 					'filters_all' => 'yes',
 					'filters_linkable!' => 'yes',
