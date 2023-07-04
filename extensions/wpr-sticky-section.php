@@ -219,7 +219,7 @@ class Wpr_Sticky_Section {
 	}
     
     public function _before_render( $element ) {
-        if ( $element->get_name() !== 'section' ) {
+        if ( $element->get_name() !== 'section' && $element->get_name() !== 'container' ) {
             return;
         }
 
