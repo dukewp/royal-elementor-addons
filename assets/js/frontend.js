@@ -3976,8 +3976,6 @@
 
 					var videoSrc = $(this).find('.wpr-slider-item').attr('data-video-src'),
 					videoAutoplay = $(this).find('.wpr-slider-item').attr('data-video-autoplay');
-
-					console.log(videoSrc);
 					
 					if ( $(this).find( '.wpr-slider-video' ).length !== 1 && videoAutoplay === 'yes' ) {
 						if ( videoSrc.includes('vimeo') || videoSrc.includes('youtube') ) {

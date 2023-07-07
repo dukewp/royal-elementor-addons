@@ -1304,11 +1304,10 @@ class Wpr_Advanced_Slider extends Widget_Base {
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'advanced-slider', [
 			'Add Unlimited Slides',
+			'Youtube & Vimeo Video Support',
+			'Custom Video Support',
 			'Vertical Sliding',
 			'Elementor Templates Slider option',
-			'Vimeo Link Type Support',
-			'Youtube Link Type Support',
-			'Custom Video Support',
 			'Scroll to Section Button',
 			'Ken Burn Effect',
 			'Columns (Carousel) 1,2,3,4,5,6',

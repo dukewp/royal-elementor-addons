@@ -1539,37 +1539,6 @@ class Wpr_Search extends Widget_Base {
 		);
 
 		$this->add_control(
-			'options_heading',
-			[
-				'label' => esc_html__( 'Options', 'wpr-addons' ),
-				'type' => Controls_Manager::HEADING,
-			]
-		);
-
-		$this->add_responsive_control(
-			'option_font_size',
-			[
-				'label' => esc_html__( 'Font Size', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px', '%'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 200,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 12,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-category-select option' => 'font-size: {{SIZE}}{{UNIT}};',
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
 			'select_border_size',
 			[
 				'label' => esc_html__( 'Border Size', 'wpr-addons' ),
@@ -1627,6 +1596,36 @@ class Wpr_Search extends Widget_Base {
 					'{{WRAPPER}} .wpr-category-select' => 'width: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'options_heading',
+			[
+				'label' => esc_html__( 'Options', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+			]
+		);
+
+		$this->add_responsive_control(
+			'option_font_size',
+			[
+				'label' => esc_html__( 'Font Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px', '%'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 200,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 12,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-category-select option' => 'font-size: {{SIZE}}{{UNIT}};',
+				]
 			]
 		);
 
