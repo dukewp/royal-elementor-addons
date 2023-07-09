@@ -885,7 +885,7 @@ class Wpr_Search extends Widget_Base {
 		$this->add_control(
 			'select_category',
 			[
-				'label' => esc_html__( 'Select Category (Pro)', 'wpr-addons' ),
+				'label' => esc_html__( 'Category Filter (Pro)', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'separator' => 'before',
 				'classes' => 'wpr-pro-control'
@@ -1396,7 +1396,7 @@ class Wpr_Search extends Widget_Base {
 			[
 				'name' => 'input_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-search-form-input, {{WRAPPER}} .wpr-category-select',
+				'selector' => '{{WRAPPER}} .wpr-search-form-input, {{WRAPPER}} .wpr-category-select-wrap, {{WRAPPER}} .wpr-category-select',
 			]
 		);
 
@@ -1461,7 +1461,7 @@ class Wpr_Search extends Widget_Base {
 				],
 				'size_units' => [ 'px', '%' ],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-search-form-input' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-search-form-input' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
 					'{{WRAPPER}} .wpr-data-fetch' => 'border-radius: 0 0 {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 				'separator' => 'after',
@@ -1482,7 +1482,8 @@ class Wpr_Search extends Widget_Base {
 				'size_units' => [ 'px', ],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-search-form-input' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					// '{{WRAPPER}} .wpr-category-select' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-category-select-wrap::before' => 'right: {{RIGHT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-category-select' => 'padding-left: {{LEFT}}{{UNIT}};'
 				],
 			]
 		);
@@ -1494,7 +1495,7 @@ class Wpr_Search extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_select',
 			[
-				'label' => esc_html__( 'Select', 'wpr-addons' ),
+				'label' => esc_html__( 'Category Filter', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'select_category' => 'yes',
@@ -1509,7 +1510,8 @@ class Wpr_Search extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#333333',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-category-select' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-category-select-wrap' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-category-select' => 'color: {{VALUE}};'
 				],
 			]
 		);
@@ -1570,7 +1572,8 @@ class Wpr_Search extends Widget_Base {
 				],
 				'size_units' => [ 'px', '%' ],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-category-select' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-category-select' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+					'{{WRAPPER}} .wpr-category-select-wrap' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'after',
 			]
@@ -1585,15 +1588,15 @@ class Wpr_Search extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 200,
+						'max' => 400,
 					],
 				],
 				'default' => [
-					'unit' => '%',
-					'size' => 15,
+					'unit' => 'px',
+					'size' => 162,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-category-select' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-category-select-wrap' => 'width: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
