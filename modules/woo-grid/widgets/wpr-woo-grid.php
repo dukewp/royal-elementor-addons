@@ -592,7 +592,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		);
 
 		// Get Available Meta Keys
-		$post_meta_keys = Utilities::get_custom_meta_keys();
+		// $post_meta_keys = Utilities::get_custom_meta_keys();
 
 		$this->add_control_query_selection();
 
@@ -766,13 +766,13 @@ class Wpr_Woo_Grid extends Widget_Base {
 		// 	);
 		// }
 
-		$this->add_control(
-			'post_meta_keys_filter',
-			[
-				'type' => Controls_Manager::HIDDEN,
-				'default' => json_encode( $post_meta_keys[0] ),
-			]
-		);
+		// $this->add_control(
+		// 	'post_meta_keys_filter',
+		// 	[
+		// 		'type' => Controls_Manager::HIDDEN,
+		// 		'default' => json_encode( $post_meta_keys[0] ),
+		// 	]
+		// );
 
 		$this->end_controls_section(); // End Controls Section
 
@@ -1626,10 +1626,13 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'element_lightbox_pfa_meta',
 			[
 				'label' => esc_html__( 'Audio Meta Value', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT2,
+				// 'type' => Controls_Manager::SELECT2,
+				'type' => 'wpr-ajax-select2',
 				'label_block' => true,
 				'default' => 'default',
-				'options' => $post_meta_keys[1],
+				// 'options' => $post_meta_keys[1],
+				'options' => 'ajaxselect2/get_custom_meta_keys',
+				'query_slug' => 'product_cat',
 				'condition' => [
 					'element_select' => 'lightbox',
 					'element_lightbox_pfa_select' => 'meta',
@@ -1657,10 +1660,13 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'element_lightbox_pfv_meta',
 			[
 				'label' => esc_html__( 'Video Meta Value', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT2,
+				// 'type' => Controls_Manager::SELECT2,
+				'type' => 'wpr-ajax-select2',
 				'label_block' => true,
 				'default' => 'default',
-				'options' => $post_meta_keys[1],
+				// 'options' => $post_meta_keys[1],
+				'options' => 'ajaxselect2/get_custom_meta_keys',
+				'query_slug' => 'product_cat',
 				'condition' => [
 					'element_select' => 'lightbox',
 					'element_lightbox_pfv_select' => 'meta',

@@ -184,7 +184,64 @@ class Wpr_Control_Ajax_Select2_Api {
 	/**
 	** Get Custom Meta Keys
 	*/
-	public static function get_custom_meta_keys() {
+	public function get_custom_meta_keys( $request ) {
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			return;   
+		}
+	
+		$data = [];
+		$options = [];
+		$merged_meta_keys = [];
+		$post_types = Utilities::get_custom_types_of( 'post', false );
+	
+		foreach ( $post_types as $post_type_slug => $post_type_name ) {
+			$data[ $post_type_slug ] = [];
+			$posts = get_posts( [ 'post_type' => $post_type_slug, 'posts_per_page' => -1 ] );
+	
+			foreach ( $posts as $key => $post ) {
+				$meta_keys = get_post_custom_keys( $post->ID );
+	
+				if ( ! empty($meta_keys) ) {
+					for ( $i = 0; $i < count( $meta_keys ); $i++ ) {
+						if ( '_' !== substr( $meta_keys[$i], 0, 1 ) ) {
+							array_push( $data[$post_type_slug], $meta_keys[$i] );
+						}
+					}
+				}
+			}
+	
+			$data[ $post_type_slug ] = array_unique( $data[ $post_type_slug ] );
+		}
+	
+		foreach ( $data as $array ) {
+			$merged_meta_keys = array_unique( array_merge( $merged_meta_keys, $array ) );
+		}
+		
+		// Rekey
+		$merged_meta_keys = array_values($merged_meta_keys);
+	
+		for ( $i = 0; $i < count( $merged_meta_keys ); $i++ ) {
+			// Add a search condition here
+			if ( ! isset( $request['s'] ) || strpos( $merged_meta_keys[$i], $request['s'] ) !== false ) {
+				$options[] = [
+					'id' => $merged_meta_keys[$i],
+					'text' => $merged_meta_keys[$i],
+				];
+			}
+		}
+	
+		return [ 'results' => $options ];
+	}
+	
+	
+	/**
+	** Get Custom Meta Keys Data
+	*/
+	public function get_custom_meta_keys_data() { // TODO
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			return;   
+		}
+		
 		$data = [];
 		$options = [];
 		$merged_meta_keys = [];
@@ -220,7 +277,8 @@ class Wpr_Control_Ajax_Select2_Api {
 			$options[ $merged_meta_keys[$i] ] = $merged_meta_keys[$i];
 		}
 
-		return [ $data, $options ];
+		// return [ $data, $options ];
+		return [ 'results' => $data ];
 	}
 
 }
