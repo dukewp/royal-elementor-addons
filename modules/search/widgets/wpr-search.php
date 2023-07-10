@@ -1593,7 +1593,7 @@ class Wpr_Search extends Widget_Base {
 				],
 				'default' => [
 					'unit' => 'px',
-					'size' => 162,
+					'size' => 230,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-category-select-wrap' => 'width: {{SIZE}}{{UNIT}};',
