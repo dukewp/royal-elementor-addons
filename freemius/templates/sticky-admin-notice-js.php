@@ -14,7 +14,6 @@
 	}
 ?>
 <script type="text/javascript" >
-	<?php if ( get_current_screen()->base !== 'royal-addons_page_wpr-templates-kit' ) : ?>
 	jQuery( document ).ready(function( $ ) {
 		$( '.fs-notice.fs-sticky .fs-close' ).click(function() {
 			var
@@ -38,5 +37,4 @@
 			});
 		});
 	});
-	<?php endif; ?>
 </script>
