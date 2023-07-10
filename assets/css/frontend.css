@@ -7831,6 +7831,30 @@ a.wpr-ajax-img-wrap {
     cursor: default;
 }
 
+.wpr-category-select-wrap {
+    position: relative;
+}
+
+select.wpr-category-select {
+    width: 100%;
+    height: 100%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    /* text-indent: 1px;
+    text-overflow: ''; */
+}
+
+.wpr-category-select-wrap::before {
+    content: "\f107";
+    font-family: "Font Awesome 5 Free" !important;
+    font-weight: 600;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+}
+
 
 /*--------------------------------------------------------------
   == Team Member

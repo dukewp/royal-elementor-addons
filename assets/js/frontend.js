@@ -4239,6 +4239,29 @@
 					$scope.removeClass( 'wpr-search-form-input-focus' );
 				}
 			} );
+            
+            if ( $scope.find('.wpr-category-select').length > 0 ) {
+                // Set the selected value on page load
+                $(document).ready(function() {
+                    var wprSelectedCategory = localStorage.getItem('wprSelectedCategory');
+                    if (wprSelectedCategory) {
+                        $scope.find('.wpr-category-select').val(wprSelectedCategory);
+                    }
+                });
+
+                $scope.find('.wpr-category-select').on('change', function(e) {
+                    
+                    var selectedValue = $(this).val();
+                    localStorage.setItem('wprSelectedCategory', selectedValue);
+
+			        if ($scope.find('.wpr-search-form-input').attr('ajax-search') === 'yes') {
+                        postsOffset = 0;
+                        $scope.find('.wpr-data-fetch').hide();
+                        $scope.find('.wpr-data-fetch ul').html('');
+                        ajaxSearchCall($scope.find('.wpr-search-form-input'), postsOffset, e);
+                    }
+                });
+            }
 
 			// if ( $scope.find('.wpr-search-input-hidden') ) {
 			// 	$scope.find('.wpr-search-form-submit').on('click', function(e) {
@@ -4417,15 +4440,6 @@
 					$scope.find('.wpr-data-fetch ul').html('');
 					ajaxSearchCall($(this), postsOffset, e);
 				});
-
-				if( $scope.find('.wpr-category-select').length > 0 ) {
-					$scope.find('.wpr-category-select').on('change', function(e) {
-						postsOffset = 0;
-						$scope.find('.wpr-data-fetch').hide();
-						$scope.find('.wpr-data-fetch ul').html('');
-						ajaxSearchCall($scope.find('.wpr-search-form-input'), postsOffset, e);
-					});
-				}
 	
 				$scope.find('.wpr-data-fetch').on('click', '.wpr-close-search', function() {
 					$scope.find('.wpr-search-form-input').val('');
@@ -4452,8 +4466,6 @@
 						}
 					}
 				});
-
-				
 
 				var mutationObserver = new MutationObserver(function(mutations) {
 					$scope.find('.wpr-data-fetch li').on('click', function() {
