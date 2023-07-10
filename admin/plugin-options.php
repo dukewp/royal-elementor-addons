@@ -29,8 +29,10 @@ function wpr_settings_link( $links ) {
     $settings_link = '<a href="admin.php?page=wpr-addons">Settings</a>';
     array_push( $links, $settings_link );
 
-    if ( !is_plugin_installed('wpr-addons-pro/wpr-addons-pro.php') ) {
+    if ( !is_plugin_installed('wpr-addons-pro/wpr-addons-pro.php') ) { // GOGA - Check if ok
         $links[] = '<a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-wpplugindashboard-upgrade-pro#purchasepro" style="color:#93003c;font-weight:700" target="_blank">' . esc_html__('Go Pro', 'wpr-addons') . '</a>';
+    } elseif ( !wpr_fs()->is_plan( 'expert' ) ) {
+        $links[] = '<a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-wpplugindashboard-upgrade-pro#purchasepro" style="color:#93003c;font-weight:700" target="_blank">' . esc_html__('Go Expert', 'wpr-addons') . '</a>';
     }
 
     return $links;
