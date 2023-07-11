@@ -3774,7 +3774,6 @@
 					data: {
 						action: 'mailchimp_subscribe',
 						fields: $(this).serialize(),
-						apiKey: mailchimpForm.data( 'api-key' ),
 						listId: mailchimpForm.data( 'list-id' )
 					},
 					success: function(data) {

@@ -181,8 +181,20 @@ class Wpr_Advanced_Slider extends Widget_Base {
 
 	public function add_repeater_args_slider_item_link_type() {
 		return [
-			'type' => Controls_Manager::HIDDEN,
-			'default' => ''
+			'label' => esc_html__( 'Link Type', 'wpr-addons' ),
+			'type' => Controls_Manager::SELECT,
+			'default' => 'none',
+			'options' => [
+				'none' => esc_html__( 'None', 'wpr-addons' ),
+				'pro-cstm' => esc_html__( 'Custom URL (Pro)', 'wpr-addons' ),
+				'pro-yt'  => esc_html__( 'Youtube (Pro)', 'wpr-addons' ),
+				'pro-vm'  => esc_html__( 'Vimeo (Pro)', 'wpr-addons' ),
+				'pro-md'  => esc_html__( 'Custom Video (Pro)', 'wpr-addons' )
+			],
+			'condition' => [
+				'slider_content_type' => 'custom'
+			],
+			'separator' => 'before'
 		];
 	}
 
@@ -332,6 +344,9 @@ class Wpr_Advanced_Slider extends Widget_Base {
 		);
 
 		$repeater->add_control( 'slider_item_link_type', $this->add_repeater_args_slider_item_link_type() );
+
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'advanced-slider', 'slider_item_link_type', ['pro-cstm', 'pro-yt', 'pro-vm', 'pro-md'] );
 
 		$repeater->add_control(
 			'vimeo_notice',

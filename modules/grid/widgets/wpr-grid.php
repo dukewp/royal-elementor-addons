@@ -169,7 +169,8 @@ class Wpr_Grid extends Widget_Base {
 					'pro-mf' => esc_html__( 'Last Modified (Pro)', 'wpr-addons'),
 					'pro-d' => esc_html__( 'Post ID (Pro)', 'wpr-addons' ),
 					'pro-ar' => esc_html__( 'Post Author (Pro)', 'wpr-addons' ),
-					'pro-cc' => esc_html__( 'Comment Count (Pro)', 'wpr-addons' )
+					'pro-cc' => esc_html__( 'Comment Count (Pro)', 'wpr-addons' ),
+					'pro-mv' => esc_html__( 'Custom Field (Pro)', 'wpr-addons' )
 				],
 				'condition' => [
 					'query_randomize!' => 'rand',

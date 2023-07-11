@@ -1271,6 +1271,7 @@ function wpr_addons_settings_page() {
                 <ul>
                     <li><span>Dedicated Support</span></li>
                     <li><span>Free and Pro Functionality Included</span></li>
+                    <li><span>Extended Custom Field Options </span></li>
                     <li><span>Ability to build Dynamic Websites</span></li>
                     <li><span>Dynamic Tags for All Widgets</span></li>
                     <li><span>Extended Custom Field Options</span></li>
@@ -1278,7 +1279,9 @@ function wpr_addons_settings_page() {
                     <li><span>Custom Taxonomy Generator</span></li>
                     <li><span>WooCommerce Wishlist Widget</span></li>
                     <li><span>WooCommerce Compare Widget</span></li>
+                    <li><span>Category Grid Widget</span></li>
                     <li><span>White Label Branding</span></li>
+                    <li><span>Elementor Pro Not Required</span></li>
                     <li>And More is Comming Soon...</li>
                 </ul>
             </div>

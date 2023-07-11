@@ -2114,7 +2114,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 
 		// add_action( 'woocommerce_add_to_cart', 'action_woocommerce_add_to_cart', 10, 6 );
 		
-		add_action( 'woocommerce_reset_variations_link' , [$this, 'change_clear_text'], 15 );
+		// add_action( 'woocommerce_reset_variations_link' , [$this, 'change_clear_text'], 15 );
 
 		echo '<div '. $this->get_render_attribute_string( 'add_to_cart_wrapper' ) .'>';
 

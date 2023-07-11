@@ -773,7 +773,8 @@ class Utilities {
 	*/
 	public static function ajax_mailchimp_subscribe() {
 		// API Key
-        $api_key = isset($_POST['apiKey']) ? sanitize_key($_POST['apiKey']) : '';
+        $api_key = !empty(get_option('wpr_mailchimp_api_key')) && false != get_option('wpr_mailchimp_api_key') ? get_option('wpr_mailchimp_api_key') : ''; // GOGA
+
         $api_key_sufix = explode( '-', $api_key )[1];
 
         // List ID

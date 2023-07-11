@@ -37,7 +37,8 @@ if ( ! defined( 'ABSPATH' ) ) {
         }
         
         $tax_query = '';
-        if ($_POST['wpr_category'] != '0') {
+
+        if ( $_POST['wpr_category'] != false && $_POST['wpr_category'] != '' ) {
             if ( isset($_POST['wpr_option_post_type']) && !empty($_POST['wpr_option_post_type']) ) {
                 $tax_query = array(
                     array(
