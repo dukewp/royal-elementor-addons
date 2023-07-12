@@ -7792,10 +7792,19 @@ a.wpr-ajax-img-wrap {
 
 .wpr-search-form .wpr-search-form-input {
     width: 100%;
-    height: 100%;
+    height: auto;
     font-size: 14px;
     background-color: transparent;
     border-style: solid;
+}
+
+.wpr-search-form-style-inner .wpr-search-form .wpr-search-form-input {
+    min-height: 100%;
+    height: auto;
+}
+
+.wpr-search-form-style-outer .wpr-search-form .wpr-search-form-input {
+    height: 100%;
 }
 
 .wpr-search-form-style-inner .wpr-search-form-input-wrap,
