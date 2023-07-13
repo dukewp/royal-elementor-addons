@@ -7848,6 +7848,7 @@ select.wpr-category-select {
     height: 100%;
     -webkit-appearance: none;
     -moz-appearance: none;
+    line-height: 1 !important;
     /* text-indent: 1px;
     text-overflow: ''; */
 }
