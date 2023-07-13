@@ -1484,7 +1484,7 @@ class Wpr_Search extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-search-form-input' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-category-select-wrap::before' => 'right: {{RIGHT}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-category-select' => 'padding-left: {{LEFT}}{{UNIT}};'
+					'{{WRAPPER}} .wpr-category-select' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 			]
 		);

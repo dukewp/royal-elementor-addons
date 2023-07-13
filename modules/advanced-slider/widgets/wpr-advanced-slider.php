@@ -2328,7 +2328,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'slider_video_btn_size',
 			[
 				'label' => esc_html__( 'Video Icon Size', 'wpr-addons' ),
@@ -2340,7 +2340,8 @@ class Wpr_Advanced_Slider extends Widget_Base {
 					'medium' => esc_html__( 'Medium', 'wpr-addons' ),
 					'large' => esc_html__( 'Large', 'wpr-addons' ),
 				],
-				'prefix_class' => 'wpr-slider-video-icon-size-',
+				'frontend_available' => true,
+				// 'prefix_class' => 'wpr-slider-video-icon-size-%s',
 			]
 		);
 	
@@ -3195,6 +3196,14 @@ class Wpr_Advanced_Slider extends Widget_Base {
 		$slider_is_rtl = is_rtl();
 		$slider_direction = $slider_is_rtl ? 'rtl' : 'ltr';
 
+		$slider_video_btn_widescreen = isset($settings['slider_video_btn_size_widescreen']) && !empty($settings['slider_video_btn_size_widescreen']) ? $settings['slider_video_btn_size_widescreen'] : $settings['slider_video_btn_size'];
+		$slider_video_btn_desktop = isset($settings['slider_video_btn_size']) && !empty($settings['slider_video_btn_size']) ? $settings['slider_video_btn_size'] : $slider_video_btn_widescreen;
+		$slider_video_btn_laptop =  isset($settings['slider_video_btn_size_laptop']) && !empty($settings['slider_video_btn_size_laptop']) ? $settings['slider_video_btn_size_laptop'] : $slider_video_btn_desktop;
+		$slider_video_btn_tablet_extra =  isset($settings['slider_video_btn_size_tablet_extra']) && !empty($settings['slider_video_btn_size_tablet_extra']) ? $settings['slider_video_btn_size_tablet_extra'] : $slider_video_btn_laptop;
+		$slider_video_btn_tablet =  isset($settings['slider_video_btn_size_tablet']) && !empty($settings['slider_video_btn_size_tablet']) ? $settings['slider_video_btn_size_tablet'] : $slider_video_btn_tablet_extra;
+		$slider_video_btn_mobile_extra =  isset($settings['slider_video_btn_size_mobile_extra']) && !empty($settings['slider_video_btn_size_mobile_extra']) ? $settings['slider_video_btn_size_mobile_extra'] : $slider_video_btn_tablet;
+		$slider_video_btn_mobile =  isset($settings['slider_video_btn_size_mobile']) && !empty($settings['slider_video_btn_size_mobile']) ? $settings['slider_video_btn_size_mobile'] : $slider_video_btn_mobile_extra;
+
 		$slider_options = [
 			'rtl' => $slider_is_rtl,
 			'speed' => absint( $settings['slider_effect_duration'] * 1000 ),
@@ -3213,6 +3222,17 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			'class' => 'wpr-advanced-slider',
 			'dir' => esc_attr( $slider_direction ),
 			'data-slick' => wp_json_encode( $slider_options ),
+			'data-video-btn-size' => wp_json_encode(
+				[
+					'widescreen' => $slider_video_btn_widescreen,
+					'desktop' => $slider_video_btn_desktop,
+					'laptop' => $slider_video_btn_laptop,
+					'tablet_extra' => $slider_video_btn_tablet_extra,
+					'tablet' => $slider_video_btn_tablet,
+					'mobile_extra' => $slider_video_btn_mobile_extra,
+					'mobile' => $slider_video_btn_mobile
+				]
+			)
 		] );
 
 		?>
