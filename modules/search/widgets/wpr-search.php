@@ -1620,7 +1620,7 @@ class Wpr_Search extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 200,
+						'max' => 25,
 					],
 				],
 				'default' => [

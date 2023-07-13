@@ -210,6 +210,18 @@ class Wpr_Taxonomy_List extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'open_in_new_page',
+			[
+				'label' => esc_html__( 'Open in New Page', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'label_block' => false,
+				'default' => 'yes',
+				'separator' => 'before'
+			]
+		);
+
         $this->end_controls_section();
 
 		// Section: Request New Feature
@@ -536,6 +548,8 @@ class Wpr_Taxonomy_List extends Widget_Base {
 		// Get Settings
         $settings = $this->get_settings_for_display();
 
+		$open_in_new_page = $settings['open_in_new_page'] ? '_blank' : '_self';
+
 		ob_start();
 		\Elementor\Icons_Manager::render_icon( $settings['tax_list_icon'], [ 'aria-hidden' => 'true' ] );
 		$icon = ob_get_clean();
@@ -609,7 +623,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 						$data_great_grandchild_term_id = ' data-parent-id="'. $grandchild_id .'" data-term-id="great-grandchild-'. $data_child_term_id .'"';
 					
 						echo '<li'. $sub_class . $data_great_grandchild_term_id .'>';
-							echo '<a href="'. esc_url(get_term_link($term->term_id)) .'">';
+							echo '<a target="'. $open_in_new_page .'" href="'. esc_url(get_term_link($term->term_id)) .'">';
 								echo '<span class="wpr-tax-wrap">'. $icon_wrapper .'<span>'. esc_html($term->name) .'</span></span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 								echo ($settings['show_tax_count']) ? '<span><span class="wpr-term-count">&nbsp;('. esc_html($term->count) .')</span></span>' : '';
 							echo '</a>';
