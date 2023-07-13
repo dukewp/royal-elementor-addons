@@ -1227,7 +1227,7 @@ class Wpr_Search extends Widget_Base {
 			'Custom Search Query - Only Posts or Pages',
 			'Custom Search Query - Only Custom Post Types (Expert)',
 			'More than 2 Results in Ajax Search',
-			'Category Filter (Pro)',
+			'Enable Category Filter (Pro)',
 			'Ajax Search Results Pagination (Load More)'
 		] );
 
