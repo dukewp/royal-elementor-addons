@@ -252,7 +252,7 @@ class Wpr_Parallax_Scroll {
             ]
         );
 
-        $repeater->add_control(
+        $repeater->add_responsive_control(
             'layer_position_hr',
             [
                 'type' => Controls_Manager::SLIDER,
@@ -275,7 +275,7 @@ class Wpr_Parallax_Scroll {
             ]
         );
 
-        $repeater->add_control(
+        $repeater->add_responsive_control(
             'layer_position_vr',
             [
                 'type' => Controls_Manager::SLIDER,

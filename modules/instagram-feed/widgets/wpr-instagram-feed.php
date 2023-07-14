@@ -197,7 +197,8 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					'luminosity' => esc_html__( 'luminosity', 'wpr-addons' ),
 				],
 				'selectors' => [
-					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-insta-feed-media-hover-bg' => 'mix-blend-mode: {{VALUE}}',
+					// '{{WRAPPER}} {{CURRENT_ITEM}} .wpr-insta-feed-media-hover-bg' => 'mix-blend-mode: {{VALUE}}',
+					'{{WRAPPER}} .wpr-insta-feed-media-hover-bg' => 'mix-blend-mode: {{VALUE}}',
 				],
 				'separator' => 'after',
 			]
