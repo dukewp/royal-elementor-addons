@@ -3890,6 +3890,9 @@
 			});
 
 			$(document).ready(function() {
+                
+                $scope.find('.slick-current').addClass('wpr-slick-visible');
+
 				var maxHeight = -1;
 				// $scope.find('.slick-slide').each(function() {
 				// if ($(this).height() > maxHeight) {
@@ -4271,6 +4274,8 @@
 
 		widgetSearch: function( $scope ) {
 
+			var isFound = false;
+
 			$scope.find('.wpr-search-form-input').on( {
 				focus: function() {
 					$scope.addClass( 'wpr-search-form-input-focus' );
@@ -4284,8 +4289,18 @@
                 // Set the selected value on page load
                 $(document).ready(function() {
                     var wprSelectedCategory = localStorage.getItem('wprSelectedCategory');
+					console.log(wprSelectedCategory);
                     if (wprSelectedCategory) {
-                        $scope.find('.wpr-category-select').val(wprSelectedCategory);
+						$scope.find('.wpr-category-select option').each(function() {
+							console.log($(this).val());
+							if ($(this).val() === wprSelectedCategory) {
+								isFound = true;
+								$scope.find('.wpr-category-select').val(wprSelectedCategory);
+								return false; // Breaks out of the .each() loop
+							} else {
+								$scope.find('.wpr-category-select').val(0);
+							}
+						});
                     }
                 });
 
