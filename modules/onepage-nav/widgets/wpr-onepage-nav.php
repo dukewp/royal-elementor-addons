@@ -470,7 +470,7 @@ class Wpr_OnepageNav extends Widget_Base {
 				'default' => '#ffffff',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-onepage-nav-item i' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .wpr-onepage-nav-item svg' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-onepage-nav-item svg' => 'color: {{VALUE}};', // GOGA - shesacvlelia mgoni
 				],
 			]
 		);

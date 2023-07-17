@@ -2674,6 +2674,21 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     width: 100% !important;
 }
 
+/* Grid SVG icons */
+.wpr-grid-extra-icon-left,
+.wpr-grid-extra-icon-right {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wpr-grid-extra-icon-left svg,
+.wpr-grid-extra-icon-right svg {
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    fill: currentColor;
+}
 
 /* Product Rating */
 

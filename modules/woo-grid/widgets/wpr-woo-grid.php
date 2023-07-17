@@ -4007,7 +4007,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#9C9C9C',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-product-categories .inner-block i[class*="wpr-grid-extra-icon"]' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-product-categories .inner-block [class*="wpr-grid-extra-icon"] i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-product-categories .inner-block [class*="wpr-grid-extra-icon"] svg' => 'fill: {{VALUE}}'
 				],
 				'separator' => 'after',
 			]
@@ -4347,7 +4348,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#9C9C9C',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-grid-product-tags .inner-block i[class*="wpr-grid-extra-icon"]' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-product-tags .inner-block [class*="wpr-grid-extra-icon"] i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-product-tags .inner-block [class*="wpr-grid-extra-icon"] svg' => 'fill: {{VALUE}}'
 				],
 				'separator' => 'after',
 			]
@@ -8828,7 +8830,13 @@ class Wpr_Woo_Grid extends Widget_Base {
 				}
 				// Icon: Before
 				if ( 'before' === $settings['element_extra_icon_pos'] ) {
-					echo '<i class="wpr-grid-extra-icon-left '. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
+					ob_start();
+					\Elementor\Icons_Manager::render_icon($settings['element_extra_icon'], ['aria-hidden' => 'true']);
+					$extra_icon = ob_get_clean();
+
+					echo '<span class="wpr-grid-extra-icon-left">';
+						echo $extra_icon;
+					echo '</span>';
 				}
 
 				// Taxonomies
@@ -8842,7 +8850,13 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 				// Icon: After
 				if ( 'after' === $settings['element_extra_icon_pos'] ) {
-					echo '<i class="wpr-grid-extra-icon-right '. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
+					ob_start();
+					\Elementor\Icons_Manager::render_icon($settings['element_extra_icon'], ['aria-hidden' => 'true']);
+					$extra_icon = ob_get_clean();
+
+					echo '<span class="wpr-grid-extra-icon-right">';
+						echo $extra_icon;
+					echo '</span>';
 				}
 				// Text: After
 				if ( 'after' === $settings['element_extra_text_pos'] ) {
@@ -8873,7 +8887,13 @@ class Wpr_Woo_Grid extends Widget_Base {
 				}
 				// Icon: Before
 				if ( 'before' === $settings['element_extra_icon_pos'] ) {
-					echo '<i class="wpr-grid-extra-icon-left '. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
+					ob_start();
+					\Elementor\Icons_Manager::render_icon($settings['element_extra_icon'], ['aria-hidden' => 'true']);
+					$extra_icon = ob_get_clean();
+
+					echo '<span class="wpr-grid-extra-icon-left">';
+						echo $extra_icon;
+					echo '</span>';
 				}
 
 				// Taxonomies
@@ -8887,7 +8907,13 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 				// Icon: After
 				if ( 'after' === $settings['element_extra_icon_pos'] ) {
-					echo '<i class="wpr-grid-extra-icon-right '. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
+					ob_start();
+					\Elementor\Icons_Manager::render_icon($settings['element_extra_icon'], ['aria-hidden' => 'true']);
+					$extra_icon = ob_get_clean();
+
+					echo '<span class="wpr-grid-extra-icon-right">';
+						echo $extra_icon;
+					echo '</span>';
 				}
 				// Text: After
 				if ( 'after' === $settings['element_extra_text_pos'] ) {
@@ -9064,7 +9090,13 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		// Icon: Before
 		if ( 'before' === $settings['element_extra_icon_pos'] ) {
-			$button_HTML .= '<i class="wpr-grid-extra-icon-left '. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
+			ob_start();
+			\Elementor\Icons_Manager::render_icon($settings['element_extra_icon'], ['aria-hidden' => 'true']);
+			$extra_icon = ob_get_clean();
+
+			echo '<span class="wpr-grid-extra-icon-left">';
+				echo $extra_icon;
+			echo '</span>';
 		}
 
 		// Button Text
@@ -9089,7 +9121,13 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		// Icon: After
 		if ( 'after' === $settings['element_extra_icon_pos'] ) {
-			$button_HTML .= '<i class="wpr-grid-extra-icon-right '. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
+			ob_start();
+			\Elementor\Icons_Manager::render_icon($settings['element_extra_icon'], ['aria-hidden' => 'true']);
+			$extra_icon = ob_get_clean();
+
+			echo '<span class="wpr-grid-extra-icon-right">';
+				echo $extra_icon;
+			echo '</span>';
 		}
 
 		echo '<div class="'. esc_attr($class) .'">';
