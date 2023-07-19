@@ -1024,8 +1024,8 @@ class Wpr_Form_Builder extends Widget_Base {
 					'size' => 100,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-field-group.wpr-form-field-type-submit' => 'width: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-stp-btns-wrap' => 'width: {{SIZE}}{{UNIT}};'
+					'{{WRAPPER}} .wpr-field-group.wpr-form-field-type-submit' => 'width: {{SIZE}}%;',
+					'{{WRAPPER}} .wpr-stp-btns-wrap' => 'width: {{SIZE}}%;'
 				],
 				'frontend_available' => true,
 			]
