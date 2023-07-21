@@ -515,7 +515,7 @@ class Wpr_Sticky_Section {
 				'data-wpr-active-breakpoints' => $this->breakpoints_manager_active(),
 				'data-wpr-z-index' => $settings['wpr_z_index'],
 				'data-wpr-sticky-hide' => $settings['sticky_hide'],
-				'data-wpr-replace-header' => $settings['sticky_replace_header_id'],
+				'data-wpr-replace-header' => $settings['sticky_replace_header'],
             ] );
         }
     }
