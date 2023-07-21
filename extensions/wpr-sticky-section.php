@@ -395,11 +395,40 @@ class Wpr_Sticky_Section {
 				'sticky_animation',
 				[
 					'label' => esc_html__( 'Select Animation', 'elementor' ),
-					'type' => Controls_Manager::ANIMATION,
+					'type' => Controls_Manager::SELECT,
+					'default' => 'none',
+					'options' => [
+						'none' => 'None',
+						'fade' => 'Fade',
+						'slide' => 'Slide'
+					],
 					'frontend_available' => true,
 					'condition' => [
 						'enable_show_hide_animation' => 'yes',
 						'sticky_advanced_options' => 'yes'
+					]
+				]
+			);
+
+			$element->add_control(
+				'sticky_animation_duration',
+				[
+					'label' => esc_html__( 'Transition', 'wpr-addons' ),
+					'type' => Controls_Manager::NUMBER,
+					'default' => 0.3,
+					'min' => 0,
+					'max' => 5,
+					'step' => 0.1,
+					'selectors' => [
+						'{{WRAPPER}} .wpr-logo' => 'transition: all {{VALUE}}s ease-in-out;', // ADD CONTROL FOR ANIMATION TIMINGS
+						'{{WRAPPER}}' => 'transition: all {{VALUE}}s ease-in-out;', // ADD CONTROL FOR ANIMATION TIMINGS
+						'--wpr-animation-duration' => '{{VALUE}}', // ADD CONTROL FOR ANIMATION TIMINGS
+
+					],
+					'condition' => [
+						'enable_show_hide_animation' => 'yes',
+						'sticky_advanced_options' => 'yes',
+						'sticky_animation' => ['fade', 'slide']
 					]
 				]
 			);
@@ -416,7 +445,8 @@ class Wpr_Sticky_Section {
 					'selectors' => [
 						'{{WRAPPER}} .wpr-logo' => 'transition: all {{VALUE}}s ease-in-out;', // ADD CONTROL FOR ANIMATION TIMINGS
 						'{{WRAPPER}}' => 'transition: all {{VALUE}}s ease-in-out;', // ADD CONTROL FOR ANIMATION TIMINGS
-						'.wpr-hidden-header' => 'transition: all {{VALUE}}s ease-in-out;', // ADD CONTROL FOR ANIMATION TIMINGS
+						'--wpr-animation-duration' => '{{VALUE}}', // ADD CONTROL FOR ANIMATION TIMINGS
+
 					],
 					'condition' => [
 						'sticky_advanced_options' => 'yes',
@@ -498,7 +528,6 @@ class Wpr_Sticky_Section {
         if ( $element->get_name() !== 'section' && $element->get_name() !== 'container' ) {
             return;
         }
-
 		
         $settings = $element->get_settings_for_display();
 
@@ -516,6 +545,7 @@ class Wpr_Sticky_Section {
 				'data-wpr-z-index' => $settings['wpr_z_index'],
 				'data-wpr-sticky-hide' => $settings['sticky_hide'],
 				'data-wpr-replace-header' => $settings['sticky_replace_header'],
+				'data-wpr-animation-duration' => $settings['sticky_animation_duration']
             ] );
         }
     }

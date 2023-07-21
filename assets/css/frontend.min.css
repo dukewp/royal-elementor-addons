@@ -13716,9 +13716,63 @@ flex-grow: 0; */
 }
 
 .wpr-sticky-hide {
-    /* transform: scaleY(0) translateY(-100%); */
-    transform: translateY(-110vh);
-    transform-origin: top;
+    visibility: hidden;
+}
+
+.wpr-none-out {
+    display: none;
+}
+
+.wpr-fade-in {
+    animation-name: added-tc-popup-animation-fade;
+    animation-duration: var(--wpr-animation-duration, 1s);
+    -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
+}
+
+.wpr-fade-out {
+    animation-name: added-tc-popup-animation-fade-out;
+    animation-duration: var(--wpr-animation-duration, 1s);
+    -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
+}
+
+.wpr-slide-in {
+    opacity: 0;
+    -webkit-transform: translateY(-100%); transform: translateY(-100%);
+    animation-name: sticky-slide-in;
+    animation-duration: var(--wpr-animation-duration, 1s);
+    -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
+}
+
+.wpr-slide-out {
+    opacity: 1;
+    -webkit-transform: translateY(0); transform: translateY(0);
+    animation-name: sticky-slide-out;
+    animation-duration: var(--wpr-animation-duration, 1s);
+    -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes sticky-slide-in {
+    from {opacity: 0; -webkit-transform: translateY(-100%); transform: translateY(-100%)}
+    to {opacity: 1;  -webkit-transform: translateY(0);  transform: translateY(0)}
+}
+
+@keyframes sticky-slide-in {
+    from {opacity: 0; -webkit-transform: translateY(-100%); transform: translateY(-100%)}
+    to {opacity: 1;  -webkit-transform: translateY(0);  transform: translateY(0)}
+}
+
+@-webkit-keyframes sticky-slide-out {
+    from {opacity: 1; -webkit-transform: translateY(0); transform: translateY(0)}
+    to {opacity: 0;  -webkit-transform: translateY(-100%);  transform: translateY(-100%)}
+}
+
+@keyframes sticky-slide-out {
+    from {opacity: 1; -webkit-transform: translateY(0); transform: translateY(0)}
+    to {opacity: 0;  -webkit-transform: translateY(-100%);  transform: translateY(-100%)}
 }
 
 /* RPB */
