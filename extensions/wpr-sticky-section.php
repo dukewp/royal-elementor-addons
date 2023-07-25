@@ -225,7 +225,7 @@ class Wpr_Sticky_Section {
 			);
 			
 			$element->add_responsive_control(
-				'sticky_effects_offset',
+				'wpr_sticky_effects_offset',
 				[
 					'label' => __( 'Scroll Top Distance', 'wpr-addons' ), // SHOULD WORK AFTER STICKING
 					'type' => Controls_Manager::NUMBER,
@@ -558,13 +558,13 @@ class Wpr_Sticky_Section {
 
 		if ($settings['enable_sticky_section'] !== 'yes') return;
 
-		$sticky_effects_offset_widescreen = isset($settings['sticky_effects_offset_widescreen']) && !empty($settings['sticky_effects_offset_widescreen']) ? $settings['sticky_effects_offset_widescreen'] : $settings['sticky_effects_offset'];
-		$sticky_effects_offset_desktop = isset($settings['sticky_effects_offset']) && !empty($settings['sticky_effects_offset']) ? $settings['sticky_effects_offset'] : $sticky_effects_offset_widescreen;
-		$sticky_effects_offset_laptop =  isset($settings['sticky_effects_offset_laptop']) && !empty($settings['sticky_effects_offset_laptop']) ? $settings['sticky_effects_offset_laptop'] : $sticky_effects_offset_desktop;
-		$sticky_effects_offset_tablet_extra =  isset($settings['sticky_effects_offset_tablet_extra']) && !empty($settings['sticky_effects_offset_tablet_extra']) ? $settings['sticky_effects_offset_tablet_extra'] : $sticky_effects_offset_laptop;
-		$sticky_effects_offset_tablet =  isset($settings['sticky_effects_offset_tablet']) && !empty($settings['sticky_effects_offset_tablet']) ? $settings['sticky_effects_offset_tablet'] : $sticky_effects_offset_tablet_extra;
-		$sticky_effects_offset_mobile_extra =  isset($settings['sticky_effects_offset_mobile_extra']) && !empty($settings['sticky_effects_offset_mobile_extra']) ? $settings['sticky_effects_offset_mobile_extra'] : $sticky_effects_offset_tablet;
-		$sticky_effects_offset_mobile =  isset($settings['sticky_effects_offset_mobile']) && !empty($settings['sticky_effects_offset_mobile']) ? $settings['sticky_effects_offset_mobile'] : $sticky_effects_offset_mobile_extra;
+		$wpr_sticky_effects_offset_widescreen = isset($settings['wpr_sticky_effects_offset_widescreen']) && !empty($settings['wpr_sticky_effects_offset_widescreen']) ? $settings['wpr_sticky_effects_offset_widescreen'] : $settings['wpr_sticky_effects_offset'];
+		$wpr_sticky_effects_offset_desktop = isset($settings['wpr_sticky_effects_offset']) && !empty($settings['wpr_sticky_effects_offset']) ? $settings['wpr_sticky_effects_offset'] : $wpr_sticky_effects_offset_widescreen;
+		$wpr_sticky_effects_offset_laptop =  isset($settings['wpr_sticky_effects_offset_laptop']) && !empty($settings['wpr_sticky_effects_offset_laptop']) ? $settings['wpr_sticky_effects_offset_laptop'] : $wpr_sticky_effects_offset_desktop;
+		$wpr_sticky_effects_offset_tablet_extra =  isset($settings['wpr_sticky_effects_offset_tablet_extra']) && !empty($settings['wpr_sticky_effects_offset_tablet_extra']) ? $settings['wpr_sticky_effects_offset_tablet_extra'] : $wpr_sticky_effects_offset_laptop;
+		$wpr_sticky_effects_offset_tablet =  isset($settings['wpr_sticky_effects_offset_tablet']) && !empty($settings['wpr_sticky_effects_offset_tablet']) ? $settings['wpr_sticky_effects_offset_tablet'] : $wpr_sticky_effects_offset_tablet_extra;
+		$wpr_sticky_effects_offset_mobile_extra =  isset($settings['wpr_sticky_effects_offset_mobile_extra']) && !empty($settings['wpr_sticky_effects_offset_mobile_extra']) ? $settings['wpr_sticky_effects_offset_mobile_extra'] : $wpr_sticky_effects_offset_tablet;
+		$wpr_sticky_effects_offset_mobile =  isset($settings['wpr_sticky_effects_offset_mobile']) && !empty($settings['wpr_sticky_effects_offset_mobile']) ? $settings['wpr_sticky_effects_offset_mobile'] : $wpr_sticky_effects_offset_mobile_extra;
 		
         if ( $settings['enable_sticky_section'] === 'yes' ) {
             $element->add_render_attribute( '_wrapper', [
@@ -580,13 +580,13 @@ class Wpr_Sticky_Section {
 				'data-wpr-replace-header' => $settings['sticky_replace_header'],
 				'data-wpr-animation-duration' => $settings['sticky_animation_duration'],
 				// 'data-wpr-offset-settings' => wp_json_encode([
-				// 	'widescreen' => $sticky_effects_offset_widescreen,
-				// 	'desktop' => $sticky_effects_offset_desktop,
-				// 	'laptop' => $sticky_effects_offset_laptop,
-				// 	'tablet_extra' => $sticky_effects_offset_tablet_extra,
-				// 	'tablet' => $sticky_effects_offset_tablet,
-				// 	'mobile_extra' => $sticky_effects_offset_mobile_extra,
-				// 	'mobile' => $sticky_effects_offset_mobile
+				// 	'widescreen' => $wpr_sticky_effects_offset_widescreen,
+				// 	'desktop' => $wpr_sticky_effects_offset_desktop,
+				// 	'laptop' => $wpr_sticky_effects_offset_laptop,
+				// 	'tablet_extra' => $wpr_sticky_effects_offset_tablet_extra,
+				// 	'tablet' => $wpr_sticky_effects_offset_tablet,
+				// 	'mobile_extra' => $wpr_sticky_effects_offset_mobile_extra,
+				// 	'mobile' => $wpr_sticky_effects_offset_mobile
 				// ])
             ] );
         }
