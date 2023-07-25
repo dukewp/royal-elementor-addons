@@ -247,6 +247,21 @@ class Wpr_Sticky_Section {
 				]
 			);
 
+			$element->add_control ( // NEXT HIDDEN SECTION
+				'sticky_replace_header',
+				[
+					'type' => Controls_Manager::SWITCHER,
+					'label' => esc_html__( 'Replace with New Section', 'wpr-addons' ),
+					'default' => 'no',
+					'return_value' => 'yes',
+					'condition' => [
+						'enable_sticky_section' => 'yes',
+						'sticky_advanced_options' => 'yes',
+						'position_location'	=> 'top'
+					]
+				]
+			);
+
 			$element->add_control (
 				'sticky_background',
 				[
@@ -257,7 +272,8 @@ class Wpr_Sticky_Section {
 					'condition' => [
 						'enable_sticky_section' => 'yes',
 						'sticky_advanced_options' => 'yes',
-						'position_location'	=> 'top'
+						'position_location'	=> 'top',
+						'sticky_replace_header!' => 'yes'
 					]
 				]
 			);
@@ -273,7 +289,8 @@ class Wpr_Sticky_Section {
 					'condition' => [
 						'sticky_background' => 'yes',
 						'sticky_advanced_options' => 'yes',
-						'position_location'	=> 'top'
+						'position_location'	=> 'top',
+						'sticky_replace_header!' => 'yes'
 					]
 				]
 			);
@@ -305,7 +322,8 @@ class Wpr_Sticky_Section {
 					'condition' => [
 						'sticky_background' => 'yes',
 						'sticky_advanced_options' => 'yes',
-						'position_location'	=> 'top'
+						'position_location'	=> 'top',
+						'sticky_replace_header!' => 'yes'
 					]
 				]
 			);
@@ -320,7 +338,8 @@ class Wpr_Sticky_Section {
 					'condition' => [
 						'enable_sticky_section' => 'yes',
 						'sticky_advanced_options' => 'yes',
-						'position_location'	=> 'top'
+						'position_location'	=> 'top',
+						'sticky_replace_header!' => 'yes'
 					]
 				]
 			);
@@ -335,12 +354,13 @@ class Wpr_Sticky_Section {
 					'max' => 5,
 					'step' => 0.1,
 					'selectors' => [
-						'{{WRAPPER}}.wpr-sticky-header .wpr-logo' => 'transform: scale({{VALUE}})', // ADD CONTROL FOR ANIMATION TIMINGS
+						'{{WRAPPER}}.wpr-sticky-header .wpr-logo' => 'transform: scale({{VALUE}}); transform-origin: left;', // ADD CONTROL FOR ANIMATION TIMINGS
 					],
 					'condition' => [
 						'sticky_logo_scale' => 'yes',
 						'sticky_advanced_options' => 'yes',
-						'position_location'	=> 'top'
+						'position_location'	=> 'top',
+						'sticky_replace_header!' => 'yes'
 					]
 				]
 			);
@@ -356,21 +376,7 @@ class Wpr_Sticky_Section {
 						'enable_sticky_section' => 'yes',
 						'sticky_advanced_options' => 'yes',
 						'position_location'	=> 'top'
-					]
-				]
-			);
-
-			$element->add_control ( // NEXT HIDDEN SECTION
-				'sticky_replace_header',
-				[
-					'type' => Controls_Manager::SWITCHER,
-					'label' => esc_html__( 'Replace with New Section', 'wpr-addons' ),
-					'default' => 'no',
-					'return_value' => 'yes',
-					'condition' => [
-						'enable_sticky_section' => 'yes',
-						'sticky_advanced_options' => 'yes',
-						'position_location'	=> 'top'
+						// 'sticky_replace_header!' => 'yes'
 					]
 				]
 			);
@@ -439,16 +445,17 @@ class Wpr_Sticky_Section {
 					'max' => 5,
 					'step' => 0.1,
 					'selectors' => [
-						// '{{WRAPPER}} .wpr-logo' => 'transition: all {{VALUE}}s ease-in-out !important;', // ADD CONTROL FOR ANIMATION TIMINGS
-						// '{{WRAPPER}}' => 'transition: all {{VALUE}}s ease-in-out !important;', // ADD CONTROL FOR ANIMATION TIMINGS
+						'{{WRAPPER}}.wpr-sticky-section-yes' => 'transition: all {{VALUE}}s ease-in-out !important;', // ADD CONTROL FOR ANIMATION TIMINGS
+						'{{WRAPPER}} .wpr-logo' => 'transition: all {{VALUE}}s ease-in-out !important;', // ADD CONTROL FOR ANIMATION TIMINGS
+						'{{WRAPPER}} *' => 'transition: all {{VALUE}}s ease-in-out !important;'
 						// '{{WRAPPER}}' => 'transition: background {{VALUE}}s, border {{VALUE}}s, border-radius {{VALUE}}s, box-shadow {{VALUE}}s;',
 						// '{{WRAPPER}} *' => 'transition: background {{VALUE}}s, border {{VALUE}}s, border-radius {{VALUE}}s, box-shadow {{VALUE}}s;'
-						'{{WRAPPER}}' => 'transition: background {{VALUE}}s, border {{VALUE}}s, border-radius {{VALUE}}s, box-shadow {{VALUE}}s;',
 
 					],
 					'condition' => [
 						'sticky_advanced_options' => 'yes',
-						'position_location'	=> 'top'
+						'position_location'	=> 'top',
+						'sticky_replace_header!' => 'yes'
 					]
 				]
 			);
@@ -474,6 +481,22 @@ class Wpr_Sticky_Section {
 			// 	]
 			// );
 
+			$element->add_control ( // NEXT HIDDEN SECTION
+				'sticky_shrink_section',
+				[
+					'type' => Controls_Manager::SWITCHER,
+					'label' => esc_html__( 'Shrink Section', 'wpr-addons' ),
+					'default' => 'no',
+					'return_value' => 'yes',
+					'condition' => [
+						'enable_sticky_section' => 'yes',
+						'sticky_advanced_options' => 'yes',
+						'position_location'	=> 'top',
+						'sticky_replace_header!' => 'yes'
+					]
+				]
+			);
+
 			$element->add_responsive_control(
 				'sticky_shrink_size',
 				[
@@ -489,12 +512,14 @@ class Wpr_Sticky_Section {
 						'size' => 50,
 					],
 					'selectors' => [
-						// '{{WRAPPER}}.wpr-sticky-header' => 'min-height: {{SIZE}}{{UNIT}} !important;',
+						'{{WRAPPER}}.wpr-sticky-header .elementor-container' => 'min-height: {{SIZE}}{{UNIT}} !important;',
 					],
 					'condition' => [
 						'enable_sticky_section' => 'yes',
 						'position_location'	=> 'top',
-						'sticky_advanced_options' => 'yes'
+						'sticky_advanced_options' => 'yes',
+						'sticky_shrink_section' => 'yes',
+						'sticky_replace_header!' => 'yes'
 					]
 				]
 			);
@@ -531,6 +556,14 @@ class Wpr_Sticky_Section {
         $settings = $element->get_settings_for_display();
 
 		if ($settings['enable_sticky_section'] !== 'yes') return;
+
+		$sticky_effects_offset_widescreen = isset($settings['sticky_effects_offset_widescreen']) && !empty($settings['sticky_effects_offset_widescreen']) ? $settings['sticky_effects_offset_widescreen'] : $settings['sticky_effects_offset'];
+		$sticky_effects_offset_desktop = isset($settings['sticky_effects_offset']) && !empty($settings['sticky_effects_offset']) ? $settings['sticky_effects_offset'] : $sticky_effects_offset_widescreen;
+		$sticky_effects_offset_laptop =  isset($settings['sticky_effects_offset_laptop']) && !empty($settings['sticky_effects_offset_laptop']) ? $settings['sticky_effects_offset_laptop'] : $sticky_effects_offset_desktop;
+		$sticky_effects_offset_tablet_extra =  isset($settings['sticky_effects_offset_tablet_extra']) && !empty($settings['sticky_effects_offset_tablet_extra']) ? $settings['sticky_effects_offset_tablet_extra'] : $sticky_effects_offset_laptop;
+		$sticky_effects_offset_tablet =  isset($settings['sticky_effects_offset_tablet']) && !empty($settings['sticky_effects_offset_tablet']) ? $settings['sticky_effects_offset_tablet'] : $sticky_effects_offset_tablet_extra;
+		$sticky_effects_offset_mobile_extra =  isset($settings['sticky_effects_offset_mobile_extra']) && !empty($settings['sticky_effects_offset_mobile_extra']) ? $settings['sticky_effects_offset_mobile_extra'] : $sticky_effects_offset_tablet;
+		$sticky_effects_offset_mobile =  isset($settings['sticky_effects_offset_mobile']) && !empty($settings['sticky_effects_offset_mobile']) ? $settings['sticky_effects_offset_mobile'] : $sticky_effects_offset_mobile_extra;
 		
         if ( $settings['enable_sticky_section'] === 'yes' ) {
             $element->add_render_attribute( '_wrapper', [
@@ -544,7 +577,16 @@ class Wpr_Sticky_Section {
 				'data-wpr-z-index' => $settings['wpr_z_index'],
 				'data-wpr-sticky-hide' => $settings['sticky_hide'],
 				'data-wpr-replace-header' => $settings['sticky_replace_header'],
-				'data-wpr-animation-duration' => $settings['sticky_animation_duration']
+				'data-wpr-animation-duration' => $settings['sticky_animation_duration'],
+				// 'data-wpr-offset-settings' => wp_json_encode([
+				// 	'widescreen' => $sticky_effects_offset_widescreen,
+				// 	'desktop' => $sticky_effects_offset_desktop,
+				// 	'laptop' => $sticky_effects_offset_laptop,
+				// 	'tablet_extra' => $sticky_effects_offset_tablet_extra,
+				// 	'tablet' => $sticky_effects_offset_tablet,
+				// 	'mobile_extra' => $sticky_effects_offset_mobile_extra,
+				// 	'mobile' => $sticky_effects_offset_mobile
+				// ])
             ] );
         }
     }
