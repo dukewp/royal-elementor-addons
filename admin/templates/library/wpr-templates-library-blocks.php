@@ -100,6 +100,16 @@ class WPR_Templates_Library_Blocks {
 
 			<?php
 
+			$modules['Footer'] = [
+				0 => 'footer',
+				1 => '#',
+			];
+
+			$modules['Header'] = [
+				0 => 'header',
+				1 => '#',
+			];
+
 			foreach ($modules as $title => $data) :
 				$module_slug = $data[0];
 				$blocks = WPR_Templates_Data::get_available_blocks();
