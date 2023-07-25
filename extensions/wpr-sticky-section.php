@@ -203,7 +203,8 @@ class Wpr_Sticky_Section {
 					'type' => Controls_Manager::HEADING,
 					'separator' => 'before',
 					'condition' => [
-						'enable_sticky_section' => 'yes'
+						'enable_sticky_section' => 'yes',
+						'position_location'	=> 'top'
 					],
 				]
 			);
