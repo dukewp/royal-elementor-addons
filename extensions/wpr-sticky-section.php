@@ -217,7 +217,8 @@ class Wpr_Sticky_Section {
 					'default' => 'no',
 					'return_value' => 'yes',
 					'condition' => [
-						'enable_sticky_section' => 'yes'
+						'enable_sticky_section' => 'yes',
+						'position_location'	=> 'top'
 					]
 				]
 			);
@@ -240,7 +241,8 @@ class Wpr_Sticky_Section {
 					'mobile_default' => 0,
 					'condition' => [
 						'enable_sticky_section' => 'yes',
-						'sticky_advanced_options' => 'yes'
+						'sticky_advanced_options' => 'yes',
+						'position_location'	=> 'top'
 					]
 				]
 			);
@@ -254,7 +256,8 @@ class Wpr_Sticky_Section {
 					'return_value' => 'yes',
 					'condition' => [
 						'enable_sticky_section' => 'yes',
-						'sticky_advanced_options' => 'yes'
+						'sticky_advanced_options' => 'yes',
+						'position_location'	=> 'top'
 					]
 				]
 			);
@@ -269,7 +272,8 @@ class Wpr_Sticky_Section {
 					],
 					'condition' => [
 						'sticky_background' => 'yes',
-						'sticky_advanced_options' => 'yes'
+						'sticky_advanced_options' => 'yes',
+						'position_location'	=> 'top'
 					]
 				]
 			);
@@ -300,7 +304,8 @@ class Wpr_Sticky_Section {
 					],
 					'condition' => [
 						'sticky_background' => 'yes',
-						'sticky_advanced_options' => 'yes'
+						'sticky_advanced_options' => 'yes',
+						'position_location'	=> 'top'
 					]
 				]
 			);
@@ -314,7 +319,8 @@ class Wpr_Sticky_Section {
 					'return_value' => 'yes',
 					'condition' => [
 						'enable_sticky_section' => 'yes',
-						'sticky_advanced_options' => 'yes'
+						'sticky_advanced_options' => 'yes',
+						'position_location'	=> 'top'
 					]
 				]
 			);
@@ -333,7 +339,8 @@ class Wpr_Sticky_Section {
 					],
 					'condition' => [
 						'sticky_logo_scale' => 'yes',
-						'sticky_advanced_options' => 'yes'
+						'sticky_advanced_options' => 'yes',
+						'position_location'	=> 'top'
 					]
 				]
 			);
@@ -347,7 +354,8 @@ class Wpr_Sticky_Section {
 					'return_value' => 'yes',
 					'condition' => [
 						'enable_sticky_section' => 'yes',
-						'sticky_advanced_options' => 'yes'
+						'sticky_advanced_options' => 'yes',
+						'position_location'	=> 'top'
 					]
 				]
 			);
@@ -361,35 +369,24 @@ class Wpr_Sticky_Section {
 					'return_value' => 'yes',
 					'condition' => [
 						'enable_sticky_section' => 'yes',
-						'sticky_advanced_options' => 'yes'
+						'sticky_advanced_options' => 'yes',
+						'position_location'	=> 'top'
 					]
 				]
 			);
 
-			$element->add_control(
-				'sticky_replace_header_id',
-				[
-					'label' => esc_html__( 'Section ID', 'wpr-addons' ),
-					'type' => Controls_Manager::TEXT,
-					'condition' => [
-						'sticky_replace_header' => 'yes'
-					]
-				]
-			);
-
-			$element->add_control (
-				'enable_show_hide_animation',
-				[
-					'type' => Controls_Manager::SWITCHER,
-					'label' => esc_html__( 'Show/Hide Animations', 'wpr-addons' ),
-					'default' => 'no',
-					'return_value' => 'yes',
-					'condition' => [
-						'enable_sticky_section' => 'yes',
-						'sticky_advanced_options' => 'yes'
-					]
-				]
-			);
+			// $element->add_control(
+			// 	'sticky_replace_header_id',
+			// 	[
+			// 		'label' => esc_html__( 'Section ID', 'wpr-addons' ),
+			// 		'type' => Controls_Manager::TEXT,
+			// 		'condition' => [
+						// 'enable_sticky_section' => 'yes',
+						// 'sticky_advanced_options' => 'yes',
+			// 			'sticky_replace_header' => 'yes'
+			// 		]
+			// 	]
+			// );
 
 			$element->add_responsive_control( // TRANSITION
 				'sticky_animation',
@@ -404,8 +401,9 @@ class Wpr_Sticky_Section {
 					],
 					'frontend_available' => true,
 					'condition' => [
-						'enable_show_hide_animation' => 'yes',
-						'sticky_advanced_options' => 'yes'
+						'enable_sticky_section' => 'yes',
+						'sticky_advanced_options' => 'yes',
+						'position_location'	=> 'top'
 					]
 				]
 			);
@@ -413,28 +411,26 @@ class Wpr_Sticky_Section {
 			$element->add_control(
 				'sticky_animation_duration',
 				[
-					'label' => esc_html__( 'Transition', 'wpr-addons' ),
+					'label' => esc_html__( 'Animation Duration', 'wpr-addons' ),
 					'type' => Controls_Manager::NUMBER,
 					'default' => 0.3,
 					'min' => 0,
 					'max' => 5,
 					'step' => 0.1,
 					'selectors' => [
-						'{{WRAPPER}} .wpr-logo' => 'transition: all {{VALUE}}s ease-in-out;', // ADD CONTROL FOR ANIMATION TIMINGS
-						'{{WRAPPER}}' => 'transition: all {{VALUE}}s ease-in-out;', // ADD CONTROL FOR ANIMATION TIMINGS
-						'--wpr-animation-duration' => '{{VALUE}}', // ADD CONTROL FOR ANIMATION TIMINGS
+						'{{WRAPPER}}' => '--wpr-animation-duration: {{VALUE}}s', // ADD CONTROL FOR ANIMATION TIMINGS
 
 					],
 					'condition' => [
-						'enable_show_hide_animation' => 'yes',
 						'sticky_advanced_options' => 'yes',
+						'position_location'	=> 'top',
 						'sticky_animation' => ['fade', 'slide']
 					]
 				]
 			);
 
 			$element->add_control(
-				'sticky_transition_duration',
+				'sticky_trans_duration',
 				[
 					'label' => esc_html__( 'Transition', 'wpr-addons' ),
 					'type' => Controls_Manager::NUMBER,
@@ -443,14 +439,16 @@ class Wpr_Sticky_Section {
 					'max' => 5,
 					'step' => 0.1,
 					'selectors' => [
-						'{{WRAPPER}} .wpr-logo' => 'transition: all {{VALUE}}s ease-in-out;', // ADD CONTROL FOR ANIMATION TIMINGS
-						'{{WRAPPER}}' => 'transition: all {{VALUE}}s ease-in-out;', // ADD CONTROL FOR ANIMATION TIMINGS
-						'--wpr-animation-duration' => '{{VALUE}}', // ADD CONTROL FOR ANIMATION TIMINGS
+						// '{{WRAPPER}} .wpr-logo' => 'transition: all {{VALUE}}s ease-in-out !important;', // ADD CONTROL FOR ANIMATION TIMINGS
+						// '{{WRAPPER}}' => 'transition: all {{VALUE}}s ease-in-out !important;', // ADD CONTROL FOR ANIMATION TIMINGS
+						// '{{WRAPPER}}' => 'transition: background {{VALUE}}s, border {{VALUE}}s, border-radius {{VALUE}}s, box-shadow {{VALUE}}s;',
+						// '{{WRAPPER}} *' => 'transition: background {{VALUE}}s, border {{VALUE}}s, border-radius {{VALUE}}s, box-shadow {{VALUE}}s;'
+						'{{WRAPPER}}' => 'transition: background {{VALUE}}s, border {{VALUE}}s, border-radius {{VALUE}}s, box-shadow {{VALUE}}s;',
 
 					],
 					'condition' => [
 						'sticky_advanced_options' => 'yes',
-						// 'enable_show_hide_animation' => 'yes'
+						'position_location'	=> 'top'
 					]
 				]
 			);
@@ -495,6 +493,7 @@ class Wpr_Sticky_Section {
 					],
 					'condition' => [
 						'enable_sticky_section' => 'yes',
+						'position_location'	=> 'top',
 						'sticky_advanced_options' => 'yes'
 					]
 				]

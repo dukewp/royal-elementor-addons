@@ -13713,10 +13713,7 @@ flex-grow: 0; */
     position: fixed;
     display: block !important;
     width: 100%; 
-}
-
-.wpr-sticky-hide {
-    visibility: hidden;
+    z-index: 99999 !important;
 }
 
 .wpr-none-out {
