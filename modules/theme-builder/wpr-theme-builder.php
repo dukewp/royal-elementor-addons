@@ -47,6 +47,15 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 
 		$taxonomy_archives = $post_taxonomies;
 
+		// Add CPT to Default Archives
+		foreach ($post_types as $post_type => $value) {
+			if ( 'post' === $post_type || 'page' === $post_type || 'e-landing-page' === $post_type ) {
+				continue;
+			}
+
+			$default_archives['archive/'. $post_type] = $value .' '. esc_html__( 'Archive', 'wpr-addons' );
+		}
+
 		$id = get_the_ID();
 		$query = '';
 
@@ -106,6 +115,16 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 				} elseif ( $template_slug == Utilities::get_template_slug($conds, 'archive/tags', $id) ) {
 					$query = 'post_tag';
 				} else {
+					foreach ($post_types as $post_type => $value) {
+						if ( 'post' === $post_type || 'page' === $post_type ) {
+							continue;
+						}
+
+						if ( $template_slug == Utilities::get_template_slug($conds, 'archive/'. $post_type, $id) ) {
+							$query = 'archive/'. $post_type;
+						}
+					}
+
 					foreach ($post_taxonomies as $tax => $value) {
 						if ( 'category' === $tax || 'tag' === $tax ) {
 							continue;
@@ -268,6 +287,15 @@ class Wpr_Theme_Builder extends Elementor\Core\Base\Document {
 
 			case 'archive/search':
 				$args = [ 's' => $settings['preview_archive_search'] ];
+				break;
+			
+			default:
+				// Custom Post Type Archives
+				if ( strpos( $source, 'archive/' ) !== false ) {
+					$post_type = str_replace( 'archive/', '', $source );
+					$args = [ 'post_type' => $post_type ];
+				}
+				
 				break;
 		}
 
