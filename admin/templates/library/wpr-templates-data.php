@@ -1219,7 +1219,13 @@ class WPR_Templates_Data {
 	}
 
 	public static function get_available_blocks() {
-		return [
+		return ['footer' => [
+			'v1' => ['type' => 'image', 'url' => 'footer/v1.jpg'],
+			'v2' => ['type' => 'image', 'url' => 'footer/v2.jpg'],
+			'v3' => ['type' => 'image', 'url' => 'footer/v3.jpg'],
+			'v4' => ['type' => 'image', 'url' => 'footer/v4.jpg'],
+			'v5' => ['type' => 'image', 'url' => 'footer/v5.jpg'],
+		],
 			'grid' => [
 				'v1' => ['type' => 'iframe', 'url' => 'grid/v1/'],
 				'v2' => ['type' => 'iframe', 'url' => 'grid/v2/'],

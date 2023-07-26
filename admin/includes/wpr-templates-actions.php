@@ -375,7 +375,7 @@ class WPR_Templates_Actions {
 		    ] );
 		} );
 
-		// Regenerate Extra Image Sizes
+		// Library Template Import Finished
 		$ajax->register_ajax_action( 'wpr_library_template_import_finished', function( $data ) {
 			Utilities::regenerate_extra_image_sizes();
 
@@ -383,6 +383,13 @@ class WPR_Templates_Actions {
 			if ( ! (wpr_fs()->is_registered() && wpr_fs()->is_tracking_allowed() || wpr_fs()->is_pending_activation() )) {
 				return;
 			}
+
+			// Templates Library Import Block
+		    wp_remote_post( 'https://reastats.kinsta.cloud/wp-json/templates-library-blocks-import/data', [
+		        'body' => [
+		            'imported_block' => $data['block']
+		        ]
+		    ] );
 
 			if ( ! isset($data['kit']) ) {
 				return;
