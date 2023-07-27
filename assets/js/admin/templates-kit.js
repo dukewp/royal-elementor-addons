@@ -40,7 +40,8 @@ jQuery(document).ready(function( $ ) {
 			});
 
 			// Search Templates Kit
-			var searchTimeout = null;  
+			var searchTimeout = null,
+				maingGridHtml = $('.wpr-templates-kit-grid').html();
 			$('.wpr-templates-kit-search').find('input').keyup(function(e) {
 				if ( e.which === 13 ) {
 					return false;
@@ -54,7 +55,7 @@ jQuery(document).ready(function( $ ) {
 
 				searchTimeout = setTimeout(function() {
 					searchTimeout = null;
-					WprTemplatesKit.searchTemplatesKit( val );
+					WprTemplatesKit.searchTemplatesKit( val, maingGridHtml );
 
 					// Final Adjustments
 					$.ajax({
@@ -418,7 +419,7 @@ jQuery(document).ready(function( $ ) {
 			$('.wpr-templates-kit-single').find('.preview-demo').attr('href', $('.wpr-templates-kit-single').find('.preview-demo').attr('href') +'/'+ id );
 		},
 
-		searchTemplatesKit: function( tag ) {
+		searchTemplatesKit: function( tag, html ) {
 			var price = $('.wpr-templates-kit-price-filter').children().first().attr( 'data-price' ),
 				priceAttr = 'mixed' === price ? '' : '[data-price*="'+ price +'"]';
 
@@ -426,6 +427,7 @@ jQuery(document).ready(function( $ ) {
 				$('.main-grid .grid-item').hide();
 				$('.main-grid .grid-item[data-tags*="'+ tag +'"]'+ priceAttr).show();
 			} else {
+				$('.main-grid').html( html );
 				$('.main-grid .grid-item'+ priceAttr).show();
 			}
 
@@ -436,6 +438,25 @@ jQuery(document).ready(function( $ ) {
 				$('.wpr-templates-kit-not-found').hide();
 				$('.wpr-templates-kit-page-title').show();
 			}
+
+			var firstResult = '';
+			// console.log(mainGridHtml);
+
+			$('.main-grid .grid-item:visible').each(function(i){
+				if ( '' !== tag ) {
+					if ( 0 === i) {
+						firstResult = $('.main-grid .grid-item[data-kit-id='+ $(this).attr('data-kit-id') +']');
+					}
+
+					let title = $(this).attr('data-title');
+
+					if ( title.indexOf(tag) >= 0 ) {
+						if ( firstResult.attr('data-kit-id') !== $(this).attr('data-kit-id')) {
+							firstResult.before( $(this).remove() );
+						}
+					}
+				}
+			});
 		},
 
 		fiterFreeProTemplates: function( price ) {
