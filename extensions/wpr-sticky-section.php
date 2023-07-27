@@ -354,14 +354,14 @@ class Wpr_Sticky_Section {
 			$element->add_control(
 				'sticky_logo_scale_size',
 				[
-					'label' => esc_html__( 'Logo Size', 'wpr-addons' ),
+					'label' => esc_html__( 'Logo Size %', 'wpr-addons' ),
 					'type' => Controls_Manager::NUMBER,
-					'default' => 0.7,
-					'min' => 0,
-					'max' => 5,
-					'step' => 0.1,
+					'default' => 70,
+					'min' => 10,
+					'max' => 100,
+					'step' => 5,
 					'selectors' => [
-						'{{WRAPPER}}.wpr-sticky-header .wpr-logo' => 'transform: scale({{VALUE}}); transform-origin: left;', // ADD CONTROL FOR ANIMATION TIMINGS
+						'{{WRAPPER}}.wpr-sticky-header .wpr-logo-image' => 'width: {{VALUE}}%', // ADD CONTROL FOR ANIMATION TIMINGS
 					],
 					'condition' => [
 						'enable_sticky_section' => 'yes',
@@ -498,7 +498,7 @@ class Wpr_Sticky_Section {
 				'sticky_shrink_section',
 				[
 					'type' => Controls_Manager::SWITCHER,
-					'label' => esc_html__( 'Shrink Section', 'wpr-addons' ),
+					'label' => esc_html__( 'Custom Height', 'wpr-addons' ),
 					'default' => 'no',
 					'return_value' => 'yes',
 					'condition' => [
