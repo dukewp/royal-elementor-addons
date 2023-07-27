@@ -291,6 +291,7 @@ class Wpr_Sticky_Section {
 						'{{WRAPPER}}.wpr-sticky-header *' => 'color: {{VALUE}} !important;', // CHECK SELECTORS - LOGO MENU & maybe BUTTON
 					],
 					'condition' => [
+						'enable_sticky_section' => 'yes',
 						'sticky_background' => 'yes',
 						'sticky_advanced_options' => 'yes',
 						'position_location'	=> 'top',
@@ -324,6 +325,7 @@ class Wpr_Sticky_Section {
 						'{{WRAPPER}}.wpr-sticky-header' => 'background-color: {{VALUE}} !important; z-index: 9999 !important;',
 					],
 					'condition' => [
+						'enable_sticky_section' => 'yes',
 						'sticky_background' => 'yes',
 						'sticky_advanced_options' => 'yes',
 						'position_location'	=> 'top',
@@ -362,6 +364,7 @@ class Wpr_Sticky_Section {
 						'{{WRAPPER}}.wpr-sticky-header .wpr-logo' => 'transform: scale({{VALUE}}); transform-origin: left;', // ADD CONTROL FOR ANIMATION TIMINGS
 					],
 					'condition' => [
+						'enable_sticky_section' => 'yes',
 						'sticky_logo_scale' => 'yes',
 						'sticky_advanced_options' => 'yes',
 						'position_location'	=> 'top',
@@ -435,6 +438,7 @@ class Wpr_Sticky_Section {
 
 					],
 					'condition' => [
+						'enable_sticky_section' => 'yes',
 						'sticky_advanced_options' => 'yes',
 						'position_location'	=> 'top',
 						'sticky_animation' => ['fade', 'slide']
@@ -460,6 +464,7 @@ class Wpr_Sticky_Section {
 
 					],
 					'condition' => [
+						'enable_sticky_section' => 'yes',
 						'sticky_advanced_options' => 'yes',
 						'position_location'	=> 'top',
 						'sticky_replace_header!' => 'yes'
