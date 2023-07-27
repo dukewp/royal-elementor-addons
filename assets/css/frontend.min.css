@@ -12118,7 +12118,7 @@ select.wpr-category-select {
 
 .wpr-horizontal.swiper-container {
     position: unset;
-    /* overflow: hidden; */
+    overflow: hidden;
     z-index: 11;
     margin: 0 32px;
 }

@@ -458,7 +458,8 @@ class Wpr_Sticky_Section {
 					'selectors' => [
 						'{{WRAPPER}}.wpr-sticky-section-yes' => 'transition: all {{VALUE}}s ease-in-out !important;', // ADD CONTROL FOR ANIMATION TIMINGS
 						'{{WRAPPER}} .wpr-logo' => 'transition: all {{VALUE}}s ease-in-out !important;', // ADD CONTROL FOR ANIMATION TIMINGS
-						'{{WRAPPER}} *' => 'transition: all {{VALUE}}s ease-in-out !important;'
+						'{{WRAPPER}} *' => 'transition: all {{VALUE}}s ease-in-out !important;',
+						'{{WRAPPER}} *::before' => 'transition: color {{VALUE}}s ease-in-out !important;'
 						// '{{WRAPPER}}' => 'transition: background {{VALUE}}s, border {{VALUE}}s, border-radius {{VALUE}}s, box-shadow {{VALUE}}s;',
 						// '{{WRAPPER}} *' => 'transition: background {{VALUE}}s, border {{VALUE}}s, border-radius {{VALUE}}s, box-shadow {{VALUE}}s;'
 
