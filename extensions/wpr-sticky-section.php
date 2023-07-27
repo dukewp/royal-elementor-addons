@@ -12,6 +12,7 @@ use Elementor\Plugin;
 use Elementor\Core\Responsive\Responsive;
 use Elementor\Core\Breakpoints\Manager;
 use Elementor\Core\Breakpoints;
+use Elementor\Group_Control_Box_Shadow;
 use WprAddons\Classes\Utilities;
 
 
@@ -259,7 +260,8 @@ class Wpr_Sticky_Section {
 						'enable_sticky_section' => 'yes',
 						'sticky_advanced_options' => 'yes',
 						'position_location'	=> 'top'
-					]
+					],
+					'separator' => 'before'
 				]
 			);
 
@@ -275,7 +277,8 @@ class Wpr_Sticky_Section {
 						'sticky_advanced_options' => 'yes',
 						'position_location'	=> 'top',
 						'sticky_replace_header!' => 'yes'
-					]
+					],
+					'separator' => 'before'
 				]
 			);
 
@@ -341,7 +344,8 @@ class Wpr_Sticky_Section {
 						'sticky_advanced_options' => 'yes',
 						'position_location'	=> 'top',
 						'sticky_replace_header!' => 'yes'
-					]
+					],
+					'separator' => 'before'
 				]
 			);
 
@@ -378,7 +382,8 @@ class Wpr_Sticky_Section {
 						'sticky_advanced_options' => 'yes',
 						'position_location'	=> 'top'
 						// 'sticky_replace_header!' => 'yes'
-					]
+					],
+					'separator' => 'before'
 				]
 			);
 
@@ -411,7 +416,8 @@ class Wpr_Sticky_Section {
 						'enable_sticky_section' => 'yes',
 						'sticky_advanced_options' => 'yes',
 						'position_location'	=> 'top'
-					]
+					],
+					'separator' => 'before'
 				]
 			);
 
@@ -457,7 +463,8 @@ class Wpr_Sticky_Section {
 						'sticky_advanced_options' => 'yes',
 						'position_location'	=> 'top',
 						'sticky_replace_header!' => 'yes'
-					]
+					],
+					'separator' => 'before'
 				]
 			);
 
@@ -494,7 +501,8 @@ class Wpr_Sticky_Section {
 						'sticky_advanced_options' => 'yes',
 						'position_location'	=> 'top',
 						'sticky_replace_header!' => 'yes'
-					]
+					],
+					'separator' => 'before'
 				]
 			);
 
@@ -521,6 +529,154 @@ class Wpr_Sticky_Section {
 						'sticky_advanced_options' => 'yes',
 						'sticky_shrink_section' => 'yes',
 						'sticky_replace_header!' => 'yes'
+					]
+				]
+			);
+
+			$element->add_control ( // NEXT HIDDEN SECTION
+				'wpr_sticky_section_border',
+				[
+					'type' => Controls_Manager::SWITCHER,
+					'label' => esc_html__( 'Custom Border', 'wpr-addons' ),
+					'default' => 'no',
+					'return_value' => 'yes',
+					'condition' => [
+						'enable_sticky_section' => 'yes',
+						'sticky_advanced_options' => 'yes',
+						'position_location'	=> 'top',
+						'sticky_replace_header!' => 'yes'
+					],
+					'separator' => 'before'
+				]
+			);
+
+			$element->add_control(
+				'wpr_sticky_section_border_type',
+				[
+					'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+					'type' => Controls_Manager::SELECT,
+					'options' => [
+						'none' => esc_html__( 'None', 'wpr-addons' ),
+						'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+						'double' => esc_html__( 'Double', 'wpr-addons' ),
+						'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+						'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+						'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+					],
+					'default' => 'none',
+					'selectors' => [
+						'{{WRAPPER}}.wpr-sticky-header' => 'border-style: {{VALUE}};'
+					],
+					'condition' => [
+						'enable_sticky_section' => 'yes',
+						'sticky_advanced_options' => 'yes',
+						'position_location'	=> 'top',
+						'sticky_replace_header!' => 'yes',
+						'wpr_sticky_section_border' => 'yes'
+					]
+				]
+			);
+
+			$element->add_control(
+				'wpr_sticky_section_border_color',
+				[
+					'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+					'type' => Controls_Manager::COLOR,
+					'default' => '#E8E8E8',
+					'selectors' => [
+						'{{WRAPPER}}.wpr-sticky-header' => 'border-color: {{VALUE}}'
+					],
+					'condition' => [
+						'enable_sticky_section' => 'yes',
+						'sticky_advanced_options' => 'yes',
+						'position_location'	=> 'top',
+						'sticky_replace_header!' => 'yes',
+						'wpr_sticky_section_border' => 'yes',
+						'wpr_sticky_section_border_type!' => 'none'
+					]
+				]
+			);
+
+			$element->add_control(
+				'wpr_sticky_section_border_width',
+				[
+					'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+					'type' => Controls_Manager::DIMENSIONS,
+					'size_units' => [ 'px' ],
+					'default' => [
+						'top' => 1,
+						'right' => 1,
+						'bottom' => 1,
+						'left' => 1,
+					],
+					'selectors' => [
+						'{{WRAPPER}}.wpr-sticky-header' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+					],
+					'condition' => [
+						'enable_sticky_section' => 'yes',
+						'sticky_advanced_options' => 'yes',
+						'position_location'	=> 'top',
+						'sticky_replace_header!' => 'yes',
+						'wpr_sticky_section_border' => 'yes',
+						'wpr_sticky_section_border_type!' => 'none'
+					]
+				]
+			);
+
+			$element->add_control(
+				'wpr_sticky_section_border_radius',
+				[
+					'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+					'type' => Controls_Manager::DIMENSIONS,
+					'size_units' => [ 'px', '%' ],
+					'default' => [
+						'top' => 0,
+						'right' => 0,
+						'bottom' => 0,
+						'left' => 0,
+					],
+					'selectors' => [
+						'{{WRAPPER}}.wpr-sticky-header' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+					],
+					'condition' => [
+						'enable_sticky_section' => 'yes',
+						'sticky_advanced_options' => 'yes',
+						'position_location'	=> 'top',
+						'sticky_replace_header!' => 'yes',
+						'wpr_sticky_section_border' => 'yes',
+						'wpr_sticky_section_border_type!' => 'none'
+					]
+				]
+			);
+
+			$element->add_control ( // NEXT HIDDEN SECTION
+				'wpr_sticky_section_bs',
+				[
+					'type' => Controls_Manager::SWITCHER,
+					'label' => esc_html__( 'Custom Shadow', 'wpr-addons' ),
+					'default' => 'no',
+					'return_value' => 'yes',
+					'condition' => [
+						'enable_sticky_section' => 'yes',
+						'sticky_advanced_options' => 'yes',
+						'position_location'	=> 'top',
+						'sticky_replace_header!' => 'yes'
+					],
+					'separator' => 'before'
+				]
+			);
+
+			$element->add_group_control(
+				Group_Control_Box_Shadow::get_type(),
+				[
+					'name' => 'wpr_sticky_section_box_shadow',
+					'selector' => '{{WRAPPER}}.wpr-sticky-header',
+					'condition' => [
+						'enable_sticky_section' => 'yes',
+						'sticky_advanced_options' => 'yes',
+						'position_location'	=> 'top',
+						'sticky_replace_header!' => 'yes',
+						'wpr_sticky_section_bs' => 'yes'
 					]
 				]
 			);
@@ -602,7 +758,7 @@ class Wpr_Sticky_Section {
 		?>
 
 		<# if ( 'yes' === settings.enable_sticky_section) { #>
-			<div class="wpr-sticky-section-yes-editor" data-wpr-z-index={{{settings.wpr_z_index}}} data-wpr-sticky-section={{{settings.enable_sticky_section}}} data-wpr-position-type={{{settings.position_type}}} data-wpr-position-offset={{{settings.position_offset}}} data-wpr-position-location={{{settings.position_location}}} data-wpr-sticky-devices={{{settings.enable_on_devices}}} data-wpr-custom-breakpoints={{{settings.custom_breakpoints}}} data-wpr-active-breakpoints={{{settings.active_breakpoints}}}></div>
+			<div class="wpr-sticky-section-yes-editor" data-wpr-z-index={{{settings.wpr_z_index}}} data-wpr-sticky-section={{{settings.enable_sticky_section}}} data-wpr-position-type={{{settings.position_type}}} data-wpr-position-offset={{{settings.position_offset}}} data-wpr-position-location={{{settings.position_location}}} data-wpr-sticky-devices={{{settings.enable_on_devices}}} data-wpr-custom-breakpoints={{{settings.custom_breakpoints}}} data-wpr-active-breakpoints={{{settings.active_breakpoints}}} data-wpr-sticky-animation={{{settings.sticky_animation}}}  data-wpr-offset-settings={{{settings.wpr_sticky_effects_offset}}}></div>
 		<# } #>   
 
 		<?php

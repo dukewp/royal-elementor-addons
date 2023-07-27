@@ -114,6 +114,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'default' => '3',
 				'max' => '4',
 				'separator' => 'before',
+				'render_type' => 'template',
 				'condition'   => [
 					'timeline_layout'   => [
 					   'horizontal',
