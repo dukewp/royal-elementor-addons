@@ -33,6 +33,36 @@ class Wpr_Sticky_Section {
         add_action('elementor/frontend/container/before_render', [$this, '_before_render'], 10, 1);
     }
 
+	public static function add_control_group_sticky_advanced_options($element) {
+        // $element->add_control(
+        //     'sticky_advanced_options_heading',
+        //     [
+        //         'label' => esc_html__( 'Advanced', 'wpr-addons' ),
+        //         'type' => Controls_Manager::HEADING,
+        //         'separator' => 'before',
+        //         'condition' => [
+        //             'enable_sticky_section' => 'yes',
+        //             'position_location'	=> 'top'
+        //         ],
+        //     ]
+        // );
+
+        // All pro
+        $element->add_control (
+            'sticky_advanced_options_pro',
+            [
+                'type' => Controls_Manager::SWITCHER,
+                'label' => esc_html__( 'See Advanced Options (Pro)', 'wpr-addons' ),
+                'default' => 'no',
+				// 'classes' => 'wpr-pro-control',
+                'condition' => [
+                    'enable_sticky_section' => 'yes',
+                    'position_location'	=> 'top'
+                ]
+            ]
+        );
+	}
+
     public function register_controls( $element ) {
 
 		if ( ( 'section' === $element->get_name() || 'container' === $element->get_name() ) ) {
@@ -197,496 +227,32 @@ class Wpr_Sticky_Section {
 				]
 			);
 
-			$element->add_control(
-				'sticky_advanced_options_heading',
-				[
-					'label' => esc_html__( 'Advanced', 'wpr-addons' ),
-					'type' => Controls_Manager::HEADING,
-					'separator' => 'before',
-					'condition' => [
-						'enable_sticky_section' => 'yes',
-						'position_location'	=> 'top'
-					],
-				]
-			);
+			if ( wpr_fs()->can_use_premium_code() && defined('WPR_ADDONS_PRO_VERSION') ) {
+				\WprAddonsPro\Extensions\Wpr_Sticky_Section_Pro::add_control_group_sticky_advanced_options($element);
+			} else {
+				$this->add_control_group_sticky_advanced_options($element);
+				// $element->add_control(
+				// 	'sticky_section_pro_notice',
+				// 	[
+				// 		'type' => Controls_Manager::RAW_HTML,
+				// 		'raw' => '<a onclick="showOptionsImage()" class="wpr-show-img" style="cursor:pointer;">Click Here</a> to see what options <br> are available in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-popups-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>
+				// 		<img src="'. WPR_ADDONS_ASSETS_URL .'img/pro-options/group_popup_settings.jpg" style="display:none;position: absolute;top: 80px;left: 0;z-index: 99;border: 1px solid #93003C;">
+				// 		<script>function showOptionsImage(){jQuery(document).on("click",function(){jQuery(".elementor-control .wpr-pro-notice img").hide()}),setTimeout(function(){jQuery(".elementor-control .wpr-pro-notice img").show()},100)}</script>',
+				// 		'content_classes' => 'wpr-pro-notice',
+				// 	]
+				// );
 
-			// All pro
-			$element->add_control (
-				'sticky_advanced_options',
-				[
-					'type' => Controls_Manager::SWITCHER,
-					'label' => esc_html__( 'Enable Advanced Options', 'wpr-addons' ),
-					'default' => 'no',
-					'return_value' => 'yes',
-					'condition' => [
-						'enable_sticky_section' => 'yes',
-						'position_location'	=> 'top'
-					]
-				]
-			);
-			
-			$element->add_responsive_control(
-				'wpr_sticky_effects_offset',
-				[
-					'label' => __( 'Scroll Top Distance', 'wpr-addons' ), // SHOULD WORK AFTER STICKING
-					'type' => Controls_Manager::NUMBER,
-					'min' => 0,
-					'required' => true,
-					'frontend_available' => true,
-					'render_type' => 'template',
-					'default' => 0,
-					'widescreen_default' => 0,
-					'laptop_default' => 0,
-					'tablet_extra_default' => 0,
-					'tablet_default' => 0,
-					'mobile_extra_default' => 0,
-					'mobile_default' => 0,
-					'condition' => [
-						'enable_sticky_section' => 'yes',
-						'sticky_advanced_options' => 'yes',
-						'position_location'	=> 'top'
-					],
-					'separator' => 'before'
-				]
-			);
-
-			$element->add_control ( // NEXT HIDDEN SECTION
-				'sticky_replace_header',
-				[
-					'type' => Controls_Manager::SWITCHER,
-					'label' => esc_html__( 'Replace with New Section', 'wpr-addons' ),
-					'default' => 'no',
-					'return_value' => 'yes',
-					'condition' => [
-						'enable_sticky_section' => 'yes',
-						'sticky_advanced_options' => 'yes',
-						'position_location'	=> 'top'
-					],
-					'separator' => 'before'
-				]
-			);
-
-			$element->add_control (
-				'sticky_background',
-				[
-					'type' => Controls_Manager::SWITCHER,
-					'label' => esc_html__( 'Enable Custom Colors', 'wpr-addons' ),
-					'default' => 'no',
-					'return_value' => 'yes',
-					'condition' => [
-						'enable_sticky_section' => 'yes',
-						'sticky_advanced_options' => 'yes',
-						'position_location'	=> 'top',
-						'sticky_replace_header!' => 'yes'
-					],
-					'separator' => 'before'
-				]
-			);
-
-			$element->add_control(
-				'sticky_text_color',
-				[
-					'label' => esc_html__( 'Text Color', 'wpr-addons' ),
-					'type' => Controls_Manager::COLOR,
-					'selectors' => [
-						'{{WRAPPER}}.wpr-sticky-header *' => 'color: {{VALUE}} !important;', // CHECK SELECTORS - LOGO MENU & maybe BUTTON
-					],
-					'condition' => [
-						'enable_sticky_section' => 'yes',
-						'sticky_background' => 'yes',
-						'sticky_advanced_options' => 'yes',
-						'position_location'	=> 'top',
-						'sticky_replace_header!' => 'yes'
-					]
-				]
-			);
-
-			// $element->add_control(
-			// 	'sticky_logo_color',
-			// 	[
-			// 		'label' => esc_html__( 'Logo Color', 'wpr-addons' ),
-			// 		'type' => Controls_Manager::COLOR,
-			// 		'selectors' => [
-			// 			'{{WRAPPER}}.wpr-sticky-header .wpr-logo' => 'color: {{VALUE}} !important;', // CHECK SELECTORS - LOGO MENU & maybe BUTTON
-			// 			'{{WRAPPER}}.wpr-sticky-header .wpr-logo *' => 'color: {{VALUE}} !important;'
-			// 		],
-			// 		'condition' => [
-			// 			'sticky_background' => 'yes',
-			// 			'sticky_advanced_options' => 'yes'
-			// 		]
-			// 	]
-			// );
-
-			$element->add_control(
-				'sticky_background_color',
-				[
-					'label' => esc_html__( 'Background Color', 'wpr-addons' ),
-					'type' => Controls_Manager::COLOR,
-					'selectors' => [
-						'{{WRAPPER}}.wpr-sticky-header' => 'background-color: {{VALUE}} !important; z-index: 9999 !important;',
-					],
-					'condition' => [
-						'enable_sticky_section' => 'yes',
-						'sticky_background' => 'yes',
-						'sticky_advanced_options' => 'yes',
-						'position_location'	=> 'top',
-						'sticky_replace_header!' => 'yes'
-					]
-				]
-			);
-
-			$element->add_control (
-				'sticky_logo_scale',
-				[
-					'type' => Controls_Manager::SWITCHER,
-					'label' => esc_html__( 'Logo Scale', 'wpr-addons' ), // Show Number Input 0.7 default
-					'default' => 'no',
-					'return_value' => 'yes',
-					'condition' => [
-						'enable_sticky_section' => 'yes',
-						'sticky_advanced_options' => 'yes',
-						'position_location'	=> 'top',
-						'sticky_replace_header!' => 'yes'
-					],
-					'separator' => 'before'
-				]
-			);
-
-			$element->add_control(
-				'sticky_logo_scale_size',
-				[
-					'label' => esc_html__( 'Logo Size %', 'wpr-addons' ),
-					'type' => Controls_Manager::NUMBER,
-					'default' => 70,
-					'min' => 10,
-					'max' => 100,
-					'step' => 5,
-					'selectors' => [
-						'{{WRAPPER}}.wpr-sticky-header .wpr-logo-image' => 'width: {{VALUE}}%', // ADD CONTROL FOR ANIMATION TIMINGS
-					],
-					'condition' => [
-						'enable_sticky_section' => 'yes',
-						'sticky_logo_scale' => 'yes',
-						'sticky_advanced_options' => 'yes',
-						'position_location'	=> 'top',
-						'sticky_replace_header!' => 'yes'
-					]
-				]
-			);
-
-			$element->add_control (
-				'sticky_hide',
-				[
-					'type' => Controls_Manager::SWITCHER,
-					'label' => esc_html__( 'Show on Scrolling Up', 'wpr-addons' ),
-					'default' => 'no',
-					'return_value' => 'yes',
-					'condition' => [
-						'enable_sticky_section' => 'yes',
-						'sticky_advanced_options' => 'yes',
-						'position_location'	=> 'top'
-						// 'sticky_replace_header!' => 'yes'
-					],
-					'separator' => 'before'
-				]
-			);
-
-			// $element->add_control(
-			// 	'sticky_replace_header_id',
-			// 	[
-			// 		'label' => esc_html__( 'Section ID', 'wpr-addons' ),
-			// 		'type' => Controls_Manager::TEXT,
-			// 		'condition' => [
-						// 'enable_sticky_section' => 'yes',
-						// 'sticky_advanced_options' => 'yes',
-			// 			'sticky_replace_header' => 'yes'
-			// 		]
-			// 	]
-			// );
-
-			$element->add_responsive_control( // TRANSITION
-				'sticky_animation',
-				[
-					'label' => esc_html__( 'Select Animation', 'elementor' ),
-					'type' => Controls_Manager::SELECT,
-					'default' => 'none',
-					'options' => [
-						'none' => 'None',
-						'fade' => 'Fade',
-						'slide' => 'Slide'
-					],
-					'frontend_available' => true,
-					'condition' => [
-						'enable_sticky_section' => 'yes',
-						'sticky_advanced_options' => 'yes',
-						'position_location'	=> 'top'
-					],
-					'separator' => 'before'
-				]
-			);
-
-			$element->add_control(
-				'sticky_animation_duration',
-				[
-					'label' => esc_html__( 'Animation Duration', 'wpr-addons' ),
-					'type' => Controls_Manager::NUMBER,
-					'default' => 0.3,
-					'min' => 0,
-					'max' => 5,
-					'step' => 0.1,
-					'selectors' => [
-						'{{WRAPPER}}' => '--wpr-animation-duration: {{VALUE}}s', // ADD CONTROL FOR ANIMATION TIMINGS
-
-					],
-					'condition' => [
-						'enable_sticky_section' => 'yes',
-						'sticky_advanced_options' => 'yes',
-						'position_location'	=> 'top',
-						'sticky_animation' => ['fade', 'slide']
-					]
-				]
-			);
-
-			$element->add_control(
-				'sticky_trans_duration',
-				[
-					'label' => esc_html__( 'Transition', 'wpr-addons' ),
-					'type' => Controls_Manager::NUMBER,
-					'default' => 0.3,
-					'min' => 0,
-					'max' => 5,
-					'step' => 0.1,
-					'selectors' => [
-						'{{WRAPPER}}.wpr-sticky-section-yes' => 'transition: all {{VALUE}}s ease-in-out !important;', // ADD CONTROL FOR ANIMATION TIMINGS
-						'{{WRAPPER}} .wpr-logo' => 'transition: all {{VALUE}}s ease-in-out !important;', // ADD CONTROL FOR ANIMATION TIMINGS
-						'{{WRAPPER}} *' => 'transition: all {{VALUE}}s ease-in-out !important;',
-						'{{WRAPPER}} *::before' => 'transition: color {{VALUE}}s ease-in-out !important;'
-						// '{{WRAPPER}}' => 'transition: background {{VALUE}}s, border {{VALUE}}s, border-radius {{VALUE}}s, box-shadow {{VALUE}}s;',
-						// '{{WRAPPER}} *' => 'transition: background {{VALUE}}s, border {{VALUE}}s, border-radius {{VALUE}}s, box-shadow {{VALUE}}s;'
-
-					],
-					'condition' => [
-						'enable_sticky_section' => 'yes',
-						'sticky_advanced_options' => 'yes',
-						'position_location'	=> 'top',
-						'sticky_replace_header!' => 'yes'
-					],
-					'separator' => 'before'
-				]
-			);
-
-			// $element->add_responsive_control(
-			// 	'sticky_hide_distance',
-			// 	[
-			// 		'type' => Controls_Manager::SLIDER,
-			// 		'label' => esc_html__( 'Scroll Distance', 'wpr-addons' ),
-			// 		'frontend_available' => true,
-			// 		'range' => [
-			// 			'px' => [
-			// 				'min' => 0,
-			// 				'max' => 500,
-			// 			]
-			// 		],
-			// 		'default' => [
-			// 			'size' => 50,
-			// 		],
-			// 		'condition' => [
-			// 			'sticky_hide' => 'yes'
-			// 		]
-			// 	]
-			// );
-
-			$element->add_control ( // NEXT HIDDEN SECTION
-				'sticky_shrink_section',
-				[
-					'type' => Controls_Manager::SWITCHER,
-					'label' => esc_html__( 'Custom Height', 'wpr-addons' ),
-					'default' => 'no',
-					'return_value' => 'yes',
-					'condition' => [
-						'enable_sticky_section' => 'yes',
-						'sticky_advanced_options' => 'yes',
-						'position_location'	=> 'top',
-						'sticky_replace_header!' => 'yes'
-					],
-					'separator' => 'before'
-				]
-			);
-
-			$element->add_responsive_control(
-				'sticky_shrink_size',
-				[
-					'type' => Controls_Manager::SLIDER,
-					'label' => esc_html__( 'Section Height', 'wpr-addons' ),
-					'range' => [
-						'px' => [
-							'min' => 0,
-							'max' => 500,
+				$element->add_control(
+					'sticky_section_pro_notice',
+					[
+						'type' => Controls_Manager::RAW_HTML,
+						'raw' => '<img src="'. WPR_ADDONS_ASSETS_URL .'img/pro-options/sticky-section-pro-features.jpg" style="border: 1px solid #93003C;">',
+						'condition' => [
+							'sticky_advanced_options_pro' => 'yes'
 						]
-					],
-					'default' => [
-						'size' => 50,
-					],
-					'selectors' => [
-						'{{WRAPPER}}.wpr-sticky-header .elementor-container' => 'min-height: {{SIZE}}{{UNIT}} !important;',
-					],
-					'condition' => [
-						'enable_sticky_section' => 'yes',
-						'position_location'	=> 'top',
-						'sticky_advanced_options' => 'yes',
-						'sticky_shrink_section' => 'yes',
-						'sticky_replace_header!' => 'yes'
 					]
-				]
-			);
-
-			$element->add_control ( // NEXT HIDDEN SECTION
-				'wpr_sticky_section_border',
-				[
-					'type' => Controls_Manager::SWITCHER,
-					'label' => esc_html__( 'Custom Border', 'wpr-addons' ),
-					'default' => 'no',
-					'return_value' => 'yes',
-					'condition' => [
-						'enable_sticky_section' => 'yes',
-						'sticky_advanced_options' => 'yes',
-						'position_location'	=> 'top',
-						'sticky_replace_header!' => 'yes'
-					],
-					'separator' => 'before'
-				]
-			);
-
-			$element->add_control(
-				'wpr_sticky_section_border_type',
-				[
-					'label' => esc_html__( 'Border Type', 'wpr-addons' ),
-					'type' => Controls_Manager::SELECT,
-					'options' => [
-						'none' => esc_html__( 'None', 'wpr-addons' ),
-						'solid' => esc_html__( 'Solid', 'wpr-addons' ),
-						'double' => esc_html__( 'Double', 'wpr-addons' ),
-						'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
-						'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
-						'groove' => esc_html__( 'Groove', 'wpr-addons' ),
-					],
-					'default' => 'none',
-					'selectors' => [
-						'{{WRAPPER}}.wpr-sticky-header' => 'border-style: {{VALUE}};'
-					],
-					'condition' => [
-						'enable_sticky_section' => 'yes',
-						'sticky_advanced_options' => 'yes',
-						'position_location'	=> 'top',
-						'sticky_replace_header!' => 'yes',
-						'wpr_sticky_section_border' => 'yes'
-					]
-				]
-			);
-
-			$element->add_control(
-				'wpr_sticky_section_border_color',
-				[
-					'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
-					'type' => Controls_Manager::COLOR,
-					'default' => '#E8E8E8',
-					'selectors' => [
-						'{{WRAPPER}}.wpr-sticky-header' => 'border-color: {{VALUE}}'
-					],
-					'condition' => [
-						'enable_sticky_section' => 'yes',
-						'sticky_advanced_options' => 'yes',
-						'position_location'	=> 'top',
-						'sticky_replace_header!' => 'yes',
-						'wpr_sticky_section_border' => 'yes',
-						'wpr_sticky_section_border_type!' => 'none'
-					]
-				]
-			);
-
-			$element->add_control(
-				'wpr_sticky_section_border_width',
-				[
-					'label' => esc_html__( 'Border Width', 'wpr-addons' ),
-					'type' => Controls_Manager::DIMENSIONS,
-					'size_units' => [ 'px' ],
-					'default' => [
-						'top' => 1,
-						'right' => 1,
-						'bottom' => 1,
-						'left' => 1,
-					],
-					'selectors' => [
-						'{{WRAPPER}}.wpr-sticky-header' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
-					],
-					'condition' => [
-						'enable_sticky_section' => 'yes',
-						'sticky_advanced_options' => 'yes',
-						'position_location'	=> 'top',
-						'sticky_replace_header!' => 'yes',
-						'wpr_sticky_section_border' => 'yes',
-						'wpr_sticky_section_border_type!' => 'none'
-					]
-				]
-			);
-
-			$element->add_control(
-				'wpr_sticky_section_border_radius',
-				[
-					'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
-					'type' => Controls_Manager::DIMENSIONS,
-					'size_units' => [ 'px', '%' ],
-					'default' => [
-						'top' => 0,
-						'right' => 0,
-						'bottom' => 0,
-						'left' => 0,
-					],
-					'selectors' => [
-						'{{WRAPPER}}.wpr-sticky-header' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
-					],
-					'condition' => [
-						'enable_sticky_section' => 'yes',
-						'sticky_advanced_options' => 'yes',
-						'position_location'	=> 'top',
-						'sticky_replace_header!' => 'yes',
-						'wpr_sticky_section_border' => 'yes',
-						'wpr_sticky_section_border_type!' => 'none'
-					]
-				]
-			);
-
-			$element->add_control ( // NEXT HIDDEN SECTION
-				'wpr_sticky_section_bs',
-				[
-					'type' => Controls_Manager::SWITCHER,
-					'label' => esc_html__( 'Custom Shadow', 'wpr-addons' ),
-					'default' => 'no',
-					'return_value' => 'yes',
-					'condition' => [
-						'enable_sticky_section' => 'yes',
-						'sticky_advanced_options' => 'yes',
-						'position_location'	=> 'top',
-						'sticky_replace_header!' => 'yes'
-					],
-					'separator' => 'before'
-				]
-			);
-
-			$element->add_group_control(
-				Group_Control_Box_Shadow::get_type(),
-				[
-					'name' => 'wpr_sticky_section_box_shadow',
-					'selector' => '{{WRAPPER}}.wpr-sticky-header',
-					'condition' => [
-						'enable_sticky_section' => 'yes',
-						'sticky_advanced_options' => 'yes',
-						'position_location'	=> 'top',
-						'sticky_replace_header!' => 'yes',
-						'wpr_sticky_section_bs' => 'yes'
-					]
-				]
-			);
+				);
+			}
 
             $element->end_controls_section();            
         }
@@ -721,7 +287,7 @@ class Wpr_Sticky_Section {
 
 		if ($settings['enable_sticky_section'] !== 'yes') return;
 
-		$wpr_sticky_effects_offset_widescreen = isset($settings['wpr_sticky_effects_offset_widescreen']) && !empty($settings['wpr_sticky_effects_offset_widescreen']) ? $settings['wpr_sticky_effects_offset_widescreen'] : $settings['wpr_sticky_effects_offset'];
+		$wpr_sticky_effects_offset_widescreen = isset($settings['wpr_sticky_effects_offset_widescreen']) && !empty($settings['wpr_sticky_effects_offset_widescreen']) ? $settings['wpr_sticky_effects_offset_widescreen'] : 0;
 		$wpr_sticky_effects_offset_desktop = isset($settings['wpr_sticky_effects_offset']) && !empty($settings['wpr_sticky_effects_offset']) ? $settings['wpr_sticky_effects_offset'] : $wpr_sticky_effects_offset_widescreen;
 		$wpr_sticky_effects_offset_laptop =  isset($settings['wpr_sticky_effects_offset_laptop']) && !empty($settings['wpr_sticky_effects_offset_laptop']) ? $settings['wpr_sticky_effects_offset_laptop'] : $wpr_sticky_effects_offset_desktop;
 		$wpr_sticky_effects_offset_tablet_extra =  isset($settings['wpr_sticky_effects_offset_tablet_extra']) && !empty($settings['wpr_sticky_effects_offset_tablet_extra']) ? $settings['wpr_sticky_effects_offset_tablet_extra'] : $wpr_sticky_effects_offset_laptop;
@@ -739,9 +305,9 @@ class Wpr_Sticky_Section {
 				'data-wpr-custom-breakpoints' => $settings['custom_breakpoints'],
 				'data-wpr-active-breakpoints' => $this->breakpoints_manager_active(),
 				'data-wpr-z-index' => $settings['wpr_z_index'],
-				'data-wpr-sticky-hide' => $settings['sticky_hide'],
-				'data-wpr-replace-header' => $settings['sticky_replace_header'],
-				'data-wpr-animation-duration' => $settings['sticky_animation_duration'],
+				'data-wpr-sticky-hide' => isset($settings['sticky_hide']) ? $settings['sticky_hide'] : '',
+				'data-wpr-replace-header' => isset($settings['sticky_replace_header']) ? $settings['sticky_replace_header'] : '',
+				'data-wpr-animation-duration' => isset($settings['sticky_animation_duration']) ? $settings['sticky_animation_duration'] : '',
 				// 'data-wpr-offset-settings' => wp_json_encode([
 				// 	'widescreen' => $wpr_sticky_effects_offset_widescreen,
 				// 	'desktop' => $wpr_sticky_effects_offset_desktop,
