@@ -9,7 +9,7 @@ jQuery(document).ready(function( $ ) {
 		init: function() {
 
 			// Overlay Click
-			$('.wpr-templates-kit-grid').find('.image-overlay').on('click', function(){
+			$(document).on('click', '.wpr-templates-kit-grid .image-overlay', function(){
 				WprTemplatesKit.showImportPage( $(this).closest('.grid-item') );
 				WprTemplatesKit.renderImportPage( $(this).closest('.grid-item') );
 			});
@@ -439,15 +439,12 @@ jQuery(document).ready(function( $ ) {
 				$('.wpr-templates-kit-page-title').show();
 			}
 
-			var firstResult = '';
-			// console.log(mainGridHtml);
-
+			// Reorder Search accoring to Title match
 			$('.main-grid .grid-item:visible').each(function(i){
 				if ( '' !== tag ) {
 					let title = $(this).attr('data-title');
 
 					if ( -1 === title.indexOf(tag) ) {
-						console.log($(this).attr('data-kit-id'));
 						$('.main-grid').append( $(this).remove() );
 					}
 				}
