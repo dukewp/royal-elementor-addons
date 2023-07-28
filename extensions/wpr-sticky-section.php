@@ -245,7 +245,8 @@ class Wpr_Sticky_Section {
 						'enable_sticky_section' => 'yes',
 						'sticky_advanced_options' => 'yes',
 						'position_location'	=> 'top'
-					]
+					],
+					'separator' => 'before'
 				]
 			);
 
