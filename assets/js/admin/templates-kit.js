@@ -444,16 +444,11 @@ jQuery(document).ready(function( $ ) {
 
 			$('.main-grid .grid-item:visible').each(function(i){
 				if ( '' !== tag ) {
-					if ( 0 === i) {
-						firstResult = $('.main-grid .grid-item[data-kit-id='+ $(this).attr('data-kit-id') +']');
-					}
-
 					let title = $(this).attr('data-title');
 
-					if ( title.indexOf(tag) >= 0 ) {
-						if ( firstResult.attr('data-kit-id') !== $(this).attr('data-kit-id')) {
-							firstResult.before( $(this).remove() );
-						}
+					if ( -1 === title.indexOf(tag) ) {
+						console.log($(this).attr('data-kit-id'));
+						$('.main-grid').append( $(this).remove() );
 					}
 				}
 			});
