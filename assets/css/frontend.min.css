@@ -13711,6 +13711,11 @@ flex-grow: 0; */
 /* Sticky Section */
 .wpr-sticky-section-yes {
     width: 100%;
+    transition: visibility 0s linear !important;
+}
+
+.wpr-sticky-section-yes * {
+    transition: visibility 0s linear !important;
 }
 
 .wpr-sticky-header {
