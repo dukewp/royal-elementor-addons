@@ -508,10 +508,10 @@ class Wpr_Post_Info extends Widget_Base {
 				'label' => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '#ddd',
-				'scheme' => [
-					'type' => Color::get_type(),
-					'value' => Color::COLOR_3,
-				],
+				// 'scheme' => [
+				// 	'type' => Color::get_type(),
+				// 	'value' => Color::COLOR_3,
+				// ],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-info li:after' => 'border-color: {{VALUE}};',
 				],
@@ -1063,6 +1063,27 @@ class Wpr_Post_Info extends Widget_Base {
 					'{{WRAPPER}} .wpr-post-info li:not(.wpr-post-info-custom-field) .wpr-post-info-text' => 'color: {{VALUE}}',
 				],
 				'separator' => 'after'
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'post_info_extra_text_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'label' => esc_html__('Typography', 'wpr-addons'),
+				'selector' => '{{WRAPPER}} .wpr-post-info li .wpr-post-info-text',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '12',
+							'unit' => 'px',
+						],
+					]
+				]
 			]
 		);
 

@@ -13711,6 +13711,7 @@ flex-grow: 0; */
 /* Sticky Section */
 .wpr-sticky-section-yes {
     width: 100%;
+    border-color: transparent;
     transition: visibility 0s linear !important;
 }
 

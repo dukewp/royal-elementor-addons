@@ -1291,7 +1291,7 @@ function wpr_addons_settings_page() {
             <img src="<?php echo esc_url(WPR_ADDONS_ASSETS_URL .'img/not-found.png'); ?>">
             <h1><?php esc_html_e('No Search Results Found.', 'wpr-addons'); ?></h1>
             <p><?php esc_html_e('Cant find a Feature you are looking for?', 'wpr-addons'); ?></p>
-            <a href="https://forms.clickup.com/1856033/f/1rmh1-5163/J9WM6WHSQRNJF37CMB" target="_blank"><?php esc_html_e('Request a New Feature', 'wpr-addons'); ?></a>
+            <a href="https://royaladdons.frill.co/b/6m4d5qm4/feature-ideas" target="_blank"><?php esc_html_e('Request a New Feature', 'wpr-addons'); ?></a>
         </div>
 
         <a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-freevsprotab-pro#purchasepro" target="_blank" class="button last wpr-free-pro-upgrade">
