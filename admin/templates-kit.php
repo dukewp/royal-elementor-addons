@@ -162,6 +162,14 @@ function wpr_addons_templates_kit_page() {
                 <p><?php esc_html_e('The import process can take a few seconds depending on the size of the kit you are importing and speed of the connection.', 'wpr-addons'); ?></p>
                 <p><?php esc_html_e('Please do NOT close this browser window until import is completed.', 'wpr-addons'); ?></p>
 
+                <?php // if wp version is lower than 6.1
+
+                if ( version_compare( get_bloginfo('version'), '6.1', '<' ) ) {
+                    echo '<p style="display:none;color: #f44;font-weight:bold;" class="wpr-wp-update-notice">'. esc_html__('Demo Content could NOT be imported, WordPress version is too old! Please update WordPress to the Latest version.', 'wpr-addons') .'</p>';
+                }
+
+                ?>
+
                 <div class="progress-wrap">
                     <div class="progress-bar"></div>
                     <strong></strong>

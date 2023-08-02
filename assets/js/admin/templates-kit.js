@@ -30,6 +30,15 @@ jQuery(document).ready(function( $ ) {
 				if ( confirmImport ) {
 					WprTemplatesKit.importTemplatesKit( $(this).attr('data-kit-id') );
 					$('.wpr-import-kit-popup-wrap').fadeIn();
+
+					// Old Version Check
+					let wooBuilder = $('.grid-item[data-kit-id="'+ $(this).attr('data-kit-id') +'"]').find('.wpr-woo-builder-label').length,
+						updateNotice = $('.wpr-wp-update-notice').length;
+						
+					if ( wooBuilder > 0 && updateNotice > 0 ) {
+						$('.wpr-wp-update-notice').show();
+						$('.progress-wrap').hide();
+					}
 				}
 			});
 
