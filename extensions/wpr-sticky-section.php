@@ -34,33 +34,18 @@ class Wpr_Sticky_Section {
     }
 
 	public static function add_control_group_sticky_advanced_options($element) {
-        // $element->add_control(
-        //     'sticky_advanced_options_heading',
-        //     [
-        //         'label' => esc_html__( 'Advanced', 'wpr-addons' ),
-        //         'type' => Controls_Manager::HEADING,
-        //         'separator' => 'before',
-        //         'condition' => [
-        //             'enable_sticky_section' => 'yes',
-        //             'position_location'	=> 'top'
-        //         ],
-        //     ]
-        // );
 
-        // All pro
-        $element->add_control (
-            'sticky_advanced_options_pro',
-            [
-                'type' => Controls_Manager::SWITCHER,
-                'label' => esc_html__( 'See Advanced Options (Pro)', 'wpr-addons' ),
-                'default' => 'no',
-				// 'classes' => 'wpr-pro-control',
+		$element->add_control(
+			'sticky_advanced_pro_notice',
+			[
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => 'With the <a class="wpr-sticky-advanced-options">advanced section</a>, you have the ability to create impressive menu effects. Take a look at some examples: <strong><a href="https://demosites.royal-elementor-addons.com/fashion-v2/?ref=rea-plugin-panel-advanced-stiky-preview" target="_blank">Preview 1, </a><a href="https://demosites.royal-elementor-addons.com/digital-marketing-agency-v2/?ref=rea-plugin-panel-advanced-stiky-preview" target="_blank">Preview 2, </a><a href="https://demosites.royal-elementor-addons.com/personal-blog-v1/?ref=rea-plugin-panel-advanced-stiky-preview" target="_blank">Preview 3, </a><a href="https://demosites.royal-elementor-addons.com/digital-marketing-agency-v1/?ref=rea-plugin-panel-advanced-stiky-preview" target="_blank">Preview 4</a></strong><br><br><img src="'. WPR_ADDONS_ASSETS_URL .'img/pro-options/sticky-section-pro-features.jpg" style="display:none; border: 1px solid #93003C;">',
+				'content_classes' => 'wpr-pro-notice',
                 'condition' => [
-                    'enable_sticky_section' => 'yes',
-                    'position_location'	=> 'top'
+                    'enable_sticky_section' => 'yes'
                 ]
-            ]
-        );
+			]
+		);
 	}
 
     public function register_controls( $element ) {
@@ -231,27 +216,6 @@ class Wpr_Sticky_Section {
 				\WprAddonsPro\Extensions\Wpr_Sticky_Section_Pro::add_control_group_sticky_advanced_options($element);
 			} else {
 				$this->add_control_group_sticky_advanced_options($element);
-				// $element->add_control(
-				// 	'sticky_section_pro_notice',
-				// 	[
-				// 		'type' => Controls_Manager::RAW_HTML,
-				// 		'raw' => '<a onclick="showOptionsImage()" class="wpr-show-img" style="cursor:pointer;">Click Here</a> to see what options <br> are available in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-popups-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>
-				// 		<img src="'. WPR_ADDONS_ASSETS_URL .'img/pro-options/group_popup_settings.jpg" style="display:none;position: absolute;top: 80px;left: 0;z-index: 99;border: 1px solid #93003C;">
-				// 		<script>function showOptionsImage(){jQuery(document).on("click",function(){jQuery(".elementor-control .wpr-pro-notice img").hide()}),setTimeout(function(){jQuery(".elementor-control .wpr-pro-notice img").show()},100)}</script>',
-				// 		'content_classes' => 'wpr-pro-notice',
-				// 	]
-				// );
-
-				$element->add_control(
-					'sticky_section_pro_notice',
-					[
-						'type' => Controls_Manager::RAW_HTML,
-						'raw' => '<img src="'. WPR_ADDONS_ASSETS_URL .'img/pro-options/sticky-section-pro-features.jpg" style="border: 1px solid #93003C;">',
-						'condition' => [
-							'sticky_advanced_options_pro' => 'yes'
-						]
-					]
-				);
 			}
 
             $element->end_controls_section();            

@@ -14,9 +14,11 @@ class WPR_WooCommerce_Config {
 		if ( 'on' !== get_option('wpr_enable_product_image_zoom', 'on') ) {
 			add_filter( 'woocommerce_single_product_zoom_enabled', '__return_false' );
 		}
-		
-		add_action( 'wp',[$this, 'wpr_remove_wc_lightbox'], 99 ); //: TODO condition
-		// add_filter( 'body_class', [$this, 'wpr_remove_elementor_lightbox'] ); //: TODO condition
+
+		if ( 'on' !== get_option('wpr_remove_wc_default_lightbox', 'on') ) {
+			add_action( 'wp',[$this, 'wpr_remove_wc_lightbox'], 99 );
+			// add_filter( 'body_class', [$this, 'wpr_remove_elementor_lightbox'] ); //: TODO condition
+		}
 
 		// Change number of products that are displayed per page (shop page)
 		add_filter( 'loop_shop_per_page', [$this, 'shop_products_per_page'], 20 );
@@ -24,7 +26,11 @@ class WPR_WooCommerce_Config {
 		// Rewrite WC Default Templates
 		add_filter( 'wc_get_template', [ $this, 'rewrite_default_wc_templates' ], 10, 3 );
 
-		add_filter( 'woocommerce_add_to_cart_fragments', [$this, 'wc_refresh_mini_cart_count']);
+
+		// Mini-cart template
+		if ( 'on' === get_option('wpr_override_woo_mini_cart', 'on') ) {
+			add_filter( 'woocommerce_add_to_cart_fragments', [$this, 'wc_refresh_mini_cart_count']);
+		}
 
 		// Fix Theme Builder issues
 		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'maybe_init_cart' ] );
@@ -146,26 +152,31 @@ class WPR_WooCommerce_Config {
 	}
 
 	public function rewrite_default_wc_templates( $located, $template_name ) {
+		// GOGA: needs separate conditions
 		// Cart template
-		if ( $template_name === 'cart/cart.php' ) {
+		if ( $template_name === 'cart/cart.php' && 'on' === get_option('wpr_override_woo_cart', 'on') ) {
 			$located = WPR_ADDONS_PATH .'includes/woocommerce/templates/cart/cart.php';
 		}
 
 		// Mini-cart template
-		if ( $template_name === 'cart/mini-cart.php' ) {
+		if ( $template_name === 'cart/mini-cart.php' && 'on' === get_option('wpr_override_woo_mini_cart', 'on') ) {
 			$located = WPR_ADDONS_PATH .'includes/woocommerce/templates/cart/mini-cart.php';
 		}
 
-		if ( $template_name === 'notices/success.php' ) {
-			$located = WPR_ADDONS_PATH .'includes/woocommerce/templates/notices/success.php';
-		}
+		if ( 'on' === get_option('wpr_override_woo_mini_cart', 'on') ) {
 
-		if ( $template_name === 'notices/error.php' ) {
-			$located = WPR_ADDONS_PATH .'includes/woocommerce/templates/notices/error.php';
-		}
-		
-		if ( $template_name === 'notices/notice.php' ) {
-			$located = WPR_ADDONS_PATH .'includes/woocommerce/templates/notices/notice.php';
+			if ( $template_name === 'notices/success.php' ) {
+				$located = WPR_ADDONS_PATH .'includes/woocommerce/templates/notices/success.php';
+			}
+	
+			if ( $template_name === 'notices/error.php' ) {
+				$located = WPR_ADDONS_PATH .'includes/woocommerce/templates/notices/error.php';
+			}
+			
+			if ( $template_name === 'notices/notice.php' ) {
+				$located = WPR_ADDONS_PATH .'includes/woocommerce/templates/notices/notice.php';
+			}
+
 		}
 
 		// if ( $template_name === 'cart/cart-empty.php' ) {

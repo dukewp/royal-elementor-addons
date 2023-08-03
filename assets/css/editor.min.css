@@ -1111,3 +1111,11 @@ pre.xdebug-var-dump {
 	flex-direction: row;
 	align-items: center;
 }
+
+
+/*--------------------------------------------------------------
+== Sections
+--------------------------------------------------------------*/
+.wpr-sticky-advanced-options {
+	cursor: pointer;
+}
