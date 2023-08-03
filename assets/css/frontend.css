@@ -297,6 +297,14 @@ template {
     display: none !important;
 }
 
+/* Hidden Element */
+.wpr-visibility-hidden {
+    visibility: hidden !important;
+}
+
+.wpr-visibility-hidden * {
+    display: none !important;
+}
 
 /* Vertical Centering */
 .wpr-cv-container {
@@ -2674,6 +2682,27 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     width: 100% !important;
 }
 
+/* Grid SVG icons */
+.wpr-grid-extra-icon-left,
+.wpr-grid-extra-icon-right {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+}
+
+.wpr-grid-extra-icon-left svg,
+.wpr-grid-extra-icon-right svg {
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    fill: currentColor;
+}
 
 /* Product Rating */
 
@@ -6229,7 +6258,8 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     -webkit-transform: scale(1.3);
     -ms-transform: scale(1.3);
     transform: scale(1.3);
-    animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+            animation-iteration-count: infinite;
 }
 
 .wpr-advanced-slider .slick-slide.wpr-slick-visible .wpr-slider-item-bg.wpr-ken-burns-out {
@@ -6238,7 +6268,8 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     -webkit-transform: scale(1);
     -ms-transform: scale(1);
     transform: scale(1);
-    animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+            animation-iteration-count: infinite;
 }
 
 .wpr-ken-burns-in {
@@ -12095,7 +12126,7 @@ select.wpr-category-select {
 
 .wpr-horizontal.swiper-container {
     position: unset;
-    /* overflow: hidden; */
+    overflow: hidden;
     z-index: 11;
     margin: 0 32px;
 }
@@ -13688,8 +13719,94 @@ flex-grow: 0; */
 /* Sticky Section */
 .wpr-sticky-section-yes {
     width: 100%;
+    border-color: transparent;
+    -webkit-transition: visibility 0s linear !important;
+    -o-transition: visibility 0s linear !important;
+    transition: visibility 0s linear !important;
 }
 
+.wpr-sticky-section-yes * {
+    -webkit-transition: visibility 0s linear !important;
+    -o-transition: visibility 0s linear !important;
+    transition: visibility 0s linear !important;
+}
+
+.wpr-sticky-header {
+    z-index: 9999 !important;
+}
+
+.wpr-hidden-header {
+    position: fixed;
+    display: block !important;
+    width: 100%; 
+    z-index: 99999 !important;
+}
+
+.wpr-none-out {
+    display: none;
+}
+
+.wpr-fade-in {
+    -webkit-animation-name: added-tc-popup-animation-fade;
+            animation-name: added-tc-popup-animation-fade;
+    -webkit-animation-duration: var(--wpr-animation-duration, 1s);
+            animation-duration: var(--wpr-animation-duration, 1s);
+    -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
+}
+
+.wpr-fade-out {
+    -webkit-animation-name: added-tc-popup-animation-fade-out;
+            animation-name: added-tc-popup-animation-fade-out;
+    -webkit-animation-duration: var(--wpr-animation-duration, 1s);
+            animation-duration: var(--wpr-animation-duration, 1s);
+    -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
+}
+
+.wpr-slide-in {
+    opacity: 0;
+    -webkit-transform: translateY(-100%); -ms-transform: translateY(-100%); transform: translateY(-100%);
+    -webkit-animation-name: sticky-slide-in;
+            animation-name: sticky-slide-in;
+    -webkit-animation-duration: var(--wpr-animation-duration, 1s);
+            animation-duration: var(--wpr-animation-duration, 1s);
+    -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
+}
+
+.wpr-slide-out {
+    opacity: 1;
+    -webkit-transform: translateY(0); -ms-transform: translateY(0); transform: translateY(0);
+    -webkit-animation-name: sticky-slide-out;
+            animation-name: sticky-slide-out;
+    -webkit-animation-duration: var(--wpr-animation-duration, 1s);
+            animation-duration: var(--wpr-animation-duration, 1s);
+    -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes sticky-slide-in {
+    from {opacity: 0; -webkit-transform: translateY(-100%); transform: translateY(-100%)}
+    to {opacity: 1;  -webkit-transform: translateY(0);  transform: translateY(0)}
+}
+
+@keyframes sticky-slide-in {
+    from {opacity: 0; -webkit-transform: translateY(-100%); transform: translateY(-100%)}
+    to {opacity: 1;  -webkit-transform: translateY(0);  transform: translateY(0)}
+}
+
+@-webkit-keyframes sticky-slide-out {
+    from {opacity: 1; -webkit-transform: translateY(0); transform: translateY(0)}
+    to {opacity: 0;  -webkit-transform: translateY(-100%);  transform: translateY(-100%)}
+}
+
+@keyframes sticky-slide-out {
+    from {opacity: 1; -webkit-transform: translateY(0); transform: translateY(0)}
+    to {opacity: 0;  -webkit-transform: translateY(-100%);  transform: translateY(-100%)}
+}
+
+/* RPB */
 .wpr-reading-progress-bar-container {
     position: fixed;
     top: 0;
