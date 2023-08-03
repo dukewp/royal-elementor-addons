@@ -1853,10 +1853,22 @@ class Wpr_Flip_Box extends Widget_Base {
 			$front_image_src = $settings['front_image']['url'];
 		}
 
+		if ( isset($settings['front_image']['alt']) ) {
+			$front_alt_text = $settings['front_image']['alt'];
+		} else {
+			$front_alt_text = '';
+		}
+
 		$back_image_src = Group_Control_Image_Size::get_attachment_image_src( $settings['back_image']['id'], 'back_image_size', $settings );
 
 		if ( ! $back_image_src ) {
 			$back_image_src = $settings['back_image']['url'];
+		}
+
+		if ( isset($settings['back_image']['alt']) ) {
+			$back_alt_text = $settings['back_image']['alt'];
+		} else {
+			$back_alt_text = '';
 		}
 
 		$back_btn_element = 'div';
@@ -1894,7 +1906,7 @@ class Wpr_Flip_Box extends Widget_Base {
 					</div>
 					<?php elseif ( 'image' === $settings['front_icon_type'] && $front_image_src ) : ?>
 					<div class="wpr-flip-box-image">
-						<img src="<?php echo esc_url( $front_image_src ); ?>" >
+						<img alt="<?php echo $front_alt_text; ?>" src="<?php echo esc_url( $front_image_src ); ?>" >
 					</div>
 					<?php endif; ?>
 					
@@ -1941,7 +1953,7 @@ class Wpr_Flip_Box extends Widget_Base {
 					</div>
 					<?php elseif ( 'image' === $settings['back_icon_type'] && $back_image_src ) : ?>
 						<div class="wpr-flip-box-image">
-							<img src="<?php echo esc_url( $back_image_src ); ?>" >
+							<img alt="<?php echo $back_alt_text; ?>" src="<?php echo esc_url( $back_image_src ); ?>" >
 						</div>
 					<?php endif; ?>
 					

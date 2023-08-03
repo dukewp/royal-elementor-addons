@@ -56,6 +56,10 @@ function is_plugin_installed($file) {
 function wpr_register_addons_settings() {
     // WooCommerce
     register_setting( 'wpr-settings', 'wpr_override_woo_templates' );
+    register_setting( 'wpr-settings', 'wpr_override_woo_cart' );
+    register_setting( 'wpr-settings', 'wpr_override_woo_mini_cart' );
+    register_setting( 'wpr-settings', 'wpr_override_woo_notices' );
+    register_setting( 'wpr-settings', 'wpr_remove_wc_default_lightbox' );
     register_setting( 'wpr-settings', 'wpr_enable_product_image_zoom' );
     register_setting( 'wpr-settings', 'wpr_enable_woo_flexslider_navigation' );
     register_setting( 'wpr-settings', 'wpr_add_wishlist_to_my_account' );
@@ -453,11 +457,47 @@ function wpr_addons_settings_page() {
             
             <div class="wpr-woo-template-info">
                 <div class="wpr-woo-template-title">
-                    <h4>Royal Templates</h4>
-                    <span>Enable/Disable Royal addons Cart, Minicart, Notifications Templates, Product Lightbox</span>
+                    <h4>WPR Woo Config</h4>
+                    <span>Below options work only if this option is enabled</span>
                 </div>
                 <input type="checkbox" name="wpr_override_woo_templates" id="wpr_override_woo_templates" <?php echo checked( get_option('wpr_override_woo_templates', 'on'), 'on', false ); ?>>
                 <label for="wpr_override_woo_templates"></label>
+            </div>
+            
+            <div class="wpr-woo-template-info">
+                <div class="wpr-woo-template-title">
+                    <h4>Cart</h4>
+                    <span>Overrides Default Cart Template</span>
+                </div>
+                <input type="checkbox" name="wpr_override_woo_cart" id="wpr_override_woo_cart" <?php echo checked( get_option('wpr_override_woo_cart', 'on'), 'on', false ); ?>>
+                <label for="wpr_override_woo_cart"></label>
+            </div>
+            
+            <div class="wpr-woo-template-info">
+                <div class="wpr-woo-template-title">
+                    <h4>Mini Cart</h4>
+                    <span>Overrides Default Mini Cart Template</span>
+                </div>
+                <input type="checkbox" name="wpr_override_woo_mini_cart" id="wpr_override_woo_mini_cart" <?php echo checked( get_option('wpr_override_woo_mini_cart', 'on'), 'on', false ); ?>>
+                <label for="wpr_override_woo_mini_cart"></label>
+            </div>
+            
+            <div class="wpr-woo-template-info">
+                <div class="wpr-woo-template-title">
+                    <h4>Notices</h4>
+                    <span>Overrides Default Notice Templates</span>
+                </div>
+                <input type="checkbox" name="wpr_override_woo_notices" id="wpr_override_woo_notices" <?php echo checked( get_option('wpr_override_woo_notices', 'on'), 'on', false ); ?>>
+                <label for="wpr_override_woo_notices"></label>
+            </div>
+            
+            <div class="wpr-woo-template-info">
+                <div class="wpr-woo-template-title">
+                    <h4>Lightbox</h4>
+                    <span>Disables Default Lightbox to avoid compatibility issues while using royal product media</span>
+                </div>
+                <input type="checkbox" name="wpr_remove_wc_default_lightbox" id="wpr_remove_wc_default_lightbox" <?php echo checked( get_option('wpr_remove_wc_default_lightbox', 'on'), 'on', false ); ?>>
+                <label for="wpr_remove_wc_default_lightbox"></label>
             </div>
             
             <div class="wpr-woo-template-info">
@@ -1291,7 +1331,7 @@ function wpr_addons_settings_page() {
             <img src="<?php echo esc_url(WPR_ADDONS_ASSETS_URL .'img/not-found.png'); ?>">
             <h1><?php esc_html_e('No Search Results Found.', 'wpr-addons'); ?></h1>
             <p><?php esc_html_e('Cant find a Feature you are looking for?', 'wpr-addons'); ?></p>
-            <a href="https://forms.clickup.com/1856033/f/1rmh1-5163/J9WM6WHSQRNJF37CMB" target="_blank"><?php esc_html_e('Request a New Feature', 'wpr-addons'); ?></a>
+            <a href="https://royaladdons.frill.co/b/6m4d5qm4/feature-ideas" target="_blank"><?php esc_html_e('Request a New Feature', 'wpr-addons'); ?></a>
         </div>
 
         <a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-freevsprotab-pro#purchasepro" target="_blank" class="button last wpr-free-pro-upgrade">

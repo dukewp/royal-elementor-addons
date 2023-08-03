@@ -1,0 +1,20 @@
+<wpml-config>
+    <elementor-widgets>
+
+        <widget name="wpr-advanced-accordion">
+            <fields-in-item items_of="advanced_accordion">
+                <field type="Advanced Accordion: Title" editor_type="LINE">accordion_title</field>
+                <field type="Advanced Accordion: Placeholder" editor_type="LINE">acc_search_placeholder</field>
+            </fields-in-item>
+        </widget>
+
+        <widget name="wpr-dual-color-heading">
+            <fields>
+                <field type="Dual Color Heading: Primary Heading" editor_type="LINE">primary_heading</field>
+                <field type="Dual Color Heading: Secondary Heading" editor_type="LINE">secondary_heading</field>
+                <field type="Dual Color Heading: Description" editor_type="AREA">description</field>
+            </fields>
+        </widget>
+
+    </elementor-widgets>
+</wpml-config>
