@@ -13725,12 +13725,6 @@ flex-grow: 0; */
     transition: visibility 0s linear !important;
 }
 
-.wpr-sticky-section-yes * {
-    -webkit-transition: visibility 0s linear !important;
-    -o-transition: visibility 0s linear !important;
-    transition: visibility 0s linear !important;
-}
-
 .wpr-sticky-header {
     z-index: 9999 !important;
 }
