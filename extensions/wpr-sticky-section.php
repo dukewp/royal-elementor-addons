@@ -313,7 +313,7 @@ class Wpr_Sticky_Section {
 		?>
 
 		<# if ( 'yes' === settings.enable_sticky_section) { #>
-			<div class="wpr-sticky-section-yes-editor" data-wpr-z-index={{{settings.wpr_z_index}}} data-wpr-sticky-section={{{settings.enable_sticky_section}}} data-wpr-position-type={{{settings.position_type}}} data-wpr-position-offset={{{settings.position_offset}}} data-wpr-position-location={{{settings.position_location}}} data-wpr-sticky-devices={{{settings.enable_on_devices}}} data-wpr-custom-breakpoints={{{settings.custom_breakpoints}}} data-wpr-active-breakpoints={{{settings.active_breakpoints}}} data-wpr-sticky-animation={{{settings.sticky_animation}}}  data-wpr-offset-settings={{{settings.wpr_sticky_effects_offset}}}></div>
+			<div class="wpr-sticky-section-yes-editor" data-wpr-z-index={{{settings.wpr_z_index}}} data-wpr-sticky-section={{{settings.enable_sticky_section}}} data-wpr-position-type={{{settings.position_type}}} data-wpr-position-offset={{{settings.position_offset}}} data-wpr-position-location={{{settings.position_location}}} data-wpr-sticky-devices={{{settings.enable_on_devices}}} data-wpr-custom-breakpoints={{{settings.custom_breakpoints}}} data-wpr-active-breakpoints={{{settings.active_breakpoints}}} data-wpr-sticky-animation={{{settings.sticky_animation}}}  data-wpr-offset-settings={{{settings.wpr_sticky_effects_offset}}} data-wpr-sticky-type={{{settings.sticky_type}}}></div>
 		<# } #>   
 
 		<?php
