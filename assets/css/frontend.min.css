@@ -13727,6 +13727,7 @@ flex-grow: 0; */
 
 .wpr-sticky-replace-header-yes + section {
     position: fixed;
+    width: 100%;
     top: -1000px;
 }
 
