@@ -994,7 +994,7 @@
 						megaSubMenu.css({
 							'max-width' : $(window).width() +'px',
 							'left' : - $scope.find('.wpr-nav-menu-container').offset().left +'px'
-						});	
+						});	// conditions for sticky replace needed
 					} else if ( $(this).hasClass('wpr-mega-menu-width-stretch') ) {
 						let elContainer = $(this).closest('.elementor-section');
 							elContainer = elContainer.hasClass('elementor-inner-section') ? elContainer : elContainer.children('.elementor-container');
