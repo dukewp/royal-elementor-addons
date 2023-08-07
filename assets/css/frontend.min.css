@@ -13725,6 +13725,11 @@ flex-grow: 0; */
     transition: visibility 0s linear !important;
 }
 
+.wpr-sticky-replace-header-yes + section {
+    position: relative;
+    top: -1000px;
+}
+
 .wpr-sticky-header {
     z-index: 9999 !important;
 }
