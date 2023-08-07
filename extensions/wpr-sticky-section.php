@@ -119,6 +119,23 @@ class Wpr_Sticky_Section {
 			);
             
 			$element->add_control (
+				'sticky_type',
+				[
+					'label' => __( 'Processor', 'wpr-addons' ),
+					'type' => Controls_Manager::SELECT,
+					'default' => 'sticky',
+					'options' => [
+						'sticky'  => __( 'CSS', 'wpr-addons' ),
+						'fixed' => __( 'JS', 'wpr-addons' ),
+					],
+					'render_type' => 'template',
+					'condition' => [
+						'position_type' => 'sticky'
+					],
+				]
+			);
+            
+			$element->add_control (
 				'position_location',
 				[
 					'label' => __( 'Location', 'wpr-addons' ),
@@ -272,6 +289,7 @@ class Wpr_Sticky_Section {
 				'data-wpr-sticky-hide' => isset($settings['sticky_hide']) ? $settings['sticky_hide'] : '',
 				'data-wpr-replace-header' => isset($settings['sticky_replace_header']) ? $settings['sticky_replace_header'] : '',
 				'data-wpr-animation-duration' => isset($settings['sticky_animation_duration']) ? $settings['sticky_animation_duration'] : '',
+				'data-wpr-sticky-type' => isset($settings['sticky_type']) ? $settings['sticky_type'] : '',
 				// 'data-wpr-offset-settings' => wp_json_encode([
 				// 	'widescreen' => $wpr_sticky_effects_offset_widescreen,
 				// 	'desktop' => $wpr_sticky_effects_offset_desktop,
