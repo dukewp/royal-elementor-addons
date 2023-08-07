@@ -13726,7 +13726,7 @@ flex-grow: 0; */
 }
 
 .wpr-sticky-replace-header-yes + section {
-    position: relative;
+    position: fixed;
     top: -1000px;
 }
 
@@ -13736,6 +13736,7 @@ flex-grow: 0; */
 
 .wpr-hidden-header {
     position: fixed;
+    top: 0 !important;
     display: block !important;
     width: 100%; 
     z-index: 99999 !important;
