@@ -121,12 +121,13 @@ class Wpr_Sticky_Section {
 			$element->add_control (
 				'sticky_type',
 				[
-					'label' => __( 'Processor', 'wpr-addons' ),
+					'label' => __( 'Sticky Relation', 'wpr-addons' ),
 					'type' => Controls_Manager::SELECT,
+					'description' => esc_html__('Please switch to *Window* if you are going to use *Advanced Options*.', 'wpr-addons'),
 					'default' => 'sticky',
 					'options' => [
-						'sticky'  => __( 'CSS', 'wpr-addons' ),
-						'fixed' => __( 'JS', 'wpr-addons' ),
+						'sticky'  => __( 'Parent', 'wpr-addons' ),
+						'fixed' => __( 'Window', 'wpr-addons' ),
 					],
 					'render_type' => 'template',
 					'condition' => [
