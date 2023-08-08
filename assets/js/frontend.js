@@ -164,7 +164,8 @@
 				    stickyHeaderFooter = '',
 					stickyAnimation = 'none',
 					stickyAnimationHide = '',
-					headerFooterZIndex = !WprElements.editorCheck() ? $scope.attr('data-wpr-z-index') : $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-z-index');
+					headerFooterZIndex = !WprElements.editorCheck() ? $scope.attr('data-wpr-z-index') : $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-z-index'),
+					stickType = !WprElements.editorCheck() ? $scope.attr('data-wpr-sticky-type') : $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-sticky-type');
 
 					var distanceFromTop = $scope.offset().top;
 
@@ -314,6 +315,7 @@
 								if ( 'yes' == $scope.data('wpr-replace-header') ) {
 									$scope.next().removeClass('wpr-hidden-header');
 									$scope.removeClass('wpr-visibility-hidden');
+									$scope.next().removeClass('wpr-' + stickyAnimation + '-in');
 								} else {
 									$scope.removeClass('wpr-sticky-header');
 								}
@@ -400,10 +402,10 @@
 					}
 					
 			        if ( 'top'  ===  positionLocation ) {
-			            $scope.css({'position': 'fixed' });
+			            $scope.css({'position': stickType });
 			        }
 			        else {
-			            $scope.css({'position': 'fixed' });
+			            $scope.css({'position': stickType });
 			        }
 			    }
 

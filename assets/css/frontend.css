@@ -13725,12 +13725,19 @@ flex-grow: 0; */
     transition: visibility 0s linear !important;
 }
 
+.wpr-sticky-replace-header-yes + section {
+    position: fixed;
+    width: 100%;
+    top: -1000px;
+}
+
 .wpr-sticky-header {
     z-index: 9999 !important;
 }
 
 .wpr-hidden-header {
     position: fixed;
+    top: 0 !important;
     display: block !important;
     width: 100%; 
     z-index: 99999 !important;
