@@ -108,9 +108,9 @@ class Wpr_Sticky_Section {
 						'sticky'  => __( 'Stick on Scroll', 'wpr-addons' ),
 						'fixed' => __( 'Fixed by Default', 'wpr-addons' ),
 					],
-                    'selectors' => [
-						'{{WRAPPER}}' => 'position: {{VALUE}};',
-                    ],
+                    // 'selectors' => [
+					// 	'{{WRAPPER}}' => 'position: {{VALUE}};',
+                    // ],
 					'render_type' => 'template',
 					'condition' => [
 						'enable_sticky_section' => 'yes'
