@@ -123,7 +123,7 @@ class Wpr_Sticky_Section {
 				[
 					'label' => __( 'Sticky Relation', 'wpr-addons' ),
 					'type' => Controls_Manager::SELECT,
-					'description' => esc_html__('Please switch to *Window* if you are going to use *Advanced Options*.', 'wpr-addons'),
+					'description' => __('Please switch to *Window* if you are going to use <span style="color: red;">*Advanced Options*</span>.', 'wpr-addons'),
 					'default' => 'sticky',
 					'options' => [
 						'sticky'  => __( 'Parent', 'wpr-addons' ),

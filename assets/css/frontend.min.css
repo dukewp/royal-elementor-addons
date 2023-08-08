@@ -13730,6 +13730,10 @@ flex-grow: 0; */
     width: 100%;
     top: -1000px;
 }
+.wpr-section-full-height {
+    height: 100% !important;
+    background-color: transparent !important;
+}
 
 .wpr-sticky-header {
     z-index: 9999 !important;
