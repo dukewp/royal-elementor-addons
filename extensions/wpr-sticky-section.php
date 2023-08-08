@@ -180,7 +180,7 @@ class Wpr_Sticky_Section {
 					'mobile_default' => 0,
                     'selectors' => [
                         '{{WRAPPER}}' => 'top: auto; bottom: auto; {{position_location.VALUE}}: {{VALUE}}px;',
-                        '.wpr-hidden-header' => 'top: {{VALUE}}px;'
+                        '{{WRAPPER}} + .wpr-hidden-header' => 'top: {{VALUE}}px;'
                     ],
 					'condition' => [
 						'enable_sticky_section' => 'yes'

@@ -13730,6 +13730,7 @@ flex-grow: 0; */
     width: 100%;
     top: -1000px;
 }
+
 .wpr-section-full-height {
     height: 100% !important;
     background-color: transparent !important;
@@ -13741,7 +13742,6 @@ flex-grow: 0; */
 
 .wpr-hidden-header {
     position: fixed;
-    top: 0 !important;
     display: block !important;
     width: 100%; 
     z-index: 99999 !important;
