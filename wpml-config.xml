@@ -4,6 +4,7 @@
         <widget name="wpr-advanced-accordion">
             <fields-in-item items_of="advanced_accordion">
                 <field name="Advanced Accordion: Title" editor_type="LINE">accordion_title</field>
+                <field name="Advanced Accordion: Content" editor_type="AREA">accordion_content</field>
             </fields-in-item>
             <fields>
                 <field name="Advanced Accordion: Placeholder" editor_type="LINE">acc_search_placeholder</field>
@@ -73,6 +74,8 @@
             <fields>
                 <field name="Content Toggle: First Label" editor_type="LINE">switcher_first_label</field>
                 <field name="Content Toggle: Second Label" editor_type="LINE">switcher_second_label</field>
+                <field name="Content Toggle: Switcher First Content" editor_type="AREA">switcher_first_content</field>
+                <field name="Content Toggle: Switcher Second Content" editor_type="AREA">switcher_second_content</field>
             </fields>
         </widget>
 
@@ -85,6 +88,7 @@
                 <field name="Countdown: Minute" editor_type="LINE">labels_minutes_singular</field>
                 <field name="Countdown: Minutes" editor_type="LINE">labels_minutes_plural</field>
                 <field name="Countdown: Seconds" editor_type="LINE">labels_seconds_plural</field>
+                <field name="Countdown: Display Message" editor_type="AREA">display_message_text</field>
             </fields>
         </widget>
 
@@ -203,6 +207,7 @@
         <widget name="wpr-image-hotspots">
             <fields-in-item items_of="hotspot_items">
                 <field name="Image Hotspots: Text" editor_type="LINE">hotspot_text</field>
+                <field name="Image Hotspots: Tooltip Text" editor_type="AREA">hotspot_tooltip_text</field>
             </fields-in-item>
         </widget>
 
@@ -327,6 +332,7 @@
                 <field name="Posts Timeline: Primary Label" editor_type="LINE">repeater_date_label</field>
                 <field name="Posts Timeline: Secondary Label" editor_type="LINE">repeater_extra_label</field>
                 <field name="Posts Timeline: Item Title" editor_type="LINE">repeater_story_title</field>
+                <field name="Posts Timeline: Item Description" editor_type="AREA">repeater_description</field>
             </fields-in-item>
         </widget>
 
@@ -369,6 +375,7 @@
             <fields>
                 <field name="Promo Box: Title" editor_type="LINE">content_title</field>
                 <field name="Promo Box: Button Text" editor_type="LINE">content_btn_text</field>
+                <field name="Promo Box: Description" editor_type="AREA">content_description</field>
             </fields>
         </widget>
 
@@ -452,14 +459,90 @@
             </fields-in-item>
         </widget>
 
-        <widget name="">
+        <widget name="wpr-archive-title">
+            <fields>
+                <field name="Archive Title: Text Before Title" editor_type="LINE">post_title_before_text</field>
+            </fields>
+        </widget>
+
+        <widget name="wpr-author-box">
+            <fields>
+                <field name="Author Box: Title" editor_type="LINE">author_title_text</field>
+                <field name="Author Box: Posts Link Text" editor_type="LINE">author_posts_link_text</field>
+            </fields>
+        </widget>
+
+        <widget name="wpr-post-comments">
+            <fields>
+                <field name="Post Comments: One Comment" editor_type="LINE">comments_text_1</field>
+                <field name="Post Comments: Multiple Comments" editor_type="LINE">comments_text_2</field>
+                <field name="Post Comments: Section Title" editor_type="LINE">comment_form_title</field>
+                <field name="Post Comments: Submit Button Text" editor_type="LINE">comment_form_submit_text</field>
+            </fields>
+        </widget>
+
+        <widget name="wpr-post-info">
+            <fields-in-item items_of="post_info_elements">
+                <field name="Post Info: No Comments" editor_type="LINE">post_info_comments_text_1</field>
+                <field name="Post Info: One Comment" editor_type="LINE">post_info_comments_text_2</field>
+                <field name="Post Info: Multiple Comments" editor_type="LINE">post_info_comments_text_3</field>
+                <field name="Post Info: Separator" editor_type="LINE">post_info_tax_sep</field>
+                <field name="Post Info: Button Text" editor_type="LINE">post_info_cf_btn_text</field>
+                <field name="Post Info: Extra Text" editor_type="LINE">post_info_extra_text</field>
+            </fields-in-item>
+        </widget>
+
+        <widget name="wpr-post-navigation">
+            <fields>
+                <field name="Post Navigation: Previous Text" editor_type="LINE">post_nav_prev_text</field>
+                <field name="Post Navigation: Next Text" editor_type="LINE">post_nav_next_text</field>
+            </fields>
+        </widget>
+
+        <widget name="wpr-page-cart">
+            <fields>
+                <field name="Cart: Update Button" editor_type="LINE">update_cart_button_text</field>
+                <field name="Cart: Totals Title" editor_type="LINE">totals_title</field>
+                <field name="Cart: Checkout Button" editor_type="LINE">checkout_button_text</field>
+                <field name="Cart: Update Shipping" editor_type="LINE">update_shipping_button_text</field>
+                <field name="Cart: Apply Coupon" editor_type="LINE">apply_coupon_button_text</field>
+            </fields>
+        </widget>
+
+        <widget name="wpr-product-media">
+            <fields>
+                <field name="Product Media: Sales Badge" editor_type="LINE">product_media_sales_badge_text</field>
+            </fields>
+        </widget>
+
+        <widget name="wpr-product-mini-cart">
+            <fields>
+                <field name="Product Mini Cart: Toggle Text" editor_type="LINE">product_media_sales_badge_text</field>
+            </fields>
+        </widget>
+
+        <widget name="wpr-product-sales-badge">
+            <fields>
+                <field name="Product Sales Badge: Badge Text" editor_type="LINE">sales_badge_text</field>
+            </fields>
+        </widget>
+
+        <widget name="wpr-product-stock">
+            <fields>
+                <field name="Product Stock: In Stock Text" editor_type="LINE">in_stock_availability_text</field>
+                <field name="Product Stock: Out of Stock Text" editor_type="LINE">out_of_stock_availability_text</field>
+                <field name="Product Stock: Back Order Text" editor_type="LINE">backorder_availability_text</field>
+            </fields>
+        </widget>
+
+        <!-- <widget name="">
             <fields>
                 <field name="" editor_type="LINE"></field>
             </fields>
             <fields-in-item items_of="">
                 <field name="" editor_type="LINE"></field>
             </fields-in-item>
-        </widget>
+        </widget> -->
 
     </elementor-widgets>
 </wpml-config>
