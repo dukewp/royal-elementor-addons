@@ -169,6 +169,12 @@
 
 					var distanceFromTop = $scope.offset().top;
 
+					if ( $scope.data('settings').sticky_animation ) {
+						stickyAnimation = $scope.data('settings').sticky_animation;
+					} else {
+						stickyAnimation = $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-sticky-animation');
+					}
+
 					var stickyAnimDuration = $scope.attr('data-wpr-animation-duration') ? $scope.attr('data-wpr-animation-duration') + 's' : 500 + 's';
 
 					// if ( WprElements.editorCheck() ) { // needs different approach
@@ -215,6 +221,7 @@
 			    changeAdminBarOffset();
 
 			    $(window).resize(function() { 
+					distanceFromTop = $scope.offset().top;
 			        viewportWidth = $('body').prop('clientWidth') + 17,
 			        changePositionType();
 			    });
@@ -243,26 +250,14 @@
 							if ( 'desktop' == deviceName ) {
 								if ( $scope.data('settings') ) {
 									stickyEffectsOffset = distanceFromTop + $scope.data('settings').wpr_sticky_effects_offset;
-									if ( $scope.data('settings').sticky_animation ) {
-										stickyAnimation = $scope.data('settings').sticky_animation;
-									}
 								} else {
 									stickyEffectsOffset = distanceFromTop + $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-offset-settings');
-									if ( $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-sticky-animation') ) {
-										stickyAnimation = $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-sticky-animation');
-									}
 								}
 							} else {
 								if ( $scope.data('settings') ) {
 									stickyEffectsOffset = distanceFromTop + $scope.data('settings')['wpr_sticky_effects_offset_' + deviceName];
-									if ( $scope.data('settings')['sticky_animation_' + deviceName] ) {
-										stickyAnimation = $scope.data('settings')['sticky_animation_' + deviceName];
-									}
 								} else {
 									stickyEffectsOffset = distanceFromTop + $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-offset-settings');
-									if ( $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-sticky-animation') ) {
-										stickyAnimation = $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-sticky-animation');
-									}
 								}
 							}
 
@@ -282,10 +277,7 @@
 						if ( 'fixed' != positionStyle ) {
 							if ( scrollPos > distanceFromTop) {
 								applyPosition();
-								// if ( 'yes' !== $scope.data('wpr-replace-header') ) {
-								// 	applyPosition();
-								// }
-							} else if ( scrollPos < distanceFromTop ) {
+							} else if ( scrollPos <= distanceFromTop ) {
 								$scope.css({'position': 'relative' });
 							}
 						}
@@ -311,7 +303,6 @@
 									$scope.addClass('wpr-sticky-header');
 								}
 							} else if ( scrollPos <= stickyEffectsOffset ) {
-								// $('#' + $scope.data('wpr-replace-header')).removeClass('wpr-hidden-header');
 								if ( 'yes' == $scope.data('wpr-replace-header') ) {
 									$scope.next().removeClass('wpr-hidden-header');
 									$scope.removeClass('wpr-visibility-hidden');
@@ -329,11 +320,6 @@
 									if ( 'yes' === $scope.data('wpr-replace-header') ) {
 										$scope.next().removeClass('wpr-' + stickyAnimation + '-out');
 										$scope.next().addClass('wpr-' + stickyAnimation + '-in');
-										// if ( scrollPos <= stickyEffectsOffset ) {
-										// 	$scope.removeClass('wpr-' + stickyAnimation + '-out').addClass('wpr-' + stickyAnimation + '-in');
-										// } else {
-										// 	$scope.removeClass('wpr-' + stickyAnimation + '-in').addClass('wpr-' + stickyAnimation + '-out');
-										// }
 									} else {
 										$scope.removeClass('wpr-' + stickyAnimation + '-out');
 										$scope.addClass('wpr-' + stickyAnimation + '-in');
@@ -400,13 +386,12 @@
 					if ( 'yes' === $scope.data('wpr-sticky-hide') && prevScrollPos < $window.scrollTop() ) {
 						return;
 					}
+
+					if ( '' == stickType ) {
+						stickType = 'fixed';
+					}
 					
-			        if ( 'top'  ===  positionLocation ) {
-			            $scope.css({'position': stickType });
-			        }
-			        else {
-			            $scope.css({'position': stickType });
-			        }
+					$scope.css({'position': stickType });
 			    }
 
 			    function changeAdminBarOffset() {	
@@ -857,6 +842,7 @@
 
 				// Show Menu
 				if ( $scope.hasClass('wpr-mobile-menu-display-offcanvas') ) {
+					$(this).closest('.elementor-top-section').addClass('wpr-section-full-height');
 					$('body').css('overflow', 'hidden');
 					$(this).parent().siblings('.wpr-mobile-mega-menu-wrap').toggleClass('wpr-mobile-mega-menu-open');
 				} else {
@@ -867,10 +853,12 @@
 				$scope.find('.mobile-mega-menu-close').on('click', function() {
 					$(this).closest('.wpr-mobile-mega-menu-wrap').removeClass('wpr-mobile-mega-menu-open');
 					$('body').css('overflow', 'visible');
+					$(this).closest('.elementor-top-section').removeClass('wpr-section-full-height');
 				});
 				$scope.find('.wpr-mobile-mega-menu-overlay').on('click', function() {
 					$(this).siblings('.wpr-mobile-mega-menu-wrap').removeClass('wpr-mobile-mega-menu-open');
 					$('body').css('overflow', 'visible');
+					$(this).closest('.elementor-top-section').removeClass('wpr-section-full-height');
 				});
 
 				// Fix Width
