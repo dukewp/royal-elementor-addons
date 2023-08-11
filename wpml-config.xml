@@ -18,6 +18,7 @@
                 <field name="Advanced Text: Animated Text" editor_type="AREA">animated_text</field>
                 <field name="Advanced Text: Highlight Text" editor_type="LINE">highlighted_text</field>
                 <field name="Advanced Text: Suffix Text" editor_type="LINE">suffix_text</field>
+                <field name="Advanced Text: Clipped Text" editor_type="LINE">clipped_text</field>
             </fields>
         </widget>
 
@@ -46,6 +47,7 @@
             <fields>
                 <field name="Button: Text" editor_type="LINE">button_text</field>
                 <field name="Button: Effect Text" editor_type="LINE">button_hover_animation_text</field>
+                <field name="Button: Tooltip Text" editor_type="AREA">tooltip_text</field>
             </fields>
         </widget>
 
@@ -67,7 +69,12 @@
         <widget name="wpr-content-ticker">
             <fields>
                 <field name="Content Ticker: Heading" editor_type="LINE">heading_text</field>
+                <field name="Content Ticker: Typing Cursor" editor_type="LINE">slider_effect_cursor</field>
+                <field name="Content Ticker: Typing Cursor" editor_type="LINE">slider_effect_cursor</field>
             </fields>
+            <fields-in-item items_of="ticker_items">
+                <field name="Content Ticker: Ticker Title" editor_type="LINE">ticker_title</field>
+            </fields-in-item>
         </widget>
 
         <widget name="wpr-content-toggle">
@@ -76,7 +83,14 @@
                 <field name="Content Toggle: Second Label" editor_type="LINE">switcher_second_label</field>
                 <field name="Content Toggle: Switcher First Content" editor_type="AREA">switcher_first_content</field>
                 <field name="Content Toggle: Switcher Second Content" editor_type="AREA">switcher_second_content</field>
+                <field name="Content Ticker: Ticker Title" editor_type="LINE">ticker_title</field>
             </fields>
+            <fields-in-item items_of="switcher_items">
+                <field name="Content Toggle: Switcher Label" editor_type="LINE">switcher_label</field>
+                <field name="Content Toggle: Switcher Content" editor_type="AREA">switcher_content</field>
+                <field name="Content Toggle: Switcher Label" editor_type="LINE">switcher_label</field>
+                <field name="Content Toggle: Switcher Content" editor_type="AREA">switcher_content</field>
+            </fields-in-item>
         </widget>
 
         <widget name="wpr-countdown">
@@ -97,9 +111,15 @@
                 <field name="Data Table: Title" editor_type="LINE">table_th</field>
             </fields-in-item>
             <fields-in-item items_of="table_content_rows">
+                <field name="Data Table: Content Tooltip Text" editor_type="AREA">content_tooltip_text</field>
+            </fields-in-item>
+            <fields-in-item items_of="table_content_rows">
                 <field name="Data Table: Content" editor_type="AREA">table_td</field>
             </fields-in-item>
             <fields>
+                <field name="Data Table: Export Excel Text" editor_type="LINE">export_excel_text</field>
+                <field name="Data Table: Export CSV Text" editor_type="LINE">export_csv_text</field>
+                <field name="Data Table: Search Placeholder" editor_type="LINE">search_placeholder</field>
             </fields>
         </widget>
 
@@ -109,6 +129,9 @@
                 <field name="Dual Button: Effect Text 1" editor_type="LINE">button_a_hover_animation_text</field>
                 <field name="Dual Button: Second Text" editor_type="LINE">button_b_text</field>
                 <field name="Dual Button: Effect Text 2" editor_type="LINE">button_b_hover_animation_text</field>
+                <field name="Dual Button: Middle Badge Text" editor_type="LINE">middle_badge_text</field>
+                <field name="Dual Button: Tooltip A Text" editor_type="AREA">tooltip_a_text</field>
+                <field name="Dual Button: Tooltip B Text" editor_type="AREA">tooltip_b_text</field>
             </fields>
         </widget>
 
@@ -190,6 +213,7 @@
                 <field name="Post Grid: One Comment" editor_type="LINE">element_comments_text_2</field>
                 <field name="Post Grid: Multiple Comments" editor_type="LINE">element_comments_text_3</field>
                 <field name="Post Grid: Extra Text" editor_type="LINE">element_extra_text</field>
+                <field name="Grid: No Likes Text" editor_type="LINE">element_like_text</field>
             </fields-in-item>
         </widget>
 
@@ -243,6 +267,7 @@
                 <field name="Magazine Grid: One Comment" editor_type="LINE">element_comments_text_2</field>
                 <field name="Magazine Grid: Multiple Comments" editor_type="LINE">element_comments_text_3</field>
                 <field name="Magazine Grid: Extra Text" editor_type="LINE">element_extra_text</field>
+                <field name="Magazine Grid: No Likes Text" editor_type="LINE">element_like_text</field>
             </fields-in-item>
         </widget>
 
@@ -256,6 +281,11 @@
                 <field name="Mailchimp: Button Loading Text" editor_type="LINE">subscribe_button_loading_text</field>
                 <field name="Mailchimp: Success Message" editor_type="LINE">success_message</field>
                 <field name="Mailchimp: Error Message" editor_type="LINE">error_message</field>
+                <field name="Mailchimp: Name Label" editor_type="LINE">name_label</field>
+                <field name="Mailchimp: Name Placeholder" editor_type="LINE">name_placeholder</field>
+                <field name="Mailchimp: Last Name Label" editor_type="LINE">last_name_label</field>
+                <field name="Mailchimp: Last Name Placeholder" editor_type="LINE">last_name_placeholder</field>
+                <field name="Mailchimp: Phone Number Label" editor_type="LINE">phone_number_label</field>
             </fields>
         </widget>
 
@@ -276,6 +306,7 @@
             <fields-in-item items_of="grid_elements">
                 <field name="Media Grid: Separator" editor_type="LINE">element_tax_sep</field>
                 <field name="Media Grid: Extra Text" editor_type="LINE">element_extra_text</field>
+                <field name="Magazine Grid: No Likes Text" editor_type="LINE">element_like_text</field>
             </fields-in-item>
         </widget>
 
@@ -298,6 +329,12 @@
                 <field name="Offcanvas: Title" editor_type="LINE">offcanvas_title</field>
                 <field name="Offcanvas: Button Title" editor_type="LINE">offcanvas_button_title</field>
             </fields>
+        </widget>
+
+        <widget name="wpr-onepage-nav">
+            <fields-in-item items_of="nav_items">
+                <field name="Onepage Nav: Item Tooltip" editor_type="LINE">nav_item_tooltip</field>
+            </fields-in-item>
         </widget>
 
         <widget name="wpr-page-list">
@@ -359,6 +396,7 @@
                 <field name="Pricing Table: Period" editor_type="LINE">preiod</field>
                 <field name="Pricing Table: Feature Text" editor_type="LINE">feature_text</field>
                 <field name="Pricing Table: Button Text" editor_type="LINE">btn_text</field>
+                <field name="Pricing Table: Feature Tooltip" editor_type="AREA">feature_tooltip_text</field>
             </fields-in-item>
         </widget>
 
@@ -387,7 +425,16 @@
                 <field name="Search: Placeholder" editor_type="LINE">search_placeholder</field>
                 <field name="Search: Aria Label" editor_type="LINE">search_aria_label</field>
                 <field name="Search: Button Text" editor_type="LINE">search_btn_text</field>
+                <field name="Search: All Cat Text" editor_type="LINE">all_cat_text</field>
+                <field name="Search: Load More Text" editor_type="LINE">pagination_load_more_text</field>
+                <field name="Search: Pagination Finish Text" editor_type="LINE">pagination_finish_text</field>
             </fields>
+        </widget>
+
+        <widget name="wpr-sharing-buttons">
+            <fields-in-item items_of="sharing_buttons">
+                <field name="Sharing Buttons: Custom Label" editor_type="LINE">sharing_custom_label</field>
+            </fields-in-item>
         </widget>
 
         <widget name="wpr-tabs">
@@ -443,6 +490,7 @@
                 <field name="Woo Grid: Last Page Text" editor_type="LINE">pagination_last_text</field>
                 <field name="Woo Grid: Load More Text" editor_type="LINE">pagination_load_more_text</field>
                 <field name="Woo Grid: Finish Text" editor_type="LINE">pagination_finish_text</field>
+                <field name="Woo Grid: Sort Heading" editor_type="LINE">sort_heading</field>
             </fields>
             <fields-in-item items_of="grid_elements">
                 <field name="Woo Grid: Separator" editor_type="LINE">element_tax_sep</field>
@@ -457,6 +505,7 @@
                 <field name="Woo Grid: Add to Compare Text" editor_type="LINE">add_to_compare_text</field>
                 <field name="Woo Grid: Remove from Wishlist Text" editor_type="LINE">remove_from_wishlist_text</field>
                 <field name="Woo Grid: Remove from Compare Text" editor_type="LINE">remove_from_compare_text</field>
+                <field name="Woo Grid: No Likes Text" editor_type="LINE">element_like_text</field>
             </fields-in-item>
         </widget>
 
@@ -497,6 +546,7 @@
             <fields>
                 <field name="Post Navigation: Previous Text" editor_type="LINE">post_nav_prev_text</field>
                 <field name="Post Navigation: Next Text" editor_type="LINE">post_nav_next_text</field>
+                <field name="Post Navigation: Back Button Link" editor_type="LINE">post_nav_back_link</field>
             </fields>
         </widget>
 
@@ -519,6 +569,7 @@
         <widget name="wpr-product-mini-cart">
             <fields>
                 <field name="Product Mini Cart: Toggle Text" editor_type="LINE">product_media_sales_badge_text</field>
+                <field name="Mini Cart: Close Cart" editor_type="LINE">close_cart_heading</field>
             </fields>
         </widget>
 
