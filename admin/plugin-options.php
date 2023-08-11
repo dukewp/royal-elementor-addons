@@ -106,8 +106,8 @@ function wpr_register_addons_settings() {
     register_setting('wpr-extension-settings', 'wpr-particles');
     register_setting('wpr-extension-settings', 'wpr-parallax-background');
     register_setting('wpr-extension-settings', 'wpr-parallax-multi-layer');
-    register_setting('wpr-extension-settings', 'wpr-sticky-section');
     register_setting('wpr-extension-settings', 'wpr-custom-css');
+    register_setting('wpr-extension-settings', 'wpr-sticky-section');
 
     // Element Toggle
     register_setting( 'wpr-elements-settings', 'wpr-element-toggle-all', [ 'default' => 'on' ]  );
@@ -1375,6 +1375,18 @@ function wpr_addons_settings_page() {
                     } elseif ( 'wpr-sticky-section' === $option_name ) {
                         echo '<br><span>Tip: Edit any Section > Navigate to Advanced tab</span>';
                         echo '<a href="https://www.youtube.com/watch?v=at0CPKtklF0&t=375s" target="_blank">Watch Video Tutorial</a>';
+                        if ( !wpr_fs()->can_use_premium_code() && !wpr_fs()->is_plan( 'expert') ) {
+                            echo '<h4 class="wpr-sticky-advanced-demos-title">Advanced Sticky Section (Pro)</h4>';
+                            echo '<p class="wpr-sticky-advanced-demos">';
+                                echo '<span>View Demos: </span>';
+                                echo '<a href="https://demosites.royal-elementor-addons.com/fashion-v2/?ref=rea-plugin-backend-elements-advanced-stiky-preview" target="_blank">Demo 1, </a>';
+                                echo '<a href="https://demosites.royal-elementor-addons.com/digital-marketing-agency-v2/?ref=rea-plugin-backend-elements-advanced-stiky-preview" target="_blank">Demo 2, </a>';
+                                echo '<a href="https://demosites.royal-elementor-addons.com/personal-blog-v1/?ref=rea-plugin-backend-elements-advanced-stiky-preview" target="_blank">Demo 3, </a>';
+                                echo '<a href="https://demosites.royal-elementor-addons.com/digital-marketing-agency-v1/?ref=rea-plugin-backend-elements-advanced-stiky-preview" target="_blank">Demo 4, </a>';
+                                echo '<a href="https://demosites.royal-elementor-addons.com/construction-v3/?ref=rea-plugin-backend-elements-advanced-stiky-preview" target="_blank">Demo 5</a>';
+                            echo '</p>';
+                            echo '<a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-advanced-stiky-pro#purchasepro" target="_blank">Upgrade to Pro</a>';
+                        }
                     } elseif ( 'wpr-custom-css' === $option_name ) {
                         echo '<br><span>Tip: Edit any Section > Navigate to Advanced tab</span>';
                     }

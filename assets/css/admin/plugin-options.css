@@ -435,6 +435,20 @@
           box-shadow: none !important;
 }
 
+.wpr-sticky-advanced-demos-title {
+  margin-bottom: 0 !important;
+}
+
+.wpr-sticky-advanced-demos {
+  margin: 0;
+}
+
+.wpr-sticky-advanced-demos a,
+.wpr-sticky-advanced-demos span {
+  display: inline;
+  text-decoration: none;
+}
+
 .wpr-woo-template-info input,
 .wpr-element-info input,
 .wpr-elements-toggle input[type="checkbox"],
