@@ -140,6 +140,10 @@ function wpr_register_addons_settings() {
         if ( 'page' !== $key && 'e-landing-page' !== $key ) {
             register_setting( 'wpr-settings', 'wpr_meta_secondary_image_'. $key );
         }
+
+        if ( 'post' !== $key && 'product' !== $key && 'page' !== $key && 'e-landing-page' !== $key ) {
+            register_setting( 'wpr-settings', 'wpr_cpt_ppp_'. $key );
+        }
     }
 
 }
@@ -598,6 +602,37 @@ function wpr_addons_settings_page() {
             <!-- </div> -->
         </div>
         <?php endif; ?>
+        
+        <div class="wpr-settings-group wpr-settings-group-cpt">
+            <h3 class="wpr-settings-group-title"><?php esc_html_e( 'Custom Post Types', 'wpr-addons' ); ?></h3>
+
+            <?php
+                $post_types = Utilities::get_custom_types_of( 'post', false );
+                foreach ( $post_types as $key => $value ) {
+                    if ( 'post' == $key || 'product' == $key || 'page' == $key || 'e-landing-page' === $key ) {
+                        continue;
+                    }
+
+                    ?>  
+                        <div class="wpr-setting">
+                            <h4>
+                                <span><?php esc_html_e( $value . ' : Posts Per Page', 'wpr-addons' ); ?></span>
+                                <br>
+                            </h4>
+
+                            <input type="text" name="wpr_cpt_ppp_<?php echo $key ?>" id="wpr_cpt_ppp_<?php echo $key ?>" value="<?php echo esc_attr(get_option('wpr_cpt_ppp_'. $key, 10)); ?>">
+                        </div>
+                    <?php
+                }
+
+                
+                // do_action('wpr_cpt_settings');
+            ?>
+            
+            <!-- <div class="wpr-settings-group-inner"> -->
+
+            <!-- </div> -->
+        </div>
 
         <div class="wpr-settings-group">
             <h3 class="wpr-settings-group-title"><?php esc_html_e( 'Integrations', 'wpr-addons' ); ?></h3>
