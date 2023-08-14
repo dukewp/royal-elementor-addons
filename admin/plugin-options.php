@@ -457,7 +457,7 @@ function wpr_addons_settings_page() {
             
             <div class="wpr-woo-template-info">
                 <div class="wpr-woo-template-title">
-                    <h4>WPR Woo Config</h4>
+                    <h4>Royal Woocommerce Config</h4>
                     <span>Below options work only if this option is enabled</span>
                 </div>
                 <input type="checkbox" name="wpr_override_woo_templates" id="wpr_override_woo_templates" <?php echo checked( get_option('wpr_override_woo_templates', 'on'), 'on', false ); ?>>
