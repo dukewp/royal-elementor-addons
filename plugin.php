@@ -993,6 +993,17 @@ class Plugin {
 
 		// Promote Premium Widgets
         add_filter('elementor/editor/localize_settings', [$this, 'promote_premium_widgets']);
+
+		add_filter( 'pre_get_posts', [$this, 'wpr_custom_posts_per_page'] );
+	}
+
+	public function wpr_custom_posts_per_page( $query ) {
+		$query_post_type = $query->query['post_type'];
+		if ( is_string($query_post_type) && get_option('wpr_cpt_ppp_'. $query_post_type ) ) {
+			$query->set( 'posts_per_page', get_option('wpr_cpt_ppp_'. $query_post_type ) );
+		}
+	
+		return $query;
 	}
 
 	/**
