@@ -220,10 +220,12 @@
 			    changePositionType();
 			    changeAdminBarOffset();
 
-			    $(window).resize(function() { 
+			    $(window).smartresize(function() { 
 					distanceFromTop = $scope.offset().top;
-			        viewportWidth = $('body').prop('clientWidth') + 17,
-			        changePositionType();
+			        viewportWidth = $('body').prop('clientWidth') + 17;
+					if ( $(window).scrollTop() <= stickyEffectsOffset ) {
+						changePositionType();
+					}
 			    });
 			    
 			    if (!stickySectionExists) {
@@ -1655,7 +1657,7 @@
 
 					if ( 'sidebar' === button.data('atc-popup') ) {
 						if ( $('.wpr-mini-cart-toggle-wrap a').length ) {
-							$('.wpr-mini-cart-toggle-wrap a').each(function() {
+							$('.wpr-mini-cart-toggle-wrap:last a').each(function() {
 								if ( 'none' === $(this).closest('.wpr-mini-cart-inner').find('.wpr-mini-cart').css('display') ) {
 									$(this).trigger('click');
 								}
