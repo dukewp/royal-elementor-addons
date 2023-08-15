@@ -8839,7 +8839,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 					\Elementor\Icons_Manager::render_icon($settings['element_extra_icon'], ['aria-hidden' => 'true']);
 					$extra_icon = ob_get_clean();
 
-					$button_HTML .= '<span class="wpr-grid-extra-icon-left">'. $extra_icon .'</span>';
+					echo '<span class="wpr-grid-extra-icon-left">';
+						echo $extra_icon;
+					echo '</span>';
 				}
 
 				// Taxonomies
@@ -8857,7 +8859,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 					\Elementor\Icons_Manager::render_icon($settings['element_extra_icon'], ['aria-hidden' => 'true']);
 					$extra_icon = ob_get_clean();
 
-					$button_HTML .= '<span class="wpr-grid-extra-icon-right">'. $extra_icon .'</span>';
+					echo '<span class="wpr-grid-extra-icon-right">';
+						echo $extra_icon;
+					echo '</span>';
 				}
 				// Text: After
 				if ( 'after' === $settings['element_extra_text_pos'] ) {
@@ -8892,7 +8896,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 					\Elementor\Icons_Manager::render_icon($settings['element_extra_icon'], ['aria-hidden' => 'true']);
 					$extra_icon = ob_get_clean();
 
-					$button_HTML .= '<span class="wpr-grid-extra-icon-left">'. $extra_icon .'</span>';
+					echo '<span class="wpr-grid-extra-icon-left">';
+						echo $extra_icon;
+					echo '</span>';
 				}
 
 				// Taxonomies
@@ -8910,7 +8916,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 					\Elementor\Icons_Manager::render_icon($settings['element_extra_icon'], ['aria-hidden' => 'true']);
 					$extra_icon = ob_get_clean();
 
-					$button_HTML .= '<span class="wpr-grid-extra-icon-right">'. $extra_icon .'</span>';
+					echo '<span class="wpr-grid-extra-icon-right">';
+						echo $extra_icon;
+					echo '</span>';
 				}
 				// Text: After
 				if ( 'after' === $settings['element_extra_text_pos'] ) {
