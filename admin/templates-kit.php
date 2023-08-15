@@ -611,6 +611,24 @@ function import_elementor_site_settings( $kit ) {
 }
 
 /**
+*** Add Elementor support for Custom Post Types
+**/
+function add_elementor_cpt_support( $post_type ) {
+    if ( ! is_admin() ) {
+        return;
+    }
+
+    $cpt_support = get_option( 'elementor_cpt_support' );
+    
+    if ( ! $cpt_support ) {
+        update_option( 'elementor_cpt_support', ['post', 'page', $post_type] );
+    } elseif ( ! in_array( $post_type, $cpt_support ) ) {
+        $cpt_support[] = $post_type;
+        update_option( 'elementor_cpt_support', $cpt_support );
+    }
+}
+
+/**
 ** Setup WPR Templates
 */
 function setup_wpr_templates( $kit ) {
@@ -649,11 +667,14 @@ function setup_wpr_templates( $kit ) {
     // Custom Post Types & Taxonomies
     if ( isset($get_custom_types) && wpr_fs()->is_plan( 'expert' ) ) {
         foreach ($get_custom_types as $label => $slug) {
+            $label = str_replace('wpr-', '', $label);
+
             if ( substr_count( $slug,'_') > 1 ) {
                 $custom_type_archive_conditions[] = '"user-archive-'. $kit .'-'. $label .'":["archive/'. $slug .'/all"]';
             } else {
                 $custom_type_archive_conditions[] = '"user-archive-'. $kit .'-'. $label .'":["archive/'. $slug .'"]';
                 $custom_type_single_conditions[] = '"user-single-'. $kit .'-'. $label .'":["single/'. $slug.'/all"]';
+                add_elementor_cpt_support( $slug );
             }
         }
         

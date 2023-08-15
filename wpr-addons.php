@@ -95,7 +95,6 @@ if ( ! function_exists( 'wpr_fs' ) ) {
 	}
 }
 
-
 /**
  * Load gettext translate for our text domain.
  *
