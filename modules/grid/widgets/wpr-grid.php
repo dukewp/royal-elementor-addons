@@ -8323,8 +8323,16 @@ class Wpr_Grid extends Widget_Base {
 			$tax_query = [];
 
 			$args = $wp_query->query_vars;
+
+			if ( is_post_type_archive() ) {
+				$posts_per_page = intval(get_option('wpr_cpt_ppp_'. $args['post_type']));
+			} else {
+				$posts_per_page = intval(get_option('posts_per_page'));
+			}
+
 			$args['orderby'] = $query_order_by;
-			$args['offset'] = ( $paged - 1 ) * intval(get_option('posts_per_page')) + intval($settings[ 'query_offset' ]);
+
+			$args['offset'] = ( $paged - 1 ) * $posts_per_page + intval($settings[ 'query_offset' ]);
 			
 			if ( isset($_GET['category']) ) {
 				
