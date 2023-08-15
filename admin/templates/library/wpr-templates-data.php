@@ -453,6 +453,19 @@ class WPR_Templates_Data {
 					'label' => 'new',
 					'priority' => 4,
 				],
+				'v2' => [
+					'name' => 'Digital SEO Marketing Agency v2',
+					'pages' => 'home,about,solutions,awards,careers,work,email-marketing,paid-search-marketing,search-engine-optimization,contact,blog',
+					'plugins' => '{}',
+					'tags' => 'digital agency company corporate digital services solutions agency web digital marketing seo social media branding dark black digital seo agency',
+					'theme-builder' => true,
+					'woo-builder' => false,
+					'off-canvas' => true,
+					'price' => $is_pro_active ? 'free' : 'expert',
+					'custom-types' => ['wpr-work' => 'wpr_work', 'wpr-work-cats' => 'wpr_work_cats'],
+					'label' => 'new',
+					'priority' => 1,
+				],
 			],
 			'digital-agency-dark' => [
 				'v1' => [
