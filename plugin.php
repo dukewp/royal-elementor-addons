@@ -998,9 +998,11 @@ class Plugin {
 	}
 
 	public function wpr_custom_posts_per_page( $query ) {
-		$query_post_type = $query->query['post_type'];
-		if ( is_string($query_post_type) && get_option('wpr_cpt_ppp_'. $query_post_type ) ) {
-			$query->set( 'posts_per_page', get_option('wpr_cpt_ppp_'. $query_post_type ) );
+		if ( isset($query->query['post_type']) ) {
+			$query_post_type = $query->query['post_type'];
+			if ( is_string($query_post_type) && get_option('wpr_cpt_ppp_'. $query_post_type ) ) {
+				$query->set( 'posts_per_page', get_option('wpr_cpt_ppp_'. $query_post_type ) );
+			}
 		}
 	
 		return $query;
