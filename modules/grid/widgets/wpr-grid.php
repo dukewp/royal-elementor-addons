@@ -1033,7 +1033,7 @@ class Wpr_Grid extends Widget_Base {
 			'current_query_notice',
 			[
 				'type' => Controls_Manager::RAW_HTML,
-				'raw' => sprintf( __( 'To set <strong>Posts per Page</strong> for all Blog <strong>Archive Pages</strong>, navigate to <strong><a href="%s" target="_blank">Settings > Reading</a></strong> & <strong><a href="%s" target="_blank">Royal Addons > Settings > Custom Post Types</a></strong> for <strong>CPT Archives</strong>.', 'wpr-addons' ), admin_url( 'options-reading.php' ), admin_url( 'admin.php?page=wpr-addons&tab=wpr_tab_settings' ) ),
+				'raw' => sprintf( __( 'To set <strong>Posts per Page</strong> for all Blog <strong>Archive Pages</strong>, navigate to <strong><a href="%s" target="_blank">Settings > Reading</a></strong> and for <strong>CPT Archives</strong>,  navigate to <strong><a href="%s" target="_blank">Royal Addons > Settings > Custom Post Types</a></strong>.', 'wpr-addons' ), admin_url( 'options-reading.php' ), admin_url( 'admin.php?page=wpr-addons&tab=wpr_tab_settings#cpt-tab' ) ),
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 				'condition' => [
 					'query_source' => 'current',

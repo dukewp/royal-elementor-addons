@@ -37,6 +37,16 @@
       align-self: flex-start;
 }
 
+.wpr-settings-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wpr-settings-navigation a {
+  text-decoration: none;
+}
+
 .button.wpr-options-button .dashicons {
   line-height: 30px;
   font-size: 16px;
