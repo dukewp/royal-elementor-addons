@@ -581,13 +581,13 @@ function wpr_addons_settings_page() {
         </div>
         
 
-        <?php if ( wpr_fs()->can_use_premium_code() ) : ?>
+        <?php if ( wpr_fs()->is_plan( 'expert' ) ) : ?>
         <div class="wpr-settings-group wpr-settings-group-cpt">
             <h3 id="cpt-tab" class="wpr-settings-group-title"><?php esc_html_e( 'Custom Post Types', 'wpr-addons' ); ?></h3>
 
             <?php
                 $post_types = Utilities::get_custom_types_of( 'post', false );
-                
+
                 foreach ( $post_types as $key => $value ) {
                     if ( 'post' == $key || 'product' == $key || 'page' == $key || 'e-landing-page' === $key ) {
                         continue;
