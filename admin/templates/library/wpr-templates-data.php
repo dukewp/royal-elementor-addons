@@ -462,7 +462,7 @@ class WPR_Templates_Data {
 					'woo-builder' => false,
 					'off-canvas' => true,
 					'price' => $is_pro_active ? 'free' : 'expert',
-					'custom-types' => ['wpr-work' => 'wpr_work', 'wpr-work-cats' => 'wpr_work_cats'],
+					'custom-types' => ['wpr-work' => 'wpr_work', 'wpr-work-category' => 'wpr_work_cats'],
 					'label' => 'new',
 					'priority' => 1,
 				],
