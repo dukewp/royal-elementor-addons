@@ -846,6 +846,7 @@ function wpr_addons_settings_page() {
                     <li><span>9 Premade Popup Templates</span></li>
                     <li><span>Particle Effects</span></li>
                     <li><span>Parallax Effect</span></li>
+                    <li><span>Sticky Section</span></li>
                     <li><span>Free Templates Kit Library</span></li>
                     <li><span>Theme Builder</span></li>
                     <li><span>WooCommerce Shop Builder  </span></li>
@@ -912,7 +913,7 @@ function wpr_addons_settings_page() {
                             <li>Trim Title & Excerpt By Letter Count</li>
                         </ul>
                     </li>
-                    <li><span>Advanced Woocommerce Grid/Slider/Carousel Widget</span>
+                    <li><span>Advanced Woo Grid/Slider/Carousel Widget</span>
                         <ul>
                             <li>Grid Columns 1,2,3,4,5,6</li>
                             <li>Masonry Layout</li>
@@ -1324,6 +1325,14 @@ function wpr_addons_settings_page() {
                         <ul>
                             <li>Advanced Scrolling Effects: Opacity, Scale opacity, Scroll opacity</li>
                             <li>Multilayer Parallax</li>
+                        </ul>
+                    </li>
+                    <li><span>Advanced Sticky Section</span>
+                        <ul>
+                            <li>Replace Header Section with a new Section on Scroll</li>
+                            <li>Change Section Height, Background and Text/Link Colors and Scale logo with transitions</li>
+                            <li>Hide Section when Scrolling Down and only show when Scrolling Up</li>
+                            <li>Add Borders, Shadows and Animations on Scroll</li>
                         </ul>
                     </li>
                     <li><span>Premium Template Kit Library - View Demo</span>
