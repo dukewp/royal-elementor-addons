@@ -8325,7 +8325,7 @@ class Wpr_Grid extends Widget_Base {
 			$args = $wp_query->query_vars;
 
 			if ( is_post_type_archive() ) {
-				$posts_per_page = intval(get_option('wpr_cpt_ppp_'. $args['post_type']));
+				$posts_per_page = intval(get_option('wpr_cpt_ppp_'. $args['post_type']), 10);
 			} else {
 				$posts_per_page = intval(get_option('posts_per_page'));
 			}
