@@ -1657,7 +1657,7 @@
 
 					if ( 'sidebar' === button.data('atc-popup') ) {
 						if ( $('.wpr-mini-cart-toggle-wrap a').length ) {
-							$('.wpr-mini-cart-toggle-wrap:last a').each(function() {
+							$('.wpr-mini-cart-toggle-wrap a').each(function() {
 								if ( 'none' === $(this).closest('.wpr-mini-cart-inner').find('.wpr-mini-cart').css('display') ) {
 									$(this).trigger('click');
 								}
