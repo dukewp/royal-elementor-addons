@@ -166,11 +166,50 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$bcc_header = 'Bcc: ' . get_option('wpr_bcc_header_'. $_POST['wpr_form_id']);
 		}
 		
-		if ( !empty( get_option('wpr_reply_to_'. $_POST['wpr_form_id']) ) ) {
-			$reply_to = 'Reply-To: ' . get_option('wpr_reply_to_'. $_POST['wpr_form_id']);
+		if ( !empty( get_option('wpr_reply_to_'. $_POST['wpr_form_id']) ) && !empty(get_option('wpr_email_from_name_'. $_POST['wpr_form_id'])) && !empty(get_option('wpr_email_from_'. $_POST['wpr_form_id'])) ) {
+			
+			preg_match_all('/id="([^"]+)"/', get_option('wpr_reply_to_'. $_POST['wpr_form_id']), $matche);
+			$reply_to_field_id = $matche[1];
+			
+			preg_match_all('/id="([^"]+)"/', get_option('wpr_email_from_name_'. $_POST['wpr_form_id']), $matche);
+			$email_from_name_field_id = $matche[1];
+			
+			preg_match_all('/id="([^"]+)"/', get_option('wpr_email_from_'. $_POST['wpr_form_id']), $matche);
+			$email_from_field_id = $matche[1];
+
+			foreach ( $_POST['form_content'] as $key => $value ) {
+				$key_parts = explode('-', $key);
+				$last_part = end($key_parts);
+
+				if (in_array($last_part, $reply_to_field_id)) {
+					$reply_to_address = $value[1];
+				}
+
+				if (in_array($last_part, $email_from_name_field_id)) {
+					$email_from_name = $value[1];
+				}
+
+				if (in_array($last_part, $email_from_field_id)) {
+					$email_from_mail = $value[1];
+				}
+			}
+
+			if ( !$reply_to_address ) {
+				$reply_to_address = get_option('wpr_reply_to_'. $_POST['wpr_form_id']);
+			}
+
+			if ( !$email_from_name ) {
+				$email_from_name = get_option('wpr_email_from_name_'. $_POST['wpr_form_id']);
+			}
+
+			if ( !$email_from_mail ) {
+				$email_from_mail = get_option('wpr_email_from_'. $_POST['wpr_form_id']);
+			}
+			
+			$reply_to = 'Reply-To: ' . $reply_to_address;
 		}
 		
-		$email_from = sprintf( 'From: %s <%s>' . "\r\n", get_option('wpr_email_from_name_'. $_POST['wpr_form_id']), get_option('wpr_email_from_'. $_POST['wpr_form_id']) );
+		$email_from = sprintf( 'From: %s <%s>' . "\r\n", $email_from_name, $email_from_mail );
 		
 		$headers = array('Content-Type: text/'. $content_type .'; charset=UTF-8', $email_from, $cc_header, $bcc_header, $reply_to);
       
