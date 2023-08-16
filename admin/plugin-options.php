@@ -422,8 +422,10 @@ function wpr_addons_settings_page() {
         <?php submit_button( '', 'wpr-options-button' ); ?>
 
         <div class="wpr-settings-group wpr-settings-navigation">
-            <a href="#woocommerce-tab">WooCommerce</a> /  
-            <a href="#cpt-tab">Custom Post Types</a> /  
+            <a href="#woocommerce-tab">WooCommerce</a> / 
+            <?php if ( wpr_fs()->is_plan( 'expert' ) ) : ?>
+                <a href="#cpt-tab">Custom Post Types</a> / 
+            <?php endif; ?>
             <a href="#metabox-tab">Metabox</a> /  
             <a href="#integrations-tab">Integrations</a> /  
             <a href="#lightbox-tab">Lightbox</a>
@@ -588,21 +590,35 @@ function wpr_addons_settings_page() {
             <?php
                 $post_types = Utilities::get_custom_types_of( 'post', false );
 
-                foreach ( $post_types as $key => $value ) {
-                    if ( 'post' == $key || 'product' == $key || 'page' == $key || 'e-landing-page' === $key ) {
-                        continue;
+                $custom_post_types_exist = false;
+                
+                foreach ( $post_types as $key => $post_type ) {
+                    if ( ! in_array( $key, ['post', 'page', 'attachment', 'product', 'e-landing-page', 'revision', 'nav_menu_item'] ) ) {
+                        // This is a custom post type.
+                        $custom_post_types_exist = true;
+                        break;
                     }
-
-                    ?>  
-                        <div class="wpr-setting">
-                            <h4>
-                                <span><?php esc_html_e( $value . ' : Posts Per Page', 'wpr-addons' ); ?></span>
-                                <br>
-                            </h4>
-
-                            <input type="text" name="wpr_cpt_ppp_<?php echo $key ?>" id="wpr_cpt_ppp_<?php echo $key ?>" value="<?php echo esc_attr(get_option('wpr_cpt_ppp_'. $key, 10)); ?>">
-                        </div>
-                    <?php
+                }
+                   
+                if ( $custom_post_types_exist ) {
+                    foreach ( $post_types as $key => $value ) {
+                        if ( 'post' == $key || 'product' == $key || 'page' == $key || 'e-landing-page' === $key ) {
+                            continue;
+                        }
+    
+                        ?>  
+                            <div class="wpr-setting">
+                                <h4>
+                                    <span><?php esc_html_e( $value . ' : Posts Per Page', 'wpr-addons' ); ?></span>
+                                    <br>
+                                </h4>
+    
+                                <input type="text" name="wpr_cpt_ppp_<?php echo $key ?>" id="wpr_cpt_ppp_<?php echo $key ?>" value="<?php echo esc_attr(get_option('wpr_cpt_ppp_'. $key, 10)); ?>">
+                            </div>
+                        <?php
+                    }
+                } else {
+                    echo '<p>No custom post types found.</p>';
                 }
 
                 
