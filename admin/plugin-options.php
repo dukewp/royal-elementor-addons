@@ -1327,7 +1327,7 @@ function wpr_addons_settings_page() {
                             <li>Multilayer Parallax</li>
                         </ul>
                     </li>
-                    <li><span>Advanced Sticky Section</span>
+                    <li><span class="wpr-advanced-sticky-options">Advanced Sticky Section - View Demo</span>
                         <ul>
                             <li>Replace Header Section with a new Section on Scroll</li>
                             <li>Change Section Height, Background and Text/Link Colors and Scale logo with transitions</li>
@@ -1335,7 +1335,7 @@ function wpr_addons_settings_page() {
                             <li>Add Borders, Shadows and Animations on Scroll</li>
                         </ul>
                     </li>
-                    <li><span>Premium Template Kit Library - View Demo</span>
+                    <li><span class="wpr-premium-template-kit-lib">Premium Template Kit Library - View Demo</span>
                         <ul>
                             <li>Access to All Premium Template Kit Library. Ready to use Sites which can be imported in one click in a few seconds.</li>
                         </ul>

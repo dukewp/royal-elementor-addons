@@ -851,6 +851,16 @@ jQuery(document).ready(function( $ ) {
 		// Show
 		if ( 'none' === display ) {
 			options.slideDown();
+			if ( $(this).hasClass('wpr-premium-template-kit-lib') ) {
+				setTimeout(function() {
+					window.open('https://demosites.royal-elementor-addons.com/elementor-templates/?ref=rea-plugin-backend-freevsprotab-pro', '_blank');
+				}, 600);
+			}
+			if ( $(this).hasClass('wpr-advanced-sticky-options') ) {
+				setTimeout(function() {
+					window.open('https://royal-elementor-addons.com/advanced-sticky-header/?ref=rea-plugin-backend-freevsprotab-pro', '_blank');
+				}, 600);
+			}
 		} else {
 			options.slideUp();
 		}
