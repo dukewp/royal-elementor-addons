@@ -30,7 +30,9 @@ define( 'WPR_ADDONS_MODULES_URL', WPR_ADDONS_URL . 'modules/' );
 /**
  * Feemius Integration
  */
-if ( ! function_exists( 'wpr_fs' ) ) {
+if ( function_exists( 'wpr_fs' ) ) {
+    wpr_fs()->set_basename( false, __FILE__ );
+} else if ( ! function_exists( 'wpr_fs' ) ) {
 	$register_freemius = true;
 
 	if ( is_admin() ) {
