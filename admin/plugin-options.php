@@ -1457,7 +1457,19 @@ function wpr_addons_settings_page() {
                                 echo '<a href="https://demosites.royal-elementor-addons.com/digital-marketing-agency-v1/?ref=rea-plugin-backend-elements-advanced-stiky-preview" target="_blank">Demo 4, </a>';
                                 echo '<a href="https://demosites.royal-elementor-addons.com/construction-v3/?ref=rea-plugin-backend-elements-advanced-stiky-preview" target="_blank">Demo 5</a>';
                             echo '</p>';
-                            echo '<a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-advanced-stiky-pro#purchasepro" target="_blank">Upgrade to Pro</a>';
+                            echo '<a class="wpr-sticky-video-tutorial wpr-inline-link" href="https://www.youtube.com/watch?v=ORay3VWrWuc" target="_blank">Watch Video Tutorial</a>';
+                            echo '<a class="wpr-inline-link" href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-advanced-stiky-pro#purchasepro" target="_blank">Upgrade to Pro</a>';
+                        } else {
+                            echo '<h4 class="wpr-sticky-advanced-demos-title">Advanced Sticky Section</h4>';
+                            echo '<p class="wpr-sticky-advanced-demos">';
+                                echo '<span>View Demos: </span>';
+                                echo '<a href="https://demosites.royal-elementor-addons.com/fashion-v2/?ref=rea-plugin-backend-elements-advanced-stiky-preview" target="_blank">Demo 1, </a>';
+                                echo '<a href="https://demosites.royal-elementor-addons.com/digital-marketing-agency-v2/?ref=rea-plugin-backend-elements-advanced-stiky-preview" target="_blank">Demo 2, </a>';
+                                echo '<a href="https://demosites.royal-elementor-addons.com/personal-blog-v1/?ref=rea-plugin-backend-elements-advanced-stiky-preview" target="_blank">Demo 3, </a>';
+                                echo '<a href="https://demosites.royal-elementor-addons.com/digital-marketing-agency-v1/?ref=rea-plugin-backend-elements-advanced-stiky-preview" target="_blank">Demo 4, </a>';
+                                echo '<a href="https://demosites.royal-elementor-addons.com/construction-v3/?ref=rea-plugin-backend-elements-advanced-stiky-preview" target="_blank">Demo 5</a>';
+                            echo '</p>';
+                            echo '<a class="wpr-sticky-video-tutorial" href="https://www.youtube.com/watch?v=ORay3VWrWuc" target="_blank">Watch Video Tutorial</a>';
                         }
                     } elseif ( 'wpr-custom-css' === $option_name ) {
                         echo '<br><span>Tip: Edit any Section > Navigate to Advanced tab</span>';

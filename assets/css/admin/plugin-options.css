@@ -445,6 +445,16 @@
           box-shadow: none !important;
 }
 
+.wpr-sticky-video-tutorial,
+.wpr-sticky-video-tutorial:hover {
+  color: #f51f3d !important;
+}
+
+.wpr-inline-link {
+  display: inline-block !important;
+  margin-right: 10px;
+}
+
 .wpr-sticky-advanced-demos-title {
   margin-bottom: 0 !important;
 }
