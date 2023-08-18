@@ -52,7 +52,7 @@ class WprPluginUpdateNotice {
                                 <li><a target="_blank" href="https://royal-elementor-addons.com/elementor-mega-menu-widget/?ref=rea-plugin-backend-update-notice">Mega Menu</a></li>
                                 <li><a target="_blank" href="https://royal-elementor-addons.com/elementor-offcanvas-menu-widget/?ref=rea-plugin-backend-update-notice">Off-Canvas Content</a></li>
                                 <li><a target="_blank" href="https://royal-elementor-addons.com/elementor-instagram-feed-widget/?ref=rea-plugin-backend-update-notice">Instagram Feed</a></li>
-                                <li><a target="_blank" href="https://royal-elementor-addons.com/elementor-image-accordion-widget/?ref=rea-plugin-backend-update-notice">Image Accordion</a></li>
+                                <li><a target="_blank" href="https://royal-elementor-addons.com/advanced-sticky-header/?ref=rea-plugin-backend-update-notice">Advanced Sticky Header</a></li>
                             </ul>
                         </div>
                         <div class="image-wrap"><img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'img/new-theme-builder.png"></div>
