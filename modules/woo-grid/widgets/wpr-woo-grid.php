@@ -9117,6 +9117,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 		} elseif ( 'variable' === $product->get_type() ) {
 			$button_HTML .= $settings['element_addcart_variable_txt'];
 			array_push( $attributes, 'href="'. esc_url( get_permalink() ) .'"' );
+		} else if ( 'pw-gift-card' === $product->get_type() ) {
+			$button_HTML .= esc_html__('Select Amount', 'wpr-addons');
+			array_push( $attributes, 'href="'. esc_url( get_permalink() ) .'"' );
 		} else {
 			array_push( $attributes, 'href="'. esc_url( $product->get_product_url() ) .'"' );
 			$button_HTML .= get_post_meta( get_the_ID(), '_button_text', true ) ? get_post_meta( get_the_ID(), '_button_text', true ) : 'Buy Product';
