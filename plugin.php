@@ -999,8 +999,10 @@ class Plugin {
 
 	public function wpr_custom_posts_per_page( $query ) {
 		if ( isset($query->query['post_type']) ) {
-			if (is_admin() && !\Elementor\Plugin::$instance->editor->is_edit_mode() ) {
-				return;
+			if (is_admin() ) {
+				if (\Elementor\Plugin::$instance->editor && !\Elementor\Plugin::$instance->editor->is_edit_mode()) {
+					return;
+				}
 			}
 			$query_post_type = $query->query['post_type'];
 			if ( is_string($query_post_type) && get_option('wpr_cpt_ppp_'. $query_post_type ) ) {
