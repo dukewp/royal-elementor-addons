@@ -44,10 +44,22 @@ class WprPluginSaleNotice {
     }
     
     public function wpr_plugin_sale_dismiss_notice() {
+		$nonce = $_POST['nonce'];
+
+		if ( !wp_verify_nonce( $nonce, 'wpr-plugin-notice-js')  || !current_user_can( 'manage_options' ) ) {
+		  exit; // Get out of here, the nonce is rotten!
+		}
+        
         add_option( 'wpr_plugin_sale_dismiss_notice', true );
     }
     
     public function wpr_sale_remind_me_later() {
+		$nonce = $_POST['nonce'];
+
+		if ( !wp_verify_nonce( $nonce, 'wpr-plugin-notice-js')  || !current_user_can( 'manage_options' ) ) {
+		  exit; // Get out of here, the nonce is rotten!
+		}
+
         update_option( 'wpr_sale_remind_me_later', absint(intval(strtotime('now'))) );
     }
 
@@ -101,76 +113,6 @@ class WprPluginSaleNotice {
 
         // Scripts & Styles
         echo "
-        <script>
-        jQuery( document ).ready( function() {
-
-            if ( jQuery('#wpr-notice-confetti').length ) {
-                const wprConfetti = confetti.create( document.getElementById('wpr-notice-confetti'), {
-                    resize: true
-                });
-
-                setTimeout( function () {
-                    wprConfetti( {
-                        particleCount: 150,
-                        origin: { x: 1, y: 2 },
-                        gravity: 0.3,
-                        spread: 50,
-                        ticks: 150,
-                        angle: 120,
-                        startVelocity: 60,
-                        colors: [
-                            '#0e6ef1',
-                            '#f5b800',
-                            '#ff344c',
-                            '#98e027',
-                            '#9900f1',
-                        ],
-                    } );
-                }, 500 );
-
-                setTimeout( function () {
-                    wprConfetti( {
-                        particleCount: 150,
-                        origin: { x: 0, y: 2 },
-                        gravity: 0.3,
-                        spread: 50,
-                        ticks: 200,
-                        angle: 60,
-                        startVelocity: 60,
-                        colors: [
-                            '#0e6ef1',
-                            '#f5b800',
-                            '#ff344c',
-                            '#98e027',
-                            '#9900f1',
-                        ],
-                    } );
-                }, 900 );
-            }
-
-                jQuery(document).on( 'click', '.wpr-plugin-sale-notice .notice-dismiss', function() {
-                    jQuery(document).find('.wpr-plugin-sale-notice').slideUp();
-                    jQuery.post({
-                        url: ajaxurl,
-                        data: {
-                            action: 'wpr_plugin_sale_dismiss_notice',
-                        }
-                    });
-                });
-                
-                jQuery(document).on( 'click', '.wpr-plugin-sale-notice .wpr-remind-later', function(e) {
-                    e.preventDefault();
-                    jQuery(document).find('.wpr-plugin-sale-notice').slideUp();
-                    jQuery.post({
-                        url: ajaxurl,
-                        data: {
-                            action: 'wpr_sale_remind_me_later',
-                        }
-                    });
-                }); 
-            });
-        </script>
-
         <style>
             .wpr-plugin-sale-notice {
                 position: relative;

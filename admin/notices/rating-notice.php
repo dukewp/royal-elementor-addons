@@ -41,18 +41,42 @@ class WprRatingNotice {
     }
 
     public function wpr_rating_maybe_later() {
+		$nonce = $_POST['nonce'];
+
+		if ( !wp_verify_nonce( $nonce, 'wpr-plugin-notice-js')  || !current_user_can( 'manage_options' ) ) {
+		  exit; // Get out of here, the nonce is rotten!
+		}
+
         update_option( 'wpr_maybe_later_time', strtotime('now') );
     }
 
-    function wpr_rating_already_rated() {    
+    function wpr_rating_already_rated() {
+		$nonce = $_POST['nonce'];
+
+		if ( !wp_verify_nonce( $nonce, 'wpr-plugin-notice-js')  || !current_user_can( 'manage_options' ) ) {
+		  exit; // Get out of here, the nonce is rotten!
+		}
+
         update_option( 'wpr_rating_already_rated' , true );
     }
     
     public function wpr_rating_dismiss_notice() {
+		$nonce = $_POST['nonce'];
+
+		if ( !wp_verify_nonce( $nonce, 'wpr-plugin-notice-js')  || !current_user_can( 'manage_options' ) ) {
+		  exit; // Get out of here, the nonce is rotten!
+		}
+
         update_option( 'wpr_rating_dismiss_notice', true );
     }
 
     public function wpr_rating_need_help() {
+		$nonce = $_POST['nonce'];
+
+		if ( !wp_verify_nonce( $nonce, 'wpr-plugin-notice-js')  || !current_user_can( 'manage_options' ) ) {
+		  exit; // Get out of here, the nonce is rotten!
+		}
+
         // Reset Activation Time if user Needs Help
         update_option( 'royal_elementor_addons_activation_time', strtotime('now') );
     }
@@ -86,50 +110,6 @@ class WprRatingNotice {
 
     public static function enqueue_scripts() {
         echo "
-        <script>
-        jQuery( document ).ready( function() {
-
-            jQuery(document).on( 'click', '.wpr-notice-dismiss-2', function() {
-                jQuery(document).find('.wpr-rating-notice').slideUp();
-                jQuery.post({
-                    url: ajaxurl,
-                    data: {
-                        action: 'wpr_rating_dismiss_notice',
-                    }
-                })
-            });
-
-            jQuery(document).on( 'click', '.wpr-maybe-later', function() {
-                jQuery(document).find('.wpr-rating-notice').slideUp();
-                jQuery.post({
-                    url: ajaxurl,
-                    data: {
-                        action: 'wpr_rating_maybe_later',
-                    }
-                })
-            });
-        
-            jQuery(document).on( 'click', '.wpr-already-rated', function() {
-                jQuery(document).find('.wpr-rating-notice').slideUp();
-                jQuery.post({
-                    url: ajaxurl,
-                    data: {
-                        action: 'wpr_rating_already_rated',
-                    }
-                })
-            });
-        
-            jQuery(document).on( 'click', '.wpr-need-support', function() {
-                jQuery.post({
-                    url: ajaxurl,
-                    data: {
-                        action: 'wpr_rating_need_help',
-                    }
-                })
-            });
-        });
-        </script>
-
         <style>
             .wpr-rating-notice {
               padding: 10px 20px;

@@ -474,9 +474,25 @@ class Plugin {
 		);
 	}
 
-
 	public function hide_theme_notice() {
 		wp_enqueue_style( 'hide-theme-notice', WPR_ADDONS_URL .'assets/css/admin/wporg-theme-notice.css', [] );
+
+		wp_enqueue_script(
+			'wpr-plugin-notice-js',
+			WPR_ADDONS_URL . 'assets/js/admin/plugin-update-notice.js',
+			[
+				'jquery'
+			]
+		);
+
+		wp_localize_script(
+			'wpr-plugin-notice-js',
+			'WprPluginNotice',
+			[
+				'ajaxurl' => admin_url( 'admin-ajax.php' ),
+				'nonce' => wp_create_nonce( 'wpr-plugin-notice-js' ),
+			]
+		);
 	}
 
 	public function enqueue_scripts() {

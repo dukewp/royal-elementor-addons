@@ -34,6 +34,12 @@ class WprProFeaturesNotice {
     }
     
     public function wpr_pro_features_dismiss_notice() {
+		$nonce = $_POST['nonce'];
+
+		if ( !wp_verify_nonce( $nonce, 'wpr-plugin-notice-js')  || !current_user_can( 'manage_options' ) ) {
+		  exit; // Get out of here, the nonce is rotten!
+		}
+
         add_option( 'wpr_pro_features_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version'], true );
         return 'responsetext';
     }
@@ -132,20 +138,6 @@ class WprProFeaturesNotice {
                     } );
                 }, 900 );
             }
-
-            jQuery(document).on( 'click', '.wpr-pro-features-notice .notice-dismiss', function() {
-
-                jQuery('body').removeClass('wpr-pro-features-body');
-
-                jQuery(document).find('.wpr-pro-features-notice-wrap').fadeOut();
-                jQuery(document).find('.wpr-pro-features-notice').slideUp();
-                jQuery.post({
-                    url: ajaxurl,
-                    data: {
-                        action: 'wpr_pro_features_dismiss_notice',
-                    }
-                });
-            }); 
         });
         </script>
 
