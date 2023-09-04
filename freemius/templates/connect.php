@@ -144,10 +144,11 @@
 		 * @author Vova Feldman
 		 * @since 2.3.2
 		 */
+		// Note: Added by GOGA
+		if ( ! did_action( 'elementor/loaded' ) ) {
+			wpr_addons_fail_load();
+		} else {
 
-	if ( ! did_action( 'elementor/loaded' ) ) {
-		wpr_addons_fail_load();
-	} else {
 		$fs->do_action( 'connect/before', $activation_state );
 	?>
 	<div id="fs_connect"
@@ -407,7 +408,8 @@
             if ( $fs->is_permission_requested( 'newsletter' ) ) {
                 $permissions[] = $permission_manager->get_newsletter_permission();
             }
-			
+
+			// Note: Added by Duke
 			$permissions[] = array(
 				'id' => 'royaladdons',
 				'icon-class' => 'dashicons dashicons-search',
