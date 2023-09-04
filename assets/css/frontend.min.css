@@ -267,6 +267,10 @@ template {
     margin: 0 auto;
   }*/
 
+.lg-outer { 
+  z-index: 999999 !important;
+}
+
 .wpr-body-overflow-hidden {
     overflow: hidden;
 }

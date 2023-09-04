@@ -143,7 +143,12 @@ class WPR_Templates_Modal_Popups {
 	    			echo '<div class="wpr-popup-container">';
 
 		    		// Close Button
-	    			echo '<div class="wpr-popup-close-btn"><i class="eicon-close"></i></div>';
+						echo '<div class="wpr-popup-close-btn"><i class="eicon-close"></i></div>';
+					// if ( \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_font_icon_svg' ) ) {
+					// 	echo '<div class="wpr-popup-close-btn"><i class="fa fa-times"></i></div>';
+					// } else {
+					// 	echo '<div class="wpr-popup-close-btn"><i class="eicon-close"></i></div>';
+					// }
 
 		    		// Elementor Template Content
 	    			echo '<div class="wpr-popup-container-inner">';
