@@ -211,6 +211,18 @@ class Wpr_Taxonomy_List extends Widget_Base {
 		);
 
 		$this->add_control(
+			'disable_links',
+			[
+				'label' => esc_html__( 'Disable Links', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'label_block' => false,
+				'default' => '',
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
 			'open_in_new_page',
 			[
 				'label' => esc_html__( 'Open in New Page', 'wpr-addons' ),
@@ -218,7 +230,10 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				'return_value' => 'yes',
 				'label_block' => false,
 				'default' => 'yes',
-				'separator' => 'before'
+				// 'separator' => 'before',
+				'condition' => [
+					'disable_links!' => 'yes'
+				]
 			]
 		);
 
@@ -262,6 +277,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-taxonomy-list li a' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-taxonomy-list li>span' => 'color: {{VALUE}}'
 				],
 			]
 		);
@@ -274,6 +290,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
                 'default' => '#00000000',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-taxonomy-list li a' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-taxonomy-list li>span' => 'background-color: {{VALUE}}'
 				]
 			]
 		);
@@ -286,6 +303,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-taxonomy-list li a' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-taxonomy-list li>span' => 'border-color: {{VALUE}}'
 				],
 			]
 		);
@@ -301,6 +319,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				'step' => 0.1,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-taxonomy-list li a' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-taxonomy-list li>span' => 'transition-duration: {{VALUE}}s'
 				],
 			]
 		);
@@ -310,7 +329,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 			[
 				'name'     => 'tax_typography',
 				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-taxonomy-list li a',
+				'selector' => '{{WRAPPER}} .wpr-taxonomy-list li a, {{WRAPPER}} .wpr-taxonomy-list li>span',
 				'fields_options' => [
 					'typography'      => [
 						'default' => 'custom',
@@ -341,6 +360,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-taxonomy-list li a:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-taxonomy-list li>span:hover' => 'color: {{VALUE}}'
 				],
 			]
 		);
@@ -352,6 +372,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-taxonomy-list li a:hover' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-taxonomy-list li>span:hover' => 'background-color: {{VALUE}}'
 				]
 			]
 		);
@@ -363,6 +384,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-taxonomy-list li a:hover' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-taxonomy-list li>span:hover' => 'border-color: {{VALUE}}'
 				],
 			]
 		);
@@ -384,6 +406,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-taxonomy-list li a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-taxonomy-list li>span' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 				'separator' => 'before',
 			]
@@ -423,6 +446,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				'default' => 'solid',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-taxonomy-list li a' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .wpr-taxonomy-list li>span' => 'border-style: {{VALUE}};'
 				],
 				'separator' => 'before',
 			]
@@ -442,6 +466,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-taxonomy-list li a' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-taxonomy-list li>span' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
 				'condition' => [
 					'tax_border_type!' => 'none',
@@ -463,6 +488,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-taxonomy-list li a' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-taxonomy-list li>span' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				]
 			]
 		);
@@ -573,10 +599,18 @@ class Wpr_Taxonomy_List extends Widget_Base {
         	
             echo '<li'. $cat_class . 'data-term-id="'.$data_parent_term_id .'">';
 				$toggle_icon = !empty($children) && ('vertical' === $settings['taxonomy_list_layout']) && ('yes' === $settings['show_sub_categories_on_click']) ? '<i class="fas fa-caret-right wpr-tax-dropdown" aria-hidden="true"></i>' : '';
-	            echo '<a href="'. esc_url(get_term_link($term->term_id)) .'">';
+				if ( 'yes' == $settings['disable_links'] ) {
+					echo '<span>';
+				} else {
+					echo '<a target="'. $open_in_new_page .'" href="'. esc_url(get_term_link($term->term_id)) .'">';
+				}
 					echo '<span class="wpr-tax-wrap">'. $toggle_icon . ' ' . $icon_wrapper .'<span>'. esc_html($term->name) .'</span></span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		            echo ($settings['show_tax_count']) ? '<span><span class="wpr-term-count">&nbsp;('. esc_html($term->count) .')</span></span>' : '';
-	            echo '</a>';
+				if ( 'yes' == $settings['disable_links'] ) {
+					echo '</span>';
+				} else {
+					echo '</a>';
+				}
             echo '</li>';
 
 			foreach ($children as $term) :
@@ -593,10 +627,18 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				
 				echo '<li'. $sub_class . 'data-term-id="child-'. $data_child_term_id .'" data-id="'. $data_item_id .'">';
 				$toggle_icon = !empty($grand_children) && ('vertical' === $settings['taxonomy_list_layout']) && ('yes' === $settings['show_sub_categories_on_click']) ? '<i class="fas fa-caret-right wpr-tax-dropdown" aria-hidden="true"></i>' : '';
-					echo '<a href="'. esc_url(get_term_link($term->term_id)) .'">';
+					if ( 'yes' == $settings['disable_links'] ) {
+						echo '<span>';
+					} else {
+						echo '<a target="'. $open_in_new_page .'" href="'. esc_url(get_term_link($term->term_id)) .'">';
+					}
 						echo '<span class="wpr-tax-wrap">'. $toggle_icon . ' ' . $icon_wrapper .'<span>'. esc_html($term->name) .'</span></span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						echo ($settings['show_tax_count']) ? '<span><span class="wpr-term-count">&nbsp;('. esc_html($term->count) .')</span></span>' : '';
-					echo '</a>';
+					if ( 'yes' == $settings['disable_links'] ) {
+						echo '</span>';
+					} else {
+						echo '</a>';
+					}
 				echo '</li>';
 	
 				foreach ($grand_children as $term) :
@@ -612,10 +654,18 @@ class Wpr_Taxonomy_List extends Widget_Base {
 					}
 					
 					echo '<li'. $sub_class . $data_grandchild_term_id .' data-id="'. $grandchild_id .'">';
-						echo '<a href="'. esc_url(get_term_link($term->term_id)) .'">';
+						if ( 'yes' == $settings['disable_links'] ) {
+							echo '<span>';
+						} else {
+							echo '<a target="'. $open_in_new_page .'" href="'. esc_url(get_term_link($term->term_id)) .'">';
+						}
 							echo '<span class="wpr-tax-wrap">'. $toggle_icon . ' ' . $icon_wrapper .'<span>'. esc_html($term->name) .'</span></span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 							echo ($settings['show_tax_count']) ? '<span><span class="wpr-term-count">&nbsp;('. esc_html($term->count) .')</span></span>' : '';
-						echo '</a>';
+						if ( 'yes' == $settings['disable_links'] ) {
+							echo '</span>';
+						} else {
+							echo '</a>';
+						}
 					echo '</li>';
 
 					foreach($great_grand_children as $term) :
@@ -623,10 +673,18 @@ class Wpr_Taxonomy_List extends Widget_Base {
 						$data_great_grandchild_term_id = ' data-parent-id="'. $grandchild_id .'" data-term-id="great-grandchild-'. $data_child_term_id .'"';
 					
 						echo '<li'. $sub_class . $data_great_grandchild_term_id .'>';
+						if ( 'yes' == $settings['disable_links'] ) {
+							echo '<span>';
+						} else {
 							echo '<a target="'. $open_in_new_page .'" href="'. esc_url(get_term_link($term->term_id)) .'">';
+						}
 								echo '<span class="wpr-tax-wrap">'. $icon_wrapper .'<span>'. esc_html($term->name) .'</span></span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-								echo ($settings['show_tax_count']) ? '<span><span class="wpr-term-count">&nbsp;('. esc_html($term->count) .')</span></span>' : '';
+								echo ($settings['show_tax_count']) ? '<span><span class="wpr-term-count">&nbsp;('. esc_html($term->count) .')</span></span>' : '';	
+						if ( 'yes' == $settings['disable_links'] ) {
+							echo '</span>';
+						} else {
 							echo '</a>';
+						}
 						echo '</li>';
 					
 					endforeach;
