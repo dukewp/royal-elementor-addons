@@ -5086,8 +5086,12 @@
 				});
 		   
 			} else if ( 'hover' === tooltipTrigger ) {
-				$hotspotItem.hover(function () {
-					$(this).toggleClass('wpr-tooltip-active');
+				$hotspotItem.on( 'mouseenter', function () {
+					$(this).addClass('wpr-tooltip-active');
+				});
+				
+				$hotspotItem.on( 'mouseleave', function () {
+					$(this).removeClass('wpr-tooltip-active');
 				});
 
 			} else {

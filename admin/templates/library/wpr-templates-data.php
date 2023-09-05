@@ -938,6 +938,20 @@ class WPR_Templates_Data {
 					'label' => '',
 					'priority' => 270,
 				],
+				'v3' => [
+					'name' => 'Real Estate v3',
+					'pages' => 'home,home-v2,about,directory,blog,contact,',
+					'plugins' => '{}',
+					'tags' => 'real estate agency company property rentals estate sales developers',
+					'theme-builder' => true,
+					'woo-builder' => false,
+					'off-canvas' => true,
+					'price' => $is_pro_active ? 'free' : 'pro',
+					'expert' => $is_expert ? 'free' : 'expert',
+					'custom-types' => ['wpr-directory' => 'wpr_directory'],
+					'label' => 'New',
+					'priority' => 272,
+				],
 			],
 			'restaurant' => [
 				'v1' => [
