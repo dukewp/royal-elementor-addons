@@ -2038,6 +2038,10 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     margin-right: 0 !important;
 }
 
+/* Custom Field */
+.wpr-custom-field {
+    display: block;
+}
 
 /* Post Info */
 .wpr-post-info {
