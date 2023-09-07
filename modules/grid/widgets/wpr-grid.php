@@ -487,6 +487,13 @@ class Wpr_Grid extends Widget_Base {
 		];
 	}
 
+	public function add_repeater_args_element_custom_field_img_ID() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
+		];
+	}
+
 	public function add_repeater_args_element_custom_field_btn_link() {
 		return [
 			'type' => Controls_Manager::HIDDEN,
@@ -689,6 +696,10 @@ class Wpr_Grid extends Widget_Base {
 	public function add_section_style_custom_field1() {}
 	
 	public function add_section_style_custom_field2() {}
+	
+	public function add_section_style_custom_field3() {}
+	
+	public function add_section_style_custom_field4() {}
 	
 	public function add_control_grid_item_even_bg_color() {}
 	
@@ -2020,6 +2031,8 @@ class Wpr_Grid extends Widget_Base {
 		);
 
 		$repeater->add_control( 'element_custom_field', $this->add_repeater_args_element_custom_field($post_meta_keys[1]) );
+
+		$repeater->add_control( 'element_custom_field_img_ID', $this->add_repeater_args_element_custom_field_img_ID() );
 
 		$repeater->add_control( 'element_custom_field_btn_link', $this->add_repeater_args_element_custom_field_btn_link() );
 
@@ -6883,6 +6896,14 @@ class Wpr_Grid extends Widget_Base {
 		// Styles =======================
 		// Section: Custom Field Style 2
 		$this->add_section_style_custom_field2();
+
+		// Styles =======================
+		// Section: Custom Field Style 3
+		$this->add_section_style_custom_field3();
+
+		// Styles =======================
+		// Section: Custom Field Style 4
+		$this->add_section_style_custom_field4();
 
 		// Styles ====================
 		// Section: Navigation -------
