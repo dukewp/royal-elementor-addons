@@ -1060,7 +1060,8 @@ class Wpr_Post_Info extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'default' => '#333333',
 				'selectors' => [
-					'{{WRAPPER}} .wpr-post-info li:not(.wpr-post-info-custom-field) .wpr-post-info-text' => 'color: {{VALUE}}',
+					// '{{WRAPPER}} .wpr-post-info li:not(.wpr-post-info-custom-field) .wpr-post-info-text' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-post-info li .wpr-post-info-text' => 'color: {{VALUE}}'
 				],
 				'separator' => 'after'
 			]
