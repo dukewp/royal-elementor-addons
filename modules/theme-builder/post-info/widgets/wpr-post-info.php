@@ -258,113 +258,113 @@ class Wpr_Post_Info extends Widget_Base {
 		);
 
 		if ( wpr_fs()->is_plan( 'expert' ) ) {
-		$repeater->add_control(
-			'post_info_cf',
-			[
-				'label' => esc_html__( 'Select Custom Field', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT2,
-				'label_block' => true,
-				'default' => 'default',
-				'options' => $post_meta_keys[1],
-				'condition' => [
-					'post_info_select' => 'custom-field'
-				],
-			]
-		);
-
-		$repeater->add_control(
-			'post_info_cf_btn_link',
-			[
-				'label' => esc_html__( 'Use Value as Button Link', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'condition' => [
-					'post_info_select' => 'custom-field'
-				],
-			]
-		);
-
-		$repeater->add_control(
-			'post_info_cf_new_tab',
-			[
-				'label' => esc_html__( 'Open Link in a New Tab', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'condition' => [
-					'post_info_select' => 'custom-field',
-					'post_info_cf_btn_link' => 'yes'
-				],
-			]
-		);
-
-		$repeater->add_control(
-			'post_info_cf_btn_text',
-			[
-				'label' => esc_html__( 'Button Text', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'dynamic' => [
-					'active' => true,
-				],
-				'default' => 'Click Me',
-				'condition' => [
-					'post_info_select' => 'custom-field',
-					'post_info_cf_btn_link' => 'yes'
-				],
-			]
-		);
-
-		$repeater->add_control(
-			'custom_field_wrapper_html_divider1',
-			[
-				'type' => Controls_Manager::DIVIDER,
-				'style' => 'thick',
-				'condition' => [
-					'post_info_select' => 'custom-field',
-				],
-			]
-		);
-
-		$repeater->add_control(
-			'post_info_cf_wrapper',
-			[
-				'label' => esc_html__( 'Wrap with HTML', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'condition' => [
-					'post_info_select' => 'custom-field'
-				],
-			]
-		);
-
-		$repeater->add_control(
-			'post_info_cf_wrapper_html',
-			[
-				'label' => esc_html__( 'Custom HTML Wrapper', 'wpr-addons' ),
-				'description' => 'Insert <strong>*cf_value*</strong> to dislpay your Custom Field.',
-				'placeholder'=> 'For Ex: <span>*cf_value*</span>',
-				'type' => Controls_Manager::TEXTAREA,
-				'dynamic' => [
-					'active' => true,
-				],
-				'condition' => [
-					'post_info_select' => 'custom-field',
-					'post_info_cf_wrapper' => 'yes',
-				],
-			]
-		);
-
-		$repeater->add_control(
-			'post_info_link_wrap',
-			[
-				'label' => esc_html__( 'Wrap with Link', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => '',
-				'return_value' => 'yes',
-				'condition' => [
-					'post_info_select!' => [ 'time', 'custom-field' ],
+			$repeater->add_control(
+				'post_info_cf',
+				[
+					'label' => esc_html__( 'Select Custom Field', 'wpr-addons' ),
+					'type' => Controls_Manager::SELECT2,
+					'label_block' => true,
+					'default' => 'default',
+					'options' => $post_meta_keys[1],
+					'condition' => [
+						'post_info_select' => 'custom-field'
+					],
 				]
-			]
-		);
+			);
+
+			$repeater->add_control(
+				'post_info_cf_btn_link',
+				[
+					'label' => esc_html__( 'Use Value as Button Link', 'wpr-addons' ),
+					'type' => Controls_Manager::SWITCHER,
+					'return_value' => 'yes',
+					'condition' => [
+						'post_info_select' => 'custom-field'
+					],
+				]
+			);
+
+			$repeater->add_control(
+				'post_info_cf_new_tab',
+				[
+					'label' => esc_html__( 'Open Link in a New Tab', 'wpr-addons' ),
+					'type' => Controls_Manager::SWITCHER,
+					'return_value' => 'yes',
+					'condition' => [
+						'post_info_select' => 'custom-field',
+						'post_info_cf_btn_link' => 'yes'
+					],
+				]
+			);
+
+			$repeater->add_control(
+				'post_info_cf_btn_text',
+				[
+					'label' => esc_html__( 'Button Text', 'wpr-addons' ),
+					'type' => Controls_Manager::TEXT,
+					'dynamic' => [
+						'active' => true,
+					],
+					'default' => 'Click Me',
+					'condition' => [
+						'post_info_select' => 'custom-field',
+						'post_info_cf_btn_link' => 'yes'
+					],
+				]
+			);
+
+			$repeater->add_control(
+				'custom_field_wrapper_html_divider1',
+				[
+					'type' => Controls_Manager::DIVIDER,
+					'style' => 'thick',
+					'condition' => [
+						'post_info_select' => 'custom-field',
+					],
+				]
+			);
+
+			$repeater->add_control(
+				'post_info_cf_wrapper',
+				[
+					'label' => esc_html__( 'Wrap with HTML', 'wpr-addons' ),
+					'type' => Controls_Manager::SWITCHER,
+					'return_value' => 'yes',
+					'condition' => [
+						'post_info_select' => 'custom-field'
+					],
+				]
+			);
+
+			$repeater->add_control(
+				'post_info_cf_wrapper_html',
+				[
+					'label' => esc_html__( 'Custom HTML Wrapper', 'wpr-addons' ),
+					'description' => 'Insert <strong>*cf_value*</strong> to dislpay your Custom Field.',
+					'placeholder'=> 'For Ex: <span>*cf_value*</span>',
+					'type' => Controls_Manager::TEXTAREA,
+					'dynamic' => [
+						'active' => true,
+					],
+					'condition' => [
+						'post_info_select' => 'custom-field',
+						'post_info_cf_wrapper' => 'yes',
+					],
+				]
+			);
+
+			$repeater->add_control(
+				'post_info_link_wrap',
+				[
+					'label' => esc_html__( 'Wrap with Link', 'wpr-addons' ),
+					'type' => Controls_Manager::SWITCHER,
+					'default' => '',
+					'return_value' => 'yes',
+					'condition' => [
+						'post_info_select!' => [ 'time', 'custom-field' ],
+					]
+				]
+			);
 		}
 
 		$repeater->add_control(

@@ -958,6 +958,12 @@ class Plugin {
 					'icon' => 'wpr-icon eicon-exchange',
 					'categories' => '["'. $category .'"]',
 				],
+				[
+					'name' => 'wpr-custom-field',
+					'title' => __('Custom Field', 'wpr-addons'),
+					'icon' => 'wpr-icon eicon-database',
+					'categories' => '["'. $category .'"]',
+				],
 			];
 
 			$config['promotionWidgets'] = array_merge( $config['promotionWidgets'], $expert_widgets );
