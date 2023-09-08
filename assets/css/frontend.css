@@ -2040,7 +2040,13 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
 
 /* Custom Field */
 .wpr-custom-field {
-    display: block;
+    display: flex;
+    align-items: center;
+}
+
+.wpr-custom-field .wpr-post-info-text {
+    display: inline-flex;
+    align-items: center;
 }
 
 /* Post Info */
