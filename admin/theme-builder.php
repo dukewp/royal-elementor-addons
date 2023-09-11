@@ -30,7 +30,7 @@ function wpr_addons_theme_builder_page() {
             <span class="plus-icon">+</span>
 
             <?php
-            if ( ! class_exists( 'WooCommerce' ) && ('wpr_tab_product_archive' === $_GET['tab'] || 'wpr_tab_product_single' === $_GET['tab'] )) {
+            if ( ! class_exists( 'WooCommerce' ) && isset($_GET['tab']) && ('wpr_tab_product_archive' === $_GET['tab'] || 'wpr_tab_product_single' === $_GET['tab'] )) {
                 echo '<div></div>';
             }
             ?>
