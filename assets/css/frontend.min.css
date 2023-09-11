@@ -17184,6 +17184,34 @@ dl.variation dd {
 == Offcanvas
 --------------------------------------------------------------*/
 
+.wpr-offcanvas-container {
+    position: relative;
+}
+
+.wpr-offcanvas-wrap-relative {
+    background-color: transparent !important;
+}
+
+.wpr-offcanvas-align-left .wpr-offcanvas-wrap-relative {
+    top: 100%;
+    left: 0;
+    right: auto;
+}
+
+.wpr-offcanvas-align-center .wpr-offcanvas-wrap-relative {
+    top: 100%;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+            transform: translateX(-50%);
+}
+
+.wpr-offcanvas-align-right .wpr-offcanvas-wrap-relative {
+    top: 100%;
+    right: 0;
+    left: auto;
+}
+
 .wpr-offcanvas-content::-webkit-scrollbar {
     width: 4px;
     background-color: transparent;
@@ -17216,6 +17244,15 @@ dl.variation dd {
     z-index: 9999;
 }
 
+.wpr-offcanvas-wrap-relative.wpr-offcanvas-wrap {
+    position: absolute;
+    width: auto;
+    height: auto;
+    min-height: auto;
+    max-width: unset;
+    max-height: unset;
+}
+
 .wpr-offcanvas-header {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -17242,6 +17279,10 @@ dl.variation dd {
     text-align: center;
     overflow: hidden;
     overflow-y: auto;
+}
+
+.wpr-offcanvas-wrap-relative .wpr-offcanvas-content {
+    position: relative;
 }
 
 .wpr-offcanvas-content .elementor-invisible {

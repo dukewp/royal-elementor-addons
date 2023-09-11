@@ -66,6 +66,7 @@ class Wpr_Offcanvas extends Widget_Base {
                     'pro-tp'   => esc_html__('Top (Pro)', 'wpr-addons'),
                     'pro-btm'  => esc_html__('Bottom (Pro)', 'wpr-addons'),
                     'pro-mdl'  => esc_html__('Middle (Pro)', 'wpr-addons'),
+                    'pro-rl'  => esc_html__('Relative (Pro)', 'wpr-addons'),
 				]
             ]
         );
@@ -94,7 +95,7 @@ class Wpr_Offcanvas extends Widget_Base {
 					]
 				],
 				'condition' => [
-					'offcanvas_position' => ['left', 'right', 'middle']
+					'offcanvas_position' => ['left', 'right', 'middle', 'relative']
 				]
 			]
 		);
@@ -127,7 +128,7 @@ class Wpr_Offcanvas extends Widget_Base {
 					'size' => 30,
 				],
 				'condition' => [
-					'offcanvas_position' => ['top', 'bottom', 'middle']
+					'offcanvas_position' => ['top', 'bottom', 'middle', 'relative']
 				]
 			]
 		);
@@ -313,8 +314,33 @@ class Wpr_Offcanvas extends Widget_Base {
 
 		$this->add_control_offcanvas_position();
 
+		$this->add_responsive_control(
+			'offcanvas_relative_distance',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 5,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-offcanvas-wrap-relative' => 'top: calc(100% + {{SIZE}}px);',
+				],
+				'condition' => [
+					'offcanvas_position' => 'relative'
+				]
+			]
+		);
+
 		// Upgrade to Pro Notice
-		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'offcanvas', 'offcanvas_position', ['pro-lf', 'pro-tp', 'pro-btm', 'pro-mdl'] );
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'offcanvas', 'offcanvas_position', ['pro-lf', 'pro-tp', 'pro-btm', 'pro-mdl', 'pro-rl'] );
 
 		$this->add_responsive_control_offcanvas_box_width();
 
@@ -416,6 +442,7 @@ class Wpr_Offcanvas extends Widget_Base {
                 'label_block'  => false,
                 'default'      => 'center',
 				// 'separator' => 'before',
+				'render_type' => 'template',
                 'options'      => [
                     'left' => [
                         'title' => esc_html__('left', 'wpr-addons'),
@@ -431,8 +458,9 @@ class Wpr_Offcanvas extends Widget_Base {
                     ],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-offcanvas-container' => 'text-align: {{VALUE}}',
-				]
+					'{{WRAPPER}} .wpr-offcanvas-container' => 'text-align: {{VALUE}}'
+				],
+				'prefix_class' => 'wpr-offcanvas-align-'
             ]
         );
 
@@ -1034,7 +1062,7 @@ class Wpr_Offcanvas extends Widget_Base {
 				<?php endif; ?>
 			</button>
 
-			<div class="wpr-offcanvas-wrap">
+			<div class="wpr-offcanvas-wrap wpr-offcanvas-wrap-<?php echo $settings['offcanvas_position'] ?>">
 				<div class="wpr-offcanvas-content wpr-offcanvas-content-<?php echo $settings['offcanvas_position'] ?>">
 					<div class="wpr-offcanvas-header">
 						<span class="wpr-close-offcanvas">
