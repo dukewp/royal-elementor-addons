@@ -85,9 +85,9 @@ class WPR_Templates_Library_Sections {
 			?>
 
 				<div class="wpr-tplib-template-wrap<?php echo esc_attr($template_class); ?>" data-title="<?php echo esc_attr(strtolower($title)); ?>">
-					<div class="wpr-tplib-template" data-slug="<?php echo esc_attr($template_slug); ?>" data-filter="<?php echo esc_attr($slug); ?>" data-preview-type="image">
+					<div class="wpr-tplib-template" data-slug="<?php echo esc_attr($data[$i]); ?>" data-filter="<?php echo esc_attr($slug); ?>" data-preview-type="image">
 						<div class="wpr-tplib-template-media">
-							<img src="<?php echo esc_url('https://royal-elementor-addons.com/library/premade-sections/'. $slug .'/'. $template_slug .'.png'); ?>">
+							<img src="<?php echo esc_url('https://royal-elementor-addons.com/library/premade-sections/'. $slug .'/'. $data[$i] .'.jpg'); ?>">
 							<div class="wpr-tplib-template-media-overlay">
 								<i class="eicon-eye"></i>
 							</div>
