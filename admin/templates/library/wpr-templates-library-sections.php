@@ -65,7 +65,7 @@ class WPR_Templates_Library_Sections {
 			</div>
 		</div>
 
-		<div class="wpr-tplib-template-gird elementor-clearfix">
+		<div class="wpr-tplib-template-gird wpr-tplib-sections-grid elementor-clearfix">
 			<div class="wpr-tplib-template-gird-inner">
 
 			<?php
