@@ -2268,6 +2268,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			'Add Unlimited Custom Timeline Items',
 			'Unlimited Slides to Show option',
 			'Carousel Autoplay and Autoplay Speed',
+			'Pause on Hover',
 			'Unlimited Posts Per Page option',
 			'Advanced Pagination - Load More Button or Infinite Scroll options',
 			'Advanced Entrance Animation Options',
@@ -5469,12 +5470,12 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		}
 	} // end rendern_dynamic_vertical_timeline
 
-	public function render_custom_horizontal_timeline( $settings, $autoplay, $loop, $dir, $data, $slidesHeight, $swiper_speed, $swiper_delay ) {
+	public function render_custom_horizontal_timeline( $settings, $autoplay, $loop, $dir, $data, $slidesHeight, $swiper_speed, $swiper_delay, $swiper_pause_on_hover ) {
 
 		$this->horizontal_timeline_classes($settings);
 
 		echo '<div class="wpr-timeline-outer-container">';
-		echo '<div class="wpr-wrapper swiper-container '. esc_attr($this->horizontal_inner_class) .'" dir="'. esc_attr($dir) .'" data-slidestoshow = "'. esc_attr($this->slidesToShow) .'" data-autoplay="'. esc_attr($autoplay) .'" data-loop="'. esc_attr($loop) .'" data-swiper-speed="'. esc_attr($swiper_speed) .'" data-swiper-delay="'. esc_attr($swiper_delay) .'" data-swiper-space-between="'. esc_attr($settings['story_info_gutter']) .'">';
+		echo '<div class="wpr-wrapper swiper-container '. esc_attr($this->horizontal_inner_class) .'" dir="'. esc_attr($dir) .'" data-slidestoshow = "'. esc_attr($this->slidesToShow) .'" data-autoplay="'. esc_attr($autoplay) .'" data-loop="'. esc_attr($loop) .'" data-swiper-speed="'. esc_attr($swiper_speed) .'" data-swiper-delay="'. esc_attr($swiper_delay) .'" data-swiper-poh="'. $swiper_pause_on_hover .'" data-swiper-space-between="'. esc_attr($settings['story_info_gutter']) .'">';
 
 		echo '<div class="swiper-wrapper '. esc_attr($this->horizontal_timeline_class) .'">';
 			if ( is_array($data) ) {
@@ -5556,7 +5557,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				echo '</div>';
 	}
 	
-	public function render_dynamic_horizontal_timeline ( $settings, $dir, $autoplay, $loop, $slidesHeight, $swiper_speed, $swiper_delay ) {
+	public function render_dynamic_horizontal_timeline ( $settings, $dir, $autoplay, $loop, $slidesHeight, $swiper_speed, $swiper_delay, $swiper_pause_on_hover ) {
 		
 		wp_reset_postdata();
 
@@ -5569,7 +5570,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		if( $this->my_query->have_posts() ) { 
 		
 		echo '<div class="wpr-timeline-outer-container">';
-				echo '<div class="wpr-wrapper swiper-container '. esc_attr($this->horizontal_inner_class) .'" dir="'. esc_attr($dir) .'" data-slidestoshow = "'. esc_attr($this->slidesToShow) .'" data-autoplay="'. esc_attr($autoplay) .'"  data-loop="'. esc_attr($loop) .'" data-swiper-speed="'. esc_attr($swiper_speed) .'" data-swiper-delay="'. esc_attr($swiper_delay) .'" data-swiper-space-between="'. esc_attr($settings['story_info_gutter']) .'">
+				echo '<div class="wpr-wrapper swiper-container '. esc_attr($this->horizontal_inner_class) .'" dir="'. esc_attr($dir) .'" data-slidestoshow = "'. esc_attr($this->slidesToShow) .'" data-autoplay="'. esc_attr($autoplay) .'"  data-loop="'. esc_attr($loop) .'" data-swiper-speed="'. esc_attr($swiper_speed) .'" data-swiper-delay="'. esc_attr($swiper_delay) .'" data-swiper-poh="'. $swiper_pause_on_hover .'" data-swiper-space-between="'. esc_attr($settings['story_info_gutter']) .'">
 					<div class="'. esc_attr($this->horizontal_timeline_class) .' swiper-wrapper">';
 					while( $this->my_query->have_posts() ) {
 						$this->my_query->the_post();
@@ -5689,6 +5690,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 		// $this->pause_on_hover = ! wpr_fs()->can_use_premium_code() && !isset($settings['pause_on_hover']) ? '' : $settings['pause_on_hover'];
 		$swiper_delay = ! wpr_fs()->can_use_premium_code() && !isset($settings['swiper_delay']) ? 0 : $settings['swiper_delay'];
+		$swiper_pause_on_hover = ! wpr_fs()->can_use_premium_code() && !isset($settings['swiper_pause_on_hover']) ? '' : $settings['swiper_pause_on_hover'];
 		$swiper_speed = $settings['swiper_speed'];
 		$slidesHeight = $settings['equal_height_slides'];
 
@@ -5730,12 +5732,12 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 			if ( 'dynamic' === $settings['timeline_content'] && ('horizontal' === $layout || 'horizontal-bottom' === $layout) ) {
 
-					$this->render_dynamic_horizontal_timeline ( $settings, $dir, $autoplay, $loop, $slidesHeight, $swiper_speed, $swiper_delay );
+					$this->render_dynamic_horizontal_timeline ( $settings, $dir, $autoplay, $loop, $slidesHeight, $swiper_speed, $swiper_delay, $swiper_pause_on_hover );
 
 
 			} elseif ( 'custom' === $settings['timeline_content'] && ('horizontal' === $layout || 'horizontal-bottom' === $layout) ) {
 
-					$this->render_custom_horizontal_timeline( $settings, $autoplay, $loop, $dir, $data, $slidesHeight,  $swiper_speed, $swiper_delay );
+					$this->render_custom_horizontal_timeline( $settings, $autoplay, $loop, $dir, $data, $slidesHeight,  $swiper_speed, $swiper_delay, $swiper_pause_on_hover );
 
 			} else {
 				if( 'dynamic' === $settings['timeline_content'] ) {
