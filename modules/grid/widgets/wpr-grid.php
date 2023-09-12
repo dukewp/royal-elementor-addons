@@ -9714,7 +9714,7 @@ class Wpr_Grid extends Widget_Base {
 			$this->get_elements_by_location( 'above', $settings, get_the_ID() );
 
 			// Media
-			if ( $this->render_post_thumbnail( $settings, get_the_ID() ) ) {
+			if ( has_post_thumbnail() ) {
 				echo '<div class="wpr-grid-media-wrap'. esc_attr($this->get_image_effect_class( $settings )) .' " data-overlay-link="'. esc_attr( $settings['overlay_post_link'] ) .'">';
 					// Post Thumbnail
 					$this->render_post_thumbnail( $settings, get_the_ID() );
