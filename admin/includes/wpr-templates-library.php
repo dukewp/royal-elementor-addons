@@ -9,6 +9,7 @@ use WprAddons\Admin\Includes\WPR_Templates_Shortcode;
 use WprAddons\Admin\Includes\WPR_Templates_Modal_Popups;
 use WprAddons\Admin\Includes\WPR_Templates_Actions;
 use WprAddons\Admin\Templates\Library\WPR_Templates_Library_Blocks;
+use WprAddons\Admin\Templates\Library\WPR_Templates_Library_Sections;
 use WprAddons\Admin\Templates\Library\WPR_Templates_Library_Pages;
 use WprAddons\Admin\Templates\Library\WPR_Templates_Library_Popups;
 use WprAddons\Classes\Utilities;
@@ -44,6 +45,9 @@ class WPR_Templates_Library {
 
 		// Add Blocks to Library
 		new WPR_Templates_Library_Blocks();
+
+		// Add Sections to Library
+		new WPR_Templates_Library_Sections();
 
 		// Add Pages to Library
 		new WPR_Templates_Library_Pages();

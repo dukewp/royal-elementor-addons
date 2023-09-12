@@ -6,6 +6,19 @@ use WprAddons\Plugin;
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class WPR_Templates_Data {
+	public static function get_available_sections() {
+		return [
+			'Header' => [
+				'1',
+				'2',
+				'3',
+			],
+			'Footer' => [
+				'1',
+			],
+		];
+	}
+
 	public static function get_available_kits() {
 		$is_pro_active = wpr_fs()->can_use_premium_code() && defined('WPR_ADDONS_PRO_VERSION');
 		$is_expert = $is_pro_active && wpr_fs()->is_plan( 'expert' );
