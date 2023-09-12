@@ -9817,7 +9817,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 				    if ( 'yes' === $settings['pagination_first_last'] ) {
 				    	if ( $paged >= 2 ) {
-					    	echo '<a href="'. esc_url(get_pagenum_link( $paged + 1, true )) .'" class="wpr-first-page">';
+					    	echo '<a href="'. esc_url(get_pagenum_link( 1, true )) .'" class="wpr-first-page">';
+					    	// echo '<a href="'. esc_url(get_pagenum_link( $paged + 1, true )) .'" class="wpr-first-page">';
 					    	// echo '<a href="'. esc_url(substr(get_pagenum_link( $paged + 1, true ), 0, strpos(get_pagenum_link( $paged + 1, true ), '?orderby'))) .'" class="wpr-first-page">';
 					    		echo Utilities::get_wpr_icon( $settings['pagination_fl_icon'], 'left' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					    		echo '<span>'. esc_html($settings['pagination_first_text']) .'</span>';

@@ -3374,10 +3374,10 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
 }
 
 @media screen and ( max-width: 767px) {
-    .wpr-grid-pagination a,
+    /* .wpr-grid-pagination a,
     .wpr-grid-pagination span {
         margin-bottom: 10px;
-    }
+    } */
     .wpr-grid-pagination span>span,
     .wpr-grid-pagination a>span {
         display: none;
