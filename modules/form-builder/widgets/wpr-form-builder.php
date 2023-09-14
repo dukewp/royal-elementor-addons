@@ -3291,7 +3291,9 @@ class Wpr_Form_Builder extends Widget_Base {
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'wpr-form-builder', [
 			'Unlimited number of fields',
-			'Submission and mailchimp actions'
+			'Submission action',
+			'Mailchimp action',
+			'Webhook action'
 		] );
     }
 

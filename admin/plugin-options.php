@@ -811,6 +811,7 @@ function wpr_addons_settings_page() {
                     <li><span>Magazine Grid/Slider Widget</span></li>
                     <li><span>Basic Timeline Widget</span></li>
                     <li><span>Basic Slider Widget</span></li>
+                    <li><span>Basic Form Builder Widget</span></li>
                     <li><span>Offcanvas Content</span></li>
                     <li><span>Instagram Feed</span></li>
                     <li><span>Twitter Feed</span></li>
@@ -1012,6 +1013,14 @@ function wpr_addons_settings_page() {
                             <li>Autoplay options</li>
                             <li>Advanced Navigation Positioning</li>
                             <li>Advanced Pagination Positioning</li>
+                        </ul>
+                    </li>
+                    <li><span>Advanced Form Builder Widget</span> 
+                        <ul>
+                            <li>Unlimited number of fields</li>
+                            <li>Submission action</li>
+                            <li>Mailchimp action</li>
+                            <li>Webhook action</li>
                         </ul>
                     </li>
                     <li><span>Advanced Offcanvas Menu</span>

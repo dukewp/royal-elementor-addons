@@ -32,11 +32,14 @@ if ( ! defined( 'ABSPATH' ) ) {
         
         foreach ( $_POST['form_content'] as $key => $value ) {
             if ( is_array($value[1]) ) {
-                $message_body[] = trim($value[2]) . ': ' . implode("\n", $value[1]);
+                $message_body[trim($value[2])] = implode("\n", $value[1]);
             } else {
-                $message_body[] = trim($value[2]) . ': ' . $value[1];
+                $message_body[trim($value[2])] = $value[1];
             }
         }
+
+		$message_body['form_id'] = $_POST['wpr_form_id'];
+		$message_body['form_name'] = $_POST['form_name'];
 
 		$args = [
 			'body' => $message_body,
