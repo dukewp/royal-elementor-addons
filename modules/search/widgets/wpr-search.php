@@ -1227,7 +1227,7 @@ class Wpr_Search extends Widget_Base {
 			'Custom Search Query - Only Posts or Pages',
 			'Custom Search Query - Only Custom Post Types (Expert)',
 			'More than 2 Results in Ajax Search',
-			'Enable Category Filter (Pro)',
+			'Enable Taxonomy Filter (Pro)',
 			'Ajax Search Results Pagination (Load More)'
 		] );
 
@@ -1496,7 +1496,7 @@ class Wpr_Search extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_select',
 			[
-				'label' => esc_html__( 'Category Filter', 'wpr-addons' ),
+				'label' => esc_html__( 'Taxonomy Filter', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'select_category' => 'yes',
@@ -1629,6 +1629,36 @@ class Wpr_Search extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-category-select option' => 'font-size: {{SIZE}}{{UNIT}};',
+				]
+			]
+		);
+
+		$this->add_control(
+			'optgroup_heading',
+			[
+				'label' => esc_html__( 'Options Group', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+			]
+		);
+
+		$this->add_responsive_control(
+			'optgroup_font_size',
+			[
+				'label' => esc_html__( 'Font Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px', '%'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 25,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 12,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-category-select optgroup' => 'font-size: {{SIZE}}{{UNIT}};',
 				]
 			]
 		);

@@ -180,6 +180,47 @@ class Wpr_Control_Ajax_Select2_Api {
 
 		return [ 'results' => $options ];
 	}
+
+	public function get_post_type_taxonomies( $request ) {
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			return;   
+		}
+
+		$post_type = isset($request['query_slug']) ? $request['query_slug'] : '';
+
+		$args = [
+			'orderby' => 'name', 
+			'order' => 'DESC',
+			'hide_empty' => true,
+			'number' => -1,
+		];
+
+		if ( isset( $request['ids'] ) ) {
+			$request['ids'] = ('' !== $request['ids']) ? $request['ids'] : '99999999'; // Query Hack
+			$ids = explode( ',', $request['ids'] );
+			$args['include'] = $ids;
+		}
+		
+		if ( isset( $request['s'] ) ) {
+			$args['name__like'] = $request['s'];
+		}
+
+		$options = [];
+		$taxonomies = get_object_taxonomies( $post_type, 'objects' );
+
+		if ( ! empty($taxonomies) ) {
+			foreach ( $taxonomies as $taxonomy ) {
+				$options[] = [
+					'id'   => $taxonomy->name,
+					'text' => $taxonomy->label,
+				];
+			}
+		}
+
+		wp_reset_postdata();
+
+		return [ 'results' => $options ];
+	}
 	
 	/**
 	** Get Custom Meta Keys

@@ -38,8 +38,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         
         $tax_query = '';
 
-        if ( $_POST['wpr_category'] != false && $_POST['wpr_category'] != '' ) {
-            if ( isset($_POST['wpr_option_post_type']) && !empty($_POST['wpr_option_post_type']) ) {
+        if ( $_POST['wpr_category'] != false && $_POST['wpr_category'] != '' ) {   
                 $tax_query = array(
                     array(
                         'taxonomy' => $_POST['wpr_option_post_type'],
@@ -47,15 +46,24 @@ if ( ! defined( 'ABSPATH' ) ) {
                         'terms'    => sanitize_text_field($_POST['wpr_category']),
                     ),
                 );
-            } else {
-                $tax_query = array(
-                    array(
-                        'taxonomy' => $_POST['wpr_query_type'] == 'product' ? $_POST['wpr_query_type'] . '_cat' : 'category',
-                        'field'    => 'term_id',
-                        'terms'    => sanitize_text_field($_POST['wpr_category']),
-                    ),
-                );
-            }
+
+            // if ( isset($_POST['wpr_option_post_type']) && !empty($_POST['wpr_option_post_type']) ) {
+            //     $tax_query = array(
+            //         array(
+            //             'taxonomy' => $_POST['wpr_option_post_type'],
+            //             'field'    => 'term_id',
+            //             'terms'    => sanitize_text_field($_POST['wpr_category']),
+            //         ),
+            //     );
+            // } else {
+            //     $tax_query = array(
+            //         array(
+            //             'taxonomy' => $_POST['wpr_query_type'] == 'product' ? $_POST['wpr_query_type'] . '_cat' : 'category',
+            //             'field'    => 'term_id',
+            //             'terms'    => sanitize_text_field($_POST['wpr_category']),
+            //         ),
+            //     );
+            // }
         }
 
         $the_query = new \WP_Query( 
