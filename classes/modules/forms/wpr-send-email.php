@@ -30,6 +30,24 @@ if ( ! defined( 'ABSPATH' ) ) {
         }
         
         $message_body = [];
+
+		foreach ($_POST['form_content'] as $field) {
+			if ($field[0] === 'email') {
+				if (!is_email($field[1])) {
+					// The field is an email, but it is not a valid email address
+					// Take action or abort function execution here
+					wp_send_json_error(array(
+						'action' => 'wpr_form_builder_email',
+						'message' => esc_html__('Email provided is invalid', 'wpr-addons'),
+						'status' => 'error'
+					));
+				}
+			}
+		}
+		
+		// Rest of your function code here (if needed)
+		
+		
     
 		$email_fields = trim(get_option('wpr_email_fields_' . $_POST['wpr_form_id']));
 		
