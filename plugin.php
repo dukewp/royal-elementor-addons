@@ -876,11 +876,12 @@ class Plugin {
 	}
 
     public function promote_premium_widgets($config) {
-		$config['promotionWidgets'] = [];
+
+		// $config['promotionWidgets'] = [];
 		$category = Utilities::is_theme_builder_template() ? 'wpr-woocommerce-builder-widgets' : 'wpr-premium-widgets';
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {
-			$config['promotionWidgets'] = [
+			$promotion_widgets = [
 				[
 					'name' => 'wpr-woo-category-grid',
 					'title' => __('Woo Category Grid', 'wpr-addons'),
@@ -966,6 +967,7 @@ class Plugin {
 				],
 			];
 
+			$config['promotionWidgets'] = array_merge( $config['promotionWidgets'], $promotion_widgets );
 			$config['promotionWidgets'] = array_merge( $config['promotionWidgets'], $expert_widgets );
 		}
 
