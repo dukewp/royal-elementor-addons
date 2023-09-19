@@ -2049,6 +2049,12 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     align-items: center;
 }
 
+.elementor-widget-wpr-custom-field-pro ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
 /* Post Info */
 .wpr-post-info {
     padding: 0;
@@ -6397,7 +6403,6 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 
 
 /* Slider Pagination */
-
 .wpr-slider-dots {
     display: inline-table;
     position: absolute;
