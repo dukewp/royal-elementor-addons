@@ -8591,11 +8591,11 @@ class Wpr_Woo_Grid extends Widget_Base {
 		} else {
 			$settings = $this->get_settings();
 
-			if ( isset($_GET['category']) ) {
+			if ( isset($_GET['product_cat']) ) {
 				
-				if ( $_GET['category'] != '0' ) {
+				if ( $_GET['product_cat'] != '0' ) {
 					// Get category from URL
-					$category = sanitize_text_field($_GET['category']);
+					$category = sanitize_text_field($_GET['product_cat']);
 				
 					array_push( $tax_query, [
 						'taxonomy' => 'product_cat',

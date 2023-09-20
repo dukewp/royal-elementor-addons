@@ -877,7 +877,6 @@ class Plugin {
 
     public function promote_premium_widgets($config) {
 
-		// $config['promotionWidgets'] = [];
 		$category = Utilities::is_theme_builder_template() ? 'wpr-woocommerce-builder-widgets' : 'wpr-premium-widgets';
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {
@@ -963,6 +962,12 @@ class Plugin {
 					'name' => 'wpr-custom-field',
 					'title' => __('Custom Field', 'wpr-addons'),
 					'icon' => 'wpr-icon eicon-database',
+					'categories' => '["'. $category .'"]',
+				],
+				[
+					'name' => 'wpr-grid-filters',
+					'title' => __('Grid Filters', 'wpr-addons'),
+					'icon' => 'wpr-icon eicon-filter',
 					'categories' => '["'. $category .'"]',
 				],
 			];

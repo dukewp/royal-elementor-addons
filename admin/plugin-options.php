@@ -1404,6 +1404,7 @@ function wpr_addons_settings_page() {
                     <li><span>White Label Branding</span></li>
                     <li><span>Elementor Pro Not Required</span></li>
                     <li><span>Custom Field Widget</span></li>
+                    <li><span>Grid Filters Widget</span></li>
                     <li>And More is Comming Soon...</li>
                 </ul>
             </div>

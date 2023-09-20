@@ -8392,6 +8392,43 @@ class Wpr_Grid extends Widget_Base {
 			$args['order'] = $settings['order_direction'];
 		}
 
+		if ( isset($args['tax_query']) ) {
+
+			$tax_query = [];
+			
+			if ( isset($_GET['category']) ) {
+				
+				if ( $_GET['category'] != '0' ) {
+					// Get category from URL
+					$category = sanitize_text_field($_GET['category']);
+				
+					array_push( $tax_query, [
+						'taxonomy' => 'category',
+						'field' => 'id',
+						'terms' => $category
+					] );
+				}
+			}
+			
+			if ( isset($_GET['post_tag']) ) {
+				
+				if ( $_GET['post_tag'] != '0' ) {
+					// Get category from URL
+					$taxonomy = sanitize_text_field($_GET['post_tag']);
+				
+					array_push( $tax_query, [
+						'taxonomy' => 'post_tag',
+						'field' => 'id',
+						'terms' => $taxonomy
+					] );
+				}
+			}
+
+			if ( !empty($tax_query) ) {
+				$args['tax_query'] = $tax_query;
+			}
+		}
+
 		return $args;
 	}
 
