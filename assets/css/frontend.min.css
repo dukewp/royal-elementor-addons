@@ -15276,6 +15276,10 @@ dl.variation dd {
 /*--------------------------------------------------------------
  == Product Media
 --------------------------------------------------------------*/
+.wpr-zero-opacity {
+    opacity: 0 !important;
+}
+
 .wpr-product-media-wrap {
     position: relative;
     display: inline-block;
