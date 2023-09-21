@@ -1498,7 +1498,7 @@ class Wpr_Product_Media extends Widget_Base {
 		$this->add_render_attribute(
 			'thumbnails_attributes',
 			[
-				'class' => ['wpr-product-media-wrap', 'wpr-product-media-thumbs-horizontal', 'wpr-zero-opacity'],
+				'class' => ['wpr-product-media-wrap', 'wpr-product-media-thumbs-horizontal'],
 				'data-slidestoshow' => $settings['gallery_slider_thumb_cols'],
 				'data-slidestoscroll' => isset($settings['gallery_slider_thumbs_to_slide']) ? $settings['gallery_slider_thumbs_to_slide'] : '',
 			]
