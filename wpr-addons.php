@@ -264,3 +264,9 @@ function exclude_wpr_styles_from_wp_optimize( $excluded_handles ) {
     return $excluded_handles;
 }
 add_filter( 'wpo_minify_excluded_css_handles', 'exclude_wpr_styles_from_wp_optimize' );
+
+add_filter( 'wp_rocket_excluded_scripts', function( $excluded_scripts ) {
+    $excluded_scripts[] = 'wpr-addons-js';
+
+    return $excluded_scripts;
+} );
