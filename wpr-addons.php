@@ -262,6 +262,17 @@ function exclude_wpr_styles_from_wp_optimize( $excluded_handles ) {
     return $excluded_handles;
 }
 
-add_filter( 'script_loader_tag', 'wpr_script_loader_tag', 10, 2 );
-add_filter( 'wpo_minify_excluded_js_handles', 'exclude_wpr_scripts_from_wp_optimize' );
-add_filter( 'wpo_minify_excluded_css_handles', 'exclude_wpr_styles_from_wp_optimize' );
+if ( 'on' === get_option('wpr_ignore_wp_rocket_js', 'on') ) {
+	var_dump('works here');
+	add_filter( 'script_loader_tag', 'wpr_script_loader_tag', 10, 2 );
+}
+
+if ( 'on' === get_option('wpr_ignore_wp_optimize_js', 'on') ) {
+	var_dump('works here');
+	add_filter( 'wpo_minify_excluded_js_handles', 'exclude_wpr_scripts_from_wp_optimize' );
+}
+
+if ( 'on' === get_option('wpr_ignore_wp_optimize_css', 'on') ) {
+	var_dump('works here');
+	add_filter( 'wpo_minify_excluded_css_handles', 'exclude_wpr_styles_from_wp_optimize' );
+}

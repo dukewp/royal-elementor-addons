@@ -102,6 +102,11 @@ function wpr_register_addons_settings() {
     register_setting( 'wpr-wh-settings', 'wpr_wl_hide_free_pro_tab' );
     register_setting( 'wpr-wh-settings', 'wpr_wl_hide_white_label_tab' );
 
+    // Optimizers
+    register_setting ('wpr-settings', 'wpr_ignore_wp_rocket_js');
+    register_setting ('wpr-settings', 'wpr_ignore_wp_optimize_js');
+    register_setting ('wpr-settings', 'wpr_ignore_wp_optimize_css');
+
     // Extensions
     register_setting('wpr-extension-settings', 'wpr-particles');
     register_setting('wpr-extension-settings', 'wpr-parallax-background');
@@ -111,11 +116,6 @@ function wpr_register_addons_settings() {
 
     // Element Toggle
     register_setting( 'wpr-elements-settings', 'wpr-element-toggle-all', [ 'default' => 'on' ]  );
-
-    // Optimizers
-    register_setting ('wpr-optimizer-settings', 'wpr_ignore_wp_rocket_js');
-    register_setting ('wpr-optimizer-settings', 'wpr_ignore_wp_optimize_js');
-    register_setting ('wpr-optimizer-settings', 'wpr_ignore_wp_optimize_css');
 
     // Widgets
     foreach ( Utilities::get_registered_modules() as $title => $data ) {
@@ -442,13 +442,29 @@ function wpr_addons_settings_page() {
             
             <div class="wpr-woo-template-info">
                 <div class="wpr-woo-template-title">
-                    <h4><?php echo 'Optimizers'; ?></h4>
+                    <h4><?php echo 'WP Rocket JS'; ?></h4>
                 </div>
-                <input type="checkbox" name="wpr_meta_secondary_image_<?php echo $key ?>" id="wpr_meta_secondary_image_<?php echo $key ?>" <?php echo checked( get_option('wpr_meta_secondary_image_'. $key, 'on'), 'on', false ); ?>>
-                <label for="wpr_meta_secondary_image_<?php echo $key ?>"></label>
+                <input type="checkbox" name="wpr_ignore_wp_rocket_js" id="wpr_ignore_wp_rocket_js" <?php echo checked( get_option('wpr_ignore_wp_rocket_js', 'on'), 'on', false ); ?>>
+                <label for="wpr_ignore_wp_rocket_js"></label>
+            </div>
+            
+            <div class="wpr-woo-template-info">
+                <div class="wpr-woo-template-title">
+                    <h4><?php echo 'WP Optimize JS'; ?></h4>
+                </div>
+                <input type="checkbox" name="wpr_ignore_wp_optimize_js" id="wpr_ignore_wp_optimize_js" <?php echo checked( get_option('wpr_ignore_wp_optimize_js', 'on'), 'on', false ); ?>>
+                <label for="wpr_ignore_wp_optimize_js"></label>
+            </div>
+            
+            <div class="wpr-woo-template-info">
+                <div class="wpr-woo-template-title">
+                    <h4><?php echo 'WP Optimize CSS'; ?></h4>
+                </div>
+                <input type="checkbox" name="wpr_ignore_wp_optimize_css" id="wpr_ignore_wp_optimize_css" <?php echo checked( get_option('wpr_ignore_wp_optimize_css', 'on'), 'on', false ); ?>>
+                <label for="wpr_ignore_wp_optimize_css"></label>
             </div>
 
-            <p class="wpr-settings-group-description"><?php esc_html_e( 'Add secondary Featured image metabox to post types.', 'wpr-addons' ); ?></p>
+            <p class="wpr-settings-group-description"><?php esc_html_e( 'Ignores our Scripts in Respective Optimizers.', 'wpr-addons' ); ?></p>
         </div>
 
         <div class="wpr-settings-group wpr-settings-group-woo">
