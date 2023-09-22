@@ -8369,6 +8369,20 @@ class Wpr_Grid extends Widget_Base {
 					] );
 				}
 			}
+						
+			if ( isset($_GET['wpr_select_category']) ) {
+				
+				if ( $_GET['wpr_select_category'] != '0' ) {
+					// Get category from URL
+					$category = sanitize_text_field($_GET['wpr_select_category']);
+				
+					array_push( $tax_query, [
+						'taxonomy' => 'category',
+						'field' => 'id',
+						'terms' => $category
+					] );
+				}
+			}
 
 			if ( !empty($tax_query) ) {
 				$args['tax_query'] = $tax_query;

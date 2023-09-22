@@ -16235,7 +16235,7 @@ dl.variation dd {
 }
 
 .wpr-product-add-to-cart .available-on-backorder,
-.wpr-product-add-to-cart .out-of-stock,
+/* .wpr-product-add-to-cart .out-of-stock, */
 .wpr-product-add-to-cart .in-stock {
     display: none;
 }
