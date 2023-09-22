@@ -112,6 +112,11 @@ function wpr_register_addons_settings() {
     // Element Toggle
     register_setting( 'wpr-elements-settings', 'wpr-element-toggle-all', [ 'default' => 'on' ]  );
 
+    // Optimizers
+    register_setting ('wpr-optimizer-settings', 'wpr_ignore_wp_rocket_js');
+    register_setting ('wpr-optimizer-settings', 'wpr_ignore_wp_optimize_js');
+    register_setting ('wpr-optimizer-settings', 'wpr_ignore_wp_optimize_css');
+
     // Widgets
     foreach ( Utilities::get_registered_modules() as $title => $data ) {
         $slug = $data[0];
@@ -422,6 +427,7 @@ function wpr_addons_settings_page() {
         <?php submit_button( '', 'wpr-options-button' ); ?>
 
         <div class="wpr-settings-group wpr-settings-navigation">
+            <a href="#optimizers-tab">Optimizers</a> / 
             <a href="#woocommerce-tab">WooCommerce</a> / 
             <?php if ( wpr_fs()->is_plan( 'expert' ) ) : ?>
                 <a href="#cpt-tab">Custom Post Types</a> / 
@@ -429,6 +435,20 @@ function wpr_addons_settings_page() {
             <a href="#metabox-tab">Metabox</a> /  
             <a href="#integrations-tab">Integrations</a> /  
             <a href="#lightbox-tab">Lightbox</a>
+        </div>
+
+        <div class="wpr-settings-group wpr-settings-group-optimizers">
+            <h3 id="optimizers-tab" class="wpr-settings-group-title"><?php esc_html_e( 'Optimizers', 'wpr-addons' ); ?></h3>
+            
+            <div class="wpr-woo-template-info">
+                <div class="wpr-woo-template-title">
+                    <h4><?php echo 'Optimizers'; ?></h4>
+                </div>
+                <input type="checkbox" name="wpr_meta_secondary_image_<?php echo $key ?>" id="wpr_meta_secondary_image_<?php echo $key ?>" <?php echo checked( get_option('wpr_meta_secondary_image_'. $key, 'on'), 'on', false ); ?>>
+                <label for="wpr_meta_secondary_image_<?php echo $key ?>"></label>
+            </div>
+
+            <p class="wpr-settings-group-description"><?php esc_html_e( 'Add secondary Featured image metabox to post types.', 'wpr-addons' ); ?></p>
         </div>
 
         <div class="wpr-settings-group wpr-settings-group-woo">

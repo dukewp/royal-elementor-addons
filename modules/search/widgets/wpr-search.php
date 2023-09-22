@@ -2005,6 +2005,7 @@ class Wpr_Search extends Widget_Base {
 				'title' => esc_html__( 'Search', 'wpr-addons' ),
 				'value' => get_search_query(),
 				'wpr-query-type' => $settings['search_query'],
+				'wpr-taxonomy-type' => isset($settings['query_taxonomy_'. $settings['search_query']]) ? $settings['query_taxonomy_'. $settings['search_query']] : '',
 				'number-of-results' => isset($settings['number_of_results']) && wpr_fs()->can_use_premium_code() ? $settings['number_of_results'] : 2,
 				'ajax-search' => isset($settings['ajax_search']) ? $settings['ajax_search'] : '',
 				'show-description' => isset($settings['show_description']) ? $settings['show_description'] : '',
