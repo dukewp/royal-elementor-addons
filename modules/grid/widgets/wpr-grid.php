@@ -8400,13 +8400,28 @@ class Wpr_Grid extends Widget_Base {
 				
 				if ( $_GET['category'] != '0' ) {
 					// Get category from URL
-					$category = sanitize_text_field($_GET['category']);
-				
-					array_push( $tax_query, [
-						'taxonomy' => 'category',
-						'field' => 'id',
-						'terms' => $category
-					] );
+					if (str_contains($_GET['category'], ',')) {
+						$categories = explode(',', $_GET['category']);
+
+						$tax_query = ['relation' => 'OR'];
+						foreach ($categories as $category) {
+							$category = sanitize_text_field($category);
+
+							array_push( $tax_query, [
+								'taxonomy' => 'category',
+								'field' => 'id',
+								'terms' => $category
+							] );
+						}
+					} else {
+						$category = sanitize_text_field($_GET['category']);
+
+						array_push( $tax_query, [
+							'taxonomy' => 'category',
+							'field' => 'id',
+							'terms' => $category
+						] );
+					}
 				}
 			}
 			
