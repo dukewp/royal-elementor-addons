@@ -8404,23 +8404,51 @@ class Wpr_Grid extends Widget_Base {
 						$categories = explode(',', $_GET['category']);
 
 						$tax_query = ['relation' => 'OR'];
-						foreach ($categories as $category) {
-							$category = sanitize_text_field($category);
+						// $tax_query = [];
 
+						if (isset($_GET['post_tag'])) {
+
+							foreach ($categories as $key=>$category) {
+								array_push($tax_query, ['relation' => 'AND']);
+								$category = sanitize_text_field($category);
+								
+								array_push( $tax_query[0], [
+									'taxonomy' => 'category',
+									'field' => 'id',
+									'terms' => $category
+								] );
+							}
+						} else {
+							foreach ($categories as $category) {
+								$category = sanitize_text_field($category);
+								
+								array_push( $tax_query, [
+									'taxonomy' => 'category',
+									'field' => 'id',
+									'terms' => $category
+								] );
+							}
+						}
+					} else {
+						$category = sanitize_text_field($_GET['category']);
+
+						$tax_query = ['relation' => 'OR'];
+
+						if (isset($_GET['post_tag'])) {
+							array_push($tax_query, ['relation' => 'AND']);
+	
+							array_push( $tax_query[0], [
+								'taxonomy' => 'category',
+								'field' => 'id',
+								'terms' => $category
+							] );
+						} else {
 							array_push( $tax_query, [
 								'taxonomy' => 'category',
 								'field' => 'id',
 								'terms' => $category
 							] );
 						}
-					} else {
-						$category = sanitize_text_field($_GET['category']);
-
-						array_push( $tax_query, [
-							'taxonomy' => 'category',
-							'field' => 'id',
-							'terms' => $category
-						] );
 					}
 				}
 			}
@@ -8430,19 +8458,25 @@ class Wpr_Grid extends Widget_Base {
 				if ( $_GET['post_tag'] != '0' ) {
 					// Get category from URL
 					$taxonomy = sanitize_text_field($_GET['post_tag']);
+					array_push($tax_query[0], ['relation' => 'AND']);
 				
-					array_push( $tax_query, [
+					array_push( $tax_query[0], [
 						'taxonomy' => 'post_tag',
 						'field' => 'id',
-						'terms' => $taxonomy
+						'terms' => $taxonomy,
+						'operator' => 'IN'
 					] );
 				}
 			}
+
+			// var_dump($tax_query);
 
 			if ( !empty($tax_query) ) {
 				$args['tax_query'] = $tax_query;
 			}
 		}
+
+		// var_dump($args['tax_query']);
 
 		return $args;
 	}
@@ -9821,6 +9855,8 @@ class Wpr_Grid extends Widget_Base {
 
 		// Loop: End
 		endif;
+
+		var_dump($this->get_main_query_args()['tax_query']);
 	}
 	
 }
