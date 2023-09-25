@@ -525,6 +525,8 @@ class Plugin {
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
 				'resturl' => get_rest_url() . 'wpraddons/v1',
 				'nonce' => wp_create_nonce( 'wpr-addons-js' ),
+				'addedToCartText' => esc_html__('was added to cart', 'wpr-addons'),
+				'viewCart' => esc_html__('View Cart', 'wpr-addons'),
 				'comparePageID' => get_option('wpr_compare_page'),
 				'comparePageURL' => get_permalink(get_option('wpr_compare_page')),
 				'wishlistPageID' => get_option('wpr_wishlist_page'),
