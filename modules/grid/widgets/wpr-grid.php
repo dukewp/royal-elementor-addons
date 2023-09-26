@@ -8407,12 +8407,10 @@ class Wpr_Grid extends Widget_Base {
 						// $tax_query = [];
 
 						if (isset($_GET['post_tag'])) {
-
 							foreach ($categories as $key=>$category) {
-								array_push($tax_query, ['relation' => 'AND']);
 								$category = sanitize_text_field($category);
 								
-								array_push( $tax_query[0], [
+								array_push( $tax_query, [
 									'taxonomy' => 'category',
 									'field' => 'id',
 									'terms' => $category
