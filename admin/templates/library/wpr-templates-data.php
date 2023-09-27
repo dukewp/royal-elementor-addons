@@ -14,6 +14,22 @@ class WPR_Templates_Data {
 		$is_woo_active = is_plugin_active('woocommerce/woocommerce.php') ? 'true' : 'false';
 
 		return [
+			'job-listing' => [
+				'v1' => [
+					'name' => 'Job Listing',
+					'pages' => 'home,job-listing,job-details,about,blog,contact,',
+					'plugins' => '{}',
+					'tags' => 'job listing vacancy career business consulting human research corporate',
+					'theme-builder' => true,
+					'woo-builder' => false,
+					'off-canvas' => true,
+					'price' => $is_pro_active ? 'free' : 'pro',
+					'expert' => $is_expert ? 'free' : 'expert',
+					'custom-types' => ['wpr-job-listing' => 'wpr_job_listing', 'wpr-job-industries' => 'wpr_job_industry'],
+					'label' => 'new',
+					'priority' => 5,
+				],
+			],
 			'grocery-store' => [
 				'v1' => [
 					'name' => 'Grocery Store - Shop',
