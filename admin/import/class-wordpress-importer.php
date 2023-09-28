@@ -1414,6 +1414,21 @@ class WP_Import extends WP_Importer {
 			'show_in_nav_menus' => true,
 			'hierarchical' => true
 		));
+
+		// Register custom post type
+		register_post_type('wpr_job_listing', array(
+			'public' => true,
+			'has_archive' => true,
+			'show_in_nav_menus' => true,
+			'supports' => array('title', 'editor', 'thumbnail')
+		));
+	
+		// Register custom taxonomy
+		register_taxonomy('wpr_job_industry', 'wpr_job_listing', array(
+			'public' => true,
+			'show_in_nav_menus' => true,
+			'hierarchical' => true
+		));
 	}
 
 	public function run() {

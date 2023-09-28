@@ -6764,7 +6764,7 @@ class Wpr_Media_Grid extends Widget_Base {
 				if ( 'before' === $settings['element_extra_icon_pos'] ) {
 					ob_start();
 					\Elementor\Icons_Manager::render_icon($settings['element_extra_icon'], ['aria-hidden' => 'true']);
-					$extra_icon = ob_get_clean();					 ob_get_clean();
+					$extra_icon = ob_get_clean();
 		
 					echo '<span class="wpr-grid-extra-icon-left">';
 						echo $extra_icon;
@@ -6779,7 +6779,6 @@ class Wpr_Media_Grid extends Widget_Base {
 					ob_start();
 					\Elementor\Icons_Manager::render_icon($settings['element_extra_icon'], ['aria-hidden' => 'true']);
 					$extra_icon = ob_get_clean();
-					ob_get_clean();
 		
 					echo '<span class="wpr-grid-extra-icon-right">';
 						echo $extra_icon;
@@ -6807,7 +6806,7 @@ class Wpr_Media_Grid extends Widget_Base {
 				if ( 'before' === $settings['element_extra_icon_pos'] ) {
 					ob_start();
 					\Elementor\Icons_Manager::render_icon($settings['element_extra_icon'], ['aria-hidden' => 'true']);
-					$extra_icon = ob_get_clean();					 ob_get_clean();
+					$extra_icon = ob_get_clean();
 		
 					echo '<span class="wpr-grid-extra-icon-left">';
 						echo $extra_icon;
@@ -6822,7 +6821,6 @@ class Wpr_Media_Grid extends Widget_Base {
 					ob_start();
 					\Elementor\Icons_Manager::render_icon($settings['element_extra_icon'], ['aria-hidden' => 'true']);
 					$extra_icon = ob_get_clean();
-					ob_get_clean();
 		
 					echo '<span class="wpr-grid-extra-icon-right">';
 						echo $extra_icon;
@@ -6855,7 +6853,7 @@ class Wpr_Media_Grid extends Widget_Base {
 				if ( 'before' === $settings['element_extra_icon_pos'] ) {
 					ob_start();
 					\Elementor\Icons_Manager::render_icon($settings['element_extra_icon'], ['aria-hidden' => 'true']);
-					$extra_icon = ob_get_clean();					 ob_get_clean();
+					$extra_icon = ob_get_clean();
 		
 					echo '<span class="wpr-grid-extra-icon-left">';
 						echo $extra_icon;
@@ -6872,7 +6870,6 @@ class Wpr_Media_Grid extends Widget_Base {
 					ob_start();
 					\Elementor\Icons_Manager::render_icon($settings['element_extra_icon'], ['aria-hidden' => 'true']);
 					$extra_icon = ob_get_clean();
-					ob_get_clean();
 		
 					echo '<span class="wpr-grid-extra-icon-right">';
 						echo $extra_icon;
@@ -7018,7 +7015,6 @@ class Wpr_Media_Grid extends Widget_Base {
 					ob_start();
 					\Elementor\Icons_Manager::render_icon($settings['element_extra_icon'], ['aria-hidden' => 'true']);
 					$extra_icon = ob_get_clean();
-					ob_get_clean();
 		
 					echo '<span class="wpr-grid-extra-icon-left">';
 						echo $extra_icon;
@@ -7039,7 +7035,6 @@ class Wpr_Media_Grid extends Widget_Base {
 					ob_start();
 					\Elementor\Icons_Manager::render_icon($settings['element_extra_icon'], ['aria-hidden' => 'true']);
 					$extra_icon = ob_get_clean();
-					ob_get_clean();
 		
 					echo '<span class="wpr-grid-extra-icon-right">';
 						echo $extra_icon;

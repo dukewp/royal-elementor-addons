@@ -425,7 +425,7 @@
                 <field name="Search: Placeholder" editor_type="LINE">search_placeholder</field>
                 <field name="Search: Aria Label" editor_type="LINE">search_aria_label</field>
                 <field name="Search: Button Text" editor_type="LINE">search_btn_text</field>
-                <field name="Search: All Cat Text" editor_type="LINE">all_cat_text</field>
+                <field name="Search: All Text" editor_type="LINE">all_cat_text</field>
                 <field name="Search: Load More Text" editor_type="LINE">pagination_load_more_text</field>
                 <field name="Search: Pagination Finish Text" editor_type="LINE">pagination_finish_text</field>
             </fields>

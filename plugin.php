@@ -525,6 +525,8 @@ class Plugin {
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
 				'resturl' => get_rest_url() . 'wpraddons/v1',
 				'nonce' => wp_create_nonce( 'wpr-addons-js' ),
+				'addedToCartText' => esc_html__('was added to cart', 'wpr-addons'),
+				'viewCart' => esc_html__('View Cart', 'wpr-addons'),
 				'comparePageID' => get_option('wpr_compare_page'),
 				'comparePageURL' => get_permalink(get_option('wpr_compare_page')),
 				'wishlistPageID' => get_option('wpr_wishlist_page'),
@@ -876,11 +878,12 @@ class Plugin {
 	}
 
     public function promote_premium_widgets($config) {
-		$config['promotionWidgets'] = [];
+
+		// $config['promotionWidgets'] = [];
 		$category = Utilities::is_theme_builder_template() ? 'wpr-woocommerce-builder-widgets' : 'wpr-premium-widgets';
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {
-			$config['promotionWidgets'] = [
+			$promotion_widgets = [
 				[
 					'name' => 'wpr-woo-category-grid',
 					'title' => __('Woo Category Grid', 'wpr-addons'),
@@ -966,6 +969,7 @@ class Plugin {
 				],
 			];
 
+			$config['promotionWidgets'] = array_merge( $config['promotionWidgets'], $promotion_widgets );
 			$config['promotionWidgets'] = array_merge( $config['promotionWidgets'], $expert_widgets );
 		}
 

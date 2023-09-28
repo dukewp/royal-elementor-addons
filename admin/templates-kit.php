@@ -666,16 +666,20 @@ function setup_wpr_templates( $kit ) {
 
     // Custom Post Types & Taxonomies
     if ( isset($get_custom_types) && wpr_fs()->is_plan( 'expert' ) ) {
+        $index = 0;
+
         foreach ($get_custom_types as $label => $slug) {
             $label = str_replace('wpr-', '', $label);
 
-            if ( substr_count( $slug,'_') > 1 ) {
+            if ( 0 > $index ) {
                 $custom_type_archive_conditions[] = '"user-archive-'. $kit .'-'. $label .'":["archive/'. $slug .'/all"]';
             } else {
                 $custom_type_archive_conditions[] = '"user-archive-'. $kit .'-'. $label .'":["archive/'. $slug .'"]';
                 $custom_type_single_conditions[] = '"user-single-'. $kit .'-'. $label .'":["single/'. $slug.'/all"]';
                 add_elementor_cpt_support( $slug );
             }
+
+            $index++;
         }
         
         $custom_type_archive_conditions = implode(',',$custom_type_archive_conditions);

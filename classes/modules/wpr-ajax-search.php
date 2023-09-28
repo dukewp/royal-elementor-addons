@@ -38,8 +38,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         
         $tax_query = '';
 
-        if ( $_POST['wpr_category'] != false && $_POST['wpr_category'] != '' ) {
-            if ( isset($_POST['wpr_option_post_type']) && !empty($_POST['wpr_option_post_type']) ) {
+        if ( $_POST['wpr_category'] != false && $_POST['wpr_category'] != '' ) {   
                 $tax_query = array(
                     array(
                         'taxonomy' => $_POST['wpr_option_post_type'],
@@ -47,15 +46,65 @@ if ( ! defined( 'ABSPATH' ) ) {
                         'terms'    => sanitize_text_field($_POST['wpr_category']),
                     ),
                 );
-            } else {
+
+            // if ( isset($_POST['wpr_option_post_type']) && !empty($_POST['wpr_option_post_type']) ) {
+            //     $tax_query = array(
+            //         array(
+            //             'taxonomy' => $_POST['wpr_option_post_type'],
+            //             'field'    => 'term_id',
+            //             'terms'    => sanitize_text_field($_POST['wpr_category']),
+            //         ),
+            //     );
+            // } else {
+            //     $tax_query = array(
+            //         array(
+            //             'taxonomy' => $_POST['wpr_query_type'] == 'product' ? $_POST['wpr_query_type'] . '_cat' : 'category',
+            //             'field'    => 'term_id',
+            //             'terms'    => sanitize_text_field($_POST['wpr_category']),
+            //         ),
+            //     );
+            // }
+        } else if ( $_POST['wpr_category'] == 0 && $_POST['wpr_query_type'] != 'all' ) {
+            if ( !empty($_POST['wpr_option_post_type']) ) {
                 $tax_query = array(
                     array(
-                        'taxonomy' => $_POST['wpr_query_type'] == 'product' ? $_POST['wpr_query_type'] . '_cat' : 'category',
+                        'taxonomy' => $_POST['wpr_option_post_type'],
                         'field'    => 'term_id',
                         'terms'    => sanitize_text_field($_POST['wpr_category']),
                     ),
                 );
-            }
+            } else { 
+                // Get the string from the POST data
+                $taxonomy_type_string = $_POST['wpr_taxonomy_type'];
+            
+                // Check if the string contains spaces
+                if (strpos($taxonomy_type_string, ' ') !== false) {
+                    // Split the string into an array based on spaces
+                    $taxonomy_types = explode(' ', $taxonomy_type_string);
+            
+                
+                    $tax_query = [
+                        'relation' => 'OR'
+                    ];
+                    
+                    foreach( $taxonomy_types as $taxonomy_type ) {
+                        array_push($tax_query, [
+                            'taxonomy' => $taxonomy_type,
+                            'operator'    => 'EXISTS'
+                        ]);
+                    }
+                } else {
+                    // If there are no spaces, leave it as a single-item array
+                    $taxonomy_types = $taxonomy_type_string;
+
+                    $tax_query = array(
+                        array(
+                            'taxonomy' => $_POST['wpr_taxonomy_type'],
+                            'operator'    => 'EXISTS',
+                        ),
+                    );
+                }
+            } 
         }
 
         $the_query = new \WP_Query( 

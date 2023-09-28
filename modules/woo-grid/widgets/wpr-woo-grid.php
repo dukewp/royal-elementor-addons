@@ -268,6 +268,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'excerpt' => esc_html__( 'Excerpt', 'wpr-addons' ),
 			'product_cat' => esc_html__( 'Categories', 'wpr-addons' ),
 			'product_tag' => esc_html__( 'Tags', 'wpr-addons' ),
+			'pro-cfa' => esc_html__( 'Custom Fields/Attributes', 'wpr-addons' ),
 			'status' => esc_html__( 'Status', 'wpr-addons' ),
 			'price' => esc_html__( 'Price', 'wpr-addons' ),
 			'pro-sd' => esc_html__( 'Sale Dates (Pro)', 'wpr-addons' ),
@@ -279,6 +280,34 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'separator' => esc_html__( 'Separator', 'wpr-addons' ),
 			'pro-lk' => esc_html__( 'Likes (Pro)', 'wpr-addons' ),
 			'pro-shr' => esc_html__( 'Sharing (Pro)', 'wpr-addons' ),
+		];
+	}
+
+	public function add_repeater_args_element_custom_field() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
+		];
+	}
+
+	public function add_repeater_args_element_custom_field_btn_link() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
+		];
+	}
+
+	public function add_repeater_args_element_custom_field_new_tab() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
+		];
+	}
+
+	public function add_repeater_args_element_custom_field_style() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
 		];
 	}
 
@@ -497,6 +526,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 	
 	public function add_section_style_sharing() {}
 	
+	public function add_section_style_custom_field1() {}
+	
+	public function add_section_style_custom_field2() {}
+	
 	public function add_control_grid_item_even_bg_color() {}
 	
 	public function add_control_grid_item_even_border_color() {}
@@ -590,9 +623,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 			]
 		);
-
-		// Get Available Meta Keys
-		// $post_meta_keys = Utilities::get_custom_meta_keys();
 
 		$this->add_control_query_selection();
 
@@ -1577,6 +1607,14 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'separator' => 'after'
 			]
 		);
+
+		$repeater->add_control( 'element_custom_field', $this->add_repeater_args_element_custom_field() );
+
+		$repeater->add_control( 'element_custom_field_btn_link', $this->add_repeater_args_element_custom_field_btn_link() );
+
+		$repeater->add_control( 'element_custom_field_style', $this->add_repeater_args_element_custom_field_style() );
+
+		$repeater->add_control( 'element_custom_field_new_tab', $this->add_repeater_args_element_custom_field_new_tab() );
 
 		$repeater->add_control( 'element_like_icon', $this->add_repeater_args_element_like_icon() );
 
@@ -3259,6 +3297,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'Grid Item Even/Odd Background Color',
 			'Title, Category, Read More Advanced Link Hover Animation',
 			'Open Links in New Tab',
+			'Custom Fields/Attributes Support (Expert)',
 			'Wishlist & Compare Buttons (Expert)'
 		] );
 		
@@ -8253,6 +8292,13 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$this->end_controls_section();
 
+		// Styles =======================
+		// Section: Custom Field Style 1
+		$this->add_section_style_custom_field1();
+
+		// Styles =======================
+		// Section: Custom Field Style 2
+		$this->add_section_style_custom_field2();
 	}
 
 
@@ -8497,7 +8543,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 			} else {
 				$posts_per_page = intval(get_option('wpr_woo_shop_ppp', 9));
 			}
-
 			$args = $wp_query->query_vars;
 			$args['tax_query'] = $this->get_tax_query_args();
 			$args['meta_query'] = $this->get_meta_query_args();
@@ -8591,11 +8636,23 @@ class Wpr_Woo_Grid extends Widget_Base {
 		} else {
 			$settings = $this->get_settings();
 
-			if ( isset($_GET['category']) ) {
-				
-				if ( $_GET['category'] != '0' ) {
+			if ( isset($_GET['wpr_select_product_cat']) ) {
+				if ( $_GET['wpr_select_product_cat'] != '0' ) {
 					// Get category from URL
-					$category = sanitize_text_field($_GET['category']);
+					$category = sanitize_text_field($_GET['wpr_select_product_cat']);
+				
+					array_push( $tax_query, [
+						'taxonomy' => 'product_cat',
+						'field' => 'id',
+						'terms' => $category
+					] );
+				}
+			}
+
+			if ( isset($_GET['product_cat']) ) {
+				if ( $_GET['product_cat'] != '0' ) {
+					// Get category from URL
+					$category = sanitize_text_field($_GET['product_cat']);
 				
 					array_push( $tax_query, [
 						'taxonomy' => 'product_cat',
@@ -8926,6 +8983,11 @@ class Wpr_Woo_Grid extends Widget_Base {
 				}
 			echo '</div>';
 		echo '</div>';
+	}
+
+	// Render Custom Fields/Attributes
+	public function render_product_custom_fields( $settings, $class, $post_id ) {
+
 	}
 
 	// Render Post Likes
@@ -9456,7 +9518,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 	// Get Elements
 	public function get_elements( $type, $settings, $class, $post_id ) {
-		if ( 'pro-lk' == $type || 'pro-shr' == $type || 'pro-sd' == $type || 'pro-ws' == $type || 'pro-cm' == $type ) {
+		if ( 'pro-lk' == $type || 'pro-shr' == $type || 'pro-sd' == $type || 'pro-ws' == $type || 'pro-cm' == $type || 'pro-cfa' == $type ) {
 			$type = 'title';
 		}
 
@@ -9521,6 +9583,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 				if ( wpr_fs()->is_plan( 'expert' ) ) {
 					$this->render_product_compare_button( $settings, $class );
 				}
+				break;
+			case 'custom-field':
+				$this->render_product_custom_fields( $settings, $class, $post_id );
 				break;
 		}
 
@@ -9817,7 +9882,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 				    if ( 'yes' === $settings['pagination_first_last'] ) {
 				    	if ( $paged >= 2 ) {
-					    	echo '<a href="'. esc_url(get_pagenum_link( $paged + 1, true )) .'" class="wpr-first-page">';
+					    	echo '<a href="'. esc_url(get_pagenum_link( 1, true )) .'" class="wpr-first-page">';
+					    	// echo '<a href="'. esc_url(get_pagenum_link( $paged + 1, true )) .'" class="wpr-first-page">';
 					    	// echo '<a href="'. esc_url(substr(get_pagenum_link( $paged + 1, true ), 0, strpos(get_pagenum_link( $paged + 1, true ), '?orderby'))) .'" class="wpr-first-page">';
 					    		echo Utilities::get_wpr_icon( $settings['pagination_fl_icon'], 'left' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					    		echo '<span>'. esc_html($settings['pagination_first_text']) .'</span>';

@@ -69,7 +69,8 @@ class Wpr_Form_Builder extends Widget_Base {
 			'email' => 'Email',
 			'redirect' => 'Redirect',
 			'pro-sb' => 'Submission (Pro)',
-			'pro-mch' => 'Mailchimp (Pro)'
+			'pro-mch' => 'Mailchimp (Pro)',
+			'pro-wh' => 'Webhook (Pro)'
 		];
 
 		return $actions_options;
@@ -99,6 +100,40 @@ class Wpr_Form_Builder extends Widget_Base {
 					self_admin_url( 'edit.php?post_type=wpr_submissions' )
 				),
 				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+			]
+		);
+
+		$widget->end_controls_section();
+	}
+
+	public function register_settings_section_webhook( $widget ) {
+		$widget->start_controls_section(
+			$this->get_control_id( 'section_webhook' ),
+			[
+				'label' => esc_html__( 'Webhook', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+				'condition' => [
+					'submit_actions' => 'webhook',
+				],
+			]
+		);
+
+		$widget->add_control(
+			'webhook_url',
+			[
+				'label' => esc_html__( 'Webhook URL', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'placeholder' => esc_html__( 'https://your-webhook-url.com', 'wpr-addons' ),
+				'ai' => [
+					'active' => false,
+				],
+				'dynamic' => [
+					'active' => true,
+				],
+				'label_block' => true,
+				'separator' => 'before',
+				'description' => esc_html__( 'Enter the webhook URL (e.g. Zapier) that will receive the submitted data.', 'wpr-addons' ),
+				'render_type' => 'none',
 			]
 		);
 
@@ -1382,6 +1417,8 @@ class Wpr_Form_Builder extends Widget_Base {
 		$this->register_settings_section_submissions($this);
 
 		$this->register_settings_section_email($this);
+
+		$this->register_settings_section_webhook($this);
 
 		$this->register_settings_section_redirect($this);
 
@@ -3254,7 +3291,9 @@ class Wpr_Form_Builder extends Widget_Base {
 		// Section: Pro Features
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'wpr-form-builder', [
 			'Unlimited number of fields',
-			'Submission and mailchimp actions'
+			'Submission action',
+			'Mailchimp action',
+			'Webhook action'
 		] );
     }
 
@@ -3555,6 +3594,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		update_option('wpr_meta_keys_'. $this->get_id(), $instance['form_metadata']);
 		update_option('wpr_referrer_'. $this->get_id(), home_url( $_SERVER['REQUEST_URI'] ));
 		update_option('wpr_referrer_title_'. $this->get_id(), get_the_title($post->ID));
+		update_option('wpr_webhook_url_'. $this->get_id(), $instance['webhook_url']);
 
 		$emailField      = isset($instance['email_field']) ? $instance['email_field'] : '';
 		$firstNameField  = isset($instance['first_name_field']) ? $instance['first_name_field'] : '';
@@ -3575,7 +3615,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		];
 
 		$submit_actions = array_filter($instance['submit_actions'], function($value) {
-			return $value !== 'pro-sb' && $value !== 'pro-mch';
+			return $value !== 'pro-sb' && $value !== 'pro-mch' && $value !== 'pro-wh';
 		});
 		$submit_actions = array_values($submit_actions);
 

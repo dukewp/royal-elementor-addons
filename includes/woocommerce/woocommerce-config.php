@@ -34,12 +34,15 @@ class WPR_WooCommerce_Config {
 
 		// Fix Theme Builder issues
 		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'maybe_init_cart' ] );
-		add_action( 'init', [ $this, 'register_wc_hooks' ], 5 );
+
+		if ( !is_admin() ) {
+			add_action( 'init', [ $this, 'register_wc_hooks' ], 5 );
+		}
 
 		if ( is_admin() ) {
 			$template = isset($_GET['post']) ? sanitize_text_field(wp_unslash($_GET['post'])) : '';
 
-			if ( $template_type = Utilities::get_wpr_template_type($template) ) { // WHAT IS THIS ?
+			if ( $template_type = Utilities::get_wpr_template_type($template) ) {
 				add_action( 'init', [ $this, 'register_wc_hooks' ], 5 );
 			}
 		}

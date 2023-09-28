@@ -102,6 +102,11 @@ function wpr_register_addons_settings() {
     register_setting( 'wpr-wh-settings', 'wpr_wl_hide_free_pro_tab' );
     register_setting( 'wpr-wh-settings', 'wpr_wl_hide_white_label_tab' );
 
+    // Optimizers
+    register_setting ('wpr-settings', 'wpr_ignore_wp_rocket_js');
+    register_setting ('wpr-settings', 'wpr_ignore_wp_optimize_js');
+    register_setting ('wpr-settings', 'wpr_ignore_wp_optimize_css');
+
     // Extensions
     register_setting('wpr-extension-settings', 'wpr-particles');
     register_setting('wpr-extension-settings', 'wpr-parallax-background');
@@ -422,6 +427,7 @@ function wpr_addons_settings_page() {
         <?php submit_button( '', 'wpr-options-button' ); ?>
 
         <div class="wpr-settings-group wpr-settings-navigation">
+            <a href="#optimizers-tab">Optimizers</a> / 
             <a href="#woocommerce-tab">WooCommerce</a> / 
             <?php if ( wpr_fs()->is_plan( 'expert' ) ) : ?>
                 <a href="#cpt-tab">Custom Post Types</a> / 
@@ -429,6 +435,36 @@ function wpr_addons_settings_page() {
             <a href="#metabox-tab">Metabox</a> /  
             <a href="#integrations-tab">Integrations</a> /  
             <a href="#lightbox-tab">Lightbox</a>
+        </div>
+
+        <div class="wpr-settings-group wpr-settings-group-optimizers">
+            <h3 id="optimizers-tab" class="wpr-settings-group-title"><?php esc_html_e( 'Optimizers', 'wpr-addons' ); ?></h3>
+            
+            <div class="wpr-woo-template-info">
+                <div class="wpr-woo-template-title">
+                    <h4><?php echo 'WP Rocket JS'; ?></h4>
+                </div>
+                <input type="checkbox" name="wpr_ignore_wp_rocket_js" id="wpr_ignore_wp_rocket_js" <?php echo checked( get_option('wpr_ignore_wp_rocket_js', 'on'), 'on', false ); ?>>
+                <label for="wpr_ignore_wp_rocket_js"></label>
+            </div>
+            
+            <div class="wpr-woo-template-info">
+                <div class="wpr-woo-template-title">
+                    <h4><?php echo 'WP Optimize JS'; ?></h4>
+                </div>
+                <input type="checkbox" name="wpr_ignore_wp_optimize_js" id="wpr_ignore_wp_optimize_js" <?php echo checked( get_option('wpr_ignore_wp_optimize_js', 'on'), 'on', false ); ?>>
+                <label for="wpr_ignore_wp_optimize_js"></label>
+            </div>
+            
+            <div class="wpr-woo-template-info">
+                <div class="wpr-woo-template-title">
+                    <h4><?php echo 'WP Optimize CSS'; ?></h4>
+                </div>
+                <input type="checkbox" name="wpr_ignore_wp_optimize_css" id="wpr_ignore_wp_optimize_css" <?php echo checked( get_option('wpr_ignore_wp_optimize_css', 'on'), 'on', false ); ?>>
+                <label for="wpr_ignore_wp_optimize_css"></label>
+            </div>
+
+            <p class="wpr-settings-group-description"><?php esc_html_e( 'Ignores our Scripts in Respective Optimizers.', 'wpr-addons' ); ?></p>
         </div>
 
         <div class="wpr-settings-group wpr-settings-group-woo">
@@ -811,6 +847,7 @@ function wpr_addons_settings_page() {
                     <li><span>Magazine Grid/Slider Widget</span></li>
                     <li><span>Basic Timeline Widget</span></li>
                     <li><span>Basic Slider Widget</span></li>
+                    <li><span>Basic Form Builder Widget</span></li>
                     <li><span>Offcanvas Content</span></li>
                     <li><span>Instagram Feed</span></li>
                     <li><span>Twitter Feed</span></li>
@@ -1012,6 +1049,14 @@ function wpr_addons_settings_page() {
                             <li>Autoplay options</li>
                             <li>Advanced Navigation Positioning</li>
                             <li>Advanced Pagination Positioning</li>
+                        </ul>
+                    </li>
+                    <li><span>Advanced Form Builder Widget</span> 
+                        <ul>
+                            <li>Unlimited number of fields</li>
+                            <li>Submission action</li>
+                            <li>Mailchimp action</li>
+                            <li>Webhook action</li>
                         </ul>
                     </li>
                     <li><span>Advanced Offcanvas Menu</span>

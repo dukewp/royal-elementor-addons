@@ -8369,6 +8369,20 @@ class Wpr_Grid extends Widget_Base {
 					] );
 				}
 			}
+						
+			if ( isset($_GET['wpr_select_category']) ) {
+				
+				if ( $_GET['wpr_select_category'] != '0' ) {
+					// Get category from URL
+					$category = sanitize_text_field($_GET['wpr_select_category']);
+				
+					array_push( $tax_query, [
+						'taxonomy' => 'category',
+						'field' => 'id',
+						'terms' => $category
+					] );
+				}
+			}
 
 			if ( !empty($tax_query) ) {
 				$args['tax_query'] = $tax_query;
@@ -9714,20 +9728,22 @@ class Wpr_Grid extends Widget_Base {
 			$this->get_elements_by_location( 'above', $settings, get_the_ID() );
 
 			// Media
-			echo '<div class="wpr-grid-media-wrap'. esc_attr($this->get_image_effect_class( $settings )) .' " data-overlay-link="'. esc_attr( $settings['overlay_post_link'] ) .'">';
-				// Post Thumbnail
-				$this->render_post_thumbnail( $settings, get_the_ID() );
+			if ( has_post_thumbnail() ) {
+				echo '<div class="wpr-grid-media-wrap'. esc_attr($this->get_image_effect_class( $settings )) .' " data-overlay-link="'. esc_attr( $settings['overlay_post_link'] ) .'">';
+					// Post Thumbnail
+					$this->render_post_thumbnail( $settings, get_the_ID() );
 
-				// Media Hover
-				echo '<div class="wpr-grid-media-hover wpr-animation-wrap">';
-					// Media Overlay
-					$this->render_media_overlay( $settings );
+					// Media Hover
+					echo '<div class="wpr-grid-media-hover wpr-animation-wrap">';
+						// Media Overlay
+						$this->render_media_overlay( $settings );
 
-					// Content: Over Media
-					$this->get_elements_by_location( 'over', $settings, get_the_ID() );
+						// Content: Over Media
+						$this->get_elements_by_location( 'over', $settings, get_the_ID() );
 
+					echo '</div>';
 				echo '</div>';
-			echo '</div>';
+			}
 
 			// Content: Below Media
 			$this->get_elements_by_location( 'below', $settings, get_the_ID() );
