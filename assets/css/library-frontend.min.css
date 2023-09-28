@@ -592,7 +592,7 @@
 
 /* Sections Grid - Modified */
 .wpr-tplib-sections-grid .wpr-tplib-template-media {
-    min-height: 45px;
+    min-height: 90px;
 }
 
 .wpr-tplib-sections-grid .wpr-tplib-template-footer,
@@ -602,11 +602,16 @@
 
 .wpr-tplib-sections-grid .wpr-tplib-template-wrap:hover .wpr-tplib-template-footer {
     display: flex;
+    width: 100%;
     position: absolute;
     bottom: 0;
     right: 0;
     z-index: 99;
-    border-left: 1px solid #efefef;
+    height: 36px;
+}
+
+.wpr-tplib-sections-grid .wpr-tplib-template-media-overlay i {
+    margin-top: -17px;
 }
 
 @media screen and ( max-width: 1919px ) {
