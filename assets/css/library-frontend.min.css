@@ -600,6 +600,10 @@
     display: none;
 }
 
+.wpr-tplib-sections-grid .wpr-tplib-template-footer {
+    align-content: flex-end;
+}
+
 .wpr-tplib-sections-grid .wpr-tplib-template-wrap:hover .wpr-tplib-template-footer {
     display: flex;
     width: 100%;
