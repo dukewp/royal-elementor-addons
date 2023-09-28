@@ -3297,6 +3297,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'Grid Item Even/Odd Background Color',
 			'Title, Category, Read More Advanced Link Hover Animation',
 			'Open Links in New Tab',
+			'Custom Fields/Attributes Support (Expert)',
 			'Wishlist & Compare Buttons (Expert)'
 		] );
 		
