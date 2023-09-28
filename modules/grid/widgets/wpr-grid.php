@@ -8403,7 +8403,7 @@ class Wpr_Grid extends Widget_Base {
 					if (str_contains($_GET['category'], ',')) {
 						$categories = explode(',', $_GET['category']);
 
-						$tax_query = ['relation' => 'OR'];
+						$tax_query = ['relation' => get_option('wpr_filter_relation')];
 						// $tax_query = [];
 
 						if (isset($_GET['post_tag'])) {
@@ -8430,10 +8430,10 @@ class Wpr_Grid extends Widget_Base {
 					} else {
 						$category = sanitize_text_field($_GET['category']);
 
-						$tax_query = ['relation' => 'OR'];
+						$tax_query = ['relation' => get_option('wpr_filter_relation')];
 
 						if (isset($_GET['post_tag'])) {
-							array_push($tax_query, ['relation' => 'AND']);
+							array_push($tax_query, ['relation' => get_option('wpr_filter_relation')]);
 	
 							array_push( $tax_query[0], [
 								'taxonomy' => 'category',
@@ -8456,25 +8456,33 @@ class Wpr_Grid extends Widget_Base {
 				if ( $_GET['post_tag'] != '0' ) {
 					// Get category from URL
 					$taxonomy = sanitize_text_field($_GET['post_tag']);
-					array_push($tax_query[0], ['relation' => 'AND']);
+					
+					$taxonomy = explode(',', $_GET['post_tag']);
 				
 					array_push( $tax_query[0], [
 						'taxonomy' => 'post_tag',
 						'field' => 'id',
-						'terms' => $taxonomy,
+						'terms' => $taxonomy[0],
 						'operator' => 'IN'
 					] );
+
+					foreach ( $taxonomy as $key=>$value ) {
+						if ( $key != 0 ) {
+							array_push( $tax_query[0], [
+								'taxonomy' => 'post_tag',
+								'field' => 'id',
+								'terms' => $value,
+								'operator' => 'IN'
+							] );
+						}
+					}
 				}
 			}
-
-			// var_dump($tax_query);
 
 			if ( !empty($tax_query) ) {
 				$args['tax_query'] = $tax_query;
 			}
 		}
-
-		// var_dump($args['tax_query']);
 
 		return $args;
 	}
