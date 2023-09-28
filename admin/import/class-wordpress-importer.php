@@ -1424,7 +1424,7 @@ class WP_Import extends WP_Importer {
 		));
 	
 		// Register custom taxonomy
-		register_taxonomy('wpr_job_industry', 'wpr_directory', array(
+		register_taxonomy('wpr_job_industry', 'wpr_job_listing', array(
 			'public' => true,
 			'show_in_nav_menus' => true,
 			'hierarchical' => true
