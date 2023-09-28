@@ -1097,6 +1097,54 @@ class Wpr_Grid extends Widget_Base {
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'layout_select', ['pro-ms'] );
 
+		$this->add_control(
+			'stick_last_element_to_bottom',
+			[
+				'label' => esc_html__( 'Last Element to Bottom', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => '',
+				'render_type' => 'template',
+				// 'separator' => 'before',
+				'condition' => [
+					'layout_select' => 'fitRows',
+				]
+			]
+		);
+
+		$this->add_control(
+            'last_element_position',
+            [
+                'label' => esc_html__( 'Last Element Position', 'wpr-addons' ),
+                'type' => Controls_Manager::CHOOSE,
+                'label_block' => false,
+                'default' => 'left',
+                'options' => [
+                    'left' => [
+                        'title' => esc_html__( 'Left', 'wpr-addons' ),
+                        'icon' => 'eicon-h-align-left',
+                    ],
+                    'center' => [
+                        'title' => esc_html__( 'Center', 'wpr-addons' ),
+                        'icon' => 'eicon-h-align-center',
+                    ],
+                    'right' => [
+                        'title' => esc_html__( 'Right', 'wpr-addons' ),
+                        'icon' => 'eicon-h-align-right',
+                    ]
+                ],
+				'selectors_dictionary' => [
+					'left' => 'left: 0; right: auto;',
+					'center' => 'left: 50%; transform: translateX(-50%);',
+					'right' => 'left: auto; right: 0;'
+				],
+				'selectors' => [
+					'{{WRAPPER}}.wpr-grid-last-element-yes .wpr-grid-item-below-content>div:last-child' => '{{VALUE}}',
+				],
+				'render_type' => 'template',
+				'separator' => 'after'
+            ]
+        );
+
 		$this->add_group_control(
 			Group_Control_Image_Size::get_type(),
 			[
@@ -9538,6 +9586,12 @@ class Wpr_Grid extends Widget_Base {
 			}
 		}
 
+		if ( 'fitRows' == $settings['layout_select'] ) {
+			$stick_last_element_to_bottom = $settings['stick_last_element_to_bottom'];
+		} else {
+			$stick_last_element_to_bottom = 'no';
+		}
+
 		$gutter_hr_widescreen = isset($settings['layout_gutter_hr_widescreen']['size']) ? $settings['layout_gutter_hr_widescreen']['size'] : $settings['layout_gutter_hr']['size'];
 		$gutter_hr_desktop = $settings['layout_gutter_hr']['size'];
 		$gutter_hr_laptop = isset($settings['layout_gutter_hr_laptop']['size']) ? $settings['layout_gutter_hr_laptop']['size'] : $gutter_hr_desktop;
@@ -9556,6 +9610,7 @@ class Wpr_Grid extends Widget_Base {
 
 		$layout_settings = [
 			'layout' => $settings['layout_select'],
+			'stick_last_element_to_bottom' => $stick_last_element_to_bottom,
 			'columns_desktop' => $settings['layout_columns'],
 			'gutter_hr' => $gutter_hr_desktop,
 			'gutter_hr_mobile' => $gutter_hr_mobile,

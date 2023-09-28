@@ -879,7 +879,10 @@ class Plugin {
 
     public function promote_premium_widgets($config) {
 
-		// $config['promotionWidgets'] = [];
+		if ( is_plugin_active('elementor-pro/elementor-pro.php') ) {
+			$config['promotionWidgets'] = [];
+		}
+
 		$category = Utilities::is_theme_builder_template() ? 'wpr-woocommerce-builder-widgets' : 'wpr-premium-widgets';
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {
@@ -915,6 +918,8 @@ class Plugin {
 					'categories' => '["'. $category .'"]',
 				],
 			];
+			
+			$config['promotionWidgets'] = array_merge( $config['promotionWidgets'], $promotion_widgets );
 		}
 		
 		if ( !wpr_fs()->is_plan( 'expert' ) ) {
@@ -969,7 +974,6 @@ class Plugin {
 				],
 			];
 
-			$config['promotionWidgets'] = array_merge( $config['promotionWidgets'], $promotion_widgets );
 			$config['promotionWidgets'] = array_merge( $config['promotionWidgets'], $expert_widgets );
 		}
 
