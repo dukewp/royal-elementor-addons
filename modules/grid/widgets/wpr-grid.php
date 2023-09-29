@@ -8456,86 +8456,45 @@ class Wpr_Grid extends Widget_Base {
 
 		if ( isset($args['tax_query']) ) {
 
-			$tax_query = [];
+			$tax_query = ['relation' => get_option('wpr_filter_relation')];
+			$prev_cleaned_key = '';
+
+			// Iterate through the $_GET array
+			foreach ($_GET as $key => $value) {
+				// Check if the variable name contains "wpr_gf_"
+				if (strpos($key, 'wpr_gf_') !== false) {
+					// Need to setup logic to get relation from filters separately
+					$cleanedKey = str_replace('wpr_gf_', '', $key);
+					$prev_cleaned_key = $cleanedKey;
+
+					if ( isset($_GET[$key]) ) {
+						
+						if ( $_GET[$key] != '0' ) {
+							// Get category from URL
+							if (str_contains($_GET[$key], ',')) {
+								$categories = explode(',', $_GET[$key]);
+
+								foreach ($categories as $category) {
+									$category = sanitize_text_field($category);
+									
+									array_push( $tax_query, [
+										'taxonomy' => $cleanedKey,
+										'field' => 'id',
+										'terms' => $category
+									] );
+								}
+							} else {
+								$category = sanitize_text_field($_GET[$key]);
+		
+								if (isset($_GET[$key])) {
 			
-			if ( isset($_GET['category']) ) {
-				
-				if ( $_GET['category'] != '0' ) {
-					// Get category from URL
-					if (str_contains($_GET['category'], ',')) {
-						$categories = explode(',', $_GET['category']);
-
-						$tax_query = ['relation' => get_option('wpr_filter_relation')];
-						// $tax_query = [];
-
-						if (isset($_GET['post_tag'])) {
-							foreach ($categories as $key=>$category) {
-								$category = sanitize_text_field($category);
-								
-								array_push( $tax_query, [
-									'taxonomy' => 'category',
-									'field' => 'id',
-									'terms' => $category
-								] );
+									array_push( $tax_query, [
+										'taxonomy' => $cleanedKey,
+										'field' => 'id',
+										'terms' => $category
+									] );
+								} 
 							}
-						} else {
-							foreach ($categories as $category) {
-								$category = sanitize_text_field($category);
-								
-								array_push( $tax_query, [
-									'taxonomy' => 'category',
-									'field' => 'id',
-									'terms' => $category
-								] );
-							}
-						}
-					} else {
-						$category = sanitize_text_field($_GET['category']);
-
-						$tax_query = ['relation' => get_option('wpr_filter_relation')];
-
-						if (isset($_GET['post_tag'])) {
-							array_push($tax_query, ['relation' => get_option('wpr_filter_relation')]);
-	
-							array_push( $tax_query[0], [
-								'taxonomy' => 'category',
-								'field' => 'id',
-								'terms' => $category
-							] );
-						} else {
-							array_push( $tax_query, [
-								'taxonomy' => 'category',
-								'field' => 'id',
-								'terms' => $category
-							] );
-						}
-					}
-				}
-			}
-			
-			if ( isset($_GET['post_tag']) ) {
-				
-				if ( $_GET['post_tag'] != '0' ) {
-					// Get category from URL
-					$taxonomy = sanitize_text_field($_GET['post_tag']);
-					
-					$taxonomy = explode(',', $_GET['post_tag']);
-				
-					array_push( $tax_query[0], [
-						'taxonomy' => 'post_tag',
-						'field' => 'id',
-						'terms' => $taxonomy[0],
-						'operator' => 'IN'
-					] );
-
-					foreach ( $taxonomy as $key=>$value ) {
-						if ( $key != 0 ) {
-							array_push( $tax_query[0], [
-								'taxonomy' => 'post_tag',
-								'field' => 'id',
-								'terms' => $value,
-								'operator' => 'IN'
-							] );
 						}
 					}
 				}
@@ -9341,7 +9300,6 @@ class Wpr_Grid extends Widget_Base {
 			echo '</li>';
 		}
 		
-		// var_dump(get_the_archive_title());
 		$q = get_queried_object();
 		// category title : custom post type archive title
 		$category_name = is_category() ? strtolower($q->name) : 'no-category';
