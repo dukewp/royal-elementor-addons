@@ -102,6 +102,11 @@ function wpr_register_addons_settings() {
     register_setting( 'wpr-wh-settings', 'wpr_wl_hide_free_pro_tab' );
     register_setting( 'wpr-wh-settings', 'wpr_wl_hide_white_label_tab' );
 
+    // Optimizers
+    register_setting ('wpr-settings', 'wpr_ignore_wp_rocket_js');
+    register_setting ('wpr-settings', 'wpr_ignore_wp_optimize_js');
+    register_setting ('wpr-settings', 'wpr_ignore_wp_optimize_css');
+
     // Extensions
     register_setting('wpr-extension-settings', 'wpr-particles');
     register_setting('wpr-extension-settings', 'wpr-parallax-background');
@@ -422,6 +427,7 @@ function wpr_addons_settings_page() {
         <?php submit_button( '', 'wpr-options-button' ); ?>
 
         <div class="wpr-settings-group wpr-settings-navigation">
+            <a href="#optimizers-tab">Optimizers</a> / 
             <a href="#woocommerce-tab">WooCommerce</a> / 
             <?php if ( wpr_fs()->is_plan( 'expert' ) ) : ?>
                 <a href="#cpt-tab">Custom Post Types</a> / 
@@ -429,6 +435,36 @@ function wpr_addons_settings_page() {
             <a href="#metabox-tab">Metabox</a> /  
             <a href="#integrations-tab">Integrations</a> /  
             <a href="#lightbox-tab">Lightbox</a>
+        </div>
+
+        <div class="wpr-settings-group wpr-settings-group-optimizers">
+            <h3 id="optimizers-tab" class="wpr-settings-group-title"><?php esc_html_e( 'Optimizers', 'wpr-addons' ); ?></h3>
+            
+            <div class="wpr-woo-template-info">
+                <div class="wpr-woo-template-title">
+                    <h4><?php echo 'WP Rocket JS'; ?></h4>
+                </div>
+                <input type="checkbox" name="wpr_ignore_wp_rocket_js" id="wpr_ignore_wp_rocket_js" <?php echo checked( get_option('wpr_ignore_wp_rocket_js', 'on'), 'on', false ); ?>>
+                <label for="wpr_ignore_wp_rocket_js"></label>
+            </div>
+            
+            <div class="wpr-woo-template-info">
+                <div class="wpr-woo-template-title">
+                    <h4><?php echo 'WP Optimize JS'; ?></h4>
+                </div>
+                <input type="checkbox" name="wpr_ignore_wp_optimize_js" id="wpr_ignore_wp_optimize_js" <?php echo checked( get_option('wpr_ignore_wp_optimize_js', 'on'), 'on', false ); ?>>
+                <label for="wpr_ignore_wp_optimize_js"></label>
+            </div>
+            
+            <div class="wpr-woo-template-info">
+                <div class="wpr-woo-template-title">
+                    <h4><?php echo 'WP Optimize CSS'; ?></h4>
+                </div>
+                <input type="checkbox" name="wpr_ignore_wp_optimize_css" id="wpr_ignore_wp_optimize_css" <?php echo checked( get_option('wpr_ignore_wp_optimize_css', 'on'), 'on', false ); ?>>
+                <label for="wpr_ignore_wp_optimize_css"></label>
+            </div>
+
+            <p class="wpr-settings-group-description"><?php esc_html_e( 'Ignores our Scripts in Respective Optimizers.', 'wpr-addons' ); ?></p>
         </div>
 
         <div class="wpr-settings-group wpr-settings-group-woo">
@@ -1260,6 +1296,7 @@ function wpr_addons_settings_page() {
                             <li>More than 2 Results in Ajax Search</li>
                             <li>Custom Search Query - Only Posts, Pages or Custom Post Types (Expert)</li>
                             <li>Ajax Search Results Pagination (Load More)</li>
+                            <li>Enable Taxonomy Filter (Pro)</li>
                         </ul>
                     </li>
                     <li><span>60+ PRO Premade Widget Templates</span>

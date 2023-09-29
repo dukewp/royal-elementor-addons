@@ -2040,13 +2040,21 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
 
 /* Custom Field */
 .wpr-custom-field {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
 }
 
 .wpr-custom-field .wpr-post-info-text {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
     display: inline-flex;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
 }
 
 .elementor-widget-wpr-custom-field-pro ul {
@@ -3773,6 +3781,21 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     }
 }
 
+@media screen and (min-width: 768px) {
+    .wpr-grid-last-element-yes .wpr-grid-item-inner {
+      height: 100% !important;
+    }
+    
+    .wpr-grid-last-element-yes .wpr-grid-item-below-content>div:last-child {
+      position: absolute !important;
+      left: 0;
+      bottom: 0;
+    }
+
+    .wpr-grid-last-element-yes .wpr-grid-item-below-content>div:last-child span {
+        white-space: nowrap;
+    }
+}
 
 /*--------------------------------------------------------------
 == Magazine Grid
@@ -13750,6 +13773,7 @@ flex-grow: 0; */
     transition: visibility 0s linear !important;
 }
 
+.wpr-sticky-replace-header-yes + div,
 .wpr-sticky-replace-header-yes + section,
 .wpr-sticky-replace-header-yes + header {
     position: fixed;
@@ -16235,7 +16259,7 @@ dl.variation dd {
 }
 
 .wpr-product-add-to-cart .available-on-backorder,
-.wpr-product-add-to-cart .out-of-stock,
+/* .wpr-product-add-to-cart .out-of-stock, */
 .wpr-product-add-to-cart .in-stock {
     display: none;
 }
@@ -18462,7 +18486,8 @@ dl.variation dd {
     display: -ms-inline-flexbox;
     display: inline-flex;
     list-style-type: none;
-    flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
     padding: 0;
 }
 
@@ -18472,7 +18497,9 @@ dl.variation dd {
 
 @media screen and (max-width: 767px) {
     .wpr-breadcrumbs {
-        align-items: center;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
     }
 
     .wpr-breadcrumbs li {
