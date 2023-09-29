@@ -1,6 +1,7 @@
 <?php
 use Elementor\Controls_Manager;
-use Elementor\Core\Schemes\Color;
+// use Elementor\Core\Schemes\Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -162,6 +163,7 @@ class Wpr_Particles {
 					'particle-source' => $settings['which_particle'],
 				] );
 			} else {
+				var_dump($settings['particles_color']);
 				$element->add_render_attribute( '_wrapper', [
 					'data-wpr-particles' => $settings[$settings['which_particle']],
 					'particle-source' => $settings['which_particle'],
