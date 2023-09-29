@@ -2291,18 +2291,6 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
 /*--------------------------------------------------------------
 == Grid
 --------------------------------------------------------------*/
-
-@media screen and (min-width: 768px) {
-    .wpr-grid-last-element-yes .wpr-grid-item-inner {
-      height: 100%;
-    }
-    
-    .wpr-grid-last-element-yes .wpr-grid-item-below-content>div:last-child {
-      position: absolute !important;
-      left: 0;
-      bottom: 0;
-    }
-}
   
 .wpr-grid-image-wrap img.wpr-hidden-image {
     opacity: 0;
@@ -3793,6 +3781,21 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     }
 }
 
+@media screen and (min-width: 768px) {
+    .wpr-grid-last-element-yes .wpr-grid-item-inner {
+      height: 100% !important;
+    }
+    
+    .wpr-grid-last-element-yes .wpr-grid-item-below-content>div:last-child {
+      position: absolute !important;
+      left: 0;
+      bottom: 0;
+    }
+
+    .wpr-grid-last-element-yes .wpr-grid-item-below-content>div:last-child span {
+        white-space: nowrap;
+    }
+}
 
 /*--------------------------------------------------------------
 == Magazine Grid

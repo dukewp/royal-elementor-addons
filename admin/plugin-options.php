@@ -1296,6 +1296,7 @@ function wpr_addons_settings_page() {
                             <li>More than 2 Results in Ajax Search</li>
                             <li>Custom Search Query - Only Posts, Pages or Custom Post Types (Expert)</li>
                             <li>Ajax Search Results Pagination (Load More)</li>
+                            <li>Enable Taxonomy Filter (Pro)</li>
                         </ul>
                     </li>
                     <li><span>60+ PRO Premade Widget Templates</span>

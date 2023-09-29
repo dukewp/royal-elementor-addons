@@ -2423,8 +2423,10 @@
 					items.each(function() {
 						$(this).css('height', maxHeight + 'px');
 					});
-
-					$scope.addClass('wpr-grid-last-element-yes');
+                    
+                    if ( 'yes' === settings.stick_last_element_to_bottom ) {
+                        $scope.addClass('wpr-grid-last-element-yes');
+                    }
 				}
 			}
 
