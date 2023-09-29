@@ -416,7 +416,7 @@ class Plugin {
         if ( \Elementor\Plugin::$instance->preview->is_preview_mode() ) {
 			wp_enqueue_style(
 				'wpr-addons-library-frontend-css',
-				WPR_ADDONS_URL . 'assets/css/library-frontend'. $this->script_suffix() .'.css',
+				WPR_ADDONS_URL . 'assets/css/admin/library-frontend'. $this->script_suffix() .'.css',
 				[],
 				Plugin::instance()->get_version()
 			);
@@ -670,7 +670,7 @@ class Plugin {
 
 		wp_enqueue_script(
 			'wpr-addons-editor-js',
-			WPR_ADDONS_URL . 'assets/js/editor'. $this->script_suffix() .'.js',
+			WPR_ADDONS_URL . 'assets/js/admin/editor'. $this->script_suffix() .'.js',
 			[ 'jquery', 'wp-i18n' ],
 			Plugin::instance()->get_version(),
 			true
@@ -695,7 +695,7 @@ class Plugin {
 
 		wp_enqueue_script(
 			'wpr-addons-library-frontend-js',
-			WPR_ADDONS_URL . 'assets/js/library-frontend'. $this->script_suffix() .'.js',
+			WPR_ADDONS_URL . 'assets/js/admin/library-frontend'. $this->script_suffix() .'.js',
 			[ 'jquery', 'wpr-macy-js' ],
 			Plugin::instance()->get_version(),
 			true
@@ -719,7 +719,7 @@ class Plugin {
 
 		wp_enqueue_script(
 			'wpr-addons-library-editor-js',
-			WPR_ADDONS_URL . 'assets/js/library-editor'. $this->script_suffix() .'.js',
+			WPR_ADDONS_URL . 'assets/js/admin/library-editor'. $this->script_suffix() .'.js',
 			[ 'jquery' ],
 			Plugin::instance()->get_version(),
 			true
@@ -729,7 +729,7 @@ class Plugin {
 	public function enqueue_panel_styles() {
 		wp_enqueue_style(
 			'wpr-addons-library-editor-css',
-			WPR_ADDONS_URL . 'assets/css/editor'. $this->script_suffix() .'.css',
+			WPR_ADDONS_URL . 'assets/css/admin/editor'. $this->script_suffix() .'.css',
 			[],
 			Plugin::instance()->get_version()
 		);
