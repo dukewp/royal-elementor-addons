@@ -285,6 +285,7 @@ function wpr_fix_royal_compatibility() {
     $active_plugins = array_values($active_plugins);
     $required_plugins = [
         'elementor/elementor.php',
+        'elementor-pro/elementor-pro.php',
         'royal-elementor-addons/wpr-addons.php',
         'royal-elementor-addons-pro/wpr-addons-pro.php',
         'wpr-addons-pro/wpr-addons-pro.php',
