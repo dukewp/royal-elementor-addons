@@ -478,7 +478,7 @@ class Wpr_OnepageNav extends Widget_Base {
 		$this->add_control(
 			'nav_item_bg_color',
 			[
-				'label' => esc_html__( 'Backgound Color', 'wpr-addons' ),
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
@@ -537,7 +537,7 @@ class Wpr_OnepageNav extends Widget_Base {
 		$this->add_control(
 			'nav_item_hover_bg_color',
 			[
-				'label' => esc_html__( 'Backgound Color', 'wpr-addons' ),
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
