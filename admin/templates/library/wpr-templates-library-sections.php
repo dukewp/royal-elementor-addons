@@ -75,8 +75,9 @@ class WPR_Templates_Library_Sections {
 
 				for ( $i=0; $i < count($data); $i++ ) :
 
-					$template_slug 	= $slug .'-'. $data[$i];
-					$template_class = strpos($template_slug, 'pro') && !wpr_fs()->can_use_premium_code() ? ' wpr-tplib-pro-wrap' : '';
+					$template_slug 	 = $slug .'-'. $data[$i];
+					$template_class  = strpos($template_slug, 'pro') && !wpr_fs()->can_use_premium_code() ? ' wpr-tplib-pro-wrap' : '';
+					$template_class .= strpos($template_slug, 'woo') && !class_exists( 'woocommerce' ) ? ' wpr-tplib-woo-wrap' : '';
 
 					if (defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code()) {
 						$template_class .= ' wpr-tplib-pro-active';
