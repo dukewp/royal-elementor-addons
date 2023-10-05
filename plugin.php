@@ -879,7 +879,7 @@ class Plugin {
 
     public function promote_premium_widgets($config) {
 
-		if ( is_plugin_active('elementor-pro/elementor-pro.php') ) {
+		if ( is_plugin_active('elementor-pro/elementor-pro.php') || is_plugin_active('pro-elements/pro-elements.php') ) {
 			$config['promotionWidgets'] = [];
 		}
 
