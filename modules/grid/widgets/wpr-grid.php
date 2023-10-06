@@ -8472,27 +8472,75 @@ class Wpr_Grid extends Widget_Base {
 						if ( $_GET[$key] != '0' ) {
 							// Get category from URL
 							if (str_contains($_GET[$key], ',')) {
-								$categories = explode(',', $_GET[$key]);
+	
+								// Example usage
+								$key_type = $this->identify_key_type($cleanedKey);
+								$filtervalues = explode(',', $_GET[$key]);
 
-								foreach ($categories as $category) {
-									$category = sanitize_text_field($category);
-									
-									array_push( $tax_query, [
-										'taxonomy' => $cleanedKey,
-										'field' => 'id',
-										'terms' => $category
-									] );
+								if ($key_type == 'unknown') {
+									if (isset($args['meta_query'])) {
+										array_push($args['meta_query'], [
+											[
+												'key'     => $cleanedKey,
+												'value'   => [$filtervalues[0], $filtervalues[1]],
+												'type'    => 'NUMERIC',
+												'compare' => 'BETWEEN',
+											],
+										]);
+									} else {
+										$args['meta_query'] = [
+											[
+												'key'     => $cleanedKey,
+												'value'   => [$filtervalues[0], $filtervalues[1]],
+												'type'    => 'NUMERIC',
+												'compare' => 'BETWEEN',
+											],
+										];
+									}
+								} else {
+									foreach ($filtervalues as $filtervalue) {
+										$filtervalue = sanitize_text_field($filtervalue);
+										
+										array_push( $tax_query, [
+											'taxonomy' => $cleanedKey,
+											'field' => 'id',
+											'terms' => $filtervalue
+										] );
+									}
 								}
 							} else {
-								$category = sanitize_text_field($_GET[$key]);
-		
-								if (isset($_GET[$key])) {
-			
-									array_push( $tax_query, [
-										'taxonomy' => $cleanedKey,
-										'field' => 'id',
-										'terms' => $category
-									] );
+								$key_type = $this->identify_key_type($cleanedKey);
+								$filtervalues = sanitize_text_field($_GET[$key]);
+								
+								if ($key_type == 'unknown') {
+									if (isset($args['meta_query'])) {
+										array_push($args['meta_query'], [
+											[
+												'key'     => $cleanedKey,
+												'value'   => [$filtervalues],
+												// 'type'    => 'NUMERIC',
+												// 'compare' => 'BETWEEN',
+											],
+										]);
+									} else {
+										$args['meta_query'] = [
+											[
+												'key'     => $cleanedKey,
+												'value'   => [$filtervalues],
+												// 'type'    => 'NUMERIC',
+												// 'compare' => 'BETWEEN',
+											],
+										];
+									}
+								} else {
+									if (isset($_GET[$key])) {
+				
+										array_push( $tax_query, [
+											'taxonomy' => $cleanedKey,
+											'field' => 'id',
+											'terms' => $filtervalue
+										] );
+									}
 								} 
 							}
 						}
@@ -8507,6 +8555,35 @@ class Wpr_Grid extends Widget_Base {
 
 		return $args;
 	}
+	
+	public function identify_key_type($key) {
+		// Check if it's a category slug
+		$category = get_category_by_slug($key);
+		if ($category) {
+			return 'category';
+		}
+	
+		// Check if it's a term slug in a taxonomy
+		$taxonomies = get_taxonomies();
+		foreach ($taxonomies as $taxonomy) {
+			$term = get_term_by('slug', $key, $taxonomy);
+			if ($term) {
+				return 'taxonomy';
+			}
+		}
+	
+		// Check if it's a custom field key
+		$custom_field_keys = get_post_custom_keys();
+		if (in_array($key, $custom_field_keys)) {
+			return 'custom_field';
+		}
+	
+		// Add more checks if needed...
+	
+		// If none of the checks match, return 'unknown' or false
+		return 'unknown';
+	}
+	
 
 	// Taxonomy Query Args
 	public function get_tax_query_args() {
