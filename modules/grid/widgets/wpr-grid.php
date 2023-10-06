@@ -8477,7 +8477,7 @@ class Wpr_Grid extends Widget_Base {
 								$key_type = $this->identify_key_type($cleanedKey);
 								$filtervalues = explode(',', $_GET[$key]);
 
-								if ($key_type == 'unknown') {
+								if ($key_type == 'meta_field') {
 									if (isset($args['meta_query'])) {
 										array_push($args['meta_query'], [
 											[
@@ -8511,8 +8511,8 @@ class Wpr_Grid extends Widget_Base {
 							} else {
 								$key_type = $this->identify_key_type($cleanedKey);
 								$filtervalues = sanitize_text_field($_GET[$key]);
-								
-								if ($key_type == 'unknown') {
+
+								if ( $key_type == 'meta_field' ) {
 									if (isset($args['meta_query'])) {
 										array_push($args['meta_query'], [
 											[
@@ -8538,10 +8538,10 @@ class Wpr_Grid extends Widget_Base {
 										array_push( $tax_query, [
 											'taxonomy' => $cleanedKey,
 											'field' => 'id',
-											'terms' => $filtervalue
+											'terms' => $filtervalues
 										] );
 									}
-								} 
+								}
 							}
 						}
 					}
@@ -8557,19 +8557,16 @@ class Wpr_Grid extends Widget_Base {
 	}
 	
 	public function identify_key_type($key) {
-		// Check if it's a category slug
-		$category = get_category_by_slug($key);
-		if ($category) {
-			return 'category';
+		// Check if it's a built-in taxonomy
+		$builtin_taxonomies = array('category', 'post_tag'); // Add more if needed
+		if (in_array($key, $builtin_taxonomies)) {
+			return 'taxonomy';
 		}
 	
-		// Check if it's a term slug in a taxonomy
-		$taxonomies = get_taxonomies();
-		foreach ($taxonomies as $taxonomy) {
-			$term = get_term_by('slug', $key, $taxonomy);
-			if ($term) {
-				return 'taxonomy';
-			}
+		// Check if it's a custom taxonomy
+		$custom_taxonomies = get_taxonomies(array('_builtin' => false));
+		if (in_array($key, $custom_taxonomies)) {
+			return 'taxonomy';
 		}
 	
 		// Check if it's a custom field key
@@ -8580,8 +8577,8 @@ class Wpr_Grid extends Widget_Base {
 	
 		// Add more checks if needed...
 	
-		// If none of the checks match, return 'unknown' or false
-		return 'unknown';
+		// If none of the checks match, assume it's a meta field
+		return 'meta_field';
 	}
 	
 
