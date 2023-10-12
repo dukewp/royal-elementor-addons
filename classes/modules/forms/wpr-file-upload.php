@@ -109,6 +109,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 		} else {
 			$allowed_file_types = $_POST['allowed_file_types'];
 		}
+		
+		if (!wp_check_filetype($file['name'])['ext']) {
+			return false;
+		}
 
 		$f_extension = pathinfo( $file['name'], PATHINFO_EXTENSION );
 		$allowed_file_types = explode( ',', $allowed_file_types );

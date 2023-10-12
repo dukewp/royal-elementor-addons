@@ -71,11 +71,15 @@ class WprPluginSaleNotice {
                             <ul>
                                 <li>
                                     <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'img/check-mark.png">
-                                    50+ Designer Made Templates Kit
+                                    70+ Designer Made Templates Kit
                                 </li>
                                 <li>
                                     <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'img/check-mark.png">
-                                    80+ Advanced Elementor Widgets
+                                    90+ Advanced Elementor Widgets
+                                </li>
+                                <li>
+                                    <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'img/check-mark.png">
+                                    Dynamic Website Builder, Custom Post Types and Cutom Fields support
                                 </li>
                                 <li>
                                     <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'img/check-mark.png">
@@ -85,9 +89,17 @@ class WprPluginSaleNotice {
                                     <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'img/check-mark.png">
                                     Advanced WooCommerce Builder
                                 </li>
+                                 <li>
+                                    <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'img/check-mark.png">
+                                    Advanced Form Builder
+                                </li>
                                 <li>
                                     <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'img/check-mark.png">
-                                    Advanced Popup Builder
+                                    Mega Menu Builder
+                                </li>
+                                <li>
+                                    <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'img/check-mark.png">
+                                    Ajax Live Search and much more...
                                 </li>
                             </ul>
                             <p>
