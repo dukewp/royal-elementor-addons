@@ -117,6 +117,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     ['key' => '_thumbnail_id']
                 ] : '',
                 'tax_query' => $tax_query,
+                'post_status' => 'publish'
             ]
         );
         

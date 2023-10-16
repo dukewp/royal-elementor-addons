@@ -2040,7 +2040,7 @@ class Wpr_Data_Table extends Widget_Base {
 					$last_key = end( $table_tr_keys );
 
 					$table_td[] = [
-						'row_id' => $table_tr[$last_key]['id'],
+						'row_id' => isset($table_tr[$last_key]['id']) ? $table_tr[$last_key]['id'] : '',
 						'type' => $content_row['table_content_row_type'],
 						'content' => $content_row['table_td'],
 						'colspan' => $content_row['table_content_row_colspan'],

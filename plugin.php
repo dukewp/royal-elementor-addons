@@ -879,9 +879,9 @@ class Plugin {
 
     public function promote_premium_widgets($config) {
 
-		if ( is_plugin_active('elementor-pro/elementor-pro.php') ) {
-			$config['promotionWidgets'] = [];
-		}
+		// if ( is_plugin_active('elementor-pro/elementor-pro.php') || is_plugin_active('pro-elements/pro-elements.php') ) {
+		// }
+		$config['promotionWidgets'] = [];
 
 		$category = Utilities::is_theme_builder_template() ? 'wpr-woocommerce-builder-widgets' : 'wpr-premium-widgets';
 
@@ -1022,7 +1022,9 @@ class Plugin {
 		add_action( 'wp_head', [ $this, 'lightbox_styles' ], 988 );
 
 		// Promote Premium Widgets
-        add_filter('elementor/editor/localize_settings', [$this, 'promote_premium_widgets']);
+		if ( current_user_can('administrator') ) {
+			add_filter('elementor/editor/localize_settings', [$this, 'promote_premium_widgets']);
+		}
 
 		add_filter( 'pre_get_posts', [$this, 'wpr_custom_posts_per_page'] );
 	}
