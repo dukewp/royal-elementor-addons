@@ -310,6 +310,15 @@ template {
     display: none !important;
 }
 
+.wpr-marquee-hidden {
+    visibility: hidden !important;
+}
+
+.wpr-marquee-hidden * {
+    visibility: hidden !important;
+    height: 0 !important;
+}
+
 /* Vertical Centering */
 .wpr-cv-container {
     display: block;
