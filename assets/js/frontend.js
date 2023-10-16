@@ -988,13 +988,23 @@
 							'left' : - $scope.find('.wpr-nav-menu-container').offset().left +'px'
 						});	// conditions for sticky replace needed
 					} else if ( $(this).hasClass('wpr-mega-menu-width-stretch') ) {
-						let elContainer = $(this).closest('.elementor-section');
-							elContainer = elContainer.hasClass('elementor-inner-section') ? elContainer : elContainer.children('.elementor-container');
+						// Sections (Old)
+						if ( 0 === $(this).closest('.e-con').length ) {
+							var elContainer = $(this).closest('.elementor-section');
+								elContainer = elContainer.hasClass('elementor-inner-section') ? elContainer : elContainer.children('.elementor-container');
 
-						let elWidgetGap = !elContainer.hasClass('elementor-inner-section') ? elContainer.find('.elementor-element-populated').css('padding') : '0';
-							elWidgetGap = parseInt(elWidgetGap.replace('px', ''), 10);
+							var elWidgetGap = !elContainer.hasClass('elementor-inner-section') ? elContainer.find('.elementor-element-populated').css('padding') : '0';
+								elWidgetGap = parseInt(elWidgetGap.replace('px', ''), 10);
 
-						let elContainerWidth = elContainer.outerWidth() - (elWidgetGap * 2),
+						// Container (New)
+						} else {
+							var elContainer = $(this).closest('.e-con-inner');
+
+							var elWidgetGap = elContainer.find('.elementor-element.e-con').css('padding'),
+								elWidgetGap = parseInt(elWidgetGap, 10);
+						}
+
+						var elContainerWidth = elContainer.outerWidth() - (elWidgetGap * 2),
 							offsetLeft = -($scope.offset().left - elContainer.offset().left) + elWidgetGap;
 
 						megaSubMenu.css({
@@ -5247,6 +5257,9 @@
 			});
 
 			$contentTickerMarquee.marquee(marqueeData);
+			if ( $scope.find('.wpr-marquee-hidden').length > 0 ) {
+				$scope.find('.wpr-ticker-marquee').removeClass('wpr-marquee-hidden');
+			}
 
 		}, // End widgetContentTicker
 
