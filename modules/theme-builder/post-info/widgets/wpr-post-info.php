@@ -352,20 +352,20 @@ class Wpr_Post_Info extends Widget_Base {
 					],
 				]
 			);
-
-			$repeater->add_control(
-				'post_info_link_wrap',
-				[
-					'label' => esc_html__( 'Wrap with Link', 'wpr-addons' ),
-					'type' => Controls_Manager::SWITCHER,
-					'default' => '',
-					'return_value' => 'yes',
-					'condition' => [
-						'post_info_select!' => [ 'time', 'custom-field' ],
-					]
-				]
-			);
 		}
+
+		$repeater->add_control(
+			'post_info_link_wrap',
+			[
+				'label' => esc_html__( 'Wrap with Link', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => '',
+				'return_value' => 'yes',
+				'condition' => [
+					'post_info_select!' => [ 'time', 'custom-field' ],
+				]
+			]
+		);
 
 		$repeater->add_control(
 			'post_info_extra_icon',
