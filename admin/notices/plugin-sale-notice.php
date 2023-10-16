@@ -8,6 +8,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class WprPluginSaleNotice {
+    // Declare class properties
+    public $past_date;
+    public $past_date_rml;
+    public $install_date;
+    public $remind_me_later;
+    
     public function __construct() {
         // delete_option('wpr_plugin_sale_dismiss_notice'); // uncomment for testing
         
