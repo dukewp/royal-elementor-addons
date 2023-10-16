@@ -280,6 +280,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'separator' => esc_html__( 'Separator', 'wpr-addons' ),
 			'pro-lk' => esc_html__( 'Likes (Pro)', 'wpr-addons' ),
 			'pro-shr' => esc_html__( 'Sharing (Pro)', 'wpr-addons' ),
+			'read-more' => esc_html__( 'View More', 'wpr-addons' )
 		];
 	}
 
@@ -432,6 +433,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 	public function add_repeater_args_element_trim_text_by() {
 		return [
+			'none' => esc_html__( 'None', 'wpr-addons' ),
 			'word_count' => esc_html__( 'Word Count', 'wpr-addons' ),
 			'pro-lc' => esc_html__( 'Letter Count (Pro)', 'wpr-addons' )
 		];
@@ -591,6 +593,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 	public function add_control_filters_pointer_height() {}
 	
 	public function add_control_filters_pointer_animation() {}
+	
+	public function add_control_read_more_animation() {}
+	
+	public function add_control_read_more_animation_height() {}
 	
 	public function add_control_stack_grid_slider_nav_position() {}
 	
@@ -1590,6 +1596,22 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'element_select' => [ 'title', 'excerpt' ],
 					'element_trim_text_by' => 'letter_count'
 				]
+			]
+		);
+
+		$repeater->add_control(
+			'element_read_more_text',
+			[
+				'label' => esc_html__( 'Read More Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
+				'default' => 'Read More',
+				'condition' => [
+					'element_select' => [ 'read-more' ],
+				],
+				'separator' => 'after'
 			]
 		);
 
@@ -5443,6 +5465,307 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$this->end_controls_section();
 
 		// Styles ====================
+		// Section: Read More --------
+		$this->start_controls_section(
+			'section_style_read_more',
+			[
+				'label' => esc_html__( 'Read More', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+				'show_label' => false,
+			]
+		);
+
+		$this->start_controls_tabs( 'tabs_grid_read_more_style' );
+
+		$this->start_controls_tab(
+			'tab_grid_read_more_normal',
+			[
+				'label' => esc_html__( 'Normal', 'wpr-addons' ),
+			]
+		);
+		
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
+			[
+				'name' => 'read_more_bg_color',
+				'label' => esc_html__( 'Background', 'wpr-addons' ),
+				'types' => [ 'classic', 'gradient' ],
+				'fields_options' => [
+					'color' => [
+						'default' => '#434900',
+					],
+				],
+				'selector' => '{{WRAPPER}} .wpr-grid-item-read-more .inner-block a'
+			]
+		);
+
+		$this->add_control(
+			'read_more_color',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#605BE5',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-item-read-more .inner-block a' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'read_more_border_color',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-item-read-more .inner-block a' => 'border-color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'read_more_box_shadow',
+				'selector' => '{{WRAPPER}} .wpr-grid-item-read-more .inner-block a',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_grid_read_more_hover',
+			[
+				'label' => esc_html__( 'Hover', 'wpr-addons' ),
+			]
+		);
+		
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
+			[
+				'name' => 'read_more_bg_color_hr',
+				'label' => esc_html__( 'Background', 'wpr-addons' ),
+				'types' => [ 'classic', 'gradient' ],
+				'fields_options' => [
+					'color' => [
+						'default' => '#434900',
+					],
+				],
+				'selector' => '{{WRAPPER}} .wpr-grid-item-read-more .inner-block a.wpr-button-none:hover, {{WRAPPER}} .wpr-grid-item-read-more .inner-block a:before, {{WRAPPER}} .wpr-grid-item-read-more .inner-block a:after'
+			]
+		);
+
+		$this->add_control(
+			'read_more_color_hr',
+			[
+				'label'  => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#4A45D2',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-item-read-more .inner-block a:hover' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'read_more_border_color_hr',
+			[
+				'label'  => esc_html__( 'Border Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#E8E8E8',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-item-read-more .inner-block a:hover' => 'border-color: {{VALUE}}',
+				]
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'read_more_box_shadow_hr',
+				'selector' => '{{WRAPPER}} .wpr-grid-item-read-more .inner-block :hover a',
+			]
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_control(
+			'read_more_divider',
+			[
+				'type' => Controls_Manager::DIVIDER,
+				'style' => 'thick',
+			]
+		);
+
+		$this->add_control_read_more_animation();
+
+		$this->add_control(
+			'read_more_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 0.1,
+				'min' => 0,
+				'max' => 5,
+				'step' => 0.1,
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-item-read-more .inner-block a' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-grid-item-read-more .inner-block a:before' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-grid-item-read-more .inner-block a:after' => 'transition-duration: {{VALUE}}s',
+				],
+			]
+		);
+
+		$this->add_control_read_more_animation_height();
+
+		$this->add_control(
+			'read_more_typo_divider',
+			[
+				'type' => Controls_Manager::DIVIDER,
+				'style' => 'thick',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'read_more_typography',
+				'scheme' => Typography::TYPOGRAPHY_3,
+				'selector' => '{{WRAPPER}} .wpr-grid-item-read-more a'
+			]
+		);
+
+		$this->add_control(
+			'read_more_border_type',
+			[
+				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
+					'double' => esc_html__( 'Double', 'wpr-addons' ),
+					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
+					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
+					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
+				],
+				'default' => 'none',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-item-read-more .inner-block a' => 'border-style: {{VALUE}};',
+				],
+				'render_type' => 'template',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'read_more_border_width',
+			[
+				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 1,
+					'right' => 1,
+					'bottom' => 1,
+					'left' => 1,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-item-read-more .inner-block a' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'render_type' => 'template',
+				'condition' => [
+					'read_more_border_type!' => 'none',
+				],
+			]
+		);
+
+		$this->add_control(
+			'read_more_icon_spacing',
+			[
+				'label' => esc_html__( 'Extra Icon Spacing', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 25,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 5,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-item-read-more .wpr-grid-extra-icon-left' => 'padding-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-item-read-more .wpr-grid-extra-icon-right' => 'padding-left: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_responsive_control(
+			'read_more_padding',
+			[
+				'label' => esc_html__( 'Padding', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-item-read-more .inner-block a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'render_type' => 'template',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'read_more_margin',
+			[
+				'label' => esc_html__( 'Margin', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-item-read-more .inner-block' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'render_type' => 'template',
+			]
+		);
+
+		$this->add_control(
+			'read_more_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-grid-item-read-more .inner-block a' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->end_controls_section();
+
+		// Styles ====================
 		// Section: Add to Cart ------
 		$this->start_controls_section(
 			'section_style_add_to_cart',
@@ -8911,9 +9234,11 @@ class Wpr_Woo_Grid extends Widget_Base {
 			echo '<div class="inner-block">';
 			if ( 'word_count' === $settings['element_trim_text_by']) {
 			  echo '<p>'. esc_html(wp_trim_words( get_the_excerpt(), $settings['element_word_count'] )) .'</p>';
-			} else {
+			} else if ( 'letter_count' === $settings['element_trim_text_by'] ) {
 			  // echo '<p>'. substr(html_entity_decode(get_the_title()), 0, $settings['element_letter_count']) .'...' . '</p>';
 			  echo '<p>'. esc_html(implode('', array_slice( str_split(get_the_excerpt()), 0, $settings['element_letter_count'] ))) .'...' .'</p>';
+			} else {
+				echo '<p>'.  get_the_excerpt()  .'</p>';	
 			}
 			echo '</div>';
 		echo '</div>';
@@ -9564,6 +9889,46 @@ class Wpr_Woo_Grid extends Widget_Base {
 		}
 	}
 
+	// Render Post Read More
+	public function render_product_read_more( $settings, $class ) {
+		// $read_more_animation = ! wpr_fs()->can_use_premium_code() ? 'wpr-button-none' : $this->get_settings()['read_more_animation'];
+		$read_more_animation = 'wpr-button-none';
+		$open_links_in_new_tab = 'yes' === $this->get_settings()['open_links_in_new_tab'] ? '_blank' : '_self';
+
+		echo '<div class="'. esc_attr($class) .'">';
+			echo '<div class="inner-block">';
+				echo '<a target="'. $open_links_in_new_tab .'" href="'. esc_url( get_the_permalink() ) .'" class="wpr-button-effect '. esc_attr($read_more_animation) .'">';
+
+				// Icon: Before
+				if ( 'before' === $settings['element_extra_icon_pos'] ) {
+					ob_start();
+					\Elementor\Icons_Manager::render_icon($settings['element_extra_icon'], ['aria-hidden' => 'true']);
+					$extra_icon = ob_get_clean();
+
+					echo '<span class="wpr-grid-extra-icon-left">';
+						echo $extra_icon;
+					echo '</span>';
+				}
+
+				// Read More Text
+				echo '<span>'. esc_html( $settings['element_read_more_text'] ) .'</span>';
+
+				// Icon: After
+				if ( 'after' === $settings['element_extra_icon_pos'] ) {
+					ob_start();
+					\Elementor\Icons_Manager::render_icon($settings['element_extra_icon'], ['aria-hidden' => 'true']);
+					$extra_icon = ob_get_clean();
+		
+					echo '<span class="wpr-grid-extra-icon-right">';
+						echo $extra_icon;
+					echo '</span>';
+				}
+
+				echo '</a>';
+			echo '</div>';
+		echo '</div>';
+	}
+
 	// Get Elements
 	public function get_elements( $type, $settings, $class, $post_id ) {
 		if ( 'pro-lk' == $type || 'pro-shr' == $type || 'pro-sd' == $type || 'pro-ws' == $type || 'pro-cm' == $type || 'pro-cfa' == $type ) {
@@ -9634,6 +9999,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 				break;
 			case 'custom-field':
 				$this->render_product_custom_fields( $settings, $class, $post_id );
+				break;
+
+			case 'read-more':
+				$this->render_product_read_more( $settings, $class );
 				break;
 		}
 
