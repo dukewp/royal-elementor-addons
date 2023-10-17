@@ -9051,7 +9051,6 @@ class Wpr_Grid extends Widget_Base {
 						$cfc_text = get_term_meta($term->term_id, $this->get_settings()['tax1_custom_color_field_text'], true);
 						$cfc_bg = get_term_meta($term->term_id, $this->get_settings()['tax1_custom_color_field_bg'], true);
 						$color_styles = 'color:'. $cfc_text .'; background-color:'. $cfc_bg .'; border-color:'. $cfc_bg .';';
-						// var_dump($color_styles);
 						$css_selector = '.elementor-element'. $this->get_unique_selector() .' .wpr-grid-tax-style-1 .inner-block a.wpr-tax-id-'. esc_attr($term->term_id);
 						$custom_tax_styles .= $css_selector .'{'. $color_styles .'}';
 						echo '<style>'. esc_html($custom_tax_styles) .'</style>'; // TODO: take out of loop if possible
