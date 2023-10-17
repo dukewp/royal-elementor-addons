@@ -735,6 +735,8 @@ class Wpr_Grid extends Widget_Base {
 	
 	public function add_control_title_pointer_animation() {}
 	
+	public function add_control_tax1_custom_colors($meta) {}
+	
 	public function add_control_tax1_pointer_color_hr() {}
 	
 	public function add_control_tax1_pointer() {}
@@ -789,6 +791,7 @@ class Wpr_Grid extends Widget_Base {
 
 		// Get Available Meta Keys
 		$post_meta_keys = Utilities::get_custom_meta_keys();
+		$tax_meta_keys = Utilities::get_custom_meta_keys_tax();
 
 		$this->add_control(
 			'query_source',
@@ -7168,6 +7171,8 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
+		$this->add_control_tax1_custom_colors($tax_meta_keys[1]);
+
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
@@ -9037,7 +9042,22 @@ class Wpr_Grid extends Widget_Base {
 
 				// Taxonomies
 				foreach ( $terms as $term ) {
-					echo '<a '. $pointer_item_class .' href="'. esc_url(get_term_link( $term->term_id )) .'">'. esc_html( $term->name );
+
+					// Custom Colors
+					$enable_custom_colors = ! wpr_fs()->can_use_premium_code() ? '' : $this->get_settings()['tax1_custom_color_switcher'];
+					$color_styles_att = '';
+			
+					if ( 'yes' === $enable_custom_colors ) {
+						$cfc_text = get_term_meta($term->term_id, $this->get_settings()['tax1_custom_color_field_text'], true);
+						$cfc_bg = get_term_meta($term->term_id, $this->get_settings()['tax1_custom_color_field_bg'], true);
+						$color_styles  = 'color:'. $cfc_text .'; background-color:'. $cfc_bg .'; border-color:'. $cfc_bg .';';
+						// $color_styles_att = 'style="'. esc_attr($color_styles) .'"';
+						echo '<style>'. $color_styles .'</style>';
+					}
+
+// var_dump($this->get_unique_selector());
+
+					echo '<a '. $pointer_item_class .' href="'. esc_url(get_term_link( $term->term_id )) .'" '. $color_styles_att .'>'. esc_html( $term->name );
 						if ( ++$count !== count( $terms ) ) {
 							echo '<span class="tax-sep">'. esc_html($settings['element_tax_sep']) .'</span>';
 						}
