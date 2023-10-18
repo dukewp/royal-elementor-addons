@@ -1,6 +1,5 @@
 <?php
 use Elementor\Controls_Manager;
-use Elementor\Core\Schemes\Color;
 use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) {
