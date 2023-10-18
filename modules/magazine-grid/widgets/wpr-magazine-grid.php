@@ -350,6 +350,8 @@ class Wpr_Magazine_Grid extends Widget_Base {
 	
 	public function add_control_title_pointer_animation() {}
 	
+	public function add_control_tax1_custom_colors($meta) {}
+	
 	public function add_control_tax1_pointer_color_hr() {}
 	
 	public function add_control_tax1_pointer() {}
@@ -406,6 +408,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 		// Get Available Meta Keys
 		$post_meta_keys = Utilities::get_custom_meta_keys();
+		$tax_meta_keys = Utilities::get_custom_meta_keys_tax();
 
 		$this->add_control(
 			'query_source',
@@ -4294,6 +4297,8 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			]
 		);
 
+		$this->add_control_tax1_custom_colors($tax_meta_keys[1]);
+
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
@@ -5506,7 +5511,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		$tax1_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['tax1_pointer_animation'];
 		$tax2_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['tax2_pointer'];
 		$tax2_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['tax2_pointer_animation'];
-		$pointer_item_class = (isset($this->get_settings()['tax1_pointer']) && 'none' !== $this->get_settings()['tax1_pointer']) || (isset($this->get_settings()['tax2_pointer']) && 'none' !== $this->get_settings()['tax2_pointer']) ? 'class="wpr-pointer-item"' : '';
+		$pointer_item_class = (isset($this->get_settings()['tax1_pointer']) && 'none' !== $this->get_settings()['tax1_pointer']) || (isset($this->get_settings()['tax2_pointer']) && 'none' !== $this->get_settings()['tax2_pointer']) ? 'wpr-pointer-item' : '';
 
 		// Pointer Class
 		if ( 'wpr-grid-tax-style-1' === $settings['element_tax_style'] ) {
@@ -5536,7 +5541,20 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 				// Taxonomies
 				foreach ( $terms as $term ) {
-					echo '<a '. $pointer_item_class .' href="'. esc_url(get_term_link( $term->term_id )) .'">'. esc_html( $term->name );
+					// Custom Colors
+					$enable_custom_colors = ! wpr_fs()->can_use_premium_code() ? '' : $this->get_settings()['tax1_custom_color_switcher'];
+					
+					if ( 'yes' === $enable_custom_colors ) {
+						$custom_tax_styles = '';
+						$cfc_text = get_term_meta($term->term_id, $this->get_settings()['tax1_custom_color_field_text'], true);
+						$cfc_bg = get_term_meta($term->term_id, $this->get_settings()['tax1_custom_color_field_bg'], true);
+						$color_styles = 'color:'. $cfc_text .'; background-color:'. $cfc_bg .'; border-color:'. $cfc_bg .';';
+						$css_selector = '.elementor-element'. $this->get_unique_selector() .' .wpr-grid-tax-style-1 .inner-block a.wpr-tax-id-'. esc_attr($term->term_id);
+						$custom_tax_styles .= $css_selector .'{'. $color_styles .'}';
+						echo '<style>'. esc_html($custom_tax_styles) .'</style>'; // TODO: take out of loop if possible
+					}
+
+					echo '<a class="'. $pointer_item_class .' wpr-tax-id-'. esc_attr($term->term_id) .'" href="'. esc_url(get_term_link( $term->term_id )) .'">'. esc_html( $term->name );
 						if ( ++$count !== count( $terms ) ) {
 							echo '<span class="tax-sep">'. esc_html($settings['element_tax_sep']) .'</span>';
 						}
