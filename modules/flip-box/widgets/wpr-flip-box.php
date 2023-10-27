@@ -6,11 +6,11 @@ use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Css_Filter;
-use Elementor\Core\Schemes\Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Repeater;
-use Elementor\Core\Schemes\Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Widget_Base;
 use Elementor\Icons;
 use Elementor\Utils;
@@ -866,7 +866,6 @@ class Wpr_Flip_Box extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'front_title_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-flip-box-front .wpr-flip-box-title',
 			]
 		);
@@ -919,7 +918,6 @@ class Wpr_Flip_Box extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'front_description_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-flip-box-front .wpr-flip-box-description',
 			]
 		);
@@ -1293,7 +1291,6 @@ class Wpr_Flip_Box extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'back_title_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-flip-box-back .wpr-flip-box-title',
 			]
 		);
@@ -1346,7 +1343,6 @@ class Wpr_Flip_Box extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'back_description_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-flip-box-back .wpr-flip-box-description',
 			]
 		);
@@ -1520,7 +1516,6 @@ class Wpr_Flip_Box extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'front_btn_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-flip-box-front .wpr-flip-box-btn',
 				'separator' => 'before',
 			]
@@ -1754,7 +1749,6 @@ class Wpr_Flip_Box extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'back_btn_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-flip-box-back .wpr-flip-box-btn',
 				'separator' => 'before',
 			]

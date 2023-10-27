@@ -4,11 +4,10 @@ namespace WprAddons\Modules\AdvancedText\Widgets;
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
-use Elementor\Core\Responsive\Responsive;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Image_Size;
-use Elementor\Core\Schemes\Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Utils;
 use Elementor\Icons;
@@ -474,7 +473,6 @@ class Advanced_Text extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'prefix_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-advanced-text-preffix',
 				'separator' => 'before',
 			]
@@ -564,7 +562,6 @@ class Advanced_Text extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'text_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-anim-text b, {{WRAPPER}} .wpr-anim-text b i,{{WRAPPER}} .wpr-anim-text,{{WRAPPER}} .wpr-highlighted-text',
 				'separator' => 'before',
 			]
@@ -757,7 +754,6 @@ class Advanced_Text extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'suffix_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-advanced-text-suffix',
 				'separator' => 'before',
 			]

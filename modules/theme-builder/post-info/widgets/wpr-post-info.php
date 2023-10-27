@@ -3,10 +3,9 @@ namespace WprAddons\Modules\ThemeBuilder\PostInfo\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
-use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
-use Elementor\Core\Schemes\Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Group_Control_Border;
 use Elementor\Repeater;
 use WprAddons\Classes\Utilities;
@@ -662,7 +661,6 @@ class Wpr_Post_Info extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'post_info_elements_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'label' => esc_html__('Typography', 'wpr-addons'),
 				'selector' => '{{WRAPPER}} .wpr-post-info li:not(.wpr-post-info-taxonomy):not(.wpr-post-info-custom-field)',
 				'fields_options' => [
@@ -800,7 +798,6 @@ class Wpr_Post_Info extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'post_info_tax_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-post-info-taxonomy a, {{WRAPPER}} .wpr-post-info-taxonomy > span:not(.wpr-post-info-text)',
 				'separator' => 'before',
 				'fields_options' => [
@@ -1071,7 +1068,6 @@ class Wpr_Post_Info extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'post_info_extra_text_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'label' => esc_html__('Typography', 'wpr-addons'),
 				'selector' => '{{WRAPPER}} .wpr-post-info li .wpr-post-info-text',
 				'fields_options' => [

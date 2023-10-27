@@ -3,12 +3,11 @@ namespace WprAddons\Modules\ThemeBuilder\ArchiveTitle\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
-use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Text_Stroke;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
-use Elementor\Core\Schemes\Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -174,7 +173,6 @@ class Wpr_Archive_Title extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'title_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'fields_options' => [
 					'typography' => [
 						'default' => 'custom',
@@ -264,7 +262,6 @@ class Wpr_Archive_Title extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'desc_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'fields_options' => [
 					'typography' => [
 						'default' => 'custom',

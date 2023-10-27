@@ -3,14 +3,13 @@ namespace WprAddons\Modules\ProgressBar\Widgets;
 
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Image_Size;
-use Elementor\Core\Schemes\Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Repeater;
-use Elementor\Core\Schemes\Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Widget_Base;
 use Elementor\Icons;
 use Elementor\Utils;
@@ -761,7 +760,6 @@ class Wpr_Progress_Bar extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'title_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-prbar-title',
 				'condition' => [
 					'title!' => '',
@@ -828,7 +826,6 @@ class Wpr_Progress_Bar extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'subtitle_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-prbar-subtitle',
 				'condition' => [
 					'subtitle!' => '',
@@ -895,7 +892,6 @@ class Wpr_Progress_Bar extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'counter_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-prbar-counter',
 				'condition' => [
 					'counter_switcher' => 'yes',

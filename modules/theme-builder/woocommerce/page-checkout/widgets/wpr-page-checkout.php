@@ -3,11 +3,10 @@ namespace WprAddons\Modules\ThemeBuilder\Woocommerce\PageCheckout\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
-use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
-use Elementor\Core\Schemes\Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -1265,7 +1264,6 @@ class Wpr_Page_Checkout extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'order_received_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .woocommerce-order p, {{WRAPPER}} .woocommerce-order address, {{WRAPPER}} .wc_payment_method label, {{WRAPPER}} .place-order *',
 				'fields_options' => [
 					'typography' => [
@@ -1362,7 +1360,6 @@ class Wpr_Page_Checkout extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'tooltip_texts',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .payment_box p',
 				'fields_options' => [
 					'typography' => [
@@ -1414,7 +1411,6 @@ class Wpr_Page_Checkout extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'thankyou_order_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .woocommerce-thankyou-order-details *',
 			]
 		);
@@ -1494,7 +1490,6 @@ class Wpr_Page_Checkout extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'place_order_button_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .actions .button, 
 				{{WRAPPER}} .place-order button, {{WRAPPER}} .coupon .button, {{WRAPPER}} .checkout_coupon button',
 				'fields_options' => [

@@ -657,6 +657,10 @@ div[class*="wpr-main-menu-align-"] .wpr-nav-menu-vertical .wpr-nav-menu>li>.wpr-
     z-index: 9999;
 }
 
+.wpr-mobile-menu-full-width .wpr-mobile-mega-menu-wrap {
+    width: 100%;
+}
+
 .wpr-mobile-menu-drdown-align-left .wpr-mobile-nav-menu:not(.wpr-mobile-mega-menu),
 .wpr-mobile-menu-drdown-align-left .wpr-mobile-mega-menu-wrap {
     left: 0;

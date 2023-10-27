@@ -3,12 +3,11 @@ namespace WprAddons\Modules\GoogleMaps\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
-use Elementor\Core\Responsive\Responsive;
 use Elementor\Repeater;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Color;
-use Elementor\Core\Schemes\Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -529,7 +528,6 @@ class Wpr_Google_Maps extends Widget_Base {
 			[
 				'name' => 'infow_window_title_typography',
 				'label' => esc_html__( 'Title Typography', 'wpr-addons' ),
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-google-map .gm-style-iw-c .wpr-gm-iwindow h3'
 			]
 		);
@@ -539,7 +537,6 @@ class Wpr_Google_Maps extends Widget_Base {
 			[
 				'name' => 'infow_window_desc_typography',
 				'label' => esc_html__( 'Description Typography', 'wpr-addons' ),
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-google-map .gm-style-iw-c .wpr-gm-iwindow p'
 			]
 		);

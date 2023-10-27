@@ -3,11 +3,10 @@ namespace WprAddons\Modules\DualButton\Widgets;
 
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
-use Elementor\Core\Responsive\Responsive;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Image_Size;
-use Elementor\Core\Schemes\Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Repeater;
@@ -757,7 +756,6 @@ class Wpr_Dual_Button extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'general_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-button-text-a,{{WRAPPER}} .wpr-button-a::after,{{WRAPPER}} .wpr-button-text-b,{{WRAPPER}} .wpr-button-b::after',
 				'separator' => 'before',
 			]

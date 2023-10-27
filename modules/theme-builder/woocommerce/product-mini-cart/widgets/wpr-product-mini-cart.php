@@ -3,12 +3,11 @@ namespace WprAddons\Modules\ThemeBuilder\Woocommerce\ProductMiniCart\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
-use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
-use Elementor\Core\Schemes\Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Group_Control_Image_Size;
 use WprAddons\Classes\Utilities;
 
@@ -284,7 +283,6 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
             [
                 'name' => 'title_typography',
                 'label' => __( 'Typography', 'wpr-addons' ),
-                'scheme' => Typography::TYPOGRAPHY_3,
                 'selector' => '{{WRAPPER}} .wpr-mini-cart-toggle-btn, {{WRAPPER}} .wpr-mini-cart-icon-count',
 				'fields_options' => [
 					'typography' => [

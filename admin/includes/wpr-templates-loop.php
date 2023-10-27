@@ -286,7 +286,7 @@ class WPR_Templates_Loop {
 										}
 									?>
 								<?php elseif ( 'wpr_tab_product_single' === $active_tab ): ?>
-									<option value="product" class="custom-type-ids"><?php esc_html_e( 'Products', 'wpr-addons' ); ?></option>
+									<option value="product" class="custom-product-ids custom-type-ids"><?php esc_html_e( 'Products', 'wpr-addons' ); ?></option>
 								<?php endif; ?>
 							<?php endif; ?>
 						</select>

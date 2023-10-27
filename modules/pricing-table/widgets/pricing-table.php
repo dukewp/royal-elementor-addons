@@ -3,10 +3,10 @@ namespace WprAddons\Modules\PricingTable\Widgets;
 
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Image_Size;
-use Elementor\Core\Schemes\Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Repeater;
 use Elementor\Widget_Base;
@@ -964,7 +964,6 @@ class Pricing_Table extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'heading_title_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-pricing-table-title',
 			]
 		);
@@ -1016,7 +1015,6 @@ class Pricing_Table extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'heading_sub_title_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-pricing-table-sub-title',
 			]
 		);
@@ -1184,7 +1182,6 @@ class Pricing_Table extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'price_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-pricing-table-price',
 			]
 		);
@@ -1435,7 +1432,6 @@ class Pricing_Table extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'period_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-pricing-table-preiod',
 			]
 		);
@@ -1560,7 +1556,6 @@ class Pricing_Table extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'feature_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-pricing-table-feature',
 			]
 		);
@@ -2011,7 +2006,6 @@ class Pricing_Table extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'btn_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-pricing-table-btn',
 				'separator' => 'before',
 			]
@@ -2160,7 +2154,6 @@ class Pricing_Table extends Widget_Base {
 			[
 				'name' => 'text_typography',
 				'label' => esc_html__( 'Typography', 'wpr-addons' ),
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-pricing-table-text'
 			]
 		);
@@ -2236,7 +2229,6 @@ class Pricing_Table extends Widget_Base {
 			[
 				'name' => 'badge_typography',
 				'label' => esc_html__( 'Typography', 'wpr-addons' ),
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-pricing-table-badge-inner'
 			]
 		);

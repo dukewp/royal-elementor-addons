@@ -3,14 +3,13 @@ namespace WprAddons\Modules\Grid\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
-use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
-use Elementor\Core\Schemes\Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Icons_Manager;
 use Elementor\Repeater;
 use Elementor\Group_Control_Image_Size;
@@ -3864,7 +3863,6 @@ class Wpr_Grid extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'title_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-item-title a'
 			]
 		);
@@ -4017,7 +4015,6 @@ class Wpr_Grid extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'content_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-item-content'
 			]
 		);
@@ -4027,7 +4024,6 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'name'     => 'content_dropcap_typography',
 				'label' => esc_html__( 'Drop Cap Typography', 'wpr-addons' ),
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-item-content.wpr-enable-dropcap p:first-child:first-letter'
 			]
 		);
@@ -4226,7 +4222,6 @@ class Wpr_Grid extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'excerpt_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-item-excerpt'
 			]
 		);
@@ -4236,7 +4231,6 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'name'     => 'excerpt_dropcap_typography',
 				'label' => esc_html__( 'Drop Cap Typography', 'wpr-addons' ),
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-item-excerpt.wpr-enable-dropcap p:first-child:first-letter'
 			]
 		);
@@ -4448,7 +4442,6 @@ class Wpr_Grid extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'date_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-item-date, {{WRAPPER}} .wpr-grid-item-date span'
 			]
 		);
@@ -4661,7 +4654,6 @@ class Wpr_Grid extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'time_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-item-time'
 			]
 		);
@@ -4935,7 +4927,6 @@ class Wpr_Grid extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'author_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-item-author'
 			]
 		);
@@ -5249,7 +5240,6 @@ class Wpr_Grid extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'comments_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-item-comments'
 			]
 		);
@@ -5573,7 +5563,6 @@ class Wpr_Grid extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'read_more_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-item-read-more a'
 			]
 		);
@@ -5854,7 +5843,6 @@ class Wpr_Grid extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'lightbox_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-item-lightbox'
 			]
 		);
@@ -6173,7 +6161,6 @@ class Wpr_Grid extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'filters_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-filters li'
 			]
 		);
@@ -6539,7 +6526,6 @@ class Wpr_Grid extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'pagination_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-pagination, {{WRAPPER}} .wpr-grid-pagination a'
 			]
 		);
@@ -6812,7 +6798,6 @@ class Wpr_Grid extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'pwd_protected_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-item-protected p'
 			]
 		);
@@ -7253,7 +7238,6 @@ class Wpr_Grid extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'tax1_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-tax-style-1'
 			]
 		);
@@ -7596,7 +7580,6 @@ class Wpr_Grid extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'tax2_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-tax-style-2'
 			]
 		);

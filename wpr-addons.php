@@ -245,6 +245,9 @@ function wpr_script_loader_tag( $tag, $handle ) {
         return $tag;
     }
 
+ 
+	// Modern implementations may employ WP_HTML_Tag_Processor here.
+	// return str_replace( ' src=', ' defer src=', $tag );
     return str_replace( ' src', ' data-cfasync="false" src', $tag );
 }
 

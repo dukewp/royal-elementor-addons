@@ -3,11 +3,10 @@ namespace WprAddons\Modules\ThemeBuilder\Woocommerce\PageCart\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
-use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
-use Elementor\Core\Schemes\Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -1519,7 +1518,6 @@ class Wpr_Page_Cart extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'buttons_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .actions .button, {{WRAPPER}} .coupon .button, {{WRAPPER}} .shipping-calculator-form .button, {{WRAPPER}} .return-to-shop .button',
 				'fields_options' => [
 					'typography' => [
@@ -1759,7 +1757,6 @@ class Wpr_Page_Cart extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'cart_totals_texts',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .cart_totals th, {{WRAPPER}} .cart_totals td, {{WRAPPER}} .shipping-calculator-button',
 				'fields_options' => [
 					'typography' => [
@@ -1800,7 +1797,6 @@ class Wpr_Page_Cart extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'cart_totals_title',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .cart_totals h2',
 			]
 		);
@@ -2140,7 +2136,6 @@ class Wpr_Page_Cart extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'checkout_button_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wc-proceed-to-checkout .checkout-button',
 				'fields_options' => [
 					'typography' => [

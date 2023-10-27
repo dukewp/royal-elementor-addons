@@ -3,10 +3,9 @@ namespace WprAddons\Modules\ThemeBuilder\PostContent\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
-use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
-use Elementor\Core\Schemes\Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -155,7 +154,6 @@ class Wpr_Post_Content extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'content_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-post-content',
 				'fields_options' => [
 					'typography'      => [
@@ -191,7 +189,6 @@ class Wpr_Post_Content extends Widget_Base {
 		// 	[
 		// 		'name'     => 'content_dropcap_typography',
 		// 		'label' => esc_html__( 'Drop Cap Typography', 'wpr-addons' ),
-		// 		'scheme' => Typography::TYPOGRAPHY_3,
 		// 		'selector' => '{{WRAPPER}} .wpr-post-content.wpr-enable-dropcap p:first-child:first-letter'
 		// 	]
 		// );

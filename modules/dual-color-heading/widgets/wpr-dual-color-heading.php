@@ -5,15 +5,14 @@ namespace WprAddons\Modules\DualColorHeading\Widgets;
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Scheme_Color;
-use Elementor\Core\Schemes\Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Icons_Manager;
-use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use WprAddons\Classes\Utilities;
 
 
@@ -264,7 +263,6 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 			[
 				'name' => 'primary_heading_typography',
 				'label' => __('Typography', 'wpr-addons'),
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-dual-title .first',
 				'fields_options' => [
 					'typography' => [
@@ -461,7 +459,6 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 			[
 				'name' => 'secondary_heading_typography',
 				'label' => __('Typography', 'wpr-addons'),
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-dual-title .second',
 				'fields_options' => [
 					'typography' => [
@@ -592,7 +589,6 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 			[
 				'name' => 'description_typography',
 				'label' => __('Typography', 'wpr-addons'),
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-dual-heading-description',
 				'fields_options' => [
 					'typography' => [
