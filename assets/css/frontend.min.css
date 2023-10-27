@@ -829,7 +829,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     display: block;
 }
 
-@media screen and ( max-width: 1025px) {
+@media screen and ( max-width: 1024px) {
     .wpr-nav-menu-bp-tablet .wpr-nav-menu-container {
         display: none;
     }

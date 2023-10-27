@@ -8457,6 +8457,7 @@ class Wpr_Grid extends Widget_Base {
 		if ( isset($args['tax_query']) ) {
 
 			$tax_query = ['relation' => get_option('wpr_filter_relation')];
+
 			$prev_cleaned_key = '';
 
 			// Iterate through the $_GET array
@@ -8478,37 +8479,83 @@ class Wpr_Grid extends Widget_Base {
 								$filtervalues = explode(',', $_GET[$key]);
 
 								if ($key_type == 'meta_field') {
-									if (isset($args['meta_query'])) {
-										array_push($args['meta_query'], [
-											[
-												'key'     => $cleanedKey,
-												'value'   => [$filtervalues[0], $filtervalues[1]],
-												'type'    => 'NUMERIC',
-												'compare' => 'BETWEEN',
-											],
-										]);
+									if ( is_numeric($filtervalues[0]) && is_numeric($filtervalues[1]) ) {
+										if (isset($args['meta_query'])) {
+											array_push($args['meta_query'], [
+												[
+													'key'     => $cleanedKey,
+													'value'   => [$filtervalues[0], $filtervalues[1]],
+													'type'    => 'NUMERIC',
+													'compare' => 'BETWEEN',
+												],
+											]);
+										} else {
+											$args['meta_query'] = [
+												[
+													'key'     => $cleanedKey,
+													'value'   => [$filtervalues[0], $filtervalues[1]],
+													'type'    => 'NUMERIC',
+													'compare' => 'BETWEEN',
+												],
+											];
+										}
 									} else {
-										$args['meta_query'] = [
-											[
-												'key'     => $cleanedKey,
-												'value'   => [$filtervalues[0], $filtervalues[1]],
-												'type'    => 'NUMERIC',
-												'compare' => 'BETWEEN',
-											],
-										];
+										if (isset($args['meta_query'])) { 
+
+
+											$for_meta_query = [ // needs check if overrides something
+												'relation' => $_GET['wpr_gfr_'. $cleanedKey],
+											];
+		
+											foreach ($filtervalues as $filtervalue) {
+												$filtervalue = sanitize_text_field($filtervalue);
+												
+											
+												array_push($for_meta_query, [
+													[
+														'key'     => $cleanedKey,
+														'value'   => $filtervalue
+													],
+												]);
+											}
+		
+											array_push( $args['meta_query'], $for_meta_query );
+										} else {
+											$args['meta_query'] = [ // needs check if overrides something
+												'relation' => $_GET['wpr_gfr_'. $cleanedKey],
+											];
+
+											if (is_array($filtervalues)) {
+												foreach ($filtervalues as $filtervalue) {
+													$args['meta_query'][] = [
+														'key'     => $cleanedKey,
+														'value'   => $filtervalue,
+														'compare' => '=',
+													];
+												}
+											} else {
+
+											}
+										}
 									}
-								} else {
+								} else { // if != 'meta_field'
+									$for_tax_query = [ // needs check if overrides something
+										'relation' => $_GET['wpr_gfr_'. $cleanedKey],
+									];
+
 									foreach ($filtervalues as $filtervalue) {
 										$filtervalue = sanitize_text_field($filtervalue);
 										
-										array_push( $tax_query, [
+										array_push( $for_tax_query, [
 											'taxonomy' => $cleanedKey,
 											'field' => 'id',
 											'terms' => $filtervalue
 										] );
 									}
+
+									array_push( $tax_query, $for_tax_query );
 								}
-							} else {
+							} else { // not str_contains($_GET[$key], ',')
 								$key_type = $this->identify_key_type($cleanedKey);
 								$filtervalues = sanitize_text_field($_GET[$key]);
 
@@ -9866,6 +9913,7 @@ class Wpr_Grid extends Widget_Base {
 	protected function render() {
 		// Get Settings
 		$settings = $this->get_settings();
+		
 		// Get Posts
 		$posts = new \WP_Query( $this->get_main_query_args() );
 
@@ -9963,7 +10011,9 @@ class Wpr_Grid extends Widget_Base {
 		// Loop: End
 		endif;
 
+		var_dump($this->get_main_query_args()['meta_query']);
 		var_dump($this->get_main_query_args()['tax_query']);
+		var_dump($this->get_main_query_args());
 	}
 	
 }
