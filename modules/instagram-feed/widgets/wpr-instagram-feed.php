@@ -584,7 +584,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		$this->start_controls_section(
 			'section_insta_api',
 			[
-				'label' => 'Intergration <a href="#" onclick="window.open(\'https://www.youtube.com/watch?v=mRwHa-J-fxg\',\'_blank\').focus()">Video Tutorial <span class="dashicons dashicons-video-alt3"></span></a>',
+				'label' => 'Intergration <a href="#" onclick="window.open(\'https://www.youtube.com/watch?v=EGwuqWK-s9E\',\'_blank\').focus()">Video Tutorial <span class="dashicons dashicons-video-alt3"></span></a>',
 				'tab' => Controls_Manager::TAB_CONTENT,
 			]
 		);
