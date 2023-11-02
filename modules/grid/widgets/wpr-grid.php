@@ -8479,12 +8479,15 @@ class Wpr_Grid extends Widget_Base {
 								$filtervalues = explode(',', $_GET[$key]);
 
 								if ($key_type == 'meta_field') {
-									if ( is_numeric($filtervalues[0]) && is_numeric($filtervalues[1]) ) {
+									if ( is_numeric($filtervalues[0]) ) {
+										$minValue = min(array_values($filtervalues));
+										$maxValue = max(array_values($filtervalues));
+										
 										if (isset($args['meta_query'])) {
 											array_push($args['meta_query'], [
 												[
 													'key'     => $cleanedKey,
-													'value'   => [$filtervalues[0], $filtervalues[1]],
+													'value'   => [$minValue, $maxValue],
 													'type'    => 'NUMERIC',
 													'compare' => 'BETWEEN',
 												],
@@ -8493,7 +8496,7 @@ class Wpr_Grid extends Widget_Base {
 											$args['meta_query'] = [
 												[
 													'key'     => $cleanedKey,
-													'value'   => [$filtervalues[0], $filtervalues[1]],
+													'value'   => [$minValue, $maxValue],
 													'type'    => 'NUMERIC',
 													'compare' => 'BETWEEN',
 												],
