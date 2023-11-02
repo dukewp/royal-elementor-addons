@@ -10014,8 +10014,12 @@ class Wpr_Grid extends Widget_Base {
 		// Loop: End
 		endif;
 
-		var_dump($this->get_main_query_args()['meta_query']);
-		var_dump($this->get_main_query_args()['tax_query']);
+		if (isset($this->get_main_query_args()['meta_query'])) {
+			var_dump($this->get_main_query_args()['meta_query']);
+		}
+		if (isset($this->get_main_query_args()['tax_query'])) {
+			var_dump($this->get_main_query_args()['tax_query']);
+		}
 		var_dump($this->get_main_query_args());
 	}
 	
