@@ -275,6 +275,12 @@ template {
     overflow: hidden;
 }
 
+.wpr-flex {
+    display: flex;
+    justify-content:  flex-start; 
+    align-items: center;
+}
+
 .wpr-inline-flex-center {
     display: -webkit-inline-box;
     display: -ms-inline-flexbox;
@@ -16733,14 +16739,14 @@ dl.variation dd {
 }
 
 /*--------------------------------------------------------------
-== Grid Filters
+== Widget Grid Filters
 --------------------------------------------------------------*/
 .wpr-gfv-wrap {
     display: flex;
     flex-wrap: wrap;
 }
 
-.wpr-gfv-wrap label {
+.wpr-gfv-wrap .wpr-gf-input-wrap {
     opacity: 0;
     width: 0;
     height: 0;
@@ -16770,8 +16776,7 @@ dl.variation dd {
     filter: none;
 }
 
-.wpr-grid-filters-wrap label {
-    display: block;
+.wpr-grid-filters-wrap .wpr-gf-input-wrap input {
     cursor: pointer;
 }
 
