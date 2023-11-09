@@ -1776,7 +1776,7 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     -webkit-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    z-index: 110;
+    z-index: 1;
 }
 
 .wpr-gallery-slider-dots ul {
@@ -6443,7 +6443,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 .wpr-slider-dots {
     display: inline-table;
     position: absolute;
-    z-index: 110;
+    z-index: 1;
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
@@ -17277,6 +17277,10 @@ dl.variation dd {
 
 .wpr-offcanvas-body-overflow {
     overflow: hidden;
+}
+
+.wpr-offcanvas-test-div {
+    visibility: hidden;
 }
 
 .wpr-offcanvas-wrap {
