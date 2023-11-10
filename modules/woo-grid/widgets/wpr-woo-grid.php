@@ -8599,7 +8599,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 			$args['tax_query'] = $this->get_tax_query_args();
 			$args['meta_query'] = $this->get_meta_query_args();
 			$args['posts_per_page'] = $posts_per_page;
-			$args['orderby'] = $settings['query_randomize'];
+			if (!empty($settings['query_randomize'])) {
+				$args['orderby'] = $settings['query_randomize'];
+			}
 		}
 
 		// Sorting
