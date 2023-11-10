@@ -198,7 +198,20 @@ class Wpr_Woo_Grid extends Widget_Base {
 		);
 	}
 	
-	public function add_control_sort_and_results_count() {}
+	public function add_control_sort_and_results_count() {
+		$this->add_control(
+			'layout_sort_and_results_count',
+			[
+				'label' => sprintf( __( 'Show Sorting %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'separator' => 'before',
+				'classes' => 'wpr-pro-control',
+				'condition' => [
+					'layout_select!' => 'slider',
+				]
+			]
+		);
+	}
 	
 	public function add_section_grid_sorting() {}
 	
