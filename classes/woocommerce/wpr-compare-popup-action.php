@@ -27,6 +27,13 @@ class WPR_Compare_Popup_Action {
     // }
 
     function wpr_get_page_content($request) {
+
+		if (!isset($_POST['wpr_addons_nonce']) || !wp_verify_nonce($_POST['wpr_addons_nonce'], 'wpr-addons-js')) {
+			wp_send_json_error(array(
+				'message' => esc_html__('Security check failed.', 'wpr-addons'),
+			));
+		}
+
         $page_id = $_POST['wpr_compare_page_id'];
         // $page_id = $request->get_param('id');
         
