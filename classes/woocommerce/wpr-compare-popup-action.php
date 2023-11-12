@@ -30,7 +30,7 @@ class WPR_Compare_Popup_Action {
 
         $page_id = $_POST['wpr_compare_page_id'];
 
-        if ( !current_user_can('read_posts') && 'publish' !== get_post_status($page_id) ) {
+        if ( !current_user_can('read_post', $page_id) && 'publish' !== get_post_status($page_id) ) {
 			wp_send_json_error(array(
 				'message' => esc_html__('Security check failed.', 'wpr-addons'),
 			));
