@@ -9247,7 +9247,7 @@ class Wpr_Grid extends Widget_Base {
 		// All Filter
 		if ( 'yes' === $settings['filters_all'] && 'yes' !== $settings['filters_linkable'] ) {
 			echo '<li class="'. esc_attr($pointer_class) .'">';
-			echo '<span data-filter="*" class="wpr-active-filter '. $pointer_item_class_name .'">'. $left_icon . esc_html($settings['filters_all_text']) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo '<span data-filter="*" class="wpr-grid-filters-item wpr-active-filter '. $pointer_item_class_name .'">'. $left_icon . esc_html($settings['filters_all_text']) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo '</li>';
 		}
 		
@@ -9765,6 +9765,8 @@ class Wpr_Grid extends Widget_Base {
 		}
 
 		// Grid Wrap
+		echo '<div class="wpr-xxx" data-settings="' . esc_attr( json_encode( $settings ) ) . '"></div>';
+
 		echo '<section class="wpr-grid elementor-clearfix" '. $render_attribute .'>';
 
 		while ( $posts->have_posts() ) : $posts->the_post();
