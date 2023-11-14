@@ -1281,27 +1281,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		// reset
 		wp_reset_postdata();
 
-		if ( 'slider' === $settings['layout_select'] ) {
-			// Slider Navigation
-			echo '<div class="wpr-grid-slider-arrow-container">';
-				echo '<div class="wpr-grid-slider-prev-arrow wpr-grid-slider-arrow" id="wpr-grid-slider-prev-'. esc_attr($this->get_id()) .'">'. Utilities::get_wpr_icon( $settings['layout_slider_nav_icon'], '' ) .'</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				echo '<div class="wpr-grid-slider-next-arrow wpr-grid-slider-arrow" id="wpr-grid-slider-next-'. esc_attr($this->get_id()) .'">'. Utilities::get_wpr_icon( $settings['layout_slider_nav_icon'], '' ) .'</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo '</div>';
-
-			// Slider Dots
-			echo '<div class="wpr-grid-slider-dots"></div>';
-		}
-
-		// Pagination
-		$this->render_grid_pagination( $settings );
-
-		// No Posts Found
-		else:
-
-			if ( 'dynamic' === $settings['query_selection'] ) {
-				echo '<h2>'. esc_html($settings['query_not_found_text']) .'</h2>';
-			}
-
 		// Loop: End
 		endif;
 	
