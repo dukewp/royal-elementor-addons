@@ -54,6 +54,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	// Main Query Args
 	public function get_main_query_args() {
 		$settings = $_POST['grid_settings'];
+		$taxonomy = $_POST['wpr_taxonomy'];
+        $term = $_POST['wpr_filter'];
+		$tax_query = [];
 		$author = ! empty( $settings[ 'query_author' ] ) ? implode( ',', $settings[ 'query_author' ] ) : '';
 
 		// if ( is_user_logged_in() ){
@@ -192,9 +195,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			}
             // Get category from URL
 
-			if ( !empty($tax_query) ) {
-				$args['tax_query'] = $tax_query;
-			}
+			// if ( !empty($tax_query) ) {
+			// 	$args['tax_query'] = $tax_query;
+			// }
 		}
 
 		// Related
@@ -213,6 +216,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 		if ( 'rand' !== $query_order_by ) {
 			$args['order'] = $settings['order_direction'];
 		}
+    
+        if ( $term != '*' ) {
+			if ( 'tag' === $taxonomy ) {
+				$taxonomy = 'post_' . $_POST['wpr_taxonomy'];
+			}
+            array_push( $tax_query, [
+                'taxonomy' => $taxonomy,
+                'field' => 'slug',
+                'terms' => $term
+            ] );
+        }
+
+		if ( !empty($tax_query) ) {
+			$args['tax_query'] = $tax_query;
+		}
 
 		return $args;
 	}
@@ -223,7 +241,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$tax_query = [];
 		$taxonomy = $_POST['wpr_taxonomy'];
         $term = $_POST['wpr_filter'];
-        error_log(print_r($_POST, true));
     
         if ( $term != '*' ) {
 			if ( 'tag' === $taxonomy ) {
