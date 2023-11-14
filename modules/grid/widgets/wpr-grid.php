@@ -9673,6 +9673,9 @@ class Wpr_Grid extends Widget_Base {
 			'download' => $settings['lightbox_popup_download'],
 		];
 
+		// $layout_settings['grid_settings'] = [esc_attr( json_encode( $settings ) )];
+		$layout_settings['grid_settings'] = $settings;
+
 		$this->add_render_attribute( 'grid-settings', [
 			'data-settings' => wp_json_encode( $layout_settings ),
 		] );
@@ -9763,9 +9766,6 @@ class Wpr_Grid extends Widget_Base {
 			$this->add_slider_settings( $settings );
 			$render_attribute = $this->get_render_attribute_string( 'slider-settings' );
 		}
-
-		// Grid Wrap
-		echo '<div class="wpr-xxx" data-settings="' . esc_attr( json_encode( $settings ) ) . '"></div>';
 
 		echo '<section class="wpr-grid elementor-clearfix" '. $render_attribute .'>';
 

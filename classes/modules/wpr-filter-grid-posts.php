@@ -221,14 +221,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	public function get_tax_query_args() {
 		$settings = $_POST['grid_settings'];
 		$tax_query = [];
-        $category = $_POST['wpr_filter'];
+		$taxonomy = $_POST['wpr_taxonomy'];
+        $term = $_POST['wpr_filter'];
         error_log(print_r($_POST, true));
     
-        if ( $category != '*' ) {
+        if ( $term != '*' ) {
+			if ( 'tag' === $taxonomy ) {
+				$taxonomy = 'post_' . $_POST['wpr_taxonomy'];
+			}
             array_push( $tax_query, [
-                'taxonomy' => 'category',
+                'taxonomy' => $taxonomy,
                 'field' => 'slug',
-                'terms' => $category
+                'terms' => $term
             ] );
         }
 
@@ -1283,8 +1287,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		// Loop: End
 		endif;
-
-		
+	
+		die();
 	}
 
 }
