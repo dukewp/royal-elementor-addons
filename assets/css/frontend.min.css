@@ -12844,7 +12844,8 @@ select.wpr-category-select {
     display: inline-block;
 }
 
-.wpr-instagram-hidden-item {
+.wpr-instagram-hidden-item,
+.wpr-grid-hidden-item {
     opacity: 0 !important;
     overflow: hidden;
 }

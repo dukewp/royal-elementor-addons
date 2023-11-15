@@ -232,6 +232,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$args['tax_query'] = $tax_query;
 		}
 
+		if ( isset($_POST['wpr_offset']) ) {
+			$args['offset'] = $_POST['wpr_offset'];
+		}
+
 		return $args;
 	}
 
