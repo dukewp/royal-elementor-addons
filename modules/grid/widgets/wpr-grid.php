@@ -9261,7 +9261,6 @@ class Wpr_Grid extends Widget_Base {
 			echo '</li>';
 		}
 		
-		// var_dump(get_the_archive_title());
 		$q = get_queried_object();
 		// category title : custom post type archive title
 		$category_name = is_category() ? strtolower($q->name) : 'no-category';
@@ -9275,7 +9274,6 @@ class Wpr_Grid extends Widget_Base {
 				$data_attr = 'post_tag' === $taxonomy ? 'tag-'. $filter->slug : $taxonomy .'-'. $filter->slug;
 				$tax_data_attr = 'post_tag' === $taxonomy ? 'tag' : $taxonomy;
 				$term_data_attr = $filter->slug;
-				var_dump($tax_data_attr , $term_data_attr);
 
 				// GOGA - tested but needs advanced testing
 				if (strpos($data_attr, $category_name) !== false) {
