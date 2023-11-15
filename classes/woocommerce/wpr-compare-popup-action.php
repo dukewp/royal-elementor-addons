@@ -30,10 +30,10 @@ class WPR_Compare_Popup_Action {
 
         $page_id = $_POST['wpr_compare_page_id'];
 
-        if ( 'publish' !== get_post_status($page_id) ) {
-			wp_send_json_error(array(
-				'message' => esc_html__('Security check failed.', 'wpr-addons'),
-			));
+        if ( post_password_required($page_id) || 'publish' !== get_post_status($page_id) ) {
+            wp_send_json_error(array(
+                'message' => esc_html__('Security check failed.', 'wpr-addons'),
+            ));
         }
 
 		if (!isset($_POST['wpr_addons_nonce']) || !wp_verify_nonce($_POST['wpr_addons_nonce'], 'wpr-addons-js')) {
