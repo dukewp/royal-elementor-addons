@@ -4,14 +4,13 @@ namespace WprAddons\Modules\AdvancedAccordion\Widgets;
 use Elementor;
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
-use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
-use Elementor\Core\Schemes\Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Repeater;
 use Elementor\Group_Control_Image_Size;
 use WprAddons\Classes\Utilities;
@@ -249,6 +248,24 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				]
             ]
         );
+
+		$this->add_control(
+			'accordion_title_tag',
+			[
+				'label' => esc_html__( 'Title HTML Tag', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'span' => esc_html__( 'Span', 'wpr-addons' ),
+					'h1' => esc_html__( 'H1', 'wpr-addons' ),
+					'h2' => esc_html__( 'H2', 'wpr-addons' ),
+					'h3' => esc_html__( 'H3', 'wpr-addons' ),
+					'h4' => esc_html__( 'H4', 'wpr-addons' ),
+					'h5' => esc_html__( 'H5', 'wpr-addons' ),
+					'h6' => esc_html__( 'H6', 'wpr-addons' )
+				],
+				'default' => 'span',
+			]
+		);
 
 		$this->add_control(
 			'interaction_speed',
@@ -544,8 +561,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'tab_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
-				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button',
+				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button, {{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button .wpr-acc-title-text',
 				'fields_options' => [
 					'typography'      => [
 						'default' => 'custom',
@@ -1113,7 +1129,6 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'content_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-panel .wpr-acc-panel-content',
 			]
 		);
@@ -1303,7 +1318,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 									$this->render_first_icon($settings, $acc); 
 								endif ; ?>
 
-								<span class="wpr-acc-title-text"><?php echo $acc['accordion_title'] ?></span>
+								<<?php echo $settings['accordion_title_tag'] ?> class="wpr-acc-title-text"><?php echo $acc['accordion_title'] ?></<?php echo $settings['accordion_title_tag'] ?>>
 							</span>
 							<?php $this->render_second_icon($settings, $acc); ?>
 						</button>

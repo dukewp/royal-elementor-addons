@@ -3,12 +3,11 @@ namespace WprAddons\Modules\ThemeBuilder\Woocommerce\ProductTabs\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
-use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
-use Elementor\Core\Schemes\Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Background;
 use WprAddons\Classes\Utilities;
@@ -1353,7 +1352,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'field_label_title_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .woocommerce-tabs .woocommerce-Tabs-panel label',
 				'fields_options' => [
 					'typography' => [
@@ -1538,7 +1536,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'input_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .comment-form-comment textarea, {{WRAPPER}} .comment-form-author input, {{WRAPPER}} .comment-form-email input',
 				'fields_options' => [
 					'typography' => [
@@ -1914,7 +1911,6 @@ class Wpr_Product_Tabs extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'submit_btn_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} #respond .comment-form .form-submit input#submit',
 				'typography' => [
 					'default' => 'custom',

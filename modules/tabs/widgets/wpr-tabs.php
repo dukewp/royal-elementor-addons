@@ -8,11 +8,11 @@ use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Css_Filter;
-use Elementor\Core\Schemes\Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Repeater;
-use Elementor\Core\Schemes\Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Widget_Base;
 use Elementor\Utils;
 use Elementor\Icons;
@@ -635,7 +635,6 @@ class Wpr_Tabs extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'tab_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} '. $css_selector['control_list'] .' .wpr-tab-title',
 			]
 		);
@@ -840,7 +839,6 @@ class Wpr_Tabs extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'tab_hover_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} '. $css_selector['control_list'] .':hover .wpr-tab-title',
 			]
 		);
@@ -1048,7 +1046,6 @@ class Wpr_Tabs extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'tab_active_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} '. $css_selector['control_list'] .'.wpr-tab-active .wpr-tab-title',
 			]
 		);
@@ -1260,7 +1257,6 @@ class Wpr_Tabs extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'content_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} '. $css_selector['content_list'],
 			]
 		);

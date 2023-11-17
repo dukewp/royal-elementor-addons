@@ -9,7 +9,6 @@ use Elementor\Core\Base\Module;
 use Elementor\Core\Kits\Documents\Tabs\Settings_Layout;
 use Elementor\Core\Responsive\Files\Frontend;
 use Elementor\Plugin;
-use Elementor\Core\Responsive\Responsive;
 use Elementor\Core\Breakpoints\Manager;
 use Elementor\Core\Breakpoints;
 use Elementor\Group_Control_Box_Shadow;

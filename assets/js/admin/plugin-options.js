@@ -267,6 +267,17 @@ jQuery(document).ready(function( $ ) {
 		// Hide Extra Options
 		var currentFilter = $('.template-filters .active-filter').attr('data-class');
 
+		
+		if (clone.hasClass('wpr-tab-product_single')) {
+			setTimeout(function() {
+				clone.find('.wpr-condition-input-ids').each(function() {
+					if ( !($(this).val()) ) {
+						$(this).val('all').show();
+					}
+				});
+			}, 600);
+		}
+
 		if ( 'blog-posts' === currentFilter || 'custom-posts' === currentFilter ) {
 			clone.find('.singles-condition-select').children(':nth-child(1),:nth-child(2),:nth-child(3)').remove();
 			clone.find('.wpr-condition-input-ids').val('all').show();
@@ -367,7 +378,6 @@ jQuery(document).ready(function( $ ) {
 	** Popup: Open -------------------------
 	*/
 	function openConditionsPopup( template ) {
-		
 		// Set Conditions
 		popupSetConditions(template);
 		popupMainConditionSelect();

@@ -2,12 +2,11 @@
 namespace WprAddons\Modules\MegaMenu\Widgets;
 
 use Elementor\Controls_Manager;
-use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Color;
-use Elementor\Core\Schemes\Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Widget_Base;
 use WprAddons\Classes\Utilities;
 
@@ -153,7 +152,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 	}
 
 	public function add_control_mob_menu_show_on() {
-		$breakpoints = Responsive::get_breakpoints();
+		$breakpoints = \Elementor\Plugin::$instance->breakpoints->get_active_breakpoints();
 
 		$this->add_control(
 			'mob_menu_show_on',
@@ -163,9 +162,9 @@ class Wpr_Mega_Menu extends Widget_Base {
 				'default' => 'tablet',
 				'options' => [
 					/* translators: %d: Breakpoint number. */
-					'mobile' => sprintf( esc_html__( 'Mobile (< %dpx)', 'wpr-addons' ), $breakpoints['md'] ),
+					'mobile' => sprintf( esc_html__( 'Mobile (≤ %dpx)', 'wpr-addons' ), $breakpoints['mobile']->get_default_value() ),
 					/* translators: %d: Breakpoint number. */
-					'tablet' => sprintf( esc_html__( 'Tablet (< %dpx)', 'wpr-addons' ), $breakpoints['lg'] ),
+					'tablet' => sprintf( esc_html__( 'Tablet (≤ %dpx)', 'wpr-addons' ), $breakpoints['tablet']->get_default_value() ),
 					// 'pro-nn' => esc_html__( 'Don\'t Show (Pro)', 'wpr-addons' ),
 					'pro-al' => esc_html__( 'All Devices (Pro)', 'wpr-addons' ),
 				],
@@ -723,7 +722,6 @@ class Wpr_Mega_Menu extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'menu_items_typography',
-				'scheme' => Typography::TYPOGRAPHY_1,
 				'selector' => '{{WRAPPER}} .wpr-menu-item,{{WRAPPER}} .wpr-mobile-menu-item,{{WRAPPER}} .wpr-mobile-sub-menu-item,{{WRAPPER}} .wpr-mobile-toggle-text, .wpr-menu-offcanvas-back h3',
 			]
 		);
@@ -1041,7 +1039,6 @@ class Wpr_Mega_Menu extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'menu_items_badge_typography',
-				'scheme' => Typography::TYPOGRAPHY_1,
 				'selector' => '{{WRAPPER}} .wpr-nav-menu .wpr-mega-menu-badge'
 			]
 		);
@@ -1315,7 +1312,6 @@ class Wpr_Mega_Menu extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'sub_menu_typography',
-				'scheme' => Typography::TYPOGRAPHY_1,
 				'selector' => '{{WRAPPER}} .wpr-sub-menu .wpr-sub-menu-item'
 			]
 		);

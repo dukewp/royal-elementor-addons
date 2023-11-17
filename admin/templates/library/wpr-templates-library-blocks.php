@@ -100,16 +100,6 @@ class WPR_Templates_Library_Blocks {
 
 			<?php
 
-			$modules['Footer'] = [
-				0 => 'footer',
-				1 => '#',
-			];
-
-			$modules['Header'] = [
-				0 => 'header',
-				1 => '#',
-			];
-
 			foreach ($modules as $title => $data) :
 				$module_slug = $data[0];
 				$blocks = WPR_Templates_Data::get_available_blocks();
@@ -139,6 +129,8 @@ class WPR_Templates_Library_Blocks {
 						$data_template_title .= ' contact';
 					} else if ( false !== strpos($title, 'Nav Menu') ) {
 						$data_template_title .= ' header';
+					} else if ( false !== strpos($title, 'Post Grid') ) {
+						$data_template_title .= ' blog';
 					}
 
 			?>

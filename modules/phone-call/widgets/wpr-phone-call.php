@@ -5,7 +5,7 @@ use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Box_Shadow;
-use Elementor\Core\Schemes\Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -469,7 +469,6 @@ class Wpr_Phone_Call extends Widget_Base {
 		Group_Control_Typography::get_type(),
 		[
 			'name' => 'button_typography',
-			'scheme' => Typography::TYPOGRAPHY_3,
 			'selector' => '{{WRAPPER}} .wpr-pc-content,{{WRAPPER}} .wpr-pc-content::after',
 			'separator' => 'before',
 			'condition' => [

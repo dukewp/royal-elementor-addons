@@ -3,14 +3,13 @@ namespace WprAddons\Modules\MediaGrid\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
-use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Background;
-use Elementor\Core\Schemes\Color;
-use Elementor\Core\Schemes\Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Repeater;
 use Elementor\Group_Control_Image_Size;
 use WprAddons\Classes\Utilities;
@@ -3058,7 +3057,6 @@ class Wpr_Media_Grid extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'title_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-item-title a'
 			]
 		);
@@ -3199,7 +3197,6 @@ class Wpr_Media_Grid extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'caption_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-item-caption'
 			]
 		);
@@ -3209,7 +3206,6 @@ class Wpr_Media_Grid extends Widget_Base {
 			[
 				'name' => 'caption_dropcap_typography',
 				'label' => esc_html__( 'Drop Cap Typography', 'wpr-addons' ),
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-item-caption.wpr-enable-dropcap p:first-child:first-letter'
 			]
 		);
@@ -3398,7 +3394,6 @@ class Wpr_Media_Grid extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'date_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-item-date'
 			]
 		);
@@ -3611,7 +3606,6 @@ class Wpr_Media_Grid extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'time_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-item-time'
 			]
 		);
@@ -3885,7 +3879,6 @@ class Wpr_Media_Grid extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'author_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-item-author'
 			]
 		);
@@ -4210,7 +4203,6 @@ class Wpr_Media_Grid extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'lightbox_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-item-lightbox'
 			]
 		);
@@ -4774,7 +4766,6 @@ class Wpr_Media_Grid extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'tax1_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-tax-style-1'
 			]
 		);
@@ -5092,7 +5083,6 @@ class Wpr_Media_Grid extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'tax2_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-tax-style-2'
 			]
 		);
@@ -5935,7 +5925,6 @@ class Wpr_Media_Grid extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'filters_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-filters li'
 			]
 		);
@@ -6302,7 +6291,6 @@ class Wpr_Media_Grid extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'pagination_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-pagination'
 			]
 		);

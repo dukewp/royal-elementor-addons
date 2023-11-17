@@ -191,6 +191,20 @@
   font-size: 14px;
 }
 
+.button.wpr-options-button.wpr-dynamic-tutorial {
+  color: #e1ad01;
+  background: #FFF;
+  border: 2px solid #e1ad01;
+  margin-left: 10px;
+}
+
+.button.wpr-options-button.wpr-dynamic-tutorial:hover,
+.button.wpr-options-button.wpr-dynamic-tutorial:focus {
+  color: #FFF;
+  background: #e1ad01;
+  border: 2px solid #e1ad01;
+}
+
 .button.wpr-options-button:hover,
 .button.wpr-options-button:focus {
   color: #fff;

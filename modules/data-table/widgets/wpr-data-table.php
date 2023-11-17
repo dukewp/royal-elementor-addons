@@ -5,14 +5,13 @@ namespace WprAddons\Modules\DataTable\Widgets;
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Icons_Manager;
-use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
-use Elementor\Core\Schemes\Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Repeater;
 use Elementor\Group_Control_Image_Size;
 use WprAddons\Classes\Utilities;
@@ -1276,7 +1275,6 @@ class Wpr_Data_Table extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'th_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} th',
 				'fields_options' => [
 					'typography'      => [
@@ -1647,7 +1645,6 @@ class Wpr_Data_Table extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'td_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} td, {{WRAPPER}} i.fa-question-circle',
 				'fields_options' => [
 					'typography'      => [

@@ -324,6 +324,8 @@ function wpr_addons_settings_page() {
         <h3><?php esc_html_e( 'Theme Builder Widgets', 'wpr-addons' ); ?></h3>
         <p><?php esc_html_e( 'Post (CPT) Archive Pages, Post (CPT) Single Pages', 'wpr-addons' ); ?></p>
         <a href="https://youtu.be/cwkhwO_rPuo?t=743" target="_blank"><?php esc_html_e( 'How to use Theme Builder Widgets', 'wpr-addons' ); ?></a>
+        <br><br>
+        <a href="https://www.youtube.com/watch?v=kE1zmi3fxh8" target="_blank"><?php esc_html_e( ' How to build Dynamic Websites', 'wpr-addons' ); ?></a>
     </div>
     <div class="wpr-elements wpr-elements-theme">
     <?php

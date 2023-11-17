@@ -7,12 +7,12 @@ use Elementor\Repeater;
 use Elementor\Controls_Manager;
 use Elementor\Scheme_Color;
 use Elementor\Group_Control_Box_Shadow;
-use Elementor\Core\Schemes\Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Background;
 use Elementor\Scheme_Typography;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use WprAddons\Classes\Utilities;
 
 class Wpr_Posts_Timeline extends Widget_Base {
@@ -3184,7 +3184,6 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'name' => 'date_typography',
 				'label' => __('Typography', 'wpr-addons'),
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-inner-date-label',
 				'fields_options' => [
 					'typography' => [

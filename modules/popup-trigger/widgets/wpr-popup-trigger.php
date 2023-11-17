@@ -7,7 +7,7 @@ use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Background;
 use WprAddons\Classes\Utilities;
 
@@ -380,7 +380,6 @@ class Wpr_Popup_Trigger extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'popup_trigger_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-popup-trigger-button'
 			]
 		);

@@ -3,10 +3,9 @@ namespace WprAddons\Modules\ThemeBuilder\PostComments\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
-use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
-use Elementor\Core\Schemes\Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Border;
 use WprAddons\Classes\Utilities;
@@ -378,7 +377,6 @@ class Wpr_Post_Comments extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'section_title_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-comments-wrap > h3',
 				'fields_options' => [
 					'typography'      => [
@@ -757,7 +755,6 @@ class Wpr_Post_Comments extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'nickname_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-comment-author',
 				'fields_options' => [
 					'typography'      => [
@@ -866,7 +863,6 @@ class Wpr_Post_Comments extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'metadata_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-comment-metadata',
 				'fields_options' => [
 					'typography' => [
@@ -949,7 +945,6 @@ class Wpr_Post_Comments extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'content_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-comment-content',
 				'fields_options' => [
 					'typography'      => [
@@ -1032,7 +1027,6 @@ class Wpr_Post_Comments extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'reply_link_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-comment-reply a',
 				'fields_options' => [
 					'typography'      => [
@@ -1292,7 +1286,6 @@ class Wpr_Post_Comments extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'navigation_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-comments-navigation a, {{WRAPPER}} .wpr-comments-navigation span',
 				'fields_options' => [
 					'typography'      => [
@@ -1497,7 +1490,6 @@ class Wpr_Post_Comments extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'cf_title_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-comment-reply-title',
 				'fields_options' => [
 					'typography'      => [
@@ -1725,7 +1717,6 @@ class Wpr_Post_Comments extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'comment_form_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-comment-form label, {{WRAPPER}} .wpr-comment-form input[type=text], {{WRAPPER}} .wpr-comment-form textarea, {{WRAPPER}} .wpr-comment-form .logged-in-as',
 				'fields_options' => [
 					'typography'      => [
@@ -1999,7 +1990,6 @@ class Wpr_Post_Comments extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'submit_button_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-submit-comment',
 				'fields_options' => [
 					'typography'      => [

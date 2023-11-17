@@ -5,13 +5,12 @@ use Elementor;
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Image_Size;
-use Elementor\Core\Schemes\Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Repeater;
-use Elementor\Core\Schemes\Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Utils;
 use Elementor\Icons;
 use Elementor\Icons_Manager;
@@ -1532,7 +1531,6 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'slider_title_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-slider-title *',
 			]
 		);
@@ -1615,7 +1613,6 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'slider_sub_title_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-slider-sub-title *',
 			]
 		);
@@ -1698,7 +1695,6 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'slider_description_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-slider-description p',
 			]
 		);
@@ -1899,7 +1895,6 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'btn_typography_1',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-slider-primary-btn',
 				'separator' => 'before',
 			]
@@ -2184,7 +2179,6 @@ class Wpr_Advanced_Slider extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'btn_typography_2',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-slider-secondary-btn',
 				'separator' => 'before',
 			]

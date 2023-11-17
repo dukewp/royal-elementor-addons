@@ -3,12 +3,11 @@ namespace WprAddons\Modules\ThemeBuilder\Woocommerce\ProductTitle\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
-use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Text_Stroke;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
-use Elementor\Core\Schemes\Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -128,7 +127,6 @@ class Wpr_Product_Title extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'title_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-product-title',
 				'fields_options' => [
 					'typography' => [

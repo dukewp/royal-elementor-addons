@@ -3,11 +3,10 @@ namespace WprAddons\Modules\PageList\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
-use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Background;
-use Elementor\Core\Schemes\Color;
-use Elementor\Core\Schemes\Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Image_Size;
 use WprAddons\Classes\Utilities;
 
@@ -479,7 +478,6 @@ class Wpr_Page_List extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'page_list_item_title_typo',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-page-list-item a',
 				'fields_options' => [
 					'typography'      => [
@@ -596,7 +594,6 @@ class Wpr_Page_List extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'page_list_item_sub_title_typo',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-page-list-item p',
 				'fields_options' => [
 					'typography'      => [

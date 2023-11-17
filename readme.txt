@@ -3,7 +3,7 @@ Contributors: WP Royal, rubeushagrid13, cyberpinky, elementoraddonswpr
 Tags: elementor, elements, widgets for elementor, elementor addons, elementor widgets, elementor form, woocommerce elementor, page builder, elementor templates, wordpress page builder, best elementor addons, addons for elementor, elementor woocommerce builder
 Stable tag: 1.3.73
 Requires at least: 5.0
-Tested up to: 6.3
+Tested up to: 6.4
 Requires PHP: 5.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html

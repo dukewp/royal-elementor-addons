@@ -3,7 +3,7 @@ namespace WprAddons\Modules\ThemeBuilder\Woocommerce\ProductStock\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
-use Elementor\Core\Schemes\Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Box_Shadow;
 use WprAddons\Classes\Utilities;

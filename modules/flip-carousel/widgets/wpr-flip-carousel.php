@@ -3,14 +3,13 @@ namespace WprAddons\Modules\FlipCarousel\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
-use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
-use Elementor\Core\Schemes\Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Repeater;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Utils;
@@ -715,7 +714,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'name' => 'pagination_content_typography',
 				'label' => __( 'Typography', 'wpr-addons' ),
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .flipster__nav__link',
 				'fields_options' => [
 					'typography' => [
@@ -1023,7 +1021,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			[
 				'name' => 'content_typography_caption',
 				'label' => __( 'Typography', 'wpr-addons' ),
-				'scheme' => \Elementor\Core\Schemes\Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .flipcaption',
 				'fields_options' => [
 					'typography' => [

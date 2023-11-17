@@ -3,12 +3,11 @@ namespace WprAddons\Modules\Forms\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
-use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Color;
-use Elementor\Core\Schemes\Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -556,7 +555,6 @@ class Wpr_Forms extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'header_title_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpforms-head-container .wpforms-title, {{WRAPPER}} .nf-form-title h3',
 			]
 		);
@@ -579,7 +577,6 @@ class Wpr_Forms extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'header_description_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpforms-head-container .wpforms-description, {{WRAPPER}} .nf-form-fields-required',
 			]
 		);
@@ -656,7 +653,6 @@ class Wpr_Forms extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'label_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpcf7-form, {{WRAPPER}} .nf-field-container label, {{WRAPPER}} .wpforms-field-label, {{WRAPPER}} .wpforms-image-choices-label, {{WRAPPER}} .wpforms-field-label-inline, {{WRAPPER}} .wpforms-captcha-question, {{WRAPPER}} .wpforms-captcha-equation, {{WRAPPER}} .wpforms-payment-total, {{WRAPPER}} .caldera-grid .control-label, {{WRAPPER}} .caldera-forms-summary-field ul li, {{WRAPPER}} .caldera-grid .total-line, {{WRAPPER}} .caldera-grid .checkbox label, {{WRAPPER}} .caldera-grid .radio label, {{WRAPPER}} .caldera-grid .caldera-forms-gdpr-field-label, {{WRAPPER}} .wpr-forms-container .wpforms-confirmation-container-full, {{WRAPPER}} .wpr-forms-container .nf-response-msg',
 			]
 		);
@@ -738,7 +734,6 @@ class Wpr_Forms extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'description_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .nf-field-description, {{WRAPPER}} .wpforms-field-sublabel, {{WRAPPER}} .wpforms-field-description, {{WRAPPER}} .caldera-grid .help-block',
 			]
 		);
@@ -1249,7 +1244,6 @@ class Wpr_Forms extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'input_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpcf7-text, {{WRAPPER}} .wpcf7-textarea, {{WRAPPER}} .wpcf7-date, {{WRAPPER}} .wpcf7-number, {{WRAPPER}} .wpcf7-select, {{WRAPPER}} .wpcf7-quiz, {{WRAPPER}} .ninja-forms-field, {{WRAPPER}} .wpforms-form input[type=date], {{WRAPPER}} .wpforms-form input[type=datetime], {{WRAPPER}} .wpforms-form input[type=datetime-local], {{WRAPPER}} .wpforms-form input[type=email], {{WRAPPER}} .wpforms-form input[type=month], {{WRAPPER}} .wpforms-form input[type=number], {{WRAPPER}} .wpforms-form input[type=password], {{WRAPPER}} .wpforms-form input[type=range], {{WRAPPER}} .wpforms-form input[type=search], {{WRAPPER}} .wpforms-form input[type=tel], {{WRAPPER}} .wpforms-form input[type=text], {{WRAPPER}} .wpforms-form input[type=time], {{WRAPPER}} .wpforms-form input[type=url], {{WRAPPER}} .wpforms-form input[type=week], {{WRAPPER}} .wpforms-form select, {{WRAPPER}} .wpforms-form textarea, {{WRAPPER}} .caldera-grid .form-control[type=text], {{WRAPPER}} .caldera-grid .form-control[type=email], {{WRAPPER}} .caldera-grid .form-control[type=tel], {{WRAPPER}} .caldera-grid .form-control[type=phone], {{WRAPPER}} .caldera-grid .form-control[type=number], {{WRAPPER}} .caldera-grid .form-control[type=url], {{WRAPPER}} .caldera-grid .form-control[type=color_picker], {{WRAPPER}} .caldera-grid .form-control[type=credit_card_cvc], {{WRAPPER}} .caldera-grid select.form-control, {{WRAPPER}} .caldera-grid textarea.form-control',
 			]
 		);
@@ -1885,7 +1879,6 @@ class Wpr_Forms extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'submit_btn_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpcf7-submit, {{WRAPPER}} .submit-wrap .ninja-forms-field, {{WRAPPER}} .wpforms-submit, {{WRAPPER}} .wpforms-page-next, {{WRAPPER}} .wpforms-page-previous, {{WRAPPER}} .caldera-grid .btn-default, {{WRAPPER}} .caldera-grid .btn-success, {{WRAPPER}} .caldera-grid .cf2-dropzone button'
 			]
 		);
@@ -2230,7 +2223,6 @@ class Wpr_Forms extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'html_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpforms-field-html, {{WRAPPER}} .nf-field-container .html-wrap, {{WRAPPER}} .wpr-caldera-html',
 			]
 		);
@@ -2278,7 +2270,6 @@ class Wpr_Forms extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'notice_error_text_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-forms-container .wpcf7-not-valid-tip, {{WRAPPER}} .wpr-forms-container .wpcf7-response-output, {{WRAPPER}} .wpr-forms-container label.wpforms-error, {{WRAPPER}} .wpr-forms-container .caldera_ajax_error_block, {{WRAPPER}} .wpr-forms-container .nf-error-msg'
 			]
 		);

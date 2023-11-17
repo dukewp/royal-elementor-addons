@@ -6,11 +6,11 @@ use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Css_Filter;
-use Elementor\Core\Schemes\Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Repeater;
-use Elementor\Core\Schemes\Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Widget_Base;
 use Elementor\Utils;
 use Elementor\Icons;
@@ -351,7 +351,6 @@ class Wpr_Price_List extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'title_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-price-list-title',
 			]
 		);
@@ -548,7 +547,6 @@ class Wpr_Price_List extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'price_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-price-list-price, {{WRAPPER}} .wpr-price-list-old-price',
 			]
 		);
@@ -758,7 +756,6 @@ class Wpr_Price_List extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'description_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-price-list-description',
 			]
 		);

@@ -3,11 +3,10 @@ namespace WprAddons\Modules\TaxonomyList\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
-use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Background;
-use Elementor\Core\Schemes\Color;
-use Elementor\Core\Schemes\Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use Elementor\Group_Control_Image_Size;
 use WprAddons\Classes\Utilities;
 
@@ -328,7 +327,6 @@ class Wpr_Taxonomy_List extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'tax_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-taxonomy-list li a, {{WRAPPER}} .wpr-taxonomy-list li>span',
 				'fields_options' => [
 					'typography'      => [

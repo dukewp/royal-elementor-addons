@@ -3,12 +3,11 @@ namespace WprAddons\Modules\Mailchimp\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
-use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Color;
-use Elementor\Core\Schemes\Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -553,7 +552,6 @@ class Wpr_Mailchimp extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'header_title_typography',
-				'scheme' => Typography::TYPOGRAPHY_1,
 				'selector' => '{{WRAPPER}} .wpr-mailchimp-header h3',
 			]
 		);
@@ -575,7 +573,6 @@ class Wpr_Mailchimp extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'header_description_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-mailchimp-header p',
 			]
 		);
@@ -655,7 +652,6 @@ class Wpr_Mailchimp extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'labels_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-mailchimp-fields label',
 			]
 		);
@@ -843,7 +839,6 @@ class Wpr_Mailchimp extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'input_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-mailchimp-fields input',
 			]
 		);
@@ -1169,7 +1164,6 @@ class Wpr_Mailchimp extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'subscribe_btn_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-mailchimp-subscribe-btn'
 			]
 		);
@@ -1358,7 +1352,6 @@ class Wpr_Mailchimp extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'message_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-mailchimp-message',
 			]
 		);

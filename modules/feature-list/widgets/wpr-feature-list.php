@@ -4,14 +4,13 @@ namespace WprAddons\Modules\FeatureList\Widgets;
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Utils;
-use Elementor\Core\Responsive\Responsive;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
-use Elementor\Core\Schemes\Color;
+use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
+use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Repeater;
 use Elementor\Group_Control_Image_Size;
 use WprAddons\Classes\Utilities;
@@ -827,7 +826,6 @@ class Wpr_Feature_List extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'feature_list_title',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-feature-list-title',
 				'fields_options' => [
 					'typography' => [
@@ -874,7 +872,6 @@ class Wpr_Feature_List extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'feature_list_description',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-feature-list-description',
 				'fields_options' => [
 					'typography' => [

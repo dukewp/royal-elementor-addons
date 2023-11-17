@@ -14,8 +14,6 @@ class WprProFeaturesNotice {
 
             if ( current_user_can('administrator') ) {
 
-                // delete_option('wpr_pro_features_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version']);
-
                 if ( !get_option('wpr_pro_features_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version']) ) {
                     add_action( 'admin_init', [$this, 'render_notice'] );
                 }
@@ -61,11 +59,12 @@ class WprProFeaturesNotice {
                                 <li><strong>Advanced Custom Fields (Extended)</strong></li>
                                 <li><strong>Custom Post Type Generator</strong></li>
                                 <li><strong>Custom Taxonomy Generator</strong></li>
-                                <li><a target="_blank" href="https://demosites.royal-elementor-addons.com/fashion-v2/shop-fashion-v2/?ref=rea-plugin-backend-expertnoticebanner-woo-compare">Product Wishlist (WooCommerce)</a></li>
-                                <li><a target="_blank" href="https://demosites.royal-elementor-addons.com/fashion-v2/shop-fashion-v2/?ref=rea-plugin-backend-expertnoticebanner-woo-wishlist">Product Compare (WooCommerce)</a></li>
+                                <li><a target="_blank" href="https://www.youtube.com/watch?v=wis1rQTn1tg">Product Wishlist (WooCommerce)</a></li>
+                                <li><a target="_blank" href="https://www.youtube.com/watch?v=wis1rQTn1tg">Product Compare (WooCommerce)</a></li>
                             </ul>
 
-                            <a href="https://royal-elementor-addons.com/#purchasepro?ref=rea-plugin-backend-expertnoticebanner-checkbtn-upgrade-expert#purchasepro" traget="_blank">Upgrade to Expert</a>
+                            <a class="wpr-pro-features-btn" href="https://royal-elementor-addons.com/#purchasepro?ref=rea-plugin-backend-expertnoticebanner-checkbtn-upgrade-expert#purchasepro" target="_blank">Upgrade to Expert</a>
+                            <a class="wpr-pro-features-btn wpr-dynamic-tutorial" href="https://www.youtube.com/watch?v=kE1zmi3fxh8" target="_blank">Dynamic Tutorial</a>
                         </div>
                         <canvas id="wpr-notice-confetti"></canvas>';
             echo '</div>';
@@ -216,6 +215,7 @@ class WprProFeaturesNotice {
                 display: none;
             }
 
+            .wpr-pro-features-btn,
             .wpr-new-widgets-list + a {
                 display: inline-block;
                 text-decoration: none;
@@ -227,6 +227,18 @@ class WprProFeaturesNotice {
                 margin-top: 30px;
                 font-weight: 500;
                 letter-spacing: 0.3px;
+            }
+
+            .wpr-pro-features-btn.wpr-dynamic-tutorial {
+                background: #e1ad01;
+            }
+
+            .wpr-pro-features-btn:hover {
+                color: #FFF;
+            }
+
+            .wpr-pro-features-btn:focus {
+                color: #FFF;
             }
 
             .wpr-get-started-button.button-primary {
