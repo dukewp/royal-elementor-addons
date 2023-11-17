@@ -16856,6 +16856,10 @@ input#fromSlider {
     z-index: 1 !important;
 }
 
+.wpr-view-more-less {
+    display: inline-block;
+}
+
 /*--------------------------------------------------------------
 == Product Filters
 --------------------------------------------------------------*/
