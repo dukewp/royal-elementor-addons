@@ -5654,7 +5654,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'read_more_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-grid-item-read-more a'
 			]
 		);
