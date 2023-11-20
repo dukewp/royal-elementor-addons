@@ -16272,11 +16272,11 @@ dl.variation dd {
     text-align: center;
 }
 
-.wpr-product-add-to-cart .available-on-backorder,
-/* .wpr-product-add-to-cart .out-of-stock, */
+/* .wpr-product-add-to-cart .available-on-backorder,
+.wpr-product-add-to-cart .out-of-stock,
 .wpr-product-add-to-cart .in-stock {
     display: none;
-}
+} */
 
 /* External/Afiiliate button */
 .woocommerce-grouped-product-list-item a.button {
