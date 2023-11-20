@@ -69,6 +69,21 @@ class Wpr_Posts_Timeline extends Widget_Base {
 	public $show_year_label;
 	public $timeline_year;            
 	public $image;
+	public $slides_to_show;
+	public $horizontal_inner_class;
+	public $horizontal_timeline_class;
+	public $swiper_class;
+	public $timeline_description;
+	public $story_date_label;
+	public $story_extra_label;
+	public $timeline_story_title;
+	public $title_key;
+	public $year_key;
+	public $date_label_key;
+	public $extra_label_key;
+	public $description_key;
+	public $background_image;
+	public $background_class;
 
 	public function wpr_aos_animation_array() {
 		return [
