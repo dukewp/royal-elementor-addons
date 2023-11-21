@@ -107,6 +107,9 @@ function wpr_register_addons_settings() {
     register_setting ('wpr-settings', 'wpr_ignore_wp_optimize_js');
     register_setting ('wpr-settings', 'wpr_ignore_wp_optimize_css');
 
+    // Grid Filters
+    register_setting('wpr-settings', 'wpr_filter_relation');
+
     // Extensions
     register_setting('wpr-extension-settings', 'wpr-particles');
     register_setting('wpr-extension-settings', 'wpr-parallax-background');
@@ -429,6 +432,7 @@ function wpr_addons_settings_page() {
         <?php submit_button( '', 'wpr-options-button' ); ?>
 
         <div class="wpr-settings-group wpr-settings-navigation">
+            <a href="#filters-tab">Filters</a> /
             <a href="#optimizers-tab">Optimizers</a> / 
             <a href="#woocommerce-tab">WooCommerce</a> / 
             <?php if ( wpr_fs()->is_plan( 'expert' ) ) : ?>
@@ -437,6 +441,20 @@ function wpr_addons_settings_page() {
             <a href="#metabox-tab">Metabox</a> /  
             <a href="#integrations-tab">Integrations</a> /  
             <a href="#lightbox-tab">Lightbox</a>
+        </div>
+
+        <div class="wpr-settings-group">
+            <h3 id="filters-tab" class="wpr-settings-group-title"><?php esc_html_e( 'Relation', 'wpr-addons' ); ?></h3>
+            
+            <div class="wpr-woo-template-info wpr-compare-wishlist">
+                <select name="wpr_filter_relation" id="wpr_filter_relation">
+                    <option value="and" <?php echo selected( get_option('wpr_filter_relation', 'and'), 'and', false ); ?>>And</option>
+                    <option value="or" <?php echo selected( get_option('wpr_filter_relation', 'or'), 'or', false ); ?>>Or</option>
+                </select>
+                <label for="wpr_filter_relation"></label>
+            </div>
+
+            <p class="wpr-settings-group-description"><?php esc_html_e( 'Filters General Relation.', 'wpr-addons' ); ?></p>
         </div>
 
         <div class="wpr-settings-group wpr-settings-group-optimizers">

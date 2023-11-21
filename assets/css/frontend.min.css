@@ -16861,6 +16861,11 @@ input#fromSlider {
     z-index: 1 !important;
 }
 
+.wpr-view-ml-wrap {
+    display: block;
+    text-align: center;
+}
+
 .wpr-view-more-less {
     display: inline-block;
 }
