@@ -8442,6 +8442,10 @@ class Wpr_Grid extends Widget_Base {
 			$args['order'] = $settings['order_direction'];
 		}
 
+		if ( !isset($args['tax_query']) ) {
+			$args['tax_query'] = [];
+		}
+
 		if ( isset($args['tax_query']) ) {
 
 			$tax_query = ['relation' => get_option('wpr_filter_relation')];
@@ -10017,10 +10021,10 @@ class Wpr_Grid extends Widget_Base {
 		endif;
 
 		if (isset($this->get_main_query_args()['meta_query'])) {
-			// var_dump($this->get_main_query_args()['meta_query']);
+			var_dump($this->get_main_query_args()['meta_query']);
 		}
 		if (isset($this->get_main_query_args()['tax_query'])) {
-			// var_dump($this->get_main_query_args()['tax_query']);
+			var_dump($this->get_main_query_args()['tax_query']);
 		}
 		// var_dump($this->get_main_query_args());
 	}
