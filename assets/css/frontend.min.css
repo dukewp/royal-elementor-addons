@@ -16856,11 +16856,12 @@ dl.variation dd {
     cursor: pointer !important;
 }
 
-input#fromSlider {
+input#wpr-from-slider {
     height: 0 !important;
     z-index: 1 !important;
 }
 
+/* View More Less */
 .wpr-view-ml-wrap {
     display: block;
     text-align: center;
@@ -16868,6 +16869,11 @@ input#fromSlider {
 
 .wpr-view-more-less {
     display: inline-block;
+}
+
+/* Grid Active Filters */
+.wpr-gf-active-filters span {
+    cursor: pointer;
 }
 
 /*--------------------------------------------------------------
