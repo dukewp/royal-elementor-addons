@@ -85,7 +85,7 @@ class WprPluginSaleNotice {
                                 </li>
                                 <li>
                                     <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'img/check-mark.png">
-                                    Dynamic Website Builder, Custom Post Types and Cutom Fields support
+                                    Dynamic Website Builder <a class="wpr-dynamic-tutorial" href="https://www.youtube.com/watch?v=kE1zmi3fxh8" target="_blank">View Demo</a> 
                                 </li>
                                 <li>
                                     <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'img/check-mark.png">
@@ -211,6 +211,14 @@ class WprPluginSaleNotice {
             .wpr-plugin-sale-notice .wpr-upgrade-to-pro-button .dashicons {
               font-size: 14px;
               line-height: 30px;
+            }
+
+            .wpr-plugin-sale-notice .wpr-dynamic-tutorial {
+                text-decoration: none;
+                color: #FFF;
+                background: #e1ad01;
+                padding: 4px 10px;
+                outline: none;
             }
             
             .wpr-plugin-sale-notice .image-wrap {

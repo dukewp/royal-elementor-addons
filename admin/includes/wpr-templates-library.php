@@ -82,7 +82,7 @@ class WPR_Templates_Library {
 			'public'              => true,
 			'rewrite'             => false,
 			'show_ui'             => true,
-			'show_in_menu'        => false,
+			'show_in_menu'        => true,
 			'show_in_nav_menus'   => false,
 			'exclude_from_search' => true,
 			'capability_type'     => 'post',

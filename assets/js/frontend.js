@@ -11,7 +11,7 @@
 			var widgets = {
 				'wpr-nav-menu.default' : WprElements.widgetNavMenu,
 				'wpr-mega-menu.default' : WprElements.widgetMegaMenu,
-				'wpr-onepage-nav.default' : WprElements.OnepageNav,
+				'wpr-onepage-nav.default' : WprElements.widgetOnepageNav,
 				'wpr-grid.default' : WprElements.widgetGrid,
 				'wpr-magazine-grid.default' : WprElements.widgetMagazineGrid,
 				'wpr-media-grid.default' : WprElements.widgetGrid,
@@ -1067,8 +1067,7 @@
 
 		}, // End widgetMegaMenu
 
-		OnepageNav: function( $scope ) {
-			
+		widgetOnepageNav: function( $scope ) {
 			// GOGA - remove extra code before update
 			$(document).ready(function(){
 				// Get all the links with the class "nav-link"
@@ -1110,6 +1109,7 @@
 					// Add a click event to each link
 					$(this).click(function(event) {
 						event.preventDefault();
+						event.stopPropagation();
 						// Remove the active class from all links
 						$navLinks.removeClass('wpr-onepage-active-item');
 						// Add the active class to the clicked link
@@ -1127,7 +1127,9 @@
 					});
 				});
 			
-				$(window).on("scroll", function() {
+				$(window).on("scroll", function(event) {
+					event.preventDefaut();
+					event.stopPropagation();
 					// Get the current scroll position
 					var scrollPos = $(this).scrollTop();
 
@@ -1158,73 +1160,6 @@
 						});
 					}
 				});
-				
-						// // Old Code
-						// $scope.find( '.wpr-onepage-nav-item' ).on( 'click', function(event) {
-						// 	event.preventDefault();
-
-						// 	var section = $( $(this).find( 'a' ).attr( 'href' ) ),
-						// 		scrollSpeed = parseInt( $(this).parent().attr( 'data-speed' ), 10 );
-
-						// 	if (section) {
-						// 		$( 'html, body' ).animate({ scrollTop: section.offset().top }, scrollSpeed );
-						// 	}
-						// 	// $( 'body' ).animate({ scrollTop: section.offset().top }, scrollSpeed );
-
-						// 	// Active Class
-						// 	getSectionOffset( $(window).scrollTop() );
-						// });
-
-						// // Trigger Fake Scroll
-						// if ( 'yes' === $scope.find( '.wpr-onepage-nav' ).attr( 'data-highlight' ) ) {
-						// 	setTimeout(function() {
-						// 		$(window).scroll();
-						// 	}, 10 );
-						// }
-						
-						// // Active Class
-						// $(window).scroll(function() {
-						// 	getSectionOffset( $(this).scrollTop() );
-						// });
-
-						// // // Get Offset
-						// // function getSectionOffset( scrollTop ) {
-						// // 	if ( 'yes' !== $scope.find( '.wpr-onepage-nav' ).attr( 'data-highlight' ) ) {
-						// // 		return;
-						// // 	}
-						// // 	// Reset Active
-						// // 	$scope.find( '.wpr-onepage-nav-item' ).children( 'a' ).removeClass( 'wpr-onepage-active-item' );
-			
-						// // 	// Set Active
-						// // 	$( '.elementor-section' ).each(function() {
-						// // 		var secOffTop = $(this).offset().top,
-						// // 			secOffBot = secOffTop + $(this).outerHeight();
-			
-						// // 		if ( scrollTop >= secOffTop && scrollTop < secOffBot ) {
-						// // 			$scope.find( '.wpr-onepage-nav-item' ).children( 'a[href="#'+ $(this).attr('id') +'"]' ).addClass( 'wpr-onepage-active-item' );
-						// // 		}
-						// // 	});
-						// // }
-
-						// // Get Offset
-						// function getSectionOffset( scrollTop ) {
-						// 	if ( 'yes' !== $scope.find( '.wpr-onepage-nav' ).attr( 'data-highlight' ) ) {
-						// 		return;
-						// 	}
-						// 	// Reset Active
-						// 	$scope.find( '.wpr-onepage-nav' ).find( 'a' ).removeClass( 'wpr-onepage-active-item' );
-
-						// 	// Set Active
-						// 	$( '.elementor-section' ).each(function() {
-						// 		var secOffTop = $(this).offset().top,
-						// 			secOffBot = secOffTop + $(this).outerHeight();
-
-						// 		if ( scrollTop >= secOffTop && scrollTop < secOffBot ) {
-						// 			$scope.find( '.wpr-onepage-nav' ).find( 'a[href="#'+ $(this).attr('id') +'"]' ).addClass( 'wpr-onepage-active-item' );
-						// 		}
-						// 	});
-						// }
-
 			});
 
 		}, // End OnepageNav
@@ -7858,9 +7793,30 @@
 				// }, 600);
 			}
 
-			if ( $scope.hasClass('wpr-offcanvas-entrance-type-push') ) {
+			if ( $scope.hasClass('wpr-offcanvas-entrance-type-push') ) {	
 
 				function growBodyWidth() {
+
+					if ($('.wpr-offcanvas-body-inner-wrap-'+ $scope.data('id')).length < 1 ) {
+						var offcanvasWrap = $('.wpr-offcanvas-wrap-'+ $scope.data('id')).clone();
+						$('.wpr-offcanvas-wrap-'+ $scope.data('id')).remove();
+	
+						if ( !($('.wpr-offcanvas-body-inner-wrap-' + $scope.data('id')).length > 0) ) {
+							$("body").wrapInner('<div class="wpr-offcanvas-body-inner-wrap-' + $scope.data('id') + '" />');
+						}
+	
+						bodyInnerWrap = $('.wpr-offcanvas-body-inner-wrap-' + $scope.data('id'));
+		
+						bodyInnerWrap.css('position', 'relative');
+		
+						if ( !(bodyInnerWrap.prev('.wpr-offcanvas-wrap').length > 0) ) {
+							console.log(offcanvasWrap);
+							document.querySelector('body').insertBefore(offcanvasWrap[0], document.querySelector('.wpr-offcanvas-body-inner-wrap-' + $scope.data('id')));
+						}
+
+						offcanvasSelector = $('.wpr-offcanvas-wrap-'+ $scope.data('id'));
+					}
+
 					openOffcanvas(offcanvasSelector);
 
 					$('body').addClass('wpr-offcanvas-body-overflow');
@@ -7887,6 +7843,12 @@
 				}
 	
 				function reduceBodyWidth() {
+					
+					if ( !bodyInnerWrap && !offcanvasSelector )  {
+						bodyInnerWrap = $('.wpr-offcanvas-body-inner-wrap-' + $scope.data('id'));
+						offcanvasSelector = $('.wpr-offcanvas-wrap-'+ $scope.data('id'));
+					}
+
 					closeOffcanvas(offcanvasSelector);
 
 					if ( offcanvasSelector.find('.wpr-offcanvas-content').hasClass('wpr-offcanvas-content-left') ) {
@@ -7901,6 +7863,10 @@
 					}
 
 					$('body').removeClass('wpr-offcanvas-body-overflow');
+					setTimeout(function() {
+						var cnt = $('.wpr-offcanvas-body-inner-wrap-' + $scope.data('id')).contents();
+						$('.wpr-offcanvas-body-inner-wrap-' + $scope.data('id')).replaceWith(cnt);
+					}, 1000);
 				}
 	
 				function closeTriggers() {
@@ -7957,17 +7923,19 @@
 				}
 
 				closeTriggers();
+				
+				$('body').on('click', function() {
+					closeTriggers();
+				});
 
 				var mutationObserver = new MutationObserver(function(mutations) {
 					closeTriggers();
 				});
 
-				// Listen to Mini Cart Changes
 				mutationObserver.observe($scope[0], {
 					childList: true,
 					subtree: true,
 				});
-
 			} else {
 
 				$scope.find('.wpr-offcanvas-trigger').on('click', function() {
@@ -8328,6 +8296,7 @@
 						url: WprConfig.ajaxurl,
 						type: 'POST',
 						data: {
+							nonce: WprConfig.nonce,
 							action: 'wpr_get_page_content',
 							wpr_compare_page_id: WprConfig.comparePageID
 						},
