@@ -11,7 +11,7 @@
 			var widgets = {
 				'wpr-nav-menu.default' : WprElements.widgetNavMenu,
 				'wpr-mega-menu.default' : WprElements.widgetMegaMenu,
-				'wpr-onepage-nav.default' : WprElements.OnepageNav,
+				'wpr-onepage-nav.default' : WprElements.widgetOnepageNav,
 				'wpr-grid.default' : WprElements.widgetGrid,
 				'wpr-magazine-grid.default' : WprElements.widgetMagazineGrid,
 				'wpr-media-grid.default' : WprElements.widgetGrid,
@@ -1067,7 +1067,7 @@
 
 		}, // End widgetMegaMenu
 
-		OnepageNav: function( $scope ) {
+		widgetOnepageNav: function( $scope ) {
 			// GOGA - remove extra code before update
 			$(document).ready(function(){
 				// Get all the links with the class "nav-link"
