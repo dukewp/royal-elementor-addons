@@ -10333,6 +10333,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 				// Media Hover
 				echo '<div class="wpr-grid-media-hover wpr-animation-wrap">';
+
+					// Filter to compensate woo incompatibility
+					echo apply_filters('wpr_grid_media_hover_content', '', get_the_ID());
+
 					// Media Overlay
 					$this->render_media_overlay( $settings );
 
