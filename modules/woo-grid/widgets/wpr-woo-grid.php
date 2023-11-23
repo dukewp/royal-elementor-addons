@@ -38,7 +38,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'royal', 'shop grid', 'product grid', 'woocommerce', 'product slider', 'product carousel', 'isotope', 'massonry grid', 'filterable grid' ];
+		return [ 'royal', 'shop grid', 'product grid', 'woocommerce', 'product slider', 'product carousel', 'isotope', 'massonry grid', 'filterable grid', 'loop grid' ];
 	}
 
 	public function get_script_depends() {
