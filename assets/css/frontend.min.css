@@ -16831,7 +16831,7 @@ dl.variation dd {
     width: 19px;
     height: 19px;
     background-color: #fff;
-    border-radius: 50% !important;
+    border-radius: 50%;
     box-shadow: 0 0 0 1px #C6C6C6;
     cursor: pointer !important;
 }
@@ -16841,7 +16841,7 @@ dl.variation dd {
     width: 19px;
     height: 19px;
     background-color: #fff;
-    border-radius: 50% !important;
+    border-radius: 50%;
     box-shadow: 0 0 0 1px #C6C6C6;
     cursor: pointer !important;
 }
