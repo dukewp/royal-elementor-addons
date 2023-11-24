@@ -36,7 +36,7 @@ class WPR_Compare_Popup_Action {
             ));
         }
 
-		if (!isset($_POST['wpr_addons_nonce']) || !wp_verify_nonce($_POST['wpr_addons_nonce'], 'wpr-addons-js')) {
+		if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'wpr-addons-js')) {
 			wp_send_json_error(array(
 				'message' => esc_html__('Security check failed.', 'wpr-addons'),
 			));
