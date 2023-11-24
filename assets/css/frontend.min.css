@@ -16793,7 +16793,7 @@ dl.variation dd {
 
 .wpr-range-container .wpr-rs-control {
     position: relative !important;
-    min-height: 50px !important;
+    margin-bottom: 10px;
 }
 
 .wpr-range-container .wpr-rf-control {
@@ -16803,15 +16803,6 @@ dl.variation dd {
     font-size: 24px !important;
     color: #635a5a !important;
 }
-
-.wpr-range-container input[type=range]::-webkit-slider-thumb:hover {
-    background: #f7f7f7;
-}
-
-/* .wpr-range-container input[type=range]::-webkit-slider-thumb:active {
-    box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
-    -webkit-box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
-} */
 
 .wpr-range-container input[type="number"] {
     color: #8a8383 !important;
@@ -16827,7 +16818,7 @@ dl.variation dd {
 .wpr-range-container input[type="range"] {
     -webkit-appearance: none !important;
     appearance: none !important;
-    height: 2px !important;
+    height: 12px;
     width: 100% !important;
     position: absolute !important;
     background-color: #C6C6C6;
@@ -16835,10 +16826,10 @@ dl.variation dd {
 }
 
 .wpr-range-container input[type=range]::-webkit-slider-thumb {
-    /* -webkit-appearance: none !important; */
+    -webkit-appearance: none !important;
     pointer-events: all !important;
-    width: 24px !important;
-    height: 24px !important;
+    width: 19px;
+    height: 19px;
     background-color: #fff;
     border-radius: 50% !important;
     box-shadow: 0 0 0 1px #C6C6C6;
@@ -16846,19 +16837,22 @@ dl.variation dd {
 }
 
 .wpr-range-container input[type=range]::-moz-range-thumb {
-    /* -webkit-appearance: none !important; */
     pointer-events: all !important;
-    width: 24px !important;
-    height: 24px !important;
+    width: 19px;
+    height: 19px;
     background-color: #fff;
     border-radius: 50% !important;
     box-shadow: 0 0 0 1px #C6C6C6;
     cursor: pointer !important;
 }
 
-input#wpr-from-slider {
+.wpr-range-container input[type=range]#wpr-from-slider {
     height: 0 !important;
     z-index: 1 !important;
+}
+
+.wpr-range-container input[type=range]#wpr-to-slider {
+    transform: translateY(-50%) !important;
 }
 
 /* View More Less */
