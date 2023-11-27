@@ -424,6 +424,7 @@ class Wpr_Offcanvas extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-offcanvas-trigger i' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-offcanvas-trigger svg' => 'margin-right: {{SIZE}}{{UNIT}};'
 				],
 				'condition' => [
 					'offcanvas_show_button_icon' => 'yes',
@@ -505,6 +506,7 @@ class Wpr_Offcanvas extends Widget_Base {
 				'default' => '#ffffff',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-offcanvas-trigger' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-offcanvas-trigger svg' => 'fill: {{VALUE}}'
 				],
 			]
 		);
@@ -546,6 +548,29 @@ class Wpr_Offcanvas extends Widget_Base {
 			[
 				'name' => 'button_typography',
 				'selector' => '{{WRAPPER}} .wpr-offcanvas-trigger',
+			]
+		);
+		
+		$this->add_responsive_control(
+			'button_icon_size',
+			[
+				'label' => esc_html__( 'SVG Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', ],
+				'range' => [
+					'px' => [
+						'min' => 5,
+						'max' => 50,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 12,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-offcanvas-trigger svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before'
 			]
 		);
 
@@ -759,7 +784,9 @@ class Wpr_Offcanvas extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-close-offcanvas i' => 'font-size: {{SIZE}}{{UNIT}};',
-					'.wpr-offcanvas-wrap-{{ID}} .wpr-close-offcanvas i' => 'font-size: {{SIZE}}{{UNIT}};'
+					'.wpr-offcanvas-wrap-{{ID}} .wpr-close-offcanvas i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-close-offcanvas svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+					'.wpr-offcanvas-wrap-{{ID}} .wpr-close-offcanvas svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};'
 				]
 			]
 		);

@@ -17232,6 +17232,12 @@ dl.variation dd {
 == Offcanvas
 --------------------------------------------------------------*/
 
+.wpr-offcanvas-trigger {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .wpr-offcanvas-container {
     position: relative;
 }
