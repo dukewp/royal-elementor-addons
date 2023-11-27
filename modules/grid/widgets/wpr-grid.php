@@ -8499,7 +8499,7 @@ class Wpr_Grid extends Widget_Base {
 
 
 											$for_meta_query = [ // needs check if overrides something
-												'relation' => $_GET['wpr_gfr_'. $cleanedKey],
+												'relation' => explode(',', $_GET['wpr_gfr_'. $cleanedKey])[0],
 											];
 		
 											foreach ($filtervalues as $filtervalue) {
@@ -8517,7 +8517,7 @@ class Wpr_Grid extends Widget_Base {
 											array_push( $args['meta_query'], $for_meta_query );
 										} else {
 											$args['meta_query'] = [ // needs check if overrides something
-												'relation' => $_GET['wpr_gfr_'. $cleanedKey],
+												'relation' => explode(',', $_GET['wpr_gfr_'. $cleanedKey])[0],
 											];
 
 											if (is_array($filtervalues)) {
@@ -8535,7 +8535,7 @@ class Wpr_Grid extends Widget_Base {
 									}
 								} else { // if != 'meta_field'
 									$for_tax_query = [ // needs check if overrides something
-										'relation' => $_GET['wpr_gfr_'. $cleanedKey],
+										'relation' => explode(',', $_GET['wpr_gfr_'. $cleanedKey])[0],
 									];
 
 									foreach ($filtervalues as $filtervalue) {
