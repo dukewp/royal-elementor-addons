@@ -13808,7 +13808,7 @@ flex-grow: 0; */
     position: fixed;
     display: block !important;
     width: 100%; 
-    z-index: 99 !important;
+    z-index: 999 !important;
 }
 
 .wpr-none-out {
@@ -17299,7 +17299,7 @@ dl.variation dd {
     max-width: 100%;
     max-height: 100%;
     display: none;
-    z-index: 999;
+    z-index: 9999;
 }
 
 .wpr-offcanvas-wrap-relative.wpr-offcanvas-wrap {
