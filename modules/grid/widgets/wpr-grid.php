@@ -4927,7 +4927,7 @@ class Wpr_Grid extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'author_typography',
-				'selector' => '{{WRAPPER}} .wpr-grid-item-author'
+				'selector' => '{{WRAPPER}} .wpr-grid-item-author, {{WRAPPER}} .wpr-grid-item-author .inner-block a'
 			]
 		);
 
