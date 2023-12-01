@@ -9265,9 +9265,19 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
+			
+			// WooCommerce Hook: Before Add to Cart Button
+			// do_action('woocommerce_before_shop_loop_item');
 
-			// Button HTML
-			echo '<a '. implode( ' ', $attributes ) .'><span>'. $button_HTML .'</span></a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			if ( $button_HTML != apply_filters( 'woocommerce_loop_add_to_cart_link', $button_HTML, $product ) ) {
+				echo apply_filters( 'woocommerce_loop_add_to_cart_link', $button_HTML, $product );
+			} else {
+				// Button HTML
+				echo '<a '. implode( ' ', $attributes ) .'><span>'. $button_HTML .'</span></a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			}
+		
+			// WooCommerce Hook: After Add to Cart Button
+			// do_action('woocommerce_after_shop_loop_item');
 
 			echo '</div>';
 		echo '</div>';
