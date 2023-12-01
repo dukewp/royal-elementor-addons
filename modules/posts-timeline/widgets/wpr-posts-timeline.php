@@ -50,6 +50,40 @@ class Wpr_Posts_Timeline extends Widget_Base {
     	if ( empty(get_option('wpr_wl_plugin_links')) )
         return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
+	
+	public $my_query;	
+	public $animation;
+	public $animation_loadmore_left;
+	public $animation_loadmore_right;		
+	public $timeline_fill;
+	public $show_readmore;		
+	public $pagination_type;
+	public $pagination_max_page;
+	public $pagination_max_pages;
+	public $animation_class;
+	public $timeline_layout;
+	public $timeline_layout_wrapper;
+	public $item_url_count;				
+	public $thumbnail_size;
+	public $thumbnail_custom_dimension;
+	public $show_year_label;
+	public $timeline_year;            
+	public $image;
+	public $slides_to_show;
+	public $horizontal_inner_class;
+	public $horizontal_timeline_class;
+	public $swiper_class;
+	public $timeline_description;
+	public $story_date_label;
+	public $story_extra_label;
+	public $timeline_story_title;
+	public $title_key;
+	public $year_key;
+	public $date_label_key;
+	public $extra_label_key;
+	public $description_key;
+	public $background_image;
+	public $background_class;
 
 	public function wpr_aos_animation_array() {
 		return [

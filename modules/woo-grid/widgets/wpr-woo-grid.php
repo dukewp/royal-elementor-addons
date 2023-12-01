@@ -38,7 +38,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'royal', 'shop grid', 'product grid', 'woocommerce', 'product slider', 'product carousel', 'isotope', 'massonry grid', 'filterable grid' ];
+		return [ 'royal', 'shop grid', 'product grid', 'woocommerce', 'product slider', 'product carousel', 'isotope', 'massonry grid', 'filterable grid', 'loop grid' ];
 	}
 
 	public function get_script_depends() {
@@ -10333,6 +10333,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 				// Media Hover
 				echo '<div class="wpr-grid-media-hover wpr-animation-wrap">';
+
+					// Filter to compensate woo incompatibility
+					echo apply_filters('wpr_grid_media_hover_content', '', get_the_ID());
+
 					// Media Overlay
 					$this->render_media_overlay( $settings );
 
