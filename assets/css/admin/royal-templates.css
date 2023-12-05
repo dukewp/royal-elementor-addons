@@ -1,3 +1,5 @@
-.wpr-templates-cat-select option {
-    text-transform: capitalize;
+.wpr-templates-cat-select,
+.wpr-templates-cat-select option,
+.wpr-templates-cat-select option:checked {
+    text-transform: capitalize !important;
 }

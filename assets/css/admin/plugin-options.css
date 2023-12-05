@@ -52,6 +52,21 @@
   font-size: 16px;
 }
 
+.button.wpr-translate-templates {
+  display: inline-flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 8px 18px;
+}
+
+.button.wpr-translate-templates span {
+  line-height: 1;
+}
+
+.button.wpr-translate-templates span:first-child {
+  margin-right: 5px;
+}
+
 .wpr-preview-buttons a:last-child,
 .wpr-preview-buttons a.wpr-how-to-use-theme-builder {
   background-color: transparent;
