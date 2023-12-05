@@ -272,6 +272,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 				'selectors' => [
 					
 					'{{WRAPPER}} .wpr-product-add-to-cart .wpr-quantity-wrapper i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-product-add-to-cart .wpr-quantity-wrapper svg' => 'fill: {{VALUE}}',
 					'{{WRAPPER}} .wpr-product-add-to-cart .quantity .qty' => 'color: {{VALUE}}',
 				],
 			]
@@ -489,6 +490,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-add-to-cart .wpr-quantity-wrapper i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-product-add-to-cart .wpr-quantity-wrapper svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 				]
 			]
 		);

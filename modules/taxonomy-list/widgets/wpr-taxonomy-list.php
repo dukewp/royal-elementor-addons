@@ -514,6 +514,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-taxonomy-list li i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-taxonomy-list li svg' => 'fill: {{VALUE}}',
 				],
 			]
 		);
@@ -536,6 +537,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-taxonomy-list li i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-taxonomy-list li svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before'
 			]

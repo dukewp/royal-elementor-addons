@@ -1191,6 +1191,7 @@ class Wpr_Team_Member extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-member-social' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-member-social i' => 'line-height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-member-social svg' => 'line-height: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);

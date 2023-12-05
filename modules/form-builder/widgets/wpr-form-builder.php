@@ -2684,6 +2684,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'default' => '#222',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-step-content i' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-step-content svg' => 'fill: {{VALUE}};',
 					'{{WRAPPER}} .wpr-step-content' => 'color: {{VALUE}};'
 				]
 			]
@@ -2730,6 +2731,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'default' => '#222',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-step-active .wpr-step-content i' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-step-active .wpr-step-content svg' => 'fill: {{VALUE}};',
 					'{{WRAPPER}} .wpr-step-active .wpr-step-content' => 'color: {{VALUE}};'
 				]
 			]
@@ -2776,6 +2778,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'default' => '#222',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-step-finish .wpr-step-content i' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-step-finish .wpr-step-content svg' => 'fill: {{VALUE}};',
 					'{{WRAPPER}} .wpr-step-finish .wpr-step-content' => 'color: {{VALUE}};'
 				]
 			]

@@ -657,6 +657,7 @@ class Wpr_Tabs extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} '. $css_selector['control_list'] .' .wpr-tab-icon i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} '. $css_selector['control_list'] .' .wpr-tab-icon svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} '. $css_selector['control_list'] .' .wpr-tab-image' => 'width: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
@@ -861,6 +862,7 @@ class Wpr_Tabs extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} '. $css_selector['control_list'] .':hover .wpr-tab-icon i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} '. $css_selector['control_list'] .':hover .wpr-tab-icon svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} '. $css_selector['control_list'] .':hover .wpr-tab-image' => 'width: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
@@ -1068,6 +1070,7 @@ class Wpr_Tabs extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} '. $css_selector['control_list'] .'.wpr-tab-active .wpr-tab-icon i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} '. $css_selector['control_list'] .'.wpr-tab-active .wpr-tab-icon svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} '. $css_selector['control_list'] .'.wpr-tab-active .wpr-tab-image' => 'width: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',

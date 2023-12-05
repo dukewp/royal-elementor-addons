@@ -4758,6 +4758,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'default' => '#D2CDCD',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-woo-rating i' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-woo-rating svg' => 'fill: {{VALUE}};'
 				],
 			]
 		);
@@ -4792,6 +4793,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-woo-rating i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-woo-rating svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};'
 				],
 				'separator' => 'before',
 			]
@@ -5786,7 +5788,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'default' => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wishlist-add span' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-wishlist-add i' => 'color: {{VALUE}}'
+					'{{WRAPPER}} .wpr-wishlist-add i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wishlist-add svg' => 'fill: {{VALUE}}'
 				]
 			]
 		);
@@ -5879,6 +5882,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'default' => '#FF4400',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wishlist-add:hover i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wishlist-add:hover svg' => 'fill: {{VALUE}}',
 					'{{WRAPPER}} .wpr-wishlist-add:hover span' => 'color: {{VALUE}}'
 				]
 			]
@@ -5934,8 +5938,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wishlist-remove span' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-wishlist-remove i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wishlist-remove svg' => 'fill: {{VALUE}}',
 					'{{WRAPPER}} .wpr-wishlist-remove:hover span' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-wishlist-remove:hover i' => 'color: {{VALUE}}'
+					'{{WRAPPER}} .wpr-wishlist-remove:hover i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wishlist-remove:hover svg' => 'fill: {{VALUE}}'
 				]
 			]
 		);
@@ -6102,7 +6108,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'default' => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-compare-add span' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-compare-add i' => 'color: {{VALUE}}'
+					'{{WRAPPER}} .wpr-compare-add i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-compare-add svg' => 'fill: {{VALUE}}'
 				]
 			]
 		);
@@ -6195,6 +6202,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'default' => '#FF4400',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-compare-add:hover i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-compare-add:hover svg' => 'fill: {{VALUE}}',
 					'{{WRAPPER}} .wpr-compare-add:hover span' => 'color: {{VALUE}}'
 				]
 			]
@@ -6250,8 +6258,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-compare-remove span' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-compare-remove i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-compare-remove svg' => 'fill: {{VALUE}}',
 					'{{WRAPPER}} .wpr-compare-remove:hover span' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-compare-remove:hover i' => 'color: {{VALUE}}'
+					'{{WRAPPER}} .wpr-compare-remove:hover i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-compare-remove:hover svg' => 'fill: {{VALUE}}'
 				]
 			]
 		);

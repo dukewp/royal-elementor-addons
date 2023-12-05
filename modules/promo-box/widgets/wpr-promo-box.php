@@ -764,6 +764,7 @@ class Wpr_Promo_Box extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-promo-box-content' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
 					'{{WRAPPER}} .wpr-promo-box-icon i' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
+					'{{WRAPPER}} .wpr-promo-box-icon svg' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
 					'{{WRAPPER}} .wpr-promo-box-title span' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
 					'{{WRAPPER}} .wpr-promo-box-title a' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',
 					'{{WRAPPER}} .wpr-promo-box-description p' => '-webkit-transition-duration: {{VALUE}}s; transition-duration: {{VALUE}}s;',

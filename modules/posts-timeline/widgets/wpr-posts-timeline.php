@@ -1023,6 +1023,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}}  .wpr-icon i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} {{CURRENT_ITEM}}  .wpr-icon svg' => 'fill: {{VALUE}}'
 				],
 				'default' => '#000',
 				'condition' => [
@@ -1111,6 +1112,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}}  .wpr-timeline-media i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} {{CURRENT_ITEM}}  .wpr-timeline-media svg' => 'fill: {{VALUE}}'
 				],
 				'condition' => [
 					'repeater_media' => 'icon',
@@ -1207,6 +1209,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
                 'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-timeline-media i' => 'display: block; text-align: {{VALUE}};',
+					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-timeline-media svg' => 'display: block; text-align: {{VALUE}};'
 				],
 				'condition' => [
 					// 'timeline_content' => 'custom',
@@ -4112,6 +4115,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wrapper .wpr-icon i' => 'font-size: {{SIZE}}{{UNIT}} !important',
+					'{{WRAPPER}} .wpr-wrapper .wpr-icon svg' => 'width: {{SIZE}}{{UNIT}} !important; height: {{SIZE}}{{UNIT}} !important;'
 				],
 				'separator' => 'before'
 			]

@@ -4012,6 +4012,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-instagram-follow-btn i' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-instagram-follow-btn svg' => 'margin-right: {{SIZE}}{{UNIT}};'
 				],
 				'separator' => 'before'
 			]

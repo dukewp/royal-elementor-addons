@@ -925,6 +925,7 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-popup-close-btn i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-popup-close-btn svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};'
 				],
 			]
 		);
@@ -948,6 +949,7 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-popup-close-btn' => 'width: {{SIZE}}{{UNIT}};height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-popup-close-btn i' => 'line-height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-popup-close-btn svg' => 'line-height: {{SIZE}}{{UNIT}};'
 				],
 			]
 		);

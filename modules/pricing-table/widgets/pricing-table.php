@@ -1083,6 +1083,7 @@ class Pricing_Table extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-pricing-table-icon i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-pricing-table-icon svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-pricing-table-icon img' => 'max-width: {{SIZE}}{{UNIT}};',
 				],
 			]

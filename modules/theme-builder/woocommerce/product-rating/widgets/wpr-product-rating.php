@@ -118,6 +118,7 @@ class Wpr_Product_Rating extends Widget_Base {
 				'default' => '#D2CDCD',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-woo-rating i' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-woo-rating svg' => 'fill: {{VALUE}};'
 				],
 			]
 		);
@@ -198,6 +199,7 @@ class Wpr_Product_Rating extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-woo-rating i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-woo-rating svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};'
 				],
 				'separator' => 'before',
 			]

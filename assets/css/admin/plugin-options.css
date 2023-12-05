@@ -53,20 +53,18 @@
 }
 
 .button.wpr-options-button.wpr-translate-templates {
-  background: #7a5ffd;
+  background: #646464;
   margin-bottom: 30px;
+  padding: 5px 20px !important;
 }
 
-.button.wpr-options-button.wpr-translate-templates:hover {
-  background: #6A4BFF;
-}
-
-.button.wpr-translate-templates .dashicons {
-  line-height: 33px !important;
+.button.wpr-options-button.wpr-translate-templates:hover,
+.button.wpr-options-button.wpr-translate-templates:focus {
+  background: #535353;
 }
 
 .button.wpr-translate-templates {
-  font-size: 13px;
+  font-size: 13px !important;
 }
 
 .button.wpr-translate-templates span {

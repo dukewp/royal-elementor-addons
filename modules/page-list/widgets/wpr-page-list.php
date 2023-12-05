@@ -779,6 +779,7 @@ class Wpr_Page_List extends Widget_Base {
 				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-page-list i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-page-list svg' => 'fill: {{VALUE}}'
 				],
 			]
 		);
@@ -828,6 +829,7 @@ class Wpr_Page_List extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-page-list i' => 'font-size: {{SIZE}}{{UNIT}}; max-height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-page-list svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-page-list i:before' => 'max-height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-page-list-item-icon' => 'max-height: {{SIZE}}{{UNIT}};',
 				],
