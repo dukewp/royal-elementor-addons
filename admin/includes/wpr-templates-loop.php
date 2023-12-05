@@ -41,6 +41,11 @@ class WPR_Templates_Loop {
 			if ( ! empty( $user_templates ) ) {
 				foreach ( $user_templates as $user_template ) {
 					$slug = $user_template->post_name;
+
+					if ( !str_contains( $slug, 'user-' ) ) {
+						continue;
+					}
+					
 					$edit_url = str_replace( 'edit', 'elementor', get_edit_post_link( $user_template->ID ) );
 					$show_on_canvas = get_post_meta(Utilities::get_template_id($slug), 'wpr_'. $template .'_show_on_canvas', true);
 

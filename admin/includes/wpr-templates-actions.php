@@ -268,8 +268,15 @@ class WPR_Templates_Actions {
 
 		
 		if ( $screen->id === 'edit-wpr_templates' ) {
-			// enqueue CSS
-			wp_enqueue_style( 'wpr-royal-templates-css', WPR_ADDONS_URL .'assets/css/admin/royal-templates.css', [], $version );
+			$custom_css = '
+				.wpr-templates-cat-select,
+				.wpr-templates-cat-select option,
+				.wpr-templates-cat-select option:checked {
+					text-transform: capitalize !important;
+				}
+			';
+
+			wp_add_inline_style( 'wp-admin', $custom_css );
 		}
 
 		// Deny if NOT Plugin Page
