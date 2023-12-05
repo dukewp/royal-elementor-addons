@@ -979,6 +979,30 @@ class Plugin {
 		}
 
 		add_filter( 'pre_get_posts', [$this, 'wpr_custom_posts_per_page'] );
+		
+		// $which (the position of the filters form) is either 'top' or 'bottom'
+		add_action( 'restrict_manage_posts', function ( $post_type, $which ) {
+			if ( 'top' === $which && 'wpr_templates' === $post_type ) {
+				$taxonomy = 'wpr_template_type';
+				$tax = get_taxonomy( $taxonomy );            // get the taxonomy object/data
+				$cat = filter_input( INPUT_GET, $taxonomy ); // get the selected category slug
+		
+				echo '<label class="screen-reader-text" for="wpr_template_type">Filter by ' .
+					esc_html( $tax->labels->singular_name ) . '</label>';
+		
+				wp_dropdown_categories( [
+					'show_option_all' => $tax->labels->all_items,
+					'hide_empty'      => 0, // include categories that have no posts
+					'hierarchical'    => $tax->hierarchical,
+					'show_count'      => 0, // don't show the category's posts count
+					'orderby'         => 'name',
+					'selected'        => $cat,
+					'taxonomy'        => $taxonomy,
+					'name'            => $taxonomy,
+					'value_field'     => 'slug',
+				] );
+			}
+		}, 10, 2 );
 	}
 
 	public function wpr_custom_posts_per_page( $query ) {

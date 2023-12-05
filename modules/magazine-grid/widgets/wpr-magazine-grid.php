@@ -1648,7 +1648,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Link to Single Page', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'default' => '',
+				'default' => 'yes',
 				'return_value' => 'yes',
 				'separator' => 'after',
 			]
