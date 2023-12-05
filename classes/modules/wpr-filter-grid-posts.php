@@ -114,6 +114,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 			'offset' => $offset
 		];
 
+		if ( isset($_POST['wpr_item_length']) ) {
+			$args['posts_per_page'] == $_POST['wpr_item_length'];
+		}
+
 		if ( $query_order_by == 'meta_value' ) {
 			$args['meta_key'] = $settings['order_posts_by_acf'];
 		}
