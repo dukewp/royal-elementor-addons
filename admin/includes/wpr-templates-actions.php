@@ -263,6 +263,14 @@ class WPR_Templates_Actions {
 
 		// Get Plugin Version
 		$version = Plugin::instance()->get_version();
+		
+		$screen = get_current_screen();
+
+		
+		if ( $screen->id === 'edit-wpr_templates' ) {
+			// enqueue CSS
+			wp_enqueue_style( 'wpr-royal-templates-css', WPR_ADDONS_URL .'assets/css/admin/royal-templates.css', [], $version );
+		}
 
 		// Deny if NOT Plugin Page
 		if ( 'toplevel_page_wpr-addons' == $hook || strpos($hook, 'wpr-theme-builder') || strpos($hook, 'wpr-popups') ) {
