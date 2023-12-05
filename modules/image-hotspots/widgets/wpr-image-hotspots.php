@@ -705,6 +705,7 @@ class Wpr_Image_Hotspots extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-hotspot-content i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-hotspot-content svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};'
 				],
 			]
 		);
@@ -750,6 +751,8 @@ class Wpr_Image_Hotspots extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}}.wpr-hotspot-icon-position-left .wpr-hotspot-text ~ i' => 'margin-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-hotspot-icon-position-right .wpr-hotspot-text ~ i' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-hotspot-icon-position-left .wpr-hotspot-text ~ svg' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-hotspot-icon-position-right .wpr-hotspot-text ~ svg' => 'margin-left: {{SIZE}}{{UNIT}};'
 				],
 			]
 		);

@@ -195,6 +195,7 @@ class Wpr_Mailchimp extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-mailchimp-header i' => '{{VALUE}}',
+					'{{WRAPPER}} .wpr-mailchimp-header svg' => '{{VALUE}}'
 				],
 				'condition' => [
 					'show_form_header' => 'yes',

@@ -988,6 +988,7 @@ class Wpr_Post_Info extends Widget_Base {
 				'default' => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-info li:not(.wpr-post-info-custom-field) i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-post-info li:not(.wpr-post-info-custom-field) svg' => 'fill: {{VALUE}}',
 				],
 				'separator' => 'after'
 			]
@@ -1011,6 +1012,7 @@ class Wpr_Post_Info extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-info li i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-post-info li svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -1033,6 +1035,7 @@ class Wpr_Post_Info extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-post-info li i' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-post-info li svg' => 'margin-right: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);

@@ -86,6 +86,7 @@ class Wpr_Product_Stock extends Widget_Base {
 				'default'   => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-stock .in-stock i' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-product-stock .in-stock svg' => 'fill: {{VALUE}};'
 				],
 			]
 		);
@@ -146,6 +147,7 @@ class Wpr_Product_Stock extends Widget_Base {
 				'default'   => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-stock .out-of-stock i' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-product-stock .out-of-stock svg' => 'fill: {{VALUE}};'
 				],
 			]
 		);
@@ -206,6 +208,7 @@ class Wpr_Product_Stock extends Widget_Base {
 				'default'   => '#FF4F40',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-stock .available-on-backorder i' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-product-stock .available-on-backorder svg' => 'fill: {{VALUE}};'
 				],
 			]
 		);
