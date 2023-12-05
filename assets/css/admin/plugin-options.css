@@ -65,6 +65,10 @@
   line-height: 33px !important;
 }
 
+.button.wpr-translate-templates {
+  font-size: 13px;
+}
+
 .button.wpr-translate-templates span {
   line-height: 1;
 }
