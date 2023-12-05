@@ -129,7 +129,7 @@ class Plugin {
 		// Form Builder
 		// TODO:: ommit if form builder turned off if possible
 		require WPR_ADDONS_PATH . 'classes/modules/wpr-form-handlers.php';
-
+		
 		// Admin Files
 		if ( is_admin() ) {
 			// Pro Features Notice
@@ -991,6 +991,7 @@ class Plugin {
 					esc_html( $tax->labels->singular_name ) . '</label>';
 		
 				wp_dropdown_categories( [
+					'class' => 'wpr-templates-cat-select',
 					'show_option_all' => $tax->labels->all_items,
 					'hide_empty'      => 0, // include categories that have no posts
 					'hierarchical'    => $tax->hierarchical,
