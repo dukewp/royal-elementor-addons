@@ -52,11 +52,17 @@
   font-size: 16px;
 }
 
-.button.wpr-translate-templates {
-  display: inline-flex !important;
-  justify-content: space-between !important;
-  align-items: center !important;
-  padding: 8px 18px;
+.button.wpr-options-button.wpr-translate-templates {
+  background: #7a5ffd;
+  margin-bottom: 30px;
+}
+
+.button.wpr-options-button.wpr-translate-templates:hover {
+  background: #6A4BFF;
+}
+
+.button.wpr-translate-templates .dashicons {
+  line-height: 33px !important;
 }
 
 .button.wpr-translate-templates span {

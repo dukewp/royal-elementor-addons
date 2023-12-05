@@ -106,7 +106,7 @@ function wpr_addons_theme_builder_page() {
 <?php
     if ( is_plugin_active( 'sitepress-multilingual-cms/sitepress.php' ) ) {
         $url = admin_url( 'edit.php?post_type=wpr_templates' );
-        echo '<a href="' . esc_url( $url ) . '" class="button wpr-translate-templates"><span class="dashicons dashicons-admin-site"></span><span>Translate Templates</span></a>';
+        echo '<a href="' . esc_url( $url ) . '" class="button button-primary wpr-translate-templates wpr-options-button"><span>Translate Templates</span><span class="dashicons dashicons-admin-site"></span></a>';
     }
 ?>
     <?php if ( $active_tab == 'wpr_tab_header' ) : ?>
