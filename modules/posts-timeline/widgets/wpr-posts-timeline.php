@@ -1209,7 +1209,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				],
                 'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-timeline-media i' => 'display: block; text-align: {{VALUE}};',
-					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-timeline-media svg' => 'display: block; text-align: {{VALUE}};'
+					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-timeline-media svg' => 'text-align: {{VALUE}};'
 				],
 				'condition' => [
 					// 'timeline_content' => 'custom',
