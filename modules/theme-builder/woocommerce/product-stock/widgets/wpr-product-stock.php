@@ -226,6 +226,29 @@ class Wpr_Product_Stock extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
+			'product_svg_size',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'SVG Size', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+                'separator' => 'before',
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 13,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-product-stock svg' => 'width: {{SIZE}}px; height: {{SIZE}}px;',
+				]
+			]
+		);
+
+		$this->add_responsive_control(
 			'product_icon_gutter',
 			[
 				'type' => Controls_Manager::SLIDER,
@@ -246,6 +269,7 @@ class Wpr_Product_Stock extends Widget_Base {
 					'{{WRAPPER}} .wpr-product-stock .in-stock i' => 'margin-right: {{SIZE}}px;',
 					'{{WRAPPER}} .wpr-product-stock .out-of-stock i' => 'margin-right: {{SIZE}}px;',
 					'{{WRAPPER}} .wpr-product-stock .available-on-backorder i' => 'margin-right: {{SIZE}}px;',
+					'{{WRAPPER}} .wpr-product-stock svg' => 'margin-right: {{SIZE}}px;',
 				]
 			]
 		);

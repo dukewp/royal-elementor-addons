@@ -2927,6 +2927,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-step' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-step svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'step_type' => ['icon', 'icon_text']
