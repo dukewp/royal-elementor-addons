@@ -21,6 +21,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     public function __construct() {
 		add_action('wp_ajax_wpr_filter_grid_posts', [$this, 'wpr_filter_grid_posts']);
 		add_action('wp_ajax_nopriv_wpr_filter_grid_posts', [$this, 'wpr_filter_grid_posts']);
+		add_action('wp_ajax_wpr_get_filtered_count', [$this, 'wpr_get_filtered_count']);
+		add_action('wp_ajax_nopriv_wpr_get_filtered_count', [$this, 'wpr_get_filtered_count']);
     }
     
 	// Get Taxonomies Related to Post Type
@@ -1231,6 +1233,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 		}
 
 		echo '</div>';
+	}
+
+	public function wpr_get_filtered_count() {
+		$settings = $_POST['grid_settings'];
+		$page_count = $this->get_max_num_pages( $settings );
+    
+        wp_send_json_success([
+            'page_count' => $page_count,
+        ]);
+    
+        wp_die();
 	}
 
 	public function wpr_filter_grid_posts() {
