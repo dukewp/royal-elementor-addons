@@ -1418,6 +1418,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 				'default' => '#d8d8d8',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-testimonial-rating i' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-testimonial-rating svg' => 'fill: {{VALUE}};',
 				],
 			]
 		);
@@ -1479,6 +1480,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-testimonial-rating i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-testimonial-rating svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -1501,6 +1503,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-testimonial-rating i' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-testimonial-rating svg' => 'margin-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-testimonial-rating span' => 'margin-left: {{SIZE}}{{UNIT}};',
 				],	
 			]
@@ -2078,6 +2081,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-testimonial-social' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-testimonial-social i' => 'line-height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-testimonial-social svg' => 'line-height: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]

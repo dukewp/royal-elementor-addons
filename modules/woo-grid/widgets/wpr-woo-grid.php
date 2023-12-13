@@ -4780,6 +4780,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'default' => '#D2CDCD',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-woo-rating i' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-woo-rating svg' => 'fill: {{VALUE}};'
 				],
 			]
 		);
@@ -4814,6 +4815,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-woo-rating i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-woo-rating svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};'
 				],
 				'separator' => 'before',
 			]
@@ -6108,7 +6110,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'default' => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wishlist-add span' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-wishlist-add i' => 'color: {{VALUE}}'
+					'{{WRAPPER}} .wpr-wishlist-add i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wishlist-add svg' => 'fill: {{VALUE}}'
 				]
 			]
 		);
@@ -6201,6 +6204,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'default' => '#FF4400',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wishlist-add:hover i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wishlist-add:hover svg' => 'fill: {{VALUE}}',
 					'{{WRAPPER}} .wpr-wishlist-add:hover span' => 'color: {{VALUE}}'
 				]
 			]
@@ -6256,8 +6260,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wishlist-remove span' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-wishlist-remove i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wishlist-remove svg' => 'fill: {{VALUE}}',
 					'{{WRAPPER}} .wpr-wishlist-remove:hover span' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-wishlist-remove:hover i' => 'color: {{VALUE}}'
+					'{{WRAPPER}} .wpr-wishlist-remove:hover i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wishlist-remove:hover svg' => 'fill: {{VALUE}}'
 				]
 			]
 		);
@@ -6424,7 +6430,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'default' => '#333333',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-compare-add span' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-compare-add i' => 'color: {{VALUE}}'
+					'{{WRAPPER}} .wpr-compare-add i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-compare-add svg' => 'fill: {{VALUE}}'
 				]
 			]
 		);
@@ -6517,6 +6524,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'default' => '#FF4400',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-compare-add:hover i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-compare-add:hover svg' => 'fill: {{VALUE}}',
 					'{{WRAPPER}} .wpr-compare-add:hover span' => 'color: {{VALUE}}'
 				]
 			]
@@ -6572,8 +6580,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-compare-remove span' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-compare-remove i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-compare-remove svg' => 'fill: {{VALUE}}',
 					'{{WRAPPER}} .wpr-compare-remove:hover span' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-compare-remove:hover i' => 'color: {{VALUE}}'
+					'{{WRAPPER}} .wpr-compare-remove:hover i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-compare-remove:hover svg' => 'fill: {{VALUE}}'
 				]
 			]
 		);
@@ -9589,9 +9599,19 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
+			
+			// WooCommerce Hook: Before Add to Cart Button
+			// do_action('woocommerce_before_shop_loop_item');
 
-			// Button HTML
-			echo '<a '. implode( ' ', $attributes ) .'><span>'. $button_HTML .'</span></a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			if ( $button_HTML != apply_filters( 'woocommerce_loop_add_to_cart_link', $button_HTML, $product ) ) {
+				echo apply_filters( 'woocommerce_loop_add_to_cart_link', $button_HTML, $product );
+			} else {
+				// Button HTML
+				echo '<a '. implode( ' ', $attributes ) .'><span>'. $button_HTML .'</span></a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			}
+		
+			// WooCommerce Hook: After Add to Cart Button
+			// do_action('woocommerce_after_shop_loop_item');
 
 			echo '</div>';
 		echo '</div>';

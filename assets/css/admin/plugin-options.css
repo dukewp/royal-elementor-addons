@@ -52,6 +52,29 @@
   font-size: 16px;
 }
 
+.button.wpr-options-button.wpr-translate-templates {
+  background: #646464;
+  margin-bottom: 30px;
+  padding: 5px 20px !important;
+}
+
+.button.wpr-options-button.wpr-translate-templates:hover,
+.button.wpr-options-button.wpr-translate-templates:focus {
+  background: #535353;
+}
+
+.button.wpr-translate-templates {
+  font-size: 13px !important;
+}
+
+.button.wpr-translate-templates span {
+  line-height: 1;
+}
+
+.button.wpr-translate-templates span:first-child {
+  margin-right: 5px;
+}
+
 .wpr-preview-buttons a:last-child,
 .wpr-preview-buttons a.wpr-how-to-use-theme-builder {
   background-color: transparent;

@@ -263,6 +263,21 @@ class WPR_Templates_Actions {
 
 		// Get Plugin Version
 		$version = Plugin::instance()->get_version();
+		
+		$screen = get_current_screen();
+
+		
+		if ( $screen->id === 'edit-wpr_templates' ) {
+			$custom_css = '
+				.wpr-templates-cat-select,
+				.wpr-templates-cat-select option,
+				.wpr-templates-cat-select option:checked {
+					text-transform: capitalize !important;
+				}
+			';
+
+			wp_add_inline_style( 'wp-admin', $custom_css );
+		}
 
 		// Deny if NOT Plugin Page
 		if ( 'toplevel_page_wpr-addons' == $hook || strpos($hook, 'wpr-theme-builder') || strpos($hook, 'wpr-popups') ) {

@@ -290,6 +290,7 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-icon i' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-icon svg' => 'width: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before'
 			]
@@ -311,6 +312,7 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-icon i' => 'height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}}',
+					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-icon svg' => 'height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}}',
 					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-label' => 'height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}}',
 				],
 			]
@@ -332,6 +334,7 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-icon i' => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-icon svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};'
 				],
 			]
 		);
@@ -533,6 +536,7 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 				'default' => '#ffffff',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-icon i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-icon svg' => 'fill: {{VALUE}}'
 				],
 			]
 		);
@@ -545,6 +549,7 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 				'default' => '#4A45D2',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-icon i' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-icon svg' => 'background-color: {{VALUE}}',
 				],
 			]
 		);
@@ -608,6 +613,7 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 				'default' => '#ffffff',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-icon:hover i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-icon:hover svg' => 'fill: {{VALUE}}',
 				],
 			]
 		);
@@ -620,6 +626,7 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-icon:hover i' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-sharing-buttons .wpr-sharing-icon:hover svg' => 'background-color: {{VALUE}}',
 				],
 			]
 		);

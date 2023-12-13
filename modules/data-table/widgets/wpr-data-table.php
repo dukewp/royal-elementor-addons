@@ -492,7 +492,8 @@ class Wpr_Data_Table extends Widget_Base {
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'default' => '#fff',
 				'selectors' => [
-					'{{WRAPPER}} {{CURRENT_ITEM}} i' => 'color: {{VALUE}}'
+					'{{WRAPPER}} {{CURRENT_ITEM}} i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} {{CURRENT_ITEM}} svg' => 'fill: {{VALUE}}'
 				],
 				'condition' => [
 					'header_icon' => 'yes',
@@ -811,7 +812,8 @@ class Wpr_Data_Table extends Widget_Base {
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'default' => '#7A7A7A',
 				'selectors' => [
-					'{{WRAPPER}} {{CURRENT_ITEM}} i' => 'color: {{VALUE}}'
+					'{{WRAPPER}} {{CURRENT_ITEM}} i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} {{CURRENT_ITEM}} svg' => 'fill: {{VALUE}}'
 				],
 				'condition' 	=> [
 					'table_content_row_type' => 'col',
@@ -1147,9 +1149,11 @@ class Wpr_Data_Table extends Widget_Base {
 					'{{WRAPPER}} .wpr-table-th' => '-webkit-transition-duration:  {{VALUE}}s; transition-duration:  {{VALUE}}s; transition-property: background-color color font-size',
 					'{{WRAPPER}} .wpr-table-th-pag' => '-webkit-transition-duration:  {{VALUE}}s; transition-duration:  {{VALUE}}s; transition-property: background-color color font-size',
 					'{{WRAPPER}} .wpr-table-th i' => '-webkit-transition-duration:  {{VALUE}}s; transition-duration:  {{VALUE}}s; transition-property: background-color color font-size',
+					'{{WRAPPER}} .wpr-table-th svg' => '-webkit-transition-duration:  {{VALUE}}s; transition-duration:  {{VALUE}}s; transition-property: background-color color font-size',
 					'{{WRAPPER}} .wpr-table-td' => '-webkit-transition-duration:  {{VALUE}}s; transition-duration:  {{VALUE}}s; transition-property: background-color color font-size',
 					'{{WRAPPER}} .wpr-table-td-pag' => '-webkit-transition-duration:  {{VALUE}}s; transition-duration:  {{VALUE}}s; transition-property: background-color color font-size',
 					'{{WRAPPER}} .wpr-table-td i' => '-webkit-transition-duration:  {{VALUE}}s; transition-duration:  {{VALUE}}s; transition-property: background-color color font-size',
+					'{{WRAPPER}} .wpr-table-td svg' => '-webkit-transition-duration:  {{VALUE}}s; transition-duration:  {{VALUE}}s; transition-property: background-color color font-size',
 					'{{WRAPPER}} .wpr-table-text' => '-webkit-transition-duration:  {{VALUE}}s; transition-duration:  {{VALUE}}s; transition-property: background-color color font-size'
 				],
 				'separator' => 'before'
@@ -1327,6 +1331,7 @@ class Wpr_Data_Table extends Widget_Base {
                 ],
                 'selectors'  => [
                     '{{WRAPPER}} .wpr-data-table thead .wpr-sorting-icon i' => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .wpr-data-table thead .wpr-sorting-icon svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
                 ],
 				'condition' => [
 					'enable_table_sorting' => 'yes'
@@ -1404,7 +1409,8 @@ class Wpr_Data_Table extends Widget_Base {
 					],
 				],
                 'selectors'             => [
-					'{{WRAPPER}} .wpr-data-table th i' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+					'{{WRAPPER}} .wpr-data-table th i' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-data-table th svg' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
             ]
 		);
@@ -1572,6 +1578,7 @@ class Wpr_Data_Table extends Widget_Base {
 					'{{WRAPPER}} tbody tr:nth-child(odd) td:hover span' => 'color: {{VALUE}} !important',
 					'{{WRAPPER}} tbody tr:nth-child(odd) td:hover.wpr-table-text' => 'color: {{VALUE}} !important',
 					'{{WRAPPER}} tbody tr:nth-child(odd) td:hover i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} tbody tr:nth-child(odd) td:hover svg' => 'fill: {{VALUE}}',
 				],
 			]
 		);
@@ -1612,6 +1619,7 @@ class Wpr_Data_Table extends Widget_Base {
 					'{{WRAPPER}} tbody tr:nth-child(even) td:hover.wpr-table-text' => 'color: {{VALUE}}',
 					'{{WRAPPER}} tbody tr:nth-child(even) td:hover a .wpr-table-text' => 'color: {{VALUE}} !important',
 					'{{WRAPPER}} tbody tr:nth-child(even) td:hover i' => 'color: {{VALUE}}',
+					'{{WRAPPER}} tbody tr:nth-child(even) td:hover svg' => 'fill: {{VALUE}}'
 				],
 			]
 		);
@@ -1788,7 +1796,8 @@ class Wpr_Data_Table extends Widget_Base {
 					],
 				],
                 'selectors'             => [
-					'{{WRAPPER}} .wpr-data-table td i' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+					'{{WRAPPER}} .wpr-data-table td i' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-data-table td svg' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
             ]
 		);

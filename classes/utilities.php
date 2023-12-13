@@ -374,7 +374,28 @@ class Utilities {
 		]);
 		
 		if ( ! $templates_loop->have_posts() ) {
-			$template = null;
+			if ( defined('ICL_LANGUAGE_CODE') ) {
+				$original_post = get_page_by_path($template, OBJECT, 'wpr_templates');
+				if ( $original_post ) {
+					$original_post_id = $original_post->ID;
+					$language_code = ICL_LANGUAGE_CODE;
+				
+					$translated_post_id = icl_object_id($original_post_id, 'wpr_templates', false, $language_code);
+					
+					if ( $translated_post_id ) {
+						$translated_post = get_post($translated_post_id);
+						$translated_slug = $translated_post->post_name;
+					
+						if ( $translated_slug ) {
+							$template = $translated_slug;
+						} else {
+							$template = null;
+						}
+					}
+				}
+			} else {
+				$template = null;
+			}
 		} else {
 			$template = $template;
 		}

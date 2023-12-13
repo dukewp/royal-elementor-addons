@@ -129,7 +129,7 @@ class Plugin {
 		// Form Builder
 		// TODO:: ommit if form builder turned off if possible
 		require WPR_ADDONS_PATH . 'classes/modules/wpr-form-handlers.php';
-
+		
 		// Admin Files
 		if ( is_admin() ) {
 			// Pro Features Notice
@@ -161,6 +161,9 @@ class Plugin {
 
 			// Secondary Image
 			require WPR_ADDONS_PATH . 'admin/metabox/wpr-secondary-image.php';
+
+			// Dropdown Category Filter for Wpr Templates
+			require WPR_ADDONS_PATH . 'admin/includes/wpr-templates-category-filter.php';
 
 			// Hide Theme Notice
 			// TODO: Remove this and fix with Transients

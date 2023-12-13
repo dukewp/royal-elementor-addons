@@ -45,7 +45,7 @@ class Wpr_Product_Description extends Widget_Base {
 		$this->add_control(
 			'description_html',
 			[
-				'label' => esc_html__( 'Description HTML', 'wpr-addons' ),
+				'label' => esc_html__( 'Render as HTML', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'no',
 			]
@@ -60,7 +60,8 @@ class Wpr_Product_Description extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-description p' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-product-description li' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .wpr-product-description a' => 'color: {{VALUE}};'
+					'{{WRAPPER}} .wpr-product-description a' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-product-description pre' => 'color: {{VALUE}};'
 				],
 			]
 		);
@@ -110,6 +111,7 @@ class Wpr_Product_Description extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-product-description p' => 'text-align: {{VALUE}}',
+					'{{WRAPPER}} .wpr-product-description pre' => 'text-align: {{VALUE}}'
 				],
 			]
 		);

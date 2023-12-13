@@ -91,6 +91,7 @@ class WPR_Render_Templates {
     	} else {
     		$conditions = json_decode( get_option('wpr_'. $type .'_conditions', '[]'), true );
     		$template = WPR_Conditions_Manager::header_footer_display_conditions( $conditions );
+
     		return (!empty( $conditions ) && !is_null($template)) ? true : false;
     	}
 	}
@@ -122,9 +123,19 @@ class WPR_Render_Templates {
 	    	$conditions = json_decode( get_option('wpr_header_conditions', '[]'), true );
 			$template_slug = WPR_Conditions_Manager::header_footer_display_conditions($conditions);
 			$template_id = Utilities::get_template_id($template_slug);
+
+			if ( defined('ICL_LANGUAGE_CODE') ) {
+				$default_language_code = apply_filters('wpml_default_language', null);
+
+				IF ( ICL_LANGUAGE_CODE !== $default_language_code ) {
+					$template_id = apply_filters('wpml_object_id', $template_id, 'wpr_templates', true, $default_language_code);
+				}
+			}
+
 			$show_on_canvas = get_post_meta($template_id, 'wpr_header_show_on_canvas', true);
 
-			if ( !empty($show_on_canvas) && 'true' === $show_on_canvas && 0 === strpos($template_slug, 'user-header-') ) {
+			// if ( !empty($show_on_canvas) && 'true' === $show_on_canvas && 0 === strpos($template_slug, 'user-header-') ) {
+			if ( !empty($show_on_canvas) && 'true' === $show_on_canvas && !is_null($template_slug) ) {
 				Utilities::render_elementor_template($template_slug);
 			}
 		}
@@ -157,9 +168,20 @@ class WPR_Render_Templates {
 	    	$conditions = json_decode( get_option('wpr_footer_conditions', '[]'), true );
 			$template_slug = WPR_Conditions_Manager::header_footer_display_conditions($conditions);
 			$template_id = Utilities::get_template_id($template_slug);
+
+			if ( defined('ICL_LANGUAGE_CODE') ) {
+				$default_language_code = apply_filters('wpml_default_language', null);
+
+				IF ( ICL_LANGUAGE_CODE !== $default_language_code ) {
+				
+					$template_id = apply_filters('wpml_object_id', $template_id, 'wpr_templates', true, $default_language_code);
+				}
+			}
+
 			$show_on_canvas = get_post_meta($template_id, 'wpr_footer_show_on_canvas', true);
 
-			if ( !empty($show_on_canvas) && 'true' === $show_on_canvas && 0 === strpos($template_slug, 'user-footer-') ) {
+			// if ( !empty($show_on_canvas) && 'true' === $show_on_canvas && 0 === strpos($template_slug, 'user-footer-') ) {
+			if ( !empty($show_on_canvas) && 'true' === $show_on_canvas && !is_null($template_slug) ) {
 				Utilities::render_elementor_template($template_slug);
 			}
 		}
