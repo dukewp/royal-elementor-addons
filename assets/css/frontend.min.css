@@ -8036,6 +8036,7 @@ select.wpr-category-select {
     -o-transition: all .5s;
     transition: all .5s;
     cursor: pointer;
+    outline: none;
 }
 
 .wpr-member-social i {
