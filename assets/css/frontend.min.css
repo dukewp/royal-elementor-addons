@@ -16662,7 +16662,7 @@ dl.variation dd {
 }
 
 .wpr-my-account-tab .woocommerce-MyAccount-content-wrapper {
-    overflow-x: scroll;
+    overflow-x: auto;
 }
 
 .wpr-account-tabs-stretch .woocommerce-MyAccount-navigation-link,
