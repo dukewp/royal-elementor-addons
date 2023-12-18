@@ -1187,7 +1187,7 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     position: fixed;
     top: 0;
     z-index: 9999;
-    height: 100%;
+    height: 100vh;
     min-height: 100%;
     overflow: hidden;
     -webkit-transition-property: -webkit-transform;
@@ -8042,6 +8042,7 @@ select.wpr-category-select {
     -o-transition: all .5s;
     transition: all .5s;
     cursor: pointer;
+    outline: none !important;
 }
 
 .wpr-member-social i {
@@ -16664,6 +16665,10 @@ dl.variation dd {
 .wpr-my-account-tabs-horizontal .woocommerce-MyAccount-navigation-link,
 .woocommerce-MyAccount-navigation-link a {
   display: inline-block;
+}
+
+.wpr-my-account-tab .woocommerce-MyAccount-content-wrapper {
+    overflow-x: auto;
 }
 
 .wpr-account-tabs-stretch .woocommerce-MyAccount-navigation-link,

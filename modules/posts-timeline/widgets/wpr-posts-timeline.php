@@ -981,6 +981,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wrapper {{CURRENT_ITEM}} .wpr-description' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-wrapper {{CURRENT_ITEM}} .wpr-description p' => 'color: {{VALUE}};'
 				],
 				'default' => '#333333',
 				'condition' => [
@@ -3319,6 +3320,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-wrapper .wpr-description' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-wrapper .wpr-description p' => 'color: {{VALUE}}'
 				],
 				'default' => '#808080',
 			]
