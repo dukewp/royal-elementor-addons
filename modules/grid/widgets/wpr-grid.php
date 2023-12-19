@@ -2856,6 +2856,16 @@ class Wpr_Grid extends Widget_Base {
 		}
 
 		$this->add_control(
+			'filters_experiment',
+			[
+				'label' => esc_html__( 'Filters Experiment', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'no',
+				'return_value' => 'yes',
+			]
+		);
+
+		$this->add_control(
 			'filters_linkable',
 			[
 				'label' => esc_html__( 'Set Linkable Filters', 'wpr-addons' ),
@@ -9475,7 +9485,7 @@ class Wpr_Grid extends Widget_Base {
 		// All Filter
 		if ( 'yes' === $settings['filters_all'] && 'yes' !== $settings['filters_linkable'] ) {
 			echo '<li class="'. esc_attr($pointer_class) .'">';
-			echo '<span data-filter="*" class="wpr-active-filter '. $pointer_item_class_name .'">'. $left_icon . esc_html($settings['filters_all_text']) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo '<span  data-filter="*" class="wpr-grid-filters-item wpr-active-filter '. $pointer_item_class_name .'">'. $left_icon . esc_html($settings['filters_all_text']) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo '</li>';
 		}
 		
@@ -9490,6 +9500,8 @@ class Wpr_Grid extends Widget_Base {
 			foreach ( $custom_filters as $key => $term_id ) {
 				$filter = get_term_by( 'id', $term_id, $taxonomy );
 				$data_attr = 'post_tag' === $taxonomy ? 'tag-'. $filter->slug : $taxonomy .'-'. $filter->slug;
+				$tax_data_attr = 'post_tag' === $taxonomy ? 'tag' : $taxonomy;
+				$term_data_attr = $filter->slug;
 
 				// GOGA - tested but needs advanced testing
 				if (strpos($data_attr, $category_name) !== false) {
@@ -9505,7 +9517,7 @@ class Wpr_Grid extends Widget_Base {
 
 					echo '<li'. $data_role .' class="'. esc_attr($pointer_class) .'">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						if ( 'yes' !== $settings['filters_linkable'] ) {
-							echo ''. $left_separator .'<span '. $pointer_item_class .' data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo ''. $left_separator .'<span '. $pointer_item_class .'  data-test-filter='. json_encode([$tax_data_attr, $term_data_attr]) .'  data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						} else {
 							echo ''. $left_separator .'<a class="'. $active_class . ' ' . $pointer_item_class_name .'" href="'. esc_url(get_term_link( $filter->term_id, $taxonomy )) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</a>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						}
@@ -9524,6 +9536,8 @@ class Wpr_Grid extends Widget_Base {
 
 			foreach ( $all_filters as $key => $filter ) {
 				$data_attr = 'post_tag' === $taxonomy ? 'tag-'. $filter->slug : $taxonomy .'-'. $filter->slug;
+				$tax_data_attr = 'post_tag' === $taxonomy ? 'tag' : $taxonomy;
+				$term_data_attr = $filter->slug;
 
 				// GOGA - tested but needs advanced testing
 				if (strpos($data_attr, $category_name) !== false) {
@@ -9540,9 +9554,9 @@ class Wpr_Grid extends Widget_Base {
 
 					echo '<li'. $data_role .' class="'. esc_attr($pointer_class) . esc_attr($hidden_class) .'">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						if ( 'yes' !== $settings['filters_linkable'] ) {
-							echo ''. $left_separator .'<span '. $pointer_item_class .' data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo ''. $left_separator .'<span '. $pointer_item_class .'  data-test-filter='. json_encode([$tax_data_attr, $term_data_attr]) .'  data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						} else {
-							echo ''. $left_separator .'<a class="'. $active_class . ' ' . $pointer_item_class_name .'" href="'. esc_url(get_term_link( $filter->term_id, $taxonomy )) .'" data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</a>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo ''. $left_separator .'<a class="'. $active_class . ' ' . $pointer_item_class_name .'" href="'. esc_url(get_term_link( $filter->term_id, $taxonomy )) .'"  data-test-filter='. json_encode([$tax_data_attr, $term_data_attr]) .'  data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</a>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						}
 					echo '</li>';
 
@@ -9559,11 +9573,13 @@ class Wpr_Grid extends Widget_Base {
 				$parent = get_term_by( 'id', $parent_filter, $taxonomy );
 				$children = get_term_children( $parent_filter, $taxonomy );
 				$data_attr = 'post_tag' === $taxonomy ? 'tag-'. $parent->slug : $taxonomy .'-'. $parent->slug;
+				$tax_data_attr = 'post_tag' === $taxonomy ? 'tag' : $taxonomy;
+				$term_data_attr = $filter->slug;
 
 				echo '<ul data-parent=".'. esc_attr(urldecode( $data_attr )) .'" class="wpr-sub-filters">';
 
 				echo '<li data-role="back" class="'. esc_attr($pointer_class) .'">';
-					echo '<span class="wpr-back-filter" data-filter=".'. esc_attr(urldecode( $data_attr )) .'">';
+					echo '<span class="wpr-back-filter"  data-test-filter='. json_encode([$tax_data_attr, $term_data_attr]) .'  data-filter=".'. esc_attr(urldecode( $data_attr )) .'">';
 						echo '<i class="fas fa-long-arrow-alt-left"></i>&nbsp;&nbsp;'. esc_html__( 'Back', 'wpr-addons' );
 					echo '</span>';
 				echo '</li>';
@@ -9573,7 +9589,7 @@ class Wpr_Grid extends Widget_Base {
 					$data_attr = 'post_tag' === $taxonomy ? 'tag-'. $sub_filter->slug : $taxonomy .'-'. $sub_filter->slug;
 
 					echo '<li data-role="sub" class="'. esc_attr($pointer_class) .'">';
-						echo ''. $left_separator .'<span '. $pointer_item_class .' data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($sub_filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo ''. $left_separator .'<span '. $pointer_item_class .'  data-test-filter='. json_encode([$tax_data_attr, $term_data_attr]) .'  data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($sub_filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo '</li>';
 				}
 
@@ -9900,6 +9916,11 @@ class Wpr_Grid extends Widget_Base {
 			'download' => $settings['lightbox_popup_download'],
 		];
 
+		// $layout_settings['grid_settings'] = [esc_attr( json_encode( $settings ) )];
+		if ( 'yes' === $settings['filters_experiment'] ) {
+			$layout_settings['grid_settings'] = $settings;
+		}
+
 		$this->add_render_attribute( 'grid-settings', [
 			'data-settings' => wp_json_encode( $layout_settings ),
 		] );
@@ -9992,7 +10013,6 @@ class Wpr_Grid extends Widget_Base {
 			$render_attribute = $this->get_render_attribute_string( 'slider-settings' );
 		}
 
-		// Grid Wrap
 		echo '<section class="wpr-grid elementor-clearfix" '. $render_attribute .'>';
 
 		while ( $posts->have_posts() ) : $posts->the_post();
