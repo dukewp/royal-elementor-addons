@@ -27,6 +27,19 @@ class WPR_Templates_Data {
 					'label' => 'trending',
 					'priority' => 4,
 				],
+                'v2' => [
+                    'name' => 'Grocery Store - Shop V2',
+                    'pages' => 'home,shop,single-product,variable-product,grouped-product,cart,wishlist,compare,about,blog,contact,contact-v1,contact-v2',
+                    'plugins' => '{"woocommerce":'. $is_woo_active .'}',
+                    'tags' => 'grocery store shop shopping woo-commerce woocommerce estore ecommerce product online eshopping market food veggies bio organic',
+                    'theme-builder' => true,
+                    'woo-builder' => true,
+                    'off-canvas' => false,
+                    'price' => $is_pro_active ? 'free' : 'pro',
+                    'expert' => $is_expert ? 'free' : 'expert',
+                    'label' => 'new',
+                    'priority' => 4,
+                ],
 			],
 			'landing-page-ebook' => [
 				'v1' => [
