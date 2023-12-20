@@ -14239,6 +14239,11 @@ flex-grow: 0; */
     margin: 0;
 }
 
+/* Product Description */
+.wpr-product-description pre * {
+    white-space: wrap;
+}
+
 /* Product Stock */
 .wpr-product-stock p {
     margin-bottom: 0;
