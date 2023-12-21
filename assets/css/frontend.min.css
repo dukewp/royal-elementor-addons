@@ -2411,6 +2411,10 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     /* background-color: dodgerblue; */
 }
 
+.wpr-grid-item.post {
+    margin: 0;
+}
+
 .elementor-widget-wpr-grid:not(.wpr-item-styles-wrapper) .wpr-grid-item {
     padding: 0 !important;
 }

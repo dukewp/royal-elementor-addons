@@ -121,7 +121,7 @@ class Wpr_Google_Maps extends Widget_Base {
 			'gm_custom_color_scheme',
 			[
 				'label' => esc_html__( 'Custom Style', 'wpr-addons' ),
-				'description' => esc_html__( 'Get custom map style code from <a href="https://snazzymaps.com/explore" target="_blank">Snazzy Maps</a> or <a href="https://mapstyle.withgoogle.com/" target="_blank">GM Styling Wizard</a> and copy/paste in this field.', 'wpr-addons' ),
+				'description' => __( 'Get custom map style code from <a href="https://snazzymaps.com/explore" target="_blank">Snazzy Maps</a> or <a href="https://mapstyle.withgoogle.com/" target="_blank">GM Styling Wizard</a> and copy/paste in this field.', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXTAREA,
 				'dynamic' => [
 					'active' => true,

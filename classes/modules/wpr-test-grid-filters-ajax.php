@@ -282,11 +282,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 								}
 							} 
 						} elseif ( $cleanedKey == 'date' ) {
+
 							$date = $_POST['wpr_url_params'][$key];
 							
 							$args['date_query'] = [];
 
-							if ( explode("-", $date) ) {
+							if ( str_contains($date, '-') && explode("-", $date) ) {
 								list($year, $month, $day) = explode("-", $date);
 
 								array_push( $args['date_query'], [
@@ -990,8 +991,96 @@ if ( ! defined( 'ABSPATH' ) ) {
 		echo '</div>';
 	}
 
-	// Render Post Custom Field
-	public function render_post_custom_field( $settings, $class, $post_id ) {}
+	public function render_post_custom_field( $settings, $class, $post_id ) {
+		$custom_field_value = get_post_meta( $post_id, $settings['element_custom_field'], true );
+		$custom_field_html = $settings['element_custom_field_wrapper_html'];
+
+		if ( has_filter('wpr_update_custom_field_value') ) {
+			ob_start();
+			apply_filters('wpr_update_custom_field_value', $custom_field_value, $post_id, $settings['element_custom_field']);
+			$custom_field_value = ob_get_clean();
+		}
+
+		// Get First Value if Array (works only for single value checkboxes)
+		if ( is_array($custom_field_value) && 1 === count($custom_field_value) ) {
+			$custom_field_value = $custom_field_value[0];
+		}
+
+		// Erase if Array or Object
+		if ( ! is_string( $custom_field_value ) && ! is_numeric( $custom_field_value ) ) {
+			$custom_field_value = '';
+		}
+
+		// Return if Empty
+		if ( '' === $custom_field_value ) {
+			return;
+		}
+
+		echo '<div class="'. esc_attr($class) .' '. $settings['element_custom_field_style'] .'">';
+			echo '<div class="inner-block">';
+				if ( 'yes' === $settings['element_custom_field_btn_link'] ) {
+					$target = 'yes' === $settings['element_custom_field_new_tab'] ? '_blank' : '_self';
+					echo '<a href="'. esc_url($custom_field_value) .'" target="'. esc_attr($target) .'">';
+				} else {
+					echo '<span>';
+				}
+
+				// Text: Before
+				if ( 'before' === $settings['element_extra_text_pos'] ) {
+					echo '<span class="wpr-grid-extra-text-left">'. esc_html( $settings['element_extra_text'] ) .'</span>';
+				}
+				// Icon: Before
+				if ( 'before' === $settings['element_extra_icon_pos'] ) {
+					ob_start();
+					\Elementor\Icons_Manager::render_icon($settings['element_extra_icon'], ['aria-hidden' => 'true']);
+					$extra_icon = ob_get_clean();
+
+					echo '<span class="wpr-grid-extra-icon-left">';
+						echo $extra_icon;
+					echo '</span>';
+				}
+
+				// Custom Field
+				if ( 'yes' === $settings['element_custom_field_img_ID'] ) {
+					$cf_img = wp_get_attachment_image_src( $custom_field_value, 'full' );
+					if ( isset($cf_img) && is_array($cf_img) ) {
+						echo '<img src="'. esc_url($cf_img[0]) .'" alt="" width="'. esc_attr($cf_img[1]) .'" height="'. esc_attr($cf_img[2]) .'">';
+					}
+				} else {
+					if ( 'yes' !== $settings['element_custom_field_btn_link'] ) {
+						echo '<span>';
+							if ( 'yes' === $settings['element_custom_field_wrapper'] ) {
+								echo str_replace( '*cf_value*', $custom_field_value, $custom_field_html );
+							} else {
+								echo $custom_field_value;
+							}
+						echo '</span>';
+					}
+				}
+
+				// Icon: After
+				if ( 'after' === $settings['element_extra_icon_pos'] ) {
+					ob_start();
+					\Elementor\Icons_Manager::render_icon($settings['element_extra_icon'], ['aria-hidden' => 'true']);
+					$extra_icon = ob_get_clean();
+
+					echo '<span class="wpr-grid-extra-icon-right">';
+						echo $extra_icon;
+					echo '</span>';
+				}
+				// Text: After
+				if ( 'after' === $settings['element_extra_text_pos'] ) {
+					echo '<span class="wpr-grid-extra-text-right">'. esc_html( $settings['element_extra_text'] ) .'</span>';
+				}
+
+				if ( 'yes' === $settings['element_custom_field_btn_link'] ) {
+					echo '</a>';
+				} else {
+					echo '</span>';
+				}
+			echo '</div>';
+		echo '</div>';
+	}
 
 	// Render Post Element Separator
 	public function render_post_element_separator( $settings, $class ) {
