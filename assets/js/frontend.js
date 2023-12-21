@@ -368,7 +368,10 @@
 					}
 
 					if ( 'yes' == $scope.data('wpr-replace-header') ) {
-  						$scope.next().get(0).style.setProperty('--wpr-animation-duration', stickyAnimDuration);
+                        console.log($scope.next());
+                        if ( 0 != $scope.next().length ) {
+                            $scope.next().get(0).style.setProperty('--wpr-animation-duration', stickyAnimDuration);
+                        }
 					}
 					
 					function debounceScroll(method, delay) {
@@ -691,16 +694,22 @@
 
 			// Full Width Dropdown
 			function fullWidthMobileDropdown() {
-				if ( ! $scope.hasClass( 'wpr-mobile-menu-full-width' ) || ! $scope.closest('.elementor-column').length ) {
+				if ( ! $scope.hasClass( 'wpr-mobile-menu-full-width' ) || (! $scope.closest('.elementor-column').length && ! $scope.closest('.elementor-element').length) ) {
 					return;
 				}
 
-				var eColumn   = $scope.closest('.elementor-column'),
-					mWidth 	  = $scope.closest('.elementor-top-section').outerWidth() - 2 * mobileMenu.offset().left,
+                // GOGA: maybe in some cases elementor-element instead of e-con
+                var topSection = $scope.closest('.elementor-top-section');
+                var topElement = $scope.closest('.elementor-element');
+
+				var eColumn   = $scope.closest('.elementor-column').length ? $scope.closest('.elementor-column') : $scope.closest('.elementor-element'),
+					mWidth 	  = topSection.length ? (topSection.outerWidth() - 2 * mobileMenu.offset().left) : (topElement.outerWidth() - 2 * mobileMenu.offset().left),
 					mPosition = eColumn.offset().left + parseInt(eColumn.css('padding-left'), 10);
 
+                // GOGA: don't need to calculate mWidth since it has tu be full
 				mobileMenu.css({
-					'width' : mWidth +'px',
+					// 'width' : mWidth +'px',
+					'width' : '100vw',
 					'left' : - mPosition +'px'
 				});
 			}
@@ -9411,12 +9420,13 @@
 						$( document.body ).trigger( 'wc_fragment_refresh' );
 						$( document.body ).trigger( 'added_to_cart', [ response.fragments, response.cart_hash, $thisBtn ] );
 
-						setTimeout( function () {
-							$thisBtn.removeClass( 'added' );
-							var currentCartCount = parseInt($('.wpr-mini-cart-icon-count').text());
-							var updatedCartCount = parseInt($scope.find('.wpr-quantity-wrapper .qty').val());
-							$('.wpr-mini-cart-icon-count').text(currentCartCount + updatedCartCount);
-						}, 1000 );
+						// setTimeout( function () {
+						// 	$thisBtn.removeClass( 'added' );
+						// 	var currentCartCount = parseInt($('.wpr-mini-cart-icon-count').text());
+						// 	var updatedCartCount = parseInt($scope.find('.wpr-quantity-wrapper .qty').val());
+                        //     console.log(currentCartCount, updatedCartCount);
+						// 	$('.wpr-mini-cart-icon-count').text(currentCartCount + updatedCartCount);
+						// }, 1000 );
 					},
 				} );
 			}

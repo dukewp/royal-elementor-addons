@@ -604,15 +604,21 @@ class Wpr_Google_Maps extends Widget_Base {
 	}
 
 	public function get_map_settings( $settings ) {
-		return [
+		$map_settings = [
 			'type' => $settings['gm_type'],
 			'style' => $settings['gm_color_scheme'],
-			'custom_style' => preg_replace( '/\s/', '', strip_tags($settings['gm_custom_color_scheme']) ),
 			'zoom_depth' => $settings['gm_zoom_depth']['size'],
 			'zoom_on_scroll' => $settings['gm_zoom_on_scroll'],
 			'cluster_markers' => $settings['gm_cluster_markers'],
 			'clusters_url' => WPR_ADDONS_URL . 'assets/js/lib/gmap/clusters/m',
 		];
+
+
+        if ( !is_array($settings['gm_custom_color_scheme']) ) {
+			$map_settings['custom_style'] = preg_replace( '/\s/', '', strip_tags($settings['gm_custom_color_scheme']) );
+        }
+
+        return $map_settings;
 	}
 
 	public function get_map_controls( $settings ) {

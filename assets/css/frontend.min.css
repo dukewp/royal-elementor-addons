@@ -10089,6 +10089,10 @@ select.wpr-category-select {
   == Flip Box
   --------------------------------------------------------------*/
 
+  .elementor-widget-wpr-flip-box {
+    flex: 1;
+  }
+
 .wpr-flip-box {
     position: relative;
     -webkit-transform-style: preserve-3d;
