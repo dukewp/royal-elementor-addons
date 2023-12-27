@@ -299,13 +299,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 						} else {
 							if ( $_POST['wpr_url_params'][$key] != '0' ) {
 								// Get category from URL
-								if (str_contains($_POST['wpr_url_params'][$key], ',')) {
+								if ( str_contains($_POST['wpr_url_params'][$key], ',') ) {
 		
 									// Example usage
 									$key_type = $this->identify_key_type($cleanedKey);
 									$filtervalues = explode(',', $_POST['wpr_url_params'][$key]);
 	
-									if ($key_type == 'meta_field') {
+									if ( 'meta_field' == $key_type ) {
 										if ( is_numeric($filtervalues[0]) ) {
 											$minValue = min(array_values($filtervalues));
 											$maxValue = max(array_values($filtervalues));
@@ -330,8 +330,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 												];
 											}
 										} else {
-											if (isset($args['meta_query'])) { 
-	
+											if ( isset($args['meta_query']) ) { 
 	
 												$for_meta_query = [ // needs check if overrides something
 													'relation' => explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0],
@@ -370,7 +369,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 										}
 									} else { // if != 'meta_field'
 										$for_tax_query = [ // needs check if overrides something
-											'relation' => explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0],
+											'relation' => explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] ? explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] : 'or',
 										];
 	
 										foreach ($filtervalues as $filtervalue) {
@@ -382,8 +381,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 												'terms' => $filtervalue
 											] );
 										}
-	
-										array_push( $tax_query, $for_tax_query );
+
+                                        array_push($tax_query, $for_tax_query);
 									}
 								} else { // not str_contains($_POST['wpr_url_params'][$key], ',')
 									$key_type = $this->identify_key_type($cleanedKey);
