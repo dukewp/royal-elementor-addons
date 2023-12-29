@@ -220,10 +220,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$args['order'] = $settings['order_direction'];
 		}
 
-		// if ( !empty($tax_query) ) {
-		// 	$args['tax_query'] = $tax_query;
-		// }
-
 		if ( isset($_POST['wpr_offset']) ) {
 			$args['offset'] = $_POST['wpr_offset'];
 		}
@@ -421,8 +417,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								}
 							}
 						}
-					} else {
-                    }
+					}
 				}
 			}
 
