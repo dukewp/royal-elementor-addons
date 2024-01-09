@@ -10178,6 +10178,10 @@ select.wpr-category-select {
   == Flip Box
   --------------------------------------------------------------*/
 
+  .elementor-widget-wpr-flip-box {
+    flex: 1;
+  }
+
 .wpr-flip-box {
     position: relative;
     -webkit-transform-style: preserve-3d;
@@ -14329,6 +14333,11 @@ flex-grow: 0; */
     margin: 0;
 }
 
+/* Product Description */
+.wpr-product-description pre * {
+    white-space: wrap;
+}
+
 /* Product Stock */
 .wpr-product-stock p {
     margin-bottom: 0;
@@ -17476,9 +17485,7 @@ dl.variation dd {
 --------------------------------------------------------------*/
 
 .wpr-offcanvas-trigger {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
+    display: inline-block;
 }
 
 .wpr-offcanvas-container {

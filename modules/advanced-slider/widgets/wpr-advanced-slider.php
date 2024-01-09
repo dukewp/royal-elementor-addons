@@ -1244,6 +1244,17 @@ class Wpr_Advanced_Slider extends Widget_Base {
 
 		$this->add_control_slider_pause_on_hover();
 
+		$this->add_control(
+			'slider_loop',
+			[
+				'label' => esc_html__( 'Infinite Loop', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'frontend_available' => true,
+				'separator' => 'before',
+			]
+		);
+
 		$this->add_control_slider_effect();
 
 		$this->add_control(
@@ -3200,6 +3211,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 
 		$slider_options = [
 			'rtl' => $slider_is_rtl,
+			'infinite' => ( $settings['slider_loop'] === 'yes' ),
 			'speed' => absint( $settings['slider_effect_duration'] * 1000 ),
 			'arrows'=> true,
 			'dots' 	=> true,
