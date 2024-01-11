@@ -231,13 +231,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 		if ( isset($args['tax_query']) ) {
 
 			$tax_query = ['relation' => get_option('wpr_filter_relation')];
+            $meta_query = ['relation' => get_option('wpr_filter_relation')];
 
 			$prev_cleaned_key = '';
 
 			// Iterate through the POST array
 			foreach ( $_POST['wpr_url_params'] as $key => $value ) {
+
 				// Check if the variable name contains "wpr_gf_"
 				if (strpos($key, 'wpr_gf_') !== false) {
+
 					// Need to setup logic to get relation from filters separately
 					$cleanedKey = str_replace('wpr_gf_', '', $key);
 					$prev_cleaned_key = $cleanedKey;
@@ -306,8 +309,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 											$minValue = min(array_values($filtervalues));
 											$maxValue = max(array_values($filtervalues));
 											
-											if (isset($args['meta_query'])) {
-												array_push($args['meta_query'], [
+											if ( isset($meta_query) ) {
+												array_push($meta_query, [
 													[
 														'key'     => $cleanedKey,
 														'value'   => [$minValue, $maxValue],
@@ -316,7 +319,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 													],
 												]);
 											} else {
-												$args['meta_query'] = [
+												$meta_query = [
 													[
 														'key'     => $cleanedKey,
 														'value'   => [$minValue, $maxValue],
@@ -326,10 +329,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 												];
 											}
 										} else {
-											if ( isset($args['meta_query']) ) { 
-	
+											if ( isset($meta_query) ) {
 												$for_meta_query = [ // needs check if overrides something
-													'relation' => explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0],
+													'relation' => explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] ? explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] : 'or',
 												];
 			
 												foreach ($filtervalues as $filtervalue) {
@@ -344,15 +346,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 													]);
 												}
 			
-												array_push( $args['meta_query'], $for_meta_query );
+												array_push( $meta_query, $for_meta_query );
 											} else {
-												$args['meta_query'] = [ // needs check if overrides something
-													'relation' => explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0],
+												$meta_query = [ // needs check if overrides something
+													'relation' => explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] ? explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] : 'or',
 												];
 	
 												if (is_array($filtervalues)) {
 													foreach ($filtervalues as $filtervalue) {
-														$args['meta_query'][] = [
+														$meta_query[] = [
 															'key'     => $cleanedKey,
 															'value'   => $filtervalue,
 															'compare' => '=',
@@ -385,8 +387,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 									$filtervalues = sanitize_text_field($_POST['wpr_url_params'][$key]);
 	
 									if ( $key_type == 'meta_field' ) {
-										if (isset($args['meta_query'])) {
-											array_push($args['meta_query'], [
+										if ( isset($meta_query) ) {
+											array_push($meta_query, [
 												[
 													'key'     => $cleanedKey,
 													'value'   => [$filtervalues],
@@ -395,7 +397,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 												],
 											]);
 										} else {
-											$args['meta_query'] = [
+											$meta_query = [
 												[
 													'key'     => $cleanedKey,
 													'value'   => [$filtervalues],
@@ -424,6 +426,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 			if ( !empty($tax_query) ) {
 				$args['tax_query'] = $tax_query;
 			}
+
+            if ( !empty($meta_query) )  {
+                $args['meta_query'] = $meta_query;
+            }
 		}
 
 		return $args;
@@ -1534,6 +1540,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		// Get Settings
 		$settings = $_POST['grid_settings'];
 
+        // var_dump($this->get_main_query_args());
 		// Get Posts
 		$posts = new \WP_Query( $this->get_main_query_args() );
 
