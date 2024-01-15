@@ -357,6 +357,13 @@ class Plugin {
 			Plugin::instance()->get_version()
 		);
 
+		wp_register_style(
+			'wpr-date-picker-css',
+			WPR_ADDONS_URL . 'assets/css/lib/date-picker/datepicker.min.css',
+			[],
+			Plugin::instance()->get_version()
+		);
+
 		wp_enqueue_style(
 			'wpr-addons-css',
 			WPR_ADDONS_URL . 'assets/css/frontend'. $this->script_suffix() .'.css',
@@ -520,6 +527,16 @@ class Plugin {
 				'jquery',
 			],
 			'3.0.8',
+			true
+		);
+
+		wp_register_script(
+			'wpr-date-picker-js',
+			WPR_ADDONS_URL . 'assets/js/lib/date-picker/datepicker-full.min.js',
+			[
+				'jquery',
+			],
+			'',
 			true
 		);
 
