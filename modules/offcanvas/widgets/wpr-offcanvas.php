@@ -766,6 +766,19 @@ class Wpr_Offcanvas extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'offcanvas_close_icon_bg_color',
+			[
+				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#FFF',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-close-offcanvas' => 'background-color: {{VALUE}};',
+					'.wpr-offcanvas-wrap-{{ID}} .wpr-close-offcanvas' => 'background-color: {{VALUE}};'
+				],
+			]
+		);
+
 		$this->add_responsive_control(
 			'offcanvas_close_icon_font_size',
 			[
@@ -789,6 +802,48 @@ class Wpr_Offcanvas extends Widget_Base {
 					'.wpr-offcanvas-wrap-{{ID}} .wpr-close-offcanvas svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};'
 				]
 			]
+		);
+
+		$this->add_responsive_control(
+			'offcanvas_close_icon_box_size',
+			[
+				'label' => esc_html__( 'Box Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', ],
+				'range' => [
+					'px' => [
+						'min' => 5,
+						'max' => 50,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 12,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-close-offcanvas' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+					'.wpr-offcanvas-wrap-{{ID}} .wpr-close-offcanvas' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};'
+				]
+			]
+		);
+	
+		$this->add_responsive_control(
+				'offcanvas_close_icon_border_radius',
+				[
+					'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+					'type' => Controls_Manager::DIMENSIONS,
+					'size_units' => [ 'px', '%' ],
+					'default' => [
+						'top' => 2,
+						'right' => 2,
+						'bottom' => 2,
+						'left' => 2,
+					],
+					'selectors' => [
+						'{{WRAPPER}} .wpr-close-offcanvas' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+						'.wpr-offcanvas-wrap-{{ID}} .wpr-close-offcanvas' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+					]
+				]
 		);
 
 		$this->add_control(
