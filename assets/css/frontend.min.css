@@ -16861,7 +16861,8 @@ dl.variation dd {
     margin: 5px;
 }
 
-.wpr-gf-visual-active {
+.wpr-gf-visual-active,
+img.wpr-gf-visual-active {
     border: 2px solid fuchsia;
 }
 
