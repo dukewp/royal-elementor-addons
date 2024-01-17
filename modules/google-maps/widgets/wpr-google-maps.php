@@ -519,6 +519,7 @@ class Wpr_Google_Maps extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-google-map .gm-style-iw-d' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-google-map .gm-style-iw-t:after' => 'background: {{VALUE}}',
+					'{{WRAPPER}} .wpr-google-map .gm-style-iw-tc:after' => 'background: {{VALUE}}'
 				],
 			]
 		);
