@@ -8638,11 +8638,11 @@ class Wpr_Woo_Grid extends Widget_Base {
 				$args['orderby']  = 'meta_value_num';
 			} elseif ( 'price' === $_GET['orderby'] ) {
 				$args['meta_key'] = '_price';
-				$args['order'] = $settings['order_direction'];
+				$args['order'] = 'ASC';
 				$args['orderby']  = 'meta_value_num';
 			} elseif ( 'price-desc' === $_GET['orderby'] ) {
 				$args['meta_key'] = '_price';
-				$args['order'] = $settings['order_direction'];
+				$args['order'] = 'DESC';
 				$args['orderby']  = 'meta_value_num';
 			} elseif ( 'random' === $_GET['orderby'] ) {
 				$args['orderby']  = 'rand';
@@ -8650,10 +8650,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 				$args['orderby']  = 'date';
 			} else if ( 'title' === $_GET['orderby'] ){
 				$args['orderby']  = 'title';
-				$args['order'] = $settings['order_direction'];
+				$args['order'] = 'ASC';
 			} else if ( 'title-desc' === $_GET['orderby'] ) {
 				$args['orderby']  = 'title';
-				$args['order'] = $settings['order_direction'];
+				$args['order'] = 'DESC';
 			} else {
 				$args['order'] = $settings['order_direction'];
 				$args['orderby']  = 'menu_order';

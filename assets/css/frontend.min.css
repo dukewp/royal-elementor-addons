@@ -13902,6 +13902,7 @@ flex-grow: 0; */
   /* override twenty-twentyone margins */
 
 .wpr-table-inner-container {
+    overflow-y: auto;
     overflow-x: auto;
 }
 
