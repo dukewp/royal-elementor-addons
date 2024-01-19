@@ -13992,8 +13992,10 @@ flex-grow: 0; */
   /* override twenty-twentyone margins */
 
 .wpr-table-inner-container {
-    overflow-y: auto;
+    transform: translate3d(0, 0, 0);
     overflow-x: auto;
+	touch-action: pan-x;
+    -webkit-overflow-scrolling: touch;
 }
 
 .wpr-hide-table-before-arrange,
