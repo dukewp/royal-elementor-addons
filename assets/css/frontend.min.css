@@ -2363,6 +2363,7 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
 .wpr-grid-image-wrap img {
     display: block;
     width: 100%;
+    border-radius: inherit;
 }
 
 .wpr-grid-media-hover {
@@ -13134,6 +13135,10 @@ select.wpr-category-select {
     padding-bottom: 100%;
     width: 100%;
  }
+
+.wpr-insta-feed-image-wrap img {
+    border-radius: inherit;
+}
 
 .wpr-if-square-images-yes .wpr-insta-feed-image-wrap {
     overflow: hidden;
