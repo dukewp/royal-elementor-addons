@@ -2852,7 +2852,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 	public function render_pro_element_slider_scroll_btn() {}
 
 	protected function render() {
-		$settings = $this->get_settings();
+		$settings = $this->get_settings_for_display();
 		$slider_html = '';
 		$item_count = 0;
 
@@ -2890,12 +2890,12 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				}
 
 				$item_type = $item['slider_item_link_type'];
-				$item_url = $item['slider_item_bg_image_url']['url'];
+				$item_url = isset($item['slider_item_bg_image_url']) ? $item['slider_item_bg_image_url']['url'] : '';
 				$btn_url_1 = $item['slider_item_btn_url_1']['url'];
 				$btn_element_1 = 'div';
 				$btn_attribute_1 = '';
 				$icon_html_1 = $item['slider_item_btn_text_1'];
-				$btn_url_2 = $item['slider_item_btn_url_2']['url'];
+				$btn_url_2 = isset($item['slider_item_btn_url_2']) ? $item['slider_item_btn_url_2']['url'] : '';
 				$btn_element_2 = 'div';
 				$btn_attribute_2 = '';
 				$icon_html_2 = $item['slider_item_btn_text_2'];
@@ -2920,7 +2920,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 					$icon_html_1 .= ob_get_clean();
 				}
 
-				if ( '' !== $item['slider_item_btn_icon_2']['value'] ) {
+				if ( isset($item['slider_item_btn_icon_2']) && '' !== $item['slider_item_btn_icon_2']['value'] ) { // me vpikrob es jobia ak - isset($item['slider_item_btn_icon_2']['value']
 					ob_start();
 					Icons_Manager::render_icon( $item['slider_item_btn_icon_2'], [ 'aria-hidden' => 'true' ] );
 					$icon_html_2 .= ob_get_clean();	

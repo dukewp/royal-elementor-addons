@@ -746,6 +746,7 @@ function wpr_addons_settings_page() {
                     <span><?php esc_html_e( 'reCAPTCHA Site Key', 'wpr-addons' ); ?></span>
                     <br>
                     <a href="https://www.google.com/recaptcha/intro/v3.html" target="_blank"><?php esc_html_e( 'How to get reCAPTCHA Site Key?', 'wpr-addons' ); ?></a>
+                    <p class="wpr-settings-group-description"><?php esc_html_e( 'Add a recaptcha element in Form Builder fields to make it work.', 'wpr-addons' ); ?></p>
                 </h4>
 
                 <input type="text" name="wpr_recaptcha_v3_site_key" id="wpr_recaptcha_v3_site_key" value="<?php echo esc_attr(get_option('wpr_recaptcha_v3_site_key')); ?>">
