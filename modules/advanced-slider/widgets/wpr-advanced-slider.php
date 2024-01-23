@@ -2920,7 +2920,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 					$icon_html_1 .= ob_get_clean();
 				}
 
-				if ( '' !== $item['slider_item_btn_icon_2']['value'] ) { // me vpikrob es jobia ak - isset($item['slider_item_btn_icon_2']['value']
+				if ( isset($item['slider_item_btn_icon_2']) && '' !== $item['slider_item_btn_icon_2']['value'] ) { // me vpikrob es jobia ak - isset($item['slider_item_btn_icon_2']['value']
 					ob_start();
 					Icons_Manager::render_icon( $item['slider_item_btn_icon_2'], [ 'aria-hidden' => 'true' ] );
 					$icon_html_2 .= ob_get_clean();	
