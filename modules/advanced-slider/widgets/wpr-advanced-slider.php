@@ -2852,7 +2852,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 	public function render_pro_element_slider_scroll_btn() {}
 
 	protected function render() {
-		$settings = $this->get_settings();
+		$settings = $this->get_settings_for_display();
 		$slider_html = '';
 		$item_count = 0;
 
@@ -2890,7 +2890,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				}
 
 				$item_type = $item['slider_item_link_type'];
-				$item_url = $item['slider_item_bg_image_url']['url'];
+				$item_url = isset($item['slider_item_bg_image_url']) ? $item['slider_item_bg_image_url']['url'] : '';
 				$btn_url_1 = $item['slider_item_btn_url_1']['url'];
 				$btn_element_1 = 'div';
 				$btn_attribute_1 = '';
