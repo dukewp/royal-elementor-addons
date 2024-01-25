@@ -2749,7 +2749,6 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
 }
 
 /* Product Rating */
-
 .wpr-woo-rating i {
     display: inline;
     position: relative;
@@ -2783,53 +2782,79 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     display: none !important;
 }
 
-.wpr-rating-icon-0:before {
+.wpr-rating-icon-0:before,
+.wpr-rating-icon-0 .wpr-rating-marked {
     width: 0;
 }
 
-.wpr-rating-icon-1:before {
-    width: 10%;
-}
-
-.wpr-rating-icon-2:before {
+.wpr-rating-icon-1:before,
+.wpr-rating-icon-1 .wpr-rating-marked {
     width: 20%;
 }
 
-.wpr-rating-icon-3:before {
+.wpr-rating-icon-2:before,
+.wpr-rating-icon-2 .wpr-rating-marked {
     width: 30%;
 }
 
-.wpr-rating-icon-4:before {
+.wpr-rating-icon-3:before,
+.wpr-rating-icon-3 .wpr-rating-marked {
+    width: 35%;
+}
+
+.wpr-rating-icon-4:before,
+.wpr-rating-icon-4 .wpr-rating-marked {
     width: 40%;
 }
 
-.wpr-rating-icon-5:before {
+.wpr-rating-icon-5:before,
+.wpr-rating-icon-5 .wpr-rating-marked {
     width: 50%;
 }
 
-.wpr-rating-icon-6:before {
+.wpr-rating-icon-6:before,
+.wpr-rating-icon-6 .wpr-rating-marked {
     width: 60%;
 }
 
-.wpr-rating-icon-7:before {
+.wpr-rating-icon-7:before,
+.wpr-rating-icon-7 .wpr-rating-marked {
+    width: 65%;
+}
+
+.wpr-rating-icon-8:before,
+.wpr-rating-icon-8 .wpr-rating-marked {
     width: 70%;
 }
 
-.wpr-rating-icon-8:before {
+.wpr-rating-icon-9:before,
+.wpr-rating-icon-9 .wpr-rating-marked {
     width: 80%;
-}
-
-.wpr-rating-icon-9:before {
-    width: 90%;
 }
 
 .wpr-rating-icon-full:before {
     width: 100%;
 }
 
+/* Latest Fix when inline icons are enabled */
+.wpr-rating-icon {
+  position: relative;
+  overflow: hidden;
+}
+
+.wpr-rating-icon .wpr-rating-marked {
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+}
+
+i[class*="wpr-rating-icon-"] {
+    display: inline-flex !important;
+    align-items: center;
+}
+
 
 /* Filters */
-
 .wpr-grid-filters li {
     display: inline-block;
 }
