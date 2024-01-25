@@ -144,7 +144,7 @@ class WPR_Templates_Modal_Popups {
 
 		    		// Close Button
 						echo '<div class="wpr-popup-close-btn"><i class="eicon-close"></i></div>';
-					// if ( \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_font_icon_svg' ) ) {
+					// if ( \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_font_icon_svg' ) ) { // GOGA: why not included
 					// 	echo '<div class="wpr-popup-close-btn"><i class="fa fa-times"></i></div>';
 					// } else {
 					// 	echo '<div class="wpr-popup-close-btn"><i class="eicon-close"></i></div>';
