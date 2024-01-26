@@ -2794,7 +2794,20 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 		$settings = $this->get_settings();
 		$rating_amount = $item['testimonial_rating_amount'];
 		$round_rating = (int)$rating_amount;
+		$rating_icon = '&#xE934;';
         $rating_icon_entity = '&#9733;';
+
+		if ( 'style_1' === $settings['testimonial_rating_style'] ) {
+			if ( 'outline' === $settings['testimonial_unmarked_rating_style'] ) {
+				$rating_icon = '&#xE933;';
+			}
+		} elseif ( 'style_2' === $settings['testimonial_rating_style'] ) {
+			$rating_icon = '&#9733;';
+
+			if ( 'outline' === $settings['testimonial_unmarked_rating_style'] ) {
+				$rating_icon = '&#9734;';
+			}
+		}
 
         if ( 'outline' === $settings['testimonial_unmarked_rating_style'] ) {
             $rating_icon_entity = '&#9734;';
@@ -2805,27 +2818,38 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 			<div class="wpr-testimonial-rating">
 			<?php for( $i = 1; $i <= $settings['testimonial_rating_scale']; $i++ ) : ?>
 
-                <?php if ( 'style_1' === $settings['testimonial_rating_style'] ) : ?>
 
-                    <?php if ( $i <= $rating_amount ) : ?>
-                        <?php $this->render_rating_icon( 'wpr-rating-icon-full' ); ?>
-                    <?php elseif ( $i === $round_rating + 1 && $rating_amount !== $round_rating ) : ?>
-                        <?php $this->render_rating_icon( 'wpr-rating-icon-'. (( $rating_amount - $round_rating ) * 10) ); ?>
-                    <?php else : ?>
-                        <?php $this->render_rating_icon( 'wpr-rating-icon-empty' ); ?>
+                <?php if ( \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_font_icon_svg' ) ) : ?>
+                    <?php if ( 'style_1' === $settings['testimonial_rating_style'] ) : ?>
+
+                        <?php if ( $i <= $rating_amount ) : ?>
+                            <?php $this->render_rating_icon( 'wpr-rating-icon-full' ); ?>
+                        <?php elseif ( $i === $round_rating + 1 && $rating_amount !== $round_rating ) : ?>
+                            <?php $this->render_rating_icon( 'wpr-rating-icon-'. (( $rating_amount - $round_rating ) * 10) ); ?>
+                        <?php else : ?>
+                            <?php $this->render_rating_icon( 'wpr-rating-icon-empty' ); ?>
+                        <?php endif; ?>
+
+                    <?php else: ?>
+
+                        <?php if ( $i <= $rating_amount ) : ?>
+                            <i class="wpr-rating-icon-full"><?php echo esc_html($rating_icon_entity); ?></i>
+                        <?php elseif ( $i === $round_rating + 1 && $rating_amount !== $round_rating ) : ?>
+                            <i class="wpr-rating-icon-<?php echo esc_attr(( $rating_amount - $round_rating ) * 10); ?>"><?php echo esc_html($rating_icon_entity); ?></i>
+                        <?php else : ?>
+                            <i class="wpr-rating-icon-empty"><?php echo esc_html($rating_icon_entity); ?></i>
+                        <?php endif; ?>
+
                     <?php endif; ?>
-
-                <?php else: ?>
-
+                <?php else : ?>
                     <?php if ( $i <= $rating_amount ) : ?>
-                        <i class="wpr-rating-icon-full"><?php echo esc_html($rating_icon_entity); ?></i>
+                        <i class="wpr-rating-icon-full"><?php echo esc_html($rating_icon); ?></i>
                     <?php elseif ( $i === $round_rating + 1 && $rating_amount !== $round_rating ) : ?>
-                        <i class="wpr-rating-icon-<?php echo esc_attr(( $rating_amount - $round_rating ) * 10); ?>"><?php echo esc_html($rating_icon_entity); ?></i>
+                        <i class="wpr-rating-icon-<?php echo esc_attr(( $rating_amount - $round_rating ) * 10); ?>"><?php echo esc_html($rating_icon); ?></i>
                     <?php else : ?>
-                        <i class="wpr-rating-icon-empty"><?php echo esc_html($rating_icon_entity); ?></i>
+                        <i class="wpr-rating-icon-empty"><?php echo esc_html($rating_icon); ?></i>
                     <?php endif; ?>
-
-				<?php endif; ?>
+                <?php endif; ?>
 
 
 	     	<?php endfor; ?>
