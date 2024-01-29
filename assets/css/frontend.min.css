@@ -13937,6 +13937,13 @@ flex-grow: 0; */
     z-index: 999 !important;
 }
 
+.wpr-hidden-header-flex {
+    position: fixed;
+    display: flex !important;
+    width: 100%;
+    z-index: 999 !important;
+}
+
 .wpr-none-out {
     display: none;
 }
@@ -17521,6 +17528,9 @@ img.wpr-gf-visual-active {
 
 .wpr-offcanvas-trigger {
     display: inline-block;
+    /* display: inline-flex;
+    justify-content: center;
+    align-items: center; */
 }
 
 .wpr-offcanvas-container {
