@@ -13811,6 +13811,13 @@ flex-grow: 0; */
     z-index: 999 !important;
 }
 
+.wpr-hidden-header-flex {
+    position: fixed;
+    display: flex !important;
+    width: 100%;
+    z-index: 999 !important;
+}
+
 .wpr-none-out {
     display: none;
 }
