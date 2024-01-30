@@ -23,6 +23,12 @@ if ( ! defined( 'ABSPATH' ) ) {
     
     // In your PHP file
     public function wpr_update_form_action_meta() {
+        $nonce = $_POST['nonce'];
+
+        if ( !wp_verify_nonce( $nonce, 'wpr-addons-js' ) ) {
+          return; // Get out of here, the nonce is rotten!
+        }
+
         $post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
         $action_name = isset($_POST['action_name']) ? sanitize_text_field($_POST['action_name']) : '';
         $status = isset($_POST['status']) ? sanitize_text_field($_POST['status']) : '';

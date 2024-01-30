@@ -3061,7 +3061,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 					// Slider Link Type
 					if ( ! empty( $item_url ) && $item_type === 'custom' ) {
 
-						$this->add_render_attribute( 'slider_item_url'. $item_count, 'href', $item_url );
+						$this->add_render_attribute( 'slider_item_url'. $item_count, 'href', esc_url($item_url) );
 
 						if ( $item['slider_item_bg_image_url']['is_external'] ) {
 							$this->add_render_attribute( 'slider_item_url'. $item_count, 'target', '_blank' );
@@ -3125,7 +3125,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 									
 									$btn_element_1 = 'a';
 
-									$this->add_render_attribute( 'primary_btn_url'. $item_count, 'href', $btn_url_1 );
+									$this->add_render_attribute( 'primary_btn_url'. $item_count, 'href', esc_url($btn_url_1) );
 
 									if ( $item['slider_item_btn_url_1']['is_external'] ) {
 										$this->add_render_attribute( 'primary_btn_url'. $item_count, 'target', '_blank' );
@@ -3143,7 +3143,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 									
 									$btn_element_2 = 'a';
 
-									$this->add_render_attribute( 'secondary_btn_url'. $item_count, 'href', $btn_url_2 );
+									$this->add_render_attribute( 'secondary_btn_url'. $item_count, 'href', esc_url($btn_url_2) );
 
 									if ( $item['slider_item_btn_url_2']['is_external'] ) {
 										$this->add_render_attribute( 'secondary_btn_url'. $item_count, 'target', '_blank' );
