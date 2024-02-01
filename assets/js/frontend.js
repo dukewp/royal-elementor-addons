@@ -2707,10 +2707,10 @@
 
 						$.ajax({
 							url: WprConfig.ajaxurl,
-                            nonce: WprConfig.nonce,
 							type: 'POST',
 							data: {
-								action: 'add_to_compare',
+                                action: 'add_to_compare',
+                                nonce: WprConfig.nonce,
 								product_id: product_id
 							},
 							success: function() {
@@ -2792,10 +2792,10 @@
 
 						$.ajax({
 							url: WprConfig.ajaxurl,
-                            nonce: WprConfig.nonce,
 							type: 'POST',
 							data: {
-								action: 'remove_from_compare',
+                                action: 'remove_from_compare',
+                                nonce: WprConfig.nonce,
 								product_id: product_id
 							},
 							success: function() {
@@ -2829,10 +2829,10 @@
 
 						$.ajax({
 							url: WprConfig.ajaxurl,
-                            nonce: WprConfig.nonce,
 							type: 'POST',
 							data: {
-								action: 'add_to_wishlist',
+                                action: 'add_to_wishlist',
+                                nonce: WprConfig.nonce,
 								product_id: product_id
 							},
 							success: function() {
@@ -2918,10 +2918,10 @@
 
 						$.ajax({
 							url: WprConfig.ajaxurl,
-                            nonce: WprConfig.nonce,
 							type: 'POST',
 							data: {
-								action: 'remove_from_wishlist',
+                                action: 'remove_from_wishlist',
+                                nonce: WprConfig.nonce,
 								product_id: product_id
 							},
 							success: function() {
@@ -8059,10 +8059,10 @@
 
 				$.ajax({
 					url: WprConfig.ajaxurl,
-                    nonce: WprConfig.nonce,
 					type: 'POST',
 					data: {
-						action: 'remove_from_wishlist',
+                        action: 'remove_from_wishlist',
+                        nonce: WprConfig.nonce,
 						product_id: product_id
 					},
 					success: function(response) {
@@ -8126,10 +8126,10 @@
 	
 					$.ajax({
 						url: WprConfig.ajaxurl,
-                        nonce: WprConfig.nonce,
 						type: 'POST',
 						data: {
-							action: 'add_to_wishlist',
+                            action: 'add_to_wishlist',
+                            nonce: WprConfig.nonce,
 							product_id: product_id
 						},
 						success: function() {
@@ -8154,10 +8154,10 @@
 
 					$.ajax({
 						url: WprConfig.ajaxurl,
-                        nonce: WprConfig.nonce,
 						type: 'POST',
 						data: {
-							action: 'remove_from_wishlist',
+                            action: 'remove_from_wishlist',
+                            nonce: WprConfig.nonce,
 							product_id: product_id
 						},
 						success: function() {
@@ -8209,10 +8209,10 @@
 
 					$.ajax({
 						url: WprConfig.ajaxurl,
-                        nonce: WprConfig.nonce,
 						type: 'POST',
 						data: {
-							action: 'add_to_compare',
+                            action: 'add_to_compare',
+                            nonce: WprConfig.nonce,
 							product_id: product_id
 						},
 						success: function() {
@@ -8237,10 +8237,10 @@
 
 					$.ajax({
 						url: WprConfig.ajaxurl,
-                        nonce: WprConfig.nonce,
 						type: 'POST',
 						data: {
-							action: 'remove_from_compare',
+                            action: 'remove_from_compare',
+                            nonce: WprConfig.nonce,
 							product_id: product_id
 						},
 						success: function() {
@@ -8312,8 +8312,8 @@
 						url: WprConfig.ajaxurl,
 						type: 'POST',
 						data: {
+                            action: 'wpr_get_page_content',
 							nonce: WprConfig.nonce,
-							action: 'wpr_get_page_content',
 							wpr_compare_page_id: WprConfig.comparePageID
 						},
 						success: function(response) {
@@ -8326,10 +8326,10 @@
 							
 								$.ajax({
 									url: WprConfig.ajaxurl,
-                                    nonce: WprConfig.nonce,
 									type: 'POST',
 									data: {
-										action: 'remove_from_compare',
+                                        action: 'remove_from_compare',
+                                        nonce: WprConfig.nonce,
 										product_id: productID
 									},
 									success: function() {
@@ -8462,10 +8462,10 @@
 			
 				$.ajax({
 					url: WprConfig.ajaxurl,
-                    nonce: WprConfig.nonce,
 					type: 'POST',
 					data: {
-						action: 'remove_from_compare',
+                        action: 'remove_from_compare',
+                        nonce: WprConfig.nonce,
 						product_id: productID
 					},
 					success: function() {
@@ -8713,6 +8713,7 @@
 										
 										if (response && response.data.status === 'success') {
 											responsesArray.push('success');
+
 											if (postId) {
 												return updateFormActionMeta(postId, action, 'success', message);
 											}
@@ -8769,9 +8770,9 @@
 					return $.ajax({
 						type: 'POST',
 						url: WprConfig.ajaxurl,
-                        nonce: WprConfig.nonce,
 						data: {
-							action: 'wpr_update_form_action_meta',
+                            action: 'wpr_update_form_action_meta',
+                            nonce: WprConfig.nonce,
 							post_id: postId,
 							action_name: actionName,
 							status: status,
@@ -9456,10 +9457,10 @@
 					var product_id = $(this).data('product-id');
 					$.ajax({
 						url: WprConfig.ajaxurl,
-                        nonce: WprConfig.nonce,
 						type: 'POST',
 						data: {
-							action: 'remove_from_wishlist',
+                            action: 'remove_from_wishlist',
+                            nonce: WprConfig.nonce,
 							product_id: product_id
 						},
 						success: function() {
@@ -9860,10 +9861,10 @@
 					var product_id = $(this).data('product-id');
 					$.ajax({
 						url: WprConfig.ajaxurl,
-                        nonce: WprConfig.nonce,
 						type: 'POST',
 						data: {
-							action: 'remove_from_wishlist',
+                            action: 'remove_from_wishlist',
+                            nonce: WprConfig.nonce,
 							product_id: product_id,
 						},
 						success: function() {
