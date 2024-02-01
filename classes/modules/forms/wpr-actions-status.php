@@ -39,7 +39,14 @@ if ( ! defined( 'ABSPATH' ) ) {
             'message' => $message
         ];
 
-        if ($post_id && $action_name && $status) {
+        $actions_whitelist = [
+            'wpr_form_builder_email',
+            'wpr_form_builder_submissions',
+            'wpr_form_builder_mailchimp',
+            'wpr_form_builder_webhook'
+        ];
+
+        if ($post_id && $action_name && $status && in_array($action_name, $actions_whitelist)) {
             update_post_meta($post_id, '_action_' . $action_name, $meta_value);
             wp_send_json_success('Post meta updated successfully');
         } else {
