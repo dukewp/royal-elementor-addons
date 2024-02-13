@@ -945,6 +945,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-slider' => 'height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-slider-item' => 'height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .slick-list' => 'height: {{SIZE}}{{UNIT}};'
 				],
 				'separator' => 'before',
 				'condition' => [
