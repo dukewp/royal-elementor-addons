@@ -47,6 +47,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$max_num_pages = intval( ceil( $query->max_num_pages ) );
 
         wp_send_json_success([
+            'page_count' => $max_num_pages,
             'max_num_pages' => $max_num_pages,
             'query_found' => $query->found_posts,
             'query_offset' => $query->query_vars['offset'],
