@@ -6430,6 +6430,7 @@ class Wpr_Grid extends Widget_Base {
 					'{{WRAPPER}} .wpr-chasing-dots .wpr-child' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-three-bounce .wpr-child' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-fading-circle .wpr-circle:before' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .lds-ring div' => 'border-color: {{VALUE}}  transparent transparent transparent',
 				],
 				'condition' => [
 					'pagination_type' => [ 'load-more', 'infinite-scroll' ]
