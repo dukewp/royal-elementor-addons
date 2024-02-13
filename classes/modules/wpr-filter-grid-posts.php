@@ -45,17 +45,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 	public function get_max_num_pages( $settings ) {
 		$query = new \WP_Query( $this->get_main_query_args() );
 		$max_num_pages = intval( ceil( $query->max_num_pages ) );
+        
+        $adjustedTotalPosts = max(0, $query->found_posts - $query->query_vars['offset']); // Ensuring it doesn't go below 0
+        $numberOfPages = ceil($adjustedTotalPosts / $query->query_vars['posts_per_page']);
 
         wp_send_json_success([
-            'page_count' => $max_num_pages,
+            'page_count' => $numberOfPages,
             'max_num_pages' => $max_num_pages,
             'query_found' => $query->found_posts,
             'query_offset' => $query->query_vars['offset'],
             'query_num' => $query->query_vars['posts_per_page']
         ]);
-        
-        $adjustedTotalPosts = max(0, $query->found_posts - $query->query_vars['offset']); // Ensuring it doesn't go below 0
-        $numberOfPages = ceil($adjustedTotalPosts / $query->query_vars['posts_per_page']);
 
 		// Reset
 		wp_reset_postdata();
