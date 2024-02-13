@@ -771,7 +771,6 @@ class Wpr_Offcanvas extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#FFF',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-close-offcanvas' => 'background-color: {{VALUE}};',
 					'.wpr-offcanvas-wrap-{{ID}} .wpr-close-offcanvas' => 'background-color: {{VALUE}};'
