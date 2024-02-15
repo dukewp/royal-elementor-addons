@@ -2323,6 +2323,9 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     float: left;
     position: relative;
     text-align: center;
+}
+
+.wpr-grid-item.post {
     margin: 0;
 }
 
