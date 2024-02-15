@@ -10246,11 +10246,11 @@ select.wpr-category-select {
   == Flip Box
   --------------------------------------------------------------*/
 
-  .elementor-widget-wpr-flip-box {
-    -webkit-box-flex: 1;
-        -ms-flex: 1;
-            flex: 1;
-  }
+.e-con-inner .elementor-widget-wpr-flip-box {
+-webkit-box-flex: 1;
+    -ms-flex: 1;
+        flex: 1;
+}
 
 .wpr-flip-box {
     position: relative;
