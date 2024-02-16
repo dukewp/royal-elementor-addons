@@ -380,6 +380,7 @@ template {
   
 
 .lg-outer { 
+  direction: ltr;
   z-index: 999999 !important;
 }
 
@@ -2445,7 +2446,10 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     float: left;
     position: relative;
     text-align: center;
-    /* background-color: dodgerblue; */
+}
+
+.wpr-grid-item.post {
+    margin: 0;
 }
 
 .wpr-grid-item.post {
