@@ -15170,6 +15170,13 @@ ul.wpr-woo-mini-cart {
             animation-fill-mode: forwards;  
 }
 
+.wpr-inline-svg,
+.wpr-mini-cart-btn-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .wpr-mini-cart-btn-icon i {
     position: relative;
 }
@@ -15203,6 +15210,11 @@ ul.wpr-woo-mini-cart {
 
 .wpr-toggle-icon-none .wpr-mini-cart-btn-icon i::before {
     content: "";
+}
+
+.wpr-mini-cart-btn-icon .wpr-inline-svg::before {
+    content: "" !important;
+    font-style: normal;
 }
 
 .wpr-toggle-icon-bag-light .wpr-mini-cart-btn-icon i::before {
