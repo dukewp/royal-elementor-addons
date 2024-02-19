@@ -14972,6 +14972,13 @@ ul.wpr-woo-mini-cart {
     display: inline-block;
 }
 
+.wpr-mini-cart-inner,
+.wpr-mini-cart-toggle-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .wpr-mini-cart {
     position: absolute;
     display: none;
@@ -15175,6 +15182,11 @@ ul.wpr-woo-mini-cart {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.wpr-mini-cart-btn-icon svg {
+    width: 18px;
+    height: 18px;
 }
 
 .wpr-mini-cart-btn-icon i {
