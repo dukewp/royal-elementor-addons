@@ -86,52 +86,28 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 			]
 		);
 
-		if ( \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_font_icon_svg' ) ) {
-			$this->add_control(
-				'select_icon',
-				[
-					'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
-					'type' => Controls_Manager::SELECT,
-					'options' => [
-						'none' => esc_html__( 'None', 'wpr-addons' ),
-						'cart-light' => esc_html__( 'Cart Light', 'wpr-addons' ),
-						'cart-medium' => esc_html__( 'Cart Medium', 'wpr-addons' ),
-						'cart-solid' => esc_html__( 'Cart Solid', 'wpr-addons' ),
-						'basket-light' => esc_html__( 'Basket Light', 'wpr-addons' ),
-						'basket-medium' => esc_html__( 'Basket Medium', 'wpr-addons' ),
-						'basket-solid' => esc_html__( 'Basket Solid', 'wpr-addons' ),
-						'bag-light' => esc_html__( 'Bag Light', 'wpr-addons' ),
-						'bag-medium' => esc_html__( 'Bag Medium', 'wpr-addons' ),
-						'bag-solid' => esc_html__( 'Bag Solid', 'wpr-addons' )
-					],
-                    'render_type' => 'template',
-					'default' => 'cart-medium',
-					'prefix_class' => 'wpr-toggle-icon-',
-				]
-			);
-		} else {
-			$this->add_control(
-				'icon',
-				[
-					'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
-					'type' => Controls_Manager::SELECT,
-					'options' => [
-						'none' => esc_html__( 'None', 'wpr-addons' ),
-						'cart-light' => esc_html__( 'Cart Light', 'wpr-addons' ),
-						'cart-medium' => esc_html__( 'Cart Medium', 'wpr-addons' ),
-						'cart-solid' => esc_html__( 'Cart Solid', 'wpr-addons' ),
-						'basket-light' => esc_html__( 'Basket Light', 'wpr-addons' ),
-						'basket-medium' => esc_html__( 'Basket Medium', 'wpr-addons' ),
-						'basket-solid' => esc_html__( 'Basket Solid', 'wpr-addons' ),
-						'bag-light' => esc_html__( 'Bag Light', 'wpr-addons' ),
-						'bag-medium' => esc_html__( 'Bag Medium', 'wpr-addons' ),
-						'bag-solid' => esc_html__( 'Bag Solid', 'wpr-addons' )
-					],
-					'default' => 'cart-medium',
-					'prefix_class' => 'wpr-toggle-icon-',
-				]
-			);
-		}
+        $this->add_control(
+            'icon',
+            [
+                'label' => esc_html__( 'Select Icon', 'wpr-addons' ),
+                'type' => Controls_Manager::SELECT,
+                'options' => [
+                    'none' => esc_html__( 'None', 'wpr-addons' ),
+                    'cart-light' => esc_html__( 'Cart Light', 'wpr-addons' ),
+                    'cart-medium' => esc_html__( 'Cart Medium', 'wpr-addons' ),
+                    'cart-solid' => esc_html__( 'Cart Solid', 'wpr-addons' ),
+                    'basket-light' => esc_html__( 'Basket Light', 'wpr-addons' ),
+                    'basket-medium' => esc_html__( 'Basket Medium', 'wpr-addons' ),
+                    'basket-solid' => esc_html__( 'Basket Solid', 'wpr-addons' ),
+                    'bag-light' => esc_html__( 'Bag Light', 'wpr-addons' ),
+                    'bag-medium' => esc_html__( 'Bag Medium', 'wpr-addons' ),
+                    'bag-solid' => esc_html__( 'Bag Solid', 'wpr-addons' )
+                ],
+                'render_type' => 'template',
+                'default' => 'cart-medium',
+                'prefix_class' => 'wpr-toggle-icon-',
+            ]
+        );
 
 		$this->add_control(
 			'toggle_text',
@@ -580,7 +556,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
         ];
     
         // Get the selected icon from the widget settings
-        $selected_icon = $settings['select_icon'];
+        $selected_icon = $settings['icon'];
     
         // Check if the selected icon exists in the SVG icons array
         if ( array_key_exists( $selected_icon, $svg_icons ) ) {
@@ -599,7 +575,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 		$sub_total = WC()->cart->get_cart_subtotal();
 		$counter_attr = 'data-counter="' . $product_count . '"';
 		if ( \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_font_icon_svg' ) ) {
-			$icon_class = $settings['select_icon']  . ' wpr-inline-svg';
+			$icon_class = $settings['icon']  . ' wpr-inline-svg';
 		} else {
 			$icon_class = 'eicon';
 		}
