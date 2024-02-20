@@ -55,6 +55,20 @@ class WPR_Templates_Data {
 					'priority' => 50,
 				],
 			],
+			'amazon-landing-page' => [
+				'v1' => [
+					'name' => 'Amazon Product Landing Page',
+					'pages' => 'home,',
+					'plugins' => '{}',
+					'tags' => 'amazon product sale coupon free page landing page one page onepage landingpage marketing promotion landing page for amazon single product digital product coupon',
+					'theme-builder' => true,
+					'woo-builder' => false,
+					'off-canvas' => false,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'label' => 'new',
+					'priority' => 50,
+				],
+			],
 			'coming-soon-pack' => [
 				'v1' => [
 					'name' => 'Coming Soon Pack',
@@ -270,7 +284,7 @@ class WPR_Templates_Data {
 			],
 			'wooshop' => [
 				'v1' => [
-					'name' => 'Woo Shop',
+					'name' => 'Woo Shop V1',
 					'pages' => 'home,shop,single-product,about,contact,',
 					'plugins' => '{"woocommerce":'. $is_woo_active .'}',
 					'tags' => 'free shop shopping woo-commerce woocommerce estore ecommerce shop ecommerce product online shop online store boutique clothes eshopping fashion designer market reseller digital purchases e commerce',
@@ -280,6 +294,20 @@ class WPR_Templates_Data {
 					'price' => $is_pro_active ? 'free' : 'free',
 					'label' => '',
 					'priority' => 3,
+				],
+			],
+			'shop-wooshop' => [
+				'v2' => [
+					'name' => 'Woo Shop V2',
+					'pages' => 'home,shop,single-product,about,cart,contact,',
+					'plugins' => '{"woocommerce":'. $is_woo_active .'}',
+					'tags' => 'free shop shopping woo-commerce woocommerce estore ecommerce shop ecommerce product online shop online store boutique clothes eshopping fashion designer market reseller digital purchases e commerce',
+					'theme-builder' => true,
+					'woo-builder' => true,
+					'off-canvas' => false,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'label' => 'New',
+					'priority' => 4,
 				],
 			],
 			'woo-auto-parts' => [
@@ -499,6 +527,20 @@ class WPR_Templates_Data {
 					'pages' => 'home,about,services,appointment,blog,contact,',
 					'plugins' => '{}',
 					'tags' => 'free homecare medication management medical elderly home assisted living facility elder home elder care old age home elders care retirement home health healthcare senior living old care senior living senior care services retirement home eldery care hospital nurse retire',
+					'theme-builder' => true,
+					'woo-builder' => false,
+					'off-canvas' => true,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'label' => 'new',
+					'priority' => 200,
+				],
+			],
+			'designer-bio' => [
+				'v1' => [
+					'name' => 'Designer Bio V1',
+					'pages' => 'home,',
+					'plugins' => '{}',
+					'tags' => 'free portfolio personal cv designer ux artist artwork personal resume photographer grid one page onepage clean creative freelanceer vcard',
 					'theme-builder' => true,
 					'woo-builder' => false,
 					'off-canvas' => true,
@@ -1031,6 +1073,20 @@ class WPR_Templates_Data {
 					'priority' => 260,
 				],
 			],
+			'aimatrix' => [
+				'v1' => [
+					'name' => 'AI Matrix - Data, Machines & AI ',
+					'pages' => 'home,about,features,resources,case-study,contact,',
+					'plugins' => '{}',
+					'tags' => 'free data analysis machine learning ai automation algorithm autonomous processing artificial intelligence science generative quantum neuromorphic technology servers web IT tech crypto cyber ittech advanced technology it technique computer windows technician digital calculations computing digital chat gpt chatgpt bard gemini application',
+					'theme-builder' => true,
+					'woo-builder' => false,
+					'off-canvas' => true,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'label' => 'new',
+					'priority' => 261,
+				],
+			],
 			'carwash' => [
 				'v1' => [
 					'name' => 'Car Wash',
@@ -1455,6 +1511,12 @@ class WPR_Templates_Data {
 				'pages' => ['home','about','services','pricing','contact'],
 				'preview' => ['home','about-us','services','pricing','contact'],
 				'price' => $is_pro_active ? 'free' : 'pro',
+			],
+			'developer-portfolio-v1' => [
+				'name' => 'Developer Portfolio - v1',
+				'pages' => ['home','portfolio','about','services','resume','contact'],
+				'preview' => ['home','portfolio','about','services','resume','contact'],
+				'price' => $is_pro_active ? 'free' : 'free',
 			],
 			'medical-v1' => [
 				'name' => 'Medical',

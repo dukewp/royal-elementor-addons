@@ -15101,6 +15101,19 @@ ul.wpr-woo-mini-cart {
     display: inline-block;
 }
 
+.wpr-mini-cart-inner,
+.wpr-mini-cart-toggle-wrap {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+
 .wpr-mini-cart {
     position: absolute;
     display: none;
@@ -15299,6 +15312,24 @@ ul.wpr-woo-mini-cart {
             animation-fill-mode: forwards;  
 }
 
+.wpr-inline-svg,
+.wpr-mini-cart-btn-icon {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+
+.wpr-mini-cart-btn-icon svg {
+    width: 18px;
+    height: 18px;
+}
+
 .wpr-mini-cart-btn-icon i {
     position: relative;
 }
@@ -15332,6 +15363,11 @@ ul.wpr-woo-mini-cart {
 
 .wpr-toggle-icon-none .wpr-mini-cart-btn-icon i::before {
     content: "";
+}
+
+.wpr-mini-cart-btn-icon .wpr-inline-svg::before {
+    content: "" !important;
+    font-style: normal;
 }
 
 .wpr-toggle-icon-bag-light .wpr-mini-cart-btn-icon i::before {
