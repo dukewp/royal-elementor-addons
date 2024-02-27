@@ -162,6 +162,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				'tmp',
 				'cgi',
 				'svg',
+        'svgz'
 			];
 		}
 
