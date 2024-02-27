@@ -68,7 +68,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	public function get_main_query_args() {
 		$settings = $_POST['grid_settings'];
 		$taxonomy = $_POST['wpr_taxonomy'];
-        $term = $_POST['wpr_filter'];
+    $term = $_POST['wpr_filter'];
 		$tax_query = [];
 		$author = ! empty( $settings[ 'query_author' ] ) ? implode( ',', $settings[ 'query_author' ] ) : '';
 
