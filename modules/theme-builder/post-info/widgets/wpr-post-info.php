@@ -1241,7 +1241,7 @@ class Wpr_Post_Info extends Widget_Base {
 
 	// Extra Icon & Text 
 	public function render_extra_icon_text( $settings ) {
-		if ( '' !== $settings['post_info_extra_icon'] || '' !== $settings['post_info_extra_text'] ) {
+		if ( ( isset( $settings['post_info_extra_icon'] ) && '' !== $settings['post_info_extra_icon']['value'] ) || '' !== $settings['post_info_extra_text'] ) {
 			echo '<span class="wpr-post-info-text">';
 				// Extra Icon
 				if ( '' !== $settings['post_info_extra_icon'] ) {
