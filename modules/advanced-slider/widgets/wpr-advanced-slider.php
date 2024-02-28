@@ -2945,7 +2945,9 @@ class Wpr_Advanced_Slider extends Widget_Base {
 						
 						preg_match('![?&]{1}v=([^&]+)!', $item_video_src, $item_video_id );
 
-						$item_bg_image_url = 'https://i.ytimg.com/vi_webp/'. $item_video_id[1] .'/maxresdefault.webp';
+            if ( empty($item_bg_image_url) ) {
+              $item_bg_image_url = 'https://i.ytimg.com/vi_webp/'. $item_video_id[1] .'/maxresdefault.webp';
+            }
 						
 						if ( 'yes' === $item['slider_item_video_autoplay'] ) {
 							// GOGA - if there is no way to autoplay with api we need mute=1 for this purpose
