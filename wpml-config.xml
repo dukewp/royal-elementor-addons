@@ -1,4 +1,8 @@
 <wpml-config>
+    <custom-types>
+        <custom-type translate="1">wpr_templates</custom-type>
+    </custom-types>
+    
     <elementor-widgets>
 
         <widget name="wpr-advanced-accordion">
