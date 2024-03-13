@@ -15,6 +15,23 @@
             </fields>
         </widget>
 
+        <widget name="wpr-advanced-slider">
+            <fields-in-item items_of="slider_items">
+                <field name="Advanced Slider: Custom URL" editor_type="LINE" key_of="slider_item_bg_image_url">url</field>
+                <field name="Advanced Slider: Video URL" editor_type="LINE" key_of="slider_item_video_src">url</field>
+                <field name="Advanced Slider: Title" editor_type="LINE">slider_item_title</field>
+                <field name="Advanced Slider: Sub Title" editor_type="LINE">slider_item_sub_title</field>
+                <field name="Advanced Slider: Description" editor_type="AREA">slider_item_description</field>
+                <field name="Advanced Slider: Button 1 Text" editor_type="LINE">slider_item_btn_text_1</field>
+                <field name="Advanced Slider: Button 1 URL" editor_type="LINE" key_of="slider_item_btn_url_1">url</field>
+                <field name="Advanced Slider: Button 2 Text" editor_type="LINE">slider_item_btn_text_2</field>
+                <field name="Advanced Slider: Button 2 URL" editor_type="LINE" key_of="slider_item_btn_url_2">url</field>
+            </fields-in-item>
+            <fields>
+                <field name="Advanced Slider: Scroll Button URL" editor_type="LINE" key_of="slider_scroll_btn_url">url</field>
+            </fields>
+        </widget>
+
         <widget name="wpr-advanced-text">
             <fields>
                 <field name="Advanced Text: Cursor Content Text" editor_type="LINE">anim_cursor_content</field>
@@ -444,7 +461,7 @@
         <widget name="wpr-tabs">
             <fields-in-item items_of="tabs">
                 <field name="Tabs: Label" editor_type="LINE">tab_title</field>
-                <field name="Tabs: Content" editor_type="AREA">tab_content</field>
+                <field name="Tabs: Content" editor_type="VISUAL">tab_content</field>
             </fields-in-item>
         </widget>
 
@@ -458,15 +475,13 @@
         </widget>
 
         <widget name="wpr-testimonial-carousel">
-            <fields>
-                <field name="" editor_type="LINE"></field>
-            </fields>
             <fields-in-item items_of="testimonial_items">
-                <field name="Testimonial Carousel: Author" editor_type="LINE">testimonial_author</field>
                 <field name="Testimonial Carousel: Job" editor_type="LINE">testimonial_job</field>
                 <field name="Testimonial Carousel: Title" editor_type="LINE">testimonial_title</field>
+                <field name="Testimonial Carousel: Author" editor_type="LINE">testimonial_author</field>
                 <field name="Testimonial Carousel: Date" editor_type="LINE">testimonial_date</field>
-                <field name="Testimonial Carousel: Content" editor_type="AREA">testimonial_content</field>
+                <field name="Testimonial Carousel: Content" editor_type="VISUAL">testimonial_content</field>
+                <field name="Testimonial Carousel: Content" editor_type="LINE" key_of="social_url_1">url</field>
             </fields-in-item>
         </widget>
 
