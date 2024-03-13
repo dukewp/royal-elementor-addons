@@ -23,8 +23,8 @@
                 <field name="Advanced Slider: Sub Title" editor_type="LINE">slider_item_sub_title</field>
                 <field name="Advanced Slider: Description" editor_type="AREA">slider_item_description</field>
                 <field name="Advanced Slider: Button 1 Text" editor_type="LINE">slider_item_btn_text_1</field>
-                <field name="Advanced Slider: Button 1 URL" editor_type="LINE" key_of="slider_item_btn_url_1">url</field>
                 <field name="Advanced Slider: Button 2 Text" editor_type="LINE">slider_item_btn_text_2</field>
+                <field name="Advanced Slider: Button 1 URL" editor_type="LINE" key_of="slider_item_btn_url_1">url</field>
                 <field name="Advanced Slider: Button 2 URL" editor_type="LINE" key_of="slider_item_btn_url_2">url</field>
             </fields-in-item>
             <fields>
@@ -67,6 +67,7 @@
         <widget name="wpr-button">
             <fields>
                 <field name="Button: Text" editor_type="LINE">button_text</field>
+                <field name="Button: URL" editor_type="LINE" key_of="button_url">url</field>
                 <field name="Button: Effect Text" editor_type="LINE">button_hover_animation_text</field>
                 <field name="Button: Tooltip Text" editor_type="AREA">tooltip_text</field>
             </fields>
@@ -91,10 +92,11 @@
             <fields>
                 <field name="Content Ticker: Heading" editor_type="LINE">heading_text</field>
                 <field name="Content Ticker: Typing Cursor" editor_type="LINE">slider_effect_cursor</field>
-                <field name="Content Ticker: Typing Cursor" editor_type="LINE">slider_effect_cursor</field>
+                <field name="Content Ticker: Heading Link" editor_type="LINE" key_of="heading_link">url</field>
             </fields>
             <fields-in-item items_of="ticker_items">
                 <field name="Content Ticker: Ticker Title" editor_type="LINE">ticker_title</field>
+                <field name="Content Ticker: Ticker Link" editor_type="LINE" key_of="ticker_link">url</field>
             </fields-in-item>
         </widget>
 
@@ -147,8 +149,10 @@
         <widget name="wpr-dual-button">
             <fields>
                 <field name="Dual Button: First Text" editor_type="LINE">button_a_text</field>
+                <field name="Dual Button: First URL" editor_type="LINE" key_of="button_a_url">url</field>
                 <field name="Dual Button: Effect Text 1" editor_type="LINE">button_a_hover_animation_text</field>
                 <field name="Dual Button: Second Text" editor_type="LINE">button_b_text</field>
+                <field name="Dual Button: Second URL" editor_type="LINE" key_of="button_b_url">url</field>
                 <field name="Dual Button: Effect Text 2" editor_type="LINE">button_b_hover_animation_text</field>
                 <field name="Dual Button: Middle Badge Text" editor_type="LINE">middle_badge_text</field>
                 <field name="Dual Button: Tooltip A Text" editor_type="AREA">tooltip_a_text</field>
@@ -167,6 +171,7 @@
         <widget name="wpr-feature-list">
             <fields-in-item items_of="list">
                 <field name="Feature List: Title" editor_type="LINE">list_title</field>
+                <field name="Feature List: Title URL" editor_type="LINE" key_of="list_title_url">url</field>
                 <field name="Feature List: Content" editor_type="AREA">list_content</field>
             </fields-in-item>
         </widget>
@@ -177,6 +182,7 @@
                 <field name="Flip Box: Front Button" editor_type="LINE">front_btn_text</field>
                 <field name="Flip Box: Front Description" editor_type="AREA">front_description</field>
                 <field name="Flip Box: Back Title" editor_type="LINE">back_title</field>
+                <field name="Flip Box: Back Link" key_of="back_link" editor_type="LINE">url</field>
                 <field name="Flip Box: Back Button" editor_type="LINE">back_btn_text</field>
                 <field name="Flip Box: Back Description" editor_type="AREA">back_description</field>
             </fields>
@@ -185,6 +191,7 @@
         <widget name="wpr-flip-carousel">
             <fields-in-item items_of="carousel_elements">
                 <field name="Flip Carousel: Image Caption" editor_type="LINE">slide_text</field>
+                <field name="Flip Carousel: Slide Link" key_of="slide_link" editor_type="LINE">url</field>
             </fields-in-item>
         </widget>
 
@@ -207,10 +214,10 @@
         </widget>
 
         <widget name="wpr-google-maps">
-            <fields>
+            <fields-in-item items_of="google_map_locations">
                 <field name="Google Maps: Location Title" editor_type="LINE">gm_location_title</field>
                 <field name="Google Maps: Location Description" editor_type="AREA">gm_location_description</field>
-            </fields>
+            </fields-in-item>
         </widget>
 
         <widget name="wpr-grid">
@@ -245,6 +252,7 @@
                 <field name="Image Accordion: Item Title" editor_type="LINE">accordion_item_title</field>
                 <field name="Image Accordion: Item Description" editor_type="LINE">accordion_item_description</field>
                 <field name="Image Accordion: Button Text" editor_type="LINE">element_button_text</field>
+                <field name="Image Accordion: Button URL" editor_type="LINE" key_of="accordion_btn_url">url</field>
                 <field name="Image Accordion: Extra Text" editor_type="LINE">element_extra_text</field>
             </fields-in-item>
         </widget>
@@ -274,6 +282,7 @@
             <fields>
                 <field name="Logo: Title Text" editor_type="LINE">custom_title</field>
                 <field name="Logo: Tagline Text" editor_type="LINE">custom_description</field>
+                <field name="Logo: Tagline Text" editor_type="LINE" key_of="custom_url">custom_url</field>
             </fields>
         </widget>
 
@@ -362,6 +371,7 @@
             <fields-in-item items_of="page_list">
                 <field name="Page List: Item Title" editor_type="LINE">page_list_item_title</field>
                 <field name="Page List: Item Sub Title" editor_type="LINE">page_list_item_sub_title</field>
+                <field name="Page List: Item URL" editor_type="LINE" key_of="page_list_item_title_url">url</field>
                 <field name="Page List: Badge Text" editor_type="LINE">page_list_item_badge_text</field>
             </fields-in-item>
         </widget>
@@ -400,6 +410,7 @@
                 <field name="Price List: Price" editor_type="LINE">prlist_price</field>
                 <field name="Price List: Old Price" editor_type="LINE">prlist_old_price</field>
                 <field name="Price List: Description" editor_type="AREA">prlist_description</field>
+                <field name="Price List: URL" editor_type="LINE" key_of="prlist_link">url</field>
             </fields-in-item>
         </widget>
 
@@ -417,6 +428,7 @@
                 <field name="Pricing Table: Period" editor_type="LINE">preiod</field>
                 <field name="Pricing Table: Feature Text" editor_type="LINE">feature_text</field>
                 <field name="Pricing Table: Button Text" editor_type="LINE">btn_text</field>
+                <field name="Pricing Table: Button URL" editor_type="LINE" key_of="btn_url">url</field>
                 <field name="Pricing Table: Feature Tooltip" editor_type="AREA">feature_tooltip_text</field>
             </fields-in-item>
         </widget>
@@ -435,6 +447,7 @@
                 <field name="Promo Box: Title" editor_type="LINE">content_title</field>
                 <field name="Promo Box: Button Text" editor_type="LINE">content_btn_text</field>
                 <field name="Promo Box: Description" editor_type="AREA">content_description</field>
+                <field name="Promo Box: Content Link" editor_type="LINE" key_of="content_link">url</field>
                 <field name="Promo Box: Badge Title" editor_type="LINE">badge_title</field>
             </fields>
         </widget>
@@ -481,7 +494,7 @@
                 <field name="Testimonial Carousel: Author" editor_type="LINE">testimonial_author</field>
                 <field name="Testimonial Carousel: Date" editor_type="LINE">testimonial_date</field>
                 <field name="Testimonial Carousel: Content" editor_type="VISUAL">testimonial_content</field>
-                <field name="Testimonial Carousel: Content" editor_type="LINE" key_of="social_url_1">url</field>
+                <field name="Testimonial Carousel: Social URL" editor_type="LINE" key_of="social_url_1">url</field>
             </fields-in-item>
         </widget>
 
