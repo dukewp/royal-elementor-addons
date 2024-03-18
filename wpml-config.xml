@@ -282,7 +282,7 @@
             <fields>
                 <field name="Logo: Title Text" editor_type="LINE">custom_title</field>
                 <field name="Logo: Tagline Text" editor_type="LINE">custom_description</field>
-                <field name="Logo: Tagline Text" editor_type="LINE" key_of="custom_url">custom_url</field>
+                <field name="Logo: Custom URL" editor_type="LINE" key_of="custom_url">url</field>
             </fields>
         </widget>
 
