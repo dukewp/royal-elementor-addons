@@ -74,6 +74,7 @@ function wpr_addons_popups_page() {
             $url = admin_url( 'edit.php?s&post_status=all&post_type=wpr_templates&wpr_template_type=popup&filter_action=Filter' );
             
             echo '<a href="' . esc_url( $url ) . '" class="button button-primary wpr-translate-templates wpr-options-button"><span class="dashicons dashicons-admin-site"></span><span>Translate WPML Templates</span></a>';
+            echo '<a href="https://www.youtube.com/watch?v=y7yjItsMBmw" class="button button-primary wpr-translate-templates wpr-options-button tutorial">'. esc_html__("Video Tutorial") .'</a>';
         }
     ?>
 
