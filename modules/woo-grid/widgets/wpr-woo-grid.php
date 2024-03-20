@@ -9264,7 +9264,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 		} else if ( 'ywf_deposit' === $product->get_type() ) {
 			$button_HTML .= esc_html__('Select Amount', 'wpr-addons');
 			array_push( $attributes, 'href="'. esc_url( get_permalink() ) .'"' );
-		} else if ( 'stm_lms_product' === $product->get_type()) {
+		} else if ( 'stm_lms_product' === $product->get_type() ) {
+			$button_HTML .= esc_html__('View Product', 'wpr-addons');
+			array_push( $attributes, 'href="'. esc_url( get_permalink() ) .'"' );
+		} else if ( 'redq_rental' === $product->get_type() ) {
 			$button_HTML .= esc_html__('View Product', 'wpr-addons');
 			array_push( $attributes, 'href="'. esc_url( get_permalink() ) .'"' );
 		} else {
