@@ -1742,11 +1742,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'element_lightbox_pfa_meta',
 			[
 				'label' => esc_html__( 'Audio Meta Value', 'wpr-addons' ),
-				// 'type' => Controls_Manager::SELECT2,
 				'type' => 'wpr-ajax-select2',
 				'label_block' => true,
 				'default' => 'default',
-				// 'options' => $post_meta_keys[1],
 				'options' => 'ajaxselect2/get_custom_meta_keys',
 				'query_slug' => 'product_cat',
 				'condition' => [
@@ -1776,11 +1774,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'element_lightbox_pfv_meta',
 			[
 				'label' => esc_html__( 'Video Meta Value', 'wpr-addons' ),
-				// 'type' => Controls_Manager::SELECT2,
 				'type' => 'wpr-ajax-select2',
 				'label_block' => true,
 				'default' => 'default',
-				// 'options' => $post_meta_keys[1],
 				'options' => 'ajaxselect2/get_custom_meta_keys',
 				'query_slug' => 'product_cat',
 				'condition' => [

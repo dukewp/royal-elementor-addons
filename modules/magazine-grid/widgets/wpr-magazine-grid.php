@@ -271,7 +271,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		];
 	}
 
-	public function add_repeater_args_element_custom_field($meta) {
+	public function add_repeater_args_element_custom_field() {
 		return [
 			'type' => Controls_Manager::HIDDEN,
 			'default' => ''
@@ -427,7 +427,6 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		$post_taxonomies = $this->get_available_taxonomies();
 
 		// Get Available Meta Keys
-		$post_meta_keys = Utilities::get_custom_meta_keys();
 		$tax_meta_keys = Utilities::get_custom_meta_keys_tax();
 
 		$this->add_control(
@@ -636,14 +635,6 @@ class Wpr_Magazine_Grid extends Widget_Base {
 			[
 				'type' => Controls_Manager::HIDDEN,
 				'default' => $this->get_related_taxonomies(),
-			]
-		);
-
-		$this->add_control(
-			'post_meta_keys_filter',
-			[
-				'type' => Controls_Manager::HIDDEN,
-				'default' => json_encode( $post_meta_keys[0] ),
 			]
 		);
 
@@ -1300,7 +1291,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 		$repeater->add_control( 'element_sharing_tooltip', $this->add_repeater_args_element_sharing_tooltip() );
 
-		$repeater->add_control( 'element_custom_field', $this->add_repeater_args_element_custom_field($post_meta_keys[1]) );
+		$repeater->add_control( 'element_custom_field', $this->add_repeater_args_element_custom_field() );
 
 		$repeater->add_control( 'element_custom_field_btn_link', $this->add_repeater_args_element_custom_field_btn_link() );
 

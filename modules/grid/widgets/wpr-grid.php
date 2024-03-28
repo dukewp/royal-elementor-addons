@@ -179,7 +179,7 @@ class Wpr_Grid extends Widget_Base {
 		);
 	}
 
-	public function add_control_order_posts_by_acf($meta) {
+	public function add_control_order_posts_by_acf() {
 	}
 
 	public function add_control_query_slides_to_show() {
@@ -479,7 +479,7 @@ class Wpr_Grid extends Widget_Base {
 		];
 	}
 
-	public function add_repeater_args_element_custom_field($meta) {
+	public function add_repeater_args_element_custom_field() {
 		return [
 			'type' => Controls_Manager::HIDDEN,
 			'default' => ''
@@ -789,7 +789,6 @@ class Wpr_Grid extends Widget_Base {
 		$post_taxonomies = $this->get_available_taxonomies();
 
 		// Get Available Meta Keys
-		$post_meta_keys = Utilities::get_custom_meta_keys();
 		$tax_meta_keys = Utilities::get_custom_meta_keys_tax();
 
 		$this->add_control(
@@ -837,7 +836,7 @@ class Wpr_Grid extends Widget_Base {
 
 		$this->add_control_order_posts();
 
-		$this->add_control_order_posts_by_acf( $post_meta_keys[1] );
+		$this->add_control_order_posts_by_acf();
 
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'order_posts', ['pro-tl', 'pro-mf', 'pro-d', 'pro-ar', 'pro-cc'] );
@@ -1071,14 +1070,6 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'type' => Controls_Manager::HIDDEN,
 				'default' => $this->get_related_taxonomies(),
-			]
-		);
-
-		$this->add_control(
-			'post_meta_keys_filter',
-			[
-				'type' => Controls_Manager::HIDDEN,
-				'default' => json_encode( $post_meta_keys[0] ),
 			]
 		);
 
@@ -2025,10 +2016,10 @@ class Wpr_Grid extends Widget_Base {
 			'element_lightbox_pfa_meta',
 			[
 				'label' => esc_html__( 'Audio Meta Value', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT2,
+				'type' => 'wpr-ajax-select2',
 				'label_block' => true,
 				'default' => 'default',
-				'options' => $post_meta_keys[1],
+				'options' => 'ajaxselect2/get_custom_meta_keys',
 				'condition' => [
 					'element_select' => 'lightbox',
 					'element_lightbox_pfa_select' => 'meta',
@@ -2056,10 +2047,10 @@ class Wpr_Grid extends Widget_Base {
 			'element_lightbox_pfv_meta',
 			[
 				'label' => esc_html__( 'Video Meta Value', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT2,
+				'type' => 'wpr-ajax-select2',
 				'label_block' => true,
 				'default' => 'default',
-				'options' => $post_meta_keys[1],
+				'options' => 'ajaxselect2/get_custom_meta_keys',
 				'condition' => [
 					'element_select' => 'lightbox',
 					'element_lightbox_pfv_select' => 'meta',
@@ -2080,7 +2071,7 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
-		$repeater->add_control( 'element_custom_field', $this->add_repeater_args_element_custom_field($post_meta_keys[1]) );
+		$repeater->add_control( 'element_custom_field', $this->add_repeater_args_element_custom_field() );
 
 		$repeater->add_control( 'element_custom_field_img_ID', $this->add_repeater_args_element_custom_field_img_ID() );
 
