@@ -5199,7 +5199,10 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		$class .= ' wpr-pointer-'. $title_pointer;
 		$class .= ' wpr-pointer-line-fx wpr-pointer-fx-'. $title_pointer_animation;
 
-		echo '<'. esc_html($settings['element_title_tag']) .' class="'. esc_attr($class) .'">';
+		$tags_whitelist = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'span', 'p'];
+		$element_title_tag = Utilities::validate_html_tags_wl( $settings['element_title_tag'], 'h2', $tags_whitelist );
+
+		echo '<'. esc_html($element_title_tag) .' class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
 				echo '<a  target="'. $open_links_in_new_tab .'" '. $pointer_item_class .' href="'. esc_url( get_the_permalink() ) .'">';
 				if ( 'word_count' === $settings['element_trim_text_by'] ) {
@@ -5209,7 +5212,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 				}
 				echo '</a>';
 			echo '</div>';
-		echo '</'. esc_html($settings['element_title_tag']) .'>';
+		echo '</'. esc_html($element_title_tag) .'>';
 	}
 
 	// Render Post Content

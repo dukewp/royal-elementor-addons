@@ -8915,7 +8915,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$class .= ' wpr-pointer-'. $title_pointer;
 		$class .= ' wpr-pointer-line-fx wpr-pointer-fx-'. $title_pointer_animation;
 
-		echo '<'. esc_attr($settings['element_title_tag']) .' class="'. esc_attr($class) .'">';
+		$tags_whitelist = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'span', 'p'];
+		$element_title_tag = Utilities::validate_html_tags_wl( $settings['element_title_tag'], 'h2', $tags_whitelist );
+
+		echo '<'. esc_attr($element_title_tag) .' class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
 				echo '<a target="'. $open_links_in_new_tab .'"  '. $pointer_item_class .' href="'. esc_url( get_the_permalink() ) .'">';
 				if ( 'word_count' === $settings['element_trim_text_by'] ) {
@@ -8925,7 +8928,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				}
 				echo '</a>';
 			echo '</div>';
-		echo '</'. esc_attr($settings['element_title_tag']) .'>';
+		echo '</'. esc_attr($element_title_tag) .'>';
 	}
 
 	// Render Post Excerpt
@@ -10348,9 +10351,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$post_index = 0;
 
+		$tags_whitelist = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'span', 'p'];
+		$grid_linked_products_heading_tag = Utilities::validate_html_tags_wl( $settings['grid_linked_products_heading_tag'], 'h2', $tags_whitelist );
+
 		if ( ('upsell' === $settings['query_selection'] && '' !== $settings['grid_linked_products_heading']) || ('cross-sell' === $settings['query_selection'] && '' !== $settings['grid_linked_products_heading']) ) {
 			echo '<div class="wpr-grid-linked-products-heading">';
-				echo '<'. $settings['grid_linked_products_heading_tag'] .'>'. esc_html( $settings['grid_linked_products_heading'] ) .'</'. $settings['grid_linked_products_heading_tag'] .'>';
+				echo '<'. $grid_linked_products_heading_tag .'>'. esc_html( $settings['grid_linked_products_heading'] ) .'</'. $grid_linked_products_heading_tag .'>';
 			echo '</div>';
 		}
 		
