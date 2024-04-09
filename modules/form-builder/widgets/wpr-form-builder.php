@@ -210,6 +210,7 @@ class Wpr_Form_Builder extends Widget_Base {
 			[
 				'label' => esc_html__( 'From Email', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'description' => esc_html__( 'Shortcode like [id="email"] can be inserted according ID of the associated mail field.', 'wpr-addons' ),
 				'default' => 'email@' . $site_domain,
 				'render_type' => 'none',
 				'dynamic' => [
