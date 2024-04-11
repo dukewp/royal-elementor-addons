@@ -1973,7 +1973,7 @@
 						if ( ! WprElements.editorCheck() ) {
 							$(this).closest( 'article' ).find( '.wpr-grid-image-wrap' ).trigger( 'click' );
 						} else {
-							alert( 'Lightbox is Disabled in the Editor!' );
+							alert( 'Lightbox is Disabled in the Editor! Please Preview to see it in action.' );
 						}
 					});
 				} else {
@@ -1982,7 +1982,7 @@
 							var imageWrap = $(this).closest( 'article' ).find( '.wpr-grid-image-wrap' );
 								imageWrap.trigger( 'click' );
 						} else {
-							alert( 'Lightbox is Disabled in the Editor!' );
+							alert( 'Lightbox is Disabled in the Editor! Please Preview to see it in action.' );
 						}
 					});
 				}
@@ -7311,7 +7311,7 @@
                         if ( ! WprElements.editorCheck() ) {
                             $(this).closest( '.wpr-insta-feed-content-wrap' ).find( '.wpr-insta-feed-image-wrap' ).trigger( 'click' );
                         } else {
-                            alert( 'Lightbox is Disabled in the Editor!' );
+                            alert( 'Lightbox is Disabled in the Editor! Please Preview to see it in action.' );
                         }
                     });
                 } else {
@@ -7320,7 +7320,7 @@
                             var imageWrap = $(this).closest( '.wpr-insta-feed-content-wrap' ).find( '.wpr-insta-feed-image-wrap' );
                                 imageWrap.trigger( 'click' );
                         } else {
-                            alert( 'Lightbox is Disabled in the Editor!' );
+                            alert( 'Lightbox is Disabled in the Editor! Please Preview to see it in action.' );
                         }
                     });
                 }
