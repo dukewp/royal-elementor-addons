@@ -9720,7 +9720,8 @@
 				var animationSpeed = $scope.find('.wpr-mini-cart-wrap').data('animation');
 
 				$('body').on('click', function(e) {
-					if ( !e.target.classList.value.includes('wpr-mini-cart') && !e.target.closest('.wpr-mini-cart') ) {
+					if ( !e.target.classList.value.includes('wpr-mini-cart') && !e.target.closest('.wpr-mini-cart') ) {	
+						$scope.find('.wpr-mini-cart-toggle-btn').closest('.elementor>.elementor-element').removeClass('wpr-z-index');
 						if ( $scope.hasClass('wpr-mini-cart-slide') ) {
 							$scope.find('.wpr-mini-cart').slideUp(animationSpeed);
 						} else {
@@ -9763,6 +9764,7 @@
 							e.stopPropagation();
 							e.preventDefault();
 							if ( 'none' === $scope.find('.wpr-mini-cart').css("display") ) {
+								$(this).closest('.elementor>.elementor-element').addClass('wpr-z-index');
 								if ( $scope.hasClass('wpr-mini-cart-slide') ) {
 									$scope.find('.wpr-mini-cart').slideDown(animationSpeed);
 								} else {
@@ -9783,6 +9785,7 @@
 									}
 								}, animationSpeed + 100);
 							} else {
+								$(this).closest('.elementor>.elementor-element').removeClass('wpr-z-index');
 								if ( $scope.hasClass('wpr-mini-cart-slide') ) {
 									$scope.find('.wpr-mini-cart').slideUp(animationSpeed);
 								} else {
