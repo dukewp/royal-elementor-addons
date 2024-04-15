@@ -210,6 +210,7 @@ class Wpr_Form_Builder extends Widget_Base {
 			[
 				'label' => esc_html__( 'From Email', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
+				'description' => esc_html__( 'Shortcode like [id="email"] can be inserted according ID of the associated mail field.', 'wpr-addons' ),
 				'default' => 'email@' . $site_domain,
 				'render_type' => 'none',
 				'dynamic' => [
@@ -425,16 +426,6 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
-		// Doesn't work even in other plugins that I've checked
-		// $this->add_control(
-		// 	'address_field',
-		// 	[
-		// 		'label' => esc_html__( 'Address', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SELECT,
-		// 		'options' => []
-		// 	]
-		// );
-
 		$this->add_control(
 			'phone_field',
 			[
@@ -448,6 +439,51 @@ class Wpr_Form_Builder extends Widget_Base {
 			'birthday_field',
 			[
 				'label' => esc_html__( 'Birthday', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => []
+			]
+		);
+
+		$this->add_control(
+			'address_field',
+			[
+				'label' => esc_html__( 'Address', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => []
+			]
+		);
+
+		$this->add_control(
+			'country_field',
+			[
+				'label' => esc_html__( 'Country', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => []
+			]
+		);
+
+		$this->add_control(
+			'city_field',
+			[
+				'label' => esc_html__( 'City', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => []
+			]
+		);
+
+		$this->add_control(
+			'state_field',
+			[
+				'label' => esc_html__( 'State', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => []
+			]
+		);
+
+		$this->add_control(
+			'zip_field',
+			[
+				'label' => esc_html__( 'Zip', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => []
 			]

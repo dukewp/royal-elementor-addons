@@ -179,7 +179,7 @@ class Wpr_Grid extends Widget_Base {
 		);
 	}
 
-	public function add_control_order_posts_by_acf($meta) {
+	public function add_control_order_posts_by_acf( $meta = [] ) {
 	}
 
 	public function add_control_query_slides_to_show() {
@@ -479,7 +479,7 @@ class Wpr_Grid extends Widget_Base {
 		];
 	}
 
-	public function add_repeater_args_element_custom_field($meta) {
+	public function add_repeater_args_element_custom_field( $meta = [] ) {
 		return [
 			'type' => Controls_Manager::HIDDEN,
 			'default' => ''
@@ -789,7 +789,6 @@ class Wpr_Grid extends Widget_Base {
 		$post_taxonomies = $this->get_available_taxonomies();
 
 		// Get Available Meta Keys
-		$post_meta_keys = Utilities::get_custom_meta_keys();
 		$tax_meta_keys = Utilities::get_custom_meta_keys_tax();
 
 		$this->add_control(
@@ -837,7 +836,7 @@ class Wpr_Grid extends Widget_Base {
 
 		$this->add_control_order_posts();
 
-		$this->add_control_order_posts_by_acf( $post_meta_keys[1] );
+		$this->add_control_order_posts_by_acf();
 
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'order_posts', ['pro-tl', 'pro-mf', 'pro-d', 'pro-ar', 'pro-cc'] );
@@ -1071,14 +1070,6 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'type' => Controls_Manager::HIDDEN,
 				'default' => $this->get_related_taxonomies(),
-			]
-		);
-
-		$this->add_control(
-			'post_meta_keys_filter',
-			[
-				'type' => Controls_Manager::HIDDEN,
-				'default' => json_encode( $post_meta_keys[0] ),
 			]
 		);
 
@@ -2025,10 +2016,10 @@ class Wpr_Grid extends Widget_Base {
 			'element_lightbox_pfa_meta',
 			[
 				'label' => esc_html__( 'Audio Meta Value', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT2,
+				'type' => 'wpr-ajax-select2',
 				'label_block' => true,
 				'default' => 'default',
-				'options' => $post_meta_keys[1],
+				'options' => 'ajaxselect2/get_custom_meta_keys',
 				'condition' => [
 					'element_select' => 'lightbox',
 					'element_lightbox_pfa_select' => 'meta',
@@ -2056,10 +2047,10 @@ class Wpr_Grid extends Widget_Base {
 			'element_lightbox_pfv_meta',
 			[
 				'label' => esc_html__( 'Video Meta Value', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT2,
+				'type' => 'wpr-ajax-select2',
 				'label_block' => true,
 				'default' => 'default',
-				'options' => $post_meta_keys[1],
+				'options' => 'ajaxselect2/get_custom_meta_keys',
 				'condition' => [
 					'element_select' => 'lightbox',
 					'element_lightbox_pfv_select' => 'meta',
@@ -2080,7 +2071,7 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
-		$repeater->add_control( 'element_custom_field', $this->add_repeater_args_element_custom_field($post_meta_keys[1]) );
+		$repeater->add_control( 'element_custom_field', $this->add_repeater_args_element_custom_field() );
 
 		$repeater->add_control( 'element_custom_field_img_ID', $this->add_repeater_args_element_custom_field_img_ID() );
 
@@ -8312,7 +8303,7 @@ class Wpr_Grid extends Widget_Base {
 
 		// Change Posts Per Page for Slider Layout
 		if ( 'slider' === $settings['layout_select'] && Utilities::is_new_free_user() ) {
-			$settings['query_posts_per_page'] = $settings['query_slides_to_show'];
+			$settings['query_posts_per_page'] = $settings['query_slides_to_show'] ? $settings['query_slides_to_show'] : -1;
 			$settings['query_posts_per_page'] = $settings['query_posts_per_page'] > 4 ? 4 : $settings['query_posts_per_page'];
 		}
 
@@ -8842,7 +8833,10 @@ class Wpr_Grid extends Widget_Base {
 		$class .= ' wpr-pointer-'. $title_pointer;
 		$class .= ' wpr-pointer-line-fx wpr-pointer-fx-'. $title_pointer_animation;
 
-		echo '<'. esc_attr($settings['element_title_tag']) .' class="'. esc_attr($class) .'">';
+		$tags_whitelist = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'span', 'p'];
+		$element_title_tag = Utilities::validate_html_tags_wl( $settings['element_title_tag'], 'h2', $tags_whitelist );
+
+		echo '<'. esc_attr($element_title_tag) .' class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
 				echo '<a target="'. $open_links_in_new_tab .'" '. $pointer_item_class .' href="'. esc_url( get_the_permalink() ) .'">';
 					if ( 'word_count' === $settings['element_trim_text_by'] ) {
@@ -8852,7 +8846,7 @@ class Wpr_Grid extends Widget_Base {
 					}
 				echo '</a>';
 			echo '</div>';
-		echo '</'. esc_attr($settings['element_title_tag']) .'>';
+		echo '</'. esc_attr($element_title_tag) .'>';
 	}
 
 	// Render Post Content
@@ -9960,7 +9954,7 @@ class Wpr_Grid extends Widget_Base {
 			'pauseOnHover' => $settings['layout_slider_pause_on_hover'],
 			'prevArrow' => '#wpr-grid-slider-prev-'. $this->get_id(),
 			'nextArrow' => '#wpr-grid-slider-next-'. $this->get_id(),
-			'sliderSlidesToScroll' => $settings['layout_slides_to_scroll'],
+			'sliderSlidesToScroll' => $settings['layout_slides_to_scroll'] ? absint( $settings['layout_slides_to_scroll'] ) : 1,
 		];
 
 		if ( ! wpr_fs()->can_use_premium_code() ) {

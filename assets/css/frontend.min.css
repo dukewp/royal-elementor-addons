@@ -398,6 +398,10 @@ button.lg-icon {
     align-items: center;
 }
 
+.wpr-z-index {
+    z-index: 9999 !important;
+}
+
 .wpr-inline-flex-center {
     display: -webkit-inline-box;
     display: -ms-inline-flexbox;
