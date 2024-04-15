@@ -179,7 +179,7 @@ class Wpr_Grid extends Widget_Base {
 		);
 	}
 
-	public function add_control_order_posts_by_acf() {
+	public function add_control_order_posts_by_acf( $meta = [] ) {
 	}
 
 	public function add_control_query_slides_to_show() {
@@ -479,7 +479,7 @@ class Wpr_Grid extends Widget_Base {
 		];
 	}
 
-	public function add_repeater_args_element_custom_field() {
+	public function add_repeater_args_element_custom_field( $meta = [] ) {
 		return [
 			'type' => Controls_Manager::HIDDEN,
 			'default' => ''

@@ -271,7 +271,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		];
 	}
 
-	public function add_repeater_args_element_custom_field() {
+	public function add_repeater_args_element_custom_field( $meta = [] ) {
 		return [
 			'type' => Controls_Manager::HIDDEN,
 			'default' => ''
