@@ -3740,6 +3740,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				$step_icon = [];
 				$step_label = [];
 				$step_sub_label = [];
+				$whitelist = ['jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'odt', 'avi', 'ogg', 'm4a', 'mov', 'mp3', 'mp4', 'mpg', 'wav', 'wmv', 'txt'];
 
 				foreach ( $instance['form_fields'] as $key => $value ) {
 					if ( 'step' === $value['field_type'] ) {
@@ -3801,6 +3802,7 @@ class Wpr_Form_Builder extends Widget_Base {
 
 				$step_count = 0;
 				$field_count = 0;
+
 				foreach ( $instance['form_fields'] as $item_index => $item ) :
 					if ( 'step' !== $item['field_type'] ) {
 						$field_count++;
@@ -3894,6 +3896,28 @@ class Wpr_Form_Builder extends Widget_Base {
 								}
 
 								if ( !empty( $item['file_types'] )) {
+
+									// Convert string to array
+									$file_types = explode(',', $item['file_types']);
+									
+									// Check for non-whitelisted file types
+									$non_whitelisted = array_diff($file_types, $whitelist);
+									
+									if ( !empty($non_whitelisted) ) {
+										$item['file_types'] = 'jpg,jpeg,png,gif,pdf,doc,docx,ppt,pptx,odt,avi,ogg,m4a,mov,mp3,mp4,mpg,wav,wmv,txt';
+										if ( is_admin() ) {
+											echo '<br>';
+											echo '<ul class="wpr-file-type-error">';
+												echo esc_html__( 'Remove following types: ', 'wpr-addons' );
+												foreach ( $non_whitelisted as $type ) {
+													if ( !empty($type) ) {
+														echo '<li>'. $type .' <li/>';
+													}
+												}
+											echo '</ul>';
+										}
+									}
+
 									$this->add_render_attribute(
 										'input' . $item_index,
 										[

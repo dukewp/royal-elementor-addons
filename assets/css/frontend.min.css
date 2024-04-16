@@ -18363,6 +18363,20 @@ dl.variation dd {
     content: "⬤" !important;
 }
 
+.wpr-file-type-error {
+    flex-basis: 100%;
+    padding: 5px 0;
+    margin: 0 0 5px 0;
+    list-style-type: none;
+    color: red;
+    font-size: 13px;
+}
+
+.wpr-file-type-error li {
+    color: #000;
+    display: inline;
+}
+
 .wpr-form-field-type-hidden {
   display: none;
 }
