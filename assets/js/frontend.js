@@ -1320,143 +1320,143 @@
 				});
 
 				// Infinite Scroll / Load More
-				if ( ( 'load-more' === settings.pagination_type || 'infinite-scroll' === settings.pagination_type ) && ( $scope.find( '.wpr-grid-pagination' ).length && ! WprElements.editorCheck() ) ) {
-					
-					var pagination = $scope.find( '.wpr-grid-pagination' ),
-						scopeClass = '.elementor-element-'+ $scope.attr( 'data-id' );
+				if ( 'load-more' === settings.pagination_type || 'infinite-scroll' === settings.pagination_type ) {
+					if ( $scope.find( '.wpr-grid-pagination' ).length && ! WprElements.editorCheck() ) {
+						var pagination = $scope.find( '.wpr-grid-pagination' ),
+							scopeClass = '.elementor-element-'+ $scope.attr( 'data-id' );
 
-					var navClass = false,
-						threshold = false;
+						var navClass = false,
+							threshold = false;
 
-					if ( 'infinite-scroll' === settings.pagination_type ) {
-						threshold = 300;
-						navClass = scopeClass +' .wpr-load-more-btn';
-					}
-
-					iGrid.infiniteScroll({
-						path: scopeClass +' .wpr-grid-pagination a',
-						hideNav: navClass,
-						append: false,
-		  				history: false,
-		  				scrollThreshold: threshold,
-		  				status: scopeClass +' .page-load-status',
-		  				onInit: function() {
-							this.on( 'load', function() {
-								iGrid.removeClass( 'grid-images-loaded' );
-							});
+						if ( 'infinite-scroll' === settings.pagination_type ) {
+							threshold = 300;
+							navClass = scopeClass +' .wpr-load-more-btn';
 						}
-					});
 
-					// Request
-					iGrid.on( 'request.infiniteScroll', function( event, path ) {
-						pagination.find( '.wpr-load-more-btn' ).hide();
-						pagination.find( '.wpr-pagination-loading' ).css( 'display', 'inline-block' );
-					});
-
-					// Load
-					var pagesLoaded = 0;
-
-					iGrid.on( 'load.infiniteScroll', function( event, response ) {
-						pagesLoaded++;
-
-						// get posts from response
-						var items = $( response ).find( scopeClass ).find( '.wpr-grid-item' );
-
-						if ( $scope.find('.woocommerce-result-count').length ) {
-							var resultCount = $scope.find('.woocommerce-result-count').text();
-							var updatedResultCount = resultCount.replace( /\d\u2013\d+/, '1\u2013' + ( $scope.find('.wpr-grid-item').length + items.length ) );
-							$scope.find('.woocommerce-result-count').text(updatedResultCount);
-						}
-						
-						iGrid.infiniteScroll( 'appendItems', items );
-						iGrid.isotopewpr( 'appended', items );
-
-						items.imagesLoaded().progress( function( instance, image ) {
-							isotopeLayout( settings );
-
-							// Fix Layout
-							setTimeout(function() {
-								isotopeLayout( settings );
-								isotopeFilters( settings );
-							}, 10 );
-				
-							setTimeout(function() {
-								iGrid.addClass( 'grid-images-loaded' );
-							}, 500 );
+						iGrid.infiniteScroll({
+							path: scopeClass +' .wpr-grid-pagination a',
+							hideNav: navClass,
+							append: false,
+							history: false,
+							scrollThreshold: threshold,
+							status: scopeClass +' .page-load-status',
+							onInit: function() {
+								this.on( 'load', function() {
+									iGrid.removeClass( 'grid-images-loaded' );
+								});
+							}
 						});
 
-						// Loading
-						pagination.find( '.wpr-pagination-loading' ).hide();
+						// Request
+						iGrid.on( 'request.infiniteScroll', function( event, path ) {
+							pagination.find( '.wpr-load-more-btn' ).hide();
+							pagination.find( '.wpr-pagination-loading' ).css( 'display', 'inline-block' );
+						});
 
-						if ( settings.pagination_max_pages - 1 !== pagesLoaded ) {
-							if ( 'load-more' === settings.pagination_type ) {
-								pagination.find( '.wpr-load-more-btn' ).fadeIn();
+						// Load
+						var pagesLoaded = 0;
 
-								if ( $scope.find('.wpr-grid-filters').length ) {
-									if ( '*' !== $scope.find('.wpr-active-filter').attr('data-filter') ) {
-										if ( 0 < $scope.find('.wpr-active-filter').length ) {
-											let dataFilterClass = $scope.find('.wpr-active-filter').attr('data-filter').substring(1);
-											items.each(function() {
-												if ( !$(this).hasClass(dataFilterClass) ) {
-													loadedItems = false;
-												} else {
-													loadedItems = true;
-													return false;
+						iGrid.on( 'load.infiniteScroll', function( event, response ) {
+							pagesLoaded++;
+
+							// get posts from response
+							var items = $( response ).find( scopeClass ).find( '.wpr-grid-item' );
+
+							if ( $scope.find('.woocommerce-result-count').length ) {
+								var resultCount = $scope.find('.woocommerce-result-count').text();
+								var updatedResultCount = resultCount.replace( /\d\u2013\d+/, '1\u2013' + ( $scope.find('.wpr-grid-item').length + items.length ) );
+								$scope.find('.woocommerce-result-count').text(updatedResultCount);
+							}
+							
+							iGrid.infiniteScroll( 'appendItems', items );
+							iGrid.isotopewpr( 'appended', items );
+
+							items.imagesLoaded().progress( function( instance, image ) {
+								isotopeLayout( settings );
+
+								// Fix Layout
+								setTimeout(function() {
+									isotopeLayout( settings );
+									isotopeFilters( settings );
+								}, 10 );
+					
+								setTimeout(function() {
+									iGrid.addClass( 'grid-images-loaded' );
+								}, 500 );
+							});
+
+							// Loading
+							pagination.find( '.wpr-pagination-loading' ).hide();
+
+							if ( settings.pagination_max_pages - 1 !== pagesLoaded ) {
+								if ( 'load-more' === settings.pagination_type ) {
+									pagination.find( '.wpr-load-more-btn' ).fadeIn();
+
+									if ( $scope.find('.wpr-grid-filters').length ) {
+										if ( '*' !== $scope.find('.wpr-active-filter').attr('data-filter') ) {
+											if ( 0 < $scope.find('.wpr-active-filter').length ) {
+												let dataFilterClass = $scope.find('.wpr-active-filter').attr('data-filter').substring(1);
+												items.each(function() {
+													if ( !$(this).hasClass(dataFilterClass) ) {
+														loadedItems = false;
+													} else {
+														loadedItems = true;
+														return false;
+													}
+												});
+					
+												if ( !loadedItems ) {
+													$scope.find( '.wpr-grid' ).infiniteScroll( 'loadNextPage' );
 												}
-											});
-				
-											if ( !loadedItems ) {
-												$scope.find( '.wpr-grid' ).infiniteScroll( 'loadNextPage' );
 											}
 										}
 									}
 								}
+							} else {
+								pagination.find( '.wpr-pagination-finish' ).fadeIn( 1000 );
+								pagination.delay( 2000 ).fadeOut( 1000 );
+								setTimeout(function() {
+									pagination.find( '.wpr-pagination-loading' ).hide();
+								}, 500 );
 							}
-						} else {
-							pagination.find( '.wpr-pagination-finish' ).fadeIn( 1000 );
-							pagination.delay( 2000 ).fadeOut( 1000 );
+
+							// Init Likes
+							// No need for this anymore
+							// setTimeout(function() {
+							// 	postLikes( settings );
+							// }, 300 );
+
+							// Init Lightbox
+							lightboxPopup( settings );
+
+							// Fix Lightbox
+							iGrid.data( 'lightGallery' ).destroy( true );
+							iGrid.lightGallery( settings.lightbox );
+
+							// Init Media Hover Link
+							mediaHoverLink();
+
+							// Init Post Sharing
+							postSharing();
+
+							lazyLoadObserver();
+
+							// Maybe there is some other way
 							setTimeout(function() {
-								pagination.find( '.wpr-pagination-loading' ).hide();
-							}, 500 );
-						}
+								setEqualHeight(settings);
+								window.dispatchEvent(new Event('resize'));
+							}, 500);
+						});
 
-						// Init Likes
-						// No need for this anymore
-						// setTimeout(function() {
-						// 	postLikes( settings );
-						// }, 300 );
-
-						// Init Lightbox
-						lightboxPopup( settings );
-
-						// Fix Lightbox
-						iGrid.data( 'lightGallery' ).destroy( true );
-						iGrid.lightGallery( settings.lightbox );
-
-						// Init Media Hover Link
-						mediaHoverLink();
-
-						// Init Post Sharing
-						postSharing();
-
-						lazyLoadObserver();
-
-						// Maybe there is some other way
-                        setTimeout(function() {
-                            setEqualHeight(settings);
-                            window.dispatchEvent(new Event('resize'));
-                        }, 500);
-					});
-
-					pagination.find( '.wpr-load-more-btn' ).on( 'click', function() {
-						if ( ! WprElements.editorCheck() ) {
+						pagination.find( '.wpr-load-more-btn' ).on( 'click', function() {
 							iGrid.infiniteScroll( 'loadNextPage' );
 							return false;
-						} else {
-							alert( 'Load More is Disabled in the Editor! Please Preview to See it in Action' );
-						}
-					});
-
+						});
+					} else {
+						$scope.find( '.wpr-load-more-btn' ).on( 'click', function() {
+							alert( 'Load More is Disabled in the Editor! Please Preview this Page to see it in action' );
+						});
+					}
 				}
 
 			// Slider
@@ -1983,7 +1983,7 @@
 						if ( ! WprElements.editorCheck() ) {
 							$(this).closest( 'article' ).find( '.wpr-grid-image-wrap' ).trigger( 'click' );
 						} else {
-							alert( 'Lightbox is Disabled in the Editor! Please Preview to see it in action. Please Preview to see it in action.' );
+							alert( 'Lightbox is Disabled in the Editor! Please Preview this Page to see it in action.' );
 						}
 					});
 				} else {
@@ -1992,7 +1992,7 @@
 							var imageWrap = $(this).closest( 'article' ).find( '.wpr-grid-image-wrap' );
 								imageWrap.trigger( 'click' );
 						} else {
-							alert( 'Lightbox is Disabled in the Editor! Please Preview to see it in action.' );
+							alert( 'Lightbox is Disabled in the Editor! Please Preview this Page to see it in action.' );
 						}
 					});
 				}
@@ -7321,7 +7321,7 @@
                         if ( ! WprElements.editorCheck() ) {
                             $(this).closest( '.wpr-insta-feed-content-wrap' ).find( '.wpr-insta-feed-image-wrap' ).trigger( 'click' );
                         } else {
-                            alert( 'Lightbox is Disabled in the Editor! Please Preview to see it in action.' );
+                            alert( 'Lightbox is Disabled in the Editor! Please Preview this Page to see it in action.' );
                         }
                     });
                 } else {
@@ -7330,7 +7330,7 @@
                             var imageWrap = $(this).closest( '.wpr-insta-feed-content-wrap' ).find( '.wpr-insta-feed-image-wrap' );
                                 imageWrap.trigger( 'click' );
                         } else {
-                            alert( 'Lightbox is Disabled in the Editor! Please Preview to see it in action.' );
+                            alert( 'Lightbox is Disabled in the Editor! Please Preview this Page to see it in action.' );
                         }
                     });
                 }
@@ -9277,7 +9277,7 @@
 				});
 
 				$scope.find('.reset_variations').on('click', function() {
-					alert('Reset is Disabled in Editor. Please Preview to See it in Action.');
+					alert('Reset is Disabled in Editor. Please Preview this Page to see it in action.');
 				});
 			}
 
