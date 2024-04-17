@@ -479,7 +479,7 @@ class Wpr_Grid extends Widget_Base {
 		];
 	}
 
-	public function add_repeater_args_element_custom_field( $meta = [] ) {
+	public function add_repeater_args_element_custom_field( $meta ) {
 		return [
 			'type' => Controls_Manager::HIDDEN,
 			'default' => ''
@@ -2071,7 +2071,7 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
-		$repeater->add_control( 'element_custom_field', $this->add_repeater_args_element_custom_field() );
+		$repeater->add_control( 'element_custom_field', $this->add_repeater_args_element_custom_field( [] ) );
 
 		$repeater->add_control( 'element_custom_field_img_ID', $this->add_repeater_args_element_custom_field_img_ID() );
 

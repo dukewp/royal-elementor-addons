@@ -271,7 +271,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		];
 	}
 
-	public function add_repeater_args_element_custom_field( $meta = [] ) {
+	public function add_repeater_args_element_custom_field( $meta ) {
 		return [
 			'type' => Controls_Manager::HIDDEN,
 			'default' => ''
@@ -1291,7 +1291,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 
 		$repeater->add_control( 'element_sharing_tooltip', $this->add_repeater_args_element_sharing_tooltip() );
 
-		$repeater->add_control( 'element_custom_field', $this->add_repeater_args_element_custom_field() );
+		$repeater->add_control( 'element_custom_field', $this->add_repeater_args_element_custom_field( [] ) );
 
 		$repeater->add_control( 'element_custom_field_btn_link', $this->add_repeater_args_element_custom_field_btn_link() );
 
