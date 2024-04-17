@@ -102,8 +102,11 @@ class Plugin {
 		// Twitter
 		require WPR_ADDONS_PATH . 'classes/modules/wpr-load-more-tweets.php';
 
-		// Twitter
+		// Meta Keys
 		require WPR_ADDONS_PATH . 'classes/wpr-custom-meta-keys.php';
+
+		// Grid
+		require WPR_ADDONS_PATH . 'classes/modules/wpr-filter-grid-posts.php';
 
 		// Particles
 		if ( 'on' === get_option('wpr-particles', 'on') ) {//TODO: make this check automatic(loop through) for all extensions
