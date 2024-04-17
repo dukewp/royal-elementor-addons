@@ -9512,7 +9512,7 @@ class Wpr_Grid extends Widget_Base {
 
 					echo '<li'. $data_role .' class="'. esc_attr($pointer_class) .'">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						if ( 'yes' !== $settings['filters_linkable'] ) {
-							echo ''. $left_separator .'<span '. $pointer_item_class .'  data-test-filter='. json_encode([$tax_data_attr, $term_data_attr]) .'  data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo ''. $left_separator .'<span '. $pointer_item_class .'  data-ajax-filter='. json_encode([$tax_data_attr, $term_data_attr]) .'  data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						} else {
 							echo ''. $left_separator .'<a class="'. $active_class . ' ' . $pointer_item_class_name .'" href="'. esc_url(get_term_link( $filter->term_id, $taxonomy )) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</a>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						}
@@ -9549,9 +9549,9 @@ class Wpr_Grid extends Widget_Base {
 
 					echo '<li'. $data_role .' class="'. esc_attr($pointer_class) . esc_attr($hidden_class) .'">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						if ( 'yes' !== $settings['filters_linkable'] ) {
-							echo ''. $left_separator .'<span '. $pointer_item_class .'  data-test-filter='. json_encode([$tax_data_attr, $term_data_attr]) .'  data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo ''. $left_separator .'<span '. $pointer_item_class .'  data-ajax-filter='. json_encode([$tax_data_attr, $term_data_attr]) .'  data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						} else {
-							echo ''. $left_separator .'<a class="'. $active_class . ' ' . $pointer_item_class_name .'" href="'. esc_url(get_term_link( $filter->term_id, $taxonomy )) .'"  data-test-filter='. json_encode([$tax_data_attr, $term_data_attr]) .'  data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</a>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo ''. $left_separator .'<a class="'. $active_class . ' ' . $pointer_item_class_name .'" href="'. esc_url(get_term_link( $filter->term_id, $taxonomy )) .'"  data-ajax-filter='. json_encode([$tax_data_attr, $term_data_attr]) .'  data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</a>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						}
 					echo '</li>';
 
@@ -9574,7 +9574,7 @@ class Wpr_Grid extends Widget_Base {
 				echo '<ul data-parent=".'. esc_attr(urldecode( $data_attr )) .'" class="wpr-sub-filters">';
 
 				echo '<li data-role="back" class="'. esc_attr($pointer_class) .'">';
-					echo '<span class="wpr-back-filter"  data-test-filter='. json_encode([$tax_data_attr, $term_data_attr]) .'  data-filter=".'. esc_attr(urldecode( $data_attr )) .'">';
+					echo '<span class="wpr-back-filter"  data-ajax-filter='. json_encode([$tax_data_attr, $term_data_attr]) .'  data-filter=".'. esc_attr(urldecode( $data_attr )) .'">';
 						echo '<i class="fas fa-long-arrow-alt-left"></i>&nbsp;&nbsp;'. esc_html__( 'Back', 'wpr-addons' );
 					echo '</span>';
 				echo '</li>';
@@ -9584,7 +9584,7 @@ class Wpr_Grid extends Widget_Base {
 					$data_attr = 'post_tag' === $taxonomy ? 'tag-'. $sub_filter->slug : $taxonomy .'-'. $sub_filter->slug;
 
 					echo '<li data-role="sub" class="'. esc_attr($pointer_class) .'">';
-						echo ''. $left_separator .'<span '. $pointer_item_class .'  data-test-filter='. json_encode([$tax_data_attr, $term_data_attr]) .'  data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($sub_filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo ''. $left_separator .'<span '. $pointer_item_class .'  data-ajax-filter='. json_encode([$tax_data_attr, $term_data_attr]) .'  data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($sub_filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo '</li>';
 				}
 
