@@ -3908,7 +3908,7 @@ class Wpr_Form_Builder extends Widget_Base {
 										if ( is_admin() ) {
 											echo '<br>';
 											echo '<ul class="wpr-file-type-error">';
-												echo esc_html__( 'Remove following types: ', 'wpr-addons' );
+												echo esc_html__( 'Please remove unsupported file type(s):', 'wpr-addons' );
 												foreach ( $non_whitelisted as $type ) {
 													if ( !empty($type) ) {
 														echo '<li>'. $type .' <li/>';
