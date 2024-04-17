@@ -179,7 +179,7 @@ class Wpr_Grid extends Widget_Base {
 		);
 	}
 
-	public function add_control_order_posts_by_acf( $meta = [] ) {
+	public function add_control_order_posts_by_acf( $meta ) {
 	}
 
 	public function add_control_query_slides_to_show() {
@@ -479,7 +479,7 @@ class Wpr_Grid extends Widget_Base {
 		];
 	}
 
-	public function add_repeater_args_element_custom_field( $meta = [] ) {
+	public function add_repeater_args_element_custom_field( $meta ) {
 		return [
 			'type' => Controls_Manager::HIDDEN,
 			'default' => ''
@@ -836,7 +836,7 @@ class Wpr_Grid extends Widget_Base {
 
 		$this->add_control_order_posts();
 
-		$this->add_control_order_posts_by_acf();
+		$this->add_control_order_posts_by_acf( [] );
 
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'order_posts', ['pro-tl', 'pro-mf', 'pro-d', 'pro-ar', 'pro-cc'] );
@@ -2107,7 +2107,7 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
-		$repeater->add_control( 'element_custom_field', $this->add_repeater_args_element_custom_field() );
+		$repeater->add_control( 'element_custom_field', $this->add_repeater_args_element_custom_field( [] ) );
 
 		$repeater->add_control( 'element_custom_field_img_ID', $this->add_repeater_args_element_custom_field_img_ID() );
 
