@@ -1332,29 +1332,32 @@ class Wpr_Grid extends Widget_Base {
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'no',
 				'return_value' => 'yes',
-				'relation' => 'or',
-				'terms' => [
-					[
-						'name' => 'layout_filters',
-						'operator' => '!=',
-						'value' => '',
-					],
-					[
-						'relation' => 'and',
-						'terms' => [
-							[
-								'name' => 'layout_pagination',
-								'operator' => '!=',
-								'value' => '',
-							],
-							[
-								'name' => 'pagination_type',
-								'operator' => '==',
-								'value' => 'load-more',
+				'render_type' => 'template',
+				'conditions' => [
+					'relation' => 'or',
+					'terms' => [
+						[
+							'name' => 'layout_filters',
+							'operator' => '!=',
+							'value' => '',
+						],
+						[
+							'relation' => 'and',
+							'terms' => [
+								[
+									'name' => 'layout_pagination',
+									'operator' => '!=',
+									'value' => '',
+								],
+								[
+									'name' => 'pagination_type',
+									'operator' => '==',
+									'value' => 'load-more',
+								],
 							],
 						],
-					],
-				],
+					]
+				]
 			]
 		);
 
