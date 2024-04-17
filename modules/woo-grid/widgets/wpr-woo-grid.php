@@ -9205,7 +9205,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		}
 
 		if ( has_post_thumbnail() ) {
-			echo '<div class="wpr-grid-image-wrap" data-src="'. esc_url( $src ) .'"  data-img-on-hover="'. $settings['secondary_img_on_hover'] .'" data-src-secondary="'. esc_url( $src2 ) .'">';
+			echo '<div class="wpr-grid-image-wrap" data-src="'. esc_url( $src ) .'"  data-img-on-hover="'. esc_attr( $settings['secondary_img_on_hover'] ) .'" data-src-secondary="'. esc_url( $src2 ) .'">';
 				echo '<img src="'. esc_url( $src ) .'" alt="'. esc_attr( $alt ) .'" class="wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
 				if ( 'yes' == $settings['secondary_img_on_hover'] ) {
 					echo '<img src="'. esc_url( $src2 ) . '" alt="'. esc_attr( $alt ) .'" class="wpr-hidden-img wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
