@@ -106,7 +106,7 @@ class Plugin {
 		require WPR_ADDONS_PATH . 'classes/modules/wpr-filter-grid-posts.php';
 		require WPR_ADDONS_PATH . 'classes/modules/wpr-test-grid-filters-ajax.php';
 		
-		// Twitter
+		// Meta Keys
 		require WPR_ADDONS_PATH . 'classes/wpr-custom-meta-keys.php';
 
 		// Particles
