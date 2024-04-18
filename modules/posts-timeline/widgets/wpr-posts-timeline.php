@@ -5543,7 +5543,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 							if ( 'yes' === $content['repeater_show_extra_label'] ) {
 								echo !empty($this->story_date_label) || !empty($this->story_extra_label) ? '<div class="wpr-extra-label" >' : '';
 								  echo !empty($this->story_date_label) ? '<span '. $this->get_render_attribute_string( $this->date_label_key ) .' >'. esc_html__($this->story_date_label) .'</span>' : ''; 
-								  echo !empty($this->story_extra_label) ? '<span '. $this->get_render_attribute_string( $this->extra_label_key ) .' >'. wp_kses_post__($this->story_extra_label) .'</span>' : '';
+								  echo !empty($this->story_extra_label) ? '<span '. $this->get_render_attribute_string( $this->extra_label_key ) .' >'. wp_kses_post($this->story_extra_label) .'</span>' : '';
 								echo !empty($this->story_date_label) || !empty($this->story_extra_label) ? '</div>' : '';
 							}
 
