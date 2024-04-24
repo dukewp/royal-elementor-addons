@@ -3486,7 +3486,7 @@ class Wpr_Form_Builder extends Widget_Base {
 					$this->add_required_attribute( $element_id );
 				}
 
-				$html .= '<span class="wpr-form-field-option" data-key="form-field-'. $item['field_id'] .'"><input ' . $this->get_render_attribute_string( $element_id ) . '> <label for="' . $html_id . '">'. $option_label .'</label></span>';
+				$html .= '<span class="wpr-form-field-option" data-key="form-field-'. esc_attr( $item['field_id'] ).'"><input ' . $this->get_render_attribute_string( $element_id ) . '> <label for="' . $html_id . '">'. $option_label .'</label></span>';
 			}
 			$html .= '</div>';
 		}
@@ -3679,7 +3679,7 @@ class Wpr_Form_Builder extends Widget_Base {
 						json_encode($submit_actions)
 					],
 					'data-redirect-url' => [
-						in_array('redirect', $submit_actions) ? $instance['redirect_to'] : ''
+						in_array('redirect', $submit_actions) ? esc_url( $instance['redirect_to'] ) : ''
 					],
 					'data-mailchimp-fields' => [
 						json_encode($fieldsArray)
