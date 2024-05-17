@@ -2442,7 +2442,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 			}
 			?>
 
-				<div data-src=<?php echo $this->item_bg_image_url ?>   class="wpr-image-accordion-item elementor-repeater-item-<?php echo $item['_id'] . $this->get_image_effect_class( $settings )?>">
+				<div data-src=<?php echo esc_url( $this->item_bg_image_url ) ?>   class="wpr-image-accordion-item elementor-repeater-item-<?php echo esc_attr( $item['_id'] ) . $this->get_image_effect_class( $settings )?>">
 
 				<div class="wpr-accordion-background" style="background-image: url(<?php echo $this->item_bg_image_url ?>);"></div>
 							
