@@ -61,7 +61,7 @@ class WPR_Templates_Loop {
 							// Delete
 							$one_time_nonce = wp_create_nonce( 'delete_post-' . $slug );
 
-							echo '<span class="wpr-delete-template button button-primary"  data-nonce="'. $one_time_nonce .'" data-slug="'. esc_attr($slug) .'" data-warning="'. esc_html__( 'Are you sure you want to delete this template?', 'wpr-addons' ) .'"><span class="dashicons dashicons-no-alt"></span></span>';
+							echo '<span class="wpr-delete-template button button-primary"  data-nonce="'. esc_attr($one_time_nonce) .'" data-slug="'. esc_attr($slug) .'" data-warning="'. esc_html__( 'Are you sure you want to delete this template?', 'wpr-addons' ) .'"><span class="dashicons dashicons-no-alt"></span></span>';
 
 
 				        echo '</div>';
@@ -463,8 +463,8 @@ class WPR_Templates_Loop {
             <?php
            	// Pro Notice
 			if ( ! wpr_fs()->can_use_premium_code() ) {
-				echo '<span style="color: #7f8b96;"><br>Conditions are fully suppoted in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-conditions-upgrade-pro#purchasepro" target="_blank">Pro and Expert versions.</a></strong></span>';
-				// echo '<span style="color: #7f8b96;"><br>Conditions are fully suppoted in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong></span>';
+				echo '<span style="color: #7f8b96;"><br>Conditions are fully supported in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-backend-conditions-upgrade-pro#purchasepro" target="_blank">Pro and Expert versions.</a></strong></span>';
+				// echo '<span style="color: #7f8b96;"><br>Conditions are fully supported in the <strong><a href="'. admin_url('admin.php?page=wpr-addons-pricing') .'" target="_blank">Pro version</a></strong></span>';
 			}
 
             ?>
