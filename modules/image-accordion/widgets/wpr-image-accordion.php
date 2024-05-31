@@ -54,6 +54,8 @@ class Wpr_Image_Accordion extends Widget_Base {
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
 
+	public $item_bg_image_url;
+
 	public function add_section_lightbox_popup() {}
 
 	public function add_section_lightbox_styles() {}
@@ -2436,11 +2438,11 @@ class Wpr_Image_Accordion extends Widget_Base {
 			$render_attribute = $this->get_render_attribute_string( 'accordion-settings'.$key );
 
 			if ( ! empty( $item['accordion_btn_url']['url'] ) ) {
-				$this->add_link_attributes( 'accordion_btn_url'.$item['_id'], $item['accordion_btn_url'] );
+				$this->add_link_attributes( 'accordion_btn_url'. esc_attr($item['_id']), $item['accordion_btn_url'] );
 			}
 			?>
 
-				<div data-src=<?php echo $this->item_bg_image_url ?>   class="wpr-image-accordion-item elementor-repeater-item-<?php echo $item['_id'] . $this->get_image_effect_class( $settings )?>">
+				<div data-src=<?php echo esc_url( $this->item_bg_image_url ) ?>   class="wpr-image-accordion-item elementor-repeater-item-<?php echo esc_attr($item['_id']) . $this->get_image_effect_class( $settings )?>">
 
 				<div class="wpr-accordion-background" style="background-image: url(<?php echo $this->item_bg_image_url ?>);"></div>
 							

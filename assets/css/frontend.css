@@ -280,6 +280,10 @@ button.lg-icon {
     overflow: hidden;
 }
 
+.wpr-z-index {
+    z-index: 9999 !important;
+}
+
 .wpr-inline-flex-center {
     display: -webkit-inline-box;
     display: -ms-inline-flexbox;
@@ -8063,7 +8067,9 @@ select.wpr-category-select {
 }
 
 .wpr-member-social {
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 45px;
     height: 45px;
     line-height: 45px;
@@ -14327,7 +14333,7 @@ flex-grow: 0; */
     border-collapse: collapse;
 }
 
-.wpr-comapre-table-wrap {
+.wpr-compare-table-wrap {
     min-height: 1px;
 }
 
@@ -16598,6 +16604,14 @@ dl.variation dd {
     overflow: hidden;
 }
 
+.woocommerce.woocommerce-checkout .wpr-checkout-order-review-table-inner #order_review,
+.woocommerce.woocommerce-checkout .wpr-checkout-order-review-table-inner #order_review_heading,
+.woocommerce-page.woocommerce-checkout .wpr-checkout-order-review-table-inner #order_review,
+.woocommerce-page.woocommerce-checkout .wpr-checkout-order-review-table-inner #order_review_heading {
+    float: none;
+    width: auto;
+}
+
 .wpr-checkout-order-review-table #order_review table {
   border: none !important;
 }
@@ -18092,6 +18106,10 @@ dl.variation dd {
     top: 100%;
 }
 
+.wpr-field-group input {
+    margin: 0;
+}
+
 .wpr-form-fields-wrap {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -18357,6 +18375,20 @@ dl.variation dd {
 
 .wpr-custom-styles-yes .wpr-form-field-type-radio .wpr-form-field-option.wpr-checked label::before {
     content: "⬤" !important;
+}
+
+.wpr-file-type-error {
+    flex-basis: 100%;
+    padding: 5px 0;
+    margin: 0 0 5px 0;
+    list-style-type: none;
+    color: red;
+    font-size: 13px;
+}
+
+.wpr-file-type-error li {
+    color: #000;
+    display: inline;
 }
 
 .wpr-form-field-type-hidden {
