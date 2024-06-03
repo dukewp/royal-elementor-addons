@@ -8450,7 +8450,7 @@ class Wpr_Grid extends Widget_Base {
 
 		if ( isset($args['tax_query']) ) {
 
-			$tax_query = ['relation' => get_option('wpr_filter_relation')];
+			$tax_query = ['relation' => get_option('wpr_filter_relation', 'or')];
 
 			$prev_cleaned_key = '';
 
