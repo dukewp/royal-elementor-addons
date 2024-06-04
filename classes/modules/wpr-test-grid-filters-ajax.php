@@ -567,7 +567,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	// Render Post Thumbnail
 	public function render_post_thumbnail( $settings ) {
 		$id = get_post_thumbnail_id();
-		
+
 		$src = Group_Control_Image_Size::get_attachment_image_src( $id, 'layout_image_crop', $settings );
 		
 		if ( get_post_meta(get_the_ID(), 'wpr_secondary_image_id') && !empty(get_post_meta(get_the_ID(), 'wpr_secondary_image_id')) ) {
@@ -1568,7 +1568,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			if ( has_post_thumbnail() ) {
 				echo '<div class="wpr-grid-media-wrap'. esc_attr($this->get_image_effect_class( $settings )) .' " data-overlay-link="'. esc_attr( $settings['overlay_post_link'] ) .'">';
 					// Post Thumbnail
-					$this->render_post_thumbnail( $settings, get_the_ID() );
+					if ( !empty($settings) ) {
+						$this->render_post_thumbnail( $settings, get_the_ID() );
+					}
 
 					// Media Hover
 					echo '<div class="wpr-grid-media-hover wpr-animation-wrap">';
