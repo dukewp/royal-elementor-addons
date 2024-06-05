@@ -21,8 +21,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     public function __construct() {
 		add_action('wp_ajax_wpr_test_grid_filters_ajax', [$this, 'wpr_test_grid_filters_ajax']);
 		add_action('wp_ajax_nopriv_wpr_test_grid_filters_ajax', [$this, 'wpr_test_grid_filters_ajax']);
-		// add_action('wp_ajax_wpr_get_filtered_count', [$this, 'wpr_get_filtered_count']);
-		// add_action('wp_ajax_nopriv_wpr_get_filtered_count', [$this, 'wpr_get_filtered_count']);
+		add_action('wp_ajax_wpr_get_filtered_count_test', [$this, 'wpr_get_filtered_count_test']);
+		add_action('wp_ajax_nopriv_wpr_get_filtered_count_test', [$this, 'wpr_get_filtered_count_test']);
     }
     
 	// Get Taxonomies Related to Post Type
@@ -230,8 +230,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		if ( isset($args['tax_query']) ) {
 
-			$tax_query = ['relation' => get_option('wpr_filter_relation', 'or')];
-            $meta_query = ['relation' => get_option('wpr_filter_relation', 'or')];
+			$tax_query = ['relation' => get_option('wpr_filter_relation')]; // TODO: CHECK IF DEFAULT NEEDED
+            $meta_query = ['relation' => get_option('wpr_filter_relation')]; // TODO: CHECK IF DEFAULT NEEDED
 
 			$prev_cleaned_key = '';
 
@@ -330,8 +330,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 											}
 										} else {
 											if ( isset($meta_query) ) {
-												$for_meta_query = [ // needs check if overrides something
-													'relation' => explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] ? explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] : 'or',
+												$for_meta_query = [ // needs check if overrides somethings
+													'relation' => explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] ? explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] : explode(',', $_POST['wpr_url_params']['wpr_gfr_'. $cleanedKey])[0],
 												];
 			
 												foreach ($filtervalues as $filtervalue) {
@@ -349,7 +349,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 												array_push( $meta_query, $for_meta_query );
 											} else {
 												$meta_query = [ // needs check if overrides something
-													'relation' => explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] ? explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] : 'or',
+													'relation' => explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] ? explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] : explode(',', $_POST['wpr_url_params']['wpr_gfr_'. $cleanedKey])[0],
 												];
 	
 												if (is_array($filtervalues)) {
@@ -367,7 +367,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 										}
 									} else { // if != 'meta_field'
 										$for_tax_query = [ // needs check if overrides something
-											'relation' => explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] ? explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] : 'or',
+											'relation' => explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] ? explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] : explode(',', $_POST['wpr_url_params']['wpr_gfr_'. $cleanedKey])[0],
 										];
 	
 										foreach ($filtervalues as $filtervalue) {
@@ -1525,14 +1525,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 		echo '</div>';
 	}
 
-	public function wpr_get_filtered_count() {
-		$settings = $_POST['grid_settings'];
-		$page_count = $this->get_max_num_pages( $settings );
+	public function wpr_get_filtered_count_test() {
+		$query = new \WP_Query( $this->get_main_query_args() );
     
         wp_send_json_success([
-            'page_count' => $page_count,
+            'query' => $query,
+			'check' => explode(',', $_POST['wpr_url_params']['wpr_gfr_place'])[0]
         ]);
-    
+		
+		wp_reset_postdata();
         wp_die();
 	}
 
@@ -1540,7 +1541,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		// Get Settings
 		$settings = $_POST['grid_settings'];
 
-        // var_dump($this->get_main_query_args());
 		// Get Posts
 		$posts = new \WP_Query( $this->get_main_query_args() );
 
