@@ -3576,25 +3576,6 @@ class Wpr_Form_Builder extends Widget_Base {
 	<?php }
 
 	public function render_submit_button($instance) {
-		// echo '<button type="submit" '.  $this->get_render_attribute_string( 'button' ) .'>';
-		// 	echo '<span '. $this->get_render_attribute_string( 'content-wrapper' ) .'>';
-		// 		if ( ! empty( $instance['button_icon'] ) || ! empty( $instance['selected_button_icon'] ) ) :
-		// 			echo '<span '. $this->get_render_attribute_string( 'icon-align' ) .'>';
-		// 				if ( empty( $instance['button_text'] ) ) :
-		// 					// remove class if possible
-		// 					echo '<span  class="wpr-hidden-element">'. esc_html__( 'Submit', 'wpr-addons' ) .'</span>';
-		// 				endif;
-		// 			echo '</span>';
-		// 		endif;
-		// 		if ( ! empty( $instance['button_text'] ) ) :
-		// 			echo '<span> '. $this->print_unescaped_setting( 'button_text' ) .'</span>';
-		// 		endif;
-		// 	echo '</span>';
-		// 	echo '<div class="wpr-double-bounce wpr-loader-hidden">';
-		// 		echo '<div class="wpr-child wpr-double-bounce1"></div>';
-		// 		echo '<div class="wpr-child wpr-double-bounce2"></div>';
-		// 	echo '</div>';
-		// echo '</button>';
 		?>
 			<button type="submit" <?php echo $this->get_render_attribute_string( 'button' ); ?>>
 				<span <?php echo $this->get_render_attribute_string( 'content-wrapper' ); ?>>
