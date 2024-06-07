@@ -1529,8 +1529,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$query = new \WP_Query( $this->get_main_query_args() );
     
         wp_send_json_success([
-            'query' => $query,
-			'check' => explode(',', $_POST['wpr_url_params']['wpr_gfr_place'])[0]
+            'query' => $query
         ]);
 		
 		wp_reset_postdata();
