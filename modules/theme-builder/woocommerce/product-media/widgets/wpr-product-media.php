@@ -1545,8 +1545,10 @@ class Wpr_Product_Media extends Widget_Base {
 				echo '<div class="wpr-thumbnail-slider-next-arrow wpr-tsa-hidden wpr-thumbnail-slider-arrow">'. Utilities::get_wpr_icon( $settings['thumbnail_slider_nav_icon'], 'right' ) .'</div>';
 		}
 
-        wc_get_template('single-product/product-image.php');
+		wc_get_template('single-product/product-image.php');
+
 		echo '</div>';
+
 		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
 			?>
 			<script>
