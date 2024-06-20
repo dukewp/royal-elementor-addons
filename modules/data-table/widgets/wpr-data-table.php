@@ -1878,7 +1878,7 @@ class Wpr_Data_Table extends Widget_Base {
 			$csvcontents = fgetcsv($handle, 0, $delimiter);
 			echo '<thead><tr class="wpr-table-head-row wpr-table-row">';
 			foreach ($csvcontents as $headercolumn) {
-				echo "<th class='wpr-table-th wpr-table-text'>$headercolumn  $sorting_icon</th>";
+				echo "<th class='wpr-table-th wpr-table-text'>". esc_html($headercolumn) . $sorting_icon ."</th>";
 			}
 			echo '</tr></thead>';
 		}
@@ -1892,7 +1892,7 @@ class Wpr_Data_Table extends Widget_Base {
 				$oddEven = $countRows % 2 == 0 ? 'wpr-even' : 'wpr-odd';
 				echo '<tr class="wpr-table-row  '. esc_attr($oddEven) .'">';
 				foreach ($csvcontents as $column) {
-					echo '<td class="wpr-table-td wpr-table-text">'. $column .'</td>';
+					echo '<td class="wpr-table-td wpr-table-text">'. esc_html($column) .'</td>';
 				}
 				echo '</tr>';
 		}
