@@ -12,7 +12,7 @@ jQuery( document ).ready( function($) {
         let matchesPro = versionPro.match(/\d+(\.\d+)+/);
         let proVersion = matchesPro ? matchesPro[0] : '';
 
-        function compareVersions(version1, version2) {
+        function wprCompareVersions(version1, version2) {
             // Extract the numeric parts of the versions
             let num1 = version1.match(/\d+(\.\d+)+/);
             let num2 = version2.match(/\d+(\.\d+)+/);
@@ -21,8 +21,6 @@ jQuery( document ).ready( function($) {
                 // Convert the extracted numbers to floats for comparison
                 let num1Float = parseFloat(num1[0]);
                 let num2Float = parseFloat(num2[0]);
-                
-                console.log(num1Float, num2Float);
         
                 // Compare the numbers
                 if (num1Float >= num2Float) {
@@ -31,7 +29,7 @@ jQuery( document ).ready( function($) {
             }
         }
         
-        compareVersions(updateVersion, proVersion);  
+        wprCompareVersions(updateVersion, proVersion);  
     }
 
 });
