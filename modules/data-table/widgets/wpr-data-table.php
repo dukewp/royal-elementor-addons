@@ -1160,37 +1160,6 @@ class Wpr_Data_Table extends Widget_Base {
 			]
 		);
 
-		// $this->add_control(
-        //     'table_alignment',
-        //     [
-        //         'label'        => esc_html__('Alignment', 'wpr-addons'),
-        //         'type'         => Controls_Manager::CHOOSE,
-        //         'label_block'  => false,
-        //         'default'      => 'center',
-        //         'options'      => [
-        //             'flex-start'   => [
-        //                 'title' => esc_html__('Left', 'wpr-addons'),
-        //                 'icon'  => 'eicon-h-align-left',
-        //             ],
-        //             'center' => [
-        //                 'title' => esc_html__('Center', 'wpr-addons'),
-        //                 'icon'  => 'eicon-h-align-center',
-        //             ],
-        //             'flex-end'  => [
-        //                 'title' => esc_html__('Right', 'wpr-addons'),
-        //                 'icon'  => 'eicon-h-align-right',
-        //             ],
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-table-container .wpr-table-inner-container' => 'justify-content: {{VALUE}}',
-		// 			'{{WRAPPER}} .wpr-table-container' => 'display: flex; justify-content: {{VALUE}}',
-		// 			'{{WRAPPER}} .wpr-export-search-cont' => 'display: flex; justify-content: {{VALUE}}',
-		// 			'{{WRAPPER}} .wpr-table-pagination-outer-cont' => 'display: flex; justify-content: {{VALUE}}'
-		// 		],
-		// 		'separator' => 'before'
-        //     ]
-        // );
-
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -1683,6 +1652,8 @@ class Wpr_Data_Table extends Widget_Base {
                 ],
                 'selectors'  => [
                     '{{WRAPPER}} .wpr-data-table tbody i:not(.fa-question-circle)' => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .wpr-data-table tbody svg' => 'height: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .wpr-data-table tbody span:has(>svg)' => 'height: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}};'
                 ],
             ]
         );
