@@ -1756,6 +1756,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'default' => '#7a7a7a',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-field-group .wpr-form-field' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-field-group .wpr-form-field svg' => 'fill: {{VALUE}};',
 					'{{WRAPPER}} .wpr-field-group input[type="radio"] + label' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-field-group input[type="checkbox"] + label' => 'color: {{VALUE}};'
 				]
@@ -3384,7 +3385,8 @@ class Wpr_Form_Builder extends Widget_Base {
 				'select-wrapper' . $i => [
 					'class' => [
 						'wpr-form-field',
-						'wpr-select-wrap',
+						'wpr-select-wrap', 
+						'wpr-fi-svg-'. (\Elementor\Plugin::$instance->experiments->is_feature_active( 'e_font_icon_svg' ) ? 'yes' : 'no'),
 						'remove-before',
 						esc_attr( $item['css_classes'] ),
 					],
@@ -3419,6 +3421,22 @@ class Wpr_Form_Builder extends Widget_Base {
 		ob_start();
 		?>
 		<div <?php $this->print_render_attribute_string( 'select-wrapper' . $i ); ?>>
+
+			<?php if ( \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_font_icon_svg' ) ) { ?>
+				<!-- <svg class="e-font-icon-svg e-eicon-caret-down" viewBox="0 0 571.4 1000" xmlns="http://www.w3.org/2000/svg">
+					<path d="M571 457q0-14-10-25l-250-250q-11-11-25-11t-25 11l-250 250q-11 11-11 25t11 25 25 11h500q14 0 25-11t10-25z"/>
+				</svg> -->
+				<!-- <svg class="e-font-icon-svg e-eicon-caret-up" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+					<path d="M763 279c8-8 8-12 8-25 0-8-4-16-8-25-9-8-13-8-25-8h-459c-8 0-16 4-25 8 0 9-4 17-4 25 0 9 4 17 8 25l230 229c8 5 16 9 25 9 8 0 16-4 25-9l225-229z"/>
+				</svg> -->
+				<!-- <svg class="e-font-icon-svg e-eicon-caret-up" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+					<path d="M763 279c8-8 8-12 8-25 0-8-4-16-8-25-9-8-13-8-25-8h-459c-8 0-16 4-25 8 0 9-4 17-4 25 0 9 4 17 8 25l230 229c8 5 16 9 25 9 8 0 16-4 25-9l225-229z"/>
+				</svg> -->
+				<svg class="e-font-icon-svg e-eicon-caret-up" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+					<path d="M763 279c8-8 8-12 8-25 0-8-4-16-8-25-9-8-13-8-25-8h-459c-8 0-16 4-25 8 0 9-4 17-4 25 0 9 4 17 8 25l230 229c8 5 16 9 25 9 8 0 16-4 25-9l225-229z"/>
+				</svg>
+			<?php } ?>
+
 			<select <?php $this->print_render_attribute_string( 'select' . $i ); ?>>
 
 				<?php
