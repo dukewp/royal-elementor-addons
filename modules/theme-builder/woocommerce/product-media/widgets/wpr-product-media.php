@@ -172,7 +172,8 @@ class Wpr_Product_Media extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-gallery-slider-arrow' => 'display:{{VALUE}} !important;',
-				]
+				],
+				'render_type' => 'template'
 			]
 		);
 

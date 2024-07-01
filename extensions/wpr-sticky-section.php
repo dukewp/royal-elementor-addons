@@ -204,7 +204,8 @@ class Wpr_Sticky_Section {
                     ],
 					'condition' => [
 						'enable_sticky_section' => 'yes'
-					]
+					],
+					'render_type' => 'template'
                 ]
             );
 
