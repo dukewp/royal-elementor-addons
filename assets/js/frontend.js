@@ -166,9 +166,12 @@
 					stickyAnimationHide = '',
 					headerFooterZIndex = !WprElements.editorCheck() ? $scope.attr('data-wpr-z-index') : $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-z-index'),
 					stickType = !WprElements.editorCheck() ? $scope.attr('data-wpr-sticky-type') : $scope.find('.wpr-sticky-section-yes-editor').attr('data-wpr-sticky-type'),
-                    hiddenHeaderClass = $scope.next().hasClass('e-con') ? 'wpr-hidden-header-flex' : 'wpr-hidden-header';
+                    hiddenHeaderClass = $scope.next().hasClass('e-con') ? 'wpr-hidden-header-flex' : 'wpr-hidden-header',
+					distanceFromTop = $scope.offset().top,
+					windowHeight = $(window).height(),
+					elementHeight = $scope.outerHeight(true),
+					distanceFromBottom = $(document).height() - (distanceFromTop + elementHeight);
 
-					var distanceFromTop = $scope.offset().top;
 
 					if ( $scope.data('settings') && $scope.data('settings').sticky_animation ) {
 						stickyAnimation = $scope.data('settings').sticky_animation;
@@ -223,6 +226,10 @@
 
 			    $(window).smartresize(function() { 
 					distanceFromTop = $scope.offset().top;
+					windowHeight = $(window).height(),
+					elementHeight = $scope.outerHeight(true),
+					distanceFromBottom = $(document).height() - (distanceFromTop + elementHeight);
+					
 			        viewportWidth = $('body').prop('clientWidth') + 17;
 					if ( $(window).scrollTop() <= stickyEffectsOffset ) {
 						changePositionType();
@@ -279,10 +286,20 @@
 						let scrollPos = $window.scrollTop();
 						
 						if ( 'fixed' != positionStyle ) {
-							if ( scrollPos > distanceFromTop) {
-								applyPosition();
-							} else if ( scrollPos <= distanceFromTop ) {
-								$scope.css({'position': 'relative' });
+							if ( 'top' === positionLocation ) {
+								if ( scrollPos > distanceFromTop) {
+									applyPosition();
+								} else if ( scrollPos <= distanceFromTop ) {
+									$scope.css({'position': 'relative' });
+								}
+							}
+
+							if ( 'bottom' === positionLocation ) {
+								if ( scrollPos + windowHeight <= $(document).height() - distanceFromBottom ) {
+									applyPosition();
+								} else {
+									$scope.css({'position': 'relative' });
+								}
 							}
 						}
 
@@ -404,10 +421,11 @@
 			        if ( $('#wpadminbar').length ) {
 			            adminBarHeight = $('#wpadminbar').css('height').slice(0, $('#wpadminbar').css('height').length - 2);
 			            // if ( 'top'  ===  positionLocation && ( 'fixed' == $scope.css('position')  || 'sticky' == $scope.css('position') ) ) {
+
 			            if ( 'top'  ===  positionLocation && ( 'fixed' == $scope.css('position') ) ) {
 			                $scope.css('top', +adminBarHeight + offsetTop + 'px');
 			                $scope.css('bottom', 'auto');
-			            } 
+			            }
 			        }
 			    }
 			}
