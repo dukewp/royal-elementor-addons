@@ -2960,11 +2960,32 @@
 						var itemUrl = $(this).find( '.wpr-grid-media-hover-bg' ).attr( 'data-url' );
 						
 						// GOGA - leave if necessary
-						if ( iGrid.find( '.wpr-grid-item-title a' ).length ) {
-							if ( '_blank' === iGrid.find( '.wpr-grid-item-title a' ).attr('target') ) {
-								window.open(itemUrl, '_blank').focus();
-							} else {
-								window.location.href = itemUrl;
+						if (iGrid.find('.wpr-grid-item-title a').length) {
+							// Extract the itemUrl
+							if (itemUrl) {
+								try {
+									// Create a URL object to validate the URL
+									var url = new URL(itemUrl);
+
+									// Define a list of allowed protocols
+									var allowedProtocols = ['http:', 'https:'];
+
+									// Check if the URL's protocol is allowed
+									if (allowedProtocols.includes(url.protocol)) {
+										// Safe to use the URL
+										var safeUrl = url.href;
+
+										if ('_blank' === iGrid.find('.wpr-grid-item-title a').attr('target')) {
+											window.open(safeUrl, '_blank').focus();
+										} else {
+											window.location.href = safeUrl;
+										}
+									} else {
+										console.error('Invalid URL scheme:', url.protocol);
+									}
+								} catch (e) {
+									console.error('Invalid URL:', itemUrl);
+								}
 							}
 						}
 					}
