@@ -87,7 +87,7 @@ class WPR_Count_Wishlist_Compare_Items {
        wp_die();
     }
     
-    function count_compare_items() {
+    public function count_compare_items() {
         $user_id = get_current_user_id();
         
         if ($user_id > 0) {
@@ -107,6 +107,19 @@ class WPR_Count_Wishlist_Compare_Items {
        wp_send_json($product_data);
 
        wp_die();
+    }
+
+    // Function to get the attribute taxonomy from the label
+    public function get_taxonomy_from_label( $label ) {
+        global $wpdb;
+        $taxonomy = $wpdb->get_var( $wpdb->prepare("
+            SELECT attribute_name
+            FROM {$wpdb->prefix}woocommerce_attribute_taxonomies
+            WHERE attribute_label = %s
+            LIMIT 1
+        ", $label) );
+
+        return $taxonomy ? 'pa_' . $taxonomy : '';
     }
 
     public function compare_table() {
@@ -185,10 +198,13 @@ class WPR_Count_Wishlist_Compare_Items {
             
             foreach ( $compare as $product_id ) {
                 $product = wc_get_product( $product_id );
+                
                 if ( ! $product ) {
                     continue;
                 }
+
                 $attributes = $product->get_attributes();
+
                 foreach ( $attributes as $attribute ) {
                     $attribute_name = wc_attribute_label($attribute->get_name());
                     if ( !in_array($attribute_name, $all_attributes) ) {
@@ -196,6 +212,7 @@ class WPR_Count_Wishlist_Compare_Items {
                     }
                 }
             }
+
             foreach ( $all_attributes as $attribute_name ) {
                 $table_data[] = array('label' => $attribute_name, 'type' => 'text');
             }
@@ -261,9 +278,12 @@ class WPR_Count_Wishlist_Compare_Items {
 								}
 
 								// Product Attributes
-								if (isset($attributes['pa_'.$attribute_name])) {
+                                // $attribute_name = $this->format_variable($attribute_name);
+                                $attribute_name = $this->get_taxonomy_from_label($attribute_name);
+
+								if (isset($attributes[$attribute_name])) {
 									// Get the value(s) of the 'dimensions' attribute for the product
-									$attributes_value = $attributes['pa_'.$attribute_name]->get_options();
+									$attributes_value = $attributes[$attribute_name]->get_options();
 									$attributes_value_array = [];
 
 									// Loop through the values and output them
@@ -287,6 +307,12 @@ class WPR_Count_Wishlist_Compare_Items {
 		echo '</div>';
 
         return ob_get_clean();
+    }
+
+    public function format_variable($variable) {
+        $variable = strtolower($variable); // Convert to lowercase
+        $variable = str_replace(' ', '-', $variable); // Replace spaces with hyphens
+        return $variable;
     }
 
     public function render_product_rating($product) {

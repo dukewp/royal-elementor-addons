@@ -37,6 +37,8 @@ class Wpr_Page_Cart extends Widget_Base {
 		return [];
 	}
 
+	public $gettext_modifications;
+
 	protected function register_controls() {
 
 		// Tab: Content ==============
