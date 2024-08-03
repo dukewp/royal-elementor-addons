@@ -3558,6 +3558,9 @@ class Wpr_Grid extends Widget_Base {
 					'{{WRAPPER}} .wpr-grid-item-below-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-item-styles-wrapper .wpr-grid-item' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
 				],
+				'condition' => [
+					'grid_item_styles_selector' == 'inner'
+				],
 				'render_type' => 'template'
 			]
 		);
