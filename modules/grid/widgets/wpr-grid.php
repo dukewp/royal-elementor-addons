@@ -3456,7 +3456,8 @@ class Wpr_Grid extends Widget_Base {
 					'wrapper' => esc_html__( 'Wrapper', 'wpr-addons' )
 				],
 				'default' => 'inner',
-				'prefix_class' => 'wpr-item-styles-'
+				'prefix_class' => 'wpr-item-styles-',
+				'render_type' => 'template'
 			]
 		);
 
@@ -3576,6 +3577,9 @@ class Wpr_Grid extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}}.wpr-item-styles-wrapper .wpr-grid-item' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				],
+				'condition' => [
+					'grid_item_styles_selector' == 'wrapper'
 				],
 				'render_type' => 'template'
 			]
