@@ -2414,13 +2414,14 @@ class Wpr_Image_Accordion extends Widget_Base {
 				break;
 			}
 			
-			if ( !empty($item['accordion_item_bg_image']['id']) ) {
-				$this->item_bg_image_url = Group_Control_Image_Size::get_attachment_image_src( $item['accordion_item_bg_image']['id'], 'accordion_image_size', $settings );
-			} elseif ( !empty($item['accordion_item_bg_image']['url']) ) {
-				$this->item_bg_image_url = $item['accordion_item_bg_image']['url'];
+			if ( !empty( $item['accordion_item_bg_image']['id'] ) ) {
+				$image_url = Group_Control_Image_Size::get_attachment_image_src( $item['accordion_item_bg_image']['id'], 'accordion_image_size', $settings );
+				$this->item_bg_image_url = esc_url_raw( $image_url );
+			} elseif ( !empty( $item['accordion_item_bg_image']['url'] ) ) {
+				$this->item_bg_image_url = esc_url_raw( $item['accordion_item_bg_image']['url'] );
 			} else {
-				$this->item_bg_image_url = WPR_ADDONS_ASSETS_URL . 'img/logo-slider-450x450.png';
-			}
+				$this->item_bg_image_url = esc_url( WPR_ADDONS_ASSETS_URL . 'img/logo-slider-450x450.png' );
+			}			
 
 			$layout['activeItem'] = [
 				'activeWidth' => $settings['accordion_active_item_style']['size'],
