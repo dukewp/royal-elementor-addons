@@ -102,7 +102,7 @@ if ( function_exists( 'wpr_fs' ) ) {
  * @return void
  */
 function wpr_addons_load_plugin() {
-	load_plugin_textdomain( 'wpr-addons' );
+	load_plugin_textdomain('wpr-addons', false, dirname(plugin_basename(__FILE__)) . '/languages/');
 
 	if ( ! did_action( 'elementor/loaded' ) ) {
 		add_action( 'admin_notices', 'wpr_addons_fail_load' );

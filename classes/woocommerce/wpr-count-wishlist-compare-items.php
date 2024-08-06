@@ -231,19 +231,19 @@ class WPR_Count_Wishlist_Compare_Items {
                             echo '<a class="wpr-compare-img-wrap" href="' . $product->get_permalink() . '">' . $product->get_image() . '</a>';
 							echo '<div class="wpr-compare-product-atc">' . $this->render_product_add_to_cart( $settings, $product ) . '</div>';
                             break;
-                        case 'text':
-                            if( in_array(strtolower($row['label']), ['description', 'sku']) ) {
+                        case 'text': 
+                            if( in_array(strtolower($row['label']), [strtolower(__('Description', 'wpr-addons')), strtolower(__('SKU', 'wpr-addons')) ]) ) {
                                 echo $product->get_data()[strtolower($row['label'])];
-                            } else if ( strtolower($row['label']) == 'name' ) {
-                                echo '<a class="wpr-compare-product-name" href="' . $product->get_permalink() . '">'. $product->get_data()[strtolower($row['label'])] .'</a>';
-							} else if ( strtolower($row['label']) == 'price' ) {
+                            } else if ( strtolower($row['label']) == strtolower(__('Name', 'wpr-addons')) ) {
+                                echo '<a class="wpr-compare-product-name" href="' . $product->get_permalink() . '">'. $product->get_data()['name'] .'</a>';
+							} else if ( strtolower($row['label']) == strtolower(__('Price', 'wpr-addons')) ) {
                                 echo $product->get_price_html();
-                            } else if ( strtolower($row['label']) == 'rating' ) {
+                            } else if ( strtolower($row['label']) ==strtolower(__('Rating', 'wpr-addons')) ) {
                                 $this->render_product_rating($product);
-                            } else if ( strtolower($row['label']) == 'stock status' ) {
+                            } else if ( strtolower($row['label']) == strtolower(__('Stock Status', 'wpr-addons')) ) {
 					            $stock_status = $product->get_stock_status();
                                 echo $stock_status == 'instock' ? esc_html__('In Stock', 'wpr-addons') : esc_html__('Out of Stock', 'wpr-addons');
-                            } else if ( strtolower($row['label']) == 'dimensions' ) {
+                            } else if ( strtolower($row['label']) == strtolower(__('Dimensions', 'wpr-addons')) ) {
 
 								if ( $product->has_dimensions() ) {
 									$dimensions = sprintf(
@@ -254,7 +254,7 @@ class WPR_Count_Wishlist_Compare_Items {
 									echo $dimensions;
 								}
 								
-							} else if ( strtolower($row['label']) == 'weight' ) {
+							} else if ( strtolower($row['label']) == strtolower(__('Weight', 'wpr-addons')) ) {
 
 								if ( $product->get_weight() ) {
 									$weight = sprintf(
