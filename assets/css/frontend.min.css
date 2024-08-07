@@ -1354,6 +1354,13 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     display: none;
 }
 
+.wpr-mobile-mega-menu-wrap[toggle-backface="yes"] .wpr-mobile-sub-offcanvas-open li.menu-item > ul {
+    display: none !important;
+}
+
+.wpr-mobile-mega-menu-wrap[toggle-backface="yes"] .wpr-mobile-sub-offcanvas-open li.wpr-mobile-sub-open.menu-item > ul {
+    display: block !important;
+}
 
 /*--------------------------------------------------------------
 == Onepage Nav
