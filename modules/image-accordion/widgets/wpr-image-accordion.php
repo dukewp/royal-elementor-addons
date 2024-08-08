@@ -2267,7 +2267,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 			echo '<div class="inner-block">';
 				$lightbox_source = $this->item_bg_image_url;
 
-				echo '<div style="opacity: 0;" class="wpr-accordion-image-wrap" data-src="'. $lightbox_source. '">';
+				echo '<div style="opacity: 0;" class="wpr-accordion-image-wrap" data-src="'. esc_attr( $lightbox_source ) .'">';
 					echo '<img src="'. esc_url( $lightbox_source ) .'" alt="'. esc_attr( $item['accordion_item_title'] ) .'">';
 				echo '</div>';
 	
@@ -2446,7 +2446,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 
 				<div data-src=<?php echo esc_url( $this->item_bg_image_url ) ?>   class="wpr-image-accordion-item elementor-repeater-item-<?php echo esc_attr($item['_id']) . $this->get_image_effect_class( $settings )?>">
 
-				<div class="wpr-accordion-background" style="background-image: url(<?php echo $this->item_bg_image_url ?>);"></div>
+				<div class="wpr-accordion-background" style="background-image: url(<?php echo esc_attr( $this->item_bg_image_url ) ?>);"></div>
 							
 							<?php
 								echo '<div '. $render_attribute .'>';
