@@ -14,6 +14,20 @@ class WPR_Templates_Data {
 		$is_woo_active = is_plugin_active('woocommerce/woocommerce.php') ? 'true' : 'false';
 
 		return [
+			'hosting' => [
+				'v1' => [
+					'name' => 'Hosting V1',
+					'pages' => 'home,about,shared,vps,reseller,dedicated,wordpress,domain,support,cart,checkout,blog,single-blog,contact,',
+					'plugins' => '{"woocommerce":'. $is_woo_active .'}',
+					'tags' => 'web host hosting technology server wordpress shared vps reseller dedicated domain ssl support plans pricing woocommere IT web cloud',
+					'theme-builder' => true,
+					'woo-builder' => true,
+					'off-canvas' => false,
+					'price' => $is_pro_active ? 'free' : 'pro',
+					'label' => 'new',
+					'priority' => 5,
+				],
+			],
 			'grocery-store' => [
 				'v1' => [
 					'name' => 'Grocery Store - Shop',
@@ -41,6 +55,48 @@ class WPR_Templates_Data {
 					'priority' => 4,
 				],
 			],
+			'party-planner' => [
+				'v1' => [
+					'name' => 'Landing Page - Party Planner',
+					'pages' => 'home,services,team,testimonial,gallery,',
+					'plugins' => '{}',
+					'tags' => 'free single page landing page one page onepage landingpage party planner event celebration organizer festival birthday corporate wedding houseparty entertainment music',
+					'theme-builder' => true,
+					'woo-builder' => false,
+					'off-canvas' => true,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'label' => 'new',
+					'priority' => 150,
+				],
+			],
+			'ico-landing-page' => [
+				'v1' => [
+					'name' => 'ICO - Landing Page',
+					'pages' => 'home,about,solutions,timeline,team,faq,',
+					'plugins' => '{}',
+					'tags' => 'free ico single page landing page one page onepage landingpage crypto currency cryptocurrency fundrising bitcoin blockchain investor profit retail market purchase token money clinet transaction payment nft coin',
+					'theme-builder' => true,
+					'woo-builder' => false,
+					'off-canvas' => true,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'label' => 'new',
+					'priority' => 82,
+				],
+			],
+			'graphic-nature' => [
+				'v1' => [
+					'name' => 'Graphic Nature V1',
+					'pages' => 'home,about,services,contact,',
+					'plugins' => '{}',
+					'tags' => 'free nature influencer travel content slider tourism influencers creator travel forest slider generic multipurpose national-park nature-park sanctuary wilderness hitchhiking mountain river lakes outdoors graphic design illustration beginner travel',
+					'theme-builder' => true,
+					'woo-builder' => false,
+					'off-canvas' => false,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'label' => 'new',
+					'priority' => 1,
+				],
+			],
 			'landing-page-ebook' => [
 				'v1' => [
 					'name' => 'Landing Page - Ebook',
@@ -53,6 +109,20 @@ class WPR_Templates_Data {
 					'price' => $is_pro_active ? 'free' : 'free',
 					'label' => 'new',
 					'priority' => 50,
+				],
+			],
+			'online-course' => [
+				'v1' => [
+					'name' => 'Online Courses',
+					'pages' => 'home,about,courses,course-details,blog,blog-single,contact,cart,checkout,',
+					'plugins' => '{"woocommerce":'. $is_woo_active .'}',
+					'tags' => 'online course learning tutorials education coaching academy elearning udemy tutor lms training center lifter lms learnpress learndash instructor online lessons distance learning',
+					'theme-builder' => true,
+					'woo-builder' => true,
+					'off-canvas' => true,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'label' => 'new',
+					'priority' => 30,
 				],
 			],
 			'amazon-landing-page' => [
@@ -208,6 +278,20 @@ class WPR_Templates_Data {
 					'expert' => $is_expert ? 'free' : 'expert',
 					'label' => 'trending',
 					'priority' => 5,
+				],
+			],
+			'electrician' => [
+				'v1' => [
+					'name' => 'Electrician',
+					'pages' => 'home,about,services,service-details,gallery,blog,single-blog,contact,',
+					'plugins' => '{}',
+					'tags' => 'free electrician electrical services repair maintenance electric electricity electrical repairer maintenance business engineering handyman plumbing repair',
+					'theme-builder' => true,
+					'woo-builder' => false,
+					'off-canvas' => true,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'label' => 'new',
+					'priority' => 300,
 				],
 			],
 			'ecommerce' => [
@@ -466,6 +550,18 @@ class WPR_Templates_Data {
 					'label' => 'new',
 					'priority' => 6,
 				],
+				'v6' => [
+					'name' => 'Magazine Blog v6',
+					'pages' => 'home,category,single-blog,contact,',
+					'plugins' => '{}',
+					'tags' => 'blogger blog posts content news newspaper journal magazine business blog publishing theme builder sports grid slider magazine',
+					'theme-builder' => true,
+					'woo-builder' => false,
+					'off-canvas' => true,
+					'price' => $is_pro_active ? 'free' : 'pro',
+					'label' => 'new',
+					'priority' => 6,
+				],
 			],
 			'yoga' => [
 				'v1' => [
@@ -674,7 +770,7 @@ class WPR_Templates_Data {
 					'name' => 'Portfolio/CV v1',
 					'pages' => 'home,about,portfolio,contact,',
 					'plugins' => '{"contact-form-7":'. $is_cf7_active .'}',
-					'tags' => 'free portfolio personal cv designer ux artist artwork personal resume photographer grid clean creative freelanceer vcard',
+					'tags' => 'free portfolio personal cv designer ux artist artwork personal resume photographer grid clean creative freelanceer vcard software developer',
 					'theme-builder' => false,
 					'woo-builder' => false,
 					'off-canvas' => false,
@@ -686,7 +782,7 @@ class WPR_Templates_Data {
 					'name' => 'Portfolio/CV - One Page v2',
 					'pages' => 'home,single project,',
 					'plugins' => '{}',
-					'tags' => 'free portfolio personal cv designer ux artist artwork personal resume photographer grid one page onepage clean creative freelanceer vcard',
+					'tags' => 'free portfolio personal cv designer ux artist artwork personal resume photographer grid one page onepage clean creative freelanceer vcard software developer',
 					'theme-builder' => true,
 					'woo-builder' => false,
 					'off-canvas' => false,
@@ -707,6 +803,20 @@ class WPR_Templates_Data {
 					'price' => $is_pro_active ? 'free' : 'free',
 					'label' => 'new',
 					'priority' => 3,
+				],
+			],
+			'software-company' => [
+				'v1' => [
+					'name' => 'Software Company V1',
+					'pages' => 'home,about,services,portfolio,portfolio-details,blog,single-blog,contact,',
+					'plugins' => '{}',
+					'tags' => 'free saas application mobile app IT services website business consulting software development enterprise solutions UI UX design testing maintenance support security data analytics web application cloud management business system digital agency portfolio business technology',
+					'theme-builder' => true,
+					'woo-builder' => false,
+					'off-canvas' => true,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'label' => 'new',
+					'priority' => 2,
 				],
 			],
 			'nft-portfolio' => [
@@ -750,6 +860,18 @@ class WPR_Templates_Data {
 					'label' => 'new',
 					'priority' => 51,
 				],
+				'v2' => [
+					'name' => 'Business Consulting V2',
+					'pages' => 'home,about,our-services,our-process,our-clients,pricing-plans,projects,project-details,faq,blog,single-blog,contact,',
+					'plugins' => '{}',
+					'tags' => 'cryptocurrency crypto blockchain advisor investment corporate finance finances financial penny grow financial consulting financial advisors fintech fintech startup business consultancy firm business consulting company financial consulting consultancy services sales marketing technology consulting business coach business consultant business guide mentor motivational speaker',
+					'theme-builder' => true,
+					'woo-builder' => false,
+					'off-canvas' => true,
+					'price' => $is_pro_active ? 'free' : 'pro',
+					'label' => 'new',
+					'priority' => 5,
+				],
 			],
 			'fintech' => [
 				'v1' => [
@@ -765,6 +887,21 @@ class WPR_Templates_Data {
 					'priority' => 201,
 				],
 			],
+			'car-rent' => [
+				'v1' => [
+					'name' => 'Car Rent',
+					'pages' => 'home,cars,car-details,about,contact,',
+					'plugins' => '{"woocommerce":'. $is_woo_active .'}',
+					'tags' => 'expert car rental service driver rent car delivery jorney luxary airport transfer car booking car hire',
+					'theme-builder' => true,
+					'woo-builder' => true,
+					'off-canvas' => false,
+					'price' => $is_pro_active ? 'free' : 'pro',
+					'expert' => $is_expert ? 'free' : 'expert',
+					'label' => 'new',
+					'priority' => 4,
+				],
+			],
 			'car-repair' => [
 				'v1' => [
 					'name' => 'Car Repair',
@@ -776,7 +913,7 @@ class WPR_Templates_Data {
 					'off-canvas' => false,
 					'price' => $is_pro_active ? 'free' : 'free',
 					'label' => 'new',
-					'priority' => 4,
+					'priority' => 10,
 				],
 			],
 			'pet-care' => [
@@ -793,6 +930,20 @@ class WPR_Templates_Data {
 					'priority' => 91,
 				],
 			],
+			'pet-shop' => [
+				'v1' => [
+					'name' => 'Pet Shop V1',
+					'pages' => 'home,shop,single-product,cart,blog,single-blog,about,contact,',
+					'plugins' => '{"woocommerce":'. $is_woo_active .'}',
+					'tags' => 'shop shopping woo-commerce woocommerce estore store ecommerce product ecommerce shop online pet shop petshop purchases e commerce free pet care dog care grooming pet minding pet sitting pet training pet walking cat animal dogs dog training',
+					'theme-builder' => true,
+					'woo-builder' => true,
+					'off-canvas' => false,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'label' => 'new',
+					'priority' => 92,
+				],
+			],
 			'travel' => [
 				'v1' => [
 					'name' => 'Travel Blogger & Influencer',
@@ -805,6 +956,32 @@ class WPR_Templates_Data {
 					'price' => $is_pro_active ? 'free' : 'free',
 					'label' => '',
 					'priority' => 100,
+				],
+				'v3' => [
+					'name' => 'Travel V3',
+					'pages' => 'home,about,tours,tours-details,gallery,blog,single-blog,contact,',
+					'plugins' => '{}',
+					'tags' => 'nature influencer travel content slider tourism influencers creator travel forest slider generic multipurpose national-park nature-park sanctuary wilderness hitchhiking mountain river lakes outdoors travel agency company office travel service',
+					'theme-builder' => true,
+					'woo-builder' => false,
+					'off-canvas' => true,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'label' => 'new',
+					'priority' => 10,
+				]
+			],
+			'financial-services' => [
+				'v1' => [
+					'name' => 'Financial Services V1',
+					'pages' => 'home,about,services,resources,blog,single-blog,faq,contact,',
+					'plugins' => '{}',
+					'tags' => 'advisor advsors blockchain business coach company consultancy consultant consulting corporate crypto cryptocurrency entrepreneur finance finances financial fintech firm free grow guide insurance investment management marketing mentor motivational penny planning sales service services solutions speaker startup strategy technology wealth',
+					'theme-builder' => true,
+					'woo-builder' => false,
+					'off-canvas' => false,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'label' => 'new',
+					'priority' => 5,
 				],
 			],
 			'cybersecurity' => [
@@ -833,6 +1010,20 @@ class WPR_Templates_Data {
 					'price' => $is_pro_active ? 'free' : 'pro',
 					'label' => '',
 					'priority' => 111,
+				],
+			],
+			'church' => [
+				'v1' => [
+					'name' => 'Church V1',
+					'pages' => 'home,about,services,events,event-details,blog,single-blog,',
+					'plugins' => '{}',
+					'tags' => 'church believe spiritual faith church-service worship ministries sermons bible pastor community vision grace free template donate religion catholic christian donation events jesus ngo nonprofit preaching sermon ministry mosque charity fundraising',
+					'theme-builder' => true,
+					'woo-builder' => false,
+					'off-canvas' => true,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'label' => 'new',
+					'priority' => 500,
 				],
 			],
 			'photographer' => [
@@ -887,6 +1078,20 @@ class WPR_Templates_Data {
 					'price' => $is_pro_active ? 'free' : 'free',
 					'label' => '',
 					'priority' => 160,
+				],
+			],
+			'nail-salon' => [
+				'v1' => [
+					'name' => 'Nail Salon',
+					'pages' => 'home,about,services,gallery,blog,single-blog,contact,',
+					'plugins' => '{}',
+					'tags' => 'free nail salon style beauty workshop hygiene manicure pedicure health wellness nail art makeup brow bar saloon',
+					'theme-builder' => true,
+					'woo-builder' => false,
+					'off-canvas' => true,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'label' => 'new',
+					'priority' => 161,
 				],
 			],
 			'lawyer' => [
@@ -953,6 +1158,35 @@ class WPR_Templates_Data {
 					'price' => $is_pro_active ? 'free' : 'free',
 					'label' => '',
 					'priority' => 2,
+				],
+			],
+			'digital-marketing' => [
+				'v1' => [
+					'name' => 'Digital Marketing V1 - One Page',
+					'pages' => 'home,features,analytics,pricing,book-demo,contact',
+					'plugins' => '{}',
+					'tags' => 'digital agency company corporate digital services office agency web digital marketing seo social media branding landing page onepage one page',
+					'theme-builder' => true,
+					'woo-builder' => false,
+					'off-canvas' => true,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'label' => 'new',
+					'priority' => 10,
+				],
+			],
+			'jewelry' => [
+				'v1' => [
+					'name' => 'Jewelry Shop',
+					'pages' => 'home,shop,single-product,cart,compare,wishlist,about,about-me,faq,blog,contact,',
+					'plugins' => '{"woocommerce":'. $is_woo_active .'}',
+					'tags' => 'shop shopping woo-commerce woocommerce estore ecommerce product online eshopping market ecommerce shop e commerce jewelry fashion store luxury diamond earrings gold jewelry care watch permanent jewelry diamond gold necklace ring earrings bracelet',
+					'theme-builder' => true,
+					'woo-builder' => true,
+					'off-canvas' => false,
+					'price' => $is_pro_active ? 'free' : 'pro',
+					'expert' => $is_expert ? 'free' : 'expert',
+					'label' => 'new',
+					'priority' => 5,
 				],
 			],
 			'drone' => [
@@ -1098,7 +1332,21 @@ class WPR_Templates_Data {
 					'off-canvas' => false,
 					'price' => $is_pro_active ? 'free' : 'free',
 					'label' => '',
-					'priority' => 4,
+					'priority' => 15,
+				],
+			],
+			'cleaning' => [
+				'v1' => [
+					'name' => 'Cleaning Service',
+					'pages' => 'home,about,services,blog,single-blog,contact,',
+					'plugins' => '{}',
+					'tags' => 'free cleaning services solutions outdoor cleaning eco friendly home cleaning industrial cleaning santization house cleaning cleaner washing meintenance house keeping window cleaning laundry',
+					'theme-builder' => true,
+					'woo-builder' => false,
+					'off-canvas' => true,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'label' => 'new',
+					'priority' => 15,
 				],
 			],
 			'realestate' => [
@@ -1173,7 +1421,7 @@ class WPR_Templates_Data {
 			],
 			'solar-energy' => [
 				'v1' => [
-					'name' => 'Solar Energy',
+					'name' => 'Solar Energy v1',
 					'pages' => 'home,about,services,detail-service,projects,team,blog,contact,',
 					'plugins' => '{}',
 					'tags' => 'wind turbines photovoltaic green energy solar energy panel sustainable clean eco technology solar solutions solar power electronic electricity sun solar panels solar cells solar inverters solar batteries renewable energy sustainable energy solar module solar system solar inverter solar charger residential solar commercial solar water heating wind energy Renewable energy Wind power Wind farm',
@@ -1183,6 +1431,18 @@ class WPR_Templates_Data {
 					'price' => $is_pro_active ? 'free' : 'free',
 					'label' => 'new',
 					'priority' => 500,
+				],
+				'v2' => [
+					'name' => 'Solar Energy v2',
+					'pages' => 'home,about-us,services,projects,team,faq,blog,single-blog,contact,',
+					'plugins' => '{}',
+					'tags' => 'wind turbines photovoltaic green energy solar energy panel sustainable clean eco technology solar solutions solar power electronic electricity sun solar panels solar cells solar inverters solar batteries renewable energy sustainable energy solar module solar system solar inverter solar charger residential solar commercial solar water heating wind energy Renewable energy Wind power Wind farm',
+					'theme-builder' => true,
+					'woo-builder' => false,
+					'off-canvas' => true,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'label' => 'new',
+					'priority' => 501,
 				],
 			],
 			'winebar' => [
@@ -1204,13 +1464,27 @@ class WPR_Templates_Data {
 					'name' => 'Landing Page - Dance Studio',
 					'pages' => 'home,classes,instructors,gallery,blog,contact',
 					'plugins' => '{}',
-					'tags' => 'free single-page landing page one page onepage landingpage dance studio dancing dance school ballet contempo dance club fitness salsa zumba academy courses dancer music tango academy street dance jazz hiphop',
+					'tags' => 'free single-page landing page one page onepage landingpage dance studio dancing dance school ballet contempo dance club fitness salsa zumba academy courses dancer music tango academy street dance jazz hiphop education',
 					'theme-builder' => true,
 					'woo-builder' => false,
 					'off-canvas' => true,
 					'price' => $is_pro_active ? 'free' : 'free',
 					'label' => 'new',
 					'priority' => 200,
+				],
+			],
+			'school' => [
+				'v1' => [
+					'name' => 'Children School',
+					'pages' => 'home,about,classes,class-details,teachers,teacher-details,events,event-details,blog,single-blog,gallery,contact,',
+					'plugins' => '{}',
+					'tags' => 'free school education online-education learning homework educator teacher classes dance daycare elementary school home school kindergarten nursery preschool child children babysister childcare day care preschool baby sister daycare',
+					'theme-builder' => true,
+					'woo-builder' => false,
+					'off-canvas' => false,
+					'price' => $is_pro_active ? 'free' : 'free',
+					'label' => 'new',
+					'priority' => 10,
 				],
 			],
 			'barbershop' => [
@@ -1239,6 +1513,18 @@ class WPR_Templates_Data {
 					'price' => $is_pro_active ? 'free' : 'free',
 					'label' => '',
 					'priority' => 300,
+				],
+				'v2' => [
+					'name' => 'Wedding V2',
+					'pages' => 'home,about-me,about-us,our-services,our-processes,portfolio,portfolio-details,announcement,shop,product-details,cart,blog,single-blog,gallery,contact,',
+					'plugins' => '{"woocommerce":'. $is_woo_active .'}',
+					'tags' => 'pro wedding bride groom shop woocommerce planning management photo video editing studio party bouquet event ceremony dress menu traditions',
+					'theme-builder' => true,
+					'woo-builder' => true,
+					'off-canvas' => true,
+					'price' => $is_pro_active ? 'free' : 'pro',
+					'label' => 'new',
+					'priority' => 5,
 				],
 			],
 		];
@@ -1270,6 +1556,12 @@ class WPR_Templates_Data {
 				'name' => 'Nature v2 - travel',
 				'pages' => ['home','about','services','blog','contact'],
 				'preview' => ['home','about','services','blog','contact'],
+				'price' => $is_pro_active ? 'free' : 'free',
+			],
+			'graphic-nature-v1' => [
+				'name' => 'Graphic Nature V1',
+				'pages' => ['home','about','services','contact'],
+				'preview' => ['home','about','services','contact'],
 				'price' => $is_pro_active ? 'free' : 'free',
 			],
 			'digital-marketing-agency-v2' => [
@@ -1308,6 +1600,12 @@ class WPR_Templates_Data {
 				'preview' => ['home','properties','about','services','faq','contact'],
 				'price' => $is_pro_active ? 'free' : 'pro',
 			],
+			'online-course-v1' => [
+				'name' => 'Online Courses',
+				'pages' => ['home','about','courses','course-details','blog','contact','cart','checkout'],
+				'preview' => ['home','about','courses','course-details','blog','contact','cart','checkout'],
+				'price' => $is_pro_active ? 'free' : 'free',
+			],
 			'barbershop-v1' => [
 				'name' => 'Barbershop V1',
 				'pages' => ['home','shop','barbers','schedule','services','blog','contact'],
@@ -1321,9 +1619,27 @@ class WPR_Templates_Data {
 				'price' => $is_pro_active ? 'free' : 'pro',
 			],
 			'solar-energy-v1' => [
-				'name' => 'Solar Energy',
+				'name' => 'Solar Energy 1',
 				'pages' => ['home','about','services','detail-service','projects','team','blog','contact'],
 				'preview' => ['home','about','services','detail-service','projects','team','blog','contact'],
+				'price' => $is_pro_active ? 'free' : 'free',
+			],
+			'solar-energy-v2' => [
+				'name' => 'Solar Energy 2',
+				'pages' => ['home','about-us','services','projects','team','faq','blog','contact,'],
+				'preview' => ['home','about-us','services','projects','team','faq','blog','contact,'],
+				'price' => $is_pro_active ? 'free' : 'free',
+			],
+			'hosting-v1' => [
+				'name' => 'Hosting V1',
+				'pages' => ['home','about','shared','vps','reseller','dedicated', 'wordpress', 'domain', 'support', 'blog', 'contact'],
+				'preview' => ['home','about','shared','vps','reseller','dedicated', 'wordpress', 'domain', 'support', 'blog', 'contact'],
+				'price' => $is_pro_active ? 'free' : 'pro',
+			],
+			'electrician-v1' => [
+				'name' => 'Electrician',
+				'pages' => ['home','about','services','service-details','gallery','blog','contact'],
+				'preview' => ['home','about','services','service-details','gallery','blog','contact'],
 				'price' => $is_pro_active ? 'free' : 'free',
 			],
 			'construction-v3' => [
@@ -1342,6 +1658,12 @@ class WPR_Templates_Data {
 				'name' => 'Home Care',
 				'pages' => ['home','about','appointment','services','blog','contact'],
 				'preview' => ['home','about','appointment','services','blog','contact'],
+				'price' => $is_pro_active ? 'free' : 'free',
+			],
+			'financial-services-v1' => [
+				'name' => 'Financial Services V1',
+				'pages' => ['home','about','services','resources','blog','faq','contact'],
+				'preview' => ['home','about','services','resources','blog','faq','contact'],
 				'price' => $is_pro_active ? 'free' : 'free',
 			],
 			'fintech-v1' => [
@@ -1398,6 +1720,12 @@ class WPR_Templates_Data {
 				'preview' => ['home','about','services','procedures','gallery','pricing','contact'],
 				'price' => $is_pro_active ? 'free' : 'free',
 			],
+			'nail-salon-v1' => [
+				'name' => 'Nail Salon',
+				'pages' => ['home','about','services','gallery','blog','contact'],
+				'preview' => ['home','about','services','gallery','blog','contact'],
+				'price' => $is_pro_active ? 'free' : 'free',
+			],
 			'travel-v1' => [
 				'name' => 'Travel Blogger',
 				'pages' => ['home','about','stories','contact'],
@@ -1410,6 +1738,18 @@ class WPR_Templates_Data {
 				'preview' => ['home','about','services','reviews','contact'],
 				'price' => $is_pro_active ? 'free' : 'free',
 			],
+			'pet-shop-v1' => [
+				'name' => 'Pet Shop V1',
+				'pages' => ['home','shop','cart','blog','about','contact'],
+				'preview' => ['home','shop','cart','blog','about','contact'],
+				'price' => $is_pro_active ? 'free' : 'free',
+			],
+			'car-rent-v1' => [
+				'name' => 'Car Rent V1',
+				'pages' => ['home','cars','about','contact'],
+				'preview' => ['home','cars','about','contact'],
+				'price' => $is_pro_active ? 'free' : 'pro',
+			],
 			'car-repair-v1' => [
 				'name' => 'Car Repair',
 				'pages' => ['home','about','contact','services','team'],
@@ -1420,6 +1760,12 @@ class WPR_Templates_Data {
 				'name' => 'Business Consulting',
 				'pages' => ['home','about','blog','contact','services','contact','faq','history','pricing','team',],
 				'preview' => ['home','about','blog','contact','services','contact','faq','history','pricing','team',],
+				'price' => $is_pro_active ? 'free' : 'pro',
+			],
+			'business-consulting-v2' => [
+				'name' => 'Business Consulting V2',
+				'pages' => ['home','about','our-services','our-process','our-clients','pricing-plans','projects','project-details','faq','blog','contact',],
+				'preview' => ['home','about','our-services','our-process','our-clients','pricing-plans','projects','project-details','faq','blog','contact',],
 				'price' => $is_pro_active ? 'free' : 'pro',
 			],
 			'travel-blog-v1' => [
@@ -1518,6 +1864,12 @@ class WPR_Templates_Data {
 				'preview' => ['home','portfolio','about','services','resume','contact'],
 				'price' => $is_pro_active ? 'free' : 'free',
 			],
+			'software-company-v1' => [
+				'name' => 'Software Company V1',
+				'pages' => ['home','about','services','portfolio','portfolio-details','blog','contact'],
+				'preview' => ['home','about','services','portfolio','portfolio-details','blog','contact'],
+				'price' => $is_pro_active ? 'free' : 'free',
+			],
 			'medical-v1' => [
 				'name' => 'Medical',
 				'pages' => ['home','about','services','doctors','contact'],
@@ -1541,6 +1893,12 @@ class WPR_Templates_Data {
 				'pages' => ['home','about','services','contact'],
 				'preview' => ['home','about','services','contact'],
 				'price' => $is_pro_active ? 'free' : 'pro',
+			],
+			'cleaning-v1' => [
+				'name' => 'Cleaning Service V1',
+				'pages' => ['home','about','services','blog','contact'],
+				'preview' => ['home','about','services','blog','contact'],
+				'price' => $is_pro_active ? 'free' : 'free',
 			],
 			'digitalagency-v2' => [
 				'name' => 'Digital Agency',
@@ -1614,10 +1972,28 @@ class WPR_Templates_Data {
 				'preview' => ['home','about','services','blog','gallery','rsvp'],
 				'price' => $is_pro_active ? 'free' : 'free',
 			],
+			'school-v1' => [
+				'name' => 'School - V1',
+				'pages' => ['home','about','classes','class-details','teachers','teacher-details','events','event-details','blog','gallery','contact'],
+				'preview' => ['home','about','classes','class-details','teachers','teacher-details','events','event-details','blog','gallery','contact'],
+				'price' => $is_pro_active ? 'free' : 'free',
+			],
 			'portfolio-v1' => [
 				'name' => 'Portfolio/CV',
 				'pages' => ['home','about','portfolio','contact'],
 				'preview' => ['home','about','portfolio','contact'],
+				'price' => $is_pro_active ? 'free' : 'free',
+			],
+			'jewelry-v1' => [
+				'name' => 'Jewelry Shop',
+				'pages' => ['home','shop','cart','compare','wishlist','about','about-me','faq','blog','contact'],
+				'preview' => ['home','shop','cart','compare','wishlist','about','about-me','faq','blog','contact'],
+				'price' => $is_pro_active ? 'free' : 'pro',
+			],
+			'travel-v3' => [
+				'name' => 'Travel V3',
+				'pages' => ['home','about','tours','tours-details','gallery','blog','contact'],
+				'preview' => ['home','about','tours','tours-details','gallery','blog','contact'],
 				'price' => $is_pro_active ? 'free' : 'free',
 			],
 			'pizza-v1' => [
@@ -1637,6 +2013,12 @@ class WPR_Templates_Data {
 				'pages' => ['home','contact','whatwedo','whoweare','partners',],
 				'preview' => ['home','contact','what-we-do','who-wea-re','our-partners',],
 				'price' => $is_pro_active ? 'free' : 'pro',
+			],
+			'church-v1' => [
+				'name' => 'Church V1',
+				'pages' => ['home','about','services','events','event-details','blog'],
+				'preview' => ['home','about','services','events','event-details','blog'],
+				'price' => $is_pro_active ? 'free' : 'free',
 			],
 			'carwash-v1' => [
 				'name' => 'Carwash',
