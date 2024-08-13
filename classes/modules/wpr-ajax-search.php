@@ -106,6 +106,8 @@ if ( ! defined( 'ABSPATH' ) ) {
                 }
             } 
         }
+        
+        $can_view_protected_posts = current_user_can('read_private_posts');
 
         $the_query = new \WP_Query( 
             [
@@ -117,9 +119,13 @@ if ( ! defined( 'ABSPATH' ) ) {
                     ['key' => '_thumbnail_id']
                 ] : '',
                 'tax_query' => $tax_query,
-                'post_status' => 'publish'
+                'post_status' => 'publish',
             ]
         );
+        
+        if (!$can_view_protected_posts) {
+            $query_args['post_password'] = '';
+        }
         
         if( $the_query->have_posts() ) :
             $number_of_queried_posts = $the_query->found_posts;
