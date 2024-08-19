@@ -12235,13 +12235,13 @@ select.wpr-category-select {
 }
 
 /* Horizontal Timeline */
-.wpr-horizontal-bottom.swiper-container {
+.wpr-horizontal-bottom.swiper {
     position: unset;
     overflow: hidden;
     z-index: 10;
 }
 
-.wpr-horizontal.swiper-container {
+.wpr-horizontal.swiper {
     position: unset;
     overflow: hidden;
     z-index: 11;
