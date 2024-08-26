@@ -137,6 +137,9 @@
 
 			if ( $scope.hasClass('wpr-jarallax') || $scope.hasClass('wpr-jarallax-yes') ) {
 				parallaxBackground();
+				// $(document).ready(function() {
+				// 	parallaxBackground();
+				// });
 			}
 
 			if ( $scope.hasClass('wpr-parallax-yes') ) {
@@ -415,6 +418,8 @@
 					}
 					
 					$scope.css({'position': stickType });
+
+					$('.wpr-close-cart span').trigger('click');
 			    }
 
 			    function changeAdminBarOffset() {	
@@ -489,21 +494,19 @@
 			}
 
 			function parallaxBackground() {
-				if ( $scope.hasClass('wpr-jarallax-yes') ) {
-					if ( ! WprElements.editorCheck() && $scope.hasClass('wpr-jarallax') ) {
-						$scope.css('background-image', 'url("' + $scope.attr('bg-image') + '")');
-						$scope.jarallax({
-							type: $scope.attr('scroll-effect'),
-							speed: $scope.attr('speed-data'),
-						});
-					} else if ( WprElements.editorCheck() ) {
-						$scope.css('background-image', 'url("' + $scope.find('.wpr-jarallax').attr('bg-image-editor') + '")');
-						$scope.jarallax({
-							type: $scope.find('.wpr-jarallax').attr('scroll-effect-editor'),
-							speed: $scope.find('.wpr-jarallax').attr('speed-data-editor')
-						});
-					}
-				} 
+				if ( ! WprElements.editorCheck() && $scope.hasClass('wpr-jarallax') ) {
+					$scope.css('background-image', 'url("' + $scope.attr('bg-image') + '")');
+					$scope.jarallax({
+						type: $scope.attr('scroll-effect'),
+						speed: $scope.attr('speed-data'),
+					});
+				} else if ( WprElements.editorCheck() ) {
+					$scope.css('background-image', 'url("' + $scope.find('.wpr-jarallax').attr('bg-image-editor') + '")');
+					$scope.jarallax({
+						type: $scope.find('.wpr-jarallax').attr('scroll-effect-editor'),
+						speed: $scope.find('.wpr-jarallax').attr('speed-data-editor')
+					});
+				}
 			}
 
 			function parallaxMultiLayer() {
@@ -4483,6 +4486,7 @@
 
 				searchTimeout = setTimeout(() => {
 					var thisValue = thisObject.val();
+
 					$.ajax({
 						type: 'POST',
 						url: WprConfig.ajaxurl,
@@ -4504,6 +4508,7 @@
 							wpr_no_results: $scope.find('.wpr-search-form-input').attr('no-results'),
 							wpr_exclude_without_thumb: $scope.find('.wpr-search-form-input').attr('exclude-without-thumb'),
 							wpr_ajax_search_link_target: $scope.find('.wpr-search-form-input').attr('link-target'),
+							wpr_show_ps_pt: $scope.find('.wpr-search-form-input').attr('password-protected'),
 							// wpr_ajax_search_img_size: $scope.find('.wpr-search-form-input').attr('ajax-search-img-size')
 						},
 						success: function(data) {
@@ -6258,7 +6263,7 @@
 				};
 			
 				var horizontal = $scope.find('.wpr-horizontal-bottom').length ? '.wpr-horizontal-bottom' : '.wpr-horizontal';
-				var swiperSlider = $scope.find(horizontal +".swiper-container");
+				var swiperSlider = $scope.find(horizontal +".swiper");
 							
 				var slidestoshow = swiperSlider.data("slidestoshow");
 
@@ -9700,6 +9705,9 @@
                     updateMiniCart();
                 }
             });
+			$( document.body ).on( 'updated_wc_div', function() {
+				updateMiniCart();
+			});
             
             function updateMiniCart() {
                 $.ajax({
@@ -9852,7 +9860,6 @@
 		}, // End of widgetProductFilters
 
 		widgetPageCart: function($scope) {
-			// $scope.find('.shipping-calculator-button').trigger('click');
 		}, // End of widgetPageCart
 
 		widgetPageMyAccount: function($scope) {
