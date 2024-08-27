@@ -239,7 +239,7 @@ class WPR_Count_Wishlist_Compare_Items {
 							} else if ( strtolower($row['label']) == strtolower(__('Price', 'wpr-addons')) ) {
                                 echo $product->get_price_html();
                             } else if ( strtolower($row['label']) ==strtolower(__('Rating', 'wpr-addons')) ) {
-                                $this->render_product_rating($product);
+                                echo $this->render_product_rating($product);
                             } else if ( strtolower($row['label']) == strtolower(__('Stock Status', 'wpr-addons')) ) {
 					            $stock_status = $product->get_stock_status();
                                 echo $stock_status == 'instock' ? esc_html__('In Stock', 'wpr-addons') : esc_html__('Out of Stock', 'wpr-addons');
