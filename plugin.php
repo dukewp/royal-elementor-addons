@@ -364,7 +364,7 @@ class Plugin {
 
 		wp_register_style(
 			'wpr-date-picker-css',
-			WPR_ADDONS_URL . 'assets/css/lib/date-picker/datepicker.min.css',
+			WPR_ADDONS_URL . 'assets/css/lib/air-datepicker/air-datepicker.css',
 			[],
 			Plugin::instance()->get_version()
 		);
@@ -545,7 +545,7 @@ class Plugin {
 
 		wp_register_script(
 			'wpr-date-picker-js',
-			WPR_ADDONS_URL . 'assets/js/lib/date-picker/datepicker-full.min.js',
+			WPR_ADDONS_URL . 'assets/js/lib/air-datepicker/air-datepicker.js',
 			[
 				'jquery',
 			],
