@@ -17139,10 +17139,19 @@ img.wpr-gf-visual-active {
     /* text-shadow: 0 0 3px rgba(0, 0, 0, 0.3); */
 }
 
-  .wpr-grid-filters-select-wrap select {
+.wpr-grid-filters-select-wrap select {
     -webkit-appearance: none;
        -moz-appearance: none;
             appearance: none;
+}
+
+input.wpr-date-filter-1 {
+    width: 49%;
+    margin-right: 2%;
+}
+
+input.wpr-date-filter-2 {
+    width: 49%;
 }
 
 /*--------------------------------------------------------------

@@ -366,9 +366,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 											}
 										}
 									} else { // if != 'meta_field'
-										$for_tax_query = [ // needs check if overrides something
-											'relation' => explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] ? explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] : explode(',', $_POST['wpr_url_params']['wpr_gfr_'. $cleanedKey])[0],
-										];
+										// if ( isset($_POST['wpr_gfr_'. $cleanedKey]) ) {
+											$for_tax_query = [ // needs check if overrides something
+												'relation' => explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] ? explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] : explode(',', $_POST['wpr_url_params']['wpr_gfr_'. $cleanedKey])[0],
+											];
+										// } else {
+										// 	$for_tax_query = [];
+										// }
 	
 										foreach ($filtervalues as $filtervalue) {
 											$filtervalue = sanitize_text_field($filtervalue);
