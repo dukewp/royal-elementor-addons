@@ -4418,7 +4418,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-centered .wpr-one-sided-timeline .wpr-right-aligned .wpr-data-wrap:after' => 'border-right-color: {{VALUE}} !important; border-left-color: transparent !important;',
 				],
 				'default' => '#FFFFFF',
-				// 'separator' => 'after',
+				'render_type' => 'template'
 			]
 		);
 		
@@ -4659,8 +4659,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 					'{{WRAPPER}} .wpr-horizontal-bottom .wpr-button-next svg' => 'text-align: center; line-height: 1.5;',
 					'{{WRAPPER}} .wpr-horizontal-bottom .wpr-button-prev svg' => 'text-align: center; line-height: 1.5;',
 					'{{WRAPPER}} .wpr-swiper-pagination.swiper-pagination-progressbar' => 'width: calc(100% - ({{SIZE}}px + 15px)*2);',
-					'{{WRAPPER}} .wpr-horizontal-bottom.swiper-container' => 'margin-left: {{SIZE}}px; margin-right: {{SIZE}}px;',
-					'{{WRAPPER}} .wpr-horizontal.swiper-container' => 'margin-left: {{SIZE}}px; margin-right: {{SIZE}}px;',
+					'{{WRAPPER}} .wpr-horizontal-bottom.swiper' => 'margin-left: {{SIZE}}px; margin-right: {{SIZE}}px;',
+					'{{WRAPPER}} .wpr-horizontal.swiper' => 'margin-left: {{SIZE}}px; margin-right: {{SIZE}}px;',
 				],
 				'render_type' => 'template'
 			]
@@ -5286,10 +5286,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 	public function horizontal_timeline_classes($settings) {
 		
-		$this->slidesToShow = isset($settings['slides_to_show']) && !empty($settings['slides_to_show']) ? $settings['slides_to_show'] : 2;
+		$this->slides_to_show = isset($settings['slides_to_show']) && !empty($settings['slides_to_show']) ? $settings['slides_to_show'] : 2;
 
-		if ( ! wpr_fs()->can_use_premium_code() && $this->slidesToShow > 4 ) {
-			$this->slidesToShow = 4;
+		if ( ! wpr_fs()->can_use_premium_code() && $this->slides_to_show > 4 ) {
+			$this->slides_to_show = 4;
 		}
 
 		if ( $settings['timeline_layout'] == 'horizontal' ) {
@@ -5517,7 +5517,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		$this->horizontal_timeline_classes($settings);
 
 		echo '<div class="wpr-timeline-outer-container">';
-		echo '<div class="wpr-wrapper swiper-container '. esc_attr($this->horizontal_inner_class) .'" dir="'. esc_attr($dir) .'" data-slidestoshow = "'. esc_attr($this->slidesToShow) .'" data-autoplay="'. esc_attr($autoplay) .'" data-loop="'. esc_attr($loop) .'" data-swiper-speed="'. esc_attr($swiper_speed) .'" data-swiper-delay="'. esc_attr($swiper_delay) .'" data-swiper-poh="'. $swiper_pause_on_hover .'" data-swiper-space-between="'. esc_attr($settings['story_info_gutter']) .'">';
+		echo '<div class="wpr-wrapper swiper '. esc_attr($this->horizontal_inner_class) .'" dir="'. esc_attr($dir) .'" data-slidestoshow = "'. esc_attr($this->slides_to_show) .'" data-autoplay="'. esc_attr($autoplay) .'" data-loop="'. esc_attr($loop) .'" data-swiper-speed="'. esc_attr($swiper_speed) .'" data-swiper-delay="'. esc_attr($swiper_delay) .'" data-swiper-poh="'. $swiper_pause_on_hover .'" data-swiper-space-between="'. esc_attr($settings['story_info_gutter']) .'">';
 
 		echo '<div class="swiper-wrapper '. esc_attr($this->horizontal_timeline_class) .'">';
 			if ( is_array($data) ) {
@@ -5612,7 +5612,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		if( $this->my_query->have_posts() ) { 
 		
 		echo '<div class="wpr-timeline-outer-container">';
-				echo '<div class="wpr-wrapper swiper-container '. esc_attr($this->horizontal_inner_class) .'" dir="'. esc_attr($dir) .'" data-slidestoshow = "'. esc_attr($this->slidesToShow) .'" data-autoplay="'. esc_attr($autoplay) .'"  data-loop="'. esc_attr($loop) .'" data-swiper-speed="'. esc_attr($swiper_speed) .'" data-swiper-delay="'. esc_attr($swiper_delay) .'" data-swiper-poh="'. $swiper_pause_on_hover .'" data-swiper-space-between="'. esc_attr($settings['story_info_gutter']) .'">
+				echo '<div class="wpr-wrapper swiper '. esc_attr($this->horizontal_inner_class) .'" dir="'. esc_attr($dir) .'" data-slidestoshow = "'. esc_attr($this->slides_to_show) .'" data-autoplay="'. esc_attr($autoplay) .'"  data-loop="'. esc_attr($loop) .'" data-swiper-speed="'. esc_attr($swiper_speed) .'" data-swiper-delay="'. esc_attr($swiper_delay) .'" data-swiper-poh="'. $swiper_pause_on_hover .'" data-swiper-space-between="'. esc_attr($settings['story_info_gutter']) .'">
 					<div class="'. esc_attr($this->horizontal_timeline_class) .' swiper-wrapper">';
 					while( $this->my_query->have_posts() ) {
 						$this->my_query->the_post();

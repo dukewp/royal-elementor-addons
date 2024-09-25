@@ -54,6 +54,9 @@ function is_plugin_installed($file) {
 
 // Register Settings
 function wpr_register_addons_settings() {
+    // Optimizers
+    register_setting ('wpr-settings', 'wpr_hide_banners');
+
     // WooCommerce
     register_setting( 'wpr-settings', 'wpr_override_woo_templates' );
     register_setting( 'wpr-settings', 'wpr_override_woo_cart' );
@@ -429,14 +432,30 @@ function wpr_addons_settings_page() {
         <?php submit_button( '', 'wpr-options-button' ); ?>
 
         <div class="wpr-settings-group wpr-settings-navigation">
+            <a href="#general-tab">General</a> / 
             <a href="#optimizers-tab">Optimizers</a> / 
             <a href="#woocommerce-tab">WooCommerce</a> / 
             <?php if ( wpr_fs()->is_plan( 'expert' ) ) : ?>
                 <a href="#cpt-tab">Custom Post Types</a> / 
             <?php endif; ?>
-            <a href="#metabox-tab">Metabox</a> /  
+            <?php if ( wpr_fs()->can_use_premium_code() ) : ?>
+                <a href="#metabox-tab">Metabox</a> /   
+            <?php endif; ?>
             <a href="#integrations-tab">Integrations</a> /  
             <a href="#lightbox-tab">Lightbox</a>
+        </div> 
+
+        <div class="wpr-settings-group wpr-settings-group-general">
+            <h3 id="general-tab" class="wpr-settings-group-title"><?php esc_html_e( 'General', 'wpr-addons' ); ?></h3>
+
+            <div class="wpr-woo-template-info">
+                <div class="wpr-woo-template-title">
+                    <h4>Hide Banners</h4>
+                    <span>Disable All REA Banners Related to Discounts and New Features</span>
+                </div>
+                <input type="checkbox" name="wpr_hide_banners" id="wpr_hide_banners" <?php echo checked( get_option('wpr_hide_banners'), 'on', false ); ?>>
+                <label for="wpr_hide_banners"></label>
+            </div> 
         </div>
 
         <div class="wpr-settings-group wpr-settings-group-optimizers">

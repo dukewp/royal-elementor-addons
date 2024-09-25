@@ -1160,37 +1160,6 @@ class Wpr_Data_Table extends Widget_Base {
 			]
 		);
 
-		// $this->add_control(
-        //     'table_alignment',
-        //     [
-        //         'label'        => esc_html__('Alignment', 'wpr-addons'),
-        //         'type'         => Controls_Manager::CHOOSE,
-        //         'label_block'  => false,
-        //         'default'      => 'center',
-        //         'options'      => [
-        //             'flex-start'   => [
-        //                 'title' => esc_html__('Left', 'wpr-addons'),
-        //                 'icon'  => 'eicon-h-align-left',
-        //             ],
-        //             'center' => [
-        //                 'title' => esc_html__('Center', 'wpr-addons'),
-        //                 'icon'  => 'eicon-h-align-center',
-        //             ],
-        //             'flex-end'  => [
-        //                 'title' => esc_html__('Right', 'wpr-addons'),
-        //                 'icon'  => 'eicon-h-align-right',
-        //             ],
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .wpr-table-container .wpr-table-inner-container' => 'justify-content: {{VALUE}}',
-		// 			'{{WRAPPER}} .wpr-table-container' => 'display: flex; justify-content: {{VALUE}}',
-		// 			'{{WRAPPER}} .wpr-export-search-cont' => 'display: flex; justify-content: {{VALUE}}',
-		// 			'{{WRAPPER}} .wpr-table-pagination-outer-cont' => 'display: flex; justify-content: {{VALUE}}'
-		// 		],
-		// 		'separator' => 'before'
-        //     ]
-        // );
-
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -1683,6 +1652,8 @@ class Wpr_Data_Table extends Widget_Base {
                 ],
                 'selectors'  => [
                     '{{WRAPPER}} .wpr-data-table tbody i:not(.fa-question-circle)' => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .wpr-data-table tbody svg' => 'height: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .wpr-data-table tbody span:has(>svg)' => 'height: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}};'
                 ],
             ]
         );
@@ -1867,6 +1838,33 @@ class Wpr_Data_Table extends Widget_Base {
 	}
 
 	protected function wpr_parse_csv_to_table($filename, $settings, $custom_pagination, $sorting_icon ) {
+		$allowed_html = array(
+			'a' => array(
+				'href' => array(),
+				'title' => array(),
+				'target' => array(),
+			),
+			'b' => array(),
+			'strong' => array(),
+			'i' => array(),
+			'em' => array(),
+			'p' => array(),
+			'br' => array(),
+			'ul' => array(),
+			'ol' => array(),
+			'li' => array(),
+			'span' => array(),
+			'div' => array(
+				'class' => array(),
+			),
+			'img' => array(
+				'src' => array(),
+				'alt' => array(),
+				'width' => array(),
+				'height' => array(),
+			),
+			// Add more allowed tags and attributes as needed
+		);		
 
 		$handle = fopen($filename, "r");
 		
@@ -1878,7 +1876,7 @@ class Wpr_Data_Table extends Widget_Base {
 			$csvcontents = fgetcsv($handle, 0, $delimiter);
 			echo '<thead><tr class="wpr-table-head-row wpr-table-row">';
 			foreach ($csvcontents as $headercolumn) {
-				echo "<th class='wpr-table-th wpr-table-text'>$headercolumn  $sorting_icon</th>";
+				echo "<th class='wpr-table-th wpr-table-text'>". wp_kses($headercolumn, $allowed_html) . $sorting_icon ."</th>";
 			}
 			echo '</tr></thead>';
 		}
@@ -1892,7 +1890,7 @@ class Wpr_Data_Table extends Widget_Base {
 				$oddEven = $countRows % 2 == 0 ? 'wpr-even' : 'wpr-odd';
 				echo '<tr class="wpr-table-row  '. esc_attr($oddEven) .'">';
 				foreach ($csvcontents as $column) {
-					echo '<td class="wpr-table-td wpr-table-text">'. $column .'</td>';
+					echo '<td class="wpr-table-td wpr-table-text">'. wp_kses($column, $allowed_html) .'</td>';
 				}
 				echo '</tr>';
 		}
