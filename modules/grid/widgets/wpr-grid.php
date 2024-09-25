@@ -1341,7 +1341,7 @@ class Wpr_Grid extends Widget_Base {
 				'return_value' => 'yes',
 				'render_type' => 'template',
 				'conditions' => [
-					'relation' => 'or',
+					'relation' => 'and',
 					'terms' => [
 						[
 							'name' => 'layout_filters',
@@ -1349,18 +1349,28 @@ class Wpr_Grid extends Widget_Base {
 							'value' => '',
 						],
 						[
-							'relation' => 'and',
+							'relation' => 'or',
 							'terms' => [
 								[
+									'relation' => 'and',
+									'terms' => [	
+										[
+											'name' => 'layout_pagination',
+											'operator' => '!=',
+											'value' => '',
+										],
+										[
+											'name' => 'pagination_type',
+											'operator' => '==',
+											'value' => 'load-more',
+										],
+									]
+								],
+								[	
 									'name' => 'layout_pagination',
-									'operator' => '!=',
-									'value' => '',
-								],
-								[
-									'name' => 'pagination_type',
 									'operator' => '==',
-									'value' => 'load-more',
-								],
+									'value' => '',
+								]
 							],
 						],
 					]
