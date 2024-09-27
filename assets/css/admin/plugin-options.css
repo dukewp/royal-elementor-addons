@@ -1647,6 +1647,11 @@ div.fs-notice.updated, div.fs-notice.success {
   display: none !important;
 }
 
+/* Freemius license error video */
+.wpr-fs-error-video-tutorial {
+  color: #000 !important;
+  text-decoration: none !important;
+}
 
 /*--------------------------------------------------------------
 == Responsive
