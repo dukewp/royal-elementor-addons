@@ -1651,6 +1651,7 @@ div.fs-notice.updated, div.fs-notice.success {
 .wpr-fs-error-video-tutorial {
   color: #000 !important;
   text-decoration: none !important;
+  font-weight: bold !important;
 }
 
 /*--------------------------------------------------------------
