@@ -845,18 +845,20 @@ class Utilities {
 	** Get WPR Icon
 	*/
 	public static function get_wpr_icon( $icon, $dir ) {
-		if ( false !== strpos( $icon, 'svg-' ) ) {
-			return Utilities::get_svg_icon( $icon, $dir );
-
-		} elseif ( false !== strpos( $icon, 'fa-' ) ) {
-			$dir = '' !== $dir ? '-'. $dir : '';
-			return wp_kses('<i class="'. esc_attr($icon . $dir) .'"></i>', [
-				'i' => [
-					'class' => []
-				]
-			]);
-		} else {
-			return '';
+		if ( !empty($icon) ) {
+			if ( false !== strpos( $icon, 'svg-' ) ) {
+				return Utilities::get_svg_icon( $icon, $dir );
+	
+			} elseif ( false !== strpos( $icon, 'fa-' ) ) {
+				$dir = '' !== $dir ? '-'. $dir : '';
+				return wp_kses('<i class="'. esc_attr($icon . $dir) .'"></i>', [
+					'i' => [
+						'class' => []
+					]
+				]);
+			} else {
+				return '';
+			}
 		}
 	}
 

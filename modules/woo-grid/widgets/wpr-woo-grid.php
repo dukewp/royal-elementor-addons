@@ -528,6 +528,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'load-more' => esc_html__( 'Load More Button', 'wpr-addons' ),
 					'pro-is' => esc_html__( 'Infinite Scrolling (Pro)', 'wpr-addons' ),
 				],
+				'render_type' => 'template',
 				'separator' => 'after'
 			]
 		);
