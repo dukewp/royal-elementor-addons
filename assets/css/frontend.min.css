@@ -17111,6 +17111,7 @@ img.wpr-gf-visual-active {
 }
 
 [class^="wpr-af-wrap-"] {
+    display: inline-block;
     padding: 5px;
     margin: 5px;
     border: 1px solid #333222;

@@ -2862,6 +2862,7 @@ class Wpr_Grid extends Widget_Base {
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'no',
 				'return_value' => 'yes',
+				'render_type' => 'template'
 			]
 		);
 
