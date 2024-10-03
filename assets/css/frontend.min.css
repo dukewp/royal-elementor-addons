@@ -2789,15 +2789,14 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     overflow: hidden;
 }
 
-.wpr-woo-rating-style-1 .wpr-woo-rating i:before {
-}
-
 .wpr-woo-rating-style-2 .wpr-woo-rating i:before {
     content: '\002605';
 }
 
 .wpr-woo-rating .wpr-rating-marked,
 .wpr-woo-rating .wpr-rating-unmarked {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
     display: inline-flex;
 }
 
