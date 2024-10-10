@@ -14,6 +14,21 @@ class WPR_Templates_Data {
 		$is_woo_active = is_plugin_active('woocommerce/woocommerce.php') ? 'true' : 'false';
 
 		return [
+			'book-shop' => [
+				'v1' => [
+					'name' => 'Bookshop V1',
+					'pages' => 'home,shop,product-details,cart,wishlist,about-us,blog,blog-details,contact,',
+					'plugins' => '{"woocommerce":'. $is_woo_active .'}',
+					'tags' => 'bookshop books store author sales e-book best-seller download shop shopping woo-commerce woocommerce estore ecommerce product eshopping ecommerce shop e commerce',
+					'theme-builder' => true,
+					'woo-builder' => true,
+					'off-canvas' => true,
+					'price' => $is_pro_active ? 'free' : 'pro',
+					'expert' => $is_expert ? 'free' : 'expert',
+					'label' => 'new',
+					'priority' => 5,
+				],
+			],
 			'hosting' => [
 				'v1' => [
 					'name' => 'Hosting V1',

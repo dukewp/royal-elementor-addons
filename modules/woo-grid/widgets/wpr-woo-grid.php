@@ -133,7 +133,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'slider' => esc_html__( 'Slider / Carousel', 'wpr-addons' ),
 					'pro-ms' => esc_html__( 'Masonry - Unlimited Height (Pro)', 'wpr-addons' ),
 				],
-				'label_block' => true
+				'label_block' => true,
+				'render_type' => 'template'
 			]
 		);
 	}
@@ -528,6 +529,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'load-more' => esc_html__( 'Load More Button', 'wpr-addons' ),
 					'pro-is' => esc_html__( 'Infinite Scrolling (Pro)', 'wpr-addons' ),
 				],
+				'render_type' => 'template',
 				'separator' => 'after'
 			]
 		);
@@ -1267,6 +1269,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'tablet_default' => 'yes',
 				'mobile_extra_default' => 'yes',
 				'mobile_default' => 'yes',
+				'render_type' => 'template',
 				'selectors_dictionary' => [
 					'' => 'none',
 					'yes' => 'inline-table'
@@ -4814,6 +4817,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-woo-rating i' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-woo-rating .wpr-rating-icon' => 'margin-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-woo-rating span.wpr-rating-icon' => 'margin-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-woo-rating span:not(.wpr-rating-icon, .wpr-rating-icon span)' => 'margin-left: {{SIZE}}{{UNIT}};',
 				],
@@ -9547,40 +9551,29 @@ class Wpr_Woo_Grid extends Widget_Base {
 					echo '<span>'. esc_html($rating_amount) .'</span>';
 				} else {
 
-                    // if ( \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_font_icon_svg' ) ) {
-                    //     for ( $b = 1; $b <= 5;  $b++ ) {
+                    if ( \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_font_icon_svg' ) && 'style-1' == $settings['element_rating_style'] ) {
+                        for ( $b = 1; $b <= 5;  $b++ ) {
                         
-                    //         if ( $b <= $rating_amount ) :
-                    //             $this->render_rating_icon( 'wpr-rating-icon-full', $settings['element_rating_unmarked_style'] );
-                    //         elseif ( $b === $round_rating + 1 && $rating_amount !== $round_rating ) :
-                    //             $this->render_rating_icon( 'wpr-rating-icon-'. (( $rating_amount - $round_rating ) * 10), $settings['element_rating_unmarked_style'] );
-                    //         else :
-                    //             $this->render_rating_icon( 'wpr-rating-icon-0', $settings['element_rating_unmarked_style'] );
-                    //         endif;
-                    //     }
-                    // } else {
-                    //     for ( $i = 1; $i <= 5; $i++ ) {
+                            if ( $b <= $rating_amount ) :
+                                $this->render_rating_icon( 'wpr-rating-icon-full', $settings['element_rating_unmarked_style'] );
+                            elseif ( $b === $round_rating + 1 && $rating_amount !== $round_rating ) :
+                                $this->render_rating_icon( 'wpr-rating-icon-'. (( $rating_amount - $round_rating ) * 10), $settings['element_rating_unmarked_style'] );
+                            else :
+                                $this->render_rating_icon( 'wpr-rating-icon-0', $settings['element_rating_unmarked_style'] );
+                            endif;
+                        }
+                    } else {
+                        for ( $i = 1; $i <= 5; $i++ ) {
 
-                    //         if ( $i <= $rating_amount ) {
-                    //             echo '<i class="wpr-rating-icon-full">'. esc_html($rating_icon) .'</i>';
-                    //         } elseif ( $i === $round_rating + 1 && $rating_amount !== $round_rating ) {
-                    //             echo '<i class="wpr-rating-icon-'. esc_attr((( $rating_amount - $round_rating ) * 10)) .'">'. esc_html($rating_icon) .'</i>';
-                    //         } else {
-                    //             echo '<i class="wpr-rating-icon-empty">'. esc_html($rating_icon) .'</i>';
-                    //         }
-                    //     }
-                    // }
-
-					for ( $i = 1; $i <= 5; $i++ ) {
-
-						if ( $i <= $rating_amount ) {
-							echo '<i class="wpr-rating-icon-full">'. esc_html($rating_icon) .'</i>';
-						} elseif ( $i === $round_rating + 1 && $rating_amount !== $round_rating ) {
-							echo '<i class="wpr-rating-icon-'. esc_attr((( $rating_amount - $round_rating ) * 10)) .'">'. esc_html($rating_icon) .'</i>';
-						} else {
-							echo '<i class="wpr-rating-icon-empty">'. esc_html($rating_icon) .'</i>';
-						}
-					}
+                            if ( $i <= $rating_amount ) {
+                                echo '<i class="wpr-rating-icon-full">'. esc_html($rating_icon) .'</i>';
+                            } elseif ( $i === $round_rating + 1 && $rating_amount !== $round_rating ) {
+                                echo '<i class="wpr-rating-icon-'. esc_attr((( $rating_amount - $round_rating ) * 10)) .'">'. esc_html($rating_icon) .'</i>';
+                            } else {
+                                echo '<i class="wpr-rating-icon-empty">'. esc_html($rating_icon) .'</i>';
+                            }
+                        }
+                    }
 				}
 
 				echo '</div>';
