@@ -133,7 +133,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'slider' => esc_html__( 'Slider / Carousel', 'wpr-addons' ),
 					'pro-ms' => esc_html__( 'Masonry - Unlimited Height (Pro)', 'wpr-addons' ),
 				],
-				'label_block' => true
+				'label_block' => true,
+				'render_type' => 'template'
 			]
 		);
 	}
@@ -1268,6 +1269,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'tablet_default' => 'yes',
 				'mobile_extra_default' => 'yes',
 				'mobile_default' => 'yes',
+				'render_type' => 'template',
 				'selectors_dictionary' => [
 					'' => 'none',
 					'yes' => 'inline-table'

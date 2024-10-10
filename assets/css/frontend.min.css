@@ -15073,7 +15073,7 @@ ul.wpr-woo-mini-cart {
     top: 0;
     left: 0;
     width: 100% !important;
-    height: 100vh;
+    height: var(--vh, 100vh);
     z-index: 999999;
     margin: 0 !important;
 }
