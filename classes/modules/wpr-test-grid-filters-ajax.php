@@ -331,8 +331,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 												}
 											} else {
 												if ( isset($meta_query) ) {
+													if ( isset($_POST['wpr_gfr_' . $cleanedKey]) && !empty(explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0]) ) {
+														$meta_relation = explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0];
+													} else if ( isset($_POST['wpr_url_params']['wpr_gfr_'. $cleanedKey]) && !empty(explode(',', $_POST['wpr_url_params']['wpr_gfr_'. $cleanedKey])[0]) ) {
+														$meta_relation = explode(',', $_POST['wpr_url_params']['wpr_gfr_'. $cleanedKey])[0];
+													} else {
+														$meta_relation = '';
+													}
+													
 													$for_meta_query = [ // needs check if overrides somethings
-														'relation' => explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] ? explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] : explode(',', $_POST['wpr_url_params']['wpr_gfr_'. $cleanedKey])[0],
+														'relation' => $meta_relation,
 													];
 				
 													foreach ($filtervalues as $filtervalue) {
