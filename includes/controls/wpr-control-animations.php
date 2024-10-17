@@ -2,6 +2,7 @@
 namespace WprAddons\Includes\Controls;
 
 use Elementor\Base_Data_Control;
+use Elementor\Control_Hover_Animation;
 use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -295,6 +296,16 @@ class WPR_Control_Button_Animations extends Base_Data_Control {
 		<div class="elementor-control-field-description">{{{ data.description }}}</div>
 		<# } #>
 		<?php
+	}
+
+	public static function get_assets( $setting ) {
+		if ( ! $setting || 'none' === $setting || !str_contains($setting, 'elementor-animation') ) {
+			return [];
+		}
+
+		return [
+			'styles' => [ 'e-animation-' . str_replace('elementor-animation-', '', $setting) ],
+		];
 	}
 	
 }
