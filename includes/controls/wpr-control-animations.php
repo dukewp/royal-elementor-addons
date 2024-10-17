@@ -2,7 +2,6 @@
 namespace WprAddons\Includes\Controls;
 
 use Elementor\Base_Data_Control;
-use Elementor\Control_Hover_Animation;
 use WprAddons\Classes\Utilities;
 
 if ( ! defined( 'ABSPATH' ) ) {
