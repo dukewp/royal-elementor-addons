@@ -219,10 +219,10 @@ class WPR_Render_Templates {
 	 */
 	public function enqueue_scripts() {
 
-		// if ( class_exists( '\Elementor\Plugin' ) ) {
-		// 	$elementor = \Elementor\Plugin::instance();
-		// 	$elementor->frontend->enqueue_styles();
-		// }
+		if ( class_exists( '\Elementor\Plugin' ) ) {
+			$elementor = \Elementor\Plugin::instance();
+			$elementor->frontend->enqueue_styles();
+		}
 
 		// if ( class_exists( '\ElementorPro\Plugin' ) ) {
 		// 	$elementor_pro = \ElementorPro\Plugin::instance();
