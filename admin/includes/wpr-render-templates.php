@@ -226,7 +226,14 @@ class WPR_Render_Templates {
 
 		if ( class_exists( '\ElementorPro\Plugin' ) ) {
 			$elementor_pro = \ElementorPro\Plugin::instance();
-			$elementor_pro->enqueue_styles();
+			if ( method_exists( $elementor_pro, 'enqueue_styles' ) ) {
+				$elementor_pro->enqueue_styles();
+			} else {
+				// Alternative approach if enqueue_styles no longer exists
+				add_action( 'wp_enqueue_scripts', function() {
+					wp_enqueue_style( 'elementor-pro-frontend', ELEMENTOR_PRO_ASSETS_URL . 'css/frontend.min.css' );
+				});
+			}
 		}
 
 		// Load Header Template CSS File
