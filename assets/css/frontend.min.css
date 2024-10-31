@@ -789,7 +789,7 @@ div[class*="wpr-main-menu-align-"] .wpr-nav-menu-vertical .wpr-nav-menu>li>.wpr-
 }
 
 .wpr-mobile-menu-full-width .wpr-mobile-mega-menu-wrap {
-    width: 100%;
+    width: 100vw;
 }
 
 .wpr-mobile-menu-drdown-align-left .wpr-mobile-nav-menu:not(.wpr-mobile-mega-menu),
@@ -1476,6 +1476,13 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     display: none;
 }
 
+.wpr-mobile-mega-menu-wrap[toggle-backface="yes"] .wpr-mobile-sub-offcanvas-open li.menu-item > ul {
+    display: none !important;
+}
+
+.wpr-mobile-mega-menu-wrap[toggle-backface="yes"] .wpr-mobile-sub-offcanvas-open li.wpr-mobile-sub-open.menu-item > ul {
+    display: block !important;
+}
 
 /*--------------------------------------------------------------
 == Onepage Nav
@@ -2912,12 +2919,24 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     content: '\002605';
 }
 
+.wpr-woo-rating .wpr-rating-marked,
+.wpr-woo-rating .wpr-rating-unmarked {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+}
+
 .wpr-woo-rating i:last-of-type {
     margin-right: 0 !important;
 }
 
 .wpr-rating-icon-empty:before {
     display: none !important;
+}
+
+.wpr-rating-icon-5 .wpr-rating-marked svg {
+    mask: linear-gradient(to right, black 50%, transparent 50%);
+    -webkit-mask: linear-gradient(to right, black 50%, transparent 50%);
 }
 
 .wpr-rating-icon-0:before,
@@ -2946,7 +2965,7 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
 }
 
 .wpr-rating-icon-5:before,
-.wpr-rating-icon-5 .wpr-rating-marked {
+.wpr-rating-icon-5 .wpr-rating-marked:not(:has(svg)) {
     width: 50%;
 }
 
@@ -8193,9 +8212,15 @@ select.wpr-category-select {
 }
 
 .wpr-member-social {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     width: 45px;
     height: 45px;
     line-height: 45px;
@@ -12354,13 +12379,13 @@ select.wpr-category-select {
 }
 
 /* Horizontal Timeline */
-.wpr-horizontal-bottom.swiper-container {
+.wpr-horizontal-bottom.swiper {
     position: unset;
     overflow: hidden;
     z-index: 10;
 }
 
-.wpr-horizontal.swiper-container {
+.wpr-horizontal.swiper {
     position: unset;
     overflow: hidden;
     z-index: 11;
@@ -14566,6 +14591,11 @@ flex-grow: 0; */
     white-space: nowrap;
 }
 
+.wpr-compare-toggle-btn i,
+.wpr-compare-toggle-btn svg {
+    transition: all 0.3s ease;
+}
+
 /* == Wishlist Button */
 
 .wpr-wishlist-add,
@@ -14693,6 +14723,11 @@ flex-grow: 0; */
 .wpr-wishlist-toggle-btn {
     display: inline-block;
     cursor: pointer;
+}
+
+.wpr-wishlist-toggle-btn i,
+.wpr-wishlist-toggle-btn svg {
+    transition: all 0.3s ease;
 }
 
 .wpr-wishlist {
@@ -15177,7 +15212,7 @@ ul.wpr-woo-mini-cart {
     top: 0;
     left: 0;
     width: 100% !important;
-    height: 100%;
+    height: var(--vh, 100vh);
     z-index: 999999;
     margin: 0 !important;
 }
@@ -15369,6 +15404,11 @@ ul.wpr-woo-mini-cart {
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
+}
+
+.wpr-mini-cart-toggle-btn i,
+.wpr-mini-cart-toggle-btn svg {
+    transition: all 0.3s ease;
 }
 
 .wpr-toggle-icon-none .wpr-mini-cart-btn-icon i::before {
@@ -18509,7 +18549,8 @@ input.wpr-date-filter-2 {
   /* -webkit-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1) inset;
           box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1) inset; */
   outline: 0;
-  box-shadow: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
 }
 
 .wpr-field-group .wpr-form-field-textual::-webkit-input-placeholder {
@@ -18590,7 +18631,9 @@ input.wpr-date-filter-2 {
   height: 15px;
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
   right: 10px;
   pointer-events: none;
 }
@@ -18706,7 +18749,8 @@ input.wpr-date-filter-2 {
 }
 
 .wpr-file-type-error {
-    flex-basis: 100%;
+    -ms-flex-preferred-size: 100%;
+        flex-basis: 100%;
     padding: 5px 0;
     margin: 0 0 5px 0;
     list-style-type: none;

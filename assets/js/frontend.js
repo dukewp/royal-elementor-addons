@@ -415,6 +415,8 @@
 					}
 					
 					$scope.css({'position': stickType });
+
+					$('.wpr-close-cart span').trigger('click');
 			    }
 
 			    function changeAdminBarOffset() {	
@@ -489,21 +491,19 @@
 			}
 
 			function parallaxBackground() {
-				if ( $scope.hasClass('wpr-jarallax-yes') ) {
-					if ( ! WprElements.editorCheck() && $scope.hasClass('wpr-jarallax') ) {
-						$scope.css('background-image', 'url("' + $scope.attr('bg-image') + '")');
-						$scope.jarallax({
-							type: $scope.attr('scroll-effect'),
-							speed: $scope.attr('speed-data'),
-						});
-					} else if ( WprElements.editorCheck() ) {
-						$scope.css('background-image', 'url("' + $scope.find('.wpr-jarallax').attr('bg-image-editor') + '")');
-						$scope.jarallax({
-							type: $scope.find('.wpr-jarallax').attr('scroll-effect-editor'),
-							speed: $scope.find('.wpr-jarallax').attr('speed-data-editor')
-						});
-					}
-				} 
+				if ( ! WprElements.editorCheck() && $scope.hasClass('wpr-jarallax') ) {
+					$scope.css('background-image', 'url("' + $scope.attr('bg-image') + '")');
+					$scope.jarallax({
+						type: $scope.attr('scroll-effect'),
+						speed: $scope.attr('speed-data'),
+					});
+				} else if ( WprElements.editorCheck() ) {
+					$scope.css('background-image', 'url("' + $scope.find('.wpr-jarallax').attr('bg-image-editor') + '")');
+					$scope.jarallax({
+						type: $scope.find('.wpr-jarallax').attr('scroll-effect-editor'),
+						speed: $scope.find('.wpr-jarallax').attr('speed-data-editor')
+					});
+				}
 			}
 
 			function parallaxMultiLayer() {
@@ -4483,6 +4483,7 @@
 
 				searchTimeout = setTimeout(() => {
 					var thisValue = thisObject.val();
+
 					$.ajax({
 						type: 'POST',
 						url: WprConfig.ajaxurl,
@@ -4504,6 +4505,7 @@
 							wpr_no_results: $scope.find('.wpr-search-form-input').attr('no-results'),
 							wpr_exclude_without_thumb: $scope.find('.wpr-search-form-input').attr('exclude-without-thumb'),
 							wpr_ajax_search_link_target: $scope.find('.wpr-search-form-input').attr('link-target'),
+							wpr_show_ps_pt: $scope.find('.wpr-search-form-input').attr('password-protected'),
 							// wpr_ajax_search_img_size: $scope.find('.wpr-search-form-input').attr('ajax-search-img-size')
 						},
 						success: function(data) {
@@ -5083,8 +5085,24 @@
 			
 			var $flipBox = $scope.find('.wpr-flip-box'),
 				flipBoxTrigger = $flipBox.data('trigger');
+			
+			// Listen for the pageshow event to prevent undesired cache
+			window.addEventListener('pageshow', function(event) {
+				if (event.persisted) {
+					if ( $flipBox.hasClass('wpr-flip-box-active') ) {
+						$flipBox.removeClass('wpr-flip-box-active');
+					}
+				}
+			});
 
-			 if ( 'box' === flipBoxTrigger ) {
+			// Listen for the popstate event same purpose
+			window.addEventListener('popstate', function(event) {
+				if ( $flipBox.hasClass('wpr-flip-box-active') ) {
+					$flipBox.removeClass('wpr-flip-box-active');
+				}
+			});
+
+			if ( 'box' === flipBoxTrigger ) {
 
 				$flipBox.find('.wpr-flip-box-front').on( 'click', function() {
 					$(this).closest('.wpr-flip-box').addClass('wpr-flip-box-active'); 
@@ -6258,7 +6276,7 @@
 				};
 			
 				var horizontal = $scope.find('.wpr-horizontal-bottom').length ? '.wpr-horizontal-bottom' : '.wpr-horizontal';
-				var swiperSlider = $scope.find(horizontal +".swiper-container");
+				var swiperSlider = $scope.find(horizontal +".swiper");
 							
 				var slidestoshow = swiperSlider.data("slidestoshow");
 
@@ -8723,7 +8741,8 @@
 							
 								return Promise.all(updateMetaPromises).then(() => {
 									if (responsesArray.includes('error')) {
-										$scope.find('form').append('<p class="wpr-submit-error">'+ $scope.data('settings').error_message +'</p>');
+										var sanitizedErrorMessage = $('<div>').text($scope.data('settings').error_message).html();
+										$scope.find('form').append('<p class="wpr-submit-error">' + sanitizedErrorMessage + '</p>');
 									} else {
 										$scope.find('form').append('<p class="wpr-submit-success">'+ $scope.data('settings').success_message +'</p>');
 										$scope.find('button').attr('disabled', true);
@@ -9444,6 +9463,12 @@
 						// }, 1000 );
 					},
 				} );
+
+				$( 'body' ).on( 'added_to_cart', function(ev, fragments, hash, button) {
+					button.next().fadeTo( 700, 1 );
+
+					button.css('display', 'none');
+				});
 			}
 		}, // End of widgetProductAddToCart
 
@@ -9700,6 +9725,10 @@
                     updateMiniCart();
                 }
             });
+
+			$( document.body ).on( 'updated_wc_div', function() {
+				updateMiniCart();
+			});
             
             function updateMiniCart() {
                 $.ajax({
@@ -9852,7 +9881,6 @@
 		}, // End of widgetProductFilters
 
 		widgetPageCart: function($scope) {
-			// $scope.find('.shipping-calculator-button').trigger('click');
 		}, // End of widgetPageCart
 
 		widgetPageMyAccount: function($scope) {

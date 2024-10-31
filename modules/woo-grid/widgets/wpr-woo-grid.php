@@ -133,7 +133,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'slider' => esc_html__( 'Slider / Carousel', 'wpr-addons' ),
 					'pro-ms' => esc_html__( 'Masonry - Unlimited Height (Pro)', 'wpr-addons' ),
 				],
-				'label_block' => true
+				'label_block' => true,
+				'render_type' => 'template'
 			]
 		);
 	}
@@ -530,6 +531,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'load-more' => esc_html__( 'Load More Button', 'wpr-addons' ),
 					'pro-is' => esc_html__( 'Infinite Scrolling (Pro)', 'wpr-addons' ),
 				],
+				'render_type' => 'template',
 				'separator' => 'after'
 			]
 		);
@@ -1273,6 +1275,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'tablet_default' => 'yes',
 				'mobile_extra_default' => 'yes',
 				'mobile_default' => 'yes',
+				'render_type' => 'template',
 				'selectors_dictionary' => [
 					'' => 'none',
 					'yes' => 'inline-table'
@@ -1849,7 +1852,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'default' => 'style-2',
 				'condition' => [
 					'element_select' => 'rating',
-				],
+				]
 			]
 		);
 
@@ -4836,6 +4839,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-woo-rating i' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-woo-rating .wpr-rating-icon' => 'margin-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-woo-rating span.wpr-rating-icon' => 'margin-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-woo-rating span:not(.wpr-rating-icon, .wpr-rating-icon span)' => 'margin-left: {{SIZE}}{{UNIT}};',
 				],
@@ -9594,7 +9598,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			$button_HTML .= esc_html__('View Product', 'wpr-addons');
 			array_push( $attributes, 'href="'. esc_url( get_permalink() ) .'"' );
 		} else {
-			if ( !$product->get_product_url() ) {
+			if ( !is_callable( array( $product, 'get_product_url' ) ) ) {
 				$button_HTML .= esc_html__('View Product', 'wpr-addons');
 				array_push( $attributes, 'href="'. esc_url( get_permalink() ) .'"' );
 			} else {
@@ -9871,7 +9875,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					echo '<span>'. esc_html($rating_amount) .'</span>';
 				} else {
 
-                    if ( \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_font_icon_svg' ) ) {
+                    if ( \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_font_icon_svg' ) && 'style-1' == $settings['element_rating_style'] ) {
                         for ( $b = 1; $b <= 5;  $b++ ) {
                         
                             if ( $b <= $rating_amount ) :
@@ -9881,7 +9885,6 @@ class Wpr_Woo_Grid extends Widget_Base {
                             else :
                                 $this->render_rating_icon( 'wpr-rating-icon-0', $settings['element_rating_unmarked_style'] );
                             endif;
-                            
                         }
                     } else {
                         for ( $i = 1; $i <= 5; $i++ ) {
@@ -9893,7 +9896,7 @@ class Wpr_Woo_Grid extends Widget_Base {
                             } else {
                                 echo '<i class="wpr-rating-icon-empty">'. esc_html($rating_icon) .'</i>';
                             }
-                         }
+                        }
                     }
 				}
 
@@ -10715,6 +10718,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			echo '<h2>'. esc_html__( 'WooCommerce is NOT active!', 'wpr-addons' ) .'</h2>';
 			return;
 		}
+		
 		// Get Posts
 		$posts = new \WP_Query( $this->get_main_query_args() );
 

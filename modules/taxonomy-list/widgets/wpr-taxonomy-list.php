@@ -210,6 +210,20 @@ class Wpr_Taxonomy_List extends Widget_Base {
 		);
 
 		$this->add_control(
+			'show_count_brackets',
+			[
+				'label' => esc_html__( 'Count Brackets', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'label_block' => false,
+				'default' => 'yes',
+				'condition' => [
+					'show_tax_count' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control(
 			'disable_links',
 			[
 				'label' => esc_html__( 'Disable Links', 'wpr-addons' ),
@@ -614,6 +628,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 		\Elementor\Icons_Manager::render_icon( $settings['tax_list_icon'], [ 'aria-hidden' => 'true' ] );
 		$icon = ob_get_clean();
 		$icon_wrapper = !empty($settings['tax_list_icon']) ? '<span>'. $icon .'</span>' : '';
+		$brackets = isset($settings['show_count_brackets']) ? $settings['show_count_brackets'] : '';
 
 		// 	'hide_empty' => 'yes' === $settings['query_hide_empty']
 		$settings['query_tax_selection'] = str_contains($settings['query_tax_selection'], 'pro-') ? 'category' : $settings['query_tax_selection'];
@@ -622,7 +637,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 		$terms = get_terms( $settings['query_tax_selection'], [ 'hide_empty' => 'yes' === $settings['query_hide_empty'], 'parent' => 0, 'child_of' => 0 ] );
 
         foreach ($terms as $key => $term) {
-			if ( !empty(get_queried_object()) && $term->term_id == get_queried_object()->term_taxonomy_id && 'yes' == $settings['highlight_active'] ) {
+			if ( !empty(get_queried_object()) && isset(get_queried_object()->term_taxonomy_id) && $term->term_id == get_queried_object()->term_taxonomy_id && 'yes' == $settings['highlight_active'] ) {
 				$cat_class = ' class="wpr-taxonomy wpr-taxonomy-active"';
 			} else {
 				$cat_class = ' class="wpr-taxonomy"';
@@ -639,13 +654,17 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				$toggle_icon = !empty($children) && ('vertical' === $settings['taxonomy_list_layout']) && ('yes' === $settings['show_sub_categories_on_click']) ? '<i class="fas fa-caret-right wpr-tax-dropdown" aria-hidden="true"></i>' : '';
 				$this->get_tax_wrapper_open_tag( $settings, $term->term_id, $open_in_new_page );
 					echo '<span class="wpr-tax-wrap">'. $toggle_icon . ' ' . $icon_wrapper .'<span>'. esc_html($term->name) .'</span></span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		            echo ($settings['show_tax_count']) ? '<span><span class="wpr-term-count">&nbsp;('. esc_html($term->count) .')</span></span>' : '';
+					if ( 'yes' === $brackets ) {
+						echo ($settings['show_tax_count']) ? '<span><span class="wpr-term-count">&nbsp;('. esc_html($term->count) .')</span></span>' : '';
+					} else {
+						echo ($settings['show_tax_count']) ? '<span><span class="wpr-term-count">&nbsp;'. esc_html($term->count) .'</span></span>' : '';
+					}
 				$this->get_tax_wrapper_close_tag( $settings );
             echo '</li>';
 
 			foreach ($children as $term) :
 				$hidden_class = $settings['show_sub_categories_on_click'] == 'yes' ? ' wpr-sub-hidden' : '';
-				if ( $term->term_id == get_queried_object()->term_taxonomy_id && 'yes' == $settings['highlight_active'] ) {
+				if ( isset(get_queried_object()->term_taxonomy_id) && $term->term_id == get_queried_object()->term_taxonomy_id && 'yes' == $settings['highlight_active'] ) {
 					$sub_class = $term->parent > 0 ? ' class="wpr-sub-taxonomy wpr-taxonomy-active' . $hidden_class . '"' : '';
 				} else {
 					$sub_class = $term->parent > 0 ? ' class="wpr-sub-taxonomy' . $hidden_class . '"' : '';
@@ -663,7 +682,11 @@ class Wpr_Taxonomy_List extends Widget_Base {
 				$toggle_icon = !empty($grand_children) && ('vertical' === $settings['taxonomy_list_layout']) && ('yes' === $settings['show_sub_categories_on_click']) ? '<i class="fas fa-caret-right wpr-tax-dropdown" aria-hidden="true"></i>' : '';
 					$this->get_tax_wrapper_open_tag( $settings, $term->term_id, $open_in_new_page );
 						echo '<span class="wpr-tax-wrap">'. $toggle_icon . ' ' . $icon_wrapper .'<span>'. esc_html($term->name) .'</span></span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-						echo ($settings['show_tax_count']) ? '<span><span class="wpr-term-count">&nbsp;('. esc_html($term->count) .')</span></span>' : '';
+						if ( 'yes' === $brackets ) {
+							echo ($settings['show_tax_count']) ? '<span><span class="wpr-term-count">&nbsp;('. esc_html($term->count) .')</span></span>' : '';
+						} else {
+							echo ($settings['show_tax_count']) ? '<span><span class="wpr-term-count">&nbsp;'. esc_html($term->count) .'</span></span>' : '';
+						}
 					$this->get_tax_wrapper_close_tag( $settings );
 				echo '</li>';
 	
@@ -686,7 +709,11 @@ class Wpr_Taxonomy_List extends Widget_Base {
 					echo '<li'. $sub_class . $data_grandchild_term_id .' data-id="'. $grandchild_id .'">';
 						$this->get_tax_wrapper_open_tag( $settings, $term->term_id, $open_in_new_page );
 							echo '<span class="wpr-tax-wrap">'. $toggle_icon . ' ' . $icon_wrapper .'<span>'. esc_html($term->name) .'</span></span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-							echo ($settings['show_tax_count']) ? '<span><span class="wpr-term-count">&nbsp;('. esc_html($term->count) .')</span></span>' : '';
+							if ( 'yes' === $brackets ) {
+								echo ($settings['show_tax_count']) ? '<span><span class="wpr-term-count">&nbsp;('. esc_html($term->count) .')</span></span>' : '';
+							} else {
+								echo ($settings['show_tax_count']) ? '<span><span class="wpr-term-count">&nbsp;'. esc_html($term->count) .'</span></span>' : '';
+							}
 						$this->get_tax_wrapper_close_tag( $settings );
 					echo '</li>';
 
@@ -701,7 +728,12 @@ class Wpr_Taxonomy_List extends Widget_Base {
 						echo '<li'. $sub_class . $data_great_grandchild_term_id .'>';
 							$this->get_tax_wrapper_open_tag( $settings, $term->term_id, $open_in_new_page );
 								echo '<span class="wpr-tax-wrap">'. $icon_wrapper .'<span>'. esc_html($term->name) .'</span></span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-								echo ($settings['show_tax_count']) ? '<span><span class="wpr-term-count">&nbsp;('. esc_html($term->count) .')</span></span>' : '';
+								if ( 'yes' === $brackets ) {
+									echo ($settings['show_tax_count']) ? '<span><span class="wpr-term-count">&nbsp;('. esc_html($term->count) .')</span></span>' : '';
+									$this->get_tax_wrapper_close_tag( $settings );
+								} else {
+									echo ($settings['show_tax_count']) ? '<span><span class="wpr-term-count">&nbsp;'. esc_html($term->count) .'</span></span>' : '';
+								}
 							$this->get_tax_wrapper_close_tag( $settings );
 						echo '</li>';
 					
