@@ -49,7 +49,7 @@ class Wpr_Page_Checkout extends Widget_Base {
             'apply_changes',
             [
                 'type' => Controls_Manager::RAW_HTML,
-                'raw' => '<div class="elementor-update-preview editor-wpr-preview-update"><span>Update changes to Preview</span><button class="elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply</button>',
+                'raw' => '<div class="elementor-update-preview editor-wpr-preview-update"><span>Publish & Update changes to Preview</span><button class="elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply</button>',
                 'separator' => 'after'
             ]
         );
