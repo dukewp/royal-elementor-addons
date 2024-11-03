@@ -1269,7 +1269,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'tablet_default' => 'yes',
 				'mobile_extra_default' => 'yes',
 				'mobile_default' => 'yes',
-				'render_type' => 'template',
 				'selectors_dictionary' => [
 					'' => 'none',
 					'yes' => 'inline-table'
@@ -1277,6 +1276,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-slider-dots' => 'display:{{VALUE}};',
 				],
+				'render_type' => 'template',
 				'condition' => [
 					'layout_select' => 'slider',
 				],
