@@ -1361,8 +1361,8 @@ class Wpr_Grid extends Widget_Base {
 										],
 										[
 											'name' => 'pagination_type',
-											'operator' => '==',
-											'value' => 'load-more',
+											'operator' => 'in',
+											'value' => ['load-more', 'infinite'],
 										],
 									]
 								],
