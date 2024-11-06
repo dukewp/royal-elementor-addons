@@ -498,11 +498,11 @@
 						speed: $scope.attr('speed-data'),
 					});
 				} else if ( WprElements.editorCheck() ) {
-					$scope.css('background-image', 'url("' + $scope.find('.wpr-jarallax').attr('bg-image-editor') + '")');
+					$scope.css('background-image', 'url("' + $scope.find('> .wpr-jarallax').attr('bg-image-editor') + '")');
 					$scope.jarallax({
-						type: $scope.find('.wpr-jarallax').attr('scroll-effect-editor'),
-						speed: $scope.find('.wpr-jarallax').attr('speed-data-editor')
-					});
+						type: $scope.find('> .wpr-jarallax').attr('scroll-effect-editor'),
+						speed: $scope.find('> .wpr-jarallax').attr('speed-data-editor')
+					});									
 				}
 			}
 
@@ -8048,7 +8048,7 @@
 					
 						// If the product ID is not in the wishlistProductIds array, remove the element
 						if (!wishlistProductIds.includes(productId)) {
-						$(this).remove();
+							$(this).remove();
 						}
 					});
 
@@ -8417,14 +8417,15 @@
 					action: 'count_compare_items',
 				},
 				success: function(response) {
-					if ( $scope.find('.wpr-compare-count').css('display') == 'none' && 0 < response.compare_count ) {
-						$scope.find('.wpr-compare-count').text(response.compare_count);
+					let compare_count = response.compare_count;
+					if ( $scope.find('.wpr-compare-count').css('display') == 'none' && 0 < compare_count ) {
+						$scope.find('.wpr-compare-count').text(compare_count);
 						$scope.find('.wpr-compare-count').css('display', 'inline-flex');
-					} else if ( 0 == response.compare_count ) {
+					} else if ( 0 == compare_count ) {
 						$scope.find('.wpr-compare-count').css('display', 'none');
-						$scope.find('.wpr-compare-count').text(response.compare_count);
+						$scope.find('.wpr-compare-count').text(compare_count);
 					} else {
-						$scope.find('.wpr-compare-count').text(response.compare_count);
+						$scope.find('.wpr-compare-count').text(compare_count);
 					}
 				},
 				error: function(error) {
