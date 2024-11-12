@@ -1541,13 +1541,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	public function wpr_get_filtered_count_test() {
 		$query = new \WP_Query( $this->get_main_query_args() );
-    
-        wp_send_json_success([
-            'query' => $query
-        ]);
-		
+	
+		// Send only the count of found posts
+		wp_send_json_success([
+			'found_posts' => $query->found_posts
+		]);
+	
 		wp_reset_postdata();
-        wp_die();
+		wp_die();
 	}
 
 	public function wpr_test_grid_filters_ajax() {
