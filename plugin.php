@@ -438,7 +438,8 @@ class Plugin {
 		if ( ! isset( $_COOKIE['wpr_guest_token'] ) ) {
 			// Generate a unique token and store it in a cookie
 			$guest_id = bin2hex(random_bytes(32)); // Secure random string as guest "session"
-			setcookie( 'wpr_guest_token', $guest_id, time() + 3600, '/' ); // 1 hour expiration
+			$secure = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' );
+			setcookie( 'wpr_guest_token', $guest_id, time() + 3600, '/', '', $secure, true ); // 1 hour expiration
 			$_COOKIE['wpr_guest_token'] = $guest_id; // Ensure it's immediately available in PHP
 		}
 	}
