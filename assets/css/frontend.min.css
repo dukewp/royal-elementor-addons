@@ -17191,12 +17191,12 @@ img.wpr-gf-visual-active {
             appearance: none;
 }
 
-input.wpr-date-filter-1 {
+input.wpr-date-filter-start {
     width: 49%;
     margin-right: 2%;
 }
 
-input.wpr-date-filter-2 {
+input.wpr-date-filter-end {
     width: 49%;
 }
 
