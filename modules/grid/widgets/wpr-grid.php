@@ -1552,6 +1552,7 @@ class Wpr_Grid extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-slider-dots' => 'display:{{VALUE}};',
 				],
+				'render_type' => 'template',
 				'condition' => [
 					'layout_select' => 'slider',
 				],

@@ -1269,7 +1269,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'tablet_default' => 'yes',
 				'mobile_extra_default' => 'yes',
 				'mobile_default' => 'yes',
-				'render_type' => 'template',
 				'selectors_dictionary' => [
 					'' => 'none',
 					'yes' => 'inline-table'
@@ -1277,6 +1276,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-slider-dots' => 'display:{{VALUE}};',
 				],
+				'render_type' => 'template',
 				'condition' => [
 					'layout_select' => 'slider',
 				],
@@ -1414,7 +1414,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'label' => esc_html__( 'Select Element', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'title',
-				'options' => $element_select,
+				'options' => $element_select + Utilities::get_woo_taxonomies(),
 				'separator' => 'after'
 			]
 		);
@@ -9274,7 +9274,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			$button_HTML .= esc_html__('View Product', 'wpr-addons');
 			array_push( $attributes, 'href="'. esc_url( get_permalink() ) .'"' );
 		} else {
-			if ( !$product->get_product_url() ) {
+			if ( !is_callable( array( $product, 'get_product_url' ) ) ) {
 				$button_HTML .= esc_html__('View Product', 'wpr-addons');
 				array_push( $attributes, 'href="'. esc_url( get_permalink() ) .'"' );
 			} else {
@@ -9735,6 +9735,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 				break;
 			case 'custom-field':
 				$this->render_product_custom_fields( $settings, $class, $post_id );
+				break;
+
+			default:
+				$this->render_product_categories( $settings, $class, $post_id );
 				break;
 		}
 
@@ -10350,6 +10354,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			echo '<h2>'. esc_html__( 'WooCommerce is NOT active!', 'wpr-addons' ) .'</h2>';
 			return;
 		}
+		
 		// Get Posts
 		$posts = new \WP_Query( $this->get_main_query_args() );
 
