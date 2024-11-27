@@ -1401,7 +1401,18 @@ class WPR_Templates_Data {
 					'price' => $is_pro_active ? 'free' : 'free',
 					'label' => 'new',
 					'priority' => 15,
-				],
+				],'v2' => [
+					'name' => 'Cleaning Service V2',
+					'pages' => 'home,about,services,pricing,shop,product-details,cart,checkout,blog,blog-details,faq,contact,contact-v2,',
+					'plugins' => '{"woocommerce":'. $is_woo_active .'}',
+					'tags' => 'pro cleaning services solutions eco-friendly cleanup removal pressure washing home office warehouse sparkling shop woocommerce store cleaning products',
+					'theme-builder' => true,
+					'woo-builder' => true,
+					'off-canvas' => false,
+					'price' => $is_pro_active ? 'free' : 'pro',
+					'label' => 'new',
+					'priority' => 5,
+				]
 			],
 			'realestate' => [
 				'v1' => [

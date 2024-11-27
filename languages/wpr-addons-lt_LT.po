@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: wpr-addons\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-06 12:34+0000\n"
-"PO-Revision-Date: 2024-10-30 18:23+0400\n"
+"PO-Revision-Date: 2024-11-08 18:31+0400\n"
 "Last-Translator: YOUR NAME <youremail@example.com>\n"
 "Language-Team: YOUR TEAM <teamemail@example.com>\n"
 "Language: lt_LT\n"
@@ -27,6 +27,9 @@ msgstr "Populiariausi"
 msgid "Average rating"
 msgstr "Vidutiniškai įvertinti"
 
+msgid "Average Rating"
+msgstr "Vidutiniškai įvertinti"
+
 msgid "Price: Low to High"
 msgstr "Kaina: Nuo žemiausios"
 
@@ -38,3 +41,24 @@ msgstr "Pavadinimas: Nuo A iki Z"
 
 msgid "Title: Z to A"
 msgstr "Pavadinimas: Nuo Z iki A"
+
+msgid "Product"
+msgstr "Produktas"
+
+msgid "Name"
+msgstr "Pavadinimas"
+
+msgid "Price"
+msgstr "Kaina"
+
+msgid "Stock Status"
+msgstr "Likutis"
+
+msgid "In stock"
+msgstr "Turime"
+
+msgid "In Stock"
+msgstr "Turime"
+
+msgid "Sale"
+msgstr "Išpardavimas"

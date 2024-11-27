@@ -518,6 +518,7 @@ class Wpr_Google_Maps extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-google-map .gm-style-iw-d' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-google-map .gm-style .gm-style-iw-c' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-google-map .gm-style-iw-t:after' => 'background: {{VALUE}}',
 					'{{WRAPPER}} .wpr-google-map .gm-style-iw-tc:after' => 'background: {{VALUE}}'
 				],

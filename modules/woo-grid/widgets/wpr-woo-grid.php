@@ -1286,7 +1286,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'tablet_default' => 'yes',
 				'mobile_extra_default' => 'yes',
 				'mobile_default' => 'yes',
-				'render_type' => 'template',
 				'selectors_dictionary' => [
 					'' => 'none',
 					'yes' => 'inline-table'
@@ -1294,6 +1293,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-slider-dots' => 'display:{{VALUE}};',
 				],
+				'render_type' => 'template',
 				'condition' => [
 					'layout_select' => 'slider',
 				],
@@ -1431,7 +1431,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'label' => esc_html__( 'Select Element', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'title',
-				'options' => $element_select,
+				'options' => $element_select + Utilities::get_woo_taxonomies(),
 				'separator' => 'after'
 			]
 		);
@@ -10114,6 +10114,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 			case 'read-more':
 				$this->render_product_read_more( $settings, $class );
+			default:
+				$this->render_product_categories( $settings, $class, $post_id );
 				break;
 		}
 
