@@ -8627,6 +8627,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			if (!empty($settings['query_randomize'])) {
 				$args['orderby'] = $settings['query_randomize'];
 			}
+			$args['post_type'] = 'product'; // GOGA: needs check
 		}
 
 		// Sorting
