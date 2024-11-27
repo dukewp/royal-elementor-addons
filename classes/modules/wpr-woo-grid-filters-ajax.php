@@ -320,6 +320,227 @@ if ( ! defined( 'ABSPATH' ) ) {
 		if ( isset($_POST['wpr_offset']) ) {
 			$args['offset'] = $_POST['wpr_offset'];
 		}
+		if ( !isset($args['tax_query']) ) {
+			$args['tax_query'] = [];
+		}
+
+		if ( isset($args['tax_query']) ) {
+
+			$tax_query = ['relation' => get_option('wpr_filter_relation')]; // TODO: CHECK IF DEFAULT NEEDED
+            $meta_query = ['relation' => get_option('wpr_filter_relation')]; // TODO: CHECK IF DEFAULT NEEDED
+
+			$prev_cleaned_key = '';
+
+			if ( isset($_POST['wpr_url_params']) ) {
+				// Iterate through the POST array
+				foreach ( $_POST['wpr_url_params'] as $key => $value ) {
+
+					// Check if the variable name contains "wpr_gf_"
+					if (strpos($key, 'wpr_gf_') !== false) {
+
+						// Need to setup logic to get relation from filters separately
+						$cleanedKey = str_replace('wpr_gf_', '', $key);
+						$prev_cleaned_key = $cleanedKey;
+
+						if ( isset($_POST['wpr_url_params'][$key]) ) {
+							if ( $cleanedKey == 'date_range' ) {
+								$date = $_POST['wpr_url_params'][$key];
+								
+								$args['date_query'] = [];
+
+								if ( str_contains($date, ',') ) {
+									$date = explode(',', $date);
+
+									if (false) {
+										$args['date_query'] = ['relation' => 'or'];
+
+										list($year1, $month1, $day1) = explode("-", $date[0]);
+										list($year2, $month2, $day2) = explode("-", $date[1]);
+
+										array_push( $args['date_query'], [
+											'year' => $year1,
+											'month' => $month1,
+											'day' => $day1,
+										] );
+
+										array_push( $args['date_query'], [
+											'year' => $year2,
+											'month' => $month2,
+											'day' => $day2,
+										] );
+
+									} else {
+										array_push( $args['date_query'], [
+											'after'     => $date[0],
+											'before'    => $date[1],
+											'inclusive' => true
+										] );
+									}
+								} 
+							} elseif ( $cleanedKey == 'date' ) {
+
+								$date = $_POST['wpr_url_params'][$key];
+								
+								$args['date_query'] = [];
+
+								if ( str_contains($date, '-') && explode("-", $date) ) {
+									list($year, $month, $day) = explode("-", $date);
+
+									array_push( $args['date_query'], [
+										'year' => $year,
+										'month' => $month,
+										'day' => $day,
+									]);
+								}
+							} else {
+								if ( $_POST['wpr_url_params'][$key] != '0' ) {
+									// Get category from URL
+									if ( str_contains($_POST['wpr_url_params'][$key], ',') ) {
+			
+										// Example usage
+										$key_type = $this->identify_key_type($cleanedKey);
+										$filtervalues = explode(',', $_POST['wpr_url_params'][$key]);
+		
+										if ( 'meta_field' == $key_type ) {
+											if ( is_numeric($filtervalues[0]) ) {
+												$minValue = min(array_values($filtervalues));
+												$maxValue = max(array_values($filtervalues));
+												
+												if ( isset($meta_query) ) {
+													array_push($meta_query, [
+														[
+															'key'     => $cleanedKey,
+															'value'   => [$minValue, $maxValue],
+															'type'    => 'NUMERIC',
+															'compare' => 'BETWEEN',
+														],
+													]);
+												} else {
+													$meta_query = [
+														[
+															'key'     => $cleanedKey,
+															'value'   => [$minValue, $maxValue],
+															'type'    => 'NUMERIC',
+															'compare' => 'BETWEEN',
+														],
+													];
+												}
+											} else {
+												if ( isset($meta_query) ) {
+													if ( isset($_POST['wpr_gfr_' . $cleanedKey]) && !empty(explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0]) ) {
+														$meta_relation = explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0];
+													} else if ( isset($_POST['wpr_url_params']['wpr_gfr_'. $cleanedKey]) && !empty(explode(',', $_POST['wpr_url_params']['wpr_gfr_'. $cleanedKey])[0]) ) {
+														$meta_relation = explode(',', $_POST['wpr_url_params']['wpr_gfr_'. $cleanedKey])[0];
+													} else {
+														$meta_relation = '';
+													}
+													
+													$for_meta_query = [ // needs check if overrides somethings
+														'relation' => $meta_relation,
+													];
+				
+													foreach ($filtervalues as $filtervalue) {
+														$filtervalue = sanitize_text_field($filtervalue);
+														
+													
+														array_push($for_meta_query, [
+															[
+																'key'     => $cleanedKey,
+																'value'   => $filtervalue
+															],
+														]);
+													}
+				
+													array_push( $meta_query, $for_meta_query );
+												} else {
+													$meta_query = [ // needs check if overrides something
+														'relation' => explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] ? explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] : explode(',', $_POST['wpr_url_params']['wpr_gfr_'. $cleanedKey])[0],
+													];
+		
+													if (is_array($filtervalues)) {
+														foreach ($filtervalues as $filtervalue) {
+															$meta_query[] = [
+																'key'     => $cleanedKey,
+																'value'   => $filtervalue,
+																'compare' => '=',
+															];
+														}
+													} else {
+		
+													}
+												}
+											}
+										} else { // if != 'meta_field'
+											// if ( isset($_POST['wpr_gfr_'. $cleanedKey]) ) {
+												$for_tax_query = [ // needs check if overrides something
+													'relation' => isset($_POST['wpr_gfr_' . $cleanedKey]) && !empty(explode(',', $_POST['wpr_gfr_' . $cleanedKey])[0]) ? explode(',', $_POST['wpr_gfr_' . $cleanedKey])[0] : '',
+												];
+											// } else {
+											// 	$for_tax_query = [];
+											// }
+		
+											foreach ($filtervalues as $filtervalue) {
+												$filtervalue = sanitize_text_field($filtervalue);
+												
+												array_push( $for_tax_query, [
+													'taxonomy' => $cleanedKey,
+													'field' => 'id',
+													'terms' => $filtervalue
+												] );
+											}
+
+											array_push($tax_query, $for_tax_query);
+										}
+									} else { // not str_contains($_POST['wpr_url_params'][$key], ',')
+										$key_type = $this->identify_key_type($cleanedKey);
+										$filtervalues = sanitize_text_field($_POST['wpr_url_params'][$key]);
+		
+										if ( $key_type == 'meta_field' ) {
+											if ( isset($meta_query) ) {
+												array_push($meta_query, [
+													[
+														'key'     => $cleanedKey,
+														'value'   => [$filtervalues],
+														// 'type'    => 'NUMERIC',
+														// 'compare' => 'BETWEEN',
+													],
+												]);
+											} else {
+												$meta_query = [
+													[
+														'key'     => $cleanedKey,
+														'value'   => [$filtervalues],
+														// 'type'    => 'NUMERIC',
+														// 'compare' => 'BETWEEN',
+													],
+												];
+											}
+										} else {
+											if (isset($_POST['wpr_url_params'][$key])) {
+						
+												array_push( $tax_query, [
+													'taxonomy' => $cleanedKey,
+													'field' => 'id',
+													'terms' => $filtervalues
+												] );
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			if ( !empty($tax_query) ) {
+				$args['tax_query'] = $tax_query;
+			}
+
+            if ( !empty($meta_query) )  {
+                $args['meta_query'] = $meta_query;
+            }
+		}
 
 		return $args;
 	}
