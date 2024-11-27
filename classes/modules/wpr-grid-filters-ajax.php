@@ -19,10 +19,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  class WPR_Grid_Filters_AJAX {
 
     public function __construct() {
-		add_action('wp_ajax_wpr_test_grid_filters_ajax', [$this, 'wpr_test_grid_filters_ajax']);
-		add_action('wp_ajax_nopriv_wpr_test_grid_filters_ajax', [$this, 'wpr_test_grid_filters_ajax']);
-		add_action('wp_ajax_wpr_get_filtered_count_test', [$this, 'wpr_get_filtered_count_test']);
-		add_action('wp_ajax_nopriv_wpr_get_filtered_count_test', [$this, 'wpr_get_filtered_count_test']);
+		add_action('wp_ajax_wpr_grid_filters_ajax', [$this, 'wpr_grid_filters_ajax']);
+		add_action('wp_ajax_nopriv_wpr_grid_filters_ajax', [$this, 'wpr_grid_filters_ajax']);
+		add_action('wp_ajax_wpr_get_filtered_count_posts', [$this, 'wpr_get_filtered_count_posts']);
+		add_action('wp_ajax_nopriv_wpr_get_filtered_count_posts', [$this, 'wpr_get_filtered_count_posts']);
     }
     
 	// Get Taxonomies Related to Post Type
@@ -1539,7 +1539,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		echo '</div>';
 	}
 
-	public function wpr_get_filtered_count_test() {
+	public function wpr_get_filtered_count_posts() {
 		$query = new \WP_Query( $this->get_main_query_args() );
 	
 		// Send only the count of found posts
@@ -1551,7 +1551,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		wp_die();
 	}
 
-	public function wpr_test_grid_filters_ajax() {
+	public function wpr_grid_filters_ajax() {
 		// Get Settings
 		$settings = $_POST['grid_settings'];
 

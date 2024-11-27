@@ -860,6 +860,17 @@ class Wpr_Woo_Grid extends Widget_Base {
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'layout_select', ['pro-ms'] );
 
 		$this->add_control(
+			'filters_experiment',
+			[
+				'label' => esc_html__( 'Filters Experiment', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'no',
+				'return_value' => 'yes',
+				'render_type' => 'template'
+			]
+		);
+
+		$this->add_control(
 			'stick_last_element_to_bottom',
 			[
 				'label' => esc_html__( 'Last Element to Bottom', 'wpr-addons' ),
@@ -10642,6 +10653,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'fullScreen' => $settings['lightbox_popup_fullscreen'],
 			'download' => $settings['lightbox_popup_download'],
 		];
+
+		if ( 'yes' === $settings['filters_experiment'] ) {
+			$layout_settings['grid_settings'] = $settings;
+		}
 
 		$this->add_render_attribute( 'grid-settings', [
 			'data-settings' => wp_json_encode( $layout_settings ),

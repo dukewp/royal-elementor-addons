@@ -104,7 +104,7 @@ class Plugin {
 
 		// Grid
 		require WPR_ADDONS_PATH . 'classes/modules/wpr-filter-grid-posts.php';
-		require WPR_ADDONS_PATH . 'classes/modules/wpr-test-grid-filters-ajax.php';
+		require WPR_ADDONS_PATH . 'classes/modules/wpr-grid-filters-ajax.php';
 		
 		// Meta Keys
 		require WPR_ADDONS_PATH . 'classes/wpr-custom-meta-keys.php';
