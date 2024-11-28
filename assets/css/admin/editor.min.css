@@ -11,7 +11,8 @@
   opacity: 0 !important;
 }
 
-#elementor-panel-get-pro-elements-sticky {
+#elementor-panel-get-pro-elements-sticky,
+#elementor-panel-get-pro-elements {
   display: none;
 }
 
