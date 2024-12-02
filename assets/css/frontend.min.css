@@ -18762,3 +18762,13 @@ dl.variation dd {
 .wpr-trigger-hover:hover img {
     will-change: transform;
 }
+
+.wpr-image-scroll-link {
+    display: block;
+    text-decoration: none;
+    width: 100%;
+}
+
+.wpr-image-scroll-link:hover {
+    text-decoration: none;
+}

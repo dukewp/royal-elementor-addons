@@ -53,7 +53,7 @@ class Wpr_Image_Scroll extends Widget_Base {
         $this->start_controls_section(
             'section_image_scroll',
             [
-                'label' => esc_html__('Image', 'wpr-addons'),
+                'label' => esc_html__('Settings', 'wpr-addons'),
             ]
         );
 
@@ -85,15 +85,15 @@ class Wpr_Image_Scroll extends Widget_Base {
             ]
         );
 
-        $this->end_controls_section();
+        // $this->end_controls_section();
 
-        // Advanced Settings
-        $this->start_controls_section(
-            'section_advanced_settings',
-            [
-                'label' => esc_html__('Advanced Settings', 'wpr-addons'),
-            ]
-        );
+        // // Advanced Settings
+        // $this->start_controls_section(
+        //     'section_advanced_settings',
+        //     [
+        //         'label' => esc_html__('Advanced Settings', 'wpr-addons'),
+        //     ]
+        // );
 
         $this->add_control(
             'scroll_direction',
@@ -153,6 +153,31 @@ class Wpr_Image_Scroll extends Widget_Base {
             ]
         );
 
+        $this->add_control(
+            'enable_wrapper_link',
+            [
+                'label' => esc_html__('Enable Wrapper Link', 'wpr-addons'),
+                'type' => Controls_Manager::SWITCHER,
+                'default' => 'no',
+                'separator' => 'before',
+            ]
+        );
+
+        $this->add_control(
+            'wrapper_link',
+            [
+                'label' => esc_html__('Link', 'wpr-addons'),
+                'type' => Controls_Manager::URL,
+                'dynamic' => [
+                    'active' => true,
+                ],
+                'placeholder' => esc_html__('https://your-link.com', 'wpr-addons'),
+                'condition' => [
+                    'enable_wrapper_link' => 'yes',
+                ],
+            ]
+        );
+
         $this->end_controls_section();
 
         // Style Section
@@ -186,6 +211,15 @@ class Wpr_Image_Scroll extends Widget_Base {
             ]
         );
 
+		$this->start_controls_tabs( 'tab_style' );
+
+		$this->start_controls_tab(
+			'tab_normal_style',
+			[
+				'label' => esc_html__( 'Normal', 'wpr-addons' )
+			]
+		);
+
         $this->add_group_control(
             Group_Control_Border::get_type(),
             [
@@ -214,6 +248,47 @@ class Wpr_Image_Scroll extends Widget_Base {
             ]
         );
 
+        $this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'tab_hover_style',
+			[
+				'label' => esc_html__( 'Hover', 'wpr-addons' )
+			]
+		);
+
+        $this->add_group_control(
+            Group_Control_Border::get_type(),
+            [
+                'name' => 'image_border_hover',
+                'selector' => '{{WRAPPER}} .wpr-image-scroll-wrap:hover',
+            ]
+        );
+
+        $this->add_responsive_control(
+            'image_border_radius_hover',
+            [
+                'label' => esc_html__('Border Radius', 'wpr-addons'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-image-scroll-wrap:hover' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Box_Shadow::get_type(),
+            [
+                'name' => 'image_box_shadow_hover',
+                'selector' => '{{WRAPPER}} .wpr-image-scroll-wrap:hover',
+            ]
+        );
+
+        $this->end_controls_tab();
+
+        $this->end_controls_tabs();
+
         $this->end_controls_section();
     }
 
@@ -232,13 +307,25 @@ class Wpr_Image_Scroll extends Widget_Base {
         ]);
 
         $this->add_render_attribute('wrapper', 'data-speed', $settings['scroll_speed']['size']);
+
+        // Add link wrapper if enabled
+        if ('yes' === $settings['enable_wrapper_link'] && !empty($settings['wrapper_link']['url'])) {
+            $this->add_link_attributes('link', $settings['wrapper_link']);
+            $this->add_render_attribute('link', 'class', 'wpr-image-scroll-link');
+        }
         ?>
+
+        <?php if ('yes' === $settings['enable_wrapper_link'] && !empty($settings['wrapper_link']['url'])) : ?>
+            <a <?php echo $this->get_render_attribute_string('link'); ?>>
+        <?php endif; ?>
 
         <div <?php echo $this->get_render_attribute_string('wrapper'); ?>>
             <?php echo Group_Control_Image_Size::get_attachment_image_html($settings); ?>
         </div>
 
-        <?php
+        <?php if ('yes' === $settings['enable_wrapper_link'] && !empty($settings['wrapper_link']['url'])) : ?>
+            </a>
+        <?php endif;
     }
 
     protected function content_template() {
