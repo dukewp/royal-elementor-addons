@@ -18723,3 +18723,42 @@ dl.variation dd {
         white-space: nowrap;
     }
 }
+
+/*--------------------------------------------------------------
+== Image Scroll
+--------------------------------------------------------------*/
+
+.wpr-image-scroll-wrap {
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 500px; /* Default height */
+}
+
+.wpr-image-scroll-wrap img {
+    position: absolute;
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease-out;
+}
+
+/* Vertical Scroll */
+.wpr-scroll-vertical img {
+    width: 100%;
+    max-width: none;
+    height: auto;
+}
+
+/* Horizontal Scroll */
+.wpr-scroll-horizontal img {
+    width: auto;
+    max-width: none;
+    height: 100%;
+}
+
+/* Hover Effects */
+.wpr-trigger-hover:hover img {
+    will-change: transform;
+}
