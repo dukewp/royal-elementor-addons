@@ -1202,6 +1202,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 			echo '</div>';
 		echo '</div>';
 	}
+	
+	// Add two new functions for handling cookies
+	public function get_compare_from_cookie() {
+        if (isset($_COOKIE['wpr_compare'])) {
+            return json_decode(stripslashes($_COOKIE['wpr_compare']), true);
+        } else if ( isset($_COOKIE['wpr_compare_'. get_current_blog_id() .'']) ) {
+            return json_decode(stripslashes($_COOKIE['wpr_compare_'. get_current_blog_id() .'']), true);
+        }
+        return array();
+	}
+
+	// Add two new functions for handling cookies
+	public function get_wishlist_from_cookie() {
+        if (isset($_COOKIE['wpr_wishlist'])) {
+            return json_decode(stripslashes($_COOKIE['wpr_wishlist']), true);
+        } else if ( isset($_COOKIE['wpr_wishlist_'. get_current_blog_id() .'']) ) {
+            return json_decode(stripslashes($_COOKIE['wpr_wishlist_'. get_current_blog_id() .'']), true);
+        }
+        return array();
+	}
 
 	// Render Wishlist Button
 	public function render_product_wishlist_button( $settings, $class ) {
