@@ -10248,6 +10248,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'filters_animation_delay' => $settings['filters_animation_delay'],
 			'pagination_type' => $settings['pagination_type'],
 			'pagination_max_pages' => $this->get_max_num_pages( $settings ),
+			'query_posts_per_page' => $settings['query_posts_per_page']
 		];
 
 		if ( 'list' === $settings['layout_select'] ) {
