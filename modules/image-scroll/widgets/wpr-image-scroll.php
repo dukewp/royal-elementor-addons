@@ -559,6 +559,153 @@ class Wpr_Image_Scroll extends Widget_Base {
             ]
         );
 
+        $this->start_controls_tabs('image_style_tabs');
+
+        $this->start_controls_tab(
+            'image_normal_tab',
+            [
+                'label' => esc_html__('Normal', 'wpr-addons'),
+            ]
+        );
+
+        $this->add_control(
+            'image_opacity',
+            [
+                'label' => esc_html__('Opacity', 'wpr-addons'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'max' => 1,
+                        'min' => 0,
+                        'step' => 0.01,
+                    ],
+                ],
+                'default' => [
+                    'size' => 1,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-image-scroll-wrap img' => 'opacity: {{SIZE}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Css_Filter::get_type(),
+            [
+                'name' => 'image_css_filters',
+                'selector' => '{{WRAPPER}} .wpr-image-scroll-wrap img',
+            ]
+        );
+
+        $this->add_control(
+            'image_blend_mode',
+            [
+                'label' => esc_html__('Blend Mode', 'wpr-addons'),
+                'type' => Controls_Manager::SELECT,
+                'options' => [
+                    '' => esc_html__('Normal', 'wpr-addons'),
+                    'multiply' => 'Multiply',
+                    'screen' => 'Screen',
+                    'overlay' => 'Overlay',
+                    'darken' => 'Darken',
+                    'lighten' => 'Lighten',
+                    'color-dodge' => 'Color Dodge',
+                    'color-burn' => 'Color Burn',
+                    'hard-light' => 'Hard Light',
+                    'soft-light' => 'Soft Light',
+                    'difference' => 'Difference',
+                    'exclusion' => 'Exclusion',
+                    'hue' => 'Hue',
+                    'saturation' => 'Saturation',
+                    'color' => 'Color',
+                    'luminosity' => 'Luminosity',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-image-scroll-wrap img' => 'mix-blend-mode: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_tab();
+
+        $this->start_controls_tab(
+            'image_hover_tab',
+            [
+                'label' => esc_html__('Hover', 'wpr-addons'),
+            ]
+        );
+
+        $this->add_control(
+            'image_opacity_hover',
+            [
+                'label' => esc_html__('Opacity', 'wpr-addons'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'max' => 1,
+                        'min' => 0,
+                        'step' => 0.01,
+                    ],
+                ],
+                'default' => [
+                    'size' => 1,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-image-scroll-wrap:hover img' => 'opacity: {{SIZE}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Css_Filter::get_type(),
+            [
+                'name' => 'image_css_filters_hover',
+                'selector' => '{{WRAPPER}} .wpr-image-scroll-wrap:hover img',
+            ]
+        );
+
+        $this->add_control(
+            'image_blend_mode_hover',
+            [
+                'label' => esc_html__('Blend Mode', 'wpr-addons'),
+                'type' => Controls_Manager::SELECT,
+                'options' => [
+                    '' => esc_html__('Normal', 'wpr-addons'),
+                    'multiply' => 'Multiply',
+                    'screen' => 'Screen',
+                    'overlay' => 'Overlay',
+                    'darken' => 'Darken',
+                    'lighten' => 'Lighten',
+                    'color-dodge' => 'Color Dodge',
+                    'color-burn' => 'Color Burn',
+                    'hard-light' => 'Hard Light',
+                    'soft-light' => 'Soft Light',
+                    'difference' => 'Difference',
+                    'exclusion' => 'Exclusion',
+                    'hue' => 'Hue',
+                    'saturation' => 'Saturation',
+                    'color' => 'Color',
+                    'luminosity' => 'Luminosity',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-image-scroll-wrap:hover img' => 'mix-blend-mode: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_tab();
+
+        $this->end_controls_tabs();
+        
+        $this->add_control(
+            'heading_wrapper_style',
+            [
+                'label' => esc_html__('Wrapper', 'wpr-addons'),
+                'type' => Controls_Manager::HEADING,
+                'separator' => 'before',
+            ]
+        );
+
 		$this->start_controls_tabs( 'tab_style' );
 
 		$this->start_controls_tab(
@@ -670,27 +817,6 @@ class Wpr_Image_Scroll extends Widget_Base {
             ]
         );
 
-        $this->add_control(
-            'overlay_opacity',
-            [
-                'label' => esc_html__('Opacity', 'wpr-addons'),
-                'type' => Controls_Manager::SLIDER,
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 1,
-                        'step' => 0.1,
-                    ],
-                ],
-                'default' => [
-                    'size' => 0,
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .wpr-image-scroll-overlay' => 'opacity: {{SIZE}};',
-                ],
-            ]
-        );
-
         $this->end_controls_tab();
 
         $this->start_controls_tab(
@@ -715,30 +841,9 @@ class Wpr_Image_Scroll extends Widget_Base {
             ]
         );
 
-        $this->add_control(
-            'overlay_opacity_hover',
-            [
-                'label' => esc_html__('Opacity', 'wpr-addons'),
-                'type' => Controls_Manager::SLIDER,
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 1,
-                        'step' => 0.1,
-                    ],
-                ],
-                'default' => [
-                    'size' => 1,
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .wpr-image-scroll-wrap:hover .wpr-image-scroll-overlay' => 'opacity: {{SIZE}};',
-                ],
-            ]
-        );
-
         $this->end_controls_tab();
 
-        $this->end_controls_tabs();
+        $this->end_controls_tabs();// Add after your existing controls in register_controls()
 
         $this->end_controls_section();
     }
