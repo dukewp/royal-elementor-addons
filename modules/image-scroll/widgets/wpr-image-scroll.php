@@ -110,6 +110,53 @@ class Wpr_Image_Scroll extends Widget_Base {
         );
 
         $this->add_control(
+            'image_fit',
+            [
+                'label' => esc_html__('Image Fit', 'wpr-addons'),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'cover',
+                'options' => [
+                    'cover' => esc_html__('Cover', 'wpr-addons'),
+                    'contain' => esc_html__('Contain', 'wpr-addons'),
+                    'auto' => esc_html__('Auto', 'wpr-addons'),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-image-scroll-wrap img' => 'object-fit: {{VALUE}};',
+                ],
+                'condition' => [
+                    'scroll_direction' => 'horizontal',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'image_position',
+            [
+                'label' => esc_html__('Image Position', 'wpr-addons'),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'center center',
+                'options' => [
+                    'top left' => esc_html__('Top Left', 'wpr-addons'),
+                    'top center' => esc_html__('Top Center', 'wpr-addons'),
+                    'top right' => esc_html__('Top Right', 'wpr-addons'),
+                    'center left' => esc_html__('Center Left', 'wpr-addons'),
+                    'center center' => esc_html__('Center Center', 'wpr-addons'),
+                    'center right' => esc_html__('Center Right', 'wpr-addons'),
+                    'bottom left' => esc_html__('Bottom Left', 'wpr-addons'),
+                    'bottom center' => esc_html__('Bottom Center', 'wpr-addons'),
+                    'bottom right' => esc_html__('Bottom Right', 'wpr-addons'),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-image-scroll-wrap img' => 'object-position: {{VALUE}};',
+                ],
+                'condition' => [
+                    'scroll_direction' => 'horizontal',
+                    'image_fit!' => 'auto',
+                ],
+            ]
+        );
+
+        $this->add_control(
             'reverse_direction',
             [
                 'label' => esc_html__('Reverse Direction', 'wpr-addons'),
@@ -176,6 +223,41 @@ class Wpr_Image_Scroll extends Widget_Base {
                     'enable_wrapper_link' => 'yes',
                 ],
             ]
+        );// Add this control after scroll_speed in register_controls()
+
+        $this->add_control(
+            'transition_duration',
+            [
+                'label' => esc_html__('Transition Duration', 'wpr-addons'),
+                'type' => Controls_Manager::NUMBER,
+                'default' => 0.3,
+                'min' => 0.1,
+                'max' => 5,
+                'step' => 0.1,
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-image-scroll-wrap' => 'transition-duration: {{VALUE}}s;'
+                ],
+                'separator' => 'before',
+            ]
+        );
+        
+        $this->add_control(
+            'transition_timing',
+            [
+                'label' => esc_html__('Transition Timing', 'wpr-addons'),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'ease',
+                'options' => [
+                    'linear' => esc_html__('Linear', 'wpr-addons'),
+                    'ease' => esc_html__('Ease', 'wpr-addons'),
+                    'ease-in' => esc_html__('Ease In', 'wpr-addons'),
+                    'ease-out' => esc_html__('Ease Out', 'wpr-addons'),
+                    'ease-in-out' => esc_html__('Ease In Out', 'wpr-addons'),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-image-scroll-wrap' => 'transition-timing-function: {{VALUE}};'
+                ],
+            ]
         );
 
         $this->end_controls_section();
@@ -211,6 +293,40 @@ class Wpr_Image_Scroll extends Widget_Base {
             ]
         );
 
+        $this->add_responsive_control(
+            'image_width',
+            [
+                'label' => esc_html__('Image Width', 'wpr-addons'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%', 'vw'],
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 3000,
+                        'step' => 5,
+                    ],
+                    '%' => [
+                        'min' => 100,
+                        'max' => 300,
+                    ],
+                    'vw' => [
+                        'min' => 100,
+                        'max' => 300,
+                    ],
+                ],
+                'default' => [
+                    'unit' => '%',
+                    'size' => 200,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-scroll-horizontal img' => 'width: {{SIZE}}{{UNIT}};',
+                ],
+                'condition' => [
+                    'scroll_direction' => 'horizontal',
+                ],
+            ]
+        );
+
 		$this->start_controls_tabs( 'tab_style' );
 
 		$this->start_controls_tab(
@@ -224,7 +340,7 @@ class Wpr_Image_Scroll extends Widget_Base {
             Group_Control_Border::get_type(),
             [
                 'name' => 'image_border',
-                'selector' => '{{WRAPPER}} .wpr-image-scroll-wrap',
+                'selector' => '{{WRAPPER}} .wpr-image-scroll-wrap'
             ]
         );
 
@@ -235,7 +351,7 @@ class Wpr_Image_Scroll extends Widget_Base {
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', '%'],
                 'selectors' => [
-                    '{{WRAPPER}} .wpr-image-scroll-wrap' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .wpr-image-scroll-wrap' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
                 ],
             ]
         );
