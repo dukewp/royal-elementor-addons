@@ -196,7 +196,67 @@ class Wpr_Image_Scroll extends Widget_Base {
                 ],
                 'default' => [
                     'unit' => 'px',
-                    'size' => 1,
+                    'size' => 2,
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'height',
+            [
+                'label' => esc_html__('Height', 'wpr-addons'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px', 'vh'],
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 1000,
+                    ],
+                    'vh' => [
+                        'min' => 0,
+                        'max' => 100,
+                    ],
+                ],
+                'default' => [
+                    'unit' => 'px',
+                    'size' => 300,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-image-scroll-wrap' => 'height: {{SIZE}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'image_width',
+            [
+                'label' => esc_html__('Width', 'wpr-addons'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%', 'vw'],
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 3000,
+                        'step' => 5,
+                    ],
+                    '%' => [
+                        'min' => 100,
+                        'max' => 300,
+                    ],
+                    'vw' => [
+                        'min' => 100,
+                        'max' => 300,
+                    ],
+                ],
+                'default' => [
+                    'unit' => '%',
+                    'size' => 200,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-scroll-horizontal img' => 'width: {{SIZE}}{{UNIT}};',
+                ],
+                'condition' => [
+                    'scroll_direction' => 'horizontal',
                 ],
             ]
         );
@@ -504,66 +564,6 @@ class Wpr_Image_Scroll extends Widget_Base {
             [
                 'label' => esc_html__('Image Style', 'wpr-addons'),
                 'tab' => Controls_Manager::TAB_STYLE,
-            ]
-        );
-
-        $this->add_responsive_control(
-            'height',
-            [
-                'label' => esc_html__('Height', 'wpr-addons'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', 'vh'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 1000,
-                    ],
-                    'vh' => [
-                        'min' => 0,
-                        'max' => 100,
-                    ],
-                ],
-                'default' => [
-                    'unit' => 'px',
-                    'size' => 300,
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .wpr-image-scroll-wrap' => 'height: {{SIZE}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_responsive_control(
-            'image_width',
-            [
-                'label' => esc_html__('Image Width', 'wpr-addons'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px', '%', 'vw'],
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 3000,
-                        'step' => 5,
-                    ],
-                    '%' => [
-                        'min' => 100,
-                        'max' => 300,
-                    ],
-                    'vw' => [
-                        'min' => 100,
-                        'max' => 300,
-                    ],
-                ],
-                'default' => [
-                    'unit' => '%',
-                    'size' => 200,
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .wpr-scroll-horizontal img' => 'width: {{SIZE}}{{UNIT}};',
-                ],
-                'condition' => [
-                    'scroll_direction' => 'horizontal',
-                ],
             ]
         );
 
