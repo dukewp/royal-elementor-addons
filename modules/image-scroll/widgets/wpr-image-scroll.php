@@ -434,6 +434,118 @@ class Wpr_Image_Scroll extends Widget_Base {
                 ],
             ]
         );
+        
+        $this->add_control(
+            'heading_overlay',
+            [
+                'label' => esc_html__('Overlay', 'wpr-addons'),
+                'type' => Controls_Manager::HEADING,
+                'separator' => 'before',
+            ]
+        );
+
+        $this->add_control(
+            'show_overlay',
+            [
+                'label' => esc_html__('Show Overlay', 'wpr-addons'),
+                'type' => Controls_Manager::SWITCHER,
+                'default' => 'no',
+            ]
+        );
+
+        $this->start_controls_tabs('overlay_style_tabs');
+
+        $this->start_controls_tab(
+            'overlay_normal_tab',
+            [
+                'label' => esc_html__('Normal', 'wpr-addons'),
+                'condition' => [
+                    'show_overlay' => 'yes',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'overlay_color',
+            [
+                'label' => esc_html__('Background Color', 'wpr-addons'),
+                'type' => Controls_Manager::COLOR,
+                'default' => 'rgba(0, 0, 0, 0.3)',
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-image-scroll-overlay' => 'background-color: {{VALUE}}',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'overlay_opacity',
+            [
+                'label' => esc_html__('Opacity', 'wpr-addons'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 1,
+                        'step' => 0.1,
+                    ],
+                ],
+                'default' => [
+                    'size' => 0,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-image-scroll-overlay' => 'opacity: {{SIZE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_tab();
+
+        $this->start_controls_tab(
+            'overlay_hover_tab',
+            [
+                'label' => esc_html__('Hover', 'wpr-addons'),
+                'condition' => [
+                    'show_overlay' => 'yes',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'overlay_color_hover',
+            [
+                'label' => esc_html__('Background Color', 'wpr-addons'),
+                'type' => Controls_Manager::COLOR,
+                'default' => 'rgba(0, 0, 0, 0.5)',
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-image-scroll-wrap:hover .wpr-image-scroll-overlay' => 'background-color: {{VALUE}}',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'overlay_opacity_hover',
+            [
+                'label' => esc_html__('Opacity', 'wpr-addons'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 1,
+                        'step' => 0.1,
+                    ],
+                ],
+                'default' => [
+                    'size' => 1,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-image-scroll-wrap:hover .wpr-image-scroll-overlay' => 'opacity: {{SIZE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_tab();
+
+        $this->end_controls_tabs();
 
         $this->add_control(
             'transition_duration',
@@ -651,6 +763,9 @@ class Wpr_Image_Scroll extends Widget_Base {
 
         <div <?php echo $this->get_render_attribute_string('wrapper'); ?>>
             <?php echo Group_Control_Image_Size::get_attachment_image_html($settings); ?>
+            <?php if ('yes' === $settings['show_overlay']) : ?>
+                <div class="wpr-image-scroll-overlay"></div>
+            <?php endif; ?>
         </div>
 
         <?php if ('yes' === $settings['enable_wrapper_link'] && !empty($settings['wrapper_link']['url'])) : ?>
@@ -695,6 +810,9 @@ class Wpr_Image_Scroll extends Widget_Base {
                         <# var iconHTML = elementor.helpers.renderIcon( view, settings.icon, { 'aria-hidden': true }, 'i', 'object' ); #>
                         {{{ iconHTML.value }}}
                     </div>
+                <# } #>
+                <# if ( settings.show_overlay == 'yes' ) { #>
+                    <div class="wpr-image-scroll-overlay"></div>
                 <# } #>
             </div>
         <# } #>

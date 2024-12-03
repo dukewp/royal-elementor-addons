@@ -18786,6 +18786,17 @@ dl.variation dd {
     text-decoration: none;
 }
 
+.wpr-image-scroll-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
 .wpr-image-scroll-icon {
     position: absolute;
     top: 50%;
@@ -18794,6 +18805,7 @@ dl.variation dd {
     z-index: 1;
     pointer-events: none;
     transition: opacity 0.3s ease;
+    z-index: 2; /* Ensure icon stays above overlay */
 }
 
 .wpr-image-scroll-icon-hidden {
