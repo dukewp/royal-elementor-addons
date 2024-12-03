@@ -18733,7 +18733,7 @@ dl.variation dd {
     position: relative;
     display: inline-block;
     width: 100%;
-    height: 500px; /* Default height */
+    height: 300px; /* Default height */
 }
 
 .wpr-image-scroll-wrap img {

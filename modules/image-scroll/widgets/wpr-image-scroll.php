@@ -523,6 +523,10 @@ class Wpr_Image_Scroll extends Widget_Base {
                         'max' => 100,
                     ],
                 ],
+                'default' => [
+                    'unit' => 'px',
+                    'size' => 300,
+                ],
                 'selectors' => [
                     '{{WRAPPER}} .wpr-image-scroll-wrap' => 'height: {{SIZE}}{{UNIT}};',
                 ],
