@@ -464,6 +464,8 @@ class Wpr_Image_Scroll extends Widget_Base {
                 'step' => 0.1,
                 'selectors' => [
                     '{{WRAPPER}} .wpr-image-scroll-wrap' => 'transition-duration: {{VALUE}}s;',
+                    '{{WRAPPER}} .wpr-image-scroll-overlay' => 'transition-duration: {{VALUE}}s;',
+                    '{{WRAPPER}} .wpr-image-scroll-overlay img' => 'transition-duration: {{VALUE}}s;',
                     '{{WRAPPER}} .wpr-image-scroll-icon' => 'transition-duration: {{VALUE}}s;',
                     '{{WRAPPER}} .wpr-image-scroll-icon-hidden' => 'transition-duration: {{VALUE}}s;'
                 ],
@@ -486,6 +488,8 @@ class Wpr_Image_Scroll extends Widget_Base {
                 ],
                 'selectors' => [
                     '{{WRAPPER}} .wpr-image-scroll-wrap' => 'transition-timing-function: {{VALUE}};',
+                    '{{WRAPPER}} .wpr-image-scroll-wrap img' => 'transition-timing-function: {{VALUE}};',
+                    '{{WRAPPER}} .wpr-image-scroll-overlay' => 'transition-timing-function: {{VALUE}};',
                     '{{WRAPPER}} .wpr-image-scroll-icon' => 'transition-timing-function: {{VALUE}};',
                     '{{WRAPPER}} .wpr-image-scroll-icon-hidden' => 'transition-timing-function: {{VALUE}};'
                 ],
