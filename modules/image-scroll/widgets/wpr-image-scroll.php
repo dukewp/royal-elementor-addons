@@ -453,100 +453,6 @@ class Wpr_Image_Scroll extends Widget_Base {
             ]
         );
 
-        $this->start_controls_tabs('overlay_style_tabs');
-
-        $this->start_controls_tab(
-            'overlay_normal_tab',
-            [
-                'label' => esc_html__('Normal', 'wpr-addons'),
-                'condition' => [
-                    'show_overlay' => 'yes',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'overlay_color',
-            [
-                'label' => esc_html__('Background Color', 'wpr-addons'),
-                'type' => Controls_Manager::COLOR,
-                'default' => 'rgba(0, 0, 0, 0.3)',
-                'selectors' => [
-                    '{{WRAPPER}} .wpr-image-scroll-overlay' => 'background-color: {{VALUE}}',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'overlay_opacity',
-            [
-                'label' => esc_html__('Opacity', 'wpr-addons'),
-                'type' => Controls_Manager::SLIDER,
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 1,
-                        'step' => 0.1,
-                    ],
-                ],
-                'default' => [
-                    'size' => 0,
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .wpr-image-scroll-overlay' => 'opacity: {{SIZE}};',
-                ],
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->start_controls_tab(
-            'overlay_hover_tab',
-            [
-                'label' => esc_html__('Hover', 'wpr-addons'),
-                'condition' => [
-                    'show_overlay' => 'yes',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'overlay_color_hover',
-            [
-                'label' => esc_html__('Background Color', 'wpr-addons'),
-                'type' => Controls_Manager::COLOR,
-                'default' => 'rgba(0, 0, 0, 0.5)',
-                'selectors' => [
-                    '{{WRAPPER}} .wpr-image-scroll-wrap:hover .wpr-image-scroll-overlay' => 'background-color: {{VALUE}}',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'overlay_opacity_hover',
-            [
-                'label' => esc_html__('Opacity', 'wpr-addons'),
-                'type' => Controls_Manager::SLIDER,
-                'range' => [
-                    'px' => [
-                        'min' => 0,
-                        'max' => 1,
-                        'step' => 0.1,
-                    ],
-                ],
-                'default' => [
-                    'size' => 1,
-                ],
-                'selectors' => [
-                    '{{WRAPPER}} .wpr-image-scroll-wrap:hover .wpr-image-scroll-overlay' => 'opacity: {{SIZE}};',
-                ],
-            ]
-        );
-
-        $this->end_controls_tab();
-
-        $this->end_controls_tabs();
-
         $this->add_control(
             'transition_duration',
             [
@@ -724,6 +630,109 @@ class Wpr_Image_Scroll extends Widget_Base {
             [
                 'name' => 'image_box_shadow_hover',
                 'selector' => '{{WRAPPER}} .wpr-image-scroll-wrap:hover',
+            ]
+        );
+
+        $this->end_controls_tab();
+
+        $this->end_controls_tabs();
+        
+        $this->add_control(
+            'heading_overlay_style',
+            [
+                'label' => esc_html__('Overlay', 'wpr-addons'),
+                'type' => Controls_Manager::HEADING,
+                'separator' => 'before',
+            ]
+        );
+
+        $this->start_controls_tabs('overlay_style_tabs');
+
+        $this->start_controls_tab(
+            'overlay_normal_tab',
+            [
+                'label' => esc_html__('Normal', 'wpr-addons'),
+                'condition' => [
+                    'show_overlay' => 'yes',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'overlay_color',
+            [
+                'label' => esc_html__('Background Color', 'wpr-addons'),
+                'type' => Controls_Manager::COLOR,
+                'default' => 'rgba(0, 0, 0, 0.3)',
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-image-scroll-overlay' => 'background-color: {{VALUE}}',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'overlay_opacity',
+            [
+                'label' => esc_html__('Opacity', 'wpr-addons'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 1,
+                        'step' => 0.1,
+                    ],
+                ],
+                'default' => [
+                    'size' => 0,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-image-scroll-overlay' => 'opacity: {{SIZE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_tab();
+
+        $this->start_controls_tab(
+            'overlay_hover_tab',
+            [
+                'label' => esc_html__('Hover', 'wpr-addons'),
+                'condition' => [
+                    'show_overlay' => 'yes',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'overlay_color_hover',
+            [
+                'label' => esc_html__('Background Color', 'wpr-addons'),
+                'type' => Controls_Manager::COLOR,
+                'default' => 'rgba(0, 0, 0, 0.5)',
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-image-scroll-wrap:hover .wpr-image-scroll-overlay' => 'background-color: {{VALUE}}',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'overlay_opacity_hover',
+            [
+                'label' => esc_html__('Opacity', 'wpr-addons'),
+                'type' => Controls_Manager::SLIDER,
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 1,
+                        'step' => 0.1,
+                    ],
+                ],
+                'default' => [
+                    'size' => 1,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-image-scroll-wrap:hover .wpr-image-scroll-overlay' => 'opacity: {{SIZE}};',
+                ],
             ]
         );
 
