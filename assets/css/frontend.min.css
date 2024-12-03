@@ -18785,3 +18785,17 @@ dl.variation dd {
 .wpr-image-scroll-link:hover {
     text-decoration: none;
 }
+
+.wpr-image-scroll-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.wpr-image-scroll-icon-hidden {
+    opacity: 0;
+}

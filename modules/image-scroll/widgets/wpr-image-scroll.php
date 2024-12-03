@@ -85,16 +85,6 @@ class Wpr_Image_Scroll extends Widget_Base {
             ]
         );
 
-        // $this->end_controls_section();
-
-        // // Advanced Settings
-        // $this->start_controls_section(
-        //     'section_advanced_settings',
-        //     [
-        //         'label' => esc_html__('Advanced Settings', 'wpr-addons'),
-        //     ]
-        // );
-
         $this->add_control(
             'scroll_direction',
             [
@@ -117,7 +107,7 @@ class Wpr_Image_Scroll extends Widget_Base {
                 'default' => 'cover',
                 'options' => [
                     'cover' => esc_html__('Cover', 'wpr-addons'),
-                    'contain' => esc_html__('Contain', 'wpr-addons'),
+                    'fill' => esc_html__('Contain', 'wpr-addons'),
                     'auto' => esc_html__('Auto', 'wpr-addons'),
                 ],
                 'selectors' => [
@@ -157,11 +147,155 @@ class Wpr_Image_Scroll extends Widget_Base {
         );
 
         $this->add_control(
+            'enable_mask',
+            [
+                'label' => esc_html__('Enable Mask', 'wpr-addons'),
+                'type' => Controls_Manager::SWITCHER,
+                'default' => 'no',
+                'separator' => 'before',
+            ]
+        );
+
+        $this->add_control(
+            'mask_image',
+            [
+                'label' => esc_html__('Choose Mask Image', 'wpr-addons'),
+                'type' => Controls_Manager::MEDIA,
+                'default' => [
+                    'url' => '',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-image-scroll-wrap' => '-webkit-mask-image: url({{URL}}); mask-image: url({{URL}}); -webkit-mask-position: center center; mask-position: center center; -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;',
+                ],
+                'condition' => [
+                    'enable_mask' => 'yes',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'mask_size',
+            [
+                'label' => esc_html__('Mask Size', 'wpr-addons'),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'contain',
+                'options' => [
+                    'auto' => esc_html__('Auto', 'wpr-addons'),
+                    'contain' => esc_html__('Contain', 'wpr-addons'),
+                    'cover' => esc_html__('Cover', 'wpr-addons'),
+                    'custom' => esc_html__('Custom', 'wpr-addons'),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-image-scroll-wrap' => '-webkit-mask-size: {{VALUE}}; mask-size: {{VALUE}};',
+                ],
+                'condition' => [
+                    'enable_mask' => 'yes',
+                    'mask_image[url]!' => '',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'mask_position',
+            [
+                'label' => esc_html__('Mask Position', 'wpr-addons'),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'center center',
+                'options' => [
+                    'center center' => esc_html__('Center Center', 'wpr-addons'),
+                    'center left' => esc_html__('Center Left', 'wpr-addons'),
+                    'center right' => esc_html__('Center Right', 'wpr-addons'),
+                    'top center' => esc_html__('Top Center', 'wpr-addons'),
+                    'top left' => esc_html__('Top Left', 'wpr-addons'),
+                    'top right' => esc_html__('Top Right', 'wpr-addons'),
+                    'bottom center' => esc_html__('Bottom Center', 'wpr-addons'),
+                    'bottom left' => esc_html__('Bottom Left', 'wpr-addons'),
+                    'bottom right' => esc_html__('Bottom Right', 'wpr-addons'),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-image-scroll-wrap' => '-webkit-mask-position: {{VALUE}}; mask-position: {{VALUE}};',
+                ],
+                'condition' => [
+                    'enable_mask' => 'yes',
+                    'mask_image[url]!' => '',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'mask_repeat',
+            [
+                'label' => esc_html__('Mask Repeat', 'wpr-addons'),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'no-repeat',
+                'options' => [
+                    'no-repeat' => esc_html__('No-repeat', 'wpr-addons'),
+                    'repeat' => esc_html__('Repeat', 'wpr-addons'),
+                    'repeat-x' => esc_html__('Repeat-x', 'wpr-addons'),
+                    'repeat-y' => esc_html__('Repeat-y', 'wpr-addons'),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-image-scroll-wrap' => '-webkit-mask-repeat: {{VALUE}}; mask-repeat: {{VALUE}};',
+                ],
+                'condition' => [
+                    'enable_mask' => 'yes',
+                    'mask_image[url]!' => '',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control(
+            'mask_size_custom',
+            [
+                'label' => esc_html__('Custom Size', 'wpr-addons'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px', '%', 'vw'],
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 1000,
+                    ],
+                    '%' => [
+                        'min' => 0,
+                        'max' => 100,
+                    ],
+                    'vw' => [
+                        'min' => 0,
+                        'max' => 100,
+                    ],
+                ],
+                'default' => [
+                    'size' => 100,
+                    'unit' => '%',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-image-scroll-wrap' => '-webkit-mask-size: {{SIZE}}{{UNIT}}; mask-size: {{SIZE}}{{UNIT}};',
+                ],
+                'condition' => [
+                    'enable_mask' => 'yes',
+                    'mask_image[url]!' => '',
+                    'mask_size' => 'custom',
+                ],
+            ]
+        );
+
+        // $this->end_controls_section();
+
+        // // Advanced Settings
+        // $this->start_controls_section(
+        //     'section_advanced_settings',
+        //     [
+        //         'label' => esc_html__('Advanced Settings', 'wpr-addons'),
+        //     ]
+        // );
+
+        $this->add_control(
             'reverse_direction',
             [
                 'label' => esc_html__('Reverse Direction', 'wpr-addons'),
                 'type' => Controls_Manager::SWITCHER,
                 'render_type' => 'template',
+                'separator' => 'before',
                 'prefix_class' => 'wpr-direction-',
             ]
         );
@@ -223,7 +357,83 @@ class Wpr_Image_Scroll extends Widget_Base {
                     'enable_wrapper_link' => 'yes',
                 ],
             ]
-        );// Add this control after scroll_speed in register_controls()
+        );
+
+        $this->add_control(
+            'heading_icon',
+            [
+                'label' => esc_html__('Icon', 'wpr-addons'),
+                'type' => Controls_Manager::HEADING,
+                'separator' => 'before',
+            ]
+        );
+
+        $this->add_control(
+            'show_icon',
+            [
+                'label' => esc_html__('Show Icon', 'wpr-addons'),
+                'type' => Controls_Manager::SWITCHER,
+                'default' => 'no',
+            ]
+        );
+        
+        $this->add_control(
+            'icon',
+            [
+                'label' => esc_html__('Select Icon', 'wpr-addons'),
+                'type' => Controls_Manager::ICONS,
+                'default' => [
+                    'value' => 'fas fa-arrow-down',
+                    'library' => 'fa-solid',
+                ],
+                'condition' => [
+                    'show_icon' => 'yes',
+                ],
+            ]
+        );
+        
+        // Add icon style controls
+        $this->add_control(
+            'icon_color',
+            [
+                'label' => esc_html__('Color', 'wpr-addons'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '#ffffff',
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-image-scroll-icon' => 'color: {{VALUE}}',
+                    '{{WRAPPER}} .wpr-image-scroll-icon svg' => 'fill: {{VALUE}}',
+                ],
+                'condition' => [
+                    'show_icon' => 'yes',
+                ],
+            ]
+        );
+        
+        $this->add_responsive_control(
+            'icon_size',
+            [
+                'label' => esc_html__('Size', 'wpr-addons'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'range' => [
+                    'px' => [
+                        'min' => 5,
+                        'max' => 100,
+                    ],
+                ],
+                'default' => [
+                    'unit' => 'px',
+                    'size' => 25,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-image-scroll-icon' => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .wpr-image-scroll-icon svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+                ],
+                'condition' => [
+                    'show_icon' => 'yes',
+                ],
+            ]
+        );
 
         $this->add_control(
             'transition_duration',
@@ -235,7 +445,9 @@ class Wpr_Image_Scroll extends Widget_Base {
                 'max' => 5,
                 'step' => 0.1,
                 'selectors' => [
-                    '{{WRAPPER}} .wpr-image-scroll-wrap' => 'transition-duration: {{VALUE}}s;'
+                    '{{WRAPPER}} .wpr-image-scroll-wrap' => 'transition-duration: {{VALUE}}s;',
+                    '{{WRAPPER}} .wpr-image-scroll-icon' => 'transition-duration: {{VALUE}}s;',
+                    '{{WRAPPER}} .wpr-image-scroll-icon-hidden' => 'transition-duration: {{VALUE}}s;'
                 ],
                 'separator' => 'before',
             ]
@@ -255,7 +467,9 @@ class Wpr_Image_Scroll extends Widget_Base {
                     'ease-in-out' => esc_html__('Ease In Out', 'wpr-addons'),
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .wpr-image-scroll-wrap' => 'transition-timing-function: {{VALUE}};'
+                    '{{WRAPPER}} .wpr-image-scroll-wrap' => 'transition-timing-function: {{VALUE}};',
+                    '{{WRAPPER}} .wpr-image-scroll-icon' => 'transition-timing-function: {{VALUE}};',
+                    '{{WRAPPER}} .wpr-image-scroll-icon-hidden' => 'transition-timing-function: {{VALUE}};'
                 ],
             ]
         );
@@ -441,7 +655,13 @@ class Wpr_Image_Scroll extends Widget_Base {
 
         <?php if ('yes' === $settings['enable_wrapper_link'] && !empty($settings['wrapper_link']['url'])) : ?>
             </a>
-        <?php endif;
+        <?php endif; ?>
+        
+             <?php if ('yes' === $settings['show_icon']) : ?>
+                <div class="wpr-image-scroll-icon">
+                    <?php \Elementor\Icons_Manager::render_icon($settings['icon'], ['aria-hidden' => 'true']); ?>
+                </div>
+            <?php endif;
     }
 
     protected function content_template() {
@@ -469,6 +689,13 @@ class Wpr_Image_Scroll extends Widget_Base {
         #>
             <div {{{ view.getRenderAttributeString( 'wrapper' ) }}}>
                 <img src="{{ image_url }}" />
+                
+                <# if ( settings.show_icon == 'yes' ) { #>
+                    <div class="wpr-image-scroll-icon">
+                        <# var iconHTML = elementor.helpers.renderIcon( view, settings.icon, { 'aria-hidden': true }, 'i', 'object' ); #>
+                        {{{ iconHTML.value }}}
+                    </div>
+                <# } #>
             </div>
         <# } #>
         <?php
