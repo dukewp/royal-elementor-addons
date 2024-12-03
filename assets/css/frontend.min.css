@@ -18753,8 +18753,6 @@ dl.variation dd {
 
 .wpr-scroll-horizontal {
     display: block; /* Make the image scroll within a single block element */
-    overflow-x: auto; /* Allow horizontal scrolling */
-    overflow-y: hidden; /* Hide vertical overflow */
     scroll-behavior: smooth; /* Smooth scrolling */
     width: 100%;
     height: 100%;
