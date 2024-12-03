@@ -146,6 +146,61 @@ class Wpr_Image_Scroll extends Widget_Base {
             ]
         );
 
+        // $this->end_controls_section();
+
+        // // Advanced Settings
+        // $this->start_controls_section(
+        //     'section_advanced_settings',
+        //     [
+        //         'label' => esc_html__('Advanced Settings', 'wpr-addons'),
+        //     ]
+        // );
+
+        $this->add_control(
+            'reverse_direction',
+            [
+                'label' => esc_html__('Reverse Direction', 'wpr-addons'),
+                'type' => Controls_Manager::SWITCHER,
+                'render_type' => 'template',
+                'separator' => 'before',
+                'prefix_class' => 'wpr-direction-',
+            ]
+        );
+
+        $this->add_control(
+            'trigger_type',
+            [
+                'label' => esc_html__('Trigger', 'wpr-addons'),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'hover',
+                'options' => [
+                    'hover' => esc_html__('Hover', 'wpr-addons'),
+                    'scroll' => esc_html__('Mouse Scroll', 'wpr-addons'),
+                ],
+                'prefix_class' => 'wpr-trigger-',
+            ]
+        );
+
+        $this->add_control(
+            'scroll_speed',
+            [
+                'label' => esc_html__('Animation Speed', 'wpr-addons'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'range' => [
+                    'px' => [
+                        'min' => 0.1,
+                        'max' => 5,
+                        'step' => 0.1,
+                    ],
+                ],
+                'default' => [
+                    'unit' => 'px',
+                    'size' => 1,
+                ],
+            ]
+        );
+
         $this->add_control(
             'enable_mask',
             [
@@ -275,61 +330,6 @@ class Wpr_Image_Scroll extends Widget_Base {
                     'enable_mask' => 'yes',
                     'mask_image[url]!' => '',
                     'mask_size' => 'custom',
-                ],
-            ]
-        );
-
-        // $this->end_controls_section();
-
-        // // Advanced Settings
-        // $this->start_controls_section(
-        //     'section_advanced_settings',
-        //     [
-        //         'label' => esc_html__('Advanced Settings', 'wpr-addons'),
-        //     ]
-        // );
-
-        $this->add_control(
-            'reverse_direction',
-            [
-                'label' => esc_html__('Reverse Direction', 'wpr-addons'),
-                'type' => Controls_Manager::SWITCHER,
-                'render_type' => 'template',
-                'separator' => 'before',
-                'prefix_class' => 'wpr-direction-',
-            ]
-        );
-
-        $this->add_control(
-            'trigger_type',
-            [
-                'label' => esc_html__('Trigger', 'wpr-addons'),
-                'type' => Controls_Manager::SELECT,
-                'default' => 'hover',
-                'options' => [
-                    'hover' => esc_html__('Hover', 'wpr-addons'),
-                    'scroll' => esc_html__('Mouse Scroll', 'wpr-addons'),
-                ],
-                'prefix_class' => 'wpr-trigger-',
-            ]
-        );
-
-        $this->add_control(
-            'scroll_speed',
-            [
-                'label' => esc_html__('Animation Speed', 'wpr-addons'),
-                'type' => Controls_Manager::SLIDER,
-                'size_units' => ['px'],
-                'range' => [
-                    'px' => [
-                        'min' => 0.1,
-                        'max' => 5,
-                        'step' => 0.1,
-                    ],
-                ],
-                'default' => [
-                    'unit' => 'px',
-                    'size' => 1,
                 ],
             ]
         );
