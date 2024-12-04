@@ -48,21 +48,16 @@ class Wpr_Image_Scroll extends Widget_Base {
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
 
+	public function is_reload_preview_required() {
+		return true;
+	}
+
 	protected function register_controls() {
         // Image Section
         $this->start_controls_section(
             'section_image_scroll',
             [
                 'label' => esc_html__('Settings', 'wpr-addons'),
-            ]
-        );
-
-        $this->add_control(
-            'update_preview',
-            [
-                'type' => Controls_Manager::RAW_HTML,
-                'raw' => '<div class="elementor-update-preview-button editor-wpr-preview-update"><span>Update changes to Preview</span><button class="elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply</button>',
-                'separator' => 'after'
             ]
         );
 
