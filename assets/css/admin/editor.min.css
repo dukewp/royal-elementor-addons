@@ -661,6 +661,7 @@
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+	align-items: center;
 }
 
 .editor-wpr-preview-update button {
