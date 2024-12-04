@@ -193,6 +193,7 @@ class Wpr_Image_Scroll extends Widget_Base {
                     'unit' => 'px',
                     'size' => 2,
                 ],
+                'separator' => 'before',
             ]
         );
 
@@ -594,7 +595,7 @@ class Wpr_Image_Scroll extends Widget_Base {
         $this->start_controls_section(
             'section_style',
             [
-                'label' => esc_html__('Image Style', 'wpr-addons'),
+                'label' => esc_html__('Image', 'wpr-addons'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -830,6 +831,9 @@ class Wpr_Image_Scroll extends Widget_Base {
                 'label' => esc_html__('Overlay', 'wpr-addons'),
                 'type' => Controls_Manager::HEADING,
                 'separator' => 'before',
+                'condition' => [
+                    'show_overlay' => 'yes',
+                ],
             ]
         );
 
