@@ -494,7 +494,44 @@ class Wpr_Image_Scroll extends Widget_Base {
                 ],
             ]
         );
+
+        $this->add_control(
+            'icon_animation',
+            [
+                'label' => esc_html__('Animation', 'wpr-addons'),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'none',
+                'options' => [
+                    'none' => esc_html__('None', 'wpr-addons'),
+                    'horizontal' => esc_html__('Horizontal', 'wpr-addons'),
+                    'vertical' => esc_html__('Vertical', 'wpr-addons'),
+                ],
+                'condition' => [
+                    'show_icon' => 'yes',
+                ],
+                'prefix_class' => 'wpr-icon-animation-',
+            ]
+        );
         
+        $this->add_control(
+            'icon_animation_duration',
+            [
+                'label' => esc_html__('Animation Duration', 'wpr-addons'),
+                'type' => Controls_Manager::NUMBER,
+                'default' => 2,
+                'min' => 0.1,
+                'max' => 10,
+                'step' => 0.1,
+                'condition' => [
+                    'show_icon' => 'yes',
+                    'icon_animation!' => 'none',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-image-scroll-icon' => 'animation-duration: {{VALUE}}s; animation-iteration-count: infinite; animation-timing-function: ease-in-out;',
+                ],
+            ]
+        );
+
         $this->add_control(
             'heading_overlay',
             [
@@ -858,47 +895,54 @@ class Wpr_Image_Scroll extends Widget_Base {
 
     protected function render() {
         $settings = $this->get_settings_for_display();
-
+    
         if (empty($settings['image']['url'])) {
             return;
         }
-
+    
         $this->add_render_attribute('wrapper', 'class', [
             'wpr-image-scroll-wrap',
-            'wpr-scroll-' . $settings['scroll_direction'],
-            'wpr-trigger-' . $settings['trigger_type'],
+            'wpr-scroll-' . esc_attr($settings['scroll_direction']),
+            'wpr-trigger-' . esc_attr($settings['trigger_type']),
             $settings['reverse_direction'] === 'yes' ? 'wpr-direction-reverse' : ''
         ]);
-
-        $this->add_render_attribute('wrapper', 'data-speed', $settings['scroll_speed']['size']);
-
+    
+        $this->add_render_attribute('wrapper', 'data-speed', floatval($settings['scroll_speed']['size']));
+    
         // Add link wrapper if enabled
         if ('yes' === $settings['enable_wrapper_link'] && !empty($settings['wrapper_link']['url'])) {
             $this->add_link_attributes('link', $settings['wrapper_link']);
             $this->add_render_attribute('link', 'class', 'wpr-image-scroll-link');
         }
         ?>
-
+    
         <?php if ('yes' === $settings['enable_wrapper_link'] && !empty($settings['wrapper_link']['url'])) : ?>
-            <a <?php echo $this->get_render_attribute_string('link'); ?>>
+            <a <?php echo $this->get_render_attribute_string('link'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Already escaped by Elementor ?>>
         <?php endif; ?>
-
-        <div <?php echo $this->get_render_attribute_string('wrapper'); ?>>
-            <?php echo Group_Control_Image_Size::get_attachment_image_html($settings); ?>
+    
+        <div <?php echo $this->get_render_attribute_string('wrapper'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Already escaped by Elementor ?>>
+            <?php 
+            // Image is handled by Elementor's Group_Control_Image_Size which includes security measures
+            echo Group_Control_Image_Size::get_attachment_image_html($settings); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Already escaped by Elementor
+            ?>
+            
             <?php if ('yes' === $settings['show_overlay']) : ?>
                 <div class="wpr-image-scroll-overlay"></div>
             <?php endif; ?>
+        
+            <?php if ('yes' === $settings['show_icon']) : ?>
+                <div class="wpr-image-scroll-icon">
+                    <?php 
+                    // Icons are handled by Elementor's Icons_Manager which includes security measures
+                    \Elementor\Icons_Manager::render_icon($settings['icon'], ['aria-hidden' => 'true']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Already escaped by Elementor
+                    ?>
+                </div>
+            <?php endif; ?>
         </div>
-
+    
         <?php if ('yes' === $settings['enable_wrapper_link'] && !empty($settings['wrapper_link']['url'])) : ?>
             </a>
-        <?php endif; ?>
-        
-             <?php if ('yes' === $settings['show_icon']) : ?>
-                <div class="wpr-image-scroll-icon">
-                    <?php \Elementor\Icons_Manager::render_icon($settings['icon'], ['aria-hidden' => 'true']); ?>
-                </div>
-            <?php endif;
+        <?php endif;
     }
 
     protected function content_template() {

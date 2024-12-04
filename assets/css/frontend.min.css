@@ -18799,6 +18799,7 @@ dl.variation dd {
 
 .wpr-image-scroll-icon {
     position: absolute;
+    display: inline-flex;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -18810,4 +18811,46 @@ dl.variation dd {
 
 .wpr-image-scroll-icon-hidden {
     opacity: 0;
+}
+
+/* Icon Animations */
+.wpr-icon-animation-horizontal .wpr-image-scroll-icon {
+    animation-name: wprIconHorizontal;
+}
+
+.wpr-icon-animation-vertical .wpr-image-scroll-icon {
+    animation-name: wprIconVertical;
+}
+
+/* Icon Animations */
+.wpr-icon-animation-horizontal .wpr-image-scroll-icon {
+    animation-name: wprIconHorizontal;
+}
+
+.wpr-icon-animation-vertical .wpr-image-scroll-icon {
+    animation-name: wprIconVertical;
+}
+
+@keyframes wprIconHorizontal {
+    0% {
+        transform: translate(-50%, -50%);
+    }
+    50% {
+        transform: translate(calc(-50% + 10px), -50%);
+    }
+    100% {
+        transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes wprIconVertical {
+    0% {
+        transform: translate(-50%, -50%);
+    }
+    50% {
+        transform: translate(-50%, calc(-50% + 10px));
+    }
+    100% {
+        transform: translate(-50%, -50%);
+    }
 }
