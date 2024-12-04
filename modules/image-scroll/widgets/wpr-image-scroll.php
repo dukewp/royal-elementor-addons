@@ -854,6 +854,9 @@ class Wpr_Image_Scroll extends Widget_Base {
                 'selectors' => [
                     '{{WRAPPER}} .wpr-image-scroll-overlay' => 'background-color: {{VALUE}}',
                 ],
+                'condition' => [
+                    'show_overlay' => 'yes',
+                ],
             ]
         );
 
@@ -877,6 +880,9 @@ class Wpr_Image_Scroll extends Widget_Base {
                 'default' => 'rgba(0, 0, 0, 0.5)',
                 'selectors' => [
                     '{{WRAPPER}} .wpr-image-scroll-wrap:hover .wpr-image-scroll-overlay' => 'background-color: {{VALUE}}',
+                ],
+                'condition' => [
+                    'show_overlay' => 'yes',
                 ],
             ]
         );
