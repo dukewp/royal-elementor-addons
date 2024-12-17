@@ -1792,7 +1792,7 @@ class Wpr_Forms extends Widget_Base {
 						'default' => '#4A45D2',
 					],
 				],
-				'selector' => '{{WRAPPER}}  .wpcf7-submit:hover, {{WRAPPER}} .submit-wrap .ninja-forms-field:hover, {{WRAPPER}} .wpforms-submit:hover, {{WRAPPER}} .wpforms-page-next:hover, {{WRAPPER}} .wpforms-page-previous:hover, {{WRAPPER}} .caldera-grid .btn-default:hover, {{WRAPPER}} .caldera-grid .btn-success, {{WRAPPER}} .caldera-grid .cf2-dropzone button:hover. {{WRAPPER}} #contact-btn:hover'
+				'selector' => '{{WRAPPER}}  .wpcf7-submit:hover, {{WRAPPER}} .submit-wrap .ninja-forms-field:hover, {{WRAPPER}} .wpforms-submit:hover, {{WRAPPER}} .wpforms-page-next:hover, {{WRAPPER}} .wpforms-page-previous:hover, {{WRAPPER}} .caldera-grid .btn-default:hover, {{WRAPPER}} .caldera-grid .btn-success, {{WRAPPER}} .caldera-grid .cf2-dropzone button:hover, {{WRAPPER}} #contact-btn:hover'
 			]
 		);
 
