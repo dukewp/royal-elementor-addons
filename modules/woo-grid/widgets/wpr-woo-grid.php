@@ -8674,6 +8674,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			if (!empty($settings['query_randomize'])) {
 				$args['orderby'] = $settings['query_randomize'];
 			}
+			$args['post_type'] = 'product'; // GOGA: needs check
 		}
 
 		// Sorting
@@ -10298,8 +10299,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'filters_animation_duration' => $settings['filters_animation_duration'],
 			'filters_animation_delay' => $settings['filters_animation_delay'],
 			'pagination_type' => $settings['pagination_type'],
-			'pagination_max_pages' => $this->get_max_num_pages( $settings ),
+			'pagination_max_pages' => $this->get_max_num_pages( $settings )
 		];
+
+		if ( 'current' !== $settings[ 'query_selection' ] ) {
+			$layout_settings['query_posts_per_page'] = $settings['query_posts_per_page'];
+		}
 
 		if ( 'list' === $settings['layout_select'] ) {
 			$layout_settings['media_align'] = $settings['layout_list_align'];

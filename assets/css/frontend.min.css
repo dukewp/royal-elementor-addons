@@ -18849,3 +18849,134 @@ dl.variation dd {
         white-space: nowrap;
     }
 }
+
+/*--------------------------------------------------------------
+== Image Scroll
+--------------------------------------------------------------*/
+
+.wpr-image-scroll-wrap {
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 300px; /* Default height */
+}
+
+.wpr-image-scroll-wrap img {
+    position: absolute;
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease-out;
+}
+
+/* Vertical Scroll */
+.wpr-scroll-vertical img {
+    width: 100%;
+    max-width: none;
+    height: auto;
+}
+
+.wpr-scroll-horizontal {
+    display: block; /* Make the image scroll within a single block element */
+    scroll-behavior: smooth; /* Smooth scrolling */
+    width: 100%;
+    height: 100%;
+    white-space: nowrap; /* Prevent line breaks to maintain scrolling flow */
+}
+
+.wpr-scroll-horizontal img {
+    height: 100%; /* Take up the container's full height */
+    width: auto; /* Allow image to determine its natural width */
+    max-width: none; /* Remove default max-width restrictions */
+    object-fit: cover; /* Ensure the image fits inside its container */
+    display: inline-block; /* Make sure image is inline for scrolling */
+}
+
+.wpr-scroll-horizontal::-webkit-scrollbar {
+    display: none;  /* Hide scrollbar in Webkit browsers */
+}
+
+/* Hover Effects */
+.wpr-trigger-hover:hover img {
+    will-change: transform;
+}
+
+.wpr-image-scroll-link {
+    display: block;
+    text-decoration: none;
+    width: 100%;
+}
+
+.wpr-image-scroll-link:hover {
+    text-decoration: none;
+}
+
+.wpr-image-scroll-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.wpr-image-scroll-icon {
+    position: absolute;
+    display: inline-flex;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 2; /* Ensure icon stays above overlay */
+}
+
+.wpr-image-scroll-icon-hidden {
+    opacity: 0;
+}
+
+/* Icon Animations */
+.wpr-icon-animation-horizontal .wpr-image-scroll-icon {
+    animation-name: wprIconHorizontal;
+}
+
+.wpr-icon-animation-vertical .wpr-image-scroll-icon {
+    animation-name: wprIconVertical;
+}
+
+/* Icon Animations */
+.wpr-icon-animation-horizontal .wpr-image-scroll-icon {
+    animation-name: wprIconHorizontal;
+}
+
+.wpr-icon-animation-vertical .wpr-image-scroll-icon {
+    animation-name: wprIconVertical;
+}
+
+@keyframes wprIconHorizontal {
+    0% {
+        transform: translate(-50%, -50%);
+    }
+    50% {
+        transform: translate(calc(-50% + 10px), -50%);
+    }
+    100% {
+        transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes wprIconVertical {
+    0% {
+        transform: translate(-50%, -50%);
+    }
+    50% {
+        transform: translate(-50%, calc(-50% + 10px));
+    }
+    100% {
+        transform: translate(-50%, -50%);
+    }
+}
