@@ -90,6 +90,7 @@ class Wpr_Image_Scroll extends Widget_Base {
                     'vertical' => esc_html__('Vertical', 'wpr-addons'),
                     'horizontal' => esc_html__('Horizontal', 'wpr-addons'),
                 ],
+                'render_type' => 'template',
                 'prefix_class' => 'wpr-scroll-',
             ]
         );

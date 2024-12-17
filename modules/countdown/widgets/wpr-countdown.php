@@ -979,6 +979,23 @@ class Wpr_Countdown extends Widget_Base {
 
 		return $class;
 	}
+	
+	public function sanitize_no_js($input) {
+		// Remove all `<script>` and `<iframe>` tags
+		$input = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $input);
+		$input = preg_replace('#<iframe(.*?)>(.*?)</iframe>#is', '', $input);
+	
+		// Remove attributes like `onload`, `onclick`, etc.
+		$input = preg_replace('#on\w+="[^"]*"#i', '', $input); // Double-quoted
+		$input = preg_replace("#on\w+='[^']*'#i", '', $input); // Single-quoted
+		$input = preg_replace('#on\w+=\S+#i', '', $input);     // Unquoted
+	
+		// Remove styles containing `javascript:`
+		$input = preg_replace('#style="[^"]*javascript:[^"]*"#i', '', $input);
+		$input = preg_replace("#style='[^']*javascript:[^']*'#i", '', $input);
+	
+		return $input;
+	}
 
 	public function get_expired_actions_json( $settings ) {
 		$actions = [];
@@ -988,6 +1005,12 @@ class Wpr_Countdown extends Widget_Base {
 				'title' => [],
 				'target' => [],
 			],
+			'h1' => [],
+			'h2' => [],
+			'h3' => [],
+			'h4' => [],
+			'h5' => [],
+			'h6' => [],
 			'b' => [],
 			'strong' => [],
 			'i' => [],
@@ -1023,7 +1046,7 @@ class Wpr_Countdown extends Widget_Base {
 						break;
 
 					case 'message':
-						$actions['message'] = wp_kses($settings['display_message_text'], $allowed_html);
+						$actions['message'] = $this->sanitize_no_js(wp_kses($settings['display_message_text'], $allowed_html));
 						break;
 
 					case 'redirect':
