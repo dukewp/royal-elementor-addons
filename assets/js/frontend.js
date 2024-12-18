@@ -62,6 +62,7 @@
 				'wpr-mini-compare-pro.default' : WprElements.widgetMiniCompare,
 				'wpr-compare-pro.default' : WprElements.widgetCompare,
 				'wpr-form-builder.default': WprElements.widgetFormBuilder,
+				'wpr-image-scroll.default': WprElements.widgetImageScroll,
 				'global': WprElements.widgetSection,
 
 				// Single
@@ -1207,13 +1208,6 @@
 				return;
 			}
 
-			if ( $scope.find('.woocommerce-result-count').length ) {
-				var resultCountText = $scope.find('.woocommerce-result-count').text();
-				resultCountText = resultCountText.replace( /\d\u2013\d+/, '1\u2013' + $scope.find('.wpr-grid-item').length );
-
-				$scope.find('.woocommerce-result-count').text(resultCountText);
-			}
-
 			// Settings
 			var settings = iGrid.attr( 'data-settings' );
 			
@@ -1227,6 +1221,60 @@
 			// Grid
 			if ( typeof settings !== typeof undefined && settings !== false ) {
 				settings = JSON.parse( iGrid.attr( 'data-settings' ) );
+
+				if ($scope.find('.woocommerce-result-count').length) {
+					var resultCountText = $scope.find('.woocommerce-result-count').text();
+
+					var scopeId = $scope.data('id'); // Get the unique scope ID
+					var storageKey = 'wpr-cached-items-length-' + scopeId;
+					
+					// Try to get cached value from localStorage
+					var cachedLength = localStorage.getItem(storageKey);
+					
+					// If no cached value exists or if we're in editor mode, calculate and store it
+					if (!cachedLength || WprElements.editorCheck()) {
+						cachedLength = $scope.find('.wpr-grid-item').length;
+						localStorage.setItem(storageKey, cachedLength);
+					}
+					
+					var itemsPerPage = settings.query_posts_per_page ? 
+						settings.query_posts_per_page : 
+						parseInt(cachedLength);
+				
+					// Ensure itemsPerPage is correctly parsed and is a valid number
+					if (isNaN(itemsPerPage) || itemsPerPage <= 0) {
+						return; // Exit if itemsPerPage is not valid
+					}
+				
+					// Find current page number from the '.wpr-grid-current-page' element
+					var currentPage = 1; // default to 1 if no page detected
+					var currentPageElement = $scope.find('.wpr-grid-current-page');
+					
+					if (currentPageElement.length) {
+						currentPage = parseInt(currentPageElement.text().trim()) || 1;
+					}
+					
+					if (currentPageElement == 1 && cachedLength !=  $scope.find('.wpr-grid-item').length) {
+						cachedLength = $scope.find('.wpr-grid-item').length;
+					}
+				
+					// Find the total number of items from the '.woocommerce-result-count' text
+					var totalItemsMatch = resultCountText.match(/of (\d+) results/);
+					var totalItems = totalItemsMatch ? parseInt(totalItemsMatch[1].trim()) : itemsPerPage;
+				
+					// Ensure totalItems is correctly parsed and is a valid number
+					if (isNaN(totalItems) || totalItems <= 0) {
+						return; // Exit if totalItems is not valid
+					}
+				
+					// Calculate the start and end item numbers
+					var startItem = (currentPage - 1) * itemsPerPage + 1;
+					var endItem = Math.min(startItem + itemsPerPage - 1, totalItems);
+				
+					// Replace the count text with the correct range
+					resultCountText = resultCountText.replace(/\d+\u2013\d+/, startItem + '\u2013' + endItem);
+					$scope.find('.woocommerce-result-count').text(resultCountText);
+				}
 
 				// Init Functions
 				isotopeLayout( settings );
@@ -9574,6 +9622,129 @@
 				}
 			}
 		}, // end widgetFormBuilder
+
+		widgetImageScroll: function($scope) {
+			var $container = $scope.find('.wpr-image-scroll-wrap');
+			var $img = $container.find('img');
+			var settings = $container.data();
+			var scrollSpeed = settings.speed || 1;
+			var containerHeight = $container.height();
+			var containerWidth = $container.width();
+			var imgHeight = $img.height();
+			var imgWidth = $img.width();
+			var isVertical = $container.hasClass('wpr-scroll-vertical');
+			var isReverse = $container.hasClass('wpr-direction-reverse');
+			var maxScroll = isVertical ? imgHeight - containerHeight : imgWidth - containerWidth;
+			var $link = $scope.find('.wpr-image-scroll-link');
+
+			$img.on('load', function() {
+                imgHeight = $img.height();
+                imgWidth = $img.width();
+                maxScroll = isVertical ? imgHeight - containerHeight : imgWidth - containerWidth;
+				updateTransitionSpeed();
+                init();
+            });
+
+			init();	
+			
+			// Add transition style with dynamic speed
+			function updateTransitionSpeed() {
+				var transitionSpeed = scrollSpeed; // Adjust this ratio as needed
+				$img.css('transition', `transform ${transitionSpeed}s ease-out`);
+			}
+
+			function init() {
+				updateTransitionSpeed();
+				// Set initial position if reverse is enabled
+				if (isReverse) {
+					if (isVertical) {
+						$img.css('transform', `translateY(-${maxScroll}px)`);
+					} else {
+						$img.css('transform', `translateX(-${maxScroll}px)`);
+					}
+				}
+
+				$container.on('mouseenter', function() {
+					$scope.find('.wpr-image-scroll-icon').addClass('wpr-image-scroll-icon-hidden');
+				});
+
+				$container.on('mouseleave', function() {
+					$scope.find('.wpr-image-scroll-icon').removeClass('wpr-image-scroll-icon-hidden');
+				});
+
+				if ($container.hasClass('wpr-trigger-hover')) {
+					initHoverScroll();
+				} else if ($container.hasClass('wpr-trigger-scroll')) {
+					initMouseScroll();
+				}
+			}
+
+			// Hover Scroll
+			function initHoverScroll() {
+				var $hoverElement = $link.length ? $link : $container;
+
+				$hoverElement.on('mouseenter', function() {
+					if (isReverse) {
+						// If reverse, go from bottom/right to top/left
+						if (isVertical) {
+							$img.css('transform', 'translateY(0)');
+						} else {
+							$img.css('transform', 'translateX(0)');
+						}
+					} else {
+						// If not reverse, go from top/left to bottom/right
+						if (isVertical) {
+							$img.css('transform', `translateY(-${maxScroll}px)`);
+						} else {
+							$img.css('transform', `translateX(-${maxScroll}px)`);
+						}
+					}
+				});
+
+				$container.on('mouseleave', function() {
+					if (isReverse) {
+						// If reverse, return to bottom/right
+						if (isVertical) {
+							$img.css('transform', `translateY(-${maxScroll}px)`);
+						} else {
+							$img.css('transform', `translateX(-${maxScroll}px)`);
+						}
+					} else {
+						// If not reverse, return to top/left
+						$img.css('transform', 'translate(0, 0)');
+					}
+				});
+			}
+
+			// Mouse Scroll
+			function initMouseScroll() {
+				var scrollPosition = isReverse ? maxScroll : 0;
+				var isScrolling = false;
+
+				$container.on('wheel', function(e) {
+					e.preventDefault();
+					if (!isScrolling) {
+						requestAnimationFrame(updateScroll);
+					}
+					isScrolling = true;
+
+					var delta = e.originalEvent.deltaY;
+					if (isReverse) {
+						delta = -delta;
+					}
+					scrollPosition = Math.max(Math.min(scrollPosition + delta * scrollSpeed, maxScroll), 0);
+				});
+
+				function updateScroll() {
+					if (isVertical) {
+						$img.css('transform', 'translateY(-' + scrollPosition + 'px)');
+					} else {
+						$img.css('transform', 'translateX(-' + scrollPosition + 'px)');
+					}
+					isScrolling = false;
+				}
+			}
+		}, // end widgetImageScroll
 
 		widgetProductAddToCart: function($scope) {
 			var qtyInput = jQuery('.woocommerce .wpr-quantity-wrapper'),

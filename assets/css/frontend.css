@@ -268,9 +268,15 @@ template {
   }*/
 
 .wpr-grid-loader-wrap {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     width: 100%;
     height: 100%;
 }
@@ -286,52 +292,70 @@ template {
   height: 16px;
   border-radius: 50%;
   background: #222020;
-  animation: wpr-grid-loader 1.2s linear infinite;
+  -webkit-animation: wpr-grid-loader 1.2s linear infinite;
+          animation: wpr-grid-loader 1.2s linear infinite;
 }
 .wpr-grid-loader div:nth-child(1) {
   top: 8px;
   left: 8px;
-  animation-delay: 0s;
+  -webkit-animation-delay: 0s;
+          animation-delay: 0s;
 }
 .wpr-grid-loader div:nth-child(2) {
   top: 8px;
   left: 32px;
-  animation-delay: -0.4s;
+  -webkit-animation-delay: -0.4s;
+          animation-delay: -0.4s;
 }
 .wpr-grid-loader div:nth-child(3) {
   top: 8px;
   left: 56px;
-  animation-delay: -0.8s;
+  -webkit-animation-delay: -0.8s;
+          animation-delay: -0.8s;
 }
 .wpr-grid-loader div:nth-child(4) {
   top: 32px;
   left: 8px;
-  animation-delay: -0.4s;
+  -webkit-animation-delay: -0.4s;
+          animation-delay: -0.4s;
 }
 .wpr-grid-loader div:nth-child(5) {
   top: 32px;
   left: 32px;
-  animation-delay: -0.8s;
+  -webkit-animation-delay: -0.8s;
+          animation-delay: -0.8s;
 }
 .wpr-grid-loader div:nth-child(6) {
   top: 32px;
   left: 56px;
-  animation-delay: -1.2s;
+  -webkit-animation-delay: -1.2s;
+          animation-delay: -1.2s;
 }
 .wpr-grid-loader div:nth-child(7) {
   top: 56px;
   left: 8px;
-  animation-delay: -0.8s;
+  -webkit-animation-delay: -0.8s;
+          animation-delay: -0.8s;
 }
 .wpr-grid-loader div:nth-child(8) {
   top: 56px;
   left: 32px;
-  animation-delay: -1.2s;
+  -webkit-animation-delay: -1.2s;
+          animation-delay: -1.2s;
 }
 .wpr-grid-loader div:nth-child(9) {
   top: 56px;
   left: 56px;
-  animation-delay: -1.6s;
+  -webkit-animation-delay: -1.6s;
+          animation-delay: -1.6s;
+}
+@-webkit-keyframes wpr-grid-loader {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 @keyframes wpr-grid-loader {
   0%, 100% {
@@ -350,7 +374,8 @@ template {
 }
 
 .wpr-ring div {
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
     display: block;
     position: absolute;
     width: 23px;
@@ -358,28 +383,45 @@ template {
     margin: 4px;
     border: 3px solid #222020;
     border-radius: 50%;
-    animation: wpr-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    -webkit-animation: wpr-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+            animation: wpr-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
     border-color: #222020 transparent transparent transparent;
 }
 
 .wpr-ring div:nth-child(1) {
-    animation-delay: -0.45s;
+    -webkit-animation-delay: -0.45s;
+            animation-delay: -0.45s;
 }
 
 .wpr-ring div:nth-child(2) {
-    animation-delay: -0.3s;
+    -webkit-animation-delay: -0.3s;
+            animation-delay: -0.3s;
 }
 
 .wpr-ring div:nth-child(3) {
-    animation-delay: -0.15s;
+    -webkit-animation-delay: -0.15s;
+            animation-delay: -0.15s;
+}
+
+@-webkit-keyframes wpr-ring {
+    0% {
+        -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+    }
 }
 
 @keyframes wpr-ring {
     0% {
-        transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
     }
     100% {
-        transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
     }
 }
 
@@ -397,9 +439,15 @@ button.lg-icon {
 }
 
 .wpr-flex {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content:  flex-start; 
-    align-items: center;
+    -webkit-box-pack:  start;
+        -ms-flex-pack:  start;
+            justify-content:  flex-start; 
+    -webkit-box-align: center; 
+        -ms-flex-align: center; 
+            align-items: center;
 }
 
 .wpr-z-index {
@@ -2935,7 +2983,9 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
 }
 
 .wpr-rating-icon-5 .wpr-rating-marked svg {
+    mask: -webkit-gradient(linear, left top, right top, color-stop(50%, black), color-stop(50%, transparent));
     mask: linear-gradient(to right, black 50%, transparent 50%);
+    -webkit-mask: -webkit-gradient(linear, left top, right top, color-stop(50%, black), color-stop(50%, transparent));
     -webkit-mask: linear-gradient(to right, black 50%, transparent 50%);
 }
 
@@ -14591,6 +14641,8 @@ flex-grow: 0; */
 
 .wpr-compare-toggle-btn i,
 .wpr-compare-toggle-btn svg {
+    -webkit-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
 }
 
@@ -14725,6 +14777,8 @@ flex-grow: 0; */
 
 .wpr-wishlist-toggle-btn i,
 .wpr-wishlist-toggle-btn svg {
+    -webkit-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
 }
 
@@ -15406,6 +15460,8 @@ ul.wpr-woo-mini-cart {
 
 .wpr-mini-cart-toggle-btn i,
 .wpr-mini-cart-toggle-btn svg {
+    -webkit-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
 }
 
@@ -18847,5 +18903,190 @@ dl.variation dd {
 
     .wpr-breadcrumbs li {
         white-space: nowrap;
+    }
+}
+
+/*--------------------------------------------------------------
+== Image Scroll
+--------------------------------------------------------------*/
+
+.wpr-image-scroll-wrap {
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 300px; /* Default height */
+}
+
+.wpr-image-scroll-wrap img {
+    position: absolute;
+    min-width: 100%;
+    min-height: 100%;
+    -o-object-fit: cover;
+       object-fit: cover;
+    -webkit-transition: -webkit-transform 0.3s ease-out;
+    transition: -webkit-transform 0.3s ease-out;
+    -o-transition: transform 0.3s ease-out;
+    transition: transform 0.3s ease-out;
+    transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out;
+}
+
+/* Vertical Scroll */
+.wpr-scroll-vertical img {
+    width: 100%;
+    max-width: none;
+    height: auto;
+}
+
+.wpr-scroll-horizontal {
+    display: block; /* Make the image scroll within a single block element */
+    scroll-behavior: smooth; /* Smooth scrolling */
+    width: 100%;
+    height: 100%;
+    white-space: nowrap; /* Prevent line breaks to maintain scrolling flow */
+}
+
+.wpr-scroll-horizontal img {
+    height: 100%; /* Take up the container's full height */
+    width: auto; /* Allow image to determine its natural width */
+    max-width: none; /* Remove default max-width restrictions */
+    -o-object-fit: cover;
+       object-fit: cover; /* Ensure the image fits inside its container */
+    display: inline-block; /* Make sure image is inline for scrolling */
+}
+
+.wpr-scroll-horizontal::-webkit-scrollbar {
+    display: none;  /* Hide scrollbar in Webkit browsers */
+}
+
+/* Hover Effects */
+.wpr-trigger-hover:hover img {
+    will-change: transform;
+}
+
+.wpr-image-scroll-link {
+    display: block;
+    text-decoration: none;
+    width: 100%;
+}
+
+.wpr-image-scroll-link:hover {
+    text-decoration: none;
+}
+
+.wpr-image-scroll-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.wpr-image-scroll-icon {
+    position: absolute;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+    z-index: 1;
+    pointer-events: none;
+    -webkit-transition: opacity 0.3s ease;
+    -o-transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease;
+    z-index: 2; /* Ensure icon stays above overlay */
+}
+
+.wpr-image-scroll-icon-hidden {
+    opacity: 0;
+}
+
+/* Icon Animations */
+.wpr-icon-animation-horizontal .wpr-image-scroll-icon {
+    -webkit-animation-name: wprIconHorizontal;
+            animation-name: wprIconHorizontal;
+}
+
+.wpr-icon-animation-vertical .wpr-image-scroll-icon {
+    -webkit-animation-name: wprIconVertical;
+            animation-name: wprIconVertical;
+}
+
+/* Icon Animations */
+.wpr-icon-animation-horizontal .wpr-image-scroll-icon {
+    -webkit-animation-name: wprIconHorizontal;
+            animation-name: wprIconHorizontal;
+}
+
+.wpr-icon-animation-vertical .wpr-image-scroll-icon {
+    -webkit-animation-name: wprIconVertical;
+            animation-name: wprIconVertical;
+}
+
+@-webkit-keyframes wprIconHorizontal {
+    0% {
+        -webkit-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+    }
+    50% {
+        -webkit-transform: translate(calc(-50% + 10px), -50%);
+                transform: translate(calc(-50% + 10px), -50%);
+    }
+    100% {
+        -webkit-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes wprIconHorizontal {
+    0% {
+        -webkit-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+    }
+    50% {
+        -webkit-transform: translate(calc(-50% + 10px), -50%);
+                transform: translate(calc(-50% + 10px), -50%);
+    }
+    100% {
+        -webkit-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+    }
+}
+
+@-webkit-keyframes wprIconVertical {
+    0% {
+        -webkit-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+    }
+    50% {
+        -webkit-transform: translate(-50%, calc(-50% + 10px));
+                transform: translate(-50%, calc(-50% + 10px));
+    }
+    100% {
+        -webkit-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes wprIconVertical {
+    0% {
+        -webkit-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+    }
+    50% {
+        -webkit-transform: translate(-50%, calc(-50% + 10px));
+                transform: translate(-50%, calc(-50% + 10px));
+    }
+    100% {
+        -webkit-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
     }
 }
