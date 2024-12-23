@@ -108,6 +108,9 @@ class Plugin {
 		// Grid
 		require WPR_ADDONS_PATH . 'classes/modules/wpr-filter-grid-posts.php';
 
+		// Media Grid
+		require WPR_ADDONS_PATH . 'classes/modules/wpr-filter-grid-media.php';
+
 		// Woo Grid
 		require WPR_ADDONS_PATH . 'classes/modules/wpr-filter-woo-products.php';
 
