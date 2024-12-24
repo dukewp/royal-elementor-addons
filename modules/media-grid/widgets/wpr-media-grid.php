@@ -911,40 +911,30 @@ class Wpr_Media_Grid extends Widget_Base {
 				'return_value' => 'yes',
 				'render_type' => 'template',
 				'conditions' => [
-					'relation' => 'and',
+					'relation' => 'or',
 					'terms' => [
+						[
+							'relation' => 'and',
+							'terms' => [	
+								[
+									'name' => 'layout_pagination',
+									'operator' => '!=',
+									'value' => '',
+								],
+								[
+									'name' => 'pagination_type',
+									'operator' => 'in',
+									'value' => ['load-more', 'infinite'],
+								],
+							]
+						],
 						[
 							'name' => 'layout_filters',
 							'operator' => '!=',
 							'value' => '',
 						],
-						[
-							'relation' => 'or',
-							'terms' => [
-								[
-									'relation' => 'and',
-									'terms' => [	
-										[
-											'name' => 'layout_pagination',
-											'operator' => '!=',
-											'value' => '',
-										],
-										[
-											'name' => 'pagination_type',
-											'operator' => 'in',
-											'value' => ['load-more', 'infinite'],
-										],
-									]
-								],
-								[	
-									'name' => 'layout_pagination',
-									'operator' => '==',
-									'value' => '',
-								]
-							],
-						],
-					]
-				]
+					],
+				],
 			]
 		);
 
