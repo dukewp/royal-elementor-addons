@@ -176,6 +176,17 @@ if ( ! defined( 'ABSPATH' ) ) {
                                 <p class="wpr-ajax-desc"><a target="<?php echo esc_attr($_POST['wpr_ajax_search_link_target']) ?>" href="<?php echo esc_url( the_permalink() ); ?>"><?php echo wp_trim_words(get_the_content(), sanitize_text_field($_POST['wpr_number_of_words'])); ?></a></p>
                             <?php endif; ?>
 
+                            <?php if ( 'yes' === sanitize_text_field($_POST['wpr_show_product_price']) && 
+                                    get_post_type() === 'product' && 
+                                    class_exists('WooCommerce') ) :
+                                $product = wc_get_product(get_the_ID());
+                                if ($product) {
+                                    $price_html = '<div class="wpr-search-product-price">'. $product->get_price_html() .'</div>';
+
+                                    echo $price_html;
+                                }
+                            endif; ?>
+
                             <?php if ( sanitize_text_field($_POST['wpr_show_view_result_btn']) ) : ?>
                                 <a target="<?php echo esc_attr($_POST['wpr_ajax_search_link_target']) ?>" class="wpr-view-result" href="<?php echo esc_url( the_permalink() ); ?>"><?php echo sanitize_text_field($_POST['wpr_view_result_text']) ?></a>
                             <?php endif; ?>
