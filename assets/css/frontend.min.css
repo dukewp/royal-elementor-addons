@@ -6215,6 +6215,10 @@ body:not(.elementor-editor-active) .wpr-template-popup {
     cursor: pointer;
 }
 
+.wpr-popup-trigger-button svg {
+    display: block;
+}
+
 
 /* Only For Editing */
 
