@@ -2127,7 +2127,7 @@ class Wpr_Data_Table extends Widget_Base {
 									<?php endif; ?> 
 											<span class="wpr-table-text">
 												<?php 
-													echo wp_kses_post( $table_td[$j]['content'] );
+													echo $this->custom_wp_kses($table_td[$j]['content']);
 
 													$this->render_tooltip_icon( $table_td[$j] );
 													
@@ -2159,4 +2159,33 @@ class Wpr_Data_Table extends Widget_Base {
 			}
 		}
   	}
+
+	// Add this function to your class
+	private function custom_wp_kses($content) {
+		$allowed_html = array(
+			// ... existing allowed tags ...
+			'div' => array(
+				'class' => array(),
+			),
+			'p' => array(),
+			// Add the custom add-to-calendar-button element
+			'add-to-calendar-button' => array(
+				'name' => array(),
+				'debug' => array(),
+				'stylelight' => array(),
+				'startdate' => array(),
+				'starttime' => array(),
+				'endtime' => array(),
+				'enddate' => array(),
+				'timezone' => array(),
+				'label' => array(),
+				'options' => array(),
+				'lightmode' => array(),
+				'size' => array(),
+				'description' => array(),
+			),
+		);
+
+		return wp_kses($content, $allowed_html);
+	}
 }
