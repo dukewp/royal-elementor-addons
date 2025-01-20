@@ -170,10 +170,10 @@ if ( ! defined( 'ABSPATH' ) ) {
                         endif ; ?>
 
                         <div class="wpr-ajax-search-content">
-                            <a target="<?php echo esc_attr($_POST['wpr_ajax_search_link_target']) ?>" class="wpr-ajax-title" href="<?php echo esc_url( the_permalink() ); ?>"><?php the_title();?></a>
+                            <a target="<?php echo esc_attr($_POST['wpr_ajax_search_link_target']) ?>" class="wpr-ajax-title" href="<?php echo esc_url( get_the_permalink() ); ?>"><?php the_title();?></a>
 
                             <?php if ( sanitize_text_field($_POST['wpr_show_description']) == 'yes' ) : ?>
-                                <p class="wpr-ajax-desc"><a target="<?php echo esc_attr($_POST['wpr_ajax_search_link_target']) ?>" href="<?php echo esc_url( the_permalink() ); ?>"><?php echo wp_trim_words(get_the_content(), sanitize_text_field($_POST['wpr_number_of_words'])); ?></a></p>
+                                <p class="wpr-ajax-desc"><a target="<?php echo esc_attr($_POST['wpr_ajax_search_link_target']) ?>" href="<?php echo esc_url( get_the_permalink() ); ?>"><?php echo wp_trim_words(get_the_content(), sanitize_text_field($_POST['wpr_number_of_words'])); ?></a></p>
                             <?php endif; ?>
 
                             <?php if ( 'yes' === sanitize_text_field($_POST['wpr_show_product_price']) && 
