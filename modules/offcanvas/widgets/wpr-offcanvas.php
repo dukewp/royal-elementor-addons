@@ -396,9 +396,9 @@ class Wpr_Offcanvas extends Widget_Base {
 					'active' => true,
 				],
 				'default' => esc_html__( 'Click Here', 'wpr-addons' ),
-				'condition' => [
-					'offcanvas_show_button_title' => 'yes'
-				]
+				// 'condition' => [
+				// 	'offcanvas_show_button_title' => 'yes'
+				// ]
 			]
 		);
 
@@ -1191,10 +1191,23 @@ class Wpr_Offcanvas extends Widget_Base {
 			]
 		);
 
+		// Before rendering the button, add the aria attributes
+		$this->add_render_attribute(
+			'trigger-button',
+			[
+				'class' => 'wpr-offcanvas-trigger',
+				'aria-label' => ! empty($settings['offcanvas_button_title']) ? 
+					esc_html($settings['offcanvas_button_title']) : 
+					esc_html__('Toggle Offcanvas Panel', 'wpr-addons'),
+				'aria-expanded' => 'false',
+				'aria-controls' => 'wpr-offcanvas-' . $this->get_id()
+			]
+		);
+
 		?>
 
 		<div <?php echo $this->get_render_attribute_string( 'offcanvas-wrapper' ); ?>>
-			<button class="wpr-offcanvas-trigger">
+			<button <?php echo $this->get_render_attribute_string( 'trigger-button' ); ?>>
 				<?php if ( 'yes' === $settings['offcanvas_show_button_icon'] && !empty($settings['offcanvas_button_icon']) ) : 
 					\Elementor\Icons_Manager::render_icon( $settings['offcanvas_button_icon'] );
 				endif; ?>
