@@ -267,6 +267,10 @@ template {
     margin: 0 auto;
   }*/
 
+.wpr-pointer-events-none {
+    pointer-events: none;
+}
+
 .wpr-grid-loader-wrap {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -1256,6 +1260,10 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     visibility: visible;
     opacity: 1;
     z-index: 9999;
+}
+
+.wpr-animate-sub-fix {
+    left: -100%;
 }
 
 .wpr-sub-menu-fx-fade .wpr-sub-mega-menu {
@@ -13539,7 +13547,7 @@ select.wpr-category-select {
 }
 
 .wpr-dual-title {
-    margin: 0;
+    margin: 0 0 0 0;
 }
 
 .wpr-dual-title .first,
