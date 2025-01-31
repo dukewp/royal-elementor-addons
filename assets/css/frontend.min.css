@@ -14175,9 +14175,10 @@ flex-grow: 0; */
 
   /* override twenty-twentyone margins */
 
+.ps.wpr-table-inner-container,
 .wpr-table-inner-container {
-    overflow-y: auto;
-    overflow-x: auto;
+    overflow-y: auto !important;
+    overflow-x: auto !important;
 }
 
 .wpr-hide-table-before-arrange,
