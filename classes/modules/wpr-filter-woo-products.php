@@ -284,6 +284,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				$posts_per_page = intval(get_option('wpr_woo_shop_ppp', 9));
 			}
 			$args = $wp_query->query_vars;
+			$args['post_type'] = 'product';
 			$args['tax_query'] = $this->get_tax_query_args();
 			$args['meta_query'] = $this->get_meta_query_args();
 			$args['posts_per_page'] = $posts_per_page;
@@ -1226,7 +1227,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	// Render Wishlist Button
 	public function render_product_wishlist_button( $settings, $class ) {
 		global $product;
-		
+
 		if ( !wpr_fs()->is_plan( 'expert' ) ) {
 			return;
 		}
