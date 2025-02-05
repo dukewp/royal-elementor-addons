@@ -35,7 +35,7 @@ class WPR_Date extends Widget_Base {
         $this->start_controls_section(
             'section_content',
             [
-                'label' => __( 'Content', 'wpr-addons' ),
+                'label' => __( 'General', 'wpr-addons' ),
             ]
         );
 
@@ -76,6 +76,93 @@ class WPR_Date extends Widget_Base {
 			]
 		);
 
+        $this->add_control(
+            'extra_text_before',
+            [
+                'label' => esc_html__( 'Extra Text (Before)', 'wpr-addons' ),
+                'type' => Controls_Manager::TEXT,
+                'default' => esc_html__( 'Before Text - ', 'wpr-addons' ),
+            ]
+        );
+
+        $this->add_control(
+            'extra_text_after',
+            [
+                'label' => esc_html__( 'Extra Text (After)', 'wpr-addons' ),
+                'type' => Controls_Manager::TEXT,
+                'default' => esc_html__( ' - After Text', 'wpr-addons' ),
+            ]
+        );
+
+        $this->add_control(
+            'text_align',
+            [
+                'label' => esc_html__( 'Text Alignment', 'wpr-addons' ),
+                'type' => Controls_Manager::CHOOSE,
+                'options' => [
+                    'left' => [
+                        'title' => esc_html__( 'Left', 'wpr-addons' ),
+                        'icon' => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => esc_html__( 'Center', 'wpr-addons' ),
+                        'icon' => 'eicon-text-align-center',
+                    ],
+                    'right' => [
+                        'title' => esc_html__( 'Right', 'wpr-addons' ),
+                        'icon' => 'eicon-text-align-right',
+                    ],
+                ],
+                'default' => 'left',
+                'toggle' => true,
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-date' => 'text-align: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+
+        // Start Style Section
+        $this->start_controls_section(
+            'section_style',
+            [
+                'label' => __( 'Style', 'wpr-addons' ),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_control(
+            'text_color',
+            [
+                'label' => __( 'Date Color', 'wpr-addons' ),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-date' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'extra_text_color',
+            [
+                'label' => __( 'Extra Text Color', 'wpr-addons' ),
+                'type' => Controls_Manager::COLOR,
+                'selectors' => [
+
+                    '{{WRAPPER}} .wpr-date .wpr-extra-text' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->add_group_control(
+            \Elementor\Group_Control_Typography::get_type(),
+            [
+                'name' => 'typography',
+                'selector' => '{{WRAPPER}} .wpr-date',
+            ]
+        );
+
         $this->end_controls_section();
     }
 
@@ -84,7 +171,10 @@ class WPR_Date extends Widget_Base {
 
         $date_format = $settings['date_format'];
         $time_format = $settings['time_format'];
+        $extra_text_before = $settings['extra_text_before'];
+        $extra_text_after = $settings['extra_text_after'];
         $format = '';
+
 
         if ( 'default' === $date_format ) {
             $date_format = get_option( 'date_format' );
@@ -110,6 +200,17 @@ class WPR_Date extends Widget_Base {
         
 		$value = date_i18n( $format );
 
-		echo wp_kses_post( $value );
+        // Build output with extra text before/after
+        $output = '<div class="wpr-date">';
+        if (!empty($extra_text_before)) {
+            $output .= '<span class="wpr-extra-text">'. $extra_text_before .'</span>';
+        }
+        $output .= $value;
+        if (!empty($extra_text_after)) {
+            $output .= '<span class="wpr-extra-text">'. $extra_text_after .'</span>';
+        }
+        $output .= '</div>';
+
+		echo wp_kses_post( $output );
     }
 }
