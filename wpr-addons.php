@@ -100,7 +100,6 @@ define('WPR_EXPERT_LICENSE_CHECK_OR', !wpr_fs()->is_plan( 'expert' ) || !defined
 define('WPR_EXPERT_LICENSE_CHECK_AND', wpr_fs()->is_plan( 'expert' ) && defined('WPR_ADDONS_PRO_VERSION'));
 
 
-
 /**
  * Load gettext translate for our text domain.
  *
