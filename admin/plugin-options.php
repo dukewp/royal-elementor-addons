@@ -297,7 +297,7 @@ function wpr_addons_settings_page() {
 
             if ( 'pro' === $data[3] && WPR_PRO_LICENSE_CHECK_OR  ) {
                 $class = 'wpr-pro-element';
-            } elseif ( 'expert' === $data[3] && !wpr_fs()->is_plan( 'expert' ) ) {
+            } elseif ( 'expert' === $data[3] && WPR_EXPERT_LICENSE_CHECK_OR ) {
                 $class = 'wpr-expert-element';
             }
 
