@@ -816,7 +816,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
-		// if ( Utilities::is_new_free_user() && ! wpr_fs()->can_use_premium_code() ) {
+		// if ( Utilities::is_new_free_user() && WPR_PRO_LICENSE_CHECK_OR  ) {
 		// 	$this->add_control(
 		// 		'limit_grid_items_pro_notice',
 		// 		[
@@ -911,7 +911,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$this->add_control_layout_columns();
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( WPR_PRO_LICENSE_CHECK_OR ) {
 			$this->add_control(
 				'grid_columns_pro_notice',
 				[
@@ -1072,7 +1072,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$this->add_control_sort_and_results_count();
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( WPR_PRO_LICENSE_CHECK_OR ) {
 			$this->add_control(
 				'sort_and_results_count_pro_notice',
 				[
@@ -1536,7 +1536,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( WPR_PRO_LICENSE_CHECK_OR ) {
 			$repeater->add_control(
 	            'element_align_pro_notice',
 	            [
@@ -8455,7 +8455,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 	public function get_main_query_args() {
 		$settings = $this->get_settings();
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( WPR_PRO_LICENSE_CHECK_OR ) {
 			$settings['query_selection'] = 'pro-cr' == $settings['query_selection'] ? 'dynamic' : $settings['query_selection'];
 			$settings['query_orderby'] = 'pro-rn' == $settings['query_orderby'] ? 'date' : $settings['query_orderby'];
 		}
@@ -8875,7 +8875,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 	public function get_image_effect_class( $settings ) {
 		$class = '';
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( WPR_PRO_LICENSE_CHECK_OR ) {
 			if ( 'pro-zi' ==  $settings['image_effects'] || 'pro-zo' ==  $settings['image_effects'] || 'pro-go' ==  $settings['image_effects'] || 'pro-bo' ==  $settings['image_effects'] ) {
 				$settings['image_effects'] = 'none';
 			}
@@ -8948,7 +8948,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 	public function render_media_overlay( $settings ) {
 		echo '<div class="wpr-grid-media-hover-bg '. esc_attr($this->get_animation_class( $settings, 'overlay' )) .'" data-url="'. esc_url( get_the_permalink( get_the_ID() ) ) .'">';
 
-			if ( wpr_fs()->can_use_premium_code() ) {
+			if ( WPR_PRO_LICENSE_CHECK_AND ) {
 				if ( '' !== $settings['overlay_image']['url'] ) {
 					echo '<img src="'. esc_url( $settings['overlay_image']['url'] ) .'">';
 				}
@@ -8959,8 +8959,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 	// Render Post Title
 	public function render_product_title( $settings, $class ) {
-		$title_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['title_pointer'];
-		$title_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['title_pointer_animation'];
+		$title_pointer = WPR_PRO_LICENSE_CHECK_OR ? 'none' : $this->get_settings()['title_pointer'];
+		$title_pointer_animation = WPR_PRO_LICENSE_CHECK_OR ? 'fade' : $this->get_settings()['title_pointer_animation'];
 		$pointer_item_class = (isset($this->get_settings()['title_pointer']) && 'none' !== $this->get_settings()['title_pointer']) ? 'class="wpr-pointer-item"' : '';
 		$open_links_in_new_tab = 'yes' === $this->get_settings()['open_links_in_new_tab'] ? '_blank' : '_self';
 
@@ -9007,8 +9007,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$count = 0;
 
 		// Pointer Class
-		$categories_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['categories_pointer'];
-		$categories_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['categories_pointer_animation'];
+		$categories_pointer = WPR_PRO_LICENSE_CHECK_OR ? 'none' : $this->get_settings()['categories_pointer'];
+		$categories_pointer_animation = WPR_PRO_LICENSE_CHECK_OR ? 'fade' : $this->get_settings()['categories_pointer_animation'];
 		$pointer_item_class = (isset($this->get_settings()['categories_pointer']) && 'none' !== $this->get_settings()['categories_pointer']) ? 'class="wpr-pointer-item"' : '';
 
 		$class .= ' wpr-pointer-'. $categories_pointer;
@@ -9064,8 +9064,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$count = 0;
 
 		// Pointer Class
-		$tags_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['tags_pointer'];
-		$tags_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['tags_pointer_animation'];
+		$tags_pointer = WPR_PRO_LICENSE_CHECK_OR ? 'none' : $this->get_settings()['tags_pointer'];
+		$tags_pointer_animation = WPR_PRO_LICENSE_CHECK_OR ? 'fade' : $this->get_settings()['tags_pointer_animation'];
 		$pointer_item_class = (isset($this->get_settings()['tags_pointer']) && 'none' !== $this->get_settings()['tags_pointer']) ? 'class="wpr-pointer-item"' : '';
 
 		$class .= ' wpr-pointer-'. $tags_pointer;
@@ -9264,7 +9264,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			$product->supports( 'ajax_add_to_cart' ) ? 'ajax_add_to_cart' : '',
 		] ) );
 
-		$add_to_cart_animation = ! wpr_fs()->can_use_premium_code() ? 'wpr-button-none' : $this->get_settings()['add_to_cart_animation'];
+		$add_to_cart_animation = WPR_PRO_LICENSE_CHECK_OR ? 'wpr-button-none' : $this->get_settings()['add_to_cart_animation'];
 
 		$popup_notification_animation = isset($this->get_settings_for_display()['popup_notification_animation']) ? $this->get_settings_for_display()['popup_notification_animation'] : '';
 		$popup_notification_fade_out_in = isset($this->get_settings_for_display()['popup_notification_fade_out_in']) ? $this->get_settings_for_display()['popup_notification_fade_out_in'] : '';
@@ -9374,7 +9374,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 	public function render_product_wishlist_button( $settings, $class ) {
 		global $product;
 		
-		if ( !wpr_fs()->is_plan( 'expert' ) ) {
+		if (WPR_EXPERT_LICENSE_CHECK_OR ) {
 			return;
 		}
 
@@ -9461,7 +9461,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 	public function render_product_compare_button( $settings, $class ) {
 		global $product;
 		
-		if ( !wpr_fs()->is_plan( 'expert' ) ) {
+		if (WPR_EXPERT_LICENSE_CHECK_OR ) {
 			return;
 		}
 
@@ -9771,12 +9771,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 				$this->render_product_add_to_cart( $settings, $class );
 				break;
 			case 'wishlist-button':
-				if ( wpr_fs()->is_plan( 'expert' ) ) {
+				if ( WPR_EXPERT_LICENSE_CHECK_AND ) {
 					$this->render_product_wishlist_button( $settings, $class );
 				}
 				break;
 			case 'compare-button':
-				if ( wpr_fs()->is_plan( 'expert' ) ) {
+				if ( WPR_EXPERT_LICENSE_CHECK_AND ) {
 					$this->render_product_compare_button( $settings, $class );
 				}
 				break;
@@ -9799,7 +9799,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			$place = $data['element_location'];
 			$align_vr = $data['element_align_vr'];
 
-			if ( ! wpr_fs()->can_use_premium_code() ) {
+			if ( WPR_PRO_LICENSE_CHECK_OR ) {
 				$align_vr = 'middle';
 			}
 
@@ -9879,7 +9879,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		// Get Custom Filters
 		$custom_filters = $settings[ 'query_taxonomy_'. $taxonomy ];
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( WPR_PRO_LICENSE_CHECK_OR ) {
 			$settings['filters_default_filter'] = '';
 			$settings['filters_icon_align'] = '';
 			$settings['filters_count'] = '';
@@ -10044,7 +10044,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$pages = $this->get_max_num_pages( $settings );
 		$paged = empty( $paged ) ? 1 : $paged;
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( WPR_PRO_LICENSE_CHECK_OR ) {
 			$settings['pagination_type'] = 'pro-is' == $settings['pagination_type'] ? 'default' : $settings['pagination_type'];
 		}
 
@@ -10236,7 +10236,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 	// Grid Settings
 	public function add_grid_settings( $settings, $settings_new ) {
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( WPR_PRO_LICENSE_CHECK_OR ) {
 			$settings['layout_select'] = 'pro-ms' == $settings['layout_select'] ? 'fitRows' : $settings['layout_select'];
 			$settings['filters_deeplinking'] = '';
 			$settings['filters_count'] = '';
@@ -10312,7 +10312,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			$layout_settings['media_distance'] = $settings['layout_list_media_distance']['size'];
 		}
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( WPR_PRO_LICENSE_CHECK_OR ) {
 			$settings['lightbox_popup_thumbnails'] = '';
 			$settings['lightbox_popup_thumbnails_default'] = '';
 			$settings['lightbox_popup_sharing'] = '';
@@ -10350,7 +10350,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$slider_is_rtl = is_rtl();
 		$slider_direction = $slider_is_rtl ? 'rtl' : 'ltr';
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( WPR_PRO_LICENSE_CHECK_OR ) {
 			$settings['layout_slider_autoplay'] = '';
 			$settings['layout_slider_autoplay_duration'] = 0;
 			$settings['layout_slider_pause_on_hover'] = '';
@@ -10370,7 +10370,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'sliderSlidesToScroll' => +$settings['layout_slides_to_scroll'],
 		];
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( WPR_PRO_LICENSE_CHECK_OR ) {
 			$settings['lightbox_popup_thumbnails'] = '';
 			$settings['lightbox_popup_thumbnails_default'] = '';
 			$settings['lightbox_popup_sharing'] = '';
@@ -10442,7 +10442,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				// Sort & Results
 				$this->render_grid_sorting( $settings, $posts );
 
-				if ( !((is_product_category() || is_product_tag()) && !wpr_fs()->can_use_premium_code()) ) {
+				if ( !((is_product_category() || is_product_tag()) && WPR_PRO_LICENSE_CHECK_OR ) ) {
 					// Filters
 					$this->render_grid_filters( $settings );
 				}

@@ -29,7 +29,7 @@ class WPR_Templates_Library_Pages {
 	** Template Library Popup
 	*/
 	public static function render_library_templates_pages() {
-		$license = !wpr_fs()->can_use_premium_code() ? 'free' : 'premium';
+		$license = WPR_PRO_LICENSE_CHECK_OR  ? 'free' : 'premium';
 
 		?>
 
@@ -95,7 +95,7 @@ class WPR_Templates_Library_Pages {
 			foreach( $data['pages'] as $key => $page ) :
 
 				$template_title = $data['name'] .' - '. str_replace('-', ' ', ucwords($page));
-				$template_price = ('pro' === $data['price'] && !wpr_fs()->can_use_premium_code()) ? 'pro' : 'free';
+				$template_price = ('pro' === $data['price'] && WPR_PRO_LICENSE_CHECK_OR ) ? 'pro' : 'free';
 				$template_class = 'pro' === $template_price ? ' wpr-tplib-pro-wrap' : '';
 				$preview_url = $data['preview'][$key];
 
@@ -115,7 +115,7 @@ class WPR_Templates_Library_Pages {
 							<span><?php echo '&nbsp;- '. esc_html(ucwords($page)); ?></span>
 						</h3>
 
-						<?php if ( 'pro' === $data['price'] && !wpr_fs()->can_use_premium_code() ) : ?>
+						<?php if ( 'pro' === $data['price'] && WPR_PRO_LICENSE_CHECK_OR  ) : ?>
 							<span class="wpr-tplib-insert-template wpr-tplib-insert-pro"><i class="eicon-star"></i> <span><?php esc_html_e( 'Go Pro', 'wpr-addons' ); ?></span></span>
 						<?php else : ?>
 							<span class="wpr-tplib-insert-template"><i class="eicon-file-download"></i> <span><?php esc_html_e( 'Insert', 'wpr-addons' ); ?></span></span>

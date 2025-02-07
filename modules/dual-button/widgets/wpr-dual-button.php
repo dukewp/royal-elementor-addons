@@ -111,7 +111,7 @@ class Wpr_Dual_Button extends Widget_Base {
 			]
 		);
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( WPR_PRO_LICENSE_CHECK_OR ) {
 			$this->add_control(
 				'dual_button_pro_notice',
 				[

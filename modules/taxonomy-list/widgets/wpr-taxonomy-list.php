@@ -116,7 +116,7 @@ class Wpr_Taxonomy_List extends Widget_Base {
 			]
 		);
 
-		if ( !wpr_fs()->is_plan( 'expert' ) ) {
+		if (WPR_EXPERT_LICENSE_CHECK_OR ) {
 			$this->add_control(
 				'query_tax_selection_pro_notice',
 				[

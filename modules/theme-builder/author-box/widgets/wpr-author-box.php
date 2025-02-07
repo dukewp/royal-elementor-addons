@@ -811,7 +811,7 @@ class Wpr_Author_Box extends Widget_Base {
 		// Get Settings
 		$settings = $this->get_settings();
 
-		if ( !wpr_fs()->can_use_premium_code() ) {
+		if ( WPR_PRO_LICENSE_CHECK_OR  ) {
 			$settings['author_bio'] = '';
 			$settings['author_name_link_tab'] = '';
 			$settings['author_title_link_tab'] = '';

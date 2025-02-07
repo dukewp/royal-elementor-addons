@@ -1741,7 +1741,7 @@ class Wpr_Nav_Menu extends Widget_Base {
 			return;
 		}
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( WPR_PRO_LICENSE_CHECK_OR ) {
 			$settings['menu_layout'] = 'horizontal';
 			$settings['toggle_btn_style'] = 'hamburger';
 		}

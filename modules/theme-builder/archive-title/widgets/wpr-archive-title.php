@@ -442,7 +442,7 @@ class Wpr_Archive_Title extends Widget_Base {
 			echo '</'. esc_attr($post_title_tag) .'>';
 		}
 
-		if ( wpr_fs()->can_use_premium_code() ) {
+		if ( WPR_PRO_LICENSE_CHECK_AND ) {
 			if ( '' !== $description && '' !== $settings['archive_description'] ) {
 				echo '<p class="wpr-archive-description">'. wp_kses_post($description) .'</p>';
 			}

@@ -28,7 +28,7 @@ class WPR_Templates_Library_Popups {
 	** Template Library Popup
 	*/
 	public function render_library_templates_popups() {
-		$license = !wpr_fs()->can_use_premium_code() ? 'free' : 'premium';
+		$license = WPR_PRO_LICENSE_CHECK_OR  ? 'free' : 'premium';
 
 		?>
 
@@ -74,7 +74,7 @@ class WPR_Templates_Library_Popups {
 					$template_title = ucfirst($type) .' '. $template_slug;
 					$preview_type 	= $popups[$type][$template_slug]['type'];
 					$preview_url 	= $popups[$type][$template_slug]['url'];
-					$template_class = ( strpos($template_slug, 'pro') && ! wpr_fs()->can_use_premium_code() ) ? ' wpr-tplib-pro-wrap' : '';
+					$template_class = ( strpos($template_slug, 'pro') && WPR_PRO_LICENSE_CHECK_OR ) ? ' wpr-tplib-pro-wrap' : '';
 
 			?>
 
@@ -89,7 +89,7 @@ class WPR_Templates_Library_Popups {
 					<div class="wpr-tplib-template-footer elementor-clearfix">
 						<h3><?php echo esc_html(str_replace('-pro', ' Pro', $template_title)); ?></h3>
 
-						<?php if ( strpos($template_slug, 'pro') && ! wpr_fs()->can_use_premium_code() ) : ?>
+						<?php if ( strpos($template_slug, 'pro') && WPR_PRO_LICENSE_CHECK_OR ) : ?>
 							<span class="wpr-tplib-insert-template wpr-tplib-insert-pro"><i class="eicon-star"></i> <span><?php esc_html_e( 'Go Pro', 'wpr-addons' ); ?></span></span>
 						<?php else : ?>
 							<span class="wpr-tplib-insert-template"><i class="eicon-file-download"></i> <span><?php esc_html_e( 'Insert', 'wpr-addons' ); ?></span></span>

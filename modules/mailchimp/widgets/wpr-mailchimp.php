@@ -228,7 +228,7 @@ class Wpr_Mailchimp extends Widget_Base {
 			]
 		);
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( WPR_PRO_LICENSE_CHECK_OR ) {
 			$this->add_control(
 				'mailchimp_pro_notice',
 				[
@@ -1408,7 +1408,7 @@ class Wpr_Mailchimp extends Widget_Base {
 		// Get Settings
 		$settings = $this->get_settings();
 
-		if ( wpr_fs()->can_use_premium_code() ) {
+		if ( WPR_PRO_LICENSE_CHECK_AND ) {
 			$clear_fields_on_submit = esc_attr($settings['clear_fields_on_submit']);
 		} else {
 			$clear_fields_on_submit = '';

@@ -232,7 +232,7 @@ class WPR_Templates_Actions {
 		// Delete Import File
 		unlink( $local_file['file'] );
 
-		return in_array($template, $tmps) && !wpr_fs()->can_use_premium_code() ? false : true;
+		return in_array($template, $tmps) && WPR_PRO_LICENSE_CHECK_OR  ? false : true;
 	}
 
 	/**

@@ -942,7 +942,7 @@ class Wpr_Countdown extends Widget_Base {
 	}
 
 	public function get_countdown_attributes( $settings ) {
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( WPR_PRO_LICENSE_CHECK_OR ) {
 			$settings['countdown_type'] = 'due-date';
 			$settings['evergreen_show_again_delay'] = '0';
 		}
@@ -962,7 +962,7 @@ class Wpr_Countdown extends Widget_Base {
 	}
 
 	public function get_countdown_class( $settings ) {
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( WPR_PRO_LICENSE_CHECK_OR ) {
 			$settings['evergreen_stop_after_date'] = '';
 			$settings['evergreen_stop_after_date_select'] = '';
 		}

@@ -164,7 +164,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			]
 		);
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( WPR_PRO_LICENSE_CHECK_OR ) {
 			$this->add_control(
 				'slider_repeater_pro_notice',
 				[
@@ -1148,7 +1148,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			$icon_next = '';
 		}
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( WPR_PRO_LICENSE_CHECK_OR ) {
 			$settings['autoplay'] = false;
 			$settings['autoplay_milliseconds'] = 0;
 			$settings['pause_on_hover'] = false;
@@ -1182,7 +1182,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
             echo '<div class="wpr-flip-carousel" data-settings="'. esc_attr($this->flip_carousel_attributes($settings)) .'">';
             echo '<ul class="wpr-flip-items-wrapper">';
             foreach ( $settings['carousel_elements'] as $key => $element ) {
-				if ( ! wpr_fs()->can_use_premium_code() && $key === 4 ) {
+				if ( WPR_PRO_LICENSE_CHECK_OR && $key === 4 ) {
 					break;
 				}
 

@@ -28,7 +28,7 @@ class WPR_Templates_Library_Sections {
 	** Template Library Popup
 	*/
 	public static function render_library_templates_sections() {
-		$license = !wpr_fs()->can_use_premium_code() ? 'free' : 'premium';
+		$license = WPR_PRO_LICENSE_CHECK_OR  ? 'free' : 'premium';
 
 		?>
 
@@ -76,10 +76,10 @@ class WPR_Templates_Library_Sections {
 				for ( $i=0; $i < count($data); $i++ ) :
 
 					$template_slug 	 = $slug .'-'. $data[$i];
-					$template_class  = strpos($template_slug, 'pro') && !wpr_fs()->can_use_premium_code() ? ' wpr-tplib-pro-wrap' : '';
+					$template_class  = strpos($template_slug, 'pro') && WPR_PRO_LICENSE_CHECK_OR  ? ' wpr-tplib-pro-wrap' : '';
 					$template_class .= strpos($template_slug, 'woo') && !class_exists( 'woocommerce' ) ? ' wpr-tplib-woo-wrap' : '';
 
-					if (defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code()) {
+					if (WPR_PRO_LICENSE_CHECK_AND) {
 						$template_class .= ' wpr-tplib-pro-active';
 					}
 
@@ -95,13 +95,13 @@ class WPR_Templates_Library_Sections {
 						</div>
 						<div class="wpr-tplib-template-footer elementor-clearfix">
 							<?php $title_v = $title .' '. esc_html($data[$i]);?>
-							<?php if ( !defined('WPR_ADDONS_PRO_VERSION') && ! wpr_fs()->can_use_premium_code() ) : ?>
+							<?php if ( !defined('WPR_ADDONS_PRO_VERSION') && WPR_PRO_LICENSE_CHECK_OR  ) : ?>
 								<h3><?php echo strpos($template_slug, 'pro') ? esc_html(str_replace('-pro', ' Pro', $title_v)) : esc_html(str_replace('-zzz', ' Pro', $title_v)); ?></h3>
 							<?php else : ?>
 								<h3><?php echo strpos($template_slug, 'pro') ? esc_html(str_replace('-pro', '', $title_v)) : esc_html(str_replace('-zzz', '', $title_v)); ?></h3>
 							<?php endif; ?>
 
-							<?php if ( ( strpos($template_slug, 'pro') && !wpr_fs()->can_use_premium_code() ) || ( strpos($template_slug, 'zzz') ) && !wpr_fs()->can_use_premium_code() ) : ?>
+							<?php if ( ( strpos($template_slug, 'pro') && WPR_PRO_LICENSE_CHECK_OR  ) || ( strpos($template_slug, 'zzz') ) && WPR_PRO_LICENSE_CHECK_OR  ) : ?>
 								<span class="wpr-tplib-insert-template wpr-tplib-insert-pro"><i class="eicon-star"></i> <span><?php esc_html_e( 'Go Pro', 'wpr-addons' ); ?></span></span>
 							<?php else : ?>
 								<span class="wpr-tplib-insert-template"><i class="eicon-file-download"></i> <span><?php esc_html_e( 'Insert', 'wpr-addons' ); ?></span></span>

@@ -1178,7 +1178,7 @@ class Wpr_Offcanvas extends Widget_Base {
     protected function render() {
         $settings = $this->get_settings_for_display();
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( WPR_PRO_LICENSE_CHECK_OR ) {
 			$settings['offcanvas_position'] = 'right';
 			$settings['offcanvas_entrance_animation'] = 'fade';
 		}
@@ -1187,7 +1187,7 @@ class Wpr_Offcanvas extends Widget_Base {
 			'offcanvas-wrapper',
 			[
 				'class' => [ 'wpr-offcanvas-container' ],
-				'data-offcanvas-open' => ! wpr_fs()->can_use_premium_code() ? 'no' : $settings['offcanvas_open_by_default'],
+				'data-offcanvas-open' => WPR_PRO_LICENSE_CHECK_OR ? 'no' : $settings['offcanvas_open_by_default'],
 			]
 		);
 

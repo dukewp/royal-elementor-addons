@@ -200,7 +200,7 @@ class Wpr_Tabs extends Widget_Base {
 		Utilities::upgrade_pro_notice( $repeater, Controls_Manager::RAW_HTML, 'tabs', 'tab_content_type', ['pro-tmp'] );
 		Utilities::upgrade_expert_notice( $repeater, Controls_Manager::RAW_HTML, 'tabs', 'tab_content_type', ['pro-cf'] );
 
-		if ( wpr_fs()->is_plan( 'expert' ) ) {
+		if ( WPR_EXPERT_LICENSE_CHECK_AND ) {
 			$repeater->add_control(
 				'tab_custom_field',
 				[
@@ -303,7 +303,7 @@ class Wpr_Tabs extends Widget_Base {
 		);
 
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( WPR_PRO_LICENSE_CHECK_OR ) {
 			$this->add_control(
 				'tabs_repeater_pro_notice',
 				[
@@ -342,7 +342,7 @@ class Wpr_Tabs extends Widget_Base {
 
 		$this->add_control_tabs_hr_position();
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( WPR_PRO_LICENSE_CHECK_OR ) {
 			$this->add_control(
 	            'tabs_align_pro_notice',
 	            [
@@ -1452,7 +1452,7 @@ class Wpr_Tabs extends Widget_Base {
 	protected function render() {
 		$settings = $this->get_settings();
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( WPR_PRO_LICENSE_CHECK_OR ) {
 			$settings['active_tab'] = 1;
 			$settings['tabs_trigger'] = 'click';
 			$settings['autoplay'] = '';
@@ -1483,7 +1483,7 @@ class Wpr_Tabs extends Widget_Base {
 			<div class="wpr-tabs-wrap">
 				<?php foreach ( $tabs as $index => $item ) :
 				
-				if ( ! wpr_fs()->can_use_premium_code() ) {
+				if ( WPR_PRO_LICENSE_CHECK_OR ) {
 					$item['tab_content_type'] = ('pro-tmp' == $item['tab_content_type']) ? 'editor' : $item['tab_content_type'];
 
 					if ( $index === 3 ) {

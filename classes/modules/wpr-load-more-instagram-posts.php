@@ -281,7 +281,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	public function get_image_effect_class( $settings ) {
 		$class = '';
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( WPR_PRO_LICENSE_CHECK_OR ) {
 			if ( 'pro-zi' ==  $settings['image_effects'] || 'pro-zo' ==  $settings['image_effects'] || 'pro-go' ==  $settings['image_effects'] || 'pro-bo' ==  $settings['image_effects'] ) {
 				$settings['image_effects'] = 'none';
 			}
@@ -310,7 +310,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$place = $data['element_location'];
 			$align_vr = $data['element_align_vr'];
 
-			if ( ! wpr_fs()->can_use_premium_code() ) {
+			if ( WPR_PRO_LICENSE_CHECK_OR ) {
 				$align_vr = 'middle';
 			}
 
@@ -410,7 +410,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		
         foreach($this->call_instagram_api($instagram_token, $_POST['wpr_load_more_settings']) as $key=>$result) : ?>
             <?php 
-				if ( $key >= 6 && !wpr_fs()->can_use_premium_code() ) {
+				if ( $key >= 6 && WPR_PRO_LICENSE_CHECK_OR  ) {
 					break;
 				}
 				if ($key < $_POST['next_post_index']) :

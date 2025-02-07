@@ -25,7 +25,7 @@ class WprPluginSaleNotice {
 
         if ( current_user_can('administrator') ) {
             if ( !get_option('wpr_plugin_sale_dismiss_notice') ) {
-                if ( !wpr_fs()->can_use_premium_code() && !wpr_fs()->is_plan( 'expert' ) ) {
+                if ( WPR_PRO_LICENSE_CHECK_OR && !wpr_fs()->is_plan( 'expert' ) ) {
                     add_action( 'admin_init', [$this, 'render_notice'] );
                 }
             }
@@ -77,7 +77,7 @@ class WprPluginSaleNotice {
                             <ul>
                                 <li>
                                     <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'img/check-mark.png">
-                                    100+ Designer Made Templates Kit
+                                    120+ Designer Made Templates Kit
                                 </li>
                                 <li>
                                     <img src="'. esc_url(WPR_ADDONS_ASSETS_URL) .'img/check-mark.png">

@@ -734,7 +734,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 
 	// Arrow Icon
 	public function render_arrow_by_location( $settings, $location, $dir ) {
-		if ( 'fixed' === $settings['post_nav_layout'] || !wpr_fs()->can_use_premium_code() ) {
+		if ( 'fixed' === $settings['post_nav_layout'] || WPR_PRO_LICENSE_CHECK_OR  ) {
 			$settings['post_nav_arrows_loc'] = 'separate';
 		}
 
@@ -751,7 +751,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 		// Get Settings
 		$settings = $this->get_settings();
 
-		if ( !wpr_fs()->can_use_premium_code() ) {
+		if ( WPR_PRO_LICENSE_CHECK_OR  ) {
 			$settings['post_nav_image'] = '';
 			$settings['post_nav_image_bg'] = '';
 			$settings['post_nav_back'] = '';
@@ -763,7 +763,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 		$nav_query = isset($settings['post_nav_query']) ? $settings['post_nav_query'] : 'all';
 
 		// Get Previous and Next Posts
-		if ( 'all' === $nav_query || !wpr_fs()->can_use_premium_code() ) {
+		if ( 'all' === $nav_query || WPR_PRO_LICENSE_CHECK_OR  ) {
 			$prev_post = get_adjacent_post( false, '', true );
 			$next_post = get_adjacent_post( false, '', false );
 		} else {

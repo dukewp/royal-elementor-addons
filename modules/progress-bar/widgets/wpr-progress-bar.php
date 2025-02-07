@@ -1142,8 +1142,8 @@ class Wpr_Progress_Bar extends Widget_Base {
 		$circle_size = $settings['circle_size']['size'];
 		$circle_half_size = ( $circle_size / 2 );
 		$circle_viewbox = sprintf( '0 0 %1$s %1$s', $circle_size );
-		$circle_line_width = wpr_fs()->can_use_premium_code() ? $settings['line_width']['size'] : 15;
-		$circle_prline_width = wpr_fs()->can_use_premium_code() ? $settings['prline_width']['size'] : 15;
+		$circle_line_width = WPR_PRO_LICENSE_CHECK_AND ? $settings['line_width']['size'] : 15;
+		$circle_prline_width = WPR_PRO_LICENSE_CHECK_AND ? $settings['prline_width']['size'] : 15;
 		$circle_radius = $circle_half_size - ( $circle_prline_width / 2 );
 
 		if ( $circle_line_width > $circle_prline_width ) {
@@ -1334,7 +1334,7 @@ class Wpr_Progress_Bar extends Widget_Base {
 		
 			<?php
 
-			if ( ! wpr_fs()->can_use_premium_code() ) {
+			if ( WPR_PRO_LICENSE_CHECK_OR ) {
 				$settings['layout'] = 'pro-vr' == $settings['layout'] ? 'hr-line' : $settings['layout'];
 			}
 
