@@ -9945,7 +9945,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		// All Filters
 		} else {
-			$all_filters = get_terms( $taxonomy );
+			$all_filters = get_terms([
+				'taxonomy' => $taxonomy,
+				'hide_empty' => false, // Include empty taxonomies
+			]);
 			$parent_filters = [];
 
 			foreach ( $all_filters as $key => $filter ) {

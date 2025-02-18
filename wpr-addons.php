@@ -4,7 +4,7 @@
  * Description: The only plugin you need for Elementor page builder.
  * Plugin URI: https://royal-elementor-addons.com/
  * Author: WP Royal
- * Version: 1.7.1007
+ * Version: 1.7.1009
  * License: GPLv3
  * Author URI: https://royal-elementor-addons.com/
  * Elementor tested up to: 3.25.4
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'WPR_ADDONS_VERSION', '1.7.1007' );
+define( 'WPR_ADDONS_VERSION', '1.7.1009' );
 
 define( 'WPR_ADDONS__FILE__', __FILE__ );
 define( 'WPR_ADDONS_PLUGIN_BASE', plugin_basename( WPR_ADDONS__FILE__ ) );
@@ -94,10 +94,10 @@ if ( function_exists( 'wpr_fs' ) ) {
 	}
 }
 
-define('WPR_PRO_LICENSE_CHECK_OR', !wpr_fs()->can_use_premium_code() || !defined('WPR_ADDONS_PRO_VERSION'));
-define('WPR_PRO_LICENSE_CHECK_AND', wpr_fs()->can_use_premium_code() && defined('WPR_ADDONS_PRO_VERSION'));
-define('WPR_EXPERT_LICENSE_CHECK_OR', !wpr_fs()->is_plan( 'expert' ) || !defined('WPR_ADDONS_PRO_VERSION'));
-define('WPR_EXPERT_LICENSE_CHECK_AND', wpr_fs()->is_plan( 'expert' ) && defined('WPR_ADDONS_PRO_VERSION'));
+define('WPR_PRO_LICENSE_CHECK_OR', !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code());
+define('WPR_PRO_LICENSE_CHECK_AND', defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code());
+define('WPR_EXPERT_LICENSE_CHECK_OR', !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->is_plan( 'expert' ));
+define('WPR_EXPERT_LICENSE_CHECK_AND', defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->is_plan( 'expert' ));
 
 
 /**

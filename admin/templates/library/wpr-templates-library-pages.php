@@ -104,7 +104,7 @@ class WPR_Templates_Library_Pages {
 			<div class="wpr-tplib-template-wrap<?php echo esc_attr($template_class); ?>" style="position:absolute;top:9999999999px;" data-title="<?php echo esc_attr(strtolower($template_title)); ?>" data-price="<?php echo esc_attr($template_price); ?>">
 				<div class="wpr-tplib-template" data-slug="<?php echo esc_attr($page); ?>" data-kit="<?php echo esc_attr($kit); ?>" data-preview-type="iframe" data-preview-url="<?php echo esc_attr($preview_url); ?>">
 					<div class="wpr-tplib-template-media">
-						<img src="<?php echo esc_url('https://royal-elementor-addons.com/library/templates-kit/'. $kit .'/'. $page .'.jpg'); ?>">
+						<img class="lazy" src="<?php echo esc_url(WPR_ADDONS_ASSETS_URL .'img/icon-256x256.png'); ?>" data-src="<?php echo esc_url('https://royal-elementor-addons.com/library/templates-kit/'. $kit .'/'. $page .'.jpg'); ?>">
 						<div class="wpr-tplib-template-media-overlay">
 							<i class="eicon-eye"></i>
 						</div>
