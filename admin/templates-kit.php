@@ -131,7 +131,7 @@ function wpr_addons_templates_kit_page() {
     </div>
 
     <div class="wpr-templates-kit-single">
-        <?php if (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->is_plan( 'expert' ) ) : ?>
+        <?php if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->is_plan( 'expert' ) ) : ?>
         <div class="wpr-templates-kit-expert-notice">
             <p>
                 <span class="dashicons dashicons-warning"></span>
@@ -580,7 +580,7 @@ function vts( $kit ) {
     // Delete Import File
     unlink( $local_file['file'] );
 
-    return in_array($kit, $tmps) && !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  ? false : true;
+    return in_array($kit, $tmps) && (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) ? false : true;
 }
 
 /**

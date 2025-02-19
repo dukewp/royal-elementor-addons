@@ -2042,7 +2042,7 @@ class Wpr_Data_Table extends Widget_Base {
 		
 		$x = 0;
 		
-		$sorting_icon = ('yes' === $settings['enable_table_sorting'] && defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() ) ? '<span class="wpr-sorting-icon"><i class="fas fa-sort"></i></span>' : ''; 
+		$sorting_icon = ('yes' === $settings['enable_table_sorting'] && (defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code()) ) ? '<span class="wpr-sorting-icon"><i class="fas fa-sort"></i></span>' : ''; 
 		
 		$this->add_render_attribute(
 			'wpr_table_inner_container_attributes',

@@ -964,7 +964,7 @@ class Wpr_Image_Hotspots extends Widget_Base {
 					
 					<?php
 
-					if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() && $key === 2 ) {
+					if ( (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $key === 2 ) {
 						break;
 					}
 

@@ -427,7 +427,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         
                   foreach ( $items as $key=>$item) :
                 
-                    if ( $key >= 6 && !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  ) {
+                    if ( $key >= 6 && (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code())  ) {
                       break;
                     }
       

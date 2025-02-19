@@ -136,7 +136,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		}
 
 		// Display Scheduled Posts
-		if ( 'yes' === $settings['display_scheduled_posts'] && defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() ) {
+		if ( 'yes' === $settings['display_scheduled_posts'] && (defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code()) ) {
 			$args['post_status'] = 'future';
 		} else {
 			$args['post_status'] = 'publish';

@@ -2892,7 +2892,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 		
 		foreach ( $settings['slider_items'] as $key => $item ) {
 
-			if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() && $key === 4 ) {
+			if ( (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $key === 4 ) {
 				break;
 			}
 

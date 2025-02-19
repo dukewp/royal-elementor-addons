@@ -2908,7 +2908,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 					
 					<?php foreach ( $settings['testimonial_items'] as $key => $item ) : ?>
 
-						<?php if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() && $key === 4 ) { break; } ?>
+						<?php if ( (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $key === 4 ) { break; } ?>
 					
 						<div class="wpr-testimonial-item elementor-repeater-item-<?php echo esc_attr( $item['_id'] ); ?> elementor-clearfix">
 							

@@ -2395,7 +2395,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 
 		$no_column = '';
 
-		if ( $settings['accordion_direction'] == 'column' && !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  ) {
+		if ( $settings['accordion_direction'] == 'column' && (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code())  ) {
 			$no_column = ' wpr-acc-no-column';
 		}
 		?>
@@ -2410,7 +2410,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 
 			<?php foreach ( $settings['accordion_items'] as $key => $item ) :
 
-			if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() && $key === 3 ) {
+			if ( (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $key === 3 ) {
 				break;
 			}
 			
