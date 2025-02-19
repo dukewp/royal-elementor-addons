@@ -28,7 +28,7 @@ class WPR_Templates_Library_Blocks {
 	** Template Library Popup
 	*/
 	public static function render_library_templates_blocks() {
-		$license = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  ? 'free' : 'premium';
+		$license = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'free' : 'premium';
 
 		?>
 

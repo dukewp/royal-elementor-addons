@@ -1523,7 +1523,7 @@ function wpr_addons_settings_page() {
                     } elseif ( 'wpr-sticky-section' === $option_name ) {
                         echo '<br><span>Tip: Edit any Section > Navigate to Advanced tab</span>';
                         echo '<a href="https://www.youtube.com/watch?v=at0CPKtklF0&t=375s" target="_blank">Watch Video Tutorial</a>';
-                        if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  && !wpr_fs()->is_plan( 'expert') ) {
+                        if ( (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && !wpr_fs()->is_plan( 'expert') ) {
                             echo '<h4 class="wpr-sticky-advanced-demos-title">Advanced Sticky Section (Pro)</h4>';
                             echo '<p class="wpr-sticky-advanced-demos">';
                                 echo '<span>View Demos: </span>';

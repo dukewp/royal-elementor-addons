@@ -3829,7 +3829,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				foreach ( $instance['form_fields'] as $item_index => $item ) :
 					if ( 'step' !== $item['field_type'] ) {
 						$field_count++;
-						if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  && 3 < $field_count  ) {
+						if ( (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && 3 < $field_count  ) {
 							continue;
 						}
 					}

@@ -2446,7 +2446,7 @@ class Wpr_Charts extends Widget_Base {
 			
 			if ( !empty($charts_labels_data) ) :
 				$data_charts_array['labels'] = explode(',', trim($charts_labels_data));
-				if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  && 3 < sizeof($data_charts_array['labels']) ) {
+				if ( (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && 3 < sizeof($data_charts_array['labels']) ) {
 					$data_charts_array['labels'] = array_slice($data_charts_array['labels'], 0, 3);
 				}
 			endif;
@@ -2454,7 +2454,7 @@ class Wpr_Charts extends Widget_Base {
 			if ( is_array($charts_data_set) && sizeof($charts_data_set) ) {
 				$charts_counter = 0;
 				foreach ( $charts_data_set as $chart_data ) {
-					if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  && $charts_counter === 3 ) {
+					if ( (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $charts_counter === 3 ) {
 						break;
 					}
 					$data_charts_array['datasets'][] = [

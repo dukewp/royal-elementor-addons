@@ -4858,11 +4858,11 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
         $key = 'wpr_instagram-feed_'.$this->get_ID(). '_' .md5($settings['cache_timeout_select']);
 
-		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  && $settings['limit'] > 6 ) {
+		if ( (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $settings['limit'] > 6 ) {
 			$settings['limit'] = 6;
 		}
 		
-		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  && $settings['limit_mobile'] > 6 ) {
+		if ( (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $settings['limit_mobile'] > 6 ) {
 			$settings['limit_mobile'] = 6;
 		}
 
@@ -5337,11 +5337,11 @@ class Wpr_Instagram_Feed extends Widget_Base {
     protected function render() {
 		$settings = $this->get_settings_for_display();
 
-		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  && $settings['limit'] > 6 ) {
+		if ( (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $settings['limit'] > 6 ) {
 			$settings['limit'] = 6;
 		}
 		
-		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  && $settings['limit_mobile'] > 6 ) {
+		if ( (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $settings['limit_mobile'] > 6 ) {
 			$settings['limit_mobile'] = 6;
 		}
 
@@ -5398,8 +5398,8 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
 		$instagram_settings['insta_load_more_settings'] = [
 			'instagram_access_token' => $settings['instagram_access_token'],
-			'limit' => !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  && $settings['limit'] > 6 ? 6 : $settings['limit'],
-			'limit_mobile' => !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  && $settings['limit_mobile'] > 6 ? 6 : $settings['limit_mobile'],
+			'limit' => (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $settings['limit'] > 6 ? 6 : $settings['limit'],
+			'limit_mobile' => (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $settings['limit_mobile'] > 6 ? 6 : $settings['limit_mobile'],
 			'is_mobile' => wp_is_mobile() ? 'mobile' : 'other',
 			'open_in_new_tab' => $settings['open_in_new_tab'],
 			'overlay_post_link' => $settings['overlay_post_link'],
@@ -5443,13 +5443,13 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'wpr_cs_pagination_type' => $pagination_type,
 				'wpr_cs_autoplay' => $autoplay,
 				'wpr_cs_loop' => $loop,
-				'wpr_cs_slides_to_show' => !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  && $slides_to_show > 3 ? 3 : $slides_to_show,
-				'wpr_cs_slides_to_show_widescreen' => !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  && $slides_to_show_widescreen > 3 ? 3 :  $slides_to_show_widescreen,
-				'wpr_cs_slides_to_show_laptop' => !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  && $slides_to_show_laptop > 3 ? 3 : $slides_to_show_laptop,
-				'wpr_cs_slides_to_show_tablet_extra' => !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  && $slides_to_show_tablet_extra > 3 ? 3 : $slides_to_show_tablet_extra,
-				'wpr_cs_slides_to_show_tablet' => !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  && $slides_to_show_tablet > 3 ? 3 : $slides_to_show_tablet,
-				'wpr_cs_slides_to_show_mobile_extra' => !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  && $slides_to_show_mobile_extra > 3 ? 3 : $slides_to_show_mobile_extra,
-				'wpr_cs_slides_to_show_mobile' => !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  && $slides_to_show_mobile > 3 ? 3 : $slides_to_show_mobile,
+				'wpr_cs_slides_to_show' => (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $slides_to_show > 3 ? 3 : $slides_to_show,
+				'wpr_cs_slides_to_show_widescreen' => (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $slides_to_show_widescreen > 3 ? 3 :  $slides_to_show_widescreen,
+				'wpr_cs_slides_to_show_laptop' => (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $slides_to_show_laptop > 3 ? 3 : $slides_to_show_laptop,
+				'wpr_cs_slides_to_show_tablet_extra' => (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $slides_to_show_tablet_extra > 3 ? 3 : $slides_to_show_tablet_extra,
+				'wpr_cs_slides_to_show_tablet' => (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $slides_to_show_tablet > 3 ? 3 : $slides_to_show_tablet,
+				'wpr_cs_slides_to_show_mobile_extra' => (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $slides_to_show_mobile_extra > 3 ? 3 : $slides_to_show_mobile_extra,
+				'wpr_cs_slides_to_show_mobile' => (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $slides_to_show_mobile > 3 ? 3 : $slides_to_show_mobile,
 				'wpr_cs_space_between' => $space_between,
 				'wpr_cs_space_between_widescreen' => $space_between_widescreen,
 				'wpr_cs_space_between_laptop' => $space_between_laptop,

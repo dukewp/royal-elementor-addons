@@ -29,7 +29,7 @@ class WPR_Templates_Library_Pages {
 	** Template Library Popup
 	*/
 	public static function render_library_templates_pages() {
-		$license = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  ? 'free' : 'premium';
+		$license = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'free' : 'premium';
 
 		?>
 

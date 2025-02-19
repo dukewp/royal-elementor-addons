@@ -1216,11 +1216,11 @@ class Utilities {
 	** Check for New Free Users
 	*/
 	public static function is_new_free_user() {
-		return !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  && (intval(get_option('royal_elementor_addons_activation_time')) > 1649247746);
+		return (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && (intval(get_option('royal_elementor_addons_activation_time')) > 1649247746);
 	}
 	
 	// public static function is_new_free_user2() {
-	// 	return !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  && (intval(get_option('royal_elementor_addons_activation_time')) > 1670317149);
+	// 	return (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && (intval(get_option('royal_elementor_addons_activation_time')) > 1670317149);
 	// }
 
 	// public static function is_old_pro_user_or_expert() {

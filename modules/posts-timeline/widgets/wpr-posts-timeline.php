@@ -5083,7 +5083,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			$paged = 1;
 		}
 
-		$posts_per_page =  (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  && $settings['posts_per_page'] > 4) ? 4 : (empty($settings['posts_per_page']) ? 4 : $settings['posts_per_page']);
+		$posts_per_page =  ((!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $settings['posts_per_page'] > 4) ? 4 : (empty($settings['posts_per_page']) ? 4 : $settings['posts_per_page']);
 
 		// Dynamic
 		$args = [

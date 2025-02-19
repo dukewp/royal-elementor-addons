@@ -4673,7 +4673,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			return;
 		}
 
-		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  && $settings['number_of_posts'] > 6 ) {
+		if ( (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $settings['number_of_posts'] > 6 ) {
 			$settings['number_of_posts'] = 6;
 		}
 

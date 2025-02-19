@@ -2128,7 +2128,7 @@ class Wpr_Search extends Widget_Base {
 		<div class="wpr-data-fetch">
 			<span class="wpr-close-search"></span>
 			<ul></ul>
-			<?php if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  && current_user_can( 'administrator' ) ) : ?>
+			<?php if ( (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && current_user_can( 'administrator' ) ) : ?>
 				<p class="wpr-search-admin-notice">More than 2 results are available in the PRO version (This notice is only visible to admin users)</p>
 			<?php endif; ?>
 		</div>
