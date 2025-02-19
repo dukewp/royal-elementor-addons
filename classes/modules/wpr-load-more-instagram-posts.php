@@ -410,7 +410,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		
         foreach($this->call_instagram_api($instagram_token, $_POST['wpr_load_more_settings']) as $key=>$result) : ?>
             <?php 
-				if ( $key >= 6 && (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code())  ) {
+				if ( $key >= 6 && (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) ) {
 					break;
 				}
 				if ($key < $_POST['next_post_index']) :

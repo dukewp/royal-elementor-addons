@@ -148,7 +148,7 @@ class WPR_Templates_Loop {
             <!-- Conditions -->
             <div class="wpr-conditions-wrap">
                 <div class="wpr-conditions-sample">
-                	<?php if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code()  ) : ?>
+                	<?php if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() ) : ?>
 						<!-- Global -->
 						<select name="global_condition_select" class="global-condition-select">
 							<option value="global"><?php esc_html_e( 'Entire Site', 'wpr-addons' ); ?></option>
@@ -441,7 +441,7 @@ class WPR_Templates_Loop {
 
 			<?php // Expert Notice
 
-			if (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->is_plan( 'expert' ) ) {
+			if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->is_plan( 'expert' ) ) {
 				echo '<span class="wpr-expert-notice" style="display:none;text-align:center;"><br>
 				<span style="color:#f44;font-size:18px;" class="dashicons dashicons-warning"></span>
 				<strong style="color:#f44;">Please Note:</strong>

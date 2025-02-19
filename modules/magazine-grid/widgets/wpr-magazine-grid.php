@@ -66,7 +66,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 				continue;
 			}
 
-			if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  ) {
+			if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 				$post_types['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Expert)';
 			} else {
 				$post_types[$slug] = esc_html( $title );
@@ -90,7 +90,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 				continue;
 			}
 
-			if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  ) {
+			if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 				$post_taxonomies['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Expert)';
 			} else {
 				$post_taxonomies[$slug] = esc_html( $title );
@@ -442,7 +442,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'magazine-grid', 'query_source', ['pro-rl', 'pro-cr'] );
 
-		if (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->is_plan( 'expert' ) ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->is_plan( 'expert' ) ) {
 			$this->add_control(
 				'query_source_cpt_pro_notice',
 				[
@@ -5758,7 +5758,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		// Loop: Start
 		if ( $posts->have_posts() ) :
 		
-		if ( 'rand' == $settings['query_randomize'] && is_front_page() && ! Utilities::is_blog_archive()  ) {
+		if ( 'rand' == $settings['query_randomize'] && is_front_page() && ! Utilities::is_blog_archive() ) {
 			shuffle($posts->posts);
 		}
 

@@ -969,7 +969,7 @@ class Plugin {
 			$config['promotionWidgets'] = array_merge( $config['promotionWidgets'], $promotion_widgets );
 		}
 		
-		if (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->is_plan( 'expert' ) ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->is_plan( 'expert' ) ) {
 			$expert_widgets = [
 				[
 					'name' => 'wpr-category-grid',

@@ -115,7 +115,7 @@ class WPR_Templates_Library_Pages {
 							<span><?php echo '&nbsp;- '. esc_html(ucwords($page)); ?></span>
 						</h3>
 
-						<?php if ( 'pro' === $data['price'] && (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code())  ) : ?>
+						<?php if ( 'pro' === $data['price'] && (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) ) : ?>
 							<span class="wpr-tplib-insert-template wpr-tplib-insert-pro"><i class="eicon-star"></i> <span><?php esc_html_e( 'Go Pro', 'wpr-addons' ); ?></span></span>
 						<?php else : ?>
 							<span class="wpr-tplib-insert-template"><i class="eicon-file-download"></i> <span><?php esc_html_e( 'Insert', 'wpr-addons' ); ?></span></span>

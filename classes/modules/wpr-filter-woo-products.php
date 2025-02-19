@@ -1228,7 +1228,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	public function render_product_wishlist_button( $settings, $class ) {
 		global $product;
 
-		if (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->is_plan( 'expert' ) ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->is_plan( 'expert' ) ) {
 			return;
 		}
 
@@ -1305,7 +1305,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	public function render_product_compare_button( $settings, $class ) {
 		global $product;
 		
-		if (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->is_plan( 'expert' ) ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->is_plan( 'expert' ) ) {
 			return;
 		}
 

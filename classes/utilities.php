@@ -372,7 +372,7 @@ class Utilities {
 				$template = $id;
 			} elseif ( in_array( $page .'/all', $conditions) && !in_array( $page .'/'. $post_id, $conditions) ) {
 				$template = $id;
-			} elseif ( in_array( $page, $conditions)  && !in_array( $page .'/'. $post_id, $conditions)  ) {
+			} elseif ( in_array( $page, $conditions)  && !in_array( $page .'/'. $post_id, $conditions) ) {
 				$template = $id;
 			}
 

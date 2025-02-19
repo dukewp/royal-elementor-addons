@@ -2144,7 +2144,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 							$class  = 'wpr-img-accordion-item-'. $data['element_select'];
 							$class .= ' elementor-repeater-item-'. $data['_id'];
 							$class .= ' wpr-img-accordion-item-display-'. $data['element_display'];
-							if  ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  ) {
+							if  ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 								$class .= ' wpr-img-accordion-item-align-center';
 							} else {
 								$class .= ' wpr-img-accordion-item-align-'. $data['element_align_hr'];
@@ -2169,7 +2169,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 	public function render_media_overlay( $settings ) {
 		echo '<div class="wpr-img-accordion-hover-bg '. $this->get_animation_class( $settings, 'overlay' ) .'">';
 
-			// if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code()  ) {
+			// if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() ) {
 			// 	if ( '' !== $settings['overlay_image']['url'] ) {
 			// 		echo '<img src="'. esc_url( $settings['overlay_image']['url'] ) .'">';
 			// 	}
@@ -2369,7 +2369,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 
 		$lightbox_settings = '';
 
-		if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code()  ) {
+		if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() ) {
 			$lightbox_settings = [
 				'selector' => '.wpr-accordion-image-wrap',
 				'iframeMaxWidth' => '60%',
@@ -2395,7 +2395,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 
 		$no_column = '';
 
-		if ( $settings['accordion_direction'] == 'column' && (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code())  ) {
+		if ( $settings['accordion_direction'] == 'column' && (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) ) {
 			$no_column = ' wpr-acc-no-column';
 		}
 		?>

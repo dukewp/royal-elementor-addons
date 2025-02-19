@@ -95,13 +95,13 @@ class WPR_Templates_Library_Sections {
 						</div>
 						<div class="wpr-tplib-template-footer elementor-clearfix">
 							<?php $title_v = $title .' '. esc_html($data[$i]);?>
-							<?php if ( !defined('WPR_ADDONS_PRO_VERSION') && (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code())  ) : ?>
+							<?php if ( !defined('WPR_ADDONS_PRO_VERSION') && (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) ) : ?>
 								<h3><?php echo strpos($template_slug, 'pro') ? esc_html(str_replace('-pro', ' Pro', $title_v)) : esc_html(str_replace('-zzz', ' Pro', $title_v)); ?></h3>
 							<?php else : ?>
 								<h3><?php echo strpos($template_slug, 'pro') ? esc_html(str_replace('-pro', '', $title_v)) : esc_html(str_replace('-zzz', '', $title_v)); ?></h3>
 							<?php endif; ?>
 
-							<?php if ( ( strpos($template_slug, 'pro') && (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code())  ) || ( strpos($template_slug, 'zzz') ) && (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code())  ) : ?>
+							<?php if ( ( strpos($template_slug, 'pro') && (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) ) || ( strpos($template_slug, 'zzz') ) && (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) ) : ?>
 								<span class="wpr-tplib-insert-template wpr-tplib-insert-pro"><i class="eicon-star"></i> <span><?php esc_html_e( 'Go Pro', 'wpr-addons' ); ?></span></span>
 							<?php else : ?>
 								<span class="wpr-tplib-insert-template"><i class="eicon-file-download"></i> <span><?php esc_html_e( 'Insert', 'wpr-addons' ); ?></span></span>
