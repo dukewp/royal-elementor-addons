@@ -3804,7 +3804,7 @@
 		}, // End widgetProductMedia
 
 		widgetCountDown: function( $scope ) {
-			var countDownWrap = $scope.children( '.elementor-widget-container' ).children( '.wpr-countdown-wrap' ),
+			var countDownWrap = $scope.children( '.elementor-widget-container' ).children( '.wpr-countdown-wrap' ).length > 0 ? $scope.children( '.elementor-widget-container' ).children( '.wpr-countdown-wrap' ) : $scope.children( '.wpr-countdown-wrap' ),
 				countDownInterval = null,
 				dataInterval = countDownWrap.data( 'interval' ),
 				dataShowAgain = countDownWrap.data( 'show-again' ),
@@ -3917,7 +3917,7 @@
 					}
 					
 					if ( dataActions.hasOwnProperty( 'message' ) ) {
-						if ( ! $scope.children( '.elementor-widget-container' ).children( '.wpr-countdown-message' ).length ) {
+						if ( ! $scope.children( '.elementor-widget-container' ).children( '.wpr-countdown-message' ).length && ! $scope.children( '.wpr-countdown-message' ).length ) {
 							countDownWrap.after( '<div class="wpr-countdown-message">'+ dataActions['message'] +'</div>' );
 						}
 					}
