@@ -376,7 +376,7 @@ class Utilities {
 				$template = $id;
 			}
 
-			if ( WPR_PRO_LICENSE_CHECK_AND ) {
+			if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() ) {
 				foreach ( $conditions as $key => $value ) {
 					if ( Utilities::check_id_in_path( $value, $post_id ) ) {
 						$template = $id;
@@ -1020,7 +1020,7 @@ class Utilities {
 			'pro-eiobk' => 'EIO Back (Pro)',
 		];
 
-		if ( WPR_PRO_LICENSE_CHECK_AND ) {
+		if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() ) {
 			$timing_functions = \WprAddonsPro\Includes\Controls\WPR_Control_Animations_Pro::wpr_animation_timings();
 		}
 
@@ -1056,7 +1056,7 @@ class Utilities {
 	** Upgrade to Pro Notice
 	*/
 	public static function upgrade_pro_notice( $module, $controls_manager, $widget, $option, $condition = [] ) {
-		if ( WPR_PRO_LICENSE_CHECK_AND ) {
+		if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() ) {
 			return;
 		}
 
@@ -1077,7 +1077,7 @@ class Utilities {
 	}
 
 	public static function upgrade_expert_notice( $module, $controls_manager, $widget, $option, $condition = [] ) {
-		if ( WPR_EXPERT_LICENSE_CHECK_AND ) {
+		if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->is_plan( 'expert' ) ) {
 			return;
 		}
 
@@ -1124,7 +1124,7 @@ class Utilities {
 	** Pro Features List Section
 	*/
 	public static function pro_features_list_section( $module, $section, $type, $widget, $features ) {
-		if ( WPR_PRO_LICENSE_CHECK_AND ) {
+		if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() ) {
 			return;
 		}
 
@@ -1216,11 +1216,11 @@ class Utilities {
 	** Check for New Free Users
 	*/
 	public static function is_new_free_user() {
-		return WPR_PRO_LICENSE_CHECK_OR  && (intval(get_option('royal_elementor_addons_activation_time')) > 1649247746);
+		return !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  && (intval(get_option('royal_elementor_addons_activation_time')) > 1649247746);
 	}
 	
 	// public static function is_new_free_user2() {
-	// 	return WPR_PRO_LICENSE_CHECK_OR  && (intval(get_option('royal_elementor_addons_activation_time')) > 1670317149);
+	// 	return !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  && (intval(get_option('royal_elementor_addons_activation_time')) > 1670317149);
 	// }
 
 	// public static function is_old_pro_user_or_expert() {

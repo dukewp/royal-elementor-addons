@@ -253,7 +253,7 @@ class Wpr_Post_Info extends Widget_Base {
 			]
 		);
 
-		if ( WPR_EXPERT_LICENSE_CHECK_AND ) {
+		if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->is_plan( 'expert' ) ) {
 			$repeater->add_control(
 				'post_info_cf',
 				[

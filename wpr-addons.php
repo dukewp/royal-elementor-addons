@@ -94,11 +94,6 @@ if ( function_exists( 'wpr_fs' ) ) {
 	}
 }
 
-define('WPR_PRO_LICENSE_CHECK_OR', !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code());
-define('WPR_PRO_LICENSE_CHECK_AND', defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code());
-define('WPR_EXPERT_LICENSE_CHECK_OR', !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->is_plan( 'expert' ));
-define('WPR_EXPERT_LICENSE_CHECK_AND', defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->is_plan( 'expert' ));
-
 
 /**
  * Load gettext translate for our text domain.

@@ -336,7 +336,7 @@ class Wpr_Image_Hotspots extends Widget_Base {
 			]
 		);
 
-		if ( WPR_PRO_LICENSE_CHECK_OR ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'hotspot_repeater_pro_notice',
 				[
@@ -936,7 +936,7 @@ class Wpr_Image_Hotspots extends Widget_Base {
 			$image_src = $settings['image']['url'];
 		}
 
-		if ( WPR_PRO_LICENSE_CHECK_OR ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['tooltip_trigger'] = 'none';
 		}
 
@@ -964,7 +964,7 @@ class Wpr_Image_Hotspots extends Widget_Base {
 					
 					<?php
 
-					if ( WPR_PRO_LICENSE_CHECK_OR && $key === 2 ) {
+					if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() && $key === 2 ) {
 						break;
 					}
 

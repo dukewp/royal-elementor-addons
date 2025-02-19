@@ -220,7 +220,7 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 
 		$this->add_controls_group_popup_settings();
 
-		if ( WPR_PRO_LICENSE_CHECK_OR ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'group_popup_settings_pro_notice',
 				[
@@ -621,7 +621,7 @@ class Wpr_Popup extends Elementor\Core\Base\Document {
 		$this->end_controls_section();
 
 		// Section: Pro Features
-		if ( WPR_PRO_LICENSE_CHECK_OR ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$this->start_controls_section(
 				'pro_features_section',
 				[

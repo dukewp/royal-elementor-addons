@@ -21,7 +21,7 @@ class WPR_Conditions_Manager {
         $template = NULL;
 
         // Custom
-        if ( WPR_PRO_LICENSE_CHECK_AND ) {
+        if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() ) {
 	        if ( !empty($conditions) ) {
                 $conditions['caller-header-footer'] = ['true'];
 
@@ -75,7 +75,7 @@ class WPR_Conditions_Manager {
         }
 
         // Custom
-        if ( WPR_PRO_LICENSE_CHECK_AND ) {
+        if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() ) {
 
 			// Archive Pages (includes search)
 			if ( !is_null( \WprAddonsPro\Classes\Pro_Modules::archive_templates_conditions( $archives ) ) ) {

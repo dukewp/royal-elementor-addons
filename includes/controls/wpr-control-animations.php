@@ -67,7 +67,7 @@ class WPR_Control_Animations extends Base_Data_Control {
 			];
 		}
 
-		if ( WPR_PRO_LICENSE_CHECK_AND ) {
+		if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() ) {
 			self::$_animations = \WprAddonsPro\Includes\Controls\WPR_Control_Animations_Pro::wpr_animations();
 		}
 
@@ -260,7 +260,7 @@ class WPR_Control_Button_Animations extends Base_Data_Control {
 			];
 		}
 
-		if ( WPR_PRO_LICENSE_CHECK_AND ) {
+		if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() ) {
 			self::$_animations = \WprAddonsPro\Includes\Controls\WPR_Control_Animations_Pro::wpr_button_animations();
 		}
 

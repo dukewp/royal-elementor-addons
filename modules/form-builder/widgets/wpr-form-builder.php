@@ -1059,7 +1059,7 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
-		if ( WPR_PRO_LICENSE_CHECK_OR ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'fields_to_show_pro_notice',
 				[
@@ -1438,7 +1438,7 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
-		if ( WPR_PRO_LICENSE_CHECK_OR ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'submit_actions_notice',
 				[
@@ -3829,7 +3829,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				foreach ( $instance['form_fields'] as $item_index => $item ) :
 					if ( 'step' !== $item['field_type'] ) {
 						$field_count++;
-						if ( WPR_PRO_LICENSE_CHECK_OR  && 3 < $field_count  ) {
+						if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  && 3 < $field_count  ) {
 							continue;
 						}
 					}

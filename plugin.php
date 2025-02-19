@@ -286,7 +286,7 @@ class Plugin {
 		// Popups
 		require WPR_ADDONS_PATH . 'modules/popup/wpr-popup.php';
 
-        if ( WPR_PRO_LICENSE_CHECK_AND ) {
+        if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() ) {
         	require WPR_ADDONS_PRO_PATH . 'modules/popup-pro/wpr-popup-pro.php';
         	$documents_manager->register_document_type( 'wpr-popups', 'Wpr_Popup_Pro' );
         } else {
@@ -932,7 +932,7 @@ class Plugin {
 
 		$category = Utilities::is_theme_builder_template() ? 'wpr-woocommerce-builder-widgets' : 'wpr-premium-widgets';
 
-		if ( WPR_PRO_LICENSE_CHECK_OR ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$promotion_widgets = [
 				[
 					'name' => 'wpr-woo-category-grid',
@@ -969,7 +969,7 @@ class Plugin {
 			$config['promotionWidgets'] = array_merge( $config['promotionWidgets'], $promotion_widgets );
 		}
 		
-		if (WPR_EXPERT_LICENSE_CHECK_OR ) {
+		if (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->is_plan( 'expert' ) ) {
 			$expert_widgets = [
 				[
 					'name' => 'wpr-category-grid',

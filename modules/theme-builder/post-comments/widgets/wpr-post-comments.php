@@ -2208,7 +2208,7 @@ class Wpr_Post_Comments extends Widget_Base {
 		$this_widget = $GLOBALS['wpr_post_comments_widget'];
 		$settings = $this_widget->get_settings();
 
-		if ( WPR_PRO_LICENSE_CHECK_OR  ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  ) {
 			$settings['comments_avatar_size'] = 60;
 		}
 
@@ -2366,7 +2366,7 @@ class Wpr_Post_Comments extends Widget_Base {
 					$url_label = '<label>'. esc_html__( 'Website', 'wpr-addons' ) .'</label>';					
 				}
 
-				if ( WPR_PRO_LICENSE_CHECK_OR  ) {
+				if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  ) {
 					$settings['comment_form_placeholders'] = '';
 				}
 
@@ -2408,7 +2408,7 @@ class Wpr_Post_Comments extends Widget_Base {
 					$text_label = '<label>'. esc_html__( 'Message', 'wpr-addons' ) . ($req ? '<span>*</span>' : '') .'</label>';
 				}
 
-				if ( WPR_PRO_LICENSE_CHECK_OR  ) {
+				if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()  ) {
 					$settings['comment_form_placeholders'] = '';
 				}
 
