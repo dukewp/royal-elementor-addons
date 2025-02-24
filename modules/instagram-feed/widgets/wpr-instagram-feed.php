@@ -4999,7 +4999,8 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
 		$target = 'yes' == $this->get_settings()['open_in_new_tab'] ? '_blank' : '_self';
 
-		echo '<div class="wpr-insta-feed-media-hover-bg '. esc_attr($this->get_animation_class( $settings, 'overlay' )) .'" data-url="'. $result->permalink .'" data-target="'. $target .'">';
+
+		echo '<div class="wpr-insta-feed-media-hover-bg '. esc_attr($this->get_animation_class( $settings, 'overlay' )) .'" data-url="'. esc_attr( $result->permalink ) .'" data-target="'. $target .'">';
 
 		echo '</div>';
 	}
