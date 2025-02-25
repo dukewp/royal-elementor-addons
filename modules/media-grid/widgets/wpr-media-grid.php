@@ -7281,6 +7281,8 @@ class Wpr_Media_Grid extends Widget_Base {
 			foreach ( $custom_filters as $key => $term_id ) {
 				$filter = get_term_by( 'id', $term_id, $taxonomy );
 				$data_attr = 'post_tag' === $taxonomy ? 'tag-'. $filter->slug : $taxonomy .'-'. $filter->slug;
+				$tax_data_attr = 'post_tag' === $taxonomy ? 'tag' : $taxonomy;
+				$term_data_attr = $filter->slug;
 
 				// Parent Filters
 				if ( 0 === $filter->parent ) {
@@ -7289,7 +7291,7 @@ class Wpr_Media_Grid extends Widget_Base {
 
 					echo '<li'. $data_role .' class="'. esc_attr($pointer_class) .'">';
 						if ( 'yes' !== $settings['filters_linkable'] ) {
-							echo ''. $left_separator .'<span '. $pointer_item_class .' data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo ''. $left_separator .'<span '. $pointer_item_class .' data-ajax-filter='. json_encode([$tax_data_attr, $term_data_attr]) .' data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						} else {
 							echo ''. $left_separator .'<a '. $pointer_item_class .' href="'. esc_url(get_term_link( $filter->term_id, $taxonomy )) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</a>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						}
@@ -7308,6 +7310,8 @@ class Wpr_Media_Grid extends Widget_Base {
 
 			foreach ( $all_filters as $key => $filter ) {
 				$data_attr = 'post_tag' === $taxonomy ? 'tag-'. $filter->slug : $taxonomy .'-'. $filter->slug;
+				$tax_data_attr = 'post_tag' === $taxonomy ? 'tag' : $taxonomy;
+				$term_data_attr = $filter->slug;
 
 				// Parent Filters
 				if ( 0 === $filter->parent ) {
@@ -7316,7 +7320,7 @@ class Wpr_Media_Grid extends Widget_Base {
 
 					echo '<li'. $data_role .' class="'. esc_attr($pointer_class) .'">';
 						if ( 'yes' !== $settings['filters_linkable'] ) {
-							echo ''. $left_separator .'<span '. $pointer_item_class .' data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo ''. $left_separator .'<span '. $pointer_item_class .' data-ajax-filter='. json_encode([$tax_data_attr, $term_data_attr]) .' data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						} else {
 							echo ''. $left_separator .'<a '. $pointer_item_class .' href="'. esc_url(get_term_link( $filter->term_id, $taxonomy )) .'" data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</a>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						}
@@ -7335,6 +7339,8 @@ class Wpr_Media_Grid extends Widget_Base {
 				$parent = get_term_by( 'id', $parent_filter, $taxonomy );
 				$children = get_term_children( $parent_filter, $taxonomy );
 				$data_attr = 'post_tag' === $taxonomy ? 'tag-'. $parent->slug : $taxonomy .'-'. $parent->slug;
+				$tax_data_attr = 'post_tag' === $taxonomy ? 'tag' : $taxonomy;
+				$term_data_attr = $filter->slug;
 
 				echo '<ul data-parent=".'. esc_attr(urldecode( $data_attr )) .'" class="wpr-sub-filters">';
 

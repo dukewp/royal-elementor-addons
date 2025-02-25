@@ -284,6 +284,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	// Render Post Excerpt
+	// Render Post Excerpt
 	public function render_post_excerpt( $settings, $class ) {
 		$dropcap_class = 'yes' === $settings['element_dropcap'] ? ' wpr-enable-dropcap' : '';
 		$class .= $dropcap_class;
@@ -294,12 +295,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-			  if ( 'word_count' === $settings['element_trim_text_by']) {
 				echo '<p>'. esc_html(wp_trim_words( get_the_excerpt(), $settings['element_word_count'] )) .'</p>';
-			  } else {
-				// echo '<p>'. substr(html_entity_decode(get_the_title()), 0, $settings['element_letter_count']) .'...' . '</p>';
-				echo '<p>'. esc_html(implode('', array_slice( str_split(get_the_excerpt()), 0, $settings['element_letter_count'] ))) .'...' .'</p>';
-			  }
 			echo '</div>';
 		echo '</div>';
 	}
