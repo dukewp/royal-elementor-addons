@@ -625,6 +625,19 @@ class Wpr_Team_Member extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'content_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-member-content' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				// 'separator' => 'before',
+			]
+		);
+
 		// Name
 		$this->add_control(
 			'name_section',

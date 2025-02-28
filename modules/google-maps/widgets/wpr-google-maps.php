@@ -581,6 +581,24 @@ class Wpr_Google_Maps extends Widget_Base {
 		);
 
 		$this->add_control(
+			'map_radius',
+			[
+				'label' => esc_html__( 'Map Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-google-map' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_control(
 			'infow_window_distance',
 			[
 				'label' => esc_html__( 'Distance from Marker', 'wpr-addons' ),

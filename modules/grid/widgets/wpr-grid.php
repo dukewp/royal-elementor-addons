@@ -3625,7 +3625,7 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'grid_item_radius',
 			[
 				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
@@ -3720,7 +3720,7 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'grid_media_radius',
 			[
 				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
@@ -3762,7 +3762,7 @@ class Wpr_Grid extends Widget_Base {
 
 		$this->add_control_overlay_border_width();
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'overlay_radius',
 			[
 				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),

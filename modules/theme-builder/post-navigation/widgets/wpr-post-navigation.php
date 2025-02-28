@@ -624,6 +624,34 @@ class Wpr_Post_Navigation extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+		
+		$this->start_controls_section(
+			'section_image',
+			[
+				'label' => esc_html__( 'Image', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'post_nav_img_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-post-navigation img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				],
+			]
+		);
+
+		$this->end_controls_section();
 
 		// Styles ====================
 		// Section: Back Button ------
