@@ -1447,6 +1447,20 @@ class Wpr_Mega_Menu extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'sub_menu_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-sub-menu' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-sub-menu li:first-child a' => 'border-top-left-radius: {{TOP}}{{UNIT}}; border-top-right-radius: {{RIGHT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-sub-menu li:last-child a' => 'border-bottom-left-radius: {{BOTTOM}}{{UNIT}}; border-bottom-right-radius: {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
 		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
 			[

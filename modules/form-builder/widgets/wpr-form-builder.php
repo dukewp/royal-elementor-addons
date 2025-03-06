@@ -1131,6 +1131,38 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'button_distance',
+			[
+				'label' => esc_html__( 'HorizontalGutter', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', '%' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+					'em' => [
+						'min' => 0,
+						'max' => 5,
+					],
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step-prev' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-step-next' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-button[type="submit"]' => 'margin-left: {{SIZE}}{{UNIT}};',
+				]
+			]
+		);
+
 		$this->add_responsive_control(
 			'button_align',
 			[
@@ -2391,6 +2423,35 @@ class Wpr_Form_Builder extends Widget_Base {
 					'{{WRAPPER}} .wpr-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-step-prev' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-step-next' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				],
+			]
+		);
+
+		$this->add_control(
+			'heading_button_wrap_style',
+			[
+				'label' => esc_html__( 'Wrapper', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'button_wrap_margin',
+			[
+				'label' => esc_html__( 'Margin', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+					'unit' => 'px',
+					'isLinked' => true,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-stp-btns-wrap' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);

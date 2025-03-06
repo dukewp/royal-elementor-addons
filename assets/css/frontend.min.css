@@ -19100,6 +19100,7 @@ dl.variation dd {
     -webkit-box-pack: justify;
         -ms-flex-pack: justify;
             justify-content: space-between;
+    flex-wrap: nowrap;
     margin-bottom: 5px;
 }
 
