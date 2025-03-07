@@ -9277,9 +9277,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'data-product_id="'. esc_attr($product->get_id()) .'"',
 			'data-product_sku="'. esc_attr($product->get_sku()) .'"',
 			'data-atc-popup="'. esc_attr( $settings['element_show_added_tc_popup'] ) .'"',
-			'data-atc-animation="'. $popup_notification_animation  .'"',
-			'data-atc-fade-out-in="'. $popup_notification_fade_out_in  .'"',
-			'data-atc-animation-time="'. $popup_notification_animation_duration  .'"'
+			'data-atc-animation="'. esc_attr($popup_notification_animation)  .'"',
+			'data-atc-fade-out-in="'. esc_attr($popup_notification_fade_out_in)  .'"',
+			'data-atc-animation-time="'. esc_attr($popup_notification_animation_duration)  .'"'
 		];
 
 		$button_HTML = '';
