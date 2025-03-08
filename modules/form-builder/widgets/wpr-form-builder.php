@@ -1134,7 +1134,7 @@ class Wpr_Form_Builder extends Widget_Base {
 		$this->add_control(
 			'button_distance',
 			[
-				'label' => esc_html__( 'HorizontalGutter', 'wpr-addons' ),
+				'label' => esc_html__( 'Horizontal Gutter', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', 'em', '%' ],
 				'range' => [
