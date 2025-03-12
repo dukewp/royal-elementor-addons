@@ -139,6 +139,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 				'posts_per_page' => $settings['query_posts_per_page'],
 				'paged' => $paged,
 			];
+
+			if ( isset($_POST['wpr_offset']) ) {
+				$args['offset'] = $_POST['wpr_offset'];
+			}
+
+			$tax_query = $this->get_tax_query_args();
+
+			if ( ! empty( $tax_query ) ) {
+				$args['tax_query'] = $tax_query;
+			}
 		}
 
 		if ( isset($_POST['wpr_offset']) ) {
@@ -157,16 +167,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$settings = $_POST['grid_settings'];
 		$tax_query = [];
 
-		
-		$tax_query = [];
+		// Add filter for selected taxonomy and term if they exist
+		if (!empty($_POST['wpr_taxonomy']) && !empty($_POST['wpr_filter']) && $_POST['wpr_filter'] !== 'all' && $_POST['wpr_taxonomy'] !== '*') {
+			$tax_query[] = [
+				'taxonomy' => sanitize_text_field($_POST['wpr_taxonomy']),
+				'field' => 'slug', // Use slug instead of ID for attachments
+				'terms' => sanitize_text_field($_POST['wpr_filter']),
+			];
 
-		foreach ( get_object_taxonomies( 'attachment' ) as $tax ) {
-			if ( ! empty($settings[ 'query_taxonomy_'. $tax ]) ) {
-				array_push( $tax_query, [
+			return $tax_query; // Return early with just the selected filter
+		}
+
+		// Otherwise, use the default taxonomies from settings
+		$media_taxonomies = get_taxonomies(['object_type' => ['attachment']], 'names'); // Get custom attachment taxonomies
+
+		foreach ($media_taxonomies as $tax) {
+			if (!empty($settings['query_taxonomy_' . $tax])) {
+				$tax_query[] = [
 					'taxonomy' => $tax,
-					'field' => 'id',
-					'terms' => $settings[ 'query_taxonomy_'. $tax ]
-				] );
+					'field' => 'slug', // Ensure it's using slug
+					'terms' => $settings['query_taxonomy_' . $tax],
+				];
 			}
 		}
 
@@ -283,7 +304,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		echo '</div>';
 	}
 
-	// Render Post Excerpt
 	// Render Post Excerpt
 	public function render_post_excerpt( $settings, $class ) {
 		$dropcap_class = 'yes' === $settings['element_dropcap'] ? ' wpr-enable-dropcap' : '';

@@ -7340,12 +7340,12 @@ class Wpr_Media_Grid extends Widget_Base {
 				$children = get_term_children( $parent_filter, $taxonomy );
 				$data_attr = 'post_tag' === $taxonomy ? 'tag-'. $parent->slug : $taxonomy .'-'. $parent->slug;
 				$tax_data_attr = 'post_tag' === $taxonomy ? 'tag' : $taxonomy;
-				$term_data_attr = $filter->slug;
+				$term_data_attr = $parent->slug;
 
 				echo '<ul data-parent=".'. esc_attr(urldecode( $data_attr )) .'" class="wpr-sub-filters">';
 
 				echo '<li data-role="back" class="'. esc_attr($pointer_class) .'">';
-					echo '<span class="wpr-back-filter" data-filter=".'. esc_attr(urldecode( $data_attr )) .'">';
+					echo '<span class="wpr-back-filter"  data-ajax-filter='. json_encode([$tax_data_attr, $term_data_attr]) .' data-filter=".'. esc_attr(urldecode( $data_attr )) .'">';
 						echo '<i class="fas fa-long-arrow-alt-left"></i>&nbsp;&nbsp;'. esc_html__( 'Back', 'wpr-addons' );
 					echo '</span>';
 				echo '</li>';
@@ -7353,9 +7353,11 @@ class Wpr_Media_Grid extends Widget_Base {
 				foreach ( $children as $child ) {
 					$sub_filter = get_term_by( 'id', $child, $taxonomy );
 					$data_attr = 'post_tag' === $taxonomy ? 'tag-'. $sub_filter->slug : $taxonomy .'-'. $sub_filter->slug;
+					$tax_data_attr = 'post_tag' === $taxonomy ? 'tag' : $taxonomy;
+					$term_data_attr = $sub_filter->slug;
 
 					echo '<li data-role="sub" class="'. esc_attr($pointer_class) .'">';
-						echo ''. $left_separator .'<span '. $pointer_item_class .' data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($sub_filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo ''. $left_separator .'<span '. $pointer_item_class .' data-ajax-filter='. json_encode([$tax_data_attr, $term_data_attr]) .' data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($sub_filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo '</li>';
 				}
 
