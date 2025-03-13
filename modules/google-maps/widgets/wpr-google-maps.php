@@ -36,6 +36,10 @@ class Wpr_Google_Maps extends Widget_Base {
 		return [ 'royal', 'google maps', 'location', 'gmap', 'cluster' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	public function get_script_depends() {
 		return [ 'wpr-google-maps', 'wpr-google-maps-clusters' ];
 	}

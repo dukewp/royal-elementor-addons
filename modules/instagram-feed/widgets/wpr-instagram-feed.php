@@ -39,6 +39,10 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		return [ 'royal', 'instagram feed', 'social', 'grid' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	public function get_script_depends() {
 		return [ 'swiper', 'wpr-isotope', 'wpr-lightgallery' ];
 	}

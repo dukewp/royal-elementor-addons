@@ -44,6 +44,10 @@ class Wpr_Post_Navigation extends Widget_Base {
 		return [ 'navigation', 'arrows', 'pagination' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	public function add_control_display_on_separate_lines() {
 		$this->add_responsive_control(
 			'display_on_separate_lines',

@@ -41,6 +41,10 @@ class Wpr_Media_Grid extends Widget_Base {
 		return [ 'royal', 'image gallery', 'image slider', 'image carousel', 'image grid', 'media grid', 'massonry grid', 'isotope', 'massonry grid', 'filterable grid' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	public function get_script_depends() {
 		return [ 'wpr-isotope', 'wpr-slick', 'wpr-lightgallery' ];
 	}

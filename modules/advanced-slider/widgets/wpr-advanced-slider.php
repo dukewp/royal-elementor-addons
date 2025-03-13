@@ -42,6 +42,10 @@ class Wpr_Advanced_Slider extends Widget_Base {
 	public function get_keywords() {
 		return [ 'royal', 'image slider', 'slideshow', 'image carousel', 'template slider', 'posts slider' ];
 	}
+
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
 	
 	public function get_script_depends() {
 		return [ 'imagesloaded', 'wpr-slick' ];

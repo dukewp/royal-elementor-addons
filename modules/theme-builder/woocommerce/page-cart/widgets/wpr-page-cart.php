@@ -33,6 +33,10 @@ class Wpr_Page_Cart extends Widget_Base {
 		return [ 'woocommerce', 'royal', 'cart', 'product', 'page', 'cart page', 'page cart' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	public function get_script_depends() {
 		return [];
 	}
