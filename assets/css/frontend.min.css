@@ -14715,6 +14715,12 @@ flex-grow: 0; */
     margin-bottom: 0;
 }
 
+.wpr-product-stock-icon,
+.wpr-product-stock-icon svg {
+    display: inline;
+    vertical-align: text-bottom;
+}
+
 /* == Compare */
 .wpr-compare-placeholder {
     opacity: 0;
