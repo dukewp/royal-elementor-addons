@@ -271,6 +271,9 @@ template {
     pointer-events: none;
 }
 
+.wpr-fix-grid-height {
+    min-height: 50vh;
+}
 .wpr-grid-loader-wrap {
     display: -webkit-box;
     display: -ms-flexbox;

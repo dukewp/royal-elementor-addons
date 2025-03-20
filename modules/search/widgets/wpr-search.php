@@ -1157,6 +1157,18 @@ class Wpr_Search extends Widget_Base {
 
 		$this->add_control_show_password_protected();
 
+		$this->add_control(
+			'show_attachments',
+			[
+				'label' => esc_html__( 'Show Attachments', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'condition' => [
+					'ajax_search' => 'yes'
+				],
+				'render_type' => 'template',
+			]
+		);
+
 		$this->add_control_open_in_new_page();
 
 		$this->add_control_show_ajax_thumbnails();
@@ -2104,6 +2116,7 @@ class Wpr_Search extends Widget_Base {
 				'exclude-without-thumb' => isset($settings['exclude_posts_without_thumbnail']) ? $settings['exclude_posts_without_thumbnail'] : '',
 				'link-target' => isset($settings['ajax_search_link_target']) && ( 'yes' === $settings['ajax_search_link_target'] ) ? '_blank'  : '_self',
 				'password-protected' => isset($settings['ajax_show_ps_pt']) ? $settings['ajax_show_ps_pt'] : 'no',
+				'attachments' => isset($settings['show_attachments']) ? $settings['show_attachments'] : 'no',
 				// 'ajax-search-img-size' => isset($settings['ajax_search_img_size']) ? $settings['ajax_search_img_size'] : ''
 			]
 		);

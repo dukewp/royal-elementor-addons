@@ -284,8 +284,15 @@ jQuery(document).ready(function( $ ) {
 												console.log('Import Finished!');
 												WprTemplatesKit.importProgressBar('finish');
 											}, 1000 );
+										},
+										error: function( xhr, textStatus, errorThrown ) {
+											console.error('AJAX-error:', textStatus, errorThrown);
 										}
 									});
+								},
+								error: function( xhr, textStatus, errorThrown ) {
+									console.error('AJAX-error:', textStatus, errorThrown);
+							
 								}
 							});
 						},
