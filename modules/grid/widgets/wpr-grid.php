@@ -1876,6 +1876,20 @@ class Wpr_Grid extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'element_show_dots',
+			[
+				'label' => esc_html__( 'Show Dots', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'default' => 'yes',
+				'condition' => [
+					'element_select' => [ 'excerpt' ],
+					'element_trim_text_by' => 'word_count'
+				]
+			]
+		);
+
+		$repeater->add_control(
 			'element_show_avatar',
 			[
 				'label' => esc_html__( 'Show Avatar', 'wpr-addons' ),
@@ -8715,7 +8729,8 @@ class Wpr_Grid extends Widget_Base {
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
 			  if ( 'word_count' === $settings['element_trim_text_by']) {
-				echo '<p>'. esc_html(wp_trim_words( get_the_excerpt(), $settings['element_word_count'] )) .'</p>';
+				$show_dots = $settings['element_show_dots'] === 'yes' ? '...' : '';
+				echo '<p>'. esc_html(wp_trim_words( get_the_excerpt(), $settings['element_word_count'], $show_dots )) .'</p>';
 			  } else {
 				// echo '<p>'. substr(html_entity_decode(get_the_title()), 0, $settings['element_letter_count']) .'...' . '</p>';
 				// echo '<p>'. esc_html(implode('', array_slice( str_split(get_the_excerpt()), 0, $settings['element_letter_count'] ))) .'...' .'</p>';	
