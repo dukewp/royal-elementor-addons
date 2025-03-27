@@ -11,7 +11,6 @@
  * Elementor Pro tested up to: 3.25.2
  *
  * Text Domain: wpr-addons
- * Requires Plugins: elementor
 */
 
 if ( ! defined( 'ABSPATH' ) ) {

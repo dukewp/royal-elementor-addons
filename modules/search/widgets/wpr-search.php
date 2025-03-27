@@ -1157,17 +1157,20 @@ class Wpr_Search extends Widget_Base {
 
 		$this->add_control_show_password_protected();
 
-		$this->add_control(
-			'show_attachments',
-			[
-				'label' => esc_html__( 'Show Attachments', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'condition' => [
-					'ajax_search' => 'yes'
-				],
-				'render_type' => 'template',
-			]
-		);
+		if ( current_user_can( 'administrator' ) ) {
+			$this->add_control(
+				'show_attachments',
+				[
+					'label' => esc_html__( 'Show Attachments', 'wpr-addons' ),
+					'description' => esc_html__( 'Include Media Files in Search Results', 'wpr-addons' ),
+					'type' => Controls_Manager::SWITCHER,
+					'condition' => [
+						'ajax_search' => 'yes'
+					],
+					'render_type' => 'template',
+				]
+			);
+		}
 
 		$this->add_control_open_in_new_page();
 

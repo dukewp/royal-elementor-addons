@@ -2942,6 +2942,19 @@ class Wpr_Grid extends Widget_Base {
 				],
 			]
 		);
+		
+		$this->add_control(
+			'filters_hide_uncategorized',
+			[
+				'label' => esc_html__( 'Hide Uncategorized', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'condition' => [
+					'filters_linkable!' => 'yes',
+				],
+			]
+		);
 
 		$this->add_control_filters_deeplinking();
 
@@ -9380,10 +9393,22 @@ class Wpr_Grid extends Widget_Base {
 
 		// All Filters
 		} else {
+			$exclude_ids = [];
+
+			if ( 'yes' === $settings['filters_hide_uncategorized'] ) {
+				$uncategorized = get_term_by('slug', 'uncategorized', $taxonomy);
+
+				if ($uncategorized && !is_wp_error($uncategorized)) {
+					$exclude_ids[] = $uncategorized->term_id;
+				}
+			}
+
 			$all_filters = get_terms([
-				'taxonomy' => $taxonomy,
-				'hide_empty' => false, // Include empty taxonomies
+				'taxonomy'   => $taxonomy,
+				'hide_empty' => false,
+				'exclude'    => $exclude_ids,
 			]);
+
 			$parent_filters = [];
 
 			foreach ( $all_filters as $key => $filter ) {
