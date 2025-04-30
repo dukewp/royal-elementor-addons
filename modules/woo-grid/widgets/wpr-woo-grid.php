@@ -3521,7 +3521,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'grid_item_border_width',
 			[
 				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
@@ -3640,7 +3640,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'grid_media_border_width',
 			[
 				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
@@ -9418,7 +9418,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$wishlist_attributes = [
 			'data-wishlist-url' => get_option('wpr_wishlist_page') ? get_option('wpr_wishlist_page') : '',
-			'data-atw-popup="'. $settings['element_show_added_to_wishlist_popup']  .'"',
+			'data-atw-popup="'. esc_attr($settings['element_show_added_to_wishlist_popup'])  .'"',
 			'data-atw-animation="'. esc_attr($popup_notification_animation)  .'"',
 			'data-atw-fade-out-in="'. esc_attr($popup_notification_fade_out_in)  .'"',
 			'data-atw-animation-time="'. esc_attr($popup_notification_animation_duration)  .'"',
