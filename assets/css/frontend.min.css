@@ -17039,7 +17039,7 @@ dl.variation dd {
 
 .wpr-cart-wrapper .form-row.coupon-col .coupon-col-end {
     /* flex: 1; */
-    height: 100%;
+    /* height: 100%; */
 }
 
 .wpr-cart-wrapper .form-row.coupon-col .coupon-col-end button {
@@ -19308,6 +19308,143 @@ dl.variation dd {
 .wpr-image-scroll-icon-hidden {
     opacity: 0;
 }
+
+/* Video Playlist Widget */
+.newsx-vplaylist-wrap {
+    position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    background-color: black;
+    overflow: hidden;
+  }
+  
+  .newsx-vplaylist-wrap * {
+    color: white;
+  }
+  
+  .newsx-vplaylist-wrap .video-player-wrap {
+    flex: 0 0 66.67%;
+    width: 66.67%;
+    height: 100%;
+  }
+  
+  .newsx-vplaylist-wrap .video-player {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+  }
+  
+  .newsx-vplaylist-wrap .video-player iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .newsx-vplaylist-thumbs-wrap {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 33.33%;
+    width: 33.33%;
+  }
+  
+  .newsx-vplaylist-highlight {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: auto;
+  }
+  
+  .newsx-vplaylist-highlight .newsx-play,
+  .newsx-vplaylist-highlight .newsx-pause {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .newsx-vplaylist-heading {
+    max-width: 80%;
+    padding: 8px 20px;
+  }
+  
+  .newsx-vplaylist-current-title {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  
+  .newsx-vplaylist-heading span {
+    display: block;
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 7px;
+  }
+  
+  .newsx-vplaylist-controller {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    min-width: 20%;
+  }
+  
+  .newsx-vplaylist-controller svg {
+    width: 30px;
+    height: 30px;
+    fill: white;
+    stroke: white;
+    cursor: pointer;
+  }
+  
+  .newsx-vplaylist-controller .newsx-pause {
+    display: none;
+  }
+  
+  .newsx-vplaylist-thumbs {
+    position: relative;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-color: #bfbfbf4d #ffffff26;
+    scrollbar-width: thin;
+  }
+  
+  .newsx-vplaylist-thumbs ul {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 0;
+    max-height: auto;
+    overflow-y: auto;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .newsx-vplaylist-thumbs li {
+    display: inline-flex;
+    padding: 10px 20px;
+    cursor: pointer;
+    max-width: 100%; /* Ensure the width matches the thumbnail size */
+  }
+  
+  .newsx-vplaylist-thumbs ul img {
+    width: 125px; /* Makes the image responsive within the list item */
+    height: 100%;
+    margin-right: 12px;
+  }
+  
+  .newsx-vplaylist-info span {
+    color: rgba(255, 255, 255, 0.75);
+  }
 
 /* Icon Animations */
 .wpr-icon-animation-horizontal .wpr-image-scroll-icon {
