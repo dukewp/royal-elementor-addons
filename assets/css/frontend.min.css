@@ -19310,7 +19310,7 @@ dl.variation dd {
 }
 
 /* Video Playlist Widget */
-.newsx-vplaylist-wrap {
+.wpr-vplaylist-wrap {
     position: relative;
     display: flex;
     flex-flow: row nowrap;
@@ -19319,17 +19319,18 @@ dl.variation dd {
     overflow: hidden;
   }
   
-  .newsx-vplaylist-wrap * {
+  .wpr-vplaylist-wrap * {
     color: white;
+    margin: 0;
   }
   
-  .newsx-vplaylist-wrap .video-player-wrap {
+  .wpr-vplaylist-wrap .video-player-wrap {
     flex: 0 0 66.67%;
     width: 66.67%;
     height: 100%;
   }
   
-  .newsx-vplaylist-wrap .video-player {
+  .wpr-vplaylist-wrap .video-player {
     position: relative;
     display: block;
     overflow: hidden;
@@ -19338,7 +19339,7 @@ dl.variation dd {
     height: 0;
   }
   
-  .newsx-vplaylist-wrap .video-player iframe {
+  .wpr-vplaylist-wrap .video-player iframe {
     position: absolute;
     top: 0;
     left: 0;
@@ -19346,14 +19347,14 @@ dl.variation dd {
     height: 100%;
   }
   
-  .newsx-vplaylist-thumbs-wrap {
+  .wpr-vplaylist-thumbs-wrap {
     display: flex;
     flex-direction: column;
     flex: 0 0 33.33%;
     width: 33.33%;
   }
   
-  .newsx-vplaylist-highlight {
+  .wpr-vplaylist-highlight {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -19361,32 +19362,32 @@ dl.variation dd {
     height: auto;
   }
   
-  .newsx-vplaylist-highlight .newsx-play,
-  .newsx-vplaylist-highlight .newsx-pause {
+  .wpr-vplaylist-highlight .wpr-play,
+  .wpr-vplaylist-highlight .wpr-pause {
     display: flex;
     justify-content: center;
     align-items: center;
   }
   
-  .newsx-vplaylist-heading {
+  .wpr-vplaylist-heading {
     max-width: 80%;
     padding: 8px 20px;
   }
   
-  .newsx-vplaylist-current-title {
+  .wpr-vplaylist-current-title {
     width: 100%;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
   
-  .newsx-vplaylist-heading span {
+  .wpr-vplaylist-heading span {
     display: block;
     color: rgba(255, 255, 255, 0.75);
     margin-bottom: 7px;
   }
   
-  .newsx-vplaylist-controller {
+  .wpr-vplaylist-controller {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19394,7 +19395,7 @@ dl.variation dd {
     min-width: 20%;
   }
   
-  .newsx-vplaylist-controller svg {
+  .wpr-vplaylist-controller svg {
     width: 30px;
     height: 30px;
     fill: white;
@@ -19402,11 +19403,11 @@ dl.variation dd {
     cursor: pointer;
   }
   
-  .newsx-vplaylist-controller .newsx-pause {
+  .wpr-vplaylist-controller .wpr-pause {
     display: none;
   }
   
-  .newsx-vplaylist-thumbs {
+  .wpr-vplaylist-thumbs {
     position: relative;
     height: 100%;
     overflow-x: hidden;
@@ -19415,7 +19416,7 @@ dl.variation dd {
     scrollbar-width: thin;
   }
   
-  .newsx-vplaylist-thumbs ul {
+  .wpr-vplaylist-thumbs ul {
     position: absolute;
     top: 0;
     left: 0;
@@ -19429,22 +19430,83 @@ dl.variation dd {
     max-width: 100%;
   }
   
-  .newsx-vplaylist-thumbs li {
+  .wpr-vplaylist-thumbs li {
     display: inline-flex;
     padding: 10px 20px;
     cursor: pointer;
     max-width: 100%; /* Ensure the width matches the thumbnail size */
   }
   
-  .newsx-vplaylist-thumbs ul img {
+  .wpr-vplaylist-thumbs ul img {
     width: 125px; /* Makes the image responsive within the list item */
     height: 100%;
     margin-right: 12px;
   }
   
-  .newsx-vplaylist-info span {
+  .wpr-vplaylist-info span {
     color: rgba(255, 255, 255, 0.75);
   }
+
+  @media only screen and (max-width: 768px) {
+    .wpr-vplaylist-heading {
+        padding: 7px 10px;
+    }
+    .wpr-vplaylist-heading span,
+    .wpr-vplaylist-current-title {
+        margin-bottom: 0;
+    }
+    .wpr-vplaylist-controller svg {
+        width: 20px;
+        height: 20px;
+    }
+    .wpr-vplaylist-thumbs li {
+        padding: 10px;
+    }
+    .wpr-vplaylist-thumbs ul img {
+        width: 90px;
+        margin-right: 10px;
+    }
+    .wpr-vplaylist-info-title {
+        margin-bottom: 2px;
+        font-size: 12px;
+        line-height: 1.3;
+    }
+    .wpr-vplaylist-info span {
+        font-size: 12px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .wpr-vplaylist-wrap {
+        flex-direction: column;
+    }
+    .wpr-vplaylist-wrap .video-player-wrap {
+        flex: auto;
+        width: 100%;
+    }
+    .wpr-vplaylist-thumbs-wrap {
+        flex: auto;
+        width: 100%;
+        height: 300px;
+    }
+    .wpr-vplaylist-heading {
+        padding: 15px;
+    }
+    .wpr-vplaylist-controller {
+        min-width: 15%;
+    }
+    .wpr-vplaylist-controller svg {
+        width: 22px;
+        height: 22px;
+    }
+    .wpr-vplaylist-thumbs li {
+        padding: 15px;
+    }
+    .wpr-vplaylist-thumbs ul img {
+        width: 120px;
+        margin-right: 10px;
+    }
+}
 
 /* Icon Animations */
 .wpr-icon-animation-horizontal .wpr-image-scroll-icon {

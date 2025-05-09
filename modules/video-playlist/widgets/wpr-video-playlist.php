@@ -55,32 +55,11 @@ class Wpr_Video_Playlist extends Widget_Base {
 	}
 	
 	protected function register_controls() {
-		$this->start_controls_section(
-			'general_section',
-			[
-				'label' => esc_html__( 'General', 'news-magazine-x' ),
-				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
-			]
-		);
-
-		$this->add_control(
-			'widget_accent_color',
-			[
-				'label' => esc_html__( 'Accent Color', 'news-magazine-x' ),
-				'type' => \Elementor\Controls_Manager::COLOR,
-                'selectors' => [
-                    '{{WRAPPER}} .newsx-vplaylist-controller' => 'background-color: {{VALUE}};',
-                ],
-				'default' => '#f84643',
-			]
-		);
-
-		$this->end_controls_section();
 
 		$this->start_controls_section(
 			'settings_section',
 			[
-				'label' => esc_html__( 'Settings', 'news-magazine-x' ),
+				'label' => esc_html__( 'Settings', 'wpr-addons' ),
 				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -88,7 +67,7 @@ class Wpr_Video_Playlist extends Widget_Base {
         $this->add_control(
             'query_group_title',
             [
-                'label' => esc_html__( 'Query', 'news-magazine-x' ),
+                'label' => esc_html__( 'Query', 'wpr-addons' ),
                 'type' => \Elementor\Controls_Manager::HEADING,
                 'separator' => 'before',
             ]
@@ -97,12 +76,12 @@ class Wpr_Video_Playlist extends Widget_Base {
 		$this->add_control(
 			'playlist_query',
 			[
-				'label' => esc_html__( 'Playlist Query', 'news-magazine-x' ),
+				'label' => esc_html__( 'Playlist Query', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::SELECT,
 				'default' => 'custom',
 				'options' => [
-					'custom' => esc_html__( 'Custom URLs', 'news-magazine-x' ),
-					'playlist' => esc_html__( 'YouTube Playlist', 'news-magazine-x' ),
+					'custom' => esc_html__( 'Custom URLs', 'wpr-addons' ),
+					'playlist' => esc_html__( 'YouTube Playlist', 'wpr-addons' ),
 				],
 			]
 		);
@@ -110,26 +89,32 @@ class Wpr_Video_Playlist extends Widget_Base {
 		$this->add_control(
 			'youtube_api_key',
 			[
-				'label' => esc_html__( 'YouTube API Key', 'news-magazine-x' ),
+				'label' => esc_html__( 'YouTube API Key', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'default' => '',
 				'description' => 'To get your <strong>Youtube API Key</strong> please watch this <strong><a href="https://youtu.be/LLAZUTbc97I" target="_blank">Video Tutorial</a></strong>.',
+				'condition' => [
+					'playlist_query' => 'playlist',
+				],
 			]
 		);
 
 		$this->add_control(
 			'youtube_playlist_id',
 			[
-				'label' => esc_html__( 'YouTube Playlist ID', 'news-magazine-x' ),
+				'label' => esc_html__( 'YouTube Playlist ID', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'default' => '',
 				'description' => 'To get your <strong>Youtube Playlist ID</strong> go to YouTube Channel, select Playlist and find E.g: <strong>list=PLjFiZESrp9558M7Rghnk5s4sMq6m3RyOb</strong> in the URL and copy the ID.',
+                'condition' => [
+                    'playlist_query' => 'playlist',
+                ],
 			]
 		);
         $this->add_control(
             'title_group_title',
             [
-                'label' => esc_html__( 'Title', 'news-magazine-x' ),
+                'label' => esc_html__( 'Title', 'wpr-addons' ),
                 'type' => \Elementor\Controls_Manager::HEADING,
                 'separator' => 'before',
             ]
@@ -138,26 +123,36 @@ class Wpr_Video_Playlist extends Widget_Base {
         $this->add_control(
             'title_tag',
             [
-                'label' => esc_html__( 'HTML Tag', 'news-magazine-x' ),
+                'label' => esc_html__( 'HTML Tag', 'wpr-addons' ),
                 'type' => \Elementor\Controls_Manager::SELECT,
                 'default' => 'h6',
-                'options' => [], // assuming this returns ['h1' => 'H1', 'h2' => 'H2', ...]
+                'options' => [
+                    'h1' => 'H1',
+                    'h2' => 'H2',
+                    'h3' => 'H3',
+                    'h4' => 'H4',
+                    'h5' => 'H5',
+                    'h6' => 'H6',
+                    'div' => 'div',
+                    'span' => 'span',
+                    'P' => 'p'
+                ]
             ]
         );
     
         $this->add_control(
             'playlist_title',
             [
-                'label' => esc_html__( 'Playlist Title', 'news-magazine-x' ),
+                'label' => esc_html__( 'Playlist Title', 'wpr-addons' ),
                 'type' => \Elementor\Controls_Manager::TEXT,
-                'default' => esc_html__( 'Now Playing', 'news-magazine-x' ),
+                'default' => esc_html__( 'Now Playing', 'wpr-addons' ),
             ]
         );
     
         $this->add_control(
             'urls_group_title',
             [
-                'label' => esc_html__( 'Custom Video URLs', 'news-magazine-x' ),
+                'label' => esc_html__( 'Custom Video URLs', 'wpr-addons' ),
                 'type' => \Elementor\Controls_Manager::HEADING,
                 'separator' => 'before',
             ]
@@ -168,7 +163,7 @@ class Wpr_Video_Playlist extends Widget_Base {
         $repeater->add_control(
             'video_url',
             [
-                'label' => esc_html__( 'Video URL', 'news-magazine-x' ),
+                'label' => esc_html__( 'Video URL', 'wpr-addons' ),
                 'type' => \Elementor\Controls_Manager::URL,
                 'default' => [
                     'url' => 'https://youtu.be/OrtzJs-wzlw',
@@ -180,7 +175,7 @@ class Wpr_Video_Playlist extends Widget_Base {
         $this->add_control(
             'video_urls',
             [
-                'label' => esc_html__( 'Video URLs', 'news-magazine-x' ),
+                'label' => esc_html__( 'Video URLs', 'wpr-addons' ),
                 'type' => \Elementor\Controls_Manager::REPEATER,
                 'fields' => $repeater->get_controls(),
                 'default' => [
@@ -192,8 +187,53 @@ class Wpr_Video_Playlist extends Widget_Base {
                     [ 'video_url' => [ 'url' => 'https://youtu.be/9qJH__RF--I' ] ],
                 ],
                 'title_field' => '{{ video_url.url }}',
+                'condition' => [
+                    'playlist_query' => 'custom',
+                ],
             ]
         );    
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'general_section',
+			[
+				'label' => esc_html__( 'General', 'wpr-addons' ),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'widget_accent_color',
+			[
+				'label' => esc_html__( 'Accent Color', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .wpr-vplaylist-controller' => 'background-color: {{VALUE}};',
+                ],
+				'default' => '#f84643',
+			]
+		);
+
+        $this->add_group_control(
+            \Elementor\Group_Control_Typography::get_type(),
+            [
+                'name' => 'title_typography',
+                'label' => esc_html__( 'Title Typography', 'wpr-addons' ),
+                'selector' => '{{WRAPPER}} .wpr-vplaylist-current-title, {{WRAPPER}} .wpr-vplaylist-info-title',
+				'fields_options' => [
+					'typography' => [
+						'default' => 'custom',
+					],
+					'font_size' => [
+						'default' => [
+							'size' => '15',
+							'unit' => 'px'
+						]
+					]
+				]
+            ]
+        );
 
 		$this->end_controls_section();
 
@@ -232,7 +272,7 @@ class Wpr_Video_Playlist extends Widget_Base {
         return $videos;
     }
 
-    public function newsx_get_svg_icon( $icon ) {
+    public function wpr_get_svg_icon( $icon ) {
         static $icons_array = null;
     
         if ( is_null( $icons_array ) ) {
@@ -248,7 +288,7 @@ class Wpr_Video_Playlist extends Widget_Base {
             }
         }
     
-        $output  = '<span class="newsx-svg-icon newsx-inline-flex">';
+        $output  = '<span class="wpr-svg-icon wpr-inline-flex">';
         $output .= isset( $icons_array[ $icon ] ) ? $icons_array[ $icon ] : '';
         $output .= '</span>';
     
@@ -259,7 +299,7 @@ class Wpr_Video_Playlist extends Widget_Base {
         $settings = $this->get_settings_for_display();
 
         $title_tag       = !empty($settings['title_tag']) ? $settings['title_tag'] : 'h6';
-        $playlist_title  = !empty($settings['playlist_title']) ? $settings['playlist_title'] : esc_html__('Now Playing', 'news-magazine-x');
+        $playlist_title  = !empty($settings['playlist_title']) ? $settings['playlist_title'] : esc_html__('Now Playing', 'wpr-addons');
         $playlist_query  = !empty($settings['playlist_query']) ? $settings['playlist_query'] : 'custom';
 
         $video_urls = [];
@@ -278,31 +318,31 @@ class Wpr_Video_Playlist extends Widget_Base {
             return;
         }
 
-        echo '<div class="newsx-vplaylist-wrap">';
+        echo '<div class="wpr-vplaylist-wrap">';
 
             // Video Player
             echo '<div class="video-player-wrap">';
                 echo '<div class="video-player">';
-                    echo '<div class="newsx-vplaylist-main"></div>';
+                    echo '<div class="wpr-vplaylist-main"></div>';
                 echo '</div>';
             echo '</div>';
 
             // Playlist Panel
-            echo '<div class="newsx-vplaylist-thumbs-wrap">';
+            echo '<div class="wpr-vplaylist-thumbs-wrap">';
 
-                echo '<div class="newsx-vplaylist-highlight">';
-                    echo '<div class="newsx-vplaylist-heading">';
+                echo '<div class="wpr-vplaylist-highlight">';
+                    echo '<div class="wpr-vplaylist-heading">';
                         echo '<span>' . esc_html($playlist_title) . '</span>';
-                        echo '<' . esc_attr($title_tag) . ' class="newsx-vplaylist-current-title"></' . esc_attr($title_tag) . '>';
+                        echo '<' . esc_attr($title_tag) . ' class="wpr-vplaylist-current-title"></' . esc_attr($title_tag) . '>';
                     echo '</div>';
 
-                    echo '<div class="newsx-vplaylist-controller">';
-                        echo '<div class="newsx-play">' . $this->newsx_get_svg_icon('play') . '</div>';
-                        echo '<div class="newsx-pause">' . $this->newsx_get_svg_icon('pause') . '</div>';
+                    echo '<div class="wpr-vplaylist-controller">';
+                        echo '<div class="wpr-play">' . $this->wpr_get_svg_icon('play') . '</div>';
+                        echo '<div class="wpr-pause">' . $this->wpr_get_svg_icon('pause') . '</div>';
                     echo '</div>';
                 echo '</div>';
 
-                echo '<div class="newsx-vplaylist-thumbs" data-urls=\'' . esc_attr(wp_json_encode($video_urls)) . '\'>';
+                echo '<div class="wpr-vplaylist-thumbs" data-urls=\'' . esc_attr(wp_json_encode($video_urls)) . '\'>';
                     echo '<ul></ul>';
                 echo '</div>';
 
