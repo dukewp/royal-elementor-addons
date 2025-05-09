@@ -42,6 +42,10 @@ class Wpr_Content_Ticker extends Widget_Base {
 		return [ 'royal', 'blog', 'content ticker', 'news ticker', 'post ticker', 'posts ticker' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	public function get_script_depends() {
 		return [ 'wpr-slick', 'wpr-marquee' ];
 	}
@@ -147,7 +151,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 				continue;
 			}
 
-			if ( !wpr_fs()->can_use_premium_code() ) {
+			if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 				$this->post_types['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Expert)';
 			} else {
 				$this->post_types[$slug] = esc_html( $title );
@@ -223,7 +227,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'content-ticker', 'query_source', ['pro-pd', 'pro-ft', 'pro-sl'] );
 
-		if ( !wpr_fs()->is_plan( 'expert' ) ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->is_plan( 'expert' ) ) {
 			$this->add_control(
 				'query_source_cpt_pro_notice',
 				[
@@ -1496,6 +1500,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 				'default' => '#555555',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-ticker-title a' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-ticker-title-inner' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-ticker-title:after' => 'color: {{VALUE}};',
 				],
 			]
@@ -1517,6 +1522,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-ticker-title:hover a' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-ticker-title-inner:hover' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-ticker-title:after' => 'color: {{VALUE}};',
 				],
 			]
@@ -1555,6 +1561,24 @@ class Wpr_Content_Ticker extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-ticker-image' => 'max-width: {{SIZE}}{{UNIT}};',
 				],
+			]
+		);
+
+		$this->add_control(
+			'content_image_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'size_units' => [ 'px', '%' ],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-ticker-image img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
 			]
 		);
 
@@ -2051,7 +2075,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 		}
 
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['heading_icon_type'] = ( 'pro-cc' == $settings['heading_icon_type'] ) ? 'none' : $settings['heading_icon_type'];
 		}
 
@@ -2077,7 +2101,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 		$settings = $this->get_settings();
 		$slider_is_rtl = is_rtl();
 		$slider_direction = $slider_is_rtl ? 'rtl' : 'ltr';
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['slider_effect'] = 'hr-slide';
 		}
 
@@ -2112,7 +2136,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 			$this->add_render_attribute( 'ticker-slider-attribute','class', 'wpr-ticker-gradient' );
 		}
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['post_type'] = 'dynamic';
 		}
 
@@ -2158,7 +2182,7 @@ class Wpr_Content_Ticker extends Widget_Base {
 				
 				<?php
 
-				if ( ! wpr_fs()->can_use_premium_code() ) {
+				if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 					$settings['type_select'] = 'slider';
 				}
 

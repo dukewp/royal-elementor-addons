@@ -39,6 +39,10 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 		return [ 'royal', 'blog', 'advanced accordion' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	public function get_script_depends() {
 		return [ '' ];
 	}
@@ -194,7 +198,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 			]
 		);
 
-		// if ( ! wpr_fs()->can_use_premium_code() ) {
+		// if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 		// 	$this->add_control(
 		// 		'acc_repeater_pro_notice',
 		// 		[
@@ -514,6 +518,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'default' => '#605BE4',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button .wpr-acc-title-text' => 'color: {{VALUE}}',
 				]
 			]
 		);
@@ -604,6 +609,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button:hover .wpr-acc-title-text' => 'color: {{VALUE}}',
 				]
 			]
 		);
@@ -654,6 +660,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.wpr-acc-active' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button.wpr-acc-active .wpr-acc-title-text' => 'color: {{VALUE}}',
 				]
 			]
 		);
@@ -1230,7 +1237,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 
 		$edit_link = '<span class="wpr-template-edit-btn" data-permalink="'. get_permalink( $id ) .'">Edit Template</span>';
 		
-		$type = get_post_meta(get_the_ID(), '_wpr_template_type', true);
+		$type = get_post_meta(get_the_ID(), '_wpr_template_type', true) || get_post_meta($id, '_elementor_template_type', true);
 		$has_css = 'internal' === get_option( 'elementor_css_print_method' ) || '' !== $type;
 
 		return Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $id, $has_css ) . $edit_link;
@@ -1309,7 +1316,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 
 						$acc_content_type = $acc['accordion_content_type'];
 					
-					if ( ! wpr_fs()->can_use_premium_code() ) {
+					if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 						$acc_content_type = 'editor';
 						// if ( $key === 3 ) {
 						// 	break;

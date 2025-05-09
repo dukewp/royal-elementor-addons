@@ -38,6 +38,10 @@ class Wpr_Mega_Menu extends Widget_Base {
 		return [ 'royal', 'nav menu', 'header', 'navigation menu', 'horizontal menu', 'horizontal navigation', 'vertical menu', 'vertical navigation', 'burger menu', 'hamburger menu', 'mobile menu', 'responsive menu' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	public function get_style_depends() {
 		return [ 'wpr-link-animations-css' ];
 	}
@@ -1447,6 +1451,20 @@ class Wpr_Mega_Menu extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'sub_menu_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-sub-menu' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-sub-menu li:first-child a' => 'border-top-left-radius: {{TOP}}{{UNIT}}; border-top-right-radius: {{RIGHT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-sub-menu li:last-child a' => 'border-bottom-left-radius: {{BOTTOM}}{{UNIT}}; border-bottom-right-radius: {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
 		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
 			[
@@ -2300,6 +2318,17 @@ class Wpr_Mega_Menu extends Widget_Base {
 			'walker' => new \Wpr_Mobile_Menu_Walker(),
 		];
 
+		// Retrieve Image Alt Text
+		$image_alt = '';
+		if ( ! empty( $settings["mob_menu_offcanvas_logo"]["url"] ) ) {
+			// Get the attachment ID from the image source URL
+			$attachment_id = attachment_url_to_postid( $settings["mob_menu_offcanvas_logo"]["url"] );
+			
+			if ( $attachment_id ) {
+				$image_alt = get_post_meta( $attachment_id, '_wp_attachment_image_alt', true );
+			}
+		}
+
 		// Generate Mobile Menu HTML
 		$moible_menu_html = wp_nav_menu( $mobile_args );
 
@@ -2310,7 +2339,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 			return;
 		}
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['menu_layout'] = 'horizontal';
 			$settings['toggle_btn_style'] = 'hamburger';
 		}
@@ -2337,17 +2366,17 @@ class Wpr_Mega_Menu extends Widget_Base {
 				echo '</div>';
 			echo '</div>';
 
-			$animation_class =  wpr_fs()->can_use_premium_code() ? 'wpr-anim-timing-'. $settings['mob_menu_offcanvas_animation_timing'] : '';
+			$animation_class =  defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() ? 'wpr-anim-timing-'. $settings['mob_menu_offcanvas_animation_timing'] : '';
 			$toggle_offcanvas_backface = isset($settings['mob_menu_toggle_offcanvas_backface']) ? $settings['mob_menu_toggle_offcanvas_backface'] : '';
 
 			// Menu
 			echo '<div class="wpr-mobile-mega-menu-wrap '. $animation_class .'" toggle-backface="'. $toggle_offcanvas_backface .'">';
-				if ( wpr_fs()->can_use_premium_code() && 'offcanvas' === $settings['mob_menu_display_as'] ) {
+				if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() && 'offcanvas' === $settings['mob_menu_display_as'] ) {
 					echo '<div class="mobile-mega-menu-header">';
 						if ( ! empty( $settings['mob_menu_offcanvas_logo']['url'] ) ) {
 							echo '<div class="mobile-mega-menu-logo">';
 								echo '<a href="'. esc_url(home_url()) .'">';
-									echo '<img src="'. esc_url($settings["mob_menu_offcanvas_logo"]["url"]) .'" alt="">';
+									echo '<img src="'. esc_url($settings["mob_menu_offcanvas_logo"]["url"]) .'" alt="'. esc_attr( $image_alt ) .'">';
 								echo '</a>';
 							echo '</div>';
 						}
@@ -2359,7 +2388,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 				echo ''. $moible_menu_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo '</div>';
 
-			if ( wpr_fs()->can_use_premium_code() && 'offcanvas' === $settings['mob_menu_display_as'] ) {
+			if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() && 'offcanvas' === $settings['mob_menu_display_as'] ) {
 				echo '<div class="wpr-mobile-mega-menu-overlay"></div>';
 			}
 

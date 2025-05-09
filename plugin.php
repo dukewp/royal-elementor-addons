@@ -110,6 +110,15 @@ class Plugin {
 		// Meta Keys
 		require WPR_ADDONS_PATH . 'classes/wpr-custom-meta-keys.php';
 
+		// Grid
+		require WPR_ADDONS_PATH . 'classes/modules/wpr-filter-grid-posts.php';
+
+		// Media Grid
+		require WPR_ADDONS_PATH . 'classes/modules/wpr-filter-grid-media.php';
+
+		// Woo Grid
+		require WPR_ADDONS_PATH . 'classes/modules/wpr-filter-woo-products.php';
+
 		// Particles
 		if ( 'on' === get_option('wpr-particles', 'on') ) {//TODO: make this check automatic(loop through) for all extensions
 			require WPR_ADDONS_PATH . 'extensions/wpr-particles.php';
@@ -282,7 +291,7 @@ class Plugin {
 		// Popups
 		require WPR_ADDONS_PATH . 'modules/popup/wpr-popup.php';
 
-        if ( wpr_fs()->can_use_premium_code() && defined('WPR_ADDONS_PRO_VERSION') ) {
+        if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() ) {
         	require WPR_ADDONS_PRO_PATH . 'modules/popup-pro/wpr-popup-pro.php';
         	$documents_manager->register_document_type( 'wpr-popups', 'Wpr_Popup_Pro' );
         } else {
@@ -434,14 +443,6 @@ class Plugin {
 	
 	public function wpr_some_init_actions() {
 		load_plugin_textdomain('wpr-addons', false, dirname(plugin_basename(__FILE__)) . '/languages/');
-
-		if ( ! isset( $_COOKIE['wpr_guest_token'] ) ) {
-			// Generate a unique token and store it in a cookie
-			$guest_id = bin2hex(random_bytes(32)); // Secure random string as guest "session"
-			$secure = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' );
-			setcookie( 'wpr_guest_token', $guest_id, time() + 3600, '/', '', $secure, true ); // 1 hour expiration
-			$_COOKIE['wpr_guest_token'] = $guest_id; // Ensure it's immediately available in PHP
-		}
 		
 		if ( get_option('wpr_hide_banners') !== 'on' ) {
 			// Pro Features Notice
@@ -456,13 +457,25 @@ class Plugin {
 			// Rating Notice 
 			require WPR_ADDONS_PATH . 'admin/notices/rating-notice.php';
 		}
+
+		// if ( defined('REST_REQUEST') && REST_REQUEST ) {
+		// 	return;
+		// }
+
+		// if ( ! isset( $_COOKIE['wpr_guest_token'] ) && !headers_sent() ) {
+		// 	// Generate a unique token and store it in a cookie
+		// 	$guest_id = bin2hex(random_bytes(32)); // Secure random string as guest "session"
+		// 	$secure = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' );
+		// 	setcookie( 'wpr_guest_token', $guest_id, time() + 3600, '/', '', $secure, true ); // 1 hour expiration
+		// 	$_COOKIE['wpr_guest_token'] = $guest_id; // Ensure it's immediately available in PHP
+		// }
 	}
 
-	public function generate_custom_token() {
+	public function wpr_generate_custom_token() {
 		if ( is_user_logged_in() ) {
 			// For logged-in users, use their user ID to store a token
 			$user_id = get_current_user_id();
-			$token = bin2hex(random_bytes(32)); // Secure token generation
+			$token = bin2hex(\random_bytes(32)); // Secure token generation
 			set_transient( 'wpr_custom_token_' . $user_id, $token, HOUR_IN_SECONDS ); // Store token for 1 hour
 			return $token;
 		} else {
@@ -474,13 +487,34 @@ class Plugin {
 				return null;
 			}
 	
-			// Now use the guest ID to store a transient specific to this user
-			$token = bin2hex(random_bytes(32)); // Secure token generation
+			// Check if a token already exists for this guest
+			$existing_token = get_transient( 'wpr_custom_guest_token_' . $guest_id );
+			if ( $existing_token ) {
+				return $existing_token;
+			}
+	
+			// Only create new token if one doesn't exist
+			$token = bin2hex(\random_bytes(32)); // Secure token generation
 			set_transient( 'wpr_custom_guest_token_' . $guest_id, $token, HOUR_IN_SECONDS ); // Store token for 1 hour
+			
+			// Clean up old guest tokens periodically (1% chance)
+			if ( rand(1, 100) === 1 ) {
+				$this->cleanup_guest_tokens();
+			}
+			
 			return $token;
 		}
 	}
 	
+	private function cleanup_guest_tokens() {
+		global $wpdb;
+		$wpdb->query(
+			"DELETE FROM {$wpdb->options} 
+			WHERE option_name LIKE '_transient_wpr_custom_guest_token_%'
+			AND option_value = ''
+			LIMIT 100"
+		);
+	}
 
 	public function hide_theme_notice() {
 		wp_enqueue_style( 'hide-theme-notice', WPR_ADDONS_URL .'assets/css/admin/wporg-theme-notice.css', [] );
@@ -536,7 +570,7 @@ class Plugin {
 			true
 		);
 
-		$custom_token = $this->generate_custom_token();
+		// $custom_token = $this->wpr_generate_custom_token();
 
 		wp_localize_script(
 			'wpr-addons-js',
@@ -558,7 +592,7 @@ class Plugin {
 				'select_empty' => esc_html__('Nothing selected', 'wpr-addons'),
 				'file_empty' => esc_html__('Please upload a file', 'wpr-addons'),
 				'recaptcha_error' => esc_html__('Recaptcha Error', 'wpr-addons'),
-				'token' => $custom_token
+				// 'token' => $custom_token
 			]
 		);
 	}	
@@ -920,7 +954,7 @@ class Plugin {
 
 		$category = Utilities::is_theme_builder_template() ? 'wpr-woocommerce-builder-widgets' : 'wpr-premium-widgets';
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$promotion_widgets = [
 				[
 					'name' => 'wpr-woo-category-grid',
@@ -957,7 +991,7 @@ class Plugin {
 			$config['promotionWidgets'] = array_merge( $config['promotionWidgets'], $promotion_widgets );
 		}
 		
-		if ( !wpr_fs()->is_plan( 'expert' ) ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->is_plan( 'expert' ) ) {
 			$expert_widgets = [
 				[
 					'name' => 'wpr-category-grid',

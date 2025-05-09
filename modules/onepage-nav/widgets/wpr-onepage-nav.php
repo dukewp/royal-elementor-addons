@@ -41,6 +41,10 @@ class Wpr_OnepageNav extends Widget_Base {
 		return [ 'royal', 'one page', 'onepage', 'navigation', 'one page scroll', 'scroll navigation', 'floating menu', 'sticky menu', 'page scroll' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
     public function get_custom_help_url() {
     	if ( empty(get_option('wpr_wl_plugin_links')) )
         // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-one-page-navigation-help-btn';
@@ -56,11 +60,22 @@ class Wpr_OnepageNav extends Widget_Base {
 		);
 
 		$this->add_control(
+			'nav_consider_header',
+			[
+				'label' => esc_html__( 'Consider Sticky Header', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => '',
+				'description' => esc_html__( 'Enable this to account for Royal Sticky Header when scrolling to sections.', 'wpr-addons' ),
+			]
+		);
+
+		$this->add_control(
 			'nav_item_show_tooltip',
 			[
 				'label' => sprintf( __( 'Show Tooltip %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
 				'type' => Controls_Manager::SWITCHER,
-				'classes' => 'wpr-pro-control no-distance'
+				'classes' => 'wpr-pro-control no-distance',
+				'separator' => 'before'
 			]
 		);
 
@@ -184,7 +199,7 @@ class Wpr_OnepageNav extends Widget_Base {
 			]
 		);
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'opnepage_pro_notice',
 				[
@@ -740,19 +755,19 @@ class Wpr_OnepageNav extends Widget_Base {
 		$settings = $this->get_settings();
 
 		// Pro Options
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['nav_item_scroll_speed'] = '';
 			$settings['nav_item_highlight'] = '';
 			$settings['nav_item_show_tooltip'] = '';
 		}
 
-		echo '<div class="wpr-onepage-nav" data-speed="'. esc_attr($settings['nav_item_scroll_speed']) .'" data-highlight="'. esc_attr($settings['nav_item_highlight']) .'">';
+		echo '<div class="wpr-onepage-nav" data-speed="'. esc_attr($settings['nav_item_scroll_speed']) .'" data-highlight="'. esc_attr($settings['nav_item_highlight']) .'" data-consider-header="'. esc_attr($settings['nav_consider_header']) .'">';
 		
 		// Nav Items
 		foreach ( $settings['nav_items'] as $item ) {
 			echo '<div class="wpr-onepage-nav-item elementor-repeater-item-'. esc_attr($item['_id']) .'">';
 				echo '<a href="#'. esc_attr($item['nav_item_id']) .'">';
-					echo ( wpr_fs()->can_use_premium_code() && 'yes' === $settings['nav_item_show_tooltip'] ) ? '<span class="wpr-tooltip">'. esc_html($item['nav_item_tooltip']) .'</span>' : '';
+					echo ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() && 'yes' === $settings['nav_item_show_tooltip'] ) ? '<span class="wpr-tooltip">'. esc_html($item['nav_item_tooltip']) .'</span>' : '';
 					\Elementor\Icons_Manager::render_icon( $item['nav_item_icon'] );
 				echo '</a>';
 			echo '</div>';

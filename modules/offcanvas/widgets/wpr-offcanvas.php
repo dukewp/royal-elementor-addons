@@ -40,6 +40,10 @@ class Wpr_Offcanvas extends Widget_Base {
 		return [ 'royal', 'offcanvas', 'menu', 'nav', 'content', 'off canvas', 'sidebar', 'ofcanvas', 'popup' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	public function get_style_depends() {
 		return [ 'wpr-link-animations-css' ];
 	}
@@ -262,7 +266,7 @@ class Wpr_Offcanvas extends Widget_Base {
 
 		$edit_link = '<span class="wpr-template-edit-btn" data-permalink="'. get_permalink( $id ) .'">Edit Template</span>';
 		
-		$type = get_post_meta(get_the_ID(), '_wpr_template_type', true);
+		$type = get_post_meta(get_the_ID(), '_wpr_template_type', true) || get_post_meta($id, '_elementor_template_type', true);
 
 		$has_css = 'internal' === get_option( 'elementor_css_print_method' ) || '' !== $type;
 
@@ -396,9 +400,9 @@ class Wpr_Offcanvas extends Widget_Base {
 					'active' => true,
 				],
 				'default' => esc_html__( 'Click Here', 'wpr-addons' ),
-				'condition' => [
-					'offcanvas_show_button_title' => 'yes'
-				]
+				// 'condition' => [
+				// 	'offcanvas_show_button_title' => 'yes'
+				// ]
 			]
 		);
 
@@ -1178,7 +1182,7 @@ class Wpr_Offcanvas extends Widget_Base {
     protected function render() {
         $settings = $this->get_settings_for_display();
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['offcanvas_position'] = 'right';
 			$settings['offcanvas_entrance_animation'] = 'fade';
 		}
@@ -1187,14 +1191,27 @@ class Wpr_Offcanvas extends Widget_Base {
 			'offcanvas-wrapper',
 			[
 				'class' => [ 'wpr-offcanvas-container' ],
-				'data-offcanvas-open' => ! wpr_fs()->can_use_premium_code() ? 'no' : $settings['offcanvas_open_by_default'],
+				'data-offcanvas-open' => !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'no' : $settings['offcanvas_open_by_default'],
+			]
+		);
+
+		// Before rendering the button, add the aria attributes
+		$this->add_render_attribute(
+			'trigger-button',
+			[
+				'class' => 'wpr-offcanvas-trigger',
+				'aria-label' => ! empty($settings['offcanvas_button_title']) ? 
+					esc_html($settings['offcanvas_button_title']) : 
+					esc_html__('Toggle Offcanvas Panel', 'wpr-addons'),
+				'aria-expanded' => 'false',
+				'aria-controls' => 'wpr-offcanvas-' . $this->get_id()
 			]
 		);
 
 		?>
 
 		<div <?php echo $this->get_render_attribute_string( 'offcanvas-wrapper' ); ?>>
-			<button class="wpr-offcanvas-trigger">
+			<button <?php echo $this->get_render_attribute_string( 'trigger-button' ); ?>>
 				<?php if ( 'yes' === $settings['offcanvas_show_button_icon'] && !empty($settings['offcanvas_button_icon']) ) : 
 					\Elementor\Icons_Manager::render_icon( $settings['offcanvas_button_icon'] );
 				endif; ?>

@@ -32,6 +32,11 @@ if ( ! defined( 'ABSPATH' ) ) {
         }
 
 		$all_post_types = [];
+
+        if ( sanitize_text_field($_POST['wpr_show_attachments']) == 'yes' ) {
+            $all_post_types = ['attachment'];
+        }
+
         foreach(  Utilities::get_custom_types_of( 'post', false ) as $key=>$value ) {
             array_push($all_post_types, $key);
         }
@@ -114,13 +119,13 @@ if ( ! defined( 'ABSPATH' ) ) {
                 [
                     'posts_per_page' => sanitize_text_field($_POST['wpr_number_of_results']), 
                     's' => sanitize_text_field( $_POST['wpr_keyword'] ), 
-                    'post_type' => $_POST['wpr_query_type'] === 'all' || !wpr_fs()->can_use_premium_code() ? $all_post_types : array( sanitize_text_field($_POST['wpr_query_type']) ),
+                    'post_type' => $_POST['wpr_query_type'] === 'all' || (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code())  ? $all_post_types : array( sanitize_text_field($_POST['wpr_query_type']) ),
                     'offset' => sanitize_text_field($_POST['wpr_search_results_offset']),
                     'meta_query' => 'yes' === sanitize_text_field($_POST['wpr_exclude_without_thumb']) ? [
                         ['key' => '_thumbnail_id']
                     ] : '',
                     'tax_query' => $tax_query,
-                    'post_status' => 'publish',
+                    'post_status' => in_array('attachment', $all_post_types) ? ['publish', 'inherit'] : 'publish',
                     'post_password' => ''
                 ]
             );
@@ -129,13 +134,13 @@ if ( ! defined( 'ABSPATH' ) ) {
                 [
                     'posts_per_page' => sanitize_text_field($_POST['wpr_number_of_results']), 
                     's' => sanitize_text_field( $_POST['wpr_keyword'] ), 
-                    'post_type' => $_POST['wpr_query_type'] === 'all' || !wpr_fs()->can_use_premium_code() ? $all_post_types : array( sanitize_text_field($_POST['wpr_query_type']) ),
+                    'post_type' => $_POST['wpr_query_type'] === 'all' || (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code())  ? $all_post_types : array( sanitize_text_field($_POST['wpr_query_type']) ),
                     'offset' => sanitize_text_field($_POST['wpr_search_results_offset']),
                     'meta_query' => 'yes' === sanitize_text_field($_POST['wpr_exclude_without_thumb']) ? [
                         ['key' => '_thumbnail_id']
                     ] : '',
                     'tax_query' => $tax_query,
-                    'post_status' => 'publish',
+                    'post_status' => in_array('attachment', $all_post_types) ? ['publish', 'inherit'] : 'publish',
                 ]
             );
         }
@@ -170,11 +175,22 @@ if ( ! defined( 'ABSPATH' ) ) {
                         endif ; ?>
 
                         <div class="wpr-ajax-search-content">
-                            <a target="<?php echo esc_attr($_POST['wpr_ajax_search_link_target']) ?>" class="wpr-ajax-title" href="<?php echo esc_url( the_permalink() ); ?>"><?php the_title();?></a>
+                            <a target="<?php echo esc_attr($_POST['wpr_ajax_search_link_target']) ?>" class="wpr-ajax-title" href="<?php echo esc_url( get_the_permalink() ); ?>"><?php the_title();?></a>
 
                             <?php if ( sanitize_text_field($_POST['wpr_show_description']) == 'yes' ) : ?>
-                                <p class="wpr-ajax-desc"><a target="<?php echo esc_attr($_POST['wpr_ajax_search_link_target']) ?>" href="<?php echo esc_url( the_permalink() ); ?>"><?php echo wp_trim_words(get_the_content(), sanitize_text_field($_POST['wpr_number_of_words'])); ?></a></p>
+                                <p class="wpr-ajax-desc"><a target="<?php echo esc_attr($_POST['wpr_ajax_search_link_target']) ?>" href="<?php echo esc_url( get_the_permalink() ); ?>"><?php echo wp_trim_words(get_the_content(), sanitize_text_field($_POST['wpr_number_of_words'])); ?></a></p>
                             <?php endif; ?>
+
+                            <?php if ( 'yes' === sanitize_text_field($_POST['wpr_show_product_price']) && 
+                                    get_post_type() === 'product' && 
+                                    class_exists('WooCommerce') ) :
+                                $product = wc_get_product(get_the_ID());
+                                if ($product) {
+                                    $price_html = '<div class="wpr-search-product-price">'. $product->get_price_html() .'</div>';
+
+                                    echo $price_html;
+                                }
+                            endif; ?>
 
                             <?php if ( sanitize_text_field($_POST['wpr_show_view_result_btn']) ) : ?>
                                 <a target="<?php echo esc_attr($_POST['wpr_ajax_search_link_target']) ?>" class="wpr-view-result" href="<?php echo esc_url( the_permalink() ); ?>"><?php echo sanitize_text_field($_POST['wpr_view_result_text']) ?></a>

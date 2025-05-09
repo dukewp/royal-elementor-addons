@@ -31,6 +31,10 @@ class Wpr_Elementor_Template extends Widget_Base {
 		return [ 'royal', 'elementor', 'template', 'load' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
     public function get_custom_help_url() {
     	if ( empty(get_option('wpr_wl_plugin_links')) )
         // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-elementor-template-help-btn';
@@ -84,7 +88,7 @@ class Wpr_Elementor_Template extends Widget_Base {
 
 			$edit_link = '<span class="wpr-template-edit-btn" data-permalink="'. esc_url(get_permalink($id)) .'">Edit Template</span>';
 		
-			$type = get_post_meta(get_the_ID(), '_wpr_template_type', true);
+			$type = get_post_meta(get_the_ID(), '_wpr_template_type', true) || get_post_meta($id, '_elementor_template_type', true);
 			$has_css = 'internal' === get_option( 'elementor_css_print_method' ) || '' !== $type;
 
 			echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $id, $has_css ) . $edit_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

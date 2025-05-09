@@ -40,6 +40,10 @@ class Wpr_Dual_Button extends Widget_Base {
 	public function get_keywords() {
 		return [ 'royal', 'dual button', 'double button' ];
 	}
+
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
 	
 	public function get_style_depends() {
 		return [ 'wpr-button-animations-css' ];
@@ -111,7 +115,7 @@ class Wpr_Dual_Button extends Widget_Base {
 			]
 		);
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'dual_button_pro_notice',
 				[

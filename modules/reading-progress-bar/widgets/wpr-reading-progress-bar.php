@@ -42,11 +42,19 @@ class Wpr_Reading_Progress_Bar extends Widget_Base {
         return [ 'royal', 'reading progress bar', 'skills bar', 'percentage bar', 'scroll' ];
     }
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
     public function get_custom_help_url() {
         if ( empty(get_option('wpr_wl_plugin_links')) )
         // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-progress-bar-help-btn';
             return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
+
+	public function is_reload_preview_required() {
+		return true;
+	}
     
     public function register_controls() {
         
@@ -59,15 +67,6 @@ class Wpr_Reading_Progress_Bar extends Widget_Base {
         );
 
 		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
-
-		$this->add_control(
-			'rpb_apply_changes',
-			[
-				'type' => Controls_Manager::RAW_HTML,
-				'raw' => '<div class="elementor-update-preview editor-wpr-preview-update"><span>Update changes to Preview</span><button class="elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply</button>',
-				'separator' => 'after'
-			]
-		);
 
 		$this->add_control(
 			'rpb_info',

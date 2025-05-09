@@ -5,11 +5,16 @@ jQuery(document).ready(function( $ ) {
 
 		requiredTheme: false,
 		requiredPlugins: false,
+		lazyImages: [],
 
 		init: function() {
-
 			// Overlay Click
 			$(document).on('click', '.wpr-templates-kit-grid .image-overlay', function(){
+				// TODO: News Magazine X Theme Banner (remove later)
+				if ( $(this).closest('.grid-item').data('kit-id') === 'news-magazine-x-v1' ) {
+					return;
+				}
+
 				WprTemplatesKit.showImportPage( $(this).closest('.grid-item') );
 				WprTemplatesKit.renderImportPage( $(this).closest('.grid-item') );
 			});
@@ -99,6 +104,8 @@ jQuery(document).ready(function( $ ) {
 			// 		WprTemplatesKit.importSingleTemplate( $('.import-kit').attr('data-kit-id'), $(this).attr('data-template-id') );
 			// 	}
 			// });
+
+			WprTemplatesKit.initializeLazyLoading();
 
 		},
 
@@ -282,8 +289,15 @@ jQuery(document).ready(function( $ ) {
 												console.log('Import Finished!');
 												WprTemplatesKit.importProgressBar('finish');
 											}, 1000 );
+										},
+										error: function( xhr, textStatus, errorThrown ) {
+											console.error('AJAX-error:', textStatus, errorThrown);
 										}
 									});
+								},
+								error: function( xhr, textStatus, errorThrown ) {
+									console.error('AJAX-error:', textStatus, errorThrown);
+							
 								}
 							});
 						},
@@ -428,6 +442,55 @@ jQuery(document).ready(function( $ ) {
 			$('.wpr-templates-kit-single').find('.preview-demo').attr('href', $('.wpr-templates-kit-single').find('.preview-demo').attr('href') +'/'+ id );
 		},
 
+		initializeLazyLoading: function() {
+			var lazyImages = $('img.lazy');
+		
+			if ("IntersectionObserver" in window) {
+				var lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+					entries.forEach(function(entry) {
+						if (entry.isIntersecting) {
+							var lazyImage = $(entry.target);
+							lazyImage.attr('src', lazyImage.data('src'));
+							lazyImage.removeClass('lazy');
+							lazyImageObserver.unobserve(entry.target);
+						}
+					});
+				});
+	
+				lazyImages.each(function() {
+					lazyImageObserver.observe(this);
+				});
+			} else {
+				// Fallback for browsers that do not support IntersectionObserver
+				var lazyLoadThrottleTimeout;
+				function lazyLoad() {
+					if (lazyLoadThrottleTimeout) {
+						clearTimeout(lazyLoadThrottleTimeout);
+					}
+	
+					lazyLoadThrottleTimeout = setTimeout(function() {
+						var scrollTop = $(window).scrollTop();
+						lazyImages.each(function() {
+							var img = $(this);
+							if (img.offset().top < (window.innerHeight + scrollTop)) {
+								img.attr('src', img.data('src'));
+								img.removeClass('lazy');
+							}
+						});
+						if (lazyImages.length == 0) {
+							$(document).off("scroll", lazyLoad);
+							$(window).off("resize", lazyLoad);
+							$(window).off("orientationChange", lazyLoad);
+						}
+					}, 20);
+				}
+	
+				$(document).on("scroll", lazyLoad);
+				$(window).on("resize", lazyLoad);
+				$(window).on("orientationChange", lazyLoad);
+			}
+		},
+
 		searchTemplatesKit: function( tag, html ) {
 			var price = $('.wpr-templates-kit-price-filter').children().first().attr( 'data-price' ),
 				priceAttr = 'mixed' === price ? '' : '[data-price*="'+ price +'"]';
@@ -438,6 +501,9 @@ jQuery(document).ready(function( $ ) {
 			} else {
 				$('.main-grid').html( html );
 				$('.main-grid .grid-item'+ priceAttr).show();
+
+				// TODO: News Magazine X Theme Banner (remove later)
+				$('.wpr-templates-kit-grid .grid-item[data-kit-id="news-magazine-x-v1"]').hide();
 			}
 
 			if ( ! $('.main-grid .grid-item').is(':visible') ) {
@@ -458,6 +524,15 @@ jQuery(document).ready(function( $ ) {
 					}
 				}
 			});
+
+			// TODO: News Magazine X Theme Banner (remove later)
+			let $newsItem = $('.wpr-templates-kit-grid .grid-item[data-kit-id="news-magazine-x-v1"]');
+			if ($newsItem.length && $newsItem.is(':visible')) {
+				$('.main-grid').prepend($newsItem);
+			}
+			WprTemplatesKit.newsMagazineXThemeBanner();
+			
+			WprTemplatesKit.initializeLazyLoading();
 		},
 
 		fiterFreeProTemplates: function( price ) {
@@ -474,6 +549,113 @@ jQuery(document).ready(function( $ ) {
 				$('.main-grid .grid-item'+ tagAttr).show();
 			}
 		},
+		
+		// TODO: News Magazine X Theme Banner (remove later)
+		newsMagazineXThemeBanner: function() {
+			let $newsItem = $('.wpr-templates-kit-grid .grid-item[data-kit-id="news-magazine-x-v1"]'),
+				$footer = $newsItem.find('footer'),
+				$overlay = $newsItem.find('.image-overlay');
+			
+			// Add install button
+			if ( ! $newsItem.find('.wpr-templates-kit-install-newsx').length ) {
+				$footer.append('\
+					<div class="wpr-templates-kit-install-newsx">\
+						Install Theme\
+					</div>\
+				');
+			}
+
+			// Add info to Overlay
+			if ( ! $newsItem.find('.wpr-templates-kit-newsx-info').length ) {
+				$overlay.append('\
+					<div class="wpr-templates-kit-newsx-info">\
+						<h3>Blog/Magazine WordPress Theme</h3>\
+					<p>Due to high demand we designed a <strong>FREE</strong>, <strong>Lightning-fast</strong> and <strong>Easy to use</strong> WordPress theme for our users.</p>\
+						<p>Instead of importing an Elementor template, you can enjoy the full WordPress theme experience! Note: the theme <strong>does not require</strong> <strong>Elementor</strong> or <strong>Royal Addons plugins</strong>.</p>\
+					</div>\
+				');
+			}
+
+			// Change Overlay Icon
+			$overlay.find('.dashicons').removeClass('dashicons-search').addClass('dashicons-external');
+			// change image overlay tag to <a>
+			if ( ! $overlay.is('a') ) {
+				$overlay.wrap('<a href="https://news-magazine-x-free.wp-royal-themes.com/demo/?ref=rea-plugin-backend-templates" target="_blank"></a>');
+			}
+
+			// Reset
+			$('.wpr-templates-kit-install-newsx').off('click');
+
+			// Add click handler for theme installation
+			$('.wpr-templates-kit-install-newsx').on('click', function() {
+				let $button = $(this),
+					confirmInstall = confirm('This action will install News Magazine X WordPress theme and redirect you to the Appearance > Themes page.\n\nPlease DO NOT close or refresh the page until the installation is complete.');
+
+				if (!confirmInstall) {
+					return;
+				}
+
+				// Change button text
+				$button.text('Installing...');
+				
+				// Check if theme is already installed
+				if (wp.themes && wp.themes.data && wp.themes.data.themes && wp.themes.data.themes['news-magazine-x']) {
+					// Theme exists, just activate and redirect
+					$.ajax({
+						url: ajaxurl,
+						type: 'POST',
+						data: {
+							action: 'wpr_install_news_magazine_x_theme',
+							theme: 'news-magazine-x',
+							nonce: WprTemplatesKitLoc.nonce
+						},
+						success: function() {
+							window.location.href = 'themes.php';
+						}
+					});
+					return;
+				}
+				
+				// Theme not installed, install it first
+				wp.updates.installTheme({
+					slug: 'news-magazine-x',
+					success: function() {
+						$.ajax({
+							url: ajaxurl,
+							type: 'POST',
+							data: {
+								action: 'wpr_install_news_magazine_x_theme',
+								theme: 'news-magazine-x',
+								nonce: WprTemplatesKitLoc.nonce
+							},
+							success: function() {
+								window.location.href = 'themes.php';
+							}
+						});
+					},
+					error: function(xhr, ajaxOptions, thrownerror) {
+						if ('folder_exists' === xhr.errorCode) {
+							// Theme is already installed, proceed with activation
+							$.ajax({
+								url: ajaxurl,
+								type: 'POST',
+								data: {
+									action: 'wpr_install_news_magazine_x_theme',
+									theme: 'news-magazine-x',
+									nonce: WprTemplatesKitLoc.nonce
+								},
+								success: function() {
+									window.location.href = 'themes.php';
+								}
+							});
+						} else {
+							$button.text('Install Failed');
+							console.log('Theme installation failed:', xhr);
+						}
+					}
+				});
+			});
+		}
 
 	}
 

@@ -46,6 +46,10 @@ class Wpr_Flip_Box extends Widget_Base {
 		return [ 'wpr-button-animations-css', 'wpr-animations-css' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
     public function get_custom_help_url() {
     	if ( empty(get_option('wpr_wl_plugin_links')) )
         // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-flip-box-help-btn';
@@ -1839,12 +1843,13 @@ class Wpr_Flip_Box extends Widget_Base {
 
 	protected function render() {
 
-		$settings = $this->get_settings();
+		$settings = $this->get_settings_for_display();
+		$settings_old = $this->get_settings();
 
-		$front_image_src = Group_Control_Image_Size::get_attachment_image_src( $settings['front_image']['id'], 'front_image_size', $settings );
+		$front_image_src = Group_Control_Image_Size::get_attachment_image_src( $settings_old['front_image']['id'], 'front_image_size', $settings_old );
 
 		if ( ! $front_image_src ) {
-			$front_image_src = $settings['front_image']['url'];
+			$front_image_src = $settings_old['front_image']['url'];
 		}
 
 		if ( isset($settings['front_image']['alt']) ) {
@@ -1853,10 +1858,10 @@ class Wpr_Flip_Box extends Widget_Base {
 			$front_alt_text = '';
 		}
 
-		$back_image_src = Group_Control_Image_Size::get_attachment_image_src( $settings['back_image']['id'], 'back_image_size', $settings );
+		$back_image_src = Group_Control_Image_Size::get_attachment_image_src( $settings_old['back_image']['id'], 'back_image_size', $settings_old );
 
 		if ( ! $back_image_src ) {
-			$back_image_src = $settings['back_image']['url'];
+			$back_image_src = $settings_old['back_image']['url'];
 		}
 
 		if ( isset($settings['back_image']['alt']) ) {
@@ -1866,20 +1871,20 @@ class Wpr_Flip_Box extends Widget_Base {
 		}
 
 		$back_btn_element = 'div';
-		$back_link = $settings['back_link']['url'];
+		$back_link = $settings_old['back_link']['url'];
 
 
 		if ( '' !== $back_link ) {
 
 			$back_btn_element = 'a';
 
-			$this->add_render_attribute( 'link_attribute', 'href', esc_url( $settings['back_link']['url'] ) );
+			$this->add_render_attribute( 'link_attribute', 'href', esc_url( $back_link ) );
 
-			if ( $settings['back_link']['is_external'] ) {
+			if ( $settings_old['back_link']['is_external'] ) {
 				$this->add_render_attribute( 'link_attribute', 'target', '_blank' );
 			}
 
-			if ( $settings['back_link']['nofollow'] ) {
+			if ( $settings_old['back_link']['nofollow'] ) {
 				$this->add_render_attribute( 'link_attribute', 'nofollow', '' );
 			}
 		}

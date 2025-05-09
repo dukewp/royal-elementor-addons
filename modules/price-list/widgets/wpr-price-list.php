@@ -42,6 +42,10 @@ class Wpr_Price_List extends Widget_Base {
 		return [ 'royal', 'pricing list', 'price list', 'price menu', 'pricing menu', 'food menu', 'restaurant menu' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
     public function get_custom_help_url() {
     	if ( empty(get_option('wpr_wl_plugin_links')) )
         // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-price-list-help-btn';
@@ -133,7 +137,7 @@ class Wpr_Price_List extends Widget_Base {
 
 		$repeater->add_control( 'prlist_link', $this->add_repeater_args_prlist_link() );
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$repeater->add_control(
 				'price_list_pro_notice',
 				[

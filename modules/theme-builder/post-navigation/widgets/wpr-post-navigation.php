@@ -44,6 +44,10 @@ class Wpr_Post_Navigation extends Widget_Base {
 		return [ 'navigation', 'arrows', 'pagination' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	public function add_control_display_on_separate_lines() {
 		$this->add_responsive_control(
 			'display_on_separate_lines',
@@ -624,6 +628,34 @@ class Wpr_Post_Navigation extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+		
+		$this->start_controls_section(
+			'section_image',
+			[
+				'label' => esc_html__( 'Image', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'post_nav_img_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-post-navigation img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
+				],
+			]
+		);
+
+		$this->end_controls_section();
 
 		// Styles ====================
 		// Section: Back Button ------
@@ -734,7 +766,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 
 	// Arrow Icon
 	public function render_arrow_by_location( $settings, $location, $dir ) {
-		if ( 'fixed' === $settings['post_nav_layout'] || !wpr_fs()->can_use_premium_code() ) {
+		if ( 'fixed' === $settings['post_nav_layout'] || (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) ) {
 			$settings['post_nav_arrows_loc'] = 'separate';
 		}
 
@@ -751,7 +783,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 		// Get Settings
 		$settings = $this->get_settings();
 
-		if ( !wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['post_nav_image'] = '';
 			$settings['post_nav_image_bg'] = '';
 			$settings['post_nav_back'] = '';
@@ -763,7 +795,7 @@ class Wpr_Post_Navigation extends Widget_Base {
 		$nav_query = isset($settings['post_nav_query']) ? $settings['post_nav_query'] : 'all';
 
 		// Get Previous and Next Posts
-		if ( 'all' === $nav_query || !wpr_fs()->can_use_premium_code() ) {
+		if ( 'all' === $nav_query || (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) ) {
 			$prev_post = get_adjacent_post( false, '', true );
 			$next_post = get_adjacent_post( false, '', false );
 		} else {

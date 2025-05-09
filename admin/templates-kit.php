@@ -24,6 +24,10 @@ add_action( 'wp_ajax_wpr_final_settings_setup', 'wpr_final_settings_setup' );
 add_action( 'wp_ajax_wpr_search_query_results', 'wpr_search_query_results' );
 add_action( 'init', 'disable_default_woo_pages_creation', 2 );
 
+
+// TODO: News Magazine X Theme Installation (remove later)
+add_action( 'wp_ajax_wpr_install_news_magazine_x_theme', 'wpr_install_news_magazine_x_theme' );
+
 // Set Image Timeout
 if ( version_compare( get_bloginfo( 'version' ), '5.1.0', '>=' ) ) {
     add_filter( 'http_request_timeout', 'set_image_request_timeout', 10, 2 );
@@ -112,7 +116,7 @@ function wpr_addons_templates_kit_page() {
                 echo '<div class="grid-item" data-kit-id="'. esc_attr($kit_id) .'" data-title="'. esc_attr(strtolower($data['name'])) .'" data-tags="'. esc_attr($data['tags']) .'" data-plugins="'. esc_attr($data['plugins']) .'" data-pages="'. esc_attr($data['pages']) .'" data-price="'. esc_attr($data['price']) .'" data-expert="'. esc_attr($is_expert) .'">';
                     echo '' !== $data['label'] ? '<span class="label label-'. esc_attr($data['label']) .'">'. esc_html($data['label']) .'</span>' : '';
                     echo '<div class="image-wrap">';
-                        echo '<img src="'. esc_url('https://royal-elementor-addons.com/library/templates-kit/'. $kit_id .'/home.jpg') .'">';
+                        echo '<img class="lazy" src="'. esc_url(WPR_ADDONS_ASSETS_URL .'img/icon-256x256.png') .'" data-src="'. esc_url('https://royal-elementor-addons.com/library/templates-kit/'. $kit_id .'/home.jpg') .'" alt="'. esc_attr($data['name']) .'">';
                         echo '<div class="image-overlay"><span class="dashicons dashicons-search"></span></div>';
                     echo '</div>';
                     echo '<footer>';
@@ -131,7 +135,7 @@ function wpr_addons_templates_kit_page() {
     </div>
 
     <div class="wpr-templates-kit-single">
-        <?php if ( !wpr_fs()->is_plan( 'expert' ) ) : ?>
+        <?php if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->is_plan( 'expert' ) ) : ?>
         <div class="wpr-templates-kit-expert-notice">
             <p>
                 <span class="dashicons dashicons-warning"></span>
@@ -583,7 +587,7 @@ function vts( $kit ) {
     // Delete Import File
     unlink( $local_file['file'] );
 
-    return in_array($kit, $tmps) && !wpr_fs()->can_use_premium_code() ? false : true;
+    return in_array($kit, $tmps) && (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) ? false : true;
 }
 
 /**
@@ -708,7 +712,9 @@ function setup_wpr_templates( $kit ) {
     $kit_name = substr($kit, 0, strripos($kit, '-v'));
     $kit_version = substr($kit, (strripos($kit, '-v') + 1), strlen($kit));
     $get_available_kits = WPR_Templates_Data::get_available_kits();
-    $get_custom_types = $get_available_kits[$kit_name][$kit_version]['custom-types'];
+    if ( isset($get_available_kits[$kit_name][$kit_version]['custom-types'] ) ) {
+        $get_custom_types = $get_available_kits[$kit_name][$kit_version]['custom-types'];
+    }
     $has_theme_builder = $get_available_kits[$kit_name][$kit_version]['theme-builder'];
     $has_woo_builder = $get_available_kits[$kit_name][$kit_version]['woo-builder'];
     $has_off_canvas = $get_available_kits[$kit_name][$kit_version]['off-canvas'];
@@ -1070,4 +1076,37 @@ function wpr_track_import_failed_kit( $kit ) {
             'imported_kit' => get_site_url()
         ]
     ] );
+}
+
+/**
+** Install News Magazine X Theme
+*/
+function wpr_install_news_magazine_x_theme() {
+    $nonce = $_POST['nonce'];
+
+    if ( !wp_verify_nonce( $nonce, 'wpr-templates-kit-js' )  || !current_user_can( 'manage_options' ) ) {
+      exit; // Get out of here, the nonce is rotten!
+    }
+    
+    if ( !current_user_can('switch_themes') ) {
+        wp_send_json_error('Permission denied');
+    }
+
+    $theme = sanitize_text_field($_POST['theme']);
+    switch_theme($theme);
+
+    // Deactivate Elementor and Royal Elementor Addons
+    if ( is_plugin_active( 'elementor/elementor.php' ) ) {
+        deactivate_plugins( 'elementor/elementor.php' );
+    }
+
+    if ( is_plugin_active( 'royal-elementor-addons/wpr-addons.php' ) ) {
+        deactivate_plugins( 'royal-elementor-addons/wpr-addons.php' );
+    }
+
+    if ( is_plugin_active( 'royal-elementor-addons-pro/wpr-addons-pro.php' ) ) {
+        deactivate_plugins( 'royal-elementor-addons-pro/wpr-addons-pro.php' );
+    }
+
+    wp_send_json_success();
 }

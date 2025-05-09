@@ -42,11 +42,19 @@ class Wpr_Countdown extends Widget_Base {
 		return [ 'royal', 'evergreen countdown timer' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
     public function get_custom_help_url() {
     	if ( empty(get_option('wpr_wl_plugin_links')) )
         // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-countdown-help-btn';
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
+
+	public function is_reload_preview_required() {
+		return true;
+	}
 
 	public function add_control_countdown_type() {
 		$this->add_control(
@@ -94,15 +102,6 @@ class Wpr_Countdown extends Widget_Base {
 		);
 
 		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
-
-		$this->add_control(
-			'countdown_apply_changes',
-			[
-				'type' => Controls_Manager::RAW_HTML,
-				'raw' => '<div class="elementor-update-preview editor-wpr-preview-update"><span>Update changes to Preview</span><button class="elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply</button>',
-				'separator' => 'after'
-			]
-		);
 
 		$this->add_control_countdown_type();
 
@@ -947,7 +946,7 @@ class Wpr_Countdown extends Widget_Base {
 	}
 
 	public function get_countdown_attributes( $settings ) {
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['countdown_type'] = 'due-date';
 			$settings['evergreen_show_again_delay'] = '0';
 		}
@@ -960,14 +959,15 @@ class Wpr_Countdown extends Widget_Base {
 		if ( 'evergreen' === $settings['countdown_type'] ) {
 			$atts .= ' data-interval="'. esc_attr( $this->get_evergreen_interval( $settings ) ) .'"';
 		} else {
-			$atts .= ' data-interval="'. esc_attr( $this->get_due_date_interval( $settings['due_date'] ) ) .'"';
+			$due_date = $this->format_date_to_standard( $settings['due_date'] );
+			$atts .= ' data-interval="'. esc_attr( $this->get_due_date_interval( $due_date ) ) .'"';
 		}
 
 		return $atts;
 	}
 
 	public function get_countdown_class( $settings ) {
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['evergreen_stop_after_date'] = '';
 			$settings['evergreen_stop_after_date_select'] = '';
 		}
@@ -984,6 +984,61 @@ class Wpr_Countdown extends Widget_Base {
 
 		return $class;
 	}
+	
+	public function sanitize_no_js($input) {
+		// Decode HTML entities to catch encoded malicious content
+		$input = html_entity_decode($input, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+		// Remove script and iframe tags (case-insensitive)
+		$input = preg_replace('/<\s*script[^>]*>.*?<\s*\/\s*script\s*>/is', '', $input);
+		$input = preg_replace('/<\s*iframe[^>]*>.*?<\s*\/\s*iframe\s*>/is', '', $input);
+
+		// Remove single script and iframe tags (self-closing or broken)
+		$input = preg_replace('/<\s*script[^>]*>/is', '', $input);
+		$input = preg_replace('/<\s*iframe[^>]*>/is', '', $input);
+
+		// Escape HTML attributes to prevent XSS
+		$input = htmlspecialchars($input, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+		// Remove event handlers and javascript: or data: protocols
+		$evil_attributes = array(
+			'onabort', 'onactivate', 'onafterprint', 'onafterupdate', 'onbeforeactivate', 
+			'onbeforecopy', 'onbeforecut', 'onbeforedeactivate', 'onbeforeeditfocus', 
+			'onbeforepaste', 'onbeforeprint', 'onbeforeunload', 'onbeforeupdate', 
+			'onblur', 'onbounce', 'oncellchange', 'onchange', 'onclick', 'oncontextmenu', 
+			'oncontrolselect', 'oncopy', 'oncut', 'ondataavailable', 'ondatasetchanged', 
+			'ondatasetcomplete', 'ondblclick', 'ondeactivate', 'ondrag', 'ondragend', 
+			'ondragenter', 'ondragleave', 'ondragover', 'ondragstart', 'ondrop', 
+			'onerror', 'onerrorupdate', 'onfilterchange', 'onfinish', 'onfocus', 
+			'onfocusin', 'onfocusout', 'onhelp', 'onkeydown', 'onkeypress', 'onkeyup', 
+			'onlayoutcomplete', 'onload', 'onlosecapture', 'onmousedown', 'onmouseenter', 
+			'onmouseleave', 'onmousemove', 'onmouseout', 'onmouseover', 'onmouseup', 
+			'onmousewheel', 'onmove', 'onmoveend', 'onmovestart', 'onpaste', 'onpropertychange', 
+			'onreadystatechange', 'onreset', 'onresize', 'onresizeend', 'onresizestart', 
+			'onrowenter', 'onrowexit', 'onrowsdelete', 'onrowsinserted', 'onscroll', 
+			'onselect', 'onselectionchange', 'onselectstart', 'onstart', 'onstop', 
+			'onsubmit', 'onunload'
+		);
+
+		$pattern = '/\s*(' . implode('|', $evil_attributes) . ')\s*=\s*([`\'"]*)[^>]*>/i';
+		$input = preg_replace($pattern, '>', $input);
+
+		// Remove javascript: and data: protocols
+		$input = preg_replace('/([a-z]*)[\x00-\x20]*=[\x00-\x20]*([`\'"]*)[\x00-\x20]*j[\x00-\x20]*a[\x00-\x20]*v[\x00-\x20]*a[\x00-\x20]*s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:/i', '', $input);
+		$input = preg_replace('/([a-z]*)[\x00-\x20]*=([\'"]*)[\x00-\x20]*d[\x00-\x20]*a[\x00-\x20]*t[\x00-\x20]*a[\x00-\x20]*:/i', '', $input);
+
+		// Remove any remaining encoded characters that might be malicious
+		$input = preg_replace('/(&#[xX]?[0-9A-Fa-f]+);?/i', '', $input);
+
+		// Final cleanup of any remaining unwanted tags
+		$input = strip_tags($input, $this->get_allowed_html_tags());
+
+		return $input;
+	}
+
+	protected function get_allowed_html_tags() {
+		return '<a><b><br><div><em><i><p><span><strong><u><h1><h2><h3><h4><h5><h6><ul><ol><li><img>';
+	}
 
 	public function get_expired_actions_json( $settings ) {
 		$actions = [];
@@ -993,6 +1048,12 @@ class Wpr_Countdown extends Widget_Base {
 				'title' => [],
 				'target' => [],
 			],
+			'h1' => [],
+			'h2' => [],
+			'h3' => [],
+			'h4' => [],
+			'h5' => [],
+			'h6' => [],
 			'b' => [],
 			'strong' => [],
 			'i' => [],
@@ -1028,7 +1089,8 @@ class Wpr_Countdown extends Widget_Base {
 						break;
 
 					case 'message':
-						$actions['message'] = wp_kses($settings['display_message_text'], $allowed_html);
+						// $actions['message'] = $this->sanitize_no_js(wp_kses($settings['display_message_text'], $allowed_html));
+						$actions['message'] = wp_kses_post($settings['display_message_text'], $allowed_html);
 						break;
 
 					case 'redirect':
@@ -1105,9 +1167,34 @@ class Wpr_Countdown extends Widget_Base {
 		}
 	}
 
+	function format_date_to_standard($date_string) {
+		// Check if the date string is already in the desired format
+		$desired_format = 'Y-m-d H:i';
+		$date_in_desired_format = \DateTime::createFromFormat($desired_format, $date_string);
+		
+		if ($date_in_desired_format && $date_in_desired_format->format($desired_format) === $date_string) {
+			return $date_string;
+		}
+		
+		// Define the format that matches the input date string
+		$format = 'd/m/Y h:i a';
+	
+		// Create a DateTime object from the input date string using the specified format
+		$date = \DateTime::createFromFormat($format, $date_string);
+	
+		// Check if the date was created successfully
+		if ($date) {
+			// Format the date to 'Y-m-d H:i'
+			return $date->format('Y-m-d H:i');
+		} else {
+			// Handle the case where the date string is invalid
+			return 'Invalid date';
+		}
+	}
+
 	protected function render() {
 		// Get Settings
-		$settings = $this->get_settings();
+		$settings = $this->get_settings_for_display();
 		
 		// Render
 		echo '<div class="'. esc_attr($this->get_countdown_class( $settings )) .'"'. $this->get_countdown_attributes( $settings ) .'>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

@@ -41,6 +41,10 @@ class Wpr_Data_Table extends Widget_Base {
 		return ['royal', 'data table', 'advanced', 'table', 'data', 'comparison table', 'table comparison'];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	public function get_script_depends() {
 		return ['wpr-table-to-excel-js', 'wpr-perfect-scroll-js'];
 	}
@@ -1979,6 +1983,55 @@ class Wpr_Data_Table extends Widget_Base {
 
 	public function render_search_export() {}
 
+	// Add this function to your class
+	private function custom_wp_kses($content) {
+		$allowed_html = array(
+			'a' => array(
+				'href' => array(),
+				'title' => array(),
+				'target' => array(),
+			),
+			'b' => array(),
+			'strong' => array(),
+			'i' => array(),
+			'em' => array(),
+			'br' => array(),
+			'ul' => array(),
+			'ol' => array(),
+			'li' => array(),
+			'span' => array(),
+			'img' => array(
+				'src' => array(),
+				'alt' => array(),
+				'width' => array(),
+				'height' => array(),
+			),
+			'div' => array(
+				'class' => array(),
+			),
+			'p' => array(),
+			// Add the custom add-to-calendar-button element
+			'add-to-calendar-button' => array(
+				'name' => array(),
+				'debug' => array(),
+				'stylelight' => array(),
+				'startdate' => array(),
+				'starttime' => array(),
+				'endtime' => array(),
+				'enddate' => array(),
+				'timezone' => array(),
+				'label' => array(),
+				'options' => array(),
+				'lightmode' => array(),
+				'size' => array(),
+				'description' => array(),
+				'dates' => array(),
+			),
+		);
+
+		return wp_kses($content, $allowed_html);
+	}
+
     protected function render() {
 		$settings = $this->get_settings_for_display(); 
 
@@ -1993,7 +2046,7 @@ class Wpr_Data_Table extends Widget_Base {
 		
 		$x = 0;
 		
-		$sorting_icon = ('yes' === $settings['enable_table_sorting'] && wpr_fs()->can_use_premium_code() ) ? '<span class="wpr-sorting-icon"><i class="fas fa-sort"></i></span>' : ''; 
+		$sorting_icon = ('yes' === $settings['enable_table_sorting'] && (defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code()) ) ? '<span class="wpr-sorting-icon"><i class="fas fa-sort"></i></span>' : ''; 
 		
 		$this->add_render_attribute(
 			'wpr_table_inner_container_attributes',
@@ -2003,7 +2056,7 @@ class Wpr_Data_Table extends Widget_Base {
 				'data-table-sorting' => $settings['enable_table_sorting'],
 				'data-custom-pagination' => $settings['enable_custom_pagination'],
 				'data-row-pagination' => $settings['enable_row_pagination'],
-				'data-entry-info' => wpr_fs()->can_use_premium_code() ? $settings['enable_entry_info'] : 'no',
+				'data-entry-info' => defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() ? $settings['enable_entry_info'] : 'no',
 				'data-rows-per-page' => isset($settings['table_items_per_page']) ? $settings['table_items_per_page'] : ''
 			]
 		);
@@ -2127,7 +2180,7 @@ class Wpr_Data_Table extends Widget_Base {
 									<?php endif; ?> 
 											<span class="wpr-table-text">
 												<?php 
-													echo wp_kses_post( $table_td[$j]['content'] );
+													echo $this->custom_wp_kses($table_td[$j]['content']);
 
 													$this->render_tooltip_icon( $table_td[$j] );
 													

@@ -41,6 +41,10 @@ class Wpr_Team_Member extends Widget_Base {
 		return [ 'royal', 'team member' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	public function get_style_depends() {
 		return [ 'wpr-animations-css', 'wpr-button-animations-css' ];
 	}
@@ -172,7 +176,7 @@ class Wpr_Team_Member extends Widget_Base {
 			]
 		);
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'team_member_pro_notice',
 				[
@@ -622,6 +626,19 @@ class Wpr_Team_Member extends Widget_Base {
 					'{{WRAPPER}} .wpr-member-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'content_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-member-content' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				// 'separator' => 'before',
 			]
 		);
 
@@ -1775,7 +1792,7 @@ class Wpr_Team_Member extends Widget_Base {
 		// Get Settings 
 		$settings = $this->get_settings();
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['member_name_location'] = 'below';
 			$settings['member_job_location'] = 'below';
 			$settings['member_description_location'] = 'below';

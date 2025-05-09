@@ -41,6 +41,10 @@ class Wpr_Flip_Carousel extends Widget_Base {
 		return [ 'royal', 'flip carousel', 'flip', 'carousel', 'flip slider' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	public function get_script_depends() {
 		return [ 'wpr-flipster' ];
 	}
@@ -164,7 +168,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			]
 		);
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'slider_repeater_pro_notice',
 				[
@@ -1148,7 +1152,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 			$icon_next = '';
 		}
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['autoplay'] = false;
 			$settings['autoplay_milliseconds'] = 0;
 			$settings['pause_on_hover'] = false;
@@ -1182,7 +1186,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
             echo '<div class="wpr-flip-carousel" data-settings="'. esc_attr($this->flip_carousel_attributes($settings)) .'">';
             echo '<ul class="wpr-flip-items-wrapper">';
             foreach ( $settings['carousel_elements'] as $key => $element ) {
-				if ( ! wpr_fs()->can_use_premium_code() && $key === 4 ) {
+				if ( (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $key === 4 ) {
 					break;
 				}
 

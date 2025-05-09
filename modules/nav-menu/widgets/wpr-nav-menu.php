@@ -38,6 +38,10 @@ class Wpr_Nav_Menu extends Widget_Base {
 		return [ 'royal', 'nav menu', 'header', 'navigation menu', 'horizontal menu', 'horizontal navigation', 'vertical menu', 'vertical navigation', 'burger menu', 'hamburger menu', 'mobile menu', 'responsive menu' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	public function get_style_depends() {
 		return [ 'wpr-link-animations-css' ];
 	}
@@ -1741,7 +1745,7 @@ class Wpr_Nav_Menu extends Widget_Base {
 			return;
 		}
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['menu_layout'] = 'horizontal';
 			$settings['toggle_btn_style'] = 'hamburger';
 		}

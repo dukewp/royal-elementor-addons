@@ -36,6 +36,10 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 		return [ 'royal', 'social sharing', 'sharing buttons', ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
     public function get_custom_help_url() {
     	if ( empty(get_option('wpr_wl_plugin_links')) )
         // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-social-sharing-buttons-help-btn';
@@ -703,7 +707,7 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 		// Get Settings
 		$settings = $this->get_settings();
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['sharing_custom_colors'] = '';
 			$settings['sharing_show_label'] = '';
 			$settings['sharing_label_bg'] = '';

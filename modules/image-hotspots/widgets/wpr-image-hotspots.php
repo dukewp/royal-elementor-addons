@@ -42,6 +42,10 @@ class Wpr_Image_Hotspots extends Widget_Base {
 		return [ 'royal', 'image hotspots' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
     public function get_custom_help_url() {
     	if ( empty(get_option('wpr_wl_plugin_links')) )
         // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-image-hotspot-help-btn';
@@ -336,7 +340,7 @@ class Wpr_Image_Hotspots extends Widget_Base {
 			]
 		);
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'hotspot_repeater_pro_notice',
 				[
@@ -936,7 +940,7 @@ class Wpr_Image_Hotspots extends Widget_Base {
 			$image_src = $settings['image']['url'];
 		}
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['tooltip_trigger'] = 'none';
 		}
 
@@ -964,7 +968,7 @@ class Wpr_Image_Hotspots extends Widget_Base {
 					
 					<?php
 
-					if ( ! wpr_fs()->can_use_premium_code() && $key === 2 ) {
+					if ( (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $key === 2 ) {
 						break;
 					}
 

@@ -41,6 +41,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 		return [ 'royal', 'shop grid', 'product grid', 'woocommerce', 'product slider', 'product carousel', 'isotope', 'massonry grid', 'filterable grid', 'loop grid' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	public function get_script_depends() {
 		return [ 'wpr-isotope', 'wpr-slick', 'wpr-lightgallery' ];
 	}
@@ -822,7 +826,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
-		// if ( Utilities::is_new_free_user() && ! wpr_fs()->can_use_premium_code() ) {
+		// if ( Utilities::is_new_free_user() && (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) ) {
 		// 	$this->add_control(
 		// 		'limit_grid_items_pro_notice',
 		// 		[
@@ -928,7 +932,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$this->add_control_layout_columns();
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'grid_columns_pro_notice',
 				[
@@ -1089,7 +1093,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$this->add_control_sort_and_results_count();
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'sort_and_results_count_pro_notice',
 				[
@@ -1132,6 +1136,52 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'render_type' => 'template',
 				'condition' => [
 					'layout_select!' => 'slider',
+				]
+			]
+		);
+
+		$this->add_control(
+			'filters_experiment',
+			[
+				'label' => esc_html__( 'Filters & Load More Experiment', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'no',
+				'return_value' => 'yes',
+				'render_type' => 'template',
+				'conditions' => [
+					'relation' => 'and',
+					'terms' => [
+						[
+							'name' => 'layout_filters',
+							'operator' => '!=',
+							'value' => '',
+						],
+						[
+							'relation' => 'or',
+							'terms' => [
+								[
+									'relation' => 'and',
+									'terms' => [	
+										[
+											'name' => 'layout_pagination',
+											'operator' => '!=',
+											'value' => '',
+										],
+										[
+											'name' => 'pagination_type',
+											'operator' => 'in',
+											'value' => ['load-more', 'infinite'],
+										],
+									]
+								],
+								[	
+									'name' => 'layout_pagination',
+									'operator' => '==',
+									'value' => '',
+								]
+							],
+						],
+					]
 				]
 			]
 		);
@@ -1507,7 +1557,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$repeater->add_control(
 	            'element_align_pro_notice',
 	            [
@@ -2915,6 +2965,19 @@ class Wpr_Woo_Grid extends Widget_Base {
 				],
 			]
 		);
+		
+		$this->add_control(
+			'filters_hide_uncategorized',
+			[
+				'label' => esc_html__( 'Hide Uncategorized', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'condition' => [
+					'filters_linkable!' => 'yes',
+				],
+			]
+		);
 
 		$this->add_control_filters_deeplinking();
 
@@ -3491,7 +3554,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'grid_item_border_width',
 			[
 				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
@@ -3536,7 +3599,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'grid_item_radius',
 			[
 				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
@@ -3610,7 +3673,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'grid_media_border_width',
 			[
 				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
@@ -3631,7 +3694,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'grid_media_radius',
 			[
 				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
@@ -3673,7 +3736,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$this->add_control_overlay_border_width();
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'overlay_radius',
 			[
 				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
@@ -8318,6 +8381,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'{{WRAPPER}} .wpr-chasing-dots .wpr-child' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-three-bounce .wpr-child' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-fading-circle .wpr-circle:before' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-ring div' => 'border-color: {{VALUE}}  transparent transparent transparent',
 				],
 				'condition' => [
 					'pagination_type' => [ 'load-more', 'infinite-scroll' ]
@@ -8741,7 +8805,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 	public function get_main_query_args() {
 		$settings = $this->get_settings();
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['query_selection'] = 'pro-cr' == $settings['query_selection'] ? 'dynamic' : $settings['query_selection'];
 			$settings['query_orderby'] = 'pro-rn' == $settings['query_orderby'] ? 'date' : $settings['query_orderby'];
 		}
@@ -8960,6 +9024,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			if (!empty($settings['query_randomize'])) {
 				$args['orderby'] = $settings['query_randomize'];
 			}
+			$args['post_type'] = 'product'; // GOGA: needs check
 		}
 
 		// Sorting
@@ -9160,7 +9225,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 	public function get_image_effect_class( $settings ) {
 		$class = '';
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			if ( 'pro-zi' ==  $settings['image_effects'] || 'pro-zo' ==  $settings['image_effects'] || 'pro-go' ==  $settings['image_effects'] || 'pro-bo' ==  $settings['image_effects'] ) {
 				$settings['image_effects'] = 'none';
 			}
@@ -9233,7 +9298,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 	public function render_media_overlay( $settings ) {
 		echo '<div class="wpr-grid-media-hover-bg '. esc_attr($this->get_animation_class( $settings, 'overlay' )) .'" data-url="'. esc_url( get_the_permalink( get_the_ID() ) ) .'">';
 
-			if ( wpr_fs()->can_use_premium_code() ) {
+			if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() ) {
 				if ( '' !== $settings['overlay_image']['url'] ) {
 					echo '<img src="'. esc_url( $settings['overlay_image']['url'] ) .'">';
 				}
@@ -9244,8 +9309,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 	// Render Post Title
 	public function render_product_title( $settings, $class ) {
-		$title_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['title_pointer'];
-		$title_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['title_pointer_animation'];
+		$title_pointer = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['title_pointer'];
+		$title_pointer_animation = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['title_pointer_animation'];
 		$pointer_item_class = (isset($this->get_settings()['title_pointer']) && 'none' !== $this->get_settings()['title_pointer']) ? 'class="wpr-pointer-item"' : '';
 		$open_links_in_new_tab = 'yes' === $this->get_settings()['open_links_in_new_tab'] ? '_blank' : '_self';
 
@@ -9294,8 +9359,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$count = 0;
 
 		// Pointer Class
-		$categories_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['categories_pointer'];
-		$categories_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['categories_pointer_animation'];
+		$categories_pointer = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['categories_pointer'];
+		$categories_pointer_animation = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['categories_pointer_animation'];
 		$pointer_item_class = (isset($this->get_settings()['categories_pointer']) && 'none' !== $this->get_settings()['categories_pointer']) ? 'class="wpr-pointer-item"' : '';
 
 		$class .= ' wpr-pointer-'. $categories_pointer;
@@ -9351,8 +9416,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$count = 0;
 
 		// Pointer Class
-		$tags_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['tags_pointer'];
-		$tags_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['tags_pointer_animation'];
+		$tags_pointer = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['tags_pointer'];
+		$tags_pointer_animation = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['tags_pointer_animation'];
 		$pointer_item_class = (isset($this->get_settings()['tags_pointer']) && 'none' !== $this->get_settings()['tags_pointer']) ? 'class="wpr-pointer-item"' : '';
 
 		$class .= ' wpr-pointer-'. $tags_pointer;
@@ -9551,12 +9616,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 			$product->supports( 'ajax_add_to_cart' ) ? 'ajax_add_to_cart' : '',
 		] ) );
 
-		$add_to_cart_animation = ! wpr_fs()->can_use_premium_code() ? 'wpr-button-none' : $this->get_settings()['add_to_cart_animation'];
+		$add_to_cart_animation = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'wpr-button-none' : $this->get_settings()['add_to_cart_animation'];
 
 		$popup_notification_animation = isset($this->get_settings_for_display()['popup_notification_animation']) ? $this->get_settings_for_display()['popup_notification_animation'] : '';
 		$popup_notification_fade_out_in = isset($this->get_settings_for_display()['popup_notification_fade_out_in']) ? $this->get_settings_for_display()['popup_notification_fade_out_in'] : '';
 		$popup_notification_animation_duration = isset($this->get_settings_for_display()['popup_notification_animation_duration']) ? $this->get_settings_for_display()['popup_notification_animation_duration'] : '';
-
+		
 		$attributes = [
 			'rel="nofollow"',
 			'class="'. esc_attr($button_class) .' wpr-button-effect '. esc_attr($add_to_cart_animation) .' '. (!$product->is_in_stock() && 'simple' === $product->get_type() ? 'wpr-atc-not-clickable' : '').'"',
@@ -9564,9 +9629,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'data-product_id="'. esc_attr($product->get_id()) .'"',
 			'data-product_sku="'. esc_attr($product->get_sku()) .'"',
 			'data-atc-popup="'. esc_attr( $settings['element_show_added_tc_popup'] ) .'"',
-			'data-atc-animation="'. $popup_notification_animation  .'"',
-			'data-atc-fade-out-in="'. $popup_notification_fade_out_in  .'"',
-			'data-atc-animation-time="'. $popup_notification_animation_duration  .'"'
+			'data-atc-animation="'. esc_attr($popup_notification_animation)  .'"',
+			'data-atc-fade-out-in="'. esc_attr($popup_notification_fade_out_in)  .'"',
+			'data-atc-animation-time="'. esc_attr($popup_notification_animation_duration)  .'"'
 		];
 
 		$button_HTML = '';
@@ -9661,7 +9726,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 	public function render_product_wishlist_button( $settings, $class ) {
 		global $product;
 		
-		if ( !wpr_fs()->is_plan( 'expert' ) ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->is_plan( 'expert' ) ) {
 			return;
 		}
 
@@ -9688,11 +9753,11 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$wishlist_attributes = [
 			'data-wishlist-url' => get_option('wpr_wishlist_page') ? get_option('wpr_wishlist_page') : '',
-			'data-atw-popup="'. $settings['element_show_added_to_wishlist_popup']  .'"',
-			'data-atw-animation="'. $popup_notification_animation  .'"',
-			'data-atw-fade-out-in="'. $popup_notification_fade_out_in  .'"',
-			'data-atw-animation-time="'. $popup_notification_animation_duration  .'"',
-			'data-open-in-new-tab="'. $settings['element_open_links_in_new_tab'] .'"'
+			'data-atw-popup="'. esc_attr($settings['element_show_added_to_wishlist_popup'])  .'"',
+			'data-atw-animation="'. esc_attr($popup_notification_animation)  .'"',
+			'data-atw-fade-out-in="'. esc_attr($popup_notification_fade_out_in)  .'"',
+			'data-atw-animation-time="'. esc_attr($popup_notification_animation_duration)  .'"',
+			'data-open-in-new-tab="'. esc_attr($settings['element_open_links_in_new_tab']) .'"'
 		];
 
 		$button_HTML = '';
@@ -9748,7 +9813,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 	public function render_product_compare_button( $settings, $class ) {
 		global $product;
 		
-		if ( !wpr_fs()->is_plan( 'expert' ) ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->is_plan( 'expert' ) ) {
 			return;
 		}
 
@@ -9776,10 +9841,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$compare_attributes = [
 			'data-compare-url' => get_option('wpr_compare_page') ? get_option('wpr_compare_page') : '',
 			'data-atcompare-popup="'. $settings['element_show_added_to_compare_popup']  .'"',
-			'data-atcompare-animation="'. $popup_notification_animation  .'"',
-			'data-atcompare-fade-out-in="'. $popup_notification_fade_out_in  .'"',
-			'data-atcompare-animation-time="'. $popup_notification_animation_duration  .'"',
-			'data-open-in-new-tab="'. $settings['element_open_links_in_new_tab'] .'"'
+			'data-atcompare-animation="'. esc_attr($popup_notification_animation)  .'"',
+			'data-atcompare-fade-out-in="'. esc_attr($popup_notification_fade_out_in)  .'"',
+			'data-atcompare-animation-time="'. esc_attr($popup_notification_animation_duration)  .'"',
+			'data-open-in-new-tab="'. esc_attr($settings['element_open_links_in_new_tab']) .'"'
 		];
 
 		$button_HTML = '';
@@ -9943,7 +10008,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 		echo '</div>';
 	}
 
-
 	public function render_product_sale_dates( $settings, $class ) {
 
 		global $product;
@@ -10099,12 +10163,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 				$this->render_product_add_to_cart( $settings, $class );
 				break;
 			case 'wishlist-button':
-				if ( wpr_fs()->is_plan( 'expert' ) ) {
+				if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->is_plan( 'expert' ) ) {
 					$this->render_product_wishlist_button( $settings, $class );
 				}
 				break;
 			case 'compare-button':
-				if ( wpr_fs()->is_plan( 'expert' ) ) {
+				if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->is_plan( 'expert' ) ) {
 					$this->render_product_compare_button( $settings, $class );
 				}
 				break;
@@ -10129,7 +10193,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			$place = $data['element_location'];
 			$align_vr = $data['element_align_vr'];
 
-			if ( ! wpr_fs()->can_use_premium_code() ) {
+			if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 				$align_vr = 'middle';
 			}
 
@@ -10209,7 +10273,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		// Get Custom Filters
 		$custom_filters = $settings[ 'query_taxonomy_'. $taxonomy ];
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['filters_default_filter'] = '';
 			$settings['filters_icon_align'] = '';
 			$settings['filters_count'] = '';
@@ -10251,6 +10315,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 			foreach ( $custom_filters as $key => $term_id ) {
 				$filter = get_term_by( 'id', $term_id, $taxonomy );
 				$data_attr = 'post_tag' === $taxonomy ? 'tag-'. $filter->slug : $taxonomy .'-'. $filter->slug;
+				$tax_data_attr = 'post_tag' === $taxonomy ? 'tag' : $taxonomy;
+				$term_data_attr = $filter->slug;
 
 				// Parent Filters
 				if ( 0 === $filter->parent ) {
@@ -10259,7 +10325,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 					echo '<li'. $data_role .' class="'. esc_attr($pointer_class) .'">';
 						if ( 'yes' !== $settings['filters_linkable'] ) {
-							echo ''. $left_separator .'<span '. $pointer_item_class .' data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo ''. $left_separator .'<span '. $pointer_item_class .' data-ajax-filter='. json_encode([$tax_data_attr, $term_data_attr]) .' data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						} else {
 							echo ''. $left_separator .'<a '. $pointer_item_class .' href="'. esc_url(get_term_link( $filter->term_id, $taxonomy )) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</a>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						}
@@ -10273,11 +10339,28 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		// All Filters
 		} else {
-			$all_filters = get_terms( $taxonomy );
+			$exclude_ids = [];
+
+			if ( 'yes' === $settings['filters_hide_uncategorized'] ) {
+				$uncategorized = get_term_by('slug', 'uncategorized', $taxonomy);
+
+				if ($uncategorized && !is_wp_error($uncategorized)) {
+					$exclude_ids[] = $uncategorized->term_id;
+				}
+			}
+
+			$all_filters = get_terms([
+				'taxonomy'   => $taxonomy,
+				'hide_empty' => false,
+				'exclude'    => $exclude_ids,
+			]);
+			
 			$parent_filters = [];
 
 			foreach ( $all_filters as $key => $filter ) {
 				$data_attr = 'post_tag' === $taxonomy ? 'tag-'. $filter->slug : $taxonomy .'-'. $filter->slug;
+				$tax_data_attr = 'post_tag' === $taxonomy ? 'tag' : $taxonomy;
+				$term_data_attr = $filter->slug;
 
 				// Parent Filters
 				if ( 0 === $filter->parent ) {
@@ -10287,9 +10370,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 					echo '<li'. $data_role .' class="'. esc_attr($pointer_class) . esc_attr($hidden_class) .'">';
 						if ( 'yes' !== $settings['filters_linkable'] ) {
-							echo ''. $left_separator .'<span '. $pointer_item_class .' data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo ''. $left_separator .'<span '. $pointer_item_class .' data-ajax-filter='. json_encode([$tax_data_attr, $term_data_attr]) .' data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						} else {
-							echo ''. $left_separator .'<a '. $pointer_item_class .' href="'. esc_url(get_term_link( $filter->term_id, $taxonomy )) .'" data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</a>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo ''. $left_separator .'<a '. $pointer_item_class .' href="'. esc_url(get_term_link( $filter->term_id, $taxonomy )) .'" data-ajax-filter='. json_encode([$tax_data_attr, $term_data_attr]) .' data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($filter->name) . $right_icon . $post_count .'</a>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						}
 					echo '</li>';
 
@@ -10306,11 +10389,13 @@ class Wpr_Woo_Grid extends Widget_Base {
 				$parent = get_term_by( 'id', $parent_filter, $taxonomy );
 				$children = get_term_children( $parent_filter, $taxonomy );
 				$data_attr = 'post_tag' === $taxonomy ? 'tag-'. $parent->slug : $taxonomy .'-'. $parent->slug;
+				$tax_data_attr = 'post_tag' === $taxonomy ? 'tag' : $taxonomy;
+				$term_data_attr = $parent->slug;
 
 				echo '<ul data-parent=".'. esc_attr(urldecode($data_attr)) .'" class="wpr-sub-filters">';
 
 				echo '<li data-role="back" class="'. esc_attr($pointer_class) .'">';
-					echo '<span class="wpr-back-filter" data-filter=".'. esc_attr(urldecode( $data_attr )) .'">';
+					echo '<span class="wpr-back-filter" data-ajax-filter='. json_encode([$tax_data_attr, $term_data_attr]) .' data-filter=".'. esc_attr(urldecode( $data_attr )) .'">';
 						echo '<i class="fas fa-long-arrow-alt-left"></i>&nbsp;&nbsp;'. esc_html__( 'Back', 'wpr-addons' );
 					echo '</span>';
 				echo '</li>';
@@ -10318,9 +10403,10 @@ class Wpr_Woo_Grid extends Widget_Base {
 				foreach ( $children as $child ) {
 					$sub_filter = get_term_by( 'id', $child, $taxonomy );
 					$data_attr = 'post_tag' === $taxonomy ? 'tag-'. $sub_filter->slug : $taxonomy .'-'. $sub_filter->slug;
+					$term_data_attr = $sub_filter->slug;
 
 					echo '<li data-role="sub" class="'. esc_attr($pointer_class) .'">';
-						echo ''. $left_separator .'<span '. $pointer_item_class .' data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($sub_filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo ''. $left_separator .'<span '. $pointer_item_class .' data-ajax-filter='. json_encode([$tax_data_attr, $term_data_attr]) .' data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($sub_filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo '</li>';
 				}
 
@@ -10368,7 +10454,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$pages = $this->get_max_num_pages( $settings );
 		$paged = empty( $paged ) ? 1 : $paged;
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['pagination_type'] = 'pro-is' == $settings['pagination_type'] ? 'default' : $settings['pagination_type'];
 		}
 
@@ -10559,8 +10645,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 	}
 
 	// Grid Settings
-	public function add_grid_settings( $settings ) {
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+	public function add_grid_settings( $settings, $settings_new ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['layout_select'] = 'pro-ms' == $settings['layout_select'] ? 'fitRows' : $settings['layout_select'];
 			$settings['filters_deeplinking'] = '';
 			$settings['filters_count'] = '';
@@ -10577,21 +10663,21 @@ class Wpr_Woo_Grid extends Widget_Base {
 			$stick_last_element_to_bottom = 'no';
 		}
 
-		$gutter_hr_widescreen = isset($settings['layout_gutter_hr_widescreen']['size']) ? $settings['layout_gutter_hr_widescreen']['size'] : $settings['layout_gutter_hr']['size'];
-		$gutter_hr_desktop = $settings['layout_gutter_hr']['size'];
-		$gutter_hr_laptop = isset($settings['layout_gutter_hr_laptop']['size']) ? $settings['layout_gutter_hr_laptop']['size'] : $gutter_hr_desktop;
-		$gutter_hr_tablet_extra = isset($settings['layout_gutter_hr_tablet_extra']['size']) ? $settings['layout_gutter_hr_tablet_extra']['size'] : $gutter_hr_laptop;
-		$gutter_hr_tablet = isset($settings['layout_gutter_hr_tablet']['size']) ? $settings['layout_gutter_hr_tablet']['size'] : $gutter_hr_tablet_extra;
-		$gutter_hr_mobile_extra = isset($settings['layout_gutter_hr_mobile_extra']['size']) ? $settings['layout_gutter_hr_mobile_extra']['size'] : $gutter_hr_tablet;
-		$gutter_hr_mobile = isset($settings['layout_gutter_hr_mobile']['size']) ? $settings['layout_gutter_hr_mobile']['size'] : $gutter_hr_mobile_extra;
+		$gutter_hr_widescreen = isset($settings_new['layout_gutter_hr_widescreen']['size']) ? $settings_new['layout_gutter_hr_widescreen']['size'] : $settings_new['layout_gutter_hr']['size'];
+		$gutter_hr_desktop = $settings_new['layout_gutter_hr']['size'];
+		$gutter_hr_laptop = isset($settings_new['layout_gutter_hr_laptop']['size']) ? $settings_new['layout_gutter_hr_laptop']['size'] : $gutter_hr_desktop;
+		$gutter_hr_tablet_extra = isset($settings_new['layout_gutter_hr_tablet_extra']['size']) ? $settings_new['layout_gutter_hr_tablet_extra']['size'] : $gutter_hr_laptop;
+		$gutter_hr_tablet = isset($settings_new['layout_gutter_hr_tablet']['size']) ? $settings_new['layout_gutter_hr_tablet']['size'] : $gutter_hr_tablet_extra;
+		$gutter_hr_mobile_extra = isset($settings_new['layout_gutter_hr_mobile_extra']['size']) ? $settings_new['layout_gutter_hr_mobile_extra']['size'] : $gutter_hr_tablet;
+		$gutter_hr_mobile = isset($settings_new['layout_gutter_hr_mobile']['size']) ? $settings_new['layout_gutter_hr_mobile']['size'] : $gutter_hr_mobile_extra;
 
-		$gutter_vr_widescreen = isset($settings['layout_gutter_vr_widescreen']['size']) ? $settings['layout_gutter_vr_widescreen']['size'] : $settings['layout_gutter_vr']['size'];
-		$gutter_vr_desktop = $settings['layout_gutter_vr']['size'];
-		$gutter_vr_laptop = isset($settings['layout_gutter_vr_laptop']['size']) ? $settings['layout_gutter_vr_laptop']['size'] : $gutter_vr_desktop;
-		$gutter_vr_tablet_extra = isset($settings['layout_gutter_vr_tablet_extra']['size']) ? $settings['layout_gutter_vr_tablet_extra']['size'] : $gutter_vr_laptop;
-		$gutter_vr_tablet = isset($settings['layout_gutter_vr_tablet']['size']) ? $settings['layout_gutter_vr_tablet']['size'] : $gutter_vr_tablet_extra;
-		$gutter_vr_mobile_extra = isset($settings['layout_gutter_vr_mobile_extra']['size']) ? $settings['layout_gutter_vr_mobile_extra']['size'] : $gutter_vr_tablet;
-		$gutter_vr_mobile = isset($settings['layout_gutter_vr_mobile']['size']) ? $settings['layout_gutter_vr_mobile']['size'] : $gutter_vr_mobile_extra;
+		$gutter_vr_widescreen = isset($settings_new['layout_gutter_vr_widescreen']['size']) ? $settings_new['layout_gutter_vr_widescreen']['size'] : $settings_new['layout_gutter_vr']['size'];
+		$gutter_vr_desktop = $settings_new['layout_gutter_vr']['size'];
+		$gutter_vr_laptop = isset($settings_new['layout_gutter_vr_laptop']['size']) ? $settings_new['layout_gutter_vr_laptop']['size'] : $gutter_vr_desktop;
+		$gutter_vr_tablet_extra = isset($settings_new['layout_gutter_vr_tablet_extra']['size']) ? $settings_new['layout_gutter_vr_tablet_extra']['size'] : $gutter_vr_laptop;
+		$gutter_vr_tablet = isset($settings_new['layout_gutter_vr_tablet']['size']) ? $settings_new['layout_gutter_vr_tablet']['size'] : $gutter_vr_tablet_extra;
+		$gutter_vr_mobile_extra = isset($settings_new['layout_gutter_vr_mobile_extra']['size']) ? $settings_new['layout_gutter_vr_mobile_extra']['size'] : $gutter_vr_tablet;
+		$gutter_vr_mobile = isset($settings_new['layout_gutter_vr_mobile']['size']) ? $settings_new['layout_gutter_vr_mobile']['size'] : $gutter_vr_mobile_extra;
 
 		$layout_settings = [
 			'layout' => $settings['layout_select'],
@@ -10623,8 +10709,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'filters_animation_duration' => $settings['filters_animation_duration'],
 			'filters_animation_delay' => $settings['filters_animation_delay'],
 			'pagination_type' => $settings['pagination_type'],
-			'pagination_max_pages' => $this->get_max_num_pages( $settings ),
+			'pagination_max_pages' => $this->get_max_num_pages( $settings )
 		];
+
+		if ( 'current' !== $settings[ 'query_selection' ] ) {
+			$layout_settings['query_posts_per_page'] = $settings['query_posts_per_page'];
+		}
 
 		if ( 'list' === $settings['layout_select'] ) {
 			$layout_settings['media_align'] = $settings['layout_list_align'];
@@ -10632,7 +10722,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			$layout_settings['media_distance'] = $settings['layout_list_media_distance']['size'];
 		}
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['lightbox_popup_thumbnails'] = '';
 			$settings['lightbox_popup_thumbnails_default'] = '';
 			$settings['lightbox_popup_sharing'] = '';
@@ -10669,7 +10759,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		$slider_is_rtl = is_rtl();
 		$slider_direction = $slider_is_rtl ? 'rtl' : 'ltr';
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['layout_slider_autoplay'] = '';
 			$settings['layout_slider_autoplay_duration'] = 0;
 			$settings['layout_slider_pause_on_hover'] = '';
@@ -10689,7 +10779,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'sliderSlidesToScroll' => +$settings['layout_slides_to_scroll'],
 		];
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['lightbox_popup_thumbnails'] = '';
 			$settings['lightbox_popup_thumbnails_default'] = '';
 			$settings['lightbox_popup_sharing'] = '';
@@ -10730,6 +10820,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 	protected function render() {
 		// Get Settings
 		$settings = $this->get_settings();
+		$settings_new = $this->get_settings_for_display();
 
 		if ( ! class_exists( 'WooCommerce' ) ) {
 			echo '<h2>'. esc_html__( 'WooCommerce is NOT active!', 'wpr-addons' ) .'</h2>';
@@ -10760,13 +10851,13 @@ class Wpr_Woo_Grid extends Widget_Base {
 				// Sort & Results
 				$this->render_grid_sorting( $settings, $posts );
 
-				if ( !((is_product_category() || is_product_tag()) && !wpr_fs()->can_use_premium_code()) ) {
+				if ( !((is_product_category() || is_product_tag()) && (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) ) ) {
 					// Filters
 					$this->render_grid_filters( $settings );
 				}
 			}
 
-			$this->add_grid_settings( $settings );
+			$this->add_grid_settings( $settings, $settings_new );
 			$render_attribute = $this->get_render_attribute_string( 'grid-settings' );
 
 		// Slider Settings

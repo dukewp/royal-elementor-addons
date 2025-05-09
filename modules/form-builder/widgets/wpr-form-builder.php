@@ -40,6 +40,10 @@ class Wpr_Form_Builder extends Widget_Base {
 		return [ 'royal', 'cf7', 'contact form 7', 'caldera forms', 'ninja forms', 'wpforms', 'wp forms', 'email', 'mail' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	public function get_style_depends() {
 		return [ 'wpr-loading-animations-css' ];
 	}
@@ -1059,7 +1063,7 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'fields_to_show_pro_notice',
 				[
@@ -1128,6 +1132,38 @@ class Wpr_Form_Builder extends Widget_Base {
 					'{{WRAPPER}} .wpr-step-next' => 'width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-step-tab .wpr-button' => 'width: {{SIZE}}{{UNIT}};'
 				],
+			]
+		);
+
+		$this->add_control(
+			'button_distance',
+			[
+				'label' => esc_html__( 'Horizontal Gutter', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', '%' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+					'em' => [
+						'min' => 0,
+						'max' => 5,
+					],
+					'%' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step-prev' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-step-next' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-button[type="submit"]' => 'margin-left: {{SIZE}}{{UNIT}};',
+				]
 			]
 		);
 
@@ -1438,7 +1474,7 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'submit_actions_notice',
 				[
@@ -1756,6 +1792,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				'default' => '#7a7a7a',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-field-group .wpr-form-field' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .wpr-field-group .wpr-form-field select' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-field-group .wpr-form-field svg' => 'fill: {{VALUE}};',
 					'{{WRAPPER}} .wpr-field-group input[type="radio"] + label' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .wpr-field-group input[type="checkbox"] + label' => 'color: {{VALUE}};'
@@ -2394,6 +2431,35 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'heading_button_wrap_style',
+			[
+				'label' => esc_html__( 'Wrapper', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'button_wrap_margin',
+			[
+				'label' => esc_html__( 'Margin', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+					'unit' => 'px',
+					'isLinked' => true,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-stp-btns-wrap' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -2598,9 +2664,32 @@ class Wpr_Form_Builder extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
+			'step_wrap_gutter_vertical',
+			[
+				'label' => esc_html__( 'Vertical Gutter', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 50,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-step' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_responsive_control(
 			'step_wrap_gutter',
 			[
-				'label' => esc_html__( 'Gutter', 'wpr-addons' ),
+				'label' => esc_html__( 'Horizontal Gutter', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => ['px'],
 				'range' => [
@@ -3633,7 +3722,9 @@ class Wpr_Form_Builder extends Widget_Base {
 		update_option('wpr_reply_to_'. $this->get_id(), $instance['email_reply_to']);
 		update_option('wpr_meta_keys_'. $this->get_id(), $instance['form_metadata']);
 		update_option('wpr_referrer_'. $this->get_id(), home_url( $_SERVER['REQUEST_URI'] ));
-		update_option('wpr_referrer_title_'. $this->get_id(), get_the_title($post->ID));
+		if ($post && $post->ID) {
+			update_option('wpr_referrer_title_'. $this->get_id(), get_the_title($post->ID));
+		}
 		update_option('wpr_webhook_url_'. $this->get_id(), $instance['webhook_url']);
 
 		$emailField      = isset($instance['email_field']) ? $instance['email_field'] : '';
@@ -3707,9 +3798,10 @@ class Wpr_Form_Builder extends Widget_Base {
 		if ( ! empty( $instance['form_name'] ) ) {
 			$this->add_render_attribute( 'form', 'name', $instance['form_name'] );
 		}
-
-		$this->add_render_attribute( 'form', 'page', get_post()->post_title );
-		$this->add_render_attribute( 'form', 'page_id', get_post()->ID );
+		if ($post && $post->ID) {
+			$this->add_render_attribute( 'form', 'page', get_post()->post_title );
+			$this->add_render_attribute( 'form', 'page_id', get_post()->ID );
+		}
 
 		if ( ! empty( $instance['button_css_id'] ) ) {
 			$this->add_render_attribute( 'button', 'id', $instance['button_css_id'] );
@@ -3805,7 +3897,7 @@ class Wpr_Form_Builder extends Widget_Base {
 				foreach ( $instance['form_fields'] as $item_index => $item ) :
 					if ( 'step' !== $item['field_type'] ) {
 						$field_count++;
-						if ( !wpr_fs()->can_use_premium_code() && 3 < $field_count  ) {
+						if ( (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && 3 < $field_count  ) {
 							continue;
 						}
 					}

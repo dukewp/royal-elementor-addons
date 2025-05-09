@@ -68,7 +68,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	public function get_main_query_args() {
 		$settings = $_POST['grid_settings'];
 		$taxonomy = $_POST['wpr_taxonomy'];
-    $term = $_POST['wpr_filter'];
+    	$term = $_POST['wpr_filter'];
 		$tax_query = [];
 		$author = ! empty( $settings[ 'query_author' ] ) ? implode( ',', $settings[ 'query_author' ] ) : '';
 
@@ -108,7 +108,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			}
 		}
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings[ 'query_randomize' ] = '';
 			$settings['order_posts'] = 'date';
 		}
@@ -136,7 +136,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		}
 
 		// Display Scheduled Posts
-		if ( 'yes' === $settings['display_scheduled_posts'] && wpr_fs()->can_use_premium_code() ) {
+		if ( 'yes' === $settings['display_scheduled_posts'] && (defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code()) ) {
 			$args['post_status'] = 'future';
 		} else {
 			$args['post_status'] = 'publish';
@@ -326,7 +326,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	public function get_image_effect_class( $settings ) {
 		$class = '';
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			if ( 'pro-zi' ==  $settings['image_effects'] || 'pro-zo' ==  $settings['image_effects'] || 'pro-go' ==  $settings['image_effects'] || 'pro-bo' ==  $settings['image_effects'] ) {
 				$settings['image_effects'] = 'none';
 			}
@@ -388,7 +388,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$alt = '' === wp_get_attachment_caption( $id ) ? get_the_title() : wp_get_attachment_caption( $id );
 
 		if ( has_post_thumbnail() ) {
-			echo '<div class="wpr-grid-image-wrap" data-src="'. esc_url( $src ) .'" data-img-on-hover="'. $settings['secondary_img_on_hover'] .'"  data-src-secondary="'. esc_url( $src2 ) .'">';
+			echo '<div class="wpr-grid-image-wrap" data-src="'. esc_url( $src ) .'" data-img-on-hover="'. esc_attr( $settings['secondary_img_on_hover'] ) .'"  data-src-secondary="'. esc_url( $src2 ) .'">';
 				if ( 'yes' == $settings['grid_lazy_loading'] ) {
 					echo '<img data-no-lazy="1" src="'. WPR_ADDONS_ASSETS_URL . 'img/icon-256x256.png" alt="'. esc_attr( $alt ) .'" class="wpr-hidden-image wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
 					if ( 'yes' == $settings['secondary_img_on_hover'] ) {
@@ -408,7 +408,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	public function render_media_overlay( $settings ) {
 		echo '<div class="wpr-grid-media-hover-bg '. esc_attr($this->get_animation_class( $settings, 'overlay' )) .'" data-url="'. esc_url( get_the_permalink( get_the_ID() ) ) .'">';
 
-			if ( wpr_fs()->can_use_premium_code() ) {
+			if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() ) {
 				if ( '' !== $settings['overlay_image']['url'] ) {
 					echo '<img data-no-lazy="1" src="'. esc_url( $settings['overlay_image']['url'] ) .'">';
 				}
@@ -419,8 +419,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	// Render Post Title
 	public function render_post_title( $settings, $class ) {
-		$title_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $_POST['grid_settings']['title_pointer'];
-		$title_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $_POST['grid_settings']['title_pointer_animation'];
+		$title_pointer = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'none' : $_POST['grid_settings']['title_pointer'];
+		$title_pointer_animation = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'fade' : $_POST['grid_settings']['title_pointer_animation'];
 		$pointer_item_class = (isset($_POST['grid_settings']['title_pointer']) && 'none' !==$_POST['grid_settings']['title_pointer']) ? 'class="wpr-pointer-item"' : '';
 		$open_links_in_new_tab = 'yes' === $_POST['grid_settings']['open_links_in_new_tab'] ? '_blank' : '_self';
 
@@ -675,7 +675,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	// Render Post Read More
 	public function render_post_read_more( $settings, $class ) {
-		$read_more_animation = ! wpr_fs()->can_use_premium_code() ? 'wpr-button-none' : $_POST['grid_settings']['read_more_animation'];
+		$read_more_animation = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'wpr-button-none' : $_POST['grid_settings']['read_more_animation'];
 		$open_links_in_new_tab = 'yes' === $_POST['grid_settings']['open_links_in_new_tab'] ? '_blank' : '_self';
 
 		echo '<div class="'. esc_attr($class) .'">';
@@ -713,10 +713,82 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	// Render Post Likes
-	public function render_post_likes( $settings, $class, $post_id ) {}
+	public function render_post_likes( $settings, $class, $post_id ) {
+		$post_likes = new WPR_Post_Likes();
 
-	// Render Post Sharing
-	public function render_post_sharing_icons( $settings, $class ) {}
+		echo '<div class="'. esc_attr($class) .'">';
+			echo '<div class="inner-block">';
+				// Text: Before
+				if ( 'before' === $settings['element_extra_text_pos'] ) {
+					echo '<span class="wpr-grid-extra-text-left">'. esc_html( $settings['element_extra_text'] ) .'</span>';
+				}
+
+				echo $post_likes->get_button( $post_id, $settings );
+
+				// Text: After
+				if ( 'after' === $settings['element_extra_text_pos'] ) {
+					echo '<span class="wpr-grid-extra-text-right">'. esc_html( $settings['element_extra_text'] ) .'</span>';
+				}
+			echo '</div>';
+		echo '</div>';
+	}
+
+	// Render Post Sharing Icons
+	public function render_post_sharing_icons( $settings, $class ) {
+		$args = [
+			'icons' => 'yes',
+			'tooltip' => $settings['element_sharing_tooltip'],
+			'url' => esc_url( get_the_permalink() ),
+			'title' => esc_html( get_the_title() ),
+			'text' => esc_html( get_the_excerpt() ),
+			'image' => esc_url( get_the_post_thumbnail_url() ),
+		];
+
+		$hidden_class = '';
+
+		echo '<div class="'. esc_attr($class) .'">';
+			echo '<div class="inner-block">';
+				// Text: Before
+				if ( 'before' === $settings['element_extra_text_pos'] ) {
+					echo '<span class="wpr-grid-extra-text-left">'. esc_html( $settings['element_extra_text'] ) .'</span>';
+				}
+
+				echo '<span class="wpr-post-sharing">';
+
+					if ( 'yes' === $settings['element_sharing_trigger'] ) {
+						$hidden_class = ' wpr-sharing-hidden';
+						$attributes  = ' data-action="'. esc_attr( $settings['element_sharing_trigger_action'] ) .'"';
+						$attributes .= ' data-direction="'. esc_attr( $settings['element_sharing_trigger_direction'] ) .'"';
+
+						echo '<a class="wpr-sharing-trigger wpr-sharing-icon"'. $attributes .'>';
+							if ( 'yes' === $settings['element_sharing_tooltip'] ) {
+								echo '<span class="wpr-sharing-tooltip wpr-tooltip">'. esc_html__( 'Share', 'wpr-addons' ) .'</span>';
+							}
+
+							echo Utilities::get_wpr_icon( $settings['element_sharing_trigger_icon'], '' );
+						echo '</a>';
+					}
+
+
+					echo '<span class="wpr-post-sharing-inner'. $hidden_class .'">';
+
+					for ( $i = 1; $i < 7; $i++ ) {
+						$args['network'] = $settings['element_sharing_icon_'. $i];
+
+						echo Utilities::get_post_sharing_icon( $args );
+					}
+
+					echo '</span>';
+
+				echo '</span>';
+
+				// Text: After
+				if ( 'after' === $settings['element_extra_text_pos'] ) {
+					echo '<span class="wpr-grid-extra-text-right">'. esc_html( $settings['element_extra_text'] ) .'</span>';
+				}
+			echo '</div>';
+		echo '</div>';
+	}
 
 	// Render Post Lightbox
 	public function render_post_lightbox( $settings, $class, $post_id ) {
@@ -801,7 +873,99 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	// Render Post Custom Field
-	public function render_post_custom_field( $settings, $class, $post_id ) {}
+	public function render_post_custom_field( $settings, $class, $post_id ) {
+		$custom_field_value = get_post_meta( $post_id, $settings['element_custom_field'], true );
+		$custom_field_html = $settings['element_custom_field_wrapper_html'];
+
+		if ( has_filter('wpr_update_custom_field_value') ) {
+			ob_start();
+			apply_filters('wpr_update_custom_field_value', $custom_field_value, $post_id, $settings['element_custom_field']);
+			$custom_field_value = ob_get_clean();
+		}
+
+		// Get First Value if Array (works only for single value checkboxes)
+		if ( is_array($custom_field_value) && 1 === count($custom_field_value) ) {
+			$custom_field_value = $custom_field_value[0];
+		}
+
+		// Erase if Array or Object
+		if ( ! is_string( $custom_field_value ) && ! is_numeric( $custom_field_value ) ) {
+			$custom_field_value = '';
+		}
+
+		// Return if Empty
+		if ( '' === $custom_field_value ) {
+			return;
+		}
+
+		echo '<div class="'. esc_attr($class) .' '. $settings['element_custom_field_style'] .'">';
+			echo '<div class="inner-block">';
+				if ( 'yes' === $settings['element_custom_field_btn_link'] ) {
+					$target = 'yes' === $settings['element_custom_field_new_tab'] ? '_blank' : '_self';
+					echo '<a href="'. esc_url($custom_field_value) .'" target="'. esc_attr($target) .'">';
+				} else {
+					echo '<span>';
+				}
+
+				// Text: Before
+				if ( 'before' === $settings['element_extra_text_pos'] ) {
+					echo '<span class="wpr-grid-extra-text-left">'. esc_html( $settings['element_extra_text'] ) .'</span>';
+				}
+				// Icon: Before
+				if ( 'before' === $settings['element_extra_icon_pos'] ) {
+					ob_start();
+					\Elementor\Icons_Manager::render_icon($settings['element_extra_icon'], ['aria-hidden' => 'true']);
+					$extra_icon = ob_get_clean();
+
+					echo '<span class="wpr-grid-extra-icon-left">';
+						echo $extra_icon;
+					echo '</span>';
+				}
+
+				// Custom Field
+				if ( 'yes' === $settings['element_custom_field_img_ID'] ) {
+					$cf_img = wp_get_attachment_image_src( $custom_field_value, 'full' );
+					if ( isset($cf_img) && is_array($cf_img) ) {
+						echo '<img src="'. esc_url($cf_img[0]) .'" alt="" width="'. esc_attr($cf_img[1]) .'" height="'. esc_attr($cf_img[2]) .'">';
+					}
+				} else {
+					if ( 'yes' !== $settings['element_custom_field_btn_link'] ) {
+						$tags_whitelist = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'span', 'p'];
+						$element_cf_tag = Utilities::validate_html_tags_wl( $settings['element_cf_tag'], 'span', $tags_whitelist );
+
+						echo '<'. esc_attr($element_cf_tag) .'>';
+							if ( 'yes' === $settings['element_custom_field_wrapper'] ) {
+								echo str_replace( '*cf_value*', $custom_field_value, $custom_field_html );
+							} else {
+								echo $custom_field_value;
+							}
+						echo '</'. esc_attr($element_cf_tag) .'>';
+					}
+				}
+
+				// Icon: After
+				if ( 'after' === $settings['element_extra_icon_pos'] ) {
+					ob_start();
+					\Elementor\Icons_Manager::render_icon($settings['element_extra_icon'], ['aria-hidden' => 'true']);
+					$extra_icon = ob_get_clean();
+
+					echo '<span class="wpr-grid-extra-icon-right">';
+						echo $extra_icon;
+					echo '</span>';
+				}
+				// Text: After
+				if ( 'after' === $settings['element_extra_text_pos'] ) {
+					echo '<span class="wpr-grid-extra-text-right">'. esc_html( $settings['element_extra_text'] ) .'</span>';
+				}
+
+				if ( 'yes' === $settings['element_custom_field_btn_link'] ) {
+					echo '</a>';
+				} else {
+					echo '</span>';
+				}
+			echo '</div>';
+		echo '</div>';
+	}
 
 	// Render Post Element Separator
 	public function render_post_element_separator( $settings, $class ) {
@@ -815,10 +979,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$terms = wp_get_post_terms( $post_id, $settings['element_select'] );
 		$count = 0;
 
-		$tax1_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $_POST['grid_settings']['tax1_pointer'];
-		$tax1_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $_POST['grid_settings']['tax1_pointer_animation'];
-		$tax2_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $_POST['grid_settings']['tax2_pointer'];
-		$tax2_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $_POST['grid_settings']['tax2_pointer_animation'];
+		$tax1_pointer = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'none' : $_POST['grid_settings']['tax1_pointer'];
+		$tax1_pointer_animation = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'fade' : $_POST['grid_settings']['tax1_pointer_animation'];
+		$tax2_pointer = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'none' : $_POST['grid_settings']['tax2_pointer'];
+		$tax2_pointer_animation = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'fade' : $_POST['grid_settings']['tax2_pointer_animation'];
 		$pointer_item_class = (isset($_POST['grid_settings']['tax1_pointer']) && 'none' !== $_POST['grid_settings']['tax1_pointer']) || (isset($_POST['grid_settings']['tax2_pointer']) && 'none' !== $_POST['grid_settings']['tax2_pointer']) ? 'wpr-pointer-item' : '';
 
 		// Pointer Class
@@ -851,7 +1015,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				foreach ( $terms as $term ) {
 
 					// Custom Colors
-					$enable_custom_colors = ! wpr_fs()->can_use_premium_code() ? '' : $_POST['grid_settings']['tax1_custom_color_switcher'];
+					$enable_custom_colors = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? '' : $_POST['grid_settings']['tax1_custom_color_switcher'];
 					
 					if ( 'yes' === $enable_custom_colors ) {
 						$custom_tax_styles = '';
@@ -962,7 +1126,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$place = $data['element_location'];
 			$align_vr = $data['element_align_vr'];
 
-			if ( ! wpr_fs()->can_use_premium_code() ) {
+			if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 				$align_vr = 'middle';
 			}
 
@@ -1061,7 +1225,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$pages = $this->get_max_num_pages( $settings );
 		$paged = empty( $paged ) ? 1 : $paged;
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['pagination_type'] = 'pro-is' == $settings['pagination_type'] ? 'default' : $settings['pagination_type'];
 		}
 
@@ -1247,6 +1411,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	public function wpr_get_filtered_count() {
+		$nonce = $_POST['nonce'];
+
+		if (!isset($nonce) || !wp_verify_nonce($nonce, 'wpr-addons-js')) {
+			wp_send_json_error(array(
+				'message' => esc_html__('Security check failed.', 'wpr-addons'),
+			));
+		}
+
 		$settings = $_POST['grid_settings'];
 		$page_count = $this->get_max_num_pages( $settings );
     
@@ -1258,6 +1430,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	public function wpr_filter_grid_posts() {
+		$nonce = $_POST['nonce'];
+
+		if (!isset($nonce) || !wp_verify_nonce($nonce, 'wpr-addons-js')) {
+			wp_send_json_error(array(
+				'message' => esc_html__('Security check failed.', 'wpr-addons'),
+			));
+		}
+
 		// Get Settings
 		$settings = $_POST['grid_settings'];
 		// Get Posts

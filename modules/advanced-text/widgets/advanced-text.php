@@ -39,6 +39,10 @@ class Advanced_Text extends Widget_Base {
 		return [ 'royal', 'advanced text', 'text effects', 'typing text', 'fancy text', 'animated text', '3d text', 'text mask', 'text rotator', 'text animaiton' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	public function get_style_depends() {
 		return [ 'wpr-text-animations-css' ];
 	}
@@ -782,7 +786,7 @@ class Advanced_Text extends Widget_Base {
 		?>
 
 		<span class="wpr-highlighted-text">
-			<?php if ( '' !== $svg_arr[$settings['highlighted_shape']] ) : ?>		
+			<?php if ( '' !== $svg_arr[$settings['highlighted_shape']] && !empty($settings['highlighted_text']) ) : ?>		
 			<span class="wpr-highlighted-text-inner"><?php echo wp_kses_post( $settings['highlighted_text'] ); ?></span>
 
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 150" class="wpr-highlight-<?php echo esc_html( $settings['highlighted_shape'] ); ?>" preserveAspectRatio="none">

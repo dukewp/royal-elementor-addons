@@ -41,6 +41,10 @@ class Wpr_Search extends Widget_Base {
 		return [ 'royal', 'search', 'search widget', 'ajax search' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	public function get_style_depends() {
 		return [ 'wpr-animations-css', 'wpr-link-animations-css', 'wpr-button-animations-css', 'wpr-loading-animations-css', 'wpr-lightgallery-css' ];
 	}
@@ -822,6 +826,57 @@ class Wpr_Search extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'price_heading',
+			[
+				'label' => esc_html__( 'Price', 'wpr-addons' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before'
+			]
+		);
+
+		$this->add_control(
+			'product_price_color',
+			[
+				'label' => esc_html__( 'Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '#666666',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-search-product-price' => 'color: {{VALUE}};',
+				],
+				'condition' => [
+					'show_product_price' => 'yes',
+					'ajax_search' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control(
+			'product_price_spacing',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 25,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 5,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-search-product-price' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'show_product_price' => 'yes',
+					'ajax_search' => 'yes'
+				]
+			]
+		);
+
 		$this->end_controls_section();
 	}
 
@@ -1046,6 +1101,22 @@ class Wpr_Search extends Widget_Base {
 		);
 	}
 
+	public function add_control_show_product_price() {
+		$this->add_control(
+			'show_product_price',
+			[
+				'label' => esc_html__( 'Show Product Price', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'no',
+				'render_type' => 'template',
+				'condition' => [
+					'ajax_search' => 'yes',
+					'search_query' => ['all', 'product', 'pro-product']
+				]
+			]
+		);
+	}
+
 	protected function register_controls() {
 		
 		// Section: Search -----------
@@ -1062,7 +1133,7 @@ class Wpr_Search extends Widget_Base {
 
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'search', 'search_query', ['pro-post', 'pro-page', 'pro-product', 'pro-product', 'pro-e-landing-page'] );
 
-		if ( !wpr_fs()->is_plan( 'expert' ) ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->is_plan( 'expert' ) ) {
 			$this->add_control(
 				'search_query_exp_pro_notice',
 				[
@@ -1086,6 +1157,21 @@ class Wpr_Search extends Widget_Base {
 
 		$this->add_control_show_password_protected();
 
+		if ( current_user_can( 'administrator' ) ) {
+			$this->add_control(
+				'show_attachments',
+				[
+					'label' => esc_html__( 'Show Attachments', 'wpr-addons' ),
+					'description' => esc_html__( 'Include Media Files in Search Results', 'wpr-addons' ),
+					'type' => Controls_Manager::SWITCHER,
+					'condition' => [
+						'ajax_search' => 'yes'
+					],
+					'render_type' => 'template',
+				]
+			);
+		}
+
 		$this->add_control_open_in_new_page();
 
 		$this->add_control_show_ajax_thumbnails();
@@ -1099,6 +1185,8 @@ class Wpr_Search extends Widget_Base {
 		$this->add_control_show_description();
 
 		$this->add_control_number_of_words_in_excerpt();
+
+		$this->add_control_show_product_price();
 
 		$this->add_control_no_results_text();
 
@@ -2019,17 +2107,19 @@ class Wpr_Search extends Widget_Base {
 				'value' => get_search_query(),
 				'wpr-query-type' => $settings['search_query'],
 				'wpr-taxonomy-type' => isset($settings['query_taxonomy_'. $settings['search_query']]) ? $settings['query_taxonomy_'. $settings['search_query']] : '',
-				'number-of-results' => isset($settings['number_of_results']) && wpr_fs()->can_use_premium_code() ? $settings['number_of_results'] : 2,
+				'number-of-results' => isset($settings['number_of_results']) && (defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code()) ? $settings['number_of_results'] : 2,
 				'ajax-search' => isset($settings['ajax_search']) ? $settings['ajax_search'] : '',
 				'show-description' => isset($settings['show_description']) ? $settings['show_description'] : '',
 				'number-of-words' => isset($settings['number_of_words_in_excerpt']) ? $settings['number_of_words_in_excerpt'] : '',
 				'show-ajax-thumbnails' => isset($settings['show_ajax_thumbnails']) ? $settings['show_ajax_thumbnails'] : '',
 				'show-view-result-btn' => isset($settings['show_view_result_btn']) ? $settings['show_view_result_btn'] : '',
+				'show-product-price' => isset($settings['show_product_price']) ? $settings['show_product_price'] : '',
 				'view-result-text' => isset($settings['view_result_text']) ? $settings['view_result_text'] : '',
 				'no-results' => isset($settings['no_results_text']) ? esc_html__($settings['no_results_text']) : '',
 				'exclude-without-thumb' => isset($settings['exclude_posts_without_thumbnail']) ? $settings['exclude_posts_without_thumbnail'] : '',
 				'link-target' => isset($settings['ajax_search_link_target']) && ( 'yes' === $settings['ajax_search_link_target'] ) ? '_blank'  : '_self',
 				'password-protected' => isset($settings['ajax_show_ps_pt']) ? $settings['ajax_show_ps_pt'] : 'no',
+				'attachments' => isset($settings['show_attachments']) ? $settings['show_attachments'] : 'no',
 				// 'ajax-search-img-size' => isset($settings['ajax_search_img_size']) ? $settings['ajax_search_img_size'] : ''
 			]
 		);
@@ -2058,7 +2148,7 @@ class Wpr_Search extends Widget_Base {
 		<div class="wpr-data-fetch">
 			<span class="wpr-close-search"></span>
 			<ul></ul>
-			<?php if ( !wpr_fs()->can_use_premium_code() && current_user_can( 'administrator' ) ) : ?>
+			<?php if ( (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && current_user_can( 'administrator' ) ) : ?>
 				<p class="wpr-search-admin-notice">More than 2 results are available in the PRO version (This notice is only visible to admin users)</p>
 			<?php endif; ?>
 		</div>

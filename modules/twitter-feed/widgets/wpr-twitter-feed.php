@@ -38,12 +38,16 @@ class Wpr_Twitter_Feed extends Widget_Base {
 		return [ 'royal', 'twitter feed', 'social', 'grid' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	public function get_script_depends() {
 		return [ 'wpr-isotope', 'wpr-lightgallery' ];
 	}
 
 	public function get_style_depends() {
-		return ['wpr-animations-css', 'wpr-loading-animations-css', 'wpr-lightgallery-css'];
+		return ['wpr-animations-css', 'wpr-loading-animations-css', 'wpr-lightgallery-css', 'e-swiper'];
 	}
 
     public function get_custom_help_url() {
@@ -331,7 +335,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 
 	public function render_post_read_more ( $settings, $class, $item ) {
 
-		// $read_more_animation = ! wpr_fs()->can_use_premium_code() ? 'wpr-button-none' : $this->get_settings()['read_more_animation'];
+		// $read_more_animation = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'wpr-button-none' : $this->get_settings()['read_more_animation'];
 		$read_more_animation = 'wpr-change-it-later';
 
 		echo '<div class="'. esc_attr($class) .'">';
@@ -590,7 +594,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			$place = $data['element_location'];
 			$align_vr = $data['element_align_vr'];
 
-			if ( ! wpr_fs()->can_use_premium_code() ) {
+			if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 				$align_vr = 'middle';
 			}
 
@@ -697,7 +701,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			]
 		);
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'hashtag_name_divider',
 				[
@@ -1090,7 +1094,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			]
 		);
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$repeater->add_control(
 	            'element_align_pro_notice',
 	            [
@@ -4673,7 +4677,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			return;
 		}
 
-		if ( !wpr_fs()->can_use_premium_code() && $settings['number_of_posts'] > 6 ) {
+		if ( (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $settings['number_of_posts'] > 6 ) {
 			$settings['number_of_posts'] = 6;
 		}
 

@@ -36,6 +36,10 @@ class Wpr_Post_Comments extends Widget_Base {
 		return [ 'comments', 'post' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	public function add_control_comments_avatar_size() {}
 
 	public function add_control_avatar_gutter() {
@@ -2208,7 +2212,7 @@ class Wpr_Post_Comments extends Widget_Base {
 		$this_widget = $GLOBALS['wpr_post_comments_widget'];
 		$settings = $this_widget->get_settings();
 
-		if ( !wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['comments_avatar_size'] = 60;
 		}
 
@@ -2366,7 +2370,7 @@ class Wpr_Post_Comments extends Widget_Base {
 					$url_label = '<label>'. esc_html__( 'Website', 'wpr-addons' ) .'</label>';					
 				}
 
-				if ( !wpr_fs()->can_use_premium_code() ) {
+				if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 					$settings['comment_form_placeholders'] = '';
 				}
 
@@ -2408,7 +2412,7 @@ class Wpr_Post_Comments extends Widget_Base {
 					$text_label = '<label>'. esc_html__( 'Message', 'wpr-addons' ) . ($req ? '<span>*</span>' : '') .'</label>';
 				}
 
-				if ( !wpr_fs()->can_use_premium_code() ) {
+				if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 					$settings['comment_form_placeholders'] = '';
 				}
 

@@ -41,6 +41,10 @@ class Wpr_Grid extends Widget_Base {
 		return [ 'royal', 'blog', 'portfolio grid', 'posts', 'post grid', 'posts grid', 'post slider', 'posts slider', 'post carousel', 'posts carousel', 'massonry grid', 'isotope', 'post gallery', 'posts gallery', 'filterable grid', 'loop grid' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	public function get_script_depends() {
 		return [ 'wpr-isotope', 'wpr-slick', 'wpr-lightgallery' ];
 	}
@@ -66,7 +70,7 @@ class Wpr_Grid extends Widget_Base {
 				continue;
 			}
 
-			if ( !wpr_fs()->can_use_premium_code() ) {
+			if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 				$post_types['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Expert)';
 			} else {
 				$post_types[$slug] = esc_html( $title );
@@ -90,7 +94,7 @@ class Wpr_Grid extends Widget_Base {
 				continue;
 			}
 
-			if ( !wpr_fs()->can_use_premium_code() ) {
+			if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 				$post_taxonomies['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Expert)';
 			} else {
 				$post_taxonomies[$slug] = esc_html( $title );
@@ -811,7 +815,7 @@ class Wpr_Grid extends Widget_Base {
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'grid', 'query_source', ['pro-rl'] );
 
-		if ( !wpr_fs()->is_plan( 'expert' ) ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->is_plan( 'expert' ) ) {
 			$this->add_control(
 				'query_source_cpt_pro_notice',
 				[
@@ -878,7 +882,7 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
-		if ( !wpr_fs()->is_plan( 'expert' ) ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->is_plan( 'expert' ) ) {
 			$this->add_control(
 				'query_tax_selection_pro_notice',
 				[
@@ -1060,7 +1064,7 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
-		// if ( Utilities::is_new_free_user() && ! wpr_fs()->can_use_premium_code() ) {
+		// if ( Utilities::is_new_free_user() && (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) ) {
 		// 	$this->add_control(
 		// 		'limit_grid_items_pro_notice',
 		// 		[
@@ -1166,7 +1170,7 @@ class Wpr_Grid extends Widget_Base {
 
 		$this->add_control_layout_columns();
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'grid_columns_pro_notice',
 				[
@@ -1339,6 +1343,52 @@ class Wpr_Grid extends Widget_Base {
 				'render_type' => 'template',
 				'condition' => [
 					'layout_select!' => 'slider',
+				]
+			]
+		);
+
+		$this->add_control(
+			'filters_experiment',
+			[
+				'label' => esc_html__( 'Filters & Load More Experiment', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'no',
+				'return_value' => 'yes',
+				'render_type' => 'template',
+				'conditions' => [
+					'relation' => 'and',
+					'terms' => [
+						[
+							'name' => 'layout_filters',
+							'operator' => '!=',
+							'value' => '',
+						],
+						[
+							'relation' => 'or',
+							'terms' => [
+								[
+									'relation' => 'and',
+									'terms' => [	
+										[
+											'name' => 'layout_pagination',
+											'operator' => '!=',
+											'value' => '',
+										],
+										[
+											'name' => 'pagination_type',
+											'operator' => 'in',
+											'value' => ['load-more', 'infinite'],
+										],
+									]
+								],
+								[	
+									'name' => 'layout_pagination',
+									'operator' => '==',
+									'value' => '',
+								]
+							],
+						],
+					]
 				]
 			]
 		);
@@ -1688,7 +1738,7 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$repeater->add_control(
 				'element_align_pro_notice',
 				[
@@ -1832,6 +1882,20 @@ class Wpr_Grid extends Widget_Base {
 				'condition' => [
 					'element_select' => [ 'title', 'excerpt' ],
 					'element_trim_text_by' => 'letter_count'
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'element_show_dots',
+			[
+				'label' => esc_html__( 'Show Dots', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'default' => 'yes',
+				'condition' => [
+					'element_select' => [ 'excerpt' ],
+					'element_trim_text_by' => 'word_count'
 				]
 			]
 		);
@@ -2853,7 +2917,7 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
-		if ( !wpr_fs()->is_plan( 'expert' ) ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->is_plan( 'expert' ) ) {
 			$this->add_control(
 				'filters_select_pro_notice',
 				[
@@ -2883,6 +2947,19 @@ class Wpr_Grid extends Widget_Base {
 				'label' => esc_html__( 'Hide Empty Filters', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'no',
+				'return_value' => 'yes',
+				'condition' => [
+					'filters_linkable!' => 'yes',
+				],
+			]
+		);
+		
+		$this->add_control(
+			'filters_hide_uncategorized',
+			[
+				'label' => esc_html__( 'Hide Uncategorized', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
 				'return_value' => 'yes',
 				'condition' => [
 					'filters_linkable!' => 'yes',
@@ -3590,7 +3667,7 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'grid_item_radius',
 			[
 				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
@@ -3685,7 +3762,7 @@ class Wpr_Grid extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'grid_media_radius',
 			[
 				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
@@ -3727,7 +3804,7 @@ class Wpr_Grid extends Widget_Base {
 
 		$this->add_control_overlay_border_width();
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'overlay_radius',
 			[
 				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
@@ -8341,7 +8418,7 @@ class Wpr_Grid extends Widget_Base {
 			}
 		}
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings[ 'query_randomize' ] = '';
 			$settings['order_posts'] = 'date';
 		}
@@ -8366,7 +8443,7 @@ class Wpr_Grid extends Widget_Base {
 		}
 
 		// Display Scheduled Posts
-		if ( 'yes' === $settings['display_scheduled_posts'] && wpr_fs()->can_use_premium_code() ) {
+		if ( 'yes' === $settings['display_scheduled_posts'] && (defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code()) ) {
 			$args['post_status'] = 'future';
 		} else {
 			$args['post_status'] = 'publish';
@@ -8432,9 +8509,18 @@ class Wpr_Grid extends Widget_Base {
 				if ( $_GET['wpr_select_category'] != '0' ) {
 					// Get category from URL
 					$category = sanitize_text_field($_GET['wpr_select_category']);
+					$taxonomy_name = 'category';
+
+					$term = get_term($category);
+
+					// Check if the term is valid
+					if (!is_wp_error($term)) {
+						// Get the taxonomy name
+						$taxonomy_name = $term->taxonomy;
+					}
 				
 					array_push( $tax_query, [
-						'taxonomy' => 'category',
+						'taxonomy' => $taxonomy_name,
 						'field' => 'id',
 						'terms' => $category
 					] );
@@ -8751,7 +8837,7 @@ class Wpr_Grid extends Widget_Base {
 	public function get_image_effect_class( $settings ) {
 		$class = '';
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			if ( 'pro-zi' ==  $settings['image_effects'] || 'pro-zo' ==  $settings['image_effects'] || 'pro-go' ==  $settings['image_effects'] || 'pro-bo' ==  $settings['image_effects'] ) {
 				$settings['image_effects'] = 'none';
 			}
@@ -8831,9 +8917,9 @@ class Wpr_Grid extends Widget_Base {
 
 	// Render Media Overlay
 	public function render_media_overlay( $settings ) {
-		echo '<div class="wpr-grid-media-hover-bg '. esc_attr($this->get_animation_class( $settings, 'overlay' )) .'" data-url="'. esc_url( get_the_permalink( get_the_ID() ) ) .'">';
+		echo '<div class="wpr-grid-media-hover-bg '. esc_attr($this->get_animation_class( $settings, 'overlay' )) .'" data-url="'. esc_attr( get_the_permalink( get_the_ID() ) ) .'">';
 
-			if ( wpr_fs()->can_use_premium_code() ) {
+			if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() ) {
 				if ( '' !== $settings['overlay_image']['url'] ) {
 					echo '<img data-no-lazy="1" src="'. esc_url( $settings['overlay_image']['url'] ) .'">';
 				}
@@ -8844,8 +8930,8 @@ class Wpr_Grid extends Widget_Base {
 
 	// Render Post Title
 	public function render_post_title( $settings, $class ) {
-		$title_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['title_pointer'];
-		$title_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['title_pointer_animation'];
+		$title_pointer = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['title_pointer'];
+		$title_pointer_animation = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['title_pointer_animation'];
 		$pointer_item_class = (isset($this->get_settings()['title_pointer']) && 'none' !==$this->get_settings()['title_pointer']) ? 'class="wpr-pointer-item"' : '';
 		$open_links_in_new_tab = 'yes' === $this->get_settings()['open_links_in_new_tab'] ? '_blank' : '_self';
 
@@ -8893,13 +8979,23 @@ class Wpr_Grid extends Widget_Base {
 			return;
 		}
 
+		$excerpt = get_the_excerpt();
+
+		// Convert HTML entities to their respective characters
+		$decoded_excerpt = html_entity_decode($excerpt, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+		// Trim the string to the desired length
+		$trimmed_excerpt = mb_substr($decoded_excerpt, 0, $settings['element_letter_count'], 'UTF-8');
+
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
 			  if ( 'word_count' === $settings['element_trim_text_by']) {
-				echo '<p>'. esc_html(wp_trim_words( get_the_excerpt(), $settings['element_word_count'] )) .'</p>';
+				$show_dots = $settings['element_show_dots'] === 'yes' ? '...' : '';
+				echo '<p>'. esc_html(wp_trim_words( get_the_excerpt(), $settings['element_word_count'], $show_dots )) .'</p>';
 			  } else {
 				// echo '<p>'. substr(html_entity_decode(get_the_title()), 0, $settings['element_letter_count']) .'...' . '</p>';
-				echo '<p>'. esc_html(implode('', array_slice( str_split(get_the_excerpt()), 0, $settings['element_letter_count'] ))) .'...' .'</p>';
+				// echo '<p>'. esc_html(implode('', array_slice( str_split(get_the_excerpt()), 0, $settings['element_letter_count'] ))) .'...' .'</p>';	
+				echo '<p>' . esc_html($trimmed_excerpt) . '...' . '</p>';
 			  }
 			echo '</div>';
 		echo '</div>';
@@ -9103,7 +9199,7 @@ class Wpr_Grid extends Widget_Base {
 
 	// Render Post Read More
 	public function render_post_read_more( $settings, $class ) {
-		$read_more_animation = ! wpr_fs()->can_use_premium_code() ? 'wpr-button-none' : $this->get_settings()['read_more_animation'];
+		$read_more_animation = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'wpr-button-none' : $this->get_settings()['read_more_animation'];
 		$open_links_in_new_tab = 'yes' === $this->get_settings()['open_links_in_new_tab'] ? '_blank' : '_self';
 
 		echo '<div class="'. esc_attr($class) .'">';
@@ -9243,10 +9339,10 @@ class Wpr_Grid extends Widget_Base {
 		$terms = wp_get_post_terms( $post_id, $settings['element_select'] );
 		$count = 0;
 
-		$tax1_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['tax1_pointer'];
-		$tax1_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['tax1_pointer_animation'];
-		$tax2_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['tax2_pointer'];
-		$tax2_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['tax2_pointer_animation'];
+		$tax1_pointer = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['tax1_pointer'];
+		$tax1_pointer_animation = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['tax1_pointer_animation'];
+		$tax2_pointer = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'none' : $this->get_settings()['tax2_pointer'];
+		$tax2_pointer_animation = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'fade' : $this->get_settings()['tax2_pointer_animation'];
 		$pointer_item_class = (isset($this->get_settings()['tax1_pointer']) && 'none' !== $this->get_settings()['tax1_pointer']) || (isset($this->get_settings()['tax2_pointer']) && 'none' !== $this->get_settings()['tax2_pointer']) ? 'wpr-pointer-item' : '';
 
 		// Pointer Class
@@ -9279,7 +9375,7 @@ class Wpr_Grid extends Widget_Base {
 				foreach ( $terms as $term ) {
 
 					// Custom Colors
-					$enable_custom_colors = ! wpr_fs()->can_use_premium_code() ? '' : $this->get_settings()['tax1_custom_color_switcher'];
+					$enable_custom_colors = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? '' : $this->get_settings()['tax1_custom_color_switcher'];
 					
 					if ( 'yes' === $enable_custom_colors ) {
 						$custom_tax_styles = '';
@@ -9390,7 +9486,7 @@ class Wpr_Grid extends Widget_Base {
 			$place = $data['element_location'];
 			$align_vr = $data['element_align_vr'];
 
-			if ( ! wpr_fs()->can_use_premium_code() ) {
+			if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 				$align_vr = 'middle';
 			}
 
@@ -9468,7 +9564,7 @@ class Wpr_Grid extends Widget_Base {
 		// Get Custom Filters
 		$custom_filters = $settings[ 'query_taxonomy_'. $taxonomy ];
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['filters_default_filter'] = '';
 			$settings['filters_icon_align'] = '';
 			$settings['filters_count'] = '';
@@ -9545,7 +9641,22 @@ class Wpr_Grid extends Widget_Base {
 
 		// All Filters
 		} else {
-			$all_filters = get_terms( $taxonomy );
+			$exclude_ids = [];
+
+			if ( 'yes' === $settings['filters_hide_uncategorized'] ) {
+				$uncategorized = get_term_by('slug', 'uncategorized', $taxonomy);
+
+				if ($uncategorized && !is_wp_error($uncategorized)) {
+					$exclude_ids[] = $uncategorized->term_id;
+				}
+			}
+
+			$all_filters = get_terms([
+				'taxonomy'   => $taxonomy,
+				'hide_empty' => false,
+				'exclude'    => $exclude_ids,
+			]);
+
 			$parent_filters = [];
 
 			foreach ( $all_filters as $key => $filter ) {
@@ -9588,7 +9699,7 @@ class Wpr_Grid extends Widget_Base {
 				$children = get_term_children( $parent_filter, $taxonomy );
 				$data_attr = 'post_tag' === $taxonomy ? 'tag-'. $parent->slug : $taxonomy .'-'. $parent->slug;
 				$tax_data_attr = 'post_tag' === $taxonomy ? 'tag' : $taxonomy;
-				$term_data_attr = $filter->slug;
+				$term_data_attr = $parent->slug;
 
 				echo '<ul data-parent=".'. esc_attr(urldecode( $data_attr )) .'" class="wpr-sub-filters">';
 
@@ -9603,7 +9714,7 @@ class Wpr_Grid extends Widget_Base {
 					$data_attr = 'post_tag' === $taxonomy ? 'tag-'. $sub_filter->slug : $taxonomy .'-'. $sub_filter->slug;
 
 					echo '<li data-role="sub" class="'. esc_attr($pointer_class) .'">';
-						echo ''. $left_separator .'<span '. $pointer_item_class .'  data-ajax-filter='. json_encode([$tax_data_attr, $term_data_attr]) .'  data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($sub_filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo ''. $left_separator .'<span '. $pointer_item_class .'  data-ajax-filter='. json_encode([$tax_data_attr, $sub_filter->slug]) .'  data-filter=".'. esc_attr(urldecode($data_attr)) .'">'. $left_icon . esc_html($sub_filter->name) . $right_icon . $post_count .'</span>'. $right_separator; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo '</li>';
 				}
 
@@ -9655,7 +9766,7 @@ class Wpr_Grid extends Widget_Base {
 			$paged = 1;
 		}
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['pagination_type'] = 'pro-is' == $settings['pagination_type'] ? 'default' : $settings['pagination_type'];
 		}
 
@@ -9842,7 +9953,7 @@ class Wpr_Grid extends Widget_Base {
 
 	// Grid Settings
 	public function add_grid_settings( $settings ) {
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['layout_select'] = 'pro-ms' == $settings['layout_select'] ? 'fitRows' : $settings['layout_select'];
 			$settings['filters_deeplinking'] = '';
 			$settings['filters_count'] = '';
@@ -9914,7 +10025,7 @@ class Wpr_Grid extends Widget_Base {
 			$layout_settings['media_distance'] = $settings['layout_list_media_distance']['size'];
 		}
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['lightbox_popup_thumbnails'] = '';
 			$settings['lightbox_popup_thumbnails_default'] = '';
 			$settings['lightbox_popup_sharing'] = '';
@@ -9952,7 +10063,7 @@ class Wpr_Grid extends Widget_Base {
 		$slider_is_rtl = is_rtl();
 		$slider_direction = $slider_is_rtl ? 'rtl' : 'ltr';
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['layout_slider_autoplay'] = '';
 			$settings['layout_slider_autoplay_duration'] = 0;
 			$settings['layout_slider_pause_on_hover'] = '';
@@ -9976,7 +10087,7 @@ class Wpr_Grid extends Widget_Base {
 			'sliderSlidesToScroll' => $settings['layout_slides_to_scroll'] ? absint( $settings['layout_slides_to_scroll'] ) : 1,
 		];
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['lightbox_popup_thumbnails'] = '';
 			$settings['lightbox_popup_thumbnails_default'] = '';
 			$settings['lightbox_popup_sharing'] = '';

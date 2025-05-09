@@ -39,6 +39,10 @@ class Wpr_Charts extends Widget_Base {
 		return [ 'royal', 'line charts', 'radar charts', 'doughnut charts', 'pie charts', 'polararea charts', 'polar charts', 'bar charts', 'horizontal charts', 'vertical charts' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	public function get_script_depends() {
 		return [ 'wpr-charts' ];
 	}
@@ -398,7 +402,7 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'charts_repeater_labels_data_pro_notice',
 				[
@@ -540,7 +544,7 @@ class Wpr_Charts extends Widget_Base {
 			]
 		);
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'charts_repeater_pro_notice',
 				[
@@ -2446,7 +2450,7 @@ class Wpr_Charts extends Widget_Base {
 			
 			if ( !empty($charts_labels_data) ) :
 				$data_charts_array['labels'] = explode(',', trim($charts_labels_data));
-				if ( !wpr_fs()->can_use_premium_code() && 3 < sizeof($data_charts_array['labels']) ) {
+				if ( (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && 3 < sizeof($data_charts_array['labels']) ) {
 					$data_charts_array['labels'] = array_slice($data_charts_array['labels'], 0, 3);
 				}
 			endif;
@@ -2454,7 +2458,7 @@ class Wpr_Charts extends Widget_Base {
 			if ( is_array($charts_data_set) && sizeof($charts_data_set) ) {
 				$charts_counter = 0;
 				foreach ( $charts_data_set as $chart_data ) {
-					if ( !wpr_fs()->can_use_premium_code() && $charts_counter === 3 ) {
+					if ( (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $charts_counter === 3 ) {
 						break;
 					}
 					$data_charts_array['datasets'][] = [
@@ -2484,7 +2488,7 @@ class Wpr_Charts extends Widget_Base {
 				
 				$charts_counter = 0;
 				foreach ( $charts_data_set AS $labels_data ) :
-					if ( ! wpr_fs()->can_use_premium_code() && $charts_counter === 3 ) {
+					if ( (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $charts_counter === 3 ) {
 						break;
 					}
 					$data_charts_array['labels'][] = $labels_data['chart_data_label'];
@@ -2496,13 +2500,13 @@ class Wpr_Charts extends Widget_Base {
 				endif;
 
 				foreach ( $data_charts_array_test as $key=>$test_data ) {
-					if ( ! wpr_fs()->can_use_premium_code() && $key === 3 ) {
+					if ( (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $key === 3 ) {
 						break;
 					}
 					$chart_data_number_values[$key] = [];
 					$outer_key = $key;
 					foreach ( $charts_data_set as $key=>$chart_data ) {
-						if ( ! wpr_fs()->can_use_premium_code() && $key === 3 ) {
+						if ( (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $key === 3 ) {
 							break;
 						}
 						$number_value = sizeof(explode(',', trim($chart_data['chart_data_set'], ','))) >= $outer_key + 1 ? array_map('floatval', explode(',', trim($chart_data['chart_data_set'], ',')))[$outer_key] : '0';
@@ -2511,7 +2515,7 @@ class Wpr_Charts extends Widget_Base {
 				}
 				
 				foreach ( $charts_data_set as $key=>$chart_data ) {
-					if ( ! wpr_fs()->can_use_premium_code() && $key === 3 ) {
+					if ( (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $key === 3 ) {
 						break;
 					}
 					array_push($chart_background_colors, trim($chart_data['chart_data_background_color']));
@@ -2523,7 +2527,7 @@ class Wpr_Charts extends Widget_Base {
 				}
 
 				foreach ( $data_charts_array_test as $key=>$data_test ) {
-					if ( ! wpr_fs()->can_use_premium_code() && $key === 3 ) {
+					if ( (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $key === 3 ) {
 						break;
 					}
 					$data_charts_array['datasets'][] = [

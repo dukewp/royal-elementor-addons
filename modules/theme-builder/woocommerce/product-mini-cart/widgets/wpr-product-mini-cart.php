@@ -35,6 +35,10 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 		return [ 'woocommerce', 'product-ini-cart', 'product', 'mini', 'cart' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	public function get_script_depends() {
 		return ['wpr-perfect-scroll-js'];
 	}
@@ -57,6 +61,16 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 		); 
 	}
 
+    public function get_custom_help_url() {
+        if ( empty(get_option('wpr_wl_plugin_links')) )
+        // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-progress-bar-help-btn';
+            return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
+    }
+
+	public function is_reload_preview_required() {
+		return true;
+	}
+
 	public function add_controls_group_mini_cart_style() {}
 
 	public function add_section_style_mini_cart() {}
@@ -74,15 +88,6 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 			[
 				'label' => esc_html__( 'General', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
-			]
-		);
-
-		$this->add_control(
-			'wpr_particles_apply_changes',
-			[
-				'type' => Controls_Manager::RAW_HTML,
-				'raw' => '<div class="elementor-update-preview editor-wpr-preview-update"><span>Update changes to Preview</span><button class="elementor-button elementor-button-success" onclick="elementor.reloadPreview();">Apply</button>',
-				'separator' => 'after'
 			]
 		);
 
@@ -640,7 +645,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 		$this->add_render_attribute(
 			'mini_cart_attributes',
 			[
-				'data-animation' => (wpr_fs()->can_use_premium_code() && isset($settings['mini_cart_entrance_speed'])) ? $settings['mini_cart_entrance_speed'] : ''
+				'data-animation' => (defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() && isset($settings['mini_cart_entrance_speed'])) ? $settings['mini_cart_entrance_speed'] : ''
 			]
 		);
 

@@ -36,6 +36,10 @@ class Wpr_Post_Info extends Widget_Base {
 		return [ 'post meta', 'post info', 'date', 'time', 'author', 'categories', 'tags', 'comments' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
 	public function add_options_post_info_select() {
 		return [
 			'date' => esc_html__( 'Date', 'wpr-addons' ),
@@ -253,7 +257,7 @@ class Wpr_Post_Info extends Widget_Base {
 			]
 		);
 
-		if ( wpr_fs()->is_plan( 'expert' ) ) {
+		if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->is_plan( 'expert' ) ) {
 			$repeater->add_control(
 				'post_info_cf',
 				[

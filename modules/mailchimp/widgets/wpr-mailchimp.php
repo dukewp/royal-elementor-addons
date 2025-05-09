@@ -36,6 +36,10 @@ class Wpr_Mailchimp extends Widget_Base {
 		return [ 'royal', 'subscribe', 'subscription form', 'email subscription', 'sing up form', 'singup form', 'newsletter', 'mailchimp' ];
 	}
 
+	public function has_widget_inner_wrapper(): bool {
+		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
+	}
+
     public function get_custom_help_url() {
     	if ( empty(get_option('wpr_wl_plugin_links')) )
         // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-mailchimp-subscription-help-btn';
@@ -228,7 +232,7 @@ class Wpr_Mailchimp extends Widget_Base {
 			]
 		);
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'mailchimp_pro_notice',
 				[
@@ -1408,7 +1412,7 @@ class Wpr_Mailchimp extends Widget_Base {
 		// Get Settings
 		$settings = $this->get_settings();
 
-		if ( wpr_fs()->can_use_premium_code() ) {
+		if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() ) {
 			$clear_fields_on_submit = esc_attr($settings['clear_fields_on_submit']);
 		} else {
 			$clear_fields_on_submit = '';
