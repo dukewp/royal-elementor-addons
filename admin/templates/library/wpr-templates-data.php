@@ -14,6 +14,22 @@ class WPR_Templates_Data {
 		$is_woo_active = is_plugin_active('woocommerce/woocommerce.php') ? 'true' : 'false';
 
 		return [
+			'filters-demo' => [
+				'v1' => [
+					'name' => 'Filters Demo',
+					'pages' => 'home,',
+					'plugins' => '{}',
+					'tags' => 'filters demo',
+					'theme-builder' => true,
+					'woo-builder' => true,
+					'off-canvas' => true,
+					'price' => $is_pro_active ? 'free' : 'pro',
+					'expert' => $is_expert ? 'free' : 'expert',
+					'custom-types' => ['transport' => 'transport', 'tr-body' => 'tr_body', 'tr-make' => 'tr_make', 'tr-model' => 'tr_model', 'tr-type' => 'tr_type'],
+					'label' => 'new',
+					'priority' => 5,
+				],
+			],
 			'book-shop' => [
 				'v1' => [
 					'name' => 'Bookshop V1',
