@@ -110,9 +110,6 @@ class Plugin {
 		// Meta Keys
 		require WPR_ADDONS_PATH . 'classes/wpr-custom-meta-keys.php';
 
-		// Grid
-		require WPR_ADDONS_PATH . 'classes/modules/wpr-filter-grid-posts.php';
-
 		// Media Grid
 		require WPR_ADDONS_PATH . 'classes/modules/wpr-filter-grid-media.php';
 
