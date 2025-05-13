@@ -1465,7 +1465,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 						$cfc_text = get_term_meta($term->term_id, $general_settings['tax1_custom_color_field_text'], true);
 						$cfc_bg = get_term_meta($term->term_id, $general_settings['tax1_custom_color_field_bg'], true);
 						$color_styles = 'color:'. $cfc_text .'; background-color:'. $cfc_bg .'; border-color:'. $cfc_bg .';';
-						$css_selector = '.elementor-element'. $this->get_unique_selector() .' .wpr-grid-tax-style-1 .inner-block a.wpr-tax-id-'. esc_attr($term->term_id);
+						// $css_selector = '.elementor-element'. $this->get_unique_selector() .' .wpr-grid-tax-style-1 .inner-block a.wpr-tax-id-'. esc_attr($term->term_id);
+						$css_selector = '.elementor-element .wpr-grid-tax-style-1 .inner-block a.wpr-tax-id-'. esc_attr($term->term_id); // TODO: get_unique_selector()
 						$custom_tax_styles .= $css_selector .'{'. $color_styles .'}';
 						echo '<style>'. esc_html($custom_tax_styles) .'</style>'; // TODO: take out of loop if possible
 					}
@@ -1904,9 +1905,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			if ( has_post_thumbnail() ) {
 				echo '<div class="wpr-grid-media-wrap'. esc_attr(WPR_Grid_Filters_AJAX::get_image_effect_class( $settings )) .' " data-overlay-link="'. esc_attr( $settings['overlay_post_link'] ) .'">';
 					// Post Thumbnail
-					if ( !empty($settings) ) {
-						WPR_Grid_Filters_AJAX::render_post_thumbnail( $settings, get_the_ID() );
-					}
+					WPR_Grid_Filters_AJAX::render_post_thumbnail( $settings, get_the_ID() );
 
 					// Media Hover
 					echo '<div class="wpr-grid-media-hover wpr-animation-wrap">';
