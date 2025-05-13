@@ -1140,51 +1140,51 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'filters_experiment',
-			[
-				'label' => esc_html__( 'Filters & Load More Experiment', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'no',
-				'return_value' => 'yes',
-				'render_type' => 'template',
-				'conditions' => [
-					'relation' => 'and',
-					'terms' => [
-						[
-							'name' => 'layout_filters',
-							'operator' => '!=',
-							'value' => '',
-						],
-						[
-							'relation' => 'or',
-							'terms' => [
-								[
-									'relation' => 'and',
-									'terms' => [	
-										[
-											'name' => 'layout_pagination',
-											'operator' => '!=',
-											'value' => '',
-										],
-										[
-											'name' => 'pagination_type',
-											'operator' => 'in',
-											'value' => ['load-more', 'infinite'],
-										],
-									]
-								],
-								[	
-									'name' => 'layout_pagination',
-									'operator' => '==',
-									'value' => '',
-								]
-							],
-						],
-					]
-				]
-			]
-		);
+		// $this->add_control(
+		// 	'filters_experiment',
+		// 	[
+		// 		'label' => esc_html__( 'Filters & Load More Experiment', 'wpr-addons' ),
+		// 		'type' => Controls_Manager::SWITCHER,
+		// 		'default' => 'no',
+		// 		'return_value' => 'yes',
+		// 		'render_type' => 'template',
+		// 		'conditions' => [
+		// 			'relation' => 'and',
+		// 			'terms' => [
+		// 				[
+		// 					'name' => 'layout_filters',
+		// 					'operator' => '!=',
+		// 					'value' => '',
+		// 				],
+		// 				[
+		// 					'relation' => 'or',
+		// 					'terms' => [
+		// 						[
+		// 							'relation' => 'and',
+		// 							'terms' => [	
+		// 								[
+		// 									'name' => 'layout_pagination',
+		// 									'operator' => '!=',
+		// 									'value' => '',
+		// 								],
+		// 								[
+		// 									'name' => 'pagination_type',
+		// 									'operator' => 'in',
+		// 									'value' => ['load-more', 'infinite'],
+		// 								],
+		// 							]
+		// 						],
+		// 						[	
+		// 							'name' => 'layout_pagination',
+		// 							'operator' => '==',
+		// 							'value' => '',
+		// 						]
+		// 					],
+		// 				],
+		// 			]
+		// 		]
+		// 	]
+		// );
 
 		$this->add_control_open_links_in_new_tab();
 
