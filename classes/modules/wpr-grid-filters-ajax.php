@@ -4,6 +4,7 @@ namespace WprAddons\Classes\Modules;
 use Elementor\Utils;
 use Elementor\Group_Control_Image_Size;
 use WprAddons\Classes\Utilities;
+use WprAddons\Classes\Modules\WPR_Post_Likes;
 
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -26,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     }
     
 	// Get Taxonomies Related to Post Type
-	public function get_related_taxonomies() {
+	public static function get_related_taxonomies() {
 		$relations = [];
 		$post_types = Utilities::get_custom_types_of( 'post', false );
 
@@ -42,8 +43,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	// Get Max Pages
-	public function get_max_num_pages( $settings ) {
-		$query = new \WP_Query( $this->get_main_query_args() );
+	public static function get_max_num_pages( $settings ) {
+		$query = new \WP_Query( WPR_Grid_Filters_AJAX::get_main_query_args($settings) );
 		$max_num_pages = intval( ceil( $query->max_num_pages ) );
 
 		// Reset
@@ -54,8 +55,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	// Main Query Args
-	public function get_main_query_args() {
-		$settings = $_POST['grid_settings'];
+	public static function get_main_query_args($settings) {
 		$author = ! empty( $settings[ 'query_author' ] ) ? implode( ',', $settings[ 'query_author' ] ) : '';
 
 		// if ( is_user_logged_in() ){
@@ -74,7 +74,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		// Change Posts Per Page for Slider Layout
 		if ( 'slider' === $settings['layout_select'] && Utilities::is_new_free_user() ) {
-			$settings['query_posts_per_page'] = $settings['query_slides_to_show'];
+			$settings['query_posts_per_page'] = $settings['query_slides_to_show'] ? $settings['query_slides_to_show'] : -1;
 			$settings['query_posts_per_page'] = $settings['query_posts_per_page'] > 4 ? 4 : $settings['query_posts_per_page'];
 		}
 
@@ -94,18 +94,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 			}
 		}
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings[ 'query_randomize' ] = '';
 			$settings['order_posts'] = 'date';
 		}
 
 		$query_order_by = '' != $settings['query_randomize'] ? $settings['query_randomize'] : $settings['order_posts'];
+		$post__not_in = isset($settings[ 'query_exclude_'. $settings[ 'query_source' ] ]) && !empty($settings[ 'query_exclude_'. $settings[ 'query_source' ] ]) ? $settings[ 'query_exclude_'. $settings[ 'query_source' ] ] : [];
 
 		// Dynamic
 		$args = [
 			'post_type' => $settings[ 'query_source' ],
-			'tax_query' => $this->get_tax_query_args(),
-			'post__not_in' => $settings[ 'query_exclude_'. $settings[ 'query_source' ] ],
+			'tax_query' => WPR_Grid_Filters_AJAX::get_tax_query_args($settings),
+			'post__not_in' => $post__not_in,
 			'posts_per_page' => $settings['query_posts_per_page'],
 			'orderby' => $query_order_by,
 			'author' => $author,
@@ -115,14 +116,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		// if ( isset($_POST['wpr_item_length']) ) {
 		// 	$args['posts_per_page'] == $_POST['wpr_item_length'];
-		// }
+		// } check before uncomenting (may conflict)
 
 		if ( $query_order_by == 'meta_value' ) {
 			$args['meta_key'] = $settings['order_posts_by_acf'];
 		}
 
 		// Display Scheduled Posts
-		if ( 'yes' === $settings['display_scheduled_posts'] && wpr_fs()->can_use_premium_code() ) {
+		if ( 'yes' === $settings['display_scheduled_posts'] && (defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code()) ) {
 			$args['post_status'] = 'future';
 		} else {
 			$args['post_status'] = 'publish';
@@ -188,26 +189,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 				if ( $_GET['wpr_select_category'] != '0' ) {
 					// Get category from URL
 					$category = sanitize_text_field($_GET['wpr_select_category']);
+					$taxonomy_name = 'category';
+	
+	                $term = get_term($category);
+	
+	                // Check if the term is valid
+	                if (!is_wp_error($term)) {
+	                    // Get the taxonomy name
+	                    $taxonomy_name = $term->taxonomy;
+	                }
 				
 					array_push( $tax_query, [
-						'taxonomy' => 'category',
+						'taxonomy' => $taxonomy_name,
 						'field' => 'id',
 						'terms' => $category
 					] );
 				}
 			}
-            // Get category from URL
+            // Get category from URL (CHECK BELOW FOR FILTERS)
 
-			// if ( !empty($tax_query) ) {
-			// 	$args['tax_query'] = $tax_query;
-			// }
+			if ( !empty($tax_query) ) {
+				$args['tax_query'] = $tax_query;
+			}
 		}
 
 		// Related
 		if ( 'related' === $settings[ 'query_source' ] ) {
 			$args = [
 				'post_type' => get_post_type( get_the_ID() ),
-				'tax_query' => $this->get_tax_query_args(),
+				'tax_query' => WPR_Grid_Filters_AJAX::get_tax_query_args($settings),
 				'post__not_in' => [ get_the_ID() ],
 				'ignore_sticky_posts' => 1,
 				'posts_per_page' => $settings['query_posts_per_page'],
@@ -220,7 +230,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$args['order'] = $settings['order_direction'];
 		}
 
-		if ( isset($_POST['wpr_offset']) ) {
+		if ( isset($_POST['wpr_offset']) ) { // Check if causes issues with grid itself
 			$args['offset'] = $_POST['wpr_offset'];
 		}
 
@@ -302,7 +312,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 									if ( str_contains($_POST['wpr_url_params'][$key], ',') ) {
 			
 										// Example usage
-										$key_type = $this->identify_key_type($cleanedKey);
+										$key_type = WPR_Grid_Filters_AJAX::identify_key_type($cleanedKey);
 										$filtervalues = explode(',', $_POST['wpr_url_params'][$key]);
 		
 										if ( 'meta_field' == $key_type ) {
@@ -396,7 +406,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 											array_push($tax_query, $for_tax_query);
 										}
 									} else { // not str_contains($_POST['wpr_url_params'][$key], ',')
-										$key_type = $this->identify_key_type($cleanedKey);
+										$key_type = WPR_Grid_Filters_AJAX::identify_key_type($cleanedKey);
 										$filtervalues = sanitize_text_field($_POST['wpr_url_params'][$key]);
 		
 										if ( $key_type == 'meta_field' ) {
@@ -434,22 +444,213 @@ if ( ! defined( 'ABSPATH' ) ) {
 							}
 						}
 					}
+				}	
+
+				if ( !empty($tax_query) ) {
+					$args['tax_query'] = $tax_query;
+				}
+
+				if ( !empty($meta_query) )  {
+					$args['meta_query'] = $meta_query;
+				}
+			} else {
+				// Iterate through the $_GET array
+				foreach ($_GET as $key => $value) {
+					// Check if the variable name contains "wpr_gf_"
+					if (strpos($key, 'wpr_gf_') !== false) {
+						// Need to setup logic to get relation from filters separately
+						$cleanedKey = str_replace('wpr_gf_', '', $key);
+						$prev_cleaned_key = $cleanedKey;
+		
+						if ( isset($_GET[$key]) ) {
+							if ( $cleanedKey == 'date_range' ) {
+								$date = $_GET[$key];
+								
+								$args['date_query'] = [];
+		
+								if ( str_contains($date, ',') ) {
+									$date = explode(',', $date);
+		
+									if (false) {
+										$args['date_query'] = ['relation' => 'or'];
+		
+										list($year1, $month1, $day1) = explode("-", $date[0]);
+										list($year2, $month2, $day2) = explode("-", $date[1]);
+		
+										array_push( $args['date_query'], [
+											'year' => $year1,
+											'month' => $month1,
+											'day' => $day1,
+										] );
+		
+										array_push( $args['date_query'], [
+											'year' => $year2,
+											'month' => $month2,
+											'day' => $day2,
+										] );
+		
+									} else {
+										array_push( $args['date_query'], [
+											'after'     => $date[0],
+											'before'    => $date[1],
+											'inclusive' => true
+										] );
+									}
+								} 
+							} elseif ( $cleanedKey == 'date' ) {
+								$date = $_GET[$key];
+								
+								$args['date_query'] = [];
+		
+								if ( explode("-", $date) ) {
+									list($year, $month, $day) = explode("-", $date);
+		
+									array_push( $args['date_query'], [
+										'year' => $year,
+										'month' => $month,
+										'day' => $day,
+									]);
+								}
+							} else {
+								if ( $_GET[$key] != '0' ) {
+									// Get category from URL
+									if (str_contains($_GET[$key], ',')) {
+			
+										// Example usage
+										$key_type = WPR_Grid_Filters_AJAX::identify_key_type($cleanedKey);
+										$filtervalues = explode(',', $_GET[$key]);
+		
+										if ($key_type == 'meta_field') {
+											if ( is_numeric($filtervalues[0]) ) {
+												$minValue = min(array_values($filtervalues));
+												$maxValue = max(array_values($filtervalues));
+												
+												if (isset($args['meta_query'])) {
+													array_push($args['meta_query'], [
+														[
+															'key'     => $cleanedKey,
+															'value'   => [$minValue, $maxValue],
+															'type'    => 'NUMERIC',
+															'compare' => 'BETWEEN',
+														],
+													]);
+												} else {
+													$args['meta_query'] = [
+														[
+															'key'     => $cleanedKey,
+															'value'   => [$minValue, $maxValue],
+															'type'    => 'NUMERIC',
+															'compare' => 'BETWEEN',
+														],
+													];
+												}
+											} else {
+												if (isset($args['meta_query'])) { 
+		
+		
+													$for_meta_query = [ // needs check if overrides something
+														'relation' => explode(',', $_GET['wpr_gfr_'. $cleanedKey])[0],
+													];
+				
+													foreach ($filtervalues as $filtervalue) {
+														$filtervalue = sanitize_text_field($filtervalue);
+														
+													
+														array_push($for_meta_query, [
+															[
+																'key'     => $cleanedKey,
+																'value'   => $filtervalue
+															],
+														]);
+													}
+				
+													array_push( $args['meta_query'], $for_meta_query );
+												} else {
+													$args['meta_query'] = [ // needs check if overrides something
+														'relation' => explode(',', $_GET['wpr_gfr_'. $cleanedKey])[0],
+													];
+		
+													if (is_array($filtervalues)) {
+														foreach ($filtervalues as $filtervalue) {
+															$args['meta_query'][] = [
+																'key'     => $cleanedKey,
+																'value'   => $filtervalue,
+																'compare' => '=',
+															];
+														}
+													} else {
+		
+													}
+												}
+											}
+										} else { // if != 'meta_field'
+											$for_tax_query = [ // needs check if overrides something
+												'relation' => explode(',', $_GET['wpr_gfr_'. $cleanedKey])[0],
+											];
+		
+											foreach ($filtervalues as $filtervalue) {
+												$filtervalue = sanitize_text_field($filtervalue);
+												
+												array_push( $for_tax_query, [
+													'taxonomy' => $cleanedKey,
+													'field' => 'id',
+													'terms' => $filtervalue
+												] );
+											}
+		
+											array_push( $tax_query, $for_tax_query );
+										}
+									} else { // not str_contains($_GET[$key], ',')
+										$key_type = WPR_Grid_Filters_AJAX::identify_key_type($cleanedKey);
+										$filtervalues = sanitize_text_field($_GET[$key]);
+		
+										if ( $key_type == 'meta_field' ) {
+											if (isset($args['meta_query'])) {
+												array_push($args['meta_query'], [
+													[
+														'key'     => $cleanedKey,
+														'value'   => [$filtervalues],
+														// 'type'    => 'NUMERIC',
+														// 'compare' => 'BETWEEN',
+													],
+												]);
+											} else {
+												$args['meta_query'] = [
+													[
+														'key'     => $cleanedKey,
+														'value'   => [$filtervalues],
+														// 'type'    => 'NUMERIC',
+														// 'compare' => 'BETWEEN',
+													],
+												];
+											}
+										} else {
+											if (isset($_GET[$key])) {
+						
+												array_push( $tax_query, [
+													'taxonomy' => $cleanedKey,
+													'field' => 'id',
+													'terms' => $filtervalues
+												] );
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+		
+				if ( !empty($tax_query) ) {
+					$args['tax_query'] = $tax_query;
 				}
 			}
-
-			if ( !empty($tax_query) ) {
-				$args['tax_query'] = $tax_query;
-			}
-
-            if ( !empty($meta_query) )  {
-                $args['meta_query'] = $meta_query;
-            }
 		}
 
 		return $args;
 	}
 	
-	public function identify_key_type($key) {
+	public static function identify_key_type($key) {
 		// Check if it's a built-in taxonomy
 		$builtin_taxonomies = array('category', 'post_tag'); // Add more if needed
 		if (in_array($key, $builtin_taxonomies)) {
@@ -464,9 +665,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	
 		// Check if it's a custom field key - WHY?
 		$custom_field_keys = get_post_custom_keys();
-		// if (in_array($key, $custom_field_keys)) {
-		// 	return 'custom_field';
-		// }
+		if ( is_array($custom_field_keys) && in_array($key, $custom_field_keys) ) {
+			return 'custom_field';
+		}
 	
 		// Add more checks if needed...
 	
@@ -475,8 +676,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	// Taxonomy Query Args
-	public function get_tax_query_args() {
-		$settings = $_POST['grid_settings'];
+	public static function get_tax_query_args($settings) {
+		$settings = $settings;
 		$tax_query = [];
 
 		if ( 'related' === $settings[ 'query_source' ] ) {
@@ -503,7 +704,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	// Get Animation Class
-	public function get_animation_class( $data, $object ) {
+	public static function get_animation_class( $data, $object ) {
 		$class = '';
 
 		// Disable Animation on Mobile
@@ -528,10 +729,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	// Get Image Effect Class
-	public function get_image_effect_class( $settings ) {
+	public static function get_image_effect_class( $settings ) {
 		$class = '';
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			if ( 'pro-zi' ==  $settings['image_effects'] || 'pro-zo' ==  $settings['image_effects'] || 'pro-go' ==  $settings['image_effects'] || 'pro-bo' ==  $settings['image_effects'] ) {
 				$settings['image_effects'] = 'none';
 			}
@@ -553,7 +754,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	// Render Password Protected Input
-	public function render_password_protected_input( $settings ) {
+	public static function render_password_protected_input( $settings ) {
 		if ( ! post_password_required() ) {
 			return;
 		}
@@ -579,9 +780,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	// Render Post Thumbnail
-	public function render_post_thumbnail( $settings ) {
+	public static function render_post_thumbnail( $settings ) {
 		$id = get_post_thumbnail_id();
-
+		
 		$src = Group_Control_Image_Size::get_attachment_image_src( $id, 'layout_image_crop', $settings );
 		
 		if ( get_post_meta(get_the_ID(), 'wpr_secondary_image_id') && !empty(get_post_meta(get_the_ID(), 'wpr_secondary_image_id')) ) {
@@ -593,7 +794,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$alt = '' === wp_get_attachment_caption( $id ) ? get_the_title() : wp_get_attachment_caption( $id );
 
 		if ( has_post_thumbnail() ) {
-			echo '<div class="wpr-grid-image-wrap" data-src="'. esc_url( $src ) .'" data-img-on-hover="'. $settings['secondary_img_on_hover'] .'"  data-src-secondary="'. esc_url( $src2 ) .'">';
+			echo '<div class="wpr-grid-image-wrap" data-src="'. esc_url( $src ) .'" data-img-on-hover="'. esc_attr( $settings['secondary_img_on_hover'] ) .'"  data-src-secondary="'. esc_url( $src2 ) .'">';
 				if ( 'yes' == $settings['grid_lazy_loading'] ) {
 					echo '<img data-no-lazy="1" src="'. WPR_ADDONS_ASSETS_URL . 'img/icon-256x256.png" alt="'. esc_attr( $alt ) .'" class="wpr-hidden-image wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
 					if ( 'yes' == $settings['secondary_img_on_hover'] ) {
@@ -610,10 +811,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	// Render Media Overlay
-	public function render_media_overlay( $settings ) {
-		echo '<div class="wpr-grid-media-hover-bg '. esc_attr($this->get_animation_class( $settings, 'overlay' )) .'" data-url="'. esc_url( get_the_permalink( get_the_ID() ) ) .'">';
+	public static function render_media_overlay( $settings ) {
+		echo '<div class="wpr-grid-media-hover-bg '. esc_attr(WPR_Grid_Filters_AJAX::get_animation_class( $settings, 'overlay' )) .'" data-url="'. esc_attr( get_the_permalink( get_the_ID() ) ) .'">'; // changed esc_url to esc_attr (why?)
 
-			if ( wpr_fs()->can_use_premium_code() ) {
+			if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() ) {
 				if ( '' !== $settings['overlay_image']['url'] ) {
 					echo '<img data-no-lazy="1" src="'. esc_url( $settings['overlay_image']['url'] ) .'">';
 				}
@@ -623,16 +824,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	// Render Post Title
-	public function render_post_title( $settings, $class ) {
-		$title_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $_POST['grid_settings']['title_pointer'];
-		$title_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $_POST['grid_settings']['title_pointer_animation'];
-		$pointer_item_class = (isset($_POST['grid_settings']['title_pointer']) && 'none' !==$_POST['grid_settings']['title_pointer']) ? 'class="wpr-pointer-item"' : '';
-		$open_links_in_new_tab = 'yes' === $_POST['grid_settings']['open_links_in_new_tab'] ? '_blank' : '_self';
+	public static function render_post_title( $settings, $class, $general_settings = '' ) {
+		$title_pointer = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'none' : $general_settings['title_pointer'];
+		$title_pointer_animation = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'fade' : $general_settings['title_pointer_animation'];
+		$pointer_item_class = (isset($general_settings['title_pointer']) && 'none' !==$general_settings['title_pointer']) ? 'class="wpr-pointer-item"' : '';
+		$open_links_in_new_tab = 'yes' === $general_settings['open_links_in_new_tab'] ? '_blank' : '_self';
 
 		$class .= ' wpr-pointer-'. $title_pointer;
 		$class .= ' wpr-pointer-line-fx wpr-pointer-fx-'. $title_pointer_animation;
 
-		echo '<'. esc_attr($settings['element_title_tag']) .' class="'. esc_attr($class) .'">';
+		$tags_whitelist = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'span', 'p'];
+		$element_title_tag = Utilities::validate_html_tags_wl( $settings['element_title_tag'], 'h2', $tags_whitelist );
+
+		echo '<'. esc_attr($element_title_tag) .' class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
 				echo '<a target="'. $open_links_in_new_tab .'" '. $pointer_item_class .' href="'. esc_url( get_the_permalink() ) .'">';
 					if ( 'word_count' === $settings['element_trim_text_by'] ) {
@@ -642,11 +846,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 					}
 				echo '</a>';
 			echo '</div>';
-		echo '</'. esc_attr($settings['element_title_tag']) .'>';
+		echo '</'. esc_attr($element_title_tag) .'>';
 	}
 
 	// Render Post Content
-	public function render_post_content( $settings, $class ) {
+	public static function render_post_content( $settings, $class ) {
 		$dropcap_class = 'yes' === $settings['element_dropcap'] ? ' wpr-enable-dropcap' : '';
 		$class .= $dropcap_class;
 
@@ -662,7 +866,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	// Render Post Excerpt
-	public function render_post_excerpt( $settings, $class ) {
+	public static function render_post_excerpt( $settings, $class ) {
 		$dropcap_class = 'yes' === $settings['element_dropcap'] ? ' wpr-enable-dropcap' : '';
 		$class .= $dropcap_class;
 
@@ -670,20 +874,30 @@ if ( ! defined( 'ABSPATH' ) ) {
 			return;
 		}
 
+		$excerpt = get_the_excerpt();
+
+		// Convert HTML entities to their respective characters
+		$decoded_excerpt = html_entity_decode($excerpt, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+		// Trim the string to the desired length
+		$trimmed_excerpt = mb_substr($decoded_excerpt, 0, $settings['element_letter_count'], 'UTF-8');
+
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-			  if ( 'word_count' === $settings['element_trim_text_by']) {
-				echo '<p>'. esc_html(wp_trim_words( get_the_excerpt(), $settings['element_word_count'] )) .'</p>';
-			  } else {
+				if ( 'word_count' === $settings['element_trim_text_by']) {
+				$show_dots = $settings['element_show_dots'] === 'yes' ? '...' : '';
+				echo '<p>'. esc_html(wp_trim_words( get_the_excerpt(), $settings['element_word_count'], $show_dots )) .'</p>';
+				} else {
 				// echo '<p>'. substr(html_entity_decode(get_the_title()), 0, $settings['element_letter_count']) .'...' . '</p>';
-				echo '<p>'. esc_html(implode('', array_slice( str_split(get_the_excerpt()), 0, $settings['element_letter_count'] ))) .'...' .'</p>';
-			  }
+				// echo '<p>'. esc_html(implode('', array_slice( str_split(get_the_excerpt()), 0, $settings['element_letter_count'] ))) .'...' .'</p>';	
+				echo '<p>' . esc_html($trimmed_excerpt) . '...' . '</p>';
+				}
 			echo '</div>';
 		echo '</div>';
 	}
 
 	// Render Post Date
-	public function render_post_date( $settings, $class ) {
+	public static function render_post_date( $settings, $class ) {
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
 				echo '<span>';
@@ -729,7 +943,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	// Render Post Time
-	public function render_post_time( $settings, $class ) {
+	public static function render_post_time( $settings, $class ) {
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
 				echo '<span>';
@@ -771,7 +985,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	// Render Post Author
-	public function render_post_author( $settings, $class ) {
+	public static function render_post_author( $settings, $class ) {
 		$author_id =  get_post_field( 'post_author' );
 
 		echo '<div class="'. esc_attr($class) .'">';
@@ -821,7 +1035,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	// Render Post Comments
-	public function render_post_comments( $settings, $class ) {
+	public static function render_post_comments( $settings, $class ) {
 		$count = get_comments_number();
 
 		if ( comments_open() ) {
@@ -879,9 +1093,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	// Render Post Read More
-	public function render_post_read_more( $settings, $class ) {
-		$read_more_animation = ! wpr_fs()->can_use_premium_code() ? 'wpr-button-none' : $_POST['grid_settings']['read_more_animation'];
-		$open_links_in_new_tab = 'yes' === $_POST['grid_settings']['open_links_in_new_tab'] ? '_blank' : '_self';
+	public static function render_post_read_more( $settings, $class, $general_settings ) {
+		$read_more_animation = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'wpr-button-none' : $general_settings['read_more_animation'];
+		$open_links_in_new_tab = 'yes' === $general_settings['open_links_in_new_tab'] ? '_blank' : '_self';
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
@@ -917,14 +1131,96 @@ if ( ! defined( 'ABSPATH' ) ) {
 		echo '</div>';
 	}
 
-	// Render Post Likes
-	public function render_post_likes( $settings, $class, $post_id ) {}
+	// Render Post Likes (Pro)
+	public static function render_post_likes( $settings, $class, $post_id ) {
+		
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
+			return;
+		}
 
-	// Render Post Sharing
-	public function render_post_sharing_icons( $settings, $class ) {}
+		$post_likes = new WPR_Post_Likes();
+
+		echo '<div class="'. esc_attr($class) .'">';
+			echo '<div class="inner-block">';
+				// Text: Before
+				if ( 'before' === $settings['element_extra_text_pos'] ) {
+					echo '<span class="wpr-grid-extra-text-left">'. esc_html( $settings['element_extra_text'] ) .'</span>';
+				}
+
+				echo $post_likes->get_button( $post_id, $settings );
+
+				// Text: After
+				if ( 'after' === $settings['element_extra_text_pos'] ) {
+					echo '<span class="wpr-grid-extra-text-right">'. esc_html( $settings['element_extra_text'] ) .'</span>';
+				}
+			echo '</div>';
+		echo '</div>';
+	}
+
+	// Render Post Sharing Icons (Pro)
+	public static function render_post_sharing_icons( $settings, $class ) {
+
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
+			return;
+		}
+
+		$args = [
+			'icons' => 'yes',
+			'tooltip' => $settings['element_sharing_tooltip'],
+			'url' => esc_url( get_the_permalink() ),
+			'title' => esc_html( get_the_title() ),
+			'text' => esc_html( get_the_excerpt() ),
+			'image' => esc_url( get_the_post_thumbnail_url() ),
+		];
+
+		$hidden_class = '';
+
+		echo '<div class="'. esc_attr($class) .'">';
+			echo '<div class="inner-block">';
+				// Text: Before
+				if ( 'before' === $settings['element_extra_text_pos'] ) {
+					echo '<span class="wpr-grid-extra-text-left">'. esc_html( $settings['element_extra_text'] ) .'</span>';
+				}
+
+				echo '<span class="wpr-post-sharing">';
+
+					if ( 'yes' === $settings['element_sharing_trigger'] ) {
+						$hidden_class = ' wpr-sharing-hidden';
+						$attributes  = ' data-action="'. esc_attr( $settings['element_sharing_trigger_action'] ) .'"';
+						$attributes .= ' data-direction="'. esc_attr( $settings['element_sharing_trigger_direction'] ) .'"';
+
+						echo '<a class="wpr-sharing-trigger wpr-sharing-icon"'. $attributes .'>';
+							if ( 'yes' === $settings['element_sharing_tooltip'] ) {
+								echo '<span class="wpr-sharing-tooltip wpr-tooltip">'. esc_html__( 'Share', 'wpr-addons' ) .'</span>';
+							}
+
+							echo Utilities::get_wpr_icon( $settings['element_sharing_trigger_icon'], '' );
+						echo '</a>';
+					}
+
+
+					echo '<span class="wpr-post-sharing-inner'. $hidden_class .'">';
+
+					for ( $i = 1; $i < 7; $i++ ) {
+						$args['network'] = $settings['element_sharing_icon_'. $i];
+
+						echo Utilities::get_post_sharing_icon( $args );
+					}
+
+					echo '</span>';
+
+				echo '</span>';
+
+				// Text: After
+				if ( 'after' === $settings['element_extra_text_pos'] ) {
+					echo '<span class="wpr-grid-extra-text-right">'. esc_html( $settings['element_extra_text'] ) .'</span>';
+				}
+			echo '</div>';
+		echo '</div>';
+	}
 
 	// Render Post Lightbox
-	public function render_post_lightbox( $settings, $class, $post_id ) {
+	public static function render_post_lightbox( $settings, $class, $post_id ) {
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
 				$lightbox_source = get_the_post_thumbnail_url( $post_id );
@@ -1005,9 +1301,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 		echo '</div>';
 	}
 
-	public function render_post_custom_field( $settings, $class, $post_id ) {
+	public static function render_post_custom_field( $settings, $class, $post_id ) {
+
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
+			return;
+		}
+
 		$custom_field_value = get_post_meta( $post_id, $settings['element_custom_field'], true );
 		$custom_field_html = $settings['element_custom_field_wrapper_html'];
+
+		// Check if the custom field is a date and format it
+		if ( !is_array($custom_field_value) && strtotime( $custom_field_value ) !== false ) {
+			if ( function_exists('get_field_object') && get_field_object($settings['element_custom_field'], $post_id) && isset(get_field_object($settings['element_custom_field'], $post_id)['display_format']) ) {
+				$date_format = get_field_object($settings['element_custom_field'], $post_id)['display_format'];
+			} else {
+				$date_format = get_option('date_format');
+			}
+			$custom_field_value = date_i18n( $date_format, strtotime( $custom_field_value ) );
+		}
 
 		if ( has_filter('wpr_update_custom_field_value') ) {
 			ob_start();
@@ -1062,13 +1373,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 					}
 				} else {
 					if ( 'yes' !== $settings['element_custom_field_btn_link'] ) {
-						echo '<span>';
+						$tags_whitelist = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'span', 'p'];
+						$element_cf_tag = Utilities::validate_html_tags_wl( $settings['element_cf_tag'], 'span', $tags_whitelist );
+
+						echo '<'. esc_attr($element_cf_tag) .'>';
 							if ( 'yes' === $settings['element_custom_field_wrapper'] ) {
 								echo str_replace( '*cf_value*', $custom_field_value, $custom_field_html );
 							} else {
 								echo $custom_field_value;
 							}
-						echo '</span>';
+						echo '</'. esc_attr($element_cf_tag) .'>';
 					}
 				}
 
@@ -1097,22 +1411,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	// Render Post Element Separator
-	public function render_post_element_separator( $settings, $class ) {
+	public static function render_post_element_separator( $settings, $class ) {
 		echo '<div class="'. esc_attr($class .' '. $settings['element_separator_style']) .'">';
 			echo '<div class="inner-block"><span></span></div>';
 		echo '</div>';
 	}
 
 	// Render Post Taxonomies
-	public function render_post_taxonomies( $settings, $class, $post_id ) {
+	public static function render_post_taxonomies( $settings, $class, $post_id, $general_settings ) {
 		$terms = wp_get_post_terms( $post_id, $settings['element_select'] );
 		$count = 0;
 
-		$tax1_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $_POST['grid_settings']['tax1_pointer'];
-		$tax1_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $_POST['grid_settings']['tax1_pointer_animation'];
-		$tax2_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $_POST['grid_settings']['tax2_pointer'];
-		$tax2_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $_POST['grid_settings']['tax2_pointer_animation'];
-		$pointer_item_class = (isset($_POST['grid_settings']['tax1_pointer']) && 'none' !== $_POST['grid_settings']['tax1_pointer']) || (isset($_POST['grid_settings']['tax2_pointer']) && 'none' !== $_POST['grid_settings']['tax2_pointer']) ? 'wpr-pointer-item' : '';
+		$tax1_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $general_settings['tax1_pointer'];
+		$tax1_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $general_settings['tax1_pointer_animation'];
+		$tax2_pointer = ! wpr_fs()->can_use_premium_code() ? 'none' : $general_settings['tax2_pointer'];
+		$tax2_pointer_animation = ! wpr_fs()->can_use_premium_code() ? 'fade' : $general_settings['tax2_pointer_animation'];
+		$pointer_item_class = (isset($general_settings['tax1_pointer']) && 'none' !== $general_settings['tax1_pointer']) || (isset($general_settings['tax2_pointer']) && 'none' !== $general_settings['tax2_pointer']) ? 'wpr-pointer-item' : '';
 
 		// Pointer Class
 		if ( 'wpr-grid-tax-style-1' === $settings['element_tax_style'] ) {
@@ -1144,12 +1458,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 				foreach ( $terms as $term ) {
 
 					// Custom Colors
-					$enable_custom_colors = ! wpr_fs()->can_use_premium_code() ? '' : $_POST['grid_settings']['tax1_custom_color_switcher'];
+					$enable_custom_colors = ! wpr_fs()->can_use_premium_code() ? '' : $general_settings['tax1_custom_color_switcher'];
 					
 					if ( 'yes' === $enable_custom_colors ) {
 						$custom_tax_styles = '';
-						$cfc_text = get_term_meta($term->term_id, $_POST['grid_settings']['tax1_custom_color_field_text'], true);
-						$cfc_bg = get_term_meta($term->term_id, $_POST['grid_settings']['tax1_custom_color_field_bg'], true);
+						$cfc_text = get_term_meta($term->term_id, $general_settings['tax1_custom_color_field_text'], true);
+						$cfc_bg = get_term_meta($term->term_id, $general_settings['tax1_custom_color_field_bg'], true);
 						$color_styles = 'color:'. $cfc_text .'; background-color:'. $cfc_bg .'; border-color:'. $cfc_bg .';';
 						$css_selector = '.elementor-element'. $this->get_unique_selector() .' .wpr-grid-tax-style-1 .inner-block a.wpr-tax-id-'. esc_attr($term->term_id);
 						$custom_tax_styles .= $css_selector .'{'. $color_styles .'}';
@@ -1182,80 +1496,80 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	// Get Elements
-	public function get_elements( $type, $settings, $class, $post_id ) {
+	public static function get_elements( $type, $settings, $class, $post_id, $general_settings ) {
 		if ( 'pro-lk' == $type || 'pro-shr' == $type || 'pro-cf' == $type ) {
 			$type = 'title';
 		}
 
 		switch ( $type ) {
 			case 'title':
-				$this->render_post_title( $settings, $class );
+				WPR_Grid_Filters_AJAX::render_post_title( $settings, $class, $general_settings );
 				break;
 
 			case 'content':
-				$this->render_post_content( $settings, $class );
+				WPR_Grid_Filters_AJAX::render_post_content( $settings, $class );
 				break;
 
 			case 'excerpt':
-				$this->render_post_excerpt( $settings, $class );
+				WPR_Grid_Filters_AJAX::render_post_excerpt( $settings, $class, $general_settings );
 				break;
 
 			case 'date':
-				$this->render_post_date( $settings, $class );
+				WPR_Grid_Filters_AJAX::render_post_date( $settings, $class );
 				break;
 
 			case 'time':
-				$this->render_post_time( $settings, $class );
+				WPR_Grid_Filters_AJAX::render_post_time( $settings, $class );
 				break;
 
 			case 'author':
-				$this->render_post_author( $settings, $class );
+				WPR_Grid_Filters_AJAX::render_post_author( $settings, $class );
 				break;
 
 			case 'comments':
-				$this->render_post_comments( $settings, $class );
+				WPR_Grid_Filters_AJAX::render_post_comments( $settings, $class );
 				break;
 
 			case 'read-more':
-				$this->render_post_read_more( $settings, $class );
+				WPR_Grid_Filters_AJAX::render_post_read_more( $settings, $class, $general_settings );
 				break;
 
 			case 'likes':
-				$this->render_post_likes( $settings, $class, $post_id );
+				WPR_Grid_Filters_AJAX::render_post_likes( $settings, $class, $post_id );
 				break;
 
 			case 'sharing':
-				$this->render_post_sharing_icons( $settings, $class );
+				WPR_Grid_Filters_AJAX::render_post_sharing_icons( $settings, $class );
 				break;
 
 			case 'lightbox':
-				$this->render_post_lightbox( $settings, $class, $post_id );
+				WPR_Grid_Filters_AJAX::render_post_lightbox( $settings, $class, $post_id );
 				break;
 
 			case 'custom-field':
-				$this->render_post_custom_field( $settings, $class, $post_id );
+				WPR_Grid_Filters_AJAX::render_post_custom_field( $settings, $class, $post_id );
 				break;
 
 			case 'separator':
-				$this->render_post_element_separator( $settings, $class );
+				WPR_Grid_Filters_AJAX::render_post_element_separator( $settings, $class );
 				break;
 			
 			default:
-				$this->render_post_taxonomies( $settings, $class, $post_id );
+				WPR_Grid_Filters_AJAX::render_post_taxonomies( $settings, $class, $post_id, $general_settings );
 				break;
 		}
 
 	}
 
 	// Get Elements by Location
-	public function get_elements_by_location( $location, $settings, $post_id ) {
+	public static function get_elements_by_location( $location, $settings, $post_id ) {
 		$locations = [];
 
 		foreach ( $settings['grid_elements'] as $data ) {
 			$place = $data['element_location'];
 			$align_vr = $data['element_align_vr'];
 
-			if ( ! wpr_fs()->can_use_premium_code() ) {
+			if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 				$align_vr = 'middle';
 			}
 
@@ -1291,10 +1605,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 							$class .= ' elementor-repeater-item-'. $data['_id'];
 							$class .= ' wpr-grid-item-display-'. $data['element_display'];
 							$class .= ' wpr-grid-item-align-'. $data['element_align_hr'];
-							$class .= $this->get_animation_class( $data, 'element' );
+							$class .= WPR_Grid_Filters_AJAX::get_animation_class( $data, 'element' );
 
 							// Element
-							$this->get_elements( $data['element_select'], $data, $class, $post_id );
+							WPR_Grid_Filters_AJAX::get_elements( $data['element_select'], $data, $class, $post_id, $settings );
 						}
 					echo '</div>';
 
@@ -1313,7 +1627,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						$class .= ' wpr-grid-item-align-'. $data['element_align_hr'];
 
 						// Element
-						$this->get_elements( $data['element_select'], $data, $class, $post_id );
+						WPR_Grid_Filters_AJAX::get_elements( $data['element_select'], $data, $class, $post_id, $settings );
 					}
 				echo '</div>';
 			}
@@ -1321,8 +1635,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		}
 	}
 
-	public function get_hidden_filter_class($slug, $settings) {
-		$posts = new \WP_Query( $this->get_main_query_args() );
+	public static function get_hidden_filter_class($slug, $settings) {
+		$posts = new \WP_Query( WPR_Grid_Filters_AJAX::get_main_query_args($settings) );
 		$visible_categories = [];
 
 		if ( $posts->have_posts() ) {
@@ -1344,17 +1658,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	// Render Grid Pagination
-	public function render_grid_pagination( $settings ) {
+	public static function render_grid_pagination( $settings ) {
 		// Return if Disabled
-		if ( 'yes' !== $settings['layout_pagination'] || 1 === $this->get_max_num_pages( $settings ) || 'slider' === $settings['layout_select'] ) {
+		if ( 'yes' !== $settings['layout_pagination'] || 1 === WPR_Grid_Filters_AJAX::get_max_num_pages( $settings ) || 'slider' === $settings['layout_select'] ) {
 			return;
 		}
 
 		global $paged;
-		$pages = $this->get_max_num_pages( $settings );
-		$paged = empty( $paged ) ? 1 : $paged;
+		$pages = WPR_Grid_Filters_AJAX::get_max_num_pages( $settings );
+		
+		// $paged = empty( $paged ) ? 1 : $paged;
+		if ( get_query_var('paged') ) {
+			$paged = get_query_var('paged');
+		} elseif ( get_query_var('page') ) {
+			$paged = get_query_var('page');
+		} else {
+			$paged = 1;
+		}
 
-		if ( ! wpr_fs()->can_use_premium_code() ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$settings['pagination_type'] = 'pro-is' == $settings['pagination_type'] ? 'default' : $settings['pagination_type'];
 		}
 
@@ -1393,83 +1715,83 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			if ( 1 !== $pages ) {
 
-			    if ( 'yes' === $settings['pagination_prev_next'] || 'yes' === $settings['pagination_first_last'] ) {
-			    	echo '<div class="wpr-grid-pagi-left-arrows">';
+				if ( 'yes' === $settings['pagination_prev_next'] || 'yes' === $settings['pagination_first_last'] ) {
+					echo '<div class="wpr-grid-pagi-left-arrows">';
 
-				    if ( 'yes' === $settings['pagination_first_last'] ) {
-				    	if ( $paged >= 2 ) {
-					    	echo '<a href="'. esc_url(get_pagenum_link( 1, true )) .'" class="wpr-first-page">';
-					    		echo Utilities::get_wpr_icon( $settings['pagination_fl_icon'], 'left' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					    		echo '<span>'. esc_html($settings['pagination_first_text']) .'</span>';
-					    	echo '</a>';
-				    	} elseif ( 'yes' === $settings['pagination_disabled_arrows'] ) {
-					    	echo '<span class="wpr-first-page wpr-disabled-arrow">';
-					    		echo Utilities::get_wpr_icon( $settings['pagination_fl_icon'], 'left' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					    		echo '<span>'. esc_html($settings['pagination_first_text']) .'</span>';
-					    	echo '</span>';
-				    	}
-				    }
+					if ( 'yes' === $settings['pagination_first_last'] ) {
+						if ( $paged >= 2 ) {
+							echo '<a href="'. esc_url(get_pagenum_link( 1, true )) .'" class="wpr-first-page">';
+								echo Utilities::get_wpr_icon( $settings['pagination_fl_icon'], 'left' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+								echo '<span>'. esc_html($settings['pagination_first_text']) .'</span>';
+							echo '</a>';
+						} elseif ( 'yes' === $settings['pagination_disabled_arrows'] ) {
+							echo '<span class="wpr-first-page wpr-disabled-arrow">';
+								echo Utilities::get_wpr_icon( $settings['pagination_fl_icon'], 'left' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+								echo '<span>'. esc_html($settings['pagination_first_text']) .'</span>';
+							echo '</span>';
+						}
+					}
 
-				    if ( 'yes' === $settings['pagination_prev_next'] ) {
-				    	if ( $paged > 1 ) {
-					    	echo '<a href="'. esc_url(get_pagenum_link( $paged - 1, true )) .'" class="wpr-prev-page">';
-					    		echo Utilities::get_wpr_icon( $settings['pagination_pn_icon'], 'left' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					    		echo '<span>'. esc_html($settings['pagination_prev_text']) .'</span>';
-					    	echo '</a>';
-				    	} elseif ( 'yes' === $settings['pagination_disabled_arrows'] ) {
-					    	echo '<span class="wpr-prev-page wpr-disabled-arrow">';
-					    		echo Utilities::get_wpr_icon( $settings['pagination_pn_icon'], 'left' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					    		echo '<span>'. esc_html($settings['pagination_prev_text']) .'</span>';
-					    	echo '</span>';
-				    	}
-				    }
+					if ( 'yes' === $settings['pagination_prev_next'] ) {
+						if ( $paged > 1 ) {
+							echo '<a href="'. esc_url(get_pagenum_link( $paged - 1, true )) .'" class="wpr-prev-page">';
+								echo Utilities::get_wpr_icon( $settings['pagination_pn_icon'], 'left' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+								echo '<span>'. esc_html($settings['pagination_prev_text']) .'</span>';
+							echo '</a>';
+						} elseif ( 'yes' === $settings['pagination_disabled_arrows'] ) {
+							echo '<span class="wpr-prev-page wpr-disabled-arrow">';
+								echo Utilities::get_wpr_icon( $settings['pagination_pn_icon'], 'left' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+								echo '<span>'. esc_html($settings['pagination_prev_text']) .'</span>';
+							echo '</span>';
+						}
+					}
 
-				    echo '</div>';
-			    }
+					echo '</div>';
+				}
 
-			    for ( $i = 1; $i <= $pages; $i++ ) {
-			        if ( 1 !== $pages && ( ! ( $i >= $paged + $range + 1 || $i <= $paged - $range - 1 ) || $pages <= $showitems ) ) {
+				for ( $i = 1; $i <= $pages; $i++ ) {
+					if ( 1 !== $pages && ( ! ( $i >= $paged + $range + 1 || $i <= $paged - $range - 1 ) || $pages <= $showitems ) ) {
 						if ( $paged === $i ) {
 							echo '<span class="wpr-grid-current-page">'. esc_html($i) .'</span>';
 						} else {
 							echo '<a href="'. esc_url(get_pagenum_link( $i, true )) .'">'. esc_html($i) .'</a>';
 						}
-			        }
-			    }
+					}
+				}
 
-			    if ( 'yes' === $settings['pagination_prev_next'] || 'yes' === $settings['pagination_first_last'] ) {
-			    	echo '<div class="wpr-grid-pagi-right-arrows">';
+				if ( 'yes' === $settings['pagination_prev_next'] || 'yes' === $settings['pagination_first_last'] ) {
+					echo '<div class="wpr-grid-pagi-right-arrows">';
 
-				    if ( 'yes' === $settings['pagination_prev_next'] ) {
-				    	if ( $paged < $pages ) {
-					    	echo '<a href="'. esc_url(get_pagenum_link( $paged + 1, true )) .'" class="wpr-next-page">';
-					    		echo '<span>'. esc_html($settings['pagination_next_text']) .'</span>';
-					    		echo Utilities::get_wpr_icon( $settings['pagination_pn_icon'], 'right' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					    	echo '</a>';
-				    	} elseif ( 'yes' === $settings['pagination_disabled_arrows'] ) {
-					    	echo '<span class="wpr-next-page wpr-disabled-arrow">';
-					    		echo '<span>'. esc_html($settings['pagination_next_text']) .'</span>';
-					    		echo Utilities::get_wpr_icon( $settings['pagination_pn_icon'], 'right' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					    	echo '</span>';
-				    	}
-				    }
+					if ( 'yes' === $settings['pagination_prev_next'] ) {
+						if ( $paged < $pages ) {
+							echo '<a href="'. esc_url(get_pagenum_link( $paged + 1, true )) .'" class="wpr-next-page">';
+								echo '<span>'. esc_html($settings['pagination_next_text']) .'</span>';
+								echo Utilities::get_wpr_icon( $settings['pagination_pn_icon'], 'right' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo '</a>';
+						} elseif ( 'yes' === $settings['pagination_disabled_arrows'] ) {
+							echo '<span class="wpr-next-page wpr-disabled-arrow">';
+								echo '<span>'. esc_html($settings['pagination_next_text']) .'</span>';
+								echo Utilities::get_wpr_icon( $settings['pagination_pn_icon'], 'right' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo '</span>';
+						}
+					}
 
-				    if ( 'yes' === $settings['pagination_first_last'] ) {
-				    	if ( $paged <= $pages - 1 ) {
-					    	echo '<a href="'. esc_url(get_pagenum_link( $pages, true )) .'" class="wpr-last-page">';
-					    		echo '<span>'. esc_html($settings['pagination_last_text']) .'</span>';
-					    		echo Utilities::get_wpr_icon( $settings['pagination_fl_icon'], 'right' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					    	echo '</a>';
-				    	} elseif ( 'yes' === $settings['pagination_disabled_arrows'] ) {
-					    	echo '<span class="wpr-last-page wpr-disabled-arrow">';
-					    		echo '<span>'. esc_html($settings['pagination_last_text']) .'</span>';
-					    		echo Utilities::get_wpr_icon( $settings['pagination_fl_icon'], 'right' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					    	echo '</span>';
-				    	}
-				    }
+					if ( 'yes' === $settings['pagination_first_last'] ) {
+						if ( $paged <= $pages - 1 ) {
+							echo '<a href="'. esc_url(get_pagenum_link( $pages, true )) .'" class="wpr-last-page">';
+								echo '<span>'. esc_html($settings['pagination_last_text']) .'</span>';
+								echo Utilities::get_wpr_icon( $settings['pagination_fl_icon'], 'right' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo '</a>';
+						} elseif ( 'yes' === $settings['pagination_disabled_arrows'] ) {
+							echo '<span class="wpr-last-page wpr-disabled-arrow">';
+								echo '<span>'. esc_html($settings['pagination_last_text']) .'</span>';
+								echo Utilities::get_wpr_icon( $settings['pagination_fl_icon'], 'right' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo '</span>';
+						}
+					}
 
-				    echo '</div>';
-			    }
+					echo '</div>';
+				}
 			}
 
 		// Load More / Infinite Scroll
@@ -1540,7 +1862,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	public function wpr_get_filtered_count_posts() {
-		$query = new \WP_Query( $this->get_main_query_args() );
+		$query = new \WP_Query( WPR_Grid_Filters_AJAX::get_main_query_args($_POST['grid_settings']) );
 	
 		// Send only the count of found posts
 		wp_send_json_success([
@@ -1556,7 +1878,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$settings = $_POST['grid_settings'];
 
 		// Get Posts
-		$posts = new \WP_Query( $this->get_main_query_args() );
+		$posts = new \WP_Query( WPR_Grid_Filters_AJAX::get_main_query_args($settings) );
 
 		// Loop: Start
 		if ( $posts->have_posts() ) :
@@ -1570,36 +1892,36 @@ if ( ! defined( 'ABSPATH' ) ) {
 			echo '<article class="'. esc_attr( $post_class ) .'">';
 
 			// Password Protected Form
-			$this->render_password_protected_input( $settings );
+			WPR_Grid_Filters_AJAX::render_password_protected_input( $settings );
 
 			// Inner Wrapper
 			echo '<div class="wpr-grid-item-inner">';
 
 			// Content: Above Media
-			$this->get_elements_by_location( 'above', $settings, get_the_ID() );
+			WPR_Grid_Filters_AJAX::get_elements_by_location( 'above', $settings, get_the_ID() );
 
 			// Media
 			if ( has_post_thumbnail() ) {
-				echo '<div class="wpr-grid-media-wrap'. esc_attr($this->get_image_effect_class( $settings )) .' " data-overlay-link="'. esc_attr( $settings['overlay_post_link'] ) .'">';
+				echo '<div class="wpr-grid-media-wrap'. esc_attr(WPR_Grid_Filters_AJAX::get_image_effect_class( $settings )) .' " data-overlay-link="'. esc_attr( $settings['overlay_post_link'] ) .'">';
 					// Post Thumbnail
 					if ( !empty($settings) ) {
-						$this->render_post_thumbnail( $settings, get_the_ID() );
+						WPR_Grid_Filters_AJAX::render_post_thumbnail( $settings, get_the_ID() );
 					}
 
 					// Media Hover
 					echo '<div class="wpr-grid-media-hover wpr-animation-wrap">';
 						// Media Overlay
-						$this->render_media_overlay( $settings );
+						WPR_Grid_Filters_AJAX::render_media_overlay( $settings );
 
 						// Content: Over Media
-						$this->get_elements_by_location( 'over', $settings, get_the_ID() );
+						WPR_Grid_Filters_AJAX::get_elements_by_location( 'over', $settings, get_the_ID() );
 
 					echo '</div>';
 				echo '</div>';
 			}
 
 			// Content: Below Media
-			$this->get_elements_by_location( 'below', $settings, get_the_ID() );
+			WPR_Grid_Filters_AJAX::get_elements_by_location( 'below', $settings, get_the_ID() );
 
 			echo '</div>'; // End .wpr-grid-item-inner
 
