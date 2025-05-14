@@ -11988,6 +11988,11 @@ select.wpr-category-select {
     opacity: 0;
 }
 
+.wpr-switcher-content-inner p,
+.wpr-switcher-content-inner * {
+    margin-bottom: 0;
+}
+
 .wpr-switcher-content-active .wpr-switcher-content-inner.wpr-overlay-none {
     opacity: 1;
 }
