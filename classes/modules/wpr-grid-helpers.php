@@ -1875,66 +1875,102 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	public function wpr_grid_filters_ajax() {
+		$start = microtime(true);
 		// Get Settings
 		$settings = $_POST['grid_settings'];
-
+	
+		// Create a unique cache key based on the settings
+		$cache_key = 'wpr_grid_filters_' . md5(serialize(WPR_Grid_Filters_AJAX::get_main_query_args($settings)));
+		// wp_send_json_success($cache_key);
+		// wp_die();
+	
+		// Try to get cached data
+		// $cached_data = get_transient($cache_key);
+		
+		// if ($cached_data !== false) {
+		// 	$end = microtime(true);
+		// 	$duration = round(($end - $start) * 1000, 2); // in ms
+		// 	wp_send_json_success([
+		// 		'output' => $cached_data,
+		// 		'duration' => $duration
+		// 	]);
+		// 	wp_die();
+		// }
+	
+		// Start output buffering to capture the HTML output
+		ob_start();
+	
 		// Get Posts
-		$posts = new \WP_Query( WPR_Grid_Filters_AJAX::get_main_query_args($settings) );
-
+		$posts = new \WP_Query(WPR_Grid_Filters_AJAX::get_main_query_args($settings));
+	
 		// Loop: Start
-		if ( $posts->have_posts() ) :
-
-		while ( $posts->have_posts() ) : $posts->the_post();
-
-			// Post Class
-			$post_class = implode( ' ', get_post_class( 'wpr-grid-item elementor-clearfix', get_the_ID() ) );
-
-			// Grid Item
-			echo '<article class="'. esc_attr( $post_class ) .'">';
-
-			// Password Protected Form
-			WPR_Grid_Filters_AJAX::render_password_protected_input( $settings );
-
-			// Inner Wrapper
-			echo '<div class="wpr-grid-item-inner">';
-
-			// Content: Above Media
-			WPR_Grid_Filters_AJAX::get_elements_by_location( 'above', $settings, get_the_ID() );
-
-			// Media
-			if ( has_post_thumbnail() ) {
-				echo '<div class="wpr-grid-media-wrap'. esc_attr(WPR_Grid_Filters_AJAX::get_image_effect_class( $settings )) .' " data-overlay-link="'. esc_attr( $settings['overlay_post_link'] ) .'">';
+		if ($posts->have_posts()) :
+	
+			while ($posts->have_posts()) : $posts->the_post();
+	
+				// Post Class
+				$post_class = implode(' ', get_post_class('wpr-grid-item elementor-clearfix', get_the_ID()));
+	
+				// Grid Item
+				echo '<article class="' . esc_attr($post_class) . '">';
+	
+				// Password Protected Form
+				WPR_Grid_Filters_AJAX::render_password_protected_input($settings);
+	
+				// Inner Wrapper
+				echo '<div class="wpr-grid-item-inner">';
+	
+				// Content: Above Media
+				WPR_Grid_Filters_AJAX::get_elements_by_location('above', $settings, get_the_ID());
+	
+				// Media
+				if (has_post_thumbnail()) {
+					echo '<div class="wpr-grid-media-wrap' . esc_attr(WPR_Grid_Filters_AJAX::get_image_effect_class($settings)) . '" data-overlay-link="' . esc_attr($settings['overlay_post_link']) . '">';
 					// Post Thumbnail
-					WPR_Grid_Filters_AJAX::render_post_thumbnail( $settings, get_the_ID() );
-
+					WPR_Grid_Filters_AJAX::render_post_thumbnail($settings, get_the_ID());
+	
 					// Media Hover
 					echo '<div class="wpr-grid-media-hover wpr-animation-wrap">';
-						// Media Overlay
-						WPR_Grid_Filters_AJAX::render_media_overlay( $settings );
-
-						// Content: Over Media
-						WPR_Grid_Filters_AJAX::get_elements_by_location( 'over', $settings, get_the_ID() );
-
+					// Media Overlay
+					WPR_Grid_Filters_AJAX::render_media_overlay($settings);
+	
+					// Content: Over Media
+					WPR_Grid_Filters_AJAX::get_elements_by_location('over', $settings, get_the_ID());
+	
 					echo '</div>';
-				echo '</div>';
-			}
-
-			// Content: Below Media
-			WPR_Grid_Filters_AJAX::get_elements_by_location( 'below', $settings, get_the_ID() );
-
-			echo '</div>'; // End .wpr-grid-item-inner
-
-			echo '</article>'; // End .wpr-grid-item
-
-		endwhile;
-
-		// reset
-		wp_reset_postdata();
-
+					echo '</div>';
+				}
+	
+				// Content: Below Media
+				WPR_Grid_Filters_AJAX::get_elements_by_location('below', $settings, get_the_ID());
+	
+				echo '</div>'; // End .wpr-grid-item-inner
+	
+				echo '</article>'; // End .wpr-grid-item
+	
+			endwhile;
+	
+			// reset
+			wp_reset_postdata();
+	
 		// Loop: End
 		endif;
 	
-		die();
+		// Get the buffered content
+		$output = ob_get_clean();
+	
+		// Cache the output
+		// set_transient($cache_key, $output, HOUR_IN_SECONDS);
+	
+		// Return the output
+		$end = microtime(true);
+		$duration = round(($end - $start) * 1000, 2); // in ms
+		wp_send_json_success([
+			'output' => $output,
+			'duration' => $duration
+		]);
+
+		wp_die();
 	}
 
 }
