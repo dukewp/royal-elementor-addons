@@ -110,7 +110,7 @@ function wpr_register_addons_settings() {
     register_setting ('wpr-settings', 'wpr_ignore_wp_optimize_js');
     register_setting ('wpr-settings', 'wpr_ignore_wp_optimize_css');
 
-    // Grid Filters
+    // Advanced Filters
     register_setting('wpr-settings', 'wpr_filter_relation');
 
     // Extensions
@@ -1488,7 +1488,7 @@ function wpr_addons_settings_page() {
                     <li><span>White Label Branding</span></li>
                     <li><span>Elementor Pro Not Required</span></li>
                     <li><span>Custom Field Widget</span></li>
-                    <li><span>Grid Filters Widget</span></li>
+                    <li><span>Advanced Filters Widget</span></li>
                     <li>And More is Comming Soon...</li>
                 </ul>
             </div>

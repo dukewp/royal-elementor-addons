@@ -11,12 +11,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * WPR_Woo_Grid_Filters_AJAX setup
+ * WPR_Woo_Grid_Helpers setup
  *
  * @since 3.4.6
  */
 
- class WPR_Woo_Grid_Filters_AJAX {
+ class WPR_Woo_Grid_Helpers {
 
     public function __construct() {
 		add_action('wp_ajax_wpr_woo_grid_filters_ajax', [$this, 'wpr_woo_grid_filters_ajax']);
@@ -2128,4 +2128,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
-new WPR_Woo_Grid_Filters_AJAX();
+new WPR_Woo_Grid_Helpers();

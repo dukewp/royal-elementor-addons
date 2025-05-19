@@ -14,7 +14,7 @@ use Elementor\Icons_Manager;
 use Elementor\Repeater;
 use Elementor\Group_Control_Image_Size;
 use WprAddons\Classes\Utilities;
-use WprAddons\Classes\Modules\WPR_Grid_Filters_AJAX;
+use WprAddons\Classes\Modules\WPR_Grid_Helpers;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -1081,7 +1081,7 @@ class Wpr_Grid extends Widget_Base {
 			'element_select_filter',
 			[
 				'type' => Controls_Manager::HIDDEN,
-				'default' => WPR_Grid_Filters_AJAX::get_related_taxonomies(),
+				'default' => WPR_Grid_Helpers::get_related_taxonomies(),
 			]
 		);
 
@@ -8427,7 +8427,7 @@ class Wpr_Grid extends Widget_Base {
 		echo '</div>';
 	}
 
-	// Render Grid Filters
+	// Render Advanced Filters
 	public function render_grid_filters( $settings ) {
 		$taxonomy = $settings['filters_select'];
 
@@ -8550,7 +8550,7 @@ class Wpr_Grid extends Widget_Base {
 				if ( 0 === $filter->parent ) {
 					$children = get_term_children( $filter->term_id, $taxonomy );
 					$data_role = ! empty($children) ? ' data-role="parent"' : '';
-					$hidden_class = WPR_Grid_Filters_AJAX::get_hidden_filter_class($filter->slug, $settings);
+					$hidden_class = WPR_Grid_Helpers::get_hidden_filter_class($filter->slug, $settings);
 
 					echo '<li'. $data_role .' class="'. esc_attr($pointer_class) . esc_attr($hidden_class) .'">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						if ( 'yes' !== $settings['filters_linkable'] ) {
@@ -8665,7 +8665,7 @@ class Wpr_Grid extends Widget_Base {
 			'filters_animation_duration' => $settings['filters_animation_duration'],
 			'filters_animation_delay' => $settings['filters_animation_delay'],
 			'pagination_type' => $settings['pagination_type'],
-			'pagination_max_pages' => WPR_Grid_Filters_AJAX::get_max_num_pages( $settings ),
+			'pagination_max_pages' => WPR_Grid_Helpers::get_max_num_pages( $settings ),
 		];
 
 		if ( 'list' === $settings['layout_select'] ) {
@@ -8776,7 +8776,7 @@ class Wpr_Grid extends Widget_Base {
 		$settings = $this->get_settings();
 		
 		// Get Posts
-		$posts = new \WP_Query( WPR_Grid_Filters_AJAX::get_main_query_args($settings) );
+		$posts = new \WP_Query( WPR_Grid_Helpers::get_main_query_args($settings) );
 
 		// Loop: Start
 		if ( $posts->have_posts() ) :
@@ -8806,34 +8806,34 @@ class Wpr_Grid extends Widget_Base {
 			echo '<article class="'. esc_attr( $post_class ) .'">';
 
 			// Password Protected Form
-			WPR_Grid_Filters_AJAX::render_password_protected_input( $settings );
+			WPR_Grid_Helpers::render_password_protected_input( $settings );
 
 			// Inner Wrapper
 			echo '<div class="wpr-grid-item-inner">';
 
 			// Content: Above Media
-			WPR_Grid_Filters_AJAX::get_elements_by_location( 'above', $settings, get_the_ID() );
+			WPR_Grid_Helpers::get_elements_by_location( 'above', $settings, get_the_ID() );
 
 			// Media
 			if ( has_post_thumbnail() ) {
-				echo '<div class="wpr-grid-media-wrap'. esc_attr(WPR_Grid_Filters_AJAX::get_image_effect_class( $settings )) .' " data-overlay-link="'. esc_attr( $settings['overlay_post_link'] ) .'">';
+				echo '<div class="wpr-grid-media-wrap'. esc_attr(WPR_Grid_Helpers::get_image_effect_class( $settings )) .' " data-overlay-link="'. esc_attr( $settings['overlay_post_link'] ) .'">';
 					// Post Thumbnail
-					WPR_Grid_Filters_AJAX::render_post_thumbnail( $settings, get_the_ID() );
+					WPR_Grid_Helpers::render_post_thumbnail( $settings, get_the_ID() );
 
 					// Media Hover
 					echo '<div class="wpr-grid-media-hover wpr-animation-wrap">';
 						// Media Overlay
-						WPR_Grid_Filters_AJAX::render_media_overlay( $settings );
+						WPR_Grid_Helpers::render_media_overlay( $settings );
 
 						// Content: Over Media
-						WPR_Grid_Filters_AJAX::get_elements_by_location( 'over', $settings, get_the_ID() );
+						WPR_Grid_Helpers::get_elements_by_location( 'over', $settings, get_the_ID() );
 
 					echo '</div>';
 				echo '</div>';
 			}
 
 			// Content: Below Media
-			WPR_Grid_Filters_AJAX::get_elements_by_location( 'below', $settings, get_the_ID() );
+			WPR_Grid_Helpers::get_elements_by_location( 'below', $settings, get_the_ID() );
 
 			echo '</div>'; // End .wpr-grid-item-inner
 
@@ -8859,7 +8859,7 @@ class Wpr_Grid extends Widget_Base {
 		}
 
 		// Pagination
-		WPR_Grid_Filters_AJAX::render_grid_pagination( $settings );
+		WPR_Grid_Helpers::render_grid_pagination( $settings );
 
 		// No Posts Found
 		else:

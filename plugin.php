@@ -104,8 +104,8 @@ class Plugin {
 
 		// Grid
 		require WPR_ADDONS_PATH . 'classes/modules/wpr-filter-grid-posts.php';
-		require WPR_ADDONS_PATH . 'classes/modules/wpr-grid-filters-ajax.php';
-		require WPR_ADDONS_PATH . 'classes/modules/wpr-woo-grid-filters-ajax.php';
+		require WPR_ADDONS_PATH . 'classes/modules/wpr-grid-helpers.php';
+		require WPR_ADDONS_PATH . 'classes/modules/wpr-woo-grid-helpers.php';
 		
 		// Meta Keys
 		require WPR_ADDONS_PATH . 'classes/wpr-custom-meta-keys.php';
@@ -605,12 +605,23 @@ class Plugin {
 			'3.0.5',
 			true
 		);
+		
+		wp_register_script(
+			'imagesloaded',
+			WPR_ADDONS_URL . 'assets/js/lib/isotope/imagesloaded'. $this->script_suffix() .'.js',
+			[
+				'jquery'
+			],
+			'5.0.0',
+			true
+		);
 
 		wp_register_script(
 			'wpr-isotope',
 			WPR_ADDONS_URL . 'assets/js/lib/isotope/isotope'. $this->script_suffix() .'.js',
 			[
 				'jquery',
+				'imagesloaded'
 			],
 			'3.0.8',
 			true
@@ -1039,8 +1050,8 @@ class Plugin {
 					'categories' => '["'. $category .'"]',
 				],
 				[
-					'name' => 'wpr-grid-filters',
-					'title' => __('Grid Filters', 'wpr-addons'),
+					'name' => 'wpr-advanced-filters',
+					'title' => __('Advanced Filters', 'wpr-addons'),
 					'icon' => 'wpr-icon eicon-filter',
 					'categories' => '["'. $category .'"]',
 				],
