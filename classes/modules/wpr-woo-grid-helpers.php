@@ -326,8 +326,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		if ( isset($args['tax_query']) ) {
 
-			$tax_query = ['relation' => get_option('wpr_filter_relation')]; // TODO: CHECK IF DEFAULT NEEDED
-            $meta_query = ['relation' => get_option('wpr_filter_relation')]; // TODO: CHECK IF DEFAULT NEEDED
+			$tax_query = ['relation' => 'AND'];
+            $meta_query = ['relation' => 'AND'];
 
 			$prev_cleaned_key = '';
 

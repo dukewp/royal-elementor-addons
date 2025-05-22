@@ -60,10 +60,12 @@ class Wpr_Grid extends Widget_Base {
 			return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
 	}
 
+	public $post_types;
+
 	public function add_option_query_source() {
-		$post_types = [];
-		$post_types['post'] = esc_html__( 'Posts', 'wpr-addons' );
-		$post_types['page'] = esc_html__( 'Pages', 'wpr-addons' );
+		$this->post_types = [];
+		$this->post_types['post'] = esc_html__( 'Posts', 'wpr-addons' );
+		$this->post_types['page'] = esc_html__( 'Pages', 'wpr-addons' );
 
 		$custom_post_types = Utilities::get_custom_types_of( 'post', true );
 		foreach( $custom_post_types as $slug => $title ) {
@@ -72,22 +74,22 @@ class Wpr_Grid extends Widget_Base {
 			}
 
 			if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
-				$post_types['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Expert)';
+				$this->post_types['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Expert)';
 			} else {
-				$post_types[$slug] = esc_html( $title );
+				$this->post_types[$slug] = esc_html( $title );
 			}
 		}
 
-		$post_types['current'] = esc_html__( 'Current Query', 'wpr-addons' );
-		$post_types['pro-rl'] = esc_html__( 'Related Query (Pro)', 'wpr-addons' );
+		$this->post_types['current'] = esc_html__( 'Current Query', 'wpr-addons' );
+		$this->post_types['pro-rl'] = esc_html__( 'Related Query (Pro)', 'wpr-addons' );
 		
-		return $post_types;
+		return $this->post_types;
 	}
 
 	public function get_available_taxonomies() {
-		$post_taxonomies = [];
-		$post_taxonomies['category'] = esc_html__( 'Categories', 'wpr-addons' );
-		$post_taxonomies['post_tag'] = esc_html__( 'Tags', 'wpr-addons' );
+		$this->post_taxonomies = [];
+		$this->post_taxonomies['category'] = esc_html__( 'Categories', 'wpr-addons' );
+		$this->post_taxonomies['post_tag'] = esc_html__( 'Tags', 'wpr-addons' );
 
 		$custom_post_taxonomies = Utilities::get_custom_types_of( 'tax', true );
 		foreach( $custom_post_taxonomies as $slug => $title ) {
@@ -96,13 +98,13 @@ class Wpr_Grid extends Widget_Base {
 			}
 
 			if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
-				$post_taxonomies['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Expert)';
+				$this->post_taxonomies['pro-'. substr($slug, 0, 2)] = esc_html( $title ) .' (Expert)';
 			} else {
-				$post_taxonomies[$slug] = esc_html( $title );
+				$this->post_taxonomies[$slug] = esc_html( $title );
 			}
 		}
 
-		return $post_taxonomies;
+		return $this->post_taxonomies;
 	}
 
 	public function add_control_secondary_img_on_hover() {
@@ -780,6 +782,8 @@ class Wpr_Grid extends Widget_Base {
 	
 	public function add_control_grid_slider_dots_hr() {}
 
+	public $post_taxonomies;
+
 	protected function register_controls() {
 
 		// Tab: Content ==============
@@ -795,10 +799,10 @@ class Wpr_Grid extends Widget_Base {
 		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
 		// Get Available Post Types
-		$post_types = $this->add_option_query_source();
+		$this->post_types = $this->add_option_query_source();
 
 		// Get Available Taxonomies
-		$post_taxonomies = $this->get_available_taxonomies();
+		$this->post_taxonomies = $this->get_available_taxonomies();
 
 		// Get Available Meta Keys
 		$tax_meta_keys = Utilities::get_custom_meta_keys_tax();
@@ -809,7 +813,7 @@ class Wpr_Grid extends Widget_Base {
 				'label' => esc_html__( 'Source', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'post',
-				'options' => $post_types,
+				'options' => $this->post_types,
 			]
 		);
 
@@ -876,7 +880,7 @@ class Wpr_Grid extends Widget_Base {
 				'label' => esc_html__( 'Select Taxonomy', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'category',
-				'options' => $post_taxonomies,
+				'options' => $this->post_taxonomies,
 				'condition' => [
 					'query_source' => 'related',
 				],
@@ -914,7 +918,7 @@ class Wpr_Grid extends Widget_Base {
 		);
 		
 		// Taxonomies
-		foreach ( $post_taxonomies as $slug => $title ) {
+		foreach ( $this->post_taxonomies as $slug => $title ) {
 			global $wp_taxonomies;
 			$post_type = '';
 
@@ -940,7 +944,7 @@ class Wpr_Grid extends Widget_Base {
 		}
 
 		// Exclude
-		foreach ( $post_types as $slug => $title ) {
+		foreach ( $this->post_types as $slug => $title ) {
 			$this->add_control(
 				'query_exclude_'. $slug,
 				[
@@ -960,7 +964,7 @@ class Wpr_Grid extends Widget_Base {
 		}
 
 		// Manual Selection
-		foreach ( $post_types as $slug => $title ) {
+		foreach ( $this->post_types as $slug => $title ) {
 			$this->add_control(
 				'query_manual_'. $slug,
 				[
@@ -1653,7 +1657,7 @@ class Wpr_Grid extends Widget_Base {
 				'label' => esc_html__( 'Select Element', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'title',
-				'options' => array_merge( $element_select, $post_taxonomies ),
+				'options' => array_merge( $element_select, $this->post_taxonomies ),
 				'separator' => 'after'
 			]
 		);
@@ -2913,7 +2917,7 @@ class Wpr_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Select Taxonomy', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
-				'options' => $post_taxonomies,
+				'options' => $this->post_taxonomies,
 				'default' => 'category',
 			]
 		);
@@ -8700,7 +8704,100 @@ class Wpr_Grid extends Widget_Base {
 
 		// $layout_settings['grid_settings'] = [esc_attr( json_encode( $settings ) )];
 		if ( 'yes' === $settings['filters_experiment'] ) {
-			$layout_settings['grid_settings'] = $settings;
+			$layout_settings['grid_settings'] = [
+				// General Settings
+				'layout_select' => isset($settings['layout_select']) ? $settings['layout_select'] : null,
+				'layout_animation' => isset($settings['layout_animation']) ? $settings['layout_animation'] : null,
+				'layout_animation_duration' => isset($settings['layout_animation_duration']) ? $settings['layout_animation_duration'] : null,
+				'layout_animation_delay' => isset($settings['layout_animation_delay']) ? $settings['layout_animation_delay'] : null,
+				'pagination_type' => isset($settings['pagination_type']) ? $settings['pagination_type'] : null,
+				'pagination_max_pages' => WPR_Grid_Helpers::get_max_num_pages($settings),
+
+				// Filter Settings
+				'filters_deeplinking' => isset($settings['filters_deeplinking']) ? $settings['filters_deeplinking'] : null,
+				'filters_linkable' => isset($settings['filters_linkable']) ? $settings['filters_linkable'] : null,
+				'filters_default_filter' => isset($settings['filters_default_filter']) ? $settings['filters_default_filter'] : null,
+				'filters_count' => isset($settings['filters_count']) ? $settings['filters_count'] : null,
+				'filters_hide_empty' => isset($settings['filters_hide_empty']) ? $settings['filters_hide_empty'] : null,
+				'filters_animation' => isset($settings['filters_animation']) ? $settings['filters_animation'] : null,
+				'filters_animation_duration' => isset($settings['filters_animation_duration']) ? $settings['filters_animation_duration'] : null,
+				'filters_animation_delay' => isset($settings['filters_animation_delay']) ? $settings['filters_animation_delay'] : null,
+
+				// Lightbox Settings
+				'lightbox_popup_autoplay' => isset($settings['lightbox_popup_autoplay']) ? $settings['lightbox_popup_autoplay'] : null,
+				'lightbox_popup_pause' => isset($settings['lightbox_popup_pause']) ? $settings['lightbox_popup_pause'] : null,
+				'lightbox_popup_progressbar' => isset($settings['lightbox_popup_progressbar']) ? $settings['lightbox_popup_progressbar'] : null,
+				'lightbox_popup_counter' => isset($settings['lightbox_popup_counter']) ? $settings['lightbox_popup_counter'] : null,
+				'lightbox_popup_arrows' => isset($settings['lightbox_popup_arrows']) ? $settings['lightbox_popup_arrows'] : null,
+				'lightbox_popup_captions' => isset($settings['lightbox_popup_captions']) ? $settings['lightbox_popup_captions'] : null,
+				'lightbox_popup_thumbnails' => isset($settings['lightbox_popup_thumbnails']) ? $settings['lightbox_popup_thumbnails'] : null,
+				'lightbox_popup_thumbnails_default' => isset($settings['lightbox_popup_thumbnails_default']) ? $settings['lightbox_popup_thumbnails_default'] : null,
+				'lightbox_popup_sharing' => isset($settings['lightbox_popup_sharing']) ? $settings['lightbox_popup_sharing'] : null,
+				'lightbox_popup_zoom' => isset($settings['lightbox_popup_zoom']) ? $settings['lightbox_popup_zoom'] : null,
+				'lightbox_popup_fullscreen' => isset($settings['lightbox_popup_fullscreen']) ? $settings['lightbox_popup_fullscreen'] : null,
+				'lightbox_popup_download' => isset($settings['lightbox_popup_download']) ? $settings['lightbox_popup_download'] : null,
+
+				// Query Settings
+				'query_source' => isset($settings['query_source']) ? $settings['query_source'] : null,
+				'query_author' => isset($settings['query_author']) ? $settings['query_author'] : null,
+				'query_posts_per_page' => isset($settings['query_posts_per_page']) ? $settings['query_posts_per_page'] : null,
+				'query_offset' => isset($settings['query_offset']) ? $settings['query_offset'] : null,
+				'query_randomize' => isset($settings['query_randomize']) ? $settings['query_randomize'] : null,
+				'order_posts' => isset($settings['order_posts']) ? $settings['order_posts'] : null,
+				'order_posts_by_acf' => isset($settings['order_posts_by_acf']) ? $settings['order_posts_by_acf'] : null,
+				'order_direction' => isset($settings['order_direction']) ? $settings['order_direction'] : null,
+				'query_exclude_no_images' => isset($settings['query_exclude_no_images']) ? $settings['query_exclude_no_images'] : null,
+				'query_selection' => isset($settings['query_selection']) ? $settings['query_selection'] : null,
+				'query_tax_selection' => isset($settings['query_tax_selection']) ? $settings['query_tax_selection'] : null,
+				'query_manual' => isset($settings['query_manual_' . $settings['query_source']]) ? $settings['query_manual_' . $settings['query_source']] : null,
+				'display_scheduled_posts' => isset($settings['display_scheduled_posts']) ? $settings['display_scheduled_posts'] : null,
+				'query_not_found_text' => isset($settings['query_not_found_text']) ? $settings['query_not_found_text'] : null,
+				'layout_image_crop' => [
+					'layout_image_crop_size' => isset($settings['layout_image_crop_size']) ? $settings['layout_image_crop_size'] : null,
+					'layout_image_crop_custom_dimension' => isset($settings['layout_image_crop_custom_dimension']) ? $settings['layout_image_crop_custom_dimension'] : null,
+				],
+				'image_effects' => isset($settings['image_effects']) ? $settings['image_effects'] : null,
+				'image_effects_animation_timing' => isset($settings['image_effects_animation_timing']) ? $settings['image_effects_animation_timing'] : null,
+				'image_effects_size' => isset($settings['image_effects_size']) ? $settings['image_effects_size'] : null,
+				'image_effects_direction' => isset($settings['image_effects_direction']) ? $settings['image_effects_direction'] : null,
+				'open_links_in_new_tab' => isset($settings['open_links_in_new_tab']) ? $settings['open_links_in_new_tab'] : null,
+				'overlay_post_link' => isset($settings['overlay_post_link']) ? $settings['overlay_post_link'] : null,
+				'secondary_img_on_hover' => isset($settings['secondary_img_on_hover']) ? $settings['secondary_img_on_hover'] : null,
+				'grid_lazy_loading' => isset($settings['grid_lazy_loading']) ? $settings['grid_lazy_loading'] : null,
+				'overlay_animation' => isset($settings['overlay_animation']) ? $settings['overlay_animation'] : null,
+				'overlay_animation_size' => isset($settings['overlay_animation_size']) ? $settings['overlay_animation_size'] : null,
+				'overlay_animation_timing' => isset($settings['overlay_animation_timing']) ? $settings['overlay_animation_timing'] : null,
+				'overlay_animation_tr' => isset($settings['overlay_animation_tr']) ? $settings['overlay_animation_tr'] : null,
+				'overlay_image' => isset($settings['overlay_image']) ? $settings['overlay_image'] : null,
+				'title_pointer' => isset($settings['title_pointer']) ? $settings['title_pointer'] : null,
+				'title_pointer_animation' => isset($settings['title_pointer_animation']) ? $settings['title_pointer_animation'] : null,
+				'read_more_animation' => isset($settings['read_more_animation']) ? $settings['read_more_animation'] : null,
+				'tax1_pointer' => isset($settings['tax1_pointer']) ? $settings['tax1_pointer'] : null,
+				'tax1_pointer_animation' => isset($settings['tax1_pointer_animation']) ? $settings['tax1_pointer_animation'] : null,
+				'tax2_pointer' => isset($settings['tax2_pointer']) ? $settings['tax2_pointer'] : null,
+				'tax2_pointer_animation' => isset($settings['tax2_pointer_animation']) ? $settings['tax2_pointer_animation'] : null,
+				'tax1_custom_color_switcher' => isset($settings['tax1_custom_color_switcher']) ? $settings['tax1_custom_color_switcher'] : null,
+				'tax1_custom_color_field_text' => isset($settings['tax1_custom_color_field_text']) ? $settings['tax1_custom_color_field_text'] : null,
+				'tax1_custom_color_field_bg' => isset($settings['tax1_custom_color_field_bg']) ? $settings['tax1_custom_color_field_bg'] : null,
+				'layout_pagination' => isset($settings['layout_pagination']) ? $settings['layout_pagination'] : null,
+				'check_ajax_filter' => 'yes',
+				
+				// Taxonomies
+				// Dynamically add taxonomy settings
+				] + array_reduce(array_keys($this->post_taxonomies ?? []), function($carry, $slug) use ($settings) {
+					$carry['query_taxonomy_'. $slug] = isset($settings['query_taxonomy_'. $slug]) ? $settings['query_taxonomy_'. $slug] : null;
+					return $carry;
+				}, []) + array_reduce(array_keys($this->post_types ?? []), function($carry, $slug) use ($settings) {
+					$carry['query_exclude_'. $slug] = isset($settings['query_exclude_'. $slug]) ? $settings['query_exclude_'. $slug] : null;
+					$carry['query_manual_'. $slug] = isset($settings['query_manual_'. $slug]) ? $settings['query_manual_'. $slug] : null;
+					return $carry;
+				}, []) + [
+
+				// Repeater Controls
+				'grid_elements' => isset($settings['grid_elements']) ? $settings['grid_elements'] : null, // Assuming 'items' is a repeater control
+
+				// Add any necessary controls from styles tab here if needed
+			];
 		}
 
 		$this->add_render_attribute( 'grid-settings', [

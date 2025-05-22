@@ -240,8 +240,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		if ( isset($args['tax_query']) ) {
 
-			$tax_query = ['relation' => get_option('wpr_filter_relation')]; // TODO: CHECK IF DEFAULT NEEDED
-            $meta_query = ['relation' => get_option('wpr_filter_relation')]; // TODO: CHECK IF DEFAULT NEEDED
+			$tax_query = ['relation' => 'AND'];
+            $meta_query = ['relation' => 'AND'];
 
 			$prev_cleaned_key = '';
 
@@ -783,10 +783,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	public static function render_post_thumbnail( $settings ) {
 		$id = get_post_thumbnail_id();
 		
-		$src = Group_Control_Image_Size::get_attachment_image_src( $id, 'layout_image_crop', $settings );
+		if ( isset($settings['check_ajax_filter']) && $settings['check_ajax_filter'] == 'yes' ) {
+			$src = Group_Control_Image_Size::get_attachment_image_src( $id, 'layout_image_crop', $settings['layout_image_crop'] );
+		} else {
+			$src = Group_Control_Image_Size::get_attachment_image_src( $id, 'layout_image_crop', $settings );
+		}
 		
 		if ( get_post_meta(get_the_ID(), 'wpr_secondary_image_id') && !empty(get_post_meta(get_the_ID(), 'wpr_secondary_image_id')) ) {
-			$src2 = Group_Control_Image_Size::get_attachment_image_src( get_post_meta(get_the_ID(), 'wpr_secondary_image_id')[0], 'layout_image_crop', $settings );
+			if ( isset($settings['check_ajax_filter']) && $settings['check_ajax_filter'] == 'yes' ) {
+				$src2 = Group_Control_Image_Size::get_attachment_image_src( get_post_meta(get_the_ID(), 'wpr_secondary_image_id')[0], 'layout_image_crop', $settings['layout_image_crop'] );
+			} else {
+				$src2 = Group_Control_Image_Size::get_attachment_image_src( get_post_meta(get_the_ID(), 'wpr_secondary_image_id')[0], 'layout_image_crop', $settings );
+			}
 		} else {
 			$src2 = '';
 		}
@@ -1317,7 +1325,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 			} else {
 				$date_format = get_option('date_format');
 			}
-			$custom_field_value = date_i18n( $date_format, strtotime( $custom_field_value ) );
+
+			if ( \DateTime::createFromFormat($date_format, $custom_field_value) !== false ) {
+				$custom_field_value = date_i18n( $date_format, strtotime( $custom_field_value ) );
+			}
 		}
 
 		if ( has_filter('wpr_update_custom_field_value') ) {
@@ -1954,8 +1965,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 			wp_reset_postdata();
 	
 		// Loop: End
+		else :
+
+			if ( 'dynamic' === $settings['query_selection'] ) {
+				echo '<h2>'. esc_html($settings['query_not_found_text']) .'</h2>';
+			}
+			
 		endif;
-	
+
 		// Get the buffered content
 		$output = ob_get_clean();
 	

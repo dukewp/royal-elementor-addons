@@ -17459,6 +17459,16 @@ img.wpr-gf-visual-active {
     border: 2px solid fuchsia;
 }
 
+.wpr-gf-visual-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.wpr-gf-visual-title {
+    display: inline-block;
+}
+
 .wpr-gfv-wrap img {
     filter: opacity(0.7) grayscale(50%);
     display: block;
