@@ -4,7 +4,7 @@
  * Description: The only plugin you need for Elementor page builder.
  * Plugin URI: https://royal-elementor-addons.com/
  * Author: WP Royal
- * Version: 1.7.1017
+ * Version: 1.7.1021
  * License: GPLv3
  * Author URI: https://royal-elementor-addons.com/
  * Elementor tested up to: 3.28.3
@@ -217,23 +217,13 @@ function royal_elementor_addons_activation_time() {//TODO: Try to locate this in
 	if ( false === get_option( 'royal_elementor_addons_activation_time_for_sale' ) ) {
 		add_option( 'royal_elementor_addons_activation_time_for_sale', absint(intval(strtotime('now'))) );
 	}
-	
-	if ( get_option('wpr_plugin_update_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version']) ) {
-		delete_option('wpr_plugin_update_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version']);
-	}
 }
 
 register_activation_hook( __FILE__, 'royal_elementor_addons_activation_time' );
 
-// Delete Plugin Update Notice
+// Plugin Deactivation
 function royal_elementor_addons_deactivate() {
-	if ( get_option('wpr_plugin_update_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version']) ) {
-		delete_option('wpr_plugin_update_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version']);
-	}
 
-	if ( get_option('wpr_pro_features_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version']) ) {
-		delete_option('wpr_pro_features_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version']);
-	}
 }
 
 // hook already exists with template kits notice
