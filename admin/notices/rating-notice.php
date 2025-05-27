@@ -38,7 +38,6 @@ class WprRatingNotice {
         } else if ( false != get_option('wpr_maybe_later_time') && $this->past_date >= get_option('wpr_maybe_later_time') ) {
             add_action( 'admin_notices', [$this, 'render_rating_notice' ]);
         }
-        add_action( 'admin_notices', [$this, 'render_rating_notice' ]);
     }
 
     public function wpr_rating_maybe_later() {
