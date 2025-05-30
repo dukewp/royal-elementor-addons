@@ -8873,7 +8873,7 @@ class Wpr_Grid extends Widget_Base {
 		$settings = $this->get_settings();
 		
 		// Get Posts
-		$posts = new \WP_Query( WPR_Grid_Helpers::get_main_query_args($settings) );
+		$posts = new \WP_Query( WPR_Grid_Helpers::get_main_query_args($settings, []) );
 
 		// Loop: Start
 		if ( $posts->have_posts() ) :

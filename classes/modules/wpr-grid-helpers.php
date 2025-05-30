@@ -44,7 +44,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	// Get Max Pages
 	public static function get_max_num_pages( $settings ) {
-		$query = new \WP_Query( WPR_Grid_Helpers::get_main_query_args($settings) );
+		$query = new \WP_Query( WPR_Grid_Helpers::get_main_query_args($settings, []) );
 		$max_num_pages = intval( ceil( $query->max_num_pages ) );
 
 		// Reset
@@ -55,7 +55,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	// Main Query Args
-	public static function get_main_query_args($settings) {
+	public static function get_main_query_args($settings, $params) {
 		$author = ! empty( $settings[ 'query_author' ] ) ? implode( ',', $settings[ 'query_author' ] ) : '';
 
 		// if ( is_user_logged_in() ){
@@ -245,9 +245,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			$prev_cleaned_key = '';
 
-			if ( isset($_POST['wpr_url_params']) ) {
+			$wpr_url_params = isset($params) && !empty($params) ? $params : (isset($_POST['wpr_url_params']) ? $_POST['wpr_url_params'] : []);
+
+			if ( isset($wpr_url_params) && !empty($wpr_url_params) ) {
 				// Iterate through the POST array
-				foreach ( $_POST['wpr_url_params'] as $key => $value ) {
+				foreach ( $wpr_url_params as $key => $value ) {
 
 					// Check if the variable name contains "wpr_gf_"
 					if (strpos($key, 'wpr_gf_') !== false) {
@@ -256,9 +258,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 						$cleanedKey = str_replace('wpr_gf_', '', $key);
 						$prev_cleaned_key = $cleanedKey;
 
-						if ( isset($_POST['wpr_url_params'][$key]) ) {
+						if ( isset($wpr_url_params[$key]) ) {
 							if ( $cleanedKey == 'date_range' ) {
-								$date = $_POST['wpr_url_params'][$key];
+								$date = $wpr_url_params[$key];
 								
 								$args['date_query'] = [];
 
@@ -293,7 +295,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								} 
 							} elseif ( $cleanedKey == 'date' ) {
 
-								$date = $_POST['wpr_url_params'][$key];
+								$date = $wpr_url_params[$key];
 								
 								$args['date_query'] = [];
 
@@ -307,13 +309,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 									]);
 								}
 							} else {
-								if ( $_POST['wpr_url_params'][$key] != '0' ) {
+								if ( $wpr_url_params[$key] != '0' ) {
 									// Get category from URL
-									if ( str_contains($_POST['wpr_url_params'][$key], ',') ) {
+									if ( str_contains($wpr_url_params[$key], ',') ) {
 			
 										// Example usage
 										$key_type = WPR_Grid_Helpers::identify_key_type($cleanedKey);
-										$filtervalues = explode(',', $_POST['wpr_url_params'][$key]);
+										$filtervalues = explode(',', $wpr_url_params[$key]);
 		
 										if ( 'meta_field' == $key_type ) {
 											if ( is_numeric($filtervalues[0]) ) {
@@ -343,8 +345,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 												if ( isset($meta_query) ) {
 													if ( isset($_POST['wpr_gfr_' . $cleanedKey]) && !empty(explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0]) ) {
 														$meta_relation = explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0];
-													} else if ( isset($_POST['wpr_url_params']['wpr_gfr_'. $cleanedKey]) && !empty(explode(',', $_POST['wpr_url_params']['wpr_gfr_'. $cleanedKey])[0]) ) {
-														$meta_relation = explode(',', $_POST['wpr_url_params']['wpr_gfr_'. $cleanedKey])[0];
+													} else if ( isset($wpr_url_params['wpr_gfr_'. $cleanedKey]) && !empty(explode(',', $wpr_url_params['wpr_gfr_'. $cleanedKey])[0]) ) {
+														$meta_relation = explode(',', $wpr_url_params['wpr_gfr_'. $cleanedKey])[0];
 													} else {
 														$meta_relation = '';
 													}
@@ -368,7 +370,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 													array_push( $meta_query, $for_meta_query );
 												} else {
 													$meta_query = [ // needs check if overrides something
-														'relation' => explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] ? explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] : explode(',', $_POST['wpr_url_params']['wpr_gfr_'. $cleanedKey])[0],
+														'relation' => explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] ? explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] : explode(',', $wpr_url_params['wpr_gfr_'. $cleanedKey])[0],
 													];
 		
 													if (is_array($filtervalues)) {
@@ -388,7 +390,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 											// if ( isset($_POST['wpr_gfr_'. $cleanedKey]) ) {
 												$for_tax_query = [ // needs check if overrides something
 													// 'relation' => isset($_POST['wpr_gfr_' . $cleanedKey]) && !empty(explode(',', $_POST['wpr_gfr_' . $cleanedKey])[0]) ? explode(',', $_POST['wpr_gfr_' . $cleanedKey])[0] : '',
-													'relation' => isset($_POST['wpr_url_params']['wpr_gfr_' . $cleanedKey]) && !empty(explode(',', $_POST['wpr_url_params']['wpr_gfr_' . $cleanedKey])[0]) ? explode(',', $_POST['wpr_url_params']['wpr_gfr_' . $cleanedKey])[0] : '',
+													'relation' => isset($wpr_url_params['wpr_gfr_' . $cleanedKey]) && !empty(explode(',', $wpr_url_params['wpr_gfr_' . $cleanedKey])[0]) ? explode(',', $wpr_url_params['wpr_gfr_' . $cleanedKey])[0] : '',
 												];
 											// } else {
 											// 	$for_tax_query = [];
@@ -406,9 +408,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 											array_push($tax_query, $for_tax_query);
 										}
-									} else { // not str_contains($_POST['wpr_url_params'][$key], ',')
+									} else { // not str_contains($wpr_url_params[$key], ',')
 										$key_type = WPR_Grid_Helpers::identify_key_type($cleanedKey);
-										$filtervalues = sanitize_text_field($_POST['wpr_url_params'][$key]);
+										$filtervalues = sanitize_text_field($wpr_url_params[$key]);
 		
 										if ( $key_type == 'meta_field' ) {
 											if ( isset($meta_query) ) {
@@ -431,7 +433,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 												];
 											}
 										} else {
-											if (isset($_POST['wpr_url_params'][$key])) {
+											if (isset($wpr_url_params[$key])) {
 						
 												array_push( $tax_query, [
 													'taxonomy' => $cleanedKey,
@@ -1649,7 +1651,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	public static function get_hidden_filter_class($slug, $settings) {
-		$posts = new \WP_Query( WPR_Grid_Helpers::get_main_query_args($settings) );
+		$posts = new \WP_Query( WPR_Grid_Helpers::get_main_query_args($settings, []) );
 		$visible_categories = [];
 
 		if ( $posts->have_posts() ) {
@@ -1875,14 +1877,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	public function wpr_get_filtered_count_posts() {
-		$query = new \WP_Query( WPR_Grid_Helpers::get_main_query_args($_POST['grid_settings']) );
+		$results = [];
 	
-		// Send only the count of found posts
-		wp_send_json_success([
-			'found_posts' => $query->found_posts
-		]);
+		// Loop through each set of parameters
+		foreach ($_POST['wpr_url_params'] as $params) {
+			$query_args = WPR_Grid_Helpers::get_main_query_args($_POST['grid_settings'], $params);
+			$query = new \WP_Query($query_args);
 	
-		wp_reset_postdata();
+			// Add the count of found posts to the results array
+			$results[] = [
+				'found_posts' => $query->found_posts
+			];
+	
+			wp_reset_postdata();
+		}
+	
+		// Send the array of results
+		wp_send_json_success($results);
 		wp_die();
 	}
 
@@ -1892,7 +1903,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$settings = $_POST['grid_settings'];
 	
 		// Create a unique cache key based on the settings
-		$cache_key = 'wpr_grid_filters_' . md5(serialize(WPR_Grid_Helpers::get_main_query_args($settings)));
+		$cache_key = 'wpr_grid_filters_' . md5(serialize(WPR_Grid_Helpers::get_main_query_args($settings, [])));
 		// wp_send_json_success($cache_key);
 		// wp_die();
 	
@@ -1913,7 +1924,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		ob_start();
 	
 		// Get Posts
-		$posts = new \WP_Query(WPR_Grid_Helpers::get_main_query_args($settings));
+		$posts = new \WP_Query(WPR_Grid_Helpers::get_main_query_args($settings, []));
 	
 		// Loop: Start
 		if ($posts->have_posts()) :
