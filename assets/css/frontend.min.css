@@ -17544,12 +17544,12 @@ img.wpr-gf-visual-active {
     cursor: pointer !important;
 }
 
-.wpr-range-container input[type=range]#wpr-from-slider {
+.wpr-range-container [id^="wpr-from-slider-"]input[type=range] {
     height: 0 !important;
     z-index: 1 !important;
 }
 
-.wpr-range-container input[type=range]#wpr-to-slider {
+.wpr-range-container [id^="wpr-to-slider-"]input[type=range] {
     transform: translateY(-50%) !important;
 }
 
