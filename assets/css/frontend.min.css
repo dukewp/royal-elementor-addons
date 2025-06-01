@@ -17434,6 +17434,10 @@ dl.variation dd {
 /*--------------------------------------------------------------
 == Widget Advanced Filters
 --------------------------------------------------------------*/
+.wpr-grid-loading {
+    opacity: 0.7 !important;
+}
+
 .wpr-gfv-wrap {
     display: flex;
     flex-wrap: wrap;
