@@ -1241,8 +1241,6 @@
 					} else if (WprConfig.is_product_tag) {
 						itemsPerPage = +WprConfig.woo_shop_tag_ppp;
 					}
-
-					console.log(itemsPerPage);
 					
 					// Ensure itemsPerPage is correctly parsed and is a valid number
 					if (isNaN(itemsPerPage) || itemsPerPage <= 0) {
